@@ -27,21 +27,20 @@ public class Participants {
             .collect(Collectors.toList()));
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
-    private void validatePlayerNumber(List<Player> players) {
-        if (players.size() < MINIMUM_NUMBER_OF_PEOPLE || players.size() > MAXIMUM_NUMBER_OF_PEOPLE) {
-            throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
-        }
-    }
-
     public void handOutInitialCards(Deck deck) {
         for (Participant participant : getParticipants()) {
             List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
             participant.receiveInitCards(cards);
         }
+    }
+
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 
     public List<Participant> getParticipants() {
@@ -53,7 +52,9 @@ public class Participants {
         return Collections.unmodifiableList(participants);
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    private void validatePlayerNumber(List<Player> players) {
+        if (players.size() < MINIMUM_NUMBER_OF_PEOPLE || players.size() > MAXIMUM_NUMBER_OF_PEOPLE) {
+            throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
+        }
     }
 }

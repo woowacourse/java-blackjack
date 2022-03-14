@@ -22,12 +22,12 @@ public abstract class Participant {
         return participantCards.calculateScore();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(participantCards.getCards());
-    }
-
     public boolean isBust() {
         return getScore() > BUST_THRESHOLD_NUMBER;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(participantCards.getCards());
     }
 
     public abstract boolean isAvailableToHit();

@@ -35,6 +35,12 @@ public class ParticipantCards {
         return cards.get(FIRST_CARD_INDEX);
     }
 
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+
     private int getAceCount() {
         return (int) cards.stream().filter(Card::isAce).count();
     }
@@ -50,10 +56,5 @@ public class ParticipantCards {
     private boolean isNeedToConvertAceValue(int aceCount, int totalScore) {
         return aceCount > NO_COUNT && totalScore > BUST_THRESHOLD;
     }
-
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
+    
 }
