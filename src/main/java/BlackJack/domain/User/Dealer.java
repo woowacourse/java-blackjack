@@ -1,7 +1,6 @@
 package BlackJack.domain.User;
 
 import BlackJack.domain.Card.CardFactory;
-import BlackJack.domain.Card.Cards;
 import BlackJack.domain.Result;
 
 import static BlackJack.domain.Card.Cards.BUST_LINE;
@@ -17,7 +16,7 @@ public class Dealer extends User {
         super("딜러", cardFactory.initCards());
     }
 
-    public boolean checkScore() {
+    public boolean canOneMoreCard() {
         return cards.calculateScore() <= DEALER_ADD_CARD_LIMIT;
     }
 

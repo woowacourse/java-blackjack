@@ -25,7 +25,7 @@ class DealerTest {
     @DisplayName("딜러가 소지한 카드가 16 이하면 true를 반환한다.")
     void checkScoreWhenUnder16Test() {
         Dealer dealer = new Dealer(cardFactory);
-        assertThat(dealer.checkScore()).isEqualTo(true);
+        assertThat(dealer.canOneMoreCard()).isEqualTo(true);
     }
 
     @Test
@@ -33,7 +33,7 @@ class DealerTest {
     void checkScoreWhenOver16Test() {
         Dealer dealer = new Dealer(cardFactory);
         dealer.addCard(cardFactory);
-        assertThat(dealer.checkScore()).isEqualTo(false);
+        assertThat(dealer.canOneMoreCard()).isEqualTo(false);
     }
 
     @Test
