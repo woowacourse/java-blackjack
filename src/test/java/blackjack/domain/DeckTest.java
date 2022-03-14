@@ -7,24 +7,24 @@ import org.junit.jupiter.api.Test;
 public class DeckTest {
 	@Test
 	void distribute_Card() {
-		Deck.generateDeck();
-		assertThat(Deck.distributeCard()).isInstanceOf(Card.class);
+		Deck deck = new Deck();
+		assertThat(deck.distributeCard()).isInstanceOf(Card.class);
 	}
 
 	@Test
 	void check_Deck_size() {
-		Deck.generateDeck();
-		Deck.distributeCard();
-		assertThat(Deck.getCardsSize()).isEqualTo(51);
+		Deck deck = new Deck();
+		deck.distributeCard();
+		assertThat(deck.getCardsSize()).isEqualTo(51);
 	}
 
 	@Test
 	void check_Deck_empty_size() {
-		Deck.generateDeck();
+		Deck deck = new Deck();
 		for (int i = 0; i < 52; i++) {
-			Deck.distributeCard();
+			deck.distributeCard();
 		}
-		assertThatThrownBy(Deck::distributeCard)
+		assertThatThrownBy(deck::distributeCard)
 			.isInstanceOf(IllegalStateException.class)
 			.hasMessageContaining("덱의 카드가 다 소진되었습니다.");
 	}

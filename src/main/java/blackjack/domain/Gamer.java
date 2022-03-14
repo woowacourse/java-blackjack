@@ -10,9 +10,9 @@ public class Gamer {
 		this.name = name;
 	}
 
-	public void addCards(int times) {
+	public void addCards(Card card, int times) {
 		for (int i = 0; i < times; i++) {
-			addCard(Deck.distributeCard());
+			addCard(card);
 		}
 	}
 

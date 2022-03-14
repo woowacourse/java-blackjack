@@ -6,16 +6,9 @@ import java.util.stream.Stream;
 
 public class Deck {
 	private static final String EMPTY_MESSAGE = "[ERROR] 덱의 카드가 다 소진되었습니다.";
-	private static Stack<Card> cards;
+	private final Stack<Card> cards;
 
-	public static Card distributeCard() {
-		if (cards.isEmpty()) {
-			throw new IllegalStateException(EMPTY_MESSAGE);
-		}
-		return cards.pop();
-	}
-
-	public static void generateDeck() {
+	public Deck() {
 		cards = new Stack<>();
 		Stream.of(CardDenomination.values())
 			.forEach(cardLetter -> Stream.of(CardSuit.values())
@@ -23,11 +16,18 @@ public class Deck {
 			);
 	}
 
-	public static int getCardsSize() {
+	public Card distributeCard() {
+		if (cards.isEmpty()) {
+			throw new IllegalStateException(EMPTY_MESSAGE);
+		}
+		return cards.pop();
+	}
+
+	public int getCardsSize() {
 		return cards.size();
 	}
 
-	public static void shuffleDeck() {
+	public void shuffleDeck() {
 		Collections.shuffle(cards);
 	}
 }

@@ -25,10 +25,10 @@ public class BlackJackGameController {
 	public void gameStart() {
 		Players players = generatePlayers();
 		Dealer dealer = new Dealer();
-		Deck.generateDeck();
-		initializeCard(players, dealer);
-		progressPlayerTurn(players, dealer);
-		progressDealerTurn(players, dealer);
+		Deck deck = new Deck();
+		initializeCard(players, dealer, deck);
+		progressPlayerTurn(players, dealer, deck);
+		progressDealerTurn(players, dealer, deck);
 		makeResult(players, dealer);
 	}
 
@@ -52,25 +52,25 @@ public class BlackJackGameController {
 		outputView.displayResult(result, players, dealer);
 	}
 
-	private void progressDealerTurn(Players players, Dealer dealer) {
+	private void progressDealerTurn(Players players, Dealer dealer, Deck deck) {
 		if (dealer.isHit()) {
 			outputView.displayNewLine();
 		}
 		while (dealer.isHit() && !dealer.isBust() && !players.isAllPlayersBlackJackOrBust()) {
 			outputView.displayDealerUnderSevenTeen();
-			dealer.addCards(EACH_TURN_DISTRIBUTE_AMOUNT);
+			dealer.addCards(deck.distributeCard(), EACH_TURN_DISTRIBUTE_AMOUNT);
 		}
 	}
 
-	private void progressPlayerTurn(Players players, Dealer dealer) {
+	private void progressPlayerTurn(Players players, Dealer dealer, Deck deck) {
 		if (!dealer.isBlackJack()) {
-			players.getPlayers().forEach(this::progressOnePlayer);
+			players.getPlayers().forEach(player -> progressOnePlayer(player, deck));
 		}
 	}
 
-	private void progressOnePlayer(Player player) {
+	private void progressOnePlayer(Player player, Deck deck) {
 		while (!player.isBust() && !player.isBlackJack() && decideHitOrStay(player)) {
-			player.addCards(EACH_TURN_DISTRIBUTE_AMOUNT);
+			player.addCards(deck.distributeCard(), EACH_TURN_DISTRIBUTE_AMOUNT);
 			outputView.displayAllCard(player);
 		}
 	}
@@ -89,9 +89,9 @@ public class BlackJackGameController {
 		}
 	}
 
-	private void initializeCard(Players players, Dealer dealer) {
-		Deck.shuffleDeck();
-		dealer.addCards(INIT_DISTRIBUTE_AMOUNT);
+	private void initializeCard(Players players, Dealer dealer, Deck deck) {
+		deck.shuffleDeck();
+		dealer.addCards(deck.distributeCard(), INIT_DISTRIBUTE_AMOUNT);
 		players.addCardToAllPlayers(INIT_DISTRIBUTE_AMOUNT);
 		outputView.displayFirstDistribution(players, dealer);
 		outputView.displayDealerOneCard(dealer);
