@@ -61,7 +61,7 @@ public class ParticipantTest {
         Card card2 = new Card(Rank.valueOf(input2), Suit.SPADE);
         Card card3 = new Card(Rank.valueOf(input3), Suit.CLOVER);
         Participant participant = new Player(new Name("pobi"), new ArrayList<>(List.of(card1, card2, card3)));
-        assertThat(participant.isMaxScore()).isTrue();
+        assertThat(participant.isUpperBoundScore()).isTrue();
     }
 
     @Test()

@@ -44,6 +44,6 @@ public class DealerTest {
     @DisplayName("딜러의 첫번째 손패만 문자열로 반환하기")
     void showOneHand() {
         Dealer dealer = new Dealer(new ArrayList<>(List.of(card1, card2)));
-        assertThat(dealer.getFirstHand().toString()).isEqualTo("J스페이드");
+        assertThat(dealer.getFirstHand().combineRankAndSuit()).isEqualTo("J스페이드");
     }
 }

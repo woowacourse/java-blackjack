@@ -13,7 +13,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isNeedToDraw() {
-        if (isBlackJack() || isMaxScore() || isBust()) {
+        if (isBlackJack() || isUpperBoundScore() || isBust()) {
             return false;
         }
         return true;

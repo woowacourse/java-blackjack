@@ -8,19 +8,22 @@ import domain.card.Card;
 
 public abstract class Participant {
 
-    protected static final String JOINING_DELIMITER = ", ";
-    protected static final int BLACK_JACK_NUMBER = 21;
-    protected static final int ACE_COUNT_LOWER_BOUND = 0;
-    protected static final int ADDITIONAL_SCORE_OF_ACE = 10;
+    private static final String JOINING_DELIMITER = ", ";
+    private static final int BLACK_JACK_NUMBER = 21;
+    private static final int ACE_COUNT_LOWER_BOUND = 0;
+    private static final int ADDITIONAL_SCORE_OF_ACE = 10;
+    private static final int SECOND_INDEX_OF_HAND = 1;
+    private static final int POINT_OF_ACE = 1;
+    private static final int POINT_OF_TEN = 10;
+
+    protected static final int FIRST_INDEX_OF_HAND = 0;
 
     private final Name name;
     private List<Card> hand;
-    private final boolean isBlackJack;
 
     public Participant(Name name, List<Card> hand) {
         this.name = name;
         this.hand = new ArrayList<>(hand);
-        this.isBlackJack = isMaxScore();
     }
 
     public void addCard(Card card) {
@@ -32,21 +35,21 @@ public abstract class Participant {
     public String showHand() {
         return String.join(
                 JOINING_DELIMITER,
-                hand.stream().map(Card::toString).collect(Collectors.toList())
+                hand.stream().map(Card::combineRankAndSuit).collect(Collectors.toList())
         );
     }
 
     public boolean isBust() {
-        return calculateMinScore() > BLACK_JACK_NUMBER;
+        return calculateMinScoreOfHand() > BLACK_JACK_NUMBER;
     }
 
-    public boolean isMaxScore() {
+    public boolean isUpperBoundScore() {
         return calculateBestScore() == BLACK_JACK_NUMBER;
     }
 
     public int calculateBestScore() {
         int aceCount = countAceCard();
-        int bestScore = calculateMinScore();
+        int bestScore = calculateMinScoreOfHand();
         while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ADDITIONAL_SCORE_OF_ACE <= BLACK_JACK_NUMBER) {
             bestScore += ADDITIONAL_SCORE_OF_ACE;
             aceCount--;
@@ -54,7 +57,7 @@ public abstract class Participant {
         return bestScore;
     }
 
-    private int calculateMinScore() {
+    private int calculateMinScoreOfHand() {
         return hand.stream().mapToInt(Card::getPoint).sum();
     }
 
@@ -71,6 +74,14 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return isBlackJack;
+        int firstCardPoint = hand.get(FIRST_INDEX_OF_HAND).getPoint();
+        int secondCardPoint = hand.get(SECOND_INDEX_OF_HAND).getPoint();
+        if (firstCardPoint == POINT_OF_ACE && secondCardPoint == POINT_OF_TEN) {
+            return true;
+        }
+        if (firstCardPoint == POINT_OF_TEN && secondCardPoint == POINT_OF_ACE) {
+            return true;
+        }
+        return false;
     }
 }

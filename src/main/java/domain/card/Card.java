@@ -18,8 +18,7 @@ public class Card {
         return rank.isAce();
     }
 
-    @Override
-    public String toString() {
+    public String combineRankAndSuit() {
         return rank.getRank() + suit.getSuit();
     }
 }

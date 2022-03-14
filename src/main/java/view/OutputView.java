@@ -25,7 +25,7 @@ public class OutputView {
     public static void printParticipantInitHands(Dealer dealer, Players players) {
         printInitHandsMessage(players.getNames());
         printNewLine();
-        System.out.printf(SHOW_DEALER_ONE_HAND_FORMAT, dealer.getFirstHand().toString());
+        System.out.printf(SHOW_DEALER_ONE_HAND_FORMAT, dealer.getFirstHand().combineRankAndSuit());
         for (Name name : players.getNames()) {
             printPlayerHand(name, players);
         }

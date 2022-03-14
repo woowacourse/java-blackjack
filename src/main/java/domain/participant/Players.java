@@ -74,7 +74,7 @@ public class Players {
     }
 
     public boolean isMaxScoreByName(Name name) {
-        return findByName(name).isMaxScore();
+        return findByName(name).isUpperBoundScore();
     }
 
     public boolean isNeedToDrawByName(Name name) {
