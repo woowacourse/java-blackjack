@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGenerator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.DistributeResult;
@@ -43,11 +44,32 @@ public class ParticipantsTest {
     }
 
     @Test
+    @DisplayName("유저가 패배한 경우 Result로 패배를 반환한다.")
+    public void checkUserLoseCase() {
+        Participants participants = new Participants();
+        participants.addDealer();
+        participants.distributeCard(new Deck(new CardGenerator()));
+        participants.addUsers(new String[]{"박창갑", "김환룡"});
+        participants.getUserResults();
+        assertThat(participants.getUserResults().get(0).getResult()).isEqualTo("패");
+    }
+
+    @Test
+    @DisplayName("유저가 승리한 경우 Result로 승리를 반환한다.")
+    public void checkUserWinCase() {
+        Participants participants = new Participants();
+        participants.addUsers(new String[]{"박창갑", "김환룡"});
+        participants.distributeCard(new Deck(new CardGenerator()));
+        participants.addDealer();
+        participants.getUserResults();
+        assertThat(participants.getUserResults().get(0).getResult()).isEqualTo("승");
+    }
+
+    @Test
     @DisplayName("참가자들 중에서 딜러가 있는 경우 해당 딜러를 찾는다.")
     public void findDealerInParticipantsTest() {
         Participants participants = new Participants();
         participants.addDealer();
-
         assertThat(participants.getDealer()).isInstanceOf(Dealer.class);
     }
 
