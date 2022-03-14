@@ -89,7 +89,7 @@ class PlayerTest {
                 Card.from(Number.ACE, Kind.SPADE),
                 Card.from(Number.NINE, Kind.SPADE))));
 
-        assertThat(player.isWinner(19)).isTrue();
+        assertThat(player.isWinner(19)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("딜러의 점수가 더 높은 경우 패배 테스트")
@@ -100,7 +100,7 @@ class PlayerTest {
                 Card.from(Number.ACE, Kind.SPADE),
                 Card.from(Number.NINE, Kind.SPADE))));
 
-        assertThat(player.isWinner(21)).isFalse();
+        assertThat(player.isWinner(21)).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이어가 버스트된 경우 패배 테스트")
@@ -112,7 +112,7 @@ class PlayerTest {
                 Card.from(Number.NINE, Kind.CLOVER),
                 Card.from(Number.NINE, Kind.HEART))));
 
-        assertThat(player.isWinner(19)).isFalse();
+        assertThat(player.isWinner(19)).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("딜러가 버스트된 경우 승리 테스트")
@@ -123,7 +123,7 @@ class PlayerTest {
                 Card.from(Number.ACE, Kind.SPADE),
                 Card.from(Number.NINE, Kind.SPADE))));
 
-        assertThat(player.isWinner(22)).isTrue();
+        assertThat(player.isWinner(22)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("둘 다 버스트된 경우 패배 테스트")
@@ -135,6 +135,29 @@ class PlayerTest {
                 Card.from(Number.NINE, Kind.CLOVER),
                 Card.from(Number.NINE, Kind.HEART))));
 
-        assertThat(player.isWinner(22)).isFalse();
+        assertThat(player.isWinner(22)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("동일한 점수를 가질 경우 무승부 테스트")
+    @Test
+    void isWinner_SameScore_isDraw() {
+        Player player = Player.of("쿼리치");
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE),
+                Card.from(Number.KING, Kind.CLOVER))));
+
+        assertThat(player.isWinner(21)).isEqualTo(Result.DRAW);
+    }
+
+    @DisplayName("동일한 점수를 가지고 버스트된 경우 패배 테스트")
+    @Test
+    void isWinner_SameScoreAndBothBusted_isLose() {
+        Player player = Player.of("쿼리치");
+        player.receive(new Cards(List.of(
+                Card.from(Number.NINE, Kind.SPADE),
+                Card.from(Number.NINE, Kind.CLOVER),
+                Card.from(Number.NINE, Kind.HEART))));
+
+        assertThat(player.isWinner(27)).isEqualTo(Result.LOSE);
     }
 }

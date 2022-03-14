@@ -20,8 +20,14 @@ public class Player extends Participant {
         return cards.getBestPossible(cards.getLowestSum());
     }
 
-    public boolean isWinner(int score) {
-        return !isBusted(calculateBestScore()) && (isBusted(score) || isCloserToBestScore(score));
+    public Result isWinner(int score) {
+        if (!isBusted(calculateBestScore()) && (isBusted(score) || isCloserToBestScore(score))) {
+            return Result.WIN;
+        }
+        if (!isBusted(calculateBestScore()) && calculateBestScore() == score) {
+            return Result.DRAW;
+        }
+        return Result.LOSE;
     }
 
     private boolean isBusted(int score) {
@@ -29,6 +35,6 @@ public class Player extends Participant {
     }
 
     private boolean isCloserToBestScore(int score) {
-        return calculateBestScore() <= BUST_THRESHOLD && calculateBestScore() > score;
+        return !isBusted(calculateBestScore()) && calculateBestScore() > score;
     }
 }

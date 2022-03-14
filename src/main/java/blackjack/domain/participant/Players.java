@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,8 +21,8 @@ public class Players {
                 .collect(Collectors.toList()));
     }
 
-    public Map<Player, Boolean> judgeResult(Dealer dealer) {
-        Map<Player, Boolean> result = new HashMap<>();
+    public Map<Player, Result> judgeResult(Dealer dealer) {
+        Map<Player, Result> result = new LinkedHashMap<>();
         for (Player player : players) {
             result.put(player, player.isWinner(dealer.calculateBestScore()));
         }
