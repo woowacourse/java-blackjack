@@ -1,6 +1,7 @@
 package view;
 
 import domain.participant.Name;
+import domain.result.Versus;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -32,8 +33,19 @@ public class InputView {
         }
     }
 
-    public static String inputAskDraw(String name) {
+    public static boolean inputAskDraw(String name) {
         System.out.printf(INPUT_ASk_DRAW_MESSAGE_FORMAT, name);
-        return scanner.nextLine();
+        String askDraw = scanner.nextLine();
+        validateAskDraw(askDraw);
+        if (askDraw.equals("y")) {
+            return true;
+        }
+        return false;
+    }
+
+    private static void validateAskDraw(String askDraw) {
+        if (!(askDraw.equals("y") || askDraw.equals("n"))) {
+            throw new IllegalArgumentException("[Error] 질문에 대한 대답은 y 혹은 n 만 가능합니다.");
+        }
     }
 }

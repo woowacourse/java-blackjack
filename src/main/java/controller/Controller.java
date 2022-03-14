@@ -60,25 +60,10 @@ public class Controller {
 
     private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
         boolean isKeepDraw = true;
-        while (isKeepDraw && inputAskDraw(name.getName())) {
+        while (isKeepDraw && InputView.inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
             OutputView.printPlayerHand(name, players);
             isKeepDraw = checkScore21OrBust(players, name);
-        }
-    }
-
-    private boolean inputAskDraw(String name) {
-        String askDraw = InputView.inputAskDraw(name);
-        validateAskDraw(askDraw);
-        if (askDraw.equals("y")) {
-            return true;
-        }
-        return false;
-    }
-
-    private void validateAskDraw(String resultAsk) {
-        if (!(resultAsk.equals("y") || resultAsk.equals("n"))) {
-            throw new IllegalArgumentException();
         }
     }
 
