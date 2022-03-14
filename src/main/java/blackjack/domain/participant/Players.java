@@ -41,6 +41,10 @@ public class Players {
 		return !(playerIndex < players.size());
 	}
 
+	public boolean isPlayerBurst(Player player) {
+		return findPlayer(player).isBurst();
+	}
+
 	public void next() {
 		playerIndex++;
 	}

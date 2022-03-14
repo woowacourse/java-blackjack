@@ -35,8 +35,9 @@ public class BlackjackController {
 		}
 	}
 
+
 	private void askDistributingCard(Player player) {
-		while (InputView.askAdditionalCard(player)) {
+		while (!blackjack.isPlayerBurst(player) && InputView.askAdditionalCard(player)) {
 			blackjack.dealAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
 			OutputView.printCards(blackjack.findPlayer(player));
 		}

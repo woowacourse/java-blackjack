@@ -39,6 +39,10 @@ public class Blackjack {
 		return !players.isEnd();
 	}
 
+	public boolean isPlayerBurst(Player player) {
+		return players.isPlayerBurst(player);
+	}
+
 	public Player getNextPlayer() {
 		Player player = players.findNextPlayer();
 		players.next();
