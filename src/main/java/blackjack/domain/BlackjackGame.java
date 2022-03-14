@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.List;
 
-import blackjack.controller.BlackjackController;
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
@@ -41,39 +40,38 @@ public class BlackjackGame {
         }
     }
 
-    public boolean isNotDealerBlackJack() {
-        return blackjackPlayers.isDealerBlackJack();
+    public boolean isExistNextPlayer() {
+        return blackjackPlayers.hasNextTurn();
     }
 
-    public void turnPlayers(BlackjackController blackjackController) {
-        for (Player player : blackjackPlayers.getPlayers()) {
-            turnEachPlayerIfGuest(blackjackController, player);
-        }
+    public void nextTurn() {
+        blackjackPlayers.nextTurn();
     }
 
-    private void turnEachPlayerIfGuest(BlackjackController blackjackController, Player player) {
+    public boolean turnGuest() {
+        Player player = blackjackPlayers.turnPlayer();
         if (player.isDealer()) {
-            return;
+            return false;
         }
 
-        while(checkGetMoreCard(player) && blackjackController.receiveForGetMoreCard(player.getName())) {
+        if (checkGetMoreCard(player)) {
             addCard(player);
-            blackjackController.announcePresentCard(player);
+            return true;
         }
+        return false;
     }
 
     public boolean checkGetMoreCard(Player player) {
         return !player.isOverMoreCardLimit();
     }
 
-    public void turnDealer(BlackjackController blackjackController) {
+    public boolean turnDealer() {
         Player dealer = blackjackPlayers.getDealer();
         if (!dealer.isOverMoreCardLimit()) {
-            blackjackController.announceDealerCanGetMoreCard();
             addCard(dealer);
-            return;
+            return true;
         }
-        blackjackController.announceDealerCantGetMoreCard();
+        return false;
     }
 
     public void addCard(Player player) {
@@ -109,5 +107,9 @@ public class BlackjackGame {
 
     public Players getBlackjackPlayers() {
         return blackjackPlayers;
+    }
+
+    public Player getTurnPlayer() {
+        return blackjackPlayers.turnPlayer();
     }
 }

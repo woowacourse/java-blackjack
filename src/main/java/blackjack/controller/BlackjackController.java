@@ -22,10 +22,9 @@ public class BlackjackController {
 
         Players players = blackjackGame.getBlackjackPlayers();
         announceStartGame(players);
-        if (!blackjackGame.isNotDealerBlackJack()) {
-            blackjackGame.turnPlayers(this);
-            blackjackGame.turnDealer(this);
-        }
+
+        turnPlayers(blackjackGame);
+        turnDealer(blackjackGame);
         announceResult(blackjackGame, players);
     }
 
@@ -50,7 +49,20 @@ public class BlackjackController {
         OutputView.announcePresentCards(toResponse(players));
     }
 
-    public boolean receiveForGetMoreCard(String name) {
+    private void turnPlayers(BlackjackGame blackjackGame) {
+        while (blackjackGame.isExistNextPlayer()) {
+            hasMoreCard(blackjackGame);
+        }
+    }
+
+    private void hasMoreCard(BlackjackGame blackjackGame) {
+        while (blackjackGame.turnGuest() && receiveForGetCard(blackjackGame.getTurnPlayer().getName())) {
+            announcePresentCard(blackjackGame.getTurnPlayer());
+        }
+        blackjackGame.nextTurn();
+    }
+
+    public boolean receiveForGetCard(String name) {
         try {
             String answer = InputView.requestMoreCard(name);
             InputValidator.inputBlank(answer);
@@ -59,7 +71,15 @@ public class BlackjackController {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        return receiveForGetMoreCard(name);
+        return receiveForGetCard(name);
+    }
+
+    private void turnDealer(BlackjackGame blackjackGame) {
+        if (blackjackGame.turnDealer()) {
+            OutputView.announceGetMoreCard(Dealer.MAX_POINT);
+            return;
+        }
+        OutputView.announceGetMoreCard(Dealer.EXCEED_POINT);
     }
 
     private List<GameResponse> toResponse(Players players) {
@@ -75,14 +95,6 @@ public class BlackjackController {
         GameResponse gameResponse = new GameResponse(player.getName(), player.getDeck());
         gameResponses.add(gameResponse);
         OutputView.announcePresentCards(gameResponses);
-    }
-
-    public void announceDealerCanGetMoreCard() {
-        OutputView.announceGetMoreCard(Dealer.MAX_POINT);
-    }
-
-    public void announceDealerCantGetMoreCard() {
-        OutputView.announceGetMoreCard(Dealer.EXCEED_POINT);
     }
 
     private void announceResult(BlackjackGame blackjackGame, Players players) {

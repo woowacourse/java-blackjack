@@ -7,6 +7,7 @@ import java.util.List;
 public class Players {
 
     private final List<Player> players;
+    private int turn;
 
     public Players() {
         this.players = new ArrayList<>();
@@ -16,6 +17,14 @@ public class Players {
         players.add(player);
     }
 
+    public void nextTurn() {
+        this.turn++;
+    }
+
+    public boolean hasNextTurn() {
+        return this.turn < players.size();
+    }
+
     public boolean isDealerBlackJack() {
         Player dealer = players.stream()
                 .filter(Player::isDealer)
@@ -23,6 +32,10 @@ public class Players {
                 .orElseThrow();
 
         return dealer.isBlackJack();
+    }
+
+    public Player turnPlayer() {
+        return this.players.get(turn);
     }
 
     public List<Player> getPlayers() {
