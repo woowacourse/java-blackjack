@@ -6,10 +6,12 @@ import static domain.MatchResult.WIN;
 
 import domain.BlackJackResult;
 import domain.MatchResult;
+import domain.card.Card;
 import domain.player.Dealer;
 import dto.PlayerDto;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final long ZERO_FOR_DEFAULT = 0L;
@@ -23,6 +25,8 @@ public class OutputView {
     private static final String STRING_FOR_WIN = "승";
     private static final String STRING_FOR_LOSE = "패";
     private static final String STRING_FOR_DRAW = "무";
+    private static final String CARD_NAME_JOIN_CHARACTER = ", ";
+
 
     private OutputView() {
     }
@@ -40,8 +44,14 @@ public class OutputView {
         playerDtos.forEach(
                 playerDto -> System.out.printf(
                         INFO_CARD_STATUS_AFTER_INITIAL_SPREAD,
-                        playerDto.getName(), playerDto.getJoinedCardNames())
-        );
+                        playerDto.getName(), getJoinedCardNames(playerDto.getCards())
+                ));
+    }
+
+    private static String getJoinedCardNames(List<Card> cards) {
+        return cards.stream()
+                .map(Card::getCardName)
+                .collect(Collectors.joining(CARD_NAME_JOIN_CHARACTER));
     }
 
     public static void printLineSeparator() {
@@ -49,7 +59,8 @@ public class OutputView {
     }
 
     public static void printCards(PlayerDto playerDto) {
-        System.out.println(playerDto.getName() + COLON_FOR_JOINING_NAME_AND_CARD + playerDto.getJoinedCardNames());
+        System.out.println(
+                playerDto.getName() + COLON_FOR_JOINING_NAME_AND_CARD + getJoinedCardNames(playerDto.getCards()));
     }
 
     public static void printDealerAddCard(Dealer dealer) {
@@ -59,7 +70,7 @@ public class OutputView {
     public static void printCardAndScore(PlayerDto playerDto) {
         System.out.printf(INFO_PLAYER_CARD_AND_SCORE,
                 playerDto.getName(),
-                playerDto.getJoinedCardNames(),
+                getJoinedCardNames(playerDto.getCards()),
                 playerDto.getScore());
     }
 

@@ -4,11 +4,9 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.player.Player;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerDto {
     private static final int FIRST_CARD_INDEX = 0;
-    private static final String CARD_NAME_JOIN_CHARACTER = ", ";
 
     private final String name;
     private final List<Card> cards;
@@ -31,12 +29,6 @@ public class PlayerDto {
                 .getCardName();
     }
 
-    public String getJoinedCardNames() {
-        return cards.stream()
-                .map(Card::getCardName)
-                .collect(Collectors.joining(CARD_NAME_JOIN_CHARACTER));
-    }
-
     public int getScore() {
         Cards cardsForScore = new Cards();
         for (Card card : cards) {
@@ -44,5 +36,9 @@ public class PlayerDto {
         }
 
         return cardsForScore.getScore();
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
