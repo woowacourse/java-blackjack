@@ -24,7 +24,7 @@ public class GuestTest {
         Guest a = new Guest("a", (p) -> HitFlag.Y);
         a.hit(deck.draw());
         a.hit(deck.draw());
-        assertThat(a.getShowCards().getCards().size())
+        assertThat(a.getShowCards().getCardValues().size())
                 .isEqualTo(2);
     }
 }

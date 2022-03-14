@@ -1,18 +1,17 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Cards {
-    public static final int ACE_GAP = 10;
+    private static final int ACE_GAP = 10;
     public static final int BLACK_JACK_SCORE = 21;
 
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public void add(Card card) {
@@ -38,12 +37,8 @@ public class Cards {
                 anyMatch(Card::isAce);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public Cards getCardValues() {
+    public List<Card> getCardValues() {
         Objects.requireNonNull(cards, "Cards의 내부 값이 null을 참조하고 있습니다.");
-        return new Cards(new ArrayList<>(cards));
+        return List.copyOf(cards);
     }
 }

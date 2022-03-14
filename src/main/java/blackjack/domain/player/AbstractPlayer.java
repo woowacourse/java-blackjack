@@ -4,7 +4,6 @@ import blackjack.BlackjackGame;
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.Objects;
 
 public abstract class AbstractPlayer implements Player {
     private static final String NAME_INPUT_ERROR_MESSAGE = "참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.";
@@ -36,7 +35,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBlackjack() {
-        return isMaxScore() && cards.getCards().size() == BlackjackGame.INIT_CARD_SIZE;
+        return isMaxScore() && cards.getCardValues().size() == BlackjackGame.INIT_CARD_SIZE;
     }
 
     @Override
@@ -55,8 +54,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public Cards getCards() {
-        Objects.requireNonNull(cards, "Cards가 null을 참조하고 있습니다.");
-        return cards.getCardValues();
+        return cards;
     }
 
     @Override

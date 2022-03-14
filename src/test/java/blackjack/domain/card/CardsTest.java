@@ -16,7 +16,7 @@ class CardsTest {
         Cards cards = new Cards(new ArrayList<>());
         Card card = deck.draw();
         cards.add(card);
-        assertThat(cards.getCards().get(0) == card)
+        assertThat(cards.getCardValues().get(0) == card)
                 .isTrue();
     }
 

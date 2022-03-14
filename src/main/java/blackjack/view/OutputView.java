@@ -36,7 +36,7 @@ public class OutputView {
     }
 
     private static String joinCardString(Cards cards) {
-        return cards.getCards()
+        return cards.getCardValues()
                 .stream()
                 .map(card -> card.getDenomination().getName() + card.getSuit().getName())
                 .collect(Collectors.joining(CARD_JOINING_DELIMITER));

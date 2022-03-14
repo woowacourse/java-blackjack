@@ -26,7 +26,7 @@ public class PlayersTest {
         Players players = Players.fromNames(List.of("a", "b"), (p) -> HitFlag.Y);
         players.initHit(deck, 2);
         for (Player player : players.getPlayers()) {
-            assertThat(player.getCards().getCards().size())
+            assertThat(player.getCards().getCardValues().size())
                     .isEqualTo(2);
         }
     }
