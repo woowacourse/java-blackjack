@@ -36,7 +36,8 @@ public class Application {
     }
 
     private static void playerTurn(Deck deck, BlackjackGame blackjackGame, Participant player) {
-        while (blackjackGame.takeMoreCard(player, deck) && InputView.inputOneMoreCard(player)) {
+        while (!player.isBust() && InputView.inputOneMoreCard(player) && blackjackGame.takeMoreCard(
+            player, deck)) {
             OutputView.showPlayerHand(player);
         }
         if (player.isBust()) {
