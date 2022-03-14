@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
+import static blackjack.domain.card.Hand.BLACKJACK_SYMBOL_SCORE;
+
 import blackjack.domain.card.Hand;
 import blackjack.domain.result.Result;
 import java.util.Objects;
@@ -19,8 +20,9 @@ public class Player extends Participant {
         super(name, cardHand);
     }
 
-    public void receiveCard(Card card) {
-        cardHand.add(card);
+    @Override
+    public boolean shouldReceive() {
+        return !cardHand.isBust() && !cardHand.isBlackjack() && cardHand.getScore() != BLACKJACK_SYMBOL_SCORE;
     }
 
     public Result compareMatchResult(int dealerCardScore) {

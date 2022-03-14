@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Hand {
 
+    public static final int BLACKJACK_SYMBOL_SCORE = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
-    private static final int BLACKJACK_SYMBOL_SCORE = 21;
     private static final int ACE_UPPER_SCORE = 11;
     private static final int ACE_SCORE_DIFFERENCE = 10;
 
@@ -56,5 +56,9 @@ public class Hand {
 
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_CARD_SIZE && getScore() == BLACKJACK_SYMBOL_SCORE;
+    }
+
+    public Card openCard() {
+        return cards.get(0);
     }
 }

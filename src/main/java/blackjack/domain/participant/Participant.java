@@ -21,8 +21,18 @@ public abstract class Participant {
         }
     }
 
+    public abstract boolean shouldReceive();
+
+    public void receiveCard(Card card) {
+        cardHand.add(card);
+    }
+
     public boolean isBust() {
         return cardHand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return cardHand.isBlackjack();
     }
 
     public String getName() {
@@ -35,5 +45,9 @@ public abstract class Participant {
 
     public int getCardTotalScore() {
         return cardHand.getScore();
+    }
+
+    public Card getOpenCard() {
+        return cardHand.openCard();
     }
 }
