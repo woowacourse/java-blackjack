@@ -3,13 +3,11 @@ package blackjack.domain.human;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import blackjack.domain.human.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@SuppressWarnings("NonAsciiCharacters")
 public class NameTest {
 
     @Test

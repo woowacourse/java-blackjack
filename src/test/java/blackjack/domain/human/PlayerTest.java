@@ -8,7 +8,6 @@ import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("NonAsciiCharacters")
 class PlayerTest {
 
     @Test
