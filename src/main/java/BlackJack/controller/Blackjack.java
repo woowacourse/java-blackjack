@@ -57,14 +57,14 @@ public class Blackjack {
         }
         while (dealer.isPossibleToAdd()) {
             OutputView.printAddDealerCard();
-            dealer.requestAddCard();
+            dealer.requestCard();
         }
         return convertToToTalUserDto(dealer, players);
     }
 
     private void addCardPerPlayer(Player player) {
         while (InputView.askOneMoreCard(UserDto.from(player))) {
-            player.requestAddCard();
+            player.requestCard();
             OutputView.printPlayerCard(UserDto.from(player));
         }
     }

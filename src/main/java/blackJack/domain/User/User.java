@@ -18,7 +18,7 @@ public abstract class User {
         this.cards = new Cards(new ArrayList<>());
     }
 
-    public void requestAddCard() {
+    public void requestCard() {
         if (isPossibleToAdd()) {
             Card card = CARD_CACHE.poll();
             this.cards.add(card);
