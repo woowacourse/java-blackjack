@@ -2,13 +2,11 @@ package blackjack.domain;
 
 import java.util.List;
 
-import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.Match;
 import blackjack.domain.result.Results;
 
 public class BlackjackGame {
@@ -79,30 +77,9 @@ public class BlackjackGame {
     }
 
     public Results calculateResult(Players players) {
-        Results results = new Results();
-        Player dealer = players.getPlayers()
-                .stream()
-                .filter(Player::isDealer)
-                .findFirst()
-                .orElseThrow();
-        for (Player player : players.getPlayers()) {
-            scoreResultIfGuest(dealer, player, results);
-        }
+        Results results = new Results(players);
+        results.calculate();
         return results;
-    }
-
-    private void scoreResultIfGuest(Player dealer, Player guest, Results results) {
-        if (guest.isDealer()) {
-            return;
-        }
-        scorePlayers(dealer, guest, results);
-    }
-
-    private void scorePlayers(Player dealer, Player guest, Results results) {
-        Match result = Match.findWinner(guest, dealer);
-        Match dealerResult = result.getDealerResult();
-        results.addResult(dealer, dealerResult);
-        results.addResult(guest, result);
     }
 
     public Players getBlackjackPlayers() {
