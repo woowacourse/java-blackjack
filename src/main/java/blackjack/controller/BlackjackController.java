@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Blackjack;
+import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.RandomNumberGenerator;
 import blackjack.view.InputView;
@@ -10,30 +11,24 @@ import java.util.Map;
 
 public class BlackjackController {
 
-    private void controlAdditionalCardFlow(Blackjack blackjack, Players players, RandomNumberGenerator randomNumberGenerator) {
-        for (String playerName : players.namesAbleToGetAdditionalCard()) {
-            while (!players.isPlayerBurst(playerName) && InputView.askAdditionalCard(playerName)) {
-                players.addCardToPlayers(Map.of(playerName, blackjack.distributeCard(randomNumberGenerator)));
-                OutputView.printCards(players.convertToPlayer(playerName));
-            }
-        }
-    }
-
     public void run() {
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         List<String> playerNames = InputView.getPlayerNames();
         Blackjack blackjack = new Blackjack(playerNames);
-        Players players = new Players(playerNames);
 
         blackjack.distributeInitialCards(new RandomNumberGenerator());
-        OutputView.printInitStatus(blackjack.getDealer(), players.getPlayers());
+        OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
 
+        while (!blackjack.cycleIsOver()) {
+            Player turnPlayer = blackjack.turnPlayer();
+            blackjack.addtionalCardToTurnPlayer(
+                    new RandomNumberGenerator(), InputView.askAdditionalCard(turnPlayer.getName()));
+            OutputView.printCards(turnPlayer);
+        }
 
-        controlAdditionalCardFlow(blackjack, players, randomNumberGenerator);
         OutputView.printDealerAdditionalCard(blackjack.distributeCardToDealerUntilHit(randomNumberGenerator));
 
-        OutputView.printCardsAndScores(blackjack.getDealer(), players.getPlayers());
-
-        OutputView.printResults(blackjack.results(players.getPlayers()));
+        OutputView.printCardsAndScores(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
+        OutputView.printResults(blackjack.results(blackjack.getPlayers().getPlayers()));
     }
 }
