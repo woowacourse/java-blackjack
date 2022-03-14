@@ -39,6 +39,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 }
