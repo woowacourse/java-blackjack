@@ -33,7 +33,7 @@
     - orElseThrow()에서 IllegalArgumentException 발생하여 메세지 전달 하도록 수정
 - [x] `Name` 객체 생성 시에 검증하는 과정에서 적절한 예외 클래스 사용
     - 기존 RuntimeException에서 IllegalArgumentException으로 예외 클래수 수정
-- [ ] **사용하지 않는 import 구문은 삭제하기**
+- [x] **사용하지 않는 import 구문은 삭제하기**
 - [x] `추상클래스(Human)`에서 자식클래스 모두가 같은 구현을 가질 때 추상메서드로 남겨두어야 하는가
   - `Player`와 `Dealer`에 중복되는 메서드를 추상클래스 내에서 구현
 
