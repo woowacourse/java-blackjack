@@ -21,7 +21,7 @@ class CardDeckTest {
         pollCards(cardDeck, 51);
         assertThatThrownBy(cardDeck::provideInitCards)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("남은 카드가 2장 미만입니다.");
+                .hasMessage("초기 지급 카드 개수 이상의 카드가 없습니다.");
     }
 
     @Test
