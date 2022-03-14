@@ -20,9 +20,7 @@ public class Deck {
 
     public Card draw() {
         validateEmpty();
-        Card card = deck.getFirst();
-        deck.removeFirst();
-        return card;
+        return deck.remove();
     }
 
     private void validateEmpty() {
