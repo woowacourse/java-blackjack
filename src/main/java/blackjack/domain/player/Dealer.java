@@ -15,7 +15,7 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public Cards getShowCards() {
-        return new Cards(List.of(getCards().getCards().get(0)));
+        return getCards().getCardValues();
     }
 
     @Override
