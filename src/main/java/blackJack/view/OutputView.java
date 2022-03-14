@@ -1,7 +1,6 @@
 package blackJack.view;
 
 import blackJack.domain.BlackJackGame;
-import blackJack.domain.card.Card;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
@@ -51,8 +50,8 @@ public class OutputView {
     }
 
     private static void printInitHoldCardMessage(Dealer dealer, List<Player> players) {
-        Card firstDealerCard = dealer.getCards().get(0);
-        System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, dealer.getName(), firstDealerCard.getCardInfo());
+        String firstDealerCardInfo = dealer.getCardsInfo().get(0);
+        System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, dealer.getName(), firstDealerCardInfo);
 
         for (Player player : players) {
             printNowHoldCardInfo(player);
@@ -60,15 +59,13 @@ public class OutputView {
     }
 
     public static void printNowHoldCardInfo(Player player) {
-        String playerCardsInfo = player.getCards().stream()
-                .map(Card::getCardInfo)
-                .collect(Collectors.joining(JOINING_DELIMITER_COMMA));
+        String playerCardsInfo = String.join(JOINING_DELIMITER_COMMA, player.getCardsInfo());
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, player.getName(), playerCardsInfo);
     }
 
     public static void printDealerReceiveCardCount(Dealer dealer) {
         System.out.printf(OUTPUT_MESSAGE_DEALER_RECEIVE_CARD_COUNT,
-                dealer.getName(), dealer.getCards().size() - DEFAULT_DEALER_CARD_SIZE);
+                dealer.getName(), dealer.getCardsInfo().size() - DEFAULT_DEALER_CARD_SIZE);
         System.out.println();
     }
 
@@ -83,9 +80,7 @@ public class OutputView {
     }
 
     private static void printParticipantGameResult(Participant participant) {
-        String playerCardsInfo = participant.getCards().stream()
-                .map(Card::getCardInfo)
-                .collect(Collectors.joining(JOINING_DELIMITER_COMMA));
+        String playerCardsInfo = String.join(JOINING_DELIMITER_COMMA, participant.getCardsInfo());
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), playerCardsInfo,
                 participant.getScore());
     }
@@ -95,7 +90,8 @@ public class OutputView {
         Map<MatchResult, Integer> dealerGameResult = blackJackGame.getDealerGameResult();
         String dealerGameResultToString = getDealerGameResultToString(dealerGameResult);
 
-        System.out.printf(OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, blackJackGame.getDealer().getName(), dealerGameResultToString);
+        System.out.printf(OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, blackJackGame.getDealer().getName(),
+                dealerGameResultToString);
         blackJackGame.getPlayersGameResult().forEach((key, value) -> System.out.printf(
                 OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, key.getName(), value.getResult()));
     }

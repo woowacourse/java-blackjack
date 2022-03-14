@@ -46,7 +46,7 @@ class BlackJackGameTest {
 
         blackJackGame.firstCardDispensing();
 
-        assertThat(player1.getCards().size()).isEqualTo(2);
+        assertThat(player1.getCardsInfo().size()).isEqualTo(2);
     }
 
     @Test

@@ -1,27 +1,26 @@
 package blackJack.domain.participant;
 
 import blackJack.domain.card.Card;
+import blackJack.domain.card.Cards;
 import blackJack.domain.card.Denomination;
 import blackJack.domain.result.MatchResult;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
-    private static final String ERROR_MESSAGE_HIT_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
     public static final int STANDARD_SCORE_OF_CHANGE_ACE = 11;
     private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
 
     private final String name;
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Participant(String name) {
         validateName(name);
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.cards = new Cards();
     }
 
     private void validateName(String name) {
@@ -33,34 +32,16 @@ public abstract class Participant {
     abstract boolean canHit();
 
     public void hit(Card card) {
-        validateHitDuplicatedCard(card);
         cards.add(card);
     }
 
-    private void validateHitDuplicatedCard(Card card) {
-        if (cards.contains(card)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_HIT_DUPLICATED_CARD);
-        }
-    }
-
     public int getScore() {
-        int score = calculateScore();
+        int score = cards.calculateScore();
 
-        if (hasAce() && score <= STANDARD_SCORE_OF_CHANGE_ACE) {
+        if (cards.containsAce() && score <= STANDARD_SCORE_OF_CHANGE_ACE) {
             score += OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
         }
         return score;
-    }
-
-    private int calculateScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
     }
 
     public MatchResult getMatchResult(int otherParticipantScore) {
@@ -73,8 +54,8 @@ public abstract class Participant {
         return MatchResult.LOSE;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<String> getCardsInfo() {
+        return cards.getCardsInfo();
     }
 
     public String getName() {
