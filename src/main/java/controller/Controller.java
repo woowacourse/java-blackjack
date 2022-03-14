@@ -21,18 +21,18 @@ public class Controller {
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, generateInitCardsForPlayers(names.size(), deck));
 
-        OutputView.printParticipantInitHands(names, dealer, players);
+        OutputView.printParticipantInitHands(dealer, players);
         if (dealer.isBlackJack()) {
             OutputView.printDealerBlackJackMessage();
-            OutputView.printResult(names, new Result(players.getResultAtDealerBlackJack(dealer)));
+            OutputView.printResult(players.getNames(), new Result(players.getResultAtDealerBlackJack(dealer)));
             return;
         }
-        OutputView.printPlayerIsBlackJackMessage(names, players);
+        OutputView.printPlayerIsBlackJackMessage(players);
 
-        drawForPlayers(names, deck, players);
+        drawForPlayers(deck, players);
         drawForDealer(deck, dealer, players);
-        OutputView.printStatuses(names, dealer, players);
-        OutputView.printResult(names, new Result(players.getResultAtFinal(dealer)));
+        OutputView.printStatuses(dealer, players);
+        OutputView.printResult(players.getNames(), new Result(players.getResultAtFinal(dealer)));
     }
 
     private List<List<Card>> generateInitCardsForPlayers(int playerCount, Deck deck) {
@@ -41,8 +41,8 @@ public class Controller {
                 .collect(Collectors.toList());
     }
 
-    private void drawForPlayers(List<Name> names, Deck deck, Players players) {
-        for (Name name : names) {
+    private void drawForPlayers(Deck deck, Players players) {
+        for (Name name : players.getNames()) {
             drawForPlayer(name, deck, players);
         }
     }

@@ -22,11 +22,11 @@ public class OutputView {
     private static final String DEALER_BLACK_JACK_MESSAGE = "\n== DEALER IS BLACK JACK ==";
     private static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n== %s IS BLACK JACK ==\n";
 
-    public static void printParticipantInitHands(List<Name> names, Dealer dealer, Players players) {
-        printInitHandsMessage(names);
+    public static void printParticipantInitHands(Dealer dealer, Players players) {
+        printInitHandsMessage(players.getNames());
         printNewLine();
         System.out.printf(SHOW_DEALER_ONE_HAND_FORMAT, dealer.getFirstHand().toString());
-        for (Name name : names) {
+        for (Name name : players.getNames()) {
             printPlayerHand(name, players);
         }
     }
@@ -44,8 +44,8 @@ public class OutputView {
         System.out.println(DEALER_BLACK_JACK_MESSAGE);
     }
 
-    public static void printPlayerIsBlackJackMessage(List<Name> names, Players players) {
-        for (Name name : names) {
+    public static void printPlayerIsBlackJackMessage(Players players) {
+        for (Name name : players.getNames()) {
             OutputView.printIfPlayerIsBlackJackMessage(name, players);
         }
     }
@@ -72,10 +72,10 @@ public class OutputView {
         System.out.println(DEALER_DRAW_MESSAGE);
     }
 
-    public static void printStatuses(List<Name> names, Dealer dealer, Players players) {
+    public static void printStatuses(Dealer dealer, Players players) {
         printNewLine();
         System.out.printf(STATUS_FORMAT, "딜러", dealer.showHand(), dealer.getBestScore());
-        for (Name name : names) {
+        for (Name name : players.getNames()) {
             System.out.printf(
                     STATUS_FORMAT, name.getName(),
                     players.showHandByName(name),

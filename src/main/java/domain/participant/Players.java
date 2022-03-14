@@ -31,7 +31,7 @@ public class Players {
         }
     }
 
-    private Player findByName(Name name) {
+    public Player findByName(Name name) {
         List<Player> matchNamePlayers = players.stream()
                 .filter(player -> player.isNameMatch(name))
                 .collect(Collectors.toList());
@@ -43,6 +43,10 @@ public class Players {
         if (matchNamePlayers.size() != SINGLE_ELEMENT) {
             throw new IllegalArgumentException(CANT_FIND_PLAYER_ERROR_MESSAGE);
         }
+    }
+
+    public List<Name> getNames() {
+        return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
     public void addCardByName(Name name, Card card) {
