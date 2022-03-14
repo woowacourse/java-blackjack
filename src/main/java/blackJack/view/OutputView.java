@@ -63,7 +63,7 @@ public class OutputView {
 
     public static void printNowHoldCardInfo(Player player) {
         String playerCardsInfo = player.getCards().stream()
-            .map(card -> card.getDenominationName() + card.getSymbolName())
+            .map(OutputView::createStringCardInfo)
             .collect(Collectors.joining(JOINING_DELIMITER_COMMA));
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, player.getName(), playerCardsInfo);
     }
@@ -86,7 +86,7 @@ public class OutputView {
 
     private static void printParticipantGameResult(Participant participant) {
         String playerCardsInfo = participant.getCards().stream()
-            .map(card -> card.getDenominationName() + card.getSymbolName())
+            .map(OutputView::createStringCardInfo)
             .collect(Collectors.joining(JOINING_DELIMITER_COMMA));
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), playerCardsInfo,
             participant.getScore());
@@ -108,5 +108,9 @@ public class OutputView {
             .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
             .collect(Collectors.toUnmodifiableList());
         return String.join(JOINING_DELIMITER_SPACE, winOrLoseEssentialInfo);
+    }
+
+    private static String createStringCardInfo(Card card) {
+        return card.getDenominationName() + card.getSymbolName();
     }
 }
