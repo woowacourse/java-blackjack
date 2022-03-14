@@ -7,6 +7,7 @@ import java.util.Random;
 public class Cards {
 	private static final int BUST_THRESHOLD = 21;
 	private static final int ACE_SPECIAL_SCORE = 11;
+	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
 	private final List<Card> cards = new ArrayList<>();
 	private int score = 0;
 
@@ -45,5 +46,13 @@ public class Cards {
 
 	public int getScore() {
 		return score;
+	}
+
+	public boolean isBust() {
+		return getScore() > BUST_THRESHOLD;
+	}
+
+	public boolean isBlackJack() {
+		return this.cards.size() == INIT_DISTRIBUTE_AMOUNT && this.getScore() == BUST_THRESHOLD;
 	}
 }

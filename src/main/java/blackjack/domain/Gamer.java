@@ -3,7 +3,6 @@ package blackjack.domain;
 import java.util.List;
 
 public class Gamer {
-	private static final int BUST_THRESHOLD = 21;
 	protected final Cards cards = new Cards();
 	protected final Name name;
 
@@ -29,15 +28,15 @@ public class Gamer {
 		return this.cards.getScore();
 	}
 
-	public boolean isBust() {
-		return this.cards.getScore() > BUST_THRESHOLD;
-	}
-
 	public String getName() {
 		return this.name.getName();
 	}
 
+	public boolean isBust() {
+		return this.cards.isBust();
+	}
+
 	public boolean isBlackJack() {
-		return this.cards.getCards().size() == 2 && this.getScore() == 21;
+		return this.cards.isBlackJack();
 	}
 }
