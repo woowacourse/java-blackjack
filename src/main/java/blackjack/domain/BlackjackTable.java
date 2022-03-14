@@ -8,6 +8,7 @@ import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
 import blackjack.domain.entry.Players;
 
+import blackjack.dto.FirstTurnCards;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,8 +42,11 @@ public class BlackjackTable {
         return players.getPlayers();
     }
 
-    public List<Participant> getParticipant() {
-        return players.getParticipant();
+    public List<FirstTurnCards> getFirstTurnCards() {
+        List<Participant> participants = players.getParticipant();
+        return participants.stream()
+            .map(participant -> new FirstTurnCards(participant.getName(), participant.openCard()))
+            .collect(Collectors.toList());
     }
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {

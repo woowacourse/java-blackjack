@@ -6,6 +6,7 @@ import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
 
+import blackjack.dto.FirstTurnCards;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
@@ -16,13 +17,11 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String NAME_DELIMITER = ", ";
 
-    public static void printParticipantsCard(List<Participant> participants) {
-        System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", concatPlayerName(participants)));
-        for (Participant participant : participants) {
-            System.out.println(MessageFormat.format("{0}카드: {1}", participant.getName(), participant.openCard().stream()
-                    .map(OutputView::toCardName)
-                    .collect(Collectors.joining(NAME_DELIMITER))));
-        }
+    public static void printFirstTurnCards(List<FirstTurnCards> firstTurnCards) {
+        System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", toName(firstTurnCards)));
+        firstTurnCards.stream()
+            .map(OutputView::printCard)
+            .forEach(System.out::println);
         System.out.println();
     }
 
@@ -36,7 +35,8 @@ public class OutputView {
     }
 
     public static void printCardResult(Map<Participant, Integer> cardResult) {
-        cardResult.forEach((player, count) -> System.out.println(MessageFormat.format("{0} - 결과: {1}", getPlayerCard(player), count)));
+        cardResult.forEach(
+            (player, count) -> System.out.println(MessageFormat.format("{0} - 결과: {1}", getPlayerCard(player), count)));
         System.out.println();
     }
 
@@ -44,30 +44,34 @@ public class OutputView {
         System.out.println("## 최종 승패");
 
         System.out.println("딜러: "
-                + gameResult.getOrDefault(PlayerOutcome.LOSE, Collections.emptyList()).size() + "승 "
-                + gameResult.getOrDefault(PlayerOutcome.WIN, Collections.emptyList()).size() + "패 "
-                + gameResult.getOrDefault(PlayerOutcome.DRAW, Collections.emptyList()).size() + "무");
+            + gameResult.getOrDefault(PlayerOutcome.LOSE, Collections.emptyList()).size() + "승 "
+            + gameResult.getOrDefault(PlayerOutcome.WIN, Collections.emptyList()).size() + "패 "
+            + gameResult.getOrDefault(PlayerOutcome.DRAW, Collections.emptyList()).size() + "무");
 
         gameResult.forEach((outcome, players) ->
-                players.forEach(player -> System.out.println(player.getName() + ": " + outcome.getValue())));
+            players.forEach(player -> System.out.println(player.getName() + ": " + outcome.getValue())));
+    }
+
+    private static String toName(List<FirstTurnCards> firstTurnCards) {
+        return firstTurnCards.stream()
+            .map(FirstTurnCards::getPlayerName)
+            .filter(name -> !name.equals(DEALER_NAME))
+            .collect(Collectors.joining(NAME_DELIMITER));
+    }
+
+    private static String printCard(FirstTurnCards cards) {
+        return MessageFormat.format("{0}카드: {1}", cards.getPlayerName(), String.join(NAME_DELIMITER, cards.getCards()));
     }
 
     private static String getPlayerCard(Participant participant) {
         return MessageFormat.format("{0}카드: {1}", participant.getName(), concatCardName(participant.getHoldCards()));
     }
 
-    private static String concatPlayerName(List<Participant> players) {
-        return players.stream()
-                .map(Participant::getName)
-                .filter(name -> !name.equals(DEALER_NAME))
-                .collect(Collectors.joining(NAME_DELIMITER));
-    }
-
     private static String concatCardName(HoldCards holdCards) {
         return holdCards.getCards()
-                .stream()
-                .map(OutputView::toCardName)
-                .collect(Collectors.joining(NAME_DELIMITER));
+            .stream()
+            .map(OutputView::toCardName)
+            .collect(Collectors.joining(NAME_DELIMITER));
     }
 
     private static String toCardName(Card card) {
