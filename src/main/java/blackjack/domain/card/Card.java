@@ -18,6 +18,14 @@ public class Card {
         return denomination;
     }
 
+    public String getDenominationName() {
+        return denomination.getName();
+    }
+
+    public String getSuitName() {
+        return suit.getName();
+    }
+
     @Override
     public String toString() {
         return denomination.getName() + suit.getName();

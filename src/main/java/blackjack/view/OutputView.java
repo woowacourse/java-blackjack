@@ -37,7 +37,8 @@ public class OutputView {
     }
 
     private static void printDealerCard(final Dealer dealer) {
-        System.out.println(dealer.getName() + COLON_AND_BLANK + dealer.getCards().iterator().next());
+        final Card firstCard = dealer.getCards().iterator().next();
+        System.out.println(dealer.getName() + COLON_AND_BLANK + firstCard.getDenominationName() + firstCard.getSuitName());
     }
 
     private static void printParticipantsCards(final Participants participants) {
@@ -49,7 +50,7 @@ public class OutputView {
     public static void printPlayerCards(final Player player) {
         final List<String> cards = new ArrayList<>();
         for (Card card : player.getCards()) {
-            cards.add(card.toString());
+            cards.add(card.getDenominationName() + card.getSuitName());
         }
         System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards));
     }
@@ -61,7 +62,7 @@ public class OutputView {
     public static void printTotalScore(final Player player, final int totalScore) {
         final List<String> cards = new ArrayList<>();
         for (Card card : player.getCards()) {
-            cards.add(card.toString());
+            cards.add(card.getDenominationName() + card.getSuitName());
         }
         System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards) + " - 결과: " + totalScore);
     }
