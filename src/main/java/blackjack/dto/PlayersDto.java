@@ -13,12 +13,6 @@ public class PlayersDto {
         this.value = value;
     }
 
-    public static PlayersDto from(final List<Player> players) {
-        return new PlayersDto(players.stream()
-            .map(PlayerDto::from)
-            .collect(Collectors.toList()));
-    }
-
     public static PlayersDto from(final Players players) {
         return new PlayersDto(players.getValue()
             .stream()

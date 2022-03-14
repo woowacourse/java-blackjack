@@ -22,6 +22,8 @@ public class BlackJackGame {
     private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
     private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
     private static final int BURST_CRITERIA = 21;
+    private static final int GAMBLER_GET_CARD_UPPER_BOUND = 16;
+    private static final int DEALER_GET_CARD_UPPER_BOUND = 21;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -93,7 +95,7 @@ public class BlackJackGame {
     }
 
     private boolean isBurst(final Player gambler, final CardDeck cardDeck) {
-        if (gambler.isFinished(cardDeck)) {
+        if (gambler.isFinished(cardDeck, GAMBLER_GET_CARD_UPPER_BOUND)) {
             outputView.printBurst(PlayerDto.from(gambler));
             return true;
         }
@@ -101,14 +103,14 @@ public class BlackJackGame {
     }
 
     private void playGameForDealer(Player dealer, CardDeck cardDeck) {
-        while (!dealer.isFinished(cardDeck)) {
+        while (!dealer.isFinished(cardDeck, DEALER_GET_CARD_UPPER_BOUND)) {
             outputView.printDealerAddCard(dealer);
         }
         checkDealerBurst(dealer);
     }
 
     private void checkDealerBurst(final Player dealer) {
-        if (dealer.getSumOfCards() > BURST_CRITERIA) {
+        if (dealer.getSumOfCards() > DEALER_GET_CARD_UPPER_BOUND) {
             outputView.printBurst(PlayerDto.from(dealer));
         }
     }
