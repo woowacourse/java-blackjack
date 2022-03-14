@@ -43,5 +43,4 @@ public abstract class Player {
     public List<PlayingCard> getCards() {
         return playingCards.getPlayingCards();
     }
-
 }
