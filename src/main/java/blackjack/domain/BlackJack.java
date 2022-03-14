@@ -1,11 +1,9 @@
 package blackjack.domain;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import blackjack.domain.card.CardDeck;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJack {
     private static final String ERROR_MESSAGE_PLAYER_NUMBER_EXCEED = "[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.";
@@ -16,13 +14,13 @@ public class BlackJack {
     private final CardDeck cardDeck;
     private final Participant dealer;
     private final List<Participant> players;
-    private final Map<Participant, Result> result;
+    private final Result result;
 
     private BlackJack(Participant dealer, List<Participant> players) {
         this.cardDeck = new CardDeck();
         this.dealer = dealer;
         this.players = players;
-        this.result = new LinkedHashMap<>();
+        this.result = new Result(dealer, players);
     }
 
     public static BlackJack createFrom(List<String> playerNames) {
@@ -61,9 +59,9 @@ public class BlackJack {
         return dealer.getScore() <= DEALER_ADDITIONAL_CARD_STANDARD;
     }
 
-    public void calculateResult() {
-        result.clear();
-        players.forEach(player -> result.put(player, new Result(dealer.getScore(), player.getScore(), player.getBetting())));
+
+    public void calculateGameResult() {
+        result.calculateRevenue();
     }
 
     public Participant getDealer() {
@@ -74,7 +72,7 @@ public class BlackJack {
         return players;
     }
 
-    public Map<Participant, Result> getResult() {
+    public Result getResult() {
         return result;
     }
 }

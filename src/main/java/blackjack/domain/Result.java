@@ -1,37 +1,69 @@
 package blackjack.domain;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Result {
     private static final int BLACK_JACK = 21;
-    private final int dealerSum;
-    private final int playerSum;
-    private final int betting;
 
-    public Result(int dealerSum, int playerSum, int betting) {
-        this.dealerSum = dealerSum;
-        this.playerSum = playerSum;
-        this.betting = betting;
+    private final Map<Participant, Integer> playersRevenue;
+    private final List<Participant> players;
+    private final Participant dealer;
+    private int dealerRevenue;
+
+    public Result(Participant dealer, List<Participant> players) {
+        this.dealer = dealer;
+        this.players = players;
+        this.playersRevenue = new LinkedHashMap<>();
     }
 
-    public int getRevenue() {
-        if (isWin()) {
-            if (playerSum == BLACK_JACK) {
-                return betting * 3 / 2;
+    public void calculateRevenue() {
+        calculatePlayersRevenue();
+        calculateDealerRevenue();
+    }
+
+    private void calculatePlayersRevenue() {
+        players.forEach(player -> playersRevenue.put(player, calculatePlayerRevenue(player)));
+    }
+
+    private void calculateDealerRevenue() {
+        dealerRevenue = playersRevenue.values()
+            .stream()
+            .mapToInt(i -> i)
+            .sum() * -1;
+    }
+
+    private int calculatePlayerRevenue(Participant player) {
+        int playerScore = player.getScore();
+        if (isWin(playerScore, dealer.getScore())) {
+            if (playerScore == BLACK_JACK) {
+                return player.getBetting() * 3 / 2;
             }
-            return betting;
+            return player.getBetting();
         }
-        if (playerSum == BLACK_JACK) {
+        if (playerScore == BLACK_JACK) {
             return 0;
         }
-        return -betting;
+        return -1 * player.getBetting();
     }
 
-    private boolean isWin() {
-        if (playerSum > BLACK_JACK) {
+    private boolean isWin(int playerScore, int dealerScore) {
+        if (playerScore > BLACK_JACK) {
             return false;
         }
-        if (dealerSum > BLACK_JACK) {
+        if (dealerScore > BLACK_JACK) {
             return true;
         }
-        return dealerSum < playerSum;
+        return dealerScore < playerScore;
+    }
+
+
+    public int getDealerRevenue() {
+        return dealerRevenue;
+    }
+
+    public int getPlayerRevenue(Participant player) {
+        return playersRevenue.get(player);
     }
 }

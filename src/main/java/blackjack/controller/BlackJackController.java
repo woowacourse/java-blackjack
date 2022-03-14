@@ -61,7 +61,7 @@ public class BlackJackController {
 
     private void finishGame(BlackJack blackJack, BlackJackDto blackJackDto) {
         resultView.showFinalStatus(blackJackDto);
-        blackJack.calculateResult();
+        blackJack.calculateGameResult();
         resultView.showResult(blackJackDto);
     }
 }

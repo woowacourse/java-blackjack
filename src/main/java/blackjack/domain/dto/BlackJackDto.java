@@ -1,7 +1,6 @@
 package blackjack.domain.dto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.BlackJack;
@@ -12,15 +11,13 @@ import blackjack.domain.card.Card;
 public class BlackJackDto {
     private static final String NAME_DELIMITER = ": ";
     private static final String CARD_DELIMITER = ", ";
-    private static final String MESSAGE_WIN = "승 ";
-    private static final String MESSAGE_LOSE = "패 ";
     private static final int FIRST_CARD = 0;
 
     private final Participant dealer;
     private final List<Participant> players;
-    private final Map<Participant, Result> result;
+    private final Result result;
 
-    public BlackJackDto(Participant dealer, List<Participant> players, Map<Participant, Result> result) {
+    public BlackJackDto(Participant dealer, List<Participant> players, Result result) {
         this.dealer = dealer;
         this.players = players;
         this.result = result;
@@ -43,15 +40,12 @@ public class BlackJackDto {
     }
 
     public String getDealerRevenue() {
-        int dealerRevenue= result.values().stream()
-            .mapToInt(Result::getRevenue)
-            .sum();
-        return dealer.getName() + NAME_DELIMITER + dealerRevenue;
+        return dealer.getName() + NAME_DELIMITER + result.getDealerRevenue();
     }
 
     public List<String> getPlayersRevenue() {
-        return result.keySet().stream()
-            .map(key -> key.getName() + NAME_DELIMITER + result.get(key).getRevenue())
+        return players.stream()
+            .map(player -> player.getName() + NAME_DELIMITER + result.getPlayerRevenue(player))
             .collect(Collectors.toList());
     }
 
