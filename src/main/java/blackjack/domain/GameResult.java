@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;

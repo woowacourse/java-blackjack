@@ -2,12 +2,14 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DealerResultsDto;
-import blackjack.dto.PlayerResultDto;
+import blackjack.dto.DealerResult;
+import blackjack.dto.PlayerResult;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -66,20 +68,24 @@ public class OutputView {
         return card.getDenomination().getName() + card.getSuit().getName();
     }
 
-    public static void printGameResult(DealerResultsDto dealerResults, List<PlayerResultDto> playerResults) {
+    public static void printGameResult(DealerResult dealerResult, List<PlayerResult> playerResults) {
         System.out.println("\n## 최종 승패");
-        System.out.println("딜러: " + generateDealerGameResult(dealerResults));
+        System.out.println("딜러: " + generateDealerGameResult(dealerResult.getResults()));
         System.out.println(generatePlayerGameResult(playerResults));
     }
 
-    private static String generateDealerGameResult(DealerResultsDto dealerResults) {
-        return dealerResults.getValue()
+    private static String generateDealerGameResult(Map<GameResult, Long> results) {
+        return results.keySet()
                 .stream()
-                .map(dealerResult -> dealerResult.getCount() + dealerResult.getGameResult())
+                .map(gameResult -> generateGameResultMessage(results, gameResult))
                 .collect(joining(" "));
     }
 
-    private static String generatePlayerGameResult(List<PlayerResultDto> playerResults) {
+    private static String generateGameResultMessage(Map<GameResult, Long> results, GameResult gameResult) {
+        return results.get(gameResult).toString() + gameResult.getValue();
+    }
+
+    private static String generatePlayerGameResult(List<PlayerResult> playerResults) {
         return playerResults.stream()
                 .map(playerResult -> playerResult.getName() + ": " + playerResult.getGameResult())
                 .collect(joining("\n"));

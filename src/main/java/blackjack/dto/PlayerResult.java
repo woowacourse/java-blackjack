@@ -1,22 +1,19 @@
 package blackjack.dto;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
 
-public class PlayerResultDto {
+public class PlayerResult {
 
     private final String name;
     private final String gameResult;
 
-    private PlayerResultDto(String name, String gameResult) {
-        this.name = name;
-        this.gameResult = gameResult;
-    }
-
-    public static PlayerResultDto of(Player player, Dealer dealer) {
+    public PlayerResult(Player player, Dealer dealer) {
         GameResult gameResult = player.decideResult(dealer);
-        return new PlayerResultDto(player.getName(), gameResult.getValue());
+
+        this.name = player.getName();
+        this.gameResult = gameResult.getValue();
     }
 
     public String getName() {

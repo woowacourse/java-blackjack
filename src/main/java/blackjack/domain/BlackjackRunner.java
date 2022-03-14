@@ -7,8 +7,8 @@ import blackjack.domain.card.generator.RandomCardsGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.DealerResultsDto;
-import blackjack.dto.PlayerResultDto;
+import blackjack.dto.DealerResult;
+import blackjack.dto.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
@@ -27,23 +27,24 @@ public class BlackjackRunner {
         drawDealer(deck, dealer);
 
         OutputView.printResult(dealer, players.getValue());
-        OutputView.printGameResult(DealerResultsDto.of(players, dealer), createPlayerResult(players, dealer));
+        OutputView.printGameResult(new DealerResult(players, dealer), createPlayerResults(players, dealer));
     }
 
     private void playing(Deck deck, Player player) {
-        if (player.isDrawable()) {
+        PlayCommand playCommand = InputView.getPlayCommand(player);
+        if (isPlaying(player, playCommand)) {
             drawCard(deck, player);
             playing(deck, player);
         }
     }
 
-    private void drawCard(Deck deck, Player player) {
-        PlayCommand playCommand = InputView.getPlayCommand(player);
+    private boolean isPlaying(Player player, PlayCommand playCommand) {
+        return player.isDrawable() && playCommand.isYes();
+    }
 
-        if (playCommand.isYes()) {
-            player.append(deck.draw());
-            OutputView.printPlayerCard(player);
-        }
+    private void drawCard(Deck deck, Player player) {
+        player.append(deck.draw());
+        OutputView.printPlayerCard(player);
     }
 
     private void drawDealer(Deck deck, Dealer dealer) {
@@ -53,10 +54,10 @@ public class BlackjackRunner {
         }
     }
 
-    private List<PlayerResultDto> createPlayerResult(Players players, Dealer dealer) {
+    private List<PlayerResult> createPlayerResults(Players players, Dealer dealer) {
         return players.getValue()
                 .stream()
-                .map(player -> PlayerResultDto.of(player, dealer))
+                .map(player -> new PlayerResult(player, dealer))
                 .collect(toList());
     }
 }
