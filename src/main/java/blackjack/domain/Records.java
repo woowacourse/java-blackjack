@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import blackjack.domain.dto.DealerResultDto;
@@ -32,7 +33,8 @@ public class Records {
 
 	private static Map<String, Integer> getDealerRecords(Dealer dealer, List<Player> players) {
 		Map<String, Integer> records = Arrays.stream(Record.values())
-			.collect(Collectors.toMap(Record::getPlayerRecord, record -> 0));
+			.collect(Collectors.toMap(Record::getPlayerRecord, record -> 0,
+				(o1, o2) -> o1, TreeMap::new));
 
 		for (Player player : players) {
 			String record = Record.getRecord(player, dealer).getDealerRecord();
