@@ -4,12 +4,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.game.Score;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Dealer extends Participant {
 
     public static final String UNIQUE_NAME = "딜러";
-    private static final String EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE = "딜러는 최소 2장의 카드를 지니고 있어야 합니다.";
+    private static final int INITIAL_DEALER_OPEN_CARDS_COUNT = 1;
 
     private Dealer(final CardBundle cardBundle) {
         super(cardBundle);
@@ -32,12 +32,10 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> getInitialOpenCards() {
-        Card openCard = cardBundle.getCards()
+        return cardBundle.getCards()
                 .stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE));
-
-        return List.of(openCard);
+                .limit(INITIAL_DEALER_OPEN_CARDS_COUNT)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override

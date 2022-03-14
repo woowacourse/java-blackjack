@@ -2,11 +2,12 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player extends Participant {
 
+    private static final int INITIAL_PLAYER_OPEN_CARDS_COUNT = 2;
     private static final String BLACK_NAME_INPUT_EXCEPTION_MESSAGE = "플레이어는 이름을 지녀야 합니다.";
     private static final String INVALID_PLAYER_NAME_EXCEPTION_MESSAGE = "플레이어의 이름은 딜러가 될 수 없습니다.";
 
@@ -51,7 +52,10 @@ public class Player extends Participant {
 
     @Override
     public List<Card> getInitialOpenCards() {
-       return Collections.unmodifiableList(cardBundle.getCards());
+       return cardBundle.getCards()
+               .stream()
+               .limit(INITIAL_PLAYER_OPEN_CARDS_COUNT)
+               .collect(Collectors.toUnmodifiableList());
     }
 
     @Override
