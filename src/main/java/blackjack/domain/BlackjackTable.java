@@ -37,16 +37,22 @@ public class BlackjackTable {
         return player.canHit() && command == Command.HIT;
     }
 
-    public Map<PlayerOutcome, List<Player>> getGameResult() {
-        return players.getGameResult();
-    }
-
     public List<Player> getPlayers() {
         return players.getPlayers();
     }
 
     public List<Participant> getParticipant() {
         return players.getParticipant();
+    }
+
+    public Map<PlayerOutcome, List<Player>> getGameResult() {
+        return players.getGameResult();
+    }
+
+    public Map<Participant, Integer> getCardResult() {
+        List<Participant> participants = players.getParticipant();
+        return participants.stream()
+            .collect(Collectors.toMap(participant -> participant, Participant::countCards));
     }
 
     private Dealer createDealer() {

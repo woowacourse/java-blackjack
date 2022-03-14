@@ -16,7 +16,7 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String NAME_DELIMITER = ", ";
 
-    public static void printPlayersDefaultCard(List<Participant> participants) {
+    public static void printParticipantsCard(List<Participant> participants) {
         System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", concatPlayerName(participants)));
         for (Participant participant : participants) {
             System.out.println(MessageFormat.format("{0}카드: {1}", participant.getName(), participant.openCard().stream()
