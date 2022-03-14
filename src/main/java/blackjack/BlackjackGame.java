@@ -1,18 +1,18 @@
 package blackjack;
 
-import blackjack.domain.BlackJackBoard;
+import blackjack.domain.BlackjackBoard;
 import blackjack.domain.HitCommand;
 import blackjack.dto.ParticipantCards;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackJackGame {
+public class BlackjackGame {
 
-    private final BlackJackBoard blackJackBoard;
+    private final BlackjackBoard blackjackBoard;
 
-    public BlackJackGame() {
-        this.blackJackBoard = createBlackJackBoard();
+    public BlackjackGame() {
+        this.blackjackBoard = createBlackjackBoard();
     }
 
     public void run() {
@@ -21,13 +21,13 @@ public class BlackJackGame {
         printAllResults();
     }
 
-    private BlackJackBoard createBlackJackBoard() {
+    private BlackjackBoard createBlackjackBoard() {
         final List<String> playerNames = InputView.inputPlayerNames();
-        return BlackJackBoard.createGame(playerNames);
+        return BlackjackBoard.createGame(playerNames);
     }
 
     private void printFirstHitCard() {
-        OutputView.showPlayersFirstCards(blackJackBoard.getDealerFirstCard(), blackJackBoard.getPlayersFirstCards());
+        OutputView.showPlayersFirstCards(blackjackBoard.getDealerFirstCard(), blackjackBoard.getPlayersFirstCards());
     }
 
     private void runAllPlayerTurn() {
@@ -36,30 +36,30 @@ public class BlackJackGame {
     }
 
     private void runPlayerTurn() {
-        if (blackJackBoard.isPlayersTurnEnd()) {
+        if (blackjackBoard.isPlayersTurnEnd()) {
             return;
         }
         final HitCommand hitCommand = inputHitCommand();
-        final ParticipantCards currentPlayerCards = blackJackBoard.hitCurrentPlayer(hitCommand);
+        final ParticipantCards currentPlayerCards = blackjackBoard.hitCurrentPlayer(hitCommand);
         OutputView.printPlayerCards(currentPlayerCards);
         runPlayerTurn();
     }
 
     private HitCommand inputHitCommand() {
-        return HitCommand.from(InputView.inputHitCommand(blackJackBoard.getCurrentTurnPlayerName()));
+        return HitCommand.from(InputView.inputHitCommand(blackjackBoard.getCurrentTurnPlayerName()));
     }
 
     private void runDealerTurn() {
-        if (blackJackBoard.isDealerTurnEnd()) {
+        if (blackjackBoard.isDealerTurnEnd()) {
             return;
         }
-        blackJackBoard.hitDealer();
+        blackjackBoard.hitDealer();
         OutputView.printDealerHit();
         runDealerTurn();
     }
 
     private void printAllResults() {
-        OutputView.printPlayerScoreResults(blackJackBoard.allPlayerScoreResults());
-        OutputView.printAllOutcomeResult(blackJackBoard.calculateAllResults());
+        OutputView.printPlayerScoreResults(blackjackBoard.allPlayerScoreResults());
+        OutputView.printAllOutcomeResult(blackjackBoard.calculateAllResults());
     }
 }

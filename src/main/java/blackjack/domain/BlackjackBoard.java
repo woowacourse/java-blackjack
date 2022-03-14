@@ -10,24 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BlackJackBoard {
+public class BlackjackBoard {
 
     private final CardDeck cardDeck;
     private final Participant dealer;
     private final Participants players;
 
-    private BlackJackBoard(final CardDeck cardDeck, final Participant dealer, final Participants players) {
+    private BlackjackBoard(final CardDeck cardDeck, final Participant dealer, final Participants players) {
         this.cardDeck = cardDeck;
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static BlackJackBoard createGame(final List<String> playerNames) {
+    public static BlackjackBoard createGame(final List<String> playerNames) {
         Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
         final CardDeck cardDeck = CardDeck.createNewCardDek();
         final Participants players = Participants.createByPlayerNames(playerNames, cardDeck);
         final Participant dealer = Dealer.createNewDealer(cardDeck.provideFirstHitCards());
-        return new BlackJackBoard(cardDeck, dealer, players);
+        return new BlackjackBoard(cardDeck, dealer, players);
     }
 
     public boolean isPlayersTurnEnd() {

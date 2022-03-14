@@ -48,7 +48,7 @@ public enum CardNumber {
     private static int calculateScore(final List<CardNumber> numbers, final int defaultScore, final int startScore) {
         return IntStream.range(0, calculateAceCount(numbers))
                 .map(aceCount -> decreaseByAceCount(startScore, aceCount))
-                .filter(CardNumber::isLowerThanBlackJackTargetNumber)
+                .filter(CardNumber::isLowerThanBlackjackTargetNumber)
                 .findFirst()
                 .orElse(defaultScore);
     }
@@ -69,7 +69,7 @@ public enum CardNumber {
         return startScore - aceCount * ACE_BONUS_VALUE;
     }
 
-    private static boolean isLowerThanBlackJackTargetNumber(final int sumCount) {
+    private static boolean isLowerThanBlackjackTargetNumber(final int sumCount) {
         return sumCount <= BLACK_JACK_TARGET_NUMBER;
     }
 

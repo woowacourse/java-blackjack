@@ -3,7 +3,7 @@ package blackjack;
 public class Application {
 
     public static void main(final String[] args) {
-        final BlackJackGame blackJackGame = new BlackJackGame();
-        blackJackGame.run();
+        final BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.run();
     }
 }
