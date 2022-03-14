@@ -19,7 +19,9 @@ public abstract class Participant {
 
     public abstract boolean isReceivable();
 
-    public abstract int calculateBestScore();
+    public int calculateBestScore() {
+        return cards.getBestScore();
+    }
 
     public void receive(CardDeck cardDeck, int count) {
         this.cards.concat(cardDeck.distribute(count));

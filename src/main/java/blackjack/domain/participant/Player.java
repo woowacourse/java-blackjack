@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    private static final int ACE_ADDITIONAL_NUMBER = 10;
     private static final int BEST_SCORE = 21;
 
     private Player(Name name) {
@@ -21,29 +20,6 @@ public class Player extends Participant {
     @Override
     public boolean isReceivable() {
         return calculateBestScore() <= BEST_SCORE;
-    }
-
-    @Override
-    public int calculateBestScore() {
-        List<Card> cards = this.cards.getCardHand();
-
-        int sum = cards.stream()
-                .map(Card::getNumber)
-                .map(Number::getScore)
-                .reduce(0, Integer::sum);
-
-        for (Card card : cards) {
-            sum = getBest(sum, card);
-        }
-
-        return sum;
-    }
-
-    private int getBest(int sum, Card card) {
-        if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BEST_SCORE) {
-            sum += ACE_ADDITIONAL_NUMBER;
-        }
-        return sum;
     }
 
     public Result judgeResult(int score) {

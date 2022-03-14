@@ -1,10 +1,10 @@
 package blackjack.controller;
 
-import static blackjack.domain.participant.Participant.*;
+import static blackjack.domain.participant.Participant.INITIAL_CARD_COUNT;
+import static blackjack.domain.participant.Participant.NORMAL_CARD_COUNT;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;

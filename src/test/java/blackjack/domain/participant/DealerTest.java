@@ -33,17 +33,6 @@ class DealerTest {
         assertThat(dealer.calculateBestScore()).isEqualTo(19);
     }
 
-    @DisplayName("딜러 카드 버스트 시 에이스 1로 계산 테스트")
-    @Test
-    void calculateBestScore_TwoAces_Is2() {
-        Dealer dealer = Dealer.createDefaultNameDealer();
-        dealer.receive(new CardDeck(
-                List.of(Card.from(Number.ACE, Kind.SPADE),
-                        Card.from(Number.ACE, Kind.HEART))), 2);
-
-        assertThat(dealer.calculateBestScore()).isEqualTo(2);
-    }
-
     @DisplayName("딜러 카드 추가 수령 가능 여부 테스트")
     @Test
     void isReceivable_BestScoreAs16_IsTrue() {
