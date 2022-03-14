@@ -12,6 +12,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import blackjack.domain.PlayStatus;
 
 public class Cards {
+    private static final int ACE_BIG = 11;
+
     private final Set<Card> value;
 
     public Cards(Set<Card> value) {

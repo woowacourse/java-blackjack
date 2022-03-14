@@ -16,8 +16,6 @@ public enum CardNumber {
     KING(10, "K"),
     ;
 
-    public static final int ACE_BIG = 11;
-
     private final int value;
     private final String name;
 
