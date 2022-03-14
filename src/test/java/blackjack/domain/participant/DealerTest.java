@@ -49,7 +49,7 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 카드의 총합이 16 이하면 hit이 가능하다.")
+    @DisplayName("딜러의 카드의 총합이 16 이하면 힛 해야 한다.")
     void hittable() {
         // given
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
@@ -59,14 +59,14 @@ public class DealerTest {
         Dealer dealer = new Dealer(cards);
 
         // when
-        boolean actual = dealer.isHittable();
+        boolean actual = dealer.shouldHit();
 
         // then
         assertThat(actual).isEqualTo(true);
     }
 
     @Test
-    @DisplayName("딜러의 카드의 총합이 17 이상이면 hit이 불가능하다.")
+    @DisplayName("딜러의 카드의 총합이 17 이상이면 힛 할 수 없다.")
     void notHittable() {
 
         // given
@@ -77,7 +77,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(cards);
 
         // when
-        boolean actual = dealer.isHittable();
+        boolean actual = dealer.shouldHit();
 
         // then
         assertThat(actual).isEqualTo(false);
