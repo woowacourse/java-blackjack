@@ -31,11 +31,11 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
-        System.out.println(dealer.getName() + " 카드: " + generateCard(dealer.getCards().get(0)));
+        System.out.println(dealer.getName() + " 카드: " + generateCardMessage(dealer.getCards().get(0)));
     }
 
     public static void printPlayerCard(Player player) {
-        System.out.println(player.getName() + " 카드: " + generateCards(player.getCards()));
+        System.out.println(player.getName() + " 카드: " + generateCardsMessage(player.getCards()));
     }
 
     public static void printDealerDrawable() {
@@ -49,43 +49,43 @@ public class OutputView {
     }
 
     private static void printDealerResult(Dealer dealer) {
-        String cardsInfo = generateCards(dealer.getCards());
+        String cardsInfo = generateCardsMessage(dealer.getCards());
         System.out.println("딜러: " + cardsInfo + " - 결과: " + dealer.getTotalScore());
     }
 
     private static void printPlayerResult(Player player) {
-        String cardsInfo = generateCards(player.getCards());
+        String cardsInfo = generateCardsMessage(player.getCards());
         System.out.println(player.getName() + ": " + cardsInfo + " - 결과: " + player.getTotalScore());
     }
 
-    private static String generateCards(List<Card> cards) {
+    private static String generateCardsMessage(List<Card> cards) {
         return cards.stream()
-                .map(OutputView::generateCard)
+                .map(OutputView::generateCardMessage)
                 .collect(joining(", "));
     }
 
-    private static String generateCard(Card card) {
+    private static String generateCardMessage(Card card) {
         return card.getDenomination().getName() + card.getSuit().getName();
     }
 
     public static void printGameResult(DealerResult dealerResult, List<PlayerResult> playerResults) {
         System.out.println("\n## 최종 승패");
-        System.out.println("딜러: " + generateDealerGameResult(dealerResult.getResults()));
-        System.out.println(generatePlayerGameResult(playerResults));
+        System.out.println("딜러: " + generateDealerResultMessage(dealerResult.getResults()));
+        System.out.println(generatePlayerResultsMessage(playerResults));
     }
 
-    private static String generateDealerGameResult(Map<GameResult, Long> results) {
+    private static String generateDealerResultMessage(Map<GameResult, Long> results) {
         return results.keySet()
                 .stream()
-                .map(gameResult -> generateGameResultMessage(results, gameResult))
+                .map(gameResult -> generateResultMessage(results, gameResult))
                 .collect(joining(" "));
     }
 
-    private static String generateGameResultMessage(Map<GameResult, Long> results, GameResult gameResult) {
+    private static String generateResultMessage(Map<GameResult, Long> results, GameResult gameResult) {
         return results.get(gameResult).toString() + gameResult.getValue();
     }
 
-    private static String generatePlayerGameResult(List<PlayerResult> playerResults) {
+    private static String generatePlayerResultsMessage(List<PlayerResult> playerResults) {
         return playerResults.stream()
                 .map(playerResult -> playerResult.getName() + ": " + playerResult.getGameResult())
                 .collect(joining("\n"));
