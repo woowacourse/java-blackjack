@@ -12,6 +12,8 @@ import blackjack.view.OutputView;
 
 public class BlackJackGameController {
 	private static final String NO = "n";
+	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
+	private static final int EACH_TURN_DISTRIBUTE_AMOUNT = 1;
 	private final InputView inputView;
 	private final OutputView outputView;
 
@@ -56,7 +58,7 @@ public class BlackJackGameController {
 		}
 		while (dealer.isHit() && !dealer.isBust() && !players.isAllPlayersBlackJackOrBust()) {
 			outputView.displayDealerUnderSevenTeen();
-			dealer.addCards(1);
+			dealer.addCards(EACH_TURN_DISTRIBUTE_AMOUNT);
 		}
 	}
 
@@ -68,7 +70,7 @@ public class BlackJackGameController {
 
 	private void progressOnePlayer(Player player) {
 		while (!player.isBust() && !player.isBlackJack() && decideHitOrStay(player)) {
-			player.addCards(1);
+			player.addCards(EACH_TURN_DISTRIBUTE_AMOUNT);
 			outputView.displayAllCard(player);
 		}
 	}
@@ -89,8 +91,8 @@ public class BlackJackGameController {
 
 	private void initializeCard(Players players, Dealer dealer) {
 		Deck.shuffleDeck();
-		dealer.addCards(2);
-		players.addCardToAllPlayers(2);
+		dealer.addCards(INIT_DISTRIBUTE_AMOUNT);
+		players.addCardToAllPlayers(INIT_DISTRIBUTE_AMOUNT);
 		outputView.displayFirstDistribution(players, dealer);
 		outputView.displayDealerOneCard(dealer);
 		for (Player player : players.getPlayers()) {
