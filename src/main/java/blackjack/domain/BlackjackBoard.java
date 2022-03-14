@@ -34,7 +34,7 @@ public class BlackjackBoard {
         return players.isAllTurnEnd();
     }
 
-    public ParticipantCards hitCurrentPlayer(final HitCommand command) {
+    public ParticipantCards takeCurrentPlayerTurn(final HitCommand command) {
         if (command.isNo()) {
             final ParticipantCards currentPlayer = players.getCurrentParticipantCards();
             players.turnToNextParticipant();

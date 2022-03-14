@@ -40,7 +40,7 @@ public class BlackjackGame {
             return;
         }
         final HitCommand hitCommand = inputHitCommand();
-        final ParticipantCards currentPlayerCards = blackjackBoard.hitCurrentPlayer(hitCommand);
+        final ParticipantCards currentPlayerCards = blackjackBoard.takeCurrentPlayerTurn(hitCommand);
         OutputView.printPlayerCards(currentPlayerCards);
         runPlayerTurn();
     }
