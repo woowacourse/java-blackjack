@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+	private static final String SHOW_HAND_FORMAT = "%s카드: %s";
+	private static final String SHOW_HAND_AND_BEST_SCORE_DELIMITER = " - 결과 : ";
+	private static final String JOINING_DELIMITER = ", ";
 	private static final String BUST_MESSAGE = "[ Bust!!! ]";
 	private static final String INIT_MESSAGE_FORMAT = "\n딜러와 %s에게 2장의 나누었습니다.\n";
 	private static final String MAX_SCORE_MESSAGE = "[ MAX SCORE!!! ]";
@@ -19,20 +22,24 @@ public class OutputView {
 		System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
 	}
 
-	public static void printParticipantStatus(String dealerStatus, List<String> playerStatuses) {
-		System.out.println(dealerStatus);
-		playerStatuses.stream().forEach(System.out::println);
+	private static String joinNameAndCard(String name, List<String> cards) {
+		return String.format(SHOW_HAND_FORMAT, name, String.join(JOINING_DELIMITER, cards));
 	}
 
-	public static void printHand(String hand) {
-		System.out.println(hand);
+	public static void printHand(String name, List<String> cards) {
+		System.out.println(joinNameAndCard(name, cards));
+	}
+
+	public static void printHandAndScore(String name, List<String> cards, int score) {
+		System.out.println(
+			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(name, cards), String.valueOf(score)));
 	}
 
 	public static void printBustMessage() {
 		System.out.println(BUST_MESSAGE);
 	}
 
-	public static void printBlackJackMessage() {
+	public static void printMaxScoreMessage() {
 		System.out.println(MAX_SCORE_MESSAGE);
 	}
 

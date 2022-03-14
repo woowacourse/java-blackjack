@@ -13,10 +13,14 @@ public class Name {
 		this.name = name;
 	}
 
-	protected void validateName(String name) {
+	private void validateName(String name) {
 		if (name == null || name.isBlank()) {
 			throw new IllegalArgumentException(BLANK_NAME_ERROR_MESSAGE);
 		}
+	}
+
+	public static Name copyOf(Name name) {
+		return new Name(name.name);
 	}
 
 	public String getName() {

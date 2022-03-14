@@ -1,8 +1,10 @@
 package controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.card.deckstrategy.GeneralGenerationDeckStrategy;
 import domain.participant.Dealer;
@@ -28,7 +30,8 @@ public class Controller {
 
 		drawForPlayers(deck, players);
 		drawForDealer(deck, dealer, players);
-		OutputView.printParticipantStatus(dealer.showHandAndBestScore(), players.showHandsAndBestScores());
+
+		printHandAndResult(dealer, players);
 		printFinalResult(dealer, players);
 	}
 
@@ -53,7 +56,16 @@ public class Controller {
 
 	private void printInitHands(Dealer dealer, Players players) {
 		OutputView.printInitMessage(players.getNames().stream().map(Name::getName).collect(Collectors.toList()));
-		OutputView.printParticipantStatus(dealer.showOneHand(), players.showHands());
+		OutputView.printHand(dealer.getName().getName(), Arrays.asList(dealer.getOneHand().getCardInfo()));
+
+		List<String> playerNames = players.getNames().stream()
+			.map(Name::getName)
+			.collect(Collectors.toList());
+		List<List<String>> playerCards = players.getCardsOfAll();
+
+		for (int i = 0; i < playerNames.size(); i++) {
+			OutputView.printHand(playerNames.get(i), playerCards.get(i));
+		}
 	}
 
 	private void printBlackJackResult(Dealer dealer, Players players) {
@@ -84,14 +96,14 @@ public class Controller {
 
 		while (isKeepDraw && InputView.askDraw(name.getName())) {
 			players.addCardByName(name, deck.draw());
-			OutputView.printHand(players.showHandByName(name));
+			OutputView.printHand(name.getName(), players.getCardsByName(name));
 			isKeepDraw = checkMaxScoreOrBust(players, name);
 		}
 	}
 
 	private boolean checkMaxScoreOrBust(Players players, Name name) {
 		if (players.checkMaxScoreByName(name)) {
-			OutputView.printBlackJackMessage();
+			OutputView.printMaxScoreMessage();
 			return false;
 		}
 		if (players.checkBustByName(name)) {
@@ -105,6 +117,20 @@ public class Controller {
 		while (!dealer.isEnoughCard()) {
 			OutputView.printDealerDrawMessage();
 			dealer.addCard(deck.draw());
+		}
+	}
+
+	private void printHandAndResult(Dealer dealer, Players players) {
+		OutputView.printHandAndScore(dealer.getName().getName(),
+			dealer.getHand().stream().map(Card::getCardInfo)
+				.collect(Collectors.toList()),
+			dealer.getBestScore());
+		List<String> names = players.getNames().stream().map(Name::getName).collect(Collectors.toList());
+		List<List<String>> cards = players.getCardsOfAll();
+		List<Integer> scores = players.getScores();
+
+		for (int i = 0; i < names.size(); i++) {
+			OutputView.printHandAndScore(names.get(i), cards.get(i), scores.get(i));
 		}
 	}
 
