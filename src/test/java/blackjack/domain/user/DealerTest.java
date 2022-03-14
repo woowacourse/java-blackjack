@@ -4,7 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Score;
+import blackjack.domain.strategy.DealerHitStrategy;
+
 import java.util.List;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -48,5 +53,18 @@ public class DealerTest {
         List<Card> cards = dealer.showInitCards();
         //then
         assertThat(cards.size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("딜러는 17점 미만이면 카드를 한장 더 받는다.")
+    public void testDealerHitWithScoreLessThan17() {
+        // given
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer();
+        DealerHitStrategy strategy = new DealerHitStrategy(dealer.getScore());
+        // when
+        boolean isHit = dealer.hitOrStay(deck, strategy);
+        // then
+        assertThat(isHit).isTrue();
     }
 }

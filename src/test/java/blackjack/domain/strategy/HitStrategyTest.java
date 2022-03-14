@@ -23,6 +23,17 @@ class HitStrategyTest {
     }
 
     @Test
+    @DisplayName("(플레이어) n이 입력되면 카드를 더이상 받지 않는다.")
+    public void testIsStayOfPlayerWithN() {
+        // given
+        String input = "n";
+        // when
+        HitStrategy strategy = new PlayerHitStrategy(input);
+        // then
+        Assertions.assertThat(strategy.isHit()).isFalse();
+    }
+
+    @Test
     @DisplayName("(플레이어) y또는 n이 아니면 예외를 던진다.")
     public void throwsExceptionWhenInputIsNotWhetherYOrN() {
         // when
