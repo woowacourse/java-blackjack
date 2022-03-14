@@ -2,6 +2,7 @@ package domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
+import domain.result.Result;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,16 +76,16 @@ public class PlayersTest {
     @Test
     @DisplayName("딜러가 블랙잭인 경우 결과 반환")
     void getResultAtDealerBlackJack() {
-        Map<Name, Versus> resultMap = players.getResultAtDealerBlackJack(dealer_BLACKJACK);
-        assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.DRAW);
-        assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
+        Result resultMap = players.getResultAtDealerBlackJack(dealer_BLACKJACK);
+        assertThat(resultMap.getVersusOfPlayer(new Name("pobi"))).isEqualTo(Versus.DRAW);
+        assertThat(resultMap.getVersusOfPlayer(new Name("jason"))).isEqualTo(Versus.LOSE);
     }
 
     @Test
     @DisplayName("최종 게임 결과 반환")
     void getResultAtFinal() {
-        Map<Name, Versus> resultMap = players.getResultAtFinal(dealer_17);
-        assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
-        assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
+        Result resultMap = players.getResultAtFinal(dealer_17);
+        assertThat(resultMap.getVersusOfPlayer(new Name("pobi"))).isEqualTo(Versus.WIN);
+        assertThat(resultMap.getVersusOfPlayer(new Name("jason"))).isEqualTo(Versus.LOSE);
     }
 }

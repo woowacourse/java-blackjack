@@ -49,8 +49,8 @@ public class ResultTest {
         players = new Players(names, initCards);
         dealer_17 = new Dealer(List.of(card_A, card_6));
         dealer_BURST = new Dealer(List.of(card_K, card_Q, card_2));
-        result_dealer_17 = new Result(players.getResultAtFinal(dealer_17));
-        result_dealer_burst = new Result(players.getResultAtFinal(dealer_BURST));
+        result_dealer_17 = players.getResultAtFinal(dealer_17);
+        result_dealer_burst = players.getResultAtFinal(dealer_BURST);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class ResultTest {
     @DisplayName("딜러가 21인데 플레이어가 블랙잭일 경우, 플레이어 승리")
     void getVersusOfPlayer_21_blackjack_win() {
         dealer_17.addCard(card_4);
-        Result result = new Result(players.getResultAtFinal(dealer_17));
+        Result result = players.getResultAtFinal(dealer_17);
         assertThat(result.getVersusOfPlayer(new Name("jojo")).getResult()).isEqualTo("승");
     }
 
@@ -102,7 +102,7 @@ public class ResultTest {
     void getVersusOfPlayer_21_21_draw() {
         dealer_17.addCard(card_4);
         players.addCardByName(new Name("jason"), card_6);
-        Result result = new Result(players.getResultAtFinal(dealer_17));
+        Result result = players.getResultAtFinal(dealer_17);
         assertThat(result.getVersusOfPlayer(new Name("jason")).getResult()).isEqualTo("무");
     }
 

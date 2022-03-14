@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.result.Result;
 import domain.result.Versus;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -80,11 +81,11 @@ public class Players {
         return findByName(name).isMaxScore();
     }
 
-    public Map<Name, Versus> getResultAtDealerBlackJack(Dealer dealer) {
+    public Result getResultAtDealerBlackJack(Dealer dealer) {
         validateDealerIsBlackJack(dealer);
         Map<Name, Versus> playerResult = new LinkedHashMap<>();
         players.forEach(player -> playerResult.put(player.getName(), player.compareAtDealerBlackJack()));
-        return playerResult;
+        return new Result(playerResult);
     }
 
     private void validateDealerIsBlackJack(Dealer dealer) {
@@ -93,9 +94,9 @@ public class Players {
         }
     }
 
-    public Map<Name, Versus> getResultAtFinal(Dealer dealer) {
+    public Result getResultAtFinal(Dealer dealer) {
         Map<Name, Versus> playerResult = new LinkedHashMap<>();
         players.forEach(player -> playerResult.put(player.getName(), player.compareAtFinal(dealer)));
-        return playerResult;
+        return new Result(playerResult);
     }
 }

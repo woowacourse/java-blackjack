@@ -6,7 +6,6 @@ import domain.card.InitCards;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
-import domain.result.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,7 +23,7 @@ public class Controller {
         OutputView.printParticipantInitHands(dealer, players);
         if (dealer.isBlackJack()) {
             OutputView.printDealerBlackJackMessage();
-            OutputView.printResult(players.getNames(), new Result(players.getResultAtDealerBlackJack(dealer)));
+            OutputView.printResult(players.getNames(), players.getResultAtDealerBlackJack(dealer));
             return;
         }
         OutputView.printPlayerIsBlackJackMessage(players);
@@ -32,7 +31,7 @@ public class Controller {
         drawForPlayers(deck, players);
         drawForDealer(deck, dealer, players);
         OutputView.printStatuses(dealer, players);
-        OutputView.printResult(players.getNames(), new Result(players.getResultAtFinal(dealer)));
+        OutputView.printResult(players.getNames(), players.getResultAtFinal(dealer));
     }
 
     private List<List<Card>> generateInitCardsForPlayers(int playerCount, Deck deck) {
