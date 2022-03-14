@@ -1,8 +1,17 @@
 package domain.player;
 
+import domain.card.Card;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Gambler extends Player {
     public Gambler(String name) {
         super(name);
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
     }
 
     @Override
@@ -11,7 +20,7 @@ public class Gambler extends Player {
     }
 
     @Override
-    public boolean isDealer() {
-        return false;
+    public List<Card> getInitialOpenCards() {
+        return new ArrayList<>(cards.getCards());
     }
 }

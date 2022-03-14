@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Player {
     private final String name;
-    private final Cards cards;
+    protected final Cards cards;
 
     protected Player(String name) {
         this.name = name;
@@ -17,6 +17,8 @@ public abstract class Player {
     public abstract boolean isDealer();
 
     public abstract boolean canGetMoreCard();
+
+    public abstract List<Card> getInitialOpenCards();
 
     public void addCard(Card card) {
         cards.addCard(card);
