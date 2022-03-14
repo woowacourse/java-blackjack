@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Judge {
 
+    public static final int MAX_SCORE = 21;
+
     public static GameResult calculateGameResult(final Players players) {
         final DealerResult dealerResult = new DealerResult();
         final List<ParticipantResult> participantResults = new ArrayList<>();
@@ -26,7 +28,7 @@ public class Judge {
     }
 
     private static boolean isDealerWin(int dealerScore, int participantScore) {
-        return participantScore > Cards.getMaxScore() || (dealerScore <= Cards.getMaxScore() && dealerScore >= participantScore);
+        return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
     }
 
     private static void updateDealerResult(DealerResult dealerResult, boolean isDealerWin) {

@@ -22,6 +22,6 @@ public class Participant extends Player {
 
     @Override
     public boolean acceptableCard() {
-        return cards.calculateScoreByAceOne() <= Cards.getMaxScore();
+        return cards.calculateScoreByAceOne() <= Judge.MAX_SCORE;
     }
 }

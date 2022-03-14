@@ -1,24 +1,18 @@
 package blackjack.domain.card;
 
+import blackjack.domain.result.Judge;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Cards {
 
-    private static final int MAX_SCORE = 21;
     private static final int ANOTHER_ACE_SCORE = 10;
 
     private final List<Card> cards;
 
     public Cards() {
         this.cards = new ArrayList<>();
-    }
-
-    private void validateInitCards(final List<Card> cards) {
-        if (cards == null || cards.size() != Deck.INIT_DISTRIBUTE_SIZE) {
-            throw new IllegalArgumentException("[ERROR] 잘못 배분된 카드입니다.");
-        }
     }
 
     public void addCard(final Card card) {
@@ -34,7 +28,7 @@ public class Cards {
 
     public int calculateFinalScore() {
         final int score = calculateScoreByAceEleven();
-        if (score <= MAX_SCORE) {
+        if (score <= Judge.MAX_SCORE) {
             return score;
         }
         return calculateScoreByAceOne();
@@ -56,10 +50,6 @@ public class Cards {
         return cards.stream()
                 .mapToInt(card -> card.getScore().getAmount())
                 .sum();
-    }
-
-    public static int getMaxScore() {
-        return MAX_SCORE;
     }
 
     public List<Card> getCards() {
