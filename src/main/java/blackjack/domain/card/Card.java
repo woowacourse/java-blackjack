@@ -9,12 +9,12 @@ public class Card {
     private final CardRank rank;
     private final CardSymbol symbol;
 
-    private Card(CardRank rank, CardSymbol symbol) {
+    private Card(final CardRank rank, final CardSymbol symbol) {
         this.rank = rank;
         this.symbol = symbol;
     }
 
-    public static Card of(CardRank rank, CardSymbol symbol) {
+    public static Card of(final CardRank rank, final CardSymbol symbol) {
         return CardCache.getCache(rank, symbol);
     }
 

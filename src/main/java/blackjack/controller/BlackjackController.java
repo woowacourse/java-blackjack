@@ -20,15 +20,15 @@ import java.util.List;
 public class BlackjackController {
 
     public BlackjackGame initializeGame() {
-        CardStack cardDeck = new CardDeck();
-        List<String> playerNames = requestPlayerNamesInput();
-        CardBundleStrategy strategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
+        final CardStack cardDeck = new CardDeck();
+        final List<String> playerNames = requestPlayerNamesInput();
+        final CardBundleStrategy strategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
 
         return new BlackjackGame(cardDeck, playerNames, strategy);
     }
 
-    public void playGame(BlackjackGame game) {
-        InitialDistributionDto gameInfoDto = InitialDistributionDto.of(game);
+    public void playGame(final BlackjackGame game) {
+        final InitialDistributionDto gameInfoDto = InitialDistributionDto.of(game);
 
         printInitialDistributionAnnouncement(gameInfoDto);
         if (!gameInfoDto.getIsGameOver()) {
@@ -36,16 +36,16 @@ public class BlackjackController {
         }
     }
 
-    private void distributeAllCards(BlackjackGame game) {
+    private void distributeAllCards(final BlackjackGame game) {
         game.distributeAllCards(
                 InputView::requestMoreCardInput,
                 OutputView::printPlayerCardDistributionInfo,
                 OutputView::printDealerExtraCardInfo);
     }
 
-    public void showGameResult(BlackjackGame game) {
-        ResultReferee referee = new ResultReferee(game.getDealer(), game.getPlayers());
-        GameResultDto dto = new GameResultDto(referee.getResults());
+    public void showGameResult(final BlackjackGame game) {
+        final ResultReferee referee = new ResultReferee(game.getDealer(), game.getPlayers());
+        final GameResultDto dto = new GameResultDto(referee.getResults());
 
         printAllCardsAndScore(dto);
         printGameResult(dto);

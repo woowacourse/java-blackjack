@@ -15,7 +15,7 @@ public abstract class Participant {
         this.cardHand = CardHand.of(cardBundle, stateStrategy);
     }
 
-    public abstract void receiveCard(Card card);
+    public abstract void receiveCard(final Card card);
 
     public boolean canDraw() {
         return !cardHand.isFinished();

@@ -12,16 +12,17 @@ public class InitialDistributionDto {
     private final List<ParticipantCardsDto> participantsInfo = new ArrayList<>();
     private final boolean isGameOver;
 
-    private InitialDistributionDto(List<Participant> participants, boolean isGameOver) {
+    private InitialDistributionDto(final List<Participant> participants,
+                                   final boolean isGameOver) {
         participants.forEach(this::initParticipantInfo);
         this.isGameOver = isGameOver;
     }
 
-    public static InitialDistributionDto of(BlackjackGame game) {
+    public static InitialDistributionDto of(final BlackjackGame game) {
         return new InitialDistributionDto(game.getParticipants(), game.isBlackjackDealer());
     }
 
-    private void initParticipantInfo(Participant participant) {
+    private void initParticipantInfo(final Participant participant) {
         ParticipantCardsDto participantCardInfo = ParticipantCardsDto.ofInitial(participant);
         participantsInfo.add(participantCardInfo);
     }

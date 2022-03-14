@@ -11,7 +11,7 @@ public class CardsDto {
     private final List<Card> cards;
     private final Score score;
 
-    public CardsDto(List<Card> cards, Score score) {
+    public CardsDto(final List<Card> cards, final Score score) {
         this.cards = new ArrayList<>(cards);
         this.score = score;
     }

@@ -23,7 +23,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         cardHand.hit(card, STATE_UPDATE_STRATEGY);
     }
 

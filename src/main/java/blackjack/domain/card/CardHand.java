@@ -11,7 +11,7 @@ public class CardHand {
     private CardBundle cardBundle;
     private CardHandState state;
 
-    private CardHand(final CardBundle cardBundle, CardHandStateStrategy stateStrategy) {
+    private CardHand(final CardBundle cardBundle, final CardHandStateStrategy stateStrategy) {
         this.cardBundle = cardBundle;
         this.state = stateStrategy.apply(cardBundle);
     }
@@ -20,7 +20,7 @@ public class CardHand {
         return new CardHand(cardBundle, stateStrategy);
     }
 
-    public void hit(Card card, CardHandStateStrategy stateStrategy) {
+    public void hit(final Card card, final CardHandStateStrategy stateStrategy) {
         validateNotFinished();
         this.cardBundle = cardBundle.addAndGenerate(card);
         this.state = stateStrategy.apply(cardBundle);

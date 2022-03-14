@@ -15,23 +15,23 @@ public class CardBundle {
     private final List<Card> cards;
     private final Score score;
 
-    private CardBundle(List<Card> cards) {
+    private CardBundle(final List<Card> cards) {
         validateNoDuplicate(cards);
         this.cards = Collections.unmodifiableList(cards);
         this.score = getBestScore();
     }
 
-    public static CardBundle of(Card card1, Card card2) {
+    public static CardBundle of(final Card card1, final Card card2) {
         return new CardBundle(List.of(card1, card2));
     }
 
-    public CardBundle addAndGenerate(Card card) {
+    public CardBundle addAndGenerate(final Card card) {
         List<Card> addedCards = new ArrayList<>(cards);
         addedCards.add(card);
         return new CardBundle(addedCards);
     }
 
-    private void validateNoDuplicate(List<Card> cards) {
+    private void validateNoDuplicate(final List<Card> cards) {
         if (cards.size() != new HashSet<>(cards).size()) {
             throw new IllegalArgumentException(NO_DUPLICATE_CARD_EXCEPTION_MESSAGE);
         }

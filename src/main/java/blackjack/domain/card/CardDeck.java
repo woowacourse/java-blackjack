@@ -21,7 +21,7 @@ public class CardDeck implements CardStack {
                 .forEach(this::initAndAddAllSymbolsOf);
     }
 
-    private void initAndAddAllSymbolsOf(CardRank rank) {
+    private void initAndAddAllSymbolsOf(final CardRank rank) {
         Arrays.stream(CardSymbol.values())
                 .forEach((symbol -> cards.add(Card.of(rank, symbol))));
     }

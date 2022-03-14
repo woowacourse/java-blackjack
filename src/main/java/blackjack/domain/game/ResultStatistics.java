@@ -10,21 +10,21 @@ public class ResultStatistics {
     private final Participant participant;
     private final Map<ResultType, ResultCount> stats = new EnumMap<>(ResultType.class);
 
-    private ResultStatistics(Participant participant) {
+    private ResultStatistics(final Participant participant) {
         this.participant = participant;
         Arrays.stream(ResultType.values())
                 .forEach(this::initializeResult);
     }
 
-    public static ResultStatistics of(Participant participant) {
+    public static ResultStatistics of(final Participant participant) {
         return new ResultStatistics(participant);
     }
 
-    private void initializeResult(ResultType resultType) {
+    private void initializeResult(final ResultType resultType) {
         stats.put(resultType, new ResultCount());
     }
 
-    public void incrementCountOf(ResultType resultType) {
+    public void incrementCountOf(final ResultType resultType) {
         ResultCount count = stats.get(resultType);
         count.increment();
     }

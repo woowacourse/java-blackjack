@@ -8,11 +8,11 @@ public enum ResultType {
 
     private final String displayName;
 
-    ResultType(String displayName) {
+    ResultType(final String displayName) {
         this.displayName = displayName;
     }
 
-    public static ResultType getOppositeTypeOf(ResultType targetType) {
+    public static ResultType getOppositeTypeOf(final ResultType targetType) {
         if (targetType == ResultType.WIN) {
             return ResultType.LOSE;
         }

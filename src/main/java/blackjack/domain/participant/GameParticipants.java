@@ -9,12 +9,12 @@ public class GameParticipants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    private GameParticipants(Dealer dealer, List<Player> players) {
+    private GameParticipants(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static GameParticipants of(Dealer dealer, List<Player> players) {
+    public static GameParticipants of(final Dealer dealer, final List<Player> players) {
         return new GameParticipants(dealer, players);
     }
 

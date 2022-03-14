@@ -17,13 +17,13 @@ public class ResultStatsDto {
     private final ParticipantCardsDto participantCardsDto;
     private final Map<ResultType, ResultCount> participantResultStats = new EnumMap<>(ResultType.class);
 
-    public ResultStatsDto(ResultStatistics resultStats) {
+    public ResultStatsDto(final ResultStatistics resultStats) {
         this.participantCardsDto = ParticipantCardsDto.of(resultStats.getParticipant());
         initializeResultStats(resultStats.getStats());
         validateResultStats();
     }
 
-    private void initializeResultStats(Map<ResultType, ResultCount> stats) {
+    private void initializeResultStats(final Map<ResultType, ResultCount> stats) {
         stats.keySet()
                 .stream()
                 .filter(resultType -> stats.get(resultType).toInt() > 0)
@@ -52,11 +52,11 @@ public class ResultStatsDto {
         return participantResultStats.keySet().size() == 1;
     }
 
-    public boolean hasMultipleCountOf(ResultType resultType) {
+    public boolean hasMultipleCountOf(final ResultType resultType) {
         return participantResultStats.get(resultType).toInt() > 1;
     }
 
-    public int getCountValueOf(ResultType resultType) {
+    public int getCountValueOf(final ResultType resultType) {
         return participantResultStats.get(resultType).toInt();
     }
 

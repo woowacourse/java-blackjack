@@ -6,15 +6,16 @@ public enum CardHandState {
 
     CAN_HIT, STAY, BLACKJACK, BUST;
 
-    public static CardHandState ofPlayer(CardBundle cards) {
+    public static CardHandState ofPlayer(final CardBundle cards) {
         return of(cards, CardBundle::isBlackjackScore);
     }
 
-    public static CardHandState ofDealer(CardBundle cards) {
+    public static CardHandState ofDealer(final CardBundle cards) {
         return of(cards, CardBundle::isDealerFinished);
     }
 
-    private static CardHandState of(CardBundle cards, Predicate<CardBundle> stayStrategy) {
+    private static CardHandState of(final CardBundle cards,
+                                    final Predicate<CardBundle> stayStrategy) {
         if (cards.isBust()) {
             return BUST;
         }

@@ -30,26 +30,26 @@ public class Player extends Participant {
         return new Player(name, cardBundle);
     }
 
-    private static void validateName(String name) {
+    private static void validateName(final String name) {
         validateNameExistence(name);
         validateNameNotDealer(name);
     }
 
-    private static void validateNameExistence(String name) {
+    private static void validateNameExistence(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(BLACK_NAME_INPUT_EXCEPTION_MESSAGE);
         }
     }
 
-    private static void validateNameNotDealer(String name) {
+    private static void validateNameNotDealer(final String name) {
         if (name.equals(Dealer.UNIQUE_NAME)) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_EXCEPTION_MESSAGE);
         }
     }
 
-    public void drawAllCards(Function<String, Boolean> drawOrStayStrategy,
-                             Supplier<Card> cardSupplier,
-                             Consumer<Player> printInfo) {
+    public void drawAllCards(final Function<String, Boolean> drawOrStayStrategy,
+                             final Supplier<Card> cardSupplier,
+                             final Consumer<Player> printInfo) {
 
         announceBlackjackOrNot(printInfo);
         while (canDraw()) {
@@ -58,13 +58,14 @@ public class Player extends Participant {
         }
     }
 
-    private void announceBlackjackOrNot(Consumer<Player> printInfo) {
+    private void announceBlackjackOrNot(final Consumer<Player> printInfo) {
         if (isBlackjack()) {
             printInfo.accept(this);
         }
     }
 
-    private void drawOrStay(Function<String, Boolean> drawOrStayChoice, Supplier<Card> cardSupplier) {
+    private void drawOrStay(final Function<String, Boolean> drawOrStayChoice,
+                            final Supplier<Card> cardSupplier) {
         if (drawOrStayChoice.apply(name)) {
             receiveCard(cardSupplier.get());
             return;
@@ -73,7 +74,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         cardHand.hit(card, STATE_UPDATE_STRATEGY);
     }
 

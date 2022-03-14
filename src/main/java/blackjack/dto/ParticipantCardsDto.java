@@ -12,12 +12,12 @@ public class ParticipantCardsDto {
     private final String name;
     private final CardsDto cardsDto;
 
-    private ParticipantCardsDto(String name, List<Card> cards, Score score) {
+    private ParticipantCardsDto(final String name, final List<Card> cards, final Score score) {
         this.name = name;
         this.cardsDto = new CardsDto(cards, score);
     }
 
-    public static ParticipantCardsDto of(Participant participant) {
+    public static ParticipantCardsDto of(final Participant participant) {
         String name = participant.getName();
         List<Card> cards = participant.getCards();
         Score score = participant.getCurrentScore();
@@ -25,7 +25,7 @@ public class ParticipantCardsDto {
         return new ParticipantCardsDto(name, cards, score);
     }
 
-    public static ParticipantCardsDto ofInitial(Participant participant) {
+    public static ParticipantCardsDto ofInitial(final Participant participant) {
         String name = participant.getName();
         List<Card> openCardInfo = participant.getInitialOpenCards();
         Score score = participant.getCurrentScore();
