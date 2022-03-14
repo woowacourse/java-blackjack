@@ -17,13 +17,13 @@ import BlackJack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
     public void run() {
         List<String> inputPlayerNames = InputView.inputPlayerNames();
         Game game = new Game(inputPlayerNames,new Dealer());
-        game.handOutInitCard();
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToToTalUserDto(game.getDealer(), game.getPlayers()));
 

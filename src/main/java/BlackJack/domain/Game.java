@@ -23,9 +23,10 @@ public class Game {
         this.players = new Players(playerNames);
         this.dealer = dealer;
         this.cards = new Cards(CARD_CACHE);
+        handOutInitCard();
     }
 
-    public void handOutInitCard(){
+    private void handOutInitCard(){
         for(int i = 0; i < HAND_OUT_COUNT; i++){
             dealer.initCard(CARD_CACHE.poll());
             players.recieveCard();
