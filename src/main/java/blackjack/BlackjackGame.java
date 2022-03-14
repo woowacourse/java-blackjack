@@ -26,7 +26,7 @@ public class BlackjackGame {
         players.initHit(deck, INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
         players.playersHit(deck, OutputView::printPresentStatus);
-        OutputView.printHitResult(getHitResults(players));
+        OutputView.printCardResults(getCardResults(players));
         OutputView.printResult(judgeResult(players.findDealer(), players.getGuests()));
     }
 
@@ -36,7 +36,7 @@ public class BlackjackGame {
                 .collect(Collectors.toMap(Player::getName, Player::getShowCards));
     }
 
-    private Map<String, Cards> getHitResults(Players players) {
+    private Map<String, Cards> getCardResults(Players players) {
         Map<String, Cards> result = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             result.put(player.getName(), player.getCards());

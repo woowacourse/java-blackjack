@@ -29,7 +29,7 @@ public class OutputView {
         System.out.println(messageBuilder);
     }
 
-    public static void printHitResult(Map<String, Cards> hitResults) {
+    public static void printCardResults(Map<String, Cards> hitResults) {
         System.out.println();
         hitResults.forEach((playerName, cards) -> System.out.printf(HIT_RESULT_MESSAGE + "\n", playerName,
                 joinCardString(cards), cards.calculateScore()));
