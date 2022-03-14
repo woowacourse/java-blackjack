@@ -13,8 +13,8 @@ public class ScoreTest {
 	@Test
 	void notAInHand() {
 		List<Card> hand = List.of(
-			new Card("3하트",3),
-			new Card("4하트", 4));
+			Card.THREE_DIAMOND,
+			Card.FOUR_DIAMOND);
 
 		int score = Score.from(hand).getSum();
 
@@ -25,9 +25,9 @@ public class ScoreTest {
 	@Test
 	void OneAInHand() {
 		List<Card> hand = List.of(
-			new Card("3하트",3),
-			new Card("4하트", 4),
-			new Card("A하트",1));
+			Card.THREE_DIAMOND,
+			Card.FOUR_DIAMOND,
+			Card.A_HEART);
 
 		int score = Score.from(hand).getSum();
 
@@ -38,10 +38,10 @@ public class ScoreTest {
 	@Test
 	void overOneAInHand() {
 		List<Card> hand = List.of(
-			new Card("3하트",3),
-			new Card("4하트", 4),
-			new Card("A하트",1),
-			new Card("A스페이드", 1));
+			Card.THREE_HEART,
+			Card.FOUR_HEART,
+			Card.A_HEART,
+			Card.A_SPADE);
 
 		int score = Score.from(hand).getSum();
 

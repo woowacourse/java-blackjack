@@ -1,15 +1,14 @@
 package blackjack.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
-	@DisplayName("카드 생성자 테스트")
+	@DisplayName("인덱스에 맞는 카드 return 테스트")
 	@Test
-	void construct() {
-		assertDoesNotThrow(() -> new Card("3다이아몬드", 3));
+	void of() {
+		assertThat(Card.of(2).getName()).isEqualTo("3다이아몬드");
 	}
-
 }

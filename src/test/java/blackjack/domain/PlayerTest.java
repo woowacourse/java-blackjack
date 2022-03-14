@@ -13,7 +13,7 @@ public class PlayerTest {
 	@Test
 	void addCard() {
 		Player player = new Player("pobi");
-		player.addCard(new Card("3다이아몬드", 3));
+		player.addCard(Card.THREE_DIAMOND);
 		int playerCardSize = player.getMyCards().size();
 		assertThat(playerCardSize).isEqualTo(1);
 	}
