@@ -17,7 +17,7 @@ public class OutputView {
     private static final String PRINT_JOINING_DELIMITER = ", ";
     private static final String PRINT_DEFAULT_FORMAT_MESSAGE = "%s: %s\n";
     private static final String PRINT_SHOW_CARD_FORMAT_MESSAGE = "%s카드: %s\n";
-    private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
+    private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.\n";
     private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
 
@@ -62,11 +62,11 @@ public class OutputView {
                 joinCards(gamer.showCards()));
     }
 
-    public static void printDealerReceive(final boolean receivable) {
-        if (receivable) {
-            System.out.println(PRINT_DEALER_RECEIVE_CARD);
-            return;
-        }
+    public static void printDealerReceive() {
+        System.out.println(PRINT_DEALER_RECEIVE_CARD);
+    }
+
+    public static void printDealerNotReceive() {
         System.out.println(PRINT_DEALER_NOT_RECEIVE_CARD);
     }
 

@@ -91,11 +91,11 @@ public class BlackJackRunner {
     }
 
     private static void progressDealerAdditionalCard(final Player dealer) {
-        boolean receivable = dealer.isSatisfyReceiveCondition();
-        OutputView.printDealerReceive(receivable);
-        if (receivable) {
+        while (dealer.isSatisfyReceiveCondition()) {
+            OutputView.printDealerReceive();
             dealer.receiveCard(deck.draw());
         }
+        OutputView.printDealerNotReceive();
     }
 
     private static void payOuts() {
