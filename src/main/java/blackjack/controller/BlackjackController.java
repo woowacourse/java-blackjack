@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import static blackjack.view.InputView.requestPlayerNamesInput;
 import static blackjack.view.OutputView.printAllCardsAndScore;
-import static blackjack.view.OutputView.printDealerExtraCardInfo;
 import static blackjack.view.OutputView.printGameResult;
 import static blackjack.view.OutputView.printInitialDistributionAnnouncement;
 
@@ -38,17 +37,10 @@ public class BlackjackController {
     }
 
     private void distributeAllCards(BlackjackGame game) {
-        game.distributeAllPlayerCards(
+        game.distributeAllCards(
                 InputView::requestMoreCardInput,
-                OutputView::printPlayerCardDistributionInfo);
-        drawDealerCards(game);
-    }
-
-    private void drawDealerCards(BlackjackGame game) {
-        while (game.dealerCanDraw()) {
-            game.drawDealerCard();
-            printDealerExtraCardInfo();
-        }
+                OutputView::printPlayerCardDistributionInfo,
+                OutputView::printDealerExtraCardInfo);
     }
 
     public void showGameResult(BlackjackGame game) {

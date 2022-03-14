@@ -59,29 +59,36 @@ public class BlackjackGame {
         }
     }
 
-    public void distributeAllPlayerCards(Function<String, Boolean> drawOrStayStrategy,
-                                         Consumer<Player> viewStrategy) {
+    public void distributeAllCards(Function<String, Boolean> drawOrStayStrategy,
+                                   Consumer<Player> viewStrategy,
+                                   Runnable dealerViewStrategy) {
         for (Player player : getPlayers()) {
             player.drawAllCards(drawOrStayStrategy, this::popCard, viewStrategy);
         }
+        drawAllDealerCards(dealerViewStrategy);
     }
 
-    public boolean dealerCanDraw() {
-        Dealer dealer = getDealer();
-        return dealer.canDraw();
+    private void drawAllDealerCards( Runnable dealerViewStrategy) {
+        while (dealerCanDraw()) {
+            drawDealerCard();
+            dealerViewStrategy.run();
+        }
     }
 
-    public void drawDealerCard() {
-        Dealer dealer = getDealer();
-        dealer.receiveCard(popCard());
+    private boolean dealerCanDraw() {
+        return getDealer().canDraw();
+    }
+
+    private void drawDealerCard() {
+        getDealer().receiveCard(popCard());
+    }
+
+    private Card popCard() {
+        return cardDeck.pop();
     }
 
     public boolean isBlackjackDealer() {
-        return participants.getDealer().isBlackjack();
-    }
-
-    public Card popCard() {
-        return cardDeck.pop();
+        return getDealer().isBlackjack();
     }
 
     public Dealer getDealer() {
