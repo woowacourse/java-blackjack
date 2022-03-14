@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class User {
 
-    private static final int BLACKJACK_NUMBER = 21;
-
     protected final Cards cards;
     protected final String name;
     protected int score = 0;
@@ -44,7 +42,7 @@ public abstract class User {
     }
 
     public boolean isBust() {
-        return score > BLACKJACK_NUMBER;
+        return cards.isBust(score);
     }
 
     public abstract boolean isDealer();

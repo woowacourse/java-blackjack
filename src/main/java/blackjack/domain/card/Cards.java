@@ -15,6 +15,10 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
+    public boolean isBust(int score) {
+        return score > BLACKJACK_NUMBER;
+    }
+
     public int getScore() {
         if (containsAce(cards)) {
             return sumWithAce();
