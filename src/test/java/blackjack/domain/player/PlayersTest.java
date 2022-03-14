@@ -36,18 +36,18 @@ class PlayersTest {
         initCards.add(deck.draw());
         return Stream.of(
                 List.of(
-                        new Participant(initCards, "pobi"),
-                        new Participant(initCards, "corinne")
+                        new Participant(initCards, "pobi", new Bet(1000)),
+                        new Participant(initCards, "corinne", new Bet(1000))
                 ),
                 List.of(
-                        new Participant(initCards, "1"),
-                        new Participant(initCards, "2"),
-                        new Participant(initCards, "3"),
-                        new Participant(initCards, "4"),
-                        new Participant(initCards, "5"),
-                        new Participant(initCards, "6"),
-                        new Participant(initCards, "7"),
-                        new Participant(initCards, "8")
+                        new Participant(initCards, "1", new Bet(1000)),
+                        new Participant(initCards, "2", new Bet(1000)),
+                        new Participant(initCards, "3", new Bet(1000)),
+                        new Participant(initCards, "4", new Bet(1000)),
+                        new Participant(initCards, "5", new Bet(1000)),
+                        new Participant(initCards, "6", new Bet(1000)),
+                        new Participant(initCards, "7", new Bet(1000)),
+                        new Participant(initCards, "8", new Bet(1000))
                 )
         );
     }
@@ -75,18 +75,18 @@ class PlayersTest {
         return Stream.of(
                 null,
                 List.of(
-                        new Participant(initCards, "pobi")
+                        new Participant(initCards, "pobi", new Bet(1000))
                 ),
                 List.of(
-                        new Participant(initCards, "1"),
-                        new Participant(initCards, "2"),
-                        new Participant(initCards, "3"),
-                        new Participant(initCards, "4"),
-                        new Participant(initCards, "5"),
-                        new Participant(initCards, "6"),
-                        new Participant(initCards, "7"),
-                        new Participant(initCards, "8"),
-                        new Participant(initCards, "9")
+                        new Participant(initCards, "1", new Bet(1000)),
+                        new Participant(initCards, "2", new Bet(1000)),
+                        new Participant(initCards, "3", new Bet(1000)),
+                        new Participant(initCards, "4", new Bet(1000)),
+                        new Participant(initCards, "5", new Bet(1000)),
+                        new Participant(initCards, "6", new Bet(1000)),
+                        new Participant(initCards, "7", new Bet(1000)),
+                        new Participant(initCards, "8", new Bet(1000)),
+                        new Participant(initCards, "9", new Bet(1000))
                 )
         );
     }
@@ -101,8 +101,8 @@ class PlayersTest {
         Dealer dealer = new Dealer(initCards);
 
         Assertions.assertThatThrownBy(() -> new Players(List.of(
-                        new Participant(initCards, "pobi"),
-                        new Participant(initCards, "pobi")
+                        new Participant(initCards, "pobi", new Bet(1000)),
+                        new Participant(initCards, "pobi", new Bet(1000))
                 ), dealer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");

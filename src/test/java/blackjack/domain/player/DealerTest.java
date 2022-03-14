@@ -109,11 +109,11 @@ class DealerTest {
     private static Stream<Arguments> participantAndResult() {
         Participant participant = new Participant(List.of(
                 new Card(Type.SPADE, Score.TEN),
-                new Card(Type.HEART, Score.TEN)), "zero");
+                new Card(Type.HEART, Score.TEN)), "zero", new Bet(1000));
         participant.addCard(new Card(Type.HEART, Score.THREE));
         Participant participant2 = new Participant(List.of(
                 new Card(Type.SPADE, Score.SIX),
-                new Card(Type.HEART, Score.SIX)), "zero");
+                new Card(Type.HEART, Score.SIX)), "zero", new Bet(1000));
         participant.addCard(new Card(Type.HEART, Score.TWO));
         Dealer dealer = new Dealer(List.of(
                 new Card(Type.SPADE, Score.TEN),
@@ -130,7 +130,7 @@ class DealerTest {
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.SEVEN),
                                 new Card(Type.HEART, Score.EIGHT)
-                        ), "zero"), new Dealer(List.of(
+                        ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
                         )), 0),
@@ -138,7 +138,7 @@ class DealerTest {
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
-                        ), "zero"), new Dealer(List.of(
+                        ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
                         )), 0),
@@ -146,7 +146,7 @@ class DealerTest {
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.NINE)
-                        ), "zero"), new Dealer(List.of(
+                        ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
                         )), 1),
@@ -154,7 +154,7 @@ class DealerTest {
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.JACK),
                                 new Card(Type.HEART, Score.TEN)
-                        ), "zero"), new Dealer(List.of(
+                        ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.JACK)
                         )), 0),
@@ -162,7 +162,7 @@ class DealerTest {
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.TEN)
-                        ), "zero"), new Dealer(List.of(
+                        ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.TEN)
                         )), 0),
@@ -176,7 +176,7 @@ class DealerTest {
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.TEN)
-                        ), "zero"),
+                        ), "zero", new Bet(1000)),
                         dealer, 1),
                 Arguments.of(participant, dealer, 0),
                 Arguments.of(participant2, dealer2, 0)

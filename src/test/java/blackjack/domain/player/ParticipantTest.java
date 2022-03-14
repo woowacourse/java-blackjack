@@ -30,7 +30,7 @@ class ParticipantTest {
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
-        assertThatThrownBy(() -> new Participant(initCards, name))
+        assertThatThrownBy(() -> new Participant(initCards, name, new Bet(1000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 비어있을 수 없습니다.");
     }
@@ -42,7 +42,7 @@ class ParticipantTest {
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
-        Participant participant = new Participant(initCards, "pobi");
+        Participant participant = new Participant(initCards, "pobi", new Bet(1000));
         assertThat(participant.getCards().size()).isEqualTo(2);
     }
 
@@ -53,7 +53,7 @@ class ParticipantTest {
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
-        Participant participant = new Participant(initCards, "pobi");
+        Participant participant = new Participant(initCards, "pobi", new Bet(1000));
         int size = participant.getCards().size();
         participant.addCard(deck.draw());
         assertThat(participant.getCards().size()).isEqualTo(size + 1);
@@ -63,7 +63,7 @@ class ParticipantTest {
     @MethodSource("participantList")
     @DisplayName("참가자는 카드에 따라 올바른 점수를 부여받는다.")
     void calculateParticipantScore(List<Card> cards, List<Card> addCards, int score) {
-        Participant participant = new Participant(cards, "pobi");
+        Participant participant = new Participant(cards, "pobi", new Bet(1000));
 
         for (Card card : addCards) {
             participant.addCard(card);
