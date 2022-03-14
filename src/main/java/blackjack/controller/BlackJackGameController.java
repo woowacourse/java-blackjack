@@ -58,7 +58,7 @@ public class BlackJackGameController {
 		}
 		while (dealer.isHit() && !dealer.isBust() && !players.isAllPlayersBlackJackOrBust()) {
 			outputView.displayDealerUnderSevenTeen();
-			dealer.addCards(deck.distributeCard(), EACH_TURN_DISTRIBUTE_AMOUNT);
+			dealer.addCards(deck.distributeCards(EACH_TURN_DISTRIBUTE_AMOUNT));
 		}
 	}
 
@@ -70,7 +70,7 @@ public class BlackJackGameController {
 
 	private void progressOnePlayer(Player player, Deck deck) {
 		while (!player.isBust() && !player.isBlackJack() && decideHitOrStay(player)) {
-			player.addCards(deck.distributeCard(), EACH_TURN_DISTRIBUTE_AMOUNT);
+			player.addCards(deck.distributeCards(EACH_TURN_DISTRIBUTE_AMOUNT));
 			outputView.displayAllCard(player);
 		}
 	}
@@ -90,11 +90,11 @@ public class BlackJackGameController {
 
 	private void initializeCard(Players players, Dealer dealer, Deck deck) {
 		deck.shuffleDeck();
-		dealer.addCards(deck.distributeCard(), INIT_DISTRIBUTE_AMOUNT);
-		players.addCardToAllPlayers(INIT_DISTRIBUTE_AMOUNT);
+		dealer.addCards(deck.distributeCards(INIT_DISTRIBUTE_AMOUNT));
 		outputView.displayFirstDistribution(players, dealer);
 		outputView.displayDealerOneCard(dealer);
 		for (Player player : players.getPlayers()) {
+			player.addCards(deck.distributeCards(INIT_DISTRIBUTE_AMOUNT));
 			outputView.displayAllCard(player);
 		}
 		outputView.displayNewLine();

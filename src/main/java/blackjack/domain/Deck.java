@@ -1,6 +1,8 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 import java.util.stream.Stream;
 
@@ -16,7 +18,7 @@ public class Deck {
 			);
 	}
 
-	public Card distributeCard() {
+	private Card distributeCard() {
 		if (cards.isEmpty()) {
 			throw new IllegalStateException(EMPTY_MESSAGE);
 		}
@@ -29,5 +31,13 @@ public class Deck {
 
 	public void shuffleDeck() {
 		Collections.shuffle(cards);
+	}
+
+	public List<Card> distributeCards(int amount) {
+		List<Card> cards = new ArrayList<>();
+		for (int i = 0; i < amount; i++) {
+			cards.add(distributeCard());
+		}
+		return cards;
 	}
 }

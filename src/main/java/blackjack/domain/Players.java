@@ -17,10 +17,6 @@ public class Players {
 		return players;
 	}
 
-	public void addCardToAllPlayers(int times) {
-		players.forEach(player -> player.addCards(times));
-	}
-
 	public boolean isAllPlayersBlackJackOrBust() {
 		return this.players.size() == this.players.stream()
 			.filter(player -> player.isBlackJack() || player.isBust())

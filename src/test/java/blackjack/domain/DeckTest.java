@@ -8,23 +8,20 @@ public class DeckTest {
 	@Test
 	void distribute_Card() {
 		Deck deck = new Deck();
-		assertThat(deck.distributeCard()).isInstanceOf(Card.class);
+		assertThat(deck.distributeCards(1).get(0)).isInstanceOf(Card.class);
 	}
 
 	@Test
 	void check_Deck_size() {
 		Deck deck = new Deck();
-		deck.distributeCard();
+		deck.distributeCards(1);
 		assertThat(deck.getCardsSize()).isEqualTo(51);
 	}
 
 	@Test
 	void check_Deck_empty_size() {
 		Deck deck = new Deck();
-		for (int i = 0; i < 52; i++) {
-			deck.distributeCard();
-		}
-		assertThatThrownBy(deck::distributeCard)
+		assertThatThrownBy(() -> deck.distributeCards(53))
 			.isInstanceOf(IllegalStateException.class)
 			.hasMessageContaining("덱의 카드가 다 소진되었습니다.");
 	}

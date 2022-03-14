@@ -10,14 +10,8 @@ public class Gamer {
 		this.name = name;
 	}
 
-	public void addCards(Card card, int times) {
-		for (int i = 0; i < times; i++) {
-			addCard(card);
-		}
-	}
-
-	public void addCard(Card card) {
-		this.cards.addCard(card);
+	public void addCards(List<Card> cards) {
+		cards.forEach(this.cards::addCard);
 	}
 
 	public List<Card> getCards() {

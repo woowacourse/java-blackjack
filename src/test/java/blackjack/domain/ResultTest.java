@@ -28,9 +28,9 @@ public class ResultTest {
 
 	@Test
 	void dealer_bust() {
-		dealer.addCard(new Card(CardDenomination.QUEEN, CardSuit.CLOVER));
-		dealer.addCard(new Card(CardDenomination.KING, CardSuit.SPADE));
-		dealer.addCard(new Card(CardDenomination.TWO, CardSuit.SPADE));
+		dealer.addCards(
+			List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER), new Card(CardDenomination.KING, CardSuit.SPADE),
+				new Card(CardDenomination.TWO, CardSuit.SPADE)));
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
@@ -40,8 +40,8 @@ public class ResultTest {
 
 	@Test
 	void dealer_blackjack() {
-		dealer.addCard(new Card(CardDenomination.QUEEN, CardSuit.CLOVER));
-		dealer.addCard(new Card(CardDenomination.ACE, CardSuit.SPADE));
+		dealer.addCards(
+			List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER), new Card(CardDenomination.ACE, CardSuit.SPADE)));
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
@@ -51,8 +51,8 @@ public class ResultTest {
 
 	@Test
 	void dealer_normal() {
-		dealer.addCard(new Card(CardDenomination.QUEEN, CardSuit.CLOVER));
-		dealer.addCard(new Card(CardDenomination.NINE, CardSuit.SPADE));
+		dealer.addCards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
+			new Card(CardDenomination.NINE, CardSuit.SPADE)));
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
@@ -61,18 +61,18 @@ public class ResultTest {
 	}
 
 	private void setPlayerBust(Player player) {
-		player.addCard(new Card(CardDenomination.TEN, CardSuit.SPADE));
-		player.addCard(new Card(CardDenomination.TEN, CardSuit.DIAMOND));
-		player.addCard(new Card(CardDenomination.TWO, CardSuit.HEART));
+		player.addCards(
+			List.of(new Card(CardDenomination.TEN, CardSuit.SPADE), new Card(CardDenomination.TEN, CardSuit.DIAMOND),
+				new Card(CardDenomination.TWO, CardSuit.HEART)));
 	}
 
 	private void setPlayerBlackJack(Player player) {
-		player.addCard(new Card(CardDenomination.TEN, CardSuit.HEART));
-		player.addCard(new Card(CardDenomination.ACE, CardSuit.DIAMOND));
+		player.addCards(
+			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.ACE, CardSuit.DIAMOND)));
 	}
 
 	private void setPlayerBlackNormal(Player player) {
-		player.addCard(new Card(CardDenomination.SIX, CardSuit.HEART));
-		player.addCard(new Card(CardDenomination.FIVE, CardSuit.DIAMOND));
+		player.addCards(
+			List.of(new Card(CardDenomination.SIX, CardSuit.HEART), new Card(CardDenomination.FIVE, CardSuit.DIAMOND)));
 	}
 }
