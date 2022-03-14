@@ -1,6 +1,5 @@
 package blackjack.dto;
 
-import static blackjack.domain.GameOutcome.DRAW;
 import static blackjack.domain.GameOutcome.LOSE;
 import static blackjack.domain.GameOutcome.WIN;
 import static java.util.Map.entry;
@@ -19,7 +18,6 @@ class OutComeResultTest {
         final Map<String, GameOutcome> playerResults = Map.of("a", WIN, "b", WIN);
         final OutComeResult outComeResult = OutComeResult.from(playerResults);
 
-        assertThat(outComeResult.getDealerResult())
-                .containsExactly(entry(WIN, 0), entry(DRAW, 0), (entry(LOSE, 2)));
+        assertThat(outComeResult.getDealerResult()).containsExactly((entry(LOSE, 2)));
     }
 }

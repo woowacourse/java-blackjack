@@ -81,7 +81,6 @@ public class OutputView {
 
     private static String printDealerResult(final Map<GameOutcome, Integer> dealerResult) {
         return dealerResult.keySet().stream()
-                .filter(key -> dealerResult.get(key) > 0)
                 .map(key -> dealerResult.get(key) + key.getPrintValue())
                 .collect(Collectors.joining(" "));
     }

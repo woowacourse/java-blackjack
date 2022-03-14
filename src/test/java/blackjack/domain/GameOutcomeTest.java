@@ -14,7 +14,6 @@ import static blackjack.domain.card.CardNumber.SIX;
 import static blackjack.domain.card.CardPattern.HEART;
 import static blackjack.domain.card.CardPattern.SPADE;
 import static blackjack.testutil.CardFixtureGenerator.createCards;
-import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -135,11 +134,5 @@ class GameOutcomeTest {
         dealer.hit(Card.of(HEART, JACK));
 
         assertThat(player.fight(dealer)).isEqualTo(WIN);
-    }
-
-    @Test
-    @DisplayName("EnumMap 순서대로 생성할 수 있다.")
-    void createInitMap() {
-        assertThat(GameOutcome.createInitMap()).containsExactly(entry(WIN, 0), entry(DRAW, 0), entry(LOSE, 0));
     }
 }

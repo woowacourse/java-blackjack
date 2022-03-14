@@ -1,9 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Participant;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
 
 public enum GameOutcome {
 
@@ -60,13 +57,6 @@ public enum GameOutcome {
             return LOSE;
         }
         return DRAW;
-    }
-
-    public static Map<GameOutcome, Integer> createInitMap() {
-        Map<GameOutcome, Integer> results = new EnumMap<>(GameOutcome.class);
-        Arrays.stream(values())
-                .forEach(key -> results.merge(key, 0, (x, y) -> y));
-        return results;
     }
 
     public GameOutcome reverse() {
