@@ -9,7 +9,15 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public String getNumber() {
+    public int getNumber() {
+        return number.getValue();
+    }
+
+    public boolean hasSameNumber(TrumpNumber trumpNumber) {
+        return this.number == trumpNumber;
+    }
+
+    public String getNumberOfString() {
         return number.getValueOfString();
     }
 
@@ -21,9 +29,6 @@ public class Card {
         return number.sumTo(otherNumber);
     }
 
-    public boolean hasSameNumber(TrumpNumber trumpNumber) {
-        return this.number == trumpNumber;
-    }
 
     @Override
     public String toString() {

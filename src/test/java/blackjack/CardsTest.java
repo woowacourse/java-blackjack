@@ -13,12 +13,10 @@ public class CardsTest {
 
     @DisplayName("9클로버, J하트 점수의 합은 19이다")
     @Test
-    void sumCardScore_9clover_Jheart() {
-        Card card1 = new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER);
-        Card card2 = new Card(TrumpNumber.JACK, TrumpSymbol.HEART);
+    void sumCardScore_9clover_Jheat() {
         Cards cards = new Cards();
-        cards.add(card1);
-        cards.add(card2);
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
 
         assertThat(cards.sumScore()).isEqualTo(19);
     }
@@ -26,12 +24,9 @@ public class CardsTest {
     @DisplayName("9클로버, J하트, A클로버 점수에는 Ace Advantage가 반영되지 않는다")
     @Test
     void sumCardScore_9clover_Jheart_Aclover() {
-        Card card1 = new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER);
-        Card card2 = new Card(TrumpNumber.JACK, TrumpSymbol.HEART);
         Cards cards = new Cards();
-        cards.add(card1);
-        cards.add(card2);
-
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.JACK, TrumpSymbol.HEART));
         cards.add(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
 
         assertThat(cards.sumScore()).isEqualTo(20);

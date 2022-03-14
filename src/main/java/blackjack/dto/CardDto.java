@@ -7,7 +7,7 @@ public class CardDto {
     private final String symbol;
 
     public CardDto(Card card) {
-        this.number = card.getNumber();
+        this.number = card.getNumberOfString();
         this.symbol = card.getSymbol();
     }
 
