@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.exceptionMessages.CardExceptionMessage.*;
-
 import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Deque;
@@ -10,6 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
+	public static final String EMPTY_DECK_EXCEPTION = "덱의 카드가 다 소진되었습니다.";
+
 	private final Deque<Card> deck;
 
 	public Deck() {
@@ -32,7 +32,7 @@ public class Deck {
 	public Card distributeCard() {
 		final int cardSize = deck.size();
 		if (cardSize <= 0) {
-			throw new IllegalStateException(EMPTY_DECK_EXCEPTION.getMessage());
+			throw new IllegalStateException(EMPTY_DECK_EXCEPTION);
 		}
 		return deck.removeLast();
 	}

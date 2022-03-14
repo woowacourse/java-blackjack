@@ -1,8 +1,8 @@
 package blackjack.domain.user;
 
-import static blackjack.domain.exceptionMessages.UserExceptionMessage.*;
-
 public class Name {
+	public static final String EMPTY_NAME_EXCEPTION = "이름이 빈 입력이면 안됩니다.";
+
 	private final String name;
 
 	public Name(final String name) {
@@ -17,7 +17,7 @@ public class Name {
 
 	private void validateEmptyName(String name) {
 		if (name.isEmpty()) {
-			throw new IllegalArgumentException(EMPTY_NAME_EXCEPTION.getMessage());
+			throw new IllegalArgumentException(EMPTY_NAME_EXCEPTION);
 		}
 	}
 

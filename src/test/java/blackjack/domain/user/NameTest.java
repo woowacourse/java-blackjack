@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import static blackjack.domain.exceptionMessages.UserExceptionMessage.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +13,6 @@ public class NameTest {
 	void blank_or_null(String input) {
 		assertThatThrownBy(() -> new Name(input))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining(EMPTY_NAME_EXCEPTION.getMessage());
+			.hasMessageContaining(Name.EMPTY_NAME_EXCEPTION);
 	}
 }

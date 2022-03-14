@@ -1,13 +1,13 @@
 package blackjack.view;
 
-import static blackjack.view.exceptionMessages.InputViewExceptionMessage.*;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class InputView {
+	private static final String NULL_STRING_EXCEPTION = "문자열의 입력이 NULL 이면 안됩니다.";
+	private static final String DECISION_INPUT_EXCEPTION = "입력은 Y,N(소문자 가능)만 입력해주세요.";
 	private static final Scanner scanner = new Scanner(System.in);
 	private static final Pattern YES_OR_NO = Pattern.compile("^[ynYN]$");
 
@@ -29,7 +29,7 @@ public class InputView {
 
 	private void validateNullString(final String names) {
 		if (names == null) {
-			throw new IllegalArgumentException(NULL_STRING_EXCEPTION.getMessage());
+			throw new IllegalArgumentException(NULL_STRING_EXCEPTION);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class InputView {
 
 	private void validateDecisionInput(String decision) {
 		if (!YES_OR_NO.matcher(decision).matches()) {
-			throw new IllegalArgumentException(DECISION_INPUT_EXCEPTION.getMessage());
+			throw new IllegalArgumentException(DECISION_INPUT_EXCEPTION);
 		}
 	}
 }

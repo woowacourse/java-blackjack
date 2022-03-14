@@ -1,9 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.exceptionMessages.CardExceptionMessage.*;
 import static org.assertj.core.api.Assertions.*;
-
-import java.util.Deque;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +36,6 @@ public class DeckTest {
 		//then
 		assertThatThrownBy(() -> deck.distributeCard())
 			.isInstanceOf(IllegalStateException.class)
-			.hasMessageContaining(EMPTY_DECK_EXCEPTION.getMessage());
+			.hasMessageContaining(Deck.EMPTY_DECK_EXCEPTION);
 	}
 }

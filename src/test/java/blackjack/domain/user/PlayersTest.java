@@ -15,6 +15,7 @@ public class PlayersTest {
 		String lines = ",,,,";
 		List<String> strings = Arrays.asList(lines.split(","));
 		assertThatThrownBy(() -> new Players(strings))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining(Players.EMPTY_PLAYER_EXCEPTION);
 	}
 }
