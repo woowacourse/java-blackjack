@@ -8,7 +8,6 @@ import blackjack.domain.game.Human;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import blackjack.domain.game.Winner;
-import blackjack.dto.HumanDto;
 import blackjack.view.Enter;
 import blackjack.view.Enterable;
 import blackjack.view.InputView;
