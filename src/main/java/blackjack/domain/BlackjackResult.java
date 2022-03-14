@@ -30,8 +30,11 @@ public class BlackjackResult {
         return resultStrings;
     }
 
-    private static void judgeAndPutResult(Player dealer, List<Player> guests, Map<String, String> resultStrings,
-                                   Map<WinDrawLose, Integer> dealerResult) {
+    private static void judgeAndPutResult(
+            Player dealer, List<Player> guests,
+            Map<String, String> resultStrings,
+            Map<WinDrawLose, Integer> dealerResult
+    ) {
         for (Player guest : guests) {
             WinDrawLose result = WinDrawLose.judgeDealerWinDrawLose(dealer, guest);
             dealerResult.merge(result, 1, Integer::sum);
