@@ -7,11 +7,11 @@ import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 
-public class BlackJackMachine {
+public class BlackjackMachine {
 
     private final CardDeck deck;
 
-    public BlackJackMachine(final CardDeck deck) {
+    public BlackjackMachine(final CardDeck deck) {
         this.deck = deck;
     }
 

@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackJackMachine;
+import blackjack.domain.BlackjackMachine;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
@@ -12,10 +12,10 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackJackController {
+public class BlackjackController {
 
     public void run() {
-        final BlackJackMachine blackJackMachine = new BlackJackMachine(new CardDeck());
+        final BlackjackMachine blackJackMachine = new BlackjackMachine(new CardDeck());
         final Dealer dealer = new Dealer();
         final Participants participants = generateParticipants();
 
@@ -37,14 +37,14 @@ public class BlackJackController {
         }
     }
 
-    private void giveInitialCardsToPlayer(final BlackJackMachine blackJackMachine,
+    private void giveInitialCardsToPlayer(final BlackjackMachine blackJackMachine,
                                           final Dealer dealer,
                                           final Participants participants) {
         blackJackMachine.giveInitialCards(dealer, participants);
         OutputView.printInitialCards(dealer, participants);
     }
 
-    private void askAndGiveCardsToParticipants(final BlackJackMachine blackJackMachine,
+    private void askAndGiveCardsToParticipants(final BlackjackMachine blackJackMachine,
                                                final Participants participants) {
         for (Participant participant : participants) {
             askAndGiveCardToParticipant(blackJackMachine, participant);
@@ -52,7 +52,7 @@ public class BlackJackController {
         OutputView.printNewLine();
     }
 
-    private void askAndGiveCardToParticipant(final BlackJackMachine blackJackMachine,
+    private void askAndGiveCardToParticipant(final BlackjackMachine blackJackMachine,
                                              final Participant participant) {
         Choice choice;
         do {
@@ -71,7 +71,7 @@ public class BlackJackController {
         }
     }
 
-    private void giveCardsToDealer(final BlackJackMachine blackJackMachine,
+    private void giveCardsToDealer(final BlackjackMachine blackJackMachine,
                                    final Dealer dealer) {
         while (dealer.canTakeCard()) {
             blackJackMachine.giveCardToDealer(dealer);

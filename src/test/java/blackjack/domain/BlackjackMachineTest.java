@@ -12,9 +12,9 @@ import blackjack.domain.player.Participant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackMachineTest {
+public class BlackjackMachineTest {
 
-    private final BlackJackMachine blackJackMachine = new BlackJackMachine(new CardDeck());
+    private final BlackjackMachine blackJackMachine = new BlackjackMachine(new CardDeck());
 
     @Test
     @DisplayName("참가자가 카드를 더 뽑는다고 하면 카드를 준다.")
