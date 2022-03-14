@@ -10,12 +10,12 @@ public class Score implements Comparable<Score> {
 	public static final int ELEVEN_ACE_SCORE = 11;
 	public static final int BUST_THRESHOLD = 21;
 
-	private static final int BUST_STATE_SCORE = -1;
 	private static final int HIT_THRESHOLD = 17;
+	private static final Score BUST_SCORE = new Score(-1);
 	private static final Map<Integer, Score> scores = new HashMap<>();
 
 	static {
-		IntStream.rangeClosed(BUST_STATE_SCORE, BUST_THRESHOLD)
+		IntStream.rangeClosed(INITIAL_SCORE, BUST_THRESHOLD)
 			.forEach(number -> scores.put(number, new Score(number)));
 	}
 
@@ -27,7 +27,7 @@ public class Score implements Comparable<Score> {
 
 	public static Score from(final int score) {
 		if (hasGreaterThanBustThreshold(score)) {
-			return scores.get(BUST_STATE_SCORE);
+			return BUST_SCORE;
 		}
 		return scores.get(score);
 	}
@@ -45,7 +45,7 @@ public class Score implements Comparable<Score> {
 	}
 
 	public boolean hasBustState() {
-		return this.score <= BUST_STATE_SCORE;
+		return this.equals(BUST_SCORE);
 	}
 
 	public boolean isHit() {
