@@ -12,7 +12,7 @@ public class Player extends Participant {
     }
 
     public Versus compareAtDealerBlackJack() {
-        if (this.isBlackJack) {
+        if (this.isBlackJack()) {
             return Versus.DRAW;
         }
         return Versus.LOSE;
@@ -22,7 +22,7 @@ public class Player extends Participant {
         if (isBust()) {
             return Versus.LOSE;
         }
-        if (this.isBlackJack || other.isBust()) {
+        if (this.isBlackJack() || other.isBust()) {
             return Versus.WIN;
         }
         return judgeVersus(other.getBestScore());
@@ -40,6 +40,6 @@ public class Player extends Participant {
     }
 
     public boolean isNameMatch(Name name) {
-        return this.name.equals(name);
+        return this.getName().equals(name);
     }
 }

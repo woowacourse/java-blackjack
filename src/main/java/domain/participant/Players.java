@@ -1,14 +1,12 @@
 package domain.participant;
 
+import domain.card.Card;
+import domain.result.Versus;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import domain.card.Card;
-import domain.result.Versus;
-import view.OutputView;
 
 public class Players {
 
@@ -64,7 +62,7 @@ public class Players {
                 .filter(player -> player.isNameMatch(name))
                 .findFirst()
                 .orElseThrow()
-                .isBlackJack;
+                .isBlackJack();
     }
 
     public boolean isMaxScoreByName(Name name) {
@@ -76,17 +74,17 @@ public class Players {
     }
 
     public Map<Name, Versus> getResultAtDealerBlackJack(Dealer dealer) {
-        if (!dealer.isBlackJack) {
+        if (!dealer.isBlackJack()) {
             throw new IllegalStateException(NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE);
         }
         Map<Name, Versus> map = new LinkedHashMap<>();
-        players.stream().forEach(player -> map.put(player.name, player.compareAtDealerBlackJack()));
+        players.stream().forEach(player -> map.put(player.getName(), player.compareAtDealerBlackJack()));
         return map;
     }
 
     public Map<Name, Versus> getResultAtFinal(Participant other) {
         Map<Name, Versus> map = new LinkedHashMap<>();
-        players.stream().forEach(player -> map.put(player.name, player.compareAtFinal(other)));
+        players.stream().forEach(player -> map.put(player.getName(), player.compareAtFinal(other)));
         return map;
     }
 }

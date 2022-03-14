@@ -23,7 +23,7 @@ public class Controller {
 
         OutputView.printParticipantInitHands(names, dealer, players);
 
-        if (dealer.isBlackJack) {
+        if (dealer.isBlackJack()) {
             OutputView.printDealerBlackJackMessage();
             OutputView.printResult(names, new Result(players.getResultAtDealerBlackJack(dealer)));
             return;

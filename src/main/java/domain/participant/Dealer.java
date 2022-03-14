@@ -15,7 +15,7 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstHand() {
-        return hand.get(FIRST_CARD_INDEX);
+        return getHand().get(FIRST_CARD_INDEX);
     }
 
     public boolean isNeedToDraw() {

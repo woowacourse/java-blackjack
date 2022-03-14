@@ -13,9 +13,9 @@ public class Participant {
     protected static final int ACE_COUNT_LOWER_BOUND = 0;
     protected static final int ADDITIONAL_SCORE_OF_ACE = 10;
 
-    protected final Name name;
-    protected List<Card> hand;
-    public final boolean isBlackJack;
+    private final Name name;
+    private List<Card> hand;
+    private final boolean isBlackJack;
 
     public Participant(Name name, List<Card> hand) {
         this.name = name;
@@ -38,8 +38,8 @@ public class Participant {
         return getMinScore() > BLACK_JACK_NUMBER;
     }
 
-    protected int getMinScore() {
-        return hand.stream().mapToInt(Card::getPoint).sum();
+    public boolean isMaxScore() {
+        return getBestScore() == BLACK_JACK_NUMBER;
     }
 
     public int getBestScore() {
@@ -52,11 +52,23 @@ public class Participant {
         return bestScore;
     }
 
-    public boolean isMaxScore() {
-        return getBestScore() == BLACK_JACK_NUMBER;
+    private int getMinScore() {
+        return hand.stream().mapToInt(Card::getPoint).sum();
     }
 
-    protected int getAceCount() {
+    private int getAceCount() {
         return (int) hand.stream().filter(Card::isAce).count();
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    protected List<Card> getHand() {
+        return hand;
+    }
+
+    public boolean isBlackJack() {
+        return isBlackJack;
     }
 }
