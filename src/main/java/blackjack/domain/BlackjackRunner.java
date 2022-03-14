@@ -40,14 +40,14 @@ public class BlackjackRunner {
 
     private static void playing(Deck deck, Player player) {
         PlayCommand playCommand = PlayCommand.YES;
-        while (player.isDrawable() && playCommand == PlayCommand.YES) {
+        while (player.isDrawable() && playCommand .isYes()) {
             playCommand = InputView.getPlayCommand(player);
             drawCard(deck, player, playCommand);
         }
     }
 
     private static void drawCard(Deck deck, Player player, PlayCommand playCommand) {
-        if (playCommand == PlayCommand.YES) {
+        if (playCommand .isYes()) {
             player.append(deck.draw());
             OutputView.printPlayerCardInfo(PlayerDto.from(player));
         }
