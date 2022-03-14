@@ -5,8 +5,8 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Name;
-import blackjack.domain.human.Player;
-import blackjack.domain.human.Players;
+import blackjack.domain.human.Gambler;
+import blackjack.domain.human.Gamblers;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -19,16 +19,16 @@ public class GameController {
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
         Dealer dealer = initDealer(cardDeck);
-        Players players = initPlayers(cardDeck);
-        OutputView.printInitGameState(players, dealer);
+        Gamblers gamblers = initPlayers(cardDeck);
+        OutputView.printInitGameState(gamblers, dealer);
 
-        askPlayersOneMoreCard(players, cardDeck);
+        askPlayersOneMoreCard(gamblers, cardDeck);
         addDealerOneMoreCard(dealer, cardDeck);
 
-        OutputView.printCardAndPoint(players, dealer);
+        OutputView.printCardAndPoint(gamblers, dealer);
 
-        Statistic statistic = Statistic.of(dealer, players);
-        printGameResult(statistic, players);
+        Statistic statistic = Statistic.of(dealer, gamblers);
+        printGameResult(statistic, gamblers);
     }
 
     private Dealer initDealer(CardDeck cardDeck) {
@@ -38,25 +38,25 @@ public class GameController {
         return dealer;
     }
 
-    private Players initPlayers(CardDeck cardDeck) {
-        Players players = generatePlayers();
-        players.distributeCard(cardDeck);
-        players.distributeCard(cardDeck);
-        return players;
+    private Gamblers initPlayers(CardDeck cardDeck) {
+        Gamblers gamblers = generatePlayers();
+        gamblers.distributeCard(cardDeck);
+        gamblers.distributeCard(cardDeck);
+        return gamblers;
     }
 
-    private Players generatePlayers() {
-        List<Player> playerList = new ArrayList<>();
-        String[] names = InputView.inputPlayerName();
+    private Gamblers generatePlayers() {
+        List<Gambler> gamblerList = new ArrayList<>();
+        String[] names = InputView.inputGamblerName();
         for (String name : names) {
-            playerList.add(Player.of(Name.of(name)));
+            gamblerList.add(Gambler.of(Name.of(name)));
         }
-        return Players.of(playerList);
+        return Gamblers.of(gamblerList);
     }
 
-    private void askPlayersOneMoreCard(Players players, CardDeck cardDeck) {
-        for (Player player : players.getCardNeedPlayers()) {
-            askOneMoreCardByPlayer(player, cardDeck);
+    private void askPlayersOneMoreCard(Gamblers gamblers, CardDeck cardDeck) {
+        for (Gambler gambler : gamblers.getCardNeedGamblers()) {
+            askOneMoreCardByPlayer(gambler, cardDeck);
         }
     }
 
@@ -67,29 +67,29 @@ public class GameController {
         }
     }
 
-    private void askOneMoreCardByPlayer(Player player, CardDeck cardDeck) {
-        if (player.isOneMoreCard()) {
-            askNeedCardPlayer(player, cardDeck);
-            checkFirstQuestion(player);
+    private void askOneMoreCardByPlayer(Gambler gambler, CardDeck cardDeck) {
+        if (gambler.isOneMoreCard()) {
+            askNeedCardPlayer(gambler, cardDeck);
+            checkFirstQuestion(gambler);
         }
     }
 
-    private void askNeedCardPlayer(Player player, CardDeck cardDeck) {
-        if (InputView.inputOneMoreCard(player.getName())) {
-            player.addCard(cardDeck.draw());
-            OutputView.printHumanCardState(player);
-            askOneMoreCardByPlayer(player, cardDeck);
+    private void askNeedCardPlayer(Gambler gambler, CardDeck cardDeck) {
+        if (InputView.inputOneMoreCard(gambler.getName())) {
+            gambler.addCard(cardDeck.draw());
+            OutputView.printPlayerCardState(gambler);
+            askOneMoreCardByPlayer(gambler, cardDeck);
         }
     }
 
-    private void checkFirstQuestion(Player player) {
-        if (player.getCards().size() <= DEFAULT_CARD_AMOUNT) {
-            OutputView.printHumanCardState(player);
+    private void checkFirstQuestion(Gambler gambler) {
+        if (gambler.getCards().size() <= DEFAULT_CARD_AMOUNT) {
+            OutputView.printPlayerCardState(gambler);
         }
     }
 
-    private void printGameResult(Statistic statistic, Players players) {
+    private void printGameResult(Statistic statistic, Gamblers gamblers) {
         OutputView.printTotalResult(statistic);
-        OutputView.printTotalResultByPlayer(statistic, players);
+        OutputView.printTotalResultByGambler(statistic, gamblers);
     }
 }

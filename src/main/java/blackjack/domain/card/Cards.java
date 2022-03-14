@@ -57,12 +57,6 @@ public class Cards {
             .count();
     }
 
-    public String gerCardList() {
-        return cards.stream()
-            .map(card -> card.getDenomination().getInitial() + card.getSymbol().getSymbolName())
-            .collect(Collectors.joining(JOIN_DELIMITER));
-    }
-
     public List<Card> getCards() {
         return cards;
     }

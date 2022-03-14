@@ -4,9 +4,9 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Statistic;
 import blackjack.domain.card.Cards;
 import blackjack.domain.human.Dealer;
-import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
-import blackjack.domain.human.Players;
+import blackjack.domain.human.Gambler;
+import blackjack.domain.human.Gamblers;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -24,38 +24,38 @@ public class OutputView {
     private static final String KOREAN_RESULT_LOSE = "패";
     private static final String KOREAN_RESULT_DRAW = "무";
 
-    public static void printInitCardState(Players players, Dealer dealer) {
+    public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
         System.out.println();
-        System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), players.getPlayerNames());
+        System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), gamblers.getGamblerNames());
         System.out.println();
     }
 
     //TODO: 휴먼 네이밍 수정
-    public static void printHumanCardState(Human human) {
-        System.out.printf(CARD_STATE_MESSAGE, human.getName(), gerCardList(human.getCards()));
+    public static void printPlayerCardState(Player player) {
+        System.out.printf(CARD_STATE_MESSAGE, player.getName(), gerCardList(player.getCards()));
         System.out.println();
     }
 
-    public static void printInitGameState(Players players, Dealer dealer) {
-        OutputView.printInitCardState(players, dealer);
-        OutputView.printHumanCardState(dealer);
-        for (Player player : players.getPlayers()) {
-            OutputView.printHumanCardState(player);
+    public static void printInitGameState(Gamblers gamblers, Dealer dealer) {
+        OutputView.printInitCardState(gamblers, dealer);
+        OutputView.printPlayerCardState(dealer);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            OutputView.printPlayerCardState(gambler);
         }
         System.out.println();
     }
 
-    public static void printCardAndPoint(Players players, Dealer dealer) {
+    public static void printCardAndPoint(Gamblers gamblers, Dealer dealer) {
         System.out.println();
-        OutputView.printHumanCardPointState(dealer);
-        for (Player player : players.getPlayers()) {
-            OutputView.printHumanCardPointState(player);
+        OutputView.printPlayerCardPointState(dealer);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            OutputView.printPlayerCardPointState(gambler);
         }
     }
 
-    public static void printHumanCardPointState(Human human) {
-        System.out.printf(CARD_STATE_MESSAGE, human.getName(), gerCardList(human.getCards()));
-        System.out.printf(POINT_STATE_MESSAGE, human.getPoint());
+    public static void printPlayerCardPointState(Player player) {
+        System.out.printf(CARD_STATE_MESSAGE, player.getName(), gerCardList(player.getCards()));
+        System.out.printf(POINT_STATE_MESSAGE, player.getPoint());
         System.out.println();
     }
 
@@ -75,10 +75,10 @@ public class OutputView {
         System.out.println(dealerResult);
     }
 
-    public static void printTotalResultByPlayer(Statistic statistic, Players players) {
-        for (Player player : players.getPlayers()) {
-            GameResult playerResult = statistic.getGameResultByPlayer(player);
-            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), changeGameResultToKorean(playerResult));
+    public static void printTotalResultByGambler(Statistic statistic, Gamblers gamblers) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            GameResult playerResult = statistic.getGameResultByGambler(gambler);
+            System.out.printf(PLAYER_RESULT_MESSAGE, gambler.getName(), changeGameResultToKorean(playerResult));
             System.out.println();
         }
     }

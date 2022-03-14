@@ -1,6 +1,6 @@
 package blackjack.domain.human;
 
-public class Dealer extends Human {
+public class Dealer extends Player {
 
     private static final int AVAILABLE_POINT_FOR_ADD_CARD = 16;
     private static final String NAME = "딜러";

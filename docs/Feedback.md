@@ -35,7 +35,7 @@
     - 기존 RuntimeException에서 IllegalArgumentException으로 예외 클래수 수정
 - [x] **사용하지 않는 import 구문은 삭제하기**
 - [x] `추상클래스(Human)`에서 자식클래스 모두가 같은 구현을 가질 때 추상메서드로 남겨두어야 하는가
-  - `Player`와 `Dealer`에 중복되는 메서드를 추상클래스 내에서 구현
+    - `Player`와 `Dealer`에 중복되는 메서드를 추상클래스 내에서 구현
 
 #### 1차 피드백 Q&A
 
@@ -43,3 +43,8 @@
 - [ ] 상속이 캡슐화를 깨트린다고 설명이 되는 이유
 - [ ] 결과 출력이 Player의 책임인가
 
+#### 1차 추가 수정
+
+- 클래스 네이밍 수정
+    - Player -> Gambler
+    - Human -> Player

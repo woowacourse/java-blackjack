@@ -1,24 +1,33 @@
 package blackjack.domain.human;
 
-public class Player extends Human {
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
-    private final Name name;
+public abstract class Player {
 
-    private Player(Name name) {
-        this.name = name;
+    private final Cards cards;
+
+    public Player() {
+        this.cards = Cards.create();
     }
 
-    public static Player of(Name name) {
-        return new Player(name);
+    public abstract String getName();
+
+    public abstract boolean isOneMoreCard();
+
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
-    @Override
-    public boolean isOneMoreCard() {
-        return !isOverThanMaxPoint();
+    public Cards getCards() {
+        return cards;
     }
 
-    @Override
-    public String getName() {
-        return name.getName();
+    public int getPoint() {
+        return getCards().getPoint();
+    }
+
+    public boolean isOverThanMaxPoint() {
+        return getCards().isOverThanMaxPoint();
     }
 }

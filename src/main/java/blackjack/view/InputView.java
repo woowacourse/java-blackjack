@@ -17,7 +17,7 @@ public class InputView {
     private static final String NO_ANSWER = "n";
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static String[] inputPlayerName() {
+    public static String[] inputGamblerName() {
         System.out.println(NAME_INPUT_MESSAGE);
         String input = SCANNER.nextLine();
         validateNames(input);

@@ -1,74 +1,74 @@
 package blackjack.domain;
 
 import blackjack.domain.human.Dealer;
-import blackjack.domain.human.Player;
-import blackjack.domain.human.Players;
+import blackjack.domain.human.Gambler;
+import blackjack.domain.human.Gamblers;
 import java.util.LinkedHashMap;
 
 public class Statistic {
 
-    private LinkedHashMap<Player, GameResult> playerResult;
+    private LinkedHashMap<Gambler, GameResult> gamblerResult;
 
-    private Statistic(Dealer dealer, Players players) {
-        this.playerResult = new LinkedHashMap<>();
-        calculate(playerResult, dealer, players);
+    private Statistic(Dealer dealer, Gamblers gamblers) {
+        this.gamblerResult = new LinkedHashMap<>();
+        calculate(gamblerResult, dealer, gamblers);
     }
 
-    public static Statistic of(Dealer dealer, Players players) {
-        return new Statistic(dealer, players);
+    public static Statistic of(Dealer dealer, Gamblers gamblers) {
+        return new Statistic(dealer, gamblers);
     }
 
-    private void calculate(LinkedHashMap<Player, GameResult> playerResult, Dealer dealer,
-        Players players) {
+    private void calculate(LinkedHashMap<Gambler, GameResult> gamblerResult, Dealer dealer,
+        Gamblers gamblers) {
         if (dealer.isOverThanMaxPoint()) {
-            calculateDealerBurst(playerResult, players);
+            calculateDealerBurst(gamblerResult, gamblers);
             return;
         }
-        calculateDealerNotBurst(playerResult, dealer, players);
+        calculateDealerNotBurst(gamblerResult, dealer, gamblers);
     }
 
-    private void calculateDealerBurst(LinkedHashMap<Player, GameResult> playerResult,
-        Players players) {
-        for (Player player : players.getPlayers()) {
-            GameResult gameResult = getResultAtBurst(player);
-            playerResult.put(player, gameResult);
+    private void calculateDealerBurst(LinkedHashMap<Gambler, GameResult> playerResult,
+        Gamblers gamblers) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            GameResult gameResult = getResultAtBurst(gambler);
+            playerResult.put(gambler, gameResult);
         }
     }
 
-    private GameResult getResultAtBurst(Player player) {
-        if (!player.isOverThanMaxPoint()) {
+    private GameResult getResultAtBurst(Gambler gambler) {
+        if (!gambler.isOverThanMaxPoint()) {
             return GameResult.WIN;
         }
         return GameResult.LOSE;
     }
 
-    private void calculateDealerNotBurst(LinkedHashMap<Player, GameResult> playerResult,
-        Dealer dealer, Players players) {
+    private void calculateDealerNotBurst(LinkedHashMap<Gambler, GameResult> gamblerResult,
+        Dealer dealer, Gamblers gamblers) {
         int dealerPoint = dealer.getPoint();
-        for (Player player : players.getPlayers()) {
-            GameResult gameResult = getResultAtNotBurst(dealerPoint, player);
-            playerResult.put(player, gameResult);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            GameResult gameResult = getResultAtNotBurst(dealerPoint, gambler);
+            gamblerResult.put(gambler, gameResult);
         }
     }
 
-    private GameResult getResultAtNotBurst(int dealerPoint, Player player) {
-        int playerPoint = player.getPoint();
-        if (player.isOverThanMaxPoint() || dealerPoint > playerPoint) {
+    private GameResult getResultAtNotBurst(int dealerPoint, Gambler gambler) {
+        int gamblerPoint = gambler.getPoint();
+        if (gambler.isOverThanMaxPoint() || dealerPoint > gamblerPoint) {
             return GameResult.LOSE;
         }
-        if (dealerPoint == playerPoint) {
+        if (dealerPoint == gamblerPoint) {
             return GameResult.DRAW;
         }
         return GameResult.WIN;
     }
 
     public int getCountByGameResult(GameResult inputGameResult) {
-        return (int) playerResult.values().stream()
+        return (int) gamblerResult.values().stream()
             .filter(gameResult -> gameResult.equals(inputGameResult))
             .count();
     }
 
-    public GameResult getGameResultByPlayer(Player player) {
-        return playerResult.get(player);
+    public GameResult getGameResultByGambler(Gambler gambler) {
+        return gamblerResult.get(gambler);
     }
 }
