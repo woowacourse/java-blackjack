@@ -9,6 +9,7 @@ import BlackJack.dto.PlayerResultsDto;
 import BlackJack.dto.UserDto;
 import BlackJack.view.InputView;
 import BlackJack.view.OutputView;
+import FuelInjection.Car;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,31 +18,32 @@ import java.util.Map;
 public class BlackjackController {
 
     public void run() {
+        CardFactory cardFactory = new CardFactory();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        Dealer dealer = new Dealer(CardFactory.initCards());
-        Players players = Players.join(inputPlayerNames);
+        Dealer dealer = new Dealer(cardFactory.initCards());
+        Players players = Players.join(inputPlayerNames, cardFactory.initCards());
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToUserDtos(dealer, players));
 
-        OutputView.printTotalResult(playGame(dealer, players));
+        OutputView.printTotalResult(playGame(dealer, players, cardFactory));
 
         Map<String, String> statistics = players.getStatistics(dealer);
         OutputView.printFinalResult(PlayerResultsDto.from(statistics), DealerResultDto.from(dealer, players.size()));
     }
 
-    private List<UserDto> playGame(Dealer dealer, Players players) {
-        players.getPlayers().forEach(this::askOneMoreCard);
+    private List<UserDto> playGame(Dealer dealer, Players players, CardFactory cardFactory) {
+        players.getPlayers().forEach( player -> askOneMoreCard(player, cardFactory));
         while (dealer.checkScore()) {
             OutputView.printAddDealerCard();
-            dealer.addCard();
+            dealer.addCard(cardFactory);
         }
         return convertToUserDtos(dealer, players);
 
     }
 
-    private void askOneMoreCard(Player player) {
+    private void askOneMoreCard(Player player, CardFactory cardFactory) {
         while (InputView.askOneMoreCard(player.getName())) {
-            player.addCard();
+            player.addCard(cardFactory);
             OutputView.printPlayerCard(UserDto.from(player));
         }
     }

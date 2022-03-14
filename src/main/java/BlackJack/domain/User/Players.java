@@ -1,6 +1,7 @@
 package BlackJack.domain.User;
 
 import BlackJack.domain.Card.CardFactory;
+import BlackJack.domain.Card.Cards;
 import BlackJack.domain.Result;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players join(List<String> playerNames) {
+    public static Players join(List<String> playerNames, Cards cards) {
         return playerNames.stream()
-                .map(name -> new Player(name, CardFactory.initCards()))
+                .map(name -> new Player(name, cards))
                 .collect(Collectors.collectingAndThen(
                         Collectors.toList(),
                         Players::new

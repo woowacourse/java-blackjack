@@ -4,28 +4,31 @@ import java.util.*;
 
 public class CardFactory {
 
-    static Queue<Card> CARD_CACHE;
+    private final Queue<Card> deck;
 
-    static {
+    public CardFactory() {
         List<Card> cards = new ArrayList<>();
         Arrays.stream(Shape.values())
                 .forEach(shape -> Arrays.stream(Number.values())
-                .map(number -> new Card(shape, number))
-                .forEach(cards::add));
+                        .map(number -> new Card(shape, number))
+                        .forEach(cards::add));
         Collections.shuffle(cards);
-        CARD_CACHE = new LinkedList<>(cards);
+        deck = new LinkedList<>(cards);
     }
 
-    public static Cards initCards() {
+    public Cards initCards() {
         List<Card> cards = new ArrayList<>();
-        cards.add(CARD_CACHE.poll());
-        cards.add(CARD_CACHE.poll());
+        cards.add(deck.poll());
+        cards.add(deck.poll());
 
         return new Cards(cards);
     }
 
-    public static Card drawOneCard() {
-        return CARD_CACHE.poll();
+    public Card drawOneCard() {
+        return deck.poll();
     }
 
+    public int size() {
+        return deck.size();
+    }
 }

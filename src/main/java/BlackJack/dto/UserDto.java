@@ -32,7 +32,7 @@ public class UserDto {
     }
 
     public static UserDto from(User user) {
-        List<CardDto> collect = user.getCards().getDeck().stream()
+        List<CardDto> collect = user.getCards().getCards().stream()
                 .map(CardDto::from)
                 .collect(Collectors.toList());
         return new UserDto(user.getName(), collect, user.getScore());

@@ -1,5 +1,6 @@
 package BlackJack.domain.User;
 
+import BlackJack.domain.Card.CardFactory;
 import BlackJack.domain.Card.Cards;
 
 public abstract class User {
@@ -20,7 +21,7 @@ public abstract class User {
         return cards;
     }
 
-    abstract public void addCard();
+    abstract public void addCard(CardFactory cardFactory);
 
     public int getScore() {
         return cards.calculateScore();

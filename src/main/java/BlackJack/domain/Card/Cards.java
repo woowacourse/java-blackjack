@@ -8,26 +8,26 @@ public class Cards {
     public static final int BUST_LINE = 21;
     private static final int EXTRA_SCORE = 10;
 
-    private final Set<Card> deck;
+    private final Set<Card> cards;
 
     public Cards(List<Card> deck) {
         this(new HashSet<>(deck));
     }
 
     public Cards(Set<Card> deck) {
-        this.deck = new HashSet<>(deck);
+        this.cards = new HashSet<>(deck);
     }
 
-    public Set<Card> getDeck() {
-        return new HashSet<>(deck);
+    public Set<Card> getCards() {
+        return new HashSet<>(cards);
     }
 
     public void add(Card card) {
-        deck.add(card);
+        cards.add(card);
     }
 
     public int calculateScore() {
-        int score = deck.stream()
+        int score = cards.stream()
                 .mapToInt(card -> card.getNumber().getValue())
                 .sum();
 
@@ -35,7 +35,7 @@ public class Cards {
     }
 
     private int addAceScore(int score) {
-        long countAce = deck.stream()
+        long countAce = cards.stream()
                 .filter(Card::containsAce)
                 .count();
 
