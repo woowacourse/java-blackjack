@@ -3,6 +3,7 @@ package view;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
+import domain.result.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,10 +40,6 @@ public class OutputView {
         System.out.printf(SHOW_HAND_FORMAT, name.getName(), players.showHandByName(name));
     }
 
-    public static void printDealerBlackJackMessage() {
-        System.out.println(DEALER_BLACK_JACK_MESSAGE);
-    }
-
     public static void printPlayerBlackJackMessage(String name) {
         System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, name);
     }
@@ -69,6 +66,24 @@ public class OutputView {
                     players.getBestScoreByName(name)
             );
         }
+    }
+
+    public static void printDealerBlackJackResult(List<Name> names, Dealer dealer, Players players) {
+        Result dealerBlackjackResult = new Result(players.getResultAtDealerBlackJack(dealer));
+        OutputView.printDealerBlackJackMessage();
+        OutputView.printResultTitle();
+        OutputView.printDealerResult(
+                dealerBlackjackResult.getDealerWinCount(),
+                dealerBlackjackResult.getDealerDrawCount(),
+                dealerBlackjackResult.getDealerLoseCount()
+        );
+        for (Name name : names) {
+            OutputView.printPlayerResult(name.getName(), dealerBlackjackResult.getVersusOfPlayer(name).getResult());
+        }
+    }
+
+    public static void printDealerBlackJackMessage() {
+        System.out.println(DEALER_BLACK_JACK_MESSAGE);
     }
 
     public static void printResultTitle() {

@@ -23,7 +23,7 @@ public class Controller {
         OutputView.printInitHands(names, dealer, players);
 
         if (dealer.isBlackJack) {
-            printDealerBlackJackResult(names, dealer, players);
+            OutputView.printDealerBlackJackResult(names, dealer, players);
             return;
         }
         printBlackJackPlayer(names, players);
@@ -39,20 +39,6 @@ public class Controller {
                 .mapToObj(i -> new InitCards(deck).getInitCards())
                 .collect(Collectors.toList());
         return initCardForPlayers;
-    }
-
-    private void printDealerBlackJackResult(List<Name> names, Dealer dealer, Players players) {
-        Result dealerBlackjackResult = new Result(players.getResultAtDealerBlackJack(dealer));
-        OutputView.printDealerBlackJackMessage();
-        OutputView.printResultTitle();
-        OutputView.printDealerResult(
-                dealerBlackjackResult.getDealerWinCount(),
-                dealerBlackjackResult.getDealerDrawCount(),
-                dealerBlackjackResult.getDealerLoseCount()
-        );
-        for (Name name : names) {
-            OutputView.printPlayerResult(name.getName(), dealerBlackjackResult.getVersusOfPlayer(name).getResult());
-        }
     }
 
     private void printBlackJackPlayer(List<Name> names, Players players) {
