@@ -11,7 +11,7 @@ public class Dealer extends Player {
     private static final String DEALER_NAME = "딜러";
 
     public Dealer(final List<Card> cards) {
-        super(cards, DEALER_NAME);
+        super(cards, DEALER_NAME, new Bet(0));
     }
 
     @Override
@@ -22,6 +22,7 @@ public class Dealer extends Player {
     public void compete(final Participant participant) {
         if (isDealerWin(calculateFinalScore(), participant.calculateFinalScore())) {
             this.win();
+            participant.lose();
             return;
         }
         participant.win();
@@ -30,6 +31,10 @@ public class Dealer extends Player {
 
     private boolean isDealerWin(final int dealerScore, final int participantScore) {
         return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
+    }
+
+    public void calculateFinalProfit(final List<Participant> participants){
+        getBet().calculatefinalProfit(participants);
     }
 
     public Card getCardFirstOne() {

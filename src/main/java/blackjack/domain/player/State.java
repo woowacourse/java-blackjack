@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 public class State {
 
+    private int betAmount;
     private int winCount = 0;
     private int loseCount = 0;
 

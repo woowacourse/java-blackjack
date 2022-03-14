@@ -1,10 +1,12 @@
 package blackjack.controller;
 
 import blackjack.domain.GameMachine;
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashMap;
 import java.util.List;
 
 public class BlackjackController {
@@ -12,11 +14,20 @@ public class BlackjackController {
     public GameMachine createGameMachine() {
         try {
             List<String> names = InputView.responseNames();
-            return new GameMachine(names);
+            HashMap<String, Bet> bets = createBets(names);
+            return new GameMachine(names, bets);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return createGameMachine();
         }
+    }
+
+    private HashMap<String, Bet> createBets(List<String> names) {
+        HashMap<String, Bet> bets = new HashMap<>();
+        for (String name : names) {
+            bets.put(name, InputView.responseBetAmount(name));
+        }
+        return bets;
     }
 
     public void play(final GameMachine gameMachine) {

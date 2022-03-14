@@ -4,10 +4,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGeneratorImpl;
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,10 +18,10 @@ public class GameMachine {
     private final Deck deck;
     private final Players players;
 
-    public GameMachine(final List<String> names) {
+    public GameMachine(final List<String> names, final HashMap<String, Bet> bets) {
         validationNames(names);
         this.deck = new Deck(new DeckGeneratorImpl());
-        this.players = new Players(createParticipants(names), createDealer());
+        this.players = new Players(createParticipants(names, bets), createDealer());
     }
 
     private void validationNames(final List<String> names) {
@@ -28,9 +30,9 @@ public class GameMachine {
         }
     }
 
-    public List<Participant> createParticipants(final List<String> names) {
+    public List<Participant> createParticipants(final List<String> names, final HashMap<String, Bet> bets) {
         return names.stream()
-                .map(name -> new Participant(Cards.createInitCards(deck), name))
+                .map(name -> new Participant(Cards.createInitCards(deck), name, bets.get(name)))
                 .collect(Collectors.toList());
     }
 
