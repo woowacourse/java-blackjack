@@ -28,7 +28,7 @@ class CardDeckTest {
     @Test
     @DisplayName("카드지급 후 남은 카드 테스트")
     public void remainCardAmountTest() {
-        cardDeck.giveCard();
+        cardDeck.draw();
         assertThat(cardDeck.size()).isEqualTo(51);
     }
 
@@ -36,9 +36,9 @@ class CardDeckTest {
     @DisplayName("카드지급 범위초과 에러 테스트")
     public void giveCardIndexExceptionTest() {
         for (int i = 0; i < 52; i++) {
-            cardDeck.giveCard();
+            cardDeck.draw();
         }
-        assertThatThrownBy(cardDeck::giveCard)
+        assertThatThrownBy(cardDeck::draw)
             .isInstanceOf(Exception.class)
             .hasMessage("[ERROR] 남은 카드가 존재하지 않습니다.");
     }

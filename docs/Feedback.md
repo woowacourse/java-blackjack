@@ -20,9 +20,11 @@
 - [x] `Card` 구현 시에 캐싱 적용
     - `List<Card> CACHE` 필드를 생성하여 52장의 카드를 담고 있는 List 생성
 - [x] `Card`에서 toString의 구현이 바뀌게 된다면 View의 출력에 미치는 영향
-  - getter를 이용하여 Denomination, Symbol 정보 반환
-  - 출력 로직 view에 구현 및 getter 사용하여 정보 반환
-- [ ] `giveCard()`메서드의 의미에 대해 (누가 누구에게 주는 것인가.)
+    - getter를 이용하여 Denomination, Symbol 정보 반환
+    - 출력 로직 view에 구현 및 getter 사용하여 정보 반환
+- [x] `giveCard()`메서드의 의미에 대해 (누가 누구에게 주는 것인가.)
+    - Players : giveCard -> distributeCard
+    - Card : giveCard -> draw
 - [ ] `CardDeck`에서 `size()`메서드는 테스트에서만 사용됨.
 - [ ] `CardDeckGenerator`에서 카드를 생성할 때 어떤 규칙을 사용하는가.
 - [ ] `Denomination`에서 `예외`를 던질 때 메세지를 담아서 보내기

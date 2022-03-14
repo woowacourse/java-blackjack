@@ -22,9 +22,9 @@ public class Players {
         return players.size();
     }
 
-    public void giveCard(CardDeck cardDeck) {
+    public void distributeCard(CardDeck cardDeck) {
         for (Player player : players) {
-            player.addCard(cardDeck.giveCard());
+            player.addCard(cardDeck.draw());
         }
     }
 

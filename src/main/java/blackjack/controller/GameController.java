@@ -33,15 +33,15 @@ public class GameController {
 
     private Dealer initDealer(CardDeck cardDeck) {
         Dealer dealer = Dealer.of();
-        dealer.addCard(cardDeck.giveCard());
-        dealer.addCard(cardDeck.giveCard());
+        dealer.addCard(cardDeck.draw());
+        dealer.addCard(cardDeck.draw());
         return dealer;
     }
 
     private Players initPlayers(CardDeck cardDeck) {
         Players players = generatePlayers();
-        players.giveCard(cardDeck);
-        players.giveCard(cardDeck);
+        players.distributeCard(cardDeck);
+        players.distributeCard(cardDeck);
         return players;
     }
 
@@ -62,7 +62,7 @@ public class GameController {
 
     private void addDealerOneMoreCard(Dealer dealer, CardDeck cardDeck) {
         if (dealer.isOneMoreCard()) {
-            dealer.addCard(cardDeck.giveCard());
+            dealer.addCard(cardDeck.draw());
             OutputView.printDealerCardAdded();
         }
     }
@@ -76,7 +76,7 @@ public class GameController {
 
     private void askNeedCardPlayer(Player player, CardDeck cardDeck) {
         if (InputView.inputOneMoreCard(player.getName())) {
-            player.addCard(cardDeck.giveCard());
+            player.addCard(cardDeck.draw());
             OutputView.printHumanCardState(player);
             askOneMoreCardByPlayer(player, cardDeck);
         }

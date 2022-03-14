@@ -17,7 +17,7 @@ public class CardDeck {
         return new CardDeck(cards);
     }
 
-    public Card giveCard() {
+    public Card draw() {
         if (cards.isEmpty()) {
             throw new ArrayIndexOutOfBoundsException(NO_CARD_ERROR_MESSAGE);
         }

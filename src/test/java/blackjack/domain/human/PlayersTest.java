@@ -26,8 +26,8 @@ class PlayersTest {
         Player player1 = Player.of(Name.of("pobi"));
         Player player2 = Player.of(Name.of("jason"));
         Players players = Players.of(List.of(player1, player2));
-        players.giveCard(cardDeck);
-        players.giveCard(cardDeck);
+        players.distributeCard(cardDeck);
+        players.distributeCard(cardDeck);
         assertThat(player1.getCards().size()).isEqualTo(2);
         assertThat(player2.getCards().size()).isEqualTo(2);
     }
