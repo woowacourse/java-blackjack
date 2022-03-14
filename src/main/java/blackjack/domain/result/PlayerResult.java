@@ -29,7 +29,7 @@ public enum PlayerResult {
             return WIN;
         }
         if (score.compareTo(otherScore) == 0) {
-            return WIN;
+            return DRAW;
         }
         return LOSS;
     }

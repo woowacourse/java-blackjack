@@ -51,22 +51,4 @@ public class Players {
     public List<Player> getStatuses() {
         return List.copyOf(players);
     }
-
-    public boolean canHit(final int turnIndex) {
-        Player player = players.get(turnIndex);
-
-        return !player.isBust();
-    }
-
-    public boolean isStillInGame(final int turnIndex) {
-        return turnIndex < players.size();
-    }
-
-    public Player getCurrentPlayer(final int index) {
-        return players.get(index);
-    }
-
-    public void drawCard(final int turnIndex, final Deck deck) {
-        players.get(turnIndex).drawCard(deck);
-    }
 }

@@ -9,12 +9,11 @@ import blackjack.domain.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,6 +39,24 @@ public class PlayersTest {
                 Arguments.of(List.of("pobi", "pobi"), Collections.emptyList()),
                 Arguments.of(List.of("pobi", "sun", "pobi"), Collections.emptyList())
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "pobi, pobi",
+            "pobi, pobi, sun"
+    }, delimiter = ':')
+    @DisplayName("플레이어명 중복 시 예외 발생")
+    void test(final String playerNames) {
+        Deck deck = new Deck(Collections.emptyList());
+
+        List<String> names = Arrays.stream(playerNames.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        System.out.println(names);
+        assertThatThrownBy(() -> Players.startWithTwoCards(names, deck))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
     }
 
     @ParameterizedTest

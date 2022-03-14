@@ -60,21 +60,16 @@ public class BlackjackGame {
     }
 
     private void proceedPlayersTurn(final Deck deck, final Players players) {
-        int turnIndex = 0;
-        while (players.isStillInGame(turnIndex)) {
-            turnIndex = takeTurn(deck, players, turnIndex);
+        for (Player player : players.getStatuses()) {
+            takeTurn(deck, player);
         }
     }
 
-    private int takeTurn(Deck deck, Players players, int index) {
-        final Player player = players.getCurrentPlayer(index);
-        if (players.canHit(index) && requestContinue(player)) {
-            players.drawCard(index, deck);
+    private void takeTurn(Deck deck, Player player) {
+        while(!player.isBust() && requestContinue(player)) {
+            player.drawCard(deck);
             outputView.printDistributedCards(ParticipantDto.toOpenAllCards(player));
-            return index;
         }
-
-        return ++index;
     }
 
     private boolean requestContinue(final Player player) {
