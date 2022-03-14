@@ -10,6 +10,7 @@ public class Dealer extends Player {
         super();
         this.name = NAME;
     }
+
     @Override
     public String getName() {
         return name;
@@ -17,6 +18,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isImpossibleHit() {
-        return this.cards.isScoreOverThan(SCORE_HIT_CRITERIA);
+        return cards.sumScore() > SCORE_HIT_CRITERIA;
     }
 }

@@ -18,9 +18,21 @@ public class InputView {
         return Arrays.asList(names.split(NAME_DELIMITER));
     }
 
-    public static String inputHitOrStaySign(String name) {
+    public static boolean inputHitOrStaySign(String name) {
         System.out.printf(DRAW_CARD_FORMAT, name);
         String sign = scanner.nextLine();
-        return sign.trim();
+        return parseToBoolean(sign);
     }
+
+    private static boolean parseToBoolean(String sign) {
+        if (sign.equals("y")) {
+            return true;
+        }
+        if (sign.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("[ERROR] 소문자 y 또는 n만 입력해주세요.");
+    }
+
+
 }

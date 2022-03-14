@@ -1,14 +1,12 @@
 package blackjack.model.player;
 
-import blackjack.dto.GamerDto;
-import blackjack.dto.PlayerDto;
 import blackjack.model.MatchResult;
 import blackjack.model.card.CardDeck;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Gamers {
@@ -36,28 +34,28 @@ public class Gamers {
         }
     }
 
-    public void hitOrStayToGamer(UnaryOperator<String> operator, Consumer<PlayerDto> consumer) {
+    public void hitOrStayToGamer(Predicate<String> predicate, Consumer<Player> consumer) {
         for (Player gamer : values) {
-            hitOrStayTo(gamer, operator, consumer);
+            hitOrStayTo(gamer, predicate, consumer);
         }
     }
 
-    private void hitOrStayTo(Player gamer, UnaryOperator<String> operator, Consumer<PlayerDto> consumer) {
+    private void hitOrStayTo(Player gamer, Predicate<String> predicate, Consumer<Player> consumer) {
         CardDeck deck = CardDeck.getInstance();
-        while (canHit(gamer) && isHitSign(operator.apply(gamer.getName()))) {
+        while (canHit(gamer) && isHitSign(gamer, predicate)) {
             gamer.receive(deck.draw());
-            consumer.accept(GamerDto.from(gamer));
+            consumer.accept(gamer);
         }
     }
 
-    private boolean isHitSign(String apply) {
-        return apply.equals(HIT_SIGN);
+    private boolean isHitSign(Player gamer, Predicate<String> predicate) {
+        return predicate.test(gamer.getName());
     }
 
     private boolean canHit(Player gamer) {
         return !gamer.isBlackJack() && !gamer.isImpossibleHit();
     }
-
+/*
     public Map<String, MatchResult> getMatchResult(Player dealer) {
         Map<String, MatchResult> gamerResults = new LinkedHashMap<>();
         for (Player gamer : values) {
@@ -86,7 +84,7 @@ public class Gamers {
     private MatchResult match(Player dealer, Player gamer) {
         return MatchResult.find(dealer, gamer);
     }
-
+*/
 
     public List<Player> getValues() {
         return values;

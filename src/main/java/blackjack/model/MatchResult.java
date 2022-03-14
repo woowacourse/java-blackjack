@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum MatchResult {
+    /*
     WIN("승", (dealer, gamer) ->
             dealer.isBlackJack() && !gamer.isBlackJack() || !dealer.isBust() && gamer.isBust()
                     || !dealer.isBust() && dealer.isWinBy(gamer)
@@ -45,4 +46,6 @@ public enum MatchResult {
         }
         return MatchResult.DRAW.value;
     }
+
+     */
 }

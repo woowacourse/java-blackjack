@@ -1,11 +1,11 @@
 package blackjack.model.player;
 
-import blackjack.model.MatchResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import java.util.List;
 
 public abstract class Player {
+    protected static final int MAX_SCORE = 21;
     protected final Cards cards;
 
     public Player() {
@@ -17,11 +17,11 @@ public abstract class Player {
     }
 
     public boolean isBlackJack() {
-        return cards.isSameWithLimitScore() && cards.hasTwoCard();
+        return cards.sumScore() == MAX_SCORE && cards.hasTwoCard();
     }
 
-    public boolean isBust() {
-        return cards.isOverLimitScore();
+    public int countAddedCards() {
+        return cards.countAddedCard();
     }
 
     public boolean isWinBy(Player otherPlayer) {

@@ -1,12 +1,5 @@
 package blackjack.view;
 
-import blackjack.dto.DealerDto;
-import blackjack.dto.DealerMatchResultsDto;
-import blackjack.dto.GamerDto;
-import blackjack.dto.GamerMatchResultsDto;
-import blackjack.dto.GamersDto;
-
-import blackjack.dto.PlayerDto;
 import blackjack.model.player.Player;
 import java.util.List;
 import java.util.StringJoiner;
@@ -54,15 +47,15 @@ public class ResultView {
         System.out.printf(GAMER_AND_CARDS_MESSAGE_FORMAT, name, cards.get(0), cards.get(1));
     }
 
-    public static void printCurrentTurnHitResult(PlayerDto gamer) {
-        if (gamer.getName().equals("딜러")) {
-            printDealerHitResult(gamer);
+    public static void printCurrentTurnHitResult(Player player) {
+        if (player.getName().equals("딜러")) {
+            printDealerHitResult(player);
             return;
         }
-        printCurrentGamerHitResult(gamer);
+        printGamerHitResult(player);
     }
 
-    private static void printCurrentGamerHitResult(PlayerDto gamer) {
+    private static void printGamerHitResult(Player gamer) {
         StringJoiner cardJoiner = new StringJoiner(", ");
         for (String card : gamer.getCards()) {
             cardJoiner.add(card);
@@ -70,13 +63,13 @@ public class ResultView {
         System.out.printf(GAMER_HIT_MESSAGE_FORMAT, gamer.getName(), cardJoiner);
     }
 
-    private static void printDealerHitResult(PlayerDto dealer) {
-        int addCount = dealer.getAddedCardCount();
-        if (addCount > 0) {
-            System.out.printf(DEALER_HIT_MESSAGE_FORMAT, dealer.getName(), addCount);
+    private static void printDealerHitResult(Player dealer) {
+        int count = dealer.countAddedCards();
+        if (count > 0) {
+            System.out.printf(DEALER_HIT_MESSAGE_FORMAT, dealer.getName(), count);
         }
     }
-
+/*
     public static void printFinalScores(DealerDto dealer, GamersDto gamers) {
         printDealerScore(dealer);
         printGamerScores(gamers);
@@ -118,4 +111,5 @@ public class ResultView {
                 .forEach((result, count) -> matchResultJoiner.add(count + result));
         System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, dealerMatchResults.getName(), matchResultJoiner);
     }
+*/
 }

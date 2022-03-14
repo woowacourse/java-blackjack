@@ -20,12 +20,12 @@ public class CardDeck {
     private Stack<Card> createCards() {
         Stack<Card> cards = new Stack<>();
         for (TrumpSymbol symbol : TrumpSymbol.values()) {
-            pushCardIn(cards, symbol);
+            pushCardBySymbol(cards, symbol);
         }
         return cards;
     }
 
-    private void pushCardIn(Stack<Card> cards, TrumpSymbol symbol) {
+    private void pushCardBySymbol(Stack<Card> cards, TrumpSymbol symbol) {
         for (TrumpNumber number : TrumpNumber.values()) {
             cards.add(new Card(number, symbol));
         }

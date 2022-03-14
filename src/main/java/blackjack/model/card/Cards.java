@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-    private static final int SCORE_LIMIT = 21;
-
     private final List<Card> values;
 
     public Cards() {
@@ -22,20 +20,12 @@ public class Cards {
         return CardScoreTotalizer.sum(values);
     }
 
-    public boolean isOverLimitScore() {
-        return sumScore() > SCORE_LIMIT;
-    }
-
-    public boolean isSameWithLimitScore() {
-        return sumScore() == SCORE_LIMIT;
-    }
-
     public boolean hasTwoCard() {
         return values.size() == 2;
     }
 
-    public boolean isScoreOverThan(int otherScore) {
-        return sumScore() > otherScore;
+    public int countAddedCard() {
+        return values.size() - 2;
     }
 
     public List<String> getValues() {

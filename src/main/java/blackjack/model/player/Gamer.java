@@ -5,6 +5,7 @@ public class Gamer extends Player {
     private static final String ERROR_MAX_LENGTH = "[ERROR] 이름은 15자 이하로 입력해주세요.";
 
     private static final int MAX_LENGTH = 15;
+    public static final int MAX_SCORE = 21;
 
     private final String name;
 
@@ -33,6 +34,6 @@ public class Gamer extends Player {
 
     @Override
     public boolean isImpossibleHit() {
-        return cards.isOverLimitScore();
+        return cards.sumScore() >= Player.MAX_SCORE;
     }
 }
