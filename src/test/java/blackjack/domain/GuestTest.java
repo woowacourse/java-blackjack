@@ -18,7 +18,7 @@ class GuestTest {
     @DisplayName("카드 받았는지 확인")
     public void checkAddCardToDeck() {
         Guest guest = new Guest("guest");
-        Card card = new Card(Suit.SPADE, Symbols.FOUR);
+        Card card = new Card(Suit.SPADE, Symbol.FOUR);
         guest.addCard(card);
 
         Guest compareGuest = new Guest("compare_guest");
@@ -30,9 +30,9 @@ class GuestTest {
     @DisplayName("덱의 카드가 21이 넘는지 확인")
     public void checkPlayerDeckOverLimit() {
         Guest guest = new Guest("guest");
-        guest.addCard(new Card(Suit.SPADE, Symbols.JACK));
-        guest.addCard(new Card(Suit.SPADE, Symbols.QUEEN));
-        guest.addCard(new Card(Suit.SPADE, Symbols.TWO));
+        guest.addCard(new Card(Suit.SPADE, Symbol.JACK));
+        guest.addCard(new Card(Suit.SPADE, Symbol.QUEEN));
+        guest.addCard(new Card(Suit.SPADE, Symbol.TWO));
         boolean overLimit = guest.isOverPointLimit();
 
         assertThat(overLimit).isTrue();
@@ -42,9 +42,9 @@ class GuestTest {
     @DisplayName("덱의 카드가 21이 넘지 않는지 확인")
     public void checkPlayerDeckUnderLimit() {
         Guest guest = new Guest("guest");
-        guest.addCard(new Card(Suit.SPADE, Symbols.JACK));
-        guest.addCard(new Card(Suit.SPADE, Symbols.QUEEN));
-        guest.addCard(new Card(Suit.SPADE, Symbols.ACE));
+        guest.addCard(new Card(Suit.SPADE, Symbol.JACK));
+        guest.addCard(new Card(Suit.SPADE, Symbol.QUEEN));
+        guest.addCard(new Card(Suit.SPADE, Symbol.ACE));
         boolean overLimit = guest.isOverPointLimit();
 
         assertThat(overLimit).isFalse();

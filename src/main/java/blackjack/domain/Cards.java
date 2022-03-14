@@ -12,7 +12,7 @@ public class Cards {
 
     static {
         for (Suit suit : Suit.values()) {
-            Arrays.stream(Symbols.values())
+            Arrays.stream(Symbol.values())
                     .forEach(symbol -> cards.add(new Card(suit, symbol)));
         }
      }

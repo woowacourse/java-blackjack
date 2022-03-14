@@ -11,8 +11,8 @@ class CardTest {
     @DisplayName("카드 인스턴스 생성 확인")
     public void createCard() {
         Suit suit = Suit.SPADE;
-        Symbols symbols = Symbols.FOUR;
-        Card card = new Card(suit, symbols);
+        Symbol symbol = Symbol.FOUR;
+        Card card = new Card(suit, symbol);
 
         assertThat(card).isInstanceOf(Card.class);
     }

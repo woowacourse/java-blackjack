@@ -21,12 +21,12 @@ class BlackjackGameTest {
     @DisplayName("딜러가 블랙잭인 경우 확인")
     void isDealerBlackjack() {
         Players players = new Players();
-        guest.addCard(new Card(Suit.SPADE, Symbols.EIGHT));
-        guest.addCard(new Card(Suit.SPADE, Symbols.SEVEN));
+        guest.addCard(new Card(Suit.SPADE, Symbol.EIGHT));
+        guest.addCard(new Card(Suit.SPADE, Symbol.SEVEN));
         players.addPlayer(guest);
 
-        dealer.addCard(new Card(Suit.DIAMOND, Symbols.ACE));
-        dealer.addCard(new Card(Suit.DIAMOND, Symbols.TEN));
+        dealer.addCard(new Card(Suit.DIAMOND, Symbol.ACE));
+        dealer.addCard(new Card(Suit.DIAMOND, Symbol.TEN));
         players.addPlayer(dealer);
 
         BlackjackGame blackjackGame = new BlackjackGame();
@@ -41,13 +41,13 @@ class BlackjackGameTest {
     @DisplayName("플레이어가 블랙잭인 경우 확인")
     void isPlayerBlackjack() {
         Players players = new Players();
-        guest.addCard(new Card(Suit.SPADE, Symbols.ACE));
-        guest.addCard(new Card(Suit.SPADE, Symbols.TEN));
+        guest.addCard(new Card(Suit.SPADE, Symbol.ACE));
+        guest.addCard(new Card(Suit.SPADE, Symbol.TEN));
         players.addPlayer(guest);
 
-        dealer.addCard(new Card(Suit.DIAMOND, Symbols.ACE));
-        dealer.addCard(new Card(Suit.DIAMOND, Symbols.THREE));
-        dealer.addCard(new Card(Suit.DIAMOND, Symbols.SEVEN));
+        dealer.addCard(new Card(Suit.DIAMOND, Symbol.ACE));
+        dealer.addCard(new Card(Suit.DIAMOND, Symbol.THREE));
+        dealer.addCard(new Card(Suit.DIAMOND, Symbol.SEVEN));
         players.addPlayer(dealer);
 
         BlackjackGame blackjackGame = new BlackjackGame();

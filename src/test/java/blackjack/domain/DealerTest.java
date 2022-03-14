@@ -19,7 +19,7 @@ class DealerTest {
     @DisplayName("카드 받았는지 확인")
     public void checkAddCardToDeck() {
         Dealer dealer = new Dealer();
-        Card card = new Card(Suit.SPADE, Symbols.FOUR);
+        Card card = new Card(Suit.SPADE, Symbol.FOUR);
         dealer.addCard(card);
 
         Dealer compareDealer = new Dealer();
@@ -32,8 +32,8 @@ class DealerTest {
     @DisplayName("덱의 카드가 16이 넘는지 확인")
     public void checkPlayerDeckOverLimit() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.SPADE, Symbols.JACK));
-        dealer.addCard(new Card(Suit.SPADE, Symbols.SEVEN));
+        dealer.addCard(new Card(Suit.SPADE, Symbol.JACK));
+        dealer.addCard(new Card(Suit.SPADE, Symbol.SEVEN));
         boolean overLimit = dealer.isOverMoreCardLimit();
 
         assertThat(overLimit).isTrue();
@@ -43,8 +43,8 @@ class DealerTest {
     @DisplayName("덱의 카드가 16이 넘지 않는지 확인")
     public void checkPlayerDeckUnderLimit() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.SPADE, Symbols.JACK));
-        dealer.addCard(new Card(Suit.SPADE, Symbols.SIX));
+        dealer.addCard(new Card(Suit.SPADE, Symbol.JACK));
+        dealer.addCard(new Card(Suit.SPADE, Symbol.SIX));
         boolean overLimit = dealer.isOverMoreCardLimit();
 
         assertThat(overLimit).isFalse();

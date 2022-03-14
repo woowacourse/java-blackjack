@@ -25,6 +25,6 @@ class CardsTest {
     public void checkCardReturn() {
         Card card = cards.assignCard();
 
-        assertThat(card.getRank()).isEqualTo(Symbols.ACE);
+        assertThat(card.getRank()).isEqualTo(Symbol.ACE);
     }
 }

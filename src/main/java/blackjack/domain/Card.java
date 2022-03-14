@@ -3,27 +3,27 @@ package blackjack.domain;
 public class Card {
 
     private final Suit suit;
-    private final Symbols symbols;
+    private final Symbol symbol;
 
-    public Card(Suit suit, Symbols symbols) {
+    public Card(Suit suit, Symbol symbol) {
         this.suit = suit;
-        this.symbols = symbols;
+        this.symbol = symbol;
     }
 
     public boolean isAce() {
-        return symbols.equals(Symbols.ACE);
+        return symbol.equals(Symbol.ACE);
     }
 
     public int sumPoint(int points) {
-        return points + symbols.getPoint();
+        return points + symbol.getPoint();
     }
 
     public Suit getSuit() {
         return suit;
     }
 
-    public Symbols getRank() {
-        return symbols;
+    public Symbol getRank() {
+        return symbol;
     }
 
     @Override
@@ -34,13 +34,13 @@ public class Card {
         Card card = (Card) o;
 
         if (suit != card.suit) return false;
-        return symbols == card.symbols;
+        return symbol == card.symbol;
     }
 
     @Override
     public int hashCode() {
         int result = suit != null ? suit.hashCode() : 0;
-        result = 31 * result + (symbols != null ? symbols.hashCode() : 0);
+        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
         return result;
     }
 }

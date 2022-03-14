@@ -12,7 +12,7 @@ class MatchTest {
     @CsvSource(value = {"SPADE:CLUB:ACE:JACK:BLACKJACK", "CLUB:SPADE:ACE:ACE:DRAW"}
             , delimiter = ':')
     @DisplayName("게스트 승무패 결정 로직 확인")
-    public void checkGuestFindWinner(Suit suit, Suit secondSuit, Symbols symbol, Symbols secondSymbol, Match result) {
+    public void checkGuestFindWinner(Suit suit, Suit secondSuit, Symbol symbol, Symbol secondSymbol, Match result) {
         Player guest = new Guest("green");
         guest.addCard(new Card(suit, symbol));
         guest.addCard(new Card(secondSuit, secondSymbol));
