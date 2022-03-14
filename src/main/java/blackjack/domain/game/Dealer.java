@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class Dealer extends Human {
+public class Dealer extends Gamer {
 
     public static final int RECEIVED_MAXIMUM = 16;
     public static final String NAME = "딜러";

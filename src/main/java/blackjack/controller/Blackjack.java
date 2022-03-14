@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.game.Answer;
 import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.Dealer;
-import blackjack.domain.game.Human;
+import blackjack.domain.game.Gamer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import blackjack.domain.game.Result;
@@ -71,8 +71,8 @@ public class Blackjack {
                 .collect(Collectors.toList());
     }
 
-    private List<String> getCards(final Human human) {
-        return human.openCards().stream()
+    private List<String> getCards(final Gamer gamer) {
+        return gamer.openCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());
     }

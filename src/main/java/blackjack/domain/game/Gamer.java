@@ -4,12 +4,12 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public abstract class Human {
+public abstract class Gamer {
 
     protected final String name;
     protected final PlayingCards playingCards = new PlayingCards();
 
-    protected Human(final String name) {
+    protected Gamer(final String name) {
         this.name = name;
     }
 
