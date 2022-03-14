@@ -23,4 +23,8 @@ public interface State {
         }
         return new Hit(cards);
     }
+
+    static boolean isSameState(State another, Class<? extends State> expectedState) {
+        return another.getClass().equals(expectedState);
+    }
 }
