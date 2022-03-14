@@ -15,10 +15,11 @@ class CardTest {
         Card card = Card.of(suit, denomination);
 
         // when
-        String cardName = card.getCardName();
+        Suit suitFromCard = card.getSuit();
+        Denomination denominationFromCard = card.getDenomination();
 
         // then
-        assertThat(cardName).isEqualTo(expected);
+        assertThat(Card.of(suitFromCard, denominationFromCard)).isEqualTo(card);
     }
 
     @ParameterizedTest(name = "{0}-{1}")

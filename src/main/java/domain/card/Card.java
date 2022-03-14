@@ -15,12 +15,16 @@ public class Card {
         return new Card(suit, denomination);
     }
 
-    public String getCardName() {
-        return this.denomination.getScore() + this.suit.getName();
-    }
-
     public boolean isAce() {
         return denomination.isAce();
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     public int getScore() {
