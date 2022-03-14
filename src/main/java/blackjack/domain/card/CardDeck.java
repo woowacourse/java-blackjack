@@ -26,6 +26,7 @@ public class CardDeck implements CardStack {
                 .forEach((symbol -> cards.add(Card.of(rank, symbol))));
     }
 
+    @Override
     public Card pop() {
         try {
             return cards.pop();
