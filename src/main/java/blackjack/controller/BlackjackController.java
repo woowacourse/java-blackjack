@@ -15,7 +15,6 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultReferee;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.GameResultDto;
@@ -32,23 +31,19 @@ public class BlackjackController {
         return new BlackjackGame(cardDeck, playerNames, strategy);
     }
 
-    public void showInitialDistribution(BlackjackGame game) {
-        Dealer dealer = game.getDealer();
-        InitialDistributionDto dto = new InitialDistributionDto(dealer, game.getPlayers());
+    public void playGame(BlackjackGame game) {
+        InitialDistributionDto dto = new InitialDistributionDto(game.getDealer(), game.getPlayers());
 
-        if (dealer.isBlackjack()) {
+        if (game.isBlackjackDealer()) {
             printDealerBlackjackInfo(dto);
             return;
         }
 
         printInitialParticipantsCards(dto);
+        distributeAllCards(game);
     }
 
     public void distributeAllCards(BlackjackGame game) {
-        if (game.getDealer().isBlackjack()) {
-            return;
-        }
-
         List<Player> players = game.getPlayers();
         players.forEach(player -> drawAllPlayerCards(player, game));
         drawDealerCards(game);

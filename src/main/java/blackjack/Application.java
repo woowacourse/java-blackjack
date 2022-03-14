@@ -9,8 +9,7 @@ public class Application {
 
     public static void main(String[] args) {
         BlackjackGame game = controller.initializeGame();
-        controller.showInitialDistribution(game);
-        controller.distributeAllCards(game);
+        controller.playGame(game);
         controller.showGameResult(game);
     }
 }
