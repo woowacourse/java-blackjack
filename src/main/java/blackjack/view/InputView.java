@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import blackjack.view.exceptionMessages.InputViewExceptionMessage;
-
 public class InputView {
 	private static final Scanner scanner = new Scanner(System.in);
 	private static final Pattern YES_OR_NO = Pattern.compile("^[ynYN]$");

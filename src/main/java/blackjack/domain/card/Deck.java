@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import static blackjack.domain.exceptionMessages.CardExceptionMessage.*;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;

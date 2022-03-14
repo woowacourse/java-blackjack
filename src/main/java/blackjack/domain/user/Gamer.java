@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,5 +40,4 @@ public class Gamer {
 	public String getName() {
 		return this.name.getName();
 	}
-
 }

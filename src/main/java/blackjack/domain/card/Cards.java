@@ -58,10 +58,11 @@ public class Cards {
 
 	private int generateOptimalScore(final int scoreWithoutAce, final List<Integer> possible) {
 		int optimalScore = scoreWithoutAce;
-		List<Integer> collect = possible.stream()
-			.filter(each -> each + scoreWithoutAce <= BUST_THRESHOLD)
+		List<Integer> notBustedScores = possible.stream()
+			.filter(score -> !Score.from(score + scoreWithoutAce).hasBustState())
 			.collect(Collectors.toList());
-		for (int possibleScore : collect) {
+
+		for (int possibleScore : notBustedScores) {
 			optimalScore = Math.max(optimalScore, possibleScore + scoreWithoutAce);
 		}
 		return optimalScore;
