@@ -42,10 +42,6 @@ public class Gamer {
         return name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH;
     }
 
-    public void addTwoCards(Card firstCard, Card secondCard) {
-        cardGroup.addTwoCards(firstCard, secondCard);
-    }
-
     public void addCard(Card card) {
         if (cardGroup.isBust()) {
             return;
@@ -65,16 +61,12 @@ public class Gamer {
         return cardGroup.isAddable();
     }
 
-    public int getCardGroupSum() {
-        return cardGroup.getSum();
+    public int getDealerSum() {
+        return cardGroup.getDealerSum();
     }
 
-    public int getMaxCardGroupSum() {
-        return cardGroup.getMaxSum();
-    }
-
-    public int getCardGroupScore() {
-        return cardGroup.getScore();
+    public int getPlayerSum() {
+        return cardGroup.getPlayerSum();
     }
 
     public CardGroup getCardGroup() {

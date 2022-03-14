@@ -1,9 +1,10 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.property.CardNumber;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import blackjack.domain.card.property.CardNumber;
 
 public class CardGroup {
     private static final int BLACKJACK_NUMBER = 21;
@@ -15,11 +16,6 @@ public class CardGroup {
         cards.add(card);
     }
 
-    public void addTwoCards(Card firstCard, Card secondCard) {
-        cards.add(firstCard);
-        cards.add(secondCard);
-    }
-
     public boolean isBust() {
         return getSum() > BLACKJACK_NUMBER;
     }
@@ -28,19 +24,19 @@ public class CardGroup {
         return getSum() < BLACKJACK_NUMBER;
     }
 
-    public int getSum() {
-        return cards.stream()
-                .map(Card::getCardNumber)
-                .mapToInt(CardNumber::getNumber)
-                .sum();
-    }
-
-    public int getMaxSum() {
+    public int getDealerSum() {
         return getSum() + countA() * ACE_SPECIAL_SCORE;
     }
 
-    public int getScore() {
-        int maxSum = getMaxSum();
+    private int getSum() {
+        return cards.stream()
+            .map(Card::getCardNumber)
+            .mapToInt(CardNumber::getNumber)
+            .sum();
+    }
+
+    public int getPlayerSum() {
+        int maxSum = getDealerSum();
         int aCount = countA();
         while (maxSum > BLACKJACK_NUMBER && aCount > 0) {
             maxSum -= ACE_SPECIAL_SCORE;

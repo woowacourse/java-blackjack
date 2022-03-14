@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import java.util.List;
+
 import blackjack.domain.BlackJack;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
@@ -10,7 +12,6 @@ import blackjack.dto.GamerCardsResultDto;
 import blackjack.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
 
 public class BlackJackController {
     private PlayerGroup playerGroup;
@@ -43,7 +44,7 @@ public class BlackJackController {
         for (Player player : players) {
             requestCardAddition(player);
         }
-        OutputView.printDealerCardMessage(blackJack.addCardToDealer());
+        OutputView.printDealerCardMessage(blackJack.playDealer());
     }
 
     private void requestCardAddition(Player player) {

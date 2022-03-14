@@ -1,13 +1,13 @@
 package blackjack.domain;
 
+import java.util.List;
+
 import blackjack.domain.card.CardPack;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.GamerGroup;
-import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
-import java.util.List;
 
 public class BlackJack {
     private final GamerGroup gamerGroup;
@@ -22,12 +22,12 @@ public class BlackJack {
         gamerGroup.addInitialCards(cardPack);
     }
 
-    public void addCardTo(Player player) {
-        player.addCard(cardPack.pickOne());
+    public void addCardTo(Gamer gamer) {
+        gamer.addCard(cardPack.pickOne());
     }
 
-    public int addCardToDealer() {
-        return gamerGroup.addCardToDealer(cardPack);
+    public int playDealer() {
+        return gamerGroup.addCardsToDealer(cardPack);
     }
 
     public void openDealerCards() {

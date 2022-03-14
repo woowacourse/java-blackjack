@@ -27,7 +27,7 @@ public class Player extends Gamer{
             return 1;
         }
 
-        return Integer.compare(getCardGroupScore(), sum);
+        return Integer.compare(getPlayerSum(), sum);
     }
 
     private boolean isDealerBust(int sum) {

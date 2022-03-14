@@ -1,16 +1,18 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.property.CardNumber;
 import blackjack.domain.card.property.CardShape;
-import java.util.stream.Stream;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class CardGroupTest {
 
@@ -22,7 +24,7 @@ class CardGroupTest {
         cardGroup.addCard(new Card(CardShape.HEART, CardNumber.TWO));
         cardGroup.addCard(new Card(CardShape.HEART, CardNumber.Q));
         cardGroup.addCard(card);
-        assertThat(cardGroup.getSum()).isEqualTo(result);
+        assertThat(cardGroup.getPlayerSum()).isEqualTo(result);
     }
 
     private static Stream<Arguments> invalidParameters() {

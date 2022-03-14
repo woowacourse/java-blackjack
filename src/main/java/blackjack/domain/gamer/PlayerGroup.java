@@ -1,12 +1,13 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.CardPack;
-import blackjack.domain.result.Match;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import blackjack.domain.card.CardPack;
+import blackjack.domain.result.Match;
 
 public class PlayerGroup {
     private static final String NAME_DUPLICATION_ERROR_MESSAGE = "플레이어 이름은 중복될 수 없습니다.";
@@ -49,9 +50,9 @@ public class PlayerGroup {
                 .count() != players.size();
     }
 
-    public void addTwoCards(CardPack cardPack) {
+    public void addCard(CardPack cardPack) {
         for (Player player : players) {
-            player.addTwoCards(cardPack.pickOne(), cardPack.pickOne());
+            player.addCard(cardPack.pickOne());
         }
     }
 

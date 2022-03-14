@@ -1,17 +1,18 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPack;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Match;
-import blackjack.domain.result.PlayerResult;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardPack;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.Match;
+import blackjack.domain.result.PlayerResult;
 
 public class GamerGroup {
     private final Dealer dealer;
@@ -23,17 +24,19 @@ public class GamerGroup {
     }
 
     public void addInitialCards(CardPack cardPack) {
-        playerGroup.addTwoCards(cardPack);
+        playerGroup.addCard(cardPack);
+        playerGroup.addCard(cardPack);
         addInitialDealerCards(cardPack);
     }
 
     private void addInitialDealerCards(CardPack cardPack) {
         Card card = cardPack.pickOne();
         card.close();
-        dealer.addTwoCards(card, cardPack.pickOne());
+        dealer.addCard(card);
+        dealer.addCard(cardPack.pickOne());
     }
 
-    public int addCardToDealer(CardPack cardPack) {
+    public int addCardsToDealer(CardPack cardPack) {
         int addedCardsCount = 0;
         while (dealer.isAddable()) {
             dealer.addCard(cardPack.pickOne());
@@ -48,7 +51,7 @@ public class GamerGroup {
     }
 
     public GameResult getGameResult() {
-        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getMaxCardGroupSum());
+        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getDealerSum());
         PlayerResult playerResult = new PlayerResult(playerResults);
 
         Collection<Match> playerMatches = playerResults.values();
