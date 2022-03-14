@@ -10,81 +10,88 @@ import java.util.stream.IntStream;
 
 public class Players {
 
+    private static final String NOT_ENOUGH_CARDS_FOR_INIT_PLAYER_ERROR_MESSAGE = "[Error] 초기화할 카드가 모자랍니다.";
     private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
+    private static final String CANT_FIND_PLAYER_ERROR_MESSAGE = "[Error] 플레이어를 찾을 수 없습니다.";
+    private static final int SINGLE_ELEMENT = 1;
+    private static final int FIND_FIRST_INDEX = 0;
 
     private final List<Player> players;
 
     public Players(List<Name> names, List<List<Card>> initCards) {
+        validateInitCardsSize(names, initCards);
         this.players = IntStream.range(0, names.size())
                 .mapToObj(i -> new Player(names.get(i), initCards.get(i)))
                 .collect(Collectors.toList());
     }
 
-    public void addCardByName(Name name, Card card) {
-        players.stream()
+    private void validateInitCardsSize(List<Name> names, List<List<Card>> initCards) {
+        if (names.size() > initCards.size()) {
+            throw new IllegalArgumentException(NOT_ENOUGH_CARDS_FOR_INIT_PLAYER_ERROR_MESSAGE);
+        }
+    }
+
+    private Player findByName(Name name) {
+        List<Player> matchNamePlayers = players.stream()
                 .filter(player -> player.isNameMatch(name))
-                .forEach(player -> player.addCard(card));
+                .collect(Collectors.toList());
+        validateNameForFind(matchNamePlayers);
+        return matchNamePlayers.get(FIND_FIRST_INDEX);
+    }
+
+    private void validateNameForFind(List<Player> matchNamePlayers) {
+        if (matchNamePlayers.size() != SINGLE_ELEMENT) {
+            throw new IllegalArgumentException(CANT_FIND_PLAYER_ERROR_MESSAGE);
+        }
+    }
+
+    public void addCardByName(Name name, Card card) {
+        findByName(name).addCard(card);
     }
 
     public String showHandByName(Name name) {
-        return players.stream()
-                .filter(player -> player.isNameMatch(name))
-                .map(Player::showHand)
-                .findFirst()
-                .orElseThrow();
+        return findByName(name).showHand();
     }
 
     public int getBestScoreByName(Name name) {
-        return players.stream()
-                .filter(player -> player.isNameMatch(name))
-                .map(Player::getBestScore)
-                .findFirst()
-                .orElseThrow();
+        return findByName(name).getBestScore();
     }
 
     public boolean isBustByName(Name name) {
-        return players.stream()
-                .filter(player -> player.isNameMatch(name))
-                .map(Player::isBust)
-                .findFirst()
-                .orElseThrow();
+        return findByName(name).isBust();
     }
 
     public boolean isNotAllBust() {
-        long count = players.stream()
+        long bustPlayerCount = players.stream()
                 .filter(Player::isBust)
                 .count();
-        return count != players.size();
+        return bustPlayerCount != players.size();
     }
 
     public boolean isBlackJackByName(Name name) {
-        return players.stream()
-                .filter(player -> player.isNameMatch(name))
-                .findFirst()
-                .orElseThrow()
-                .isBlackJack();
+        return findByName(name).isBlackJack();
     }
 
     public boolean isMaxScoreByName(Name name) {
-        return players.stream()
-                .filter(player -> player.isNameMatch(name))
-                .map((Player::isMaxScore))
-                .findFirst()
-                .orElseThrow();
+        return findByName(name).isMaxScore();
     }
 
     public Map<Name, Versus> getResultAtDealerBlackJack(Dealer dealer) {
+        validateDealerIsBlackJack(dealer);
+        Map<Name, Versus> playerResult = new LinkedHashMap<>();
+        players.forEach(player -> playerResult.put(player.getName(), player.compareAtDealerBlackJack()));
+        return playerResult;
+    }
+
+    private void validateDealerIsBlackJack(Dealer dealer) {
         if (!dealer.isBlackJack()) {
             throw new IllegalStateException(NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE);
         }
-        Map<Name, Versus> map = new LinkedHashMap<>();
-        players.stream().forEach(player -> map.put(player.getName(), player.compareAtDealerBlackJack()));
-        return map;
     }
 
-    public Map<Name, Versus> getResultAtFinal(Participant other) {
-        Map<Name, Versus> map = new LinkedHashMap<>();
-        players.stream().forEach(player -> map.put(player.getName(), player.compareAtFinal(other)));
-        return map;
+    public Map<Name, Versus> getResultAtFinal(Dealer dealer) {
+        Map<Name, Versus> playerResult = new LinkedHashMap<>();
+        players.forEach(player -> playerResult.put(player.getName(), player.compareAtFinal(dealer)));
+        return playerResult;
     }
 }
