@@ -26,15 +26,15 @@ public class Game {
         handOutInitCard();
     }
 
-    private void handOutInitCard(){
-        for(int i = 0; i < HAND_OUT_COUNT; i++){
+    private void handOutInitCard() {
+        for (int i = 0; i < HAND_OUT_COUNT; i++) {
             dealer.initCard(CARD_CACHE.poll());
             players.recieveCard();
         }
     }
 
-    public boolean checkDealerIsBlackJack(){
-        if(dealer.checkBlackJack()){
+    public boolean checkDealerIsBlackJack() {
+        if (dealer.checkBlackJack()) {
             makeBlackjackResult();
             return true;
         }
@@ -49,7 +49,7 @@ public class Game {
     }
 
     private void distinctBlackjackPlayerResult(Player player) {
-        if(player.isBlackJack()){
+        if (player.isBlackJack()) {
             playerScore.addResult(player, Result.DRAW);
         }
         playerScore.addResult(player, Result.LOSE);
@@ -57,14 +57,14 @@ public class Game {
 
     public void makePlayerResult() {
         for (Player player : players.getPlayers()) {
-            playerScore.addResult(player,Result.judge(dealer,player));
+            playerScore.addResult(player, Result.judge(dealer, player));
         }
     }
 
-    public void makeDealerResult(PlayerScore playerScore){
+    public void makeDealerResult(PlayerScore playerScore) {
         List<Result> results = playerScore.getPlayersResult().values().stream().collect(Collectors.toUnmodifiableList());
         for (Result value : Result.values()) {
-           dealerScore.addResult(value, getDealerResultCount(Result.reverse(value), results));
+            dealerScore.addResult(value, getDealerResultCount(Result.reverse(value), results));
         }
     }
 

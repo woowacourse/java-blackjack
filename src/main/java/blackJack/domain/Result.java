@@ -15,10 +15,6 @@ public enum Result {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public static Result judge(Dealer dealer, Player player) {
         if (dealer.getScore() > WIN_SCORE || dealer.getScore() < player.getScore() && player.getScore() <= WIN_SCORE) {
             return Result.WIN;
@@ -29,14 +25,18 @@ public enum Result {
         return Result.DRAW;
     }
 
-    public static Result reverse(Result result){
-        if(result.equals(Result.WIN)){
+    public static Result reverse(Result result) {
+        if (result.equals(Result.WIN)) {
             return Result.LOSE;
         }
-        if(result.equals(Result.LOSE)){
+        if (result.equals(Result.LOSE)) {
             return Result.WIN;
         }
         return Result.DRAW;
+    }
+
+    public String getValue() {
+        return value;
     }
 
 }

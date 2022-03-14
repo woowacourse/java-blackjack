@@ -1,7 +1,6 @@
 package blackJack.domain.Card;
 
 public class Card {
-
     private Shape shape;
     private Number number;
 
@@ -17,5 +16,4 @@ public class Card {
     public Number getNumber() {
         return number;
     }
-
 }

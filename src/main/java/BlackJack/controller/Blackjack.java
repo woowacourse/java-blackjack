@@ -43,14 +43,13 @@ public class Blackjack {
     }
 
     private void checkDealerIsBlackJack(Game game) {
-        if(game.checkDealerIsBlackJack()){
+        if (game.checkDealerIsBlackJack()) {
             OutputView.printFinalResult(
-                convertToPlayerResultDtos(game.getPlayerScore()),
-                convertToDealerResultDto(game.getDealerScore())
+                    convertToPlayerResultDtos(game.getPlayerScore()),
+                    convertToDealerResultDto(game.getDealerScore())
             );
         }
     }
-
 
     private List<UserDto> playGame(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {

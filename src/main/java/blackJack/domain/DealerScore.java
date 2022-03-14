@@ -6,12 +6,12 @@ import java.util.Map;
 public class DealerScore {
     Map<Result, Integer> dealerScore;
 
-    public DealerScore(){
+    public DealerScore() {
         dealerScore = new EnumMap<Result, Integer>(Result.class);
     }
 
-    public void addResult(Result result, Integer count){
-        dealerScore.put(result,count);
+    public void addResult(Result result, Integer count) {
+        dealerScore.put(result, count);
     }
 
     public Map<Result, Integer> getDealerScore() {

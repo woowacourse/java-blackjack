@@ -9,11 +9,11 @@ import java.util.Map;
 public class PlayerScore {
     private Map<String, Result> playersScore;
 
-    public PlayerScore(){
+    public PlayerScore() {
         this.playersScore = new HashMap<>();
     }
 
-    public void addResult(Player player, Result result){
+    public void addResult(Player player, Result result) {
         playersScore.put(player.getName(), result);
     }
 

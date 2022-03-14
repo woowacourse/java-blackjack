@@ -1,6 +1,6 @@
 package blackJack.domain.Card;
 
-import java.util.*;
+import java.util.LinkedList;
 
 public class CardFactory {
 

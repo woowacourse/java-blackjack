@@ -11,9 +11,9 @@ public class Dealer extends User {
         super("딜러");
     }
 
-    public boolean checkBlackJack(){
-        List<String> openCardNumber = Arrays.asList("10","K","J","Q");
-        if(openCardNumber.contains(cards.getDeck().get(0).getNumber().getDenomination())){
+    public boolean checkBlackJack() {
+        List<String> openCardNumber = Arrays.asList("10", "K", "J", "Q");
+        if (openCardNumber.contains(cards.getDeck().get(0).getNumber().getDenomination())) {
             return this.isBlackJack();
         }
         return false;

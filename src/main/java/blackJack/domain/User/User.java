@@ -18,8 +18,8 @@ public abstract class User {
         this.cards = new Cards(new ArrayList<>());
     }
 
-    public void requestAddCard(){
-        if(isPossibleToAdd()){
+    public void requestAddCard() {
+        if (isPossibleToAdd()) {
             Card card = CARD_CACHE.poll();
             this.cards.add(card);
             return;
@@ -27,7 +27,7 @@ public abstract class User {
         throw new IllegalArgumentException(ExeptionMessage.CANNOT_ADD_CARD);
     }
 
-    public void initCard(Card card){
+    public void initCard(Card card) {
         this.cards.add(card);
     }
 
@@ -45,10 +45,12 @@ public abstract class User {
         return cards.calculateScore();
     }
 
-    public boolean isBlackJack(){
-        if(cards.calculateScore() == 21){
+    public boolean isBlackJack() {
+        if (cards.calculateScore() == 21) {
             return true;
         }
         return false;
-    };
+    }
+
+    ;
 }
