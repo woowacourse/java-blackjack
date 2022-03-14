@@ -1,4 +1,7 @@
 package BlackJack.domain.User;
+import BlackJack.domain.PlayerScore;
+import BlackJack.domain.Result;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +19,6 @@ public class Players {
     public void recieveCard() {
         for (Player player : players) {
             player.initCard(CARD_CACHE.poll());
-        }
-    }
-
-    public void checkPlayersBlackJack() {
-        for (Player player : players) {
-            player.checkBlackJack();
-        }
-    }
-
-    public void addCard(){
-        for (Player player : players) {
-            player.addCard();
         }
     }
 

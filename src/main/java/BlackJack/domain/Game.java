@@ -33,19 +33,28 @@ public class Game {
         }
     }
 
-    public void checkPlayerAndDealerIsBlackJack(){
-        dealer.checkBlackJack();
-        players.checkPlayersBlackJack();
+    public boolean checkDealerIsBlackJack(){
+        if(dealer.checkBlackJack()){
+            makeBlackjackResult();
+            return true;
+        }
+        return false;
     }
 
-    private Players playGame() {
-        players.addCard();
-        return players;
+    private void makeBlackjackResult() {
+        dealerScore.addResult(Result.WIN, 1);
+        for (Player player : players.getPlayers()) {
+            distinctBlackjackPlayerResult(player);
+        }
     }
 
-    public Dealer checkDealerAddCard(){
-        dealer.addCard();
-        return dealer;
+    private void distinctBlackjackPlayerResult(Player player) {
+        if(player.isBlackJack()){
+            playerScore.addResult(player, Result.DRAW);
+        }
+        playerScore.addResult(player, Result.LOSE);
+    }
+
     public void makePlayerResult() {
         for (Player player : players.getPlayers()) {
             playerScore.addResult(player,Result.judge(dealer,player));

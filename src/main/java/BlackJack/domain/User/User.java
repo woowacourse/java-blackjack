@@ -14,7 +14,6 @@ public abstract class User {
 
     protected String name;
     protected Cards cards;
-    protected Result result;
 
     public User(String name) {
         this.name = name;
@@ -47,4 +46,11 @@ public abstract class User {
     public int getScore() {
         return cards.calculateScore();
     }
+
+    public boolean isBlackJack(){
+        if(cards.calculateScore() == 21){
+            return true;
+        }
+        return false;
+    };
 }
