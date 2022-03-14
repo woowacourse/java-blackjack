@@ -20,7 +20,7 @@ public class BlackjackController {
         CardFactory cardFactory = new CardFactory();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
         Dealer dealer = new Dealer(cardFactory.initCards());
-        Players players = Players.create(inputPlayerNames, cardFactory.initCards());
+        Players players = Players.create(inputPlayerNames, cardFactory);
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToUserDtos(dealer, players));
 
@@ -31,7 +31,7 @@ public class BlackjackController {
     }
 
     private List<UserDto> playGame(Dealer dealer, Players players, CardFactory cardFactory) {
-        players.getPlayers().forEach( player -> askOneMoreCard(player, cardFactory));
+        players.getPlayers().forEach(player -> askOneMoreCard(player, cardFactory));
         while (dealer.checkScore()) {
             OutputView.printAddDealerCard();
             dealer.addCard(cardFactory);
@@ -41,7 +41,7 @@ public class BlackjackController {
     }
 
     private void askOneMoreCard(Player player, CardFactory cardFactory) {
-        while (InputView.askOneMoreCard(player.getName())) {
+        while (!player.isBust() && InputView.askOneMoreCard(player.getName())) {
             player.addCard(cardFactory);
             OutputView.printPlayerCard(UserDto.from(player));
         }

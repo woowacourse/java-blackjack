@@ -15,7 +15,7 @@ class PlayersTest {
     void joinTest() {
         CardFactory cardFactory = new CardFactory();
         List<String> input = List.of("기론", "열음");
-        Players players = Players.create(input, cardFactory.initCards());
+        Players players = Players.create(input, cardFactory);
         assertThat(players.size()).isEqualTo(input.size());
     }
 }
