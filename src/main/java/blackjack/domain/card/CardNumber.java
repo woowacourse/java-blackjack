@@ -37,9 +37,8 @@ public enum CardNumber {
 
     public static int calculateScore(final List<CardNumber> numbers) {
         final int defaultSum = calculateDefaultSum(numbers);
-        final int countOfA = countA(numbers);
-        if (countOfA > 0) {
-            return addBonusValue(defaultSum, countOfA);
+        if (checkContainingA(numbers)) {
+            return addBonusValue(defaultSum);
         }
         return defaultSum;
     }
@@ -50,18 +49,16 @@ public enum CardNumber {
                 .sum();
     }
 
-    private static int countA(final List<CardNumber> numbers) {
-        return (int) numbers.stream()
-                .filter(number -> number == A)
-                .count();
+    private static boolean checkContainingA(final List<CardNumber> numbers) {
+        return numbers.stream()
+                .anyMatch(number -> number == A);
     }
 
-    private static int addBonusValue(final int defaultSum, int countOfA) {
-        int bonusSum = defaultSum;
-        while (bonusSum <= MIN_VALUE_ADDING_BONUS && countOfA-- > 0) {
-            bonusSum += BONUS_VALUE;
+    private static int addBonusValue(final int defaultSum) {
+        if (defaultSum <= MIN_VALUE_ADDING_BONUS) {
+            return defaultSum + BONUS_VALUE;
         }
-        return bonusSum;
+        return defaultSum;
     }
 
     public String getPrintValue() {
