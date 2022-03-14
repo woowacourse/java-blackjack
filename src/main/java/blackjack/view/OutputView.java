@@ -88,9 +88,9 @@ public class OutputView {
     private static void printParticipantResult(final ParticipantResult result) {
         final Map<Participant, Result> participantResult = result.getResult();
 
-        participantResult.keySet()
-                .forEach(participant -> System.out.println(
-                        participant.getName() + COLON_AND_BLANK + participantResult.get(participant).getName()));
+        for (Participant participant : participantResult.keySet()) {
+            System.out.println(participant.getName() + COLON_AND_BLANK + participantResult.get(participant).getName());
+        }
     }
 
     public static void printNewLine() {
