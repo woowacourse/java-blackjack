@@ -35,9 +35,14 @@ public class Cards {
                 .count();
 
         for (int i = 0; i < countAce; i++) {
-            if (score + EXTRA_SCORE <= BUST_LINE) {
-                score += EXTRA_SCORE;
-            }
+            score = calculateAceScore(score);
+        }
+        return score;
+    }
+
+    private int calculateAceScore(int score) {
+        if (score + EXTRA_SCORE <= BUST_LINE) {
+            score += EXTRA_SCORE;
         }
         return score;
     }
