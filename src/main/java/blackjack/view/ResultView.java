@@ -14,36 +14,36 @@ public class ResultView {
     public static final String PLAYER_SCORE_MESSAGE_FORMAT = "\n%s 카드: %s - 결과: %d\n";
     public static final String PLAYER_MATCH_MESSAGE_FORMAT = "\n%s: %s";
 
-    public static void printStartResult(Player dealer, List<Player> gamers) {
+    public static void printStartResult(final Player dealer, final List<Player> gamers) {
         printNameOf(dealer);
         printNamesOf(gamers);
         printNameAndFirstCardOf(dealer);
         printNamesAndCardsOf(gamers);
     }
 
-    private static void printNameOf(Player dealer) {
+    private static void printNameOf(final Player dealer) {
         System.out.printf(DEALER_MESSAGE_FORMAT, dealer.getName());
     }
 
-    private static void printNamesOf(List<Player> gamers) {
-        StringJoiner nameJoiner = new StringJoiner(", ");
+    private static void printNamesOf(final List<Player> gamers) {
+        final StringJoiner nameJoiner = new StringJoiner(", ");
         for (Player gamer : gamers) {
             nameJoiner.add(gamer.getName());
         }
         System.out.printf(GAMERS_MESSAGE_FORMAT, nameJoiner);
     }
 
-    private static void printNameAndFirstCardOf(Player dealer) {
+    private static void printNameAndFirstCardOf(final Player dealer) {
         System.out.printf(DEALER_AND_CARD_MESSAGE_FORMAT, dealer.getName(), dealer.getCards().get(0));
     }
 
-    private static void printNamesAndCardsOf(List<Player> gamers) {
+    private static void printNamesAndCardsOf(final List<Player> gamers) {
         for (Player gamer : gamers) {
             print(gamer.getName(), gamer.getCards());
         }
     }
 
-    private static void print(String name, List<String> cards) {
+    private static void print(final String name, final List<String> cards) {
         System.out.printf(GAMER_AND_CARDS_MESSAGE_FORMAT, name, cards.get(0), cards.get(1));
     }
 
