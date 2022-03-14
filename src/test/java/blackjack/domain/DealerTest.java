@@ -24,7 +24,7 @@ public class DealerTest {
         dealer.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.HEART, Denomination.SIX)));
 
-        assertThat(dealer.isHit()).isTrue();
+        assertThat(dealer.isAvailableToHit()).isTrue();
     }
 
     @Test
@@ -35,7 +35,7 @@ public class DealerTest {
         dealer.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
             new Card(Suit.HEART, Denomination.SEVEN)));
 
-        assertThat(dealer.isHit()).isFalse();
+        assertThat(dealer.isAvailableToHit()).isFalse();
     }
 
     @Test
