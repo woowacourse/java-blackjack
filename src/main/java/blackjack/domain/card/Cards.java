@@ -2,14 +2,12 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Cards {
 
     private final int MAX_POINT = 21;
     private final int DIFFERENCE_POINT_OF_ACE = 10;
     private final int MINIMUM_ACE_AMOUNT = 1;
-    private final String JOIN_DELIMITER = ", ";
 
     private final List<Card> cards;
 

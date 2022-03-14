@@ -33,7 +33,7 @@ public class Gamblers {
             .filter(Gambler::isOneMoreCard)
             .collect(Collectors.toList());
     }
-
+    //TODO: List 전달로 수정
     public String getGamblerNames() {
         return gamblers.stream()
             .map(Gambler::getName)

@@ -30,7 +30,6 @@ public class OutputView {
         System.out.println();
     }
 
-    //TODO: 휴먼 네이밍 수정
     public static void printPlayerCardState(Player player) {
         System.out.printf(CARD_STATE_MESSAGE, player.getName(), gerCardList(player.getCards()));
         System.out.println();
@@ -53,12 +52,6 @@ public class OutputView {
         }
     }
 
-    public static void printPlayerCardPointState(Player player) {
-        System.out.printf(CARD_STATE_MESSAGE, player.getName(), gerCardList(player.getCards()));
-        System.out.printf(POINT_STATE_MESSAGE, player.getPoint());
-        System.out.println();
-    }
-
     public static void printDealerCardAdded() {
         System.out.println();
         System.out.println(DEALER_NO_MORE_CARD_MESSAGE);
@@ -78,7 +71,8 @@ public class OutputView {
     public static void printTotalResultByGambler(Statistic statistic, Gamblers gamblers) {
         for (Gambler gambler : gamblers.getGamblers()) {
             GameResult playerResult = statistic.getGameResultByGambler(gambler);
-            System.out.printf(PLAYER_RESULT_MESSAGE, gambler.getName(), changeGameResultToKorean(playerResult));
+            System.out.printf(PLAYER_RESULT_MESSAGE, gambler.getName(),
+                changeGameResultToKorean(playerResult));
             System.out.println();
         }
     }
@@ -102,5 +96,11 @@ public class OutputView {
             return KOREAN_RESULT_LOSE;
         }
         return KOREAN_RESULT_DRAW;
+    }
+
+    private static void printPlayerCardPointState(Player player) {
+        System.out.printf(CARD_STATE_MESSAGE, player.getName(), gerCardList(player.getCards()));
+        System.out.printf(POINT_STATE_MESSAGE, player.getPoint());
+        System.out.println();
     }
 }

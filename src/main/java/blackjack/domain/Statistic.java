@@ -18,6 +18,17 @@ public class Statistic {
         return new Statistic(dealer, gamblers);
     }
 
+
+    public int getCountByGameResult(GameResult inputGameResult) {
+        return (int) gamblerResult.values().stream()
+            .filter(gameResult -> gameResult.equals(inputGameResult))
+            .count();
+    }
+
+    public GameResult getGameResultByGambler(Gambler gambler) {
+        return gamblerResult.get(gambler);
+    }
+
     private void calculate(LinkedHashMap<Gambler, GameResult> gamblerResult, Dealer dealer,
         Gamblers gamblers) {
         if (dealer.isOverThanMaxPoint()) {
@@ -60,15 +71,5 @@ public class Statistic {
             return GameResult.DRAW;
         }
         return GameResult.WIN;
-    }
-
-    public int getCountByGameResult(GameResult inputGameResult) {
-        return (int) gamblerResult.values().stream()
-            .filter(gameResult -> gameResult.equals(inputGameResult))
-            .count();
-    }
-
-    public GameResult getGameResultByGambler(Gambler gambler) {
-        return gamblerResult.get(gambler);
     }
 }
