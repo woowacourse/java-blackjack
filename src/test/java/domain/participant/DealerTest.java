@@ -29,7 +29,7 @@ public class DealerTest {
     void isEnoughCard_False() {
         Card card = new Card(Rank.RANK_5, Suit.HEART);
         Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
-        assertThat(dealer.isEnoughCard()).isFalse();
+        assertThat(dealer.isNeedToDraw()).isFalse();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class DealerTest {
     void isEnoughCard_True() {
         Card card = new Card(Rank.RANK_6, Suit.HEART);
         Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
-        assertThat(dealer.isEnoughCard()).isTrue();
+        assertThat(dealer.isNeedToDraw()).isTrue();
     }
 
     @Test

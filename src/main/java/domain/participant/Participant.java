@@ -19,7 +19,7 @@ public class Participant {
     public Participant(Name name, List<Card> hand) {
         this.name = name;
         this.hand = new ArrayList<>(hand);
-        this.isBlackJack = isScore21();
+        this.isBlackJack = isMaxScore();
     }
 
     public void addCard(Card card) {
@@ -51,7 +51,7 @@ public class Participant {
         return bestScore;
     }
 
-    public boolean isScore21() {
+    public boolean isMaxScore() {
         return getBestScore() == BLACK_JACK_NUMBER;
     }
 

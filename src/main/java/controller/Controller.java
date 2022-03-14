@@ -20,7 +20,7 @@ public class Controller {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
-        OutputView.printInitHands(names, dealer, players);
+        OutputView.printParticipantInitHands(names, dealer, players);
 
         if (dealer.isBlackJack) {
             OutputView.printDealerBlackJackResult(names, dealer, players);
@@ -43,50 +43,33 @@ public class Controller {
 
     private void printBlackJackPlayer(List<Name> names, Players players) {
         for (Name name : names) {
-            if (players.isScore21ByName(name)) {
-                OutputView.printPlayerBlackJackMessage(name.getName());
-            }
+            OutputView.printPlayerBlackJackMessage(name, players);
         }
     }
 
     private void drawForPlayers(List<Name> names, Deck deck, Players players) {
         for (Name name : names) {
-            if (players.isBlackJackByName(name)) {
-                continue;
-            }
-            askAndDrawForPlayer(deck, players, name);
+            askAndDrawForPlayer(name, deck, players);
         }
     }
 
-    private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
-        boolean isKeepDraw = true;
-        while (isKeepDraw && InputView.inputAskDraw(name.getName())) {
+    private void askAndDrawForPlayer(Name name, Deck deck, Players players) {
+        boolean isMaxScoreOrBust = false;
+        while (!players.isBlackJackByName(name) && !isMaxScoreOrBust && InputView.inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
             OutputView.printPlayerHand(name, players);
-            isKeepDraw = checkScore21OrBust(players, name);
+            isMaxScoreOrBust = OutputView.printIfMaxScoreOrBust(players, name);
         }
-    }
-
-    private boolean checkScore21OrBust(Players players, Name name) {
-        if (players.isScore21ByName(name)) {
-            OutputView.printBlackJackMessage();
-            return false;
-        }
-        if (players.isBustByName(name)) {
-            OutputView.printBustMessage();
-            return false;
-        }
-        return true;
     }
 
     private void drawForDealer(Deck deck, Dealer dealer, Players players) {
-        if (!players.isAllBust()) {
+        if (players.isNotAllBust()) {
             checkAndDrawForDealer(deck, dealer);
         }
     }
 
     private void checkAndDrawForDealer(Deck deck, Dealer dealer) {
-        while (!dealer.isEnoughCard()) {
+        while (dealer.isNeedToDraw()) {
             OutputView.printDealerDrawMessage();
             dealer.addCard(deck.draw());
         }

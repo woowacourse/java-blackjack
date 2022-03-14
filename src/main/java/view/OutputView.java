@@ -2,6 +2,7 @@ package view;
 
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.Result;
 import java.util.List;
@@ -14,7 +15,7 @@ public class OutputView {
     private static final String SHOW_HAND_FORMAT = "%s 카드: %s\n";
     private static final String STATUS_FORMAT = "%s 카드: %s - 결과 : %d\n";
     private static final String BUST_MESSAGE = "[ Bust!!! ]";
-    private static final String BLACK_JACK_MESSAGE = "[ SCORE IS 21 ]";
+    private static final String MAX_SCORE_MESSAGE = "[ SCORE IS 21 ]";
     private static final String RESULT_TITLE_MESSAGE = "\n## 최종 승패";
     private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d무 %d패\n";
     private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
@@ -22,13 +23,13 @@ public class OutputView {
     private static final String DEALER_BLACK_JACK_MESSAGE = "\n== DEALER IS BLACK JACK ==";
     public static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n== %s IS BLACK JACK ==\n";
 
-    public static void printInitMessage(List<Name> names) {
+    public static void printInitHandsMessage(List<Name> names) {
         String namesForPrint = names.stream().map(Name::getName).collect(Collectors.joining(", "));
         System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
     }
 
-    public static void printInitHands(List<Name> names, Dealer dealer, Players players) {
-        printInitMessage(names);
+    public static void printParticipantInitHands(List<Name> names, Dealer dealer, Players players) {
+        printInitHandsMessage(names);
         printNewLine();
         System.out.printf(SHOW_ONE_HAND_FORMAT, dealer.getFirstHand().toString());
         for (Name name : names) {
@@ -40,16 +41,17 @@ public class OutputView {
         System.out.printf(SHOW_HAND_FORMAT, name.getName(), players.showHandByName(name));
     }
 
-    public static void printPlayerBlackJackMessage(String name) {
-        System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, name);
-    }
 
-    public static void printBustMessage() {
-        System.out.println(BUST_MESSAGE);
-    }
-
-    public static void printBlackJackMessage() {
-        System.out.println(BLACK_JACK_MESSAGE);
+    public static boolean printIfMaxScoreOrBust(Players players, Name name) {
+        if (players.isMaxScoreByName(name)) {
+            System.out.println(MAX_SCORE_MESSAGE);
+            return false;
+        }
+        if (players.isBustByName(name)) {
+            System.out.println(BUST_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
     public static void printDealerDrawMessage() {
@@ -84,6 +86,12 @@ public class OutputView {
 
     public static void printDealerBlackJackMessage() {
         System.out.println(DEALER_BLACK_JACK_MESSAGE);
+    }
+
+    public static void printPlayerBlackJackMessage(Name name, Players players) {
+        if (players.isMaxScoreByName(name)) {
+            System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, name.getName());
+        }
     }
 
     public static void printResultTitle() {

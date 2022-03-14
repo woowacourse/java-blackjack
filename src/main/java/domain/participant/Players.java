@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 import domain.card.Card;
 import domain.result.Versus;
+import view.OutputView;
 
 public class Players {
 
@@ -22,7 +23,9 @@ public class Players {
     }
 
     public void addCardByName(Name name, Card card) {
-        players.stream().filter(player -> player.isNameMatch(name)).forEach(player -> player.addCard(card));
+        players.stream()
+                .filter(player -> player.isNameMatch(name))
+                .forEach(player -> player.addCard(card));
     }
 
     public String showHandByName(Name name) {
@@ -44,14 +47,16 @@ public class Players {
     public boolean isBustByName(Name name) {
         return players.stream()
                 .filter(player -> player.isNameMatch(name))
-                .map(Player::isBust).findFirst().orElseThrow();
+                .map(Player::isBust)
+                .findFirst()
+                .orElseThrow();
     }
 
-    public boolean isAllBust() {
+    public boolean isNotAllBust() {
         long count = players.stream()
                 .filter(Player::isBust)
                 .count();
-        return count == players.size();
+        return count != players.size();
     }
 
     public boolean isBlackJackByName(Name name) {
@@ -62,10 +67,12 @@ public class Players {
                 .isBlackJack;
     }
 
-    public boolean isScore21ByName(Name name) {
+    public boolean isMaxScoreByName(Name name) {
         return players.stream()
                 .filter(player -> player.isNameMatch(name))
-                .map((Player::isScore21)).findFirst().orElseThrow();
+                .map((Player::isMaxScore))
+                .findFirst()
+                .orElseThrow();
     }
 
     public Map<Name, Versus> getResultAtDealerBlackJack(Dealer dealer) {
