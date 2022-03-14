@@ -30,7 +30,6 @@ public class Card {
         return denomination == ACE;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

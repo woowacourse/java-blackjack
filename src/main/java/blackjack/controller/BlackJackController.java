@@ -71,6 +71,9 @@ public class BlackJackController {
         if (isHit) {
             outputView.printDealerHit();
         }
+        if (isHit && !dealer.isBust()) {
+            hitOrStayCardDealer(deck, dealer);
+        }
     }
 
     private void showGameResult(Users users) {
