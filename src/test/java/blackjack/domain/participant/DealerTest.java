@@ -4,13 +4,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.ManualCardStrategy;
 import blackjack.domain.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -18,14 +19,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
-    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
-
     @ParameterizedTest
     @MethodSource("provideForStartWithDrawCardTest")
     @DisplayName("딜러는 카드 2장을 지닌채 게임을 시작한다.")
     void startWithDrawCardTest(final List<Card> initializedCards) {
-        manualCardStrategy.initCards(initializedCards);
-        Deck deck = Deck.generate(manualCardStrategy);
+        Deck deck = new Deck(initializedCards);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
         List<Card> cards = dealer.getCards();
@@ -35,11 +33,11 @@ class DealerTest {
     @ParameterizedTest
     @MethodSource("provideForStartWithDrawCardTest")
     @DisplayName("딜러의 카드 점수에 따라 카드 뽑기 가능 여부를 반환한다.")
-    void dealerUnderMinimumTotal(final List<Card> initializedCards, final boolean canDraw) {
+    void dealerUnderMinimumTotal(final List<Card> initializedCards, final boolean drawable) {
         Deck deck = new Deck(initializedCards);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
-        assertThat(dealer.shouldDraw()).isEqualTo(canDraw);
+        assertThat(dealer.shouldDraw()).isEqualTo(drawable);
     }
 
     private static Stream<Arguments> provideForStartWithDrawCardTest() {
@@ -61,76 +59,42 @@ class DealerTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("provideForDealerLoseByBurst")
+    @CsvSource(value = "KING,SIX,JACK")
     @DisplayName("딜러의 카드 합이 버스트일 경우 패배한다.")
-    void dealerLoseByBurst(List<Card> initializedCards) {
-        final Deck deck = new Deck(initializedCards);
+    void dealerLoseByBurst(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3) {
+
+        final Deck deck = new Deck(List.of(
+                new Card(CardPattern.DIAMOND, cardNumber1),
+                new Card(CardPattern.DIAMOND, cardNumber2),
+                new Card(CardPattern.DIAMOND, cardNumber3)));
+
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
-        while (dealer.shouldDraw()) {
-            dealer.drawCard(deck);
-        }
+        dealer.drawCard(deck);
+
 
         assertThat(dealer.judgeWinner(new Player("sun"))).isEqualTo(PlayerResult.WIN);
     }
 
-    private static Stream<Arguments> provideForDealerLoseByBurst() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.KING),
-                                new Card(CardPattern.DIAMOND, CardNumber.SIX),
-                                new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                                new Card(CardPattern.SPADE, CardNumber.EIGHT),
-                                new Card(CardPattern.SPADE, CardNumber.TEN)
-                        )
-                )
-        );
-    }
-
     @ParameterizedTest
-    @MethodSource("provideForDealerCalculateWinningResultTest")
+    @CsvSource(value = {"KING,FIVE,LOSS", "KING,ACE,WIN"})
     @DisplayName("딜러는 승패를 결정한다.")
-    void dealerCalculateWinningResultTest(final List<Card> dealerCards,
-                                          final List<Card> playersCards,
-                                          final PlayerResult expectedPlayerResult) {
-        final Deck dealerDeck = new Deck(dealerCards);
-        final Deck playersDeck = new Deck(playersCards);
+    void dealerCalculateWinningResultTest(final CardNumber cardNumber1,
+                                          final CardNumber cardNumber2,
+                                          final PlayerResult result) {
+        final Deck dealerDeck = new Deck(List.of(
+                new Card(CardPattern.DIAMOND, CardNumber.JACK),
+                new Card(CardPattern.DIAMOND, CardNumber.QUEEN)));
+
+        Deck playerDeck = new Deck(List.of(
+                new Card(CardPattern.DIAMOND, cardNumber1),
+                new Card(CardPattern.DIAMOND, cardNumber2)
+        ));
 
         final Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
-        final Player player = new Player("if");
-        player.drawCard(playersDeck);
-        player.drawCard(playersDeck);
+        Players players = Players.startWithTwoCards(Collections.singletonList("sun"), playerDeck);
 
-        final PlayerResult actualPlayerResult = dealer.judgeWinner(player);
-        assertThat(actualPlayerResult).isEqualTo(expectedPlayerResult);
-    }
-
-    private static Stream<Arguments> provideForDealerCalculateWinningResultTest() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.KING),
-                                new Card(CardPattern.DIAMOND, CardNumber.JACK)
-                        ),
-                        List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.TWO),
-                                new Card(CardPattern.DIAMOND, CardNumber.THREE)
-                        ),
-                        PlayerResult.LOSS
-                ),
-                Arguments.of(
-                        List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.FOUR),
-                                new Card(CardPattern.DIAMOND, CardNumber.THREE),
-                                new Card(CardPattern.DIAMOND, CardNumber.KING)
-                        ),
-                        List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                                new Card(CardPattern.DIAMOND, CardNumber.QUEEN)
-                        ),
-                        PlayerResult.WIN
-                )
-        );
+        final PlayerResult actualPlayerResult = dealer.judgeWinner(players.getStatuses().get(0));
+        assertThat(actualPlayerResult).isEqualTo(result);
     }
 }

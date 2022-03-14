@@ -25,6 +25,7 @@ public class Score implements Comparable<Score> {
 
         return new Score(sum);
     }
+
     private void validateNegative(int value) {
         if (value < 0) {
             throw new IllegalArgumentException("점수는 음수일 수 없습니다.");

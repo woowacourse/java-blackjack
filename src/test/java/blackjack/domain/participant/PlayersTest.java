@@ -4,13 +4,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.ManualCardStrategy;
 import blackjack.domain.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,14 +20,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayersTest {
 
-    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
-
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideForPlayerNamesDuplicatedExceptionTest")
     @DisplayName("플레이어명 중복 시 예외 발생")
     void playerNamesDuplicatedExceptionTest(final List<String> playerNames, final List<Card> initializedCards) {
-        manualCardStrategy.initCards(initializedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+        final Deck deck = new Deck(initializedCards);
+
         assertThatThrownBy(() -> Players.startWithTwoCards(playerNames, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
@@ -42,18 +39,13 @@ public class PlayersTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {
-            "pobi, pobi",
-            "pobi, pobi, sun"
-    }, delimiter = ':')
+    @ValueSource(strings = {"pobi,pobi", "pobi,sun,pobi"})
     @DisplayName("플레이어명 중복 시 예외 발생")
     void test(final String playerNames) {
         Deck deck = new Deck(Collections.emptyList());
-
         List<String> names = Arrays.stream(playerNames.split(","))
-                .map(String::trim)
                 .collect(Collectors.toList());
-        System.out.println(names);
+
         assertThatThrownBy(() -> Players.startWithTwoCards(names, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
@@ -63,8 +55,7 @@ public class PlayersTest {
     @MethodSource("provideForStartWithDrawCardTest")
     @DisplayName("각 플레이어는 카드 2장을 지닌채 게임을 시작한다.")
     void startWithDrawCardTest(final List<String> playerNames, final List<Card> initializedCards) {
-        manualCardStrategy.initCards(initializedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+        final Deck deck = new Deck(initializedCards);
         final Players players = Players.startWithTwoCards(playerNames, deck);
         final List<Player> actualPlayers = players.getStatuses();
 

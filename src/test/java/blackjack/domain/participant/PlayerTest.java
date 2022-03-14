@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.ManualCardStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,8 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
-
-    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
 
     @ParameterizedTest(name = "[{index}] 플레이어명 : \"{0}\"")
     @ValueSource(strings = {"", " "})
@@ -35,8 +32,7 @@ class PlayerTest {
     @MethodSource("provideForDrawCardTest")
     @DisplayName("참여자는 카드를 뽑을 수 있어야 한다.")
     void drawCardTest(final List<Card> expectedCards) {
-        manualCardStrategy.initCards(expectedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+        final Deck deck = new Deck(expectedCards);
         final Participant participant = new Player("sun");
 
         for (int i = 0; i < expectedCards.size(); i++) {
@@ -70,8 +66,7 @@ class PlayerTest {
     @MethodSource("provideForCannotContinueDrawCardTest")
     @DisplayName("카드의 합계가 21 초과인지 확인할 수 있어야 한다.")
     void cannotContinueDrawTest(final List<Card> expectedCards) {
-        manualCardStrategy.initCards(expectedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+        final Deck deck = new Deck(expectedCards);
         final Participant participant = new Player("sun");
 
         for (int i = 0; i < expectedCards.size(); i++) {
@@ -106,8 +101,7 @@ class PlayerTest {
     @MethodSource("provideForCanContinueDrawCardTest")
     @DisplayName("카드의 합계가 21 이하인지 확인할 수 있어야 한다.")
     void canContinueDrawTest(final List<Card> expectedCards) {
-        manualCardStrategy.initCards(expectedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+        final Deck deck = new Deck(expectedCards);
         final Participant participant = new Player("sun");
 
         for (int i = 0; i < expectedCards.size(); i++) {

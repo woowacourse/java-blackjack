@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.strategy.ManualCardStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,14 +15,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
 
-    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
-
     @ParameterizedTest
     @MethodSource("provideForValidateCardDuplicatedTest")
     @DisplayName("중복된 카드가 존재할 시 예외 발생")
     void validateCardDuplicatedTest(final List<Card> cards) {
-        manualCardStrategy.initCards(cards);
-        assertThatThrownBy(() -> Deck.generate(manualCardStrategy))
+        assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("중복된 카드는 존재할 수 없습니다.");
     }
@@ -50,9 +46,8 @@ class DeckTest {
     @MethodSource("provideForDrawCardTest")
     @DisplayName("카드 덱에서 한장의 카드를 뽑는다.")
     void drawCardTest(final List<Card> expectedCards) {
-        manualCardStrategy.initCards(expectedCards);
 
-        final Deck deck = Deck.generate(manualCardStrategy);
+        final Deck deck = new Deck(expectedCards);
         final List<Card> actualCards = new LinkedList<>();
         for (int i = 0; i < expectedCards.size(); i++) {
             actualCards.add(deck.drawCard());
@@ -82,8 +77,7 @@ class DeckTest {
     @Test
     @DisplayName("뽑을 수 있는 카드가 없을 시 예외 발생")
     void validateDrawCardTest() {
-        manualCardStrategy.initCards(List.of(new Card(CardPattern.DIAMOND, CardNumber.ACE)));
-        final Deck deck = Deck.generate(manualCardStrategy);
+        final Deck deck = new Deck(List.of(new Card(CardPattern.DIAMOND, CardNumber.ACE)));
         deck.drawCard();
         assertThatThrownBy(deck::drawCard)
                 .isInstanceOf(IllegalArgumentException.class)

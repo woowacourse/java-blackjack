@@ -66,7 +66,7 @@ public class BlackjackGame {
     }
 
     private void takeTurn(Deck deck, Player player) {
-        while(!player.isBust() && requestContinue(player)) {
+        while (!player.isBust() && requestContinue(player)) {
             player.drawCard(deck);
             outputView.printDistributedCards(ParticipantDto.toOpenAllCards(player));
         }

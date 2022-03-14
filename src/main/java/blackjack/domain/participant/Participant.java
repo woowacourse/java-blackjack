@@ -21,6 +21,7 @@ public abstract class Participant {
         this.name = name;
         this.cards = cards;
     }
+
     abstract public List<Card> showFirstCards();
 
     public void drawCard(final Deck deck) {
