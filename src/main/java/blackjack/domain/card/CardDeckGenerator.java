@@ -1,30 +1,29 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class CardDeckGenerator {
 
     public static CardDeck generate() {
-        List<Card> cards = createCards();
+        Stack<Card> cards = createCards();
         Collections.shuffle(cards);
         return CardDeck.generate(cards);
     }
 
-    private static List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
+    private static Stack<Card> createCards() {
+        Stack<Card> cards = new Stack<>();
         createCardByDenomination(cards);
         return cards;
     }
 
-    private static void createCardByDenomination(List<Card> cards) {
+    private static void createCardByDenomination(Stack<Card> cards) {
         for (Denomination denomination : Denomination.values()) {
             createCardBySymbol(cards, denomination);
         }
     }
 
-    private static void createCardBySymbol(List<Card> cards, Denomination denomination) {
+    private static void createCardBySymbol(Stack<Card> cards, Denomination denomination) {
         for (Symbol symbol : Symbol.values()) {
             cards.add(Card.of(denomination, symbol));
         }

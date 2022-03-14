@@ -48,3 +48,6 @@
 - 클래스 네이밍 수정
     - Player -> Gambler
     - Human -> Player
+- CardDeck 내 카드목록 Stack으로 구현
+    - 기존 List<Card> -> Stack<Card>
+    - 리스트의 크기 - 1을 반환하는 메서드에서 stack의 pop을 이용한 메서드로 수정
