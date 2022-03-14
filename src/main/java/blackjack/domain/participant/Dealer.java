@@ -28,6 +28,7 @@ public class Dealer extends Participant {
         return state.cards().getScore() > BLACK_JACK_NUMBER;
     }
 
+    @Override
     public List<Card> getCards() {
         validateEndTurn();
         return state.cards().values();

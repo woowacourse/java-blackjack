@@ -25,7 +25,8 @@ public class Player extends Participant {
         return !state.isFinished();
     }
 
+    @Override
     public List<Card> getCards() {
-        return List.copyOf(state.cards().values());
+        return state.cards().values();
     }
 }

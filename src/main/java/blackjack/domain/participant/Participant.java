@@ -51,5 +51,7 @@ public abstract class Participant {
         }
     }
 
+    public abstract List<Card> getCards();
+
     public abstract boolean canDraw();
 }
