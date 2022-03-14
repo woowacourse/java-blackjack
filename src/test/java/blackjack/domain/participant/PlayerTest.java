@@ -1,6 +1,10 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.TestBlackjackUtils.createCardHand;
 import static blackjack.domain.TestCardFixture.aceCard;
+import static blackjack.domain.TestCardFixture.kingCard;
+import static blackjack.domain.TestCardFixture.sevenCard;
+import static blackjack.domain.TestCardFixture.tenCard;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Hand;
@@ -35,5 +39,30 @@ class PlayerTest {
         assertThatThrownBy(() -> new Player(null, cardHand))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("[ERROR] 이름과 카드패가 null일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("승자가 누군지 확인")
+    void isWin() {
+        Player seung = new Player(new Name("seung"), createCardHand(aceCard, sevenCard));
+        Player pobi = new Player(new Name("pobi"), createCardHand(aceCard, kingCard));
+
+        assertThat(seung.isWin(pobi)).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드를 받을 수 있는 상태인지 확인")
+    void receiveCardByPlayer() {
+        Player seung = new Player(new Name("seung"), createCardHand(aceCard, kingCard));
+
+        assertThat(seung.shouldReceive()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드패의 총합이 정확한지 확인")
+    void sumOfCardHand() {
+        Player seung = new Player(new Name("seung"), createCardHand(aceCard, tenCard));
+        
+        assertThat(seung.getCardTotalScore()).isEqualTo(21);
     }
 }
