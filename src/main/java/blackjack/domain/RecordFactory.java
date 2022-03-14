@@ -21,11 +21,7 @@ public class RecordFactory {
     }
 
     private Record createRecord(int score) {
-        return Record.of(isDealerBust(), dealerScore, score);
-    }
-
-    private boolean isDealerBust() {
-        return PlayStatus.isBust(dealerScore);
+        return Record.of(dealerScore, score);
     }
 
     private void updateDealerRecord(Record record) {

@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.PlayStatus.*;
+
 import java.util.Arrays;
 
 public enum Record {
@@ -16,8 +18,8 @@ public enum Record {
         this.opposite = opposite;
     }
 
-    public static Record of(boolean isDealerBust, int dealerScore, int score) {
-        if (isPlayerLoss(isDealerBust, dealerScore, score)) {
+    public static Record of(int dealerScore, int score) {
+        if (isPlayerLoss(dealerScore, score)) {
             return LOSS;
         }
 
@@ -28,8 +30,8 @@ public enum Record {
         return WIN;
     }
 
-    private static boolean isPlayerLoss(boolean isDealerBust, int dealerScore, int score) {
-        return PlayStatus.isBust(score) || (!isDealerBust && score < dealerScore);
+    private static boolean isPlayerLoss(int dealerScore, int score) {
+        return isBust(score) || (!isBust(dealerScore) && score < dealerScore);
     }
 
     public String getName() {
