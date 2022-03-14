@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Denomination;
+import domain.card.Number;
 import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +29,17 @@ public class DealerTest {
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
-                Arguments.arguments("합계 22인 경우 true", getCards(Denomination.TWO, Denomination.QUEEN, Denomination.KING),
+                Arguments.arguments("합계 22인 경우 true", getCards(Number.TWO, Number.QUEEN, Number.KING),
                         true),
-                Arguments.arguments("합계 17인 경우 true", getCards(Denomination.SEVEN, Denomination.QUEEN), true),
-                Arguments.arguments("합계 15인 경우 false", getCards(Denomination.QUEEN, Denomination.FIVE), false)
+                Arguments.arguments("합계 17인 경우 true", getCards(Number.SEVEN, Number.QUEEN), true),
+                Arguments.arguments("합계 15인 경우 false", getCards(Number.QUEEN, Number.FIVE), false)
         );
     }
 
-    private static Cards getCards(Denomination... arguments) {
+    private static Cards getCards(Number... arguments) {
         List<Card> list = new ArrayList<>();
-        for (Denomination denomination : arguments) {
-            list.add(new Card(denomination, Suit.CLOVER));
+        for (Number number : arguments) {
+            list.add(new Card(number, Suit.CLOVER));
         }
         return new Cards(list);
     }
@@ -48,8 +48,8 @@ public class DealerTest {
     @DisplayName("딜러 draw 확인")
     void drawCard() {
         // given
-        Dealer dealer = new Dealer(new Name("딜러"), getCards(Denomination.QUEEN));
-        Card newCard = new Card(Denomination.ACE, Suit.CLOVER);
+        Dealer dealer = new Dealer(new Name("딜러"), getCards(Number.QUEEN));
+        Card newCard = new Card(Number.ACE, Suit.CLOVER);
 
         // when
         dealer.drawCard(newCard);

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Denomination;
+import domain.card.Number;
 import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -34,11 +34,11 @@ class GameResultTest {
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
                 Arguments.arguments("플레이어가 버스트가 아니고 딜러가 버스트인 경우",
-                        new Player(new Name("abc"), getCards(Denomination.ACE, Denomination.NINE)),
-                        new Dealer(new Name("딜러"), getCards(Denomination.QUEEN, Denomination.KING, Denomination.JACK))),
+                        new Player(new Name("abc"), getCards(Number.ACE, Number.NINE)),
+                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.KING, Number.JACK))),
                 Arguments.arguments("둘 다 버스트가 아니고 딜러보다 숫자가 높은 경우",
-                        new Player(new Name("abc"), getCards(Denomination.KING, Denomination.QUEEN)),
-                        new Dealer(new Name("딜러"), getCards(Denomination.QUEEN, Denomination.NINE)))
+                        new Player(new Name("abc"), getCards(Number.KING, Number.QUEEN)),
+                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.NINE)))
         );
     }
 
@@ -57,26 +57,26 @@ class GameResultTest {
     private static Stream<Arguments> provideParameters2() {
         return Stream.of(
                 Arguments.arguments(
-                        new Player(new Name("abc1"), getCards(Denomination.ACE, Denomination.NINE)),
-                        new Player(new Name("abc2"), getCards(Denomination.EIGHT, Denomination.NINE)),
-                        new Dealer(new Name("딜러"), getCards(Denomination.QUEEN, Denomination.NINE)),
+                        new Player(new Name("abc1"), getCards(Number.ACE, Number.NINE)),
+                        new Player(new Name("abc2"), getCards(Number.EIGHT, Number.NINE)),
+                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.NINE)),
                         MatchResult.WIN,
                         1
                 ),
                 Arguments.arguments(
-                        new Player(new Name("abc1"), getCards(Denomination.ACE, Denomination.NINE)),
-                        new Player(new Name("abc2"), getCards(Denomination.NINE, Denomination.NINE)),
-                        new Dealer(new Name("딜러"), getCards(Denomination.EIGHT, Denomination.NINE)),
+                        new Player(new Name("abc1"), getCards(Number.ACE, Number.NINE)),
+                        new Player(new Name("abc2"), getCards(Number.NINE, Number.NINE)),
+                        new Dealer(new Name("딜러"), getCards(Number.EIGHT, Number.NINE)),
                         MatchResult.LOSE,
                         2
                 )
         );
     }
 
-    private static Cards getCards(Denomination... arguments) {
+    private static Cards getCards(Number... arguments) {
         List<Card> list = new ArrayList<>();
-        for (Denomination denomination : arguments) {
-            list.add(new Card(denomination, Suit.CLOVER));
+        for (Number number : arguments) {
+            list.add(new Card(number, Suit.CLOVER));
         }
         return new Cards(list);
     }

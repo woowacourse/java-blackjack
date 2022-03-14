@@ -4,9 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Denomination;
+import domain.card.Number;
 import domain.card.Suit;
-import domain.participant.Command;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
@@ -62,7 +61,7 @@ public class BlackJackGameTest {
         // given
         List<Participant> expectPlayers = new ArrayList<>();
         for (Name name : names) {
-            expectPlayers.add(new Player(name, getCards(Denomination.SEVEN, Denomination.QUEEN)));
+            expectPlayers.add(new Player(name, getCards(Number.SEVEN, Number.QUEEN)));
         }
 
         // when
@@ -72,10 +71,10 @@ public class BlackJackGameTest {
         assertThat(playerNames).containsAll(expectPlayers);
     }
 
-    private static Cards getCards(Denomination... arguments) {
+    private static Cards getCards(Number... arguments) {
         List<Card> list = new ArrayList<>();
-        for (Denomination denomination : arguments) {
-            list.add(new Card(denomination, Suit.CLOVER));
+        for (Number number : arguments) {
+            list.add(new Card(number, Suit.CLOVER));
         }
         return new Cards(list);
     }

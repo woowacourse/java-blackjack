@@ -19,9 +19,9 @@ public class CardsTest {
     @ParameterizedTest(name = "[{index}] {0}인 경우 총합은 {1}")
     @MethodSource("provideParameters")
     @DisplayName("단일 카드 총합 구하기")
-    void sum(Denomination denomination, int expect) {
+    void sum(Number number, int expect) {
         // given
-        Cards cards = new Cards(Collections.singletonList(new Card(denomination, Suit.CLOVER)));
+        Cards cards = new Cards(Collections.singletonList(new Card(number, Suit.CLOVER)));
 
         // then
         assertThat(cards.sum()).isEqualTo(expect);
@@ -29,19 +29,19 @@ public class CardsTest {
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
-                Arguments.arguments(Denomination.ACE, 11),
-                Arguments.arguments(Denomination.TWO, 2),
-                Arguments.arguments(Denomination.THREE, 3),
-                Arguments.arguments(Denomination.FOUR, 4),
-                Arguments.arguments(Denomination.FIVE, 5),
-                Arguments.arguments(Denomination.SIX, 6),
-                Arguments.arguments(Denomination.SEVEN, 7),
-                Arguments.arguments(Denomination.EIGHT, 8),
-                Arguments.arguments(Denomination.NINE, 9),
-                Arguments.arguments(Denomination.TEN, 10),
-                Arguments.arguments(Denomination.JACK, 10),
-                Arguments.arguments(Denomination.QUEEN, 10),
-                Arguments.arguments(Denomination.KING, 10)
+                Arguments.arguments(Number.ACE, 11),
+                Arguments.arguments(Number.TWO, 2),
+                Arguments.arguments(Number.THREE, 3),
+                Arguments.arguments(Number.FOUR, 4),
+                Arguments.arguments(Number.FIVE, 5),
+                Arguments.arguments(Number.SIX, 6),
+                Arguments.arguments(Number.SEVEN, 7),
+                Arguments.arguments(Number.EIGHT, 8),
+                Arguments.arguments(Number.NINE, 9),
+                Arguments.arguments(Number.TEN, 10),
+                Arguments.arguments(Number.JACK, 10),
+                Arguments.arguments(Number.QUEEN, 10),
+                Arguments.arguments(Number.KING, 10)
         );
     }
 
@@ -49,8 +49,8 @@ public class CardsTest {
     @DisplayName("ACE 2개인 경우")
     void sum2() {
         // given
-        Cards cards = new Cards(Arrays.asList(new Card(Denomination.ACE, Suit.CLOVER)
-                , new Card(Denomination.ACE, Suit.HEART)));
+        Cards cards = new Cards(Arrays.asList(new Card(Number.ACE, Suit.CLOVER)
+                , new Card(Number.ACE, Suit.HEART)));
 
         // then
         assertThat(cards.sum()).isEqualTo(12);
@@ -61,9 +61,9 @@ public class CardsTest {
     void add() {
         // given
         List<Card> list = new ArrayList<>();
-        list.add(new Card(Denomination.ACE, Suit.CLOVER));
+        list.add(new Card(Number.ACE, Suit.CLOVER));
         Cards cards = new Cards(list);
-        Card newCard = new Card(Denomination.JACK, Suit.HEART);
+        Card newCard = new Card(Number.JACK, Suit.HEART);
 
         // when
         cards.add(newCard);

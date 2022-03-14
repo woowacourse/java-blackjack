@@ -14,8 +14,8 @@ public class CardDistributor {
 
     static {
         for (Suit suit : Suit.values()) {
-            for (Denomination denomination : Denomination.values()) {
-                CACHE.add(new Card(denomination, suit));
+            for (Number number : Number.values()) {
+                CACHE.add(new Card(number, suit));
             }
         }
     }

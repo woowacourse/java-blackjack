@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Card {
 
-    private final Denomination denomination;
+    private final Number number;
     private final Suit suit;
 
-    public Card(final Denomination denomination, final Suit suit) {
-        this.denomination = denomination;
+    public Card(final Number number, final Suit suit) {
+        this.number = number;
         this.suit = suit;
     }
 
-    public Denomination getDenomination() {
-        return denomination;
+    public Number getDenomination() {
+        return number;
     }
 
     public Suit getSuit() {
@@ -21,11 +21,11 @@ public class Card {
     }
 
     public int toInt() {
-        return this.denomination.getValue();
+        return this.number.getValue();
     }
 
     public boolean isAce() {
-        return this.denomination == Denomination.ACE;
+        return this.number == Number.ACE;
     }
 
     @Override
@@ -33,18 +33,18 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return denomination == card.denomination && suit == card.suit;
+        return number == card.number && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(denomination, suit);
+        return Objects.hash(number, suit);
     }
 
     @Override
     public String toString() {
         return "Card{" +
-                "denomination=" + denomination +
+                "denomination=" + number +
                 ", suit=" + suit +
                 '}';
     }
