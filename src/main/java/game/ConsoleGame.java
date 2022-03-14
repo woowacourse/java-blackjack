@@ -1,4 +1,4 @@
-package controller;
+package game;
 
 import domain.game.BlackJackGame;
 import domain.game.GameResult;
@@ -9,7 +9,7 @@ import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-public class BlackJackController {
+public class ConsoleGame {
 
     public void run() {
         BlackJackGame blackJackGame = createBlackJackGame();
