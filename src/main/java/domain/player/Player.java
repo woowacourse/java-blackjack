@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.MatchResult;
 import domain.card.Card;
 import domain.card.Cards;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public abstract class Player {
     public abstract boolean canGetMoreCard();
 
     public abstract List<Card> getOpenCards();
+
+    public abstract MatchResult match(Player another);
 
     public void addCard(Card card) {
         cards.addCard(card);
@@ -42,6 +45,14 @@ public abstract class Player {
 
     public List<Card> getCards() {
         return new ArrayList<>(cards.getCards());
+    }
+
+    protected boolean hasHigherScoreIgnoreBust(Player another) {
+        return this.getScore() > another.getScore();
+    }
+
+    protected boolean winByBlackJack(Player another) {
+        return this.isBlackJack() && !another.isBlackJack();
     }
 
     @Override

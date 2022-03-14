@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.MatchResult;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,5 +23,20 @@ public class Gambler extends Player {
     @Override
     public List<Card> getOpenCards() {
         return new ArrayList<>(cards.getCards());
+    }
+
+    @Override
+    public MatchResult match(Player dealer) {
+        if (this.isBust()) {
+            return MatchResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return MatchResult.WIN;
+        }
+        if (hasHigherScoreIgnoreBust(dealer) || winByBlackJack(dealer)) {
+            return MatchResult.WIN;
+        }
+
+        return MatchResult.DRAW;
     }
 }
