@@ -21,7 +21,7 @@ public class Blackjack {
 
     public void run() {
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        Game game = new Game(inputPlayerNames,new Dealer());
+        Game game = new Game(inputPlayerNames, new Dealer());
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToToTalUserDto(game.getDealer(), game.getPlayers()));
 
@@ -58,14 +58,14 @@ public class Blackjack {
         }
         while (dealer.isPossibleToAdd()) {
             OutputView.printAddDealerCard();
-            dealer.addCard();
+            dealer.requestAddCard();
         }
         return convertToToTalUserDto(dealer, players);
     }
 
     private void addCardPerPlayer(Player player) {
         while (InputView.askOneMoreCard(UserDto.from(player))) {
-            player.addCard();
+            player.requestAddCard();
             OutputView.printPlayerCard(UserDto.from(player));
         }
     }

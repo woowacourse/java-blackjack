@@ -19,7 +19,7 @@ class UserTest {
         player.cards.add(new Card(Shape.HEART, Number.JACK));
         player.cards.add(new Card(Shape.HEART, Number.TEN));
         player.cards.add(new Card(Shape.HEART, Number.ACE));
-        assertThatThrownBy(() -> player.addCard())
+        assertThatThrownBy(() -> player.requestAddCard())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExeptionMessage.CANNOT_ADD_CARD);
     }
