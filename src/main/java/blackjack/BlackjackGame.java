@@ -50,8 +50,8 @@ public class BlackjackGame {
     private void hitDealer(BlackjackTable blackjackTable) {
         while (blackjackTable.needMoreCardByDealer()) {
             blackjackTable.hitDealer();
+            OutputView.printReceivingMoreCardOfDealer();
         }
-        OutputView.printReceivingMoreCardOfDealer();
     }
 
     private PlayerCardResult toPlayerCard(Player player) {
