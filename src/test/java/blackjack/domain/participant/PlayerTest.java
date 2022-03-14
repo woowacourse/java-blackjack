@@ -66,6 +66,7 @@ class PlayerTest {
         void cannotHit() {
             final Participant player = Player.createNewPlayer("user", cards);
             player.hit(Card.of(SPADE, EIGHT));
+
             assertThat(player.canHit()).isFalse();
         }
     }
@@ -75,6 +76,7 @@ class PlayerTest {
     void hitException() {
         final Participant player = Player.createNewPlayer("user", cards);
         player.hit(Card.of(SPADE, EIGHT));
+
         assertThatThrownBy(() -> player.hit(Card.of(SPADE, NINE)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
@@ -86,6 +88,7 @@ class PlayerTest {
         final Participant player = Player.createNewPlayer("user", cards);
         final Card card = Card.of(SPADE, A);
         player.hit(card);
+
         assertThat(player.cards()).contains(card);
     }
 
@@ -94,6 +97,7 @@ class PlayerTest {
     void changeFinishStatus() {
         final Participant player = Player.createNewPlayer("user", cards);
         player.changeFinishStatus();
+
         assertThat(player.canHit()).isFalse();
     }
 
@@ -101,6 +105,7 @@ class PlayerTest {
     @DisplayName("턴이 종료되지 않은 경우에 카드의 합을 계산하려하면 예외를 발생시킨다.")
     void calculateResultScoreExceptionByNotEndTurn() {
         final Participant player = Player.createNewPlayer("user", cards);
+
         assertThatThrownBy(() -> player.calculateResultScore())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
@@ -111,6 +116,7 @@ class PlayerTest {
     void outcomeResultException() {
         final Participant player = Player.createNewPlayer("user", cards);
         final Participant dealer = Dealer.createNewDealer(createCards(Card.of(HEART, TEN), Card.of(HEART, SEVEN)));
+
         assertThatThrownBy(() -> player.fight(dealer))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 비교할 수 없습니다.");

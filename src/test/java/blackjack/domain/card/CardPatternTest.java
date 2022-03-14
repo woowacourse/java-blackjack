@@ -15,6 +15,7 @@ class CardPatternTest {
         final int distinctCount = (int) cardPatterns.stream()
                 .distinct()
                 .count();
+
         assertThat(distinctCount).isEqualTo(4);
     }
 }

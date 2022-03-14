@@ -18,6 +18,7 @@ class OutComeResultTest {
     void getDealerResult() {
         final Map<String, GameOutcome> playerResults = Map.of("a", WIN, "b", WIN);
         final OutComeResult outComeResult = OutComeResult.from(playerResults);
+
         assertThat(outComeResult.getDealerResult())
                 .containsExactly(entry(WIN, 0), entry(DRAW, 0), (entry(LOSE, 2)));
     }

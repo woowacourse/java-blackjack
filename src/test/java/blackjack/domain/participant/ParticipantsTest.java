@@ -58,6 +58,7 @@ class ParticipantsTest {
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
         participants.hitCurrentParticipant(Card.of(SPADE, JACK));
+
         assertThat(participants.isAllTurnEnd()).isTrue();
     }
 

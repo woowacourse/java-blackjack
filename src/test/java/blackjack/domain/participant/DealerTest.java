@@ -29,6 +29,7 @@ class DealerTest {
     void hitExceptionByLimitDealerScore() {
         final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
         final Participant dealer = Dealer.createNewDealer(cards);
+
         assertThatThrownBy(() -> dealer.hit(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
@@ -48,6 +49,7 @@ class DealerTest {
     void changeFinishStatusException() {
         final List<Card> cards = createCards(Card.of(SPADE, TWO), Card.of(SPADE, SEVEN));
         final Participant dealer = Dealer.createNewDealer(cards);
+
         assertThatThrownBy(() -> dealer.changeFinishStatus())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("딜러는 직접 게임을 종료할 권한이 없습니다.");

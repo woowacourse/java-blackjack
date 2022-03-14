@@ -24,6 +24,7 @@ class CardNumberTest {
         final int distinctCount = (int) cardNumbers.stream()
                 .distinct()
                 .count();
+
         assertThat(distinctCount).isEqualTo(13);
     }
 
@@ -49,6 +50,7 @@ class CardNumberTest {
     void calculateMaxScore() {
         final List<CardNumber> cardNumbers = Arrays.asList(A, A);
         final int result = CardNumber.calculateMaxScore(cardNumbers);
+
         assertThat(result).isEqualTo(22);
     }
 }

@@ -49,6 +49,7 @@ class GameOutcomeTest {
 
         final List<Card> dealerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, A));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
+
         assertThat(player.fight(dealer)).isEqualTo(DRAW);
     }
 
@@ -61,6 +62,7 @@ class GameOutcomeTest {
 
         final List<Card> dealerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, JACK));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
+
         assertThat(player.fight(dealer)).isEqualTo(WIN);
     }
 
@@ -73,6 +75,7 @@ class GameOutcomeTest {
 
         final List<Card> dealerCards = Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
+
         assertThat(player.fight(dealer)).isEqualTo(LOSE);
     }
 
@@ -87,6 +90,7 @@ class GameOutcomeTest {
         final List<Card> dealerCards = Arrays.asList(Card.of(SPADE, SEVEN), Card.of(SPADE, NINE));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
         dealer.hit(Card.of(SPADE, FIVE));
+
         assertThat(player.fight(dealer)).isEqualTo(DRAW);
     }
 
@@ -101,6 +105,7 @@ class GameOutcomeTest {
         final List<Card> dealerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, SIX));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
         dealer.hit(Card.of(HEART, JACK));
+
         assertThat(player.fight(dealer)).isEqualTo(LOSE);
     }
 
@@ -114,6 +119,7 @@ class GameOutcomeTest {
 
         final List<Card> dealerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, QUEEN));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
+
         assertThat(player.fight(dealer)).isEqualTo(LOSE);
     }
 
@@ -127,6 +133,7 @@ class GameOutcomeTest {
         final List<Card> dealerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, SIX));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
         dealer.hit(Card.of(HEART, JACK));
+
         assertThat(player.fight(dealer)).isEqualTo(WIN);
     }
 

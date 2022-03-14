@@ -15,6 +15,7 @@ public class CardTest {
         final int distinctCount = (int) cards.stream()
                 .distinct()
                 .count();
+
         assertThat(distinctCount).isEqualTo(52);
     }
 }

@@ -21,6 +21,7 @@ class GameStatusTest {
         final GameStatus gameStatus = GameStatus.RUNNING;
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
         cards.addCard(Card.of(SPADE, JACK));
+
         assertThat(gameStatus.refreshStatus(cards)).isEqualTo(GameStatus.BUST);
     }
 
@@ -29,6 +30,7 @@ class GameStatusTest {
     void refreshStatusByBlackJack() {
         final GameStatus gameStatus = GameStatus.RUNNING;
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A)));
+
         assertThat(gameStatus.refreshStatus(cards)).isEqualTo(GameStatus.BLACKJACK);
     }
 }
