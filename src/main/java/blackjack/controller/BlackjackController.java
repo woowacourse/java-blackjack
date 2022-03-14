@@ -8,7 +8,6 @@ import blackjack.domain.user.UserName;
 import blackjack.domain.result.OutcomeResults;
 import blackjack.domain.user.Player;
 import blackjack.domain.card.deck.RandomDeck;
-import blackjack.domain.result.Outcome;
 import blackjack.domain.result.Results;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;

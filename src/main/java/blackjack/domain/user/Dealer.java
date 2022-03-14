@@ -6,9 +6,6 @@ public class Dealer extends User {
 
     private static final UserName DEALER_NAME = new UserName("딜러");
     private static final int SEVEN_TEEN = 17;
-//    private static final int WIN = 1;
-//    private static final int DRAW = 0;
-//    private static final int LOSE = -1;
 
     public Dealer() {
         super(DEALER_NAME);

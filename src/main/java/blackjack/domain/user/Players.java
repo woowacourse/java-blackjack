@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.deck.Deck;
 import java.util.List;
-import java.util.Objects;
 
 public class Players {
 

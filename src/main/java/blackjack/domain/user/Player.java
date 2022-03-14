@@ -5,9 +5,6 @@ import blackjack.domain.result.Outcome;
 public class Player extends User {
 
     private static final int TWENTY_ONE = 21;
-    private static final int WIN = 1;
-    private static final int DRAW = 0;
-    private static final int LOSE = -1;
 
     public Player(UserName playerName) {
         super(playerName);
