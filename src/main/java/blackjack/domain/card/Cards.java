@@ -66,12 +66,11 @@ public class Cards {
                 .sum();
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(this.cards);
-    }
-
     public static int getMaxScore() {
         return MAX_SCORE;
     }
 
+    public List<Card> getCards() {
+        return List.copyOf(this.cards);
+    }
 }

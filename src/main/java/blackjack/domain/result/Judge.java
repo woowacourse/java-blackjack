@@ -18,7 +18,7 @@ public class Judge {
     }
 
     private static void calculateDealerResult(final DealerResult dealerResult, final Players players) {
-        players.initPointer();
+        players.initParticipantPointer();
         while (!players.isParticipantPointerEnd()) {
             boolean isDealerWin = players.competeWithPointParticipant();
             updateDealerResult(dealerResult, isDealerWin);
@@ -27,7 +27,7 @@ public class Judge {
     }
 
     private static void calculateParticipantsResult(final List<ParticipantResult> participantResults, final Players players) {
-        players.initPointer();
+        players.initParticipantPointer();
         while (!players.isParticipantPointerEnd()) {
             boolean isDealerWin = players.competeWithPointParticipant();
             participantResults.add(makeParticipantResult(players.pointParticipantName(), isDealerWin));

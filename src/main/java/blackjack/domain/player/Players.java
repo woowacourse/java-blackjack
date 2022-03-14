@@ -43,7 +43,7 @@ public class Players {
         }
     }
 
-    public void initPointer() {
+    public void initParticipantPointer() {
         participantPointer = 0;
     }
 
@@ -55,19 +55,11 @@ public class Players {
         return participantScore > Cards.getMaxScore() || (dealerScore <= Cards.getMaxScore() && dealerScore >= participantScore);
     }
 
-    public Player getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getParticipants() {
-        return List.copyOf(participants);
-    }
-
     public boolean isDealerAcceptableCard() {
         return dealer.acceptableCard();
     }
 
-    public void addParticipantCard(Card card) {
+    public void addPointParticipantCard(Card card) {
         pointParticipant().addCard(card);
     }
 
@@ -96,5 +88,13 @@ public class Players {
 
     public String pointParticipantName() {
         return pointParticipant().getName();
+    }
+
+    public Player getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getParticipants() {
+        return List.copyOf(participants);
     }
 }

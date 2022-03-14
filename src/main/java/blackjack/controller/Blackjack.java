@@ -55,7 +55,7 @@ public class Blackjack {
     }
 
     private void decideParticipantsMoreCard(final Players players, final Deck deck) {
-        players.initPointer();
+        players.initParticipantPointer();
         while (!players.isParticipantPointerEnd()) {
             decideParticipantMoreCard(players, deck);
             players.moveParticipantPointer();
@@ -64,7 +64,7 @@ public class Blackjack {
 
     private void decideParticipantMoreCard(final Players players, final Deck deck) {
         while (isNotOverMaxScore(players) && InputView.oneMoreCard(players.pointParticipantName())) {
-            players.addParticipantCard(deck.draw());
+            players.addPointParticipantCard(deck.draw());
             OutputView.printPlayerCardInfo(players.pointParticipant());
         }
     }
