@@ -1,6 +1,6 @@
 package blackJack.view;
 
-import blackJack.dto.UserDto;
+import blackJack.domain.User.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +32,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean askOneMoreCard(UserDto player) {
+    public static boolean askOneMoreCard(Player player) {
         System.out.printf(ONE_MORE_CARD_MESSAGE, player.getName());
         String input = input();
         validateYesOrNo(input);

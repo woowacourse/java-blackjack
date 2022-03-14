@@ -5,6 +5,7 @@ import blackJack.domain.Card.Cards;
 import blackJack.utils.ExeptionMessage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static blackJack.domain.Card.CardFactory.CARD_CACHE;
 
@@ -37,8 +38,8 @@ public abstract class User {
         return name;
     }
 
-    public Cards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return cards.getDeck();
     }
 
     public int getScore() {
@@ -51,6 +52,4 @@ public abstract class User {
         }
         return false;
     }
-
-    ;
 }

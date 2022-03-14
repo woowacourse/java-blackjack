@@ -1,10 +1,17 @@
 package blackJack.view;
 
-import blackJack.dto.DealerResultDto;
-import blackJack.dto.PlayerResultDto;
-import blackJack.dto.UserDto;
+import blackJack.domain.Card.Card;
+import blackJack.domain.DealerScore;
+import blackJack.domain.PlayerScore;
+import blackJack.domain.Result;
+import blackJack.domain.User.Dealer;
+import blackJack.domain.User.Player;
+import blackJack.domain.User.Players;
+import blackJack.domain.User.User;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -23,39 +30,45 @@ public class OutputView {
         System.out.printf(DRAW_MESSAGE, userNames.stream().collect(Collectors.joining(DELIMITER)));
     }
 
-    public static void printTotalUserCards(List<UserDto> users) {
-        for (UserDto userDto : users) {
-            if (userDto.getName().equals(DEALER)) {
-                System.out.println(String.format(CARD_FORMAT, userDto.getName(), userDto.getCards().get(0)));
-                continue;
-            }
-            printPlayerCard(userDto);
+    public static void printTotalUserCards(Dealer dealer, Players players) {
+        System.out.println(String.format(CARD_FORMAT, dealer.getName(), dealer.getCards().get(0)));
+        for (Player player : players.getPlayers()) {
+            printPlayerCard(player);
         }
     }
 
-    public static void printPlayerCard(UserDto userDto) {
-        String cards = userDto.getCards().stream().collect(Collectors.joining(DELIMITER));
-        System.out.println(String.format(CARD_FORMAT, userDto.getName(), cards));
+    public static void printPlayerCard(Player player) {
+        String cards = player.getCards().stream()
+                .map(Card::getCardInfo)
+                .collect(Collectors.joining(DELIMITER));
+        System.out.println(String.format(CARD_FORMAT, player.getName(), cards));
     }
 
     public static void printAddDealerCard() {
         System.out.println(ADD_DEALER_CARD_MESSAGE);
     }
 
-    public static void printTotalResult(List<UserDto> userDtos) {
-        for (UserDto userDto : userDtos) {
-            String cards = userDto.getCards().stream().collect(Collectors.joining(DELIMITER));
-            System.out.println(String.format(CARD_FORMAT + SCORE_FORMAT, userDto.getName(), cards, userDto.getScore()));
+    public static void printTotalResult(List<User> users) {
+        for (User user : users) {
+            String cards = user.getCards().stream()
+                    .map(Card::getCardInfo)
+                    .collect(Collectors.joining(DELIMITER));
+            System.out.println(String.format(CARD_FORMAT + SCORE_FORMAT, user.getName(), cards, user.getScore()));
         }
     }
 
-    public static void printFinalResult(List<PlayerResultDto> resultDtos, DealerResultDto dealerDto) {
+    public static void printFinalResult(String dealerName, DealerScore dealerScore, PlayerScore playerScore) {
         System.out.println(FINAL_RESULT_MESSAGE);
-
-        System.out.println(String.format(NAME_FORMAT + DEALER_RESULT_FORMAT, dealerDto.getName(), dealerDto.getDealerWinCount(), dealerDto.getDealerLoseCount(), dealerDto.getDealerDrawCount()));
-        for (PlayerResultDto resultDto : resultDtos) {
-            System.out.println(String.format(NAME_FORMAT + PLAYER_RESULT_FORMAT, resultDto.getName(), resultDto.getResult()));
+        Integer lose = dealerScore.getDealerScore().get(Result.LOSE);
+        Integer draw = dealerScore.getDealerScore().get(Result.DRAW);
+        Integer win = dealerScore.getDealerScore().get(Result.WIN);
+        System.out.println(String.format(NAME_FORMAT + DEALER_RESULT_FORMAT, dealerName, win, lose, draw));
+        for (Map.Entry<String, Result> playerResult : playerScore.getPlayersScore().entrySet()) {
+            System.out.println(String.format(NAME_FORMAT + PLAYER_RESULT_FORMAT, playerResult.getKey(), playerResult.getValue()));
         }
+    }
 
+    public static void printTotalResult(Dealer dealer, Players players) {
     }
 }
+

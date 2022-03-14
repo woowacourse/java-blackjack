@@ -9,11 +9,11 @@ public class Card {
         this.number = number;
     }
 
-    public Shape getShape() {
-        return shape;
-    }
-
     public Number getNumber() {
         return number;
+    }
+
+    public String getCardInfo() {
+        return number.getDenomination() + shape.getShapeName();
     }
 }
