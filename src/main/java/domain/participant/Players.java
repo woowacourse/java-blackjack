@@ -19,13 +19,13 @@ public class Players {
     private final List<Player> players;
 
     public Players(List<Name> names, List<List<Card>> initCards) {
-        validateInitCardsSize(names, initCards);
+        validateInitCardsForPlayers(names, initCards);
         this.players = IntStream.range(0, names.size())
                 .mapToObj(i -> new Player(names.get(i), initCards.get(i)))
                 .collect(Collectors.toList());
     }
 
-    private void validateInitCardsSize(List<Name> names, List<List<Card>> initCards) {
+    private void validateInitCardsForPlayers(List<Name> names, List<List<Card>> initCards) {
         if (names.size() > initCards.size()) {
             throw new IllegalArgumentException(NOT_ENOUGH_CARDS_FOR_INIT_PLAYER_ERROR_MESSAGE);
         }
@@ -35,11 +35,11 @@ public class Players {
         List<Player> matchNamePlayers = players.stream()
                 .filter(player -> player.isNameMatch(name))
                 .collect(Collectors.toList());
-        validateNameForFind(matchNamePlayers);
+        validateNameForFindByName(matchNamePlayers);
         return matchNamePlayers.get(FIND_FIRST_INDEX);
     }
 
-    private void validateNameForFind(List<Player> matchNamePlayers) {
+    private void validateNameForFindByName(List<Player> matchNamePlayers) {
         if (matchNamePlayers.size() != SINGLE_ELEMENT) {
             throw new IllegalArgumentException(CANT_FIND_PLAYER_ERROR_MESSAGE);
         }

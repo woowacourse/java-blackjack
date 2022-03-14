@@ -19,7 +19,7 @@ public class Controller {
         List<Name> names = InputView.inputNames();
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
-        Players players = new Players(names, generateInitCardsForPlayers(names, deck));
+        Players players = new Players(names, generateInitCardsForPlayers(names.size(), deck));
 
         OutputView.printParticipantInitHands(names, dealer, players);
         if (dealer.isBlackJack()) {
@@ -35,11 +35,10 @@ public class Controller {
         OutputView.printResult(names, new Result(players.getResultAtFinal(dealer)));
     }
 
-    private List<List<Card>> generateInitCardsForPlayers(List<Name> names, Deck deck) {
-        List<List<Card>> initCardForPlayers = IntStream.range(0, names.size())
+    private List<List<Card>> generateInitCardsForPlayers(int playerCount, Deck deck) {
+        return IntStream.range(0, playerCount)
                 .mapToObj(i -> new InitCards(deck).getInitCards())
                 .collect(Collectors.toList());
-        return initCardForPlayers;
     }
 
     private void drawForPlayers(List<Name> names, Deck deck, Players players) {

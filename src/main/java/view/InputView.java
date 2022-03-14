@@ -1,7 +1,6 @@
 package view;
 
 import domain.participant.Name;
-import domain.result.Versus;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -23,11 +22,11 @@ public class InputView {
                 .map(String::trim)
                 .map(Name::new)
                 .collect(Collectors.toList());
-        checkDuplicate(names);
+        validateNames(names);
         return names;
     }
 
-    private static void checkDuplicate(List<Name> names) {
+    private static void validateNames(List<Name> names) {
         if (new HashSet<>(names).size() != names.size()) {
             throw new IllegalArgumentException(NAME_DUPLICATE_ERROR_MESSAGE);
         }
@@ -37,10 +36,7 @@ public class InputView {
         System.out.printf(INPUT_ASk_DRAW_MESSAGE_FORMAT, name);
         String askDraw = scanner.nextLine();
         validateAskDraw(askDraw);
-        if (askDraw.equals("y")) {
-            return true;
-        }
-        return false;
+        return askDraw.equals("y");
     }
 
     private static void validateAskDraw(String askDraw) {
