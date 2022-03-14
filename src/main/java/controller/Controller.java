@@ -79,6 +79,7 @@ public class Controller {
 	private void printBlackJackResult(Dealer dealer, Players players) {
 		OutputView.printBlackJackResultTitle();
 		Result blackjackResult = new Result(players.getResultAtBlackJack(dealer));
+
 		OutputView.printResultTitle();
 		OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),
 			blackjackResult.getDealerLoseCount());
@@ -114,6 +115,7 @@ public class Controller {
 			OutputView.printMaxScoreMessage();
 			return false;
 		}
+		
 		if (players.checkBustByName(name)) {
 			OutputView.printBustMessage();
 			return false;
@@ -133,6 +135,7 @@ public class Controller {
 			dealer.getHand().stream().map(Card::getCardInfo)
 				.collect(Collectors.toList()),
 			dealer.getBestScore());
+
 		List<String> names = convertNamesToString(players.getNames());
 		List<List<String>> cards = convertCardsToString(players.getCardsOfAll());
 		List<Integer> scores = players.getScores();
@@ -144,6 +147,7 @@ public class Controller {
 
 	private void printFinalResult(Dealer dealer, Players players) {
 		Result finalResult = new Result(players.getResultAtFinal(dealer));
+
 		OutputView.printResultTitle();
 		OutputView.printDealerResult(
 			finalResult.getDealerWinCount(),
