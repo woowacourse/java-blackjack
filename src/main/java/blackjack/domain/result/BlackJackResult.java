@@ -7,8 +7,8 @@ import blackjack.domain.gamer.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
+import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
 import static blackjack.domain.gamer.Gamer.MAX_CARD_VALUE;
-import static blackjack.domain.gamer.Gamers.INIT_DISTRIBUTION_COUNT;
 
 
 public enum BlackJackResult {
