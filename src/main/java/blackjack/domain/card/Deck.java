@@ -7,15 +7,15 @@ public class Deck {
     private final LinkedList<Card> deck;
 
     public Deck() {
-        this.deck = new LinkedList<>(createDeck());
+        this.deck = createDeck();
         Collections.shuffle(this.deck);
     }
 
-    private List<Card> createDeck() {
+    private LinkedList<Card> createDeck() {
         return Arrays.stream(CardShape.values())
                 .flatMap(shape -> Arrays.stream(CardNumber.values())
                         .map(number -> new Card(shape, number)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     public Card draw() {
