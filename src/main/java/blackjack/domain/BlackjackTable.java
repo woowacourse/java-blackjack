@@ -14,8 +14,10 @@ import blackjack.dto.PlayerGameResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BlackjackTable {
+
     private final Deck deck;
     private final Players players;
 
@@ -59,11 +61,9 @@ public class BlackjackTable {
     }
 
     public List<PlayerGameResult> getGameResults() {
-        Map<PlayerOutcome, List<Player>> gameResult = players.getGameResult();
-
-        return gameResult.keySet().stream()
-            .flatMap(outcome -> gameResult.get(outcome).stream()
-                .map(player -> new PlayerGameResult(player.getName(), outcome)))
+        Map<PlayerOutcome, List<Player>> gameResults = players.getGameResults();
+        return gameResults.keySet().stream()
+            .flatMap(outcome -> toPlayerGameResult(gameResults, outcome))
             .collect(Collectors.toList());
     }
 
@@ -85,4 +85,11 @@ public class BlackjackTable {
         );
     }
 
+    private Stream<PlayerGameResult> toPlayerGameResult(
+        Map<PlayerOutcome, List<Player>> gameResult,
+        PlayerOutcome outcome
+    ) {
+        return gameResult.get(outcome).stream()
+            .map(player -> new PlayerGameResult(player.getName(), outcome));
+    }
 }

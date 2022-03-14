@@ -26,7 +26,7 @@ public class Players {
         dealer.addCard(card);
     }
 
-    public Map<PlayerOutcome, List<Player>> getGameResult() {
+    public Map<PlayerOutcome, List<Player>> getGameResults() {
         return players.stream()
                 .collect(Collectors.groupingBy(player -> player.match(dealer)));
     }
