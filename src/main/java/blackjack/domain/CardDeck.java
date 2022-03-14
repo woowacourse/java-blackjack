@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Queue;
 
 public class CardDeck {
-    public static final Queue<Card> cardDeck = new LinkedList<>();
+    public final Queue<Card> cardDeck = new LinkedList<>();
 
     public CardDeck(CardGenerator cardGenerator) {
         List<Card> cards = cardGenerator.generate();
