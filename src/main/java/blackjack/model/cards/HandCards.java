@@ -2,23 +2,18 @@ package blackjack.model.cards;
 
 import blackjack.model.card.Card;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-final class HandCards implements Cards{
+final class HandCards implements TakableCards {
 
     private final List<Card> values;
 
     HandCards(Card card1, Card card2, Card... cards) {
         this.values = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
-    }
-
-    HandCards(Cards cards) {
-        this.values = List.copyOf(cards.values());
     }
 
     private HandCards(List<Card> cards) {

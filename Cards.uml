@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>blackjack.model.cards.BestScoreCards</OriginalElement>
+  <nodes>
+    <node x="0.0" y="240.0">blackjack.model.cards.BestScoreCards</node>
+    <node x="104.0" y="160.0">blackjack.model.cards.ScoreCards</node>
+    <node x="180.0" y="240.0">blackjack.model.cards.MaxScoreCards</node>
+    <node x="252.0" y="160.0">blackjack.model.cards.HandCards</node>
+    <node x="168.0" y="80.0">blackjack.model.cards.TakableCards</node>
+    <node x="196.0" y="0.0">blackjack.model.cards.Cards</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="blackjack.model.cards.MaxScoreCards" target="blackjack.model.cards.ScoreCards">
+      <point x="0.0" y="-15.0" />
+      <point x="256.0" y="215.0" />
+      <point x="200.0" y="215.0" />
+      <point x="32.0" y="15.0" />
+    </edge>
+    <edge source="blackjack.model.cards.ScoreCards" target="blackjack.model.cards.TakableCards">
+      <point x="0.0" y="-15.0" />
+      <point x="168.0" y="135.0" />
+      <point x="204.0" y="135.0" />
+      <point x="-36.0" y="15.0" />
+    </edge>
+    <edge source="blackjack.model.cards.BestScoreCards" target="blackjack.model.cards.ScoreCards">
+      <point x="0.0" y="-15.0" />
+      <point x="80.0" y="215.0" />
+      <point x="136.0" y="215.0" />
+      <point x="-32.0" y="15.0" />
+    </edge>
+    <edge source="blackjack.model.cards.HandCards" target="blackjack.model.cards.TakableCards">
+      <point x="0.0" y="-15.0" />
+      <point x="312.0" y="135.0" />
+      <point x="276.0" y="135.0" />
+      <point x="36.0" y="15.0" />
+    </edge>
+    <edge source="blackjack.model.cards.TakableCards" target="blackjack.model.cards.Cards">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="186.0" y="135.0" />
+  <SelectedNodes>
+    <node>blackjack.model.cards.BestScoreCards</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

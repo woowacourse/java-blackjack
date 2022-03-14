@@ -4,11 +4,11 @@ import blackjack.model.card.Card;
 import java.util.Collection;
 import java.util.Objects;
 
-public abstract class ScoreCards implements Cards {
+public abstract class ScoreCards implements TakableCards {
 
-    private final Cards cards;
+    private final TakableCards cards;
 
-    public ScoreCards(Cards cards) {
+    public ScoreCards(TakableCards cards) {
         this.cards = cards;
     }
 

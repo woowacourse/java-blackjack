@@ -4,7 +4,7 @@ import blackjack.model.card.Card;
 
 final class MaxScoreCards extends ScoreCards{
 
-    MaxScoreCards(Cards cards) {
+    MaxScoreCards(TakableCards cards) {
         super(cards);
     }
 

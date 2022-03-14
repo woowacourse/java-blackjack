@@ -9,6 +9,7 @@ import blackjack.model.blackjack.Records;
 import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
+import blackjack.model.cards.TakableCards;
 import blackjack.model.cards.Score;
 import blackjack.model.cards.ScoreCards;
 import java.util.Map;
@@ -25,9 +26,9 @@ public final class Dealer extends Player {
         this(Cards.of(card1, card2, cards));
     }
 
-    private Dealer(Cards ownCards) {
-        super(NAME, ownCards);
-        this.cards = Cards.maxScoreCards(ownCards);
+    private Dealer(TakableCards cards) {
+        super(NAME, cards);
+        this.cards = Cards.maxScoreCards(cards);
     }
 
     public Records matchAll(Players players) {

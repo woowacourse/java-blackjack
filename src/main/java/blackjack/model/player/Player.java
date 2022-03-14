@@ -2,6 +2,7 @@ package blackjack.model.player;
 
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
+import blackjack.model.cards.TakableCards;
 import blackjack.model.cards.Score;
 import blackjack.model.cards.ScoreCards;
 
@@ -17,7 +18,7 @@ public class Player {
         this(name, Cards.of(card1, card2, cards));
     }
 
-    protected Player(Name name, Cards cards) {
+    protected Player(Name name, TakableCards cards) {
         this.name = name;
         this.cards = Cards.bestScoreCards(cards);
     }
@@ -31,7 +32,7 @@ public class Player {
     }
 
     public final Cards cards() {
-        return Cards.copyOf(cards);
+        return cards;
     }
 
     public final void take(Card card) {

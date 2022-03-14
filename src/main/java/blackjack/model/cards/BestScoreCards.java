@@ -5,7 +5,7 @@ import blackjack.model.card.Rank;
 
 final class BestScoreCards extends ScoreCards {
 
-    BestScoreCards(Cards cards) {
+    BestScoreCards(TakableCards cards) {
         super(cards);
     }
 
