@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -55,19 +56,12 @@ public class OutputView {
     public static void printFinalResult(Dealer dealer, Players players) {
         System.out.println();
         System.out.println("## 최종 승패");
-        Map<Player, Boolean> resultCounter = players.judgeResult(dealer.calculateBestScore());
+        Map<Player, Result> resultCounter = players.judgeResult(dealer.calculateBestScore());
         System.out.println(dealer.getName().getValue() + ": " +
-                resultCounter.values().stream().filter(Predicate.not(Boolean::booleanValue)).count() + "승" +
-                resultCounter.values().stream().filter(Boolean::booleanValue).count() + "패");
+                resultCounter.values().stream().filter(result -> result == Result.WIN).count() + "승" +
+                resultCounter.values().stream().filter(result -> result == Result.TIE).count() + "무" +
+                resultCounter.values().stream().filter(result -> result == Result.LOSE).count() + "패");
         resultCounter.forEach((player, result)
-                -> System.out.println(player.getName().getValue() + ": " + isWin(result)));
+                -> System.out.println(player.getName().getValue() + ": " + result.getResult()));
     }
-
-    private static String isWin(boolean result) {
-        if (result) {
-            return "승";
-        }
-        return "패";
-    }
-
 }

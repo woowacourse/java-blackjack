@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Result;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,10 +29,10 @@ public class Players {
         }
     }
 
-    public Map<Player, Boolean> judgeResult(int score) {
-        Map<Player, Boolean> result = new HashMap<>();
+    public Map<Player, Result> judgeResult(int score) {
+        Map<Player, Result> result = new HashMap<>();
         for (Player player : players) {
-            result.put(player, player.isWinner(score));
+            result.put(player, player.judgeResult(score));
         }
         return result;
     }

@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Kind;
 import blackjack.domain.card.Number;
+import blackjack.domain.card.Result;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,7 @@ class PlayerTest {
         player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
                 Card.from(Number.NINE, Kind.SPADE))), 2);
 
-        assertThat(player.isWinner(19)).isTrue();
+        assertThat(player.judgeResult(19)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("딜러의 점수가 더 높은 경우 패배 테스트")
@@ -61,10 +61,10 @@ class PlayerTest {
         player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
                 Card.from(Number.NINE, Kind.SPADE))), 2);
 
-        assertThat(player.isWinner(21)).isFalse();
+        assertThat(player.judgeResult(21)).isEqualTo(Result.LOSE);
     }
 
-    @DisplayName("플레이어가 버스트된 경우 패배 테스트")
+    @DisplayName("플레이어만 버스트된 경우 패배 테스트")
     @Test
     void isWinner_PlayerBusted_isLose() {
         Player player = Player.of("Pobi");
@@ -72,20 +72,20 @@ class PlayerTest {
                 Card.from(Number.NINE, Kind.CLOVER),
                 Card.from(Number.NINE, Kind.HEART))), 2);
 
-        assertThat(player.isWinner(19)).isFalse();
+        assertThat(player.judgeResult(19)).isEqualTo(Result.LOSE);
     }
 
-    @DisplayName("딜러가 버스트된 경우 승리 테스트")
+    @DisplayName("딜러만 버스트된 경우 승리 테스트")
     @Test
     void isWinner_DealerBusted_isWin() {
         Player player = Player.of("Pobi");
         player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
                 Card.from(Number.NINE, Kind.SPADE))), 2);
 
-        assertThat(player.isWinner(22)).isTrue();
+        assertThat(player.judgeResult(22)).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("둘 다 버스트된 경우 패배 테스트")
+    @DisplayName("둘 다 버스트된 경우 무승부 테스트")
     @Test
     void isWinner_BothBusted_isLose() {
         Player player = Player.of("Pobi");
@@ -93,7 +93,7 @@ class PlayerTest {
                 Card.from(Number.NINE, Kind.CLOVER),
                 Card.from(Number.NINE, Kind.HEART))), 3);
 
-        assertThat(player.isWinner(22)).isFalse();
+        assertThat(player.judgeResult(22)).isEqualTo(Result.TIE);
     }
 
     @DisplayName("Ace만 있을 시 베스트 점수 계산 테스트")

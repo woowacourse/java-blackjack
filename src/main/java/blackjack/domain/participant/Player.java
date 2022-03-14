@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
+import blackjack.domain.card.Result;
 import java.util.List;
 
 public class Player extends Participant {
@@ -45,8 +46,14 @@ public class Player extends Participant {
         return sum;
     }
 
-    public boolean isWinner(int score) {
-        return !isBusted(calculateBestScore()) && (isBusted(score) || isCloserToBestScore(score));
+    public Result judgeResult(int score) {
+        if (isBusted(score) && isBusted(calculateBestScore()) || calculateBestScore() == score) {
+            return Result.TIE;
+        }
+        if (isBusted(calculateBestScore()) || (!isBusted(score) && !isCloserToBestScore(score))) {
+            return Result.LOSE;
+        }
+        return Result.WIN;
     }
 
     private boolean isBusted(int score) {
