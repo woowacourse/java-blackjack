@@ -2,6 +2,9 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Card {
 
     private final CardSymbol symbol;
@@ -47,9 +50,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-            "symbol=" + symbol +
-            ", number=" + number +
-            '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
     }
 }

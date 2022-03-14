@@ -6,6 +6,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import blackjack.domain.PlayStatus;
 
 public class Cards {
@@ -53,8 +56,6 @@ public class Cards {
 
     @Override
     public String toString() {
-        return "Cards{" +
-            "value=" + value +
-            '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
     }
 }

@@ -12,14 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardTest {
 
-    private static Stream<Arguments> provideCard() {
-        return Stream.of(
-            Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.ACE), 1),
-            Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.JACK), 10),
-            Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.TEN), 10)
-        );
-    }
-
     @ParameterizedTest
     @CsvSource(value = {"DIAMOND", "CLUB", "HEART", "SPADE"})
     @DisplayName("주어진 모양과 숫자의 카드를 생성한다.")
@@ -57,5 +49,13 @@ class CardTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCard() {
+        return Stream.of(
+            Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.ACE), 1),
+            Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.JACK), 10),
+            Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.TEN), 10)
+        );
     }
 }
