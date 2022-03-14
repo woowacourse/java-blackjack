@@ -13,8 +13,8 @@ public class Application {
 
         blackJackGame.hitOrStayUntilPossible(InputView::inputHitOrStaySign, ResultView::printCurrentTurnHitResult);
 
+        ResultView.printFinalResult(blackJackGame.getDealer(), blackJackGame.getGamers());
         /*
-        ResultView.printFinalScores(DealerDto.from(blackJackGame.getDealer()), GamersDto.from(blackJackGame));
         ResultView.printMatchResult(DealerMatchResultsDto.from(blackJackGame),
                 GamerMatchResultsDto.from(blackJackGame));
         */

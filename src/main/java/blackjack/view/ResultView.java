@@ -69,34 +69,23 @@ public class ResultView {
             System.out.printf(DEALER_HIT_MESSAGE_FORMAT, dealer.getName(), count);
         }
     }
-/*
-    public static void printFinalScores(DealerDto dealer, GamersDto gamers) {
-        printDealerScore(dealer);
-        printGamerScores(gamers);
+
+    public static void printFinalResult(Player dealer, List<Player> gamers) {
+        printResultOf(dealer);
+        for (Player gamer : gamers) {
+            printResultOf(gamer);
+        }
     }
 
-    private static void printDealerScore(DealerDto dealer) {
+    private static void printResultOf(Player dealer) {
         StringJoiner cardJoiner = new StringJoiner(", ");
         for (String card : dealer.getCards()) {
             cardJoiner.add(card);
         }
-        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, dealer.getName(), cardJoiner, dealer.getScore());
+        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, dealer.getName(), cardJoiner, dealer.sumCardsScore());
     }
 
-    private static void printGamerScores(GamersDto gamers) {
-        for (GamerDto gamer : gamers.getGamers()) {
-            printGamerScore(gamer);
-        }
-    }
-
-    private static void printGamerScore(GamerDto gamer) {
-        StringJoiner cardJoiner = new StringJoiner(", ");
-        for (String card : gamer.getCards()) {
-            cardJoiner.add(card);
-        }
-        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, gamer.getName(), cardJoiner, gamer.getScore());
-    }
-
+/*
     public static void printMatchResult(DealerMatchResultsDto dealerMatchResults,
                                         GamerMatchResultsDto gamerMatchResults) {
         printDealerMatchResult(dealerMatchResults);

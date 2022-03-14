@@ -24,6 +24,10 @@ public abstract class Player {
         return cards.countAddedCard();
     }
 
+    public int sumCardsScore() {
+        return cards.sumScore();
+    }
+
     public boolean isWinBy(Player otherPlayer) {
         return cards.sumScore() > otherPlayer.cards.sumScore();
     }
