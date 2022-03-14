@@ -11,6 +11,7 @@ public class CardStackGenerator {
         return new CardStackImpl(List.of(cards));
     }
 
+    // TODO: 클래스명 변경
     private static class CardStackImpl implements CardStack {
         final LinkedList<Card> cards = new LinkedList<>();
 

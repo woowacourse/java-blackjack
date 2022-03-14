@@ -1,18 +1,16 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.requestMorePlayerCardInput;
-import static blackjack.view.OutputView.printPlayerBustInfo;
-import static blackjack.view.OutputView.printPlayerCardsInfo;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.ResultStatistics;
-import blackjack.domain.game.ResultType;
-import blackjack.domain.game.Score;
+import blackjack.domain.game.dto.DealerMatchDto;
+import blackjack.domain.game.dto.PlayerMatchDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.ArrayList;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
     public BlackjackGame initializeGame(List<String> playerNames) {
@@ -21,76 +19,30 @@ public class BlackjackController {
 
     public void givePlayerCards(Player player, BlackjackGame game) {
         while (player.canReceive()) {
-            if (!requestMorePlayerCardInput(player.getName())) {
+            if (!InputView.requestMorePlayerCardInput(player.getName())) {
                 return;
             }
             player.receiveCard(game.popCard());
-            printPlayerCardsInfo(player);
+            OutputView.printPlayerCardsInfo(player);
         }
 
-        printPlayerBustInfo();
+        OutputView.printPlayerBustInfo();
     }
 
-    public List<ResultStatistics> finishGame(BlackjackGame game) {
+    public void printDealerMatchDto(BlackjackGame game) {
+        DealerMatchDto dealerMatchDto = DealerMatchDto.of(game.getDealer(), game.getParticipants());
+        OutputView.printDealerMatchResult(dealerMatchDto);
+    }
+
+    public void printPlayersMatchDto(BlackjackGame game) {
         Dealer dealer = game.getDealer();
-        List<Player> players = game.getParticipants();
 
-        ResultStatistics dealerResult = ResultStatistics.of(dealer.getName());
-        Score dealerScore = dealer.getCurrentScore();
+        List<PlayerMatchDto> playerMatchDtos = game.getParticipants()
+                .stream()
+                .map(player -> PlayerMatchDto.of(player, dealer))
+                .collect(Collectors.toList());
 
-        if (dealerScore.toInt() > Score.BLACKJACK) {
-            return getResultsOnDealerBust(players, dealerResult);
-        }
-
-        List<ResultStatistics> results = getResults(players, dealerResult, dealerScore);
-        results.add(0, dealerResult);
-
-        return results;
-    }
-
-    private List<ResultStatistics> getResultsOnDealerBust(List<Player> players, ResultStatistics dealerResult) {
-        List<ResultStatistics> results = new ArrayList<>();
-        for (Player player : players) {
-            ResultStatistics playerResult = ResultStatistics.of(player.getName());
-            dealerResult.incrementCountOf(ResultType.LOSE);
-            playerResult.incrementCountOf(ResultType.WIN);
-            results.add(playerResult);
-        }
-        results.add(0, dealerResult);
-        return results;
-    }
-
-    private List<ResultStatistics> getResults(List<Player> players, ResultStatistics dealerResult, Score dealerScore) {
-        List<ResultStatistics> results = new ArrayList<>();
-
-        for (Player player : players) {
-            ResultStatistics playerResult = ResultStatistics.of(player.getName());
-            Score playerScore = player.getCurrentScore();
-
-            if (playerScore.toInt() > Score.BLACKJACK) {
-                dealerResult.incrementCountOf(ResultType.WIN);
-                playerResult.incrementCountOf(ResultType.LOSE);
-                results.add(playerResult);
-                continue;
-            }
-
-            int compareResult = dealerScore.compareTo(playerScore);
-
-            if (compareResult > 0) {
-                dealerResult.incrementCountOf(ResultType.WIN);
-                playerResult.incrementCountOf(ResultType.LOSE);
-            }
-            if (compareResult == 0) {
-                dealerResult.incrementCountOf(ResultType.DRAW);
-                playerResult.incrementCountOf(ResultType.DRAW);
-            }
-            if (compareResult < 0) {
-                dealerResult.incrementCountOf(ResultType.LOSE);
-                playerResult.incrementCountOf(ResultType.WIN);
-            }
-            results.add(playerResult);
-        }
-        return results;
+        OutputView.printPlayerMatchResults(playerMatchDtos);
     }
 }
 

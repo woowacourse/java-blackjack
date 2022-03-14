@@ -2,15 +2,17 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.ResultStatistics;
+import blackjack.domain.game.ResultCount;
 import blackjack.domain.game.ResultType;
+import blackjack.domain.game.dto.DealerMatchDto;
+import blackjack.domain.game.dto.PlayerMatchDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -20,12 +22,14 @@ public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
 
     private static final String JOIN_DELIMITER = ", ";
+    private static final String COLON_SEPARATOR = ": ";
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
     private static final String DEALER_INITIAL_CARD_FORMAT = "딜러: %s" + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s 카드: %s";
     private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!";
     private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String FINAL_RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
 
     // TODO: DTO 로 변경
     public static void printInitialParticipantsCards(BlackjackGame blackjackGame) {
@@ -68,32 +72,37 @@ public class OutputView {
         print(builder.toString());
     }
 
-    public static void printGameResult(List<ResultStatistics> results) {
-        print(NEW_LINE + "## 최종 승패");
+    public static void printDealerMatchResult(DealerMatchDto dealerMatchDto) {
+        System.out.println(FINAL_RESULT_MESSAGE);
+        System.out.print(dealerMatchDto.getName() + COLON_SEPARATOR);
 
-        for (ResultStatistics result : results) {
-            String name = result.getParticipantName();
-            List<ResultType> existingTypes = Arrays.stream(ResultType.values())
-                    .filter(type -> result.getCountOf(type).toInt() > 0)
-                    .collect(Collectors.toList());
+        dealerMatchDto.getMatchResult()
+                .entrySet()
+                .forEach(OutputView::printSingleDealerMatchResult);
 
-            if (existingTypes.size() == 1) {
-                int count = result.getCountOf(existingTypes.get(0)).toInt();
+        System.out.println();
+    }
 
-                if (count == 1) {
-                    System.out.println(name + ": " + existingTypes.get(0).getDisplayName());
-                    continue;
-                }
-                System.out.println(name + ": " + count + existingTypes.get(0).getDisplayName());
-                continue;
-            }
+    private static void printSingleDealerMatchResult(Entry<ResultType, ResultCount> entrySet) {
+        int resultCount = entrySet.getValue().toInt();
+        String resultTypeName = entrySet.getKey().getDisplayName();
 
-            String resultString = existingTypes.stream()
-                    .map(type -> result.getCountOf(type).toInt() + type.getDisplayName())
-                    .collect(Collectors.joining(" "));
-
-            System.out.println(name + ": " + resultString);
+        if (resultCount > 0) {
+            System.out.print(resultCount + resultTypeName + " ");
         }
+    }
+
+    public static void printPlayerMatchResults(Collection<PlayerMatchDto> playerMatchDtos) {
+        playerMatchDtos.forEach(
+                OutputView::printSinglePlayerMatchResult
+        );
+    }
+
+    private static void printSinglePlayerMatchResult(PlayerMatchDto playerMatchDto) {
+        String name = playerMatchDto.getName();
+        String matchResult = playerMatchDto.getMatchResult().getDisplayName();
+
+        System.out.println(name + COLON_SEPARATOR + matchResult);
     }
 
     private static String getParticipantsCardCountInfo(BlackjackGame blackjackGame) {

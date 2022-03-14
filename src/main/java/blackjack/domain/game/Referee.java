@@ -1,14 +1,15 @@
 package blackjack.domain.game;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Referee {
 
-    public Map<ResultType, ResultCount> generateDealerResult(Dealer dealer, Set<Player> players) {
+    public Map<ResultType, ResultCount> generateDealerResult(Dealer dealer, Collection<Player> players) {
         Map<ResultType, ResultCount> results = generateDefaultResults();
 
         for (Player player : players) {
@@ -19,8 +20,8 @@ public class Referee {
         return results;
     }
 
-    public ResultType generatePlayerResult(Player player, Player otherPlayer) {
-        return player.compareWith(otherPlayer);
+    public ResultType generatePlayerResult(Player player, Participant other) {
+        return player.compareWith(other);
     }
 
     private Map<ResultType, ResultCount> generateDefaultResults() {

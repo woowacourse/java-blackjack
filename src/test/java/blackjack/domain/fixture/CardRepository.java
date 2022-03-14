@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSymbol;
 
+// TODO: 클래스명 변경
 public class CardRepository {
     public static final Card CLOVER2 = Card.of(CardRank.TWO, CardSymbol.CLOVER);
     public static final Card CLOVER3 = Card.of(CardRank.THREE, CardSymbol.CLOVER);
