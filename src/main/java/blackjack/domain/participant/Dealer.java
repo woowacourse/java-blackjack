@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isFinished() {
-        return holdingCard.calculateTotal() >= DEALER_MIN_TOTAL;
+        return holdingCard.computeTotalScore() >= DEALER_MIN_TOTAL;
     }
 
 }

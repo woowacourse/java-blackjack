@@ -5,6 +5,8 @@ import java.util.List;
 
 public class HoldingCard {
     public static final int BLACK_JACK_SCORE = 21;
+    private static final int ACE_BONUS_SCORE = 10;
+
     private final List<Card> holdingCard;
 
     public HoldingCard(List<Card> cards) {
@@ -16,13 +18,13 @@ public class HoldingCard {
     }
 
     public boolean isBust() {
-        return calculateTotal() > BLACK_JACK_SCORE;
+        return computeTotalScore() > BLACK_JACK_SCORE;
     }
 
-    public int calculateTotal() {
+    public int computeTotalScore() {
         int sum = sum();
-        if (hasAce() && sum <= 11) {
-            sum += 10;
+        if (hasAce() && sum <= BLACK_JACK_SCORE - ACE_BONUS_SCORE) {
+            sum += ACE_BONUS_SCORE;
         }
         return sum;
     }
@@ -40,10 +42,5 @@ public class HoldingCard {
 
     public List<Card> getHoldingCard() {
         return holdingCard;
-    }
-
-    @Override
-    public String toString() {
-        return holdingCard.toString();
     }
 }

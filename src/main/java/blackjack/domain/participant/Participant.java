@@ -41,7 +41,7 @@ public abstract class Participant {
     public abstract boolean isFinished();
 
     public int calculateScore() {
-        int score = holdingCard.calculateTotal();
+        int score = holdingCard.computeTotalScore();
         if (score > BLACK_JACK_SCORE) {
             return 0;
         }

@@ -25,6 +25,6 @@ public class ParticipantDto {
     }
 
     public int getSum() {
-        return cards.calculateTotal();
+        return cards.computeTotalScore();
     }
 }

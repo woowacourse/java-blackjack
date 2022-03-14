@@ -64,7 +64,7 @@ class HoldingCardTest {
                         Card.valueOf(ACE, HEART),
                         Card.valueOf(ACE, DIAMOND)));
         HoldingCard holdingCard = new HoldingCard(cards);
-        int result = holdingCard.calculateTotal();
+        int result = holdingCard.computeTotalScore();
         Assertions.assertThat(result).isEqualTo(14);
     }
 
@@ -77,7 +77,7 @@ class HoldingCardTest {
                         Card.valueOf(ACE, DIAMOND)));
         HoldingCard holdingCard = new HoldingCard(cards);
         holdingCard.add(Card.valueOf(SEVEN, DIAMOND));
-        int result = holdingCard.calculateTotal();
+        int result = holdingCard.computeTotalScore();
         Assertions.assertThat(result).isEqualTo(21);
     }
 
@@ -91,7 +91,7 @@ class HoldingCardTest {
         HoldingCard holdingCard = new HoldingCard(cards);
         holdingCard.add(Card.valueOf(SEVEN, DIAMOND));
         holdingCard.add(Card.valueOf(TEN, DIAMOND));
-        int result = holdingCard.calculateTotal();
+        int result = holdingCard.computeTotalScore();
         Assertions.assertThat(result).isEqualTo(21);
     }
 }
