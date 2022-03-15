@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -13,8 +12,8 @@ public class CardDeck {
 
     private final Queue<Card> cardDeck;
 
-    public CardDeck(LinkedList<Card> cardDeck) {
-        this.cardDeck = cardDeck;
+    public CardDeck(CardDeckGenerator cardDeckGenerator) {
+        this.cardDeck = cardDeckGenerator.generate();
     }
 
     public Card draw() {

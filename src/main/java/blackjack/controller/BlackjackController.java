@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.CardDeck;
+import blackjack.domain.CardDeckGenerator;
 import blackjack.domain.DrawStatus;
 import blackjack.domain.ParticipantResult;
 import blackjack.domain.player.Dealer;
@@ -25,7 +27,8 @@ public class BlackjackController {
     }
 
     private BlackjackGame setUpBlackjackGame() {
-        final BlackjackGame blackjackGame = BlackjackGame.create(inputView.requestPlayerNamesToPlayGame());
+        final BlackjackGame blackjackGame = BlackjackGame.create(inputView.requestPlayerNamesToPlayGame(),
+                new CardDeck(new CardDeckGenerator()));
 
         outputView.printParticipantInitialCards(blackjackGame.getPlayers(), blackjackGame.getDealer());
         return blackjackGame;

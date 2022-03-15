@@ -19,8 +19,7 @@ public class BlackjackGame {
         this.dealer = dealer;
     }
 
-    public static BlackjackGame create(final List<String> playerNames) {
-        final CardDeck cardDeck = CardDeckGenerator.createCardDeckByCardNumber();
+    public static BlackjackGame create(final List<String> playerNames, CardDeck cardDeck) {
         return new BlackjackGame(cardDeck, setUpPlayers(playerNames, cardDeck), setUpDealer(cardDeck));
     }
 

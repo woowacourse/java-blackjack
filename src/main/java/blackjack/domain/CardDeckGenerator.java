@@ -5,15 +5,18 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class CardDeckGenerator {
 
-    public static CardDeck createCardDeckByCardNumber() {
+    private static final List<Card> CARDS = initializeCardDeckByCardNumber();
+
+    private static LinkedList<Card> initializeCardDeckByCardNumber() {
         LinkedList<Card> cards = new LinkedList<>();
         for (CardPattern cardPattern : CardPattern.values()) {
             addCardByPattern(cards, cardPattern);
         }
-        return new CardDeck(shuffleCard(cards));
+        return cards;
     }
 
     private static void addCardByPattern(LinkedList<Card> cards, CardPattern cardPattern) {
@@ -22,7 +25,8 @@ public class CardDeckGenerator {
         }
     }
 
-    private static LinkedList<Card> shuffleCard(LinkedList<Card> cards) {
+    public LinkedList<Card> generate() {
+        LinkedList<Card> cards = new LinkedList<>(CARDS);
         Collections.shuffle(cards);
         return cards;
     }
