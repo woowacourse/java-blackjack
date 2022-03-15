@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.FIVE;
 import static blackjack.domain.card.CardNumber.JACK;
+import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardNumber.THREE;
@@ -12,10 +13,12 @@ import static blackjack.domain.card.CardSymbol.DIAMOND;
 import static blackjack.domain.card.CardSymbol.HEART;
 import static blackjack.domain.card.CardSymbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -85,5 +88,35 @@ class CardsTest {
                         Card.of(SPADE, ACE),
                         Card.of(HEART, TEN))), 13)
         );
+    }
+
+    @Test
+    @DisplayName("처음으로 추가된 카드를 찾는다.")
+    void findFirst() {
+        // give
+        final Cards cards = new Cards();
+        final Card firstCard = Card.of(CLUB, KING);
+
+        cards.add(firstCard);
+        cards.add(Card.of(CLUB, QUEEN));
+
+        // when
+        final Card actual = cards.findFirst();
+
+        // then
+        assertThat(actual).isEqualTo(firstCard);
+    }
+
+    @Test
+    @DisplayName("카드가 없으면 예외를 던진다.")
+    void findFirst_exception() {
+        // give
+        final Cards cards = new Cards();
+
+        // when
+        // then
+        assertThatThrownBy(() -> cards.findFirst())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("카드가 한 장도 없습니다.");
     }
 }
