@@ -30,8 +30,4 @@ public class Deck {
             throw new IllegalArgumentException(DECK_EMPTY_ERROR);
         }
     }
-
-    public List<Card> getDeck() {
-        return Collections.unmodifiableList(deck);
-    }
 }
