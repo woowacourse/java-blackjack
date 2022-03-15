@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 public enum Denomination {
 
-    ACE("A", 1, 11),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -16,13 +16,13 @@ public enum Denomination {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    public static final int FIRST_INDEX = 0;
+    public static final int ACE_UPPER_SCORE = 11;
     private final String name;
-    private final int[] scores;
+    private final int score;
 
-    Denomination(String name, int... scores) {
+    Denomination(String name, int score) {
         this.name = name;
-        this.scores = scores;
+        this.score = score;
     }
 
     public static boolean isAce(Denomination denomination) {
@@ -34,6 +34,6 @@ public enum Denomination {
     }
 
     public int getScore() {
-        return scores[FIRST_INDEX];
+        return score;
     }
 }

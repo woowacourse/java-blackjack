@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static blackjack.constant.CommonConstant.BLACKJACK_SYMBOL_NUMBER;
+import static blackjack.domain.card.Denomination.ACE_UPPER_SCORE;
 
 import blackjack.domain.MatchResult;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.Objects;
 public class Hand {
 
     private static final int BLACKJACK_CARD_SIZE = 2;
-    private static final int ACE_UPPER_SCORE = 11;
     private static final int ACE_LOWER_SCORE = 1;
     private static final int ACE_SCORE_DIFFERENCE = ACE_UPPER_SCORE - ACE_LOWER_SCORE;
 
