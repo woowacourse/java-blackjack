@@ -1,20 +1,21 @@
 package blackjack;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import blackjack.domain.HitRequest;
 import blackjack.domain.Judgement;
+import blackjack.domain.WinResult;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
-import blackjack.domain.participant.Name;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackJackApplication {
 
@@ -114,9 +115,9 @@ public class BlackJackApplication {
     }
 
     private static void showWinResult(Dealer dealer, Players players) {
-        final Map<String, Judgement> playersResult = players.calculateJudgmentResult(dealer);
-        final Map<Judgement, Integer> dealerResult = playersResult.values().stream()
-            .collect(Collectors.toMap(Judgement::getOpposite, j -> 1, Integer::sum));
+        final WinResult winResult = new WinResult(dealer, players.getValues());
+        final Map<String, Judgement> playersResult = winResult.getPlayersResult();
+        final Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
 
         OutputView.printWinResultMessage();
         OutputView.printDealerWinResult(dealer.getName(), dealerResult);

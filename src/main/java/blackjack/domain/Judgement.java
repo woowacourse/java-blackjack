@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public enum Judgement {
 
     WIN("승") {
@@ -28,6 +31,42 @@ public enum Judgement {
     }
 
     abstract public Judgement getOpposite();
+
+    public static Judgement judgePlayer(Player player, Dealer dealer) {
+        if (player.isBust()) {
+            return Judgement.LOSE;
+        }
+        if (dealer.isBust()) {
+            return Judgement.WIN;
+        }
+        if (dealer.isBlackJack() || player.isBlackJack()) {
+            return judgePlayerByBlackJack(player, dealer);
+        }
+        return judgePlayerByScore(player, dealer);
+    }
+
+    private static Judgement judgePlayerByBlackJack(Player player, Dealer dealer) {
+        if (dealer.isBlackJack() && player.isBlackJack()) {
+            return Judgement.DRAW;
+        }
+        if (dealer.isBlackJack()) {
+            return Judgement.LOSE;
+        }
+        return Judgement.WIN;
+    }
+
+    private static Judgement judgePlayerByScore(Player player, Dealer dealer) {
+        int dealerScore = dealer.calculateScore();
+        int playerScore = player.calculateScore();
+        if (dealerScore == playerScore) {
+            return Judgement.DRAW;
+        }
+        if (dealerScore > playerScore) {
+            return Judgement.LOSE;
+
+        }
+        return Judgement.WIN;
+    }
 
     public String getName() {
         return name;

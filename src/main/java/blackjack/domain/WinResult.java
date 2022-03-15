@@ -1,14 +1,13 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 
 public class WinResult {
 
@@ -16,61 +15,18 @@ public class WinResult {
     private final Map<String, Judgement> playersResult;
 
     public WinResult(Dealer dealer, List<Player> players) {
-        dealerResult = new EnumMap<>(Judgement.class);
-        playersResult = new LinkedHashMap<>();
-
-        initDealerResult();
-        calculateResult(dealer, List.copyOf(players));
+        this.playersResult = calculatePlayerResult(dealer, players);
+        this.dealerResult = calculateDealerResult();
     }
 
-    private void initDealerResult() {
-        Arrays.stream(Judgement.values())
-            .forEach(value -> dealerResult.put(value, 0));
+    public Map<String, Judgement> calculatePlayerResult(Dealer dealer, List<Player> players) {
+        return players.stream()
+            .collect(Collectors.toMap(Participant::getName, player -> Judgement.judgePlayer(player, dealer)));
     }
 
-    private void calculateResult(Dealer dealer, List<Player> players) {
-        players.forEach(player -> updateResult(player, judge(dealer, player)));
-    }
-
-    private Judgement judge(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return Judgement.LOSE;
-        }
-        if (dealer.isBust()) {
-            return Judgement.WIN;
-        }
-        if (dealer.isBlackJack() || player.isBlackJack()) {
-            return judgeWithBlackJack(dealer, player);
-        }
-        return judgeWithScore(dealer, player);
-    }
-
-    private Judgement judgeWithBlackJack(Dealer dealer, Player player) {
-        if (dealer.isBlackJack() && player.isBlackJack()) {
-            return Judgement.DRAW;
-        }
-        if (dealer.isBlackJack()) {
-            return Judgement.LOSE;
-        }
-        return Judgement.WIN;
-    }
-
-    private Judgement judgeWithScore(Dealer dealer, Player player) {
-        int dealerScore = dealer.calculateScore();
-        int playerScore = player.calculateScore();
-        if (dealerScore == playerScore) {
-            return Judgement.DRAW;
-        }
-        if (dealerScore > playerScore) {
-            return Judgement.LOSE;
-
-        }
-        return Judgement.WIN;
-    }
-
-    private void updateResult(Player player, Judgement playerJudgement) {
-        dealerResult.merge(playerJudgement.getOpposite(), 1, Integer::sum);
-        playersResult.put(player.getName(), playerJudgement);
+    public Map<Judgement, Integer> calculateDealerResult() {
+        return playersResult.values().stream()
+            .collect(Collectors.toMap(Judgement::getOpposite, j -> 1, Integer::sum));
     }
 
     public Map<Judgement, Integer> getDealerResult() {

@@ -3,15 +3,8 @@ package blackjack.domain;
 import static blackjack.domain.Judgement.*;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Pattern.*;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -23,6 +16,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 
 public class WinResultTest {
 
@@ -178,10 +178,15 @@ public class WinResultTest {
 
     private static Map<Judgement, Integer> createJudgementMap(int win, int draw, int lose) {
         Map<Judgement, Integer> judgementMap = new EnumMap<>(Judgement.class);
-        judgementMap.put(WIN, win);
-        judgementMap.put(DRAW, draw);
-        judgementMap.put(LOSE, lose);
-
+        if (win > 0) {
+            judgementMap.put(WIN, win);
+        }
+        if (draw > 0) {
+            judgementMap.put(DRAW, draw);
+        }
+        if (lose > 0) {
+            judgementMap.put(LOSE, lose);
+        }
         return judgementMap;
     }
 }
