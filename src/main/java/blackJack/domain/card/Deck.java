@@ -9,10 +9,14 @@ public class Deck {
 
     private final Queue<Card> deck;
 
-    public Deck() {
+    private Deck(LinkedList<Card> deck) {
+        this.deck = deck;
+    }
+
+    public static Deck createDeck() {
         List<Card> cards = Card.initializeDeck();
         Collections.shuffle(cards);
-        deck = new LinkedList<>(cards);
+        return new Deck(new LinkedList<>(cards));
     }
 
     public Card getCard() {

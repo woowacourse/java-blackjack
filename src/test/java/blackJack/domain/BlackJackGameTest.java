@@ -51,10 +51,10 @@ class BlackJackGameTest {
     @DisplayName("딜러의 승패 결과 테스트")
     void calculateDealerResult() {
         BlackJackGame blackJackGame = initializeBlackJackGame();
-        dealer.receiveCard(new Card(Suit.SPADE, Denomination.NINE));
-        player1.receiveCard(new Card(Suit.SPADE, Denomination.EIGHT));
-        player2.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        player3.receiveCard(new Card(Suit.SPADE, Denomination.ACE));
+        dealer.receiveCard(Card.from(Suit.SPADE, Denomination.NINE));
+        player1.receiveCard(Card.from(Suit.SPADE, Denomination.EIGHT));
+        player2.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
 
         final Map<WinDrawLose, Integer> dealerResult = blackJackGame.calculateDealerResult();
 
@@ -69,10 +69,10 @@ class BlackJackGameTest {
     @DisplayName("플레이어들의 승패 결과 테스트")
     void calculatePlayersResult() {
         BlackJackGame blackJackGame = initializeBlackJackGame();
-        dealer.receiveCard(new Card(Suit.SPADE, Denomination.NINE));
-        player1.receiveCard(new Card(Suit.SPADE, Denomination.EIGHT));
-        player2.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        player3.receiveCard(new Card(Suit.SPADE, Denomination.ACE));
+        dealer.receiveCard(Card.from(Suit.SPADE, Denomination.NINE));
+        player1.receiveCard(Card.from(Suit.SPADE, Denomination.EIGHT));
+        player2.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
 
         final Map<Player, WinDrawLose> playersResult = blackJackGame.calculatePlayersResult();
 
@@ -85,6 +85,6 @@ class BlackJackGameTest {
 
     private BlackJackGame initializeBlackJackGame() {
         Participants participants = new Participants(dealer, List.of(player1, player2, player3));
-        return new BlackJackGame(participants, new Deck());
+        return new BlackJackGame(participants, Deck.createDeck());
     }
 }

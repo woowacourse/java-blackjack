@@ -1,28 +1,41 @@
 package blackJack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final List<Card> CARDS = List.copyOf(initializeDeck());
+    private static final String ERROR_MESSAGE_INVALID_CARD = "카드가 존재하지 않습니다.";
+
+    private static final List<Card> CARDS;
+
+    static {
+        CARDS = Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Denomination.values())
+                        .map(denomination -> new Card(suit, denomination)))
+                .collect(Collectors.toUnmodifiableList());
+    }
 
     private final Suit suit;
     private final Denomination denomination;
 
-    public Card(Suit suit, Denomination denomination) {
+    private Card(Suit suit, Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
 
+    public static Card from(Suit suit, Denomination denomination) {
+        return CARDS.stream()
+                .filter(card -> card.suit == suit && card.denomination == denomination)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_INVALID_CARD));
+    }
+
     public static List<Card> initializeDeck() {
-        return Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Denomination.values())
-                        .map(denomination -> new Card(suit, denomination)))
-                .collect(Collectors.toCollection(LinkedList::new));
+        return new ArrayList<>(CARDS);
     }
 
     public boolean isAce() {

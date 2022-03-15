@@ -41,11 +41,11 @@ class PlayerTest {
     void isWin() {
         Player player = new Player("kth990303");
         Dealer dealer = new Dealer();
-        player.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
-        player.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
-        dealer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.TWO));
+        player.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
+        player.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
+        dealer.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
+        dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
         assertThat(player.isWin(dealer)).isEqualTo(WinDrawLose.WIN);
     }
@@ -55,12 +55,12 @@ class PlayerTest {
     void isDraw() {
         Player player = new Player("kth990303");
         Dealer dealer = new Dealer();
-        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        player.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
-        player.receiveCard(new Card(Suit.CLOVER, Denomination.TWO));
-        dealer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.TWO));
+        player.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
+        player.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
+        dealer.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
+        dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
         assertThat(player.isWin(dealer)).isEqualTo(WinDrawLose.DRAW);
     }
@@ -70,12 +70,12 @@ class PlayerTest {
     void isLose() {
         Player player = new Player("kth990303");
         Dealer dealer = new Dealer();
-        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        player.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
-        player.receiveCard(new Card(Suit.CLOVER, Denomination.THREE));
-        dealer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.THREE));
+        player.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
+        player.receiveCard(Card.from(Suit.CLOVER, Denomination.THREE));
+        dealer.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
+        dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.THREE));
 
         assertThat(player.isWin(dealer)).isEqualTo(WinDrawLose.LOSE);
     }
@@ -84,9 +84,9 @@ class PlayerTest {
     @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
     void hasFalsePlayerNextTurn() {
         Player player = new Player("kei");
-        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        player.receiveCard(new Card(Suit.HEART, Denomination.JACK));
-        player.receiveCard(new Card(Suit.SPADE, Denomination.TWO));
+        player.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(Card.from(Suit.HEART, Denomination.JACK));
+        player.receiveCard(Card.from(Suit.SPADE, Denomination.TWO));
 
         assertThat(player.hasNextTurn()).isFalse();
     }
@@ -95,8 +95,8 @@ class PlayerTest {
     @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
     void hasTruePlayerNextTurn() {
         Player player = new Player("kei");
-        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        player.receiveCard(new Card(Suit.HEART, Denomination.JACK));
+        player.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(Card.from(Suit.HEART, Denomination.JACK));
 
         assertThat(player.hasNextTurn()).isTrue();
     }
