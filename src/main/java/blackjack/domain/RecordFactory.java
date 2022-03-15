@@ -14,10 +14,10 @@ public class RecordFactory {
     }
 
     public PlayRecord getPlayerRecord(int score) {
-        PlayRecord playerPlayRecord = createRecord(score);
-        updateDealerRecord(playerPlayRecord.getOpposite());
+        PlayRecord playerRecord = createRecord(score);
+        updateDealerRecord(playerRecord.getOpposite(playerRecord));
 
-        return playerPlayRecord;
+        return playerRecord;
     }
 
     private PlayRecord createRecord(int score) {

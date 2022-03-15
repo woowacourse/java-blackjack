@@ -2,20 +2,16 @@ package blackjack.domain;
 
 import static blackjack.domain.PlayStatus.*;
 
-import java.util.Arrays;
-
 public enum PlayRecord {
 
-    WIN("승", "패"),
-    PUSH("무", "무"),
-    LOSS("패", "승");
+    WIN("승"),
+    PUSH("무"),
+    LOSS("패");
 
     private final String name;
-    private final String opposite;
 
-    PlayRecord(String name, String opposite) {
+    PlayRecord(String name) {
         this.name = name;
-        this.opposite = opposite;
     }
 
     public static PlayRecord of(int dealerScore, int score) {
@@ -38,10 +34,15 @@ public enum PlayRecord {
         return name;
     }
 
-    PlayRecord getOpposite() {
-        return Arrays.stream(PlayRecord.values())
-            .filter(record -> record.name.equals(opposite))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("옳지 않은 결과 입력입니다."));
+    PlayRecord getOpposite(PlayRecord record) {
+        if (record == LOSS) {
+            return WIN;
+        }
+
+        if (record == WIN) {
+            return LOSS;
+        }
+
+        return PUSH;
     }
 }

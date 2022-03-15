@@ -17,7 +17,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.participant.Cards;
 
 class CardsTest {
 
