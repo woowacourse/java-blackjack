@@ -6,7 +6,8 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.dto.DealerDto;
+import blackjack.view.dto.ParticipantDto;
+import blackjack.view.dto.PlayersDto;
 import blackjack.view.dto.ReceiveDecision;
 
 public class Controller {
@@ -18,11 +19,11 @@ public class Controller {
 
         initDealerCards(cardDeck, dealer);
         initPlayerCards(cardDeck, players);
-        OutputView.printInitCardHandStatus(DealerDto.of(dealer), players);
+        OutputView.printInitCardHandStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
 
         playBlackJack(cardDeck, dealer, players);
-        OutputView.printFinalStatus(dealer, players);
-        OutputView.printFinalResult(dealer, players);
+        OutputView.printFinalStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
+        OutputView.printFinalResult(ParticipantDto.of(dealer), PlayersDto.of(players));
     }
 
     private void initDealerCards(CardDeck cardDeck, Dealer dealer) {
@@ -44,7 +45,7 @@ public class Controller {
         for (Player player : players.getPlayers()) {
             while (isPlayable(player)) {
                 player.receive(cardDeck.draw());
-                OutputView.printCardHandStatus(player);
+                OutputView.printCardHandStatus(ParticipantDto.of(player));
             }
         }
     }
