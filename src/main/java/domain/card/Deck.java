@@ -28,12 +28,15 @@ public class Deck {
         return new Deck(cards);
     }
 
-
     public List<Card> handOutInitialTurn() {
         return Arrays.asList(handOut(), handOut());
     }
 
     public Card handOut() {
         return cards.pop();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
