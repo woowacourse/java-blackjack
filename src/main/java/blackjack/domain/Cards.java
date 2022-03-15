@@ -9,7 +9,6 @@ public class Cards {
 	private static final int ACE_SPECIAL_SCORE = 11;
 	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
 	private final List<Card> cards;
-	private int score = 0;
 
 	public Cards(List<Card> cards) {
 		this.cards = cards;
@@ -23,7 +22,7 @@ public class Cards {
 		cards.add(card);
 	}
 
-	private void calculateScore() {
+	private int calculateScore() {
 		int aceCount = (int) cards.stream().filter(Card::isAce)
 			.count();
 		int score = cards.stream()
@@ -32,7 +31,7 @@ public class Cards {
 		for (int i = 0; i < aceCount; i++) {
 			score += calculateOneAce(score);
 		}
-		this.score = score;
+		return score;
 	}
 
 	private int calculateOneAce(int score) {
@@ -52,8 +51,7 @@ public class Cards {
 	}
 
 	public int getScore() {
-		calculateScore();
-		return score;
+		return calculateScore();
 	}
 
 	public boolean isBust() {
