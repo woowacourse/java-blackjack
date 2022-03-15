@@ -8,7 +8,6 @@ import blackjack.domain.result.Match;
 
 public class Deck {
 
-    private static final int HAS_NOT_ACE = 0;
     private static final int ACE_ELEVEN_POSSIBLE = 10;
     private static final int BLACKJACK_SIZE = 2;
 
@@ -20,10 +19,9 @@ public class Deck {
 
     public int sumPoints() {
         int points = sumCardPoint();
-        int aceCount = (int) deck.stream()
-                .filter(PlayingCard::isAce)
-                .count();
-        if (aceCount == HAS_NOT_ACE) {
+        boolean aceExist = deck.stream()
+                .anyMatch(PlayingCard::isAce);
+        if (!aceExist) {
             return points;
         }
         return calculateAcePoint(points);
