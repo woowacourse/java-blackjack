@@ -24,19 +24,19 @@ public class CardsTest {
         assertThat(cards).isNotEqualTo(otherCards);
     }
 
-    @DisplayName("9클로버, J하트 점수의 합은 19이다")
+    @DisplayName("9클로버, J하트를 가지고 있으면 19점 이다.")
     @Test
-    void sumCardScore_9clover_Jheat() {
+    void isBust_9clover_Jheat() {
         Cards cards = new Cards();
-        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
-        cards.add(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.SPADE));
+        cards.add(new Card(TrumpNumber.JACK, TrumpSymbol.DIAMOND));
 
         assertThat(cards.sumScore()).isEqualTo(19);
     }
 
-    @DisplayName("9클로버, J하트, A클로버 점수에는 Ace Advantage가 반영되지 않는다")
+    @DisplayName("9클로버, J하트, A클로버를 가지고 있으면 Ace Advantage가 반영 되지 않는다..")
     @Test
-    void sumCardScore_9clover_Jheart_Aclover() {
+    void isBust_9clover_Jheart_Aclover() {
         Cards cards = new Cards();
         cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
         cards.add(new Card(TrumpNumber.JACK, TrumpSymbol.HEART));
@@ -45,34 +45,13 @@ public class CardsTest {
         assertThat(cards.sumScore()).isEqualTo(20);
     }
 
-    @DisplayName("9클로버, A클로버 점수에 Ace Advantage가 반영된다")
+    @DisplayName("9클로버, A클로버를 가지고 있으면 점수에 Ace Advantage가 반영된다")
     @Test
     void sumCardScore_9clover_Aclover() {
         Cards cards = new Cards();
-        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.HEART));
         cards.add(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
 
         assertThat(cards.sumScore()).isEqualTo(20);
-    }
-
-    @DisplayName("두장의 카드를 가지고 있으면 true를 반환합니다.")
-    @Test
-    void hasTwoCard_true() {
-        Cards cards = new Cards();
-        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
-        cards.add(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
-
-        assertThat(cards.hasTwoCard()).isTrue();
-    }
-
-    @DisplayName("카드를 두장보다 많이 가지고 있으면 false를 반환합니다.")
-    @Test
-    void hasTwoCard_false() {
-        Cards cards = new Cards();
-        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
-        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
-        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
-
-        assertThat(cards.hasTwoCard()).isFalse();
     }
 }
