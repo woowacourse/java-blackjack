@@ -1,13 +1,16 @@
 package blackjack.service;
 
+import blackjack.domain.game.Betting;
 import blackjack.domain.game.Compete;
 import blackjack.domain.game.Deck;
+import blackjack.domain.game.Money;
 import blackjack.domain.game.RedrawChoice;
 import blackjack.domain.role.Dealer;
 import blackjack.domain.role.Hand;
 import blackjack.domain.role.Player;
 import blackjack.domain.role.PlayerTurns;
 import blackjack.domain.role.Role;
+import blackjack.dto.BettingDto;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
@@ -15,7 +18,9 @@ import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTableDto;
 import blackjack.dto.PlayerTurnsDto;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -24,6 +29,7 @@ public class BlackJackService {
 	private Deck deck;
 	private Role dealer;
 	private List<Role> players;
+	private Betting betting;
 
 	public void initBlackJackGame(Deck deck, Role dealer) {
 		this.deck = deck;
@@ -34,6 +40,20 @@ public class BlackJackService {
 		players = names.stream()
 				.map(name -> new Player(name, new Hand()))
 				.collect(Collectors.toList());
+	}
+
+	public PlayerTurnsDto startBettingPhase() {
+		return PlayerTurnsDto.from(new PlayerTurns(players));
+	}
+
+	public void betMoney(List<BettingDto> bettingMoneys) {
+		Map<Role, Money> betting = new HashMap<>();
+		for (BettingDto bettingDto : bettingMoneys) {
+			Role player = getPlayerByName(bettingDto.getName());
+			Money money = new Money(bettingDto.getMoney());
+			betting.put(player, money);
+		}
+		this.betting = new Betting(betting);
 	}
 
 	public DealerTableDto distributeCardToDealer() {

@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 public class InputView {
 
 	private static final String PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+	private static final String BETTING = "의 배팅 금액은?";
 	private static final String DRAW_ONE_MORE_CARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
 	private static final String NAME_DISTRIBUTOR = ",";
 
@@ -21,6 +22,11 @@ public class InputView {
 		final String rawNames = inputData(InputValidator::validatePlayerName,
 				() -> System.out.println(PLAYER_NAME));
 		return Arrays.asList(rawNames.split(NAME_DISTRIBUTOR));
+	}
+
+	public String requestBetting(final String player) {
+		return inputData(InputValidator::validateBetting,
+				() -> System.out.println("\n" + player + BETTING));
 	}
 
 	public String drawOneMoreCard(final String player) {

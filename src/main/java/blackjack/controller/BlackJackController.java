@@ -1,10 +1,11 @@
 package blackjack.controller;
 
+import blackjack.domain.game.Deck;
+import blackjack.domain.game.RedrawChoice;
 import blackjack.domain.role.Dealer;
 import blackjack.domain.role.DealerDrawable;
-import blackjack.domain.game.Deck;
 import blackjack.domain.role.Hand;
-import blackjack.domain.game.RedrawChoice;
+import blackjack.dto.BettingDto;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
@@ -14,6 +15,7 @@ import blackjack.dto.PlayerTurnsDto;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -31,6 +33,7 @@ public class BlackJackController {
 	public void run(InputView inputView, OutputView outputView) {
 		initBlackJackGame();
 		addPlayers(inputView::requestPlayerName);
+		betMoney(inputView::requestBetting);
 		distributeCard(outputView::printInitialStatus);
 		takePlayersTurn(inputView::drawOneMoreCard, outputView::printPlayerHand);
 		takeDealerTurn(outputView::printDealerStatus);
@@ -43,6 +46,16 @@ public class BlackJackController {
 
 	private void addPlayers(Supplier<List<String>> playerNames) {
 		blackJackService.joinPlayers(playerNames.get());
+	}
+
+	private void betMoney(UnaryOperator<String> bettingFunction) {
+		PlayerTurnsDto playerTurns = blackJackService.startBettingPhase();
+		List<BettingDto> betting = new ArrayList<>();
+		for (String player : playerTurns.getNames()) {
+			String money = bettingFunction.apply(player);
+			betting.add(BettingDto.from(player, Integer.parseInt(money)));
+		}
+		blackJackService.betMoney(betting);
 	}
 
 	private void distributeCard(BiConsumer<DealerTableDto, List<PlayerTableDto>> printerTable) {
