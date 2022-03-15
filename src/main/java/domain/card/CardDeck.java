@@ -38,7 +38,7 @@ public class CardDeck {
         return new CardDeck();
     }
 
-    public Card getCard() {
+    public Card drawCard() {
         return cards.pop();
     }
 

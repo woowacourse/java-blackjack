@@ -41,10 +41,10 @@ public class BlackJackController {
 
     private void spreadCards(CardDeck cardDeck, Dealer dealer, Gamblers gamblers) {
         gamblers.addCard(cardDeck);
-        dealer.addCard(cardDeck.getCard());
+        dealer.addCard(cardDeck.drawCard());
 
         gamblers.addCard(cardDeck);
-        dealer.addCard(cardDeck.getCard());
+        dealer.addCard(cardDeck.drawCard());
 
         printCardsAfterInitialSpread(dealer, gamblers);
     }
@@ -92,7 +92,7 @@ public class BlackJackController {
         }
 
         do {
-            gambler.addCard(cardDeck.getCard());
+            gambler.addCard(cardDeck.drawCard());
             OutputView.printCards(CardsDto.from(gambler));
         } while (gambler.isHittable() && InputView.scanIsHit(gambler.getName()));
     }
@@ -101,7 +101,7 @@ public class BlackJackController {
         OutputView.printLineSeparator();
 
         while (dealer.isHittable()) {
-            dealer.addCard(cardDeck.getCard());
+            dealer.addCard(cardDeck.drawCard());
             OutputView.printDealerAddCard(dealer);
         }
     }

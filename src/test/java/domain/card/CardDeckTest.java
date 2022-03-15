@@ -23,8 +23,8 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.newInstance();
 
         // when
-        Card clubsAce = cardDeck.getCard();
-        Card clubsTwo = cardDeck.getCard();
+        Card clubsAce = cardDeck.drawCard();
+        Card clubsTwo = cardDeck.drawCard();
 
         // then
         assertAll(
@@ -40,7 +40,7 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.newInstance();
 
         // when
-        Card card = cardDeck.getCard();
+        Card card = cardDeck.drawCard();
 
         // then
         assertThatThrownBy(cardDeck::shuffle)
