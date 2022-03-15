@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -80,7 +81,7 @@ class DeckTest {
         final Deck deck = new Deck(List.of(new Card(CardPattern.DIAMOND, CardNumber.ACE)));
         deck.drawCard();
         assertThatThrownBy(deck::drawCard)
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessageContaining("더 이상 뽑을 수 있는 카드가 없습니다.");
     }
 }

@@ -2,10 +2,7 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.strategy.CardStrategy;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Deck {
 
@@ -34,7 +31,7 @@ public class Deck {
 
     private void validateDrawCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("더 이상 뽑을 수 있는 카드가 없습니다.");
+            throw new NoSuchElementException("더 이상 뽑을 수 있는 카드가 없습니다.");
         }
     }
 
