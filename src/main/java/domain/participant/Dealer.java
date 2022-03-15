@@ -6,7 +6,6 @@ import domain.card.Card;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public final class Dealer extends Participant {
     private static final int FIRST_INDEX = 0;
@@ -22,15 +21,16 @@ public final class Dealer extends Participant {
         gameState = ParticipantState.END;
     }
 
-    public Map<String, List<GameResult>> getGameResultWithName(final List<GameResult> playersResult) {
-        return Map.of(name, GameResult.reverseResults(playersResult));
-    }
-
     @Override
     public List<Card> getCards() {
         if (gameState == ParticipantState.RUNNING) {
-            return Collections.singletonList(cards.getCards().get(FIRST_INDEX));
+            return Collections.singletonList(super.getCards().get(FIRST_INDEX));
         }
-        return cards.getCards();
+        return super.getCards();
+    }
+
+    @Override
+    public GameResult getGameResult(final Participant player) {
+        return GameResult.getDealerResult(this.cards, player.cards);
     }
 }

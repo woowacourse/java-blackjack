@@ -1,10 +1,9 @@
 package domain;
 
 import domain.card.Cards;
+
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 public enum GameResult {
     WIN((a, b) -> compareCardStatePower(a, b) > 0 || (isBothStand(a, b) && compareCardScore(a, b) > 0)),
@@ -42,13 +41,7 @@ public enum GameResult {
         return playerCards.calculateSum() - dealerCards.calculateSum();
     }
 
-    public static List<GameResult> reverseResults(final List<GameResult> origin) {
-        return origin.stream()
-                .map(GameResult::reverseResults)
-                .collect(Collectors.toList());
-    }
-
-    private static GameResult reverseResults(final GameResult origin) {
+    public static GameResult reverseFrom(final GameResult origin) {
         if (origin == WIN) {
             return LOSE;
         }
@@ -56,5 +49,13 @@ public enum GameResult {
             return WIN;
         }
         return DRAW;
+    }
+
+    public static GameResult getPlayerResult(final Cards playerCards, final Cards dealerCards) {
+        return of(playerCards, dealerCards);
+    }
+
+    public static GameResult getDealerResult(final Cards dealerCards, final Cards playerCards) {
+        return reverseFrom(of(playerCards, dealerCards));
     }
 }

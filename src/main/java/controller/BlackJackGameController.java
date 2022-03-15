@@ -1,17 +1,16 @@
 package controller;
 
-import domain.GameResult;
 import domain.card.Card;
+import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.CardsWithTotalScoreDto;
-import dto.NameWithCardsDto;
-import utils.GameResultConvertor;
+import dto.DealerResultDto;
+import dto.PlayerResultDto;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,12 +33,12 @@ public final class BlackJackGameController {
         dealer = new Dealer();
         players = new Players(names);
         initCards();
-        OutputView.printInitCardsResult(new NameWithCardsDto(getNameWithCardsAllParticipant()));
+        OutputView.printInitCardsResult(getNameWithCardsAllParticipant());
     }
 
     private void initCards() {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            dealer.drawCard();
+            dealer.drawCard(CardDeck.draw());
             players.drawCard();
         }
     }
@@ -67,39 +66,29 @@ public final class BlackJackGameController {
 
     private void hitPlayer(final Player player) {
         int printCount = 0;
-        while (player.drawCard(inputPlayerHitResponse(player))) {
-            OutputView.printCardsWithName(new NameWithCardsDto(player.getNameWithCards()));
+        while (player.drawCard(CardDeck.draw(), inputPlayerHitRequest(player))) {
+            OutputView.printCardsWithName(player.getNameWithCards());
             printCount++;
         }
         if (printCount == 0) {
-            OutputView.printCardsWithName(new NameWithCardsDto(player.getNameWithCards()));
+            OutputView.printCardsWithName(player.getNameWithCards());
         }
     }
 
-    private boolean inputPlayerHitResponse(final Player player) {
+    private boolean inputPlayerHitRequest(final Player player) {
         return InputView.inputTryToHit(player.getName());
     }
 
     private void hitDealer() {
-        OutputView.printDealerHit(dealer.drawCard());
+        OutputView.printDealerHit(dealer.drawCard(CardDeck.draw()));
     }
 
     private void showCardsTotal() {
         dealer.stopRunning();
-        final Map<String, Integer> totalScoreWithName = new LinkedHashMap<>(dealer.getTotalScoreWithName());
-        totalScoreWithName.putAll(players.getTotalScoreWithName());
-        final CardsWithTotalScoreDto cardsWithTotalScore = new CardsWithTotalScoreDto(getNameWithCardsAllParticipant(), totalScoreWithName);
-        OutputView.printCardsWithTotalScore(cardsWithTotalScore);
+        OutputView.printCardsWithTotalScore(CardsWithTotalScoreDto.generateDtos(dealer, players));
     }
 
     private void showGameResult() {
-        final Map<String, GameResult> playersGameResults = players.calculateGameResult(dealer);
-        final Map<String, List<GameResult>> dealerGameResult = dealer.getGameResultWithName(new ArrayList<>(playersGameResults.values()));
-        final Map<String, List<String>> gameResult = convertGameResultToString(dealerGameResult, playersGameResults);
-        OutputView.printGameResultWithName(gameResult);
-    }
-
-    private Map<String, List<String>> convertGameResultToString(final Map<String, List<GameResult>> dealerGameResult, final Map<String, GameResult> playersGameResults) {
-        return GameResultConvertor.convertToString(dealerGameResult, playersGameResults);
+        OutputView.printGameResultWithName(new DealerResultDto(dealer, players), PlayerResultDto.generateDtos(dealer, players));
     }
 }

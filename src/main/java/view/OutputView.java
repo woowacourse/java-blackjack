@@ -2,7 +2,8 @@ package view;
 
 import domain.card.Card;
 import dto.CardsWithTotalScoreDto;
-import dto.NameWithCardsDto;
+import dto.DealerResultDto;
+import dto.PlayerResultDto;
 import utils.CardConvertor;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printInitCardsResult(final NameWithCardsDto nameWithCards) {
-        printInitCardsIntro(nameWithCards.get().keySet());
+    public static void printInitCardsResult(final Map<String, List<Card>> nameWithCards) {
+        printInitCardsIntro(nameWithCards.keySet());
         printCardsWithName(nameWithCards);
     }
 
@@ -32,23 +33,25 @@ public class OutputView {
         print(String.join(CARD_OR_NAME_DELIMITER, names) + INIT_CARD_SUFFIX_MESSAGE);
     }
 
-    public static void printCardsWithName(final NameWithCardsDto nameWithCards, final int... score) {
-        for (final Entry<String, List<Card>> entry : nameWithCards.get().entrySet()) {
+    public static void printCardsWithName(final Map<String, List<Card>> nameWithCards, final int... score) {
+        for (final Entry<String, List<Card>> entry : nameWithCards.entrySet()) {
             final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(entry.getKey()).append(NAME_SUFFIX).append(convertToString(entry.getValue()));
+            stringBuilder.append(entry.getKey())
+                    .append(NAME_SUFFIX)
+                    .append(convertToString(entry.getValue()));
             addScore(stringBuilder, score);
             print(stringBuilder.toString());
         }
+    }
+
+    private static String convertToString(final List<Card> cards) {
+        return String.join(CARD_OR_NAME_DELIMITER, CardConvertor.convertToString(cards));
     }
 
     private static void addScore(final StringBuilder stringBuilder, final int[] score) {
         if (score.length != 0) {
             stringBuilder.append(SCORE_PREFIX).append(score[0]);
         }
-    }
-
-    private static String convertToString(final List<Card> cards) {
-        return String.join(CARD_OR_NAME_DELIMITER, CardConvertor.convertToString(cards));
     }
 
     public static void print(final String content) {
@@ -61,16 +64,17 @@ public class OutputView {
         }
     }
 
-    public static void printCardsWithTotalScore(final CardsWithTotalScoreDto cardsWithTotalScore) {
-        for (final Entry<NameWithCardsDto, Integer> entry : cardsWithTotalScore.get().entrySet()) {
-            printCardsWithName(entry.getKey(), entry.getValue());
+    public static void printCardsWithTotalScore(final List<CardsWithTotalScoreDto> cardsWithTotalScores) {
+        for (final CardsWithTotalScoreDto cardsWithTotalScore : cardsWithTotalScores) {
+            printCardsWithName(cardsWithTotalScore.getNameWithCards(), cardsWithTotalScore.getTotalScore());
         }
     }
 
-    public static void printGameResultWithName(final Map<String, List<String>> gameResult) {
+    public static void printGameResultWithName(final DealerResultDto dealerResultDto, final List<PlayerResultDto> playerResultDtos) {
         print(GAME_RESULT_INTRO_MESSAGE);
-        for (final Entry<String, List<String>> entry : gameResult.entrySet()) {
-            print(entry.getKey() + NAME_AND_GAME_RESULT_DELIMITER + String.join(BLANK, entry.getValue()));
+        print(dealerResultDto.getName() + NAME_AND_GAME_RESULT_DELIMITER + dealerResultDto.getGameResult());
+        for (final PlayerResultDto playerResultDto : playerResultDtos) {
+            print(playerResultDto.getName() + NAME_AND_GAME_RESULT_DELIMITER + playerResultDto.getGameResult());
         }
     }
 }

@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.GameResult;
 import domain.card.Card;
+import domain.card.CardDeck;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -18,12 +18,10 @@ public final class Players {
                 .collect(Collectors.toList());
     }
 
-    public Map<String, GameResult> calculateGameResult(final Dealer dealer) {
-        final Map<String, GameResult> gameResultWithName = new LinkedHashMap<>();
-        for (Player player : players) {
-            gameResultWithName.putAll(player.getGameResultWithName(dealer));
+    public void drawCard() {
+        for (final Player player : players) {
+            player.drawCard(CardDeck.draw());
         }
-        return gameResultWithName;
     }
 
     public Map<String, List<Card>> getCardsWithName() {
@@ -34,21 +32,7 @@ public final class Players {
         return cardsWithNameTotal;
     }
 
-    public Map<String, Integer> getTotalScoreWithName() {
-        final Map<String, Integer> totalScoreWithName = new LinkedHashMap<>();
-        for (final Player player : players) {
-            totalScoreWithName.putAll(player.getTotalScoreWithName());
-        }
-        return totalScoreWithName;
-    }
-
     public List<Player> getPlayers() {
         return new ArrayList<>(players);
-    }
-
-    public void drawCard() {
-        for (final Player player : players) {
-            player.drawCard();
-        }
     }
 }
