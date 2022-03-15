@@ -3,10 +3,10 @@ package blackjack.domain.card;
 import blackjack.domain.game.Score;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
 
 public class Hand {
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
+    private static final int VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL = 10;
 
     private final Set<Card> cards;
 
@@ -35,27 +35,31 @@ public class Hand {
     }
 
     public Score getScore() {
-        Score defaultScore = calculateScoreBy(Card::getRankValue);
-        if (defaultScore.isGreaterOrEqualThan(Score.BLACKJACK)) {
-            return defaultScore;
+        int maximumScore = cards.stream()
+                .map(Card::getRankValue)
+                .reduce(Score.valueOf(0), Score::add)
+                .getValue();
+
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+
+        return calculateScoreIncludingAce(maximumScore, aceCount);
+    }
+
+    private Score calculateScoreIncludingAce(int maximumScore, int aceCount) {
+        int adjustedScore = maximumScore;
+
+        for (int i = 0; i < aceCount; i++) {
+            if (adjustedScore <= Score.BLACKJACK) {
+                break; // TODO: 2 depth 수정하기
+            }
+            adjustedScore -= VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL;
         }
 
-        return calculateScoreBy(this::getMinimumScore);
+        return Score.valueOf(adjustedScore);
     }
 
-    private Score calculateScoreBy(Function<Card, Score> function) {
-        return cards.stream()
-                .map(function)
-                .reduce(Score.valueOf(0), Score::add);
-    }
-
-    private Score getMinimumScore(Card card) {
-        if (card.isAce()) {
-            return Score.valueOf(Score.SMALL_ACE_VALUE);
-        }
-
-        return card.getRankValue();
-    }
 
     @Override
     public String toString() {
