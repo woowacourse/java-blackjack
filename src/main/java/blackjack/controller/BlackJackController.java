@@ -4,22 +4,21 @@ import blackjack.domain.Dealer;
 import blackjack.domain.DealerDrawable;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
-import blackjack.dto.DealerTableDto;
-import blackjack.dto.PlayerTableDto;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
-import java.util.List;
-
 import blackjack.domain.RedrawChoice;
+import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerStatusDto;
-import blackjack.dto.PlayerTurnDto;
+import blackjack.dto.PlayerTableDto;
+import blackjack.dto.PlayerTurnsDto;
 import blackjack.service.BlackJackService;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public class BlackJackController {
 
@@ -52,27 +51,23 @@ public class BlackJackController {
 		printerTable.accept(dealerTable, playersTable);
 	}
 
-	private void takePlayersTurn(Function<PlayerTurnDto, String> answerFunction,
+	private void takePlayersTurn(UnaryOperator<String> answerFunction,
 								 Consumer<PlayerTableDto> printerPlayerStatus) {
-		while (true) {
-			String answer = answerFunction.apply(getWhoseTurn());
-			PlayerStatusDto playerStatus = drawPlayer(answer);
-			printerPlayerStatus.accept(playerStatus.getTableStatusDto());
-			if (playerStatus.isDraw()) {
-				continue;
-			}
-			if (!playerStatus.isHasNextPlayer()) {
-				break;
-			}
+		PlayerTurnsDto playerTurns = blackJackService.startPlayerDrawPhase();
+		for (String player : playerTurns.getNames()) {
+			drawPlayer(answerFunction, printerPlayerStatus, player);
 		}
 	}
 
-	private PlayerTurnDto getWhoseTurn() {
-		return blackJackService.whoseTurn();
-	}
-
-	private PlayerStatusDto drawPlayer(String answer) {
-		return blackJackService.drawPlayer(RedrawChoice.of(answer));
+	private void drawPlayer(UnaryOperator<String> answerFunction,
+							Consumer<PlayerTableDto> printerPlayerStatus,
+							String player) {
+		String answer = answerFunction.apply(player);
+		PlayerStatusDto playerStatus = blackJackService.drawPlayer(RedrawChoice.of(answer), player);
+		printerPlayerStatus.accept(playerStatus.getTableStatusDto());
+		if (playerStatus.isDraw()) {
+			drawPlayer(answerFunction, printerPlayerStatus, player);
+		}
 	}
 
 	private void takeDealerTurn(Consumer<DealerTurnDto> printerDealerTurn) {

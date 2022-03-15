@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-import blackjack.dto.PlayerTurnDto;
-
 public class InputView {
 
 	private static final String PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -25,9 +23,9 @@ public class InputView {
 		return Arrays.asList(rawNames.split(NAME_DISTRIBUTOR));
 	}
 
-	public String drawOneMoreCard(final PlayerTurnDto player) {
+	public String drawOneMoreCard(final String player) {
 		return inputData(InputValidator::validateDrawChoice,
-				() -> System.out.println(player.getName() + DRAW_ONE_MORE_CARD));
+				() -> System.out.println(player + DRAW_ONE_MORE_CARD));
 	}
 
 	private String inputData(final Consumer<String> validation, final InputMessage inputMessage) {

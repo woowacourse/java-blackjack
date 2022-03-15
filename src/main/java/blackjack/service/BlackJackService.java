@@ -5,6 +5,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
+import blackjack.domain.PlayerTurns;
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.Role;
 import blackjack.dto.DealerTableDto;
@@ -12,10 +13,10 @@ import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTableDto;
-import blackjack.dto.PlayerTurnDto;
+import blackjack.dto.PlayerTurnsDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class BlackJackService {
@@ -23,8 +24,7 @@ public class BlackJackService {
 	private Deck deck;
 	private Role dealer;
 	private List<Role> players;
-	private ListIterator<Role> it;
-	private Role currentPlayer;
+	private PlayerTurns playerTurns;
 
 	public void initBlackJackGame(Deck deck, Role dealer) {
 		this.deck = deck;
@@ -35,12 +35,6 @@ public class BlackJackService {
 		players = names.stream()
 				.map(name -> new Player(name, new Hand()))
 				.collect(Collectors.toList());
-		initPlayerIterator();
-	}
-
-	private void initPlayerIterator() {
-		it = players.listIterator();
-		nextPlayer();
 	}
 
 	public DealerTableDto distributeCardToDealer() {
@@ -59,32 +53,25 @@ public class BlackJackService {
 		return playerStatuses;
 	}
 
-	public PlayerTurnDto whoseTurn() {
-		return PlayerTurnDto.from(currentPlayer);
+	public PlayerTurnsDto startPlayerDrawPhase() {
+		playerTurns = new PlayerTurns(players);
+		return PlayerTurnsDto.from(playerTurns);
 	}
 
-	public PlayerStatusDto drawPlayer(final RedrawChoice answer) {
+	public PlayerStatusDto drawPlayer(final RedrawChoice answer, final String name) {
+		Role player = getPlayerByName(name);
 		if (answer == RedrawChoice.NO) {
-			PlayerStatusDto status = PlayerStatusDto.from(false, hasNextPlayer(), currentPlayer);
-			nextPlayer();
-			return status;
+			return PlayerStatusDto.from(false, playerTurns.hasNextPlayer(), player);
 		}
-		currentPlayer.draw(deck.draw());
-		PlayerStatusDto status = PlayerStatusDto.from(currentPlayer.canDraw(), hasNextPlayer(), currentPlayer);
-		if (!currentPlayer.canDraw()) {
-			nextPlayer();
-		}
-		return status;
+		player.draw(deck.draw());
+		return PlayerStatusDto.from(player.canDraw(), playerTurns.hasNextPlayer(), player);
 	}
 
-	private boolean hasNextPlayer() {
-		return it.hasNext();
-	}
-
-	private void nextPlayer() {
-		if (hasNextPlayer()) {
-			currentPlayer = it.next();
-		}
+	private Role getPlayerByName(String name) {
+		return players.stream()
+				.filter(player -> player.getName().equals(name))
+				.findFirst()
+				.orElseThrow(NoSuchElementException::new);
 	}
 
 	public DealerTurnDto drawDealer() {
