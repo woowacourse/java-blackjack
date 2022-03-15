@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Cards {
-    public static final int BUST_LINE = 21;
+    private static final int BUST_LINE = 21;
     private static final int EXTRA_SCORE = 10;
 
     private final Set<Card> cards;
@@ -24,6 +24,10 @@ public class Cards {
 
     public void add(Card card) {
         cards.add(card);
+    }
+
+    public boolean isBust(){
+        return calculateScore() > BUST_LINE;
     }
 
     public int calculateScore() {

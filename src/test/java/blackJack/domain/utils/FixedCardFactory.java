@@ -2,6 +2,7 @@ package blackJack.domain.utils;
 
 import blackJack.domain.Card.Card;
 import blackJack.domain.Card.CardFactory;
+import blackJack.domain.Card.Cards;
 import blackJack.domain.Card.Shape;
 
 import java.util.List;
