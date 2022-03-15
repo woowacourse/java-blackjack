@@ -34,12 +34,12 @@ public class Gamer {
     }
 
     private void validateLength(String name) {
-        if (isInProperLength(name)) {
+        if (isWrongLength(name)) {
             throw new IllegalArgumentException(NAME_LENGTH_ERROR_MESSAGE);
         }
     }
 
-    private boolean isInProperLength(String name) {
+    private boolean isWrongLength(String name) {
         return name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH;
     }
 
