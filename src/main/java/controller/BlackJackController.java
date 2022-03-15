@@ -9,6 +9,7 @@ import domain.player.Gambler;
 import domain.player.Gamblers;
 import dto.CardsAndScoreDto;
 import dto.CardsDto;
+import dto.NameDto;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -49,8 +50,19 @@ public class BlackJackController {
     }
 
     private void printCardsAfterInitialSpread(Dealer dealer, Gamblers gamblers) {
-        OutputView.printSpreadAnnouncement(dealer.getName(), gamblers.getGamblerNames());
+        OutputView.printSpreadAnnouncement(getNameDtosForPlayers(dealer, gamblers.getGamblers()));
         OutputView.printInitialOpenCards(getInitialOpenCardsDto(dealer, gamblers));
+    }
+
+    private List<NameDto> getNameDtosForPlayers(Dealer dealer, List<Gambler> gamblers) {
+        List<NameDto> names = new ArrayList<>();
+        names.add(NameDto.from(dealer));
+
+        for (Gambler gambler : gamblers) {
+            names.add(NameDto.from(gambler));
+        }
+
+        return names;
     }
 
     private List<CardsDto> getInitialOpenCardsDto(Dealer dealer, Gamblers gamblers) {

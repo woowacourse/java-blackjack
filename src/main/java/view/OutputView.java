@@ -16,6 +16,7 @@ import domain.card.Suit;
 import domain.player.Dealer;
 import dto.CardsAndScoreDto;
 import dto.CardsDto;
+import dto.NameDto;
 import dto.ResultDto;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -32,10 +33,11 @@ public class OutputView {
     private static final String RESULT_TITLE = "## 최종 승패";
     private static final String CARD_NAME_JOIN_CHARACTER = ", ";
     private static final String GAMBLER_NAME_DELIMITER = ", ";
-    private static final Map<Denomination, String> DENOMINATION_NAME_MAPPER = new EnumMap<>(Denomination.class);
-    private static final Map<Suit, String> SUIT_NAME_MAPPER = new EnumMap<>(Suit.class);
-    private static final Map<MatchResult, String> MATCH_RESULT_MAPPER = new EnumMap<>(MatchResult.class);
     private static final String WIN_DRAW_LOSE_DELIMITER = " ";
+    private static final String ERROR_FOR_NO_DEALER_FOUND = "[ERROR] 딜러를 확인하지 못했습니다";
+    private static final Map<Denomination, String> DENOMINATION_NAME_MAPPER = new EnumMap<>(Denomination.class);
+    private static final Map<MatchResult, String> MATCH_RESULT_MAPPER = new EnumMap<>(MatchResult.class);
+    private static final Map<Suit, String> SUIT_NAME_MAPPER = new EnumMap<>(Suit.class);
 
     static {
         DENOMINATION_NAME_MAPPER.put(Denomination.KING, "K");
@@ -65,9 +67,27 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printSpreadAnnouncement(String dealerName, List<String> gamblerNames) {
+    public static void printSpreadAnnouncement(List<NameDto> names) {
         System.out.println();
-        System.out.printf(INFO_FOR_INITIAL_SPREAD, dealerName, String.join(GAMBLER_NAME_DELIMITER, gamblerNames));
+        NameDto dealerNameDto = getDealerNameByNameDtos(names);
+        String gamblerNames = getGamblerNamesByNameDtos(names);
+
+        System.out.printf(INFO_FOR_INITIAL_SPREAD, dealerNameDto.getName(),
+                String.join(GAMBLER_NAME_DELIMITER, gamblerNames));
+    }
+
+    private static NameDto getDealerNameByNameDtos(List<NameDto> names) {
+        return names.stream()
+                .filter(NameDto::isDealer)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException(ERROR_FOR_NO_DEALER_FOUND));
+    }
+
+    private static String getGamblerNamesByNameDtos(List<NameDto> names) {
+        return names.stream()
+                .filter(NameDto::isGambler)
+                .map(NameDto::getName)
+                .collect(joining(GAMBLER_NAME_DELIMITER));
     }
 
     public static void printInitialOpenCards(List<CardsDto> cardsDtos) {
