@@ -29,7 +29,7 @@ public enum PlayerResult {
     }
 
     private static boolean isLose(Dealer dealer, Player player) {
-        return dealer.isBust() || (player.isGreaterScoreThan(dealer) && !player.isBust());
+        return player.isBlackJack() || dealer.isBust() || (player.isGreaterScoreThan(dealer) && !player.isBust());
     }
 
     private static boolean isAllBlackJack(Dealer dealer, Player player) {
