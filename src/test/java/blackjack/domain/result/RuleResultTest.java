@@ -52,7 +52,7 @@ public class RuleResultTest {
         RuleResult blackJackResult = RuleResult.findBlackJackRule(gamer);
         assertAll(
                 () -> assertThat(blackJackResult).isEqualTo(RuleResult.HIT),
-                () -> assertThat(blackJackResult.getResult()).isInstanceOf(Keep.class)
+                () -> assertThat(blackJackResult.getResult()).isInstanceOf(Win.class)
         );
     }
 

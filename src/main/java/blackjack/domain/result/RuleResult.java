@@ -10,7 +10,7 @@ public enum RuleResult {
 
     BLACK_JACK(new BlackJack(), RuleResult::isBlackJack),
     BUST(new Lose(), RuleResult::isBust),
-    HIT(new Keep(), Player::isSatisfyReceiveCondition);
+    HIT(new Win(), Player::isSatisfyReceiveCondition);
 
     private final ResultStrategy resultStrategy;
 

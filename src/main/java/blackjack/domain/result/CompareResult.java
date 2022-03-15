@@ -9,7 +9,7 @@ import java.util.function.BiPredicate;
 public enum CompareResult {
 
     BLACK_JACK(new BlackJack(), (dealerResult, gamer) -> isBlackJack(gamer)),
-    WIN(new Keep(), (dealerResult, gamer) -> isWin(dealerResult, gamer.calculateResult())),
+    WIN(new Win(), (dealerResult, gamer) -> isWin(dealerResult, gamer.calculateResult())),
     DRAW(new Draw(), (dealerResult, gamer) -> isDraw(dealerResult, gamer.calculateResult())),
     LOSE(new Lose(), (dealerResult, gamer) -> isLose(dealerResult, gamer.calculateResult()));
 

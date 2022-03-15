@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.result.Draw;
-import blackjack.domain.result.Keep;
+import blackjack.domain.result.Win;
 import blackjack.domain.result.Lose;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +42,7 @@ public class GamersTest {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         Gamers gamers = new Gamers(List.of(gamer));
 
-        assertThat(gamers.compareResult(9).get(gamer)).isInstanceOf(Keep.class);
+        assertThat(gamers.compareResult(9).get(gamer)).isInstanceOf(Win.class);
     }
 
     @Test

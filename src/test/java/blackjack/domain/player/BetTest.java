@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.result.BlackJack;
 import blackjack.domain.result.Draw;
-import blackjack.domain.result.Keep;
+import blackjack.domain.result.Win;
 import blackjack.domain.result.Lose;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ public class BetTest {
     @DisplayName("Keep 결과는 수익을 1배로 계산한다.")
     void calculateCurrentAmountKeep() {
         Bet bet = new Bet(1000);
-        bet.calculateBenefit(new Keep());
+        bet.calculateBenefit(new Win());
         assertThat(bet.getAmount()).isEqualTo(1000);
     }
 

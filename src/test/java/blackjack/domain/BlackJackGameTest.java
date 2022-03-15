@@ -12,7 +12,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.Keep;
+import blackjack.domain.result.Win;
 import blackjack.domain.result.Lose;
 import blackjack.domain.result.ResultStrategy;
 import java.util.List;
@@ -55,7 +55,7 @@ public class BlackJackGameTest {
 
         //then
         assertAll(
-                () -> assertThat(gameResult.get(judy)).isInstanceOf(Keep.class),
+                () -> assertThat(gameResult.get(judy)).isInstanceOf(Win.class),
                 () -> assertThat(gameResult.get(huni)).isInstanceOf(Lose.class)
         );
     }

@@ -23,7 +23,7 @@ public class BlackJackResultTest {
 
         Map<Gamer, ResultStrategy> map = gamers.getGamers().stream()
                 .collect(Collectors.toMap(gamer -> gamer,
-                        gamer -> new Keep()));
+                        gamer -> new Win()));
 
         BlackJackResult result = new BlackJackResult(map);
         assertThat(result.getResult().keySet()).contains(huni, hani);
