@@ -22,15 +22,15 @@ public class Roles {
 	}
 
 	public Role distributeCardToDealer(final Deck deck) {
-		dealer.draw(deck.draw(), 1);
+		dealer.draw(deck, 1);
 		final Role dealerStatus = new Dealer(dealer.getHand(), DealerDrawChoice::chooseDraw);
-		dealer.draw(deck.draw(), 1);
+		dealer.draw(deck, 1);
 		return dealerStatus;
 	}
 
 	public List<Role> distributeCardToPlayers(final Deck deck) {
 		for (Role player : players) {
-			player.draw(deck.draw(), 2);
+			player.draw(deck, 2);
 		}
 		return players;
 	}
@@ -40,7 +40,7 @@ public class Roles {
 			dealer.stopDraw();
 			return dealer;
 		}
-		dealer.draw(deck.draw(), 1);
+		dealer.draw(deck, 1);
 		return dealer;
 	}
 
@@ -56,7 +56,7 @@ public class Roles {
 			currentPlayer.stopDraw();
 			return currentPlayer;
 		}
-		currentPlayer.draw(deck.draw(), 1);
+		currentPlayer.draw(deck, 1);
 		return currentPlayer;
 	}
 

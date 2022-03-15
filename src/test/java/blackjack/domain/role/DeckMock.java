@@ -13,7 +13,10 @@ public class DeckMock extends Deck {
 
 	public DeckMock(final List<Card> cards) {
 		deck = new LinkedList<>();
-		deck.addAll(cards);
+		for (Card card : cards) {
+			System.out.println(card.getInformation());
+			deck.add(card);
+		}
 	}
 
 	@Override

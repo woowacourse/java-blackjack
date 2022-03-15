@@ -1,6 +1,7 @@
 package blackjack.domain.role;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,12 +21,33 @@ class RolesTest {
 	@Test
 	@DisplayName("딜러에게 카드가 제대로 배분되는지 확인")
 	void distribute_Cards_To_Dealer() {
-		final List<Card> cards = Arrays.asList(CardMockFactory.of("A클로버"),
-			CardMockFactory.of("10클로버"));
-		final Deck deck = new DeckMock(cards);
+		final Deck deck = new DeckMock(initCards());
+
 		roles.initDealer();
 		final Role dealer = roles.distributeCardToDealer(deck);
-		assertThat(dealer.getCardsInformation().size()).isEqualTo(1);
+
+		assertAll(
+			() -> assertThat(dealer.getCardsInformation().size()).isEqualTo(1),
+			() -> assertThat(dealer.getCardsInformation()).isEqualTo(List.of("A클로버"))
+		);
+	}
+
+	@Test
+	@DisplayName("플레이어에게 카드가 제대로 배분되는지 확인")
+	void distribute_Cards_to_Player() {
+		final List<Card> cards = initCards();
+		final Deck deck = new DeckMock(cards);
+
+		roles.joinPlayers(List.of("player"));
+		final List<Role> players = roles.distributeCardToPlayers(deck);
+		final Role actualPlayer = players.get(0);
+
+		assertThat(actualPlayer.getCardsInformation()).isEqualTo(List.of("A클로버", "10클로버"));
+
+	}
+
+	private List<Card> initCards() {
+		return Arrays.asList(CardMockFactory.of("A클로버"), CardMockFactory.of("10클로버"));
 	}
 
 }

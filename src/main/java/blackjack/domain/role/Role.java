@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import blackjack.domain.Outcome;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 
 public abstract class Role {
@@ -25,9 +25,9 @@ public abstract class Role {
 		this.competeResult = new EnumMap<Outcome, Integer>(Outcome.class);
 	}
 
-	public void draw(final Card card, final int theNumberOfCars) {
+	public void draw(final Deck deck, final int theNumberOfCars) {
 		for (int i = 0; i < theNumberOfCars; i++) {
-			hand.addCard(card);
+			hand.addCard(deck.draw());
 		}
 	}
 
