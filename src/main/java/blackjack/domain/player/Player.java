@@ -9,9 +9,9 @@ public interface Player {
 
     boolean isBlackJack();
 
-    boolean isOverMoreCardLimit();
+    boolean isCanHit();
 
-    boolean isOverPointLimit();
+    boolean isBust();
 
     boolean isDealer();
 

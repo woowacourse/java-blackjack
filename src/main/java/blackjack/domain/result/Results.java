@@ -30,7 +30,7 @@ public class Results {
         return results.get(player);
     }
 
-    public void calculate() {
+    public void competeDealerWithPlayers() {
         Player dealer = players.getPlayers()
                 .stream()
                 .filter(Player::isDealer)
@@ -45,10 +45,10 @@ public class Results {
         if (guest.isDealer()) {
             return;
         }
-        scorePlayers(dealer, guest);
+        scorePlay(dealer, guest);
     }
 
-    private void scorePlayers(Player dealer, Player guest) {
+    private void scorePlay(Player dealer, Player guest) {
         Match result = Match.findWinner(guest, dealer);
         Match dealerResult = result.getDealerResult();
         addResult(dealer, dealerResult);

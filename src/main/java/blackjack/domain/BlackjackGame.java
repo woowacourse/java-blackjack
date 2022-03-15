@@ -58,12 +58,12 @@ public class BlackjackGame {
     }
 
     public boolean checkGetMoreCard(Player player) {
-        return !player.isOverMoreCardLimit();
+        return !player.isCanHit();
     }
 
     public boolean turnDealer(CardShuffleMachine playingCardShuffleMachine) {
         Player dealer = blackjackPlayers.getDealer();
-        if (!dealer.isOverMoreCardLimit()) {
+        if (!dealer.isCanHit()) {
             addCard(dealer, playingCardShuffleMachine);
             return true;
         }
@@ -76,7 +76,7 @@ public class BlackjackGame {
 
     public Results calculateResult(Players players) {
         Results results = new Results(players);
-        results.calculate();
+        results.competeDealerWithPlayers();
         return results;
     }
 

@@ -14,7 +14,7 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isOverMoreCardLimit() {
+    public boolean isCanHit() {
         return playingCards.sumPoints() > MAX_POINT;
     }
 
@@ -26,10 +26,10 @@ public class Dealer extends AbstractPlayer implements Player {
     @Override
     public boolean isWin(Player guest, Player dealer) {
         int points = playingCards.sumPoints();
-        if (guest.isLose(points) && points <= PlayingCards.BLACKJACK_POINT) {
+        if (guest.isBust() && points <= PlayingCards.BLACKJACK_POINT) {
             return true;
         }
-        if (guest.isOverMoreCardLimit() && points <= PlayingCards.BLACKJACK_POINT) {
+        if (guest.isLose(points) && points <= PlayingCards.BLACKJACK_POINT) {
             return true;
         }
         return false;

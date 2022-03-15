@@ -38,7 +38,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
-        boolean overLimit = dealer.isOverMoreCardLimit();
+        boolean overLimit = dealer.isCanHit();
 
         assertThat(overLimit).isTrue();
     }
@@ -49,7 +49,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.SIX));
-        boolean overLimit = dealer.isOverMoreCardLimit();
+        boolean overLimit = dealer.isCanHit();
 
         assertThat(overLimit).isFalse();
     }

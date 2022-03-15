@@ -24,7 +24,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isOverPointLimit() {
+    public boolean isBust() {
         return playingCards.isBust();
     }
 

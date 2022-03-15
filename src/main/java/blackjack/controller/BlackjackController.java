@@ -54,19 +54,19 @@ public class BlackjackController {
 
     private void turnPlayers(BlackjackGame blackjackGame) {
         while (blackjackGame.isExistNextPlayer()) {
-            hasMoreCard(blackjackGame);
+            hasHit(blackjackGame);
         }
     }
 
-    private void hasMoreCard(BlackjackGame blackjackGame) {
-        while (blackjackGame.isTurnGuest() && receiveForGetCard(blackjackGame.getTurnPlayer().getName())) {
+    private void hasHit(BlackjackGame blackjackGame) {
+        while (blackjackGame.isTurnGuest() && receiveHit(blackjackGame.getTurnPlayer().getName())) {
             blackjackGame.addCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
             announcePresentCard(blackjackGame.getTurnPlayer());
         }
         blackjackGame.nextTurn();
     }
 
-    public boolean receiveForGetCard(String name) {
+    public boolean receiveHit(String name) {
         try {
             String answer = InputView.requestMoreCard(name);
             InputValidator.inputBlank(answer);
@@ -75,7 +75,7 @@ public class BlackjackController {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        return receiveForGetCard(name);
+        return receiveHit(name);
     }
 
     private void turnDealer(BlackjackGame blackjackGame) {
