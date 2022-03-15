@@ -49,7 +49,7 @@ public class Participant {
     }
 
     private boolean isContainAce() {
-        return cards.stream().filter(Card::isAce).count() > 0;
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     private boolean isBetterToGiveMoreForAce() {
