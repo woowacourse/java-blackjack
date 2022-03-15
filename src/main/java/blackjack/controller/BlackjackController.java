@@ -15,8 +15,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
-    public BlackjackGame initializeGame(List<String> playerNames) {
-        return new BlackjackGame(new CardDeck(), playerNames);
+    public BlackjackGame initializeGame() {
+        try {
+            List<String> playerNames = InputView.requestPlayerNamesInput();
+            return new BlackjackGame(new CardDeck(), playerNames);
+        } catch (IllegalArgumentException exception) {
+            OutputView.printException(exception);
+            return initializeGame();
+        }
     }
 
     // TODO: 추후 participants 에 dealer 가 포함되는 구조로 개선되면 수정 필요

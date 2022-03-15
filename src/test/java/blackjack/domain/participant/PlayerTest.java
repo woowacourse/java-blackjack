@@ -8,6 +8,7 @@ import static blackjack.domain.fixture.CardRepository.CLOVER5;
 import static blackjack.domain.fixture.CardRepository.CLOVER6;
 import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
@@ -31,6 +32,15 @@ public class PlayerTest {
     @Test
     void of() {
         assertThat(player).isNotNull();
+    }
+
+    @DisplayName("Player 의 이름이 비어있을 경우 예외가 발생한다.")
+    @Test
+    void of_withEmptyNameThrowsIllegalArgumentException() {
+        Hand hand = Hand.of(CLOVER4, CLOVER5);
+        assertThatThrownBy(() -> Player.of("", hand))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 1글자 이상이어야합니다.");
     }
 
     @DisplayName("Card 를 전달받아 Hand 에 추가할 수 있다.")

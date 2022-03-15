@@ -2,13 +2,12 @@ package blackjack;
 
 import blackjack.controller.BlackjackController;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.view.InputView;
 
 public class Application {
 
     public static void main(String[] args) {
         BlackjackController blackjackController = new BlackjackController();
-        BlackjackGame blackjackGame = blackjackController.initializeGame(InputView.requestPlayerNamesInput());
+        BlackjackGame blackjackGame = blackjackController.initializeGame();
 
         blackjackController.printInitialHand(blackjackGame);
         blackjackController.giveCardsToAllPlayer(blackjackGame);
