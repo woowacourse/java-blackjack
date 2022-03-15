@@ -5,20 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.human.Players;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("NonAsciiCharacters")
+
 class BlackjackTableTest {
     private final Players players = Players.fromText("pobi");
     private BlackjackTable blackjackTable;
     
     @BeforeEach
-    void 테이블생성() {
+    void setup() {
         blackjackTable = BlackjackTable.from(players);
     }
     
     @Test
-    void 테이블_초기_카드나눠주기() {
+    @DisplayName("테이블 초기 카드 나눠주기 기능 검사")
+    void initCardTest() {
         blackjackTable.initCard();
         assertAll(
                 () -> assertThat(blackjackTable.getPlayers().get().size()).isEqualTo(1),
@@ -28,7 +30,8 @@ class BlackjackTableTest {
     }
     
     @Test
-    void 테이블_플레이어들_getPlayers() {
+    @DisplayName("테이블 getPlayers() 기능 검사")
+    void etPlayersTest() {
         assertThat(blackjackTable.getPlayers()).isEqualTo(players);
     }
 }

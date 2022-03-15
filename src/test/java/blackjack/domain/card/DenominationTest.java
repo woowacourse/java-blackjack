@@ -3,10 +3,10 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.cardelement.Denomination;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@SuppressWarnings("NonAsciiCharacters")
 class DenominationTest {
     
     @ParameterizedTest
@@ -25,7 +25,8 @@ class DenominationTest {
             , "Q,QUEEN"
             , "K,KING"
     })
-    void 숫자_알맞게_들어가는지_검사(String numStr, Denomination expectedDenomination) {
+    @DisplayName("숫자 알맞게 들어가는지 검사")
+    void setExpectedDenominationTest(String numStr, Denomination expectedDenomination) {
         Denomination denomination = Denomination.valueof(numStr);
         assertThat(denomination).isEqualTo(expectedDenomination);
     }

@@ -34,6 +34,7 @@ class StatisticTest {
         
         @BeforeEach
         void setup() {
+            // given
             addCardList(player1, List.of("A", "A", "A", "A", "A"));
             addCardList(player2, List.of("10", "10", "2"));
             Players players = Players.from(List.of(player1, player2));
@@ -41,18 +42,21 @@ class StatisticTest {
             BlackjackTable blackjackTable = BlackjackTable.from(players);
             addCardList(blackjackTable.getDealer(), List.of("8", "10", "10"));
             
+            // when
             statistic = Statistic.from(blackjackTable);
         }
         
         @Test
-        void playerResult() {
+        void playerResultTest() {
+            // then
             assertThat(statistic.getPlayersResult())
                     .containsEntry(player1, Result.WIN)
                     .containsEntry(player2, Result.LOSE);
         }
         
         @Test
-        void dealerResult() {
+        void dealerResultTest() {
+            // then
             assertThat(statistic.getDealerResult()).isEqualTo(Map.of(
                             Result.LOSE, 1,
                             Result.WIN, 1,
@@ -69,6 +73,7 @@ class StatisticTest {
         
         @BeforeEach
         void setup() {
+            // given
             addCardList(player1, List.of("10", "10", "10"));
             addCardList(player2, List.of("10", "10", "10"));
             Players players = Players.from(List.of(player1, player2));
@@ -76,18 +81,21 @@ class StatisticTest {
             BlackjackTable blackjackTable = BlackjackTable.from(players);
             addCardList(blackjackTable.getDealer(), List.of("10", "10", "10", "10"));
             
+            //when
             statistic = Statistic.from(blackjackTable);
         }
         
         @Test
-        void playerResult() {
+        void playerResultTest() {
+            // then
             assertThat(statistic.getPlayersResult())
                     .containsEntry(player1, Result.LOSE)
                     .containsEntry(player2, Result.LOSE);
         }
         
         @Test
-        void dealerResult() {
+        void dealerResultTest() {
+            // then
             assertThat(statistic.getDealerResult()).isEqualTo(Map.of(
                             Result.LOSE, 0,
                             Result.WIN, 2,
@@ -104,6 +112,7 @@ class StatisticTest {
         
         @BeforeEach
         void setup() {
+            // given
             addCardList(player1, List.of("10", "10", "10"));
             addCardList(player2, List.of("5", "A"));
             addCardList(player3, List.of("10", "10"));
@@ -112,11 +121,14 @@ class StatisticTest {
             
             BlackjackTable blackjackTable = BlackjackTable.from(players);
             addCardList(blackjackTable.getDealer(), List.of("10", "10"));
+            
+            // when
             statistic = Statistic.from(blackjackTable);
         }
         
         @Test
-        void playerResult() {
+        void playerResultTest() {
+            // then
             assertThat(statistic.getPlayersResult())
                     .containsEntry(player1, Result.LOSE)
                     .containsEntry(player2, Result.LOSE)
@@ -125,7 +137,8 @@ class StatisticTest {
         }
         
         @Test
-        void dealerResult() {
+        void dealerResultTest() {
+            // then
             assertThat(statistic.getDealerResult()).isEqualTo(Map.of(
                             Result.LOSE, 1,
                             Result.WIN, 2,

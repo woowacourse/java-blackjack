@@ -64,18 +64,18 @@
 - [x] 파일 끝에 개행문자 추가
     - [x] insert_final_newline 옵션을 true로 설정
 - [x] 인풋 뷰 검증로직을 Players 클래스 안으로 이동, 정적팩토리메서드 추가
-- [x] GameController : 10 라인 넘어가는 questAddCard 메서드 로직 효율화
+- [x] `GameController` : 10 라인 넘어가는 `questAddCard` 메서드 로직 효율화
 - [x] suit 클래스 속 이름 중복 제거
 - [x] 상수와 인스턴스 변수 사이 개행
 - [x] cards 속 정적 팩토리 메소드 제거 및 생성자 public 화
-    - [x] 상속불가 클래스에 final 추가
+    - [x] 상속불가 클래스에 `final` 추가
     - [x] 정적 팩토리 메서드 네이밍 컨벤션에 맞게 수정
 - [x] PLAYER_NAME_DELIMITER 제거 및 로직 변경
 - [x] 패키지 명명규칙에 맞게 이름 수정
-- [ ] 테스트코드
+- [x] 테스트코드
     - [x] 테스트코드 컨벤션에 맞게 수정
-    - [ ] 테스트코드 when-given-then 적용
-    - [ ] @DisplayName 변경
+    - [x] 테스트코드 when-given-then 적용
+    - [x] `@DisplayName` 변경
 - [ ] 패키지에 위치한 클래스들 하위에 패키지를 더 나누기
 - [ ] Table 클래스 이름 변경, 클래스 역할 고민
 - [ ] 
@@ -94,7 +94,7 @@
 
 - [ ] 불변화
 - [ ] final class 로 상속안함 표시
-- [ ] 
+- [ ] players test 추가
 - [ ] 
 - [ ] 
 - [ ] 
@@ -111,4 +111,3 @@
 - [x] indent 1로 수정
 - [x] Deck을 Stack으로 변경
 - [x] 테스트 코드 리팩토링
-

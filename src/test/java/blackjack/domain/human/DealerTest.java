@@ -5,34 +5,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.cardelement.Denomination;
 import blackjack.domain.card.cardelement.Suit;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("NonAsciiCharacters")
 class DealerTest {
     
     @Test
-    public void 참여자에_카드_추가() {
+    @DisplayName("딜러 카드 추가/포인트 획득 기능 검사")
+    public void addCardToPlayerTest() {
+        // given
         Dealer dealer = Dealer.newInstance();
-        
         Card card5 = Card.of(Denomination.valueof("5"), Suit.SPADE);
         Card card6 = Card.of(Denomination.valueof("6"), Suit.SPADE);
         
+        // when
         dealer.addCard(card5);
         dealer.addCard(card6);
         
+        // then
         assertThat(dealer.getPoint()).isEqualTo(11);
     }
     
     @Test
-    public void 딜러_히트가능() {
+    @DisplayName("딜러 히트가능 확인하는 기능 검")
+    public void isAbleToHitTest() {
+        // given
         Dealer dealer = Dealer.newInstance();
-        
         Card card5 = Card.of(Denomination.valueof("5"), Suit.SPADE);
         Card card6 = Card.of(Denomination.valueof("6"), Suit.SPADE);
         
+        // when
         dealer.addCard(card5);
         dealer.addCard(card6);
         
+        // then
         assertThat(dealer.isAbleToHit()).isTrue();
     }
 }

@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.cardelement.Denomination;
 import blackjack.domain.card.cardelement.Suit;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@SuppressWarnings("NonAsciiCharacters")
 class PointTest {
     
     @ParameterizedTest
@@ -20,7 +20,8 @@ class PointTest {
             "ACE,TEN,TEN,21",
     })
     
-    void 올바른_포인트_계산되는지_검사(Denomination d1, Denomination d2, Denomination d3, int expectedPoint) {
+    @DisplayName("올바른 포인트 계산되는지 검사")
+    void setExpectedPointTest(Denomination d1, Denomination d2, Denomination d3, int expectedPoint) {
         List<Card> rawCards = List.of(
                 Card.of(d1, Suit.SPADE),
                 Card.of(d2, Suit.SPADE),

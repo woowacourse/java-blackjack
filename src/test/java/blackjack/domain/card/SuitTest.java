@@ -3,10 +3,10 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.cardelement.Suit;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@SuppressWarnings("NonAsciiCharacters")
 class SuitTest {
     @ParameterizedTest
     @CsvSource(value = {
@@ -15,7 +15,9 @@ class SuitTest {
             "DIAMOND,다이아몬드",
             "CLOVER,클로버"
     })
-    void 문양_알맞게_들어가는지_검사(Suit expectedSuit, String inputSymbolName) {
+    
+    @DisplayName("올바른 문양 들어가는지 검사")
+    void setExpectedSuitTest(Suit expectedSuit, String inputSymbolName) {
         assertThat(expectedSuit.getName()).isEqualTo(inputSymbolName);
     }
 }
