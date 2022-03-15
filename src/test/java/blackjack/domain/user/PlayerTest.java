@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    public static final int MAX_DRAWABLE_COUNT = 11;
+    private static final int MAX_DRAWABLE_COUNT = 11;
+    private static final int MINIMUM_BETTING_AMOUNT = 1;
 
     @DisplayName("플레이어 생성 검증")
     @Test
@@ -21,7 +22,7 @@ public class PlayerTest {
         String name = "pobi";
 
         //when
-        Player player = Player.from(name);
+        Player player = createPlayerByName(name);
 
         //then
         assertThat(player).isNotNull();
@@ -34,7 +35,7 @@ public class PlayerTest {
         String name = " ";
 
         //when & then
-        assertThatThrownBy(() -> Player.from(name))
+        assertThatThrownBy(() -> createPlayerByName(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -43,7 +44,7 @@ public class PlayerTest {
     public void testDrawCard() {
         //given
         Deck deck = createDeck();
-        Player player = Player.from("pobi");
+        Player player = createPlayerByName("pobi");
 
         //when
         player.drawCard(deck);
@@ -58,7 +59,7 @@ public class PlayerTest {
     public void testCardDrawable() {
         //given
         Deck deck = createDeck();
-        Player player = Player.from("pobi");
+        Player player = createPlayerByName("pobi");
 
         //when
         for (int i = 0; i < MAX_DRAWABLE_COUNT; i++) {
@@ -73,7 +74,7 @@ public class PlayerTest {
     public void testShowInitCards() {
         //given
         Deck deck = createDeck();
-        Player player = Player.from("pobi");
+        Player player = createPlayerByName("pobi");
 
         player.drawCard(deck);
         player.drawCard(deck);
@@ -87,5 +88,9 @@ public class PlayerTest {
 
     private Deck createDeck() {
         return new Deck(new ShuffledDeckGenerateStrategy());
+    }
+
+    private Player createPlayerByName(String name) {
+        return Player.from(name, new BettingMoney(MINIMUM_BETTING_AMOUNT);
     }
 }

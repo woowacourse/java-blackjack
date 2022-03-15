@@ -8,7 +8,7 @@ public class Player extends User {
     private static final int DRAW_THRESHOLD = 21;
     private static final int INIT_COUNT = 2;
 
-    private Player(String name) {
+    private Player(String name, BettingMoney money) {
         super(name);
     }
 
@@ -17,9 +17,10 @@ public class Player extends User {
         return false;
     }
 
-    public static Player from(String name) {
+    public static Player from(String name, BettingMoney money) {
         validateName(name);
-        return new Player(name);
+
+        return new Player(name, money);
     }
 
     private static void validateName(String playerName) {
