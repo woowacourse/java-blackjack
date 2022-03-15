@@ -37,5 +37,9 @@ public abstract class Gamer {
         return playingCards.isOverBlackjack();
     }
 
+    public String getName() {
+        return name;
+    }
+
     abstract boolean isDrawable();
 }

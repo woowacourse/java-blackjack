@@ -37,10 +37,6 @@ public class Dealer extends Gamer {
         return playingCards.getPartOfCard();
     }
 
-    public String getName() {
-        return name;
-    }
-
     @Override
     public boolean isDrawable() {
         return playingCards.calculateTotal() <= DRAWING_MAXIMUM;

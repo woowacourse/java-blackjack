@@ -35,10 +35,6 @@ public class Player extends Gamer {
         biConsumer.accept(this.name, GamerDto.getCards(this));
     }
 
-    public String getName() {
-        return name;
-    }
-
     @Override
     public boolean isDrawable() {
         return playingCards.isUnderBlackjack();
