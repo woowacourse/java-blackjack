@@ -1,7 +1,10 @@
-package model;
+package model.participator;
 
-import static model.Dealer.DEALER_NAME;
+import static model.participator.Dealer.DEALER_NAME;
 import static model.card.Cards.BLACK_JACK_SCORE;
+
+import model.Betting;
+import model.Result;
 
 public class Player extends Participator {
     private Betting betting;
@@ -31,15 +34,12 @@ public class Player extends Participator {
         return Result.of(this, dealer);
     }
 
+    public void lostBet(Dealer dealer) {
+        this.subtractProfit(betting.getBettingAmount());
+        dealer.addProfit(betting.getBettingAmount());
+    }
+
     public long getBettingAmount() {
         return betting.getBettingAmount();
-    }
-
-    public void bet(Dealer dealer) {
-        betting = betting.bet(dealer);
-    }
-
-    public long getProfitAmount() {
-        return betting.getProfitAmount();
     }
 }

@@ -2,6 +2,8 @@ package model;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
+import model.participator.Dealer;
+import model.participator.Player;
 
 public enum Result {
     WIN((player, dealer) -> player.compareTo(dealer) > 0,

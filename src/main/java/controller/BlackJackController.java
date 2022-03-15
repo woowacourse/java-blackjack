@@ -1,6 +1,6 @@
 package controller;
 
-import static model.Dealer.DEALER_NAME;
+import static model.participator.Dealer.DEALER_NAME;
 
 import dto.AllParticipatorsDto;
 import java.util.List;

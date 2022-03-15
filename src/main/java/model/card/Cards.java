@@ -1,26 +1,32 @@
 package model.card;
 
-import java.util.ArrayList;
 import java.util.List;
 import model.Status;
+import model.card.cardGettable.CardsGettable;
+import model.card.cardGettable.EveryCardsGettable;
 
 public class Cards {
     public static final int BLACK_JACK_SCORE = 21;
     private static final int SCORE_GAP_PER_ACE = 10;
-    private static final String EMPTY_CARDS_MESSAGE = "보유한 카드가 없습니다.";
     private static final String DUPLICATED_CARD_MESSAGE = "중복된 카드를 받을 수 없습니다.";
 
     private final List<Card> cards;
+    private CardsGettable cardsGettableStrategy;
 
-    public Cards(final List<Card> cards) {
+    private Cards(List<Card> cards, CardsGettable cardsGettableStrategy) {
         if (isDuplicated(cards)) {
             throw new IllegalArgumentException(DUPLICATED_CARD_MESSAGE);
         }
-        this.cards = new ArrayList<>(cards);
+        this.cards = cards;
+        this.cardsGettableStrategy = cardsGettableStrategy;
     }
 
     private boolean isDuplicated(final List<Card> cards) {
         return cards.stream().distinct().count() != cards.size();
+    }
+
+    public Cards(final List<Card> cards) {
+        this(cards, new EveryCardsGettable());
     }
 
     public int getSum() {
@@ -53,22 +59,15 @@ public class Cards {
         cards.add(card);
     }
 
-    public Card getFirstCard() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_CARDS_MESSAGE);
-        }
-        return cards.get(0);
-    }
-
     public Status getStatus() {
         return Status.of(cards.size(), getSum());
     }
 
-    public boolean isStand() {
-        return getStatus().equals(Status.STAND);
+    public List<Card> getCardsByStrategy() {
+        return cardsGettableStrategy.getCards(cards);
     }
 
-    public List<Card> getValue() {
-        return cards;
+    public void setCardsGettableStrategy(CardsGettable strategy) {
+        this.cardsGettableStrategy = strategy;
     }
 }

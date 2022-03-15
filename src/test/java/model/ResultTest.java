@@ -16,6 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
+import model.participator.Dealer;
+import model.participator.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,14 +48,14 @@ public class ResultTest {
 
     private void initPlayer(Cards playerCards) {
         player = new Player("player", 0);
-        for (Card card : playerCards.getValue()) {
+        for (Card card : playerCards.getCardsByStrategy()) {
             player.receiveCard(card);
         }
     }
 
     private void initDealer(Cards dealerCards) {
         dealer = new Dealer();
-        for (Card card : dealerCards.getValue()) {
+        for (Card card : dealerCards.getCardsByStrategy()) {
             dealer.receiveCard(card);
         }
     }

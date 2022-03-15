@@ -14,6 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.Arrays;
 import model.card.Card;
 import model.card.CardFace;
+import model.participator.Dealer;
+import model.participator.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -107,8 +109,10 @@ public class PlayerTest {
     }
 
     @Test
-    void bet() {
-        thousandBettedPlayer.bet(dealer);
-        assertThat(thousandBettedPlayer.getProfitAmount()).isEqualTo(-1000);
+    void lostBet() {
+        Dealer dealer = new Dealer();
+        thousandBettedPlayer.lostBet(dealer);
+        assertThat(thousandBettedPlayer.getProfit()).isEqualTo(-1000);
+        assertThat(dealer.getProfit()).isEqualTo(1000);
     }
 }

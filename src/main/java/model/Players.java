@@ -6,6 +6,8 @@ import static java.util.stream.Collectors.toMap;
 import java.util.List;
 import java.util.Map;
 import model.card.CardDeck;
+import model.participator.Dealer;
+import model.participator.Player;
 
 public class Players {
     private final List<Player> players;

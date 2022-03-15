@@ -1,7 +1,7 @@
-package model;
+package model.participator;
 
-import model.cardGettable.EveryCardsGettable;
-import model.cardGettable.FirstCardsGettable;
+import model.card.cardGettable.EveryCardsGettable;
+import model.card.cardGettable.FirstCardsGettable;
 
 public class Dealer extends Participator {
     public static final String DEALER_NAME = "딜러";
@@ -19,9 +19,5 @@ public class Dealer extends Participator {
     @Override
     public boolean canReceiveCard() {
         return this.getSum() <= DEALER_CRITERIA_HIT_SCORE;
-    }
-
-    public void receiveBet(long bettingAmount) {
-
     }
 }
