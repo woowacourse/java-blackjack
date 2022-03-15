@@ -116,7 +116,7 @@ public class Game {
     }
 
     private void winDealer(final Winner winner, Dealer dealer, final Players players) {
-        OutputView.printDealerScore(dealer.getName(), winner.countWinner(), winner.countLoser(players));
+        OutputView.printDealerScore(dealer.getName(), winner.countLoser(players), winner.countWinner());
     }
 
     private void winPlayers(final Winner winner, final Players players) {

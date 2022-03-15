@@ -59,8 +59,8 @@ public class OutputView {
         System.out.println(WINNER_TITLE);
     }
 
-    public static void printDealerScore(final String name, final int winPlayersCount, final int losePlayersCount) {
-        System.out.printf(DEALER_SCORE_FORMAT, name, winPlayersCount, WIN, losePlayersCount, LOSE);
+    public static void printDealerScore(final String name, final int losePlayersCount, final int winPlayersCount) {
+        System.out.printf(DEALER_SCORE_FORMAT, name, losePlayersCount, WIN, winPlayersCount, LOSE);
         printNewLine();
     }
 
