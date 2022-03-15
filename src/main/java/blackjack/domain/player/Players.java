@@ -1,6 +1,8 @@
 package blackjack.domain.player;
 
+import blackjack.domain.CardDeck;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -9,11 +11,17 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         players = List.copyOf(players);
         checkPlayerCountToPlayGame(players.size());
         checkDuplicatePlayerName(players);
         this.players = players;
+    }
+
+    public static Players of(final List<String> playerNames, final CardDeck cardDeck) {
+        return new Players(playerNames.stream()
+                .map(name -> new Player(name, cardDeck.drawInitialCards()))
+                .collect(Collectors.toList()));
     }
 
     private void checkPlayerCountToPlayGame(int playerCount) {

@@ -1,42 +1,35 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private static final CardDeck CARD_DECK = CardDeckGenerator.createCardDeckByCardNumber();
-
+    private final CardDeck cardDeck;
     private final Players players;
     private final Dealer dealer;
 
-    private BlackjackGame(final Players players, final Dealer dealer) {
+    private BlackjackGame(final CardDeck cardDeck, final Players players, final Dealer dealer) {
+        this.cardDeck = cardDeck;
         this.players = players;
         this.dealer = dealer;
     }
 
     public static BlackjackGame create(final List<String> playerNames) {
-        return new BlackjackGame(setUpPlayers(playerNames), setUpDealer());
+        final CardDeck cardDeck = CardDeckGenerator.createCardDeckByCardNumber();
+        return new BlackjackGame(cardDeck, setUpPlayers(playerNames, cardDeck), setUpDealer(cardDeck));
     }
 
-    private static Players setUpPlayers(final List<String> playerNames) {
-        return new Players(playerNames.stream()
-                .map(name -> new Player(name, drawInitialCards()))
-                .collect(Collectors.toUnmodifiableList()));
+    private static Players setUpPlayers(final List<String> playerNames, final CardDeck cardDeck) {
+        return Players.of(playerNames, cardDeck);
     }
 
-    private static Dealer setUpDealer() {
-        return new Dealer(drawInitialCards());
-    }
-
-    private static Cards drawInitialCards() {
-        return CARD_DECK.drawInitialCards();
+    private static Dealer setUpDealer(final CardDeck cardDeck) {
+        return new Dealer(cardDeck.drawInitialCards());
     }
 
     public void drawCardToParticipant(final Participant participant) {
@@ -44,7 +37,7 @@ public class BlackjackGame {
     }
 
     private Card drawCard() {
-        return CARD_DECK.drawCard();
+        return cardDeck.drawCard();
     }
 
     public ParticipantResult findGameResult() {
