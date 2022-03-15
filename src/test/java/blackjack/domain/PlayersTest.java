@@ -15,20 +15,20 @@ public class PlayersTest {
 	void check_empty_list() {
 		String lines = ",,,,";
 		List<String> strings = Arrays.asList(lines.split(","));
-		assertThatThrownBy(() -> new Players(strings.stream().map(Name::new).collect(Collectors.toList())))
+		assertThatThrownBy(() -> Players.from(strings.stream().map(Name::new).collect(Collectors.toList())))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	void check_all_player_blackjack_or_bust() {
-		String lines = "pobi,jason";
-		List<String> strings = Arrays.asList(lines.split(","));
-		Players players = new Players(strings.stream().map(Name::new).collect(Collectors.toList()));
-		players.getPlayers().get(0).addCards(
+		Player player1 = new Player(new Name("pobi"));
+		Player player2 = new Player(new Name("jason"));
+		player1.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.TEN, CardSuit.CLOVER),
 				new Card(CardDenomination.TWO, CardSuit.HEART)));
-		players.getPlayers().get(1).addCards(
+		player2.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.SPADE), new Card(CardDenomination.ACE, CardSuit.HEART)));
+		Players players = new Players(List.of(player1, player2));
 		assertThat(players.isAllPlayersBlackJackOrBust()).isTrue();
 	}
 }

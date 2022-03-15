@@ -33,7 +33,7 @@ public class BlackJackGameController {
 
 	private Players generatePlayers() {
 		try {
-			return new Players(inputView.inputPlayerNames().stream().map(Name::new).collect(Collectors.toList()));
+			return Players.from(inputView.inputPlayerNames().stream().map(Name::new).collect(Collectors.toList()));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return generatePlayers();
