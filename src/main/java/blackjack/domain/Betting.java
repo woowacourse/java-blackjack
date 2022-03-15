@@ -15,16 +15,7 @@ public class Betting {
         }
     }
 
-    public int calculateEarns(Outcome outcome, boolean isBlackjack) {
-        if (outcome == Outcome.LOSE) {
-            return betMoney * (-1);
-        }
-        if (outcome == Outcome.DRAW) {
-            return 0;
-        }
-        if (isBlackjack) {
-            return (int) (betMoney * 1.5);
-        }
+    public int getValue() {
         return betMoney;
     }
 }
