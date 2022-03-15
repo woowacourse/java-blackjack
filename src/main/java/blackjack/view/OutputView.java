@@ -70,7 +70,7 @@ public class OutputView {
     }
 
     public static void printPlayerRecord(PlayerRecordDto dto) {
-        System.out.println(dto.getName() + ": " + dto.getRecord().getName());
+        System.out.println(dto.getName() + ": " + dto.getRecord());
     }
 
     public static void printError(final String message) {

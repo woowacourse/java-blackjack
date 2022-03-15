@@ -20,7 +20,7 @@ public class DealerRecordDto {
         final Map<String, Integer> map = initMap();
 
         for (PlayerRecordDto dto : dtos) {
-            final Record record = Record.fromOppositeName(dto.getRecord().getName());
+            final Record record = Record.fromOppositeName(dto.getRecord());
             map.put(record.getName(), map.get(record.getName()) + 1);
         }
         return new DealerRecordDto(map);
