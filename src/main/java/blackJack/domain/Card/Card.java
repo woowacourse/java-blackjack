@@ -23,7 +23,7 @@ public class Card {
         this.number = number;
     }
 
-    public static Card of(Shape shape, Number number) {
+    public static Card valueOf(Shape shape, Number number) {
         return CACHE.stream().filter(card -> card.isSameShape(shape) && card.isSameNumber(number))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 없는 카드 입니다."));

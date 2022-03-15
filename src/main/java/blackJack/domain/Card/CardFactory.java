@@ -11,13 +11,18 @@ public class CardFactory {
     private final Queue<Card> deck;
 
     public CardFactory() {
+        List<Card> cards = createCards();
+        Collections.shuffle(cards);
+        deck = new LinkedList<>(cards);
+    }
+
+    private List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
         Arrays.stream(Shape.values())
                 .forEach(shape -> Arrays.stream(Number.values())
-                        .map(number -> Card.of(shape, number))
+                        .map(number -> Card.valueOf(shape, number))
                         .forEach(cards::add));
-        Collections.shuffle(cards);
-        deck = new LinkedList<>(cards);
+        return cards;
     }
 
     public Cards initCards() {
