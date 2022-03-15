@@ -34,12 +34,12 @@ public enum PlayRecord {
         return name;
     }
 
-    PlayRecord getOpposite(PlayRecord record) {
-        if (record == LOSS) {
+    public PlayRecord getOpposite() {
+        if (this == LOSS) {
             return WIN;
         }
 
-        if (record == WIN) {
+        if (this == WIN) {
             return LOSS;
         }
 
