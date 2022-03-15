@@ -29,10 +29,11 @@ public class BlackJackGame {
 		this.deck = deck;
 	}
 
-	public void start(Function<String, Boolean> answerReceiver, BiConsumer<String, List<Card>> cardChecker) {
+	public void play(Function<String, Boolean> answerReceiver, BiConsumer<String, List<Card>> cardChecker) {
 		giveFirstCards();
 		checkFirstCardsOfGamers(cardChecker);
 		askPlayerHitOrStay(answerReceiver, cardChecker);
+		askDealerHitOrStay();
 	}
 
 	private void giveFirstCards() {
@@ -77,6 +78,12 @@ public class BlackJackGame {
 		return new GamerDto(gamers.findPlayerByName(name));
 	}
 
+	private void askDealerHitOrStay() {
+		while (gamers.checkDealerDrawPossible()) {
+			gamers.giveCardToDealer(deck);
+		}
+	}
+
 	public GameResultDto createResult() {
 		Dealer dealer = gamers.getDealer();
 		List<Player> players = gamers.getPlayers();
@@ -93,16 +100,7 @@ public class BlackJackGame {
 			playerEarnings.put(player.getName(), playerEarning);
 			dealerEarning += result.getReverseEarning(playerEarning);
 		}
-		return new GameResultDto(askDealerHitOrStay(), dealerEarning, playerEarnings);
-	}
-
-	public int askDealerHitOrStay() {
-		int count = 0;
-		while (gamers.checkDealerDrawPossible()) {
-			gamers.giveCardToDealer(deck);
-			count++;
-		}
-		return count;
+		return new GameResultDto(gamers.findDealerHitCount(), dealerEarning, playerEarnings);
 	}
 
 	public GamerDto getDealerDto() {

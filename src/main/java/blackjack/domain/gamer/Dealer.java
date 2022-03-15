@@ -7,4 +7,8 @@ public class Dealer extends Gamer{
     public Dealer() {
         super(NAME);
     }
+
+    public int getCardSize() {
+        return getCards().size();
+    }
 }

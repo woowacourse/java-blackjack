@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.DrawStrategy;
 
 public class Gamers {
@@ -69,6 +70,10 @@ public class Gamers {
 		return players.stream()
 			.map(Player::getName)
 			.collect(Collectors.toList());
+	}
+
+	public int findDealerHitCount() {
+		return dealer.getCardSize() - Cards.CARD_SIZE_BLACKJACK;
 	}
 
 	public Dealer getDealer() {

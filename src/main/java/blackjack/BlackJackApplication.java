@@ -16,7 +16,7 @@ public class BlackJackApplication {
             new Deck(Card.getCards()));
         OutputView.printGamers(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
 
-        blackJackGame.start(InputView::askHitOrStay, OutputView::checkHoldingCards);
+        blackJackGame.play(InputView::askHitOrStay, OutputView::checkHoldingCards);
         GameResultDto result = blackJackGame.createResult();
 
         OutputView.printAdditionalDrawDealer(result.getDealerDrawCount());

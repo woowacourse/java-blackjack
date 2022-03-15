@@ -9,8 +9,8 @@ public class Cards {
 
 	private static final String NOT_ACE = "Ace 카드가 아닙니다.";
 
+	public static final int CARD_SIZE_BLACKJACK = 2;
 	private static final int MAX_CARD_VALUE = 21;
-	private static final int CARD_SIZE_BLACKJACK = 2;
 
 	private final List<Card> values;
 

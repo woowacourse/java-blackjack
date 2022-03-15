@@ -22,7 +22,7 @@ class BlackJackGameTest {
     void initDistribution() {
         BlackJackGame blackJackGame = new BlackJackGame(
             Arrays.asList("a", "b"), s -> 10, new Deck(Card.getCards()));
-        blackJackGame.start(answer -> false, (s, c) -> {});
+        blackJackGame.play(answer -> false, (s, c) -> {});
 
         GamerDto dealerDto = blackJackGame.getDealerDto();
         List<GamerDto> playerDtos = blackJackGame.getPlayerDtos();
@@ -37,26 +37,12 @@ class BlackJackGameTest {
     @DisplayName("딜러의 점수가 17이상일 때 까지 카드를 1장씩 받는다.")
     void dealerDistribution() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("name"), s -> 10, new Deck(Card.getCards()));
-        blackJackGame.askDealerHitOrStay();
+        blackJackGame.play(answer -> false, (s, c) -> {});
+
         GamerDto dealer = blackJackGame.getDealerDto();
         int cardNumberSum = dealer.getCardNumberSum();
+
         assertThat(cardNumberSum).isGreaterThan(16);
-    }
-
-    @Test
-    @DisplayName("1000원 배팅일 때 무승부이면 수익 0원")
-    void createResultDraw() {
-        BlackJackGame blackJackGame = new BlackJackGame(
-            List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
-
-        blackJackGame.start(answer -> false, (s, c) -> {});
-        GameResultDto result = blackJackGame.createResult();
-
-        int dealerEarning = result.getDealerEarning();
-        Map<String, Integer> playerEarnings = result.getPlayerEarnings();
-
-        assertThat(playerEarnings.get("name")).isEqualTo(0);
-        assertThat(dealerEarning).isEqualTo(0);
     }
 
     @Test
@@ -65,7 +51,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(
             List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
-        blackJackGame.start(answer -> true, (s, c) -> {});
+        blackJackGame.play(answer -> true, (s, c) -> {});
         GameResultDto result = blackJackGame.createResult();
 
         int dealerEarning = result.getDealerEarning();
