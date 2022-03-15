@@ -1,23 +1,20 @@
 package domain.card;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
-import static domain.MockCard.CLUB_ACE_CARD;
-import static domain.MockCard.HEART_TEN_CARD;
-import static domain.MockCard.SPADE_NINE_CARD;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import domain.GameResult;
 import domain.HitThreshold;
-import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static domain.MockCard.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardsTest {
 
@@ -70,46 +67,24 @@ public class CardsTest {
     }
 
     @ParameterizedTest
-    @DisplayName("최종 승패 결과 반환")
-    @MethodSource("provideResultAndCards")
-    void calculateFinalResult(GameResult expected, List<Card> cardsForPlayer, List<Card> cardsForDealer) {
-        for (Card card : cardsForPlayer) {
-            myCards.add(card);
-        }
+    @DisplayName("카드를 더 해줄때 카드 합이 20이하 인 경우에 사용자의 요청대로 실행된다.")
+    @CsvSource(value = {"true,true", "false,false"})
+    void validRequest(final boolean request, final boolean expected) {
+        myCards.add(CLUB_ACE_CARD);
+        myCards.add(SPADE_NINE_CARD);
 
-        for (Card card : cardsForDealer) {
-            dealerCards.add(card);
-        }
-
-        assertThat(myCards.calculateGameResult(dealerCards)).isEqualTo(expected);
+        assertThat(myCards.add(CLUB_ACE_CARD, request)).isEqualTo(expected);
     }
 
-    public static Stream<Arguments> provideResultAndCards() {
-        return Stream.of(
-                Arguments.of(WIN,
-                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD),
-                        List.of(HEART_TEN_CARD, HEART_TEN_CARD, HEART_TEN_CARD)),
-                Arguments.of(WIN,
-                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD),
-                        List.of(HEART_TEN_CARD, HEART_TEN_CARD)),
-                Arguments.of(WIN,
-                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD),
-                        List.of(SPADE_NINE_CARD, SPADE_NINE_CARD)),
-                Arguments.of(LOSE,
-                        List.of(HEART_TEN_CARD, HEART_TEN_CARD, SPADE_NINE_CARD),
-                        List.of(HEART_TEN_CARD, HEART_TEN_CARD, SPADE_NINE_CARD)),
-                Arguments.of(LOSE,
-                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD),
-                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD)),
-                Arguments.of(LOSE,
-                        List.of(HEART_TEN_CARD, SPADE_NINE_CARD),
-                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD)),
-                Arguments.of(DRAW,
-                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD),
-                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD)),
-                Arguments.of(DRAW,
-                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD),
-                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD))
-        );
+    @Test
+    @DisplayName("카드를 더 해줄때 카드 합이 21이상 인 경우 사용자가 카드 받기를 원하면 예외를 던진다.")
+    void invalidRequest() {
+        final boolean request = true;
+        myCards.add(CLUB_ACE_CARD);
+        myCards.add(HEART_TEN_CARD);
+
+        assertThatThrownBy(() -> myCards.add(CLUB_ACE_CARD, request))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드를 더 이상 받을 수 없습니다.");
     }
 }
