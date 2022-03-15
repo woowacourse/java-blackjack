@@ -48,8 +48,12 @@ public class BlackJack {
 			final Role playerStatus = roles.drawPlayer(deck, RedrawChoice.of(answer), currentPlayer);
 			OutputView.printPersonalHand(playerStatus);
 			currentPlayer = roles.getCurrentPlayerName();
-		} while (!currentPlayer.isEmpty());
+		} while (!hasMorePlayer(currentPlayer));
 		OutputView.printDealerStatus(roles.drawDealer(deck));
+	}
+
+	private boolean hasMorePlayer(final String player) {
+		return player.isEmpty();
 	}
 
 	private void calculateFinalResult() {
