@@ -7,11 +7,12 @@ import java.util.List;
 
 public abstract class Player {
 
-    protected final String name;
-    protected final PlayingCards playingCards = new PlayingCards();
+    private final String name;
+    private final PlayingCards playingCards;
 
     protected Player(final String name) {
         this.name = name;
+        this.playingCards = new PlayingCards();
     }
 
     public void receiveCard(final PlayingCard playingCard) {
