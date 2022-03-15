@@ -9,17 +9,17 @@ public enum Match {
     DRAW(0, "무")
     ;
 
-    private final int value;
+    private final int number;
     private final String result;
 
-    Match(int value, String result) {
-        this.value = value;
+    Match(int number, String result) {
+        this.number = number;
         this.result = result;
     }
 
     public static Optional<Match> of(int number) {
         return Arrays.stream(values())
-                .filter(it -> it.value == number)
+                .filter(value -> value.number == number)
                 .findFirst();
     }
 
