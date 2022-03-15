@@ -9,7 +9,7 @@ import blackjack.view.OutputView;
 import java.util.HashMap;
 import java.util.List;
 
-public class BlackjackController {
+public final class BlackjackController {
 
     public GameMachine createGameMachine() {
         try {

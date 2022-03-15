@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.*;
 
-public class Deck {
+public final class Deck {
 
     private final Stack<Card> deck;
 

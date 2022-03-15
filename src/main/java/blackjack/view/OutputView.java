@@ -9,7 +9,7 @@ import blackjack.domain.player.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 
     private static final int INIT_DISTRIBUTE_SIZE = 2;
     private static final int ADD_CARD_CONDITION = 16;

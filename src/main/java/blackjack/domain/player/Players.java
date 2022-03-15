@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.HashSet;
 import java.util.List;
 
-public class Players {
+public final class Players {
 
     private static final int MIN_SIZE = 2;
     private static final int MAX_SIZE = 8;

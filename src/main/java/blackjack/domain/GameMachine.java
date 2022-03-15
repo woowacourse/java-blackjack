@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GameMachine {
+public final class GameMachine {
 
     private final Deck deck;
     private final Players players;

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public final class InputView {
 
     private static final String YES = "y";
     private static final String NO = "n";

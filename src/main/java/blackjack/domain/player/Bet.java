@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import java.util.List;
 
-public class Bet {
+public final class Bet {
 
     public static final double WIN = 1.5;
     public static final double LOSE = -1.0;
