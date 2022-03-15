@@ -1,13 +1,12 @@
 package blackjack;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.HitRequest;
-import blackjack.domain.Judgement;
 import blackjack.domain.Money;
-import blackjack.domain.WinResult;
+import blackjack.domain.ParticipantProfit;
+import blackjack.domain.ProfitResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
@@ -126,12 +125,12 @@ public class BlackJackApplication {
     }
 
     private static void showWinResult(Dealer dealer, Players players) {
-        final WinResult winResult = new WinResult(dealer, players.getValues());
-        final Map<String, Judgement> playersResult = winResult.getPlayersResult();
-        final Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
+        final ProfitResult profitResult = new ProfitResult(players.getValues(), dealer);
+        List<ParticipantProfit> playersResult = profitResult.getPlayersResult();
+        ParticipantProfit dealerResult = profitResult.getDealerResult();
 
-        OutputView.printWinResultMessage();
-        OutputView.printDealerWinResult(dealer.getName(), dealerResult);
-        OutputView.printPlayersWinResult(playersResult);
+        OutputView.printProfitResultMessage();
+        OutputView.printParticipantProfitResult(dealerResult);
+        playersResult.forEach(OutputView::printParticipantProfitResult);
     }
 }
