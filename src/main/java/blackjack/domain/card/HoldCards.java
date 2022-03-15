@@ -24,7 +24,7 @@ public class HoldCards {
         cards.add(card);
     }
 
-    public int countBestNumber() {
+    public int countBestSum() {
         return Denomination.sum(cards.stream()
                 .map(Card::getDenomination)
                 .collect(Collectors.toList()));

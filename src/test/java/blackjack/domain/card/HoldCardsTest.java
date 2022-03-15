@@ -17,7 +17,7 @@ class HoldCardsTest {
                 List.of(
                         Card.valueOf(Suit.CLUB, Denomination.THREE),
                         Card.valueOf(Suit.HEART, Denomination.FOUR)));
-        int bestNumber = holdCards.countBestNumber();
+        int bestNumber = holdCards.countBestSum();
 
         assertThat(bestNumber).isEqualTo(7);
     }
@@ -26,7 +26,7 @@ class HoldCardsTest {
     @DisplayName("에이스가 포함 될 경우 21에 가까운 숫자를 반환한다")
     void countCardNumberContainsAce() {
         HoldCards holdCards = HoldCards.init(List.of(Card.valueOf(Suit.CLUB, Denomination.ACE), Card.valueOf(Suit.HEART, Denomination.TEN)));
-        int bestNumber = holdCards.countBestNumber();
+        int bestNumber = holdCards.countBestSum();
 
         assertThat(bestNumber).isEqualTo(21);
     }
