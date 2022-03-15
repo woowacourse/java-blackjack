@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class BattingMoney {
@@ -7,6 +8,7 @@ public class BattingMoney {
     private final int value;
 
     public BattingMoney(final String value) {
+        Objects.requireNonNull(value, "배팅 금액에는 null이 들어올 수 없습니다.");
         validateNaturalNumber(value);
         this.value = Integer.parseInt(value);
     }
