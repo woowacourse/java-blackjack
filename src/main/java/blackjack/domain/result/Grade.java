@@ -17,7 +17,7 @@ public enum Grade {
         this.grade = grade;
     }
 
-    public static Grade grade(final Dealer dealer, final Player player) {
+    public static Grade gradeToInitCards(final Dealer dealer, final Player player) {
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return TIE;
         }
@@ -28,5 +28,18 @@ public enum Grade {
             return WIN;
         }
         return PROCEED;
+    }
+
+    public static Grade grade(final Dealer dealer, final Player player) {
+        if (player.isBust()) {
+            return LOSE;
+        }
+        if (dealer.isBust() || dealer.isLowerScore(player)) {
+            return WIN;
+        }
+        if (dealer.isHigherScore(player)) {
+            return LOSE;
+        }
+        return TIE;
     }
 }

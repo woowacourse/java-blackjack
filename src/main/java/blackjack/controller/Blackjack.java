@@ -25,9 +25,10 @@ public class Blackjack {
 
         OutputView.printPlayerNameInstruction();
         Players players = createPlayers();
+        Result result = new Result(players);
 
-        drawCards(dealer, players);
-        showWinner(dealer, players);
+        drawCards(dealer, players, result);
+        showWinner(dealer, players, result);
     }
 
     private Players createPlayers() {
@@ -40,12 +41,11 @@ public class Blackjack {
     }
 
     // TODO: draw 전략 패턴 적용해보기
-    private void drawCards(final Dealer dealer, final Players players) {
+    private void drawCards(final Dealer dealer, final Players players, final Result result) {
         CardDeck cardDeck = new CardDeck();
         dealCards(cardDeck, dealer, players);
 
-        Result result = new Result();
-        if (result.isKeepPlaying(dealer, players)) {
+        if (result.isKeepPlaying(dealer)) {
             drawCardToPlayers(players, cardDeck);
             drawCardToDealer(dealer, cardDeck);
         }
@@ -114,13 +114,9 @@ public class Blackjack {
         OutputView.printNewLine();
     }
 
-    private void showWinner(final Dealer dealer, final Players players) {
+    private void showWinner(final Dealer dealer, final Players players, final Result result) {
         openScore(dealer, players);
-
-        Result result = new Result();
-        for (Player player : players.getPlayers()) {
-            result.compete(dealer, player);
-        }
+        result.compete(dealer);
         OutputView.printResultTitle();
         showResult(dealer, result, players);
     }

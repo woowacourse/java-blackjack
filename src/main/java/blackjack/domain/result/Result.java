@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Result {
 
@@ -16,24 +17,23 @@ public class Result {
 
     private final Map<Player, Grade> result = new HashMap<>();
 
-    public boolean isKeepPlaying(final Dealer dealer, final Players players) {
+    public Result(final Players players) {
         for (Player player : players.getPlayers()) {
-            result.put(player, Grade.grade(dealer, player));
+            result.put(player, Grade.PROCEED);
         }
+    }
+
+    public boolean isKeepPlaying(final Dealer dealer) {
+        grade(dealer);
         return result.values().stream()
                 .anyMatch(grade -> grade.equals(Grade.PROCEED));
     }
 
-    public void compete(final Dealer dealer, final Player player) {
-        if (player.isBust()) {
-            losers.add(player);
-            return;
+    public void compete(final Dealer dealer) {
+        final List<Player> proceedPlayers = getProceedPlayers();
+        for (Player player : proceedPlayers) {
+            result.put(player, Grade.grade(dealer, player));
         }
-        if (dealer.isBust() || dealer.isLowerScore(player)) {
-            winners.add(player);
-            return;
-        }
-        losers.add(player);
     }
 
     public int numberOfWinners() {
@@ -46,5 +46,19 @@ public class Result {
 
     public boolean contains(final Player player) {
         return winners.contains(player);
+    }
+
+    private void grade(final Dealer dealer) {
+        result.replaceAll((player, grade) -> Grade.gradeToInitCards(dealer, player));
+    }
+
+    private List<Player> getProceedPlayers() {
+        return result.keySet().stream()
+                .filter(player -> result.get(player).equals(Grade.PROCEED))
+                .collect(Collectors.toList());
+    }
+
+    public Grade getGrade(final Player player) {
+        return result.get(player);
     }
 }

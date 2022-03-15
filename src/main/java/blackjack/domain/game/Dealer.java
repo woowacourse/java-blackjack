@@ -17,6 +17,10 @@ public class Dealer extends Gamer {
         return sumOfCards() < player.sumOfCards();
     }
 
+    public boolean isHigherScore(final Player player) {
+        return sumOfCards() > player.sumOfCards();
+    }
+
     public List<Card> openPartOfCards() {
         return playingCards.getPartOfCard();
     }

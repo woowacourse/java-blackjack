@@ -70,4 +70,31 @@ public class DealerTest {
 
         assertThat(dealer.isLowerScore(player)).isTrue();
     }
+
+    @DisplayName("딜러의 카드 총 합이 플레이어보다 큰 경우를 확인한다.")
+    @Test
+    void is_higher_score_true() {
+        player.dealCards(List.of(sixSpade, sixSpade));
+        dealer.dealCards(List.of(sevenSpade, sevenSpade));
+
+        assertThat(dealer.isHigherScore(player)).isTrue();
+    }
+
+    @DisplayName("딜러의 카드 총 합이 플레이어보다 같은 경우를 확인한다.")
+    @Test
+    void is_higher_score_same() {
+        player.dealCards(List.of(sixSpade, sevenSpade));
+        dealer.dealCards(List.of(sixSpade, sevenSpade));
+
+        assertThat(dealer.isHigherScore(player)).isFalse();
+    }
+
+    @DisplayName("딜러의 카드 총 합이 플레이어보다 작은 경우를 확인한다.")
+    @Test
+    void is_higher_score_false() {
+        player.dealCards(List.of(sevenSpade, sevenSpade));
+        dealer.dealCards(List.of(sixSpade, sixSpade));
+
+        assertThat(dealer.isHigherScore(player)).isFalse();
+    }
 }

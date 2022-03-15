@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class GradeTest {
 
@@ -31,47 +30,82 @@ class GradeTest {
 
     @DisplayName("딜러와 플레이어 모두 블랙잭일 경우 무승부임을 확인한다.")
     @Test
-    void grade_tie() {
+    void grade_to_init_cards_tie() {
         dealer.dealCards(List.of(aceSpade, tenSpade));
         player.dealCards(List.of(aceSpade, tenSpade));
 
-        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.TIE);
+        assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.TIE);
     }
 
     @DisplayName("딜러는 블랙잭이나 플레이어는 블랙잭이 아닐 경우 패배임을 확인한다.")
     @Test
-    void grade_lose() {
+    void grade_to_init_cards_lose() {
         dealer.dealCards(List.of(aceSpade, tenSpade));
         player.dealCards(List.of(tenSpade, tenSpade));
 
-        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.LOSE);
+        assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.LOSE);
     }
 
     @DisplayName("딜러는 블랙잭이 아니나 플레이어가 블랙잭일 경우 승리임을 확인한다.")
     @Test
-    void grade_win() {
+    void grade_to_init_cards_win() {
         dealer.dealCards(List.of(tenSpade, tenSpade));
         player.dealCards(List.of(aceSpade, tenSpade));
 
-        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.WIN);
+        assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.WIN);
     }
 
     @DisplayName("딜러와 플레이어 모두 블랙잭이 없을 경우 게임을 진행하는 것을 확인한다.")
     @Test
-    void grade_proceed() {
+    void grade_to_init_cards_proceed() {
         dealer.dealCards(List.of(tenSpade, tenSpade));
         player.dealCards(List.of(tenSpade, tenSpade));
 
-        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.PROCEED);
+        assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.PROCEED);
     }
 
-    // TODO: 플레이어가 버스트 -> 패
+    @DisplayName("플레이어가 버스트일 경우 패배임을 확인한다.")
+    @Test
+    void grade_player_bust() {
+        dealer.dealCards(List.of(tenSpade, tenSpade));
+        player.dealCards(List.of(tenSpade, tenSpade, tenSpade));
 
-    // TODO: 딜러가 버스트 -> 승
+        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.LOSE);
+    }
 
-    // TODO: 동점 -> 무승부
+    @DisplayName("딜러가 버스트일 경우 승리임을 확인한다.")
+    @Test
+    void grade_dealer_bust() {
+        dealer.dealCards(List.of(tenSpade, tenSpade, tenSpade));
+        player.dealCards(List.of(tenSpade, tenSpade));
 
-    // TODO: 점수가 더 높음 -> 승
+        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.WIN);
+    }
 
-    // TODO: 점수가 낮음 -> 패
+    @DisplayName("모두 버스트가 아니며 동점일 경우 무승부임을 확인한다.")
+    @Test
+    void grade_tie() {
+        dealer.dealCards(List.of(tenSpade, tenSpade));
+        player.dealCards(List.of(tenSpade, tenSpade));
+
+        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.TIE);
+    }
+
+    @DisplayName("모두 버스트가 아니며 플레이어의 점수가 더 높을 경우 승리임을 확인한다.")
+    @Test
+    void grade_win() {
+        dealer.dealCards(List.of(tenSpade));
+        player.dealCards(List.of(tenSpade, tenSpade));
+
+        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.WIN);
+    }
+
+    @DisplayName("모두 버스트가 아니며 플레이어의 점수가 더 낮을 경우 패배임을 확인한다.")
+    @Test
+    void grade_lose() {
+        dealer.dealCards(List.of(tenSpade, tenSpade));
+        player.dealCards(List.of(tenSpade));
+
+        assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.LOSE);
+    }
 }
