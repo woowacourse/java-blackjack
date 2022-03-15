@@ -45,15 +45,17 @@ public class Players {
     public MatchResult judgeWinners(final Dealer dealer) {
         final Map<String, MatchStatus> matchStatuses = new LinkedHashMap<>();
         for (final Player player : players) {
-            matchStatuses.putAll(judgeWinner(player, dealer));
+            appendJudgedWinner(matchStatuses, player, dealer);
         }
         return new MatchResult(matchStatuses);
     }
 
-    private Map<String, MatchStatus> judgeWinner(final Player player, final Dealer dealer) {
+    private void appendJudgedWinner(final Map<String, MatchStatus> matchStatuses,
+                                    final Player player,
+                                    final Dealer dealer) {
         final String playerName = player.getParticipantName();
         final MatchStatus matchStatus = dealer.judgeWinner(player);
-        return Map.of(playerName, matchStatus);
+        matchStatuses.put(playerName, matchStatus);
     }
 
     public List<Player> getPlayers() {
