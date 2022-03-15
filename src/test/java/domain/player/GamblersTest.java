@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.EmptySource;
 
 class GamblersTest {
     @Test
@@ -26,8 +26,8 @@ class GamblersTest {
     }
 
     @ParameterizedTest(name = "생성자 매개변수 : {0}")
-    @NullAndEmptySource
-    @DisplayName("Null 또는 Empty 로 겜블러 생성시 IAE 발생")
+    @EmptySource
+    @DisplayName("빈 목록으로 겜블러 생성시 IAE 발생")
     void createGamblersWithNullOrEmptyShouldFail(List<Gambler> gamblers) {
         assertThatThrownBy(() -> new Gamblers(gamblers))
                 .isInstanceOf(IllegalArgumentException.class)
