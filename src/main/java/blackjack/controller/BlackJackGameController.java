@@ -52,9 +52,7 @@ public class BlackJackGameController {
 	}
 
 	private void progressDealerTurn(Players players, Dealer dealer, Deck deck) {
-		if (dealer.canAddCards()) {
-			outputView.displayNewLine();
-		}
+		outputView.displayNewLine();
 		while (dealer.canAddCards() && !players.isAllPlayersBlackJackOrBust()) {
 			outputView.displayDealerUnderSevenTeen();
 			dealer.addCards(deck.distributeCards(EACH_TURN_DISTRIBUTE_AMOUNT));
