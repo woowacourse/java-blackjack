@@ -46,4 +46,40 @@ class RecordTest {
         // then
         assertThat(actual).isEqualTo(dealerRecord);
     }
+
+    @ParameterizedTest
+    @DisplayName("isWin 테스트")
+    @CsvSource(value = {"19:18:false", "19:19:false", "19:20:true", "19:22:false", "22:21:true",
+            "22:22:false"}, delimiter = ':')
+    void isWin(int dealerScore, int playerScore, boolean expected) {
+        // when
+        final boolean actual = Record.isWin(dealerScore, playerScore);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("isPush() 테스트")
+    @CsvSource(value = {"19:18:false", "19:19:true", "19:20:false", "19:22:false", "22:21:false",
+            "22:22:false"}, delimiter = ':')
+    void isPush(int dealerScore, int playerScore, boolean expected) {
+        // when
+        final boolean actual = Record.isPush(dealerScore, playerScore);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("isLoss()() 테스트")
+    @CsvSource(value = {"19:18:true", "19:19:false", "19:20:false", "19:22:true", "22:21:false",
+            "22:22:true"}, delimiter = ':')
+    void isLoss(int dealerScore, int playerScore, boolean expected) {
+        // when
+        final boolean actual = Record.isLoss(dealerScore, playerScore);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
 }

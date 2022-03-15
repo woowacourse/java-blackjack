@@ -14,7 +14,15 @@ public enum Record {
         return playerScore <= MAX_SCORE && playerScore > dealerScore;
     }),
     PUSH("무", (dealerScore, playerScore) -> dealerScore.equals(playerScore) && playerScore <= MAX_SCORE),
-    LOSS("패", (dealerScore, playerScore) -> true);
+    LOSS("패", (dealerScore, playerScore) -> {
+        if (playerScore > MAX_SCORE) {
+            return true;
+        }
+        if (dealerScore > MAX_SCORE) {
+            return false;
+        }
+        return dealerScore > playerScore;
+    });
 
     private final String name;
     private final BiPredicate<Integer, Integer> predicate;
@@ -39,6 +47,18 @@ public enum Record {
             return WIN;
         }
         return PUSH;
+    }
+
+    static boolean isWin(int dealerScore, int playerScore) {
+        return WIN.predicate.test(dealerScore, playerScore);
+    }
+
+    static boolean isPush(int dealerScore, int playerScore) {
+        return PUSH.predicate.test(dealerScore, playerScore);
+    }
+
+    static boolean isLoss(int dealerScore, int playerScore) {
+        return LOSS.predicate.test(dealerScore, playerScore);
     }
 
     public String getName() {
