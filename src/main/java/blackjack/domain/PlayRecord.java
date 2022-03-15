@@ -30,10 +30,6 @@ public enum PlayRecord {
         return isBust(score) || (!isBust(dealerScore) && score < dealerScore);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public PlayRecord getOpposite() {
         if (this == LOSS) {
             return WIN;
@@ -44,5 +40,9 @@ public enum PlayRecord {
         }
 
         return PUSH;
+    }
+
+    public String getName() {
+        return name;
     }
 }
