@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
@@ -20,7 +21,7 @@ public class PlayerTest {
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);
 
-        Player player = new Player(new Name("Player"), cards);
+        Player player = new Player(new Name("Player"), cards, new Betting(1000));
 
         // when
         List<Card> actual = player.showInitialCards();
@@ -39,7 +40,7 @@ public class PlayerTest {
         List<Card> cards = List.of(card1, card2);
 
         CardDeck deck = new CardDeck(List.of(new Card(Pattern.HEART, Denomination.THREE)));
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, new Betting(1000));
 
         // when
         player.hit(deck);
@@ -57,7 +58,7 @@ public class PlayerTest {
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         List<Card> cards = List.of(card1, card2);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, new Betting(1000));
 
         // when
         boolean actual = player.isHittable();
@@ -75,7 +76,7 @@ public class PlayerTest {
         Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
         List<Card> cards = List.of(card1, card2);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, new Betting(1000));
 
         // when
         boolean actual = player.isHittable();

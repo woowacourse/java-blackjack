@@ -1,10 +1,13 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
 
 public class Player extends Participant {
+
+    private Betting betting;
 
     private static final int HIT_STANDARD = 21;
 
@@ -12,6 +15,10 @@ public class Player extends Participant {
         super(name, new Cards(cards));
     }
 
+    public Player(Name name, List<Card> cards, Betting betting) {
+        super(name, new Cards(cards));
+        this.betting = betting;
+    }
 
     @Override
     public List<Card> showInitialCards() {
@@ -20,5 +27,9 @@ public class Player extends Participant {
 
     public boolean isHittable() {
         return getScore().isLessThan(HIT_STANDARD);
+    }
+
+    public Betting getBetting() {
+        return betting;
     }
 }

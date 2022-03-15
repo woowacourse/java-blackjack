@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.Betting;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
@@ -36,8 +37,17 @@ public class BlackjackGame {
 
     private List<Player> createPlayers(List<Name> playerNames, CardDeck deck) {
         return playerNames.stream()
-                .map(name -> new Player(name, deck.drawDouble()))
+                .map(name -> new Player(name, deck.drawDouble(), inputBetting(name)))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    private Betting inputBetting(Name name) {
+        try {
+            return new Betting(InputView.inputBetMoney(name.getValue()));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return inputBetting(name);
+        }
     }
 
     private void proceed(CardDeck deck, Dealer dealer, List<Player> players) {
