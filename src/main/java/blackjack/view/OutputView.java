@@ -52,7 +52,7 @@ public class OutputView {
 
     private static void announcePresentGuestCards(GameResponse gameResponse, StringBuilder sb) {
         for (PlayingCard playingCard : gameResponse.getDeck().getCards()) {
-            sb.append(playingCard.getRank().getValue())
+            sb.append(playingCard.getRank().getAlias())
                     .append(playingCard.getSuit().getName())
                     .append(RESULT_DELIMITER);
         }
@@ -62,7 +62,7 @@ public class OutputView {
 
     private static void announcePresentDealerCards(GameResponse gameResponse, StringBuilder sb) {
         for (PlayingCard playingCard : gameResponse.getDeck().getCards()) {
-            sb.append(playingCard.getRank().getValue())
+            sb.append(playingCard.getRank().getAlias())
                     .append(playingCard.getSuit().getName())
                     .append(RESULT_DELIMITER);
             break;
@@ -93,7 +93,7 @@ public class OutputView {
                 .append(CARD_FORMAT)
                 .append(RESULT_START_DELIMITER);
         for (PlayingCard playingCard : gameResponse.getDeck().getCards()) {
-            sb.append(playingCard.getRank().getValue())
+            sb.append(playingCard.getRank().getAlias())
                     .append(playingCard.getSuit().getName())
                     .append(RESULT_DELIMITER);
         }

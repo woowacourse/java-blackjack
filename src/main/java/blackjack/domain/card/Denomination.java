@@ -18,18 +18,18 @@ public enum Denomination {
     ;
 
     private final int point;
-    private final String value;
+    private final String alias;
 
-    Denomination(int point, String value) {
+    Denomination(int point, String alias) {
         this.point = point;
-        this.value = value;
+        this.alias = alias;
     }
 
     public int getPoint() {
         return point;
     }
 
-    public String getValue() {
-        return value;
+    public String getAlias() {
+        return alias;
     }
 }
