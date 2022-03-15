@@ -15,7 +15,8 @@ public enum Result {
             (Player::lostBet)),
     DRAW((player, dealer) -> !player.equals(Status.BUST) && player.compareTo(dealer) == 0,
             Integer::equals,
-            ((player, dealer) -> {}));
+            ((player, dealer) -> {
+            }));
 
     private final BiPredicate<Status, Status> statusCriteria;
     private final BiPredicate<Integer, Integer> cardsSumCriteria;

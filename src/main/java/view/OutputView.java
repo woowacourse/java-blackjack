@@ -75,7 +75,7 @@ public class OutputView {
         System.out.println(DEALER_NAME + NAME_VALUE_DELIMITER + totalProfitDto.getDealerProfit() + WON);
 
         for (Entry<String, Long> entry : totalProfitDto.getPlayerProfits().entrySet()) {
-            System.out.println(entry.getKey() + NAME_VALUE_DELIMITER + entry.getValue()+ WON);
+            System.out.println(entry.getKey() + NAME_VALUE_DELIMITER + entry.getValue() + WON);
         }
     }
 

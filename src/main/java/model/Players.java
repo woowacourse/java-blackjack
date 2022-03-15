@@ -8,8 +8,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import model.card.CardDeck;
-import model.participator.Dealer;
 import model.matchplayerselect.MatchPlayerSelectStrategy;
+import model.participator.Dealer;
 import model.participator.Player;
 
 public class Players {

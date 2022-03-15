@@ -1,14 +1,14 @@
 package model.participator;
 
-import static model.participator.Dealer.DEALER_NAME;
 import static model.card.Cards.BLACK_JACK_SCORE;
+import static model.participator.Dealer.DEALER_NAME;
 
+import model.Result;
 import model.Status;
 import model.betting.Betting;
 import model.betting.BettingCalculateStrategy;
 import model.betting.BlackJacCalculateStrategy;
 import model.betting.NormalCalculateStrategy;
-import model.Result;
 
 public class Player extends Participator {
     private Betting betting;

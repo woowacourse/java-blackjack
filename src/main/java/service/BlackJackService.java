@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Map;
 import model.Players;
 import model.Result;
-import model.matchplayerselect.SelectBlackJackAndCanMatchStrategy;
-import model.matchplayerselect.SelectCanMatchStrategy;
 import model.Status;
 import model.card.Card;
 import model.card.CardDeck;
+import model.matchplayerselect.SelectBlackJackAndCanMatchStrategy;
+import model.matchplayerselect.SelectCanMatchStrategy;
 import model.participator.Dealer;
 import model.participator.Participator;
 import model.participator.Player;
@@ -72,7 +72,7 @@ public class BlackJackService {
     }
 
     public void matchFirstTurn() {
-        if(dealer.getStatus().equals(Status.BLACKJACK) || players.anyHasBlackJack()) {
+        if (dealer.getStatus().equals(Status.BLACKJACK) || players.anyHasBlackJack()) {
             executeBetting(players.matchWith(dealer, new SelectBlackJackAndCanMatchStrategy()));
         }
     }

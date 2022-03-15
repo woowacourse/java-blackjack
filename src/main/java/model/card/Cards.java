@@ -21,12 +21,12 @@ public class Cards {
         this.cardsGettableStrategy = cardsGettableStrategy;
     }
 
-    private boolean isDuplicated(final List<Card> cards) {
-        return cards.stream().distinct().count() != cards.size();
-    }
-
     public Cards(final List<Card> cards) {
         this(cards, new EveryCardsGettable());
+    }
+
+    private boolean isDuplicated(final List<Card> cards) {
+        return cards.stream().distinct().count() != cards.size();
     }
 
     public int getSum() {
