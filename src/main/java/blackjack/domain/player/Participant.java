@@ -19,7 +19,7 @@ public class Participant extends AbstractPlayer implements Player {
 
     @Override
     public boolean canHit() {
-        return getScore() <= MAX_SCORE;
+        return !isBust();
     }
 
     @Override
