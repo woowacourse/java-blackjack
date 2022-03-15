@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.game.WinningResult;
+import blackjack.domain.game.PlayerWinningResult;
 
 public class PlayerTest {
 
@@ -46,7 +46,7 @@ public class PlayerTest {
         player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.HEART, Denomination.JACK)));
 
-        assertThat(player.calculateProfit(WinningResult.WIN)).isEqualTo(1500);
+        assertThat(player.calculateProfit(PlayerWinningResult.WIN)).isEqualTo(1500);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class PlayerTest {
         player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.HEART, Denomination.NINE)));
 
-        assertThat(player.calculateProfit(WinningResult.WIN)).isEqualTo(1000);
+        assertThat(player.calculateProfit(PlayerWinningResult.WIN)).isEqualTo(1000);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class PlayerTest {
         player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.HEART, Denomination.NINE)));
 
-        assertThat(player.calculateProfit(WinningResult.DRAW)).isEqualTo(0);
+        assertThat(player.calculateProfit(PlayerWinningResult.DRAW)).isEqualTo(0);
     }
 
     @Test
@@ -79,6 +79,6 @@ public class PlayerTest {
         player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.HEART, Denomination.SIX)));
 
-        assertThat(player.calculateProfit(WinningResult.LOSE)).isEqualTo(-1000);
+        assertThat(player.calculateProfit(PlayerWinningResult.LOSE)).isEqualTo(-1000);
     }
 }

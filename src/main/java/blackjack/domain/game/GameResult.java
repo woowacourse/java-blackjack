@@ -11,24 +11,24 @@ import blackjack.domain.participant.Player;
 public class GameResult {
 
     private final Dealer dealer;
-    private final Map<Player, WinningResult> playerResult;
+    private final Map<Player, PlayerWinningResult> playerResult;
 
     public GameResult(Participants participants) {
         dealer = participants.getDealer();
         playerResult = new HashMap<>();
         for (Player player : participants.getPlayers()) {
-            playerResult.put(player, WinningResult.of(dealer, player));
+            playerResult.put(player, PlayerWinningResult.of(dealer, player));
         }
     }
 
-    public Map<Player, WinningResult> getPlayerResult() {
+    public Map<Player, PlayerWinningResult> getPlayerResult() {
         return playerResult;
     }
 
-    public Map<WinningResult, Integer> getDealerResult() {
-        Map<WinningResult, Integer> dealerResult = new HashMap<>();
-        for (WinningResult winningResult : playerResult.values()) {
-            WinningResult convertedResult = winningResult.reverse();
+    public Map<PlayerWinningResult, Integer> getDealerResult() {
+        Map<PlayerWinningResult, Integer> dealerResult = new HashMap<>();
+        for (PlayerWinningResult winningResult : playerResult.values()) {
+            PlayerWinningResult convertedResult = winningResult.reverse();
             dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
         }
         return dealerResult;

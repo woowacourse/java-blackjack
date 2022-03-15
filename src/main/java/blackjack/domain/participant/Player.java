@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.game.WinningResult;
+import blackjack.domain.game.PlayerWinningResult;
 
 public class Player extends Participant {
 
@@ -25,14 +25,14 @@ public class Player extends Participant {
         isTurnEnd = true;
     }
 
-    public double calculateProfit(WinningResult winningResult) {
+    public double calculateProfit(PlayerWinningResult winningResult) {
         if (isBlackjack()) {
             return bettingMoney * 1.5;
         }
-        if (winningResult == WinningResult.WIN) {
+        if (winningResult == PlayerWinningResult.WIN) {
             return bettingMoney;
         }
-        if (winningResult == WinningResult.LOSE) {
+        if (winningResult == PlayerWinningResult.LOSE) {
             return -bettingMoney;
         }
         return 0;

@@ -34,7 +34,7 @@ public class GameResultTest {
 
         GameResult gameResult = new GameResult(participants);
 
-        assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.LOSE);
+        assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(PlayerWinningResult.LOSE);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class GameResultTest {
 
         GameResult gameResult = new GameResult(participants);
 
-        assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.WIN);
+        assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(PlayerWinningResult.WIN);
     }
 
     @Test

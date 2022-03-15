@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.WinningResult;
+import blackjack.domain.game.PlayerWinningResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -87,8 +87,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printResult(Map<WinningResult, Integer> dealerResult,
-        Map<Player, WinningResult> playerResult) {
+    public static void printResult(Map<PlayerWinningResult, Integer> dealerResult,
+        Map<Player, PlayerWinningResult> playerResult) {
         System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
         System.out.print(DEALER_DIRECTION);
         dealerResult.forEach((key, value) -> System.out.print(" " + value + key.getResult()));
