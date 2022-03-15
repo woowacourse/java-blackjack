@@ -1,8 +1,5 @@
 package view;
 
-import static domain.MatchResult.DRAW;
-import static domain.MatchResult.LOSE;
-import static domain.MatchResult.WIN;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -10,9 +7,7 @@ import static java.util.stream.Collectors.joining;
 
 import domain.BlackJackResult;
 import domain.MatchResult;
-import domain.card.Denomination;
 import domain.card.PlayingCard;
-import domain.card.Suit;
 import domain.player.Dealer;
 import dto.CardsAndScoreDto;
 import dto.CardsDto;
@@ -22,6 +17,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import view.util.NameMapper;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
@@ -35,34 +31,6 @@ public class OutputView {
     private static final String GAMBLER_NAME_DELIMITER = ", ";
     private static final String WIN_DRAW_LOSE_DELIMITER = " ";
     private static final String ERROR_FOR_NO_DEALER_FOUND = "[ERROR] 딜러를 확인하지 못했습니다";
-    private static final Map<Denomination, String> DENOMINATION_NAME_MAPPER = new EnumMap<>(Denomination.class);
-    private static final Map<MatchResult, String> MATCH_RESULT_MAPPER = new EnumMap<>(MatchResult.class);
-    private static final Map<Suit, String> SUIT_NAME_MAPPER = new EnumMap<>(Suit.class);
-
-    static {
-        DENOMINATION_NAME_MAPPER.put(Denomination.KING, "K");
-        DENOMINATION_NAME_MAPPER.put(Denomination.QUEEN, "Q");
-        DENOMINATION_NAME_MAPPER.put(Denomination.JACK, "J");
-        DENOMINATION_NAME_MAPPER.put(Denomination.ACE, "A");
-        DENOMINATION_NAME_MAPPER.put(Denomination.TWO, "2");
-        DENOMINATION_NAME_MAPPER.put(Denomination.THREE, "3");
-        DENOMINATION_NAME_MAPPER.put(Denomination.FOUR, "4");
-        DENOMINATION_NAME_MAPPER.put(Denomination.FIVE, "5");
-        DENOMINATION_NAME_MAPPER.put(Denomination.SIX, "6");
-        DENOMINATION_NAME_MAPPER.put(Denomination.SEVEN, "7");
-        DENOMINATION_NAME_MAPPER.put(Denomination.EIGHT, "8");
-        DENOMINATION_NAME_MAPPER.put(Denomination.NINE, "9");
-        DENOMINATION_NAME_MAPPER.put(Denomination.TEN, "10");
-
-        SUIT_NAME_MAPPER.put(Suit.CLUBS, "클로버");
-        SUIT_NAME_MAPPER.put(Suit.DIAMONDS, "다이아몬드");
-        SUIT_NAME_MAPPER.put(Suit.HEARTS, "하트");
-        SUIT_NAME_MAPPER.put(Suit.SPADES, "스페이드");
-
-        MATCH_RESULT_MAPPER.put(WIN, "승");
-        MATCH_RESULT_MAPPER.put(DRAW, "무");
-        MATCH_RESULT_MAPPER.put(LOSE, "패");
-    }
 
     private OutputView() {
     }
@@ -100,13 +68,8 @@ public class OutputView {
 
     private static String getJoinedCardNames(List<PlayingCard> playingPlayingCards) {
         return playingPlayingCards.stream()
-                .map(OutputView::parseCardName)
+                .map(NameMapper::getCardName)
                 .collect(joining(CARD_NAME_JOIN_CHARACTER));
-    }
-
-    private static String parseCardName(PlayingCard playingCard) {
-        return DENOMINATION_NAME_MAPPER.get(playingCard.getDenomination()) + SUIT_NAME_MAPPER.get(
-                playingCard.getSuit());
     }
 
     public static void printLineSeparator() {
@@ -148,7 +111,7 @@ public class OutputView {
 
     private static String getResultMessageByResultDto(ResultDto resultDto) {
         if (resultDto.isGamblerResult()) {
-            return MATCH_RESULT_MAPPER.get(resultDto.getGamblerResult());
+            return NameMapper.getResultName(resultDto.getGamblerResult());
         }
 
         return getDealerResult(getDealerResultByResultDto(resultDto));
@@ -163,7 +126,7 @@ public class OutputView {
     private static String getDealerResult(Map<MatchResult, Long> dealerResult) {
         return Arrays.stream(MatchResult.values())
                 .filter(dealerResult::containsKey)
-                .map(matchResult -> dealerResult.get(matchResult) + MATCH_RESULT_MAPPER.get(matchResult))
+                .map(matchResult -> dealerResult.get(matchResult) + NameMapper.getResultName(matchResult))
                 .collect(joining(WIN_DRAW_LOSE_DELIMITER));
     }
 }
