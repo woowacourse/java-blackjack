@@ -9,7 +9,8 @@ import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerTest {
+class
+PlayerTest {
 
     @Test
     @DisplayName("플레이어가 정상적으로 생성되는지 확인")

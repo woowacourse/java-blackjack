@@ -24,11 +24,11 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldReceive() {
-        return cardHand.getScore() < DEALER_CARD_PIVOT;
+        return hand.getScore() < DEALER_CARD_PIVOT;
     }
 
     public Card getOpenCard() {
-        return cardHand.getCards().get(0);
+        return hand.getCards().get(0);
     }
 
     public EnumMap<MatchResult, Integer> getMatchResultScores() {
@@ -39,8 +39,9 @@ public class Dealer extends Participant {
         return matchResultScores.get(matchResult);
     }
 
-    public void decideMatchResult(Player player) {
-        MatchResult matchResult = cardHand.compareMatchResult(player.getCardHand());
+    public MatchResult decideMatchResult(Player player) {
+        MatchResult matchResult = hand.compareMatchResult(player.getHand());
         matchResultScores.put(matchResult, matchResultScores.get(matchResult) + 1);
+        return matchResult;
     }
 }

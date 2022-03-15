@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.MatchResult;
+import blackjack.domain.dto.ScoreBoardResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
@@ -67,7 +68,7 @@ public class OutputView {
 
     private static void printPlayersScore(List<Player> players) {
         for (Player player : players) {
-            out.printf(PLAYER_SCORE_MESSAGE, player.getName(), getCardsFrom(player), player.getCardHand().getScore());
+            out.printf(PLAYER_SCORE_MESSAGE, player.getName(), getCardsFrom(player), player.getHand().getScore());
         }
     }
 
@@ -99,6 +100,16 @@ public class OutputView {
     private static void printPlayerMatchResult(List<Player> players) {
         for (Player player : players) {
             out.printf(PLAYER_MATCH_RESULT_MESSAGE, player.getName(), player.getResult().getName());
+        }
+    }
+
+    public static void printBlackjackGameResult2(ScoreBoardResponse scoreBoardResponse) {
+        String dealerMatchResultMessage = scoreBoardResponse.getDealerMatchResultMessage();
+        out.println(BLACKJACK_GAME_RESULT_MESSAGE);
+        out.println(dealerMatchResultMessage);
+        List<String> playerMatchResultMessages = scoreBoardResponse.getPlayerMatchResultMessages();
+        for (String playerMatchResultMessage : playerMatchResultMessages) {
+            out.println(playerMatchResultMessage);
         }
     }
 }

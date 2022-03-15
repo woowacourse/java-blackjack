@@ -10,8 +10,9 @@ public class Player extends Participant {
         this.name = new Name(name);
     }
 
-    public void decideMatchResult(Dealer dealer) {
-        matchResult =  cardHand.compareMatchResult(dealer.getCardHand());
+    public MatchResult decideMatchResult(Dealer dealer) {
+        matchResult =  hand.compareMatchResult(dealer.getHand());
+        return matchResult;
     }
 
     public MatchResult getResult() {

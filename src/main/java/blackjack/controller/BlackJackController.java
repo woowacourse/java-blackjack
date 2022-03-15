@@ -1,7 +1,9 @@
 package blackjack.controller;
 
+import blackjack.domain.ScoreBoard;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
+import blackjack.domain.dto.ScoreBoardResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -12,6 +14,7 @@ import java.util.List;
 public class BlackJackController {
 
     private static final String Y = "Y";
+    private static final String DEALER_MATCH_RESULT_MESSAGE = "딜러: ";
 
     private Deck deck = new Deck(new RandomCardsGenerateStrategy());
     private Dealer dealer = new Dealer();
@@ -24,8 +27,11 @@ public class BlackJackController {
         takeOneMoreCardDuringDealerTurn();
         OutputView.printParticipantScore(dealer, players);
 
-        decideGameScore();
-        OutputView.printBlackjackGameResult(dealer, players);
+//        decideGameScore();
+        ScoreBoard scoreBoard = new ScoreBoard(dealer, players);
+        ScoreBoardResponse scoreBoardResponse = ScoreBoardResponse.from(scoreBoard);
+//        OutputView.printBlackjackGameResult(dealer, players);
+        OutputView.printBlackjackGameResult2(scoreBoardResponse);
     }
 
     private List<Player> createPlayers() {

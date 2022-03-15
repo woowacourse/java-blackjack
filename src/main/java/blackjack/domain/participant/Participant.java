@@ -8,30 +8,30 @@ import java.util.Objects;
 abstract class Participant {
 
     protected Name name;
-    protected final Hand cardHand = new Hand();
+    protected final Hand hand = new Hand();
 
     public String getName() {
         return name.getValue();
     }
 
-    public Hand getCardHand() {
-        return cardHand;
+    public Hand getHand() {
+        return hand;
     }
 
     public int getScore() {
-        return cardHand.getScore();
+        return hand.getScore();
     }
 
     public List<Card> getCards() {
-        return cardHand.getCards();
+        return hand.getCards();
     }
 
     public void receiveCard(Card card) {
-        cardHand.addAll(card);
+        hand.addAll(card);
     }
 
     public boolean isBust() {
-        return cardHand.isBust();
+        return hand.isBust();
     }
 
     @Override
@@ -55,7 +55,7 @@ abstract class Participant {
     public String toString() {
         return "Participant{" +
                 "name=" + name +
-                ", cardHand=" + cardHand +
+                ", cardHand=" + hand +
                 '}';
     }
 }
