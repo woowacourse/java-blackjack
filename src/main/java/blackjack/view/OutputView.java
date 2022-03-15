@@ -7,7 +7,7 @@ import blackjack.domain.human.Player;
 import java.util.Map;
 
 public class OutputView {
-
+    
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
             + System.lineSeparator();
     private static final String HUMAN_CARD_STATE_MESSAGE = "%s카드: %s";
@@ -16,7 +16,7 @@ public class OutputView {
     private static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %d무 %d패" + System.lineSeparator();
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
-
+    
     public static void printInitCards(final Table table) {
         OutputView.printInitCardState(table);
         OutputView.printHumanHand(table.getDealer());
@@ -25,16 +25,16 @@ public class OutputView {
         }
         System.out.println();
     }
-
+    
     public static void printHumanHand(final Human human) {
         System.out.printf(HUMAN_CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), human.getCards());
     }
-
+    
     private static void printInitCardState(final Table table) {
         System.out.printf(INIT_CARD_MESSAGE,
                 table.getDealer().getName(), table.getPlayers().getPlayerNames());
     }
-
+    
     public static void printHandAndPoint(final Table table) {
         System.out.println();
         OutputView.printHumanCardPointState(table.getDealer());
@@ -42,22 +42,22 @@ public class OutputView {
             OutputView.printHumanCardPointState(player);
         }
     }
-
+    
     public static void printHumanCardPointState(final Human human) {
         System.out.printf(HUMAN_CARD_STATE_MESSAGE + HUMAN_POINT_STATE + System.lineSeparator(),
                 human.getName(), human.getCards(), human.getPoint());
     }
-
+    
     public static void printDealerHit() {
         System.out.println(DEALER_CARD_ADDED_MESSAGE);
     }
-
+    
     public static void printDealerResult(final Map<Result, Integer> result) {
         System.out.println(RESULT_FRONT_MESSAGE);
         System.out.printf(DEALER_RESULT_MESSAGE, result.get(Result.WIN), result.get(Result.DRAW),
                 result.get(Result.LOSE));
     }
-
+    
     public static void printPlayerResult(final Map<Player, Result> result) {
         for (Player player : result.keySet()) {
             System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), result.get(player));

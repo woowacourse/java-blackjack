@@ -20,37 +20,37 @@ class StatisticTest {
     private final Player player2 = Player.of("jason");
     private final Player player3 = Player.of("bani");
     private final Player player4 = Player.of("hunch");
-
+    
     void addCardList(Human human, List<String> cards) {
         for (String card : cards) {
             human.addCard(Card.of(Denomination.of(card), Suit.CLOVER));
         }
     }
-
+    
     @Nested
     @DisplayName("딜러_21초과_플레이어승")
     class DealerOverPlayerUnderTest {
         Statistic statistic;
-
+        
         @BeforeEach
         void setup() {
             addCardList(player1, List.of("A", "A", "A", "A", "A"));
             addCardList(player2, List.of("10", "10", "2"));
             Players players = Players.of(List.of(player1, player2));
-
+            
             Table table = Table.of(players);
             addCardList(table.getDealer(), List.of("8", "10", "10"));
-
+            
             statistic = Statistic.of(table);
         }
-
+        
         @Test
         void playerResult() {
             assertThat(statistic.getPlayersResult())
                     .containsEntry(player1, Result.WIN)
                     .containsEntry(player2, Result.LOSE);
         }
-
+        
         @Test
         void dealerResult() {
             assertThat(statistic.getDealerResult())
@@ -62,31 +62,31 @@ class StatisticTest {
                     );
         }
     }
-
+    
     @Nested
     @DisplayName("딜러_21초과_딜러승")
     class DealerOverPlayerOverTest {
         Statistic statistic;
-
+        
         @BeforeEach
         void setup() {
             addCardList(player1, List.of("10", "10", "10"));
             addCardList(player2, List.of("10", "10", "10"));
             Players players = Players.of(List.of(player1, player2));
-
+            
             Table table = Table.of(players);
             addCardList(table.getDealer(), List.of("10", "10", "10", "10"));
-
+            
             statistic = Statistic.of(table);
         }
-
+        
         @Test
         void playerResult() {
             assertThat(statistic.getPlayersResult())
                     .containsEntry(player1, Result.LOSE)
                     .containsEntry(player2, Result.LOSE);
         }
-
+        
         @Test
         void dealerResult() {
             assertThat(statistic.getDealerResult())
@@ -98,12 +98,12 @@ class StatisticTest {
                     );
         }
     }
-
+    
     @Nested
     @DisplayName("딜러_21이하_테스트")
     class DealerUnderTest {
         Statistic statistic;
-
+        
         @BeforeEach
         void setup() {
             addCardList(player1, List.of("10", "10", "10"));
@@ -111,12 +111,12 @@ class StatisticTest {
             addCardList(player3, List.of("10", "10"));
             addCardList(player4, List.of("10", "10", "A"));
             Players players = Players.of(List.of(player1, player2, player3, player4));
-
+            
             Table table = Table.of(players);
             addCardList(table.getDealer(), List.of("10", "10"));
             statistic = Statistic.of(table);
         }
-
+        
         @Test
         void playerResult() {
             assertThat(statistic.getPlayersResult())
@@ -125,7 +125,7 @@ class StatisticTest {
                     .containsEntry(player3, Result.DRAW)
                     .containsEntry(player4, Result.WIN);
         }
-
+        
         @Test
         void dealerResult() {
             assertThat(statistic.getDealerResult())

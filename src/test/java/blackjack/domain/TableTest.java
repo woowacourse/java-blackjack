@@ -13,12 +13,12 @@ class TableTest {
     private final Player player1 = Player.of("pobi");
     private final Players players = Players.of(List.of(player1));
     private Table table;
-
+    
     @BeforeEach
     void 테이블생성() {
         table = Table.of(players);
     }
-
+    
     @Test
     void 테이블_초기_카드나눠주기() {
         table.initCard();
@@ -27,7 +27,7 @@ class TableTest {
                 table.getDealer().getCards().size() == 2)
                 .isTrue();
     }
-
+    
     @Test
     void 테이블_플레이어들_getPlayers() {
         assertThat(table.getPlayers()).isEqualTo(players);

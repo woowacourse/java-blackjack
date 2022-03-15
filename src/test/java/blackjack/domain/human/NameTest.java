@@ -9,13 +9,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class NameTest {
-
+    
     @Test
     public void 참여자이름_객체_생성_통과() {
         assertThat(Name.of("jack").get())
                 .isEqualTo("jack");
     }
-
+    
     @ParameterizedTest
     @ValueSource(strings = {"ja ck", "jac.k", ""})
     public void 참여자이름_객체_생성_실패(String input) {

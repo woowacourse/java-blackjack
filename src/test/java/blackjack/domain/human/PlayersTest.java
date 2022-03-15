@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class PlayersTest {
-
+    
     @Test
     public void 생성() {
         Player player = Player.of("test");
         Players players = Players.of(List.of(player));
         assertThat(players.size()).isEqualTo(1);
     }
-
+    
     @Test
     public void 플레이어_카드_배분_테스트() {
         Player player1 = Player.of("pobi");
@@ -27,7 +27,7 @@ class PlayersTest {
         assertThat(player1.getCards().size()).isEqualTo(2);
         assertThat(player2.getCards().size()).isEqualTo(2);
     }
-
+    
     @Test
     public void 플레이어_이름() {
         Player player1 = Player.of("pobi");

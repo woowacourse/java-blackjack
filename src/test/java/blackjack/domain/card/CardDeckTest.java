@@ -13,14 +13,14 @@ class CardDeckTest {
         assertThat(cardDeck.size())
                 .isEqualTo(52);
     }
-
+    
     @Test
     void 카드주기_테스트() {
         CardDeck cardDeck = CardDeck.getInstance();
         cardDeck.draw();
         assertThat(cardDeck.size()).isEqualTo(51);
     }
-
+    
     @Test
     void 카드주기_테스트_error() {
         CardDeck cardDeck = CardDeck.getInstance();

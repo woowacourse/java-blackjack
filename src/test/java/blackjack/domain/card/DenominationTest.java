@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 class DenominationTest {
-
+    
     @ParameterizedTest
     @CsvSource(value = {
             "A,ACE"

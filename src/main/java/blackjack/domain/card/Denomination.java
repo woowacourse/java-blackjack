@@ -16,26 +16,26 @@ public enum Denomination {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10);
-
+    
     private final String initial;
     private final int point;
-
+    
     Denomination(final String initial, final int point) {
         this.initial = initial;
         this.point = point;
     }
-
+    
     public static Denomination of(final String initialInput) {
         return Arrays.stream(Denomination.values())
                 .filter(value -> value.initial.equals(initialInput))
                 .findAny()
                 .orElseThrow();
     }
-
+    
     public String getInitial() {
         return initial;
     }
-
+    
     public int getPoint() {
         return point;
     }
