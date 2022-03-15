@@ -17,13 +17,23 @@ public class Controller {
         Dealer dealer = Dealer.createDefaultNameDealer();
         Players players = Players.of(InputView.requestPlayerNames());
 
-        dealer.receive(cardDeck, INITIAL_CARD_COUNT);
-        players.receive(cardDeck, INITIAL_CARD_COUNT);
+        initDealerCards(cardDeck, dealer);
+        initPlayerCards(cardDeck, players);
         OutputView.printInitCardHandStatus(dealer, players);
 
         playBlackJack(cardDeck, dealer, players);
         OutputView.printFinalStatus(dealer, players);
         OutputView.printFinalResult(dealer, players);
+    }
+
+    private void initDealerCards(CardDeck cardDeck, Dealer dealer) {
+        dealer.receive(cardDeck, INITIAL_CARD_COUNT);
+    }
+
+    private void initPlayerCards(CardDeck cardDeck, Players players) {
+        for (Player player : players.getPlayers()) {
+            player.receive(cardDeck, INITIAL_CARD_COUNT);
+        }
     }
 
     private void playBlackJack(CardDeck cardDeck, Dealer dealer, Players players) {

@@ -23,12 +23,6 @@ public class Players {
                         .collect(Collectors.toList()));
     }
 
-    public void receive(CardDeck cardDeck, int eachCount) {
-        for (Player player : players) {
-            player.receive(cardDeck, eachCount);
-        }
-    }
-
     public Map<Player, Result> judgeResult(int score) {
         Map<Player, Result> result = new HashMap<>();
         for (Player player : players) {
