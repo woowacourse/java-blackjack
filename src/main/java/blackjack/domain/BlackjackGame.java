@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
@@ -27,11 +28,12 @@ public class BlackjackGame {
     }
 
     private void initPlayers(List<String> playerNames) {
-        blackjackPlayers = new Players();
-        blackjackPlayers.addPlayer(new Dealer());
+        List<Player> players = new ArrayList<>();
+        players.add(new Dealer());
         for (String playerName : playerNames) {
-            blackjackPlayers.addPlayer(new Guest(playerName));
+            players.add(new Guest(playerName));
         }
+        blackjackPlayers = new Players(players);
     }
 
     private void initCards(PlayingCardShuffleMachine playingCardShuffleMachine) {

@@ -9,8 +9,8 @@ public class Players {
     private final List<Player> players;
     private int turn;
 
-    public Players() {
-        this.players = new ArrayList<>();
+    public Players(List<Player> players) {
+        this.players = new ArrayList<>(players);
     }
 
     public void addPlayer(Player player) {

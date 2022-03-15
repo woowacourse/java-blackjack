@@ -13,7 +13,9 @@ import blackjack.domain.result.Match;
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.Results;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,29 +23,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BlackjackGameTest {
 
     BlackjackGame blackjackGame;
-    Player guest;
-    Player dealer;
+    List<Player> players;
+    Guest guest;
+    Dealer dealer;
 
     @BeforeEach
     void setUp() {
         blackjackGame = new BlackjackGame();
+        players = new ArrayList<>();
         guest = new Guest("haha");
         dealer = new Dealer();
+        players.add(guest);
+        players.add(dealer);
     }
 
     @Test
     @DisplayName("딜러가 블랙잭인 경우 확인")
     void isDealerBlackjack() {
-        Players players = new Players();
+        Players playList = new Players(players);
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
-        players.addPlayer(guest);
+        playList.addPlayer(guest);
 
         dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
         dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.TEN));
-        players.addPlayer(dealer);
+        playList.addPlayer(dealer);
 
-        Results results = blackjackGame.calculateResult(players);
+        Results results = blackjackGame.calculateResult(playList);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
 
@@ -53,17 +59,17 @@ class BlackjackGameTest {
     @Test
     @DisplayName("플레이어가 블랙잭인 경우 확인")
     void isPlayerBlackjack() {
-        Players players = new Players();
+        Players playerList = new Players(players);
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.TEN));
-        players.addPlayer(guest);
+        playerList.addPlayer(guest);
 
         dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
         dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.THREE));
         dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.SEVEN));
-        players.addPlayer(dealer);
+        playerList.addPlayer(dealer);
 
-        Results results = blackjackGame.calculateResult(players);
+        Results results = blackjackGame.calculateResult(playerList);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
 
