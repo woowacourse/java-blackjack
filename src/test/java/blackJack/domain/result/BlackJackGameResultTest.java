@@ -20,7 +20,6 @@ class BlackJackGameResultTest {
     private final Player player3 = new Player("parang");
     private final Dealer dealer = new Dealer();
 
-
     @Test
     @DisplayName("딜러의 승패 결과 테스트")
     void calculateDealerResult() {
