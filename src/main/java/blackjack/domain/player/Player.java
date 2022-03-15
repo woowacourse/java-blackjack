@@ -15,7 +15,7 @@ public interface Player {
 
     boolean isDealer();
 
-    boolean isWin(Player guest, Player dealer);
+    boolean isWin(Player player);
 
     boolean isLose(int point);
 

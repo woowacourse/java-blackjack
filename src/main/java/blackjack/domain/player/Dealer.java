@@ -24,7 +24,7 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isWin(Player guest, Player dealer) {
+    public boolean isWin(Player guest) {
         int points = playingCards.sumPoints();
         if (guest.isBlackJack() && !isBlackJack()) {
             return false;

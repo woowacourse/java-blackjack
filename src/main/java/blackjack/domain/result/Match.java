@@ -22,9 +22,9 @@ public enum Match {
         this.expression = expression;
     }
 
-    public static Match findWinner(Player guest, Player dealer) {
+    public static Match findWinner(Player player, Player competitor) {
         return Arrays.stream(Match.values())
-                .filter(match -> match.expression.apply(guest, dealer))
+                .filter(match -> match.expression.apply(player, competitor))
                 .findFirst()
                 .orElseThrow();
     }
@@ -44,15 +44,21 @@ public enum Match {
         return match.result.equals(this.oppositeResult);
     }
 
-    private static boolean winPlayerCondition(Player guest, Player dealer) {
-        return guest.isWin(guest, dealer);
+    private static boolean winPlayerCondition(Player player, Player competitor) {
+        if (competitor.isDealer()) {
+            return player.isWin(competitor);
+        }
+        return competitor.isWin(player);
     }
 
-    private static boolean losePlayerCondition(Player guest, Player dealer) {
-        return dealer.isWin(guest, dealer);
+    private static boolean losePlayerCondition(Player player, Player competitor) {
+        if (competitor.isDealer()) {
+            return competitor.isWin(player);
+        }
+        return player.isWin(competitor);
     }
 
-    private static Boolean isDraw(Player guest, Player dealer) {
-        return guest.isDraw(dealer);
+    private static Boolean isDraw(Player player, Player competitor) {
+        return player.isDraw(competitor);
     }
 }
