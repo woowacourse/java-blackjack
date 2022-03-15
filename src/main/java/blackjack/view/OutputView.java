@@ -25,6 +25,7 @@ public class OutputView {
     private static final String FINAL_RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
     private static final String PLAYER_MATCH_RESULT_FORMAT = "%s: %s" + NEW_LINE;
     private static final String PARTICIPANT_HAND_AND_SCORE_FORMAT = "%s 카드: %s - 결과: %d" + NEW_LINE;
+    private static final String EXCEPTION_MESSAGE_FORMAT = "[ERROR] %s" + NEW_LINE;
 
     public static void printInitialDistributionInfo(List<ParticipantDto> playerDtos) {
         String names = playerDtos.stream()
@@ -92,6 +93,10 @@ public class OutputView {
 
     public static void printPlayerMatchResults(Collection<PlayerMatchDto> playerMatchDtos) {
         playerMatchDtos.forEach(OutputView::printSinglePlayerMatchResult);
+    }
+
+    public static void printException(RuntimeException exception) {
+        System.out.printf(EXCEPTION_MESSAGE_FORMAT, exception.getMessage());
     }
 
     private static void printSinglePlayerMatchResult(PlayerMatchDto playerMatchDto) {

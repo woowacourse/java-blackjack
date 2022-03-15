@@ -35,17 +35,29 @@ public class BlackjackController {
     public void giveCardsToAllPlayer(BlackjackGame game) {
         List<Player> players = game.getParticipants();
         for (Player player : players) {
-            givePlayerCards(player, game);
+            giveCardsToPlayer(player, game);
         }
     }
 
-    private void givePlayerCards(Player player, BlackjackGame game) {
-        if (!InputView.requestMorePlayerCardInput(player.getName())) {
-            return;
+    private void giveCardsToPlayer(Player player, BlackjackGame game) {
+        try {
+            giveSingleCardToPlayerOnMoreCardInput(player, game);
+        } catch (IllegalArgumentException exception) {
+            OutputView.printException(exception);
+            giveCardsToPlayer(player, game);
         }
+    }
+
+    private void giveSingleCardToPlayerOnMoreCardInput(Player player, BlackjackGame game) {
+        if (InputView.requestMorePlayerCardInput(player.getName())) {
+            giveSingleCardToPlayer(player, game);
+        }
+    }
+
+    private void giveSingleCardToPlayer(Player player, BlackjackGame game) {
         if (game.giveExtraCardToPlayer(player)) {
             OutputView.printParticipantHand(ParticipantDto.from(player));
-            givePlayerCards(player, game);
+            giveCardsToPlayer(player, game);
             return;
         }
 
