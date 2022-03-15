@@ -18,19 +18,19 @@ public class Users {
         this.users = users;
     }
 
-    public static Users of(List<String> playerNames, Dealer dealer) {
-        validateDuplication(playerNames);
-
-        List<User> users = playerNames.stream()
-                .map(Player::from)
-                .collect(toList());
+    public static Users of(List<User> users, Dealer dealer) {
+        validateDuplication(users);
 
         users.add(dealer);
 
         return new Users(users);
     }
 
-    private static void validateDuplication(List<String> playerNames) {
+    private static void validateDuplication(List<User> users) {
+        List<String> playerNames = users.stream()
+                .map(player -> player.getName())
+                .collect(toList());
+
         HashSet<String> hashSet = new HashSet<>(playerNames);
 
         if (hashSet.size() < playerNames.size()) {
