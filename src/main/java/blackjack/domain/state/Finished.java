@@ -15,8 +15,8 @@ public abstract class Finished extends AbstractBlackjackGameState {
     }
 
     @Override
-    public BlackjackGameState stand() {
-        return null;
+    public final BlackjackGameState stand() {
+        throw new IllegalStateException("종료된 상태는 stand을 할 수 없습니다.");
     }
 
     @Override

@@ -21,4 +21,13 @@ class StandTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("종료된 상태는 hit을 할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("Stand는 stand할 경우 예외가 발생해야 한다.")
+    void standException() {
+        final BlackjackGameState stand = new Stand(createCards(Card.of(SPADE, KING), Card.of(SPADE, FIVE)));
+        assertThatThrownBy(() -> stand.stand())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("종료된 상태는 stand을 할 수 없습니다.");
+    }
 }

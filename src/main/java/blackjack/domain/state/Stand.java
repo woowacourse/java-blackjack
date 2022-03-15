@@ -9,11 +9,6 @@ public class Stand extends Finished {
     }
 
     @Override
-    public BlackjackGameState stand() {
-        return null;
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
     }
