@@ -2,7 +2,11 @@ package domain.player;
 
 import static domain.MatchResult.LOSE;
 import static domain.MatchResult.WIN;
+import static domain.player.CardFixtures.A_SPADES;
+import static domain.player.CardFixtures.SEVEN_CLUBS;
+import static domain.player.CardFixtures.TEN_HEARTS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.MatchResult;
 import domain.card.Denomination;
@@ -123,5 +127,72 @@ class DealerTest {
         dolbum.addCard(PlayingCard.of(Suit.CLUBS, Denomination.TWO));
 
         return new Gamblers(List.of(pobi, rich, dolbum));
+    }
+
+    @Test
+    @DisplayName("동점이더라도 딜러만 블랙잭이면 딜러가 승리한다.")
+    void blackjackWinEvenIfCompetitorMadeSameScore() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(A_SPADES);
+        dealer.addCard(TEN_HEARTS);
+
+        Gambler gambler = new Gambler("rich");
+        gambler.addCard(SEVEN_CLUBS);
+        gambler.addCard(SEVEN_CLUBS);
+        gambler.addCard(SEVEN_CLUBS);
+
+        // when
+        boolean isDealerBlackjack = dealer.isBlackJack();
+        MatchResult resultForDealer = dealer.match(gambler);
+        boolean isGamblerBlackjack = gambler.isBlackJack();
+        MatchResult resultForGambler = gambler.match(dealer);
+
+        // then
+        assertAll(
+                () -> assertThat(dealer.getScore()).isEqualTo(gambler.getScore()),
+                () -> assertThat(isDealerBlackjack).isTrue(),
+                () -> assertThat(isGamblerBlackjack).isFalse(),
+                () -> assertThat(resultForDealer).isEqualTo(MatchResult.WIN),
+                () -> assertThat(resultForGambler).isEqualTo(MatchResult.LOSE)
+        );
+    }
+
+    @Test
+    @DisplayName("겜블러가 버스트이면, 딜러는 버스트여도 딜러가 승리한다.")
+    void dealerWinsInAnyConditionWhenGamblerIsBust() {
+        // given
+        Gambler gambler = new Gambler("rich");
+        gambler.addCard(TEN_HEARTS);
+        gambler.addCard(TEN_HEARTS);
+        gambler.addCard(SEVEN_CLUBS);
+
+        Dealer dealer = new Dealer();
+        dealer.addCard(SEVEN_CLUBS);
+        dealer.addCard(TEN_HEARTS);
+
+        // when
+        boolean isGamblerBust = gambler.isBust();
+        MatchResult gamblerResultWhenDealerIsNotBust = gambler.match(dealer);
+
+        boolean dealerBustStatusBeforeBust = dealer.isBust();
+        MatchResult dealerResultWhenDealerIsNotBust = dealer.match(gambler);
+
+        dealer.addCard(TEN_HEARTS);
+        boolean dealerBustStatusAfterBust = dealer.isBust();
+        MatchResult gamblerResultWhenDealerIsBust = gambler.match(dealer);
+        MatchResult dealerResultWhenDealerIsBust = dealer.match(gambler);
+
+        // then
+        assertAll(
+                () -> assertThat(isGamblerBust).isTrue(),
+                () -> assertThat(gamblerResultWhenDealerIsNotBust).isEqualTo(LOSE),
+                () -> assertThat(dealerBustStatusBeforeBust).isFalse(),
+                () -> assertThat(dealerResultWhenDealerIsNotBust).isEqualTo(WIN),
+
+                () -> assertThat(dealerBustStatusAfterBust).isTrue(),
+                () -> assertThat(gamblerResultWhenDealerIsBust).isEqualTo(LOSE),
+                () -> assertThat(dealerResultWhenDealerIsBust).isEqualTo(MatchResult.WIN)
+        );
     }
 }
