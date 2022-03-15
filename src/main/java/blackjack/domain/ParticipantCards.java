@@ -35,11 +35,9 @@ public class ParticipantCards {
         return cards.get(FIRST_CARD_INDEX);
     }
 
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
-
 
     private int getAceCount() {
         return (int) cards.stream().filter(Card::isAce).count();

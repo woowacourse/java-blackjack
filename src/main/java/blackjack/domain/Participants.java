@@ -12,7 +12,6 @@ public class Participants {
 
     private static final String PLAYER_NUMBER_ERROR_MESSAGE = "[ERROR] 플레이어 수는 1~8명 사이여야 합니다.";
 
-
     private final Dealer dealer = new Dealer();
     private final List<Player> players;
 
@@ -33,7 +32,6 @@ public class Participants {
             participant.receiveInitCards(cards);
         }
     }
-
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
@@ -57,4 +55,5 @@ public class Participants {
             throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
         }
     }
+
 }

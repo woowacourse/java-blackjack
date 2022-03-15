@@ -31,4 +31,5 @@ public enum Denomination {
     public String getName() {
         return name;
     }
+
 }

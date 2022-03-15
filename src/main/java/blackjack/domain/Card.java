@@ -25,4 +25,5 @@ public class Card {
     public String getDenominationName() {
         return denomination.getName();
     }
+
 }

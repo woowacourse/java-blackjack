@@ -45,7 +45,6 @@ public class Player extends Participant {
         }
     }
 
-
     private void checkNullAndEmpty(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException(PLAYER_NAME_EMPTY_ERROR_MESSAGE);

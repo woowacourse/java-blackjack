@@ -36,5 +36,5 @@ public enum WinningResult {
         }
         return WIN;
     }
-}
 
+}

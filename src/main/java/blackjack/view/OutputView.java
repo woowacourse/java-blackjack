@@ -110,4 +110,5 @@ public class OutputView {
             (key, value) -> System.out.println(
                 key.getName() + RESULT_DELIMITER + value.getResult()));
     }
+
 }

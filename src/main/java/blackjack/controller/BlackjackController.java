@@ -75,7 +75,6 @@ public class BlackjackController {
         return InputView.inputPlayerHit(player.getName()).equals("y");
     }
 
-
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
         while (dealer.isHittable()) {
             OutputView.printDealerHitMessage();
@@ -95,6 +94,4 @@ public class BlackjackController {
         OutputView.printResult(dealerResult, playerResult);
     }
 
-
 }
-
