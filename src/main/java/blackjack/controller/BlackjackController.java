@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.game.BlackjackGame;
@@ -21,9 +22,18 @@ public class BlackjackController {
     }
 
     private Participants createParticipants() {
-        return new Participants(InputView.inputPlayerName().stream()
-            .map(Player::new)
-            .collect(Collectors.toList()));
+        List<String> names = inputPlayersName();
+        return new Participants(inputPlayersBettingMoney(names));
+    }
+
+    private List<String> inputPlayersName() {
+        return InputView.inputPlayerName();
+    }
+
+    private List<Player> inputPlayersBettingMoney(List<String> names) {
+        return names.stream()
+            .map(name -> new Player(name, InputView.inputBettingMoney(name)))
+            .collect(Collectors.toList());
     }
 
     private void dealInitialCards(BlackjackGame blackjackGame) {

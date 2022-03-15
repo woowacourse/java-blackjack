@@ -2,10 +2,12 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
 
+    private final int bettingMoney;
     private boolean isTurnEnd = false;
 
-    public Player(String name) {
+    public Player(String name, int bettingMoney) {
         super(name);
+        this.bettingMoney = bettingMoney;
     }
 
     public boolean canHit() {
