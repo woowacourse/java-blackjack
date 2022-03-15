@@ -1,50 +1,13 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Cards;
-import java.util.List;
+public class Player extends Participant {
 
-public abstract class Player {
-    protected static final int MAX_SCORE = 21;
-    protected final Cards cards;
-
-    public Player() {
-        this.cards = new Cards();
+    public Player(final String name) {
+        super(name);
     }
 
-    public void receive(final Card card) {
-        this.cards.add(card);
+    @Override
+    public boolean isImpossibleHit() {
+        return cards.sumScore() >= Participant.MAX_SCORE;
     }
-
-    public boolean isBlackJack() {
-        return cards.sumScore() == MAX_SCORE && cards.hasTwoCard();
-    }
-
-    public int countAddedCards() {
-        return cards.countAddedCard();
-    }
-
-    public int sumCardsScore() {
-        return cards.sumScore();
-    }
-
-    public boolean isBust() {
-        return cards.sumScore() > MAX_SCORE;
-    }
-
-    public boolean isWinBy(Player otherPlayer) {
-        return cards.sumScore() > otherPlayer.cards.sumScore();
-    }
-
-    public boolean isDrawWith(Player otherPlayer) {
-        return cards.sumScore() == otherPlayer.cards.sumScore();
-    }
-
-    public List<String> getCards() {
-        return cards.getValues();
-    }
-
-    public abstract String getName();
-
-    public abstract boolean isImpossibleHit();
 }

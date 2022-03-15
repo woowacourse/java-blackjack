@@ -1,6 +1,7 @@
 package blackjack.model.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.TrumpNumber;
@@ -8,26 +9,40 @@ import blackjack.model.card.TrumpSymbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerTest {
+public class PlayerTest {
 
-    @DisplayName("카드 점수의 합이 21이고 카드 개수가 2개 이면 true를 반환한다.")
+    @DisplayName("이름이 공백이면 예외가 발생한다")
     @Test
-    void isBlackJack_true() {
-        Player dealer = new Dealer();
-        dealer.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
-        dealer.receive(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
-
-        assertThat(dealer.isBlackJack()).isTrue();
+    void build_exception_blank() {
+        assertThatThrownBy(() -> new Player(" "))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이름은 공백이거나 없을 수 없습니다.");
     }
 
-    @DisplayName("카드 점수의 합이 21이고 카드 개수가 3개 이면 false를 반환한다.")
+    @DisplayName("이름이 null값 이면 예외가 발생한다")
     @Test
-    void isBlackJack_false() {
-        Player gamer = new Gamer("리버");
-        gamer.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
-        gamer.receive(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
-        gamer.receive(new Card(TrumpNumber.KING, TrumpSymbol.CLOVER));
+    void build_exception_null() {
+        assertThatThrownBy(() -> new Player(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이름은 공백이거나 없을 수 없습니다.");
+    }
 
-        assertThat(gamer.isBlackJack()).isFalse();
+    @DisplayName("Player가 정상적으로 생성되는지 확인한다.")
+    @Test
+    void construct_Gamer() {
+        Participant liver = new Player("아차산메이웨더미래의챔피언리버");
+
+        assertThat(liver).isInstanceOf(Player.class);
+    }
+
+    @DisplayName("카드 점수의 합이 21점 이상이면 true를 반환한다.")
+    @Test
+    void isImpossibleHit_true() {
+        Player player = new Player("리버");
+        player.receive(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.TWO, TrumpSymbol.CLOVER));
+
+        assertThat(player.isImpossibleHit()).isTrue();
     }
 }

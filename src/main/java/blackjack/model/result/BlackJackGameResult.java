@@ -1,7 +1,7 @@
 package blackjack.model.result;
 
-import blackjack.model.player.Gamers;
-import blackjack.model.player.Player;
+import blackjack.model.player.Players;
+import blackjack.model.player.Participant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,27 +9,27 @@ public class BlackJackGameResult {
     private final Map<String, MatchResult> gamersMatchResult;
     private final Map<MatchResult, Integer> dealerMatchResult;
 
-    public BlackJackGameResult(Player dealer, Gamers gamers) {
-        this.gamersMatchResult = createGamersMatchResult(dealer, gamers);
-        this.dealerMatchResult = createDealerMatchResult(dealer, gamers);
+    public BlackJackGameResult(Participant dealer, Players players) {
+        this.gamersMatchResult = createGamersMatchResult(dealer, players);
+        this.dealerMatchResult = createDealerMatchResult(dealer, players);
     }
 
-    public Map<String, MatchResult> createGamersMatchResult(Player dealer, Gamers gamers) {
+    public Map<String, MatchResult> createGamersMatchResult(Participant dealer, Players players) {
         Map<String, MatchResult> gamersMatchResult = new LinkedHashMap<>();
-        for (Player gamer : gamers.getValues()) {
+        for (Participant gamer : players.getValues()) {
             MatchResult matchResult = match(dealer, gamer);
             gamersMatchResult.put(gamer.getName(), matchResult);
         }
         return gamersMatchResult;
     }
 
-    private MatchResult match(Player dealer, Player gamer) {
+    private MatchResult match(Participant dealer, Participant gamer) {
         return MatchResult.findBy(dealer, gamer);
     }
 
-    private Map<MatchResult, Integer> createDealerMatchResult(Player dealer, Gamers gamers) {
+    private Map<MatchResult, Integer> createDealerMatchResult(Participant dealer, Players players) {
         Map<MatchResult, Integer> dealerMatchResult = initDealerMatchResult();
-        for (Player gamer : gamers.getValues()) {
+        for (Participant gamer : players.getValues()) {
             MatchResult matchResult = match(dealer, gamer);
             dealerMatchResult.merge(matchResult, 1, Integer::sum);
         }

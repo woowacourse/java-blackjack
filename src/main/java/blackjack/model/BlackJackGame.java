@@ -2,8 +2,9 @@ package blackjack.model;
 
 import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
-import blackjack.model.player.Gamers;
-import blackjack.model.player.Player;
+import blackjack.model.player.Players;
+import blackjack.model.player.Participants;
+import blackjack.model.player.Participant;
 import blackjack.model.result.BlackJackGameResult;
 import java.util.List;
 import java.util.function.Consumer;
@@ -12,12 +13,14 @@ import java.util.function.Predicate;
 public class BlackJackGame {
     private static final int START_CARD_COUNT = 2;
 
-    private final Player dealer;
-    private final Gamers gamers;
+    private final Participants participants;
+    private final Participant dealer;
+    private final Players players;
 
-    public BlackJackGame(final List<String> gamerNames) {
+    public BlackJackGame(final List<String> names) {
+        this.participants = new Participants(names);
         this.dealer = new Dealer();
-        this.gamers = new Gamers(gamerNames);
+        this.players = new Players(names);
     }
 
     public void start() {
@@ -33,15 +36,15 @@ public class BlackJackGame {
     }
 
     private void giveCardsToGamers() {
-        gamers.giveCardsToGamer();
+        players.giveCardsToGamer();
     }
 
-    public void hitOrStayUntilPossible(Predicate<String> predicate, Consumer<Player> consumer) {
-        gamers.hitOrStayToGamer(predicate, consumer);
+    public void hitOrStayUntilPossible(Predicate<String> predicate, Consumer<Participant> consumer) {
+        players.hitOrStayToGamer(predicate, consumer);
         hitOrStayToDealer(consumer);
     }
 
-    private void hitOrStayToDealer(Consumer<Player> consumer) {
+    private void hitOrStayToDealer(Consumer<Participant> consumer) {
         CardDeck deck = CardDeck.getInstance();
         while (!dealer.isBlackJack() && !dealer.isImpossibleHit()) {
             dealer.receive(deck.draw());
@@ -50,14 +53,14 @@ public class BlackJackGame {
     }
 
     public BlackJackGameResult createMatchResult() {
-        return new BlackJackGameResult(dealer, gamers);
+        return new BlackJackGameResult(dealer, players);
     }
 
-    public Player getDealer() {
+    public Participant getDealer() {
         return dealer;
     }
 
-    public List<Player> getGamers() {
-        return gamers.getValues();
+    public List<Participant> getGamers() {
+        return players.getValues();
     }
 }

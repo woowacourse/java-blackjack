@@ -1,6 +1,6 @@
 package blackjack.model.result;
 
-import blackjack.model.player.Player;
+import blackjack.model.player.Participant;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
@@ -19,14 +19,14 @@ public enum MatchResult {
     ;
 
     private final String value;
-    private final BiPredicate<Player, Player> biPredicate;
+    private final BiPredicate<Participant, Participant> biPredicate;
 
-    MatchResult(String value, BiPredicate<Player, Player> biPredicate) {
+    MatchResult(String value, BiPredicate<Participant, Participant> biPredicate) {
         this.value = value;
         this.biPredicate = biPredicate;
     }
 
-    public static MatchResult findBy(Player dealer, Player gamer) {
+    public static MatchResult findBy(Participant dealer, Participant gamer) {
         return Arrays.stream(values())
                 .filter(matchResult -> matchResult.biPredicate.test(dealer, gamer))
                 .findAny()

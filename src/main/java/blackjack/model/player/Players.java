@@ -6,37 +6,37 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Gamers {
+public class Players {
     private static final int START_CARD_COUNT = 2;
 
-    private final List<Player> values;
+    private final List<Participant> values;
 
-    public Gamers(final List<String> names) {
+    public Players(final List<String> names) {
         this.values = names.stream()
-                .map(Gamer::new)
+                .map(Player::new)
                 .collect(Collectors.toList());
     }
 
     public void giveCardsToGamer() {
-        for (Player gamer : values) {
+        for (Participant gamer : values) {
             giveCardsTo(gamer);
         }
     }
 
-    private void giveCardsTo(final Player gamer) {
+    private void giveCardsTo(final Participant gamer) {
         CardDeck deck = CardDeck.getInstance();
         for (int i = 0; i < START_CARD_COUNT; i++) {
             gamer.receive(deck.draw());
         }
     }
 
-    public void hitOrStayToGamer(Predicate<String> predicate, Consumer<Player> consumer) {
-        for (Player gamer : values) {
+    public void hitOrStayToGamer(Predicate<String> predicate, Consumer<Participant> consumer) {
+        for (Participant gamer : values) {
             hitOrStayTo(gamer, predicate, consumer);
         }
     }
 
-    private void hitOrStayTo(final Player gamer, Predicate<String> predicate, Consumer<Player> consumer) {
+    private void hitOrStayTo(final Participant gamer, Predicate<String> predicate, Consumer<Participant> consumer) {
         CardDeck deck = CardDeck.getInstance();
         while (canHit(gamer) && isHitSign(gamer, predicate)) {
             gamer.receive(deck.draw());
@@ -44,15 +44,15 @@ public class Gamers {
         }
     }
 
-    private boolean canHit(final Player gamer) {
+    private boolean canHit(final Participant gamer) {
         return !gamer.isBlackJack() && !gamer.isImpossibleHit();
     }
 
-    private boolean isHitSign(Player gamer, Predicate<String> predicate) {
+    private boolean isHitSign(Participant gamer, Predicate<String> predicate) {
         return predicate.test(gamer.getName());
     }
 
-    public List<Player> getValues() {
+    public List<Participant> getValues() {
         return values;
     }
 }

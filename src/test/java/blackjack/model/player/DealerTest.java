@@ -1,12 +1,11 @@
 package blackjack.model.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.TrumpNumber;
 import blackjack.model.card.TrumpSymbol;
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ public class DealerTest {
     @DisplayName("Dealer가 정상적으로 생성되는지 확인한다.")
     @Test
     void construct_Dealer() {
-        Player liver = new Dealer();
+        Participant liver = new Dealer();
 
         assertThat(liver).isInstanceOf(Dealer.class);
     }

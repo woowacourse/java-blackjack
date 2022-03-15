@@ -2,15 +2,18 @@ package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Cards;
-import blackjack.model.card.TrumpNumber;
-import blackjack.model.card.TrumpSymbol;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
+
+    @DisplayName("Cards가 정상적으로 생성되는지 확인한다.")
+    @Test
+    void construct(){
+        Cards cards = new Cards();
+
+        assertThat(cards).isInstanceOf(Cards.class);
+    }
 
     @DisplayName("9클로버, J하트 점수의 합은 19이다")
     @Test
