@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ public class PlayingCards {
     private final Set<PlayingCard> cards;
 
     public PlayingCards(Set<PlayingCard> cards) {
-        this.cards = cards;
+        this.cards = new HashSet<>(cards);
     }
 
     public PlayingCards() {
