@@ -1,10 +1,13 @@
 package view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
 
     private static final String PLAYER_NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String COMMA = ",";
     private static final String GET_MORE_CARD_OR_NOT_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String GET_CARD_OR_NOT_REGEX = "^[y,n]$";
     private static final String YES = "y";
@@ -23,9 +26,13 @@ public class InputView {
         return INPUT_VIEW;
     }
 
-    public String inputPlayerName() {
+    public List<String> inputPlayerName() {
         System.out.println(PLAYER_NAME_INPUT_MESSAGE);
-        return input();
+        return splitByComma(input());
+    }
+
+    private List<String> splitByComma(String names) {
+        return Arrays.asList(names.split(COMMA));
     }
 
     private String input() {

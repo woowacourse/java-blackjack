@@ -1,16 +1,12 @@
 package domain.participant;
 
 import domain.card.Deck;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-
-    private static final String DELIMITER = ",";
 
     private final List<Player> players;
 
@@ -18,8 +14,8 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players of(String names) {
-        List<Player> players = Arrays.stream(names.split(DELIMITER))
+    public static Players of(List<String> playerNames) {
+        List<Player> players = playerNames.stream()
             .map(String::trim)
             .map(Player::new)
             .collect(Collectors.toList());
