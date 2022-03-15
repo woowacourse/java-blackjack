@@ -5,8 +5,7 @@ import blackjack.domain.card.PlayingCards;
 public class Dealer extends AbstractPlayer implements Player {
 
     public static final String NAME = "딜러";
-    public static final int MAX_POINT = 16;
-    public static final int EXCEED_POINT = 17;
+    public static final int HIT_MAX_POINT = 16;
 
     public Dealer(String name, PlayingCards playingCards) {
         this.name = name;
@@ -19,7 +18,7 @@ public class Dealer extends AbstractPlayer implements Player {
 
     @Override
     public boolean isCanHit() {
-        return playingCards.sumPoints() < MAX_POINT;
+        return playingCards.sumPoints() < HIT_MAX_POINT;
     }
 
     @Override

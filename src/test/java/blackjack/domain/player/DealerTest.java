@@ -40,9 +40,8 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
-        boolean overLimit = dealer.isCanHit();
 
-        assertThat(overLimit).isFalse();
+        assertThat(dealer.isCanHit()).isFalse();
     }
 
     @Test
@@ -51,9 +50,8 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.FIVE));
-        boolean overLimit = dealer.isCanHit();
 
-        assertThat(overLimit).isTrue();
+        assertThat(dealer.isCanHit()).isTrue();
     }
 
     @ParameterizedTest

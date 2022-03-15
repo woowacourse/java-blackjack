@@ -49,11 +49,11 @@ public class BlackjackController {
 
     private void turnPlayers(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
         while (blackjackGame.isExistNextPlayer()) {
-            hasHit(blackjackGame, playingCardShuffleMachine);
+            turnGuest(blackjackGame, playingCardShuffleMachine);
         }
     }
 
-    private void hasHit(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
+    private void turnGuest(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
         while (blackjackGame.isTurnGuest() && receiveHit(blackjackGame.getTurnPlayer().getName())) {
             blackjackGame.assignCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
             announcePresentCard(blackjackGame);
@@ -64,7 +64,7 @@ public class BlackjackController {
     private boolean receiveHit(String name) {
         try {
             String answer = InputView.requestHit(name);
-            return answer.equals(InputValidator.MORE_CARD);
+            return answer.equals(InputValidator.HIT);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -72,11 +72,9 @@ public class BlackjackController {
     }
 
     private void turnDealer(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
-        if (blackjackGame.isTurnDealer(playingCardShuffleMachine)) {
-            OutputView.announceHit(Dealer.MAX_POINT);
-            return;
+        while (blackjackGame.isTurnDealer(playingCardShuffleMachine)) {
+            OutputView.announceHit(Dealer.HIT_MAX_POINT);
         }
-        OutputView.announceHit(Dealer.EXCEED_POINT);
     }
 
     private void announcePresentCard(BlackjackGame blackjackGame) {
