@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public enum Result {
     WIN("승"),
     DRAW("무"),
@@ -9,6 +12,19 @@ public enum Result {
     
     Result(final String resultText) {
         this.resultText = resultText;
+    }
+    
+    public static Result fromIsWin(Boolean isWin) {
+        if (isWin) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
+    }
+    
+    public Result toReverse() {
+        return (Result) Arrays.stream(Result.values())
+                .sorted(Comparator.reverseOrder())
+                .toArray()[this.ordinal()];
     }
     
     @Override

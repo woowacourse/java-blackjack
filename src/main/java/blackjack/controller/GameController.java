@@ -57,7 +57,7 @@ public final class GameController {
         
         Statistic statistic = Statistic.from(blackjackTable);
         
-        OutputView.printDealerResult(statistic.getDealerResult());
+        OutputView.printDealerResult(statistic.getDealerResults());
         OutputView.printPlayerResult(statistic.getPlayersResult());
     }
 }

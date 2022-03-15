@@ -96,7 +96,7 @@
 - [ ] 불변화
 - [ ] final class 로 상속안함 표시
 - [ ] players test 추가
-- [ ] 
+- [x] statistic 로직 수정
 - [ ] 
 - [ ] 
 - [ ] 

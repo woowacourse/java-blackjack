@@ -26,4 +26,11 @@ public final class Name {
     public String get() {
         return value;
     }
+    
+    @Override
+    public String toString() {
+        return "Name{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

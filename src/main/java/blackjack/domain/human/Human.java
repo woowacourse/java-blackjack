@@ -1,5 +1,7 @@
 package blackjack.domain.human;
 
+import static blackjack.util.Constants.BLACKJACK_NUMBER;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
@@ -14,12 +16,16 @@ public abstract class Human {
     
     public abstract boolean isAbleToHit();
     
-    public Card getInitCard() {
-        return cards.getFirstCard();
-    }
-    
     public void addCard(final Card card) {
         cards.add(card);
+    }
+    
+    public boolean isBurst() {
+        return getPoint() > BLACKJACK_NUMBER;
+    }
+    
+    public Card getInitCard() {
+        return cards.getFirstCard();
     }
     
     public int getPoint() {
@@ -32,5 +38,13 @@ public abstract class Human {
     
     public Cards getCards() {
         return cards;
+    }
+    
+    @Override
+    public String toString() {
+        return "Human{" +
+                "name=" + name +
+                ", cards=" + cards +
+                '}';
     }
 }

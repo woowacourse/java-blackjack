@@ -19,6 +19,14 @@ public final class Player extends Human {
         return getCards().size() == Constants.INIT_CARD_NUMBER;
     }
     
+    public boolean isWinner(Dealer dealer) {
+        return dealer.getPoint() < getPoint();
+    }
+    
+    public boolean isDraw(Dealer dealer) {
+        return dealer.getPoint() == getPoint();
+    }
+    
     @Override
     public boolean isAbleToHit() {
         return cards.getPoint() < BLACKJACK_NUMBER;
