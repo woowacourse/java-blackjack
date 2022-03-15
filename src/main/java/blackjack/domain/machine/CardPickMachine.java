@@ -5,7 +5,7 @@ import java.util.Set;
 
 import blackjack.domain.strategy.NumberGenerator;
 
-public class Cards {
+public class CardPickMachine {
     private final Set<Card> pickedCards = new HashSet<>();
 
     public Card pickCard(NumberGenerator numberGenerator) {
