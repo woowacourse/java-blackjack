@@ -31,6 +31,24 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("이름이 같은 플레이어는 같은 플레이어다")
+    void if_name_same_then_same_player() {
+        Player playerA = new Player("필즈");
+        Player playerB = new Player("필즈");
+
+        assertThat(playerA).isEqualTo(playerB);
+    }
+
+    @Test
+    @DisplayName("이름이 다른 플레이어는 다른 플레이어다")
+    void if_name_differ_then_different_player() {
+        Player playerA = new Player("필즈");
+        Player playerB = new Player("승팡");
+
+        assertThat(playerA).isNotEqualTo(playerB);
+    }
+
+    @Test
     @DisplayName("플레이어가 카드를 정상적으로 받는지 확인")
     void receiveCard() {
         Player player = new Player("필즈");
