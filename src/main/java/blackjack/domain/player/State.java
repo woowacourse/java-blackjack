@@ -1,7 +1,5 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.Rule.BLACKJACK_SIZE;
-
 import blackjack.domain.Rule;
 
 public enum State {
@@ -11,11 +9,13 @@ public enum State {
     NONE,
     ;
 
+    private static final int  BLACKJACK_SIZE = 2;
+
     public static State from(final Player player) {
         if (player.getTotalScore() > Rule.WINNING_SCORE.getValue()) {
             return BUST;
         }
-        if (player.getCardsSize() == BLACKJACK_SIZE.getValue() && player.getTotalScore() == Rule.WINNING_SCORE.getValue()) {
+        if (player.getCardsSize() == BLACKJACK_SIZE && player.getTotalScore() == Rule.WINNING_SCORE.getValue()) {
             return BLACKJACK;
         }
         return NONE;
