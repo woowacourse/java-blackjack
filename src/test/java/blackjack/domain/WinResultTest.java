@@ -34,7 +34,8 @@ public class WinResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, NINE);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
         List<Player> players = List.of(player);
 
         // when
@@ -59,7 +60,7 @@ public class WinResultTest {
 
     @ParameterizedTest
     @MethodSource("provideForPlayerBust")
-    @DisplayName("플레이어가 버스트면 무조건 딜러가 이긴다")
+    @DisplayName("플레이어가 버스트면 무조건 딜러가 이긴다.")
     void playerBust(Card dealerCard, Card playerCard) {
         // given
         Dealer dealer = createDealer(SIX);
@@ -68,7 +69,8 @@ public class WinResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
         player.hit(playerCard);
         List<Player> players = List.of(player);
 
@@ -93,7 +95,7 @@ public class WinResultTest {
     }
 
     @Test
-    @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트면 플레이어가 이긴다")
+    @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트면 플레이어가 이긴다.")
     void dealerBust() {
         // given
         Dealer dealer = createDealer(SIX);
@@ -102,7 +104,8 @@ public class WinResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
         List<Player> players = List.of(player);
 
         // when
@@ -127,7 +130,8 @@ public class WinResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
         player.hit(new Card(HEART, ACE));
         List<Player> players = List.of(player);
 
@@ -145,7 +149,7 @@ public class WinResultTest {
     }
 
     @Test
-    @DisplayName("블랙잭 끼리는 비긴다")
+    @DisplayName("블랙잭 끼리는 비긴다.")
     void blackJackDrawWithBlackJack() {
         // given
         Dealer dealer = createDealer(ACE);
@@ -153,7 +157,8 @@ public class WinResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, ACE);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
         List<Player> players = List.of(player);
 
         // when
@@ -179,7 +184,8 @@ public class WinResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, ACE);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
         List<Player> players = List.of(player);
 
         // when

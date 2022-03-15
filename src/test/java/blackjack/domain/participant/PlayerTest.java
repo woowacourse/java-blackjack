@@ -1,12 +1,6 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Pattern;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,17 +11,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayerTest {
+import blackjack.domain.Money;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Pattern;
 
+public class PlayerTest {
 
     @Test
     @DisplayName("플레이어를 생성할 때 카드는 null일 수 없다.")
     void cardsNotNull() {
         // given
         Name name = new Name("pobi");
+        Money betMoney = new Money(1000);
 
         // then
-        assertThatThrownBy(() -> new Player(name, null))
+        assertThatThrownBy(() -> new Player(name, null, betMoney))
             .isInstanceOf(NullPointerException.class);
     }
 
@@ -39,8 +39,9 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         Cards cards = new Cards(List.of(card1, card2));
+        Money betMoney = new Money(1000);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, betMoney);
 
         // when
         player.hit(new Card(Pattern.HEART, Denomination.THREE));
@@ -57,8 +58,9 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         Cards cards = new Cards(List.of(card1, card2));
+        Money betMoney = new Money(1000);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, betMoney);
 
         // when
         boolean actual = player.isHittable();
@@ -75,8 +77,9 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
         Cards cards = new Cards(List.of(card1, card2));
+        Money betMoney = new Money(1000);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, betMoney);
 
         // when
         boolean actual = player.isHittable();
@@ -93,8 +96,9 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         Cards cards = new Cards(List.of(card1, card2));
+        Money betMoney = new Money(1000);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, betMoney);
 
         // when
         int actual = player.calculateScore();
@@ -113,8 +117,9 @@ public class PlayerTest {
         Card card3 = new Card(Pattern.HEART, Denomination.ACE);
         Card card4 = new Card(Pattern.SPADE, Denomination.ACE);
         Cards cards = new Cards(List.of(card1, card2));
+        Money betMoney = new Money(1000);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, betMoney);
         player.hit(card3);
         player.hit(card4);
 
@@ -134,8 +139,9 @@ public class PlayerTest {
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         Card card3 = new Card(Pattern.HEART, Denomination.TWO);
         Cards cards = new Cards(List.of(card1, card2));
+        Money betMoney = new Money(1000);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, betMoney);
         player.hit(card3);
 
         // when
@@ -154,8 +160,9 @@ public class PlayerTest {
         Card DIAMOND_TEN = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card CLOVER_TEN = new Card(Pattern.CLOVER, Denomination.TEN);
         Cards cards = new Cards(List.of(DIAMOND_TEN, CLOVER_TEN));
+        Money betMoney = new Money(1000);
 
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, betMoney);
         player.hit(card);
 
         // when
@@ -181,7 +188,9 @@ public class PlayerTest {
         // given
         Name name = new Name("lala");
         Cards cards = new Cards(initCards);
-        Player player = new Player(name, cards);
+        Money betMoney = new Money(1000);
+
+        Player player = new Player(name, cards, betMoney);
         for (Card hitCard : hitCards) {
             player.hit(hitCard);
         }

@@ -7,6 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
@@ -39,12 +40,13 @@ public class PlayersTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         Cards cards1 = new Cards(List.of(card1, card2));
-        Player player1 = new Player(name1, cards1);
+        Money betMoney = new Money(1000);
+        Player player1 = new Player(name1, cards1, betMoney);
 
         Card card3 = new Card(Pattern.HEART, Denomination.TEN);
         Card card4 = new Card(Pattern.SPADE, Denomination.TEN);
         Cards cards2 = new Cards(List.of(card3, card4));
-        Player player2 = new Player(name1, cards2);
+        Player player2 = new Player(name1, cards2, betMoney);
         // then
         Assertions.assertThatThrownBy(() -> new Players(List.of(player1, player2)))
             .isInstanceOf(IllegalArgumentException.class)

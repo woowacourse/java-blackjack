@@ -52,7 +52,7 @@ public class BlackJackApplication {
     private static Player createPlayer(CardDeck deck, Name name) {
         Money betMoney = inputMoney(name);
         Cards cards = new Cards(deck.drawDouble());
-        return new Player(name, cards);
+        return new Player(name, cards, betMoney);
     }
 
     private static Money inputMoney(Name name) {

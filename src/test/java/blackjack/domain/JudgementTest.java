@@ -31,7 +31,8 @@ public class JudgementTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, NINE);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
 
         // when
         Judgement judgement = judgePlayer(player, dealer);
@@ -66,7 +67,8 @@ public class JudgementTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
         player.hit(playerCard);
 
         // when
@@ -93,7 +95,8 @@ public class JudgementTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
 
         // when
         Judgement judgement = judgePlayer(player, dealer);
@@ -112,7 +115,8 @@ public class JudgementTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeAce = new Card(SPADE, ACE);
         Cards playerCards = new Cards(List.of(heartTen, spadeAce));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
 
         // when
         Judgement judgement = judgePlayer(player, dealer);
@@ -130,7 +134,8 @@ public class JudgementTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, ACE);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
-        Player player = new Player(new Name("pobi"), playerCards);
+        Money betMoney = new Money(1000);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
 
         // when
         Judgement judgement = judgePlayer(player, dealer);
