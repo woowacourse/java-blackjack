@@ -49,7 +49,7 @@ public class BlackjackController {
     private PlayerDTO createPlayerDto(Player player, List<Card> playerCards) {
         List<CardDTO> cards = new ArrayList<>();
         for (Card card : playerCards) {
-            cards.add(new CardDTO(card.getRank().getSymbol(), card.getSuit().getSymbol()));
+            cards.add(new CardDTO(card.getRank().name(), card.getSuit().name()));
         }
         return new PlayerDTO(player.getName(), player.score().getValue(), cards);
     }
@@ -92,7 +92,7 @@ public class BlackjackController {
     private void printDealerRecord(Dealer dealer, List<Gamer> gamers) {
         Map<String, Integer> result = new LinkedHashMap<>();
         for (Gamer gamer : gamers) {
-            result.merge(dealer.match(gamer.getCards()).getSymbol(), 1, Integer::sum);
+            result.merge(dealer.match(gamer.getCards()).name(), 1, Integer::sum);
         }
         OutputView.printDealerRecord(result);
     }
@@ -100,7 +100,7 @@ public class BlackjackController {
     private void printGamerRecords(Dealer dealer, List<Gamer> gamers) {
         for (Gamer gamer : gamers) {
             Result result = dealer.match(gamer.getCards());
-            OutputView.printGamerRecord(gamer.getName(), result.opposite().getSymbol());
+            OutputView.printGamerRecord(gamer.getName(), result.opposite().name());
         }
     }
 }

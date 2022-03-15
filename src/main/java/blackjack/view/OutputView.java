@@ -11,7 +11,7 @@ public class OutputView {
 
     public static final String DISTRIBUTE_CARD_MSG = "%s와 %s에게 2장을 나누었습니다.%n";
     public static final String CARD_DISPLAY_MSG = "%s: %s%n";
-    public static final String PLAYER_CARD_OPEN_MSG = "%s카드: %s%n";
+    public static final String PLAYER_CARD_OPEN_MSG = "%s 카드: %s%n";
     public static final String DEALER_TAKE_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public static final String DISPLAY_RESULT_MSG = "%s 카드: %s - 결과: %d%n";
     public static final String GAME_RESULT_GUIDE_MSG = "## 최종 승패";
@@ -42,7 +42,7 @@ public class OutputView {
     }
 
     private static String getCardText(CardDTO card) {
-        return card.getRank() + card.getSuit();
+        return RankSymbol.getMappingSymbol(card.getRank()) + SuitSymbol.getMappingSymbol(card.getSuit());
     }
 
     public static void printCard(PlayerDTO player) {
@@ -69,9 +69,9 @@ public class OutputView {
     public static void printDealerRecord(Map<String, Integer> result) {
         System.out.println("\n" + GAME_RESULT_GUIDE_MSG);
         System.out.printf(DEALER_GAME_RESULT_MSG,
-                result.getOrDefault("승", 0),
-                result.getOrDefault("무", 0),
-                result.getOrDefault("패", 0));
+                result.getOrDefault("WIN", 0),
+                result.getOrDefault("DRAW", 0),
+                result.getOrDefault("LOSE", 0));
     }
 
     public static void printGamerRecord(String name, String result) {
