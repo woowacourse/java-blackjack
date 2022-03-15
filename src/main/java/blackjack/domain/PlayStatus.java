@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public enum PlayStatus {
+
     BUST,
     HIT,
     STAY;

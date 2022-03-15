@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 public class Name {
+
     private final String name;
 
     private Name(String name) {

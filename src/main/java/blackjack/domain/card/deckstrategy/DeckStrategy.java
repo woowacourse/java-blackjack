@@ -5,5 +5,6 @@ import java.util.Deque;
 import blackjack.domain.card.Card;
 
 public interface DeckStrategy {
+
     Deque<Card> create();
 }

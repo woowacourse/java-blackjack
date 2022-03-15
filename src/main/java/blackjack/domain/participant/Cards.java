@@ -12,6 +12,7 @@ import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 
 class Cards {
+
     private static final int ACE_BIG = 11;
 
     private final Set<Card> value;
