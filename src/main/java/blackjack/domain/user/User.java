@@ -16,12 +16,6 @@ public abstract class User {
         this.name = name;
     }
 
-    public void drawInitCards(Deck deck) {
-        deck.drawInitCards()
-                .stream()
-                .forEach(cards::add);
-    }
-
     public List<Card> showCards() {
         return cards.getCards();
     }

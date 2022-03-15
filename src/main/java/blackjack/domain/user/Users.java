@@ -44,9 +44,9 @@ public class Users {
         }
     }
 
-    public void setInitCardsPerPlayer(Deck deck) {
+    public void drawCards(Deck deck) {
         for (User user : users) {
-            user.drawInitCards(deck);
+            user.drawCard(deck);
         }
     }
 

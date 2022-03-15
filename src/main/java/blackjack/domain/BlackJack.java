@@ -33,7 +33,8 @@ public class BlackJack {
     }
 
     public void setInitCardsPerPlayer() {
-        users.setInitCardsPerPlayer(deck);
+        users.drawCards(deck);
+        users.drawCards(deck);
     }
 
     public void drawAdditionalCard(Consumer<User> consumerPlayer, Consumer<User> consumerDealer) {

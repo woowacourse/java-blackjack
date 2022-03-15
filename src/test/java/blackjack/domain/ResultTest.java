@@ -37,12 +37,14 @@ class ResultTest {
         );
 
         for (User player : players) {
-            player.drawInitCards(deck);
+            player.drawCard(deck);
+            player.drawCard(deck);
             player.calculate();
         }
 
         Dealer dealer = new Dealer();
-        dealer.drawInitCards(deck);
+        dealer.drawCard(deck);
+        dealer.drawCard(deck);
         dealer.calculate();
 
         //when
