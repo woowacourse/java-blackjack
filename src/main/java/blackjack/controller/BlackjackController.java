@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.machine.BlackjackGame;
 import blackjack.domain.machine.GameResponse;
+import blackjack.domain.machine.Hit;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -37,11 +38,20 @@ public class BlackjackController {
     }
 
     private void turnEachGuest(BlackjackGame blackjackGame) {
-        while (blackjackGame.checkGetMoreCard()) {
+        while (canGetMoreCard(blackjackGame)) {
             GameResponse gameResponse = blackjackGame.addCardToPlayer();
             OutputView.announcePresentCards(gameResponse);
         }
         blackjackGame.turnGuest();
+    }
+
+    private boolean canGetMoreCard(BlackjackGame blackjackGame) {
+        if (blackjackGame.checkOverLimit()) {
+            return false;
+        }
+        Player player = blackjackGame.getTurnPlayer();
+        String userResponse = InputView.requestMoreCard(player.getName());
+        return Hit.isYes(userResponse);
     }
 
     private void turnDealer(BlackjackGame blackjackGame) {

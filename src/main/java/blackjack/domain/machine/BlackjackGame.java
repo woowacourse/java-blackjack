@@ -6,7 +6,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.view.InputView;
 import java.util.List;
 
 public class BlackjackGame {
@@ -35,13 +34,9 @@ public class BlackjackGame {
         return new GameResponse(player.getName(), player.getDeck());
     }
 
-    public boolean checkGetMoreCard() {
+    public boolean checkOverLimit() {
         Player player = blackjackPlayers.getTurnPlayer();
-        if (player.isOverLimit(Guest.LIMIT_POINT)) {
-            return false;
-        }
-        String userResponse = InputView.requestMoreCard(player.getName());
-        return Hit.isYes(userResponse);
+        return player.isOverLimit(Guest.LIMIT_POINT);
     }
 
     public boolean canGetMoreCardToDealer() {
@@ -70,6 +65,10 @@ public class BlackjackGame {
 
     public List<Player> getPlayers() {
         return blackjackPlayers.getPlayers();
+    }
+
+    public Player getTurnPlayer() {
+        return blackjackPlayers.getTurnPlayer();
     }
 
     private void scorePlayers(Player dealer, Player guest, Results results) {
