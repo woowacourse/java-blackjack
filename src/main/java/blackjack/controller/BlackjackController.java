@@ -35,10 +35,7 @@ public class BlackjackController {
 
     private List<String> receivePlayerNames() {
         try {
-            List<String> names = InputView.inputPlayerNames();
-            InputValidator.inputListBlank(names);
-            InputValidator.hasDuplicateName(names);
-            return names;
+            return InputView.inputPlayerNames();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return receivePlayerNames();
@@ -50,7 +47,6 @@ public class BlackjackController {
                 .stream()
                 .map(Player::getName)
                 .collect(Collectors.toList()));
-
         OutputView.announcePresentCards(blackjackGame.getGameResponse());
     }
 
@@ -71,8 +67,6 @@ public class BlackjackController {
     private boolean receiveHit(String name) {
         try {
             String answer = InputView.requestHit(name);
-            InputValidator.inputBlank(answer);
-            InputValidator.isAnswerFormat(answer);
             return answer.equals(InputValidator.MORE_CARD);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
