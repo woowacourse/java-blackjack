@@ -1,4 +1,4 @@
-package blackjack.domain.strategy;
+package blackjack.domain.strategy.hit;
 
 public interface HitStrategy {
 

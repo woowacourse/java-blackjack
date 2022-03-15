@@ -1,15 +1,16 @@
-package blackjack.domain.strategy;
+package blackjack.domain.strategy.hit;
+
+import java.util.function.Supplier;
 
 public class PlayerHitStrategy implements HitStrategy {
 
     public static final String YES = "y";
     public static final String NO = "n";
 
-    private final String input;
+    private Supplier<String> supplier;
 
-    public PlayerHitStrategy(String input) {
-        validateYesOrNo(input);
-        this.input = input;
+    public PlayerHitStrategy(Supplier<String> supplier) {
+        this.supplier = supplier;
     }
 
     private void validateYesOrNo(String input) {
@@ -20,6 +21,8 @@ public class PlayerHitStrategy implements HitStrategy {
 
     @Override
     public boolean isHit() {
+        String input = supplier.get();
+        validateYesOrNo(input);
         return input.equalsIgnoreCase(YES);
     }
 }

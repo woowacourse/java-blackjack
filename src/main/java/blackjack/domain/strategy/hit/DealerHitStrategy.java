@@ -1,4 +1,4 @@
-package blackjack.domain.strategy;
+package blackjack.domain.strategy.hit;
 
 import blackjack.domain.card.Score;
 
@@ -14,6 +14,6 @@ public class DealerHitStrategy implements HitStrategy {
 
     @Override
     public boolean isHit() {
-        return HIT_THRESHOLD.isGreaterThan(score);
+        return !score.isGreaterThan(HIT_THRESHOLD);
     }
 }

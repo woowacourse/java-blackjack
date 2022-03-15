@@ -5,7 +5,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
-import blackjack.domain.strategy.HitStrategy;
+import blackjack.domain.strategy.hit.HitStrategy;
 
 public abstract class User {
 

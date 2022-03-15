@@ -7,6 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Score;
+import blackjack.domain.strategy.hit.DealerHitStrategy;
+import blackjack.domain.strategy.hit.HitStrategy;
+import blackjack.domain.strategy.hit.PlayerHitStrategy;
 
 class HitStrategyTest {
 
@@ -16,7 +19,7 @@ class HitStrategyTest {
         // given
         String input = "y";
         // when
-        HitStrategy strategy = new PlayerHitStrategy(input);
+        HitStrategy strategy = new PlayerHitStrategy(() -> input);
 
         // then
         Assertions.assertThat(strategy.isHit()).isTrue();
@@ -28,7 +31,7 @@ class HitStrategyTest {
         // given
         String input = "n";
         // when
-        HitStrategy strategy = new PlayerHitStrategy(input);
+        HitStrategy strategy = new PlayerHitStrategy(() -> input);
         // then
         Assertions.assertThat(strategy.isHit()).isFalse();
     }
@@ -39,19 +42,31 @@ class HitStrategyTest {
         // when
         String input = "a";
         // then
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> new PlayerHitStrategy(input));
+        HitStrategy strategy = new PlayerHitStrategy(() -> input);
 
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(strategy::isHit);
     }
 
     @Test
     @DisplayName("(딜러) 현재 점수가 17보다 낮으면 카드를 받을 수 있다.")
-    public void testIHitOfDealerWithLowerScore() {
+    public void testIsIHitOfDealerWithScoreLowerThan17() {
         // given
-        Score score = new Score(10);
+        Score score = new Score(16);
         // when
         HitStrategy strategy = new DealerHitStrategy(score);
         // then
         Assertions.assertThat(strategy.isHit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("(딜러) 현재 점수가 17보다 크거나 같으면 카드를 받을 수 없다.")
+    public void testIsStayOfDealerWithScoreGreaterOrEqualThan17() {
+        // given
+        Score score = new Score(17);
+        // when
+        HitStrategy strategy = new DealerHitStrategy(score);
+        // then
+        Assertions.assertThat(strategy.isHit()).isFalse();
     }
 }
