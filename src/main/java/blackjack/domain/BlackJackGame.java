@@ -61,7 +61,7 @@ public class BlackJackGame {
                 .getName();
     }
 
-    public List<Card> playerDrawCardOnDecision(Boolean decision) {
+    public List<Card> playerDrawCardOnDecision(boolean decision) {
         Player playerOnTurn = players.stream()
                 .filter(participant -> !participant.isFinished())
                 .findFirst().get();
