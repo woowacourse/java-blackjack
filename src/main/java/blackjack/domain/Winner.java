@@ -21,7 +21,7 @@ public class Winner {
     }
 
     public int countLoser(Players players) {
-        return players.countWinner(countWinner());
+        return players.countLoser(countWinner());
     }
 
     public boolean contains(final Player player) {

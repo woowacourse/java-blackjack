@@ -11,7 +11,6 @@ public class Player extends Human {
     private static final String GIVEN_SYMBOL = "y";
     private static final String NOT_GIVEN_SYMBOL = "n";
     private static final String DEALER_NAME = "딜러";
-    private final Cards cards = new Cards();
 
     public Player(final String name) {
         super(name);
@@ -36,37 +35,12 @@ public class Player extends Human {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public List<String> getCards() {
-        return cards.getAllCards();
-    }
-
-    @Override
-    public int getTotal() {
-        return cards.calculateTotal();
-    }
-
-    @Override
-    public void dealInit(final List<Card> initCards) {
-        cards.add(initCards);
-    }
-
-    @Override
-    public void hit(final Card card) {
-        cards.add(card);
-    }
-
-    @Override
-    public boolean isBust() {
-        return cards.isOverBlackjack();
-    }
-
     @Override
     public boolean canDraw() {
         return cards.isUnderBlackjack();
+    }
+
+    public String getName() {
+        return name;
     }
 }

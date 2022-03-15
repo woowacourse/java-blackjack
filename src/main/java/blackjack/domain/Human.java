@@ -4,21 +4,32 @@ import java.util.List;
 
 public abstract class Human {
 
-    protected String name;
+    protected final String name;
+    protected final PlayingCards cards = new PlayingCards();
 
     protected Human(final String name) {
         this.name = name;
     }
 
-    abstract List<String> getCards();
+    public void dealInit(List<Card> initCards) {
+        cards.add(initCards);
+    }
 
-    abstract int getTotal();
+    public void hit(final Card card) {
+        cards.add(card);
+    }
 
-    abstract void dealInit(List<Card> initCards);
-
-    abstract void hit(Card card);
-
-    abstract boolean isBust();
+    public boolean isBust() {
+        return cards.isOverBlackjack();
+    }
 
     abstract boolean canDraw();
+
+    public List<String> getCards() {
+        return cards.getAllNames();
+    }
+
+    public int getTotal() {
+        return cards.calculateTotal();
+    }
 }

@@ -7,15 +7,15 @@ import blackjack.view.OutputView;
 public class Game {
 
     public void run() {
-        Deal deal = new Deal();
+        CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
         Players players = createPlayers();
 
-        dealInitCards(deal, dealer, players);
+        dealInitCards(cardDeck, dealer, players);
         openInitCards(dealer, players);
 
-        drawPlayers(players, deal);
-        drawDealer(dealer, deal);
+        drawPlayers(players, cardDeck);
+        drawDealer(dealer, cardDeck);
 
         openResult(dealer, players);
         win(dealer, players);
@@ -31,11 +31,11 @@ public class Game {
         }
     }
 
-    private void dealInitCards(Deal deal, Dealer dealer, Players players) {
+    private void dealInitCards(CardDeck cardDeck, Dealer dealer, Players players) {
         OutputView.printDealCardMessage(dealer.getName(), players.getNames());
-        dealer.dealInit(deal.dealInit());
+        dealer.dealInit(cardDeck.dealInit());
         for (Player player : players.getPlayers()) {
-            player.dealInit(deal.dealInit());
+            player.dealInit(cardDeck.dealInit());
         }
     }
 
@@ -49,15 +49,15 @@ public class Game {
         OutputView.printNewLine();
     }
 
-    private void drawPlayers(final Players players, final Deal deal) {
+    private void drawPlayers(final Players players, final CardDeck cardDeck) {
         for (Player player : players.getPlayers()) {
-            drawPlayer(player, deal);
+            drawPlayer(player, cardDeck);
         }
     }
 
-    private void drawPlayer(final Player player, final Deal deal) {
+    private void drawPlayer(final Player player, final CardDeck cardDeck) {
         while (isDrawing(player)) {
-            player.hit(deal.draw());
+            player.hit(cardDeck.drawCard());
             OutputView.printCard(player.getName(), player.getCards());
             OutputView.printNewLine();
         }
@@ -79,9 +79,9 @@ public class Game {
         }
     }
 
-    private void drawDealer(final Dealer dealer, final Deal deal) {
+    private void drawDealer(final Dealer dealer, final CardDeck cardDeck) {
         while (dealer.canDraw()) {
-            dealer.hit(deal.draw());
+            dealer.hit(cardDeck.drawCard());
             OutputView.printDrawDealerCardMessage(dealer.getName(), Dealer.RECEIVED_MAXIMUM);
         }
         OutputView.printNewLine();

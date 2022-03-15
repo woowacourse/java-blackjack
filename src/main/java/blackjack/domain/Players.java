@@ -25,20 +25,6 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
-    public List<String> getNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public int countWinner(int winnerCount) {
-        return players.size() - winnerCount;
-    }
-
     private List<String> trimNames(String input) {
         return Arrays.stream(input.split(DELIMITER, -1))
                 .map(String::trim)
@@ -63,4 +49,17 @@ public class Players {
         }
     }
 
+    public int countLoser(int countWinner) {
+        return players.size() - countWinner;
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 }
