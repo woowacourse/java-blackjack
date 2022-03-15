@@ -55,10 +55,6 @@ public class BlackjackGame {
         if (player.isDealer()) {
             return false;
         }
-        return checkGetMoreCard(player);
-    }
-
-    private boolean checkGetMoreCard(Player player) {
         return player.isCanHit();
     }
 
