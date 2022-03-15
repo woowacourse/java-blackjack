@@ -7,7 +7,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.ParticipantCards;
 
-public class Participant {
+public abstract class Participant {
 
     private final ParticipantName name;
     protected ParticipantCards cards;
