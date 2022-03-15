@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.MatchResult;
-import domain.card.Card;
+import domain.card.PlayingCard;
 import java.util.List;
 
 public class Dealer extends Player {
@@ -23,8 +23,8 @@ public class Dealer extends Player {
     }
 
     @Override
-    public List<Card> getOpenCards() {
-        return List.of(cards.getCards().get(FIRST_CARD_OPEN_INDEX));
+    public List<PlayingCard> getOpenCards() {
+        return List.of(playingCards.getCards().get(FIRST_CARD_OPEN_INDEX));
     }
 
     @Override

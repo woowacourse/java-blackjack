@@ -6,20 +6,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class CardTest {
+class PlayingCardTest {
     @ParameterizedTest(name = "{0}+{1} - {2}")
     @CsvSource(value = {"SPADES;ACE;1스페이드", "HEARTS;SEVEN;7하트"}, delimiter = ';')
     @DisplayName("카드 생성 테스트")
     void createCard(Suit suit, Denomination denomination, String expected) {
         // given
-        Card card = Card.of(suit, denomination);
+        PlayingCard playingCard = PlayingCard.of(suit, denomination);
 
         // when
-        Suit suitFromCard = card.getSuit();
-        Denomination denominationFromCard = card.getDenomination();
+        Suit suitFromCard = playingCard.getSuit();
+        Denomination denominationFromCard = playingCard.getDenomination();
 
         // then
-        assertThat(Card.of(suitFromCard, denominationFromCard)).isEqualTo(card);
+        assertThat(PlayingCard.of(suitFromCard, denominationFromCard)).isEqualTo(playingCard);
     }
 
     @ParameterizedTest(name = "{0}-{1}")
@@ -27,10 +27,10 @@ class CardTest {
     @DisplayName("카드 동등성 테스트")
     void cardEqualityTest(Suit suit, Denomination denomination) {
         // given
-        Card card = Card.of(suit, denomination);
-        Card anotherCard = Card.of(suit, denomination);
+        PlayingCard playingCard = PlayingCard.of(suit, denomination);
+        PlayingCard anotherPlayingCard = PlayingCard.of(suit, denomination);
 
         // when & then
-        assertThat(card).isEqualTo(anotherCard);
+        assertThat(playingCard).isEqualTo(anotherPlayingCard);
     }
 }

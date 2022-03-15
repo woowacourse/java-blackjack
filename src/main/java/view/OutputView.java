@@ -10,8 +10,8 @@ import static java.util.stream.Collectors.joining;
 
 import domain.BlackJackResult;
 import domain.MatchResult;
-import domain.card.Card;
 import domain.card.Denomination;
+import domain.card.PlayingCard;
 import domain.card.Suit;
 import domain.player.Dealer;
 import dto.CardsAndScoreDto;
@@ -98,14 +98,15 @@ public class OutputView {
                 ));
     }
 
-    private static String getJoinedCardNames(List<Card> cards) {
-        return cards.stream()
+    private static String getJoinedCardNames(List<PlayingCard> playingPlayingCards) {
+        return playingPlayingCards.stream()
                 .map(OutputView::parseCardName)
                 .collect(joining(CARD_NAME_JOIN_CHARACTER));
     }
 
-    private static String parseCardName(Card card) {
-        return DENOMINATION_NAME_MAPPER.get(card.getDenomination()) + SUIT_NAME_MAPPER.get(card.getSuit());
+    private static String parseCardName(PlayingCard playingCard) {
+        return DENOMINATION_NAME_MAPPER.get(playingCard.getDenomination()) + SUIT_NAME_MAPPER.get(
+                playingCard.getSuit());
     }
 
     public static void printLineSeparator() {

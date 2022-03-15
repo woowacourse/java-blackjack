@@ -1,16 +1,16 @@
 package dto;
 
-import domain.card.Card;
+import domain.card.PlayingCard;
 import domain.player.Player;
 import java.util.List;
 
 public class CardsDto {
     private final String name;
-    private final List<Card> cards;
+    private final List<PlayingCard> playingPlayingCards;
 
-    private CardsDto(String name, List<Card> cards) {
+    private CardsDto(String name, List<PlayingCard> playingPlayingCards) {
         this.name = name;
-        this.cards = List.copyOf(cards);
+        this.playingPlayingCards = List.copyOf(playingPlayingCards);
     }
 
     public static CardsDto from(Player player) {
@@ -25,7 +25,7 @@ public class CardsDto {
         return name;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<PlayingCard> getCards() {
+        return playingPlayingCards;
     }
 }

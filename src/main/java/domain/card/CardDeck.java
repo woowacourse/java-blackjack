@@ -13,44 +13,46 @@ import java.util.stream.Stream;
 public class CardDeck {
     private static final int INITIAL_SIZE = 52;
     private static final String CAN_NOT_SHUFFLE_USED_DECK = "사용중인 카드는 다시 섞을 수 없습니다.";
-    private static final List<Card> originalCards;
+    private static final List<PlayingCard> ORIGINAL_PLAYING_CARDS;
 
-    private final Deque<Card> cards;
+    private final Deque<PlayingCard> playingPlayingCards;
 
     static {
-        originalCards = List.copyOf(
+        ORIGINAL_PLAYING_CARDS = List.copyOf(
                 Arrays.stream(Suit.values())
                         .flatMap(CardDeck::getCardStream)
                         .collect(toList())
         );
     }
 
-    private static Stream<Card> getCardStream(Suit suit) {
+    private static Stream<PlayingCard> getCardStream(Suit suit) {
         return Arrays.stream(Denomination.values())
-                .map(denomination -> Card.of(suit, denomination));
+                .map(denomination -> PlayingCard.of(suit, denomination));
     }
 
     private CardDeck() {
-        this.cards = new ArrayDeque<>(originalCards);
+        this.playingPlayingCards = new ArrayDeque<>(ORIGINAL_PLAYING_CARDS);
+    }
+
+    private CardDeck(List<PlayingCard> playingPlayingCards) {
+        this.playingPlayingCards = new ArrayDeque<>(playingPlayingCards);
     }
 
     public static CardDeck newInstance() {
         return new CardDeck();
     }
 
-    public Card drawCard() {
-        return cards.pop();
+    public PlayingCard drawCard() {
+        return playingPlayingCards.pop();
     }
 
     public CardDeck shuffle() {
-        if (cards.size() != INITIAL_SIZE) {
+        if (playingPlayingCards.size() != INITIAL_SIZE) {
             throw new IllegalStateException(CAN_NOT_SHUFFLE_USED_DECK);
         }
 
-        cards.clear();
-        List<Card> newCards = new ArrayList<>(originalCards);
-        Collections.shuffle(newCards);
-        cards.addAll(newCards);
-        return this;
+        List<PlayingCard> newPlayingCards = new ArrayList<>(ORIGINAL_PLAYING_CARDS);
+        Collections.shuffle(newPlayingCards);
+        return new CardDeck(newPlayingCards);
     }
 }

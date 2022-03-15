@@ -2,17 +2,17 @@ package domain.card;
 
 import java.util.Objects;
 
-public class Card {
+public class PlayingCard {
     private final Suit suit;
     private final Denomination denomination;
 
-    private Card(Suit suit, Denomination denomination) {
+    private PlayingCard(Suit suit, Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
 
-    public static Card of(Suit suit, Denomination denomination) {
-        return new Card(suit, denomination);
+    public static PlayingCard of(Suit suit, Denomination denomination) {
+        return new PlayingCard(suit, denomination);
     }
 
     public boolean isAce() {
@@ -39,7 +39,7 @@ public class Card {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Card that = (Card) o;
+        PlayingCard that = (PlayingCard) o;
         return suit == that.suit && denomination == that.denomination;
     }
 

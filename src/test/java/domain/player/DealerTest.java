@@ -5,8 +5,8 @@ import static domain.MatchResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.MatchResult;
-import domain.card.Card;
 import domain.card.Denomination;
+import domain.card.PlayingCard;
 import domain.card.Suit;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,8 +33,8 @@ class DealerTest {
     void supply_card() {
         // given
         Dealer rich = new Dealer("rich");
-        rich.addCard(Card.of(Suit.HEARTS, Denomination.FIVE));
-        rich.addCard(Card.of(Suit.SPADES, Denomination.FIVE));
+        rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
+        rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
         int expected = 10;
 
         // when
@@ -49,8 +49,8 @@ class DealerTest {
     void checkIfSameOrLessThanSixteen() {
         // given
         Dealer dealer = new Dealer("rich");
-        dealer.addCard(Card.of(Suit.HEARTS, Denomination.FIVE));
-        dealer.addCard(Card.of(Suit.SPADES, Denomination.FIVE));
+        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
+        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
 
         // when
         boolean actual = dealer.isHittable();
@@ -64,8 +64,8 @@ class DealerTest {
     void checkIfSameOrGreaterThanSeventeen() {
         // given
         Dealer dealer = new Dealer("rich");
-        dealer.addCard(Card.of(Suit.HEARTS, Denomination.KING));
-        dealer.addCard(Card.of(Suit.SPADES, Denomination.KING));
+        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
+        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
 
         // when
         boolean actual = dealer.isHittable();
@@ -79,9 +79,9 @@ class DealerTest {
     void isBust() {
         // given
         Dealer dealer = new Dealer("rich");
-        dealer.addCard(Card.of(Suit.HEARTS, Denomination.KING));
-        dealer.addCard(Card.of(Suit.SPADES, Denomination.KING));
-        dealer.addCard(Card.of(Suit.CLUBS, Denomination.KING));
+        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
+        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
+        dealer.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
 
         // when
         boolean isBust = dealer.isBust();
@@ -95,8 +95,8 @@ class DealerTest {
     void getMatchResults() {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(Card.of(Suit.SPADES, Denomination.ACE));
-        dealer.addCard(Card.of(Suit.SPADES, Denomination.FOUR));
+        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.ACE));
+        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.FOUR));
         Gamblers gamblers = setupGamblers();
 
         // when
@@ -111,16 +111,16 @@ class DealerTest {
 
     private Gamblers setupGamblers() {
         Gambler pobi = new Gambler("pobi");
-        pobi.addCard(Card.of(Suit.HEARTS, Denomination.SIX));
-        pobi.addCard(Card.of(Suit.HEARTS, Denomination.TEN));
+        pobi.addCard(PlayingCard.of(Suit.HEARTS, Denomination.SIX));
+        pobi.addCard(PlayingCard.of(Suit.HEARTS, Denomination.TEN));
 
         Gambler rich = new Gambler("rich");
-        rich.addCard(Card.of(Suit.CLUBS, Denomination.ACE));
-        rich.addCard(Card.of(Suit.CLUBS, Denomination.TEN));
+        rich.addCard(PlayingCard.of(Suit.CLUBS, Denomination.ACE));
+        rich.addCard(PlayingCard.of(Suit.CLUBS, Denomination.TEN));
 
         Gambler dolbum = new Gambler("dolbum");
-        dolbum.addCard(Card.of(Suit.CLUBS, Denomination.ACE));
-        dolbum.addCard(Card.of(Suit.CLUBS, Denomination.TWO));
+        dolbum.addCard(PlayingCard.of(Suit.CLUBS, Denomination.ACE));
+        dolbum.addCard(PlayingCard.of(Suit.CLUBS, Denomination.TWO));
 
         return new Gamblers(List.of(pobi, rich, dolbum));
     }

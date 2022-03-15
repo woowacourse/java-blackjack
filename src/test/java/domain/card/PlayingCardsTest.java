@@ -9,20 +9,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class CardsTest {
+public class PlayingCardsTest {
     @Test
     @DisplayName("카드 묶음 생성 테스트")
     void createCards() {
         // given
-        Cards cards = new Cards();
-        cards.addCard(Card.of(Suit.CLUBS, Denomination.FIVE));
-        cards.addCard(Card.of(Suit.HEARTS, Denomination.SEVEN));
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.addCard(PlayingCard.of(Suit.CLUBS, Denomination.FIVE));
+        playingCards.addCard(PlayingCard.of(Suit.HEARTS, Denomination.SEVEN));
 
         // when
-        List<Card> rawCards = cards.getCards();
+        List<PlayingCard> rawPlayingCards = playingCards.getCards();
 
         // then
-        assertThat(rawCards).contains(Card.of(Suit.CLUBS, Denomination.FIVE));
+        assertThat(rawPlayingCards).contains(PlayingCard.of(Suit.CLUBS, Denomination.FIVE));
     }
 
     @ParameterizedTest(name = "{0}{1} + {2}{3} = {4}")
@@ -35,12 +35,12 @@ public class CardsTest {
                         Suit suit2, Denomination denomination2,
                         int expected) {
         // given
-        Cards cards = new Cards();
-        cards.addCard(Card.of(suit, denomination));
-        cards.addCard(Card.of(suit2, denomination2));
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.addCard(PlayingCard.of(suit, denomination));
+        playingCards.addCard(PlayingCard.of(suit2, denomination2));
 
         // when
-        int actual = cards.getScore();
+        int actual = playingCards.getScore();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -57,13 +57,13 @@ public class CardsTest {
                 Suit suit3, Denomination denomination3,
                 boolean expected) {
         // given
-        Cards cards = new Cards();
-        cards.addCard(Card.of(suit, denomination));
-        cards.addCard(Card.of(suit2, denomination2));
-        cards.addCard(Card.of(suit3, denomination3));
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.addCard(PlayingCard.of(suit, denomination));
+        playingCards.addCard(PlayingCard.of(suit2, denomination2));
+        playingCards.addCard(PlayingCard.of(suit3, denomination3));
 
         // when
-        boolean actual = cards.isBust();
+        boolean actual = playingCards.isBust();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -73,22 +73,22 @@ public class CardsTest {
     @DisplayName("블랙잭 여부 테스트")
     void isBlackjack() {
         // given
-        Card aClubs = Card.of(Suit.CLUBS, Denomination.ACE);
-        Card tenHearts = Card.of(Suit.HEARTS, Denomination.TEN);
-        Card tenDiamonds = Card.of(Suit.DIAMONDS, Denomination.TEN);
+        PlayingCard aClubs = PlayingCard.of(Suit.CLUBS, Denomination.ACE);
+        PlayingCard tenHearts = PlayingCard.of(Suit.HEARTS, Denomination.TEN);
+        PlayingCard tenDiamonds = PlayingCard.of(Suit.DIAMONDS, Denomination.TEN);
 
-        Cards blackjackCards = new Cards();
-        blackjackCards.addCard(aClubs);
-        blackjackCards.addCard(tenHearts);
+        PlayingCards blackjackPlayingCards = new PlayingCards();
+        blackjackPlayingCards.addCard(aClubs);
+        blackjackPlayingCards.addCard(tenHearts);
 
-        Cards notBlackjackCards = new Cards();
-        notBlackjackCards.addCard(tenHearts);
-        notBlackjackCards.addCard(tenDiamonds);
-        notBlackjackCards.addCard(aClubs);
+        PlayingCards notBlackjackPlayingCards = new PlayingCards();
+        notBlackjackPlayingCards.addCard(tenHearts);
+        notBlackjackPlayingCards.addCard(tenDiamonds);
+        notBlackjackPlayingCards.addCard(aClubs);
 
         // when
-        boolean shouldBeBlackjack = blackjackCards.isBlackJack();
-        boolean shouldNotBeBlackjack = notBlackjackCards.isBlackJack();
+        boolean shouldBeBlackjack = blackjackPlayingCards.isBlackJack();
+        boolean shouldNotBeBlackjack = notBlackjackPlayingCards.isBlackJack();
 
         // then
         assertAll(

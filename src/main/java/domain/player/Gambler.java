@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.MatchResult;
-import domain.card.Card;
+import domain.card.PlayingCard;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +18,8 @@ public class Gambler extends Player {
     }
 
     @Override
-    public List<Card> getOpenCards() {
-        return new ArrayList<>(cards.getCards());
+    public List<PlayingCard> getOpenCards() {
+        return new ArrayList<>(playingCards.getCards());
     }
 
     @Override

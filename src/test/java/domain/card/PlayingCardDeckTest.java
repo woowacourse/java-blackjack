@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardDeckTest {
+public class PlayingCardDeckTest {
     @Test
     @DisplayName("카드덱 생성 테스트")
     void createCardDeck() {
@@ -23,13 +23,13 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.newInstance();
 
         // when
-        Card clubsAce = cardDeck.drawCard();
-        Card clubsTwo = cardDeck.drawCard();
+        PlayingCard clubsAce = cardDeck.drawCard();
+        PlayingCard clubsTwo = cardDeck.drawCard();
 
         // then
         assertAll(
-                () -> assertThat(clubsAce).isEqualTo(Card.of(Suit.CLUBS, Denomination.ACE)),
-                () -> assertThat(clubsTwo).isEqualTo(Card.of(Suit.CLUBS, Denomination.TWO))
+                () -> assertThat(clubsAce).isEqualTo(PlayingCard.of(Suit.CLUBS, Denomination.ACE)),
+                () -> assertThat(clubsTwo).isEqualTo(PlayingCard.of(Suit.CLUBS, Denomination.TWO))
         );
     }
 
@@ -40,7 +40,7 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.newInstance();
 
         // when
-        Card card = cardDeck.drawCard();
+        PlayingCard playingCard = cardDeck.drawCard();
 
         // then
         assertThatThrownBy(cardDeck::shuffle)

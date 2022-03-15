@@ -3,8 +3,8 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.MatchResult;
-import domain.card.Card;
 import domain.card.Denomination;
+import domain.card.PlayingCard;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,9 +31,9 @@ class GamblerTest {
     void is_bust() {
         // given
         Gambler gambler = new Gambler("dolbum");
-        gambler.addCard(Card.of(Suit.HEARTS, Denomination.KING));
-        gambler.addCard(Card.of(Suit.SPADES, Denomination.KING));
-        gambler.addCard(Card.of(Suit.CLUBS, Denomination.KING));
+        gambler.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
+        gambler.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
+        gambler.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
 
         // when
         boolean isBust = gambler.isBust();
@@ -50,12 +50,12 @@ class GamblerTest {
                                   MatchResult expected) {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(Card.of(Suit.SPADES, Denomination.ACE));
-        dealer.addCard(Card.of(Suit.SPADES, Denomination.FOUR));
+        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.ACE));
+        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.FOUR));
 
         Gambler gambler = new Gambler("pobi");
-        gambler.addCard(Card.of(Suit.HEARTS, denomination));
-        gambler.addCard(Card.of(Suit.HEARTS, denomination2));
+        gambler.addCard(PlayingCard.of(Suit.HEARTS, denomination));
+        gambler.addCard(PlayingCard.of(Suit.HEARTS, denomination2));
 
         // when
         MatchResult match = gambler.match(dealer);

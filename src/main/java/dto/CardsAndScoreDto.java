@@ -1,6 +1,6 @@
 package dto;
 
-import domain.card.Card;
+import domain.card.PlayingCard;
 import domain.player.Player;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class CardsAndScoreDto {
         return cardsDto.getName();
     }
 
-    public List<Card> getCards() {
+    public List<PlayingCard> getCards() {
         return cardsDto.getCards();
     }
 

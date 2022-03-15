@@ -1,42 +1,42 @@
 package domain.player;
 
 import domain.MatchResult;
-import domain.card.Card;
-import domain.card.Cards;
+import domain.card.PlayingCard;
+import domain.card.PlayingCards;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
     private final String name;
-    protected final Cards cards;
+    protected final PlayingCards playingCards;
 
     protected Player(String name) {
         this.name = name;
-        this.cards = new Cards();
+        this.playingCards = new PlayingCards();
     }
 
     public abstract boolean isHittable();
 
-    public abstract List<Card> getOpenCards();
+    public abstract List<PlayingCard> getOpenCards();
 
     public abstract MatchResult match(Player another);
 
     public abstract boolean isDealer();
 
-    public void addCard(Card card) {
-        cards.addCard(card);
+    public void addCard(PlayingCard playingCard) {
+        playingCards.addCard(playingCard);
     }
 
     public int getScore() {
-        return cards.getScore();
+        return playingCards.getScore();
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return playingCards.isBust();
     }
 
     public boolean isBlackJack() {
-        return cards.isBlackJack();
+        return playingCards.isBlackJack();
     }
 
     protected MatchResult getMatchResultAfterBustCheck(Player another) {
@@ -63,15 +63,15 @@ public abstract class Player {
         return this.name;
     }
 
-    public List<Card> getHoldingCards() {
-        return new ArrayList<>(cards.getCards());
+    public List<PlayingCard> getHoldingCards() {
+        return new ArrayList<>(playingCards.getCards());
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Player{");
         sb.append("name='").append(name).append('\'');
-        sb.append(", cards=").append(cards);
+        sb.append(", playingCards=").append(playingCards);
         sb.append('}');
         return sb.toString();
     }
