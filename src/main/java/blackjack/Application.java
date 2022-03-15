@@ -29,14 +29,9 @@ public class Application {
     }
 
     private static List<Player> createPlayers(CardDispenser cardDispenser) {
-        return names().stream()
-            .map(n -> new Player(n, cardDispenser.issue(), cardDispenser.issue()))
-            .collect(toUnmodifiableList());
-    }
-
-    private static List<String> names() {
         List<String> names = InputView.inputNames();
         return names.stream()
+            .map(n -> new Player(n, cardDispenser.issue(), cardDispenser.issue()))
             .collect(toUnmodifiableList());
     }
 
