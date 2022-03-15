@@ -1,6 +1,5 @@
 package domain.card;
 
-import domain.GameResult;
 import domain.HitThreshold;
 
 import java.util.ArrayList;
@@ -68,10 +67,6 @@ public final class Cards {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAceCard);
-    }
-
-    public GameResult calculateGameResult(final Cards other) {
-        return GameResult.of(this, other);
     }
 
     public boolean isStand() {
