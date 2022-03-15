@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class InputView {
     private static final int IGNORE_EMPTY_INPUT = -1;
+    private static final int MAXIMUM_GAMBLER_NUMBER = 7;
     private static final String HIT_CHARACTER = "y";
     private static final String COMMA_DELIMITER = ",";
     private static final String ERROR_DUPLICATE_NAME = "[ERROR] 이름은 중복될 수 없습니다.";
@@ -22,6 +23,7 @@ public class InputView {
         System.out.println(INPUT_PLAYER_NAMES);
         List<String> playerNames = scanRawPlayerNames();
         validateDuplicateNames(playerNames);
+        validateMaximumGamblers(playerNames);
         return playerNames;
     }
 
@@ -39,6 +41,14 @@ public class InputView {
 
         if (isDuplicate) {
             throw new IllegalArgumentException(ERROR_DUPLICATE_NAME);
+        }
+    }
+
+    private static void validateMaximumGamblers(List<String> gamblerNames) {
+        int currentGamblers = gamblerNames.size();
+
+        if (currentGamblers > MAXIMUM_GAMBLER_NUMBER) {
+            throw new IllegalArgumentException("[ERROR] 겜블러는 최대 7명까지 참여 가능합니다 : " + currentGamblers);
         }
     }
 
