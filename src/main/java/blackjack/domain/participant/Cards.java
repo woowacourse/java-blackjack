@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import static blackjack.domain.card.CardNumber.*;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -18,7 +17,7 @@ class Cards {
     private final Set<Card> value;
 
     Cards(Set<Card> value) {
-        this.value = new LinkedHashSet<>(List.copyOf(value));
+        this.value = new LinkedHashSet<>(value);
     }
 
     void add(Card card) {
@@ -54,7 +53,7 @@ class Cards {
     }
 
     Set<Card> getValue() {
-        return Set.copyOf(value);
+        return new LinkedHashSet<>(value);
     }
 
     @Override
