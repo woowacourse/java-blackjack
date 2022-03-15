@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class Player {
 
-    private static final int BURST_NUMBER = 21;
-
     protected final String name;
     protected final PlayingCards playingCards = new PlayingCards();
 
@@ -20,13 +18,13 @@ public abstract class Player {
         playingCards.addCard(playingCard);
     }
 
+    public boolean isBurst() {
+        return playingCards.isBurst();
+    }
+
     public abstract boolean isNotFinished();
 
     public abstract boolean isDealer();
-
-    public boolean isBurst() {
-        return playingCards.getCardSum() > BURST_NUMBER;
-    }
 
     public GameResult compare(final Player player) {
         return GameResult.of(this.getSumOfCards(), player.getSumOfCards());

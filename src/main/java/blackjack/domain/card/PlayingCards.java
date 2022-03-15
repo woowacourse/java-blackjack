@@ -10,6 +10,8 @@ public class PlayingCards {
     private static final int NO_COUNT = 0;
     private static final int ACE_DECREASE_UNIT = 1;
     private static final int ACE_DIFFERENCE_UNIT = 10;
+    private static final int BURST_NUMBER = 21;
+
 
     private final List<PlayingCard> playingCards;
 
@@ -19,6 +21,14 @@ public class PlayingCards {
 
     public void addCard(PlayingCard playingCard) {
         playingCards.add(playingCard);
+    }
+
+    public boolean isBurst() {
+        return getCardSum() > BURST_NUMBER;
+    }
+
+    public int getCardSum() {
+        return adjustSumByAce(getCurrentSum());
     }
 
     private int adjustSumByAce(int currentSum) {
@@ -34,10 +44,6 @@ public class PlayingCards {
         return Collections.unmodifiableList(playingCards);
     }
 
-    public int getCardSum() {
-        return adjustSumByAce(getCurrentSum());
-    }
-
     private int getCurrentSum() {
         return playingCards.stream()
             .mapToInt(playingCard -> playingCard.getDenomination().getScore())
@@ -49,4 +55,5 @@ public class PlayingCards {
             .filter(PlayingCard::isAce)
             .count();
     }
+
 }
