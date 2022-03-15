@@ -47,7 +47,7 @@ public enum Record {
     }
 
     private static Record getRecordForBurst(Player player, Dealer dealer) {
-        if (dealer.isBurst() && player.isBurst()) {
+        if (player.isBurst()) {
             return DEFEAT;
         }
 
