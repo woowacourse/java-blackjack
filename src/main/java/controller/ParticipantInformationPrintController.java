@@ -10,14 +10,19 @@ import domain.participant.Players;
 import domain.result.Result;
 import view.OutputView;
 
-public class ResultController {
-	public ResultController() {
+public class ParticipantInformationPrintController {
+	public ParticipantInformationPrintController() {
 	}
 
 	private List<String> convertNamesToString(List<Name> names) {
 		return names.stream().map(Name::getName).collect(Collectors.toList());
 	}
 
+	public void printHand(Players players, Name name) {
+		OutputView.printHand(players.getPlayerDTOByName(name));
+
+	}
+	
 	public void printInitHands(Dealer dealer, Players players) {
 		OutputView.printInitMessage(convertNamesToString(players.getNames()));
 		OutputView.printHand(dealer.getOneHandInfo());

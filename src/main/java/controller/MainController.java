@@ -15,22 +15,22 @@ import view.OutputView;
 public class MainController {
 
 	public void run() {
-		ResultController resultController = new ResultController();
+		ParticipantInformationPrintController participantsInfoPrintController = new ParticipantInformationPrintController();
 		Deck deck = Deck.from(new GeneralGenerationDeckStrategy());
 		Dealer dealer = new Dealer(deck.generateInitCards());
 		Players players = new Players(makePlayers(makeNames(), deck));
-		resultController.printInitHands(dealer, players);
+		participantsInfoPrintController.printInitHands(dealer, players);
 
 		if (dealer.isBlackJack()) {
-			resultController.printBlackJackResult(dealer, players);
+			participantsInfoPrintController.printBlackJackResult(dealer, players);
 			return;
 		}
 
-		drawForPlayers(deck, players);
+		drawForPlayers(deck, players, participantsInfoPrintController);
 		drawForDealer(deck, dealer, players);
 
-		resultController.printHandAndResult(dealer, players);
-		resultController.printFinalResult(dealer, players);
+		participantsInfoPrintController.printHandAndResult(dealer, players);
+		participantsInfoPrintController.printFinalResult(dealer, players);
 	}
 
 	private List<Name> makeNames() {
@@ -52,9 +52,9 @@ public class MainController {
 		return players;
 	}
 
-	private void drawForPlayers(Deck deck, Players players) {
+	private void drawForPlayers(Deck deck, Players players, ParticipantInformationPrintController controller) {
 		players.getNames().stream()
-			.forEach(name -> askAndDrawForPlayer(deck, players, name));
+			.forEach(name -> askAndDrawForPlayer(deck, players, name, controller));
 	}
 
 	private void drawForDealer(Deck deck, Dealer dealer, Players players) {
@@ -63,12 +63,13 @@ public class MainController {
 		}
 	}
 
-	private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
+	private void askAndDrawForPlayer(Deck deck, Players players, Name name,
+		ParticipantInformationPrintController controller) {
 		boolean isKeepDraw = !(players.checkMaxScoreByName(name));
 
 		while (isKeepDraw && InputView.askDraw(name.getName())) {
 			players.addCardByName(name, deck.draw());
-			OutputView.printHand(players.getPlayerDTOByName(name));
+			controller.printHand(players, name);
 			isKeepDraw = checkMaxScoreOrBust(players, name);
 		}
 	}
