@@ -6,6 +6,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.view.dto.DealerDto;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printInitCardHandStatus(Dealer dealer, Players players) {
+    public static void printInitCardHandStatus(DealerDto dealerDto, Players players) {
         List<Player> readPlayers = players.getPlayers();
 
         System.out.println();
@@ -21,7 +22,7 @@ public class OutputView {
                 .map(player -> player.getName().getValue())
                 .collect(Collectors.joining(", ")) + "에게 2장을 나누었습니다.");
 
-        System.out.println("딜러: " + dealer.showOneCard());
+        System.out.println("딜러: " + dealerDto.showOneCard());
 
         for (Player player : readPlayers) {
             printCardHandStatus(player);

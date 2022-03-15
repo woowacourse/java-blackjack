@@ -6,6 +6,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.DealerDto;
 import blackjack.view.dto.ReceiveDecision;
 
 public class Controller {
@@ -17,7 +18,7 @@ public class Controller {
 
         initDealerCards(cardDeck, dealer);
         initPlayerCards(cardDeck, players);
-        OutputView.printInitCardHandStatus(dealer, players);
+        OutputView.printInitCardHandStatus(DealerDto.of(dealer), players);
 
         playBlackJack(cardDeck, dealer, players);
         OutputView.printFinalStatus(dealer, players);

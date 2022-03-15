@@ -17,10 +17,6 @@ public class Dealer extends Participant {
         return new Dealer(DEFAULT_NAME);
     }
 
-    public String showOneCard() {
-        return cards.getCardHand().get(0).toString();
-    }
-
     @Override
     public boolean isReceivable() {
         return calculateBestScore() < RECEIVABLE_SCORE_THRESHOLD;
