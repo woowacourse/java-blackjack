@@ -4,11 +4,11 @@ import blackjack.domain.game.Answer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 
-public class Converter {
+public class InputConverter {
 
     private static final Enterable enterable = new Enter();
 
-    private Converter() {
+    private InputConverter() {
     }
 
     public static Players createPlayers() {

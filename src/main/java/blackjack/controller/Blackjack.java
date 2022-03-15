@@ -4,10 +4,7 @@ import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Players;
 import blackjack.domain.result.Result;
-import blackjack.view.Converter;
-import blackjack.view.Enter;
-import blackjack.view.Enterable;
-import blackjack.view.InputView;
+import blackjack.view.InputConverter;
 import blackjack.view.OutputView;
 
 public class Blackjack {
@@ -16,7 +13,7 @@ public class Blackjack {
         Dealer dealer = new Dealer();
 
         OutputView.printPlayerNameInstruction();
-        Players players = Converter.createPlayers();
+        Players players = InputConverter.createPlayers();
         Result result = new Result(players);
 
         drawCards(dealer, players, result);
@@ -28,7 +25,7 @@ public class Blackjack {
         dealCard(dealer, players, cardDeck);
 
         if (result.isKeepPlaying(dealer)) {
-            players.draw(cardDeck, Converter::isDrawing, OutputView::printCards);
+            players.draw(cardDeck, InputConverter::isDrawing, OutputView::printCards);
             OutputView.printNewLine();
             dealer.draw(cardDeck, OutputView::printDrawDealer);
             OutputView.printNewLine();
