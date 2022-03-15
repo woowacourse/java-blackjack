@@ -11,7 +11,7 @@ public class CardsTest {
     private Cards cards;
     @BeforeEach
     public void setUp() {
-        cards = new Cards(new AlwaysAscNumberMachine());
+        cards = new Cards(new AlwaysDescNumberMachine());
     }
     @Test
     @DisplayName("Cards 객체 생성 확인")
@@ -23,7 +23,7 @@ public class CardsTest {
     @DisplayName("Cards 반환 확인")
     public void checkCardReturn() {
         Card card = cards.assignCard();
-        Card compareCard = new Card(Suit.SPADE, Rank.ACE);
+        Card compareCard = new Card(Suit.CLUB, Rank.KING);
         assertThat(card).isEqualTo(compareCard);
     }
 }

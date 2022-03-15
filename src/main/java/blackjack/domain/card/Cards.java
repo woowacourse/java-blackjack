@@ -1,26 +1,25 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Cards {
 
-    private final List<Card> cards;
-    private final CardPickMachine cardPickMachine;
+    private final Stack<Card> cards;
 
-    public Cards(CardPickMachine cardPickMachine) {
+    public Cards(CardMachine cardMachine) {
         this.cards = makeCards();
-        this.cardPickMachine = cardPickMachine;
+        cardMachine.shuffleCards(cards);
     }
 
     public Card assignCard() {
-        return cards.get(cardPickMachine.assignIndex());
+        return cards.pop();
     }
 
-    private List<Card> makeCards() {
-        List<Card> cards = new ArrayList<>();
+    private Stack<Card> makeCards() {
+        Stack<Card> cards = new Stack<>();
         List<Suit> suits = Arrays.stream(Suit.values()).collect(Collectors.toList());
         for (Suit suit : suits) {
             addRankForSuit(cards, suit);
@@ -28,7 +27,7 @@ public class Cards {
         return cards;
     }
 
-    private void addRankForSuit(List<Card> cards, Suit suit) {
+    private void addRankForSuit(Stack<Card> cards, Suit suit) {
         List<Rank> ranks = Arrays.stream(Rank.values()).collect(Collectors.toList());
         for (Rank rank : ranks) {
             cards.add(new Card(suit, rank));
