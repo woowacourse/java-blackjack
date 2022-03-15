@@ -37,7 +37,7 @@ public abstract class Participant {
     public void hit(Deck deck) {
         cards.add(deck.drawCard());
 
-        if (cards.getStatus() == Status.BUST) {
+        if (cards.isBust()) {
             status = Status.BUST;
         }
     }

@@ -22,12 +22,8 @@ public class Cards {
         value.add(card);
     }
 
-    public Status getStatus() {
-        if (sumValue() > MAX_SCORE) {
-            return Status.BUST;
-        }
-
-        return Status.HIT;
+    public boolean isBust() {
+        return sumValue() > MAX_SCORE;
     }
 
     public int sumValue() {
