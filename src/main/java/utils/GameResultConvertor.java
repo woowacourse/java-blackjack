@@ -1,85 +1,59 @@
 package utils;
 
 import domain.GameResult;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class GameResultConvertor {
-    public static Map<String, List<String>> convertToString(final Map<String, List<GameResult>> dealerGameResult,
-                                                            final Map<String, GameResult> playersGameResult) {
-        final Map<String, List<String>> result = new LinkedHashMap<>();
-        convertDealerGameResult(dealerGameResult, result);
-        convertPlayerGameResult(playersGameResult, result);
-        return result;
+
+    public static String convertToString(final GameResult gameResult) {
+        return GameResultMapper.mapToString(gameResult);
     }
 
-    private static void convertDealerGameResult(final Map<String, List<GameResult>> dealerGameResult,
-                                                final Map<String, List<String>> result) {
-        for (Entry<String, List<GameResult>> entry : dealerGameResult.entrySet()) {
-            result.put(entry.getKey(), convertToString(entry.getValue()));
-        }
-    }
-
-    private static List<String> convertToString(final List<GameResult> gameResults) {
-        final List<String> mappedGameResults = new ArrayList<>();
-        final List<String> parsedGameResults = new ArrayList<>();
-        for (GameResult gameResult : gameResults) {
-            mappedGameResults.add(GameResultMapper.get(gameResult));
-        }
-
-        append(mappedGameResults, "승", parsedGameResults);
-        append(mappedGameResults, "패", parsedGameResults);
-        append(mappedGameResults, "무,", parsedGameResults);
-
-        return parsedGameResults;
-    }
-
-    private static void convertPlayerGameResult(final Map<String, GameResult> playersGameResult,
-                                                final Map<String, List<String>> result) {
-        for (Entry<String, GameResult> entry : playersGameResult.entrySet()) {
-            result.put(entry.getKey(), convertToString(entry.getValue()));
-        }
-    }
-
-    private static List<String> convertToString(final GameResult gameResult) {
-        return Collections.singletonList(GameResultMapper.get(gameResult));
-    }
-
-    private static void append(final List<String> candidates,
-                               final String standard,
-                               final List<String> parsedGameResults) {
-        if (candidates.contains(standard)) {
-            final int count = (int) candidates.stream()
-                    .filter(string -> string.equals(standard))
-                    .count();
-            final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(count).append(standard);
-            parsedGameResults.add(stringBuilder.toString());
-        }
+    public static String convertToString(final List<String> results) {
+        return String.join(" ", GameResultMapper.convertToCountWithString(results));
     }
 
     private GameResultConvertor() {
     }
 
-    private static class GameResultMapper {
-        private static final Map<GameResult, String> GAME_RESULT_MAPPER = new EnumMap<>(GameResult.class);
+    private enum GameResultMapper {
+        WIN(GameResult.WIN, "승"),
+        LOSE(GameResult.LOSE, "패"),
+        DRAW(GameResult.DRAW, "무"),
+        ;
 
-        static {
-            GAME_RESULT_MAPPER.put(GameResult.WIN, "승");
-            GAME_RESULT_MAPPER.put(GameResult.LOSE, "패");
-            GAME_RESULT_MAPPER.put(GameResult.DRAW, "무");
+        private final GameResult gameResult;
+        private final String name;
+
+        GameResultMapper(final GameResult gameResult, final String name) {
+            this.gameResult = gameResult;
+            this.name = name;
         }
 
-        static String get(final GameResult gameResult) {
-            return GAME_RESULT_MAPPER.get(gameResult);
+        public static String mapToString(final GameResult other) {
+            return Arrays.stream(GameResultMapper.values())
+                    .filter(gameResult -> gameResult.gameResult == other)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임결과 입니다."))
+                    .name;
         }
 
-        private GameResultMapper() {
+        public static List<String> convertToCountWithString(final List<String> results) {
+            final List<String> convertedResults = new ArrayList<>();
+            for (final GameResultMapper value : values()) {
+                addResult(results, convertedResults, value.name);
+            }
+            return convertedResults;
+        }
+
+        private static void addResult(final List<String> origin, final List<String> convertedResults, final String name) {
+            if (origin.contains(name)) {
+                final long matchingCount = origin.stream().filter(name::equals).count();
+                convertedResults.add(matchingCount + name);
+            }
         }
     }
 }
