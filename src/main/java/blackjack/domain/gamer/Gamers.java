@@ -17,11 +17,11 @@ public class Gamers {
 	private final Dealer dealer;
 	private final List<Player> players;
 
-	public Gamers(List<String> names, Function<String, Integer> moneyProvider) {
+	public Gamers(List<String> names, Function<String, Integer> betting) {
 		validateDuplicationNames(names);
 		this.dealer = new Dealer();
 		this.players = names.stream()
-			.map(name -> new Player(name, moneyProvider.apply(name)))
+			.map(name -> new Player(name, betting.apply(name)))
 			.collect(Collectors.toList());
 	}
 

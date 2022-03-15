@@ -25,8 +25,8 @@ public class BlackJackGame {
 	private final Gamers gamers;
 	private final DrawStrategy deck;
 
-	public BlackJackGame(List<String> names, Function<String, Integer> moneyProvider, DrawStrategy deck) {
-		this.gamers = new Gamers(names, moneyProvider);
+	public BlackJackGame(List<String> names, Function<String, Integer> betting, DrawStrategy deck) {
+		this.gamers = new Gamers(names, betting);
 		this.deck = deck;
 	}
 
