@@ -30,34 +30,18 @@ public enum Denomination {
         this.printValue = printValue;
     }
 
-    public static boolean canBust(final List<Denomination> denominations) {
-        final int defaultSum = calculateDefaultValuesSum(denominations);
-
-        return calculateMaxSum(denominations, defaultSum) > 21;
-    }
-
-    private static int calculateDefaultValuesSum(final List<Denomination> denominations) {
-        return denominations.stream()
-                .mapToInt(denomination -> denomination.defaultValue)
-                .sum();
-    }
-
-    private static int calculateMaxSum(final List<Denomination> denominations, final int defaultSum) {
-        return defaultSum + calculateAceCount(denominations) * ACE_BONUS_VALUE;
-    }
-
-    private static int calculateAceCount(final List<Denomination> denominations) {
-        return (int) denominations.stream()
-                .filter(denomination -> denomination == A)
-                .count();
-    }
-
     public static int calculateScore(final List<Denomination> numbers) {
         final int bonusMaxScore = calculateAceCount(numbers) * ACE_BONUS_VALUE;
         final int defaultScore = sumDefaultScore(numbers);
         final int startScore = defaultScore + bonusMaxScore;
 
         return calculateScore(numbers, defaultScore, startScore);
+    }
+
+    private static int calculateAceCount(final List<Denomination> denominations) {
+        return (int) denominations.stream()
+                .filter(denomination -> denomination == A)
+                .count();
     }
 
     private static int sumDefaultScore(final List<Denomination> numbers) {
@@ -80,5 +64,18 @@ public enum Denomination {
 
     private static boolean isLowerThanBlackjackTargetNumber(final int sumCount) {
         return sumCount <= 21;
+    }
+
+    public static int calculateMaxScore(final List<Denomination> denominations) {
+        final int defaultScore = calculateDefaultScore(denominations);
+
+        final int bonusMaxScore = calculateAceCount(denominations) * ACE_BONUS_VALUE;
+        return defaultScore + bonusMaxScore;
+    }
+
+    private static int calculateDefaultScore(final List<Denomination> denominations) {
+        return denominations.stream()
+                .mapToInt(denomination -> denomination.defaultValue)
+                .sum();
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static blackjack.domain.card.Denomination.A;
+import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.SEVEN;
 import static blackjack.domain.card.Denomination.TEN;
 import static blackjack.domain.card.Denomination.THREE;
@@ -17,17 +18,18 @@ class DenominationTest {
 
     @ParameterizedTest
     @MethodSource("generateBustCheckValues")
-    void 버스트_가능여부를_반환한다(final List<Denomination> denominations, final boolean expected) {
-        boolean result = Denomination.canBust(denominations);
+    void 버스트_가능여부를_반환한다(final List<Denomination> denominations, final int expected) {
+        int result = Denomination.calculateMaxScore(denominations);
         assertThat(result).isEqualTo(expected);
     }
 
     private static Stream<Arguments> generateBustCheckValues() {
         return Stream.of(
-                Arguments.of(Arrays.asList(THREE, SEVEN, TEN), false),
-                Arguments.of(Arrays.asList(A, TEN), false),
-                Arguments.of(Arrays.asList(A, A, TEN), true),
-                Arguments.of(Arrays.asList(A, A, TEN, TEN), true)
+                Arguments.of(Arrays.asList(THREE, SEVEN, TEN), 20),
+                Arguments.of(Arrays.asList(A, TEN), 21),
+                Arguments.of(Arrays.asList(A, A), 22),
+                Arguments.of(Arrays.asList(A, THREE, EIGHT), 22),
+                Arguments.of(Arrays.asList(A, EIGHT), 19)
         );
     }
 
