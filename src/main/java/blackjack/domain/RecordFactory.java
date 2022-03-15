@@ -25,7 +25,7 @@ public class RecordFactory {
     }
 
     private void updateDealerRecord(PlayRecord playRecord) {
-        dealerRecord.put(playRecord, dealerRecord.getOrDefault(playRecord, 0) + 1);
+        dealerRecord.merge(playRecord, 1, Integer::sum);
     }
 
     public Map<PlayRecord, Integer> getDealerRecord() {
