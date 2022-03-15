@@ -56,4 +56,47 @@ public class GameResultTest {
 
         assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.WIN);
     }
+
+    @Test
+    @DisplayName("플레이어가 이겼을 경우 딜러의 손익 구하기")
+    void getDealerProfitResult() {
+        List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.SEVEN),
+            new Card(Suit.SPADE, Denomination.TEN));
+        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.TEN),
+            new Card(Suit.SPADE, Denomination.THREE),
+            new Card(Suit.SPADE, Denomination.SEVEN));
+
+        Player player = new Player("player", 2000);
+        Participants participants = new Participants(List.of(player));
+        Dealer dealer = participants.getDealer();
+
+        dealer.initCards(dealerCards);
+        player.initCards(playerCards);
+
+        GameResult gameResult = new GameResult(participants);
+
+        assertThat(gameResult.calculateBettingResult().get(dealer)).isEqualTo(-2000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 이겼을 경우 플레이어의 손익 구하기")
+    void getPlayerProfitResult() {
+        List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.SEVEN),
+            new Card(Suit.SPADE, Denomination.TEN));
+        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.TEN),
+            new Card(Suit.SPADE, Denomination.THREE),
+            new Card(Suit.SPADE, Denomination.SEVEN));
+
+        Player player = new Player("player", 2000);
+        Participants participants = new Participants(List.of(player));
+        Dealer dealer = participants.getDealer();
+
+        dealer.initCards(dealerCards);
+        player.initCards(playerCards);
+
+        GameResult gameResult = new GameResult(participants);
+
+        assertThat(gameResult.calculateBettingResult().get(player)).isEqualTo(2000);
+    }
+
 }

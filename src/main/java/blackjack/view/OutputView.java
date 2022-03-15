@@ -21,6 +21,7 @@ public class OutputView {
     private static final String PARTICIPANT_WINNING_RESULT_MESSAGE = "\n## 최종 승패";
     private static final String DEALER_DIRECTION = "딜러:";
     private static final String RESULT_DELIMITER = ": ";
+    private static final String PROFIT_TITLE_MESSAGE = "## 최종 수익";
 
     public static void printInitialCardInformation(Participants participants) {
         List<String> participantName = participants.getPlayers().stream()
@@ -95,5 +96,14 @@ public class OutputView {
         playerResult.forEach(
             (key, value) -> System.out.println(
                 key.getName() + RESULT_DELIMITER + value.getResult()));
+    }
+
+    public static void printProfitResult(Map<Participant, Double> profitResult) {
+        System.out.println("\n" + PROFIT_TITLE_MESSAGE);
+        for (Participant participant : profitResult.keySet()) {
+            System.out.print(
+                participant.getName() + RESULT_DELIMITER + Double.toString(profitResult.get(participant)) + "\n"
+            );
+        }
     }
 }
