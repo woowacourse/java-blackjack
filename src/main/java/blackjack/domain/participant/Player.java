@@ -14,6 +14,10 @@ public class Player extends Participant {
         this.betMoney = betMoney;
     }
 
+    public Money getBetMoney() {
+        return betMoney;
+    }
+
     @Override
     public boolean isHittable() {
         return calculateScore() < HIT_STANDARD;
