@@ -18,7 +18,7 @@ public enum GameResult {
         this.biPredicate = biPredicate;
     }
 
-    public static GameResult of(final Cards playerCards, final Cards dealerCards) {
+    public static GameResult getPlayerResult(final Cards playerCards, final Cards dealerCards) {
         return Arrays.stream(GameResult.values())
                 .filter(gameResult -> gameResult.biPredicate.test(playerCards, dealerCards))
                 .findFirst()
@@ -41,7 +41,7 @@ public enum GameResult {
         return playerCards.calculateSum() - dealerCards.calculateSum();
     }
 
-    public static GameResult reverseFrom(final GameResult origin) {
+    private static GameResult reverseFrom(final GameResult origin) {
         if (origin == WIN) {
             return LOSE;
         }
@@ -51,11 +51,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    public static GameResult getPlayerResult(final Cards playerCards, final Cards dealerCards) {
-        return of(playerCards, dealerCards);
-    }
-
     public static GameResult getDealerResult(final Cards dealerCards, final Cards playerCards) {
-        return reverseFrom(of(playerCards, dealerCards));
+        return reverseFrom(getPlayerResult(playerCards, dealerCards));
     }
 }
