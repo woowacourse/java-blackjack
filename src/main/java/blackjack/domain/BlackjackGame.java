@@ -77,11 +77,19 @@ public class BlackjackGame {
         return results;
     }
 
-    public List<GameResponse> getGameResponse() {
+    public List<GameResponse> getPlayersGameResponses() {
         List<GameResponse> gameResponses = new ArrayList<>();
         for (Player player : blackjackPlayers.getPlayers()) {
             gameResponses.add(new GameResponse(player.getName(), player.getPlayingCards()));
         }
+        return gameResponses;
+    }
+
+    public List<GameResponse> getTurnPlayerGameResponse() {
+        List<GameResponse> gameResponses = new ArrayList<>();
+        GameResponse gameResponse = new GameResponse(blackjackPlayers.turnPlayer().getName(),
+                blackjackPlayers.turnPlayer().getPlayingCards());
+        gameResponses.add(gameResponse);
         return gameResponses;
     }
 

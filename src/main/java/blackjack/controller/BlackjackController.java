@@ -11,7 +11,6 @@ import blackjack.domain.card.PlayingCardShuffleMachine;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.GameResponse;
 import blackjack.domain.result.Results;
 import blackjack.utils.InputValidator;
 import blackjack.view.InputView;
@@ -47,7 +46,7 @@ public class BlackjackController {
                 .stream()
                 .map(Player::getName)
                 .collect(Collectors.toList()));
-        OutputView.announcePresentCards(blackjackGame.getGameResponse());
+        OutputView.announcePresentCards(blackjackGame.getPlayersGameResponses());
     }
 
     private void turnPlayers(BlackjackGame blackjackGame) {
@@ -59,7 +58,7 @@ public class BlackjackController {
     private void hasHit(BlackjackGame blackjackGame) {
         while (blackjackGame.isTurnGuest() && receiveHit(blackjackGame.getTurnPlayer().getName())) {
             blackjackGame.assignCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
-            announcePresentCard(blackjackGame.getTurnPlayer());
+            announcePresentCard(blackjackGame);
         }
         blackjackGame.nextTurn();
     }
@@ -82,15 +81,12 @@ public class BlackjackController {
         OutputView.announceHit(Dealer.EXCEED_POINT);
     }
 
-    private void announcePresentCard(Player player) {
-        List<GameResponse> gameResponses = new ArrayList<>();
-        GameResponse gameResponse = new GameResponse(player.getName(), player.getPlayingCards());
-        gameResponses.add(gameResponse);
-        OutputView.announcePresentCards(gameResponses);
+    private void announcePresentCard(BlackjackGame blackjackGame) {
+        OutputView.announcePresentCards(blackjackGame.getTurnPlayerGameResponse());
     }
 
     private void announceResult(BlackjackGame blackjackGame, Players players) {
-        OutputView.announceResultCards(blackjackGame.getGameResponse());
+        OutputView.announceResultCards(blackjackGame.getPlayersGameResponses());
         Results results = blackjackGame.calculateResult(players);
         OutputView.announceResultWinner(results);
     }
