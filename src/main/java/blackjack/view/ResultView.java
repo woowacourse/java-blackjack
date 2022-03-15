@@ -50,26 +50,26 @@ public class ResultView {
         System.out.printf(GAMER_AND_CARDS_MESSAGE_FORMAT, name, cards.get(0), cards.get(1));
     }
 
-    public static void printCurrentTurnHitResult(Participant participant) {
-        if (participant.getName().equals("딜러")) {
-            printDealerHitResult(participant);
+    public static void printCurrentTurnResult(String name, List<String> cards) {
+        if (name.equals("딜러")) {
+            printDealerHitResult(name, cards);
             return;
         }
-        printGamerHitResult(participant);
+        printGamerHitResult(name, cards);
     }
 
-    private static void printGamerHitResult(Participant gamer) {
+    private static void printGamerHitResult(String name, List<String> cards) {
         StringJoiner cardJoiner = new StringJoiner(", ");
-        for (String card : gamer.getCards()) {
+        for (String card : cards) {
             cardJoiner.add(card);
         }
-        System.out.printf(GAMER_HIT_MESSAGE_FORMAT, gamer.getName(), cardJoiner);
+        System.out.printf(GAMER_HIT_MESSAGE_FORMAT, name, cardJoiner);
     }
 
-    private static void printDealerHitResult(Participant dealer) {
-        int count = dealer.countAddedCards();
+    private static void printDealerHitResult(String name, List<String> cards) {
+        int count = cards.size() - 2;
         if (count > 0) {
-            System.out.printf(DEALER_HIT_MESSAGE_FORMAT, dealer.getName(), count);
+            System.out.printf(DEALER_HIT_MESSAGE_FORMAT, name, count);
         }
     }
 
@@ -85,7 +85,7 @@ public class ResultView {
         for (String card : dealer.getCards()) {
             cardJoiner.add(card);
         }
-        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, dealer.getName(), cardJoiner, dealer.sumCardsScore());
+        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, dealer.getName(), cardJoiner);
     }
 
     public static void printMatchResult(final BlackJackGameResult blackJackGameResult) {

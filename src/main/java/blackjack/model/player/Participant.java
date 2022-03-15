@@ -1,13 +1,13 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.Cards;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 public abstract class Participant {
     protected static final int START_DRAW_COUNT = 2;
-    protected static final int MAX_SCORE = 21;
 
     protected final String name;
     protected final Cards cards;
@@ -29,27 +29,12 @@ public abstract class Participant {
         }
     }
 
-    public abstract Participant receive(final Card card);
-
     public abstract Participant drawCardsBy(final CardDeck cardDeck);
 
-    public abstract Participant drawBy(final CardDeck cardDeck);
+    public abstract void hitOrStayBy(CardDeck cardDeck, Predicate<String> predicate,
+                                     BiConsumer<String, List<String>> consumer);
 
-    public boolean isBlackJack() {
-        return cards.sumScore() == MAX_SCORE && cards.hasTwoCard();
-    }
-
-    public int countAddedCards() {
-        return cards.countAddedCard();
-    }
-
-    public int sumCardsScore() {
-        return cards.sumScore();
-    }
-
-    public boolean isBust() {
-        return cards.sumScore() > MAX_SCORE;
-    }
+    public abstract Participant hitBy(final CardDeck cardDeck);
 
     public boolean isWinBy(Participant otherParticipant) {
         return cards.sumScore() > otherParticipant.cards.sumScore();
@@ -67,5 +52,11 @@ public abstract class Participant {
         return name;
     }
 
-    public abstract boolean isImpossibleHit();
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
 }

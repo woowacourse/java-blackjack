@@ -48,7 +48,7 @@ public class PlayerTest {
     void draw_new_Participant() {
         CardDeck deck = new CardDeck();
         Participant player = new Player("리버");
-        Participant otherDealer = player.drawBy(deck);
+        Participant otherDealer = player.hitBy(deck);
 
         assertThat(player).isNotEqualTo(otherDealer);
     }

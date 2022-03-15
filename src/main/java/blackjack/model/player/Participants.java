@@ -2,6 +2,8 @@ package blackjack.model.player;
 
 import blackjack.model.card.CardDeck;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 public class Participants {
     private final Players players;
@@ -26,6 +28,11 @@ public class Participants {
 
     public Participants drawCardsBy(final CardDeck cardDeck) {
         return new Participants(players.drawCardsBy(cardDeck), dealer.drawCardsBy(cardDeck));
+    }
+
+    public void hitOrStayBy(CardDeck cardDeck, Predicate<String> predicate, BiConsumer<String, List<String>> consumer) {
+        players.hitOrStayBy(cardDeck, predicate, consumer);
+        dealer.hitOrStayBy(cardDeck, predicate, consumer);
     }
 
     public Participant getDealer() {

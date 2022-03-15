@@ -2,20 +2,20 @@ package blackjack.model;
 
 import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
-import blackjack.model.player.Players;
-import blackjack.model.player.Participants;
 import blackjack.model.player.Participant;
+import blackjack.model.player.Participants;
+import blackjack.model.player.Players;
 import blackjack.model.result.BlackJackGameResult;
 
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 public class BlackjackGame {
+    private final Players players;
     private final Participants participants;
     private final CardDeck cardDeck;
     private final Participant dealer;
-    private final Players players;
 
     public BlackjackGame(final List<String> names) {
         this.participants = new Participants(names);
@@ -35,25 +35,12 @@ public class BlackjackGame {
         return new BlackjackGame(participants.drawCardsBy(cardDeck), this.cardDeck);
     }
 
-    public void hitOrStayUntilPossible(Predicate<String> predicate, Consumer<Participant> consumer) {
-        players.hitOrStayToGamer(predicate, consumer);
-        hitOrStayToDealer(consumer);
-    }
-
-    private void hitOrStayToDealer(Consumer<Participant> consumer) {
-        CardDeck deck = CardDeck.getInstance();
-        while (!dealer.isBlackJack() && !dealer.isImpossibleHit()) {
-            dealer.receive(deck.draw());
-        }
-        consumer.accept(dealer);
+    public void performEachTurn(Predicate<String> predicate, BiConsumer<String, List<String>> consumer) {
+        participants.hitOrStayBy(cardDeck, predicate, consumer);
     }
 
     public BlackJackGameResult createMatchResult() {
         return new BlackJackGameResult(dealer, players);
-    }
-
-    public Participant getDealer2() {
-        return dealer;
     }
 
     public List<Participant> getPlayers() {

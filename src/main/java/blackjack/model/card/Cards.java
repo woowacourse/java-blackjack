@@ -1,6 +1,5 @@
 package blackjack.model.card;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,16 +20,20 @@ public class Cards {
         return new Cards(values);
     }
 
+    public boolean isBlackjack() {
+        return sumScore() == 21 && values.size() == 2;
+    }
+
+    public boolean isBust() {
+        return sumScore() > 21;
+    }
+
+    public boolean isStopScore() {
+        return sumScore() > 17;
+    }
+
     public int sumScore() {
         return CardScoreTotalizer.sum(values);
-    }
-
-    public boolean hasTwoCard() {
-        return values.size() == 2;
-    }
-
-    public int countAddedCard() {
-        return values.size() - 2;
     }
 
     public List<String> getValues() {

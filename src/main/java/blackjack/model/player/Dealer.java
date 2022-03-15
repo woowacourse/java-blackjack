@@ -3,9 +3,11 @@ package blackjack.model.player;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.Cards;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 public class Dealer extends Participant {
-    private static final int SCORE_HIT_CRITERIA = 16;
 
     public Dealer() {
         super("딜러");
@@ -15,11 +17,15 @@ public class Dealer extends Participant {
         super(name, cards);
     }
 
-    @Override
-    public Participant receive(final Card card) {
-        String name = super.name;
-        Cards newCards = this.cards.add(card);
-        return new Dealer(name, newCards);
+    public void hitOrStayBy(CardDeck cardDeck, Predicate<String> predicate, BiConsumer<String, List<String>> consumer) {
+        while (canHit()) {
+            hitBy(cardDeck);
+            consumer.accept(super.getName(), super.getCards());
+        }
+    }
+
+    private boolean canHit() {
+        return !super.cards.isBlackjack() && !super.cards.isStopScore();
     }
 
     @Override
@@ -33,14 +39,9 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Participant drawBy(final CardDeck deck) {
+    public Participant hitBy(final CardDeck deck) {
         String name = super.name;
         Cards newCards = this.cards.add(deck.draw());
         return new Dealer(name, newCards);
-    }
-
-    @Override
-    public boolean isImpossibleHit() {
-        return cards.sumScore() > SCORE_HIT_CRITERIA;
     }
 }

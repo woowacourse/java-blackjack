@@ -3,7 +3,7 @@ package blackjack.model.player;
 import blackjack.model.card.CardDeck;
 
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -28,26 +28,10 @@ public class Players {
         return new Players(newValues);
     }
 
-    public void hitOrStayToGamer(Predicate<String> predicate, Consumer<Participant> consumer) {
-        for (Participant gamer : values) {
-            hitOrStayTo(gamer, predicate, consumer);
+    public void hitOrStayBy(CardDeck cardDeck, Predicate<String> predicate, BiConsumer<String, List<String>> consumer) {
+        for (Participant player : values) {
+            player.hitOrStayBy(cardDeck, predicate, consumer);
         }
-    }
-
-    private void hitOrStayTo(final Participant gamer, Predicate<String> predicate, Consumer<Participant> consumer) {
-        CardDeck deck = CardDeck.getInstance();
-        while (canHit(gamer) && isHitSign(gamer, predicate)) {
-            gamer.receive(deck.draw());
-            consumer.accept(gamer);
-        }
-    }
-
-    private boolean canHit(final Participant gamer) {
-        return !gamer.isBlackJack() && !gamer.isImpossibleHit();
-    }
-
-    private boolean isHitSign(Participant gamer, Predicate<String> predicate) {
-        return predicate.test(gamer.getName());
     }
 
     public List<Participant> getValues() {

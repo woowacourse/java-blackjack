@@ -7,14 +7,14 @@ import java.util.function.BiPredicate;
 public enum MatchResult {
 
     WIN("승", (dealer, gamer) ->
-            dealer.isBlackJack() && !gamer.isBlackJack() || !dealer.isBust() && gamer.isBust()
+            dealer.isBlackjack() && !gamer.isBlackjack() || !dealer.isBust() && gamer.isBust()
                     || !dealer.isBust() && dealer.isWinBy(gamer)
     ),
     LOSE("패", (dealer, gamer) ->
-            dealer.isBust() && !gamer.isBust() || !dealer.isBlackJack() && gamer.isBlackJack()
+            dealer.isBust() && !gamer.isBust() || !dealer.isBlackjack() && gamer.isBlackjack()
                     || !dealer.isBust() && !dealer.isWinBy(gamer)),
     DRAW("무", (dealer, gamer) ->
-            dealer.isBust() && gamer.isBust() || dealer.isBlackJack() && dealer.isBlackJack()
+            dealer.isBust() && gamer.isBust() || dealer.isBlackjack() && dealer.isBlackjack()
                     || !dealer.isBust() && dealer.isDrawWith(gamer)),
     ;
 
