@@ -32,7 +32,7 @@ public class ProfitResultTest {
         Card spadeNine = new Card(SPADE, ACE);
         Cards playerCards = new Cards(List.of(heartTen, spadeNine));
         int amount = 1000;
-        Money betMoney = new Money(amount);
+        BetMoney betMoney = new BetMoney(amount);
         Player player = new Player(new Name("pobi"), playerCards, betMoney);
         List<Player> players = List.of(player);
 
@@ -64,7 +64,7 @@ public class ProfitResultTest {
         Card card4 = new Card(SPADE, EIGHT);
         Cards playerCards = new Cards(List.of(card3, card4));
         int amount = 1000;
-        Money betMoney = new Money(amount);
+        BetMoney betMoney = new BetMoney(amount);
         Player player = new Player(new Name("pobi"), playerCards, betMoney);
         List<Player> players = List.of(player);
 
@@ -95,7 +95,7 @@ public class ProfitResultTest {
         Card card4 = new Card(SPADE, SEVEN);
         Cards playerCards = new Cards(List.of(card3, card4));
         int amount = 1000;
-        Money betMoney = new Money(amount);
+        BetMoney betMoney = new BetMoney(amount);
         Player player = new Player(new Name("pobi"), playerCards, betMoney);
         List<Player> players = List.of(player);
 

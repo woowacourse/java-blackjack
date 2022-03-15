@@ -3,8 +3,8 @@ package blackjack;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.BetMoney;
 import blackjack.domain.HitRequest;
-import blackjack.domain.Money;
 import blackjack.domain.ParticipantProfit;
 import blackjack.domain.ProfitResult;
 import blackjack.domain.card.CardDeck;
@@ -49,14 +49,14 @@ public class BlackJackApplication {
     }
 
     private static Player createPlayer(CardDeck deck, Name name) {
-        Money betMoney = inputMoney(name);
+        BetMoney betMoney = inputMoney(name);
         Cards cards = new Cards(deck.drawDouble());
         return new Player(name, cards, betMoney);
     }
 
-    private static Money inputMoney(Name name) {
+    private static BetMoney inputMoney(Name name) {
         try {
-            return new Money(InputView.inputPlayerBetAmount(name.getValue()));
+            return new BetMoney(InputView.inputPlayerBetAmount(name.getValue()));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputMoney(name);

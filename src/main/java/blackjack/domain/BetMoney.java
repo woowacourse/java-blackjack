@@ -2,14 +2,14 @@ package blackjack.domain;
 
 import java.util.Objects;
 
-public class Money {
+public class BetMoney {
 
     public static final int MIN_AMOUNT = 100;
     public static final int AMOUNT_UNIT = 100;
 
     private final int amount;
 
-    public Money(int amount) {
+    public BetMoney(int amount) {
         validateAmount(amount);
         this.amount = amount;
     }
@@ -37,8 +37,8 @@ public class Money {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        Money money = (Money)o;
-        return amount == money.amount;
+        BetMoney betMoney = (BetMoney)o;
+        return amount == betMoney.amount;
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.Money;
+import blackjack.domain.BetMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
@@ -24,7 +24,7 @@ public class PlayerTest {
     void cardsNotNull() {
         // given
         Name name = new Name("pobi");
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         // then
         assertThatThrownBy(() -> new Player(name, null, betMoney))
@@ -39,7 +39,7 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         Cards cards = new Cards(List.of(card1, card2));
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         Player player = new Player(name, cards, betMoney);
 
@@ -58,7 +58,7 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         Cards cards = new Cards(List.of(card1, card2));
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         Player player = new Player(name, cards, betMoney);
 
@@ -77,7 +77,7 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
         Cards cards = new Cards(List.of(card1, card2));
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         Player player = new Player(name, cards, betMoney);
 
@@ -96,7 +96,7 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         Cards cards = new Cards(List.of(card1, card2));
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         Player player = new Player(name, cards, betMoney);
 
@@ -117,7 +117,7 @@ public class PlayerTest {
         Card card3 = new Card(Pattern.HEART, Denomination.ACE);
         Card card4 = new Card(Pattern.SPADE, Denomination.ACE);
         Cards cards = new Cards(List.of(card1, card2));
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         Player player = new Player(name, cards, betMoney);
         player.hit(card3);
@@ -139,7 +139,7 @@ public class PlayerTest {
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         Card card3 = new Card(Pattern.HEART, Denomination.TWO);
         Cards cards = new Cards(List.of(card1, card2));
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         Player player = new Player(name, cards, betMoney);
         player.hit(card3);
@@ -160,7 +160,7 @@ public class PlayerTest {
         Card DIAMOND_TEN = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card CLOVER_TEN = new Card(Pattern.CLOVER, Denomination.TEN);
         Cards cards = new Cards(List.of(DIAMOND_TEN, CLOVER_TEN));
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         Player player = new Player(name, cards, betMoney);
         player.hit(card);
@@ -188,7 +188,7 @@ public class PlayerTest {
         // given
         Name name = new Name("lala");
         Cards cards = new Cards(initCards);
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
 
         Player player = new Player(name, cards, betMoney);
         for (Card hitCard : hitCards) {

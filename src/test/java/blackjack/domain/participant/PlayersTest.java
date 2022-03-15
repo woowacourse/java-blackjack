@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.Money;
+import blackjack.domain.BetMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
@@ -40,7 +40,7 @@ public class PlayersTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         Cards cards1 = new Cards(List.of(card1, card2));
-        Money betMoney = new Money(1000);
+        BetMoney betMoney = new BetMoney(1000);
         Player player1 = new Player(name1, cards1, betMoney);
 
         Card card3 = new Card(Pattern.HEART, Denomination.TEN);

@@ -7,19 +7,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class MoneyTest {
+public class BetMoneyTest {
 
     @ParameterizedTest
     @ValueSource(ints = {100, 200, 1000})
     @DisplayName("100원 단위로 설정한 금액에 대한 Money 를 생성할 수 있다.")
     void createMoney(int amount) {
         // when
-        Money money = new Money(amount);
+        BetMoney betMoney = new BetMoney(amount);
 
         // then
         assertAll(
-            () -> assertThat(money).isNotNull(),
-            () -> assertThat(money.getAmount()).isEqualTo(amount)
+            () -> assertThat(betMoney).isNotNull(),
+            () -> assertThat(betMoney.getAmount()).isEqualTo(amount)
         );
     }
 
@@ -28,7 +28,7 @@ public class MoneyTest {
     @DisplayName("Money 를 생성하려면 금액이 100원 보다 커야한다.")
     void createMoneyOverAmount10(int amount) {
         // then
-        assertThatThrownBy(() -> new Money(amount))
+        assertThatThrownBy(() -> new BetMoney(amount))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 금액은 100원 이상이어야 합니다.");
     }
@@ -38,7 +38,7 @@ public class MoneyTest {
     @DisplayName("Money 를 생성하려면 금액이 100원 단위여야한다.")
     void createMoneyUnit10(int amount) {
         // then
-        assertThatThrownBy(() -> new Money(amount))
+        assertThatThrownBy(() -> new BetMoney(amount))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 금액은 100원 단위어야 합니다.");
     }
@@ -49,10 +49,10 @@ public class MoneyTest {
     void multiplyMoney(double multiple) {
         // given
         int amount = 1000;
-        Money money = new Money(amount);
+        BetMoney betMoney = new BetMoney(amount);
 
         // when
-        Profit profit = money.calculateProfit(multiple);
+        Profit profit = betMoney.calculateProfit(multiple);
 
         // then
         assertThat(profit.getAmount()).isEqualTo((int)(amount * multiple));
