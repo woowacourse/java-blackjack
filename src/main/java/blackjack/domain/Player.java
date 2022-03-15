@@ -10,14 +10,13 @@ public class Player extends Human {
     private static final String RECEIVED_FLAG_MESSAGE = "y, n 중에서 입력해주세요.";
     private static final String GIVEN_SYMBOL = "y";
     private static final String NOT_GIVEN_SYMBOL = "n";
-
-    private final String name;
+    private static final String DEALER_NAME = "딜러";
     private final Cards cards = new Cards();
 
     public Player(final String name) {
+        super(name);
         Validator.validateNullOrEmpty(name);
         validateEqualsDealerName(name);
-        this.name = name;
     }
 
     public boolean answer(final String receivedFlag) {
@@ -32,7 +31,7 @@ public class Player extends Human {
     }
 
     private void validateEqualsDealerName(final String name) {
-        if (name.equals(Dealer.getName())) {
+        if (name.equals(DEALER_NAME)) {
             throw new IllegalArgumentException(EQUALS_DEALER_NAME_MESSAGE);
         }
     }

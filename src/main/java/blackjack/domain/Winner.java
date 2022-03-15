@@ -16,8 +16,12 @@ public class Winner {
         }
     }
 
-    public int winPlayersCount() {
+    public int countWinner() {
         return winners.size();
+    }
+
+    public int countLoser(Players players) {
+        return players.countWinner(countWinner());
     }
 
     public boolean contains(final Player player) {

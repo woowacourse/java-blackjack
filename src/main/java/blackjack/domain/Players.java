@@ -35,8 +35,8 @@ public class Players {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public int getPlayerCount() {
-        return players.size();
+    public int countWinner(int winnerCount) {
+        return players.size() - winnerCount;
     }
 
     private List<String> trimNames(String input) {

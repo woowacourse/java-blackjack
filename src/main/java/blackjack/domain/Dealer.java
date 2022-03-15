@@ -1,11 +1,16 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class Dealer extends Human {
 
     public static final int RECEIVED_MAXIMUM = 16;
-    private static final String name = "딜러";
+    public static final String DEALER_NAME = "딜러";
+
+    public Dealer() {
+        super(DEALER_NAME);
+    }
 
     private final Cards cards = new Cards();
 
@@ -13,7 +18,7 @@ public class Dealer extends Human {
         return getTotal() >= player.getTotal();
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 

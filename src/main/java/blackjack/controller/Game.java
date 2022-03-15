@@ -32,7 +32,7 @@ public class Game {
     }
 
     private void dealInitCards(Deal deal, Dealer dealer, Players players) {
-        OutputView.printDealCardMessage(Dealer.getName(), players.getNames());
+        OutputView.printDealCardMessage(dealer.getName(), players.getNames());
         dealer.dealInit(deal.dealInit());
         for (Player player : players.getPlayers()) {
             player.dealInit(deal.dealInit());
@@ -40,7 +40,7 @@ public class Game {
     }
 
     private void openInitCards(Dealer dealer, Players players) {
-        OutputView.printCard(Dealer.getName(), dealer.getInitCard());
+        OutputView.printCard(dealer.getName(), dealer.getInitCard());
         OutputView.printNewLine();
         for (Player player : players.getPlayers()) {
             OutputView.printCard(player.getName(), player.getCards());
@@ -82,7 +82,7 @@ public class Game {
     private void drawDealer(final Dealer dealer, final Deal deal) {
         while (dealer.canDraw()) {
             dealer.hit(deal.draw());
-            OutputView.printDrawDealerCardMessage(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
+            OutputView.printDrawDealerCardMessage(dealer.getName(), Dealer.RECEIVED_MAXIMUM);
         }
         OutputView.printNewLine();
     }
@@ -93,7 +93,7 @@ public class Game {
     }
 
     private void openDealerResult(final Dealer dealer) {
-        OutputView.printResult(Dealer.getName(), dealer.getCards(), dealer.getTotal());
+        OutputView.printResult(dealer.getName(), dealer.getCards(), dealer.getTotal());
         OutputView.printNewLine();
     }
 
@@ -111,14 +111,12 @@ public class Game {
             winner.decide(dealer, player);
         }
         OutputView.printWinnerTitle();
-        winDealer(winner, players);
+        winDealer(winner, dealer, players);
         winPlayers(winner, players);
     }
 
-    private void winDealer(final Winner winner, final Players players) {
-        int winPlayersCount = winner.winPlayersCount();
-        int losePlayersCount = players.getPlayerCount() - winner.winPlayersCount();
-        OutputView.printDealerScore(Dealer.getName(), losePlayersCount, winPlayersCount);
+    private void winDealer(final Winner winner, Dealer dealer, final Players players) {
+        OutputView.printDealerScore(dealer.getName(), winner.countWinner(), winner.countLoser(players));
     }
 
     private void winPlayers(final Winner winner, final Players players) {
