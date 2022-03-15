@@ -35,18 +35,12 @@ public class GameController {
     }
     
     private void questAddCard(final Player player, final CardDeck cardDeck) {
-        if (!player.isAbleToHit()) {
-            return;
-        }
-        boolean isHit = InputView.inputOneMoreCard(player.getName());
-        if (!isHit && player.isTwoCard()) {
-            OutputView.printHumanHand(player);
-            return;
-        }
-        if (isHit) {
+        while (player.isAbleToHit() && InputView.inputOneMoreCard(player.getName())) {
             player.addCard(cardDeck.draw());
             OutputView.printHumanHand(player);
-            questAddCard(player, cardDeck);
+        }
+        if (player.isTwoCard()) {
+            OutputView.printHumanHand(player);
         }
     }
     

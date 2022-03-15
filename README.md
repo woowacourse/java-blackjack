@@ -65,8 +65,8 @@
 - [x] 파일 끝에 개행문자 추가
     - [x] insert_final_newline 옵션을 true로 설정
 - [x] 인풋 뷰 검증로직을 Players 클래스 안으로 이동, 정적팩토리메서드 추가
-- [ ] 
-- [ ] 
+- [x] GameController : 10라인 넘어가는 questAddCard 메서드 로직 효율화
+    - [x] while문 사용
 - [ ] 
 - [ ] 
 - [ ] 
