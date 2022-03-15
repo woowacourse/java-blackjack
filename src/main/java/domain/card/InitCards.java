@@ -12,10 +12,10 @@ public class InitCards {
     private final List<Card> intiCards;
 
     public InitCards(Deck deck) {
-        this.intiCards = generateInitCards(deck);
+        this.intiCards = createInitCards(deck);
     }
 
-    private List<Card> generateInitCards(Deck deck) {
+    private List<Card> createInitCards(Deck deck) {
         return IntStream.range(0, INIT_SIZE)
                 .mapToObj(i -> deck.draw())
                 .collect(Collectors.toList());
@@ -23,5 +23,11 @@ public class InitCards {
 
     public List<Card> getInitCards() {
         return Collections.unmodifiableList(intiCards);
+    }
+
+    public static List<List<Card>> generateInitCardsForPlayers(Deck deck, int playerCount) {
+        return IntStream.range(0, playerCount)
+                .mapToObj(i -> new InitCards(deck).getInitCards())
+                .collect(Collectors.toList());
     }
 }

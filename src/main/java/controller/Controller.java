@@ -18,7 +18,7 @@ public class Controller {
         List<Name> names = InputView.inputNames();
         Deck deck = Deck.createDeckForBlackJack();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
-        Players players = new Players(names, generateInitCardsForPlayers(names.size(), deck));
+        Players players = new Players(names, InitCards.generateInitCardsForPlayers(deck, names.size()));
 
         OutputView.printParticipantInitHands(dealer, players);
 
@@ -33,12 +33,6 @@ public class Controller {
         drawForDealer(deck, dealer, players);
         OutputView.printStatuses(dealer, players);
         OutputView.printResult(players.getNames(), players.getResultAtFinal(dealer));
-    }
-
-    private List<List<Card>> generateInitCardsForPlayers(int playerCount, Deck deck) {
-        return IntStream.range(0, playerCount)
-                .mapToObj(i -> new InitCards(deck).getInitCards())
-                .collect(Collectors.toList());
     }
 
     private void drawForPlayers(Deck deck, Players players) {

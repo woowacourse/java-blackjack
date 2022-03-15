@@ -42,7 +42,7 @@ public class PlayersTest {
     @DisplayName("이름으로 플레이어 손패 반환")
     void showHandByName() {
         Name name = new Name("pobi");
-        assertThat(players.showHandByName(name)).isEqualTo("A클로버, Q클로버");
+        assertThat(players.showHandByName(name)).isEqualTo("A♣️, Q♣️");
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PlayersTest {
     void addCardByName() {
         Name name = new Name("pobi");
         players.addCardByName(name, new Card(Rank.RANK_A, Suit.DIAMOND));
-        assertThat(players.showHandByName(name)).isEqualTo("A클로버, Q클로버, A다이아몬드");
+        assertThat(players.showHandByName(name)).isEqualTo("A♣️, Q♣️, A♦️");
     }
 
     @Test
