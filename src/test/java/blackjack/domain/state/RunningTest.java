@@ -27,4 +27,13 @@ class RunningTest {
         Running running = new Running(createCards(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
         assertThat(running.isFinished()).isFalse();
     }
+
+    @Test
+    @DisplayName("Running은 score를 계산하려할 경우 예외를 발생시킨다.")
+    void scoreException() {
+        Running running = new Running(createCards(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+        assertThatThrownBy(() -> running.score())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("진행중인 상태는 스코어를 계산할 수 없습니다.");
+    }
 }

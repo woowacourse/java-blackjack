@@ -36,6 +36,6 @@ public class Running implements BlackjackGameState {
 
     @Override
     public int score() {
-        return 0;
+        throw new IllegalStateException("진행중인 상태는 스코어를 계산할 수 없습니다.");
     }
 }
