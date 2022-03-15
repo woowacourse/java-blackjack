@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static blackJack.domain.Card.CardFactory.INIT_CARD_SIZE;
+
 public class Cards {
     private static final int BUST_LINE = 21;
     private static final int EXTRA_SCORE = 10;
@@ -61,6 +63,6 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && getScore() == BUST_LINE;
+        return cards.size() == INIT_CARD_SIZE && getScore() == BUST_LINE;
     }
 }

@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 public class CardFactory {
 
-    private static final int INIT_CARD_SIZE = 2;
+    public static final int INIT_CARD_SIZE = 2;
 
     private final Queue<Card> deck;
 

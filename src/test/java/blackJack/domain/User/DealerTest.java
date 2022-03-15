@@ -48,7 +48,7 @@ class DealerTest {
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);
 
-        PlayerResult actual = dealer.compare(player);
+        PlayerResult actual = PlayerResult.decision(dealer, player);
         PlayerResult expected = PlayerResult.LOSE;
         assertThat(actual).isEqualTo(expected);
     }
@@ -61,7 +61,7 @@ class DealerTest {
                new Card(Shape.HEART, Number.TEN)));
        Player player = new Player("test", playerCards);
        Dealer dealer = new Dealer(cardFactory);
-       PlayerResult actual = dealer.compare(player);
+       PlayerResult actual = PlayerResult.decision(dealer, player);
        PlayerResult expected = PlayerResult.WIN;
        assertThat(actual).isEqualTo(expected);
     }
@@ -78,7 +78,7 @@ class DealerTest {
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);
-        PlayerResult actual = dealer.compare(player);
+        PlayerResult actual = PlayerResult.decision(dealer, player);
         PlayerResult expected = PlayerResult.WIN;
         assertThat(actual).isEqualTo(expected);
     }

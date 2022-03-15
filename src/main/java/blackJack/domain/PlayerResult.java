@@ -20,7 +20,7 @@ public enum PlayerResult {
     }
 
     public static PlayerResult decision(Dealer dealer, Player player){
-        if(isBlackJack(dealer) && isBlackJack(player)){
+        if(isAllBlackJack(dealer, player) || dealer.isSameScore(player)){
             return PlayerResult.DRAW;
         }
         if(dealer.isLose(player)){
@@ -30,6 +30,10 @@ public enum PlayerResult {
             return PlayerResult.LOSE;
         }
         throw new IllegalArgumentException("[ERROR] 없는 경우의 수입니다.");
+    }
+
+    private static boolean isAllBlackJack(Dealer dealer, Player player) {
+        return isBlackJack(dealer) && isBlackJack(player);
     }
 
     private static boolean isBlackJack(User user) {

@@ -31,7 +31,9 @@ public class BlackjackController {
     }
 
     private List<UserDto> playGame(Dealer dealer, Players players, CardFactory cardFactory) {
-        players.getPlayers().forEach(player -> askOneMoreCard(player, cardFactory));
+
+        players.getPlayers()
+                .forEach(player -> askOneMoreCard(player, cardFactory));
         while (dealer.canOneMoreCard()) {
             OutputView.printAddDealerCard();
             dealer.hit(cardFactory);

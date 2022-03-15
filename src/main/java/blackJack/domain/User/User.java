@@ -29,6 +29,10 @@ public abstract class User {
         return cards.isBust();
     }
 
+    public boolean isSameScore(User user){
+        return this.getScore() == user.getScore();
+    }
+
     public boolean isGreaterScoreThan(User user) {
         return this.cards.getScore() > user.cards.getScore();
     }
