@@ -17,9 +17,9 @@ public class PlayingCardsTest {
 
     @BeforeEach
     void before() {
-        aceSpade = new Card(CardNumber.ACE, CardShape.SPADE);
-        threeSpade = new Card(CardNumber.THREE, CardShape.SPADE);
-        queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
+        aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
+        threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
+        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("카드들의 총합이 올바르게 계산되는지 확인한다.")

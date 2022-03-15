@@ -4,7 +4,7 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class Playing {
+public class BlackjackGame {
 
     public void play(Dealer dealer, Players players) {
         CardDeck cardDeck = new CardDeck();
@@ -57,7 +57,7 @@ public class Playing {
         try {
             OutputView.printTakeCardInstruction(player.getName());
             String input = InputView.inputTakeCardAnswer();
-            return Answer.findBySymbol(input);
+            return HitOption.hits(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
             return hitOrStay(player);

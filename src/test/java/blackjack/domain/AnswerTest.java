@@ -15,7 +15,7 @@ public class AnswerTest {
     @ParameterizedTest
     @NullAndEmptySource
     void isGiven_null_or_empty_exception(String input) {
-        assertThatThrownBy(() -> Answer.findBySymbol(input))
+        assertThatThrownBy(() -> HitOption.hits(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("빈 값을 입력할 수 없습니다.");
     }
@@ -24,24 +24,24 @@ public class AnswerTest {
     @ParameterizedTest
     @ValueSource(strings = {"y", "Y"})
     void isGiven_true(String input) {
-        final boolean given = Answer.findBySymbol(input);
+        final boolean hitOption = HitOption.hits(input);
 
-        assertThat(given).isTrue();
+        assertThat(hitOption).isTrue();
     }
 
     @DisplayName("n, N를 입력 받았을 때 False 를 반환하는지 확인한다.")
     @ParameterizedTest
     @ValueSource(strings = {"n", "N"})
     void isGiven_false(String input) {
-        final boolean given = Answer.findBySymbol(input);
+        final boolean hitOption = HitOption.hits(input);
 
-        assertThat(given).isFalse();
+        assertThat(hitOption).isFalse();
     }
 
     @DisplayName("y, n 외의 값을 입력할 경우 예외를 발생시킨다.")
     @Test
     void isGiven_exception() {
-        assertThatThrownBy(() -> Answer.findBySymbol("a"))
+        assertThatThrownBy(() -> HitOption.hits("a"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("y, n 중에서 입력해주세요.");
     }
