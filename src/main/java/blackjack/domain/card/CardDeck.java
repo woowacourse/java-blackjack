@@ -15,7 +15,7 @@ public class CardDeck {
     }
 
     public static CardDeck createGameDeck() {
-        List<Card> pool = Card.createCardPool();
+        List<Card> pool = Card.getPool();
         Collections.shuffle(pool);
         return new CardDeck(pool);
     }

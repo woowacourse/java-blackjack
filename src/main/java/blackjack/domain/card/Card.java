@@ -24,7 +24,7 @@ public class Card {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바르지 않은 카드입니다."));
     }
 
-    public static List<Card> createCardPool() {
+    private static List<Card> createCardPool() {
         return Arrays.stream(Pattern.values())
                 .map(Card::createCardsBy)
                 .flatMap(Collection::stream)
