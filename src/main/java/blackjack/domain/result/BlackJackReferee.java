@@ -13,24 +13,15 @@ public class BlackJackReferee {
     private static final int INCREASE_COUNT = 1;
 
     private final Map<String, BlackJackResult> playerResults = new HashMap<>();
-    private final Map<BlackJackResult, Integer> dealerResult = new HashMap<>();
 
     public BlackJackReferee(List<Player> players, Dealer dealer) {
-        initDealerResults();
         addResults(players, dealer);
-    }
-
-    private void initDealerResults() {
-        for (BlackJackResult blackJackResult : BlackJackResult.values()) {
-            dealerResult.put(blackJackResult, DEFAULT_COUNT);
-        }
     }
 
     private void addResults(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             BlackJackResult result = player.match(dealer);
             playerResults.put(player.getName(), result);
-            dealerResult.merge(result.getReverse(), INCREASE_COUNT, Integer::sum);
         }
     }
 
@@ -39,6 +30,18 @@ public class BlackJackReferee {
     }
 
     public Map<BlackJackResult, Integer> getDealerResult() {
+        Map<BlackJackResult, Integer> dealerResult = new HashMap<>();
+        initDealerResults(dealerResult);
+        for (String playerName : playerResults.keySet()) {
+            BlackJackResult result = playerResults.get(playerName);
+            dealerResult.merge(result.getReverse(), INCREASE_COUNT, Integer::sum);
+        }
         return Collections.unmodifiableMap(dealerResult);
+    }
+
+    private void initDealerResults(Map<BlackJackResult, Integer> dealerResult) {
+        for (BlackJackResult blackJackResult : BlackJackResult.values()) {
+            dealerResult.put(blackJackResult, DEFAULT_COUNT);
+        }
     }
 }
