@@ -11,17 +11,19 @@ import java.util.Map;
 
 public class OutputView {
 
+    public static final String DELIMITER_JOINING = ", ";
+
     private OutputView() {
     }
 
-    public static void printGuideMessage(String message){
+    public static void printGuideMessage(String message) {
         System.out.println(message);
     }
 
     public static void printStartInfo(GamerDto dealer, List<GamerDto> players) {
         String names = players.stream()
                 .map(GamerDto::getName)
-                .collect(joining(", "));
+                .collect(joining(DELIMITER_JOINING));
         System.out.println("\n" + dealer.getName() + "와 " + names + "에게 2장씩 나누었습니다.");
 
         System.out.println(dealer.getName() + ": " + dealer.getCards().getValue().get(0).getValue());
@@ -34,7 +36,7 @@ public class OutputView {
     public static void printPlayerCardInfo(GamerDto player) {
         String cardsInfo = player.getCards().getValue().stream()
                 .map(CardDto::getValue)
-                .collect(joining(", "));
+                .collect(joining(DELIMITER_JOINING));
 
         System.out.println(player.getName() + ": " + cardsInfo);
     }
@@ -54,7 +56,7 @@ public class OutputView {
     private static void createPlayerResultInfo(GamerDto player) {
         String cardsInfo = player.getCards().getValue().stream()
                 .map(CardDto::getValue)
-                .collect(joining(", "));
+                .collect(joining(DELIMITER_JOINING));
 
         System.out.println(player.getName() + ": " + cardsInfo + " - 결과: " + player.getCards().getTotalScore());
     }
@@ -62,7 +64,7 @@ public class OutputView {
     private static void createDealerResultInfo(GamerDto dealer) {
         String cardsInfo = dealer.getCards().getValue().stream()
                 .map(CardDto::getValue)
-                .collect(joining(", "));
+                .collect(joining(DELIMITER_JOINING));
 
         System.out.println(dealer.getName() + ": " + cardsInfo + " - 결과: " + dealer.getCards().getTotalScore());
     }
