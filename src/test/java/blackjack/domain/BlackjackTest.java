@@ -45,7 +45,7 @@ public class BlackjackTest {
     @DisplayName("addCondition이 true이고 카드추가 후 burst가 되면 turn플레이어 다음으로 넘어가는지 테스트")
     @Test
     void additionalCardToTurnPlayerTest3() {
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(0, 1, 2, 9, 3, 4, 10));
+        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(9, 1, 2, 10, 3, 4, 11));
         blackjack.distributeInitialCards(numberGenerator);
         blackjack.addtionalCardToPlayer(numberGenerator, blackjack.turnPlayer(), true);
         assertThat(blackjack.turnPlayer().getName().equals("jason")).isTrue();
