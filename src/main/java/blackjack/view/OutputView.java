@@ -1,7 +1,11 @@
 package blackjack.view;
 
+import blackjack.domain.game.Dealer;
+import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import blackjack.domain.result.Grade;
+import blackjack.domain.result.Result;
+import blackjack.dto.GamerDto;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +37,14 @@ public class OutputView {
         printNewLine();
     }
 
+    public static void printInitCards(final Dealer dealer, final Players players) {
+        printCards(dealer.getName(), GamerDto.getPartOfCards(dealer));
+        for (Player player : players.getPlayers()) {
+            printCards(player.getName(), GamerDto.getCards(player));
+        }
+        printNewLine();
+    }
+
     public static void printCards(final String name, final List<String> playingCards) {
         System.out.printf(CARDS_FORMAT, name, String.join(DELIMITER, playingCards));
         printNewLine();
@@ -48,24 +60,36 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printScore(final String name, final List<String> playingCards, final int total) {
+    public static void printTotalScore(final Dealer dealer, final Players players) {
+        printScore(dealer.getName(), GamerDto.getCards(dealer), dealer.sumOfCards());
+        for (Player player : players.getPlayers()) {
+            printScore(player.getName(), GamerDto.getCards(player), player.sumOfCards());
+        }
+        printNewLine();
+    }
+
+    public static void printResult(final Dealer dealer, final Result result, final Players players) {
+        System.out.println("## 최종 승패");
+        printDealerResult(dealer.getName(), result.numberOfResult());
+        for (Player player : players.getPlayers()) {
+            printPlayerResult(player.getName(), result.getGrade(player));
+        }
+    }
+
+    private static void printScore(final String name, final List<String> playingCards, final int total) {
         System.out.printf(CARDS_FORMAT + " - 결과: %d", name, String.join(DELIMITER, playingCards), total);
         printNewLine();
     }
 
-    public static void printResultTitle() {
-        System.out.println("## 최종 승패");
-    }
-
-    public static void printDealerResult(final String name, final Map<Grade, Integer> numberOfResult) {
+    private static void printDealerResult(final String name, final Map<Grade, Integer> numberOfResult) {
         System.out.printf("%s: %d%s %d%s %d%s", name,
-                numberOfResult.get(Grade.LOSE), Grade.LOSE.getGrade(),
+                numberOfResult.get(Grade.LOSE), Grade.WIN.getGrade(),
                 numberOfResult.get(Grade.TIE), Grade.TIE.getGrade(),
-                numberOfResult.get(Grade.WIN), Grade.WIN.getGrade());
+                numberOfResult.get(Grade.WIN), Grade.LOSE.getGrade());
         printNewLine();
     }
 
-    public static void printPlayerResult(final String name, final Grade grade) {
+    private static void printPlayerResult(final String name, final Grade grade) {
         System.out.printf("%s: %s", name, grade.getGrade());
         printNewLine();
     }

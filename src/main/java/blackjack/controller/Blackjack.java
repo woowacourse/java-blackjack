@@ -1,20 +1,16 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.game.Answer;
 import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.Dealer;
-import blackjack.domain.game.Gamer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import blackjack.domain.result.Result;
+import blackjack.dto.GamerDto;
 import blackjack.view.Enter;
 import blackjack.view.Enterable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Blackjack {
 
@@ -57,27 +53,7 @@ public class Blackjack {
         for (Player player : players.getPlayers()) {
             player.dealCards(cardDeck.pickInit());
         }
-        openInitCards(dealer, players);
-    }
-
-    private void openInitCards(final Dealer dealer, final Players players) {
-        OutputView.printCards(dealer.getName(), getPartOfCards(dealer));
-        for (Player player : players.getPlayers()) {
-            OutputView.printCards(player.getName(), getCards(player));
-        }
-        OutputView.printNewLine();
-    }
-
-    private List<String> getPartOfCards(final Dealer dealer) {
-        return dealer.openPartOfCards().stream()
-                .map(Card::getName)
-                .collect(Collectors.toList());
-    }
-
-    private List<String> getCards(final Gamer gamer) {
-        return gamer.openCards().stream()
-                .map(Card::getName)
-                .collect(Collectors.toList());
+        OutputView.printInitCards(dealer, players);
     }
 
     private void drawCardToPlayers(final Players players, final CardDeck cardDeck) {
@@ -91,7 +67,7 @@ public class Blackjack {
         while (player.isDrawable() && isDrawing(player)) {
             player.drawCard(cardDeck.pick());
             // TODO: 도메인 객체에 뷰 함수 전달?
-            OutputView.printCards(player.getName(), getCards(player));
+            OutputView.printCards(player.getName(), GamerDto.getCards(player));
         }
     }
 
@@ -115,25 +91,8 @@ public class Blackjack {
     }
 
     private void showWinner(final Dealer dealer, final Players players, final Result result) {
-        openScore(dealer, players);
+        OutputView.printTotalScore(dealer, players);
         result.compete(dealer);
-        OutputView.printResultTitle();
-        showResult(dealer, result, players);
-    }
-
-    private void openScore(final Dealer dealer, final Players players) {
-        OutputView.printScore(dealer.getName(), getCards(dealer), dealer.sumOfCards());
-        for (Player player : players.getPlayers()) {
-            OutputView.printScore(player.getName(), getCards(player), player.sumOfCards());
-        }
-        OutputView.printNewLine();
-    }
-
-    private void showResult(final Dealer dealer, final Result result, final Players players) {
-        OutputView.printDealerResult(dealer.getName(), result.numberOfResult());
-
-        for (Player player : players.getPlayers()) {
-            OutputView.printPlayerResult(player.getName(), result.getGrade(player));
-        }
+        OutputView.printResult(dealer, result, players);
     }
 }
