@@ -23,10 +23,13 @@ class PlayerTest {
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
     void returnBust(CardNumber cardNumber, boolean expected) {
         // give
-        final Player player = new Player("pobi");
-        final List<Card> cards = List.of(Card.of(DIAMOND, cardNumber), Card.of(DIAMOND, QUEEN),
+        final List<Card> cards = List.of(
+                Card.of(DIAMOND, cardNumber),
+                Card.of(DIAMOND, QUEEN),
                 Card.of(DIAMOND, JACK));
-        final Deck deck = Deck.createBy(cards);
+        final Deck deck = Deck.from(() -> cards);
+
+        final Player player = new Player("pobi");
         IntStream.range(0, 3)
                 .mapToObj(i -> deck)
                 .forEach(player::hit);
@@ -42,11 +45,16 @@ class PlayerTest {
     @DisplayName("게임준비를 위해 가진 카드를 초기화한다.")
     void init() {
         // give
+        final List<Card> cards = List.of(
+                Card.of(DIAMOND, QUEEN),
+                Card.of(DIAMOND, KING),
+                Card.of(DIAMOND, JACK));
+        final Deck deck = Deck.from(() -> cards);
+
         final Player player = new Player("pobi");
-        final List<Card> cards = List.of(Card.of(DIAMOND, QUEEN), Card.of(DIAMOND, KING));
 
         // when
-        player.initCards(Deck.createBy(cards));
+        player.initCards(deck);
         final int actual = player.getCards().getValue().size();
 
         // then

@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.CardNumber.ACE;
+import static blackjack.domain.card.CardNumber.FIVE;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardNumber.SEVEN;
@@ -22,8 +24,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 class DealerTest {
 
     @ParameterizedTest
-    @DisplayName("딜러가 카드를 뽑아야하는지 확인한다.")
-    @MethodSource("provideCardFactory")
+    @DisplayName("딜러가 추가로 카드를 뽑아야하는지 확인한다.")
+    @MethodSource("provideDeck")
     void canDrawCard(Deck deck, boolean expected) {
         // give
         final Dealer dealer = new Dealer();
@@ -36,10 +38,12 @@ class DealerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideCardFactory() {
+    private static Stream<Arguments> provideDeck() {
         return Stream.of(
-                Arguments.of(Deck.createBy(List.of(Card.of(DIAMOND, TEN), Card.of(DIAMOND, SEVEN))), false),
-                Arguments.of(Deck.createBy(List.of(Card.of(DIAMOND, TEN), Card.of(DIAMOND, SIX))), true)
+                Arguments.of(Deck.from(() -> List.of(Card.of(DIAMOND, TEN), Card.of(DIAMOND, SEVEN))), false),
+                Arguments.of(Deck.from(() -> List.of(Card.of(DIAMOND, ACE), Card.of(DIAMOND, SIX))), false),
+                Arguments.of(Deck.from(() -> List.of(Card.of(DIAMOND, TEN), Card.of(DIAMOND, SIX))), true),
+                Arguments.of(Deck.from(() -> List.of(Card.of(DIAMOND, ACE), Card.of(DIAMOND, FIVE))), true)
         );
     }
 
@@ -48,9 +52,7 @@ class DealerTest {
     void openCard() {
         // give
         final Card firstCard = Card.of(CLUB, KING);
-        final Card secondCard = Card.of(DIAMOND, QUEEN);
-
-        final Deck deck = Deck.createBy(List.of(secondCard, firstCard));
+        final Deck deck = Deck.from(() -> List.of(firstCard, Card.of(DIAMOND, QUEEN)));
 
         final Dealer dealer = new Dealer();
         dealer.initCards(deck);
