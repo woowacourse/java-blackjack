@@ -45,8 +45,8 @@ public enum BlackJackResult {
 		return (int)(bet * profit);
 	}
 
-	public double getReverseEarning(double earning) {
-		return LOSE.getProfit() * earning;
+	public int getReverseEarning(int earning) {
+		return (int)(LOSE.getProfit() * earning);
 	}
 
 	public double getProfit() {

@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -181,6 +183,15 @@ class BlackJackResultTest {
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result.getProfit()).isEqualTo(0);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"BLACKJACK_WIN:1500", "WIN:1000", "LOSE:-1000", "DRAW:0"}, delimiter = ':')
+	@DisplayName("수익률에 따른 수익 계산")
+	void calculateEarning(String input, int bet) {
+		BlackJackResult result = BlackJackResult.valueOf(input);
+		int earning = result.calculateEarning(1000);
+		assertThat(earning).isEqualTo(bet);
 	}
 
 	private Card getAce() {
