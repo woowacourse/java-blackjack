@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,8 @@ import blackjack.domain.card.Cards;
 
 class BlackJackResultTest {
 
-	private Cards playerCards = new Cards();
-	private Cards dealerCards = new Cards();
+	private final Cards playerCards = new Cards();
+	private final Cards dealerCards = new Cards();
 
 	@Test
 	@DisplayName("플레이어가 블랙잭이고 딜러가 블랙잭이 아니면 승리")
@@ -25,7 +26,7 @@ class BlackJackResultTest {
 		dealerCards.add(getAce());
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		Assertions.assertThat(result).isEqualTo(BlackJackResult.WIN);
+		assertThat(result).isEqualTo(BlackJackResult.BLACKJACK_WIN);
 	}
 
 	@Test
@@ -39,7 +40,7 @@ class BlackJackResultTest {
 		dealerCards.add(getAce());
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		Assertions.assertThat(result).isEqualTo(BlackJackResult.WIN);
+		assertThat(result).isEqualTo(BlackJackResult.WIN);
 	}
 
 	@Test
@@ -54,7 +55,7 @@ class BlackJackResultTest {
 		dealerCards.add(getAce());
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		Assertions.assertThat(result).isEqualTo(BlackJackResult.WIN);
+		assertThat(result).isEqualTo(BlackJackResult.WIN);
 	}
 
 	@Test
@@ -69,7 +70,7 @@ class BlackJackResultTest {
 		dealerCards.add(getAce());
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		Assertions.assertThat(result).isEqualTo(BlackJackResult.LOSE);
+		assertThat(result).isEqualTo(BlackJackResult.LOSE);
 	}
 
 	@Test
@@ -83,7 +84,7 @@ class BlackJackResultTest {
 		dealerCards.add(getAce());
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		Assertions.assertThat(result).isEqualTo(BlackJackResult.LOSE);
+		assertThat(result).isEqualTo(BlackJackResult.LOSE);
 	}
 
 	@Test
@@ -98,7 +99,7 @@ class BlackJackResultTest {
 		dealerCards.add(getAce());
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		Assertions.assertThat(result).isEqualTo(BlackJackResult.LOSE);
+		assertThat(result).isEqualTo(BlackJackResult.LOSE);
 	}
 
 	@Test
@@ -111,7 +112,7 @@ class BlackJackResultTest {
 		dealerCards.add(getAce());
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		Assertions.assertThat(result).isEqualTo(BlackJackResult.DRAW);
+		assertThat(result).isEqualTo(BlackJackResult.DRAW);
 	}
 
 	@Test
@@ -124,7 +125,62 @@ class BlackJackResultTest {
 		dealerCards.add(getFive());
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		Assertions.assertThat(result).isEqualTo(BlackJackResult.DRAW);
+		assertThat(result).isEqualTo(BlackJackResult.DRAW);
+	}
+
+	@Test
+	@DisplayName("블랙잭으로 이기면 수익률 1.5")
+	void blackJackWinProfit() {
+		playerCards.add(getTen());
+		playerCards.add(getAce());
+
+		dealerCards.add(getFive());
+		dealerCards.add(getFive());
+		dealerCards.add(getAce());
+
+		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
+		assertThat(result.getProfit()).isEqualTo(1.5);
+	}
+
+	@Test
+	@DisplayName("블랙잭이 아니게 이기면 수익률 1")
+	void normalWinProfit() {
+		playerCards.add(getFive());
+		playerCards.add(getFive());
+		playerCards.add(getAce());
+
+		dealerCards.add(getFive());
+		dealerCards.add(getFive());
+
+		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
+		assertThat(result.getProfit()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("패배하면 수익률 -1")
+	void loseProfit() {
+		playerCards.add(getFive());
+		playerCards.add(getFive());
+		playerCards.add(getAce());
+
+		dealerCards.add(getAce());
+		dealerCards.add(getTen());
+
+		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
+		assertThat(result.getProfit()).isEqualTo(-1);
+	}
+
+	@Test
+	@DisplayName("무승부이면 수익률 0")
+	void drawProfit() {
+		playerCards.add(getAce());
+		playerCards.add(getTen());
+
+		dealerCards.add(getAce());
+		dealerCards.add(getTen());
+
+		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
+		assertThat(result.getProfit()).isEqualTo(0);
 	}
 
 	private Card getAce() {

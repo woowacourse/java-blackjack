@@ -90,13 +90,13 @@ public class OutputView {
 
     private static void getDealerSingleResult(Map<BlackJackResult, Integer> dealerResult, BlackJackResult dealer) {
         if (dealerResult.get(dealer) > 0) {
-            System.out.print(dealerResult.get(dealer) + dealer.getValue() + " ");
+            System.out.print(dealerResult.get(dealer) + dealer.getName() + " ");
         }
     }
 
     private static void printFinalPlayerResult(Map<String, BlackJackResult> playerResult) {
         for (String name : playerResult.keySet()) {
-            System.out.printf("%s: %s\n", name, playerResult.get(name).getValue());
+            System.out.printf("%s: %s\n", name, playerResult.get(name).getName());
         }
     }
 }
