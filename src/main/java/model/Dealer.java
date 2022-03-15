@@ -9,15 +9,15 @@ public class Dealer extends Participator {
 
     public Dealer() {
         super(DEALER_NAME);
-        this.cardsGettableStrategy = new FirstCardsGettable();
+        setCardsGettableStrategy(new FirstCardsGettable());
     }
 
     public void setEveryCardGettable() {
-        this.cardsGettableStrategy = new EveryCardsGettable();
+        setCardsGettableStrategy(new EveryCardsGettable());
     }
 
     @Override
     public boolean canReceiveCard() {
-        return cards.getSum() <= DEALER_CRITERIA_HIT_SCORE;
+        return this.getSum() <= DEALER_CRITERIA_HIT_SCORE;
     }
 }

@@ -2,7 +2,6 @@ package model;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
-import model.card.Cards;
 
 public enum Result {
     WIN((player, dealer) -> player.compareTo(dealer) > 0,
@@ -21,11 +20,13 @@ public enum Result {
         this.cardsSumCriteria = cardsSumCriteria;
     }
 
-    public static Result of(Cards playerCards, Cards dealerCards) {
-        if (playerCards.isStand() && dealerCards.isStand()) {
-            return Result.of(playerCards.getSum(), dealerCards.getSum());
+    public static Result of(Player player, Dealer dealer) {
+        Status playerStatus = player.getStatus();
+        Status dealerStatus = dealer.getStatus();
+        if (playerStatus.equals(Status.STAND) && dealerStatus.equals(Status.STAND)) {
+            return Result.of(player.getSum(), dealer.getSum());
         }
-        return Result.of(playerCards.getStatus(), dealerCards.getStatus());
+        return Result.of(playerStatus, dealerStatus);
     }
 
     private static Result of(Status playerStatus, Status dealerStatus) {

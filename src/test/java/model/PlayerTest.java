@@ -87,13 +87,13 @@ public class PlayerTest {
     @Test
     void matchWithDealerBothBust() {
         Dealer dealer = new Dealer();
-        dealer.cards.addCard(new Card(DIAMOND, QUEEN));
-        dealer.cards.addCard(new Card(SPADE, QUEEN));
-        dealer.cards.addCard(new Card(CLOVER, QUEEN));
+        dealer.receiveCard(new Card(DIAMOND, QUEEN));
+        dealer.receiveCard(new Card(SPADE, QUEEN));
+        dealer.receiveCard(new Card(CLOVER, QUEEN));
 
-        player.cards.addCard(new Card(DIAMOND, KING));
-        player.cards.addCard(new Card(SPADE, KING));
-        player.cards.addCard(new Card(CLOVER, KING));
+        player.receiveCard(new Card(DIAMOND, KING));
+        player.receiveCard(new Card(SPADE, KING));
+        player.receiveCard(new Card(CLOVER, KING));
         assertThat(player.matchWith(dealer)).isEqualTo(Result.LOSE);
     }
 }

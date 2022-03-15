@@ -3,14 +3,11 @@ package model;
 import static model.Dealer.DEALER_NAME;
 import static model.card.Cards.BLACK_JACK_SCORE;
 
-import model.cardGettable.EveryCardsGettable;
-
 public class Player extends Participator {
 
     public Player(String playerName) {
         super(playerName);
         checkNameIsDealer(playerName);
-        this.cardsGettableStrategy = new EveryCardsGettable();
     }
 
     private void checkNameIsDealer(String name) {
@@ -21,10 +18,10 @@ public class Player extends Participator {
 
     @Override
     public boolean canReceiveCard() {
-        return cards.getSum() < BLACK_JACK_SCORE;
+        return this.getSum() < BLACK_JACK_SCORE;
     }
 
     public Result matchWith(Dealer dealer) {
-        return Result.of(this.cards, dealer.cards);
+        return Result.of(this, dealer);
     }
 }
