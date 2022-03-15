@@ -18,7 +18,7 @@ public class CardsDto {
     }
 
     static CardsDto forResult(Player player) {
-        return new CardsDto(player.getName(), player.getCards());
+        return new CardsDto(player.getName(), player.getHoldingCards());
     }
 
     public String getName() {

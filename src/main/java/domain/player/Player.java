@@ -63,7 +63,7 @@ public abstract class Player {
         return this.name;
     }
 
-    public List<Card> getCards() {
+    public List<Card> getHoldingCards() {
         return new ArrayList<>(cards.getCards());
     }
 
