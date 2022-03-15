@@ -31,20 +31,21 @@ public class Cards {
         new Cards(cardHand);
     }
 
-    public int getLowestSum() {
+    public int getBestPossible() {
+        int lowestSum = getLowestSum();
+        for (Card card : cardHand) {
+            if (card.isAce() && lowestSum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
+                lowestSum += ACE_ADDITIONAL_NUMBER;
+            }
+        }
+        return lowestSum;
+    }
+
+    private int getLowestSum() {
         return cardHand.stream()
                 .map(Card::getNumber)
                 .map(Number::getScore)
                 .reduce(0, Integer::sum);
-    }
-
-    public int getBestPossible(int sum) {
-        for (Card card : cardHand) {
-            if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
-                sum += ACE_ADDITIONAL_NUMBER;
-            }
-        }
-        return sum;
     }
 
     public int getHighestSum() {

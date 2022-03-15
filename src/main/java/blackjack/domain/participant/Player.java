@@ -17,7 +17,7 @@ public class Player extends Participant {
 
     @Override
     public int calculateBestScore() {
-        return cards.getBestPossible(cards.getLowestSum());
+        return cards.getBestPossible();
     }
 
     public Result isWinner(int score) {
