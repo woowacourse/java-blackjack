@@ -43,8 +43,8 @@ public enum BlackJackResult {
 			.orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
 	}
 
-	public double calculateEarning(int bet) {
-		return bet * profit;
+	public int calculateEarning(int bet) {
+		return (int)(bet * profit);
 	}
 
 	public double getReverseEarning(double earning) {

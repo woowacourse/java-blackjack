@@ -76,11 +76,11 @@ public class BlackJackGame {
 
 	private GameResultDto makeResult(Dealer dealer, List<Player> players) {
 		int dealerEarning = DEFAULT_EARNING;
-		Map<String, Double> playerEarnings = new LinkedHashMap<>();
+		Map<String, Integer> playerEarnings = new LinkedHashMap<>();
 
 		for (Player player : players) {
 			BlackJackResult result = player.match(dealer);
-			double playerEarning = result.calculateEarning(player.getBet());
+			int playerEarning = result.calculateEarning(player.getBet());
 			playerEarnings.put(player.getName(), playerEarning);
 			dealerEarning += result.getReverseEarning(playerEarning);
 		}

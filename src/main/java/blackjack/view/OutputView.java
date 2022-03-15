@@ -75,28 +75,9 @@ public class OutputView {
     }
 
     public static void printFinalResult(GameResultDto gameResultDto) {
-        System.out.println("## 최종 승패");
-        printFinalDealerResult(gameResultDto.getDealerResult());
-        printFinalPlayerResult(gameResultDto.getPlayerResults());
-    }
-
-    private static void printFinalDealerResult(Map<BlackJackResult, Integer> dealerResult) {
-        System.out.print("딜러: ");
-        for (BlackJackResult dealer : dealerResult.keySet()) {
-            getDealerSingleResult(dealerResult, dealer);
-        }
-        System.out.println();
-    }
-
-    private static void getDealerSingleResult(Map<BlackJackResult, Integer> dealerResult, BlackJackResult dealer) {
-        if (dealerResult.get(dealer) > 0) {
-            System.out.print(dealerResult.get(dealer) + dealer.getName() + " ");
-        }
-    }
-
-    private static void printFinalPlayerResult(Map<String, BlackJackResult> playerResult) {
-        for (String name : playerResult.keySet()) {
-            System.out.printf("%s: %s\n", name, playerResult.get(name).getName());
-        }
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + gameResultDto.getDealerEarning());
+        gameResultDto.getPlayerEarnings()
+            .forEach((name, earning) -> System.out.printf("%s: %s\n", name, earning));
     }
 }

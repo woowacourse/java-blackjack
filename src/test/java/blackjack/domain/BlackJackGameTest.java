@@ -53,8 +53,8 @@ class BlackJackGameTest {
         blackJackGame.askPlayerHitOrStay(answer -> false, dto -> {});
         GameResultDto result = blackJackGame.createResult();
 
-        double dealerEarning = result.getDealerEarning();
-        Map<String, Double> playerEarnings = result.getPlayerEarnings();
+        int dealerEarning = result.getDealerEarning();
+        Map<String, Integer> playerEarnings = result.getPlayerEarnings();
 
         assertThat(playerEarnings.get("name")).isEqualTo(0);
         assertThat(dealerEarning).isEqualTo(0);
@@ -69,8 +69,8 @@ class BlackJackGameTest {
         blackJackGame.askPlayerHitOrStay(answer -> true, dto -> {});
         GameResultDto result = blackJackGame.createResult();
 
-        double dealerEarning = result.getDealerEarning();
-        Map<String, Double> playerEarnings = result.getPlayerEarnings();
+        int dealerEarning = result.getDealerEarning();
+        Map<String, Integer> playerEarnings = result.getPlayerEarnings();
 
         assertThat(playerEarnings.get("name")).isEqualTo(-1000);
         assertThat(dealerEarning).isEqualTo(1000);
