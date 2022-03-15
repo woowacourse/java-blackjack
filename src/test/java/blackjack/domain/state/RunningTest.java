@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import static blackjack.domain.card.CardNumber.JACK;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardPattern.SPADE;
@@ -35,5 +36,14 @@ class RunningTest {
         assertThatThrownBy(() -> running.score())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("진행중인 상태는 스코어를 계산할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("카드를 더했을때 버스트라면 버스트 상태가 반환된다.")
+    void hitToBust() {
+        BlackjackGameState running = new Running(createCards(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+        BlackjackGameState nextState = running.hit(Card.of(SPADE, JACK));
+
+        assertThat(nextState).isInstanceOf(Bust.class);
     }
 }

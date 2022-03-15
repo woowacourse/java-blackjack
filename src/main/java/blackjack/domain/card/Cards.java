@@ -20,8 +20,8 @@ public class Cards {
     }
 
     private void validateCardsSize(final List<Card> cards) {
-        if (cards.size() != BLACKJACK_CARD_SIZE) {
-            throw new IllegalArgumentException("카드 2장으로 생성해야 합니다.");
+        if (cards.size() < BLACKJACK_CARD_SIZE) {
+            throw new IllegalArgumentException("카드 2장이상으로 생성해야 합니다.");
         }
     }
 
@@ -45,10 +45,11 @@ public class Cards {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public void addCard(final Card card) {
+    public Cards addCard(final Card card) {
         Objects.requireNonNull(card, "null인 카드는 들어올 수 없습니다.");
         validateDuplicateCard(card);
         cards.add(card);
+        return new Cards(new ArrayList<>(cards));
     }
 
     private void validateDuplicateCard(final Card card) {

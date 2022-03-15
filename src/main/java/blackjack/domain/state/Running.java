@@ -15,8 +15,12 @@ public class Running implements BlackjackGameState {
     }
 
     @Override
-    public void hit(final Card card) {
-
+    public BlackjackGameState hit(final Card card) {
+        final Cards newCards = cards.addCard(card);
+        if (newCards.isBust()) {
+            return new Bust(newCards);
+        }
+        return null;
     }
 
     @Override

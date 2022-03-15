@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface BlackjackGameState {
 
-    void hit(final Card card);
+    BlackjackGameState hit(final Card card);
 
     BlackjackGameState stand();
 
