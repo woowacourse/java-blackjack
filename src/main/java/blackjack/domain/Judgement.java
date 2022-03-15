@@ -5,6 +5,12 @@ import blackjack.domain.participant.Player;
 
 public enum Judgement {
 
+    BLACKJACK("블랙잭") {
+        @Override
+        public Judgement getOpposite() {
+            return LOSE;
+        }
+    },
     WIN("승") {
         @Override
         public Judgement getOpposite() {
@@ -52,7 +58,7 @@ public enum Judgement {
         if (dealer.isBlackJack()) {
             return Judgement.LOSE;
         }
-        return Judgement.WIN;
+        return Judgement.BLACKJACK;
     }
 
     private static Judgement judgePlayerByScore(Player player, Dealer dealer) {

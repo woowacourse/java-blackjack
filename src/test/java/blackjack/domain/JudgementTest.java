@@ -48,6 +48,13 @@ public class JudgementTest {
         );
     }
 
+    private static Dealer createDealer(Denomination denomination2) {
+        Card card1 = new Card(DIAMOND, TEN);
+        Card card2 = new Card(CLOVER, denomination2);
+        Cards cards = new Cards(List.of(card1, card2));
+        return new Dealer(cards);
+    }
+
     @ParameterizedTest
     @MethodSource("provideForPlayerBust")
     @DisplayName("플레이어가 버스트일 경우 무조건 플레이어가 진다.")
@@ -96,22 +103,22 @@ public class JudgementTest {
     }
 
     @Test
-    @DisplayName("딜러와 똑같이 21점이어도 블랙잭인 딜러가 이긴다.")
+    @DisplayName("딜러와 똑같이 21점이어도 2장의 카드만 가지고 있는 플레이어가 블랙잭이다.")
     void blackJackDoesNotDefeat() {
         // given
-        Dealer dealer = createDealer(ACE);
+        Dealer dealer = createDealer(TEN);
+        dealer.hit(new Card(DIAMOND, ACE));
 
         Card heartTen = new Card(HEART, TEN);
-        Card spadeNine = new Card(SPADE, TEN);
-        Cards playerCards = new Cards(List.of(heartTen, spadeNine));
+        Card spadeAce = new Card(SPADE, ACE);
+        Cards playerCards = new Cards(List.of(heartTen, spadeAce));
         Player player = new Player(new Name("pobi"), playerCards);
-        player.hit(new Card(HEART, ACE));
 
         // when
         Judgement judgement = judgePlayer(player, dealer);
 
         // then
-        assertThat(judgement).isEqualTo(LOSE);
+        assertThat(judgement).isEqualTo(BLACKJACK);
     }
 
     @Test
@@ -130,12 +137,5 @@ public class JudgementTest {
 
         // then
         assertThat(judgement).isEqualTo(DRAW);
-    }
-
-    private static Dealer createDealer(Denomination denomination2) {
-        Card card1 = new Card(DIAMOND, TEN);
-        Card card2 = new Card(CLOVER, denomination2);
-        Cards cards = new Cards(List.of(card1, card2));
-        return new Dealer(cards);
     }
 }

@@ -119,8 +119,8 @@ public class WinResultTest {
     }
 
     @Test
-    @DisplayName("똑같이 21점이어도 블랙잭이 이긴다.")
-    void blackJackDoesNotDefeat() {
+    @DisplayName("똑같이 21점이어도 딜러만 블랙잭이면 딜러가 이긴다.")
+    void blackJackOnlyDealer() {
         // given
         Dealer dealer = createDealer(ACE);
 
@@ -166,6 +166,32 @@ public class WinResultTest {
         assertAll(
             () -> assertThat(dealerResult).isEqualTo(judgementMap),
             () -> assertThat(playersResult.get(player.getName())).isEqualTo(DRAW)
+        );
+    }
+
+    @Test
+    @DisplayName("똑같이 21점이어도 플래이어만 블랙잭이면 플레이어가 블랙잭이다.")
+    void blackJackOnlyPlayer() {
+        // given
+        Dealer dealer = createDealer(TEN);
+        dealer.hit(new Card(HEART, ACE));
+
+        Card heartTen = new Card(HEART, TEN);
+        Card spadeNine = new Card(SPADE, ACE);
+        Cards playerCards = new Cards(List.of(heartTen, spadeNine));
+        Player player = new Player(new Name("pobi"), playerCards);
+        List<Player> players = List.of(player);
+
+        // when
+        WinResult winResult = new WinResult(dealer, players);
+        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Judgement> playersResult = winResult.getPlayersResult();
+        Map<Judgement, Integer> judgementMap = createJudgementMap(0, 0, 1);
+
+        // then
+        assertAll(
+            () -> assertThat(dealerResult).isEqualTo(judgementMap),
+            () -> assertThat(playersResult.get(player.getName())).isEqualTo(BLACKJACK)
         );
     }
 
