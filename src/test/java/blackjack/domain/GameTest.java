@@ -4,13 +4,17 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSymbol;
 import blackjack.domain.participant.Player;
 
 public class GameTest {
@@ -46,6 +50,21 @@ public class GameTest {
         assertThat(actual).isEqualTo(List.of(15, 20, 20));
     }
 
+    @Test
+    @DisplayName("상태가 HIT인 플레이어를 Optional로 반환한다.")
+    void findHitPlayer() {
+        // give
+        Game game = new Game(new CardDeck(new TestDeck()), List.of("pobi"));
+
+        // when
+        Optional<Player> hitPlayer = game.findHitPlayer();
+        if (hitPlayer.isPresent()) {
+            boolean actual = hitPlayer.get().isHit();
+            // then
+            assertThat(actual).isTrue();
+        }
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"HIT:30", "STAY:20"}, delimiter = ':')
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
@@ -60,6 +79,19 @@ public class GameTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러의 첫 번째 카드를 반환한다.")
+    void dealerFirstCard() {
+        // give
+        Game game = new Game(new CardDeck(new TestDeck()), List.of("pobi"));
+
+        // when
+        Card actual = game.dealerFirstCard();
+
+        // then
+        assertThat(actual).isEqualTo(new Card(CardSymbol.CLUB, CardNumber.FIVE));
     }
 
     @Test
