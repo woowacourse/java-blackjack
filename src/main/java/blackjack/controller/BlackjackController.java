@@ -2,13 +2,12 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackMachine;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.money.BettingMachine;
-import blackjack.domain.money.Money;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
-import blackjack.domain.result.ParticipantResult;
+import blackjack.domain.result.MoneyResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -19,7 +18,7 @@ public class BlackjackController {
         final BlackjackMachine blackJackMachine = new BlackjackMachine(new CardDeck());
         final Dealer dealer = new Dealer();
         final Participants participants = generateParticipants();
-        final BettingMachine bettingMachine = betMoneys(participants);
+        final MoneyResult bettingMachine = betMoneys(participants);
 
         giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
         askAndGiveCardsToParticipants(blackJackMachine, participants);
@@ -39,20 +38,20 @@ public class BlackjackController {
         }
     }
 
-    private BettingMachine betMoneys(final Participants participants) {
-        final BettingMachine bettingMachine = new BettingMachine();
+    private MoneyResult betMoneys(final Participants participants) {
+        final MoneyResult bettingMachine = new MoneyResult();
         for (Participant participant : participants) {
-            bettingMachine.betMoney(participant, getMoney(participant));
+            participant.betMoney(getMoney(participant.getName()));
         }
         return bettingMachine;
     }
 
-    private Money getMoney(final Participant participant) {
+    private Money getMoney(final String name) {
         try {
-            return Money.from(InputView.getMoney(participant));
+            return Money.from(InputView.getMoney(name));
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            return getMoney(participant);
+            return getMoney(name);
         }
     }
 
@@ -108,9 +107,8 @@ public class BlackjackController {
     }
 
     private void calculateTotalMoney(final Dealer dealer, final Participants participants,
-                                     final BettingMachine bettingMachine) {
-        final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
-        bettingMachine.calculateMoney(participantResult.getResult());
+                                     final MoneyResult bettingMachine) {
+        bettingMachine.calculateParticipantMoney(dealer, participants);
         OutputView.printTotalMoney(bettingMachine.getMoneys(),
                 dealer.getName(), bettingMachine.calculateDealerMoney());
     }

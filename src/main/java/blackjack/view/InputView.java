@@ -28,8 +28,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String getMoney(final Participant participant) {
-        System.out.printf("%n%s의 배팅 금액은?%n", participant.getName());
+    public static String getMoney(final String name) {
+        System.out.printf("%n%s의 배팅 금액은?%n", name);
         return scanner.nextLine();
     }
 

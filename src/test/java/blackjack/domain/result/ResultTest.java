@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -16,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ParticipantResultTest {
+public class ResultTest {
 
     @ParameterizedTest(name = "[{index}] 딜러 : {0}, {1}, 참가자 : {2}, {3} -> {4}")
     @MethodSource("generateDecideWhenDealerIsAliveArguments")
@@ -32,10 +31,8 @@ public class ParticipantResultTest {
             participant.takeCard(card4);
         }
 
-        ParticipantResult results = new ParticipantResult(dealer, participants);
-
         for (Participant participant : participants) {
-            assertThat(results.getResult()).contains(entry(participant, expected));
+            assertThat(Result.of(dealer, participant)).isEqualTo(expected);
         }
     }
 
@@ -105,10 +102,8 @@ public class ParticipantResultTest {
             participant.takeCard(card5);
         }
 
-        ParticipantResult results = new ParticipantResult(dealer, participants);
-
         for (Participant participant : participants) {
-            assertThat(results.getResult()).contains(entry(participant, expected));
+            assertThat(Result.of(dealer, participant)).isEqualTo(expected);
         }
     }
 
@@ -147,10 +142,8 @@ public class ParticipantResultTest {
             participant.takeCard(card6);
         }
 
-        ParticipantResult results = new ParticipantResult(dealer, participants);
-
         for (Participant participant : participants) {
-            assertThat(results.getResult()).contains(entry(participant, expected));
+            assertThat(Result.of(dealer, participant)).isEqualTo(expected);
         }
     }
 

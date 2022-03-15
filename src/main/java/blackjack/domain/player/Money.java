@@ -1,4 +1,4 @@
-package blackjack.domain.money;
+package blackjack.domain.player;
 
 import blackjack.domain.result.Result;
 import java.util.Objects;
@@ -38,8 +38,8 @@ public class Money {
         }
     }
 
-    Money calculate(final Result result) {
-        if (result ==  Result.BLACKJACK) {
+    public Money calculate(final Result result) {
+        if (result == Result.BLACKJACK) {
             return Money.from((long) (value * BLACKJACK_MULTIPLY));
         }
         if (result == Result.WIN) {

@@ -1,4 +1,4 @@
-package blackjack.domain.money;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -7,31 +7,18 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
-import blackjack.domain.result.ParticipantResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class BettingMachineTest {
-
-    @ParameterizedTest(name = "[{index}] {0}원 배팅 -> {1}원")
-    @CsvSource({"10000, 10_000", "40000, 40_000", "100000, 100_000"})
-    @DisplayName("참가자가 원하는 금액을 배팅한다.")
-    void betMoney(String input, int expected) {
-        Participant participant = new Participant("김제니");
-
-        BettingMachine bettingMachine = new BettingMachine();
-        bettingMachine.betMoney(participant, Money.from(input));
-
-        assertThat(bettingMachine.getMoneys()).contains(entry(participant, Money.from(expected)));
-    }
+public class MoneyResultTest {
 
     @ParameterizedTest(name = "[{index}] 딜러 {0}, {1}, 참가자 {2}, {3} -> {4} 원")
     @MethodSource("generateCalculateMoneyArguments")
@@ -41,19 +28,16 @@ public class BettingMachineTest {
         dealer.takeCard(card1);
         dealer.takeCard(card2);
 
-        BettingMachine bettingMachine = new BettingMachine();
-
         Participants participants = new Participants(List.of("김제니", "박채영"));
         for (Participant participant : participants) {
             participant.takeCard(card3);
             participant.takeCard(card4);
-            bettingMachine.betMoney(participant, Money.from(10_000));
+            participant.betMoney(Money.from(10_000));
         }
 
-        ParticipantResult participantResult = new ParticipantResult(dealer, participants);
-
-        bettingMachine.calculateMoney(participantResult.getResult());
-        Map<Participant, Money> moneys = bettingMachine.getMoneys();
+        MoneyResult moneyResult = new MoneyResult();
+        moneyResult.calculateParticipantMoney(dealer, participants);
+        Map<Participant, Money> moneys = moneyResult.getMoneys();
 
         for (Participant participant : participants) {
             assertThat(moneys).contains(entry(participant, Money.from(expected)));
@@ -93,19 +77,17 @@ public class BettingMachineTest {
         dealer.takeCard(card1);
         dealer.takeCard(card2);
 
-        BettingMachine bettingMachine = new BettingMachine();
-
         Participants participants = new Participants(List.of("김제니", "박채영"));
         for (Participant participant : participants) {
             participant.takeCard(card3);
             participant.takeCard(card4);
-            bettingMachine.betMoney(participant, Money.from(10_000));
+            participant.betMoney(Money.from(10_000));
         }
 
-        ParticipantResult participantResult = new ParticipantResult(dealer, participants);
+        MoneyResult moneyResult = new MoneyResult();
+        moneyResult.calculateParticipantMoney(dealer, participants);
 
-        bettingMachine.calculateMoney(participantResult.getResult());
-        assertThat(bettingMachine.calculateDealerMoney()).isEqualTo(Money.from(expected));
+        assertThat(moneyResult.calculateDealerMoney()).isEqualTo(Money.from(expected));
     }
 
     static Stream<Arguments> generateCalculateDealerMoneyArguments() {

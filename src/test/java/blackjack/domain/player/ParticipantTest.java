@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class ParticipantTest {
@@ -58,5 +59,15 @@ public class ParticipantTest {
                         List.of(new Card(Denomination.KING, Suit.CLOVER), new Card(Denomination.TEN, Suit.HEART)),
                         new Card(Denomination.NINE, Suit.SPADE))
         );
+    }
+
+    @ParameterizedTest(name = "[{index}] {0}원 배팅 -> {1}원")
+    @CsvSource({"10000, 10_000", "40000, 40_000", "100000, 100_000"})
+    @DisplayName("참가자가 원하는 금액을 배팅한다.")
+    void betMoney(String input, int expected) {
+        Participant participant = new Participant("김제니");
+        participant.betMoney(Money.from(input));
+
+        assertThat(participant.getMoney()).isEqualTo(Money.from(expected));
     }
 }

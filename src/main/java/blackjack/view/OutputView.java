@@ -3,8 +3,8 @@ package blackjack.view;
 import static blackjack.domain.Rule.DEALER_HIT_STANDARD_SCORE;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.money.Money;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
@@ -15,7 +15,6 @@ import java.util.Map;
 public class OutputView {
 
     private static final String CARD_DELIMITER = ", ";
-    private static final String RESULT_DELIMITER = " ";
     private static final String COLON_AND_BLANK = ": ";
 
     public static void printInitialCards(final Dealer dealer, final Participants participants) {

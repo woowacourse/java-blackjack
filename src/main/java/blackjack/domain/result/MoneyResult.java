@@ -1,26 +1,24 @@
-package blackjack.domain.money;
+package blackjack.domain.result;
 
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Participant;
-import blackjack.domain.result.Result;
+import blackjack.domain.player.Participants;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BettingMachine {
+public class MoneyResult {
 
     private final Map<Participant, Money> moneys;
 
-    public BettingMachine() {
+    public MoneyResult() {
         this.moneys = new LinkedHashMap<>();
     }
 
-    public void betMoney(final Participant participant, final Money money) {
-        moneys.put(participant, money);
-    }
-
-    public void calculateMoney(final Map<Participant, Result> result) {
-        for (Participant participant : result.keySet()) {
-            final Money money = moneys.get(participant);
-            moneys.put(participant, money.calculate(result.get(participant)));
+    public void calculateParticipantMoney(final Dealer dealer, final Participants participants) {
+        for (Participant participant : participants) {
+            final Money money = participant.getMoney();
+            moneys.put(participant, money.calculate(Result.of(dealer, participant)));
         }
     }
 
