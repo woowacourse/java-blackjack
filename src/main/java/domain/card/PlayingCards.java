@@ -24,7 +24,7 @@ public class PlayingCards {
     }
 
     public boolean isBust() {
-        return calculateScore(playingPlayingCards) > MAXIMUM_VALID_SCORE;
+        return calculateScore() > MAXIMUM_VALID_SCORE;
     }
 
     public boolean isBlackJack() {
@@ -36,24 +36,24 @@ public class PlayingCards {
     }
 
     public int getScore() {
-        return calculateScore(playingPlayingCards);
+        return calculateScore();
     }
 
-    private static int calculateScore(List<PlayingCard> playingPlayingCards) {
-        if (containsAce(playingPlayingCards)) {
-            return calculateScoreWithAce(playingPlayingCards);
+    private int calculateScore() {
+        if (containsAce()) {
+            return calculateScoreWithAce();
         }
 
-        return calculateScoreWithoutAce(playingPlayingCards);
+        return calculateScoreWithoutAce();
     }
 
-    private static boolean containsAce(List<PlayingCard> playingPlayingCards) {
+    private boolean containsAce() {
         return playingPlayingCards.stream()
                 .anyMatch(PlayingCard::isAce);
     }
 
-    private static int calculateScoreWithAce(List<PlayingCard> playingPlayingCards) {
-        int minimumScore = calculateScoreWithoutAce(playingPlayingCards);
+    private int calculateScoreWithAce() {
+        int minimumScore = calculateScoreWithoutAce();
 
         if (minimumScore + ALTERNATIVE_ACE_GAP <= MAXIMUM_VALID_SCORE) {
             return minimumScore + ALTERNATIVE_ACE_GAP;
@@ -62,7 +62,7 @@ public class PlayingCards {
         return minimumScore;
     }
 
-    private static int calculateScoreWithoutAce(List<PlayingCard> playingPlayingCards) {
+    private int calculateScoreWithoutAce() {
         return playingPlayingCards.stream()
                 .mapToInt(PlayingCard::getScore)
                 .sum();
