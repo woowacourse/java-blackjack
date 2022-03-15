@@ -22,7 +22,7 @@ public class Cards {
 
     public boolean isBlackJack() {
         if (cards.size() < MINIMUM_CARDS_TO_CHECK_IF_BLACKJACK) {
-            throw new IllegalStateException(ERROR_TO_CHECK_IF_BLACKJACK_FOR_INSUFFICIENT_CARDS);
+            return false;
         }
 
         return getScore() == MAXIMUM_VALID_SCORE && cards.size() == CARD_QUANTITY_FOR_BLACKJACK;
