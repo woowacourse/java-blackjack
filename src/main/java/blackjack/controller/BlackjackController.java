@@ -1,11 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackGameResult;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.WinningResult;
+import blackjack.domain.result.BlackjackGameResult;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.result.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

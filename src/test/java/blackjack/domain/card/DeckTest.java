@@ -1,8 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
