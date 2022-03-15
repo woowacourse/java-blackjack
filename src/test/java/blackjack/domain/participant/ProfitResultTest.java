@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Pattern.*;
@@ -12,9 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
 
 public class ProfitResultTest {
 

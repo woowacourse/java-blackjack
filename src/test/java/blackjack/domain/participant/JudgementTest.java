@@ -1,8 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import static blackjack.domain.Judgement.*;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Pattern.*;
+import static blackjack.domain.participant.Judgement.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.List;
@@ -17,9 +17,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
 
 public class JudgementTest {
 

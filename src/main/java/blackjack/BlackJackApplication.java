@@ -3,17 +3,17 @@ package blackjack;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.BetMoney;
 import blackjack.domain.HitRequest;
-import blackjack.domain.ParticipantProfit;
-import blackjack.domain.ProfitResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
+import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.ParticipantProfit;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.ProfitResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
