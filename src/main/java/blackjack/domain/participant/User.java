@@ -39,6 +39,14 @@ public class User extends Participant {
         return Result.checkUserResult(ScoreCalculator.cardSum(cards), otherScore);
     }
 
+    public int calculateProfit(int otherScore) {
+        return UserProfit.calculateMoney(checkResult(otherScore), checkBlackJack(), bettingPrice);
+    }
+
+    private boolean checkBlackJack() {
+        return ScoreCalculator.cardSum(cards) == 21;
+    }
+
     public boolean checkBust() {
         return ScoreCalculator.cardSum(cards) > BUST_STANDARD;
     }
