@@ -29,6 +29,10 @@ public class Cards {
         return new Cards(Arrays.asList(cardDeck.provideCard(), cardDeck.provideCard()));
     }
 
+    public static Cards copyOf(final Cards cards) {
+        return new Cards(cards.cards);
+    }
+
     public int calculateScore() {
         final List<CardNumber> cardNumbers = cardNumbers();
         return CardNumber.calculateScore(cardNumbers);

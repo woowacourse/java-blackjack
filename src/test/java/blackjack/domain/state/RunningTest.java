@@ -56,4 +56,13 @@ class RunningTest {
 
         assertThat(nextState).isInstanceOf(Running.class);
     }
+
+    @Test
+    @DisplayName("Stand 상태로 변경할 수 있다.")
+    void stand() {
+        BlackjackGameState running = new Running(createCards(Card.of(SPADE, KING), Card.of(SPADE, FIVE)));
+        BlackjackGameState nextState = running.stand();
+
+        assertThat(nextState).isInstanceOf(Stand.class);
+    }
 }

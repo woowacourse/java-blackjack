@@ -11,7 +11,7 @@ public class Running extends AbstractBlackjackGameState {
 
     @Override
     public BlackjackGameState hit(final Card card) {
-        final Cards newCards = addCard(card);
+        final Cards newCards = cards.addCard(card);
         if (newCards.isBust()) {
             return new Bust(newCards);
         }
@@ -20,7 +20,7 @@ public class Running extends AbstractBlackjackGameState {
 
     @Override
     public BlackjackGameState stand() {
-        return null;
+        return new Stand(Cards.copyOf(cards));
     }
 
     @Override

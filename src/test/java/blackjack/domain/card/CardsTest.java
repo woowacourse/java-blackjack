@@ -38,7 +38,7 @@ class CardsTest {
         final List<Card> cards = Arrays.asList(Card.of(SPADE, A));
         assertThatThrownBy(() -> new Cards(cards))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드 2장으로 생성해야 합니다.");
+                .hasMessage("카드 2장이상으로 생성해야 합니다.");
     }
 
     @Test
