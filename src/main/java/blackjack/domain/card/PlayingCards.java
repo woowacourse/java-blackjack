@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class PlayingCards {
 
-    public static final int BLACKJACK_POINT = 21;
+    private static final int BLACKJACK_POINT = 21;
     private static final int ACE_ELEVEN_POSSIBLE = 10;
     private static final int BLACKJACK_SIZE = 2;
 
@@ -50,6 +50,10 @@ public class PlayingCards {
 
     public boolean isBust() {
         return sumPoints() > BLACKJACK_POINT;
+    }
+
+    public boolean isHit() {
+        return sumPoints() < BLACKJACK_POINT;
     }
 
     public boolean isBlackJack() {

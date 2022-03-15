@@ -11,7 +11,7 @@ public class Guest extends AbstractPlayer implements Player {
 
     @Override
     public boolean isCanHit() {
-        return playingCards.sumPoints() < PlayingCards.BLACKJACK_POINT;
+        return playingCards.isHit();
     }
 
     @Override
@@ -25,9 +25,9 @@ public class Guest extends AbstractPlayer implements Player {
         if (dealer.isBlackJack() && !isBlackJack()) {
             return false;
         }
-        if (dealer.isBust() && points <= PlayingCards.BLACKJACK_POINT) {
+        if (dealer.isBust() && !this.isBust()) {
             return true;
         }
-        return (dealer.isLose(points)) && (points <= PlayingCards.BLACKJACK_POINT);
+        return (dealer.isLose(points)) && (!this.isBust());
     }
 }
