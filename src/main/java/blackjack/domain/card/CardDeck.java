@@ -1,12 +1,9 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CardDeck {
 
@@ -16,23 +13,10 @@ public class CardDeck {
         this.cards = new LinkedList<>(cards);
     }
 
-    public CardDeck() {
-        this(initCards());
-    }
-
-    private static List<Card> initCards() {
-        List<Card> cards = Arrays.stream(Pattern.values())
-                .map(CardDeck::createCardsBy)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        Collections.shuffle(cards);
-        return cards;
-    }
-
-    private static List<Card> createCardsBy(Pattern pattern) {
-        return Arrays.stream(Denomination.values())
-                .map(denomination -> new Card(pattern, denomination))
-                .collect(Collectors.toList());
+    public static CardDeck createGameDeck() {
+        List<Card> pool = Card.createCardPool();
+        Collections.shuffle(pool);
+        return new CardDeck(pool);
     }
 
     public Card draw() {

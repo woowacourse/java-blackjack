@@ -14,22 +14,17 @@ public class CardDeckTest {
     @DisplayName("카드 뭉치에서 카드를 한 장 뽑아서 준다.")
     void drawCard() {
         // given
-        Card card = new Card(Pattern.DIAMOND, Denomination.TWO);
-        List<Card> cards = List.of(card);
-        CardDeck deck = new CardDeck(cards);
-
-        // when
-        Card actual = deck.draw();
+        CardDeck deck = CardDeck.createGameDeck();
 
         // then
-        assertThat(actual).isEqualTo(card);
+        assertThat(deck.draw()).isInstanceOf(Card.class);
     }
 
     @Test
     @DisplayName("두 장의 카드를 한번에 뽑을 수 있다.")
     void drawDouble() {
         // given
-        CardDeck deck = new CardDeck();
+        CardDeck deck = CardDeck.createGameDeck();
 
         // when
         List<Card> actual = deck.drawDouble();

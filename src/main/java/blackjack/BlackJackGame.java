@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
 
     public void play() {
-        CardDeck deck = new CardDeck();
+        CardDeck deck = CardDeck.createGameDeck();
         Dealer dealer = new Dealer(deck.drawDouble());
         List<Player> players = createPlayers(inputPlayerNames(), deck);
         proceed(deck, dealer, players);

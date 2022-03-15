@@ -1,6 +1,13 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Card {
+
+    private static final List<Card> pool = createCardPool();
 
     private final Pattern pattern;
     private final Denomination denomination;
@@ -8,6 +15,30 @@ public class Card {
     public Card(Pattern pattern, Denomination denomination) {
         this.pattern = pattern;
         this.denomination = denomination;
+    }
+
+    public static Card of(Pattern pattern, Denomination denomination) {
+        return pool.stream()
+                .filter(card -> card.pattern == pattern && card.denomination == denomination)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바르지 않은 카드입니다."));
+    }
+
+    public static List<Card> createCardPool() {
+        return Arrays.stream(Pattern.values())
+                .map(Card::createCardsBy)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    private static List<Card> createCardsBy(Pattern pattern) {
+        return Arrays.stream(Denomination.values())
+                .map(denomination -> new Card(pattern, denomination))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Card> getPool() {
+        return pool;
     }
 
     public Pattern getPattern() {
