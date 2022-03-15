@@ -17,7 +17,6 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
-        Deck deck = new Deck(new RandomCardGenerator());
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(Type.HEART, Score.SIX));
         dealer.addCard(new Card(Type.SPADE, Score.TWO));

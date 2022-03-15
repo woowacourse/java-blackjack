@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.*;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,9 +10,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayersTest {
+
+    private AcceptStrategy inputStrategy;
+
+    @BeforeEach
+    void setup() {
+        inputStrategy = new ParticipantAcceptStrategy();
+    }
 
     @ParameterizedTest
     @MethodSource("participantListBySuccess")
@@ -23,20 +31,21 @@ class PlayersTest {
     }
 
     private static Stream<List<Player>> participantListBySuccess() {
+        AcceptStrategy inputStrategy = new ParticipantAcceptStrategy();
         return Stream.of(
                 List.of(
-                        new Participant("pobi"),
-                        new Participant("corinne")
+                        new Participant("pobi", inputStrategy),
+                        new Participant("corin", inputStrategy)
                 ),
                 List.of(
-                        new Participant("1"),
-                        new Participant("2"),
-                        new Participant("3"),
-                        new Participant("4"),
-                        new Participant("5"),
-                        new Participant("6"),
-                        new Participant("7"),
-                        new Participant("8")
+                        new Participant("1", inputStrategy),
+                        new Participant("2", inputStrategy),
+                        new Participant("3", inputStrategy),
+                        new Participant("4", inputStrategy),
+                        new Participant("5", inputStrategy),
+                        new Participant("6", inputStrategy),
+                        new Participant("7", inputStrategy),
+                        new Participant("8", inputStrategy)
                 )
         );
     }
@@ -53,21 +62,22 @@ class PlayersTest {
     }
 
     private static Stream<List<Player>> participantListByFail() {
+        AcceptStrategy inputStrategy = new ParticipantAcceptStrategy();
         return Stream.of(
                 null,
                 List.of(
-                        new Participant("pobi")
+                        new Participant("pobi", inputStrategy)
                 ),
                 List.of(
-                        new Participant("1"),
-                        new Participant("2"),
-                        new Participant("3"),
-                        new Participant("4"),
-                        new Participant("5"),
-                        new Participant("6"),
-                        new Participant("7"),
-                        new Participant("8"),
-                        new Participant("9")
+                        new Participant("1", inputStrategy),
+                        new Participant("2", inputStrategy),
+                        new Participant("3", inputStrategy),
+                        new Participant("4", inputStrategy),
+                        new Participant("5", inputStrategy),
+                        new Participant("6", inputStrategy),
+                        new Participant("7", inputStrategy),
+                        new Participant("8", inputStrategy),
+                        new Participant("9", inputStrategy)
                 )
         );
     }
@@ -77,12 +87,10 @@ class PlayersTest {
     void thrownExceptionWhenNamesDuplicated() {
         Player dealer = new Dealer();
         Assertions.assertThatThrownBy(() -> new Players(List.of(
-                        new Participant("pobi"),
-                        new Participant("pobi")
+                        new Participant("pobi", inputStrategy),
+                        new Participant("pobi", inputStrategy)
                 ), dealer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");
     }
-
-
 }

@@ -1,23 +1,27 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
-import java.util.List;
-import java.util.Set;
+import javax.security.auth.callback.Callback;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Players {
+public class Players implements Function<Deck, Boolean> {
 
     private static final int MIN_SIZE = 2;
     private static final int MAX_SIZE = 8;
 
     private final List<Player> participants;
+    private final Deque<Player> copiedParticipants;
     private final Player dealer;
-    private int participantPointer = 0;
 
     public Players(final List<Player> participants, final Player dealer) {
         validateParticipants(participants);
         this.participants = participants;
+        this.copiedParticipants = new ArrayDeque<>(participants);
         this.dealer = dealer;
     }
 
@@ -42,50 +46,40 @@ public class Players {
         }
     }
 
-    public void initParticipantPointer() {
-        participantPointer = 0;
-    }
-
-    public boolean isDealerAcceptableCard() {
-        return dealer.acceptableCard();
-    }
-
-    public void addPointParticipantCard(Card card) {
-        pointParticipant().addCard(card);
-    }
-
-    public boolean isPointParticipantAcceptableCard() {
-        return pointParticipant().acceptableCard();
-    }
-
-    public Player pointParticipant() {
-        if (isParticipantPointerEnd()) {
-            throw new RuntimeException("참가자를 불러올 수 없습니다.");
-        }
-        return participants.get(participantPointer);
-    }
-
-    public boolean isParticipantPointerEnd() {
-        return participantPointer == participants.size();
-    }
-
-    public void moveParticipantPointer() {
-        participantPointer++;
-    }
-
-    public void addDealerCard(Card card) {
-        dealer.addCard(card);
-    }
-
-    public String pointParticipantName() {
-        return pointParticipant().getName();
-    }
-
     public Player getDealer() {
         return dealer;
     }
 
     public List<Player> getParticipants() {
         return List.copyOf(participants);
+    }
+
+    @Override
+    public Boolean apply(Deck deck) {
+        validateEndParticipants();
+        Player participant = copiedParticipants.getFirst();
+        if (participant.acceptableCard()) {
+            participant.addCard(deck.draw());
+            return true;
+        }
+        copiedParticipants.pop();
+        return false;
+    }
+
+    public Player getParticipant() {
+        if (allParticipantsDecided()) {
+            throw new RuntimeException("[ERROR] 참가자가 더이상 존재하지 않습니다.");
+        }
+        return copiedParticipants.getFirst();
+    }
+
+    private void validateEndParticipants() {
+        if (allParticipantsDecided()) {
+            throw new RuntimeException("[ERROR] 참가자가 더이상 존재하지 않습니다.");
+        }
+    }
+
+    public boolean allParticipantsDecided() {
+        return copiedParticipants.isEmpty();
     }
 }

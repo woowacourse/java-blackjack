@@ -2,10 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardGenerator;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.player.*;
 import blackjack.domain.result.Judge;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -37,7 +34,7 @@ public class Blackjack {
 
     private List<Player> createParticipants(final List<String> names) {
         return names.stream()
-                .map(Participant::new)
+                .map(name -> new Participant(name, new ParticipantAcceptStrategy()))
                 .collect(Collectors.toList());
     }
 
@@ -60,34 +57,26 @@ public class Blackjack {
 
     private void decideGetMoreCard(final Players players, final Deck deck) {
         decideParticipantsMoreCard(players, deck);
-        decideDealerMoreCard(players, deck);
+        decideDealerMoreCard(players.getDealer(), deck);
     }
 
     private void decideParticipantsMoreCard(final Players players, final Deck deck) {
-        players.initParticipantPointer();
-        while (!players.isParticipantPointerEnd()) {
-            decideParticipantMoreCard(players, deck);
-            players.moveParticipantPointer();
+        while (!players.allParticipantsDecided()) {
+            Player player = players.getParticipant();
+            boolean cardAccept = players.apply(deck);
+            printParticipantCardInfo(cardAccept, player);
         }
     }
 
-    private void decideParticipantMoreCard(final Players players, final Deck deck) {
-        while (isNotOverMaxScore(players) && InputView.oneMoreCard(players.pointParticipantName())) {
-            players.addPointParticipantCard(deck.draw());
-            OutputView.printPlayerCardInfo(players.pointParticipant());
+    private void printParticipantCardInfo(final boolean cardAccept, final Player participant) {
+        if(cardAccept) {
+            OutputView.printPlayerCardInfo(participant);
         }
     }
 
-    private boolean isNotOverMaxScore(final Players players) {
-        if (!players.isPointParticipantAcceptableCard()) {
-            OutputView.printParticipantOverMaxScore(players.pointParticipantName());
-        }
-        return players.isPointParticipantAcceptableCard();
-    }
-
-    private void decideDealerMoreCard(final Players players, final Deck deck) {
-        if (players.isDealerAcceptableCard()) {
-            players.addDealerCard(deck.draw());
+    private void decideDealerMoreCard(final Player dealer, final Deck deck) {
+        if (dealer.acceptableCard()) {
+            dealer.addCard(deck.draw());
             OutputView.printDealerAcceptCard();
             return;
         }

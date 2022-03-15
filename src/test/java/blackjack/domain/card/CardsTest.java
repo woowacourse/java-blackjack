@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -19,7 +18,6 @@ public class CardsTest {
     @Test
     @DisplayName("카드를 추가할 떄 null을 전달하면 예외를 발생한다.")
     void thrownExceptionWhenGivenNull() {
-        Deck deck = new Deck(new RandomCardGenerator());
         Cards cards = new Cards();
         assertThatThrownBy(() -> cards.addCard(null))
                 .isInstanceOf(IllegalArgumentException.class)
