@@ -35,11 +35,9 @@ public class ProfitResult {
 
     private ParticipantProfit calculateDealerResult(List<ParticipantProfit> playersProfits, Dealer dealer) {
         int playersProfitSum = playersProfits.stream()
-            .map(ParticipantProfit::getProfit)
-            .mapToInt(Profit::getAmount)
+            .mapToInt(ParticipantProfit::getProfit)
             .sum();
-        Profit dealerProfit = new Profit(playersProfitSum * -1);
-        return new ParticipantProfit(dealer.getName(), dealerProfit);
+        return new ParticipantProfit(dealer.getName(), playersProfitSum * -1);
     }
 
     public ParticipantProfit getDealerResult() {

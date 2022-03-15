@@ -2,19 +2,19 @@ package blackjack.domain;
 
 public class ParticipantProfit {
 
-    private final String name;
-    private final Profit profit;
+    private final String participantName;
+    private final int profit;
 
-    public ParticipantProfit(String name, Profit profit) {
-        this.name = name;
+    public ParticipantProfit(String participantName, int profit) {
+        this.participantName = participantName;
         this.profit = profit;
     }
 
-    public String getName() {
-        return name;
+    public String getParticipantName() {
+        return participantName;
     }
 
-    public Profit getProfit() {
+    public int getProfit() {
         return profit;
     }
 }

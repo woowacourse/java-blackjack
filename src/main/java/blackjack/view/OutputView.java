@@ -61,6 +61,6 @@ public class OutputView {
     }
 
     public static void printParticipantProfitResult(ParticipantProfit profit) {
-        System.out.printf("%s: %s%n", profit.getName(), profit.getProfit().getAmount());
+        System.out.printf("%s: %s%n", profit.getParticipantName(), profit.getProfit());
     }
 }

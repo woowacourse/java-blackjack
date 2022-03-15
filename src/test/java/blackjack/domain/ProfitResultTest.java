@@ -40,13 +40,11 @@ public class ProfitResultTest {
         ProfitResult profitResult = new ProfitResult(players, dealer);
         ParticipantProfit playerResult = profitResult.getPlayersResult().get(0);
         ParticipantProfit dealerResult = profitResult.getDealerResult();
-        Profit playerProfit = new Profit((int)(amount * 1.5));
-        Profit dealerProfit = new Profit((int)(amount * -1.5));
 
         // then
         assertAll(
-            () -> assertThat(playerResult.getProfit()).isEqualTo(playerProfit),
-            () -> assertThat(dealerResult.getProfit()).isEqualTo(dealerProfit)
+            () -> assertThat(playerResult.getProfit()).isEqualTo((int)(amount * 1.5)),
+            () -> assertThat(dealerResult.getProfit()).isEqualTo((int)(amount * -1.5))
         );
     }
 
@@ -72,13 +70,11 @@ public class ProfitResultTest {
         ProfitResult profitResult = new ProfitResult(players, dealer);
         ParticipantProfit playerResult = profitResult.getPlayersResult().get(0);
         ParticipantProfit dealerResult = profitResult.getDealerResult();
-        Profit playerProfit = new Profit(amount);
-        Profit dealerProfit = new Profit(amount * -1);
 
         // then
         assertAll(
-            () -> assertThat(playerResult.getProfit()).isEqualTo(playerProfit),
-            () -> assertThat(dealerResult.getProfit()).isEqualTo(dealerProfit)
+            () -> assertThat(playerResult.getProfit()).isEqualTo(amount),
+            () -> assertThat(dealerResult.getProfit()).isEqualTo(amount * -1)
         );
     }
 
@@ -103,13 +99,11 @@ public class ProfitResultTest {
         ProfitResult profitResult = new ProfitResult(players, dealer);
         ParticipantProfit playerResult = profitResult.getPlayersResult().get(0);
         ParticipantProfit dealerResult = profitResult.getDealerResult();
-        Profit playerProfit = new Profit(amount * -1);
-        Profit dealerProfit = new Profit(amount);
 
         // then
         assertAll(
-            () -> assertThat(playerResult.getProfit()).isEqualTo(playerProfit),
-            () -> assertThat(dealerResult.getProfit()).isEqualTo(dealerProfit)
+            () -> assertThat(playerResult.getProfit()).isEqualTo(amount * -1),
+            () -> assertThat(dealerResult.getProfit()).isEqualTo(amount)
         );
     }
 }

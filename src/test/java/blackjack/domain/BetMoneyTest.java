@@ -52,9 +52,9 @@ public class BetMoneyTest {
         BetMoney betMoney = new BetMoney(amount);
 
         // when
-        Profit profit = betMoney.calculateProfit(multiple);
+        int profit = betMoney.calculateProfit(multiple);
 
         // then
-        assertThat(profit.getAmount()).isEqualTo((int)(amount * multiple));
+        assertThat(profit).isEqualTo((int)(amount * multiple));
     }
 }
