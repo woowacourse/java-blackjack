@@ -53,7 +53,7 @@ public class BlackJackGameController {
 
 	private void progressDealerTurn(Players players, Dealer dealer, Deck deck) {
 		outputView.displayNewLine();
-		while (dealer.canAddCards() && !players.isAllPlayersBlackJackOrBust()) {
+		while (dealer.canHit() && !players.isAllPlayersBlackJackOrBust()) {
 			outputView.displayDealerUnderSevenTeen();
 			dealer.addCards(deck.distributeCards(EACH_TURN_DISTRIBUTE_AMOUNT));
 		}
@@ -64,7 +64,7 @@ public class BlackJackGameController {
 	}
 
 	private void progressOnePlayer(Player player, Deck deck) {
-		while (player.canAddCards() && decideHitOrStay(player)) {
+		while (player.canHit() && decideHitOrStay(player)) {
 			player.addCards(deck.distributeCards(EACH_TURN_DISTRIBUTE_AMOUNT));
 			outputView.displayAllCard(player);
 		}

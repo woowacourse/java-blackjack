@@ -51,7 +51,7 @@ public class Dealer extends Gamer {
 	}
 
 	@Override
-	public boolean canAddCards() {
+	public boolean canHit() {
 		return !this.isBust() && !this.isBlackJack() && this.isHit();
 	}
 }

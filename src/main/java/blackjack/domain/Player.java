@@ -7,7 +7,7 @@ public class Player extends Gamer {
 	}
 
 	@Override
-	public boolean canAddCards() {
+	public boolean canHit() {
 		return !this.isBlackJack() && !this.isBust();
 	}
 }

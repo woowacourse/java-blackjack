@@ -14,7 +14,7 @@ public abstract class Gamer {
 		cards.forEach(this.cards::addCard);
 	}
 
-	public abstract boolean canAddCards();
+	public abstract boolean canHit();
 
 	public List<Card> getCards() {
 		return this.cards.getCards();
