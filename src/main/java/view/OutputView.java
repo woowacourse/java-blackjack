@@ -56,7 +56,7 @@ public class OutputView {
         }
     }
 
-    public static void printIfMaxScoreOrBust(Players players, Name name) {
+    public static void printIfMaxScoreOrBust(Name name, Players players) {
         if (players.isMaxScoreByName(name)) {
             System.out.println(MAX_SCORE_MESSAGE);
         }

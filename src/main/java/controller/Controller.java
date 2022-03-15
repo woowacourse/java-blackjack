@@ -51,18 +51,12 @@ public class Controller {
         while (players.isNeedToDrawByName(name) && InputView.inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
             OutputView.printPlayerHand(name, players);
-            OutputView.printIfMaxScoreOrBust(players, name);
+            OutputView.printIfMaxScoreOrBust(name, players);
         }
     }
 
     private void drawForDealer(Deck deck, Dealer dealer, Players players) {
-        if (players.isNotAllBust()) {
-            checkAndDrawForDealer(deck, dealer);
-        }
-    }
-
-    private void checkAndDrawForDealer(Deck deck, Dealer dealer) {
-        while (dealer.isNeedToDraw()) {
+        while (players.isNotAllBust() && dealer.isNeedToDraw()) {
             OutputView.printDealerDrawMessage();
             dealer.addCard(deck.draw());
         }
