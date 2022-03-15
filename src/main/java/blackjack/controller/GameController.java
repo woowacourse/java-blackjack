@@ -27,7 +27,7 @@ public class GameController {
         drawPlayerCards(game);
         drawDealerCards(game);
 
-        ParticipantsResult(game);
+        participantsResult(game);
         playRecord(game);
     }
 
@@ -60,7 +60,7 @@ public class GameController {
         printDealerDrawCardCount(drawCount);
     }
 
-    private void ParticipantsResult(Game game) {
+    private void participantsResult(Game game) {
         printParticipantCardsWithScore(new ParticipantDto(game.getDealer()));
         for (Player player : game.getPlayers()) {
             printParticipantCardsWithScore(new ParticipantDto(player));
