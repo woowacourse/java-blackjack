@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
@@ -30,12 +30,12 @@ public class Controller {
 	}
 
 	private void decidePlayersReceivingAdditionalCard(BlackJack blackJack) {
-		for (Participant player : blackJack.getPlayers()) {
+		for (Player player : blackJack.getPlayers()) {
 			decidePlayerReceivingAdditionalCard(blackJack, player);
 		}
 	}
 
-	private void decidePlayerReceivingAdditionalCard(BlackJack blackJack, Participant player) {
+	private void decidePlayerReceivingAdditionalCard(BlackJack blackJack, Player player) {
 
 		while (needAdditionalCard(player)) {
 			blackJack.handOutCardTo(player);
@@ -46,7 +46,7 @@ public class Controller {
 		}
 	}
 
-	private boolean needAdditionalCard(Participant player) {
+	private boolean needAdditionalCard(Player player) {
 		String name = ParticipantDto.from(player).getName();
 		return !(player.isOverMaxScore()) && InputView.askAdditionalCard(name);
 	}
