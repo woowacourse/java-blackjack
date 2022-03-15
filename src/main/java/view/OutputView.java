@@ -7,6 +7,7 @@ import domain.participant.Players;
 import domain.participant.Result;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -79,11 +80,10 @@ public class OutputView {
         System.out.println(DEALER_HIT_CARD_MESSAGE);
     }
 
-    public void showResult(Map<Result, Integer> dealerResult, List<String> playerNames,
-        List<Result> playerResult) {
+    public void showResult(Map<Result, Integer> dealerResult, Map<Player, Result> playerResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
         showDealerResult(dealerResult);
-        showPlayersResult(playerNames, playerResult);
+        showPlayersResult(playerResult);
     }
 
     private void showDealerResult(Map<Result, Integer> dealerResult) {
@@ -92,10 +92,10 @@ public class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    private void showPlayersResult(List<String> playerNames, List<Result> playerResult) {
-        for (int idx = 0; idx < playerNames.size(); idx++) {
+    private void showPlayersResult(Map<Player, Result> playerResult) {
+        for (Entry<Player, Result> result : playerResult.entrySet()) {
             System.out.println(
-                playerNames.get(idx) + DELIMITER + showPlayerResult(playerResult.get(idx)));
+                result.getKey().getName() + DELIMITER + showPlayerResult(result.getValue()));
         }
     }
 

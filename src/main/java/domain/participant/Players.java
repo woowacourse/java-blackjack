@@ -3,7 +3,9 @@ package domain.participant;
 import domain.card.Deck;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -37,10 +39,16 @@ public class Players {
             .collect(Collectors.toList());
     }
 
-    public List<Result> checkResults(Dealer dealer) {
-        return players.stream()
+    public Map<Player, Result> checkResults(Dealer dealer) {
+        Map<Player, Result> playerResult = new HashMap<>();
+        List<Result> results = players.stream()
             .map(player -> player.isWin(dealer))
             .collect(Collectors.toList());
+        
+        for (int i = 0; i < players.size(); i++) {
+            playerResult.put(players.get(i), results.get(i));
+        }
+        return playerResult;
     }
 
     public List<Player> getPlayers() {
