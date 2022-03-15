@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayingCards {
-    private static final String ERROR_TO_CHECK_IF_BLACKJACK_FOR_INSUFFICIENT_CARDS = "카드가 두 장 미만인 경우, 블랙잭 여부확인이 불가합니다.";
     private static final int MAXIMUM_VALID_SCORE = 21;
     private static final int MINIMUM_CARDS_TO_CHECK_IF_BLACKJACK = 2;
     private static final int ALTERNATIVE_ACE_GAP = 10;
