@@ -16,6 +16,7 @@ public class Players {
 
     private Players(final List<String> playerNames, final Deck deck) {
         validateNameNotDuplicated(playerNames);
+        validateNameCountEnough(playerNames);
         this.players = playerNames.stream()
                 .map(playerName -> Player.readyToPlay(playerName, deck))
                 .collect(Collectors.toUnmodifiableList());
@@ -25,6 +26,17 @@ public class Players {
         if (isPlayerNameDuplicated(playerNames)) {
             throw new IllegalArgumentException("플레이어명은 중복될 수 없습니다.");
         }
+    }
+
+    private static void validateNameCountEnough(final List<String> playerNames) {
+        if (isNameCountEnough(playerNames)) {
+            throw new IllegalArgumentException("플레이어는 8명 이하여야 합니다.");
+        }
+    }
+
+    private static boolean isNameCountEnough(final List<String> playerNames) {
+        final int allowedMaximumNameCount = 8;
+        return playerNames.size() > allowedMaximumNameCount;
     }
 
     private static boolean isPlayerNameDuplicated(final List<String> playerNames) {
