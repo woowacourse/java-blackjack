@@ -17,7 +17,7 @@ public class StateTest {
         dealer.takeCard(new Card(Denomination.ACE, Suit.HEART));
         dealer.takeCard(new Card(Denomination.JACK, Suit.SPADE));
 
-        assertThat(State.from(dealer)).isEqualTo(State.BLACKJACK);
+        assertThat(State.from(dealer.getCards())).isEqualTo(State.BLACKJACK);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class StateTest {
         dealer.takeCard(new Card(Denomination.JACK, Suit.SPADE));
         dealer.takeCard(new Card(Denomination.QUEEN, Suit.CLOVER));
 
-        assertThat(State.from(dealer)).isEqualTo(State.BUST);
+        assertThat(State.from(dealer.getCards())).isEqualTo(State.BUST);
     }
 
     @Test
@@ -38,6 +38,6 @@ public class StateTest {
         dealer.takeCard(new Card(Denomination.THREE, Suit.HEART));
         dealer.takeCard(new Card(Denomination.JACK, Suit.SPADE));
 
-        assertThat(State.from(dealer)).isEqualTo(State.NONE);
+        assertThat(State.from(dealer.getCards())).isEqualTo(State.NONE);
     }
 }
