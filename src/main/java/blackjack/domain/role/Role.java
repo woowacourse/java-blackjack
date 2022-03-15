@@ -52,7 +52,7 @@ public abstract class Role {
 	}
 
 	public Hand getHand() {
-		return hand;
+		return new Hand(hand.getCards());
 	}
 
 	public Map<Outcome, Integer> getCompeteResult() {
