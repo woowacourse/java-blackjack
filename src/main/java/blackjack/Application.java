@@ -12,7 +12,7 @@ public class Application {
 
         blackjackController.printInitialHand(blackjackGame);
         blackjackController.giveCardsToAllPlayer(blackjackGame);
-        blackjackController.giveExtraCardToDealerIfPossible(blackjackGame);
+        blackjackController.giveExtraCardToDealer(blackjackGame);
         blackjackController.printFinalHandAndScore(blackjackGame);
         blackjackController.printDealerMatchDto(blackjackGame);
         blackjackController.printPlayersMatchDto(blackjackGame);

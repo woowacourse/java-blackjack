@@ -45,16 +45,18 @@ public class BlackjackController {
             if (!InputView.requestMorePlayerCardInput(player.getName())) {
                 return;
             }
-            player.receiveCard(game.popCard());
+            player.receiveCard(game.popCard()); // TODO: BlackjackGame 이 할 일 같음
             OutputView.printSingleHand(ParticipantDto.from(player));
         }
 
         OutputView.printPlayerBustInfo();
     }
 
-    public void giveExtraCardToDealerIfPossible(BlackjackGame game) {
-        if (game.giveCardToDealer()) {
-            OutputView.printDealerExtraCardInfo();
+    public void giveExtraCardToDealer(BlackjackGame game) {
+        int extraCardCount = game.giveExtraCardsToDealer();
+
+        if (extraCardCount > 0) {
+            OutputView.printDealerExtraCardInfo(extraCardCount);
         }
     }
 

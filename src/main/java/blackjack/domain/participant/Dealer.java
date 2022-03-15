@@ -6,9 +6,7 @@ import blackjack.domain.game.Score;
 
 public class Dealer extends Participant {
 
-    private static final int MAXIMUM_CARDS_QUANTITY = 3;
     private static final String DEALER_NAME = "딜러";
-    private static final String INVALID_CARD_QUANTITY_EXCEPTION_MESSAGE = "딜러는 최대 3개의 카드만 지닐 수 있습니다.";
 
     private Dealer(final String name, final Hand hand) {
         super(name, hand);
@@ -19,14 +17,7 @@ public class Dealer extends Participant {
     }
 
     public void receiveCard(Card card) {
-        validateCardQuantity();
         hand.add(card);
-    }
-
-    private void validateCardQuantity() {
-        if (hand.getCards().size() >= MAXIMUM_CARDS_QUANTITY) {
-            throw new IllegalArgumentException(INVALID_CARD_QUANTITY_EXCEPTION_MESSAGE);
-        }
     }
 
     public boolean canReceive() {

@@ -7,6 +7,8 @@ import static blackjack.domain.fixture.CardRepository.CLOVER4;
 import static blackjack.domain.fixture.CardRepository.CLOVER5;
 import static blackjack.domain.fixture.CardRepository.CLOVER6;
 import static blackjack.domain.fixture.CardRepository.CLOVER7;
+import static blackjack.domain.fixture.CardRepository.CLOVER8;
+import static blackjack.domain.fixture.CardRepository.CLOVER9;
 import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -44,28 +46,36 @@ public class BlackjackGameTest {
                 .hasMessage("플레이어가 없는 게임은 존재할 수 없습니다.");
     }
 
-    @DisplayName("딜러의 점수가 16이하인 경우 한 장의 카드를 더 할당한다.")
+    @DisplayName("딜러의 점수가 16이하인 점수가 17이상이 될 때까지 카드를 받는다.")
     @Test
-    void giveCardToDealer_returnTrueIfDealerReceivedExtraCard() {
+    void giveExtraCardsToDealer_giveExtraCardsToDealerIfDealerScoreIsLessOrEqualThan16() {
+        // given
         CardStack cards = CardStackGenerator.ofReverse(
-                CLOVER6, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
+                CLOVER2, CLOVER3, CLOVER7, CLOVER8, CLOVER9, CLOVER10, CLOVER4, CLOVER5, CLOVER6);
         BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
 
-        boolean actual = blackjackGame.giveCardToDealer();
+        // when
+        int actual = blackjackGame.giveExtraCardsToDealer();
+        int expected = 3;
 
-        assertThat(actual).isTrue();
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("딜러의 점수가 17이상인 경우 한 장의 카드를 더 받지 않는다.")
     @Test
-    void giveCardToDealer_returnFalseIfDealerDidNotReceiveExtraCard() {
+    void giveExtraCardsToDealer_doNotGiveExtraCardsToDealerIfDealerScoreIsGreaterThan16() {
+        // given
         CardStack cards = CardStackGenerator.ofReverse(
-                CLOVER7, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
+                CLOVER_KING, CLOVER10, CLOVER7, CLOVER8, CLOVER9, CLOVER4, CLOVER5, CLOVER6);
         BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
 
-        boolean actual = blackjackGame.giveCardToDealer();
+        // when
+        int actual = blackjackGame.giveExtraCardsToDealer();
+        int expected = 0;
 
-        assertThat(actual).isFalse();
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("CardDeck 에서 카드 한장을 뽑아서 반환한다.")

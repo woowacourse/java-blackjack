@@ -37,13 +37,14 @@ public class BlackjackGame {
         }
     }
 
-    public boolean giveCardToDealer() {
-        if (!dealer.canReceive()) {
-            return false;
+    public int giveExtraCardsToDealer() {
+        int extraCardCount = 0;
+        while (dealer.canReceive()) {
+            dealer.receiveCard(cardDeck.pop());
+            extraCardCount++;
         }
 
-        dealer.receiveCard(cardDeck.pop());
-        return true;
+        return extraCardCount;
     }
 
     public Card popCard() {
