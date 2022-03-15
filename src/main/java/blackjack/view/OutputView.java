@@ -1,12 +1,12 @@
 package blackjack.view;
 
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.role.Role;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerResultDto;
 
 public class OutputView {
 
@@ -60,41 +60,49 @@ public class OutputView {
 			dealer.getName() + IS + SPACE + (dealer.getDrawStandard() + 1) + FAIL_TO_RECEIVE_ONE_MORE_CARD + "\n");
 	}
 
-	public static void printFinalResult(FinalResultDto finalResult) {
-		final DealerResultDto dealerResult = finalResult.getDealerResults();
-		final List<PlayerResultDto> playerResult = finalResult.getPlayerResults();
+	public static void printFinalResult(final Role dealerResult, final List<Role> playersResult) {
 		printDealerFinalResult(dealerResult);
-		playerResult.forEach(OutputView::printPlayerFinalResult);
+		playersResult.forEach(OutputView::printPlayerFinalResult);
 		System.out.print("\n");
 		System.out.println(FINAL_OUTCOME);
 		printDealerOutcome(dealerResult);
-		printPlayerOutcome(playerResult);
+		printPlayerOutcome(playersResult);
 	}
 
-	private static void printDealerFinalResult(final DealerResultDto result) {
+	private static void printDealerFinalResult(final Role result) {
 		System.out.print(result.getName() + SPACE + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCards()));
-		System.out.println(RESULT + result.getTotalScore());
+		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCardsInformation()));
+		System.out.println(RESULT + result.calculateFinalResult());
 	}
 
-	private static void printPlayerFinalResult(final PlayerResultDto result) {
+	private static void printPlayerFinalResult(final Role result) {
 		System.out.print(result.getName() + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCards()));
-		System.out.println(RESULT + result.getTotalScore());
+		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCardsInformation()));
+		System.out.println(RESULT + result.calculateFinalResult());
 	}
 
-	private static void printDealerOutcome(final DealerResultDto dealerResult) {
+	private static void printDealerOutcome(final Role dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		final String dealerOutcome = dealerResult.getCompeteResult().entrySet().stream()
+		final String dealerOutcome = dealerResult.getCompeteResult()
+			.entrySet()
+			.stream()
 			.map(entry -> EMPTY + entry.getValue() + entry.getKey().getValue())
 			.collect(Collectors.joining(SPACE));
 		System.out.println(dealerOutcome);
 	}
 
-	private static void printPlayerOutcome(final List<PlayerResultDto> playerResults) {
-		for (PlayerResultDto playerResult : playerResults) {
+	private static void printPlayerOutcome(final List<Role> playersResult) {
+		for (Role playerResult : playersResult) {
 			System.out.print(playerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-			System.out.println(playerResult.getCompeteResult().getValue());
+			System.out.println(getValue(playerResult.getCompeteResult()));
 		}
+	}
+
+	private static String getValue(final Map<Outcome, Integer> rawResult) {
+		final Outcome outcome = rawResult.keySet()
+			.stream()
+			.findFirst()
+			.orElseThrow(NoSuchElementException::new);
+		return outcome.getValue();
 	}
 }

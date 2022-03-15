@@ -28,7 +28,9 @@ public class BlackJackApplication {
 			OutputView.printPersonalHand(playerStatus);
 		}
 		OutputView.printDealerStatus(blackJack.drawDealer());
-		OutputView.printFinalResult(blackJack.calculateFinalResult());
+		final List<Role> playersResult = blackJack.calculatePlayerResult();
+		final Role dealerResult = blackJack.calculateDealerResult();
+		OutputView.printFinalResult(dealerResult, playersResult);
 
 	}
 

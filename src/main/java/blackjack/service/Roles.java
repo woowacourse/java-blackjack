@@ -1,9 +1,6 @@
 package blackjack.service;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -15,12 +12,9 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.role.Dealer;
 import blackjack.domain.role.Player;
 import blackjack.domain.role.Role;
-import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerResultDto;
 
 public class Roles {
 
-	private static final int COMPETE_COUNT = 1;
 	private static final String NO_PLAYER = "";
 
 	private List<Role> players;
@@ -45,11 +39,6 @@ public class Roles {
 	}
 
 	public Role drawDealer(final Deck deck) {
-		// if (!dealer.canDraw()) {
-		// 	return DealerTurnDto.from(dealer, false, Dealer.CAN_NOT_DRAW_STANDARD);
-		// }
-		// dealer.draw(deck.draw(), 1);
-		// return DealerTurnDto.from(dealer, true, Dealer.CAN_DRAW_STANDARD);
 		if (!dealer.canDraw()) {
 			dealer.stopDraw();
 			return dealer;
@@ -89,26 +78,23 @@ public class Roles {
 			.orElse(NO_PLAYER);
 	}
 
-	public FinalResultDto calculateFinalResult() {
-		final Map<Outcome, Integer> dealerResult = new EnumMap<>(Outcome.class);
-		final List<PlayerResultDto> playersResult = new ArrayList<>();
+	public List<Role> calculatePlayerResult() {
 		for (Role player : players) {
-			Outcome outcome = judge(player);
-			final Map<Outcome, Integer> playerResult = recordPlayerCompeteResult(outcome);
-			playersResult.add(PlayerResultDto.from(player, playerResult));
-			dealerResult.merge(outcome.getCounterpartRoleOutcome(), COMPETE_COUNT, Integer::sum);
+			final Outcome outcome = judge(player);
+			player.recordCompeteResult(outcome);
 		}
-		return FinalResultDto.from(dealer, dealerResult, playersResult);
+		return players;
+	}
+
+	public Role calculateDealerResult() {
+		for (Role player : players) {
+			final Outcome outcome = judge(player);
+			dealer.recordCompeteResult(outcome.getCounterpartRoleOutcome());
+		}
+		return dealer;
 	}
 
 	private Outcome judge(Role player) {
 		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
 	}
-
-	private Map<Outcome, Integer> recordPlayerCompeteResult(final Outcome outcome) {
-		final Map<Outcome, Integer> result = new EnumMap<>(Outcome.class);
-		result.merge(outcome, COMPETE_COUNT, Integer::sum);
-		return result;
-	}
-
 }
