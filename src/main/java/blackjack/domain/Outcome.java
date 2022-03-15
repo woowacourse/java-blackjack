@@ -27,11 +27,11 @@ public enum Outcome {
         return judgeByScore(player.getScore(), dealer.getScore());
     }
 
-    private static Outcome judgeByScore(int score, int target) {
-        if (score > target) {
+    private static Outcome judgeByScore(Score score, Score target) {
+        if (score.compareTo(target) > 0) {
             return Outcome.WIN;
         }
-        if (score == target) {
+        if (score.equals(target)) {
             return Outcome.DRAW;
         }
         return Outcome.LOSE;

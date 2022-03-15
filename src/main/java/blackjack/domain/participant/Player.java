@@ -19,6 +19,6 @@ public class Player extends Participant {
     }
 
     public boolean isHittable() {
-        return getScore() < HIT_STANDARD;
+        return getScore().isLessThan(HIT_STANDARD);
     }
 }

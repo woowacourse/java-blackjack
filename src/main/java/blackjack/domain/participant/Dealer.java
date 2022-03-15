@@ -19,6 +19,6 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldHit() {
-        return getScore() < HIT_STANDARD;
+        return getScore().isLessThan(HIT_STANDARD);
     }
 }

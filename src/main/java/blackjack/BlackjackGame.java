@@ -13,7 +13,7 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJackGame {
+public class BlackjackGame {
 
     public void play() {
         CardDeck deck = CardDeck.createGameDeck();
