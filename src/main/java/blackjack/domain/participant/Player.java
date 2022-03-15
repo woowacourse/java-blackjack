@@ -9,6 +9,7 @@ public class Player extends Participant {
         super(name, cards);
     }
 
+    @Override
     public boolean isFinished() {
         return holdingCard.isBust();
     }

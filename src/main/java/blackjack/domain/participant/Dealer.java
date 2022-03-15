@@ -11,6 +11,7 @@ public class Dealer extends Participant {
         super(DEALER, cards);
     }
 
+    @Override
     public boolean isFinished() {
         return holdingCard.computeTotalScore() >= DEALER_MIN_TOTAL;
     }
