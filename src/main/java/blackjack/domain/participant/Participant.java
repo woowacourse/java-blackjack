@@ -7,18 +7,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     private static final int ADDITIONAL_SCORE_FOR_ACE = 10;
     protected static final int GOAL_SCORE = 21;
 
     protected final String name;
+    protected int score = 0;
     private final List<Card> cards = new ArrayList<>();
-    private int score = 0;
 
     public Participant(String name) {
         this.name = name;
     }
+
+    public abstract boolean isHittable();
 
     public void addCard(Card card) {
         cards.add(card);
@@ -26,7 +28,7 @@ public class Participant {
     }
 
     public TotalScoreDto computeTotalScore() {
-        this.endTurn();
+        this.computeAce();
         return new TotalScoreDto(this);
     }
 
@@ -42,7 +44,7 @@ public class Participant {
         return Collections.unmodifiableList(cards);
     }
 
-    private void endTurn() {
+    private void computeAce() {
         if (isContainAce() && isBetterToGiveMoreForAce()) {
             score += ADDITIONAL_SCORE_FOR_ACE;
         }

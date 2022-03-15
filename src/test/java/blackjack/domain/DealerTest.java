@@ -22,7 +22,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(Symbol.HEART, Denomination.TWO));
 
-        assertThat(dealer.isAbleToAddCard()).isTrue();
+        assertThat(dealer.isHittable()).isTrue();
     }
 
     @Test
@@ -32,7 +32,7 @@ class DealerTest {
         dealer.addCard(new Card(Symbol.HEART, Denomination.NINE));
         dealer.addCard(new Card(Symbol.SPADE, Denomination.NINE));
 
-        assertThat(dealer.isAbleToAddCard()).isFalse();
+        assertThat(dealer.isHittable()).isFalse();
     }
 
     @Test

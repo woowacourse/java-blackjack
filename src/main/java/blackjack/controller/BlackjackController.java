@@ -52,14 +52,14 @@ public class BlackjackController {
     }
 
     private void hitOrStay(Player player) {
-        while (player.isAbleToHit() && isRequestHit(player.getName())) {
+        while (player.isHittable() && isRequestHit(player.getName())) {
             player.addCard(deck.draw());
             printCurrentStatus(CurrentCardsDto.of(player));
         }
     }
 
     private void addCardForDealerIfNeed() {
-        while (dealer.isAbleToAddCard()) {
+        while (dealer.isHittable()) {
             dealer.addCard(deck.draw());
             printDealerAdded(dealer.getName());
         }

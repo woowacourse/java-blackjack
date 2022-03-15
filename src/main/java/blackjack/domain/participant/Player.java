@@ -8,8 +8,8 @@ public class Player extends Participant {
         super(name);
     }
 
-    public boolean isAbleToHit() {
-        return getScore() < GOAL_SCORE;
+    public boolean isHittable() {
+        return score < GOAL_SCORE;
     }
 
     public PlayerResultDto computeResult(int comparisonScore) {
@@ -17,12 +17,12 @@ public class Player extends Participant {
     }
 
     private boolean isWin(int comparisonScore) {
-        if (getScore() > GOAL_SCORE) {
+        if (score > GOAL_SCORE) {
             return false;
         }
         if (comparisonScore > GOAL_SCORE) {
             return true;
         }
-        return getScore() >= comparisonScore;
+        return score >= comparisonScore;
     }
 }

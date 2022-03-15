@@ -14,8 +14,8 @@ public class Dealer extends Participant {
         super(NAME_OF_DEALER);
     }
 
-    public boolean isAbleToAddCard() {
-        return getScore() <= BOUND_FOR_ADDITIONAL_CARD;
+    public boolean isHittable() {
+        return score <= BOUND_FOR_ADDITIONAL_CARD;
     }
 
     public DealerResultDto computeResult(List<PlayerResultDto> totalPlayerResult) {
