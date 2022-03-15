@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     private static void printInitCards(Dealer dealer, List<Player> players) {
-        System.out.println(makeStatusFormat(dealer.getName(), dealer.getMyCards()));
+        System.out.println(makeStatusFormat(dealer.getName(), dealer.getMyCards().subList(0, 1)));
 
         players.forEach(player ->
                 System.out.println(makeStatusFormat(player.getName(), player.getMyCards())));
