@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -11,18 +12,16 @@ public class InitCards {
     private final List<Card> intiCards;
 
     public InitCards(Deck deck) {
-        List<Card> cards = generateInitCards(deck);
-        this.intiCards = List.copyOf(cards);
+        this.intiCards = generateInitCards(deck);
     }
 
     private List<Card> generateInitCards(Deck deck) {
-        List<Card> cards = IntStream.range(0, INIT_SIZE)
+        return IntStream.range(0, INIT_SIZE)
                 .mapToObj(i -> deck.draw())
                 .collect(Collectors.toList());
-        return cards;
     }
 
     public List<Card> getInitCards() {
-        return List.copyOf(intiCards);
+        return Collections.unmodifiableList(intiCards);
     }
 }
