@@ -25,7 +25,7 @@ public class Player extends Participant {
         return getScore() > dealer.getScore();
     }
 
-    public boolean isAvailableToHit() {
+    public boolean isHittable() {
         return getScore() < HIT_THRESHOLD_NUMBER;
     }
 

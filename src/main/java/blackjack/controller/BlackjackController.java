@@ -55,7 +55,7 @@ public class BlackjackController {
     private boolean isPlayerWantMoreCards(Player player, Deck deck) {
         boolean cardPrintFlag = false;
 
-        while (isAvailableToHit(player) && isPlayerWantToHit(player)) {
+        while (isHittable(player) && isPlayerWantToHit(player)) {
             player.receiveCard(deck.pickCard());
             OutputView.printPlayerCardInformation(player);
             cardPrintFlag = true;
@@ -63,8 +63,8 @@ public class BlackjackController {
         return cardPrintFlag;
     }
 
-    private boolean isAvailableToHit(Player player) {
-        if (!player.isAvailableToHit()) {
+    private boolean isHittable(Player player) {
+        if (!player.isHittable()) {
             OutputView.printPlayerHitImpossibleMessage(player.getName());
             return false;
         }
@@ -77,7 +77,7 @@ public class BlackjackController {
 
 
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
-        while (dealer.isAvailableToHit()) {
+        while (dealer.isHittable()) {
             OutputView.printDealerHitMessage();
             dealer.receiveCard(deck.pickCard());
         }

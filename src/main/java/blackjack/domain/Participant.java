@@ -30,7 +30,7 @@ public abstract class Participant {
         return Collections.unmodifiableList(participantCards.getCards());
     }
 
-    public abstract boolean isAvailableToHit();
+    public abstract boolean isHittable();
 
     public abstract String getName();
 
