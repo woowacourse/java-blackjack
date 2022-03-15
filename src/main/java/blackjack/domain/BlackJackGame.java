@@ -19,8 +19,7 @@ import blackjack.dto.GamerDto;
 public class BlackJackGame {
 
 	private static final int INIT_DISTRIBUTION_COUNT = 2;
-	private static final int DEFAULT_COUNT = 0;
-	private static final int INCREASE_COUNT = 1;
+	private static final int DEFAULT_EARNING = 0;
 
 	private final Gamers gamers;
 	private final DrawStrategy deck;
@@ -76,7 +75,7 @@ public class BlackJackGame {
 	}
 
 	private GameResultDto makeResult(Dealer dealer, List<Player> players) {
-		int dealerEarning = 0;
+		int dealerEarning = DEFAULT_EARNING;
 		Map<String, Double> playerEarnings = new LinkedHashMap<>();
 
 		for (Player player : players) {

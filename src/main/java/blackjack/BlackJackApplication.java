@@ -10,7 +10,7 @@ public class BlackJackApplication {
 
     public static void main(String[] args) {
         BlackJackGame blackJackGame = new BlackJackGame(InputView.askNames(),
-            s-> 1,
+            InputView::askBet,
             new Deck(Card.getCards()));
 
         blackJackGame.start(OutputView::printFirstCards);
