@@ -1,7 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import blackjack.domain.CardsTestDataGenerator;
+import blackjack.domain.Player;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtensionContext;

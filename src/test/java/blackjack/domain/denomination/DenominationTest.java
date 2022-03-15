@@ -1,8 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.denomination;
 
 import static blackjack.domain.Denomination.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Denomination;
+import blackjack.domain.denomination.DenominationArgumentsProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.cards;
 
 import static blackjack.domain.Denomination.*;
 import static blackjack.domain.Suit.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import blackjack.domain.Card;
+import blackjack.domain.Cards;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtensionContext;

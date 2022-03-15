@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.denomination;
 
 import static blackjack.domain.Denomination.*;
 import static org.junit.jupiter.params.provider.Arguments.*;

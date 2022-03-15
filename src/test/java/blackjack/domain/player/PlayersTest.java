@@ -1,7 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.Player;
+import blackjack.domain.Players;
+import blackjack.domain.player.PlayerArgumentsProvider;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

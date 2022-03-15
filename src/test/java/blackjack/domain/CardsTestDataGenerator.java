@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.Denomination.*;
 import static blackjack.domain.Suit.*;
 
+import blackjack.domain.Card;
 import java.util.List;
 
 public class CardsTestDataGenerator {
