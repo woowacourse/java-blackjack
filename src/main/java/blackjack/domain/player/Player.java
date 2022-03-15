@@ -15,8 +15,8 @@ public class Player extends Participant {
         super(name, cards);
     }
 
-    public GameResult findResult(int dealerScore) {
-        return GameResult.findPlayerResult(calculateScore(), dealerScore);
+    public GameResult findResult(Dealer dealer) {
+        return GameResult.findPlayerResult(this, dealer);
     }
 
     @Override
@@ -31,6 +31,11 @@ public class Player extends Participant {
     @Override
     public boolean isRangeScoreToReceive() {
         return cards.calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
+    }
+
+    @Override
+    public boolean isBust() {
+        return cards.calculateScore() > MAX_BLACKJACK_SCORE;
     }
 
     public boolean isHit(DrawStatus drawStatus) {

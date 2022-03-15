@@ -22,4 +22,9 @@ public class Dealer extends Participant {
     public boolean isRangeScoreToReceive() {
         return cards.calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
     }
+
+    @Override
+    public boolean isBust() {
+        return cards.calculateScore() > MAX_BLACKJACK_SCORE;
+    }
 }

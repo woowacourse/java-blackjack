@@ -53,7 +53,7 @@ public class ParticipantResultTest {
     @Test
     @DisplayName("플레이어 게임결과를 확인한다.")
     void checkPlayerGameResult() {
-        ParticipantResult participantResult = ParticipantResult.create(dealer.calculateScore(), players);
+        ParticipantResult participantResult = ParticipantResult.create(dealer, players);
         final Map<String, GameResult> expected = new HashMap<>(Map.ofEntries(
                 Map.entry("slow", GameResult.WIN),
                 Map.entry("jason", GameResult.DRAW),
@@ -68,7 +68,7 @@ public class ParticipantResultTest {
     @Test
     @DisplayName("딜러 게임결과를 확인한다.")
     void checkDealerGameResult() {
-        ParticipantResult participantResult = ParticipantResult.create(dealer.calculateScore(), players);
+        ParticipantResult participantResult = ParticipantResult.create(dealer, players);
         final Map<GameResult, Integer> expected = new HashMap<>(Map.ofEntries(
                 Map.entry(GameResult.LOSE, 1),
                 Map.entry(GameResult.WIN, 1),

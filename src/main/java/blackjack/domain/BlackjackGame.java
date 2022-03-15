@@ -40,7 +40,7 @@ public class BlackjackGame {
     }
 
     public ParticipantResult findGameResult() {
-        return ParticipantResult.create(dealer.calculateScore(), players.getPlayers());
+        return ParticipantResult.create(dealer, players.getPlayers());
     }
 
     public List<Player> getPlayers() {
