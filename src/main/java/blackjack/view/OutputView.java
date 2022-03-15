@@ -21,6 +21,7 @@ public class OutputView {
     public static void printFirstDistribute(CurrentCardsDto dealer, List<CurrentCardsDto> players) {
         System.out.println(makeFirstDistributeTitleString(dealer, players));
 
+        printCurrentStatus(dealer);
         for (CurrentCardsDto player : players) {
             printCurrentStatus(player);
         }

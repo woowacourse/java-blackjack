@@ -33,13 +33,13 @@ public class Players {
 
     public List<CurrentCardsDto> generateCurrentCardsDTO() {
         return players.stream()
-                .map(Player::generateCurrentCardsDTO)
+                .map(CurrentCardsDto::of)
                 .collect(Collectors.toList());
     }
 
     public List<TotalScoreDto> computeTotalScore() {
         return players.stream()
-                .map(Player::computeTotalScore)
+                .map(Participant::computeTotalScore)
                 .collect(Collectors.toList());
     }
 

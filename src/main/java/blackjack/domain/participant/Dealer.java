@@ -1,10 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.dto.CurrentCardsDto;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.PlayerResultDto;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -28,10 +26,4 @@ public class Dealer extends Participant {
 
         return new DealerResultDto(getName(), winCount, loseCount);
     }
-
-    @Override
-    public CurrentCardsDto generateCurrentCardsDTO() {
-        return new CurrentCardsDto(getName(), Collections.unmodifiableList(getCards().subList(0, 1)));
-    }
-
 }
