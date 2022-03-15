@@ -4,7 +4,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 
@@ -18,7 +21,7 @@ class MatchRecordTest {
         Dealer dealer = new Dealer();
         Player player = new Player("player");
         
-        player.drawCard(deck);
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
         
         // when
         MatchRecord record = MatchRecord.findMatchRecord(player, dealer);

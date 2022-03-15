@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Score;
-import blackjack.domain.strategy.DealerHitStrategy;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import blackjack.domain.strategy.hit.DealerHitStrategy;
 
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,11 +29,10 @@ public class DealerTest {
     @Test
     public void testDrawCard() {
         //given
-        Deck deck = new Deck();
         Dealer dealer = new Dealer();
 
         //when
-        dealer.drawCard(deck);
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.EIGHT));
         List<Card> cards = dealer.getHandCards();
 
         //then
@@ -47,8 +46,8 @@ public class DealerTest {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
 
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
+        dealer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
         //when
         List<Card> cards = dealer.showInitCards();
         //then
@@ -66,5 +65,21 @@ public class DealerTest {
         boolean isHit = dealer.hitOrStay(deck, strategy);
         // then
         assertThat(isHit).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러는 17점 이상이면 카드를 더 받을 수 없다.")
+    public void testDealerStayWithScoreGreaterOrEqualThan17() {
+        // given
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer();
+
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.KING));
+        // when
+
+        boolean isHit = dealer.hitOrStay(deck, new DealerHitStrategy(dealer.getScore()));
+        // then
+        assertThat(isHit).isFalse();
     }
 }

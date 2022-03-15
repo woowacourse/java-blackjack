@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import blackjack.domain.strategy.hit.PlayerHitStrategy;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -30,11 +33,10 @@ public class PlayerTest {
     @Test
     public void testDrawCard() {
         //given
-        Deck deck = new Deck();
         Player player = new Player("pobi");
 
         //when
-        player.drawCard(deck);
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
         List<Card> cards = player.getHandCards();
 
         //then
@@ -50,7 +52,7 @@ public class PlayerTest {
 
         //when
         for (int i = 0; i < MAX_DRAWABLE_COUNT; i++) {
-            player.drawCard(deck);
+            player.receiveCard(deck.drawCard());
         }
         //then
         assertThat(player.isBust()).isTrue();
@@ -63,8 +65,8 @@ public class PlayerTest {
         Deck deck = new Deck();
         Player player = new Player("pobi");
 
-        player.drawCard(deck);
-        player.drawCard(deck);
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.SEVEN));
+        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
 
         //when
         List<Card> cards = player.showInitCards();
@@ -73,4 +75,27 @@ public class PlayerTest {
         assertThat(cards.size()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("플레이어는 y를 입력받으면 카드를 한장 더 받을 수 있다.")
+    public void testPlayerHitWithInputY() {
+        // given
+        Deck deck = new Deck();
+        Player player = new Player("pobi");
+        // when
+        boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> "y"));
+        // then
+        assertThat(isHit).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어는 n을 입력받으면 카드를 한장 더 받을 수 없다다.")
+    public void testPlayerHitWithInputN() {
+        // given
+        Deck deck = new Deck();
+        Player player = new Player("pobi");
+        // when
+        boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> "n"));
+        // then
+        assertThat(isHit).isFalse();
+    }
 }

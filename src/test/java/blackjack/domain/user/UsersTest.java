@@ -10,7 +10,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.MatchRecord;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 
 class UsersTest {
 
@@ -39,7 +42,7 @@ class UsersTest {
         Users users = Users.from(names);
 
         // when
-        users.getDealer().drawCard(deck);
+        users.getDealer().receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
 
         // then
         Map<Player, MatchRecord> playerMatchRecords = users.createPlayerMatchRecords();

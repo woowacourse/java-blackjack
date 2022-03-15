@@ -21,8 +21,8 @@ public abstract class User {
         this(new Hand(), new Name(input));
     }
 
-    public void drawCard(Deck deck) {
-        hand.addCard(deck.drawCard());
+    public void receiveCard(Card card) {
+        hand.addCard(card);
     }
 
     public boolean isBust() {
@@ -36,7 +36,7 @@ public abstract class User {
     public boolean hitOrStay(Deck deck, HitStrategy strategy) {
         boolean isHit = strategy.isHit();
         if (isHit) {
-            drawCard(deck);
+            receiveCard(deck.drawCard());
         }
         return isHit && !isBust();
     }

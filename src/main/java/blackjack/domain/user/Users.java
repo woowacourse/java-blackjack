@@ -33,11 +33,11 @@ public class Users {
 
     public void drawInitCards(Deck deck) {
         for (Player player : players) {
-            player.drawCard(deck);
-            player.drawCard(deck);
+            player.receiveCard(deck.drawCard());
+            player.receiveCard(deck.drawCard());
         }
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
+        dealer.receiveCard(deck.drawCard());
+        dealer.receiveCard(deck.drawCard());
     }
 
     public Map<Player, MatchRecord> createPlayerMatchRecords() {
