@@ -37,7 +37,7 @@ class HoldCardsTest {
 
     @Test
     @DisplayName("중복된 카드로 생성할 경우 예외를 발생한다.")
-    void throwDuplicateCardNumbers() {
+    void throwExceptionDuplicateCardNumbers() {
         assertThatIllegalArgumentException()
             .isThrownBy(() -> HoldCards.initTwoCards(Card.valueOf(CLUB, ACE), Card.valueOf(CLUB, ACE)))
             .withMessage("카드가 중복될 수 없습니다.");
@@ -45,7 +45,17 @@ class HoldCardsTest {
 
     @Test
     @DisplayName("중복된 카드를 추가할 경우 예외를 발생한다.")
-    void throwDuplicateCardNumber() {
+    void throwExceptionDuplicateCardNumber() {
+        HoldCards holdCards = HoldCards.initTwoCards(Card.valueOf(CLUB, ACE), Card.valueOf(HEART, TEN));
+
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> holdCards.addCard(Card.valueOf(CLUB, ACE)))
+            .withMessage("카드가 중복될 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("초기 카드가 2장이 아닌경우 예외를 발생한다.")
+    void throwExceptionInvalidSize() {
         HoldCards holdCards = HoldCards.initTwoCards(Card.valueOf(CLUB, ACE), Card.valueOf(HEART, TEN));
 
         assertThatIllegalArgumentException()
