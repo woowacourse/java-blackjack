@@ -51,11 +51,11 @@ public abstract class Player {
         return MatchResult.DRAW;
     }
 
-    protected boolean hasHigherScoreIgnoreBust(Player another) {
+    private boolean hasHigherScoreIgnoreBust(Player another) {
         return this.getScore() > another.getScore();
     }
 
-    protected boolean winByBlackJack(Player another) {
+    private boolean winByBlackJack(Player another) {
         return this.isBlackJack() && !another.isBlackJack();
     }
 
