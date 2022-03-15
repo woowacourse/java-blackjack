@@ -30,10 +30,11 @@ public class CardGroup {
 
     public int getScore() {
         int sum = getSum();
-        if (containsAce() && sum + ACE_SPECIAL_SCORE > BLACKJACK_NUMBER) {
+        boolean containsAce = containsAce();
+        if (containsAce && sum + ACE_SPECIAL_SCORE > BLACKJACK_NUMBER) {
             return sum;
         }
-        if (containsAce()) {
+        if (containsAce) {
             return sum + ACE_SPECIAL_SCORE;
         }
         return sum;
