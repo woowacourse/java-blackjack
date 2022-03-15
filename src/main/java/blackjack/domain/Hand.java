@@ -29,16 +29,13 @@ public class Hand {
 		int totalScore = cards.stream()
 				.mapToInt(Card::getScore)
 				.sum();
-		if (isBust(totalScore)) {
-			return BUST;
-		}
 		if (hasAce()) {
 			return getOptimizedScore(totalScore, totalScore + ACE_AS_ELEVEN);
 		}
 		return totalScore;
 	}
 
-	private boolean isBust(int totalScore) {
+	public boolean isBust(int totalScore) {
 		return totalScore > OPTIMIZED_WINNING_NUMBER;
 	}
 
@@ -52,10 +49,6 @@ public class Hand {
 			return aceAsOneScore;
 		}
 		return aceAsElevenScore;
-	}
-
-	public boolean isBustScore(int totalScore) {
-		return totalScore == BUST || totalScore > OPTIMIZED_WINNING_NUMBER;
 	}
 
 	public List<Card> getCards() {

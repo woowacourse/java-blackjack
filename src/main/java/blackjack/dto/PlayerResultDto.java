@@ -1,12 +1,11 @@
 package blackjack.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import blackjack.domain.Card;
 import blackjack.domain.Hand;
 import blackjack.domain.Outcome;
 import blackjack.domain.Role;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerResultDto {
 
@@ -22,7 +21,7 @@ public class PlayerResultDto {
 				.map(Card::getInformation)
 				.collect(Collectors.toList());
 		this.totalScore = hand.calculateOptimalScore();
-		this.bust = hand.isBustScore(totalScore);
+		this.bust = hand.isBust(totalScore);
 		this.competeResult = competeResult;
 	}
 

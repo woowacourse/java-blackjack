@@ -20,6 +20,10 @@ public abstract class Role {
 		return hand.isBlackJack();
 	}
 
+	public boolean isBust() {
+		return hand.isBust(hand.calculateOptimalScore());
+	}
+
 	public int calculateFinalScore() {
 		return hand.calculateOptimalScore();
 	}

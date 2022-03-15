@@ -43,12 +43,10 @@ class HandTest {
 
 	@DisplayName("패가 파산 했는지 확인")
 	@ParameterizedTest(name = "{index} {displayName} score={0} expectedIsBustScore={1}")
-	@CsvSource(value = {"0, true", "1, false", "21, false", "22, true"})
-	void check_Is_Bust_Score(int score, boolean expectedIsBustScore) {
+	@CsvSource(value = {"1, false", "21, false", "22, true"})
+	void check_Is_Bust(int score, boolean expectedIsBustScore) {
 		final Hand hand = new Hand();
-		hand.isBustScore(score);
-
-		assertThat(hand.isBustScore(score)).isEqualTo(expectedIsBustScore);
+		assertThat(hand.isBust(score)).isEqualTo(expectedIsBustScore);
 	}
 
 	@DisplayName("패가 블랙잭인지 확인")
@@ -95,7 +93,7 @@ class HandTest {
 		return Stream.of(
 				Arguments.of(hand1, 21),
 				Arguments.of(hand2, 21),
-				Arguments.of(hand3, 0),
+				Arguments.of(hand3, 30),
 				Arguments.of(hand4, 20));
 	}
 }

@@ -44,15 +44,20 @@ class CompeteTest {
 		final Hand notBlackjackTopHand = CreateHand.create(CardMockFactory.of("2클로버"), CardMockFactory.of("K클로버"),
 				CardMockFactory.of("9클로버"));
 		final Hand bottomHand = CreateHand.create(CardMockFactory.of("2클로버"), CardMockFactory.of("3클로버"));
+		final Hand bustHand = CreateHand.create(CardMockFactory.of("K클로버"), CardMockFactory.of("J클로버"),
+				CardMockFactory.of("Q클로버"));
 
 		return Stream.of(
 				Arguments.of(blackJackHand, bottomHand, Outcome.VICTORY),
 				Arguments.of(blackJackHand, notBlackjackTopHand, Outcome.VICTORY),
 				Arguments.of(notBlackjackTopHand, bottomHand, Outcome.VICTORY),
+				Arguments.of(bottomHand, bustHand, Outcome.VICTORY),
 
 				Arguments.of(notBlackjackTopHand, blackJackHand, Outcome.DEFEAT),
 				Arguments.of(bottomHand, blackJackHand, Outcome.DEFEAT),
 				Arguments.of(bottomHand, notBlackjackTopHand, Outcome.DEFEAT),
+				Arguments.of(bustHand, bottomHand, Outcome.DEFEAT),
+				Arguments.of(bustHand, bustHand, Outcome.DEFEAT),
 
 				Arguments.of(blackJackHand, blackJackHand, Outcome.TIE),
 				Arguments.of(notBlackjackTopHand, notBlackjackTopHand, Outcome.TIE),

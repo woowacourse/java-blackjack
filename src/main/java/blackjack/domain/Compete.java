@@ -22,6 +22,12 @@ public class Compete {
 		if (player.isBlackJack() || dealer.isBlackJack()) {
 			return Outcome.ofBlackJack(player.isBlackJack(), dealer.isBlackJack());
 		}
+		if (player.isBust()) {
+			return Outcome.DEFEAT;
+		}
+		if (dealer.isBust()) {
+			return Outcome.VICTORY;
+		}
 		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
 	}
 
