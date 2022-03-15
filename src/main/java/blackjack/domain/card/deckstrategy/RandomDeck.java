@@ -2,10 +2,11 @@ package blackjack.domain.card.deckstrategy;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -13,14 +14,11 @@ import blackjack.domain.card.CardSymbol;
 
 public class RandomDeck implements DeckStrategy {
     @Override
-    public Stack<Card> create() {
+    public Deque<Card> create() {
         List<Card> list = getCards();
         Collections.shuffle(list);
 
-        Stack<Card> deck = new Stack<>();
-        deck.addAll(list);
-
-        return deck;
+        return new ArrayDeque<>(list);
     }
 
     private static List<Card> getCards() {

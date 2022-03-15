@@ -4,6 +4,8 @@ import static blackjack.domain.card.CardNumber.*;
 import static blackjack.domain.card.CardSymbol.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -67,11 +69,10 @@ class DealerTest {
 
     private static class TestNoBustDeck implements DeckStrategy {
         @Override
-        public Stack<Card> create() {
-            Stack<Card> cards = new Stack<>();
-            cards.addAll(List.of(
-                new Card(DIAMOND, QUEEN), new Card(CLUB, SEVEN))); // start, Dealer
-            return cards;
+        public Deque<Card> create() {
+            // start, Dealer
+            return new ArrayDeque<>(List.of(
+                new Card(DIAMOND, QUEEN), new Card(CLUB, SEVEN)));
         }
     }
 }
