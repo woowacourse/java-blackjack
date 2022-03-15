@@ -69,7 +69,7 @@ public class BlackJackResultTest {
 
     @Test
     @DisplayName("게이머의 수익을 계산한다. - 패배")
-    void calculateReturnOfGamers() {
+    void calculateReturnOfGamersLose() {
         Gamer huni = new Gamer("huni", new Bet(1000));
 
         Map<Gamer, ResultStrategy> map = new HashMap<>();
@@ -77,5 +77,17 @@ public class BlackJackResultTest {
 
         BlackJackResult result = new BlackJackResult(map);
         assertThat(result.calculateReturn().get(huni)).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("딜러의 이익 총합을 계산한다.")
+    void calculateReturnOfDealer() {
+        Gamer huni = new Gamer("huni", new Bet(1000));
+
+        Map<Gamer, ResultStrategy> map = new HashMap<>();
+        map.put(huni, new Lose());
+
+        BlackJackResult result = new BlackJackResult(map);
+        assertThat(result.calculateDealerReturn(result.calculateReturn())).isEqualTo(1000);
     }
 }
