@@ -3,7 +3,6 @@ package blackjack.view;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
@@ -83,13 +82,13 @@ public class OutputView {
     }
 
     public static void printFinalResultBoard(final int dealerResult,
-                                             final Map<Player, Bet> gamerResultBoard) {
+                                             final Map<Gamer, Integer> gamerReturns) {
         System.out.println("\n## 최종 승패");
         System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
                 dealerResult);
-        gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
+        gamerReturns.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
                 key.getName(),
-                value.getAmount()));
+                value));
     }
 
     public static void printErrorMessage(final String message) {

@@ -6,7 +6,7 @@ import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-public enum CompareResult {
+public enum Result {
 
     BLACK_JACK(new BlackJack(), (dealerResult, gamer) -> isBlackJack(gamer)),
     WIN(new Win(), (dealerResult, gamer) -> isWin(dealerResult, gamer.calculateResult())),
@@ -17,12 +17,12 @@ public enum CompareResult {
 
     private final BiPredicate<Integer, Gamer> predicate;
 
-    CompareResult(final ResultStrategy resultStrategy, final BiPredicate<Integer, Gamer> predicate) {
+    Result(final ResultStrategy resultStrategy, final BiPredicate<Integer, Gamer> predicate) {
         this.resultStrategy = resultStrategy;
         this.predicate = predicate;
     }
 
-    public static CompareResult findCompareResult(final int dealerResult, final Gamer gamer) {
+    public static Result findCompareResult(final int dealerResult, final Gamer gamer) {
         return Arrays.stream(values())
                 .filter((result) -> result.predicate.test(dealerResult, gamer))
                 .findFirst()

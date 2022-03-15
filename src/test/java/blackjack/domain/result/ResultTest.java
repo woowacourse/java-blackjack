@@ -12,7 +12,7 @@ import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CompareResultTest {
+public class ResultTest {
 
     @Test
     @DisplayName("승리한 경우를 계산한다.")
@@ -23,8 +23,8 @@ public class CompareResultTest {
         Gamer judy = new Gamer("judy", new Bet(1000));
         judy.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
 
-        assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy)).isEqualTo(CompareResult.WIN);
+        assertThat(Result.findCompareResult(dealer.calculateResult()
+                , judy)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -36,8 +36,8 @@ public class CompareResultTest {
         Gamer judy = new Gamer("judy", new Bet(1000));
         receiveCardBelowStandard(judy);
 
-        assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy)).isEqualTo(CompareResult.WIN);
+        assertThat(Result.findCompareResult(dealer.calculateResult()
+                , judy)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -49,8 +49,8 @@ public class CompareResultTest {
         Gamer judy = new Gamer("judy", new Bet(1000));
         receiveCardOverStandard(judy);
 
-        assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy)).isEqualTo(CompareResult.LOSE);
+        assertThat(Result.findCompareResult(dealer.calculateResult()
+                , judy)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -62,8 +62,8 @@ public class CompareResultTest {
         Gamer judy = new Gamer("judy", new Bet(1000));
         receiveCardOverStandard(judy);
 
-        assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy)).isEqualTo(CompareResult.LOSE);
+        assertThat(Result.findCompareResult(dealer.calculateResult()
+                , judy)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -75,8 +75,8 @@ public class CompareResultTest {
         Gamer judy = new Gamer("judy", new Bet(1000));
         judy.receiveCard(new Card(Suit.CLOVER, Denomination.FOUR));
 
-        assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy)).isEqualTo(CompareResult.LOSE);
+        assertThat(Result.findCompareResult(dealer.calculateResult()
+                , judy)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -88,8 +88,8 @@ public class CompareResultTest {
         Gamer judy = new Gamer("judy", new Bet(1000));
         judy.receiveCard(new Card(Suit.CLOVER, Denomination.FIVE));
 
-        assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy)).isEqualTo(CompareResult.DRAW);
+        assertThat(Result.findCompareResult(dealer.calculateResult()
+                , judy)).isEqualTo(Result.DRAW);
     }
 
     private void receiveCardOverStandard(final Player player) {

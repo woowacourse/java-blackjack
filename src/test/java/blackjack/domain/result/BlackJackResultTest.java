@@ -40,7 +40,7 @@ public class BlackJackResultTest {
         map.put(huni, new BlackJack());
 
         BlackJackResult result = new BlackJackResult(map);
-        assertThat(result.calculateReturn().get(huni)).isEqualTo(1500);
+        assertThat(result.calculateGamerReturn().get(huni)).isEqualTo(1500);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class BlackJackResultTest {
         map.put(huni, new Win());
 
         BlackJackResult result = new BlackJackResult(map);
-        assertThat(result.calculateReturn().get(huni)).isEqualTo(1000);
+        assertThat(result.calculateGamerReturn().get(huni)).isEqualTo(1000);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class BlackJackResultTest {
         map.put(huni, new Draw());
 
         BlackJackResult result = new BlackJackResult(map);
-        assertThat(result.calculateReturn().get(huni)).isEqualTo(0);
+        assertThat(result.calculateGamerReturn().get(huni)).isEqualTo(0);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class BlackJackResultTest {
         map.put(huni, new Lose());
 
         BlackJackResult result = new BlackJackResult(map);
-        assertThat(result.calculateReturn().get(huni)).isEqualTo(-1000);
+        assertThat(result.calculateGamerReturn().get(huni)).isEqualTo(-1000);
     }
 
     @Test
@@ -88,6 +88,6 @@ public class BlackJackResultTest {
         map.put(huni, new Lose());
 
         BlackJackResult result = new BlackJackResult(map);
-        assertThat(result.calculateDealerReturn(result.calculateReturn())).isEqualTo(1000);
+        assertThat(result.calculateDealerReturn(result.calculateGamerReturn())).isEqualTo(1000);
     }
 }

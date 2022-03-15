@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.result.BlackJack;
 import blackjack.domain.result.Draw;
-import blackjack.domain.result.Win;
 import blackjack.domain.result.Lose;
+import blackjack.domain.result.Win;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

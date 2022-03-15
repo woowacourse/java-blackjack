@@ -8,9 +8,11 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.BlackJackResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackRunner {
 
@@ -96,9 +98,9 @@ public class BlackJackRunner {
 
     private static void payOuts() {
         OutputView.printFinalResult(blackJackGame.getDealer(), blackJackGame.getGamers());
-//        Map<Player, Bet> gamerResultBoard = blackJackGame.calculateResultBoard();
-//        OutputView.printFinalResultBoard(blackJackGame.calculateDealerResultBoard(gamerResultBoard),
-//                gamerResultBoard);
+        BlackJackResult blackJackResult = blackJackGame.calculateBlackJackResult();
+        Map<Gamer, Integer> gamerReturns = blackJackResult.calculateGamerReturn();
+        OutputView.printFinalResultBoard(blackJackResult.calculateDealerReturn(gamerReturns), gamerReturns);
     }
 
 }

@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.result.CompareResult;
+import blackjack.domain.result.Result;
 import blackjack.domain.result.ResultStrategy;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -29,7 +29,7 @@ public class Gamers {
     public Map<Gamer, ResultStrategy> compareResult(final int dealerPoint) {
         return gamers.stream()
                 .collect(toMap(gamer -> gamer,
-                        gamer -> CompareResult.findCompareResult(dealerPoint, gamer).getResult(),
+                        gamer -> Result.findCompareResult(dealerPoint, gamer).getResult(),
                         (e1, e2) -> e1,
                         LinkedHashMap::new));
     }

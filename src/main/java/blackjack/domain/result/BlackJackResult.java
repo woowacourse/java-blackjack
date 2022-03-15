@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackResult {
 
-    private static final int DEALER_CACULATE_UNIT = -1;
+    private static final int DEALER_CALCULATE_UNIT = -1;
 
     public final Map<Gamer, ResultStrategy> result;
 
@@ -16,7 +16,7 @@ public class BlackJackResult {
         this.result = result;
     }
 
-    public Map<Gamer, Integer> calculateReturn() {
+    public Map<Gamer, Integer> calculateGamerReturn() {
         return result.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
                         result -> result.getValue().calculateBet(result.getKey().getBet().getAmount()),
@@ -28,7 +28,7 @@ public class BlackJackResult {
         return returnBoard.values()
                 .stream()
                 .mapToInt(value -> value)
-                .sum() * DEALER_CACULATE_UNIT;
+                .sum() * DEALER_CALCULATE_UNIT;
     }
 
     public Map<Gamer, ResultStrategy> getResult() {
