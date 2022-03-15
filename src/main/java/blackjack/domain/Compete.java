@@ -14,8 +14,15 @@ public class Compete {
 	}
 
 	public void judgeCompete(Role player, Role dealer) {
-		Outcome result = Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
+		Outcome result = createOutcome(player, dealer);
 		competeResults.put(player.getName(), result);
+	}
+
+	private Outcome createOutcome(Role player, Role dealer) {
+		if (player.isBlackJack() || dealer.isBlackJack()) {
+			return Outcome.ofBlackJack(player.isBlackJack(), dealer.isBlackJack());
+		}
+		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
 	}
 
 	public Map<Outcome, Long> getDealerCompeteResults() {

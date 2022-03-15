@@ -1,19 +1,17 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.factory.CardMockFactory;
+import blackjack.domain.util.CreateHand;
 import java.util.List;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import blackjack.domain.factory.CardMockFactory;
-import blackjack.domain.util.CreateHand;
 
 @DisplayName("Hand 테스트")
 class HandTest {
@@ -51,6 +49,31 @@ class HandTest {
 		hand.isBustScore(score);
 
 		assertThat(hand.isBustScore(score)).isEqualTo(expectedIsBustScore);
+	}
+
+	@DisplayName("패가 블랙잭인지 확인")
+	@ParameterizedTest(name = "{index} {displayName} cards={0} expectedBlackJack={1}")
+	@MethodSource("getHandAndBlackJack")
+	void check_Is_BlackJack(Hand hand, boolean expectedBlackJack) {
+		assertThat(hand.isBlackJack()).isEqualTo(expectedBlackJack);
+	}
+
+	private static Stream<Arguments> getHandAndBlackJack() {
+		final Hand hand1 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
+		final Hand hand2 = CreateHand.create(CardMockFactory.of("K클로버"), CardMockFactory.of("J클로버"));
+		final Hand hand3 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("9클로버"),
+				CardMockFactory.of("2클로버"));
+		final Hand hand4 = CreateHand.create(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"),
+				CardMockFactory.of("J클로버"));
+		final Hand hand5 = CreateHand.create(CardMockFactory.of("2클로버"), CardMockFactory.of("3클로버"),
+				CardMockFactory.of("4클로버"));
+
+		return Stream.of(
+				Arguments.of(hand1, true),
+				Arguments.of(hand2, false),
+				Arguments.of(hand3, false),
+				Arguments.of(hand4, false),
+				Arguments.of(hand5, false));
 	}
 
 	@DisplayName("현재 패에 가지고 있는 최적의 점수 계산 확인")

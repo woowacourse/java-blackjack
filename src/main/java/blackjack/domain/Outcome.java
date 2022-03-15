@@ -18,8 +18,17 @@ public enum Outcome {
 		this.competeStander = competeStander;
 	}
 
+	public static Outcome ofBlackJack(boolean playerBlackjack, boolean dealerBlackJack) {
+		final int gapScore = Boolean.compare(playerBlackjack, dealerBlackJack);
+		return createOutcome(gapScore);
+	}
+
 	public static Outcome of(int playerScore, int dealerScore) {
 		final int gapScore = playerScore - dealerScore;
+		return createOutcome(gapScore);
+	}
+
+	private static Outcome createOutcome(int gapScore) {
 		return Arrays.stream(values())
 				.filter(outcome -> outcome.matchThisOutcome(gapScore))
 				.findFirst()

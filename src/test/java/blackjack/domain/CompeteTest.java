@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.factory.CardMockFactory;
 import blackjack.domain.util.CreateHand;
@@ -41,13 +40,23 @@ class CompeteTest {
 	}
 
 	private static Stream<Arguments> createHandAndOutcome() {
-		final Hand winHand = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
-		final Hand looseHand = CreateHand.create(CardMockFactory.of("2클로버"), CardMockFactory.of("3클로버"));
+		final Hand blackJackHand = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
+		final Hand notBlackjackTopHand = CreateHand.create(CardMockFactory.of("2클로버"), CardMockFactory.of("K클로버"),
+				CardMockFactory.of("9클로버"));
+		final Hand bottomHand = CreateHand.create(CardMockFactory.of("2클로버"), CardMockFactory.of("3클로버"));
 
 		return Stream.of(
-				Arguments.of(winHand, looseHand, Outcome.VICTORY),
-				Arguments.of(looseHand, winHand, Outcome.DEFEAT),
-				Arguments.of(winHand, winHand, Outcome.TIE));
+				Arguments.of(blackJackHand, bottomHand, Outcome.VICTORY),
+				Arguments.of(blackJackHand, notBlackjackTopHand, Outcome.VICTORY),
+				Arguments.of(notBlackjackTopHand, bottomHand, Outcome.VICTORY),
+
+				Arguments.of(notBlackjackTopHand, blackJackHand, Outcome.DEFEAT),
+				Arguments.of(bottomHand, blackJackHand, Outcome.DEFEAT),
+				Arguments.of(bottomHand, notBlackjackTopHand, Outcome.DEFEAT),
+
+				Arguments.of(blackJackHand, blackJackHand, Outcome.TIE),
+				Arguments.of(notBlackjackTopHand, notBlackjackTopHand, Outcome.TIE),
+				Arguments.of(bottomHand, bottomHand, Outcome.TIE));
 	}
 
 	private static Stream<Arguments> createPlayersAndOutcome() {

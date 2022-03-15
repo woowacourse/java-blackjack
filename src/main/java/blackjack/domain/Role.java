@@ -16,6 +16,10 @@ public abstract class Role {
 		hand.addCard(card);
 	}
 
+	public boolean isBlackJack() {
+		return hand.isBlackJack();
+	}
+
 	public int calculateFinalScore() {
 		return hand.calculateOptimalScore();
 	}

@@ -8,6 +8,7 @@ public class Hand {
 	public static final int BUST = 0;
 	public static final int OPTIMIZED_WINNING_NUMBER = 21;
 
+	private static final int MATCH_BLACKJACK_SIZE = 2;
 	private static final int ACE_AS_ELEVEN = 10;
 
 	private final List<Card> cards;
@@ -18,6 +19,10 @@ public class Hand {
 
 	public void addCard(final Card card) {
 		cards.add(card);
+	}
+
+	public boolean isBlackJack() {
+		return calculateOptimalScore() == OPTIMIZED_WINNING_NUMBER && cards.size() == MATCH_BLACKJACK_SIZE;
 	}
 
 	public int calculateOptimalScore() {
