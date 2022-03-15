@@ -24,7 +24,7 @@ public class BlackjackController {
         blackjackGame.initGames(receivePlayerNames(), playingCardShuffleMachine);
 
         Players players = blackjackGame.getBlackjackPlayers();
-        announceStartGame(players);
+        announceStartGame(blackjackGame, players);
 
         turnPlayers(blackjackGame);
         turnDealer(blackjackGame);
@@ -43,13 +43,13 @@ public class BlackjackController {
         }
     }
 
-    private void announceStartGame(Players players) {
+    private void announceStartGame(BlackjackGame blackjackGame, Players players) {
         OutputView.announceStartGame(players.getPlayers()
                 .stream()
                 .map(Player::getName)
                 .collect(Collectors.toList()));
 
-        OutputView.announcePresentCards(toResponse(players));
+        OutputView.announcePresentCards(blackjackGame.getGameResponse(players));
     }
 
     private void turnPlayers(BlackjackGame blackjackGame) {
@@ -66,7 +66,7 @@ public class BlackjackController {
         blackjackGame.nextTurn();
     }
 
-    public boolean receiveHit(String name) {
+    private boolean receiveHit(String name) {
         try {
             String answer = InputView.requestMoreCard(name);
             InputValidator.inputBlank(answer);
@@ -86,15 +86,7 @@ public class BlackjackController {
         OutputView.announceGetMoreCard(Dealer.EXCEED_POINT);
     }
 
-    private List<GameResponse> toResponse(Players players) {
-        List<GameResponse> gameResponses = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            gameResponses.add(new GameResponse(player.getName(), player.getDeck()));
-        }
-        return gameResponses;
-    }
-
-    public void announcePresentCard(Player player) {
+    private void announcePresentCard(Player player) {
         List<GameResponse> gameResponses = new ArrayList<>();
         GameResponse gameResponse = new GameResponse(player.getName(), player.getDeck());
         gameResponses.add(gameResponse);
@@ -102,7 +94,7 @@ public class BlackjackController {
     }
 
     private void announceResult(BlackjackGame blackjackGame, Players players) {
-        OutputView.announceResultCards(toResponse(players));
+        OutputView.announceResultCards(blackjackGame.getGameResponse(players));
         Results results = blackjackGame.calculateResult(players);
         OutputView.announceResultWinner(results);
     }

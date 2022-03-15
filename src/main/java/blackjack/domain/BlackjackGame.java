@@ -11,6 +11,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.domain.result.GameResponse;
 import blackjack.domain.result.Results;
 
 public class BlackjackGame {
@@ -80,6 +81,14 @@ public class BlackjackGame {
         Results results = new Results(players);
         results.competeDealerWithPlayers();
         return results;
+    }
+
+    public List<GameResponse> getGameResponse(Players players) {
+        List<GameResponse> gameResponses = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            gameResponses.add(new GameResponse(player.getName(), player.getDeck()));
+        }
+        return gameResponses;
     }
 
     public Players getBlackjackPlayers() {
