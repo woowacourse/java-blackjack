@@ -8,7 +8,7 @@ public class Player extends Participant {
         super(name);
     }
 
-    public Result isWin(Dealer dealer) {
+    public Result judgeResult(Dealer dealer) {
         if (compareTo(dealer) > COMPARE_CRITERIA) {
             return Result.WIN;
         }

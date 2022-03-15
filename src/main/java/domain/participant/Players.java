@@ -41,7 +41,7 @@ public class Players {
 
     public List<Result> checkResults(Dealer dealer) {
         return players.stream()
-            .map(player -> player.isWin(dealer))
+            .map(player -> player.judgeResult(dealer))
             .collect(Collectors.toList());
     }
 
