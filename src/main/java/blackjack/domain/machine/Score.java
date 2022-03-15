@@ -3,7 +3,7 @@ package blackjack.domain.machine;
 import java.util.List;
 
 public class Score {
-    private static final int INIT_A__NUMBER = 1;
+    private static final int INIT_A_NUMBER = 1;
     private static final int NEW_A_NUMBER = 11;
 
     private final int sum;
@@ -30,7 +30,7 @@ public class Score {
 
     private static boolean isContainA(List<Card> hand) {
         int count = (int) hand.stream()
-                .filter(myCard -> myCard.getNumber() == INIT_A__NUMBER)
+                .filter(myCard -> myCard.getNumber() == INIT_A_NUMBER)
                 .count();
 
         return count > 0;
@@ -38,7 +38,7 @@ public class Score {
 
     private static int scoreWithA(int sum) {
         if (sum <= NEW_A_NUMBER) {
-            return sum + NEW_A_NUMBER - INIT_A__NUMBER;
+            return sum + NEW_A_NUMBER - INIT_A_NUMBER;
         }
 
         return sum;
