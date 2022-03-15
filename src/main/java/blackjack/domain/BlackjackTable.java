@@ -7,6 +7,7 @@ import blackjack.util.Constants;
 
 public class BlackjackTable {
     private static final CardDeck cardDeck = CardDeck.getInstance();
+    
     private final Dealer dealer;
     private final Players players;
     

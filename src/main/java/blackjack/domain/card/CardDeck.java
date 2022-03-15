@@ -7,6 +7,7 @@ import java.util.Stack;
 
 public class CardDeck {
     private static final String NO_CARD_EXCEPTION_MESSAGE = "덱에 남은 카드가 없습니다";
+    
     private final Stack<Card> value;
     
     private CardDeck() {
