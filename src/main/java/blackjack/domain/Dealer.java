@@ -7,6 +7,22 @@ public class Dealer extends Gamer {
 		super(new Name("딜러"));
 	}
 
+	public boolean isWin(Player player) {
+		return isWinByNormalCase(player) || isWinBySpecialCase(player);
+	}
+
+	public boolean isDraw(Player player) {
+		return isDrawByNormalCase(player) || isDrawBySpecialCase(player);
+	}
+
+	public boolean isLose(Player player) {
+		return !isWin(player) && !isDraw(player);
+	}
+
+	public boolean isHit() {
+		return this.getScore() < HIT_THRESHOLD;
+	}
+
 	private boolean isPlayerAndDealerInNormalCase(Player player) {
 		return !this.isBlackJack() && !this.isBust() && !player.isBlackJack() && !player.isBust();
 	}
@@ -30,23 +46,6 @@ public class Dealer extends Gamer {
 		return isPlayerAndDealerInNormalCase(player)
 			&& this.getScore() == player.getScore();
 	}
-
-	public boolean isWin(Player player) {
-		return isWinByNormalCase(player) || isWinBySpecialCase(player);
-	}
-
-	public boolean isDraw(Player player) {
-		return isDrawByNormalCase(player) || isDrawBySpecialCase(player);
-	}
-
-	public boolean isLose(Player player) {
-		return !isWin(player) && !isDraw(player);
-	}
-
-	public boolean isHit() {
-		return this.getScore() < HIT_THRESHOLD;
-	}
-
 	public Card getRandomOneCard() {
 		return this.cards.getRandomCard();
 	}
