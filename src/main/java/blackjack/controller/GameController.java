@@ -1,43 +1,37 @@
 package blackjack.controller;
 
+import blackjack.domain.BlackjackTable;
 import blackjack.domain.Statistic;
-import blackjack.domain.Table;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameController {
     public void run() {
-        Table table = Table.of(getPlayers());
+        BlackjackTable blackjackTable = BlackjackTable.of(getPlayers());
         
-        initGame(table);
-        startGame(table);
-        endGame(table);
+        initGame(blackjackTable);
+        startGame(blackjackTable);
+        endGame(blackjackTable);
     }
     
     private Players getPlayers() {
-        List<Player> rawPlayers = new ArrayList<>();
-        for (String name : InputView.inputPlayerNames()) {
-            rawPlayers.add(Player.of(name));
-        }
-        return Players.of(rawPlayers);
+        return Players.ofInputText(InputView.inputPlayerNames());
     }
     
-    private void initGame(final Table table) {
-        table.initCard();
-        OutputView.printInitCards(table);
+    private void initGame(final BlackjackTable blackjackTable) {
+        blackjackTable.initCard();
+        OutputView.printInitCards(blackjackTable);
     }
     
-    private void startGame(final Table table) {
-        for (Player player : table.getPlayers().get()) {
-            questAddCard(player, table.getCardDeck());
+    private void startGame(final BlackjackTable blackjackTable) {
+        for (Player player : blackjackTable.getPlayers().get()) {
+            questAddCard(player, blackjackTable.getCardDeck());
         }
-        addCardToDealer(table);
+        addCardToDealer(blackjackTable);
     }
     
     private void questAddCard(final Player player, final CardDeck cardDeck) {
@@ -56,18 +50,18 @@ public class GameController {
         }
     }
     
-    private void addCardToDealer(final Table table) {
-        Dealer dealer = table.getDealer();
+    private void addCardToDealer(final BlackjackTable blackjackTable) {
+        Dealer dealer = blackjackTable.getDealer();
         if (dealer.isAbleToHit()) {
-            dealer.addCard(table.getCardDeck().draw());
+            dealer.addCard(blackjackTable.getCardDeck().draw());
             OutputView.printDealerHit();
         }
     }
     
-    private void endGame(final Table table) {
-        OutputView.printHandAndPoint(table);
+    private void endGame(final BlackjackTable blackjackTable) {
+        OutputView.printHandAndPoint(blackjackTable);
         
-        Statistic statistic = Statistic.of(table);
+        Statistic statistic = Statistic.of(blackjackTable);
         
         OutputView.printDealerResult(statistic.getDealerResult());
         OutputView.printPlayerResult(statistic.getPlayersResult());

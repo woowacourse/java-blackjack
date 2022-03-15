@@ -5,18 +5,18 @@ import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Players;
 import blackjack.util.Constants;
 
-public class Table {
+public class BlackjackTable {
     private static final CardDeck cardDeck = CardDeck.getInstance();
     private final Dealer dealer;
     private final Players players;
     
-    private Table(Players players) {
+    private BlackjackTable(Players players) {
         this.players = players;
         this.dealer = Dealer.getInstance();
     }
     
-    public static Table of(Players players) {
-        return new Table(players);
+    public static BlackjackTable of(Players players) {
+        return new BlackjackTable(players);
     }
     
     public void initCard() {

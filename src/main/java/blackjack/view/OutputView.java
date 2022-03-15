@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Result;
-import blackjack.domain.Table;
+import blackjack.domain.BlackjackTable;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
 import java.util.Map;
@@ -17,10 +17,10 @@ public class OutputView {
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
     
-    public static void printInitCards(final Table table) {
-        OutputView.printInitCardState(table);
-        OutputView.printHumanHand(table.getDealer());
-        for (Player player : table.getPlayers().get()) {
+    public static void printInitCards(final BlackjackTable blackjackTable) {
+        OutputView.printInitCardState(blackjackTable);
+        OutputView.printHumanHand(blackjackTable.getDealer());
+        for (Player player : blackjackTable.getPlayers().get()) {
             OutputView.printHumanHand(player);
         }
         System.out.println();
@@ -30,15 +30,15 @@ public class OutputView {
         System.out.printf(HUMAN_CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), human.getCards());
     }
     
-    private static void printInitCardState(final Table table) {
+    private static void printInitCardState(final BlackjackTable blackjackTable) {
         System.out.printf(INIT_CARD_MESSAGE,
-                table.getDealer().getName(), table.getPlayers().getPlayerNames());
+                blackjackTable.getDealer().getName(), blackjackTable.getPlayers().getPlayerNames());
     }
     
-    public static void printHandAndPoint(final Table table) {
+    public static void printHandAndPoint(final BlackjackTable blackjackTable) {
         System.out.println();
-        OutputView.printHumanCardPointState(table.getDealer());
-        for (Player player : table.getPlayers().get()) {
+        OutputView.printHumanCardPointState(blackjackTable.getDealer());
+        for (Player player : blackjackTable.getPlayers().get()) {
             OutputView.printHumanCardPointState(player);
         }
     }

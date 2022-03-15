@@ -38,10 +38,10 @@ class StatisticTest {
             addCardList(player2, List.of("10", "10", "2"));
             Players players = Players.of(List.of(player1, player2));
             
-            Table table = Table.of(players);
-            addCardList(table.getDealer(), List.of("8", "10", "10"));
+            BlackjackTable blackjackTable = BlackjackTable.of(players);
+            addCardList(blackjackTable.getDealer(), List.of("8", "10", "10"));
             
-            statistic = Statistic.of(table);
+            statistic = Statistic.of(blackjackTable);
         }
         
         @Test
@@ -74,10 +74,10 @@ class StatisticTest {
             addCardList(player2, List.of("10", "10", "10"));
             Players players = Players.of(List.of(player1, player2));
             
-            Table table = Table.of(players);
-            addCardList(table.getDealer(), List.of("10", "10", "10", "10"));
+            BlackjackTable blackjackTable = BlackjackTable.of(players);
+            addCardList(blackjackTable.getDealer(), List.of("10", "10", "10", "10"));
             
-            statistic = Statistic.of(table);
+            statistic = Statistic.of(blackjackTable);
         }
         
         @Test
@@ -112,9 +112,9 @@ class StatisticTest {
             addCardList(player4, List.of("10", "10", "A"));
             Players players = Players.of(List.of(player1, player2, player3, player4));
             
-            Table table = Table.of(players);
-            addCardList(table.getDealer(), List.of("10", "10"));
-            statistic = Statistic.of(table);
+            BlackjackTable blackjackTable = BlackjackTable.of(players);
+            addCardList(blackjackTable.getDealer(), List.of("10", "10"));
+            statistic = Statistic.of(blackjackTable);
         }
         
         @Test

@@ -11,15 +11,15 @@ public class Statistic {
     private final Map<Result, Integer> dealerResult = new HashMap<>();
     private final Map<Player, Result> playerResult = new HashMap<>();
     
-    private Statistic(Table table) {
+    private Statistic(BlackjackTable blackjackTable) {
         for (Result value : Result.values()) {
             dealerResult.put(value, 0);
         }
-        calculate(table);
+        calculate(blackjackTable);
     }
     
-    public static Statistic of(Table table) {
-        return new Statistic(table);
+    public static Statistic of(BlackjackTable blackjackTable) {
+        return new Statistic(blackjackTable);
     }
     
     public Map<Result, Integer> getDealerResult() {
@@ -30,9 +30,9 @@ public class Statistic {
         return playerResult;
     }
     
-    private void calculate(Table table) {
-        calculateEachPlayers(table.getPlayers(), table.getDealer().getPoint());
-        calculateDealerResult(table.getPlayers());
+    private void calculate(BlackjackTable blackjackTable) {
+        calculateEachPlayers(blackjackTable.getPlayers(), blackjackTable.getDealer().getPoint());
+        calculateDealerResult(blackjackTable.getPlayers());
     }
     
     private void calculateEachPlayers(final Players players, final int dealerPoint) {
