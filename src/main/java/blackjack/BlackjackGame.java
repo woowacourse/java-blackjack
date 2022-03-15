@@ -5,9 +5,9 @@ import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
-public class Controller {
+public class BlackjackGame {
 
-	public void run() {
+	public void play() {
 		BlackJack blackJack = generateGame();
 		startGame(blackJack);
 		decidePlayerHitOrNot(blackJack);
