@@ -7,6 +7,14 @@ public class Player extends Gamer {
 	}
 
 	@Override
+	protected boolean isWinBySpecialCase(Gamer gamer) {
+		if (this.isBlackJack() && !gamer.isBlackJack()) {
+			return true;
+		}
+		return gamer.isBust() && !this.isBust();
+	}
+
+	@Override
 	public boolean canHit() {
 		return !this.isBlackJack() && !this.isBust();
 	}

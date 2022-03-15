@@ -16,6 +16,37 @@ public abstract class Gamer {
 
 	public abstract boolean canHit();
 
+	public boolean isWin(Gamer gamer) {
+		return isWinByNormalCase(gamer) || isWinBySpecialCase(gamer);
+	}
+
+	public boolean isDraw(Gamer gamer) {
+		return isDrawByNormalCase(gamer) || isDrawBySpecialCase(gamer);
+	}
+
+	public boolean isLose(Gamer gamer) {
+		return !isWin(gamer) && !isDraw(gamer);
+	}
+
+	private boolean isGamersInNormalCase(Gamer gamer) {
+		return !this.isBlackJack() && !this.isBust() && !gamer.isBlackJack() && !gamer.isBust();
+	}
+
+	private boolean isWinByNormalCase(Gamer gamer) {
+		return isGamersInNormalCase(gamer) && this.getScore() > gamer.getScore();
+	}
+
+	protected abstract boolean isWinBySpecialCase(Gamer gamer);
+
+	private boolean isDrawBySpecialCase(Gamer gamer) {
+		return this.isBlackJack() && gamer.isBlackJack();
+	}
+
+	private boolean isDrawByNormalCase(Gamer gamer) {
+		return isGamersInNormalCase(gamer)
+			&& this.getScore() == gamer.getScore();
+	}
+
 	public List<Card> getCards() {
 		return this.cards.getCards();
 	}
