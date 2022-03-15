@@ -53,12 +53,6 @@ public class Gamers {
         return dealer;
     }
 
-    public void distributeCardToPlayer(Deck deck) {
-        for (Player player : players) {
-            player.addCard(deck.draw());
-        }
-    }
-
     public boolean canDrawToPlayer(Player player) {
         return !player.isBurst();
     }

@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
-
 public class OutputView {
 
     public static void printFirstCards(Dealer dealer, List<Player> players) {
