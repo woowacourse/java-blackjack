@@ -15,7 +15,7 @@ public class Dealer extends AbstractPlayer implements Player {
 
     @Override
     public boolean isCanHit() {
-        return playingCards.sumPoints() > MAX_POINT;
+        return playingCards.sumPoints() < MAX_POINT;
     }
 
     @Override

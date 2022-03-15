@@ -13,25 +13,12 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
-
     public void nextTurn() {
         this.turn++;
     }
 
     public boolean hasNextTurn() {
         return this.turn < players.size();
-    }
-
-    public boolean isDealerBlackJack() {
-        Player dealer = players.stream()
-                .filter(Player::isDealer)
-                .findFirst()
-                .orElseThrow();
-
-        return dealer.isBlackJack();
     }
 
     public Player turnPlayer() {

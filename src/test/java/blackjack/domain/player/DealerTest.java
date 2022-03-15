@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.Denomination;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,24 +35,36 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("덱의 카드가 16이 넘는지 확인")
+    @DisplayName("카드를 더 받을 수 있는지 확인: 16을 넘는 경우")
     public void checkPlayerDeckOverLimit() {
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
         boolean overLimit = dealer.isCanHit();
 
-        assertThat(overLimit).isTrue();
+        assertThat(overLimit).isFalse();
     }
 
     @Test
-    @DisplayName("덱의 카드가 16이 넘지 않는지 확인")
+    @DisplayName("카드를 더 받을 수 있는지 확인: 16을 넘지 않는 경우")
     public void checkPlayerDeckUnderLimit() {
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.SIX));
+        dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.FIVE));
         boolean overLimit = dealer.isCanHit();
 
-        assertThat(overLimit).isFalse();
+        assertThat(overLimit).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"SPADE:TWO:JACK:true", "SPADE:JACK:TWO:false"}, delimiter = ':')
+    @DisplayName("딜러 승패 확인")
+    void checkDealerResult(Suit suit, Denomination denomination, Denomination secondDenomination, boolean expected) {
+        Guest guest = new Guest("guest");
+        guest.addCard(new PlayingCard(suit, denomination));
+
+        Dealer dealer = new Dealer();
+        dealer.addCard(new PlayingCard(suit, secondDenomination));
+        assertThat(dealer.isWin(guest)).isEqualTo(expected);
     }
 }

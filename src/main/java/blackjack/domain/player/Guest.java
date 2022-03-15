@@ -11,7 +11,7 @@ public class Guest extends AbstractPlayer implements Player {
 
     @Override
     public boolean isCanHit() {
-        return playingCards.sumPoints() > PlayingCards.BLACKJACK_POINT;
+        return playingCards.sumPoints() < PlayingCards.BLACKJACK_POINT;
     }
 
     @Override
