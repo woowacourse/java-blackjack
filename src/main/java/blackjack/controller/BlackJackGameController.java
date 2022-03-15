@@ -46,7 +46,7 @@ public class BlackJackGameController {
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player);
 		}
-		Result result = new Result(players);
+		Result result = Result.of(players, dealer);
 		outputView.displayNewLine();
 		outputView.displayResult(result, players, dealer);
 	}

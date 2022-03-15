@@ -20,7 +20,7 @@ public class ResultTest {
 	void gamer_init() {
 		dealer = new Dealer();
 		players = new Players(List.of(new Name("pobi"), new Name("jason"), new Name("alpha")));
-		result = new Result(players);
+		result = Result.of(players, dealer);
 		player1 = players.getPlayers().get(0);
 		player2 = players.getPlayers().get(1);
 		player3 = players.getPlayers().get(2);
@@ -34,7 +34,7 @@ public class ResultTest {
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
-		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
+		Map<Player, ResultType> gameResult = result.getGameResult();
 		assertThat(gameResult.values()).containsSequence(ResultType.WIN, ResultType.LOSE, ResultType.WIN);
 	}
 
@@ -45,7 +45,7 @@ public class ResultTest {
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
-		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
+		Map<Player, ResultType> gameResult = result.getGameResult();
 		assertThat(gameResult.values()).containsSequence(ResultType.DRAW, ResultType.LOSE, ResultType.LOSE);
 	}
 
@@ -56,7 +56,7 @@ public class ResultTest {
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
-		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
+		Map<Player, ResultType> gameResult = result.getGameResult();
 		assertThat(gameResult.values()).containsSequence(ResultType.WIN, ResultType.LOSE, ResultType.LOSE);
 	}
 
