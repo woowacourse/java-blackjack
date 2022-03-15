@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.testutil.CardDeckFixtureGenerator.createCardDeck;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardDeck;
@@ -20,8 +21,7 @@ class GameResultTest {
     Dealer dealer = new Dealer();
     Gambler gambler = new Gambler("돌범");
     CardDeck cardDeck;
-    PlayingCard card1;
-    PlayingCard card2;
+
 
     @DisplayName("버스트가 없는 경우에 한하여")
     @Nested
@@ -29,8 +29,8 @@ class GameResultTest {
         @BeforeEach
         void setUp() {
             //given
-            card1 = new PlayingCard(Suit.CLUBS, Denomination.FIVE);
-            card2 = new PlayingCard(Suit.CLUBS, Denomination.SIX);
+            final PlayingCard card1 = new PlayingCard(Suit.CLUBS, Denomination.FIVE);
+            final PlayingCard card2 = new PlayingCard(Suit.CLUBS, Denomination.SIX);
             Deque<PlayingCard> rawCardDeck = new ArrayDeque<>();
             rawCardDeck.push(card1);
             rawCardDeck.push(card2);
@@ -88,26 +88,21 @@ class GameResultTest {
     }
 
 
-
     @DisplayName("딜러가 버스트인 경우, 패배 결과 객체를 반환하는지 확인한다.")
     @Test
     void burst_dealer_lose() {
         //given
-        PlayingCard card = new PlayingCard(Suit.CLUBS, Denomination.KING);
-        PlayingCard burst1 = new PlayingCard(Suit.HEARTS, Denomination.KING);
-        PlayingCard burst2 = new PlayingCard(Suit.HEARTS, Denomination.JACK);
-        PlayingCard burst3 = new PlayingCard(Suit.HEARTS, Denomination.QUEEN);
-        Deque<PlayingCard> rawCardDeck = new ArrayDeque<>();
-        rawCardDeck.push(card);
-        rawCardDeck.push(burst1);
-        rawCardDeck.push(burst2);
-        rawCardDeck.push(burst3);
-        cardDeck = new CardDeck(() -> rawCardDeck);
+        cardDeck = createCardDeck(
+            new PlayingCard(Suit.CLUBS, Denomination.KING),
+            new PlayingCard(Suit.HEARTS, Denomination.KING),
+            new PlayingCard(Suit.HEARTS, Denomination.JACK),
+            new PlayingCard(Suit.HEARTS, Denomination.QUEEN)
+        );
+        this.cardDeck.drawTo(dealer);
+        this.cardDeck.drawTo(dealer);
+        this.cardDeck.drawTo(dealer);
 
-        cardDeck.drawTo(dealer);
-        cardDeck.drawTo(dealer);
-        cardDeck.drawTo(dealer);
-        cardDeck.drawTo(gambler);
+        this.cardDeck.drawTo(gambler);
 
         //when
         final GameResult result = GameResult.of(dealer, gambler);
@@ -120,20 +115,17 @@ class GameResultTest {
     @Test
     void burst_gambler_lose() {
         //given
-        PlayingCard card = new PlayingCard(Suit.CLUBS, Denomination.KING);
-        PlayingCard burst1 = new PlayingCard(Suit.HEARTS, Denomination.KING);
-        PlayingCard burst2 = new PlayingCard(Suit.HEARTS, Denomination.JACK);
-        PlayingCard burst3 = new PlayingCard(Suit.HEARTS, Denomination.QUEEN);
-        Deque<PlayingCard> rawCardDeck = new ArrayDeque<>();
-        rawCardDeck.push(card);
-        rawCardDeck.push(burst1);
-        rawCardDeck.push(burst2);
-        rawCardDeck.push(burst3);
-        cardDeck = new CardDeck(() -> rawCardDeck);
+        cardDeck = createCardDeck(
+            new PlayingCard(Suit.CLUBS, Denomination.KING),
+            new PlayingCard(Suit.HEARTS, Denomination.KING),
+            new PlayingCard(Suit.HEARTS, Denomination.JACK),
+            new PlayingCard(Suit.HEARTS, Denomination.QUEEN)
+        );
 
         cardDeck.drawTo(gambler);
         cardDeck.drawTo(gambler);
         cardDeck.drawTo(gambler);
+
         cardDeck.drawTo(dealer);
 
         //when
@@ -148,24 +140,19 @@ class GameResultTest {
     @Test
     void burst_draw() {
         //given
-        PlayingCard burst1 = new PlayingCard(Suit.CLUBS, Denomination.KING);
-        PlayingCard burst2 = new PlayingCard(Suit.CLUBS, Denomination.JACK);
-        PlayingCard burst3 = new PlayingCard(Suit.CLUBS, Denomination.QUEEN);
-        PlayingCard burst11 = new PlayingCard(Suit.HEARTS, Denomination.KING);
-        PlayingCard burst22 = new PlayingCard(Suit.HEARTS, Denomination.JACK);
-        PlayingCard burst33 = new PlayingCard(Suit.HEARTS, Denomination.QUEEN);
-        Deque<PlayingCard> rawCardDeck = new ArrayDeque<>();
-        rawCardDeck.push(burst1);
-        rawCardDeck.push(burst2);
-        rawCardDeck.push(burst3);
-        rawCardDeck.push(burst11);
-        rawCardDeck.push(burst22);
-        rawCardDeck.push(burst33);
-        cardDeck = new CardDeck(() -> rawCardDeck);
+        cardDeck = createCardDeck(
+            new PlayingCard(Suit.CLUBS, Denomination.KING),
+            new PlayingCard(Suit.CLUBS, Denomination.JACK),
+            new PlayingCard(Suit.CLUBS, Denomination.QUEEN),
+            new PlayingCard(Suit.HEARTS, Denomination.KING),
+            new PlayingCard(Suit.HEARTS, Denomination.JACK),
+            new PlayingCard(Suit.HEARTS, Denomination.QUEEN)
+        );
 
         cardDeck.drawTo(gambler);
         cardDeck.drawTo(gambler);
         cardDeck.drawTo(gambler);
+
         cardDeck.drawTo(dealer);
         cardDeck.drawTo(dealer);
         cardDeck.drawTo(dealer);
