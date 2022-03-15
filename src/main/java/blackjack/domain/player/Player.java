@@ -8,7 +8,7 @@ public abstract class Player {
 
     protected final Cards cards;
 
-    public Player(Cards cards) {
+    protected Player(Cards cards) {
         this.cards = cards;
     }
 
