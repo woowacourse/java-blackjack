@@ -1,6 +1,4 @@
-package blackjack.domain.participant;
-
-import blackjack.domain.result.Result;
+package blackjack.domain.result;
 
 import java.util.Arrays;
 import java.util.function.IntUnaryOperator;

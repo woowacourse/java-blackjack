@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.result.Result;
 import blackjack.domain.result.ScoreCalculator;
+import blackjack.domain.result.UserProfit;
 
 public class User extends Participant {
 

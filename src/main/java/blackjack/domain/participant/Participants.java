@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.DistributeResult;
+import blackjack.domain.result.ProfitResult;
 import blackjack.domain.result.UserResult;
 
 import java.util.*;
@@ -58,6 +59,16 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
+    public List<ProfitResult> calculateProfitResult() {
+        List<ProfitResult> profitResults = new ArrayList<>();
+        Dealer dealer = getDealer();
+        profitResults.add(new ProfitResult("딜러", calculateDealerProfit()));
+        for (User user : getUsers()) {
+            profitResults.add(new ProfitResult(user.getName(), user.calculateProfit(dealer.getCardSum())));
+        }
+        return profitResults;
+    }
+
     public Participant getUserByName(String name) {
         return participants.stream()
                 .filter(participant -> participant.checkName(name))
@@ -71,5 +82,14 @@ public class Participants {
                 .filter(Participant::isUser)
                 .map(p -> new UserResult(p, dealerScore))
                 .collect(Collectors.toList());
+    }
+
+    public int calculateDealerProfit() {
+        int dealerProfit = 0;
+        for (User user : getUsers()) {
+            dealerProfit += (-user.calculateProfit(getDealer().getCardSum()));
+        }
+
+        return dealerProfit;
     }
 }

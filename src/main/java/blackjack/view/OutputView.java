@@ -1,10 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.DistributeResult;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.UserResult;
+import blackjack.domain.result.*;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -43,12 +40,19 @@ public class OutputView {
         System.out.println(getConcatNameAndCardNames(distributeResult));
     }
 
+    public static void printProfitResult(List<ProfitResult> profitResults) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        for (ProfitResult profitResult : profitResults) {
+            System.out.printf("%s: %d%n", profitResult.getName(), profitResult.getProfit());
+        }
+    }
+
     public static void printDealerDraw() {
         System.out.println(lineSeparator() + MORE_DEALER_DRAW_CARD);
     }
 
     public static void printFinalCardWithScore(List<DistributeResult> distributeResults) {
-        System.out.println(System.lineSeparator());
         for (DistributeResult distributeResult : distributeResults) {
             System.out.println(getConcatNameAndCardsIncludeSum(distributeResult));
         }

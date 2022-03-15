@@ -7,6 +7,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.DistributeResult;
+import blackjack.domain.result.ProfitResult;
 import blackjack.domain.result.UserResult;
 
 import java.util.List;
@@ -42,6 +43,10 @@ public class BlackJack {
             participants.distributeCard(deck);
         }
         return participants.getDistributeResult();
+    }
+
+    public List<ProfitResult> calculateProfitResult() {
+        return participants.calculateProfitResult();
     }
 
     public DistributeResult playGameOnePlayer(String playerName) {
