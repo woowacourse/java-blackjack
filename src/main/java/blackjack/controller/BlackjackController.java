@@ -8,7 +8,6 @@ import blackjack.model.player.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,7 @@ public class BlackjackController {
     public void play() {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = createDealer(cardDeck);
-        List<Gamer> gamers = createGamers(names(), cardDeck);
+        List<Gamer> gamers = createGamers(InputView.inputNames(), cardDeck);
         OutputView.printOpenCard(createPlayerDto(dealer, dealer.openCards()), createGamersDto(gamers));
         takeCards(cardDeck, dealer, gamers);
         displayResult(dealer, gamers);
@@ -27,17 +26,6 @@ public class BlackjackController {
 
     private Dealer createDealer(CardDeck cardDeck) {
         return new Dealer(List.of(cardDeck.selectCard(), cardDeck.selectCard()));
-    }
-
-    private List<String> names() {
-        List<String> names;
-        try {
-            names = InputView.inputNames();
-        } catch (IllegalArgumentException exception) {
-            System.out.println("[ERROR] " + exception.getMessage());
-            return names();
-        }
-        return names;
     }
 
     private List<Gamer> createGamers(List<String> names, CardDeck cardDeck) {
@@ -88,14 +76,7 @@ public class BlackjackController {
     }
 
     private boolean isKeepTakeCard(Player gamer) {
-        String option;
-        try {
-            option = InputView.chooseOptions(gamer.getName());
-        } catch (IllegalArgumentException exception) {
-            System.out.println("[ERROR] " + exception.getMessage());
-            return isKeepTakeCard(gamer);
-        }
-        return option.equals("y");
+        return InputView.chooseOptions(gamer.getName()).equals("y");
     }
 
     private void displayResult(Dealer dealer, List<Gamer> gamers) {

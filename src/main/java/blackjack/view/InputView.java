@@ -15,10 +15,15 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> inputNames() throws IllegalArgumentException {
+    public static List<String> inputNames() {
         System.out.println(REQUEST_PLAYER_NAME_MSG);
         String text = SCANNER.nextLine();
-        validateNameFormat(text);
+        try {
+            validateNameFormat(text);
+        } catch (IllegalArgumentException exception) {
+            System.out.println("[ERROR] " + exception.getMessage());
+            return inputNames();
+        }
         return List.of(text.split(","));
     }
 
@@ -28,10 +33,15 @@ public class InputView {
         }
     }
 
-    public static String chooseOptions(String name) throws IllegalArgumentException {
+    public static String chooseOptions(String name) {
         System.out.printf(REQUEST_CARD_TAKE_OPTION_MSG, name);
         String value = SCANNER.nextLine();
-        validateOption(value);
+        try {
+            validateOption(value);
+        } catch (IllegalArgumentException exception) {
+            System.out.println("[ERROR] " + exception.getMessage());
+            return chooseOptions(name);
+        }
         return value;
     }
 
