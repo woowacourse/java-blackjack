@@ -6,7 +6,7 @@ import blackjack.domain.player.Bet;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.BlackJackResult;
+import blackjack.domain.result.RuleResult;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class BlackJackGame {
         dealStartingCards(dealer, deck);
         for (Gamer gamer : gamers.getGamers()) {
             dealStartingCards(gamer, deck);
-            gamer.calculateCurrentBet(BlackJackResult.findBlackJackResult(gamer)
+            gamer.calculateCurrentBet(RuleResult.findBlackJackRule(gamer)
                     .getResult());
         }
     }

@@ -6,21 +6,21 @@ import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-public enum BlackJackResult {
+public enum RuleResult {
 
-    BLACK_JACK(new BlackJack(), BlackJackResult::isBlackJack),
-    BUST(new Lose(), BlackJackResult::isBust),
+    BLACK_JACK(new BlackJack(), RuleResult::isBlackJack),
+    BUST(new Lose(), RuleResult::isBust),
     HIT(new Keep(), Player::isSatisfyReceiveCondition);
 
     private final ResultStrategy resultStrategy;
 
     private final Predicate<Player> predicate;
 
-    BlackJackResult(final ResultStrategy resultStrategy, final Predicate<Player> predicate) {
+    RuleResult(final ResultStrategy resultStrategy, final Predicate<Player> predicate) {
         this.resultStrategy = resultStrategy;
         this.predicate = predicate;
     }
-    public static BlackJackResult findBlackJackResult(final Player player) {
+    public static RuleResult findBlackJackRule(final Player player) {
         return Arrays.stream(values())
                 .filter(value -> value.predicate.test(player))
                 .findFirst()

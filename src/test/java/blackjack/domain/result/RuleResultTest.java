@@ -11,7 +11,7 @@ import blackjack.domain.player.Gamer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackResultTestStrategy {
+public class RuleResultTest {
 
     @Test
     @DisplayName("블랙잭 게임 룰 상 결과가 블랙잭이다.")
@@ -20,9 +20,9 @@ public class BlackJackResultTestStrategy {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
 
-        BlackJackResult blackJackResult = BlackJackResult.findBlackJackResult(gamer);
+        RuleResult blackJackResult = RuleResult.findBlackJackRule(gamer);
         assertAll(
-                () -> assertThat(blackJackResult).isEqualTo(BlackJackResult.BLACK_JACK),
+                () -> assertThat(blackJackResult).isEqualTo(RuleResult.BLACK_JACK),
                 () -> assertThat(blackJackResult.getResult()).isInstanceOf(BlackJack.class)
         );
     }
@@ -35,9 +35,9 @@ public class BlackJackResultTestStrategy {
         gamer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
         gamer.receiveCard(new Card(Suit.HEART, Denomination.TWO));
 
-        BlackJackResult blackJackResult = BlackJackResult.findBlackJackResult(gamer);
+        RuleResult blackJackResult = RuleResult.findBlackJackRule(gamer);
         assertAll(
-                () -> assertThat(blackJackResult).isEqualTo(BlackJackResult.BUST),
+                () -> assertThat(blackJackResult).isEqualTo(RuleResult.BUST),
                 () -> assertThat(blackJackResult.getResult()).isInstanceOf(Lose.class)
         );
     }
@@ -49,9 +49,9 @@ public class BlackJackResultTestStrategy {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         gamer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
 
-        BlackJackResult blackJackResult = BlackJackResult.findBlackJackResult(gamer);
+        RuleResult blackJackResult = RuleResult.findBlackJackRule(gamer);
         assertAll(
-                () -> assertThat(blackJackResult).isEqualTo(BlackJackResult.HIT),
+                () -> assertThat(blackJackResult).isEqualTo(RuleResult.HIT),
                 () -> assertThat(blackJackResult.getResult()).isInstanceOf(Keep.class)
         );
     }
