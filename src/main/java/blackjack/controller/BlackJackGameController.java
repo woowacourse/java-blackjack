@@ -48,7 +48,7 @@ public class BlackJackGameController {
 		}
 		Result result = Result.of(players, dealer);
 		outputView.displayNewLine();
-		outputView.displayResult(result, players, dealer);
+		outputView.displayResult(result, dealer);
 	}
 
 	private void progressDealerTurn(Players players, Dealer dealer, Deck deck) {
