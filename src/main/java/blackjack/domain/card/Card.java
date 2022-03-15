@@ -3,20 +3,24 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final List<Card> cache;
+    private static final Map<String, Card> cache;
 
     static {
         cache = Arrays.stream(CardSymbol.values())
                 .flatMap(symbol -> Arrays.stream(CardNumber.values())
                         .map(number -> new Card(symbol, number))
                         .collect(Collectors.toList())
-                        .stream()
-                ).collect(Collectors.toUnmodifiableList());
+                        .stream())
+                .collect(Collectors.toMap(
+                        card -> findKey(card.symbol, card.number),
+                        card -> card,
+                        (a, b) -> a));
     }
 
     private final CardSymbol symbol;
@@ -28,15 +32,15 @@ public class Card {
     }
 
     public static Card of(CardSymbol symbol, CardNumber number) {
-        return cache.stream()
-                .filter(card -> card.symbol == symbol)
-                .filter(card -> card.number == number)
-                .findFirst()
-                .orElseThrow();
+        return cache.get(findKey(symbol, number));
+    }
+
+    private static String findKey(CardSymbol symbol, CardNumber number) {
+        return symbol.getName() + number.getName();
     }
 
     public static List<Card> getAllCards() {
-        return new ArrayList<>(cache);
+        return new ArrayList<>(cache.values());
     }
 
     public boolean isAce() {
