@@ -6,16 +6,18 @@ import java.util.stream.Collectors;
 
 public class Players {
 	private static final String EMPTY_PLAYERS = "[ERROR] 한 명 이상의 플레이어가 필요합니다.";
+	private static final String OVER_FULL_PLAYERS = "[ERROR] 26명 이상의 플레이어로는 원활한 진행이 불가합니다.";
+	private static final int FULL_PLAYER_THRESHOLD = 26;
 	private final List<Player> players;
 
 	public Players(List<Player> players) {
 		validateEmptyPlayers(players);
+		validateFullPlayers(players);
 		this.players = new ArrayList<>();
 		this.players.addAll(players);
 	}
 
 	public static Players from(List<Name> names) {
-		validateEmptyNames(names);
 		return new Players(names.stream()
 			.map(Player::new)
 			.collect(Collectors.toList()));
@@ -31,15 +33,15 @@ public class Players {
 			.count();
 	}
 
-	private static void validateEmptyNames(List<Name> names) {
-		if (names.isEmpty()) {
+	private void validateEmptyPlayers(List<Player> players) {
+		if (players.isEmpty()) {
 			throw new IllegalArgumentException(EMPTY_PLAYERS);
 		}
 	}
 
-	private void validateEmptyPlayers(List<Player> players) {
-		if (players.isEmpty()) {
-			throw new IllegalArgumentException(EMPTY_PLAYERS);
+	private void validateFullPlayers(List<Player> players) {
+		if (players.size() > FULL_PLAYER_THRESHOLD) {
+			throw new IllegalArgumentException(OVER_FULL_PLAYERS);
 		}
 	}
 }

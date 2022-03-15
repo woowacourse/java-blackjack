@@ -11,9 +11,16 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 	@Test
-	@DisplayName("빈 리스트를 받았을 때 에러 발생")
 	void check_empty_list() {
 		String lines = ",,,,";
+		List<String> strings = Arrays.asList(lines.split(","));
+		assertThatThrownBy(() -> Players.from(strings.stream().map(Name::new).collect(Collectors.toList())))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	void check_over_full() {
+		String lines = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,x,y,z,!,?";
 		List<String> strings = Arrays.asList(lines.split(","));
 		assertThatThrownBy(() -> Players.from(strings.stream().map(Name::new).collect(Collectors.toList())))
 			.isInstanceOf(IllegalArgumentException.class);
