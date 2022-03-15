@@ -18,7 +18,7 @@ public class CardsTest {
         @Test
         @DisplayName("가지고 있는 카드의 총합을 반환한다.")
         void returnTotalNumber() {
-            Cards cards = new Cards(
+            HoldCards cards = new HoldCards(
                 List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK),
                     Card.of(CardPattern.HEART, CardNumber.EIGHT)));
 
@@ -31,7 +31,7 @@ public class CardsTest {
         @DisplayName("ACE가 포함된 경우 21 넘지 않는 최대한 가까운 총합을 반환한다.")
         void returnTotalNumberWithAce(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3,
             int expected) {
-            Cards cards = new Cards(
+            HoldCards cards = new HoldCards(
                 List.of(Card.of(CardPattern.CLOVER, CardNumber.ACE),
                     Card.of(CardPattern.HEART, cardNumber1),
                     Card.of(CardPattern.SPADE, cardNumber2),
@@ -48,7 +48,7 @@ public class CardsTest {
         @Test
         @DisplayName("카드를 추가한다.")
         void addCard() {
-            Cards cards = new Cards(
+            HoldCards cards = new HoldCards(
                 List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK),
                     Card.of(CardPattern.HEART, CardNumber.EIGHT)));
             cards.add(Card.of(CardPattern.CLOVER, CardNumber.FOUR));

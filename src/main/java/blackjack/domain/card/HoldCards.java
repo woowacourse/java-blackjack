@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Cards {
+public class HoldCards {
 
     private final List<Card> cards;
 
-    public Cards() {
-        this(new ArrayList<>());
+    public HoldCards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
-    public Cards(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    public static HoldCards drawTwoCards(Drawable drawable) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(drawable.draw());
+        cards.add(drawable.draw());
+        return new HoldCards(cards);
     }
 
     public int getTotalNumber() {

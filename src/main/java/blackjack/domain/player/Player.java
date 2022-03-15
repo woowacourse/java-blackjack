@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import java.util.List;
 
 import blackjack.domain.card.Drawable;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.HoldCards;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 
@@ -11,16 +11,12 @@ public class Player {
 
     public static final int BLACKJACK_NUMBER = 21;
 
-    private final Cards cards;
+    private final HoldCards cards;
     private final Name name;
 
-    public Player(String name) {
-        this(new Name(name));
-    }
-
-    public Player(Name name) {
-        this.cards = new Cards();
-        this.name = name;
+    public Player(String name, Drawable deck) {
+        this.cards = HoldCards.drawTwoCards(deck);
+        this.name = new Name(name);
     }
 
     public void drawCard(Drawable drawable) {

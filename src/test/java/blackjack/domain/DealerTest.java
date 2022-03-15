@@ -24,12 +24,10 @@ public class DealerTest {
         @CsvSource(value = {"SIX|true", "SEVEN|false"}, delimiter = '|')
         @DisplayName("패의 합이 17이 넘는지 유무를 알려준다.")
         void returnFalse(CardNumber cardNumber, boolean expected) {
-            Dealer dealer = new Dealer();
             MockDeck mockDeck = new MockDeck(
                 List.of(Card.of(CardPattern.CLOVER, CardNumber.TEN),
                     Card.of(CardPattern.CLOVER, cardNumber)));
-            dealer.drawCard(mockDeck);
-            dealer.drawCard(mockDeck);
+            Dealer dealer = new Dealer(mockDeck);
 
             Assertions.assertThat(dealer.isDrawable()).isEqualTo(expected);
         }

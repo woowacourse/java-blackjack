@@ -5,23 +5,21 @@ import static blackjack.view.OutputView.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.player.Dealer;
+import blackjack.domain.Selection;
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Name;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.Selection;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        Players players = requestPlayers();
-        Dealer dealer = new Dealer();
         Deck deck = Deck.create();
+        Players players = requestPlayers(deck);
+        Dealer dealer = new Dealer(deck);
 
-        drawCardTwice(players, dealer, deck);
         printPlayersCard(toDto(players), PlayerDto.from(dealer));
 
         takeTurnsPlayers(players, deck);
@@ -68,13 +66,6 @@ public class BlackjackApplication {
         printPlayerCards(PlayerDto.from(player));
     }
 
-    private static void drawCardTwice(Players players, Dealer dealer, Deck deck) {
-        for (int i = 0; i < 2; i++) {
-            players.drawAll(deck);
-            dealer.drawCard(deck);
-        }
-    }
-
     private static List<PlayerDto> toDto(Players players) {
         return players.getValue()
             .stream()
@@ -82,19 +73,18 @@ public class BlackjackApplication {
             .collect(Collectors.toList());
     }
 
-    private static Players requestPlayers() {
+    private static Players requestPlayers(Deck deck) {
         List<String> inputNames = InputView.requestNames();
 
         try {
             List<Player> players = inputNames.stream()
                 .map(String::trim)
-                .map(Name::new)
-                .map(Player::new)
+                .map(input -> new Player(input, deck))
                 .collect(Collectors.toList());
             return new Players(players);
         } catch (IllegalArgumentException exception) {
             printException(exception);
-            return requestPlayers();
+            return requestPlayers(deck);
         }
     }
 }
