@@ -10,11 +10,8 @@ public class Player extends User {
 
     @Override
     public boolean hit(CardFactory cardFactory) {
-        if(!isBust() ){
-            cards.add(cardFactory.drawOneCard());
-            return true;
-        }
-        return false;
+        cards.add(cardFactory.drawOneCard());
+        return true;
     }
 
 }

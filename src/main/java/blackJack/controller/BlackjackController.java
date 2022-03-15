@@ -42,7 +42,8 @@ public class BlackjackController {
     }
 
     private void askOneMoreCard(Player player, CardFactory cardFactory) {
-        while (InputView.askOneMoreCard(player.getName()) && player.hit(cardFactory)) {
+        while (!player.isBust() && InputView.askOneMoreCard(player.getName())) {
+            player.hit(cardFactory);
             OutputView.printPlayerCard(UserDto.from(player));
         }
     }
