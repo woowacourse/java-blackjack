@@ -14,26 +14,26 @@ public class InputValidator {
 	private static final String CHOICE_YES = "y";
 	private static final String CHOICE_NO = "n";
 
-	public static void validatePlayerName(String input) {
+	public static void validatePlayerName(final String input) {
 		validateEmpty(input);
 		validateSpace(input);
 		validateDuplication(input);
 	}
 
-	private static void validateEmpty(String input) {
+	private static void validateEmpty(final String input) {
 		if (input.isEmpty()) {
 			throw new IllegalArgumentException(NO_INPUT_ERROR);
 		}
 	}
 
-	private static void validateSpace(String input) {
+	private static void validateSpace(final String input) {
 		if (input.contains(SPACE)) {
 			throw new IllegalArgumentException(INPUT_CONTAINS_SPACE_ERROR);
 		}
 	}
 
-	private static void validateDuplication(String input) {
-		String[] parsedInput = input.split(NAME_DISTRIBUTOR);
+	private static void validateDuplication(final String input) {
+		final String[] parsedInput = input.split(NAME_DISTRIBUTOR);
 		final long theNumberOfUniqueInput = Arrays.stream(parsedInput)
 			.distinct()
 			.count();
@@ -42,12 +42,12 @@ public class InputValidator {
 		}
 	}
 
-	public static void validateDrawChoice(String input) {
+	public static void validateDrawChoice(final String input) {
 		validateEmpty(input);
 		validateProperChoice(input);
 	}
 
-	private static void validateProperChoice(String input) {
+	private static void validateProperChoice(final String input) {
 		final String inputLowercase = input.toLowerCase(Locale.ROOT);
 		if (!inputLowercase.equals(CHOICE_YES) && !inputLowercase.equals(CHOICE_NO)) {
 			throw new IllegalArgumentException(PROPER_CHOICE_ERROR);

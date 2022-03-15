@@ -5,7 +5,7 @@ import blackjack.domain.card.Hand;
 
 public class Player extends Role {
 
-	public Player(String name, Hand hand) {
+	public Player(final String name, final Hand hand) {
 		super(name, hand);
 	}
 

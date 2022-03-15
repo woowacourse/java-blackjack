@@ -8,12 +8,11 @@ import blackjack.domain.card.Hand;
 public class Dealer extends Role {
 
 	private static final int CAN_DRAW_STANDARD = 16;
-
 	private static final String DEALER_NAME = "딜러";
 
 	private final Supplier<Boolean> drawable;
 
-	public Dealer(Hand hand, Supplier<Boolean> drawable) {
+	public Dealer(final Hand hand, final Supplier<Boolean> drawable) {
 		super(DEALER_NAME, hand);
 		this.drawable = drawable;
 	}

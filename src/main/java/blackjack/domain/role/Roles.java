@@ -91,7 +91,7 @@ public class Roles {
 		return dealer;
 	}
 
-	private Outcome judge(Role player) {
+	private Outcome judge(final Role player) {
 		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
 	}
 }

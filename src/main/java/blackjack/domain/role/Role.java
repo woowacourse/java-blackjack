@@ -16,7 +16,7 @@ public abstract class Role {
 	protected final Hand hand;
 
 	private boolean drawMore;
-	private Map<Outcome, Integer> competeResult;
+	private final Map<Outcome, Integer> competeResult;
 
 	public Role(final String name, final Hand hand) {
 		this.name = name;

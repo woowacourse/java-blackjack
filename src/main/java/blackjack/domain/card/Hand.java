@@ -45,7 +45,7 @@ public class Hand {
 		return totalScore;
 	}
 
-	private boolean isBust(int totalScore) {
+	private boolean isBust(final int totalScore) {
 		return totalScore > BlackJack.OPTIMIZED_WINNING_NUMBER;
 	}
 

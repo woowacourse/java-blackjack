@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class Deck {
 
 	public static final String EMPTY_DECK_ERROR = "드로우 가능한 카드가 더이상 없습니다.";
+
 	private final Queue<Card> cards;
 
 	public Deck() {

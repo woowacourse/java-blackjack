@@ -38,7 +38,7 @@ public class OutputView {
 		System.out.println(message);
 	}
 
-	private static void printHand(final Role dealerStatus, List<Role> playersStatus) {
+	private static void printHand(final Role dealerStatus, final List<Role> playersStatus) {
 		printPersonalHand(dealerStatus);
 		playersStatus.forEach(OutputView::printPersonalHand);
 		System.out.print("\n");

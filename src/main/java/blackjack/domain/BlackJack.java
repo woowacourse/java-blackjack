@@ -44,7 +44,7 @@ public class BlackJack {
 	private void redrawCard() {
 		String currentPlayer = roles.getCurrentPlayerName();
 		do {
-			String answer = InputView.drawOneMoreCard(currentPlayer);
+			final String answer = InputView.drawOneMoreCard(currentPlayer);
 			final Role playerStatus = roles.drawPlayer(deck, RedrawChoice.of(answer), currentPlayer);
 			OutputView.printPersonalHand(playerStatus);
 			currentPlayer = roles.getCurrentPlayerName();

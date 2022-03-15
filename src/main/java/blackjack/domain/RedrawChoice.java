@@ -14,7 +14,7 @@ public enum RedrawChoice {
 		this.value = value;
 	}
 
-	public static RedrawChoice of(String choice) {
+	public static RedrawChoice of(final String choice) {
 		final String lowercaseChoice = choice.toLowerCase(Locale.ROOT);
 		return Arrays.stream(values())
 			.filter(redrawChoice -> lowercaseChoice.equals(redrawChoice.getValue()))
