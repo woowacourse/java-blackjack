@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import java.util.EnumMap;
 import java.util.List;

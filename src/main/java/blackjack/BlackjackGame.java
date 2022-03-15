@@ -1,9 +1,9 @@
 package blackjack;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.dto.HitRequest;
 import blackjack.dto.ParticipantInitialResponse;
