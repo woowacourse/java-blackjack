@@ -26,8 +26,12 @@ public class Dealer extends User {
     }
 
     @Override
-    public void hit(CardFactory cardFactory) {
-        cards.add(cardFactory.drawOneCard());
+    public boolean hit(CardFactory cardFactory) {
+        if(canOneMoreCard()){
+            cards.add(cardFactory.drawOneCard());
+            return true;
+        }
+        return false;
     }
 
     public boolean isLose(Player player) {

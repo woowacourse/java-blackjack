@@ -40,5 +40,5 @@ public abstract class User {
     public boolean isBlackJack(){
         return cards.isBlackJack();
     }
-    abstract public void hit(CardFactory cardFactory);
+    abstract public boolean hit(CardFactory cardFactory);
 }
