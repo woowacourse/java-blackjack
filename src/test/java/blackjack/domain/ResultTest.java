@@ -84,6 +84,6 @@ class ResultTest {
     }
 
     private Player createPlayerByName(String name) {
-        return Player.from(name, new BettingMoney(MINIMUM_BETTING_AMOUNT);
+        return Player.from(name, new BettingMoney(MINIMUM_BETTING_AMOUNT));
     }
 }
