@@ -9,7 +9,15 @@ public class PlayingCards {
     private static final int ALTERNATIVE_ACE_GAP = 10;
     private static final int CARD_QUANTITY_FOR_BLACKJACK = 2;
 
-    private final List<PlayingCard> playingPlayingCards = new ArrayList<>();
+    private final List<PlayingCard> playingPlayingCards;
+
+    public PlayingCards() {
+        this(new ArrayList<>());
+    }
+
+    public PlayingCards(List<PlayingCard> playingCards) {
+        this.playingPlayingCards = new ArrayList<>(playingCards);
+    }
 
     public void addCard(PlayingCard playingCard) {
         playingPlayingCards.add(playingCard);
