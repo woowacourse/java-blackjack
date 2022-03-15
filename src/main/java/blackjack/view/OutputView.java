@@ -44,7 +44,7 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(gamerCardsDto.getName())
                 .append(": ")
-                .append(String.join(", ", getGamerCards(gamerCardsDto)));
+                .append(String.join(", ", gamerCardsToList(gamerCardsDto)));
         System.out.println(stringBuilder);
     }
 
@@ -84,15 +84,17 @@ public class OutputView {
 
     private static void printGamerCardAndSum(GamerCardsResultDto gamerCardsResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gamerCardsResultDto.getGamerCardsDto().getName())
+        String gamerName = gamerCardsResultDto.getGamerCardsDto().getName();
+        GamerCardsDto gamerCardsDto = gamerCardsResultDto.getGamerCardsDto();
+        stringBuilder.append(gamerName)
                 .append(": ")
-                .append(String.join(", ", getGamerCards(gamerCardsResultDto.getGamerCardsDto())))
+                .append(String.join(", ", gamerCardsToList(gamerCardsDto)))
                 .append(" - 결과: ")
                 .append(gamerCardsResultDto.getSum());
         System.out.println(stringBuilder);
     }
 
-    private static List<String> getGamerCards(GamerCardsDto gamerCardsDto) {
+    private static List<String> gamerCardsToList(GamerCardsDto gamerCardsDto) {
         return gamerCardsDto.getCards()
                 .stream()
                 .map(CardDto::getCard)
