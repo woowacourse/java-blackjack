@@ -20,8 +20,8 @@ public abstract class Finished extends AbstractBlackjackGameState {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public final boolean isFinished() {
+        return true;
     }
 
     @Override

@@ -5,6 +5,7 @@ import static blackjack.domain.card.CardNumber.FIVE;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardPattern.SPADE;
 import static blackjack.testutil.CardFixtureGenerator.createCards;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
@@ -29,5 +30,12 @@ class StandTest {
         assertThatThrownBy(() -> stand.stand())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("종료된 상태는 stand을 할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("Stand는 종료여부는 true가 반환된다.")
+    void isFinished() {
+        final BlackjackGameState stand = new Stand(createCards(Card.of(SPADE, KING), Card.of(SPADE, FIVE)));
+        assertThat(stand.isFinished()).isTrue();
     }
 }

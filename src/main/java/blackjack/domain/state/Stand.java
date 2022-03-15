@@ -9,11 +9,6 @@ public class Stand extends Finished {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
     public int score() {
         return 0;
     }
