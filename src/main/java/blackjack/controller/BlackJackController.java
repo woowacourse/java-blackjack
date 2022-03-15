@@ -2,10 +2,10 @@ package blackjack.controller;
 
 import static blackjack.dto.UserDto.from;
 
+import blackjack.domain.BlackJack;
 import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.dto.UsersDto;
@@ -15,42 +15,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class BlackJack {
+public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJack(InputView inputView, OutputView outputView) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
-        Users users = getUsers();
+        BlackJack blackJack = BlackJack.from(getPlayerNames(), new ShuffledDeckGenerateStrategy());
 
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
-        users.setInitCardsPerPlayer(deck);
+        blackJack.setInitCardsPerPlayer();
 
-        printInitCardInfo(users);
+        printInitCardInfo(blackJack.getUsers());
 
-        drawAdditionalCard(users, deck);
+        drawAdditionalCard(blackJack);
 
-        users.calculateAllUser();
+        blackJack.calculateScore();
 
-        printFinalResult(users);
+        printFinalResult(blackJack.getUsers());
     }
 
-    private Users getUsers() {
+    private List<String> getPlayerNames() {
         try {
-            List<String> playerNames = inputView.inputPlayerNames();
-
-            Dealer dealer = new Dealer();
-
-            return Users.of(playerNames, dealer);
-        } catch(IllegalArgumentException e) {
+            return inputView.inputPlayerNames();
+        }catch(IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
-            return getUsers();
+            return getPlayerNames();
         }
     }
 
@@ -59,12 +54,14 @@ public class BlackJack {
         outputView.printInitCards(usersDto);
     }
 
-    private void drawAdditionalCard(Users users, Deck deck) {
+    private void drawAdditionalCard(BlackJack blackJack) {
+        Deck deck = blackJack.getDeck();
+
         Consumer<User> consumerPlayer = user -> drawCardPerPlayer(user, deck);
 
         Consumer<User> consumerDealer = user -> drawDealerCard(user, deck);
 
-        users.drawAdditionalCard(consumerPlayer, consumerDealer);
+        blackJack.drawAdditionalCard(consumerPlayer, consumerDealer);
     }
 
     private void drawCardPerPlayer(User player, Deck deck) {
