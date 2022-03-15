@@ -5,6 +5,7 @@ import java.util.List;
 public class Score {
     private static final int INIT_A_NUMBER = 1;
     private static final int NEW_A_NUMBER = 11;
+    public static final int CONDITION_BURST = 21;
 
     private final int sum;
 
@@ -37,7 +38,7 @@ public class Score {
     }
 
     private static int scoreWithA(int sum) {
-        if (sum <= NEW_A_NUMBER) {
+        if (sum + (NEW_A_NUMBER - INIT_A_NUMBER) <= CONDITION_BURST) {
             return sum + NEW_A_NUMBER - INIT_A_NUMBER;
         }
 

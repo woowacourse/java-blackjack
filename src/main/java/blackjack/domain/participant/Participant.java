@@ -8,7 +8,6 @@ import blackjack.domain.machine.Score;
 
 public abstract class Participant {
     private static final String NAME_ERROR = "[Error] 이름은 빈 값일 수 없습니다.";
-    private static final int CONDITION_BURST = 21;
 
     protected String name;
     protected List<Card> myCards;
@@ -35,7 +34,7 @@ public abstract class Participant {
     }
 
     public boolean isBurst() {
-        return score() > CONDITION_BURST;
+        return score() > Score.CONDITION_BURST;
     }
 
     public List<Card> getMyCards() {
