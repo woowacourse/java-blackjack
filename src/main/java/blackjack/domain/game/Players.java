@@ -1,6 +1,8 @@
 package blackjack.domain.game;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -17,6 +19,19 @@ public class Players {
 
         for (String name : names) {
             players.add(new Player(name));
+        }
+    }
+
+    public void deal(final CardDeck cardDeck) {
+        for (Player player : players) {
+            player.dealCards(cardDeck.pickInit());
+        }
+    }
+
+    public void draw(final CardDeck cardDeck,
+                     final Predicate<Player> predicate, final BiConsumer<String, List<String>> biConsumer) {
+        for (Player player : players) {
+            player.draw(cardDeck, predicate, biConsumer);
         }
     }
 
