@@ -115,7 +115,7 @@ class CardsTest {
 
         // when
         // then
-        assertThatThrownBy(() -> cards.findFirst())
+        assertThatThrownBy(cards::findFirst)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드가 한 장도 없습니다.");
     }

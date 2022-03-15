@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomGeneratingStrategy;
 import blackjack.dto.DealerRecordDto;
 import blackjack.dto.DealerTurnResultDto;
 import blackjack.dto.ParticipantDto;
@@ -19,7 +20,7 @@ public class GameController {
     private final DealerService dealerService;
 
     public GameController() {
-        final Deck deck = Deck.create();
+        final Deck deck = Deck.from(new RandomGeneratingStrategy());
         this.playerService = initPlayerService(deck);
         this.dealerService = new DealerService(deck);
     }
