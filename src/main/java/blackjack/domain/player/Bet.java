@@ -1,13 +1,12 @@
 package blackjack.domain.player;
 
-import blackjack.domain.result.ResultStrategy;
 import java.util.Objects;
 
 public class Bet {
 
     private static final int MIN = 0;
 
-    private int amount;
+    private final int amount;
 
     public Bet(final int amount) {
         checkBetRightRange(amount);
@@ -18,10 +17,6 @@ public class Bet {
         if (bet <= MIN) {
             throw new IllegalArgumentException("[ERROR] 베팅은 1원부터 가능합니다.");
         }
-    }
-
-    public void calculateBenefit(final ResultStrategy resultStrategy) {
-        amount = resultStrategy.calculateBet(amount);
     }
 
     public int getAmount() {
