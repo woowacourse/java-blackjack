@@ -52,6 +52,8 @@ public class GameController {
     }
 
     private void drawPlayerCards(Game game) {
+        validatePlayersPresent(game.getPlayers());
+
         while (game.findHitPlayer().isPresent()) {
             Player player = game.findHitPlayer().get();
             PlayStatus hitOrStay = requestHitOrStay(player.getName());
@@ -59,6 +61,12 @@ public class GameController {
             game.drawPlayerCard(player, hitOrStay);
 
             printPlayerCards(convertToDto(player));
+        }
+    }
+
+    private void validatePlayersPresent(List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalStateException("플레이어가 존재하지 않습니다.");
         }
     }
 
