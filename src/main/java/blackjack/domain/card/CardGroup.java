@@ -20,12 +20,23 @@ public class CardGroup {
         return getSum() > BLACKJACK_NUMBER;
     }
 
+    public boolean isBust(int sum) {
+        return sum > BLACKJACK_NUMBER;
+    }
+
     public boolean isAddable() {
         return getSum() < BLACKJACK_NUMBER;
     }
 
-    public int getDealerSum() {
-        return getSum() + countA() * ACE_SPECIAL_SCORE;
+    public int getScore() {
+        int sum = getSum();
+        if (containsAce() && sum + ACE_SPECIAL_SCORE > BLACKJACK_NUMBER) {
+            return sum;
+        }
+        if (containsAce()) {
+            return sum + ACE_SPECIAL_SCORE;
+        }
+        return sum;
     }
 
     private int getSum() {
@@ -35,20 +46,8 @@ public class CardGroup {
             .sum();
     }
 
-    public int getPlayerSum() {
-        int maxSum = getDealerSum();
-        int aCount = countA();
-        while (maxSum > BLACKJACK_NUMBER && aCount > 0) {
-            maxSum -= ACE_SPECIAL_SCORE;
-            aCount--;
-        }
-        return maxSum;
-    }
-
-    private int countA() {
-        return (int) cards.stream()
-                .filter(Card::isA)
-                .count();
+    private boolean containsAce() {
+        return cards.stream().anyMatch(Card::isA);
     }
 
     public void open() {

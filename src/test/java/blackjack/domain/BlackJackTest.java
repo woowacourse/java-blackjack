@@ -1,7 +1,13 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.property.CardNumber;
@@ -13,11 +19,6 @@ import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Match;
 import blackjack.domain.result.PlayerResult;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 class BlackJackTest {
     @Test

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Gamer{
-    private static final int BLACKJACK_NUMBER = 21;
-
     public Player(String name) {
         super(name);
     }
@@ -19,18 +17,14 @@ public class Player extends Gamer{
     }
 
     public int compareCardsSumTo(int sum) {
-        if (isBust()) {
+        if (this.isBust()) {
             return -1;
         }
 
-        if (isDealerBust(sum)) {
+        if (isBust(sum)) {
             return 1;
         }
 
-        return Integer.compare(getPlayerSum(), sum);
-    }
-
-    private boolean isDealerBust(int sum) {
-        return sum > BLACKJACK_NUMBER;
+        return Integer.compare(getScore(), sum);
     }
 }

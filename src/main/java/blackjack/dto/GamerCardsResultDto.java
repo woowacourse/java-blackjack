@@ -22,7 +22,7 @@ public class GamerCardsResultDto {
     public static List<GamerCardsResultDto> of(List<Gamer> gamersCards) {
         List<GamerCardsResultDto> gamersCardsResultDto = new ArrayList<>();
         for (Gamer gamer : gamersCards) {
-            gamersCardsResultDto.add(of(gamer.getName(), gamer.getCardGroup(), gamer.getPlayerSum()));
+            gamersCardsResultDto.add(of(gamer.getName(), gamer.getCardGroup(), gamer.getScore()));
         }
         return Collections.unmodifiableList(gamersCardsResultDto);
     }

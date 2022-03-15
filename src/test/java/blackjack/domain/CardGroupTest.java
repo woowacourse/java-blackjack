@@ -24,7 +24,7 @@ class CardGroupTest {
         cardGroup.addCard(new Card(CardShape.HEART, CardNumber.TWO));
         cardGroup.addCard(new Card(CardShape.HEART, CardNumber.Q));
         cardGroup.addCard(card);
-        assertThat(cardGroup.getPlayerSum()).isEqualTo(result);
+        assertThat(cardGroup.getScore()).isEqualTo(result);
     }
 
     private static Stream<Arguments> invalidParameters() {

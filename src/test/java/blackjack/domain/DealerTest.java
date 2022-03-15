@@ -25,14 +25,14 @@ class DealerTest {
         dealer.addCard(card);
 
         dealer.addCard(new Card(CardShape.HEART, CardNumber.A));
-        assertThat(dealer.getDealerSum()).isEqualTo(result);
+        assertThat(dealer.getScore()).isEqualTo(result);
     }
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-                Arguments.of(new Card(CardShape.HEART, CardNumber.FIVE), 26, "카드 숫자 합 15에서 Ace 추가시에 26"),
-                Arguments.of(new Card(CardShape.HEART, CardNumber.SIX), 27, "카드 숫자 합 16에서 Ace 추가시에 27"),
-                Arguments.of(new Card(CardShape.HEART, CardNumber.SEVEN), 17, "카드 숫자 합 17에서 Ace 추가시에 변화없음")
+                Arguments.of(new Card(CardShape.HEART, CardNumber.FIVE), 16, "카드 숫자 합 15에서 Ace 추가시에 16"),
+                Arguments.of(new Card(CardShape.HEART, CardNumber.SIX), 17, "카드 숫자 합 16에서 Ace 추가시에 17"),
+                Arguments.of(new Card(CardShape.HEART, CardNumber.SEVEN), 17, "카드 숫자 합 17에서 Ace 추가시에 17")
         );
     }
 }

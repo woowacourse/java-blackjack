@@ -57,16 +57,16 @@ public class Gamer {
         return cardGroup.isBust();
     }
 
+    public boolean isBust(int sum) {
+        return cardGroup.isBust(sum);
+    }
+
     public boolean isAddable() {
         return cardGroup.isAddable();
     }
 
-    public int getDealerSum() {
-        return cardGroup.getDealerSum();
-    }
-
-    public int getPlayerSum() {
-        return cardGroup.getPlayerSum();
+    public int getScore() {
+        return cardGroup.getScore();
     }
 
     public CardGroup getCardGroup() {

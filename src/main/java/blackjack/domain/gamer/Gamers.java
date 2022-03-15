@@ -14,11 +14,11 @@ import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Match;
 import blackjack.domain.result.PlayerResult;
 
-public class GamerGroup {
+public class Gamers {
     private final Dealer dealer;
     private final PlayerGroup playerGroup;
 
-    public GamerGroup(Dealer dealer, PlayerGroup playerGroup) {
+    public Gamers(Dealer dealer, PlayerGroup playerGroup) {
         this.dealer = dealer;
         this.playerGroup = playerGroup;
     }
@@ -51,7 +51,7 @@ public class GamerGroup {
     }
 
     public GameResult getGameResult() {
-        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getDealerSum());
+        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getScore());
         PlayerResult playerResult = new PlayerResult(playerResults);
 
         Collection<Match> playerMatches = playerResults.values();
