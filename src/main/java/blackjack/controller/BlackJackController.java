@@ -14,7 +14,6 @@ import java.util.List;
 public class BlackJackController {
 
     private static final String Y = "Y";
-    private static final String DEALER_MATCH_RESULT_MESSAGE = "딜러: ";
 
     private Deck deck = new Deck(new RandomCardsGenerateStrategy());
     private Dealer dealer = new Dealer();
@@ -27,10 +26,8 @@ public class BlackJackController {
         takeOneMoreCardDuringDealerTurn();
         OutputView.printParticipantScore(dealer, players);
 
-//        decideGameScore();
         ScoreBoard scoreBoard = new ScoreBoard(dealer, players);
         ScoreBoardResponse scoreBoardResponse = ScoreBoardResponse.from(scoreBoard);
-//        OutputView.printBlackjackGameResult(dealer, players);
         OutputView.printBlackjackGameResult2(scoreBoardResponse);
     }
 
@@ -70,13 +67,6 @@ public class BlackJackController {
         while (dealer.shouldReceive()) {
             OutputView.printDealerOneMoreCard();
             dealer.receiveCard(deck.draw());
-        }
-    }
-
-    void decideGameScore() {
-        for (Player player : players) {
-            player.decideMatchResult(dealer);
-            dealer.decideMatchResult(player);
         }
     }
 }

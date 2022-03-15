@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.MatchResult;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Card;
 import java.util.List;
@@ -32,6 +33,10 @@ abstract class Participant {
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public MatchResult match(Participant other) {
+        return hand.compareMatchResult(other.hand);
     }
 
     @Override

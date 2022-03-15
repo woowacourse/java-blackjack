@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class ScoreBoard {
 
-    EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap(MatchResult.class);
-    Map<Player, MatchResult> playersMatchResult = new LinkedHashMap<>();
+    private EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap(MatchResult.class);
+    private Map<Player, MatchResult> playersMatchResult = new LinkedHashMap<>();
 
 
     public ScoreBoard(Dealer dealer, List<Player> players) {
         initDealerMatchResult();
-        matchEachOther(dealer, players);
+        matchEachOthers(dealer, players);
     }
 
     private void initDealerMatchResult() {
@@ -24,7 +24,7 @@ public class ScoreBoard {
         }
     }
 
-    private void matchEachOther(Dealer dealer, List<Player> players) {
+    private void matchEachOthers(Dealer dealer, List<Player> players) {
         for (Player player : players) {
             makeDealerMatchResult(dealer, player);
             makePlayerMatchResult(dealer, player);
@@ -32,12 +32,12 @@ public class ScoreBoard {
     }
 
     private void makeDealerMatchResult(Dealer dealer, Player player) {
-        MatchResult matchResult = dealer.decideMatchResult(player);
+        MatchResult matchResult = dealer.match(player);
         dealerMatchResult.put(matchResult, dealerMatchResult.get(matchResult) + 1);
     }
 
     private void makePlayerMatchResult(Dealer dealer, Player player) {
-        MatchResult matchResult = player.decideMatchResult(dealer);
+        MatchResult matchResult = player.match(dealer);
         playersMatchResult.put(player, matchResult);
     }
 

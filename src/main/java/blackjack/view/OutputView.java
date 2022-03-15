@@ -14,7 +14,6 @@ import java.util.Map;
 public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
-    private static final String PLAYER_MATCH_RESULT_MESSAGE = "%s: %s" + NEW_LINE;
     private static final String PLAYER_SCORE_MESSAGE = "%s카드: %s - 결과: %d" + NEW_LINE;
     private static final String DEALER_SCORE_MESSAGE = NEW_LINE + "%s 카드: %s - 결과: %d" + NEW_LINE;
     private static final String DEALER_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
@@ -22,9 +21,7 @@ public class OutputView {
     private static final String GIVE_CARDS_TO_DEALER_MESSAGE = "%s: %s" + NEW_LINE;
     private static final String PLAYER_CARD_MESSAGE = "%s카드: %s" + NEW_LINE;
     private static final String COMMA_DELIMITER = ", ";
-    private static final String SPACE_DELIMINATOR = " ";
     private static final String BLACKJACK_GAME_RESULT_MESSAGE = "## 최종 승패";
-    private static final String DEALER_MATCH_RESULT_MESSAGE = "딜러: ";
 
     public static void printGiveCardsToParticipants(Dealer dealer, List<Player> players) {
         out.printf(GIVE_CARDS_TO_PLAYERS_MESSAGE, getPlayerNames(players));
@@ -80,27 +77,6 @@ public class OutputView {
 
     private static String cardDisplayContents(Card card) {
         return card.getDenomination() + card.getSuit();
-    }
-
-    public static void printBlackjackGameResult(Dealer dealer, List<Player> players) {
-        out.println(BLACKJACK_GAME_RESULT_MESSAGE);
-        printDealerMatchResult(dealer);
-        printPlayerMatchResult(players);
-    }
-
-    private static void printDealerMatchResult(Dealer dealer) {
-        Map<MatchResult, Integer> resultScores = dealer.getMatchResultScores();
-        String dealerScoreString = resultScores.entrySet().stream()
-                .filter(entry -> entry.getValue() != 0)
-                .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(joining(SPACE_DELIMINATOR));
-        out.println(DEALER_MATCH_RESULT_MESSAGE + dealerScoreString);
-    }
-
-    private static void printPlayerMatchResult(List<Player> players) {
-        for (Player player : players) {
-            out.printf(PLAYER_MATCH_RESULT_MESSAGE, player.getName(), player.getResult().getName());
-        }
     }
 
     public static void printBlackjackGameResult2(ScoreBoardResponse scoreBoardResponse) {

@@ -24,6 +24,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -110,7 +111,7 @@ public class ScoreBoardTest {
         // when
         ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(player));
         int dealerMatchScore = scoreBoard.findDealerMatchScore(WIN);
-        MatchResult playerMatchResult = player.getResult();
+        MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
 
         // then
         assertAll(
@@ -168,12 +169,13 @@ public class ScoreBoardTest {
 
         // when
         ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(playerA, playerB, playerC));
+        EnumMap<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
         Map<Player, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
 
         // then
         assertAll(
-                () -> assertThat(dealer.getMatchResultScore(WIN)).isEqualTo(2),
-                () -> assertThat(dealer.getMatchResultScore(LOSE)).isEqualTo(1),
+                () -> assertThat(dealerMatchResults.get(WIN)).isEqualTo(2),
+                () -> assertThat(dealerMatchResults.get(LOSE)).isEqualTo(1),
 
                 () -> assertThat(playersMatchResult.get(playerA)).isEqualTo(LOSE),
                 () -> assertThat(playersMatchResult.get(playerB)).isEqualTo(WIN),
@@ -192,13 +194,14 @@ public class ScoreBoardTest {
 
         // when
         ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(playerA, playerB, playerC));
+        EnumMap<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
         Map<Player, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
 
         // then
         assertAll(
-                () -> assertThat(dealer.getMatchResultScore(WIN)).isEqualTo(1),
-                () -> assertThat(dealer.getMatchResultScore(LOSE)).isEqualTo(1),
-                () -> assertThat(dealer.getMatchResultScore(DRAW)).isEqualTo(1),
+                () -> assertThat(dealerMatchResults.get(WIN)).isEqualTo(1),
+                () -> assertThat(dealerMatchResults.get(LOSE)).isEqualTo(1),
+                () -> assertThat(dealerMatchResults.get(DRAW)).isEqualTo(1),
 
                 () -> assertThat(playersMatchResult.get(playerA)).isEqualTo(WIN),
                 () -> assertThat(playersMatchResult.get(playerB)).isEqualTo(LOSE),

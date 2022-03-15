@@ -10,11 +10,6 @@ public class Player extends Participant {
         this.name = new Name(name);
     }
 
-    public MatchResult decideMatchResult(Dealer dealer) {
-        matchResult =  hand.compareMatchResult(dealer.getHand());
-        return matchResult;
-    }
-
     public MatchResult getResult() {
         return matchResult;
     }
