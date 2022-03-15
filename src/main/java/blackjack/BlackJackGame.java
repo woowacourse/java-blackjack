@@ -33,7 +33,7 @@ public class BlackJackGame {
     }
 
     public boolean isDrawPossible(String name, UnaryOperator<String> operator) {
-        return !gamers.isBurst(name) && Answer.from(operator.apply(name)).isYes();
+        return !gamers.canDraw(name) && Answer.from(operator.apply(name)).isYes();
     }
 
     public void distributeCardToPlayer(String name) {

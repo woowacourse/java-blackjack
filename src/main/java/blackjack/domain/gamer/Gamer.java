@@ -61,5 +61,5 @@ public abstract class Gamer {
         return cards.size();
     }
 
-    abstract boolean canDraw();
+    abstract boolean isBurst();
 }

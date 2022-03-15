@@ -44,7 +44,7 @@ public class Gamers {
     }
 
     public void distributeAdditionalToDealer(Deck deck) {
-        while (dealer.canDraw()) {
+        while (dealer.isBurst()) {
             distributeCard(dealer, deck);
         }
     }
@@ -57,9 +57,9 @@ public class Gamers {
         findPlayerByName(name).addCard(deck.draw());
     }
 
-    public boolean isBurst(String name) {
+    public boolean canDraw(String name) {
         Player player = findPlayerByName(name);
-        return !player.canDraw();
+        return !player.isBurst();
     }
 
     public Player findPlayerByName(String name) {

@@ -1,6 +1,5 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,7 +56,7 @@ public class GamersTest {
     void isBurst() {
         String name = "범고래";
         Gamers gamers = new Gamers(List.of(name));
-        assertThat(gamers.isBurst(name)).isFalse();
+        assertThat(gamers.canDraw(name)).isFalse();
     }
 
     @Test

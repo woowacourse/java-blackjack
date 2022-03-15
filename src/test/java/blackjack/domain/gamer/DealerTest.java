@@ -20,6 +20,6 @@ class DealerTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        assertThat(dealer.canDraw()).isEqualTo(true);
+        assertThat(dealer.isBurst()).isEqualTo(true);
     }
 }
