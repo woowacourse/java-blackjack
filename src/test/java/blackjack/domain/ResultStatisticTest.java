@@ -7,7 +7,9 @@ import blackjack.domain.card.element.Denomination;
 import blackjack.domain.card.element.Suit;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
-import blackjack.domain.human.Players;
+import blackjack.domain.human.group.Players;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultStatistic;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class StatisticTest {
+class ResultStatisticTest {
     private final Player player1 = Player.from("pobi");
     private final Player player2 = Player.from("jason");
     private final Player player3 = Player.from("bani");
@@ -30,7 +32,7 @@ class StatisticTest {
     @Nested
     @DisplayName("딜러_21초과_플레이어승")
     class DealerOverPlayerUnderTest {
-        Statistic statistic;
+        ResultStatistic resultStatistic;
         
         @BeforeEach
         void setup() {
@@ -43,13 +45,13 @@ class StatisticTest {
             addCardList(blackjackTable.getDealer(), List.of("8", "10", "10"));
             
             // when
-            statistic = Statistic.from(blackjackTable);
+            resultStatistic = ResultStatistic.from(blackjackTable);
         }
         
         @Test
         void playerResultTest() {
             // then
-            assertThat(statistic.getPlayersResult())
+            assertThat(resultStatistic.getPlayersResult())
                     .containsEntry(player1, Result.WIN)
                     .containsEntry(player2, Result.LOSE);
         }
@@ -57,7 +59,7 @@ class StatisticTest {
         @Test
         void dealerResultTest() {
             // then
-            assertThat(statistic.getDealerResults()).isEqualTo(Map.of(
+            assertThat(resultStatistic.getDealerResults()).isEqualTo(Map.of(
                             Result.LOSE, 1,
                             Result.WIN, 1,
                             Result.DRAW, 0
@@ -69,7 +71,7 @@ class StatisticTest {
     @Nested
     @DisplayName("딜러_21초과_딜러승")
     class DealerOverPlayerOverTest {
-        Statistic statistic;
+        ResultStatistic resultStatistic;
         
         @BeforeEach
         void setup() {
@@ -82,13 +84,13 @@ class StatisticTest {
             addCardList(blackjackTable.getDealer(), List.of("10", "10", "10", "10"));
             
             //when
-            statistic = Statistic.from(blackjackTable);
+            resultStatistic = ResultStatistic.from(blackjackTable);
         }
         
         @Test
         void playerResultTest() {
             // then
-            assertThat(statistic.getPlayersResult())
+            assertThat(resultStatistic.getPlayersResult())
                     .containsEntry(player1, Result.LOSE)
                     .containsEntry(player2, Result.LOSE);
         }
@@ -96,7 +98,7 @@ class StatisticTest {
         @Test
         void dealerResultTest() {
             // then
-            assertThat(statistic.getDealerResults()).isEqualTo(Map.of(
+            assertThat(resultStatistic.getDealerResults()).isEqualTo(Map.of(
                             Result.LOSE, 0,
                             Result.WIN, 2,
                             Result.DRAW, 0
@@ -108,7 +110,7 @@ class StatisticTest {
     @Nested
     @DisplayName("딜러_21이하_테스트")
     class DealerUnderTest {
-        Statistic statistic;
+        ResultStatistic resultStatistic;
         
         @BeforeEach
         void setup() {
@@ -123,13 +125,13 @@ class StatisticTest {
             addCardList(blackjackTable.getDealer(), List.of("10", "10"));
             
             // when
-            statistic = Statistic.from(blackjackTable);
+            resultStatistic = ResultStatistic.from(blackjackTable);
         }
         
         @Test
         void playerResultTest() {
             // then
-            assertThat(statistic.getPlayersResult())
+            assertThat(resultStatistic.getPlayersResult())
                     .containsEntry(player1, Result.LOSE)
                     .containsEntry(player2, Result.LOSE)
                     .containsEntry(player3, Result.DRAW)
@@ -139,7 +141,7 @@ class StatisticTest {
         @Test
         void dealerResultTest() {
             // then
-            assertThat(statistic.getDealerResults()).isEqualTo(Map.of(
+            assertThat(resultStatistic.getDealerResults()).isEqualTo(Map.of(
                             Result.LOSE, 1,
                             Result.WIN, 2,
                             Result.DRAW, 1

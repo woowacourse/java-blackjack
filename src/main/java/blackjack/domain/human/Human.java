@@ -2,9 +2,9 @@ package blackjack.domain.human;
 
 import static blackjack.util.Constants.BLACKJACK_NUMBER;
 
-import blackjack.domain.Point;
+import blackjack.domain.result.Point;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.group.Cards;
 import blackjack.domain.human.element.Name;
 
 public abstract class Human {

@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.group.CardDeck;
 import blackjack.domain.human.Dealer;
-import blackjack.domain.human.Players;
+import blackjack.domain.human.group.Players;
 import blackjack.util.Constants;
 
 public final class BlackjackTable {

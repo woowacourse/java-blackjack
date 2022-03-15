@@ -1,6 +1,7 @@
-package blackjack.domain.human;
+package blackjack.domain.human.group;
 
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.group.CardDeck;
+import blackjack.domain.human.Player;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;

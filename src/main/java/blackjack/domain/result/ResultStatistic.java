@@ -1,23 +1,24 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
+import blackjack.domain.BlackjackTable;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Statistic {
+public final class ResultStatistic {
     private final Map<Player, Result> playersResult = new HashMap<>();
     private final Map<Result, Integer> dealerResults = new HashMap<>();
     
-    private Statistic(BlackjackTable blackjackTable) {
+    private ResultStatistic(BlackjackTable blackjackTable) {
         for (Result value : Result.values()) {
             dealerResults.put(value, 0);
         }
         calculate(blackjackTable);
     }
     
-    public static Statistic from(BlackjackTable blackjackTable) {
-        return new Statistic(blackjackTable);
+    public static ResultStatistic from(BlackjackTable blackjackTable) {
+        return new ResultStatistic(blackjackTable);
     }
     
     public Map<Result, Integer> getDealerResults() {

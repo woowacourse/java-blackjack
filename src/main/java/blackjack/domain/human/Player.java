@@ -2,7 +2,7 @@ package blackjack.domain.human;
 
 import static blackjack.util.Constants.BLACKJACK_NUMBER;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.group.Cards;
 import blackjack.util.Constants;
 
 public final class Player extends Human {

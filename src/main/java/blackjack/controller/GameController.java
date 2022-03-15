@@ -1,11 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackTable;
-import blackjack.domain.Statistic;
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.result.ResultStatistic;
+import blackjack.domain.card.group.CardDeck;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
-import blackjack.domain.human.Players;
+import blackjack.domain.human.group.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -55,9 +55,9 @@ public final class GameController {
     private void endGame(final BlackjackTable blackjackTable) {
         OutputView.printHandAndPoint(blackjackTable);
         
-        Statistic statistic = Statistic.from(blackjackTable);
+        ResultStatistic resultStatistic = ResultStatistic.from(blackjackTable);
         
-        OutputView.printDealerResult(statistic.getDealerResults());
-        OutputView.printPlayerResult(statistic.getPlayersResult());
+        OutputView.printDealerResult(resultStatistic.getDealerResults());
+        OutputView.printPlayerResult(resultStatistic.getPlayersResult());
     }
 }

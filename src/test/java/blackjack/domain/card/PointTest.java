@@ -2,10 +2,10 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Point;
+import blackjack.domain.result.Point;
 import blackjack.domain.card.element.Denomination;
 import blackjack.domain.card.element.Suit;
-import java.util.List;
+import blackjack.domain.card.group.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

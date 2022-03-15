@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.group.Cards;
 import blackjack.util.Constants;
 
 public final class Point {
