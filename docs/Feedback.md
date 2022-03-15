@@ -60,3 +60,4 @@
 - 추상 클래스 Player 중복 필드 및 메서드 구현
     - Name 필드, getName() 메서드 중복
     - 추상 클래스 내 구현
+- 패키지 이름 변경 : Human -> Player

@@ -1,4 +1,4 @@
-package blackjack.domain.human;
+package blackjack.domain.player;
 
 import java.util.regex.Pattern;
 

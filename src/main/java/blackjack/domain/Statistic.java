@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import blackjack.domain.human.Dealer;
-import blackjack.domain.human.Gambler;
-import blackjack.domain.human.Gamblers;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Gamblers;
 import java.util.LinkedHashMap;
 
 public class Statistic {
