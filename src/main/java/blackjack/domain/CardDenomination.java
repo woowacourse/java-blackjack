@@ -15,19 +15,19 @@ public enum CardDenomination {
 	QUEEN(10, "Q"),
 	KING(10, "K");
 
-	private final int letterScore;
-	private final String cardName;
+	private final int score;
+	private final String name;
 
-	CardDenomination(final int letterScore, final String cardName) {
-		this.letterScore = letterScore;
-		this.cardName = cardName;
+	CardDenomination(final int score, final String name) {
+		this.score = score;
+		this.name = name;
 	}
 
 	public int getLetterScore() {
-		return letterScore;
+		return score;
 	}
 
 	public String getCardName() {
-		return cardName;
+		return name;
 	}
 }
