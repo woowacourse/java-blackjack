@@ -12,6 +12,7 @@ public class Dealer extends Gamer {
         super(DEALER_NAME, cards);
     }
 
+    @Override
     public boolean canHit() {
         return getTotalScore() <= DRAWABLE_LIMIT_VALUE;
     }
@@ -26,7 +27,7 @@ public class Dealer extends Gamer {
             return GameResult.LOSE;
         }
 
-        return GameResult.of(getTotalScore(),player.getTotalScore());
+        return GameResult.of(getTotalScore(), player.getTotalScore());
     }
 }
 

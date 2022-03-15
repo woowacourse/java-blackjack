@@ -10,6 +10,7 @@ public class Player extends Gamer {
         super(name, cards);
     }
 
+    @Override
     public boolean canHit() {
         return getTotalScore() <= BLACKJACK_SCORE;
     }
@@ -24,6 +25,6 @@ public class Player extends Gamer {
             return GameResult.WIN;
         }
 
-        return GameResult.of(getTotalScore(),dealer.getTotalScore());
+        return GameResult.of(getTotalScore(), dealer.getTotalScore());
     }
 }
