@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import blackjack.domain.card.CardGroup;
-import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Player;
 
 public class GamerCardsResultDto {
     private final GamerCardsDto gamerCardsDto;
@@ -19,10 +19,10 @@ public class GamerCardsResultDto {
     public static GamerCardsResultDto of(String name, CardGroup cards, int sum) {
         return new GamerCardsResultDto(GamerCardsDto.of(name, cards), sum);
     }
-    public static List<GamerCardsResultDto> of(List<Gamer> gamersCards) {
+    public static List<GamerCardsResultDto> of(List<Player> playersCards) {
         List<GamerCardsResultDto> gamersCardsResultDto = new ArrayList<>();
-        for (Gamer gamer : gamersCards) {
-            gamersCardsResultDto.add(of(gamer.getName(), gamer.getCardGroup(), gamer.getScore()));
+        for (Player player : playersCards) {
+            gamersCardsResultDto.add(of(player.getName(), player.getCardGroup(), player.getScore()));
         }
         return Collections.unmodifiableList(gamersCardsResultDto);
     }

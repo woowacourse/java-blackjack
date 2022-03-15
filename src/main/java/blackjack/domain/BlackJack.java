@@ -4,8 +4,8 @@ import java.util.List;
 
 import blackjack.domain.card.CardPack;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
 
@@ -22,8 +22,8 @@ public class BlackJack {
         gamers.addInitialCards(cardPack);
     }
 
-    public void addCardTo(Gamer gamer) {
-        gamer.addCard(cardPack.pickOne());
+    public void addCardTo(Player player) {
+        player.addCard(cardPack.pickOne());
     }
 
     public int playDealer() {
@@ -38,8 +38,8 @@ public class BlackJack {
         return gamers.getGameResult();
     }
 
-    public List<Gamer> getGamers() {
-        return gamers.getGamers();
+    public List<Player> getGamers() {
+        return gamers.getPlayers();
     }
 
     public Dealer getDealer() {

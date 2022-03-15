@@ -73,11 +73,11 @@ public class Gamers {
         return (int) matches.stream().filter(value -> value == type.getOpposite()).count();
     }
 
-    public List<Gamer> getGamers() {
-        List<Gamer> gamers = new ArrayList<>();
-        gamers.add(dealer);
-        playerGroup.addAllTo(gamers);
-        return Collections.unmodifiableList(gamers);
+    public List<Player> getPlayers() {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        playerGroup.addAllTo(players);
+        return Collections.unmodifiableList(players);
     }
 
     public Dealer getDealer() {

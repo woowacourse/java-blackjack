@@ -56,7 +56,7 @@ public class PlayerGroup {
         }
     }
 
-    public void addAllTo(List<Gamer> gamers) {
+    public void addAllTo(List<Player> gamers) {
         gamers.addAll(players);
     }
 

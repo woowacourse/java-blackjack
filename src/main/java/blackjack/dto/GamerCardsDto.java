@@ -1,10 +1,11 @@
 package blackjack.dto;
 
-import blackjack.domain.card.CardGroup;
-import blackjack.domain.gamer.Gamer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.gamer.Player;
 
 public class GamerCardsDto {
     private final String name;
@@ -19,10 +20,10 @@ public class GamerCardsDto {
         return new GamerCardsDto(name, CardDto.of(cards));
     }
 
-    public static List<GamerCardsDto> of(List<Gamer> gamersCards) {
+    public static List<GamerCardsDto> of(List<Player> playersCards) {
         List<GamerCardsDto> gamersCardsDto = new ArrayList<>();
-        for (Gamer gamer : gamersCards) {
-            gamersCardsDto.add(of(gamer.getName(), gamer.getCardGroup()));
+        for (Player player : playersCards) {
+            gamersCardsDto.add(of(player.getName(), player.getCardGroup()));
         }
         return Collections.unmodifiableList(gamersCardsDto);
     }

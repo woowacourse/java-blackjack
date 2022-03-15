@@ -2,7 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 
-public class Dealer extends Gamer {
+public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int DEALER_STAND_CONDITION = 16;
 
