@@ -30,17 +30,34 @@ public class Card {
 
     public static Card valueOf(Suit suit, Denomination denomination) {
         return CACHE_CARDS.stream()
-                .filter(card -> card.containSuit(suit) && card.containDenomination(denomination))
+                .filter(card -> card.find(suit, denomination))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
     }
 
-    public Denomination getDenomination() {
-        return this.denomination;
+    private static Stream<Card> toCard(Suit suit) {
+        return Arrays.stream(Denomination.values())
+                .map(denomination -> new Card(suit, denomination));
+    }
+
+    private boolean find(Suit suit, Denomination denomination) {
+        return containSuit(suit) && containDenomination(denomination);
+    }
+
+    private boolean containSuit(Suit suit) {
+        return this.suit == suit;
+    }
+
+    private boolean containDenomination(Denomination denomination) {
+        return this.denomination == denomination;
     }
 
     public Suit getSuit() {
         return suit;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     @Override
@@ -58,18 +75,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(suit, denomination);
-    }
-
-    private static Stream<Card> toCard(Suit suit) {
-        return Arrays.stream(Denomination.values())
-                .map(denomination -> new Card(suit, denomination));
-    }
-
-    private boolean containDenomination(Denomination denomination) {
-        return this.denomination == denomination;
-    }
-
-    private boolean containSuit(Suit suit) {
-        return this.suit == suit;
     }
 }

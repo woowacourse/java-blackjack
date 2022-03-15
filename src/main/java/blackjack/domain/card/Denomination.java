@@ -33,10 +33,6 @@ public enum Denomination {
         return calculateBestNumber(sumTotal(denominations), countAce(denominations));
     }
 
-    public String getName() {
-        return name;
-    }
-
     private static int sumTotal(List<Denomination> denominations) {
         return denominations.stream()
                 .mapToInt(denomination -> denomination.value)
@@ -61,5 +57,9 @@ public enum Denomination {
             total = total + SPECIAL_ACE - ACE.value;
         }
         return total;
+    }
+
+    public String getName() {
+        return name;
     }
 }
