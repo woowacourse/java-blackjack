@@ -18,6 +18,11 @@ public class Guest extends AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
     public boolean isWin(Player guest, Player dealer) {
         int points = playingCards.sumPoints();
         if (dealer.isLose(points) && points <= Match.MAX_WINNER_POINT) {

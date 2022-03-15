@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.Match;
 
 public abstract class AbstractPlayer implements Player {
 
@@ -17,11 +16,6 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public boolean isBlackJack() {
         return playingCards.sumBlackJack();
-    }
-
-    @Override
-    public boolean isDealer() {
-        return this.name.equals(Dealer.NAME);
     }
 
     @Override
