@@ -12,6 +12,6 @@ public class User extends Player {
 
     @Override
     public boolean isPossibleToPickCard() {
-        return getTotalScore() <= Cards.BLACK_JACK_SCORE;
+        return !exceedMaxScore();
     }
 }

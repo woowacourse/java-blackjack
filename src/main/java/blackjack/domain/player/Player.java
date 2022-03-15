@@ -26,7 +26,7 @@ public abstract class Player {
 
     public abstract boolean isPossibleToPickCard();
 
-    public final Boolean isBlackJack() {
+    public final boolean isBlackJack() {
         return cards.isBlackJack();
     }
 
