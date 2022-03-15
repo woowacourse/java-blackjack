@@ -10,13 +10,17 @@ import blackjack.domain.player.Players;
 
 public class Results {
 
+    private final Map<Player, MatchResult> results;
     private final Players players;
 
-    public Results(Players players) {
+    public Results(Players players, Map<Player, MatchResult> results) {
         this.players = players;
+        this.results = results;
     }
 
-    private final Map<Player, MatchResult> results = new LinkedHashMap<>();
+    public static Results from(Players players) {
+        return new Results(players, new LinkedHashMap<>());
+    }
 
     public void competeDealerWithPlayers() {
         Player dealer = players.getPlayers()
