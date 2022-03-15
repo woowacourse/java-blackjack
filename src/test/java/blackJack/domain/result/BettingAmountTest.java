@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class BettingAmountTest {
@@ -29,5 +30,13 @@ class BettingAmountTest {
         assertThatThrownBy(() -> BettingAmount.newInstanceByString(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 양수여야 합니다.");
+    }
+
+    @ParameterizedTest(name = "승부 결과에 따른 수익 반환 테스트")
+    @CsvSource(value = {"BLACK_JACK_WIN,15000", "WIN,10000", "DRAW,0", "LOSE,-10000"})
+    void calculateProfit(MatchResult matchResult, int expectedProfit) {
+        BettingAmount bettingAmount = new BettingAmount(10000);
+
+        assertThat(bettingAmount.calculateProfit(matchResult)).isEqualTo(expectedProfit);
     }
 }

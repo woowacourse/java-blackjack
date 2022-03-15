@@ -26,4 +26,8 @@ public class BettingAmount {
             throw new IllegalArgumentException("베팅 금액은 양수여야 합니다.");
         }
     }
+
+    public int calculateProfit(MatchResult matchResult) {
+        return matchResult.calculateProfit(bettingAmount);
+    }
 }
