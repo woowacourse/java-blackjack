@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 
-public class Dealer extends AbstractPlayer implements Player {
+public class Dealer extends Player {
 
     public static final String NAME = "딜러";
     public static final int LIMIT_POINT = 16;

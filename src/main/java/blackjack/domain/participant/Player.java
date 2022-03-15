@@ -3,15 +3,26 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
-public interface Player {
+public abstract class Player {
 
-    void addCard(Card card);
+    protected Deck cards;
+    protected String name;
 
-    boolean isOverLimit(int limit);
+    public void addCard(Card card) {
+        cards.addCard(card);
+    }
 
-    String getName();
+    public boolean isOverLimit(int limit) {
+        return cards.sumPoints() > limit;
+    }
 
-    Deck getDeck();
+    public String getName() {
+        return name;
+    }
 
-    boolean isDealer();
+    public Deck getDeck() {
+        return cards;
+    }
+
+    public abstract boolean isDealer();
 }
