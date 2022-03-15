@@ -36,7 +36,7 @@ class BlackjackGameTest {
         players.add(dealer);
 
         Players playerList = new Players(players);
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), new ArrayList<>());
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), new ArrayList<>());
         Results results = blackjackGame.calculateResult(playerList);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
@@ -60,7 +60,7 @@ class BlackjackGameTest {
         players.add(dealer);
 
         Players playerList = new Players(players);
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), new ArrayList<>());
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), new ArrayList<>());
         Results results = blackjackGame.calculateResult(playerList);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
@@ -73,7 +73,7 @@ class BlackjackGameTest {
     void pickCard() {
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
         Guest guest = new Guest("guest", new PlayingCards());
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), new ArrayList<>());
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), new ArrayList<>());
         blackjackGame.assignCard(guest, playingCardFixMachine);
         blackjackGame.assignCard(guest, playingCardFixMachine);
 
@@ -90,7 +90,7 @@ class BlackjackGameTest {
         List<String> players = new ArrayList<>();
 
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), players);
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
         blackjackGame.initGames(playingCardShuffleMachine);
         blackjackGame.nextTurn();
 
@@ -103,7 +103,7 @@ class BlackjackGameTest {
         List<String> players = new ArrayList<>();
         players.add("green");
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), players);
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
         blackjackGame.initGames(playingCardShuffleMachine);
         blackjackGame.nextTurn();
 
@@ -116,7 +116,7 @@ class BlackjackGameTest {
         List<String> players = new ArrayList<>();
         players.add("green");
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), players);
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
         blackjackGame.initGames(playingCardShuffleMachine);
         blackjackGame.nextTurn();
 
@@ -128,7 +128,7 @@ class BlackjackGameTest {
     void checkPossibleDealerTurn() {
         List<String> players = new ArrayList<>();
         CardShuffleMachine playingCardFixMachine = new PlayingCardFixMachine();
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), players);
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
         blackjackGame.initGames(playingCardFixMachine);
 
         assertThat(blackjackGame.isTurnDealer()).isTrue();

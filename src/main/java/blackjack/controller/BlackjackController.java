@@ -18,7 +18,7 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void playGame() {
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), receivePlayerNames());
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), receivePlayerNames());
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
         blackjackGame.initGames(playingCardShuffleMachine);
 

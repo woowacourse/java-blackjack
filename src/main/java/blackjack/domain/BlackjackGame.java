@@ -5,6 +5,7 @@ import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
@@ -18,16 +19,20 @@ public class BlackjackGame {
     private final Deck deck;
     private final Players blackjackPlayers;
 
-    public BlackjackGame(Deck deck, List<String> playerNames) {
+    public BlackjackGame(Deck deck, Players players) {
         this.deck = deck;
-        this.blackjackPlayers = initPlayers(playerNames);
+        this.blackjackPlayers = players;
+    }
+
+    public static BlackjackGame of(Deck deck, List<String> playerNames) {
+        return new BlackjackGame(deck, initPlayers(playerNames));
     }
 
     public void initGames(CardShuffleMachine playingCardShuffleMachine) {
         initCards(playingCardShuffleMachine);
     }
 
-    private Players initPlayers(List<String> playerNames) {
+    private static Players initPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
         for (String playerName : playerNames) {
