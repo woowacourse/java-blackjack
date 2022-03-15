@@ -10,8 +10,7 @@ public class Player extends User {
 
     @Override
     public boolean hit(CardFactory cardFactory) {
-        cards.add(cardFactory.drawOneCard());
-        return true;
+        return cards.add(cardFactory.drawOneCard());
     }
 
 }
