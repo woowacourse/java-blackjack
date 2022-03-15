@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.*;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.dto.GameResultDto;
@@ -23,7 +22,7 @@ public class Application {
         Deck deck = new Deck(Card.VALUES);
         Dealer dealer = new Dealer(getInitCards(deck));
         Players players = createPlayers(deck);
-        OutputView.printStartInfo(toGamerDto(dealer), toPlayersDto(players));
+        OutputView.printStartInfo(GamerDto.from(dealer), toPlayersDto(players));
 
         List<GamerDto> playerDtos = playPlayers(deck, players);
         GamerDto dealerDto = playDealer(deck, dealer);
@@ -49,10 +48,6 @@ public class Application {
                 .collect(Collectors.toList());
     }
 
-    private static GamerDto toGamerDto(Gamer gamer) {
-        return GamerDto.from(gamer);
-    }
-
     private static List<GamerDto> playPlayers(Deck deck, Players players) {
         players.getValue().forEach(player -> playing(deck, player));
         return toPlayersDto(players);
@@ -69,13 +64,13 @@ public class Application {
     private static void drawCard(Deck deck, Player player, PlayCommand playCommand) {
         if (playCommand.isContinue()) {
             player.addCard(deck.draw());
-            OutputView.printPlayerCardInfo(toGamerDto(player));
+            OutputView.printPlayerCardInfo(GamerDto.from(player));
         }
     }
 
     private static GamerDto playDealer(Deck deck, Dealer dealer) {
         drawDealer(deck, dealer);
-        return toGamerDto(dealer);
+        return GamerDto.from(dealer);
     }
 
     private static void drawDealer(Deck deck, Dealer dealer) {
