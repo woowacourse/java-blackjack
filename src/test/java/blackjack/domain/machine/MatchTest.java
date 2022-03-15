@@ -1,8 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.machine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.machine.Match;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

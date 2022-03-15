@@ -1,12 +1,9 @@
-package blackjack.domain;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class CardTest {
 
