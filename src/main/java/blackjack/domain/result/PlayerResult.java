@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public enum PlayerResult {
@@ -14,22 +15,30 @@ public enum PlayerResult {
         this.name = name;
     }
 
-    public static PlayerResult makeResult(Player player) {
+    public static PlayerResult createResult(Player player, Dealer dealer) {
+        Score playerScore = player.getScore();
+        Score dealerScore = dealer.getScore();
+
         if (player.isBust()) {
             return LOSS;
         }
 
-        return WIN;
-    }
-
-
-    public static PlayerResult calculateResult(Score score, Score otherScore) {
-        if (score.compareTo(otherScore) > 0) {
+        if (dealer.isBust()) {
             return WIN;
         }
-        if (score.compareTo(otherScore) == 0) {
+
+        return compareScore(playerScore, dealerScore);
+    }
+
+    private static PlayerResult compareScore(Score playerScore, Score dealerScore) {
+        if (playerScore.isOver(dealerScore)) {
+            return WIN;
+        }
+
+        if (playerScore.equals(dealerScore)) {
             return DRAW;
         }
+
         return LOSS;
     }
 

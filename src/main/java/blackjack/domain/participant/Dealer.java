@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,19 +26,11 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldDraw() {
-        return calculateScore().isBelow(DEALER_MIN_SCORE);
+        return calculateScore().isBelow(new Score(DEALER_MIN_SCORE));
     }
 
     public PlayerResult judgeWinner(final Player player) {
-        if (bustExist(player)) {
-            return PlayerResult.makeResult(player);
-        }
-
-        return PlayerResult.calculateResult(player.calculateScore(), this.calculateScore());
-    }
-
-    private boolean bustExist(Player player) {
-        return player.isBust() || this.isBust();
+        return PlayerResult.createResult(player, this);
     }
 
     @Override

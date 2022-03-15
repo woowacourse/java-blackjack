@@ -18,10 +18,13 @@ class ScoreTest {
     @ParameterizedTest
     @MethodSource("provideForCards")
     @DisplayName("카드 합 계산")
-    void calculateScore(List<Card> cards, int expectedScore) {
-        Score actualScore = Score.from(cards);
+    void calculateScore(List<Card> cards, int expected) {
+        int sumCardNumbers = cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
+        Score actual = new Score(sumCardNumbers);
 
-        assertThat(actualScore.getValue()).isEqualTo(expectedScore);
+        assertThat(actual).isEqualTo(new Score(expected));
     }
 
     private static Stream<Arguments> provideForCards() {
@@ -48,9 +51,12 @@ class ScoreTest {
     @MethodSource("provideForCardsWithAce")
     @DisplayName("에이스 카드 계산")
     void calculateScoreWithAce(List<Card> cards) {
-        Score score = Score.from(cards);
+        int sumCardNumbers = cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
+        Score actual = new Score(sumCardNumbers);
 
-        assertThat(score.calculateWithAce().getValue()).isEqualTo(21);
+        assertThat(actual.calculateWithAce().getValue()).isEqualTo(21);
     }
 
     private static Stream<Arguments> provideForCardsWithAce() {

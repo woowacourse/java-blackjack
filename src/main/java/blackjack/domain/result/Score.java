@@ -1,11 +1,8 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Card;
-
-import java.util.List;
 import java.util.Objects;
 
-public class Score implements Comparable<Score> {
+public class Score {
 
     public static final int BLACKJACK_NUMBER = 21;
     public static final int ACE_NUMBER = 1;
@@ -13,17 +10,9 @@ public class Score implements Comparable<Score> {
 
     private final int value;
 
-    private Score(int value) {
+    public Score(int value) {
         this.value = value;
         validateNegative(value);
-    }
-
-    public static Score from(List<Card> cards) {
-        int sum = cards.stream()
-                .mapToInt(Card::getNumber)
-                .sum();
-
-        return new Score(sum);
     }
 
     private void validateNegative(int value) {
@@ -39,21 +28,16 @@ public class Score implements Comparable<Score> {
         return new Score(value + ALTERNATE_ACE_VALUE);
     }
 
-    public boolean isOver(int value) {
-        return this.value > value;
+    public boolean isOver(Score score) {
+        return this.value > score.value;
     }
 
-    public boolean isBelow(int value) {
-        return this.value < value;
+    public boolean isBelow(Score score) {
+        return this.value < score.value;
     }
 
     public int getValue() {
         return value;
-    }
-
-    @Override
-    public int compareTo(Score o) {
-        return getValue() - o.getValue();
     }
 
     @Override

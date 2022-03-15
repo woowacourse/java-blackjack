@@ -29,7 +29,11 @@ public abstract class Participant {
     }
 
     protected Score calculateScore() {
-        Score score = Score.from(cards);
+        int sumCardNumbers = cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
+
+        Score score = new Score(sumCardNumbers);
 
         if (hasAceCard()) {
             score = score.calculateWithAce();
@@ -44,7 +48,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return calculateScore().isOver(BLACKJACK_NUMBER);
+        return calculateScore().isOver(new Score(BLACKJACK_NUMBER));
     }
 
     public Score getScore() {
