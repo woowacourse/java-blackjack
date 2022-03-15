@@ -1,11 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,15 +15,15 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Deck 태스트")
 class DeckTest {
 
-	private Deck deck = new Deck();
+	private final Deck deck = new Deck();
 
 	@Test
 	@DisplayName("카드 장수 검증")
 	void check_Construct_Cards_Size() {
 		assertThat(deck).extracting("cards")
-			.asList()
-			.size()
-			.isEqualTo(52);
+				.asList()
+				.size()
+				.isEqualTo(52);
 	}
 
 	@Nested
@@ -39,8 +41,8 @@ class DeckTest {
 		void lack_Of_Cars() {
 			drawAll();
 			assertThatThrownBy(deck::draw)
-				.isInstanceOf(NoSuchElementException.class)
-				.hasMessageContaining("드로우 가능한 카드가 더이상 없습니다.");
+					.isInstanceOf(NoSuchElementException.class)
+					.hasMessageContaining("드로우 가능한 카드가 더이상 없습니다.");
 		}
 	}
 

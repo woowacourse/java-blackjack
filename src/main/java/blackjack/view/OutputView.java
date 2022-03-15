@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Outcome;
+import blackjack.domain.game.Outcome;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.PlayerTableDto;
 import java.util.List;

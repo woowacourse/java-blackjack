@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.role;
 
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

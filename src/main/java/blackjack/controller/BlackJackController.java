@@ -1,10 +1,10 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.DealerDrawable;
-import blackjack.domain.Deck;
-import blackjack.domain.Hand;
-import blackjack.domain.RedrawChoice;
+import blackjack.domain.role.Dealer;
+import blackjack.domain.role.DealerDrawable;
+import blackjack.domain.game.Deck;
+import blackjack.domain.role.Hand;
+import blackjack.domain.game.RedrawChoice;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;

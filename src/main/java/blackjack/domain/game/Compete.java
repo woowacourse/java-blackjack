@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
+import blackjack.domain.role.Role;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;

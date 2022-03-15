@@ -1,9 +1,9 @@
 package blackjack.dto;
 
-import blackjack.domain.Card;
-import blackjack.domain.Hand;
-import blackjack.domain.Outcome;
-import blackjack.domain.Role;
+import blackjack.domain.card.Card;
+import blackjack.domain.role.Hand;
+import blackjack.domain.game.Outcome;
+import blackjack.domain.role.Role;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

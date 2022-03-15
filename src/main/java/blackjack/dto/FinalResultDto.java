@@ -1,10 +1,10 @@
 package blackjack.dto;
 
-import blackjack.domain.Compete;
+import blackjack.domain.game.Compete;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Role;
+import blackjack.domain.role.Role;
 
 public class FinalResultDto {
 

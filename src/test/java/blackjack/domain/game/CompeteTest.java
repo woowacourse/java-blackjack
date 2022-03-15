@@ -1,9 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.domain.factory.CardMockFactory;
-import blackjack.domain.util.CreateHand;
+import blackjack.factory.CardMockFactory;
+import blackjack.domain.role.Dealer;
+import blackjack.domain.role.DealerDrawable;
+import blackjack.domain.role.Hand;
+import blackjack.domain.role.Player;
+import blackjack.domain.role.Role;
+import blackjack.util.CreateHand;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;

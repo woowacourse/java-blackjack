@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import java.util.Arrays;
 
@@ -15,9 +15,9 @@ public enum RedrawChoice {
 
 	public static RedrawChoice of(String choice) {
 		return Arrays.stream(values())
-			.filter(redrawChoice -> choice.equals(redrawChoice.getValue()))
-			.findAny()
-			.orElseThrow(IllegalArgumentException::new);
+				.filter(redrawChoice -> choice.equals(redrawChoice.getValue()))
+				.findAny()
+				.orElseThrow(IllegalArgumentException::new);
 	}
 
 	public String getValue() {

@@ -1,7 +1,7 @@
-package blackjack.domain.util;
+package blackjack.util;
 
-import blackjack.domain.Card;
-import blackjack.domain.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.role.Hand;
 
 public class CreateHand {
 

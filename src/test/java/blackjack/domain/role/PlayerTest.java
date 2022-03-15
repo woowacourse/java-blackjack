@@ -1,7 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.role;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -11,8 +12,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.factory.CardMockFactory;
-import blackjack.domain.util.CreateHand;
+import blackjack.factory.CardMockFactory;
+import blackjack.util.CreateHand;
 
 @DisplayName("Player 테스트")
 class PlayerTest {
