@@ -11,11 +11,11 @@ class CardFactoryTest {
     @DisplayName("두장의 카드를 나눠주고 나눠준 카드는 카드 캐쉬에서 지운다.")
     void drawTwoCardsTest() {
         CardFactory cardFactory = new CardFactory();
-        Cards actual = cardFactory.initCards();
+        Cards cards = cardFactory.initCards();
         int expectedDrawnCards = 2;
-        int expectedCardCache = 50;
-        assertThat(actual.getCards().size()).isEqualTo(expectedDrawnCards);
-        assertThat(cardFactory.size()).isEqualTo(expectedCardCache);
+        int expectedCardSize = 50;
+        assertThat(cards.getCards().size()).isEqualTo(expectedDrawnCards);
+        assertThat(cardFactory.size()).isEqualTo(expectedCardSize);
     }
 
     @Test
@@ -23,7 +23,7 @@ class CardFactoryTest {
     void drawOneCard() {
         CardFactory cardFactory = new CardFactory();
         cardFactory.drawOneCard();
-        int expectedCardCache = 51;
-        assertThat(cardFactory.size()).isEqualTo(expectedCardCache);
+        int expectedCardSize = 51;
+        assertThat(cardFactory.size()).isEqualTo(expectedCardSize);
     }
 }
