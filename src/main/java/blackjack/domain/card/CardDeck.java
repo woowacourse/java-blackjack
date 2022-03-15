@@ -16,7 +16,7 @@ public class CardDeck {
     }
 
     public static CardDeck createNewCardDek() {
-        List<Card> cards = Card.createNewCards();
+        List<Card> cards = Card.cards();
         return new CardDeck(new ArrayDeque<>(Randoms.shuffle(cards)));
     }
 

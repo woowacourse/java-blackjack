@@ -41,7 +41,7 @@ public class Card {
                 .collect(Collectors.toList());
     }
 
-    public static List<Card> createNewCards() {
+    public static List<Card> cards() {
         return new ArrayList<>(CARDS_CACHE);
     }
 
