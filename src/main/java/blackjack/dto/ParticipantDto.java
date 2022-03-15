@@ -17,8 +17,8 @@ public class ParticipantDto {
         this.score = score;
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getValue();
     }
 
     public Set<Card> getCards() {
