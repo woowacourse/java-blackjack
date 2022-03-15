@@ -17,19 +17,19 @@ public class Dealer extends Participant {
     }
 
     public void receiveCard(Card card) {
-        hand.add(card);
+        getHand().add(card);
     }
 
     public boolean canReceive() {
-        Score score = hand.getScore();
+        Score score = getHand().getScore();
         return score.isLessOrEqualThan(Score.DEALER_EXTRA_CARD_LIMIT);
     }
 
     @Override
     public String toString() {
         return "Dealer{" +
-                "name='" + name + '\'' +
-                ", hand=" + hand +
+                "name='" + getName() + '\'' +
+                ", hand=" + getHand() +
                 '}';
     }
 }
