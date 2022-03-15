@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.gamer.Gamer.MAX_CARD_VALUE;
+
 public enum CardNumber {
     ACE(11, "A"),
     TWO(2, "2"),
@@ -27,6 +29,13 @@ public enum CardNumber {
 
     public int getValue() {
         return this.value;
+    }
+
+    public int selectAceValue(int sum) {
+        if (this == ACE && this.getValue() + sum > MAX_CARD_VALUE) {
+            return LOWER_ACE_VALUE;
+        }
+        return this.getValue();
     }
 
     public String getName() {

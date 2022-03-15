@@ -19,6 +19,10 @@ public class Card {
         return cardNumber.getValue();
     }
 
+    public int getAceValue(int sum) {
+        return cardNumber.selectAceValue(sum);
+    }
+
     public String getName() {
         return cardNumber.getName();
     }

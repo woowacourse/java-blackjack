@@ -1,7 +1,6 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,16 +48,9 @@ public abstract class Gamer {
 
     private int getSumNotToBurst(int sum, List<Card> aces) {
         for (Card ace : aces) {
-            sum += selectAceValue(sum, ace);
+            sum += ace.getAceValue(sum);
         }
         return sum;
-    }
-
-    private int selectAceValue(int sum, Card ace) {
-        if (ace.isAce() && ace.getValue() + sum > MAX_CARD_VALUE) {
-            return CardNumber.LOWER_ACE_VALUE;
-        }
-        return ace.getValue();
     }
 
     public String getName() {
