@@ -34,18 +34,19 @@ public class Users {
         dealer.drawInitCards(deck);
     }
 
+    public Map<Player, MatchRecord> createPlayerMatchRecords() {
+        return players.stream()
+            .collect(toMap(
+                Function.identity(),
+                player -> MatchRecord.findMatchRecord(player, dealer)
+            ));
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
     public Dealer getDealer() {
         return dealer;
-    }
-
-    public Map<Player, MatchRecord> createPlayerMatchRecords() {
-        return players.stream().collect(toMap(
-            Function.identity(),
-            player -> MatchRecord.findMatchRecord(player, dealer)
-        ));
     }
 }
