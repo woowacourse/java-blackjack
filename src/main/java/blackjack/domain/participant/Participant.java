@@ -18,7 +18,7 @@ public abstract class Participant {
 
     private static void validateNameNotBlank(final String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException("플레이어명은 공백이 될 수 없습니다.");
+            throw new IllegalArgumentException("참가자 이름은 공백이 될 수 없습니다.");
         }
     }
 

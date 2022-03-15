@@ -18,7 +18,7 @@ class PlayerTest {
         final Deck deck = Deck.generate(new RandomDeckGenerator());
         assertThatThrownBy(() -> Player.readyToPlay(name, deck))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("플레이어명은 공백이 될 수 없습니다.");
+                .hasMessageContaining("참가자 이름은 공백이 될 수 없습니다.");
     }
 
 }
