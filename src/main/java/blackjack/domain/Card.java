@@ -17,8 +17,8 @@ public class Card {
 		return cardDenomination.getCardName();
 	}
 
-	public String getType() {
-		return cardSuit.getValue();
+	public CardSuit getType() {
+		return cardSuit;
 	}
 
 	public boolean isAce() {
