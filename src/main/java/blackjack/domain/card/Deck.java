@@ -27,6 +27,10 @@ public class Deck {
         return calculateAcePoint(points);
     }
 
+    public boolean isBust() {
+        return sumPoints() > Match.MAX_WINNER_POINT;
+    }
+
     public boolean sumBlackJack() {
         return deck.size() == BLACKJACK_SIZE && sumPoints() == Match.MAX_WINNER_POINT;
     }

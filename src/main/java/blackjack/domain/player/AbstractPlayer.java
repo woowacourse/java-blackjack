@@ -31,7 +31,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isOverPointLimit() {
-        return playingCards.sumPoints() > Match.MAX_WINNER_POINT;
+        return playingCards.isBust();
     }
 
     @Override
