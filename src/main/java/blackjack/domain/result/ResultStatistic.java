@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ResultStatistic {
-    private final Map<Player, Result> playersResult = new HashMap<>();
+    private final Map<String, Result> playersResult = new HashMap<>();
     private final Map<Result, Integer> dealerResults = new HashMap<>();
     
     private ResultStatistic(BlackjackTable blackjackTable) {
@@ -25,15 +25,19 @@ public final class ResultStatistic {
         return (dealerResults);
     }
     
-    public Map<Player, Result> getPlayersResult() {
-        return playersResult;
+    public Map<String, Result> getPlayersResult() {
+        HashMap<String, Result> result = new HashMap<>();
+        for (String name : playersResult.keySet()) {
+            result.put(name, playersResult.get(name));
+        }
+        return result;
     }
     
     private void calculate(BlackjackTable table) {
         for (Player player : table.getPlayers().get()) {
             Result playerResult = calculatePlayerResult(player, table.getDealer());
             Result dealerResult = playerResult.toReverse();
-            playersResult.put(player, playerResult);
+            playersResult.put(player.getName(), playerResult);
             dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
         }
     }

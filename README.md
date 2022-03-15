@@ -93,7 +93,7 @@
 
 ## TODO
 
-- [ ] 불변화
+- [x] cards, table 클래스 제외 불변화
 - [ ] final class 로 상속안함 표시
 - [ ] players test 추가
 - [x] resultStatistic 로직 수정

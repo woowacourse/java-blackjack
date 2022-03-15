@@ -52,8 +52,8 @@ class ResultStatisticTest {
         void playerResultTest() {
             // then
             assertThat(resultStatistic.getPlayersResult())
-                    .containsEntry(player1, Result.WIN)
-                    .containsEntry(player2, Result.LOSE);
+                    .containsEntry(player1.getName(), Result.WIN)
+                    .containsEntry(player2.getName(), Result.LOSE);
         }
         
         @Test
@@ -91,8 +91,8 @@ class ResultStatisticTest {
         void playerResultTest() {
             // then
             assertThat(resultStatistic.getPlayersResult())
-                    .containsEntry(player1, Result.LOSE)
-                    .containsEntry(player2, Result.LOSE);
+                    .containsEntry(player1.getName(), Result.LOSE)
+                    .containsEntry(player2.getName(), Result.LOSE);
         }
         
         @Test
@@ -132,10 +132,10 @@ class ResultStatisticTest {
         void playerResultTest() {
             // then
             assertThat(resultStatistic.getPlayersResult())
-                    .containsEntry(player1, Result.LOSE)
-                    .containsEntry(player2, Result.LOSE)
-                    .containsEntry(player3, Result.DRAW)
-                    .containsEntry(player4, Result.WIN);
+                    .containsEntry(player1.getName(), Result.LOSE)
+                    .containsEntry(player2.getName(), Result.LOSE)
+                    .containsEntry(player3.getName(), Result.DRAW)
+                    .containsEntry(player4.getName(), Result.WIN);
         }
         
         @Test

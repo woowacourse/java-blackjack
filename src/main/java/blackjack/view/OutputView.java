@@ -76,9 +76,9 @@ public final class OutputView {
                 result.get(Result.LOSE));
     }
     
-    public static void printPlayerResult(final Map<Player, Result> result) {
-        for (Player player : result.keySet()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), result.get(player));
+    public static void printPlayerResult(final Map<String, Result> result) {
+        for (String name : result.keySet()) {
+            System.out.printf(PLAYER_RESULT_MESSAGE, name, result.get(name));
         }
     }
 }
