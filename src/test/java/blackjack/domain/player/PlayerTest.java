@@ -38,12 +38,11 @@ class PlayerTest {
     void receiveCard() {
         Cards cards = new Cards(firstDrawTwoCards());
         Player player = new Player("slow", cards);
-        final int expected = 3;
+        final Card card = new Card(CardPattern.DIAMOND, CardNumber.SIX);
 
-        player.hit(new Card(CardPattern.DIAMOND, CardNumber.SIX));
-        final int actual = player.cards.getCards().size();
+        player.hit(card);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(player.getCards().getCards()).contains(card);
     }
 
     private List<Card> firstDrawTwoCards() {
@@ -79,11 +78,10 @@ class PlayerTest {
                 new Card(CardPattern.SPADE, CardNumber.ACE)
         ));
         Player player = new Player("slow", cards);
-        final boolean expected = true;
 
         final boolean actual = player.isRangeScoreToReceive();
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -95,10 +93,9 @@ class PlayerTest {
                 new Card(CardPattern.SPADE, CardNumber.TWO)
         ));
         Player player = new Player("slow", cards);
-        final boolean expected = false;
 
         final boolean actual = player.isRangeScoreToReceive();
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 }

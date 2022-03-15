@@ -39,12 +39,11 @@ class DealerTest {
     void receiveCard() {
         Cards cards = new Cards(firstDrawTwoCards());
         Dealer dealer = new Dealer(cards);
-        final int expected = 3;
+        final Card card = new Card(CardPattern.DIAMOND, CardNumber.SIX);
 
-        dealer.hit(new Card(CardPattern.DIAMOND, CardNumber.SIX));
-        final int actual = dealer.cards.getCards().size();
+        dealer.hit(card);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(dealer.getCards().getCards()).contains(card);
     }
 
     private List<Card> firstDrawTwoCards() {
@@ -79,11 +78,10 @@ class DealerTest {
                 new Card(CardPattern.SPADE, CardNumber.SIX)
         ));
         Dealer dealer = new Dealer(cards);
-        final boolean expected = true;
 
         final boolean actual = dealer.isRangeScoreToReceive();
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -94,10 +92,9 @@ class DealerTest {
                 new Card(CardPattern.SPADE, CardNumber.SEVEN)
         ));
         Dealer dealer = new Dealer(cards);
-        final boolean expected = false;
 
         final boolean actual = dealer.isRangeScoreToReceive();
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 }
