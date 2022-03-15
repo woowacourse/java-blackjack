@@ -15,7 +15,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBlackJack() {
-        return playingCards.sumBlackJack();
+        return playingCards.isBlackJack();
     }
 
     @Override

@@ -31,7 +31,7 @@ public class PlayingCards {
         return sumPoints() > Match.MAX_WINNER_POINT;
     }
 
-    public boolean sumBlackJack() {
+    public boolean isBlackJack() {
         return deck.size() == BLACKJACK_SIZE && sumPoints() == Match.MAX_WINNER_POINT;
     }
 
