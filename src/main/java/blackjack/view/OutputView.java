@@ -18,7 +18,7 @@ public class OutputView {
         List<String> playerNames = players.stream()
                 .map(ParticipantResponse::getName)
                 .collect(Collectors.toUnmodifiableList());
-        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), String.join(", ", playerNames));
+        System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.%n%n", dealer.getName(), String.join(", ", playerNames));
         printInitialDealerCards(dealer);
         players.forEach(OutputView::printParticipantCards);
     }

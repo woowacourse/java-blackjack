@@ -15,13 +15,13 @@ public class InputView {
     }
 
     public static HitRequest inputHitRequest(String playerName) {
-        System.out.printf("%s는(은) 한 장의 카드를 더 받으시겠습니까? (예는 y, 아니오는 n)%n", playerName);
+        System.out.printf("%n%s는(은) 한 장의 카드를 더 받으시겠습니까? (예는 y, 아니오는 n)%n", playerName);
         return HitRequest.find(scanner.nextLine());
     }
 
     public static int inputBetMoney(String name) {
         try {
-            System.out.printf("%s의 베팅 금액은?", name);
+            System.out.printf("%s의 베팅 금액은?%n", name);
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             return inputBetMoney(name);
