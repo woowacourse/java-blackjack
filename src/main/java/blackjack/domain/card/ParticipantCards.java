@@ -6,8 +6,7 @@ import java.util.List;
 
 public class ParticipantCards {
 
-    private static final int FIRST = 0;
-    private static final int SECOND = 1;
+    private static final int INITIAL_CARD_SIZE = 2;
     private static final int BLACKJACK_THRESHOLD_NUMBER = 21;
     private static final int ACE_SCORE_DIFFERENCE = 10;
 
@@ -18,7 +17,7 @@ public class ParticipantCards {
     }
 
     public boolean isBlackjack() {
-        return cards.get(FIRST).getPoint() + cards.get(SECOND).getPoint() == BLACKJACK_THRESHOLD_NUMBER;
+        return cards.size() == INITIAL_CARD_SIZE && getScore() == BLACKJACK_THRESHOLD_NUMBER;
     }
 
     public void addCard(Card card) {
@@ -34,22 +33,19 @@ public class ParticipantCards {
         for (Card card : cards) {
             score += card.getPoint();
         }
-        score = calculateScoreAdvantageousWithAce(score);
-        return score;
+        return calculateScoreAdvantageousWithAce(score);
     }
 
     private int calculateScoreAdvantageousWithAce(int score) {
-        int aceCount = getAceCount();
-        while (aceCount-- > 0 && score > BLACKJACK_THRESHOLD_NUMBER) {
-            score -= ACE_SCORE_DIFFERENCE;
+        if (isExistAce() && score + ACE_SCORE_DIFFERENCE <= BLACKJACK_THRESHOLD_NUMBER) {
+            score += ACE_SCORE_DIFFERENCE;
         }
         return score;
     }
 
-    private int getAceCount() {
-        return (int)cards.stream()
-            .filter(card -> card.getDenomination() == Denomination.ACE)
-            .count();
+    private boolean isExistAce() {
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {

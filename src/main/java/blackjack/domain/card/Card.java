@@ -10,6 +10,10 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
+
     public int getPoint() {
         return denomination.getPoint();
     }
