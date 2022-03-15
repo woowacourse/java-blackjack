@@ -21,9 +21,10 @@ public class BlackjackRunner {
         Dealer dealer = new Dealer(deck.getInitCards());
         Players players = new Players(deck, InputView.getNames());
 
-        OutputView.printStart(dealer, players.getValue());
+        List<Player> primaryPlayers = players.getValue();
+        OutputView.printStart(dealer, primaryPlayers);
 
-        players.getValue().forEach(player -> playing(deck, player));
+        primaryPlayers.forEach(player -> playing(deck, player));
         drawDealer(deck, dealer);
 
         OutputView.printResult(dealer, players.getValue());
