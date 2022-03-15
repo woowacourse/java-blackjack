@@ -25,15 +25,12 @@ public class DealerService {
     }
 
     public DealerTurnResultDto progressTurn() {
-        if (!dealer.canDrawCard()) {
-            return new DealerTurnResultDto(0);
-        }
-
         int count = 0;
-        do {
+        
+        while (dealer.canDrawCard()) {
             dealer.hit(deck);
             count++;
-        } while (dealer.canDrawCard());
+        }
         return new DealerTurnResultDto(count);
     }
 
