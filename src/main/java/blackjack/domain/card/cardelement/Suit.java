@@ -1,4 +1,4 @@
-package blackjack.domain.card.cardElement;
+package blackjack.domain.card.cardelement;
 
 public enum Suit {
     SPADE("스페이드"),

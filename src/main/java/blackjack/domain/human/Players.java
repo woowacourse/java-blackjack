@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 public final class Players {
     private static final String NULL_NAMES_DUPLICATED_ERROR_MESSAGE = "이름은 중복될 수 없습니다.";
     private static final String NAME_SEPARATE_REGEX = ",";
-    private static final String PLAYER_NAME_DELIMITER = ", ";
     private final List<Player> players;
     
     private Players(final List<Player> players) {

@@ -1,6 +1,6 @@
-package rentCompany.car;
+package rentalcompany.car;
 
-public class K5 extends Car {
+public final class K5 extends Car {
     private static final int DISTANCE_PER_LITER = 13;
     private static final String NAME = "K5";
     private final int tripDistance;

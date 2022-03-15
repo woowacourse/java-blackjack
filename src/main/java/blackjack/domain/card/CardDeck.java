@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.cardElement.Denomination;
-import blackjack.domain.card.cardElement.Suit;
+import blackjack.domain.card.cardelement.Denomination;
+import blackjack.domain.card.cardelement.Suit;
 import java.util.Collections;
 import java.util.Stack;
 

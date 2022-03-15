@@ -1,18 +1,18 @@
-package rentCompany;
+package rentalcompany;
 
 import java.util.ArrayList;
 import java.util.List;
-import rentCompany.car.Car;
+import rentalcompany.car.Car;
 
-public class RentCompany {
+public class RentalCompany {
     private final List<Car> cars;
     
-    private RentCompany() {
+    private RentalCompany() {
         this.cars = new ArrayList<>();
     }
     
-    public static RentCompany create() {
-        return new RentCompany();
+    public static RentalCompany create() {
+        return new RentalCompany();
     }
     
     public void addCar(Car car) {
