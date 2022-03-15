@@ -12,7 +12,7 @@ public final class Dealer extends Player {
     }
 
     public boolean canHit() {
-        return this.deck.isScoreLessThan(SCORE_HIT_CRITERIA);
+        return this.canHit(SCORE_HIT_CRITERIA);
     }
 
     public Result compareWith(Entry entry) {
@@ -29,13 +29,9 @@ public final class Dealer extends Player {
         return entry.getScore() < this.getScore();
     }
 
-    public int getDeckSize() {
-        return this.deck.getSize();
-    }
-
     public void hit(TrumpCard card) {
         if (canHit()) {
-            this.deck.add(card);
+            this.addCard(card);
         }
     }
 }

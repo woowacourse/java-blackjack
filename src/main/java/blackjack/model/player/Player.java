@@ -6,8 +6,8 @@ import blackjack.model.trumpcard.TrumpCard;
 public abstract class Player {
     private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";
 
-    protected final String name;
-    protected final Deck deck;
+    private final String name;
+    private final Deck deck;
 
     public Player(String name) {
         checkNull(name);
@@ -27,6 +27,14 @@ public abstract class Player {
 
     public void addCard(TrumpCard card) {
         this.deck.add(card);
+    }
+
+    public boolean canHit(int criteria) {
+        return this.deck.isScoreLessThan(criteria);
+    }
+
+    public int getDeckSize() {
+        return this.deck.getSize();
     }
 
     public boolean isBust() {
