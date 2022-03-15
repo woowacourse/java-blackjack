@@ -41,7 +41,7 @@ class DealerTest {
         Dealer dealer = new Dealer(cards);
         final int expected = 3;
 
-        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SIX));
+        dealer.hit(new Card(CardPattern.DIAMOND, CardNumber.SIX));
         final int actual = dealer.cards.getCards().size();
 
         assertThat(actual).isEqualTo(expected);
@@ -81,7 +81,7 @@ class DealerTest {
         Dealer dealer = new Dealer(cards);
         final boolean expected = true;
 
-        final boolean actual = dealer.isPossibleToReceiveCard();
+        final boolean actual = dealer.isRangeScoreToReceive();
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -96,7 +96,7 @@ class DealerTest {
         Dealer dealer = new Dealer(cards);
         final boolean expected = false;
 
-        final boolean actual = dealer.isPossibleToReceiveCard();
+        final boolean actual = dealer.isRangeScoreToReceive();
 
         assertThat(actual).isEqualTo(expected);
     }

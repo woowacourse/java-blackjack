@@ -43,8 +43,8 @@ public class BlackjackController {
     }
 
     private void processForPlayer(final BlackjackGame blackjackGame, final Player player) {
-        while (player.isPossibleToReceiveCard() && player.isHit(requestDrawStatus(player.getName()))) {
-            blackjackGame.drawCardToParticipant(player);
+        while (player.isPossibleToHit(requestDrawStatus(player.getName()))) {
+            blackjackGame.hit(player);
             outputView.printPlayerCardStatus(player.getName(), player.getCards().getCards());
         }
     }
@@ -59,9 +59,9 @@ public class BlackjackController {
     }
 
     private void turnOfDealer(final BlackjackGame blackjackGame, Dealer dealer) {
-        while (dealer.isPossibleToReceiveCard()) {
+        while (dealer.isRangeScoreToReceive()) {
             outputView.printDealerDrawOneMoreCard();
-            blackjackGame.drawCardToParticipant(dealer);
+            blackjackGame.hit(dealer);
         }
     }
 

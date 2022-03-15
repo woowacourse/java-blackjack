@@ -17,7 +17,7 @@ public class CardDeck {
         this.cardDeck = cardDeck;
     }
 
-    public Card drawCard() {
+    public Card draw() {
         checkEmptyCardDeck();
         return cardDeck.poll();
     }

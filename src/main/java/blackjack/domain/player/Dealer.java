@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private static final int MAX_SCORE_TO_PICK = 16;
+    private static final int MAX_SCORE_TO_RECEIVE_CARD = 16;
     private static final int FIRST_OPEN_COUNT = 1;
 
     public Dealer(Cards cards) {
@@ -19,7 +19,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isPossibleToReceiveCard() {
-        return cards.calculateScore() <= MAX_SCORE_TO_PICK;
+    public boolean isRangeScoreToReceive() {
+        return cards.calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
     }
 }

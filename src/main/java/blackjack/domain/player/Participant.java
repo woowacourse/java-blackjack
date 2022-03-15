@@ -21,7 +21,7 @@ public abstract class Participant {
         }
     }
 
-    public void receiveCard(Card card) {
+    public void hit(Card card) {
         cards.addCard(card);
     }
 
@@ -43,5 +43,5 @@ public abstract class Participant {
 
     public abstract List<Card> openFirstCards();
 
-    public abstract boolean isPossibleToReceiveCard();
+    public abstract boolean isRangeScoreToReceive();
 }

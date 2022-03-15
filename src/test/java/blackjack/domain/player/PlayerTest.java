@@ -40,7 +40,7 @@ class PlayerTest {
         Player player = new Player("slow", cards);
         final int expected = 3;
 
-        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SIX));
+        player.hit(new Card(CardPattern.DIAMOND, CardNumber.SIX));
         final int actual = player.cards.getCards().size();
 
         assertThat(actual).isEqualTo(expected);
@@ -81,7 +81,7 @@ class PlayerTest {
         Player player = new Player("slow", cards);
         final boolean expected = true;
 
-        final boolean actual = player.isPossibleToReceiveCard();
+        final boolean actual = player.isRangeScoreToReceive();
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -97,7 +97,7 @@ class PlayerTest {
         Player player = new Player("slow", cards);
         final boolean expected = false;
 
-        final boolean actual = player.isPossibleToReceiveCard();
+        final boolean actual = player.isRangeScoreToReceive();
 
         assertThat(actual).isEqualTo(expected);
     }

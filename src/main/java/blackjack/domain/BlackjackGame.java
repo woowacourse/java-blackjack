@@ -32,12 +32,12 @@ public class BlackjackGame {
         return new Dealer(cardDeck.drawInitialCards());
     }
 
-    public void drawCardToParticipant(final Participant participant) {
-        participant.receiveCard(drawCard());
+    public void hit(final Participant participant) {
+        participant.hit(drawCard());
     }
 
     private Card drawCard() {
-        return cardDeck.drawCard();
+        return cardDeck.draw();
     }
 
     public ParticipantResult findGameResult() {
