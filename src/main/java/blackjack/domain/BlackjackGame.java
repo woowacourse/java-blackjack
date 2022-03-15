@@ -46,17 +46,12 @@ public class BlackjackGame {
         blackjackPlayers.nextTurn();
     }
 
-    public boolean turnGuest() {
+    public boolean isTurnGuest() {
         Player player = blackjackPlayers.turnPlayer();
         if (player.isDealer()) {
             return false;
         }
-
-        if (checkGetMoreCard(player)) {
-            addCard(player);
-            return true;
-        }
-        return false;
+        return checkGetMoreCard(player);
     }
 
     public boolean checkGetMoreCard(Player player) {

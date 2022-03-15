@@ -58,7 +58,8 @@ public class BlackjackController {
     }
 
     private void hasMoreCard(BlackjackGame blackjackGame) {
-        while (blackjackGame.turnGuest() && receiveForGetCard(blackjackGame.getTurnPlayer().getName())) {
+        while (blackjackGame.isTurnGuest() && receiveForGetCard(blackjackGame.getTurnPlayer().getName())) {
+            blackjackGame.addCard(blackjackGame.getTurnPlayer());
             announcePresentCard(blackjackGame.getTurnPlayer());
         }
         blackjackGame.nextTurn();
