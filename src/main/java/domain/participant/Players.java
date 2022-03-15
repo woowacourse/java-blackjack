@@ -14,7 +14,7 @@ public class Players {
     private static final String NOT_ENOUGH_CARDS_FOR_INIT_PLAYER_ERROR_MESSAGE = "[Error] 초기화할 카드가 모자랍니다.";
     private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
     private static final String CANT_FIND_PLAYER_ERROR_MESSAGE = "[Error] 플레이어를 찾을 수 없습니다.";
-    private static final int SINGLE_ELEMENT = 1;
+    private static final int SINGLE_ELEMENT_COUNT = 1;
     private static final int FIND_FIRST_INDEX = 0;
 
     private final List<Player> players;
@@ -41,13 +41,9 @@ public class Players {
     }
 
     private void validateNameForFindByName(List<Player> matchNamePlayers) {
-        if (matchNamePlayers.size() != SINGLE_ELEMENT) {
+        if (matchNamePlayers.size() != SINGLE_ELEMENT_COUNT) {
             throw new IllegalArgumentException(CANT_FIND_PLAYER_ERROR_MESSAGE);
         }
-    }
-
-    public List<Name> getNames() {
-        return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
     public void addCardByName(Name name, Card card) {
@@ -79,6 +75,10 @@ public class Players {
 
     public boolean isNeedToDrawByName(Name name) {
         return findByName(name).isNeedToDraw();
+    }
+
+    public List<Name> getNames() {
+        return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
     public Result getResultAtDealerBlackJack(Dealer dealer) {

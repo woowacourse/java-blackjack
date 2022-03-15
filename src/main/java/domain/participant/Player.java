@@ -19,6 +19,10 @@ public class Player extends Participant {
         return true;
     }
 
+    public boolean isNameMatch(Name name) {
+        return this.getName().equals(name);
+    }
+
     public Versus compareAtDealerBlackJack() {
         if (this.isBlackJack()) {
             return Versus.DRAW;
@@ -45,9 +49,5 @@ public class Player extends Participant {
             return Versus.LOSE;
         }
         return Versus.DRAW;
-    }
-
-    public boolean isNameMatch(Name name) {
-        return this.getName().equals(name);
     }
 }
