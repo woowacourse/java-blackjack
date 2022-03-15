@@ -30,7 +30,7 @@ public class Deck {
                 List<String> nameAndValue = List.of(line.split(FILE_CONTENT_DELIMITER));
                 cards.add(Card.generateCard(nameAndValue.get(NAME_INDEX)
                         , Integer.parseInt(nameAndValue.get(VALUE_INDEX))));
-                isExist.add(false);
+                isExist.add(true);
             }
         } catch (Exception e) {
             throw new RuntimeException(FILE_IO_EXCEPTION);
@@ -44,15 +44,15 @@ public class Deck {
     public Card randomPick(NumberGenerator numberGenerator) {
         validateDeckIsNotEmpty();
         int cardIndex = numberGenerator.generateNumber();
-        while (Boolean.TRUE.equals(isExist.get(cardIndex))) {
+        while (Boolean.FALSE.equals(isExist.get(cardIndex))) {
             cardIndex = numberGenerator.generateNumber();
         }
-        isExist.set(cardIndex, true);
+        isExist.set(cardIndex, false);
         return cards.get(cardIndex);
     }
 
     private void validateDeckIsNotEmpty() {
-        if (!isExist.contains(false)) {
+        if (Boolean.FALSE.equals(isExist.contains(true))) {
             throw new RuntimeException(NO_AVAILABLE_CARD_EXCEPTION);
         }
     }
