@@ -28,10 +28,9 @@ public class Participants {
     }
 
     public void dealInitialCards(Deck deck) {
-        dealer.initCards(List.of(deck.pickCard(), deck.pickCard()));
+        deck.dealInitialCards(dealer);
         for (Player player : players) {
-            List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
-            player.initCards(cards);
+            deck.dealInitialCards(player);
         }
     }
 

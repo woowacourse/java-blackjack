@@ -48,6 +48,10 @@ public class ParticipantCards {
             .anyMatch(Card::isAce);
     }
 
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

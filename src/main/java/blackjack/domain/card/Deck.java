@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import blackjack.domain.participant.Participant;
+
 public class Deck {
 
     private static final String DECK_EMPTY_ERROR = "[ERROR] 카드를 모두 사용하였습니다.";
@@ -18,6 +20,10 @@ public class Deck {
                 .forEach(denomination -> deck.add(new Card(suit, denomination)));
         }
         Collections.shuffle(deck);
+    }
+
+    public void dealInitialCards(Participant participant) {
+        participant.initCards(List.of(pickCard(), pickCard()));
     }
 
     public Card pickCard() {
