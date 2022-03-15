@@ -17,12 +17,12 @@ public class Cards {
 
     public int calculateTotalScore() {
         int totalScore = 0;
-        boolean ace = false;
 
         for (Card card : value) {
-            ace = card.isAceCard();
             totalScore = card.addScore(totalScore);
         }
+
+        boolean ace = value.stream().anyMatch(Card::isAceCard);
         return convertCloseBlackJack(ace, totalScore);
     }
 
