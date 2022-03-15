@@ -19,14 +19,14 @@ public class BlackjackGame {
         this.cardDeck = new CardDeck();
     }
 
-    private BlackjackGame(final Players players, final Participant dealer, final CardDeck cardDeck) {
+    private BlackjackGame(final Players players, final Participant dealer) {
         this.players = players;
         this.dealer = dealer;
-        this.cardDeck = cardDeck;
+        this.cardDeck = null;
     }
 
     public BlackjackGame start() {
-        return new BlackjackGame(players.drawCardsBy(cardDeck), dealer.drawCardsBy(cardDeck), cardDeck);
+        return new BlackjackGame(players.drawCardsBy(cardDeck), dealer.drawCardsBy(cardDeck));
     }
 
     public void performEachTurn(Predicate<String> predicate, Consumer<Participant> consumer) {

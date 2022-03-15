@@ -19,6 +19,10 @@ public abstract class Participant {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
     public abstract Participant drawCardsBy(final CardDeck cardDeck);
 
     public abstract boolean canHit();
@@ -27,9 +31,6 @@ public abstract class Participant {
 
     public abstract List<String> getCards();
 
-    public String getName() {
-        return name;
-    }
     /*
     public boolean isWinBy(Participant otherParticipant) {
         return cards.sumScore() > otherParticipant.cards.sumScore();

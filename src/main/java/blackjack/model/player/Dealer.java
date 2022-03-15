@@ -7,40 +7,41 @@ import java.util.List;
 
 
 public class Dealer extends Participant {
+    private static final String NAME = "딜러";
+
     private final State state;
 
     public Dealer() {
-        super("딜러");
+        super(NAME);
         this.state = new DealerState();
     }
 
-    private Dealer(final String name, final State state) {
-        super(name);
+    private Dealer(final State state) {
+        super(NAME);
         this.state = state;
     }
 
-    public boolean canHit() {
-        return state.state().equals("Hit");
+    public List<String> getCards() {
+        return state.getCards();
     }
 
     @Override
     public Participant drawCardsBy(final CardDeck deck) {
-        String name = this.name;
-        State state = this.state;
-        for (int i = 0; i < Player.START_DRAW_COUNT; i++) {
-            state = this.state.addCard(deck.draw());
+        State copyOfState = null;
+        for (int i = 0; i < Participant.START_DRAW_COUNT; i++) {
+            copyOfState = this.state.addCard(deck.draw());
         }
-        return new Dealer(name, state);
+        return new Dealer(copyOfState);
+    }
+
+    @Override
+    public boolean canHit() {
+        return state.canHit();
     }
 
     @Override
     public Participant hitBy(final CardDeck deck) {
-        String name = super.name;
         State state = this.state.addCard(deck.draw());
-        return new Dealer(name, state);
-    }
-
-    public List<String> getCards(){
-        return state.getCards();
+        return new Dealer(state);
     }
 }

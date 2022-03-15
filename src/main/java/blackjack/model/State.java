@@ -10,28 +10,23 @@ public abstract class State {
     protected static final String BUST = "Bust";
 
     protected final Cards cards;
-    protected String state;
+    protected String sign;
 
     public State() {
         this.cards = new Cards();
-        this.state = HIT;
+        this.sign = HIT;
     }
 
     protected State(Cards cards, String state) {
         this.cards = cards;
-        this.state = state;
+        this.sign = state;
     }
-
-    public String state() {
-        choiceState();
-        return state;
-    }
-
-    protected abstract void choiceState();
-
-    public abstract State addCard(Card card);
 
     public List<String> getCards() {
         return cards.getValues();
     }
+
+    public abstract boolean canHit();
+
+    public abstract State addCard(Card card);
 }

@@ -4,6 +4,9 @@ import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 
 public class DealerState extends State {
+    private static final int MAX_SCORE = 21;
+    private static final int DEALER_HIT_LIMIT_SCORE = 16;
+
     private static final String FINISH = "Finish";
 
     public DealerState() {
@@ -16,21 +19,26 @@ public class DealerState extends State {
 
     @Override
     public State addCard(Card card) {
-        Cards cards = this.cards.add(card);
-        return new DealerState(cards, state);
+        Cards copyOfCards = this.cards.add(card);
+        return new DealerState(copyOfCards, this.sign);
     }
 
     @Override
-    protected void choiceState() {
+    public boolean canHit() {
+        choiceSign();
+        return sign.equals(HIT);
+    }
+
+    protected void choiceSign() {
         int score = cards.sumScore();
-        if (score > 17) {
-            state = FINISH;
+        if (score > DEALER_HIT_LIMIT_SCORE) {
+            sign = FINISH;
         }
-        if (score > 21) {
-            state = BUST;
+        if (score > MAX_SCORE) {
+            sign = BUST;
         }
-        if (score == 21 && cards.hasTwoCard()) {
-            state = BLACKJACK;
+        if (score == MAX_SCORE && cards.hasOnlyStartCards()) {
+            sign = BLACKJACK;
         }
     }
 }

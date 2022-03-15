@@ -1,11 +1,8 @@
 package blackjack.model.card;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.TrumpNumber;
 import java.util.List;
 
 public class CardScoreTotalizer {
-
     public static final int ACE_ADVANTAGE = 10;
     public static final int MAX_SCORE_FOR_ACE_ADVANTAGE = 10;
 
@@ -24,11 +21,11 @@ public class CardScoreTotalizer {
         return card.getNumber();
     }
 
-    private static boolean canSumAceAdvantageTo(final int score) {
-        return score <= MAX_SCORE_FOR_ACE_ADVANTAGE;
-    }
-
     private static boolean isAce(final Card card) {
         return card.hasSameNumber(TrumpNumber.ACE);
+    }
+
+    private static boolean canSumAceAdvantageTo(final int score) {
+        return score <= MAX_SCORE_FOR_ACE_ADVANTAGE;
     }
 }

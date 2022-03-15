@@ -25,10 +25,6 @@ public class Card {
         return symbol.getValue();
     }
 
-    public int sumNumberTo(int otherNumber) {
-        return number.sumTo(otherNumber);
-    }
-
     @Override
     public String toString() {
         return this.number.getValue() + this.symbol.getValue();

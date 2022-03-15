@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class DealerStateTest {
 
-    @DisplayName("카드 점수의 합이 21을 넘으면 bust를 반환한다.")
+    @DisplayName("카드 점수의 합이 21을 넘으면 false를 반환한다.")
     @Test()
     void state_bust() {
         State state = new DealerState();
@@ -18,30 +18,30 @@ public class DealerStateTest {
         state.addCard(new Card(TrumpNumber.JACK, TrumpSymbol.HEART));
         state.addCard(new Card(TrumpNumber.KING, TrumpSymbol.SPADE));
 
-        assertThat(state.state()).isEqualTo("Bust");
+        assertThat(state.canHit()).isFalse();
     }
 
-    @DisplayName("카드 점수의 합이 16이하 이면 Hit를 반환한다.")
+    @DisplayName("카드 점수의 합이 16이하 이면 true를 반환한다.")
     @Test()
     void state_Hit() {
         State state = new DealerState();
         state.addCard(new Card(TrumpNumber.SIX, TrumpSymbol.HEART));
         state.addCard(new Card(TrumpNumber.KING, TrumpSymbol.SPADE));
 
-        assertThat(state.state()).isEqualTo("Hit");
+        assertThat(state.canHit()).isTrue();
     }
 
-    @DisplayName("카드가 두장이고 점수 합이 21이면 Blackjack을 반환한다.")
+    @DisplayName("카드가 두장이고 점수 합이 21이면 false를 반환한다.")
     @Test()
     void state_Blackjack() {
         State state = new DealerState();
         state.addCard(new Card(TrumpNumber.ACE, TrumpSymbol.HEART));
         state.addCard(new Card(TrumpNumber.KING, TrumpSymbol.SPADE));
 
-        assertThat(state.state()).isEqualTo("Blackjack");
+        assertThat(state.canHit()).isFalse();
     }
 
-    @DisplayName("카드가 점수 합이 17이상 Finish를 반환한다.")
+    @DisplayName("카드가 점수 합이 17이상 false를 반환한다.")
     @Test()
     void state_Finish() {
         State state = new DealerState();
@@ -49,6 +49,6 @@ public class DealerStateTest {
         state.addCard(new Card(TrumpNumber.EIGHT, TrumpSymbol.SPADE));
         state.addCard(new Card(TrumpNumber.FOUR, TrumpSymbol.SPADE));
 
-        assertThat(state.state()).isEqualTo("Finish");
+        assertThat(state.canHit()).isFalse();
     }
 }

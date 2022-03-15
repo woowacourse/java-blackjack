@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
+    private static final int START_CARD_COUNT = 2;
+
     private final List<Card> values;
 
     public Cards() {
@@ -12,7 +14,7 @@ public class Cards {
     }
 
     private Cards(List<Card> values) {
-        this.values = values;
+        this.values = new ArrayList<>(values);
     }
 
     public Cards add(final Card card) {
@@ -20,24 +22,16 @@ public class Cards {
         return new Cards(values);
     }
 
-    public boolean hasTwoCard() {
-        return values.size() == 2;
+    public int sumScore() {
+        return CardScoreTotalizer.sum(values);
+    }
+
+    public boolean hasOnlyStartCards() {
+        return values.size() == START_CARD_COUNT;
     }
 
     public boolean isBlackjack() {
         return sumScore() == 21 && values.size() == 2;
-    }
-
-    public boolean isBust() {
-        return sumScore() > 21;
-    }
-
-    public boolean isStopScore() {
-        return sumScore() > 17;
-    }
-
-    public int sumScore() {
-        return CardScoreTotalizer.sum(values);
     }
 
     public List<String> getValues() {
