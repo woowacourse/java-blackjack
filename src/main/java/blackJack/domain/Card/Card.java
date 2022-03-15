@@ -3,6 +3,7 @@ package blackJack.domain.Card;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Card {
     private static final int TOTAL_CARDS_SIZE = 52;
@@ -47,5 +48,22 @@ public class Card {
 
     private boolean isSameNumber(Number number) {
         return this.number == number;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Card card = (Card) o;
+        return shape == card.shape && number == card.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shape, number);
     }
 }
