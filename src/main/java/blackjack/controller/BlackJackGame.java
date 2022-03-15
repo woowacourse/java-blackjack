@@ -85,11 +85,11 @@ public class BlackJackGame {
     }
 
     private boolean canGamblerReceiveCard(final Player gambler, final CardDeck cardDeck) {
-        return isHit(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished(GAMBLER_GET_CARD_UPPER_BOUND);
+        return isHitThenReceiveCard(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished(GAMBLER_GET_CARD_UPPER_BOUND);
     }
 
-    private boolean isHit(final Player gambler, final CardDeck cardDeck) {
-        if (askHitOrStay(PlayerDto.from(gambler)).equals(BlackJackCommand.YES)) {
+    private boolean isHitThenReceiveCard(final Player gambler, final CardDeck cardDeck) {
+        if (askHitOrStay(PlayerDto.from(gambler)).isHit()) {
             gambler.receiveCard(cardDeck.pop());
             return true;
         }
