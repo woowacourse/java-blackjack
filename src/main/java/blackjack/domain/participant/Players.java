@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,7 +11,7 @@ public class Players {
     private final List<Player> players;
 
     private Players(List<Player> players) {
-        this.players = new ArrayList<>(players);
+        this.players = players;
     }
 
     public static Players of(List<String> playerNames) {
