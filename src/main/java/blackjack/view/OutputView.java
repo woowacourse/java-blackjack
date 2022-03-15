@@ -19,14 +19,13 @@ public class OutputView {
     private static final String DEALER_GIVEN_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_GIVEN_NO_MORE_CARD_MESSAGE = "딜러는 17이상이라 카드를 더 받지 않습니다.";
     private static final String MATCH_RESULT_DELIMITER = ": ";
-    private static final String NO_CARDS_ERROR_MESSAGE = "카드가 존재하지 않습니다.";
 
     public static void announceStartGame(List<String> playerNames) {
         System.out.println(String.join(COMMA_DELIMITER, playerNames) + DISTRIBUTE_TWO_CARDS_MESSAGE);
     }
 
     public static void announcePresentCards(GameResponse gameResponse) {
-            printFirstStartCards(gameResponse);
+        printFirstStartCards(gameResponse);
     }
 
     public static void announcePresentCards(List<GameResponse> gameResponses) {
