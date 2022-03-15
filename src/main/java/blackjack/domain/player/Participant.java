@@ -4,10 +4,11 @@ import blackjack.domain.result.Judge;
 
 public class Participant extends Player {
 
-    private final AcceptStrategy inputStrategy;
-    public Participant(final String name, final AcceptStrategy inputStrategy) {
+    private final AcceptStrategy acceptStrategy;
+
+    public Participant(final String name, final AcceptStrategy acceptStrategy) {
         super(name);
-        this.inputStrategy = inputStrategy;
+        this.acceptStrategy = acceptStrategy;
     }
 
     @Override
@@ -20,6 +21,6 @@ public class Participant extends Player {
     }
 
     private boolean acceptCard() {
-        return inputStrategy.accept(this.name);
+        return acceptStrategy.accept(this.name);
     }
 }
