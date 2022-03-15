@@ -21,7 +21,7 @@ public class HoldingCards {
         return calculateTotal() > FULL_SCORE;
     }
 
-    private boolean isBlackJack() {
+    public boolean isBlackJack() {
         return calculateTotal() == FULL_SCORE && cards.size() == BLACK_JACK_CARD_COUNT;
     }
 

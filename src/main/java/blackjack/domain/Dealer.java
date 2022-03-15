@@ -11,7 +11,7 @@ public class Dealer extends Participant {
     }
 
     public Card showFirstCard() {
-        return super.getHoldingCard().getFirstCard();
+        return super.getHoldingCard().pickFirstCard();
     }
 
     public boolean isFinished() {
@@ -19,15 +19,36 @@ public class Dealer extends Participant {
     }
 
     public GameResult judgeResult(Player player) {
-        if(player.getHoldingCard().isBust()) {
+        if(playerBust(player) || bothNotBustAndDealerTotalLarger(player) || onlyDealerBlackJack(player)) {
             return GameResult.WIN;
         }
-        if(super.getHoldingCard().isBust() && !player.getHoldingCard().isBust()) {
+        if(onlyDealerBust(player) || bothNotBustAndPlayerTotalLarger(player)) {
             return GameResult.LOSE;
         }
-        if(super.getHoldingCard().calculateTotal() > player.getHoldingCard().calculateTotal()) {
-            return GameResult.WIN;
-        }
         return GameResult.DRAW;
+    }
+
+    private boolean playerBust(Player player) {
+        return player.getHoldingCard().isBust();
+    }
+
+    private boolean dealerBust() {
+        return super.getHoldingCard().isBust();
+    }
+
+    private boolean bothNotBustAndDealerTotalLarger(Player player) {
+        return super.getHoldingCard().calculateTotal() > player.getHoldingCard().calculateTotal();
+    }
+
+    private boolean onlyDealerBust(Player player) {
+        return dealerBust() && !playerBust(player);
+    }
+
+    private boolean bothNotBustAndPlayerTotalLarger(Player player) {
+        return super.getHoldingCard().calculateTotal() < player.getHoldingCard().calculateTotal();
+    }
+
+    private boolean onlyDealerBlackJack(Player player) {
+        return super.getHoldingCard().isBlackJack() && !player.getHoldingCard().isBlackJack();
     }
 }
