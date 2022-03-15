@@ -14,27 +14,27 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void addCard(PlayingCard playingCard) {
+    public final void addCard(PlayingCard playingCard) {
         playingCards.addCard(playingCard);
     }
 
     @Override
-    public boolean isBlackJack() {
+    public final boolean isBlackJack() {
         return playingCards.isBlackJack();
     }
 
     @Override
-    public boolean isLose(int point) {
+    public final boolean isLose(int point) {
         return point > playingCards.sumPoints();
     }
 
     @Override
-    public boolean isBust() {
+    public final boolean isBust() {
         return playingCards.isBust();
     }
 
     @Override
-    public boolean isDraw(Player player) {
+    public final boolean isDraw(Player player) {
         return playingCards.sumPoints() == player.getPlayingCards().sumPoints();
     }
 
