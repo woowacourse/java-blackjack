@@ -1,13 +1,11 @@
 package blackjack.view;
 
-import blackjack.domain.Record;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerRecordDto;
 import blackjack.dto.DealerTurnResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantResultDto;
 import blackjack.dto.PlayerRecordDto;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -62,14 +60,13 @@ public class OutputView {
     public static void printDealerRecord(DealerRecordDto dto) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
 
-        final StringBuilder builder = new StringBuilder();
-        Arrays.stream(Record.values())
-                .filter(it -> dto.getValue(it) != 0)
-                .forEach(it -> builder.append(" ")
-                        .append(dto.getValue(it))
-                        .append(it.getName()));
+        final String message = dto.getKeys()
+                .stream()
+                .filter(key -> dto.getValue(key) != 0)
+                .map(key -> dto.getValue(key) + key)
+                .collect(Collectors.joining(" "));
 
-        System.out.println("딜러:" + builder);
+        System.out.println("딜러: " + message);
     }
 
     public static void printPlayerRecord(PlayerRecordDto dto) {
