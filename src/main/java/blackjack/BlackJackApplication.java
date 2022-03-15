@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.HitRequest;
 import blackjack.domain.Judgement;
+import blackjack.domain.Money;
 import blackjack.domain.WinResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardFactory;
@@ -49,8 +50,18 @@ public class BlackJackApplication {
     }
 
     private static Player createPlayer(CardDeck deck, Name name) {
+        Money betMoney = inputMoney(name);
         Cards cards = new Cards(deck.drawDouble());
         return new Player(name, cards);
+    }
+
+    private static Money inputMoney(Name name) {
+        try {
+            return new Money(InputView.inputPlayerBetAmount(name.getValue()));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return inputMoney(name);
+        }
     }
 
     private static void play(CardDeck deck, Dealer dealer, Players players) {

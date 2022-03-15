@@ -18,4 +18,20 @@ public class InputView {
         System.out.println();
         return scanner.nextLine().toLowerCase();
     }
+
+    public static int inputPlayerBetAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은? (숫자만 입력)", playerName);
+        System.out.println();
+        String betAmount = scanner.nextLine();
+        validateNumberType(betAmount);
+        return Integer.parseInt(betAmount);
+    }
+
+    private static void validateNumberType(String value) {
+        try {
+            Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("입력값은 숫자만 입력해야 합니다.");
+        }
+    }
 }
