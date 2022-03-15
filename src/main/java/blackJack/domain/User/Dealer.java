@@ -26,15 +26,6 @@ public class Dealer extends User {
         return dealerWinCount;
     }
 
-    @Override
-    public boolean hit(CardFactory cardFactory) {
-        if(canOneMoreCard()){
-            cards.add(cardFactory.drawOneCard());
-            return true;
-        }
-        return false;
-    }
-
     public boolean isLose(Player player) {
         if(isBust() || (player.isGreaterScoreThan(this) && !player.isBust())){
             dealerLoseCount++;
@@ -50,4 +41,14 @@ public class Dealer extends User {
         }
         return false;
     }
+
+    @Override
+    public boolean hit(CardFactory cardFactory) {
+        if(canOneMoreCard()){
+            cards.add(cardFactory.drawOneCard());
+            return true;
+        }
+        return false;
+    }
+
 }
