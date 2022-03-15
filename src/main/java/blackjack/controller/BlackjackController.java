@@ -28,7 +28,7 @@ public class BlackjackController {
     // TODO: 추후 participants 에 dealer 가 포함되는 구조로 개선되면 수정 필요
     public void printInitialHand(BlackjackGame game) {
         ParticipantDto dealerDto = ParticipantDto.from(game.getDealer());
-        List<ParticipantDto> playerDtos = game.getParticipants()
+        List<ParticipantDto> playerDtos = game.getPlayers()
                 .stream()
                 .map(ParticipantDto::from)
                 .collect(Collectors.toList());
@@ -43,7 +43,7 @@ public class BlackjackController {
     }
 
     public void giveCardsToAllPlayer(BlackjackGame game) {
-        List<Player> players = game.getParticipants();
+        List<Player> players = game.getPlayers();
         for (Player player : players) {
             giveCardsToPlayer(player, game);
         }
@@ -90,7 +90,7 @@ public class BlackjackController {
     // TODO: 추후 participants 에 dealer 가 포함되는 구조로 개선되면 수정 필요
     public void printFinalHandAndScore(BlackjackGame game) {
         List<ParticipantDto> participants = new ArrayList<>(List.of(ParticipantDto.from(game.getDealer())));
-        participants.addAll(game.getParticipants()
+        participants.addAll(game.getPlayers()
                 .stream()
                 .map(ParticipantDto::from)
                 .collect(Collectors.toList()));
@@ -99,14 +99,14 @@ public class BlackjackController {
     }
 
     public void printDealerMatchDto(BlackjackGame game) {
-        DealerMatchDto dealerMatchDto = DealerMatchDto.of(game.getDealer(), game.getParticipants());
+        DealerMatchDto dealerMatchDto = DealerMatchDto.of(game.getDealer(), game.getPlayers());
         OutputView.printDealerMatchResult(dealerMatchDto);
     }
 
     public void printPlayersMatchDto(BlackjackGame game) {
         Dealer dealer = game.getDealer();
 
-        List<PlayerMatchDto> playerMatchDtos = game.getParticipants()
+        List<PlayerMatchDto> playerMatchDtos = game.getPlayers()
                 .stream()
                 .map(player -> PlayerMatchDto.of(player, dealer))
                 .collect(Collectors.toList());

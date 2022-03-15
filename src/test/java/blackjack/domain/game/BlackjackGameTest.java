@@ -31,11 +31,11 @@ public class BlackjackGameTest {
     void constructor_initsGameWithPlayerNames() {
         BlackjackGame blackjackGame = new BlackjackGame(new CardDeck(), playerNames);
 
-        List<Player> participants = blackjackGame.getParticipants();
+        List<Player> players = blackjackGame.getPlayers();
 
-        assertThat(participants.size()).isEqualTo(2);
-        assertThat(participants.get(0).getName()).isEqualTo("hudi");
-        assertThat(participants.get(1).getName()).isEqualTo("jeong");
+        assertThat(players.size()).isEqualTo(2);
+        assertThat(players.get(0).getName()).isEqualTo("hudi");
+        assertThat(players.get(1).getName()).isEqualTo("jeong");
     }
 
     @DisplayName("생성자에 플레이어명이 입력되지 않으면 예외가 발생한다.")
@@ -61,7 +61,7 @@ public class BlackjackGameTest {
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER6, CLOVER7, CLOVER8);
         BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
-        Player player = blackjackGame.getParticipants().get(0);
+        Player player = blackjackGame.getPlayers().get(0);
 
         // when
         boolean actual = blackjackGame.giveExtraCardToPlayer(player);
@@ -77,7 +77,7 @@ public class BlackjackGameTest {
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER2, CLOVER3, CLOVER10, CLOVER5, CLOVER6, CLOVER7, CLOVER8);
         BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
-        Player player = blackjackGame.getParticipants().get(0);
+        Player player = blackjackGame.getPlayers().get(0);
 
         // when
         boolean actual = blackjackGame.giveExtraCardToPlayer(player);
