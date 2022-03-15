@@ -2,7 +2,7 @@ package blackJack.domain.User;
 
 import blackJack.domain.Card.*;
 import blackJack.domain.Card.Number;
-import blackJack.domain.Result;
+import blackJack.domain.PlayerResult;
 import blackJack.domain.utils.FixedCardFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +32,7 @@ class DealerTest {
     @DisplayName("딜러가 소지한 카드가 16 초과면 false를 반환한다.")
     void checkScoreWhenOver16Test() {
         Dealer dealer = new Dealer(cardFactory);
-        dealer.addCard(cardFactory);
+        dealer.hit(cardFactory);
         assertThat(dealer.canOneMoreCard()).isEqualTo(false);
     }
 
@@ -45,11 +45,11 @@ class DealerTest {
                 new Card(Shape.CLOVER, Number.TWO)));
         Player player = new Player("test", over21Cards);
         Dealer dealer = new Dealer(cardFactory);
-        dealer.addCard(cardFactory);
-        dealer.addCard(cardFactory);
+        dealer.hit(cardFactory);
+        dealer.hit(cardFactory);
 
-        Result actual = dealer.compare(player);
-        Result expected = Result.LOSE;
+        PlayerResult actual = dealer.compare(player);
+        PlayerResult expected = PlayerResult.LOSE;
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -61,8 +61,8 @@ class DealerTest {
                new Card(Shape.HEART, Number.TEN)));
        Player player = new Player("test", playerCards);
        Dealer dealer = new Dealer(cardFactory);
-       Result actual = dealer.compare(player);
-       Result expected = Result.WIN;
+       PlayerResult actual = dealer.compare(player);
+       PlayerResult expected = PlayerResult.WIN;
        assertThat(actual).isEqualTo(expected);
     }
 
@@ -75,11 +75,11 @@ class DealerTest {
 
         Player player = new Player("test", playerCards);
         Dealer dealer = new Dealer(cardFactory);
-        dealer.addCard(cardFactory);
-        dealer.addCard(cardFactory);
-        dealer.addCard(cardFactory);
-        Result actual = dealer.compare(player);
-        Result expected = Result.WIN;
+        dealer.hit(cardFactory);
+        dealer.hit(cardFactory);
+        dealer.hit(cardFactory);
+        PlayerResult actual = dealer.compare(player);
+        PlayerResult expected = PlayerResult.WIN;
         assertThat(actual).isEqualTo(expected);
     }
 

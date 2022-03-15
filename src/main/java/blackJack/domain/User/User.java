@@ -22,7 +22,7 @@ public abstract class User {
     }
 
     public int getScore() {
-        return cards.calculateScore();
+        return cards.getScore();
     }
 
     public boolean isBust() {
@@ -30,10 +30,11 @@ public abstract class User {
     }
 
     public boolean isGreaterScoreThan(User user) {
-        return this.cards.calculateScore() > user.cards.calculateScore();
+        return this.cards.getScore() > user.cards.getScore();
     }
 
-    abstract public void addCard(CardFactory cardFactory);
-
-
+    public boolean isBlackJack(){
+        return cards.isBlackJack();
+    }
+    abstract public void hit(CardFactory cardFactory);
 }

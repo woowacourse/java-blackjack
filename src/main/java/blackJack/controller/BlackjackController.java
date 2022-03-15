@@ -34,7 +34,7 @@ public class BlackjackController {
         players.getPlayers().forEach(player -> askOneMoreCard(player, cardFactory));
         while (dealer.canOneMoreCard()) {
             OutputView.printAddDealerCard();
-            dealer.addCard(cardFactory);
+            dealer.hit(cardFactory);
         }
         return convertToUserDtos(dealer, players);
 
@@ -42,7 +42,7 @@ public class BlackjackController {
 
     private void askOneMoreCard(Player player, CardFactory cardFactory) {
         while (!player.isBust() && InputView.askOneMoreCard(player.getName())) {
-            player.addCard(cardFactory);
+            player.hit(cardFactory);
             OutputView.printPlayerCard(UserDto.from(player));
         }
     }

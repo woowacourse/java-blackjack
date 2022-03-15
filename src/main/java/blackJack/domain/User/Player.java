@@ -9,7 +9,7 @@ public class Player extends User {
     }
 
     @Override
-    public void addCard(CardFactory cardFactory) {
+    public void hit(CardFactory cardFactory) {
         cards.add(cardFactory.drawOneCard());
     }
 

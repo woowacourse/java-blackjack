@@ -14,7 +14,7 @@ public class Cards {
         this(new HashSet<>(deck));
     }
 
-    public Cards(Set<Card> deck) {
+    private Cards(Set<Card> deck) {
         this.cards = new HashSet<>(deck);
     }
 
@@ -26,11 +26,11 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean isBust(){
-        return calculateScore() > BUST_LINE;
+    public boolean isBust() {
+        return getScore() > BUST_LINE;
     }
 
-    public int calculateScore() {
+    public int getScore() {
         int score = cards.stream()
                 .mapToInt(card -> card.getNumber().getValue())
                 .sum();
@@ -44,15 +44,23 @@ public class Cards {
                 .count();
 
         for (int i = 0; i < countAce; i++) {
-            score = getScore(score);
+            score = calculateAceScore(score);
         }
         return score;
     }
 
-    private int getScore(int score) {
+    private int calculateAceScore(int score) {
         if (score + EXTRA_SCORE <= BUST_LINE) {
             score += EXTRA_SCORE;
         }
         return score;
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && getScore() == BUST_LINE;
     }
 }

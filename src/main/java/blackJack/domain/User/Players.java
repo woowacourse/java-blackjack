@@ -1,7 +1,7 @@
 package blackJack.domain.User;
 
 import blackJack.domain.Card.CardFactory;
-import blackJack.domain.Result;
+import blackJack.domain.PlayerResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class Players {
     public Map<String, String> getStatistics(Dealer dealer) {
         Map<String, String> result = new HashMap<>();
         for (Player player : players) {
-            Result compare = dealer.compare(player);
+            PlayerResult compare = PlayerResult.decision(dealer, player);
             result.put(player.getName(), compare.getValue());
         }
         return result;

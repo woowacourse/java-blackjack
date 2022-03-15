@@ -4,7 +4,7 @@ import blackJack.domain.Card.Card;
 import blackJack.domain.Card.CardFactory;
 import blackJack.domain.Card.Cards;
 import blackJack.domain.Card.Shape;
-
+import blackJack.domain.Card.Number;
 import java.util.List;
 
 public class FixedCardFactory extends CardFactory {

@@ -18,8 +18,8 @@ public class DealerResultDto {
 
     public static DealerResultDto from(Dealer dealer, int totalGameCount) {
         int dealerLoseCount = dealer.getDealerLoseCount();
-        int dealerDrawCount = dealer.getDealerDrawCount();
-        int dealerWinCount = totalGameCount - (dealerLoseCount + dealerDrawCount);
+        int dealerWinCount = dealer.getDealerWinCount();
+        int dealerDrawCount = totalGameCount - (dealerLoseCount + dealerWinCount);
         return new DealerResultDto(dealer.getName(), dealerLoseCount, dealerDrawCount, dealerWinCount);
     }
 
