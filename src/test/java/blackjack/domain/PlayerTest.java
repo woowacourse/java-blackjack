@@ -11,7 +11,7 @@ public class PlayerTest {
     @Test
     void addCard() {
         Player player = new Player("pobi");
-        player.addCard(new Card("3다이아몬드", 3));
+        player.addCard(Card.generateCard("3다이아몬드", 3));
         int playerCardSize = player.getMyCards().size();
         assertThat(playerCardSize).isEqualTo(1);
     }
@@ -20,9 +20,9 @@ public class PlayerTest {
     @Test
     void burst() {
         Player player = new Player("pobi");
-        player.addCard(new Card("10다이아몬드", 10));
-        player.addCard(new Card("10다이아몬드", 10));
-        player.addCard(new Card("10다이아몬드", 10));
+        player.addCard(Card.generateCard("10다이아몬드", 10));
+        player.addCard(Card.generateCard("10다이아몬드", 10));
+        player.addCard(Card.generateCard("10다이아몬드", 10));
         assertThat(player.isBurst()).isTrue();
     }
 
@@ -30,7 +30,7 @@ public class PlayerTest {
     @Test
     void burst2() {
         Player player = new Player("pobi");
-        player.addCard(new Card("10다이아몬드", 10));
+        player.addCard(Card.generateCard("10다이아몬드", 10));
         assertThat(player.isBurst()).isFalse();
     }
 

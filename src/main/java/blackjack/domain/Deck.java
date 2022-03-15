@@ -35,7 +35,6 @@ public class Deck {
                         , Integer.parseInt(nameAndValue.get(VALUE_INDEX))));
                 isExist.add(false);
             }
-            Card.lock();
         } catch (Exception e) {
             throw new RuntimeException(FILE_IO_EXCEPTION);
         }
