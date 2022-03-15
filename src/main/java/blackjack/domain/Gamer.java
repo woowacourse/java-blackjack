@@ -18,7 +18,7 @@ public abstract class Gamer {
         return cards.calculateTotalScore();
     }
 
-    public void add(Card card) {
+    public void addCard(Card card) {
         cards.add(card);
     }
 

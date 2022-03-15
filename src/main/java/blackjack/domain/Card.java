@@ -35,8 +35,12 @@ public class Card {
         return this.denomination == denomination && this.suit == suit;
     }
 
-    public int getSumScore(int totalScore) {
+    public int addScore(int totalScore) {
         return denomination.addScore(totalScore);
+    }
+
+    public boolean isAceCard() {
+        return denomination.isAce();
     }
 
     public Denomination getDenomination() {

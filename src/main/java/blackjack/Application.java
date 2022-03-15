@@ -68,7 +68,7 @@ public class Application {
 
     private static void drawCard(Deck deck, Player player, PlayCommand playCommand) {
         if (playCommand.isContinue()) {
-            player.add(deck.draw());
+            player.addCard(deck.draw());
             OutputView.printPlayerCardInfo(toGamerDto(player));
         }
     }
@@ -81,7 +81,7 @@ public class Application {
     private static void drawDealer(Deck deck, Dealer dealer) {
         while (dealer.canHit()) {
             OutputView.printDealerDrawableInfo();
-            dealer.add(deck.draw());
+            dealer.addCard(deck.draw());
         }
     }
 

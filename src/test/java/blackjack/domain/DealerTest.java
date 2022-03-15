@@ -45,7 +45,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateCards());
         Card card = Card.of(FIVE, SPADE);
 
-        dealer.add(card);
+        dealer.addCard(card);
 
         assertThat(dealer.getCards().getValue().size()).isEqualTo(3);
     }

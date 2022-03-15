@@ -49,7 +49,7 @@ public class PlayerTest {
         Player player = new Player(name, cards);
         Card card = Card.of(FIVE, SPADE);
 
-        player.add(card);
+        player.addCard(card);
 
         assertThat(player.getCards().getValue().size()).isEqualTo(3);
     }

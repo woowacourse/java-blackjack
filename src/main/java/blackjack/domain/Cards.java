@@ -17,27 +17,20 @@ public class Cards {
 
     public int calculateTotalScore() {
         int totalScore = 0;
+        boolean ace = false;
 
         for (Card card : value) {
-            totalScore = card.getSumScore(totalScore);
+            ace = card.isAceCard();
+            totalScore = card.addScore(totalScore);
         }
-        return ConvertCloseBlackJack(totalScore);
+        return convertCloseBlackJack(ace, totalScore);
     }
 
-    private int ConvertCloseBlackJack(int totalScore) {
-        int convertScore = totalScore;
-
-        for (int i = 0; i < countAce(); i++) {
-            convertScore = calculateAceScore(convertScore);
+    private int convertCloseBlackJack(boolean aceCheck, int totalScore) {
+        if (aceCheck) {
+            return calculateAceScore(totalScore);
         }
-        return convertScore;
-    }
-
-    private Long countAce() {
-        return value.stream()
-                .map(Card::getDenomination)
-                .filter(card -> ACE.equals(card))
-                .count();
+        return totalScore;
     }
 
     private int calculateAceScore(int score) {
