@@ -21,6 +21,8 @@ public abstract class Player {
 
     public abstract MatchResult match(Player another);
 
+    public abstract boolean isDealer();
+
     public void addCard(Card card) {
         cards.addCard(card);
     }
