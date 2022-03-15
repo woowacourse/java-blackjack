@@ -6,9 +6,9 @@ import java.util.List;
 
 public class ParticipantCards {
 
-    private final static int NO_COUNT = 0;
-    private final static int BUST_THRESHOLD = 21;
-    private final static int CONVERT_ACE_AMOUNT = 10;
+    private static final int NO_COUNT = 0;
+    private static final int BUST_THRESHOLD = 21;
+    private static final int CONVERT_ACE_AMOUNT = 10;
     private static final int FIRST_CARD_INDEX = 0;
 
     private final List<Card> cards;
