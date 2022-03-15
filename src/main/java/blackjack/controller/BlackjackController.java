@@ -17,8 +17,8 @@ public class BlackjackController {
         OutputView.announceStartGame(blackjackGame.getPlayerNames());
         OutputView.announcePresentCards(toResponse(blackjackGame.getPlayers()));
 
-        turnGuests(blackjackGame);
-        turnDealer(blackjackGame);
+        decideGuestsToGetMoreCards(blackjackGame);
+        decideDealerGetMoreCard(blackjackGame);
 
         printResult(blackjackGame);
     }
@@ -31,13 +31,13 @@ public class BlackjackController {
         return gameResponses;
     }
 
-    private void turnGuests(BlackjackGame blackjackGame) {
+    private void decideGuestsToGetMoreCards(BlackjackGame blackjackGame) {
         while (blackjackGame.hasNextGuest()) {
-            turnEachGuest(blackjackGame);
+            decideGuestToGetMoreCards(blackjackGame);
         }
     }
 
-    private void turnEachGuest(BlackjackGame blackjackGame) {
+    private void decideGuestToGetMoreCards(BlackjackGame blackjackGame) {
         while (canGetMoreCard(blackjackGame)) {
             GameResponse gameResponse = blackjackGame.addCardToPlayer();
             OutputView.announcePresentCards(gameResponse);
@@ -54,12 +54,7 @@ public class BlackjackController {
         return Hit.isYes(userResponse);
     }
 
-    private void turnDealer(BlackjackGame blackjackGame) {
-        announceDealerCanGetMoreCard(blackjackGame);
-    }
-
-    private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame) {
-
+    private void decideDealerGetMoreCard(BlackjackGame blackjackGame) {
         if (blackjackGame.canGetMoreCardToDealer()) {
             OutputView.announceDealerGetMoreCard();
             blackjackGame.addCardToDealer();
