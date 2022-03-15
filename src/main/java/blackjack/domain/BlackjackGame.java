@@ -31,8 +31,8 @@ public class BlackjackGame {
         return players.isDealerHit(deck);
     }
 
-    public boolean canHit(Player player, Command command) {
-        return command == Command.HIT && player.countCards() < BLACKJACK_NUMBER;
+    public boolean canPlayerHit(Player player, Command command) {
+        return command.isHit() && player.countCards() < BLACKJACK_NUMBER;
     }
 
     public Map<Participant, Integer> getCardResult(List<Participant> participants) {

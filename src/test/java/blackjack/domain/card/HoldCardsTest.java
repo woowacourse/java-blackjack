@@ -56,4 +56,12 @@ class HoldCardsTest {
                 .isThrownBy(() -> holdCards.addCard(Card.valueOf(Suit.CLUB, Denomination.ACE)))
                 .withMessage("카드가 중복될 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("처음에 2장의 카드를 배분하지 않은 경우 예외를 발생한다.")
+    void validateInitCardSize() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> HoldCards.init(List.of(Card.valueOf(Suit.CLUB, Denomination.ACE))))
+                .withMessage("초기 카드는 2장씩 나눠져야 합니다.");
+    }
 }

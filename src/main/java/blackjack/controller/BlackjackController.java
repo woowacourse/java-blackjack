@@ -37,7 +37,7 @@ public class BlackjackController {
             command = Command.find(InputView.inputCommand(player));
             receiveCard(blackjackGame, player, command);
             OutputView.printPlayerCards(player);
-        } while (blackjackGame.canHit(player, command));
+        } while (blackjackGame.canPlayerHit(player, command));
     }
 
     private void receiveCard(BlackjackGame blackjackGame, Player player, Command command) {
