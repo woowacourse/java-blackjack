@@ -25,10 +25,4 @@ public class Result {
 			.filter(each -> each == resultType)
 			.count();
 	}
-
-	private void insertInGameResult(List<Player> players, ResultType resultType) {
-		for (Player player : players) {
-			this.gameResult.put(player, resultType);
-		}
-	}
 }
