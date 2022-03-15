@@ -34,7 +34,7 @@ public abstract class Participant {
 
         private Name(String name) {
             if (name.isEmpty()) {
-                throw new IllegalArgumentException("[ERROR] 빈 이름!!");
+                throw new IllegalArgumentException("[ERROR] 빈 이름은 사용할 수 없습니다.");
             }
             this.name = name;
         }

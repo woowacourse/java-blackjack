@@ -21,7 +21,7 @@ public class BlackJackGame {
 
     private void validateEmptyNames(List<String> playerNames) {
         if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 빈 이름이 있습니다.");
+            throw new IllegalArgumentException("[ERROR] 이름 입력이 비었습니다");
         }
     }
 
@@ -71,7 +71,7 @@ public class BlackJackGame {
         if(!decision) {
             playerOnTurn.closeTurn();
         }
-        return playerOnTurn.getHoldingCard().getHoldingCard();
+        return playerOnTurn.getHoldingCard().getCards();
     }
 
     public boolean dealerDrawMoreCard() {
