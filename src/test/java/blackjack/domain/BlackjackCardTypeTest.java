@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 
 public class BlackjackCardTypeTest {
 
-    @DisplayName("같은 종류 카드 equals true인지 확인하는 테스트")
+    @DisplayName("카드 종류 같으면 equals이 true리턴하는지 테스트")
     @Test
     void equalsTest() {
         Card card = Card.generateCard(BlackjackCardType.DIAMOND_10);
         assertThat(card.equals(Card.generateCard(BlackjackCardType.DIAMOND_10))).isTrue();
     }
 
-    @DisplayName("다른 종류 카드 equals false인지 확인하는 테스트")
+    @DisplayName("카드 종류 다르면 equals이 false리턴하는지 테스트")
     @Test
     void equalsTest2() {
         Card card = Card.generateCard(BlackjackCardType.DIAMOND_10);

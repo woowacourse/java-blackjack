@@ -16,7 +16,7 @@ public class PlayerTest {
         assertThat(playerCardSize).isEqualTo(1);
     }
 
-    @DisplayName("버스트 테스트_버스트")
+    @DisplayName("스코어 21 넘으면 burst인지 확인하는 기능 true 리턴하는지 테스트")
     @Test
     void burst() {
         Player player = new Player("pobi");
@@ -26,25 +26,11 @@ public class PlayerTest {
         assertThat(player.isBurst()).isTrue();
     }
 
-    @DisplayName("버스트 테스트_버스트아님")
+    @DisplayName("스코어 21 못넘으면 burst인지 확인하는 기능 False 리턴하는지 테스트")
     @Test
     void burst2() {
         Player player = new Player("pobi");
         player.addCard(Card.generateCard(BlackjackCardType.DIAMOND_10));
         assertThat(player.isBurst()).isFalse();
-    }
-
-    @DisplayName("이름 같은지 확인하는 테스트_같음")
-    @Test
-    void isSameNameTest() {
-        Player player = new Player("pobi");
-        assertThat(player.getName().equals("pobi")).isEqualTo(true);
-    }
-
-    @DisplayName("이름 같은지 확인하는 테스트_다름")
-    @Test
-    void isSameNameTest2() {
-        Player player = new Player("pobi");
-        assertThat(player.getName().equals("jason")).isEqualTo(false);
     }
 }

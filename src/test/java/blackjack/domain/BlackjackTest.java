@@ -26,7 +26,7 @@ public class BlackjackTest {
         assertThat(playerCardNum == 2 && dealerCardNum == 2).isTrue();
     }
 
-    @DisplayName("addCondition이 true일때 현재 turn플레이어 카드 추가되는지 테스트")
+    @DisplayName("현재 turn플레이어에게 addCondition가 true라면 카드 추가되는지 테스트")
     @Test
     void additionalCardToTurnPlayerTest() {
         blackjack.addtionalCardToPlayer(
@@ -34,7 +34,7 @@ public class BlackjackTest {
         assertThat(blackjack.getPlayers().firstPlayer().getMyCards().size()).isEqualTo(1);
     }
 
-    @DisplayName("addCondition이 false일때 turn플레이어 다음으로 넘어가는지 테스트")
+    @DisplayName("addCondition이 false일때 turn플레이어가 다음으로 넘어가는지 테스트")
     @Test
     void additionalCardToTurnPlayerTest2() {
         blackjack.addtionalCardToPlayer(
@@ -42,7 +42,7 @@ public class BlackjackTest {
         assertThat(blackjack.turnPlayer().getName().equals("jason")).isTrue();
     }
 
-    @DisplayName("addCondition이 true이고 카드추가 후 burst가 되면 turn플레이어 다음으로 넘어가는지 테스트")
+    @DisplayName("addCondition이 true이고 카드추가 후 점수가 burst가 되면 turn플레이어가 다음으로 넘어가는지 테스트")
     @Test
     void additionalCardToTurnPlayerTest3() {
         NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(9, 1, 2, 10, 3, 4, 11));

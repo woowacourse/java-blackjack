@@ -17,7 +17,7 @@ public class CardsTest {
         assertThat(afterScore > beforeScore).isTrue();
     }
 
-    @DisplayName("점수 잘 계산되는지 테스트, 에이스가 3장일때")
+    @DisplayName("에이스가 3장일때 점수가 최적으로 계산되는지 테스트")
     @Test
     void scoreTest() {
         Cards cards = Cards.generateCards();
@@ -27,7 +27,7 @@ public class CardsTest {
         assertThat(cards.score()).isEqualTo(13);
     }
 
-    @DisplayName("점수 잘 계산되는지 테스트, 에이스가 포함되어 있을때")
+    @DisplayName("에이스가 포함되어 있을때 점수가 최적으로 계산되는지 테스트")
     @Test
     void scoreTest2() {
         Cards cards = Cards.generateCards();

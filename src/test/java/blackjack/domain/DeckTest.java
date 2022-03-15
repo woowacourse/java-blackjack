@@ -30,7 +30,7 @@ public class DeckTest {
         assertThat(duplicatedCardExist).isFalse();
     }
 
-    @DisplayName("덱이 비었을때 카드 뽑으면 예외처리 발생하는지 테스트")
+    @DisplayName("덱이 비었을때 카드 뽑으면 예외 발생하는지 테스트")
     @Test
     void validateDeckIsEmpty() {
         for (int i = 0; i<BlackjackCardType.values().length; ++i) {
