@@ -12,13 +12,13 @@ public abstract class User {
     protected final Hand hand;
     protected final Name name;
 
-    protected User(Name name) {
-        this.hand = new Hand();
+    private User(Hand hand, Name name) {
+        this.hand = hand;
         this.name = name;
     }
 
     protected User(String input) {
-        this(new Name(input));
+        this(new Hand(), new Name(input));
     }
 
     public void drawInitCards(Deck deck) {

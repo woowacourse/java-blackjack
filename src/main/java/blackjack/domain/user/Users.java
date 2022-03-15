@@ -15,9 +15,13 @@ public class Users {
     private final List<Player> players;
     private final Dealer dealer;
 
-    private Users(List<Player> players) {
+    private Users(List<Player> players, Dealer dealer) {
         this.players = players;
-        dealer = new Dealer();
+        this.dealer = dealer;
+    }
+
+    private Users(List<Player> players) {
+        this(players, new Dealer());
     }
 
     public static Users from(List<String> inputNames) {
