@@ -57,3 +57,6 @@
 - CardDeck 내 카드목록 Stack으로 구현
     - 기존 List<Card> -> Stack<Card>
     - 리스트의 크기 - 1을 반환하는 메서드에서 stack의 pop을 이용한 메서드로 수정
+- 추상 클래스 Player 중복 필드 및 메서드 구현
+    - Name 필드, getName() 메서드 중복
+    - 추상 클래스 내 구현
