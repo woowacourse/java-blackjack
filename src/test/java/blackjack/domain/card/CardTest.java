@@ -10,7 +10,7 @@ class CardTest {
     @DisplayName("카드 생성자 테스트")
     @Test
     void create() {
-        Card card = Card.from(Number.ACE, Kind.HEART);
+        Card card = new Card(Number.ACE, Kind.HEART);
         assertThat(card).isNotNull();
     }
 }

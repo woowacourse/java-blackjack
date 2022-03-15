@@ -16,7 +16,7 @@ class DealerTest {
     @Test
     void constructor_CreateDealer_HasInstance() {
         Dealer dealer = new Dealer();
-        dealer.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE))));
+        dealer.receive(new Cards(List.of(new Card(Number.ACE, Kind.SPADE))));
 
         assertThat(dealer).isNotNull();
     }
@@ -26,8 +26,8 @@ class DealerTest {
     void isReceivable_BestScoreAs16_IsTrue() {
         Dealer dealer = new Dealer();
         dealer.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.FIVE, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.FIVE, Kind.SPADE))));
 
         assertThat(dealer.isReceivable()).isTrue();
     }
@@ -37,8 +37,8 @@ class DealerTest {
     void isReceivable_BestScoreAs17_IsFalse() {
         Dealer dealer = new Dealer();
         dealer.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.SIX, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.SIX, Kind.SPADE))));
 
         assertThat(dealer.isReceivable()).isFalse();
     }
@@ -48,10 +48,10 @@ class DealerTest {
     void calculateBestScore_FourAces_Returns4() {
         Dealer dealer = new Dealer();
         dealer.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.ACE, Kind.DIAMOND),
-                Card.from(Number.ACE, Kind.CLOVER),
-                Card.from(Number.ACE, Kind.HEART))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.ACE, Kind.DIAMOND),
+                new Card(Number.ACE, Kind.CLOVER),
+                new Card(Number.ACE, Kind.HEART))));
 
         assertThat(dealer.calculateBestScore()).isEqualTo(4);
     }
@@ -61,8 +61,8 @@ class DealerTest {
     void calculateBestScore_ConsideringAceAsElevenWhenUnder21_Returns19() {
         Dealer dealer = new Dealer();
         dealer.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.EIGHT, Kind.HEART))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.EIGHT, Kind.HEART))));
 
         assertThat(dealer.calculateBestScore()).isEqualTo(19);
     }
@@ -72,8 +72,8 @@ class DealerTest {
     void calculateBestScore_ConsideringAceAsOneWhenExceeds21_Returns2() {
         Dealer dealer = new Dealer();
         dealer.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.ACE, Kind.HEART))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.ACE, Kind.HEART))));
 
         assertThat(dealer.calculateBestScore()).isEqualTo(2);
     }

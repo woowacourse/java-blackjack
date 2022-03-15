@@ -19,18 +19,18 @@ public class PlayersTest {
     @BeforeAll
     static void beforeAll() {
         players.getPlayers().get(0).receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.HEART),
-                Card.from(Number.KING, Kind.HEART))));
+                new Card(Number.ACE, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
         players.getPlayers().get(1).receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.CLOVER),
-                Card.from(Number.NINE, Kind.CLOVER))));
+                new Card(Number.ACE, Kind.CLOVER),
+                new Card(Number.NINE, Kind.CLOVER))));
         players.getPlayers().get(2).receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.DIAMOND),
-                Card.from(Number.EIGHT, Kind.DIAMOND))));
+                new Card(Number.ACE, Kind.DIAMOND),
+                new Card(Number.EIGHT, Kind.DIAMOND))));
 
         dealer.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.NINE, Kind.SPADE))));
     }
 
     @DisplayName("플레이어들 객체 생성자 테스트")

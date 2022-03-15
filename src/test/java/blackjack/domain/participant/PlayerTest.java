@@ -16,7 +16,7 @@ class PlayerTest {
     @Test
     void constructor_CreatePlayer_HasInstance() {
         Player player = Player.of("쿼리치");
-        player.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE))));
+        player.receive(new Cards(List.of(new Card(Number.ACE, Kind.SPADE))));
 
         assertThat(player).isNotNull();
     }
@@ -26,8 +26,8 @@ class PlayerTest {
     void isReceivable_BestScore21_IsTrue() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.KING, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.KING, Kind.SPADE))));
 
         assertThat(player.isReceivable()).isTrue();
     }
@@ -37,9 +37,9 @@ class PlayerTest {
     void isReceivable_BestScore22_IsFalse() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.TEN, Kind.SPADE),
-                Card.from(Number.TWO, Kind.SPADE),
-                Card.from(Number.TEN, Kind.HEART))));
+                new Card(Number.TEN, Kind.SPADE),
+                new Card(Number.TWO, Kind.SPADE),
+                new Card(Number.TEN, Kind.HEART))));
 
         assertThat(player.isReceivable()).isFalse();
     }
@@ -49,10 +49,10 @@ class PlayerTest {
     void calculateBestScore_FourAces_Returns14() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.ACE, Kind.DIAMOND),
-                Card.from(Number.ACE, Kind.CLOVER),
-                Card.from(Number.ACE, Kind.HEART))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.ACE, Kind.DIAMOND),
+                new Card(Number.ACE, Kind.CLOVER),
+                new Card(Number.ACE, Kind.HEART))));
 
         assertThat(player.calculateBestScore()).isEqualTo(14);
     }
@@ -62,8 +62,8 @@ class PlayerTest {
     void calculateBestScore_ConsideringAceAsEleven_Returns21() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.KING, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.KING, Kind.SPADE))));
 
         assertThat(player.calculateBestScore()).isEqualTo(21);
     }
@@ -73,10 +73,10 @@ class PlayerTest {
     void calculateBestScore_ConsideringAceAsOne_Returns21() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.FIVE, Kind.SPADE),
-                Card.from(Number.SEVEN, Kind.SPADE),
-                Card.from(Number.EIGHT, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.FIVE, Kind.SPADE),
+                new Card(Number.SEVEN, Kind.SPADE),
+                new Card(Number.EIGHT, Kind.SPADE))));
 
         assertThat(player.calculateBestScore()).isEqualTo(21);
     }
@@ -86,8 +86,8 @@ class PlayerTest {
     void isWinner_Player20_isWin() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.NINE, Kind.SPADE))));
 
         assertThat(player.isWinner(19)).isEqualTo(Result.WIN);
     }
@@ -97,8 +97,8 @@ class PlayerTest {
     void isWinner_Player20_isLose() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.NINE, Kind.SPADE))));
 
         assertThat(player.isWinner(21)).isEqualTo(Result.LOSE);
     }
@@ -108,9 +108,9 @@ class PlayerTest {
     void isWinner_PlayerBusted_isLose() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.NINE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.CLOVER),
-                Card.from(Number.NINE, Kind.HEART))));
+                new Card(Number.NINE, Kind.SPADE),
+                new Card(Number.NINE, Kind.CLOVER),
+                new Card(Number.NINE, Kind.HEART))));
 
         assertThat(player.isWinner(19)).isEqualTo(Result.LOSE);
     }
@@ -120,8 +120,8 @@ class PlayerTest {
     void isWinner_DealerBusted_isWin() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.NINE, Kind.SPADE))));
 
         assertThat(player.isWinner(22)).isEqualTo(Result.WIN);
     }
@@ -131,9 +131,9 @@ class PlayerTest {
     void isWinner_BothBusted_isLose() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.NINE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.CLOVER),
-                Card.from(Number.NINE, Kind.HEART))));
+                new Card(Number.NINE, Kind.SPADE),
+                new Card(Number.NINE, Kind.CLOVER),
+                new Card(Number.NINE, Kind.HEART))));
 
         assertThat(player.isWinner(22)).isEqualTo(Result.LOSE);
     }
@@ -143,8 +143,8 @@ class PlayerTest {
     void isWinner_SameScore_isDraw() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.KING, Kind.CLOVER))));
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.KING, Kind.CLOVER))));
 
         assertThat(player.isWinner(21)).isEqualTo(Result.DRAW);
     }
@@ -154,9 +154,9 @@ class PlayerTest {
     void isWinner_SameScoreAndBothBusted_isLose() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
-                Card.from(Number.NINE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.CLOVER),
-                Card.from(Number.NINE, Kind.HEART))));
+                new Card(Number.NINE, Kind.SPADE),
+                new Card(Number.NINE, Kind.CLOVER),
+                new Card(Number.NINE, Kind.HEART))));
 
         assertThat(player.isWinner(27)).isEqualTo(Result.LOSE);
     }

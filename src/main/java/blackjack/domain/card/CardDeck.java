@@ -19,7 +19,7 @@ public class CardDeck {
     public static CardDeck initShuffled() {
         List<Card> cardDeck = Arrays.stream(Number.values())
                 .flatMap(number -> Arrays.stream(Kind.values())
-                        .map(kind -> Card.from(number, kind)))
+                        .map(kind -> new Card(number, kind)))
                 .collect(Collectors.toList());
         Collections.shuffle(cardDeck);
 
