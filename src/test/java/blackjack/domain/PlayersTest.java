@@ -8,6 +8,13 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 
+    @DisplayName("중복된 플레이어 이름 예외 발생하는지 테스트")
+    @Test
+    void noDuplicatedNameTest() {
+        assertThatThrownBy(() -> new Players(List.of("pobi", "jason", "pobi")))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("처음 플레이어 가져오는 기능 테스트")
     @Test
     void firstPlayerTest() {
