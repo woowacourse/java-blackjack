@@ -23,16 +23,16 @@ public abstract class Participant implements Comparable<Participant> {
         this.name = new Name(name);
     }
 
-    public abstract boolean canDrawCard();
+    public abstract boolean canHit();
 
     public void hit(Deck deck) {
-        if (!canDrawCard()) {
+        if (!canHit()) {
             throw new IllegalStateException(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
         }
         cards.addCard(deck.handOut());
     }
 
-    public void hitInitialTurn(Deck deck) {
+    public void pickTwoCards(Deck deck) {
         this.cards.addCards(deck.handOutInitialTurn());
     }
 
@@ -40,7 +40,7 @@ public abstract class Participant implements Comparable<Participant> {
         return cards.calculateScore();
     }
 
-    private boolean isOverMaxScore() {
+    private boolean isBust() {
         return calculateScore() > MAX_SCORE;
     }
 
@@ -54,10 +54,10 @@ public abstract class Participant implements Comparable<Participant> {
 
     @Override
     public int compareTo(Participant participant) {
-        if (participant.isOverMaxScore()) {
+        if (participant.isBust()) {
             return 1;
         }
-        if (isOverMaxScore()) {
+        if (isBust()) {
             return -1;
         }
 

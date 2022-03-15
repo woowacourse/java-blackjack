@@ -29,7 +29,7 @@ public class Players {
 
     public void runInitialTurn(Deck deck) {
         for (Player player : players) {
-            player.hitInitialTurn(deck);
+            player.pickTwoCards(deck);
         }
     }
 

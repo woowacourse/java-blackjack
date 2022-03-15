@@ -19,7 +19,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canDrawCard() {
+    public boolean canHit() {
         return cards.calculateSum() < MAX_SCORE;
     }
 }

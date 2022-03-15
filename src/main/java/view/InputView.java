@@ -45,7 +45,7 @@ public class InputView {
         }
     }
 
-    public boolean inputMoreCardOrNot(String name) {
+    public boolean inputHitOrStay(String name) {
         System.out.printf(GET_MORE_CARD_OR_NOT_MESSAGE, name);
         System.out.print(System.lineSeparator());
         String userInput = input();
@@ -53,7 +53,7 @@ public class InputView {
             validateRegex(userInput);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            return inputMoreCardOrNot(name);
+            return inputHitOrStay(name);
         }
         return matchYesOrNo(userInput);
     }

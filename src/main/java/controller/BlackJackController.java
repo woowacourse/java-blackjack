@@ -18,10 +18,10 @@ public class BlackJackController {
         Deck deck = Deck.initDeck();
         Players players = createPlayers();
         Dealer dealer = new Dealer();
-        initialTurn(players, dealer, deck);
-        hitCardByPlayers(players, deck);
-        hitCardByDealer(dealer, deck);
-        showFinalTurn(players, dealer);
+        handOverTwoCards(players, dealer, deck);
+        hitOrStayByPlayers(players, deck);
+        hitOrStayByDealer(dealer, deck);
+        showFinalScore(players, dealer);
         showResult(players, dealer);
     }
 
@@ -35,36 +35,36 @@ public class BlackJackController {
         }
     }
 
-    private void initialTurn(Players players, Dealer dealer, Deck deck) {
+    private void handOverTwoCards(Players players, Dealer dealer, Deck deck) {
         players.runInitialTurn(deck);
-        dealer.hitInitialTurn(deck);
+        dealer.pickTwoCards(deck);
         outputView.showInitialTurnStatus(players, dealer);
     }
 
 
-    private void hitCardByPlayers(Players players, Deck deck) {
+    private void hitOrStayByPlayers(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            hitCardByPlayer(player, deck);
+            hitOrStayByPlayer(player, deck);
         }
     }
 
-    private void hitCardByPlayer(Player player, Deck deck) {
-        while (player.canDrawCard() && inputView.inputMoreCardOrNot(player.getName())) {
+    private void hitOrStayByPlayer(Player player, Deck deck) {
+        while (player.canHit() && inputView.inputHitOrStay(player.getName())) {
             player.hit(deck);
             outputView.showPlayerCardStatus(player);
         }
     }
 
-    private void hitCardByDealer(Dealer dealer, Deck deck) {
+    private void hitOrStayByDealer(Dealer dealer, Deck deck) {
         int hitCount = 0;
-        while (dealer.canDrawCard()) {
+        while (dealer.canHit()) {
             hitCount++;
             dealer.hit(deck);
         }
         outputView.showDealerHitCardMessage(hitCount);
     }
 
-    private void showFinalTurn(Players players, Dealer dealer) {
+    private void showFinalScore(Players players, Dealer dealer) {
         outputView.showFinalTurnStatus(players, dealer);
     }
 
