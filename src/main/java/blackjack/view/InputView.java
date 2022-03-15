@@ -29,9 +29,23 @@ public class InputView {
         return input.equalsIgnoreCase("y");
     }
 
+    public int inputBettingMoney(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+
+        return translateInteger(scanner.nextLine());
+    }
+
     private void validateYN(String input) {
         if (!(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n"))) {
             throw new IllegalArgumentException("잘못된 입력 형식입니다.");
+        }
+    }
+
+    private int translateInteger(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("숫자(정수)를 입력해주세요.");
         }
     }
 }
