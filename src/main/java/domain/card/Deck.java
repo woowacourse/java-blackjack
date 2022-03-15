@@ -16,18 +16,9 @@ public class Deck {
     }
 
     public static Deck getInstance() {
-        LinkedList<Card> tmpCards = new LinkedList<>();
-        for (Symbol symbol : Symbol.values()) {
-            addCard(symbol, tmpCards);
-        }
+        LinkedList<Card> tmpCards = new LinkedList<>(Card.getCardCache());
         Collections.shuffle(tmpCards);
         return new Deck(tmpCards);
-    }
-
-    private static void addCard(Symbol symbol, LinkedList<Card> tmpCards) {
-        for (Denomination denomination : Denomination.values()) {
-            tmpCards.add(Card.of(symbol, denomination));
-        }
     }
 
     public List<Card> handOutInitialTurn() {
@@ -44,7 +35,8 @@ public class Deck {
             throw new IllegalStateException(CAN_NOT_POP_CARD_ERROR);
         }
     }
-    public int size(){
+
+    public int size() {
         return deck.size();
     }
 }
