@@ -21,7 +21,8 @@ public class BlackJackGameResult {
     public Map<WinDrawLose, Integer> calculateDealerResult() {
         final Map<WinDrawLose, Integer> gameResult = initializeDealerResult();
         for (Player player : players) {
-            final WinDrawLose winDrawLose = dealer.isWin(player);
+            final WinDrawLose playerWinDrawLose = WinDrawLose.calculateWinDrawLose(player, dealer);
+            final WinDrawLose winDrawLose = WinDrawLose.swapResult(playerWinDrawLose);
             gameResult.computeIfPresent(winDrawLose, (k, v) -> v + 1);
         }
         return gameResult;
@@ -38,7 +39,7 @@ public class BlackJackGameResult {
     public Map<Player, WinDrawLose> calculatePlayersResult() {
         final Map<Player, WinDrawLose> gameResult = new LinkedHashMap<>();
         for (Player player : players) {
-            final WinDrawLose winOrLose = player.isWin(dealer);
+            final WinDrawLose winOrLose = WinDrawLose.calculateWinDrawLose(player, dealer);
             gameResult.put(player, winOrLose);
         }
         return gameResult;

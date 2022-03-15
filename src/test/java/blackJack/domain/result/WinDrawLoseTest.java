@@ -98,4 +98,17 @@ class WinDrawLoseTest {
 
         assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.DRAW);
     }
+
+    @Test
+    @DisplayName("둘 다 21점이고, 둘 다 블랙잭이 아닌 경우")
+    void isDraw() {
+        player.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
+        player.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
+        dealer.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
+        dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
+
+        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.DRAW);
+    }
 }
