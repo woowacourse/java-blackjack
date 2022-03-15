@@ -8,8 +8,8 @@ import java.util.function.Predicate;
 
 public enum BlackJackResult {
 
-    BLACK_JACK(new BlackJack(), player -> isBlackJack(player)),
-    BUST(new Lose(), player -> isBust(player)),
+    BLACK_JACK(new BlackJack(), BlackJackResult::isBlackJack),
+    BUST(new Lose(), BlackJackResult::isBust),
     HIT(new Keep(), Player::isSatisfyReceiveCondition);
 
     private final ResultStrategy resultStrategy;

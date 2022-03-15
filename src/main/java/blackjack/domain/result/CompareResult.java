@@ -8,7 +8,7 @@ public enum CompareResult {
 
     WIN(new Keep(), CompareResult::isWin),
     DRAW(new Draw(), CompareResult::isDraw),
-    LOSE(new Lose(), (dealerResult, gamerResult) -> isLose(dealerResult, gamerResult));
+    LOSE(new Lose(), CompareResult::isLose);
 
     private final ResultStrategy resultStrategy;
 
