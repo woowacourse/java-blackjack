@@ -95,7 +95,7 @@ public class OutputView {
     private static String makeResultToText(final DealerResult dealerResult) {
         ResultCount win = dealerResult.getWin();
         ResultCount lose = dealerResult.getLose();
-        return String.format("%d%s %d%s", win.getCount(), win.getVerify().getValue(), lose.getCount(), lose.getVerify().getValue());
+        return String.format("%d%s %d%s", win.getCount(), win.getResult().getValue(), lose.getCount(), lose.getResult().getValue());
     }
 
     private static void printParticipantsResult(final List<ParticipantResult> participantResults) {

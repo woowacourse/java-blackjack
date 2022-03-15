@@ -2,19 +2,19 @@ package blackjack.domain.result;
 
 public class ResultCount {
 
-    private final Result verify;
+    private final Result result;
     private int count;
 
-    ResultCount(final Result verify) {
-        this.verify = verify;
+    ResultCount(final Result result) {
+        this.result = result;
     }
 
     public void increaseCount() {
         this.count++;
     }
 
-    public Result getVerify() {
-        return verify;
+    public Result getResult() {
+        return result;
     }
 
     public int getCount() {
