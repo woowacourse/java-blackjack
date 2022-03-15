@@ -12,8 +12,6 @@ import java.util.Map;
 
 public class BlackJackGame {
 
-    private static final int COUNT_UNIT = 1;
-
     private final Player dealer;
     private final Gamers gamers;
 
