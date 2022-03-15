@@ -13,8 +13,7 @@ public class ParticipantsTest {
     @DisplayName("참가자들은 딜러와 플레이어들로 구성된다.")
     void createParticipants() {
 
-        Participants participants = new Participants(
-            List.of(new Player("마루"), new Player("엔젤앤지")));
+        Participants participants = Participants.from(List.of("마루", "엔젤앤지"));
 
         assertThat(participants.getParticipants().size()).isEqualTo(3);
     }
@@ -22,20 +21,18 @@ public class ParticipantsTest {
     @Test
     @DisplayName("플레이어가 1명 미만일 시 오류 발생")
     void createPlayersNumberException() {
-        List<Player> playerList = List.of();
+        List<String> players = List.of();
 
-        assertThatThrownBy(() -> new Participants(playerList))
+        assertThatThrownBy(() -> Participants.from(players))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("플레이어가 8명 초과일 시 오류 발생")
     void createPlayersNumberException2() {
-        List<Player> playerList = List.of(new Player("1"), new Player("2"), new Player("3"),
-            new Player("4"), new Player("5"), new Player("6"),
-            new Player("7"), new Player("8"), new Player("9"));
+        List<String> players = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-        assertThatThrownBy(() -> new Participants(playerList))
+        assertThatThrownBy(() -> Participants.from(players))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

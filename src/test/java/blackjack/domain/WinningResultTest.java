@@ -18,10 +18,11 @@ public class WinningResultTest {
             new Card(Suit.SPADE, Denomination.NINE),
             new Card(Suit.CLOVER, Denomination.EIGHT));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
@@ -38,10 +39,11 @@ public class WinningResultTest {
             new Card(Suit.SPADE, Denomination.NINE),
             new Card(Suit.CLOVER, Denomination.EIGHT));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
@@ -58,10 +60,11 @@ public class WinningResultTest {
             new Card(Suit.SPADE, Denomination.THREE),
             new Card(Suit.CLOVER, Denomination.EIGHT));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
@@ -78,10 +81,11 @@ public class WinningResultTest {
             new Card(Suit.SPADE, Denomination.TWO),
             new Card(Suit.CLOVER, Denomination.THREE));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
@@ -98,10 +102,11 @@ public class WinningResultTest {
             new Card(Suit.CLOVER, Denomination.FIVE),
             new Card(Suit.DIAMOND, Denomination.TEN));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
@@ -118,10 +123,11 @@ public class WinningResultTest {
             new Card(Suit.CLOVER, Denomination.FOUR),
             new Card(Suit.DIAMOND, Denomination.TWO));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 

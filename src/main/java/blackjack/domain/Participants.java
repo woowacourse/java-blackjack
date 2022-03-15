@@ -15,7 +15,7 @@ public class Participants {
     private final Dealer dealer = new Dealer();
     private final List<Player> players;
 
-    public Participants(List<Player> players) {
+    private Participants(List<Player> players) {
         validatePlayerNumber(players);
         this.players = new ArrayList<>(players);
     }

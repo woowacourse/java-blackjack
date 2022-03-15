@@ -12,8 +12,8 @@ public class BlackjackGameResultTest {
     @Test
     @DisplayName("블랙잭 게임 생성")
     void createBlackjackGame() {
-        assertThatCode(() -> new BlackjackGameResult(new Participants(
-            List.of(new Player("마루"), new Player("엔젤앤지")))))
+
+        assertThatCode(() -> new BlackjackGameResult(Participants.from(List.of("마루", "엔젤앤지"))))
             .doesNotThrowAnyException();
     }
 
@@ -27,10 +27,11 @@ public class BlackjackGameResultTest {
             new Card(Suit.SPADE, Denomination.EIGHT),
             new Card(Suit.CLOVER, Denomination.TEN));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
@@ -50,10 +51,11 @@ public class BlackjackGameResultTest {
             new Card(Suit.SPADE, Denomination.EIGHT),
             new Card(Suit.CLOVER, Denomination.ACE));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
@@ -73,10 +75,11 @@ public class BlackjackGameResultTest {
             new Card(Suit.SPADE, Denomination.NINE),
             new Card(Suit.CLOVER, Denomination.EIGHT));
 
-        Player player = new Player("player");
+        Participants participants = Participants.from(List.of("player"));
 
-        Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
