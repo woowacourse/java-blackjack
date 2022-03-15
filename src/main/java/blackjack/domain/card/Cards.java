@@ -18,12 +18,20 @@ public final class Cards {
         return cards.size();
     }
     
-    public int getPoint() {
-        return Point.from(cards).get();
-    }
-    
     public Card getFirstCard() {
         return cards.get(0);
+    }
+    
+    public int getRawPoint() {
+        return cards.stream()
+                .mapToInt(card -> card.getDenomination().getPoint())
+                .sum();
+    }
+    
+    public int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
     
     @Override

@@ -9,35 +9,23 @@ public final class Point {
     
     private final int value;
     
-    private Point(List<Card> rawCards) {
-        this.value = computeAce(getRawPoint(rawCards), getAceCount(rawCards));
+    private Point(Cards cards) {
+        this.value = computeWithAce(cards.getRawPoint(), cards.getAceCount());
     }
     
-    public static Point from(List<Card> rawCards) {
-        return new Point(rawCards);
+    public static Point fromCards(Cards cards) {
+        return new Point(cards);
     }
     
     public int get() {
         return value;
     }
     
-    private int computeAce(int point, int aceCount) {
+    private static int computeWithAce(int point, int aceCount) {
         if (point > Constants.BLACKJACK_NUMBER && aceCount > MIN_ACE_COUNT) {
             point -= ACE_MINUS_NUMBER;
-            return computeAce(point, --aceCount);
+            return computeWithAce(point, --aceCount);
         }
         return point;
-    }
-    
-    private int getRawPoint(List<Card> cards) {
-        return cards.stream()
-                .mapToInt(card -> card.getDenomination().getPoint())
-                .sum();
-    }
-    
-    private int getAceCount(List<Card> cards) {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
     }
 }

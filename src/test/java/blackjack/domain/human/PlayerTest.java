@@ -81,4 +81,20 @@ class PlayerTest {
         // then
         assertThat(player.isAbleToHit()).isFalse();
     }
+    
+    @Test
+    @DisplayName("카드모음 포인트 올바른지 검사")
+    public void equalPointTest() {
+        // given
+        Player player = Player.from("test");
+        Card card5 = Card.of(Denomination.valueof("2"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.valueof("9"), Suit.SPADE);
+    
+        // when
+        player.addCard(card5);
+        player.addCard(card6);
+    
+        // then
+        assertThat(player.getPoint()).isEqualTo(11);
+    }
 }
