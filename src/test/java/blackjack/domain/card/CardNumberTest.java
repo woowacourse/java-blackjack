@@ -10,6 +10,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardNumberTest {
 
+    @DisplayName("블랙잭인지 확인한다.")
+    @Test
+    void is_blackjack_true() {
+        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.ACE, CardNumber.QUEEN));
+
+        assertThat(CardNumber.isBlackjack(cardNumbers)).isTrue();
+    }
+
+    @DisplayName("블랙잭이 아닌 것을 확인한다.")
+    @Test
+    void is_blackjack_false() {
+        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.ACE, CardNumber.QUEEN, CardNumber.QUEEN));
+
+        assertThat(CardNumber.isBlackjack(cardNumbers)).isFalse();
+    }
+
     @DisplayName("모든 카드의 합계를 확인한다.")
     @Test
     void total() {

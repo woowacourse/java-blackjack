@@ -29,6 +29,10 @@ public abstract class Gamer {
         playingCards.add(card);
     }
 
+    public boolean isBlackjack() {
+        return playingCards.isBlackjack();
+    }
+
     public boolean isBust() {
         return playingCards.isOverBlackjack();
     }

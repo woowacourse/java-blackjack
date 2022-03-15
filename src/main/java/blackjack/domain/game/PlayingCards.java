@@ -22,9 +22,7 @@ public class PlayingCards {
     }
 
     public int calculateTotal() {
-        List<CardNumber> cardNumbers = playingCards.stream()
-                .map(Card::getCardNumber)
-                .collect(Collectors.toUnmodifiableList());
+        List<CardNumber> cardNumbers = getCardNumbers();
         return CardNumber.getTotal(cardNumbers);
     }
 
@@ -36,6 +34,11 @@ public class PlayingCards {
         return calculateTotal() < BLACKJACK;
     }
 
+    public boolean isBlackjack() {
+        List<CardNumber> cardNumbers = getCardNumbers();
+        return CardNumber.isBlackjack(cardNumbers);
+    }
+
     public List<Card> getPartOfCard() {
         if (playingCards.isEmpty()) {
             return new ArrayList<>();
@@ -45,6 +48,12 @@ public class PlayingCards {
 
     public List<Card> getAllCards() {
         return playingCards.stream()
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private List<CardNumber> getCardNumbers() {
+        return playingCards.stream()
+                .map(Card::getCardNumber)
                 .collect(Collectors.toUnmodifiableList());
     }
 }

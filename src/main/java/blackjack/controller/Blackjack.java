@@ -7,7 +7,7 @@ import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Gamer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
-import blackjack.domain.game.Result;
+import blackjack.domain.result.Result;
 import blackjack.view.Enter;
 import blackjack.view.Enterable;
 import blackjack.view.InputView;
@@ -44,8 +44,11 @@ public class Blackjack {
         CardDeck cardDeck = new CardDeck();
         dealCards(cardDeck, dealer, players);
 
-        drawCardToPlayers(players, cardDeck);
-        drawCardToDealer(dealer, cardDeck);
+        Result result = new Result();
+        if (result.isKeepPlaying(dealer, players)) {
+            drawCardToPlayers(players, cardDeck);
+            drawCardToDealer(dealer, cardDeck);
+        }
     }
 
     private void dealCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {

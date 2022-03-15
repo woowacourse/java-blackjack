@@ -21,6 +21,7 @@ public enum CardNumber {
     JACK("J", 10),
     ;
 
+    private static final int NUMBER_TEN = 10;
     private static final int ACE_EXTRA_NUMBER = 10;
 
     private final String name;
@@ -31,6 +32,13 @@ public enum CardNumber {
         this.number = number;
     }
 
+    public static boolean isBlackjack(final List<CardNumber> cardNumbers) {
+        if (cardNumbers.size() != 2) {
+            return false;
+        }
+        return hasAce(cardNumbers) && hasTen(cardNumbers);
+    }
+
     public static int getTotal(final List<CardNumber> cardNumbers) {
         int total = cardNumbers.stream()
                 .map(cardNumber -> cardNumber.number)
@@ -38,6 +46,16 @@ public enum CardNumber {
                 .sum();
         total = addAceExtraNumber(cardNumbers, total);
         return total;
+    }
+
+    private static boolean hasAce(final List<CardNumber> cardNumbers) {
+        return cardNumbers.contains(CardNumber.ACE);
+    }
+
+    private static boolean hasTen(final List<CardNumber> cardNumbers) {
+        return cardNumbers.stream()
+                .map(cardNumber -> cardNumber.number)
+                .anyMatch(number -> number == NUMBER_TEN);
     }
 
     private static int addAceExtraNumber(final List<CardNumber> cardNumbers, int total) {
