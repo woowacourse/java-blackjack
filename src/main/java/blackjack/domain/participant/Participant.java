@@ -28,10 +28,6 @@ public abstract class Participant {
         return cards;
     }
 
-    public <T> boolean isSameClass(Class<T> classType) {
-        return getClass() == classType;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
