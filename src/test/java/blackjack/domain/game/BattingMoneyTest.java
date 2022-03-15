@@ -22,7 +22,7 @@ class BattingMoneyTest {
     @NullSource
     void createExceptionByNullValue(String nullValue) {
         assertThatThrownBy(() -> new BattingMoney(nullValue))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("배팅 금액에는 null이 들어올 수 없습니다.");
     }
 
