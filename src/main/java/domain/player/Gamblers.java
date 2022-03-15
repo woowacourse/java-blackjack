@@ -1,7 +1,5 @@
 package domain.player;
 
-import static java.util.stream.Collectors.toList;
-
 import domain.card.CardDeck;
 import java.util.List;
 import java.util.Objects;
@@ -33,12 +31,6 @@ public class Gamblers {
         for (Gambler gambler : this.gamblers) {
             gambler.addCard(cardDeck.getCard());
         }
-    }
-
-    public List<String> getGamblerNames() {
-        return gamblers.stream()
-                .map(Gambler::getName)
-                .collect(toList());
     }
 
     public List<Gambler> getGamblers() {
