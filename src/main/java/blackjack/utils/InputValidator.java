@@ -9,6 +9,8 @@ public class InputValidator {
     public static final String HIT = "y";
     private static final String STOP_HIT = "n";
     private static final String HAS_DUPLICATE_NAME_ERROR_MESSAGE = "[Error]: 중복된 이름이 존재합니다.";
+    private static final int LIMIT_NUMBER_OF_PLAYERS = 8;
+    private static final String LIMIT_NUMBER_OF_PLAYERS_ERROR_MESSAGE = "[Error]: 게임에 참가할 수 있는 인원은 최대 8명입니다.";
 
     private InputValidator() {
     }
@@ -30,6 +32,12 @@ public class InputValidator {
                 anyMatch(String::isBlank);
         if (isBlank) {
             throw new IllegalArgumentException(BLANK_ERROR_MESSAGE);
+        }
+    }
+
+    public static void isOverNumberOfPlayersLimit(List<String> names) {
+        if (names.size() > LIMIT_NUMBER_OF_PLAYERS) {
+            throw new IllegalArgumentException(LIMIT_NUMBER_OF_PLAYERS_ERROR_MESSAGE);
         }
     }
 

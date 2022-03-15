@@ -24,6 +24,7 @@ public class InputView {
 
         InputValidator.inputListBlank(names);
         InputValidator.hasDuplicateName(names);
+        InputValidator.isOverNumberOfPlayersLimit(names);
         return names;
     }
 
