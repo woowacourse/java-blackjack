@@ -22,7 +22,7 @@ public class Application {
     }
 
     private static void run() {
-        CardDispenser cardDispenser = CardDispenser.shuffledCardDispenser();
+        CardDispenser cardDispenser = new CardDispenser();
         Dealer dealer = new Dealer(cardDispenser.issue(), cardDispenser.issue());
         Players players = new Players(createPlayers(cardDispenser));
         playBlackjack(cardDispenser, dealer, players);

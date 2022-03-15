@@ -9,11 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-public class ShuffledCardDispenserTest {
+public class CardDispenserTest {
 
     @Test
     void cardGenerate() {
-        CardDispenser cardDispenser = new ShuffledCardDispenser();
+        CardDispenser cardDispenser = new CardDispenser();
         Set<Card> set = new HashSet<>();
 
         for (int i = 0; i < 52; i++) {
