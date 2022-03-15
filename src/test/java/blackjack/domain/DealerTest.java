@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,9 @@ public class DealerTest {
 		Player player = new Player(new Name("pobi"));
 		dealer.addCards(List.of(new Card(CardDenomination.NINE, CardSuit.CLOVER)));
 		player.addCards(List.of(new Card(CardDenomination.FIVE, CardSuit.CLOVER)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(win && !draw && !lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isTrue(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isFalse());
 	}
 
 	@Test
@@ -24,10 +24,9 @@ public class DealerTest {
 		Player player = new Player(new Name("pobi"));
 		dealer.addCards(List.of(new Card(CardDenomination.NINE, CardSuit.CLOVER)));
 		player.addCards(List.of(new Card(CardDenomination.TEN, CardSuit.CLOVER)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(!win & !draw & lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isFalse(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isTrue());
 	}
 
 	@Test
@@ -36,10 +35,9 @@ public class DealerTest {
 		Player player = new Player(new Name("pobi"));
 		dealer.addCards(List.of(new Card(CardDenomination.NINE, CardSuit.CLOVER)));
 		player.addCards(List.of(new Card(CardDenomination.NINE, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(!win && draw && !lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isFalse(),
+			() -> assertThat(dealer.isDraw(player)).isTrue(),
+			() -> assertThat(dealer.isLose(player)).isFalse());
 	}
 
 	@Test
@@ -50,10 +48,9 @@ public class DealerTest {
 			List.of(new Card(CardDenomination.TEN, CardSuit.CLOVER), new Card(CardDenomination.ACE, CardSuit.CLOVER)));
 		player.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.ACE, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(!win && draw && !lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isFalse(),
+			() -> assertThat(dealer.isDraw(player)).isTrue(),
+			() -> assertThat(dealer.isLose(player)).isFalse());
 	}
 
 	@Test
@@ -65,10 +62,9 @@ public class DealerTest {
 		player.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.TEN, CardSuit.SPADE),
 				new Card(CardDenomination.ACE, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(win && !draw && !lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isTrue(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isFalse());
 	}
 
 	@Test
@@ -80,10 +76,9 @@ public class DealerTest {
 				new Card(CardDenomination.ACE, CardSuit.CLOVER)));
 		player.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.ACE, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(!win && !draw && lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isFalse(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isTrue());
 	}
 
 	@Test
@@ -95,10 +90,9 @@ public class DealerTest {
 				new Card(CardDenomination.TWO, CardSuit.SPADE)));
 		player.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.JACK, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(!win && !draw && lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isFalse(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isTrue());
 	}
 
 	@Test
@@ -110,10 +104,9 @@ public class DealerTest {
 				new Card(CardDenomination.TWO, CardSuit.CLOVER)));
 		player.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.ACE, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(!win && !draw && lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isFalse(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isTrue());
 	}
 
 	@Test
@@ -126,10 +119,9 @@ public class DealerTest {
 		player.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.JACK, CardSuit.HEART),
 				new Card(CardDenomination.TWO, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(win && !draw && !lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isTrue(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isFalse());
 	}
 
 	@Test
@@ -141,10 +133,9 @@ public class DealerTest {
 		player.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.JACK, CardSuit.HEART),
 				new Card(CardDenomination.TWO, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(win && !draw && !lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isTrue(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isFalse());
 	}
 
 	@Test
@@ -156,9 +147,8 @@ public class DealerTest {
 		player.addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.JACK, CardSuit.HEART),
 				new Card(CardDenomination.TWO, CardSuit.HEART)));
-		boolean win = dealer.isWin(player);
-		boolean draw = dealer.isDraw(player);
-		boolean lose = dealer.isLose(player);
-		assertThat(win && !draw && !lose).isTrue();
+		assertAll(() -> assertThat(dealer.isWin(player)).isTrue(),
+			() -> assertThat(dealer.isDraw(player)).isFalse(),
+			() -> assertThat(dealer.isLose(player)).isFalse());
 	}
 }
