@@ -3,27 +3,22 @@ package blackjack.model;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 
-public class State {
-    private final static String HIT = "Hit";
-    private static final String BLACKJACK = "Blackjack";
-    private static final String BUST = "Bust";
-    private static final String FINISH = "Finish";
+public abstract class State {
+    protected static final String HIT = "Hit";
+    protected static final String BLACKJACK = "Blackjack";
+    protected static final String BUST = "Bust";
 
-    private final Cards cards;
-    private String state;
+    protected final Cards cards;
+    protected String state;
 
     public State() {
         this.cards = new Cards();
         this.state = HIT;
     }
 
-    private State(Cards cards) {
+    protected State(Cards cards, String state) {
         this.cards = cards;
-    }
-
-    public State addCard(Card card) {
-        Cards cards = this.cards.add(card);
-        return new State(cards);
+        this.state = state;
     }
 
     public String state() {
@@ -31,16 +26,7 @@ public class State {
         return state;
     }
 
-    private void choiceState() {
-        int score = cards.sumScore();
-        if (score > 21) {
-            state = BUST;
-        }
-        if (score == 21) {
-            state = FINISH;
-        }
-        if (score == 21 && cards.hasTwoCard()) {
-            state = BLACKJACK;
-        }
-    }
+    protected abstract void choiceState();
+
+    public abstract State addCard(Card card);
 }
