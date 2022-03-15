@@ -12,7 +12,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isFinished() {
-        return cards.isBust() || cards.sum() > DRAW_STANDARD || cards.isBlackjack();
+        return cards.sum() > DRAW_STANDARD;
     }
 
     @Override

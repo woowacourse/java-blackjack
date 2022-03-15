@@ -7,7 +7,8 @@ import java.util.List;
 public class Cards {
 
     private static final int ACE_ADDITIONAL_VALUE = 10;
-    private static final int BLACKJACK_VALUE = 21;
+    protected static final int BLACKJACK_VALUE = 21;
+    protected static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> value;
 
@@ -19,12 +20,12 @@ public class Cards {
         this.value.add(card);
     }
 
-    public boolean isBust() {
-        return sum() > BLACKJACK_VALUE;
+    public Status getStatus() {
+        return Status.findStatus(this);
     }
 
-    public boolean isBlackjack() {
-        return sum() == BLACKJACK_VALUE;
+    public int getCount() {
+        return value.size();
     }
 
     public int sum() {

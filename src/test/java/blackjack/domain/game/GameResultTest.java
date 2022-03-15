@@ -34,7 +34,10 @@ class GameResultTest {
                         new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.KING, Number.JACK))),
                 Arguments.arguments("둘 다 버스트가 아니고 딜러보다 숫자가 높은 경우",
                         new Player(new Name("abc"), getCards(Number.KING, Number.QUEEN)),
-                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.NINE)))
+                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.NINE))),
+                Arguments.arguments("플레이어만 블랙잭",
+                        new Player(new Name("abc"), getCards(Number.KING, Number.ACE)),
+                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.TEN, Number.ACE)))
         );
     }
 

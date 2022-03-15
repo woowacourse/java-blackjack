@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
@@ -27,19 +28,30 @@ public class GameResult {
         Cards playerCards = player.getCards();
         Cards dealerCards = dealer.getCards();
 
-        if (isFirstCardsLose(playerCards, dealerCards)) {
-            return MatchResult.LOSE;
+        if (compareCards(playerCards, dealerCards)) {
+            return MatchResult.WIN;
         }
 
-        if (isFirstCardsLose(dealerCards, playerCards)) {
-            return MatchResult.WIN;
+        if (compareCards(dealerCards, playerCards)) {
+            return MatchResult.LOSE;
         }
 
         return MatchResult.PUSH;
     }
 
-    private boolean isFirstCardsLose(Cards cards1, Cards cards2) {
-        return cards1.isBust() || (!cards2.isBust() && cards1.sum() < cards2.sum());
+    /**
+     * 파라미터로 주어진 카드 목록 두 개를 비교하고, 첫 번째 카드 목록이 승리할 경우 true 반환.
+     *
+     * @param cards1 - 카드 목록, cards2 - cards1과 비교할 카드 목록
+     * @return cards1이 승리 조건에 부합하면 true
+     */
+    private boolean compareCards(Cards cards1, Cards cards2) {
+        Status status1 = cards1.getStatus();
+        Status status2 = cards2.getStatus();
+
+        return (status1 == Status.BLACKJACK && status2 != Status.BLACKJACK)
+                || (status1 != Status.BUST && status2 == Status.BUST)
+                || (status1 == Status.NONE && status2 == Status.NONE && cards1.sum() > cards2.sum());
     }
 
     public MatchResult getMatchResult(Player player) {

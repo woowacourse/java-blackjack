@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Status;
 
 public class Player extends Participant {
 
@@ -10,7 +11,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isFinished() {
-        return cards.isBust() || cards.isBlackjack();
+        return cards.getStatus() != Status.NONE;
     }
 
     @Override
