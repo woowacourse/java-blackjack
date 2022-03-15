@@ -1,12 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import blackjack.domain.card.Denomination;
 
 @DisplayName("Denomination 테스트")
 class DenominationTest {

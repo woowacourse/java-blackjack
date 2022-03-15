@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.role;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -11,8 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.card.Hand;
 import blackjack.domain.factory.CardMockFactory;
-import blackjack.domain.role.Dealer;
-import blackjack.domain.role.Role;
 import blackjack.domain.util.CreateHand;
 
 @DisplayName("Dealer 테스트")
