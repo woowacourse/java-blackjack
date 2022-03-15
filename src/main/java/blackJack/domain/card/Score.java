@@ -7,6 +7,7 @@ public class Score {
     private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BLACK_JACK = 21;
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int DEALER_MAXIMUM_HIT_SCORE = 16;
 
     private final int score;
 
@@ -14,16 +15,20 @@ public class Score {
         score = cardPoint;
     }
 
-    public boolean isBust() {
-        return score > BLACK_JACK;
-    }
-
     public boolean isBlackJack(int cardCount) {
         return cardCount == BLACK_JACK_CARD_COUNT && score == BLACK_JACK;
     }
 
+    public boolean isBust() {
+        return score > BLACK_JACK;
+    }
+
     public boolean hasPossibleAcePoint() {
         return score + ACE_BONUS_SCORE <= BLACK_JACK;
+    }
+
+    public boolean isPossibleDealerHit() {
+        return score <= DEALER_MAXIMUM_HIT_SCORE;
     }
 
     public int getScore() {
