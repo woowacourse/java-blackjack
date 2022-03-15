@@ -6,7 +6,6 @@ import static blackjack.domain.card.CardSymbol.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.deckstrategy.DeckStrategy;

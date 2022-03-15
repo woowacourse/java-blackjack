@@ -13,6 +13,6 @@ public class CardDeck {
     }
 
     public Card drawCard() {
-        return deck.pop();
+        return deck.removeLast();
     }
 }

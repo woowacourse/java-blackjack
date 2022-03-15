@@ -7,15 +7,17 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.PlayStatus;
 import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.deckstrategy.DeckStrategy;
 
 class DealerTest {
@@ -65,6 +67,23 @@ class DealerTest {
 
         // then
         assertThat(actual).isEqualTo(new Card(CLUB, FIVE));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"SEVEN:false", "SIX:true"}, delimiter = ':')
+    @DisplayName("딜러가 카드를 추가로 뽑았는지 아닌지 검증한다.")
+    void isDraw(CardNumber cardNumber, boolean expected) {
+        // give
+        Dealer dealer = new Dealer();
+        CardDeck cardDeck = new CardDeck(() -> new ArrayDeque<>(List.of(
+            new Card(DIAMOND, ACE),
+            new Card(DIAMOND, QUEEN), new Card(CLUB, cardNumber))));
+        dealer.init(cardDeck);
+        // when
+        boolean actual = dealer.drawCards(cardDeck).isDraw();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     private static class TestNoBustDeck implements DeckStrategy {
