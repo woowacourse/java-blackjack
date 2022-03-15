@@ -26,21 +26,32 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("블랙잭 판단 확인 테스트")
-    void isBlackJack() {
+    @DisplayName("카드에 Ace가 11로 되는 경우 합계 계산 테스트")
+    void calculateScoreWithAceEleven() {
         cards.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
         cards.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
 
-        assertThat(cards.isBlackJack()).isTrue();
+        assertThat(cards.calculateScore()).isEqualTo(21);
     }
 
     @Test
-    @DisplayName("버스트 판단 확인 테스트")
-    void isBust() {
-        cards.receiveCard(Card.from(Suit.DIAMOND, Denomination.JACK));
+    @DisplayName("카드에 Ace가 1로 되는 경우 합계 계산 테스트")
+    void calculateScoreWithAceOne() {
+        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
         cards.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
-        cards.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
 
-        assertThat(cards.isBust()).isTrue();
+        assertThat(cards.calculateScore()).isEqualTo(19);
+    }
+
+    @Test
+    @DisplayName("카드에 Ace가 여러개인 경우 계산 테스트")
+    void calculateScoreWithAceCountThree() {
+        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
+        cards.receiveCard(Card.from(Suit.HEART, Denomination.ACE));
+        cards.receiveCard(Card.from(Suit.DIAMOND, Denomination.ACE));
+        cards.receiveCard(Card.from(Suit.SPADE, Denomination.EIGHT));
+
+        assertThat(cards.calculateScore()).isEqualTo(21);
     }
 }

@@ -1,32 +1,45 @@
 package blackJack.domain.card;
 
-import java.util.Set;
+import java.util.Objects;
 
 public class Score {
 
+    private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BLACK_JACK = 21;
     private static final int ACE_BONUS_SCORE = 10;
 
-    public int calculateFinalScore(Set<Card> cards) {
-        final int score = calculateCardsSum(cards);
-        if (hasAce(cards) && checkValidationAceBonusScore(score)) {
-            return score + ACE_BONUS_SCORE;
-        }
-        return score;
+    private final int score;
+
+    public Score(int cardPoint) {
+        score = cardPoint;
     }
 
-    private boolean hasAce(Set<Card> cards) {
-        return cards.stream()
-                .anyMatch(Card::isAce);
+    public boolean isBust() {
+        return score > BLACK_JACK;
     }
 
-    private boolean checkValidationAceBonusScore(int score) {
+    public boolean isBlackJack(int cardCount) {
+        return cardCount == BLACK_JACK_CARD_COUNT && score == BLACK_JACK;
+    }
+
+    public boolean hasPossibleAcePoint() {
         return score + ACE_BONUS_SCORE <= BLACK_JACK;
     }
 
-    private int calculateCardsSum(Set<Card> cards) {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

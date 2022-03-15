@@ -40,7 +40,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return cards.calculateFinalScore();
+        return cards.calculateScore();
     }
 
     public String getName() {

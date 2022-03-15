@@ -7,15 +7,12 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private static final int BLACK_JACK_CARD_COUNT = 2;
-    private static final int BLACK_JACK = 21;
+    private static final int ACE_BONUS_SCORE = 10;
 
     private final Set<Card> cards;
-    private final Score score;
 
     public Cards() {
         cards = new HashSet<>();
-        score = new Score();
     }
 
     public void receiveCard(Card card) {
@@ -23,15 +20,33 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACK_JACK_CARD_COUNT && calculateFinalScore() == BLACK_JACK;
+        final Score score = new Score(calculateScore());
+        return score.isBlackJack(cards.size());
     }
 
     public boolean isBust() {
-        return calculateFinalScore() > BLACK_JACK;
+        final Score score = new Score(calculateScore());
+        return score.isBust();
     }
 
-    public int calculateFinalScore() {
-        return score.calculateFinalScore(cards);
+    public int calculateScore() {
+        final int sumScore = calculateCardsSum();
+        final Score score = new Score(sumScore);
+        if (hasAce(cards) && score.hasPossibleAcePoint()) {
+            return sumScore + ACE_BONUS_SCORE;
+        }
+        return sumScore;
+    }
+
+    private boolean hasAce(Set<Card> cards) {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    private int calculateCardsSum() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public List<Card> getCards() {
