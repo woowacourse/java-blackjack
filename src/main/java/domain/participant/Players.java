@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Deck;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +15,7 @@ public class Players {
     private final List<Player> players;
 
     private Players(List<Player> players) {
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     public static Players of(String names) {
@@ -28,7 +29,7 @@ public class Players {
 
     public void runInitialTurn(Deck deck) {
         for (Player player : players) {
-            player.hitInitialTurn(deck.handOutInitialTurn());
+            player.hitInitialTurn(deck);
         }
     }
 
