@@ -42,8 +42,9 @@ public class OutputView {
 
     public static void printGamerCard(GamerCardsDto gamerCardsDto) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gamerCardsDto.getName()).append(": ");
-        stringBuilder.append(String.join(", ", getGamerCards(gamerCardsDto)));
+        stringBuilder.append(gamerCardsDto.getName())
+                .append(": ")
+                .append(String.join(", ", getGamerCards(gamerCardsDto)));
         System.out.println(stringBuilder);
     }
 
@@ -67,8 +68,8 @@ public class OutputView {
     private static void printDealerAddCardMessage(int addedCardsCount) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < addedCardsCount; i++) {
-            stringBuilder.append("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-            stringBuilder.append(System.lineSeparator());
+            stringBuilder.append("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+                    .append(System.lineSeparator());
         }
         System.out.print(stringBuilder);
     }
@@ -83,9 +84,11 @@ public class OutputView {
 
     private static void printGamerCardAndSum(GamerCardsResultDto gamerCardsResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gamerCardsResultDto.getGamerCardsDto().getName()).append(": ");
-        stringBuilder.append(String.join(", ", getGamerCards(gamerCardsResultDto.getGamerCardsDto())));
-        stringBuilder.append(" - 결과: ").append(gamerCardsResultDto.getSum());
+        stringBuilder.append(gamerCardsResultDto.getGamerCardsDto().getName())
+                .append(": ")
+                .append(String.join(", ", getGamerCards(gamerCardsResultDto.getGamerCardsDto())))
+                .append(" - 결과: ")
+                .append(gamerCardsResultDto.getSum());
         System.out.println(stringBuilder);
     }
 
