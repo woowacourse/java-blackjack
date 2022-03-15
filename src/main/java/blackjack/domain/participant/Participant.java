@@ -38,7 +38,7 @@ public abstract class Participant {
                 .getValue();
     }
 
-    abstract public List<Card> showInitialCards();
+    public abstract List<Card> showInitialCards();
 
     public List<Card> getCards() {
         return List.copyOf(cards.getCards());
