@@ -8,21 +8,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Status;
+import blackjack.domain.card.Deck;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.EmptySource;
 
 class PlayerTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "  "})
+    @EmptySource
     @DisplayName("이름이 유효하지 않으면 예외를 던진다.")
     void emptyName(String name) {
         // then
@@ -34,21 +33,20 @@ class PlayerTest {
     @Test
     @DisplayName("이름이 제한된 길이를 초과하면 예외를 던진다.")
     void nameLength() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("1234567890".repeat(10));
-        stringBuilder.append("1");
+        // give
+        final String name = "1234567890".repeat(10) + "1";
 
         // then
-        assertThatThrownBy(() -> new Player(stringBuilder.toString()))
+        assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("길이는 100자를 초과할 수 없습니다.");
 
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"TWO:BUST", "ACE:HIT"}, delimiter = ':')
+    @CsvSource(value = {"TWO:false", "ACE:true"}, delimiter = ':')
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
-    void returnBust(CardNumber cardNumber, Status expected) {
+    void returnBust(CardNumber cardNumber, boolean expected) {
         // give
         final Player player = new Player("pobi");
         final List<Card> cards = List.of(Card.of(DIAMOND, cardNumber), Card.of(DIAMOND, QUEEN),
@@ -59,7 +57,7 @@ class PlayerTest {
                 .forEach(player::hit);
 
         // when
-        final Status actual = player.getStatus();
+        final boolean actual = player.isHit();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -74,23 +72,9 @@ class PlayerTest {
 
         // when
         player.initCards(Deck.createBy(cards));
-        final int actual = player.getScore();
+        final int actual = player.getCards().getValue().size();
 
         // then
-        assertThat(actual).isEqualTo(20);
-    }
-
-    @Test
-    @DisplayName("상태를 STAY로 변경한다.")
-    void stay() {
-        // give
-        final Player player = new Player("pobi");
-
-        // when
-        player.stay();
-        final Status actual = player.getStatus();
-
-        // then
-        assertThat(actual).isEqualTo(Status.STAY);
+        assertThat(actual).isEqualTo(2);
     }
 }
