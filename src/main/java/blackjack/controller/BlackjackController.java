@@ -23,14 +23,14 @@ public class BlackjackController {
             Player turnPlayer = blackjack.turnPlayer();
             blackjack.addtionalCardToPlayer(
                     new RandomNumberGenerator(), turnPlayer, InputView.askAdditionalCard(turnPlayer.getName()));
-            OutputView.printCards(turnPlayer);
+            OutputView.printCards(turnPlayer, true);
         }
 
         if (blackjack.additionalCardToDealer(randomNumberGenerator)) {
             OutputView.printDealerAdditionalCard();
         }
 
-        OutputView.printCardsAndScores(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
+        OutputView.printCardsWithScore(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
         OutputView.printResults(blackjack.results(blackjack.getPlayers().getPlayers()));
     }
 }
