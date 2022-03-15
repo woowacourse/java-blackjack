@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.cardelement.Denomination;
-import blackjack.domain.card.cardelement.Suit;
+import blackjack.domain.card.element.Denomination;
+import blackjack.domain.card.element.Suit;
 
 public final class Card {
     private final Denomination denomination;

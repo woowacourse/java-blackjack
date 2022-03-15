@@ -1,5 +1,6 @@
 package blackjack.domain.human;
 
+import blackjack.domain.Point;
 import blackjack.domain.card.Cards;
 
 public final class Dealer extends Human {
@@ -15,6 +16,11 @@ public final class Dealer extends Human {
     
     @Override
     public boolean isAbleToHit() {
-        return cards.getPoint() <= HIT_STANDARD_NUMBER;
+        return Point.fromCards(cards).get() <= HIT_STANDARD_NUMBER;
     }
+    
+//    @Override
+//    public boolean isAbleToHit() {
+//        return cards.getPoint() <= HIT_STANDARD_NUMBER;
+//    }
 }

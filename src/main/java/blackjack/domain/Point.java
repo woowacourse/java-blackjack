@@ -1,7 +1,7 @@
-package blackjack.domain.card;
+package blackjack.domain;
 
+import blackjack.domain.card.Cards;
 import blackjack.util.Constants;
-import java.util.List;
 
 public final class Point {
     public static final int ACE_MINUS_NUMBER = 10;
