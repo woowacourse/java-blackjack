@@ -27,6 +27,10 @@ public class PlayingCards {
         return getCardSum() > BURST_NUMBER;
     }
 
+    public boolean isNotFinishedWithBound(final int boundNumber) {
+        return getCardSum() < boundNumber;
+    }
+
     public int getCardSum() {
         return adjustSumByAce(getCurrentSum());
     }
@@ -55,5 +59,4 @@ public class PlayingCards {
             .filter(PlayingCard::isAce)
             .count();
     }
-
 }

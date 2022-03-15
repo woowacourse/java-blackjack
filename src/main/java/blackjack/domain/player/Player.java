@@ -23,7 +23,9 @@ public abstract class Player {
         return playingCards.isBurst();
     }
 
-    public abstract boolean isNotFinished();
+    public boolean isNotFinished(final int boundNumber) {
+        return playingCards.isNotFinishedWithBound(boundNumber);
+    }
 
     public abstract boolean isDealer();
 

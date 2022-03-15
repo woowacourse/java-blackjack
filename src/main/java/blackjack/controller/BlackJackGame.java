@@ -21,6 +21,8 @@ public class BlackJackGame {
 
     private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
     private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
+    private static final int GAMBLER_GET_CARD_UPPER_BOUND = 21;
+    private static final int DEALER_GET_CARD_UPPER_BOUND = 17;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -83,7 +85,7 @@ public class BlackJackGame {
     }
 
     private boolean canGamblerReceiveCard(final Player gambler, final CardDeck cardDeck) {
-        return isHit(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished();
+        return isHit(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished(GAMBLER_GET_CARD_UPPER_BOUND);
     }
 
     private boolean isHit(final Player gambler, final CardDeck cardDeck) {
@@ -114,7 +116,7 @@ public class BlackJackGame {
     }
 
     private boolean canDealerReceiveCard(final Dealer dealer) {
-        return isNotBurst(dealer) && dealer.isNotFinished();
+        return isNotBurst(dealer) && dealer.isNotFinished(DEALER_GET_CARD_UPPER_BOUND);
     }
 
     private void processResult(Players players) {
