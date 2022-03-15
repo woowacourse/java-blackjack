@@ -2,8 +2,8 @@ package blackjack.view;
 
 import static blackjack.domain.Rule.DEALER_HIT_STANDARD_SCORE;
 
-import blackjack.domain.Money;
 import blackjack.domain.card.Card;
+import blackjack.domain.money.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;

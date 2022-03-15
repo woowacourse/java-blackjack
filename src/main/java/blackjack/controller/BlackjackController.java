@@ -1,9 +1,9 @@
 package blackjack.controller;
 
-import blackjack.domain.BettingMachine;
 import blackjack.domain.BlackjackMachine;
-import blackjack.domain.Money;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.money.BettingMachine;
+import blackjack.domain.money.Money;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
