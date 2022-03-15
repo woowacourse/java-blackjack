@@ -37,6 +37,17 @@ class DealerTest {
     }
 
     @Test
+    @DisplayName("딜러만 블랙잭이면 딜러는 승리한다")
+    void onlyDealerIsBlackJack_dealerWin() {
+        Player player = new Player("dog",
+                List.of(new Card(CardNumber.TEN, Symbol.SPADE), new Card(CardNumber.SEVEN, Symbol.SPADE)));
+        player.receiveCard(new Card(CardNumber.FOUR, Symbol.SPADE));
+        Dealer dealer = new Dealer(
+                List.of(new Card(CardNumber.KING, Symbol.SPADE), new Card(CardNumber.ACE, Symbol.SPADE)));
+        assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.WIN);
+    }
+
+    @Test
     @DisplayName("딜러만 버스트라면 딜러가 패배한다")
     void dealerIsBust_dealerLose() {
         Player player = new Player("dog",

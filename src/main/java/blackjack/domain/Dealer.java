@@ -37,6 +37,9 @@ public class Dealer extends Participant {
     }
 
     private boolean bothNotBustAndDealerTotalLarger(Player player) {
+        if (dealerBust() || playerBust(player)) {
+            return false;
+        }
         return super.getHoldingCard().calculateTotal() > player.getHoldingCard().calculateTotal();
     }
 
@@ -45,6 +48,9 @@ public class Dealer extends Participant {
     }
 
     private boolean bothNotBustAndPlayerTotalLarger(Player player) {
+        if (dealerBust() || playerBust(player)) {
+            return false;
+        }
         return super.getHoldingCard().calculateTotal() < player.getHoldingCard().calculateTotal();
     }
 
