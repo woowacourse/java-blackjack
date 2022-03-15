@@ -20,4 +20,8 @@ public class Dealer extends Participator {
     public boolean canReceiveCard() {
         return this.getSum() <= DEALER_CRITERIA_HIT_SCORE;
     }
+
+    public void receiveBet(long bettingAmount) {
+
+    }
 }

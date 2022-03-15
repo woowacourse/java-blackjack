@@ -4,7 +4,7 @@ import static model.Dealer.DEALER_NAME;
 import static model.card.Cards.BLACK_JACK_SCORE;
 
 public class Player extends Participator {
-    private final Betting betting;
+    private Betting betting;
 
     private Player(String playerName, Betting betting) {
         super(playerName);
@@ -33,5 +33,13 @@ public class Player extends Participator {
 
     public long getBettingAmount() {
         return betting.getBettingAmount();
+    }
+
+    public void bet(Dealer dealer) {
+        betting = betting.bet(dealer);
+    }
+
+    public long getProfitAmount() {
+        return betting.getProfitAmount();
     }
 }

@@ -1,11 +1,18 @@
 package model;
 
 public class Betting {
+    private static final int INIT_PROFIT_AMOUNT = 0;
     private final long bettingAmount;
+    private final long profitAmount;
 
-    public Betting(long bettingAmount) {
+    private Betting(long bettingAmount, long profitAmount) {
         checkBettingAmountPositive(bettingAmount);
         this.bettingAmount = bettingAmount;
+        this.profitAmount = profitAmount;
+    }
+
+    public Betting(long bettingAmount) {
+        this(bettingAmount, INIT_PROFIT_AMOUNT);
     }
 
     private void checkBettingAmountPositive(long bettingAmount) {
@@ -14,7 +21,17 @@ public class Betting {
         }
     }
 
+    public Betting bet(Dealer dealer) {
+        dealer.receiveBet(bettingAmount);
+        Betting bettingAfterBet = new Betting(bettingAmount, profitAmount - bettingAmount);
+        return bettingAfterBet;
+    }
+
     public long getBettingAmount() {
         return bettingAmount;
+    }
+
+    public long getProfitAmount() {
+        return profitAmount;
     }
 }

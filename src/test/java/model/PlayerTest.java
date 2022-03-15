@@ -23,10 +23,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class PlayerTest {
 
     private Player player;
+    private Player thousandBettedPlayer;
+    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         player = new Player("클레이", 0);
+        thousandBettedPlayer = new Player("베팅한 플레이어", 1000);
+        dealer = new Dealer();
     }
 
     @ParameterizedTest
@@ -98,8 +102,13 @@ public class PlayerTest {
     }
 
     @Test
+    void initBettingAmount() {
+        assertThat(thousandBettedPlayer.getBettingAmount()).isEqualTo(1000);
+    }
+
+    @Test
     void bet() {
-        Player player = new Player("pobi", 10000);
-        assertThat(player.getBettingAmount()).isEqualTo(10000);
+        thousandBettedPlayer.bet(dealer);
+        assertThat(thousandBettedPlayer.getProfitAmount()).isEqualTo(-1000);
     }
 }
