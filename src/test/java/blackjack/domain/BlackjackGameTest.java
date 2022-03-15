@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,13 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackGameTest {
 
-    BlackjackGame blackjackGame;
-
-    @BeforeEach
-    void setUp() {
-        blackjackGame = new BlackjackGame();
-    }
-
     @Test
     @DisplayName("게임 계산 결과: 딜러가 이긴 경우 확인")
     void isDealerBlackjack() {
@@ -44,6 +36,7 @@ class BlackjackGameTest {
         players.add(dealer);
 
         Players playerList = new Players(players);
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), new ArrayList<>());
         Results results = blackjackGame.calculateResult(playerList);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
@@ -67,6 +60,7 @@ class BlackjackGameTest {
         players.add(dealer);
 
         Players playerList = new Players(players);
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), new ArrayList<>());
         Results results = blackjackGame.calculateResult(playerList);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
@@ -79,6 +73,7 @@ class BlackjackGameTest {
     void pickCard() {
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
         Guest guest = new Guest("haha");
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), new ArrayList<>());
         blackjackGame.addCard(guest, playingCardFixMachine);
         blackjackGame.addCard(guest, playingCardFixMachine);
 
@@ -93,8 +88,10 @@ class BlackjackGameTest {
     @DisplayName("다음 순서가 존재하지 않는 경우: 딜러만 있는 경우")
     void checkNonExistNextTurn() {
         List<String> players = new ArrayList<>();
+
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-        blackjackGame.initGames(players, playingCardShuffleMachine);
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), players);
+        blackjackGame.initGames(playingCardShuffleMachine);
         blackjackGame.nextTurn();
 
         assertThat(blackjackGame.isExistNextPlayer()).isFalse();
@@ -106,7 +103,8 @@ class BlackjackGameTest {
         List<String> players = new ArrayList<>();
         players.add("green");
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-        blackjackGame.initGames(players, playingCardShuffleMachine);
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), players);
+        blackjackGame.initGames(playingCardShuffleMachine);
         blackjackGame.nextTurn();
 
         assertThat(blackjackGame.isExistNextPlayer()).isTrue();
@@ -118,7 +116,8 @@ class BlackjackGameTest {
         List<String> players = new ArrayList<>();
         players.add("green");
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-        blackjackGame.initGames(players, playingCardShuffleMachine);
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), players);
+        blackjackGame.initGames(playingCardShuffleMachine);
         blackjackGame.nextTurn();
 
         assertThat(blackjackGame.isTurnGuest()).isTrue();
@@ -129,7 +128,8 @@ class BlackjackGameTest {
     void checkPossibleDealerTurn() {
         List<String> players = new ArrayList<>();
         CardShuffleMachine playingCardFixMachine = new PlayingCardFixMachine();
-        blackjackGame.initGames(players, playingCardFixMachine);
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), players);
+        blackjackGame.initGames(playingCardFixMachine);
 
         assertThat(blackjackGame.turnDealer(playingCardFixMachine)).isTrue();
     }

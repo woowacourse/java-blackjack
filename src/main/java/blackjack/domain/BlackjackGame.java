@@ -5,7 +5,6 @@ import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.PlayingCard;
-import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
@@ -16,24 +15,24 @@ import blackjack.domain.result.Results;
 public class BlackjackGame {
 
     private final List<PlayingCard> playingCards;
-    private Players blackjackPlayers;
+    private final Players blackjackPlayers;
 
-    public BlackjackGame() {
-        this.playingCards = Deck.getPlayingCards();
+    public BlackjackGame(List<PlayingCard> playingCards, List<String> playerNames) {
+        this.playingCards = playingCards;
+        this.blackjackPlayers = initPlayers(playerNames);
     }
 
-    public void initGames(List<String> playerNames, CardShuffleMachine playingCardShuffleMachine) {
-        initPlayers(playerNames);
+    public void initGames(CardShuffleMachine playingCardShuffleMachine) {
         initCards(playingCardShuffleMachine);
     }
 
-    private void initPlayers(List<String> playerNames) {
+    private Players initPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
         for (String playerName : playerNames) {
             players.add(new Guest(playerName));
         }
-        blackjackPlayers = new Players(players);
+        return new Players(players);
     }
 
     private void initCards(CardShuffleMachine playingCardShuffleMachine) {
