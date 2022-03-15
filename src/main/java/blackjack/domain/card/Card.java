@@ -25,7 +25,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.number == Number.ACE;
+        return number.isAce();
     }
 
     @Override

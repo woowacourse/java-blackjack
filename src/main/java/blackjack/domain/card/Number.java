@@ -24,6 +24,10 @@ public enum Number {
         this.name = name;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getValue() {
         return value;
     }
