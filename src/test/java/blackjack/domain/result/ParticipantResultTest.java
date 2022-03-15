@@ -44,7 +44,7 @@ public class ParticipantResultTest {
                 Arguments.of(
                         new Card(Denomination.NINE, Suit.CLOVER), new Card(Denomination.EIGHT, Suit.HEART),
                         new Card(Denomination.TEN, Suit.SPADE), new Card(Denomination.ACE, Suit.HEART),
-                        Result.WIN
+                        Result.BLACKJACK
                 ),
                 Arguments.of(
                         new Card(Denomination.NINE, Suit.CLOVER), new Card(Denomination.EIGHT, Suit.HEART),

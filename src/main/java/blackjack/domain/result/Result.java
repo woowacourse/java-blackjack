@@ -7,6 +7,8 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
+    BLACKJACK("블랙잭", ((dealer, participant) ->
+            participant.isBlackjack() && dealer.isNotBlackjack())),
     WIN("승", (dealer, participant) ->
             participant.isNotBust() &&
                     (participant.getTotalScore() > dealer.getTotalScore() || dealer.isBust())),
