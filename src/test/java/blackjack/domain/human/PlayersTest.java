@@ -19,6 +19,26 @@ class PlayersTest {
     }
     
     @Test
+    @DisplayName("복사 후 반환기능 검사")
+    public void getTest() {
+        // given
+        Player player1 = Player.from("pobi");
+        Player player2 = Player.from("jason");
+        Players players = Players.from(List.of(player1, player2));
+        CardDeck cardDeck = CardDeck.newInstance();
+        
+        // when
+        player2 = Player.from("제이슨");
+        players.giveCard(cardDeck);
+        players.giveCard(cardDeck);
+        
+        // then
+        assertThat(players.get())
+                .extracting("name")
+                .contains("pobi", "jason");
+    }
+    
+    @Test
     @DisplayName("플레이어들 카드 배분 기능 검사")
     public void giveCardTest() {
         // given

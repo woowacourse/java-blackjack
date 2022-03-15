@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackTable;
+import blackjack.domain.BlackjackRepository;
 import blackjack.domain.card.group.CardDeck;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
@@ -11,27 +11,27 @@ import blackjack.view.OutputView;
 
 public final class GameController {
     public void run() {
-        BlackjackTable blackjackTable = BlackjackTable.from(getPlayers());
+        BlackjackRepository blackjackRepository = BlackjackRepository.from(getPlayers());
         
-        initGame(blackjackTable);
-        startGame(blackjackTable);
-        endGame(blackjackTable);
+        initGame(blackjackRepository);
+        startGame(blackjackRepository);
+        endGame(blackjackRepository);
     }
     
     private Players getPlayers() {
         return Players.fromText(InputView.inputPlayerNames());
     }
     
-    private void initGame(final BlackjackTable blackjackTable) {
-        blackjackTable.initCard();
-        OutputView.printInitCards(blackjackTable);
+    private void initGame(final BlackjackRepository blackjackRepository) {
+        blackjackRepository.initCard();
+        OutputView.printInitCards(blackjackRepository);
     }
     
-    private void startGame(final BlackjackTable blackjackTable) {
-        for (Player player : blackjackTable.getPlayers().get()) {
-            hitOrStayPlayer(player, blackjackTable.getCardDeck());
+    private void startGame(final BlackjackRepository blackjackRepository) {
+        for (Player player : blackjackRepository.getPlayers().get()) {
+            hitOrStayPlayer(player, blackjackRepository.getCardDeck());
         }
-        hitOrStayDealer(blackjackTable);
+        hitOrStayDealer(blackjackRepository);
     }
     
     private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
@@ -44,18 +44,18 @@ public final class GameController {
         }
     }
     
-    private void hitOrStayDealer(final BlackjackTable blackjackTable) {
-        Dealer dealer = blackjackTable.getDealer();
+    private void hitOrStayDealer(final BlackjackRepository blackjackRepository) {
+        Dealer dealer = blackjackRepository.getDealer();
         if (dealer.isAbleToHit()) {
-            dealer.addCard(blackjackTable.getCardDeck().pop());
+            dealer.addCard(blackjackRepository.getCardDeck().pop());
             OutputView.printDealerHit();
         }
     }
     
-    private void endGame(final BlackjackTable blackjackTable) {
-        OutputView.printHandAndPoint(blackjackTable);
+    private void endGame(final BlackjackRepository blackjackRepository) {
+        OutputView.printHandAndPoint(blackjackRepository);
         
-        ResultStatistic resultStatistic = ResultStatistic.from(blackjackTable);
+        ResultStatistic resultStatistic = ResultStatistic.from(blackjackRepository);
         
         OutputView.printDealerResult(resultStatistic.getDealerResults());
         OutputView.printPlayerResult(resultStatistic.getPlayersResult());

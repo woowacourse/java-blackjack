@@ -5,19 +5,19 @@ import blackjack.domain.human.Dealer;
 import blackjack.domain.human.group.Players;
 import blackjack.util.Constants;
 
-public final class BlackjackTable {
+public final class BlackjackRepository {
     private static final CardDeck cardDeck = CardDeck.newInstance();
     
     private final Dealer dealer;
     private final Players players;
     
-    private BlackjackTable(Players players) {
+    private BlackjackRepository(Players players) {
         this.dealer = Dealer.newInstance();
         this.players = players;
     }
     
-    public static BlackjackTable from(Players players) {
-        return new BlackjackTable(players);
+    public static BlackjackRepository from(Players players) {
+        return new BlackjackRepository(players);
     }
     
     public void initCard() {

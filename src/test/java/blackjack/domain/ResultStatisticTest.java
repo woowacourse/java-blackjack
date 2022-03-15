@@ -41,11 +41,11 @@ class ResultStatisticTest {
             addCardList(player2, List.of("10", "10", "2"));
             Players players = Players.from(List.of(player1, player2));
             
-            BlackjackTable blackjackTable = BlackjackTable.from(players);
-            addCardList(blackjackTable.getDealer(), List.of("8", "10", "10"));
+            BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
+            addCardList(blackjackRepository.getDealer(), List.of("8", "10", "10"));
             
             // when
-            resultStatistic = ResultStatistic.from(blackjackTable);
+            resultStatistic = ResultStatistic.from(blackjackRepository);
         }
         
         @Test
@@ -80,11 +80,11 @@ class ResultStatisticTest {
             addCardList(player2, List.of("10", "10", "10"));
             Players players = Players.from(List.of(player1, player2));
             
-            BlackjackTable blackjackTable = BlackjackTable.from(players);
-            addCardList(blackjackTable.getDealer(), List.of("10", "10", "10", "10"));
+            BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
+            addCardList(blackjackRepository.getDealer(), List.of("10", "10", "10", "10"));
             
             //when
-            resultStatistic = ResultStatistic.from(blackjackTable);
+            resultStatistic = ResultStatistic.from(blackjackRepository);
         }
         
         @Test
@@ -121,11 +121,11 @@ class ResultStatisticTest {
             addCardList(player4, List.of("10", "10", "A"));
             Players players = Players.from(List.of(player1, player2, player3, player4));
             
-            BlackjackTable blackjackTable = BlackjackTable.from(players);
-            addCardList(blackjackTable.getDealer(), List.of("10", "10"));
+            BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
+            addCardList(blackjackRepository.getDealer(), List.of("10", "10"));
             
             // when
-            resultStatistic = ResultStatistic.from(blackjackTable);
+            resultStatistic = ResultStatistic.from(blackjackRepository);
         }
         
         @Test

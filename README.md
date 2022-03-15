@@ -79,10 +79,7 @@
 - [x] 코드 리포맷 세팅
 - [x] 출력화면에 맞게 OutputView 메서드 로직 수정
 - [x] 패키지에 위치한 클래스들 하위에 패키지를 더 나누기
-- [ ] Table 클래스 이름 변경, 클래스 역할 고민
-- [ ] 
-- [ ] 
-- [ ] 
+- [x] Table 클래스 이름 변경, 클래스 역할 고민 -> repository 화
 
 ## 궁금증
 
@@ -93,12 +90,13 @@
 
 ## TODO
 
+- [x] players test 추가
+- [x] final class 로 상속안함 표시
 - [x] cards, table 클래스 제외 불변화
-- [ ] final class 로 상속안함 표시
-- [ ] players test 추가
 - [x] resultStatistic 로직 수정
 - [x] Point 생성자 인자를 Cards로 변경 및 메소드 Cards로 이동
 - [ ] 조합으로 구현로직 변경
+- [ ] 테스트 코드 검사
 - [ ] 
 
 - [x] final 적용
