@@ -11,7 +11,7 @@ public class PlayingCard {
     }
 
     public boolean isAce() {
-        return denomination.equals(Denomination.ACE);
+        return denomination == Denomination.ACE;
     }
 
     public int sumPoint(int points) {
