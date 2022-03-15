@@ -29,25 +29,25 @@ public enum CompareResult {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하는 결과가 없습니다."));
     }
 
-    private static boolean isBlackJack(Player player) {
+    private static boolean isBlackJack(final Player player) {
         return player.showCards().size() == Card.START_CARD_COUNT &&
                 player.calculateResult() == Gamer.LIMIT_GAMER_TOTAL_POINT;
     }
 
-    private static boolean isWin(Integer dealerResult, Integer gamerResult) {
+    private static boolean isWin(final Integer dealerResult, final Integer gamerResult) {
         return (dealerResult > Gamer.LIMIT_GAMER_TOTAL_POINT &&
                 gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT)
                 || (dealerResult < gamerResult &&
                 gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT);
     }
 
-    private static boolean isDraw(Integer dealerResult, Integer gamerResult) {
+    private static boolean isDraw(final Integer dealerResult, final Integer gamerResult) {
         return dealerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT &&
                 gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT &&
                 dealerResult == gamerResult;
     }
 
-    private static boolean isLose(Integer dealerResult, Integer gamerResult) {
+    private static boolean isLose(final Integer dealerResult, final Integer gamerResult) {
         return dealerResult > gamerResult ||
                 gamerResult > Gamer.LIMIT_GAMER_TOTAL_POINT;
     }

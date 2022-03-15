@@ -6,6 +6,8 @@ import blackjack.domain.player.Bet;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +21,11 @@ public class BlackJackResultTest {
 
         Gamers gamers = new Gamers(List.of(huni, hani));
 
-        BlackJackResult result = BlackJackResult.init(gamers);
+        Map<Gamer, ResultStrategy> map = gamers.getGamers().stream()
+                .collect(Collectors.toMap(gamer -> gamer,
+                        gamer -> new Keep()));
+
+        BlackJackResult result = new BlackJackResult(map);
         assertThat(result.getResult().keySet()).contains(huni, hani);
     }
 }

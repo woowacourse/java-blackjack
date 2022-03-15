@@ -6,6 +6,7 @@ import blackjack.domain.player.Bet;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.ResultStrategy;
 import blackjack.domain.result.RuleResult;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Player, Bet> calculateResultBoard() {
+    public Map<Player, ResultStrategy> calculateResultBoard() {
         return gamers.compareResult(dealer.calculateResult());
     }
 

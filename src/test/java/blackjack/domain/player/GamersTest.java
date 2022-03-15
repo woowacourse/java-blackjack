@@ -6,6 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.result.Draw;
+import blackjack.domain.result.Keep;
+import blackjack.domain.result.Lose;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +32,7 @@ public class GamersTest {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         Gamers gamers = new Gamers(List.of(gamer));
 
-        assertThat(gamers.compareResult(11).get(gamer).getAmount()).isEqualTo(-1000);
+        assertThat(gamers.compareResult(11).get(gamer)).isInstanceOf(Lose.class);
     }
 
     @Test
@@ -39,7 +42,7 @@ public class GamersTest {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         Gamers gamers = new Gamers(List.of(gamer));
 
-        assertThat(gamers.compareResult(9).get(gamer).getAmount()).isEqualTo(1000);
+        assertThat(gamers.compareResult(9).get(gamer)).isInstanceOf(Keep.class);
     }
 
     @Test
@@ -49,6 +52,6 @@ public class GamersTest {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         Gamers gamers = new Gamers(List.of(gamer));
 
-        assertThat(gamers.compareResult(10).get(gamer).getAmount()).isEqualTo(0);
+        assertThat(gamers.compareResult(10).get(gamer)).isInstanceOf(Draw.class);
     }
 }
