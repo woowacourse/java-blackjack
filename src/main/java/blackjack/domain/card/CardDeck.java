@@ -1,16 +1,17 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class CardDeck {
 
-    private final List<Card> cards;
+    private final Queue<Card> cards;
 
     public CardDeck(List<Card> cards) {
-        this.cards = new LinkedList<>(cards);
+        this.cards = new ArrayDeque<>(cards);
     }
 
     public static CardDeck createGameDeck() {
@@ -23,7 +24,7 @@ public class CardDeck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 카드 덱이 비어 있습니다.");
         }
-        return cards.remove(0);
+        return cards.poll();
     }
 
     public List<Card> drawDouble() {
