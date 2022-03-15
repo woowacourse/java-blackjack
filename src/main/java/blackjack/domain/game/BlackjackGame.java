@@ -18,7 +18,8 @@ public class BlackjackGame {
     private final List<Player> participants = new ArrayList<>();
 
     public BlackjackGame(CardStack cardDeck, List<String> playerNames) {
-        validatePlayerNames(playerNames);
+        validatePlayerNamesNotEmpty(playerNames);
+        validatePlayerNamesNotDuplicate(playerNames);
 
         this.cardDeck = cardDeck;
         this.dealer = Dealer.of(generateInitialHand());
@@ -31,8 +32,19 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
     }
 
-    private void validatePlayerNames(List<String> playerNames) {
-        if (playerNames.size() == 0) {
+    private void validatePlayerNamesNotDuplicate(List<String> playerNames) {
+        int originalSize = playerNames.size();
+        int distinctSize = (int) playerNames.stream()
+                .distinct()
+                .count();
+
+        if (originalSize != distinctSize) {
+            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
+        }
+    }
+
+    private void validatePlayerNamesNotEmpty(List<String> playerNames) {
+        if (playerNames.isEmpty()) {
             throw new IllegalArgumentException(NO_PLAYER_EXCEPTION_MESSAGE);
         }
     }

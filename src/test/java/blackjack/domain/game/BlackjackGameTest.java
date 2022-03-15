@@ -46,6 +46,14 @@ public class BlackjackGameTest {
                 .hasMessage("플레이어가 없는 게임은 존재할 수 없습니다.");
     }
 
+    @DisplayName("생성자에 중복된 플레이어명이 전달되면 예외가 발생한다.")
+    @Test
+    void constructor_throwsExceptionOnDuplicateNameInput() {
+        assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of("hudi", "jeong", "hudi")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
+    }
+
     @DisplayName("giveExtraCardToPlayer 는 전달받은 플레이어에 카드를 추가하고, 카드를 더 받을 수 있다면 true 를 반환한다.")
     @Test
     void giveExtraCardToPlayer_addCardToHandOfPlayerAndReturnTrueIfPlayerCanReceiveMore() {
