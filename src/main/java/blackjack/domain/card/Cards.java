@@ -81,6 +81,14 @@ public class Cards {
         return cards.size() == size;
     }
 
+    public boolean isOverScoreThan(int score) {
+        return calculateScore() > score;
+    }
+
+    public boolean isSameScore(int score) {
+        return calculateScore() == score;
+    }
+
     public List<Card> getValues() {
         return List.copyOf(cards);
     }

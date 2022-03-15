@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-
 import java.util.List;
 import java.util.Objects;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public abstract class Participant {
 
@@ -38,11 +38,11 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
+        return cards.isOverScoreThan(BLACKJACK_SCORE);
     }
 
     public boolean isBlackJack() {
-        return cards.isSameSize(BLACKJACK_COUNT) && calculateScore() == BLACKJACK_SCORE;
+        return cards.isSameSize(BLACKJACK_COUNT) && cards.isSameScore(BLACKJACK_SCORE);
     }
 
     abstract public boolean isHittable();
