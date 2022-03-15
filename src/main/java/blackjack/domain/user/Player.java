@@ -8,8 +8,11 @@ public class Player extends User {
     private static final int DRAW_THRESHOLD = 21;
     private static final int INIT_COUNT = 2;
 
+    private final BettingMoney money;
+
     private Player(String name, BettingMoney money) {
         super(name);
+        this.money = money;
     }
 
     @Override
