@@ -2,6 +2,7 @@ package blackjack.model.player;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+import blackjack.model.blackjack.Records;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
