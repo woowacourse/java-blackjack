@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class Cards {
 	private static final int BUST_THRESHOLD = 21;
-	private static final int ACE_SPECIAL_SCORE = 11;
 	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
+	private static final int ACE_SCORE_DIFFERENCE = 10;
 	private final List<Card> cards;
 
 	public Cards(List<Card> cards) {
@@ -23,23 +23,15 @@ public class Cards {
 	}
 
 	private int calculateScore() {
-		int aceCount = (int) cards.stream().filter(Card::isAce)
-			.count();
 		int score = cards.stream()
-			.filter(card -> !card.isAce())
-			.mapToInt(Card::getScore).sum() + aceCount;
-		for (int i = 0; i < aceCount; i++) {
-			score += calculateOneAce(score);
+			.mapToInt(Card::getScore).sum();
+		if (cards.stream().noneMatch(Card::isAce)) {
+			return score;
+		}
+		if (score + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD) {
+			return score + ACE_SCORE_DIFFERENCE;
 		}
 		return score;
-	}
-
-	private int calculateOneAce(int score) {
-		int diff = ACE_SPECIAL_SCORE - CardDenomination.ACE.getLetterScore();
-		if (score + diff <= BUST_THRESHOLD) {
-			return diff;
-		}
-		return 0;
 	}
 
 	public Card getRandomCard() {
