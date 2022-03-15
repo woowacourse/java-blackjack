@@ -10,6 +10,6 @@ public class DeckTest {
     @Test
     @DisplayName("카드덱 생성 테스트")
     void createValidDeck() {
-        assertThat(Deck.createDeck()).isNotNull();
+        assertThat(Deck.create()).isNotNull();
     }
 }

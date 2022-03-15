@@ -42,6 +42,6 @@ class BlackJackGameTest {
 
     private BlackJackGame initializeBlackJackGame() {
         Participants participants = new Participants(dealer, List.of(player));
-        return new BlackJackGame(participants, Deck.createDeck());
+        return new BlackJackGame(participants, Deck.create());
     }
 }

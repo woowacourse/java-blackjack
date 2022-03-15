@@ -27,14 +27,14 @@ public class BlackJackGame {
 
     public void distributeCard(Participant participant) {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            participant.receiveCard(deck.getCard());
+            participant.receiveCard(deck.distributeCard());
         }
     }
 
     public Dealer doDealerGame() {
         final Dealer dealer = participants.getDealer();
         while (dealer.hasNextTurn()) {
-            dealer.receiveCard(deck.getCard());
+            dealer.receiveCard(deck.distributeCard());
         }
         return dealer;
     }

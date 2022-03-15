@@ -13,13 +13,13 @@ public class Deck {
         this.deck = deck;
     }
 
-    public static Deck createDeck() {
+    public static Deck create() {
         List<Card> cards = Card.initializeDeck();
         Collections.shuffle(cards);
         return new Deck(new LinkedList<>(cards));
     }
 
-    public Card getCard() {
+    public Card distributeCard() {
         return deck.poll();
     }
 }

@@ -19,7 +19,7 @@ public class BlackJackController {
 
     public void run() {
         final Participants participants = getParticipants();
-        final Deck deck = Deck.createDeck();
+        final Deck deck = Deck.create();
         final BlackJackGame blackJackGame = new BlackJackGame(participants, deck);
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(participants);
@@ -52,7 +52,7 @@ public class BlackJackController {
 
     private void doEachPlayerTurn(Player player, Deck deck) {
         while (player.hasNextTurn() && getOneMoreCard(player)) {
-            player.receiveCard(deck.getCard());
+            player.receiveCard(deck.distributeCard());
             OutputView.printNowHoldCardInfo(player);
         }
     }
