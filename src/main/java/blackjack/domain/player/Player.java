@@ -3,18 +3,23 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Player {
 
-    protected final Cards cards;
-    private final String name;
+    protected Cards cards;
+    protected String name;
 
-    Player(final String name) {
-        this.cards = new Cards();
+    public Player(String name) {
+        validateEmpty(name);
         this.name = name;
+        this.cards = new Cards();
+    }
+
+    private void validateEmpty(final String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 이름은 비어있을 수 없습니다.");
+        }
     }
 
     public abstract boolean acceptableCard();

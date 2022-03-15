@@ -31,14 +31,14 @@ public class Cards {
         if (score <= Judge.MAX_SCORE) {
             return score;
         }
-        return calculateScoreByAceOne();
+        return calculateScore();
     }
 
     public int calculateScoreByAceEleven() {
         if (containsAce()) {
-            return calculateScoreByAceOne() + ANOTHER_ACE_SCORE;
+            return calculateScore() + ANOTHER_ACE_SCORE;
         }
-        return calculateScoreByAceOne();
+        return calculateScore();
     }
 
     private boolean containsAce() {
@@ -46,7 +46,7 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    public int calculateScoreByAceOne() {
+    public int calculateScore() {
         return cards.stream()
                 .mapToInt(card -> card.getScore().getAmount())
                 .sum();

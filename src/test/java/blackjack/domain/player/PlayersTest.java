@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.*;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,15 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayersTest {
 
-    private Deck deck;
-    private List<Card> initCards;
-
-    @BeforeEach
-    void setup() {
-        deck = new Deck(new RandomCardGenerator());
-        initCards = List.of(deck.draw(), deck.draw());
-    }
-
     @ParameterizedTest
     @MethodSource("participantListBySuccess")
     @DisplayName("참가자는 2~8명 사이이다. (성공)")
@@ -33,7 +23,6 @@ class PlayersTest {
     }
 
     private static Stream<List<Player>> participantListBySuccess() {
-        Deck deck = new Deck(new RandomCardGenerator());
         return Stream.of(
                 List.of(
                         new Participant("pobi"),
@@ -64,7 +53,6 @@ class PlayersTest {
     }
 
     private static Stream<List<Player>> participantListByFail() {
-        Deck deck = new Deck(new RandomCardGenerator());
         return Stream.of(
                 null,
                 List.of(
