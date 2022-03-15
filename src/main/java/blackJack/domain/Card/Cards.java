@@ -29,17 +29,13 @@ public class Cards {
     }
 
     public int getScore() {
-        int score = cards.stream()
-                .mapToInt(card -> card.getNumber().getValue())
-                .sum();
+        int score = cards.stream().mapToInt(card -> card.getNumber().getValue()).sum();
 
         return addAceScore(score);
     }
 
     private int addAceScore(int score) {
-        long countAce = cards.stream()
-                .filter(Card::isAce)
-                .count();
+        long countAce = cards.stream().filter(Card::isAce).count();
 
         for (int i = 0; i < countAce; i++) {
             score = calculateAceScore(score);
@@ -66,11 +62,11 @@ public class Cards {
         return getScore() > BUST_LINE;
     }
 
-    public boolean isGreaterThan(Cards cards){
+    public boolean isGreaterThan(Cards cards) {
         return this.getScore() > cards.getScore();
     }
 
-    public boolean isSameScore(Cards cards){
-        return this.getScore() == cards.getScore();
+    public boolean isSameScore(Cards cards) {
+        return !isBust() && this.getScore() == cards.getScore();
     }
 }

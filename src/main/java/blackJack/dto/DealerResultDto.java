@@ -27,13 +27,13 @@ public class DealerResultDto {
     }
 
     public static DealerResultDto from(Map<String, String> result) {
-        int winCount=0;
-        int loseCount=0;
+        int winCount = 0;
+        int loseCount = 0;
         for (String value : result.values()) {
             winCount = getWinCount(winCount, value);
             loseCount = getLoseCount(loseCount, value);
         }
-        int drawCount = result.size() - (winCount+loseCount);
+        int drawCount = result.size() - (winCount + loseCount);
         return new DealerResultDto(winCount, drawCount, loseCount);
     }
 

@@ -29,7 +29,7 @@ public abstract class User {
         return cards.isBust();
     }
 
-    public boolean isSameScore(User user){
+    public boolean isSameScore(User user) {
         return this.cards.isSameScore(user.cards);
     }
 
@@ -37,8 +37,9 @@ public abstract class User {
         return this.cards.isGreaterThan(user.cards);
     }
 
-    public boolean isBlackJack(){
+    public boolean isBlackJack() {
         return cards.isBlackJack();
     }
+
     abstract public boolean hit(CardFactory cardFactory);
 }

@@ -31,7 +31,7 @@ public enum Number {
         return value;
     }
 
-    public boolean isAce(){
+    public boolean isAce() {
         return this == ACE;
     }
 }

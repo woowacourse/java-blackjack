@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static blackJack.utils.ExeptionMessage.EMPTY_CARD;
+
 public class Card {
     private static final int TOTAL_CARDS_SIZE = 52;
     private static final List<Card> CACHE = new ArrayList<>(TOTAL_CARDS_SIZE);
@@ -27,7 +29,7 @@ public class Card {
     public static Card valueOf(Shape shape, Number number) {
         return CACHE.stream().filter(card -> card.isSameShape(shape) && card.isSameNumber(number))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 없는 카드 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(EMPTY_CARD));
     }
 
     public Shape getShape() {

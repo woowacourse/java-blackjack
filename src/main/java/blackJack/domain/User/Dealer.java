@@ -17,7 +17,7 @@ public class Dealer extends User {
 
     @Override
     public boolean hit(CardFactory cardFactory) {
-        if(canOneMoreCard()){
+        if (canOneMoreCard()) {
             cards.add(cardFactory.drawOneCard());
             return true;
         }
