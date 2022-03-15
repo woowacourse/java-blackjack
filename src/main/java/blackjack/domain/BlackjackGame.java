@@ -58,13 +58,9 @@ public class BlackjackGame {
         return player.isCanHit();
     }
 
-    public boolean isTurnDealer(CardShuffleMachine playingCardShuffleMachine) {
-        Player dealer = blackjackPlayers.getDealer();
-        if (dealer.isCanHit()) {
-            assignCard(dealer, playingCardShuffleMachine);
-            return true;
-        }
-        return false;
+    public boolean isTurnDealer() {
+        Player dealer = this.getDealer();
+        return dealer.isCanHit();
     }
 
     public void assignCard(Player player, CardShuffleMachine playingCardShuffleMachine) {
@@ -99,5 +95,9 @@ public class BlackjackGame {
 
     public Player getTurnPlayer() {
         return blackjackPlayers.turnPlayer();
+    }
+
+    public Player getDealer() {
+        return blackjackPlayers.getDealer();
     }
 }

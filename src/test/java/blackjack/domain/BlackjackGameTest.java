@@ -131,6 +131,6 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), players);
         blackjackGame.initGames(playingCardFixMachine);
 
-        assertThat(blackjackGame.isTurnDealer(playingCardFixMachine)).isTrue();
+        assertThat(blackjackGame.isTurnDealer()).isTrue();
     }
 }
