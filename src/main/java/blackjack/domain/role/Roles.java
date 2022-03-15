@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain.role;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,9 +9,6 @@ import blackjack.domain.Outcome;
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.role.Dealer;
-import blackjack.domain.role.Player;
-import blackjack.domain.role.Role;
 
 public class Roles {
 

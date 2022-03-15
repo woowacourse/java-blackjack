@@ -1,10 +1,10 @@
-package blackjack;
+package blackjack.domain;
 
 import java.util.List;
 
-import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
 import blackjack.domain.role.Role;
+import blackjack.domain.role.Roles;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

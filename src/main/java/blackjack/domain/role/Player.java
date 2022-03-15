@@ -1,6 +1,6 @@
 package blackjack.domain.role;
 
-import blackjack.BlackJack;
+import blackjack.domain.BlackJack;
 import blackjack.domain.card.Hand;
 
 public class Player extends Role {

@@ -2,7 +2,7 @@ package blackjack.domain.role;
 
 import java.util.function.Supplier;
 
-import blackjack.BlackJack;
+import blackjack.domain.BlackJack;
 import blackjack.domain.card.Hand;
 
 public class Dealer extends Role {
