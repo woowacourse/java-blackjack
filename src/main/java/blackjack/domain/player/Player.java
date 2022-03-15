@@ -29,8 +29,8 @@ public abstract class Player {
 
     public abstract boolean isDealer();
 
-    public GameResult compare(final Player player) {
-        return GameResult.of(this.getSumOfCards(), player.getSumOfCards());
+    public GameResult compare(final Player gambler) {
+        return GameResult.of(this, gambler);
     }
 
     public int getSumOfCards() {
@@ -43,5 +43,17 @@ public abstract class Player {
 
     public List<PlayingCard> getCards() {
         return playingCards.getPlayingCards();
+    }
+
+    public boolean isWin(final Player otherPlayer) {
+        return this.getSumOfCards() > otherPlayer.getSumOfCards();
+    }
+
+    public boolean isDraw(final Player otherPlayer) {
+        return this.getSumOfCards() == otherPlayer.getSumOfCards();
+    }
+
+    public boolean isLose(final Player otherPlayer) {
+        return this.getSumOfCards() < otherPlayer.getSumOfCards();
     }
 }

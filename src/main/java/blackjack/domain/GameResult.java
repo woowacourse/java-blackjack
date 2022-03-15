@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
@@ -10,50 +11,48 @@ public enum GameResult {
     LOSE("패", GameResult::isDealerLose),
     ;
 
-    private static final int BURST = 21;
-
     private final String result;
-    private final BiPredicate<Integer, Integer> condition;
+    private final BiPredicate<Player, Player> condition;
 
-    GameResult(final String result, final BiPredicate<Integer, Integer> condition) {
+    GameResult(final String result, final BiPredicate<Player, Player> condition) {
         this.result = result;
         this.condition = condition;
     }
 
-    public static GameResult of(final int dealerScore, final int gamblerScore) {
-        if (containsBurst(dealerScore, gamblerScore)) {
-            return getBurstResult(dealerScore, gamblerScore);
+    public static GameResult of(final Player dealer, final Player gambler) {
+        if (containsBurst(dealer, gambler)) {
+            return getBurstResult(dealer, gambler);
         }
         return Arrays.stream(values())
-            .filter(it -> it.condition.test(dealerScore, gamblerScore))
+            .filter(it -> it.condition.test(dealer, gambler))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 점수가 입력되었습니다."));
     }
 
-    private static boolean containsBurst(final int dealerScore, final int gamblerScore) {
-        return dealerScore > BURST || gamblerScore > BURST;
+    private static boolean containsBurst(final Player dealer, final Player gambler) {
+        return dealer.isBurst() || gambler.isBurst();
     }
 
-    private static GameResult getBurstResult(final Integer dealerScore, final Integer gamblerScore) {
-        if (dealerScore > BURST && gamblerScore > BURST) {
+    private static GameResult getBurstResult(final Player dealer, final Player gambler) {
+        if (dealer.isBurst() && gambler.isBurst()) {
             return DRAW;
         }
-        if (dealerScore <= BURST && gamblerScore > BURST) {
+        if (!dealer.isBurst() && gambler.isBurst()) {
             return WIN;
         }
         return LOSE;
     }
 
-    private static boolean isDealerWin(final Integer dealerScore, final Integer gamblerScore) {
-        return dealerScore > gamblerScore;
+    private static boolean isDealerWin(final Player dealer, final Player gambler) {
+        return dealer.isWin(gambler);
     }
 
-    private static boolean isDraw(final Integer dealerScore, final Integer gamblerScore) {
-        return dealerScore == gamblerScore;
+    private static boolean isDraw(final Player dealer, final Player gambler) {
+        return dealer.isDraw(gambler);
     }
 
-    private static boolean isDealerLose(final Integer dealerScore, final Integer gamblerScore) {
-        return dealerScore < gamblerScore;
+    private static boolean isDealerLose(final Player dealer, final Player gambler) {
+        return dealer.isLose(gambler);
     }
 
     public GameResult reverse() {
