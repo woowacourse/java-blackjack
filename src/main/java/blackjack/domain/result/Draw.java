@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-public class Draw implements Result {
+public class Draw implements ResultStrategy {
 
     static final int DEFAULT_BET = 0;
 

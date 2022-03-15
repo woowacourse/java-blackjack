@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-public class Lose implements Result {
+public class Lose implements ResultStrategy {
 
     @Override
     public int calculateBet(final int amount) {

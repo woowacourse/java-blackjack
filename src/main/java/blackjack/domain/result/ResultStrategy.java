@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-public interface Result {
+public interface ResultStrategy {
 
     int calculateBet(final int amount);
 }

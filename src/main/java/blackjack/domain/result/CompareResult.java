@@ -10,12 +10,12 @@ public enum CompareResult {
     DRAW(new Draw(), CompareResult::isDraw),
     LOSE(new Lose(), (dealerResult, gamerResult) -> isLose(dealerResult, gamerResult));
 
-    private final Result result;
+    private final ResultStrategy resultStrategy;
 
     private final BiPredicate<Integer, Integer> predicate;
 
-    CompareResult(final Result result, final BiPredicate<Integer, Integer> predicate) {
-        this.result = result;
+    CompareResult(final ResultStrategy resultStrategy, final BiPredicate<Integer, Integer> predicate) {
+        this.resultStrategy = resultStrategy;
         this.predicate = predicate;
     }
     public static CompareResult findCompareResult(final int dealerResult, final int gamerResult) {
@@ -43,7 +43,7 @@ public enum CompareResult {
                 gamerResult > Gamer.LIMIT_GAMER_TOTAL_POINT;
     }
 
-    public Result getResult() {
-        return result;
+    public ResultStrategy getResult() {
+        return resultStrategy;
     }
 }

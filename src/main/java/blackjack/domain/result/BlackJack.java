@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-public class BlackJack implements Result {
+public class BlackJack implements ResultStrategy {
 
     private static final double CALCULATE_UNIT = 1.5;
 

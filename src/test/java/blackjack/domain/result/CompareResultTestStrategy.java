@@ -12,7 +12,7 @@ import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CompareResultTest {
+public class CompareResultTestStrategy {
 
     @Test
     @DisplayName("승리한 경우를 계산한다.")

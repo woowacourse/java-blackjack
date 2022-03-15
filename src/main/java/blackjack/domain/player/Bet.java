@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultStrategy;
 import java.util.Objects;
 
 public class Bet {
@@ -20,8 +20,8 @@ public class Bet {
         }
     }
 
-    public void calculateBenefit(final Result result) {
-        amount = result.calculateBet(amount);
+    public void calculateBenefit(final ResultStrategy resultStrategy) {
+        amount = resultStrategy.calculateBet(amount);
     }
 
     public int getAmount() {

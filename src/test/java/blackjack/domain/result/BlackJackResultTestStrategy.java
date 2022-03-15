@@ -11,7 +11,7 @@ import blackjack.domain.player.Gamer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackResultTest {
+public class BlackJackResultTestStrategy {
 
     @Test
     @DisplayName("블랙잭 게임 룰 상 결과가 블랙잭이다.")

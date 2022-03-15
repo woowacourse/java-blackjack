@@ -12,12 +12,12 @@ public enum BlackJackResult {
     BUST(new Lose(), player -> isBust(player)),
     HIT(new Keep(), Player::isSatisfyReceiveCondition);
 
-    private final Result result;
+    private final ResultStrategy resultStrategy;
 
     private final Predicate<Player> predicate;
 
-    BlackJackResult(final Result result, final Predicate<Player> predicate) {
-        this.result = result;
+    BlackJackResult(final ResultStrategy resultStrategy, final Predicate<Player> predicate) {
+        this.resultStrategy = resultStrategy;
         this.predicate = predicate;
     }
     public static BlackJackResult findBlackJackResult(final Player player) {
@@ -36,7 +36,7 @@ public enum BlackJackResult {
         return player.calculateResult() > Gamer.LIMIT_GAMER_TOTAL_POINT;
     }
 
-    public Result getResult() {
-        return result;
+    public ResultStrategy getResult() {
+        return resultStrategy;
     }
 }
