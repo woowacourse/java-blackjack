@@ -28,7 +28,7 @@ public class Player extends Gamer{
             return 1;
         }
 
-        return Integer.compare(getCardGroupScore(), anotherCardsSum);
+        return Integer.compare(getFinalScore(), anotherCardsSum);
     }
 
     private boolean isBust(int sum) {

@@ -53,7 +53,7 @@ public class GamerGroup {
     }
 
     public GameResult getGameResult() {
-        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getMaxCardGroupSum());
+        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getSumWithMaximumAce());
         PlayerResult playerResult = new PlayerResult(playerResults);
 
         Collection<Match> playerMatches = playerResults.values();

@@ -19,18 +19,18 @@ class DealerTest {
     @DisplayName("딜러 카드 더하기 테스트")
     void addCard(Card card, int result, String testName) {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardShape.HEART, CardNumber.Q));
+        dealer.addCard(new Card(CardShape.HEART, CardNumber.FOUR));
         dealer.addCard(card);
 
         dealer.addCard(new Card(CardShape.HEART, CardNumber.ACE));
-        assertThat(dealer.getCardGroupSum()).isEqualTo(result);
+        assertThat(dealer.getSumWithMaximumAce()).isEqualTo(result);
     }
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-                Arguments.of(new Card(CardShape.HEART, CardNumber.FIVE), 16, "카드 숫자 합 15에서 1 추가시에 16"),
-                Arguments.of(new Card(CardShape.HEART, CardNumber.SIX), 17, "카드 숫자 합 16에서 1 추가시에 17"),
-                Arguments.of(new Card(CardShape.HEART, CardNumber.SEVEN), 17, "카드 숫자 합 17에서 1 추가시에 17")
+                Arguments.of(new Card(CardShape.HEART, CardNumber.FIVE), 20, "카드 숫자 합 9에서 11 추가시에 20"),
+                Arguments.of(new Card(CardShape.HEART, CardNumber.SIX), 21, "카드 숫자 합 10에서 11 추가시에 21"),
+                Arguments.of(new Card(CardShape.HEART, CardNumber.SEVEN), 22, "카드 숫자 합 11에서 11 추가시에 22")
         );
     }
 }

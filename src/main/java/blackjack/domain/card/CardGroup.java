@@ -16,26 +16,23 @@ public class CardGroup {
     }
 
     public boolean isBust() {
-        return getSum() > BLACKJACK_NUMBER;
+        return calculateScore() > BLACKJACK_NUMBER;
     }
 
     public boolean isAddable() {
-        return getSum() < BLACKJACK_NUMBER;
+        return calculateScore() < BLACKJACK_NUMBER;
     }
 
-    public int getSum() {
-        return cards.stream()
+    public int calculateSumWithMaximumAce() {
+        int sum = cards.stream()
                 .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getNumber)
                 .sum();
+        return sum + countA() * ACE_SPECIAL_SCORE;
     }
 
-    public int getMaxSum() {
-        return getSum() + countA() * ACE_SPECIAL_SCORE;
-    }
-
-    public int getScore() {
-        int maxSum = getMaxSum();
+    public int calculateScore() {
+        int maxSum = calculateSumWithMaximumAce();
         int aCount = countA();
         while (maxSum > BLACKJACK_NUMBER && aCount > 0) {
             maxSum -= ACE_SPECIAL_SCORE;

@@ -62,16 +62,12 @@ public class Gamer {
         return cardGroup.isAddable();
     }
 
-    public int getCardGroupSum() {
-        return cardGroup.getSum();
+    public int getSumWithMaximumAce() {
+        return cardGroup.calculateSumWithMaximumAce();
     }
 
-    public int getMaxCardGroupSum() {
-        return cardGroup.getMaxSum();
-    }
-
-    public int getCardGroupScore() {
-        return cardGroup.getScore();
+    public int getFinalScore() {
+        return cardGroup.calculateScore();
     }
 
     public List<Card> getCards() {

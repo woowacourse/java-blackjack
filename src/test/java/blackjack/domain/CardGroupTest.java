@@ -22,7 +22,7 @@ class CardGroupTest {
         cardGroup.addCard(new Card(CardShape.HEART, CardNumber.TWO));
         cardGroup.addCard(new Card(CardShape.HEART, CardNumber.Q));
         cardGroup.addCard(card);
-        assertThat(cardGroup.getSum()).isEqualTo(result);
+        assertThat(cardGroup.calculateSumWithMaximumAce()).isEqualTo(result);
     }
 
     private static Stream<Arguments> invalidParameters() {
