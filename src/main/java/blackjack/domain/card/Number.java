@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
-import blackjack.domain.BlackjackGame;
-
 import java.util.List;
+
+import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public enum Number {
     ACE(1, "A"),
@@ -57,7 +57,7 @@ public enum Number {
     }
 
     private static int sumUnderBlackJackNumber(int total) {
-        if (total + SPECIAL_ACE - ACE.value <= BlackjackGame.BLACKJACK_NUMBER) {
+        if (total + SPECIAL_ACE - ACE.value <= BLACKJACK_NUMBER) {
             total = total + SPECIAL_ACE - ACE.value;
         }
         return total;

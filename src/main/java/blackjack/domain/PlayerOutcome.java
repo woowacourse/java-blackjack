@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
+
 public enum PlayerOutcome {
     WIN("승"),
     LOSE("패"),
@@ -12,13 +14,13 @@ public enum PlayerOutcome {
     }
 
     public static PlayerOutcome match(int dealerTotal, int playerTotal) {
-        if (dealerTotal > BlackjackGame.BLACKJACK_NUMBER && playerTotal > BlackjackGame.BLACKJACK_NUMBER) {
+        if (dealerTotal > BLACKJACK_NUMBER && playerTotal > BLACKJACK_NUMBER) {
             return LOSE;
         }
-        if (dealerTotal > BlackjackGame.BLACKJACK_NUMBER) {
+        if (dealerTotal > BLACKJACK_NUMBER) {
             return WIN;
         }
-        if (playerTotal > BlackjackGame.BLACKJACK_NUMBER) {
+        if (playerTotal > BLACKJACK_NUMBER) {
             return LOSE;
         }
         return matchCards(dealerTotal, playerTotal);
