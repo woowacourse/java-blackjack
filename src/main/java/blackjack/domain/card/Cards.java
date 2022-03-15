@@ -19,12 +19,12 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean isBlackJack() {
-        return isFirstReceivedCards() && getTotalScore() == BLACK_JACK_SCORE;
-    }
-
     public boolean isFirstReceivedCards() {
         return cards.size() == FIRST_RECEIVED_CARD_SIZE;
+    }
+
+    public boolean isBlackJack() {
+        return isFirstReceivedCards() && getTotalScore() == BLACK_JACK_SCORE;
     }
 
     public boolean exceedMaxScore() {
@@ -38,16 +38,16 @@ public class Cards {
         return calculateScore(score - NUMBER_TO_USE_ACE_CARD_WITH_ONE, countOfAce - 1);
     }
 
-    public int getCountOfAce() {
-        return (int) cards.stream()
-                .filter(Card::isAceCard)
-                .count();
-    }
-
     public int getTotalScore() {
         return cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
+    }
+
+    public int getCountOfAce() {
+        return (int) cards.stream()
+                .filter(Card::isAceCard)
+                .count();
     }
 
     public List<Card> getCards() {

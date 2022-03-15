@@ -30,19 +30,23 @@ public abstract class Player {
         return cards.isBlackJack();
     }
 
+    public final boolean exceedMaxScore() {
+        return cards.exceedMaxScore();
+    }
+
     public final void pickCard(final Card card) {
         cards.addCard(card);
     }
 
     public final Result findResult(final Player otherPlayer) {
-        return Result.findResult(cards, otherPlayer.cards);
+        return Result.findResult(this, otherPlayer);
     }
 
     public final String getName() {
         return name;
     }
 
-    public final List<Card> getCards() {
+    public final List<Card> getCardsToList() {
         return cards.getCards();
     }
 

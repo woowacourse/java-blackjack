@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.player.Player;
 
 public enum Result {
 
@@ -14,18 +14,17 @@ public enum Result {
         this.result = result;
     }
 
-    public static Result findResult(final Cards myCards, final Cards otherCards) {
-        if (myCards.exceedMaxScore() && otherCards.exceedMaxScore()) {
+    public static Result findResult(final Player player, final Player otherPlayer) {
+        if (player.exceedMaxScore() && otherPlayer.exceedMaxScore()) {
             return DRAW;
         }
-        if (myCards.exceedMaxScore()) {
+        if (player.exceedMaxScore()) {
             return LOSE;
         }
-        if (otherCards.exceedMaxScore()) {
+        if (otherPlayer.exceedMaxScore()) {
             return WIN;
         }
-        return compareScore(myCards.calculateScore(myCards.getTotalScore(), myCards.getCountOfAce()),
-                otherCards.calculateScore(otherCards.getTotalScore(), otherCards.getCountOfAce()));
+        return compareScore(player.getTotalScore(), otherPlayer.getTotalScore());
     }
 
     private static Result compareScore(final int myScore, final int otherScore) {

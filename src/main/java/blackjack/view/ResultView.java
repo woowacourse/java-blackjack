@@ -39,12 +39,12 @@ public class ResultView {
 
     private static String checkPlayerType(final Player player) {
         if (player instanceof Dealer) {
-            return player.getCards().stream()
+            return player.getCardsToList().stream()
                     .map(card -> card.getCardNumberType() + card.getCardPattern())
                     .findFirst()
                     .orElseThrow();
         }
-        return String.join(", ", player.getCards().stream()
+        return String.join(", ", player.getCardsToList().stream()
                 .map(card -> card.getCardNumberType() + card.getCardPattern())
                 .collect(Collectors.toList()));
     }
