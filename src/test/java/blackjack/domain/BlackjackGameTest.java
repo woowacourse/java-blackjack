@@ -53,7 +53,7 @@ class BlackjackGameTest {
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
 
-        assertThat(guestResult.getMatch().get(Match.LOSE)).isEqualTo(dealerResult.getMatch().get(Match.BLACKJACK));
+        assertThat(guestResult.getMatch().get(Match.LOSE)).isEqualTo(dealerResult.getMatch().get(Match.WIN));
     }
 
     @Test
@@ -73,7 +73,7 @@ class BlackjackGameTest {
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
 
-        assertThat(guestResult.getMatch().get(Match.BLACKJACK)).isEqualTo(dealerResult.getMatch().get(Match.LOSE));
+        assertThat(guestResult.getMatch().get(Match.WIN)).isEqualTo(dealerResult.getMatch().get(Match.LOSE));
     }
 
     @Test
