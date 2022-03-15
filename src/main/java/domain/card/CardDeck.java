@@ -30,12 +30,12 @@ public class CardDeck {
                 .map(denomination -> PlayingCard.of(suit, denomination));
     }
 
-    private CardDeck() {
-        this.playingPlayingCards = new ArrayDeque<>(ORIGINAL_PLAYING_CARDS);
-    }
-
     private CardDeck(List<PlayingCard> playingPlayingCards) {
         this.playingPlayingCards = new ArrayDeque<>(playingPlayingCards);
+    }
+
+    private CardDeck() {
+        this(new ArrayList<>(ORIGINAL_PLAYING_CARDS));
     }
 
     public static CardDeck newInstance() {
