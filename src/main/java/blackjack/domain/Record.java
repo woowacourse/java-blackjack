@@ -49,18 +49,6 @@ public enum Record {
         return PUSH;
     }
 
-    static boolean isWin(int dealerScore, int playerScore) {
-        return WIN.predicate.test(dealerScore, playerScore);
-    }
-
-    static boolean isPush(int dealerScore, int playerScore) {
-        return PUSH.predicate.test(dealerScore, playerScore);
-    }
-
-    static boolean isLoss(int dealerScore, int playerScore) {
-        return LOSS.predicate.test(dealerScore, playerScore);
-    }
-
     public String getName() {
         return name;
     }
