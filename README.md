@@ -56,8 +56,6 @@
 - **BlackJackCardsGenerator**
     - 서로 다른 52장의 카드를 가진 덱을 생성한다.
 
-<br>
-
 - **Participant**
     - 게임 참여자 abstract class
     - 카드를 보유하고 있다.
@@ -82,17 +80,12 @@
 - **BetMoney**
     - 베팅한 돈
 
-<br>
-
 - **HitRequest**
     - 카드 추가 여부에 대한 응답 값을 의미하는 enum
 
 - **Judgement**
     - 승, 무, 패 값을 가진 enum
     - 플레이어의 승패를 결정한다.
-
-- **WinResult**
-    - 플레이어와 딜러의 승패 결과를 관리한다.
 
 - **ProfitResult**
     - 플레이어와 딜러의 최종 수익을 관리한다.
