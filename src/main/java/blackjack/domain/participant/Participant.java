@@ -2,19 +2,17 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.participant.vo.PlayerName;
 import blackjack.domain.state.State;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Participant {
 
-    final String name;
+    final PlayerName name;
     State state;
 
     private Participant(final String name, final State state) {
-        Objects.requireNonNull(name, "이름에는 null이 들어올 수 없습니다.");
-        validateEmptyName(name);
-        this.name = name;
+        this.name = new PlayerName(name);
         this.state = state;
     }
 
@@ -22,18 +20,12 @@ public abstract class Participant {
         this(name, State.create(new Cards(cards)));
     }
 
-    private void validateEmptyName(final String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("이름에는 공백이 들어올 수 없습니다.");
-        }
-    }
-
     public void draw(final Card card) {
         state = state.draw(card);
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public void stay() {
