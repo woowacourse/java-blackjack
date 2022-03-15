@@ -1,8 +1,12 @@
 package blackJack.domain.Card;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CardFactory {
+
+    private static final int INIT_CARD_SIZE = 2;
 
     private final Queue<Card> deck;
 
@@ -17,9 +21,9 @@ public class CardFactory {
     }
 
     public Cards initCards() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(deck.poll());
-        cards.add(deck.poll());
+        List<Card> cards = IntStream.range(0, INIT_CARD_SIZE)
+                .mapToObj(i -> drawOneCard())
+                .collect(Collectors.toList());
 
         return new Cards(cards);
     }
