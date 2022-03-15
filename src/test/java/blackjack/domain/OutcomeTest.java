@@ -128,15 +128,14 @@ public class OutcomeTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"WIN,LOSE", "DRAW,DRAW", "LOSE,WIN"})
-    @DisplayName("승무패의 반대를 반환한다")
-    void returnOpposite(String inputName, String expectedName) {
+    @CsvSource(value = {"WIN_BLACKJACK,1.5", "WIN,1", "DRAW,0", "LOSE,-1"})
+    @DisplayName("각각의 결과값은 수익률을 가지고 있다.")
+    void returnOpposite(String inputName, double expected) {
         // given
         Outcome outcome = Outcome.valueOf(inputName);
-        Outcome expected = Outcome.valueOf(expectedName);
 
         // when
-        Outcome actual = outcome.getOpposite();
+        double actual = outcome.getEarningsRate();
 
         // then
         assertThat(actual).isEqualTo(expected);
