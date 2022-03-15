@@ -17,15 +17,15 @@ public final class Point {
         return new Point(cards);
     }
     
-    public int get() {
-        return value;
-    }
-    
     private static int computeWithAce(int point, int aceCount) {
         if (point > Constants.BLACKJACK_NUMBER && aceCount > MIN_ACE_COUNT) {
             point -= ACE_MINUS_NUMBER;
             return computeWithAce(point, --aceCount);
         }
         return point;
+    }
+    
+    public int get() {
+        return value;
     }
 }

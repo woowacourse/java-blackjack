@@ -2,10 +2,10 @@ package blackjack.domain.human;
 
 import static blackjack.util.Constants.BLACKJACK_NUMBER;
 
-import blackjack.domain.result.Point;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.group.Cards;
 import blackjack.domain.human.element.Name;
+import blackjack.domain.result.Point;
 
 public abstract class Human {
     protected final Name name;
@@ -16,13 +16,11 @@ public abstract class Human {
         this.cards = cards;
     }
     
-    public abstract boolean isAbleToHit();
-    
     public void addCard(final Card card) {
         cards.add(card);
     }
     
-    public boolean isBurst() {
+    public boolean isBust() {
         return getPoint() > BLACKJACK_NUMBER;
     }
     

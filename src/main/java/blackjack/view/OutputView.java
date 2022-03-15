@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.BlackjackTable;
-import blackjack.domain.result.Result;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
+import blackjack.domain.result.Result;
 import java.util.Map;
 
 public final class OutputView {

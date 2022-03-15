@@ -1,11 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackTable;
-import blackjack.domain.result.ResultStatistic;
 import blackjack.domain.card.group.CardDeck;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.group.Players;
+import blackjack.domain.result.ResultStatistic;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -29,13 +29,13 @@ public final class GameController {
     
     private void startGame(final BlackjackTable blackjackTable) {
         for (Player player : blackjackTable.getPlayers().get()) {
-            questAddCard(player, blackjackTable.getCardDeck());
+            hitOrStayPlayer(player, blackjackTable.getCardDeck());
         }
-        addCardToDealer(blackjackTable);
+        hitOrStayDealer(blackjackTable);
     }
     
-    private void questAddCard(final Player player, final CardDeck cardDeck) {
-        while (player.isAbleToHit() && InputView.inputOneMoreCard(player.getName())) {
+    private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
+        while (!player.isBust() && InputView.inputOneMoreCard(player.getName())) {
             player.addCard(cardDeck.draw());
             OutputView.printHumanHand(player);
         }
@@ -44,7 +44,7 @@ public final class GameController {
         }
     }
     
-    private void addCardToDealer(final BlackjackTable blackjackTable) {
+    private void hitOrStayDealer(final BlackjackTable blackjackTable) {
         Dealer dealer = blackjackTable.getDealer();
         if (dealer.isAbleToHit()) {
             dealer.addCard(blackjackTable.getCardDeck().draw());

@@ -2,10 +2,10 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.result.Point;
 import blackjack.domain.card.element.Denomination;
 import blackjack.domain.card.element.Suit;
 import blackjack.domain.card.group.Cards;
+import blackjack.domain.result.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -27,7 +27,7 @@ class PointTest {
         cards.add(Card.of(d1, Suit.SPADE));
         cards.add(Card.of(d2, Suit.SPADE));
         cards.add(Card.of(d3, Suit.SPADE));
-
+        
         assertThat(Point.fromCards(cards).get()).isEqualTo(expectedPoint);
     }
 }

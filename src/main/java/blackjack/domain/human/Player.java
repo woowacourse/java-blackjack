@@ -1,7 +1,5 @@
 package blackjack.domain.human;
 
-import static blackjack.util.Constants.BLACKJACK_NUMBER;
-
 import blackjack.domain.card.group.Cards;
 import blackjack.util.Constants;
 
@@ -16,7 +14,7 @@ public final class Player extends Human {
     }
     
     public boolean isTwoCard() {
-        return getCards().size() == Constants.INIT_CARD_NUMBER;
+        return cards.size() == Constants.INIT_CARD_NUMBER;
     }
     
     public boolean isWinner(Dealer dealer) {
@@ -25,10 +23,5 @@ public final class Player extends Human {
     
     public boolean isDraw(Dealer dealer) {
         return dealer.getPoint() == getPoint();
-    }
-    
-    @Override
-    public boolean isAbleToHit() {
-        return getPoint() < BLACKJACK_NUMBER;
     }
 }
