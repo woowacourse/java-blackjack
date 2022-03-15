@@ -1,7 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.result.Result;
 import blackjack.view.dto.ParticipantDto;
 import blackjack.view.dto.PlayersDto;
+import blackjack.view.dto.ResultCounterDto;
 
 public class OutputView {
 
@@ -34,15 +36,10 @@ public class OutputView {
         System.out.println(playersDto.showEachResult());
     }
 
-    public static void printFinalResult(ParticipantDto dealerDto, PlayersDto playersDto) {
+    public static void printFinalResult(ResultCounterDto resultCounterDto) {
         System.out.println();
         System.out.println("## 최종 승패");
-//        Map<Player, Result> resultCounter = playersDto.judgeResult(dealerDto.calculateBestScore());
-//        System.out.println(dealerDto.getName() + ": " +
-//                resultCounter.values().stream().filter(result -> result == Result.WIN).count() + "승" +
-//                resultCounter.values().stream().filter(result -> result == Result.TIE).count() + "무" +
-//                resultCounter.values().stream().filter(result -> result == Result.LOSE).count() + "패");
-//        resultCounter.forEach((player, result)
-//                -> System.out.println(player.getName().getValue() + ": " + result.getResult()));
+        System.out.println(resultCounterDto.showDealerResult());
+        System.out.println(resultCounterDto.showEachPlayersResult());
     }
 }

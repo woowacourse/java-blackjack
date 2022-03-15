@@ -4,11 +4,13 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.result.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.ParticipantDto;
 import blackjack.view.dto.PlayersDto;
 import blackjack.view.dto.ReceiveDecision;
+import blackjack.view.dto.ResultCounterDto;
 
 public class Controller {
 
@@ -23,7 +25,7 @@ public class Controller {
 
         playBlackJack(cardDeck, dealer, players);
         OutputView.printFinalStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
-        OutputView.printFinalResult(ParticipantDto.of(dealer), PlayersDto.of(players));
+        OutputView.printFinalResult(ResultCounterDto.of(Result.judgeResult(dealer, players), dealer, players));
     }
 
     private void initDealerCards(CardDeck cardDeck, Dealer dealer) {

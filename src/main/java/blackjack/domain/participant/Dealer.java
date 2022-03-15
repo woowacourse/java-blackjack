@@ -1,9 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import java.util.List;
-
 public class Dealer extends Participant {
 
     private static final int RECEIVABLE_SCORE_THRESHOLD = 17;
