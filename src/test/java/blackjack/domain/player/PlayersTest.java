@@ -1,10 +1,10 @@
 package blackjack.domain.player;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,10 +28,8 @@ class PlayersTest {
         Guest guest = new Guest("guest");
         playerList.add(guest);
         Players players = new Players(playerList);
-
         players.nextTurn();
 
         assertThat(players.turnPlayer()).isEqualTo(guest);
     }
-
 }

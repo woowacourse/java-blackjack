@@ -17,11 +17,12 @@ class GuestTest {
     @DisplayName("guest 객체 생성 확인")
     void createGuest() {
         Guest guest = new Guest("guest");
+
         assertThat(guest).isInstanceOf(Guest.class);
     }
 
     @Test
-    @DisplayName("카드 받았는지 확인")
+    @DisplayName("카드를 할당 받았는지 확인")
     void checkAddCardToDeck() {
         Guest guest = new Guest("guest");
         PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.FOUR);
@@ -29,31 +30,30 @@ class GuestTest {
 
         Guest compareGuest = new Guest("compare_guest");
         compareGuest.addCard(playingCard);
+
         assertThat(guest).isEqualTo(compareGuest);
     }
 
     @Test
-    @DisplayName("덱의 카드가 21이 넘는지 확인")
-    void checkPlayerDeckOverLimit() {
+    @DisplayName("플레이어가 Bust인 경우")
+    void checkPlayerIsBust() {
         Guest guest = new Guest("guest");
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.TWO));
-        boolean overLimit = guest.isBust();
 
-        assertThat(overLimit).isTrue();
+        assertThat(guest.isBust()).isTrue();
     }
 
     @Test
-    @DisplayName("덱의 카드가 21이 넘지 않는지 확인")
-    void checkPlayerDeckUnderLimit() {
+    @DisplayName("플레이어가 Bust가 아닌 경우")
+    void checkPlayerIsNotBust() {
         Guest guest = new Guest("guest");
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        boolean overLimit = guest.isBust();
 
-        assertThat(overLimit).isFalse();
+        assertThat(guest.isBust()).isFalse();
     }
 
     @ParameterizedTest
@@ -65,18 +65,20 @@ class GuestTest {
 
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(suit, secondDenomination));
+
         assertThat(guest.isWin(dealer)).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"SPADE:JACK:JACK", "SPADE:ACE:ACE"}, delimiter = ':')
-    @DisplayName("무승부 확인")
+    @DisplayName("플레이어와 딜러 무승부 확인")
     void checkPlayerDraw(Suit suit, Denomination denomination, Denomination secondDenomination) {
         Guest guest = new Guest("guest");
         guest.addCard(new PlayingCard(suit, denomination));
 
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(suit, secondDenomination));
+
         assertThat(dealer.isDraw(guest)).isTrue();
     }
 

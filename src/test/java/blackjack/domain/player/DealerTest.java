@@ -22,8 +22,8 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("카드 받았는지 확인")
-    public void checkAddCardToDeck() {
+    @DisplayName("카드를 할당받았는지 확인")
+    public void checkAddCardToPlayingCard() {
         Dealer dealer = new Dealer();
         PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.FOUR);
         dealer.addCard(playingCard);
@@ -35,8 +35,8 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("카드를 더 받을 수 있는지 확인: 16을 넘는 경우")
-    public void checkPlayerDeckOverLimit() {
+    @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘는 경우")
+    public void checkPlayerCantHit() {
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
@@ -46,8 +46,8 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("카드를 더 받을 수 있는지 확인: 16을 넘지 않는 경우")
-    public void checkPlayerDeckUnderLimit() {
+    @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘지 않는 경우")
+    public void checkPlayerCanHit() {
         Dealer dealer = new Dealer();
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.FIVE));

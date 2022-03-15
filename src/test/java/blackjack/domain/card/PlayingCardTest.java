@@ -18,7 +18,7 @@ class PlayingCardTest {
     }
 
     @Test
-    @DisplayName("카드가 ACE인지 확인")
+    @DisplayName("생성된 카드가 ACE인지 확인")
     void isAce() {
         Suit suit = Suit.SPADE;
         Denomination denomination = Denomination.ACE;

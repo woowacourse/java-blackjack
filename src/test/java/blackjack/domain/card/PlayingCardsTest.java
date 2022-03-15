@@ -89,7 +89,7 @@ class PlayingCardsTest {
 
     @Test
     @DisplayName("ace 2개 일때 2점 점수 확인")
-    void checkPointsForTwoAcesOverLimit() {
+    void checkPointsForTwoAcesIfBust() {
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.JACK));
@@ -99,7 +99,7 @@ class PlayingCardsTest {
     }
 
     @Test
-    @DisplayName("bust인지 확인")
+    @DisplayName("Bust인지 확인")
     void checkIsBust() {
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.JACK));
@@ -109,7 +109,7 @@ class PlayingCardsTest {
     }
 
     @Test
-    @DisplayName("블랙잭인지 확인")
+    @DisplayName("블랙잭인 경우")
     void checkBlackJack() {
         playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.JACK));
@@ -118,7 +118,7 @@ class PlayingCardsTest {
     }
 
     @Test
-    @DisplayName("점수가 21이짐나 블랙잭이 아닌 경우")
+    @DisplayName("점수가 21점이지만, 블랙잭이 아닌 경우")
     void checkNotBlackJack() {
         playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.THREE));
