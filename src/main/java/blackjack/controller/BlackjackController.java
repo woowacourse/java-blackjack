@@ -51,7 +51,7 @@ public class BlackjackController {
                 .map(Player::getName)
                 .collect(Collectors.toList()));
 
-        OutputView.announcePresentCards(blackjackGame.getGameResponse(players));
+        OutputView.announcePresentCards(blackjackGame.getGameResponse());
     }
 
     private void turnPlayers(BlackjackGame blackjackGame) {
@@ -96,7 +96,7 @@ public class BlackjackController {
     }
 
     private void announceResult(BlackjackGame blackjackGame, Players players) {
-        OutputView.announceResultCards(blackjackGame.getGameResponse(players));
+        OutputView.announceResultCards(blackjackGame.getGameResponse());
         Results results = blackjackGame.calculateResult(players);
         OutputView.announceResultWinner(results);
     }
