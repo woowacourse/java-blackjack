@@ -38,12 +38,12 @@ public abstract class User {
         return this.hand.isWinTo(other.hand);
     }
 
-    public boolean hitOrStay(Deck deck, HitStrategy hitStrategy) {
-        if (hitStrategy.isHit()) {
+    public boolean hitOrStay(Deck deck, HitStrategy strategy) {
+        boolean isHit = strategy.isHit();
+        if (isHit) {
             drawCard(deck);
-            return true;
         }
-        return false;
+        return isHit && !isBust();
     }
 
     public List<Card> getHandCards() {
@@ -59,4 +59,5 @@ public abstract class User {
     }
 
     public abstract List<Card> showInitCards();
+
 }
