@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.PlayingCard;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.PlayingCards;
 
 public interface Player {
 
@@ -23,5 +23,5 @@ public interface Player {
 
     String getName();
 
-    Deck getDeck();
+    PlayingCards getDeck();
 }

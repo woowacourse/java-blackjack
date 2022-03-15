@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.PlayingCards;
 import blackjack.domain.result.Match;
 
 public class Guest extends AbstractPlayer implements Player {
@@ -8,7 +8,7 @@ public class Guest extends AbstractPlayer implements Player {
     public static final int MAX_POINT = 21;
 
     public Guest(String name) {
-        this.playingCards = new Deck();
+        this.playingCards = new PlayingCards();
         this.name = name;
     }
 

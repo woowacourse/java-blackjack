@@ -1,11 +1,11 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.PlayingCard;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.PlayingCards;
 
 public abstract class AbstractPlayer implements Player {
 
-    protected Deck playingCards;
+    protected PlayingCards playingCards;
     protected String name;
 
     @Override
@@ -39,7 +39,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public Deck getDeck() {
+    public PlayingCards getDeck() {
         return playingCards;
     }
 

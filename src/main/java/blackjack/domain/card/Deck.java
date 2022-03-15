@@ -1,55 +1,25 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import blackjack.domain.result.Match;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Deck {
 
-    private static final int ACE_ELEVEN_POSSIBLE = 10;
-    private static final int BLACKJACK_SIZE = 2;
+    private static final List<PlayingCard> PLAYING_CARDS = new ArrayList<>();
 
-    private final Set<PlayingCard> deck = new LinkedHashSet<>();
-
-    public void addCard(PlayingCard playingCard) {
-        deck.add(playingCard);
-    }
-
-    public int sumPoints() {
-        int points = sumCardPoint();
-        boolean aceExist = deck.stream()
-                .anyMatch(PlayingCard::isAce);
-        if (!aceExist) {
-            return points;
+    static {
+        for (Suit suit : Suit.values()) {
+            Arrays.stream(Denomination.values())
+                    .forEach(symbol -> PLAYING_CARDS.add(new PlayingCard(suit, symbol)));
         }
-        return calculateAcePoint(points);
-    }
+     }
 
-    public boolean isBust() {
-        return sumPoints() > Match.MAX_WINNER_POINT;
-    }
+     private Deck() {
+     }
 
-    public boolean sumBlackJack() {
-        return deck.size() == BLACKJACK_SIZE && sumPoints() == Match.MAX_WINNER_POINT;
-    }
-
-    private int calculateAcePoint(int points) {
-        if (points + ACE_ELEVEN_POSSIBLE <= Match.MAX_WINNER_POINT) {
-            return points + ACE_ELEVEN_POSSIBLE;
-        }
-        return points;
-    }
-
-    private int sumCardPoint() {
-        return deck.stream()
-                .mapToInt(PlayingCard::getPoint)
-                .sum();
-    }
-
-    public Set<PlayingCard> getCards() {
-        return Collections.unmodifiableSet(deck);
+    public static List<PlayingCard> getPlayingCards() {
+        return new ArrayList<>(PLAYING_CARDS);
     }
 
     @Override
@@ -57,13 +27,13 @@ public class Deck {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Deck deck1 = (Deck) o;
+        Deck deck = (Deck) o;
 
-        return deck != null ? deck.equals(deck1.deck) : deck1.deck == null;
+        return PLAYING_CARDS != null ? PLAYING_CARDS.equals(deck.PLAYING_CARDS) : deck.PLAYING_CARDS == null;
     }
 
     @Override
     public int hashCode() {
-        return deck != null ? deck.hashCode() : 0;
+        return PLAYING_CARDS != null ? PLAYING_CARDS.hashCode() : 0;
     }
 }

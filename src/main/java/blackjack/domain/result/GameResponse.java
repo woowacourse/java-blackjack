@@ -1,15 +1,15 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.PlayingCards;
 
 public class GameResponse {
 
     private final String name;
-    private final Deck deck;
+    private final PlayingCards playingCards;
 
-    public GameResponse(String name, Deck deck) {
+    public GameResponse(String name, PlayingCards playingCards) {
         this.name = name;
-        this.deck = deck;
+        this.playingCards = playingCards;
     }
 
     public boolean isDealer(String name) {
@@ -20,7 +20,7 @@ public class GameResponse {
         return name;
     }
 
-    public Deck getDeck() {
-        return deck;
+    public PlayingCards getDeck() {
+        return playingCards;
     }
 }
