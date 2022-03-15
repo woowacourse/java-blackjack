@@ -7,40 +7,16 @@ import blackjack.domain.participant.Player;
 
 public enum Judgement {
 
-    BLACKJACK("블랙잭", money -> money.calculateProfit(1.5)) {
-        @Override
-        public Judgement getOpposite() {
-            return LOSE;
-        }
-    },
-    WIN("승", money -> money.calculateProfit(1)) {
-        @Override
-        public Judgement getOpposite() {
-            return LOSE;
-        }
-    },
-    DRAW("무", money -> money.calculateProfit(1)) {
-        @Override
-        public Judgement getOpposite() {
-            return DRAW;
-        }
-    },
-    LOSE("패", money -> money.calculateProfit(-1)) {
-        @Override
-        public Judgement getOpposite() {
-            return WIN;
-        }
-    };
+    BLACKJACK(money -> money.calculateProfit(1.5)),
+    WIN(money -> money.calculateProfit(1)),
+    DRAW(money -> money.calculateProfit(1)),
+    LOSE(money -> money.calculateProfit(-1));
 
-    private final String name;
     private final Function<Money, Profit> profitFunction;
 
-    Judgement(String name, Function<Money, Profit> profitFunction) {
-        this.name = name;
+    Judgement(Function<Money, Profit> profitFunction) {
         this.profitFunction = profitFunction;
     }
-
-    abstract public Judgement getOpposite();
 
     public static Judgement judgePlayer(Player player, Dealer dealer) {
         if (dealer.isBlackJack() || player.isBlackJack()) {
@@ -73,16 +49,11 @@ public enum Judgement {
         }
         if (dealerScore > playerScore) {
             return Judgement.LOSE;
-
         }
         return Judgement.WIN;
     }
 
     public Profit calculateProfit(Money betMoney) {
         return profitFunction.apply(betMoney);
-    }
-
-    public String getName() {
-        return name;
     }
 }
