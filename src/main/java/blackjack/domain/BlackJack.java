@@ -14,8 +14,8 @@ import java.util.List;
 public class BlackJack {
 
     private static final int INIT_DISTRIBUTE_COUNT = 2;
-    public static final int SCORE_LIMIT = 21;
-    public static final String DEALER_NAME = "딜러";
+    private static final int SCORE_LIMIT = 21;
+    private static final String DEALER_NAME = "딜러";
 
     private final Participants participants;
     private final Deck deck;
