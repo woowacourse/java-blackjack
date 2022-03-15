@@ -21,12 +21,16 @@ public class GameResult {
         for (Player player : players) {
             Outcome playerOutcome = Outcome.judge(player, dealer);
             int playerEarnings = calculateEarnings(player, playerOutcome);
-            int dealerEarnings = playerEarnings * (-1);
+            int dealerEarnings = getDealerEarnings(playerEarnings);
             playersEarnings.merge(dealer.getName(), dealerEarnings, Integer::sum);
             playersEarnings.put(player.getName(), playerEarnings);
         }
 
         return new GameResult(playersEarnings);
+    }
+
+    private static int getDealerEarnings(int playerEarnings) {
+        return playerEarnings * (-1);
     }
 
     private static int calculateEarnings(Player player, Outcome outcome) {
