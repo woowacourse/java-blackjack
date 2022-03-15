@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.MatchResult.DRAW;
 import static blackjack.domain.MatchResult.LOSE;
 import static blackjack.domain.MatchResult.WIN;
+import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.FIVE;
 import static blackjack.domain.card.Denomination.FOUR;
@@ -180,4 +181,28 @@ public class ScoreBoardTest {
         );
     }
 
+    @Test
+    @DisplayName("플레이어 한명이 승이고 나머지가 패, 무이면 딜러는 1승 1패 1무 이다")
+    void player_win_other_lose_and_draw_dealer_1_win_1_lose_1_draw() {
+        // given
+        Dealer dealer = createDealerWithDenominations(ACE, SEVEN); // 18
+        Player playerA = createPlayerWithDenominations("user a", NINE, JACK); // 19
+        Player playerB = createPlayerWithDenominations("user b", FIVE, EIGHT); // 13
+        Player playerC = createPlayerWithDenominations("user c", QUEEN, SIX, TWO); // 18
+
+        // when
+        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(playerA, playerB, playerC));
+        Map<Player, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
+
+        // then
+        assertAll(
+                () -> assertThat(dealer.getMatchResultScore(WIN)).isEqualTo(1),
+                () -> assertThat(dealer.getMatchResultScore(LOSE)).isEqualTo(1),
+                () -> assertThat(dealer.getMatchResultScore(DRAW)).isEqualTo(1),
+
+                () -> assertThat(playersMatchResult.get(playerA)).isEqualTo(WIN),
+                () -> assertThat(playersMatchResult.get(playerB)).isEqualTo(LOSE),
+                () -> assertThat(playersMatchResult.get(playerC)).isEqualTo(DRAW)
+        );
+    }
 }
