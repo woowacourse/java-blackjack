@@ -19,7 +19,7 @@ public class Players {
 
     public static Players of(List<String> names) {
         return new Players(names.stream()
-                .map(Player::new)
+                .map(playerName -> new Player(playerName, 0))
                 .collect(toList()));
     }
 

@@ -26,14 +26,14 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("클레이");
+        player = new Player("클레이", 0);
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {"딜러"})
     void invalidNameCreate(String name) {
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("이름 입력 실패 :");
     }
@@ -95,5 +95,11 @@ public class PlayerTest {
         player.receiveCard(new Card(SPADE, KING));
         player.receiveCard(new Card(CLOVER, KING));
         assertThat(player.matchWith(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    void bet() {
+        Player player = new Player("pobi", 10000);
+        assertThat(player.getBettingAmount()).isEqualTo(10000);
     }
 }

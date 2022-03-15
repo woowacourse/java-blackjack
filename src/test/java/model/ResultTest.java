@@ -45,7 +45,7 @@ public class ResultTest {
     }
 
     private void initPlayer(Cards playerCards) {
-        player = new Player("player");
+        player = new Player("player", 0);
         for (Card card : playerCards.getValue()) {
             player.receiveCard(card);
         }

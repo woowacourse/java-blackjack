@@ -4,10 +4,16 @@ import static model.Dealer.DEALER_NAME;
 import static model.card.Cards.BLACK_JACK_SCORE;
 
 public class Player extends Participator {
+    private final Betting betting;
 
-    public Player(String playerName) {
+    private Player(String playerName, Betting betting) {
         super(playerName);
         checkNameIsDealer(playerName);
+        this.betting = betting;
+    }
+
+    public Player(String playerName, long bettingAmount) {
+        this(playerName, new Betting(bettingAmount));
     }
 
     private void checkNameIsDealer(String name) {
@@ -23,5 +29,9 @@ public class Player extends Participator {
 
     public Result matchWith(Dealer dealer) {
         return Result.of(this, dealer);
+    }
+
+    public long getBettingAmount() {
+        return betting.getBettingAmount();
     }
 }
