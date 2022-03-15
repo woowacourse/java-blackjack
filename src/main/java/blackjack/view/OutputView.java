@@ -46,7 +46,7 @@ public class OutputView {
 	}
 
 	private String convertCardToString(Card card) {
-		return card.getCardName() + card.getType().getValue();
+		return card.getCardName() + card.getType().getName();
 	}
 
 	public void displayDealerUnderSevenTeen() {
