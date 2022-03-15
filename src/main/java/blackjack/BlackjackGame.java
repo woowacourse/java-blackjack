@@ -108,6 +108,6 @@ public class BlackjackGame {
         OutputView.printCardResultMessage();
         OutputView.printParticipantCards(new ParticipantResponse(dealer));
         players.forEach(player -> OutputView.printParticipantCards(new ParticipantResponse(player)));
-        OutputView.printWinResult(GameResult.of(dealer, players));
+        OutputView.printGameResult(GameResult.of(dealer, players));
     }
 }
