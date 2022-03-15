@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HoldCards {
@@ -11,14 +9,11 @@ public class HoldCards {
     private final List<Card> cards;
 
     private HoldCards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
-    public static HoldCards init(Card first, Card second) {
-        validateDuplicate(first, second);
-        List<Card> cards = new ArrayList<>();
-        cards.add(first);
-        cards.add(second);
+    public static HoldCards init(List<Card> cards) {
+        validateDuplicate(cards);
         return new HoldCards(cards);
     }
 
@@ -41,8 +36,9 @@ public class HoldCards {
         return cards;
     }
 
-    private static void validateDuplicate(Card first, Card second) {
-        if (first.equals(second)) {
+    private static void validateDuplicate(List<Card> cards) {
+        Set<Card> distinctCards = new HashSet<>(cards);
+        if (distinctCards.size() != cards.size()) {
             throw new IllegalArgumentException("카드가 중복될 수 없습니다.");
         }
     }
