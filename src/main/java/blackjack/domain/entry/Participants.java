@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Players {
+public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Players(Dealer dealer, List<Player> players) {
+    public Participants(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }

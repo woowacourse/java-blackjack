@@ -6,18 +6,18 @@ import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
-import blackjack.domain.entry.Players;
+import blackjack.domain.entry.Participants;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackTable {
     private final Deck deck;
-    private final Players players;
+    private final Participants participants;
 
     public BlackjackTable(List<String> names) {
         this.deck = Deck.of(Card.createDeck());
-        this.players = new Players(createDealer(), toPlayers(names));
+        this.participants = new Participants(createDealer(), toPlayers(names));
     }
 
     public void hit(Participant participant) {
@@ -25,11 +25,11 @@ public class BlackjackTable {
     }
 
     public boolean needMoreCardByDealer() {
-        return players.isHitDealer();
+        return participants.isHitDealer();
     }
 
     public void hitDealer() {
-        players.hitDealer(deck.draw());
+        participants.hitDealer(deck.draw());
     }
 
     public boolean canHit(Participant participant) {
@@ -37,11 +37,11 @@ public class BlackjackTable {
     }
 
     public List<Participant> getParticipants() {
-        return players.getParticipants();
+        return participants.getParticipants();
     }
 
     public Map<PlayerOutcome, List<Player>> countGameResult() {
-        return players.getGameResults();
+        return participants.getGameResults();
     }
 
     private Dealer createDealer() {
