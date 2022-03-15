@@ -89,7 +89,12 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.SPADE),
                 new Card(Number.NINE, Kind.SPADE))));
 
-        assertThat(player.isWinner(19)).isEqualTo(Result.WIN);
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.NINE, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("딜러의 점수가 더 높은 경우 패배 테스트")
@@ -100,7 +105,12 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.SPADE),
                 new Card(Number.NINE, Kind.SPADE))));
 
-        assertThat(player.isWinner(21)).isEqualTo(Result.LOSE);
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.ACE, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이어가 버스트된 경우 패배 테스트")
@@ -108,11 +118,16 @@ class PlayerTest {
     void isWinner_PlayerBusted_isLose() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
+                new Card(Number.EIGHT, Kind.SPADE),
                 new Card(Number.NINE, Kind.SPADE),
-                new Card(Number.NINE, Kind.CLOVER),
-                new Card(Number.NINE, Kind.HEART))));
+                new Card(Number.TEN, Kind.SPADE))));
 
-        assertThat(player.isWinner(19)).isEqualTo(Result.LOSE);
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.NINE, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("딜러가 버스트된 경우 승리 테스트")
@@ -123,7 +138,13 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.SPADE),
                 new Card(Number.NINE, Kind.SPADE))));
 
-        assertThat(player.isWinner(22)).isEqualTo(Result.WIN);
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.JACK, Kind.HEART),
+                new Card(Number.QUEEN, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("둘 다 버스트된 경우 패배 테스트")
@@ -131,11 +152,17 @@ class PlayerTest {
     void isWinner_BothBusted_isLose() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
+                new Card(Number.EIGHT, Kind.SPADE),
                 new Card(Number.NINE, Kind.SPADE),
-                new Card(Number.NINE, Kind.CLOVER),
-                new Card(Number.NINE, Kind.HEART))));
+                new Card(Number.TEN, Kind.SPADE))));
 
-        assertThat(player.isWinner(22)).isEqualTo(Result.LOSE);
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.JACK, Kind.HEART),
+                new Card(Number.QUEEN, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("동일한 점수를 가질 경우 무승부 테스트")
@@ -144,9 +171,14 @@ class PlayerTest {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
                 new Card(Number.ACE, Kind.SPADE),
-                new Card(Number.KING, Kind.CLOVER))));
+                new Card(Number.KING, Kind.SPADE))));
 
-        assertThat(player.isWinner(21)).isEqualTo(Result.DRAW);
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.ACE, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.DRAW);
     }
 
     @DisplayName("동일한 점수를 가지고 버스트된 경우 패배 테스트")
@@ -154,10 +186,16 @@ class PlayerTest {
     void isWinner_SameScoreAndBothBusted_isLose() {
         Player player = Player.of("쿼리치");
         player.receive(new Cards(List.of(
+                new Card(Number.EIGHT, Kind.SPADE),
                 new Card(Number.NINE, Kind.SPADE),
-                new Card(Number.NINE, Kind.CLOVER),
-                new Card(Number.NINE, Kind.HEART))));
+                new Card(Number.TEN, Kind.SPADE))));
 
-        assertThat(player.isWinner(27)).isEqualTo(Result.LOSE);
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.EIGHT, Kind.HEART),
+                new Card(Number.NINE, Kind.HEART),
+                new Card(Number.TEN, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
     }
 }

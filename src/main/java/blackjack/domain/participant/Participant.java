@@ -5,9 +5,6 @@ import java.util.ArrayList;
 
 public abstract class Participant {
 
-    public static final int ACE_ADDITIONAL_NUMBER = 10;
-    public static final int BUST_THRESHOLD = 21;
-
     protected final Cards cards;
     private final Name name;
 
@@ -18,10 +15,16 @@ public abstract class Participant {
 
     public abstract boolean isReceivable();
 
-    public abstract int calculateBestScore();
-
     public void receive(Cards cards) {
         this.cards.concat(cards);
+    }
+
+    public int calculateBestScore() {
+        return cards.getBestPossible();
+    }
+
+    protected boolean isBusted() {
+        return cards.isBusted();
     }
 
     public Name getName() {

@@ -43,9 +43,9 @@ class DealerTest {
         assertThat(dealer.isReceivable()).isFalse();
     }
 
-    @DisplayName("Ace 4장 보유 시 4점 반환")
+    @DisplayName("Ace 4장 보유 시 14점 반환")
     @Test
-    void calculateBestScore_FourAces_Returns4() {
+    void calculateBestScore_FourAces_Returns14() {
         Dealer dealer = new Dealer();
         dealer.receive(new Cards(List.of(
                 new Card(Number.ACE, Kind.SPADE),
@@ -53,28 +53,30 @@ class DealerTest {
                 new Card(Number.ACE, Kind.CLOVER),
                 new Card(Number.ACE, Kind.HEART))));
 
-        assertThat(dealer.calculateBestScore()).isEqualTo(4);
+        assertThat(dealer.calculateBestScore()).isEqualTo(14);
     }
 
-    @DisplayName("21점 이하일 경우 Ace 를 11점으로 판단하여 계산")
+    @DisplayName("Ace 를 11점으로 판단하여 베스트 점수 계산")
     @Test
-    void calculateBestScore_ConsideringAceAsElevenWhenUnder21_Returns19() {
+    void calculateBestScore_ConsideringAceAsEleven_Returns21() {
         Dealer dealer = new Dealer();
         dealer.receive(new Cards(List.of(
                 new Card(Number.ACE, Kind.SPADE),
-                new Card(Number.EIGHT, Kind.HEART))));
+                new Card(Number.KING, Kind.SPADE))));
 
-        assertThat(dealer.calculateBestScore()).isEqualTo(19);
+        assertThat(dealer.calculateBestScore()).isEqualTo(21);
     }
 
-    @DisplayName("21점 초과 시 Ace 를 1점으로 판단하여 계산")
+    @DisplayName("Ace 를 1점으로 판단하여 베스트 점수 계산")
     @Test
-    void calculateBestScore_ConsideringAceAsOneWhenExceeds21_Returns2() {
+    void calculateBestScore_ConsideringAceAsOne_Returns21() {
         Dealer dealer = new Dealer();
         dealer.receive(new Cards(List.of(
                 new Card(Number.ACE, Kind.SPADE),
-                new Card(Number.ACE, Kind.HEART))));
+                new Card(Number.FIVE, Kind.SPADE),
+                new Card(Number.SEVEN, Kind.SPADE),
+                new Card(Number.EIGHT, Kind.SPADE))));
 
-        assertThat(dealer.calculateBestScore()).isEqualTo(2);
+        assertThat(dealer.calculateBestScore()).isEqualTo(21);
     }
 }

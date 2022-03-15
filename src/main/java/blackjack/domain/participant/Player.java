@@ -12,29 +12,16 @@ public class Player extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return calculateBestScore() <= BUST_THRESHOLD;
+        return !cards.isBusted();
     }
 
-    @Override
-    public int calculateBestScore() {
-        return cards.getBestPossible();
-    }
-
-    public Result isWinner(int score) {
-        if (!isBusted(calculateBestScore()) && (isBusted(score) || isCloserToBestScore(score))) {
-            return Result.WIN;
+    public Result isWinner(Dealer dealer) {
+        if (isBusted() || dealer.hasHigherScore(this)) {
+            return Result.LOSE;
         }
-        if (!isBusted(calculateBestScore()) && calculateBestScore() == score) {
+        if (dealer.hasSameScore(this)) {
             return Result.DRAW;
         }
-        return Result.LOSE;
-    }
-
-    private boolean isBusted(int score) {
-        return score > BUST_THRESHOLD;
-    }
-
-    private boolean isCloserToBestScore(int score) {
-        return !isBusted(calculateBestScore()) && calculateBestScore() > score;
+        return Result.WIN;
     }
 }

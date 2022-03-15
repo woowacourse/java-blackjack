@@ -14,8 +14,11 @@ public class Dealer extends Participant {
         return calculateBestScore() < MAX_RECEIVABLE_SCORE;
     }
 
-    @Override
-    public int calculateBestScore() {
-        return cards.getHighestSum();
+    public boolean hasHigherScore(Player player) {
+        return calculateBestScore() > player.calculateBestScore() && !isBusted();
+    }
+
+    public boolean hasSameScore(Player player) {
+        return calculateBestScore() == player.calculateBestScore();
     }
 }

@@ -1,8 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.participant.Participant.ACE_ADDITIONAL_NUMBER;
-import static blackjack.domain.participant.Participant.BUST_THRESHOLD;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -10,13 +7,15 @@ import java.util.Set;
 
 public class Cards {
 
+    private static final int ACE_ADDITIONAL_NUMBER = 10;
+    private static final int BUST_THRESHOLD = 21;
     private static final String DUPLICATE_EXCEPTION_MESSAGE = "카드 패에 중복된 카드가 존재할 수 없습니다.";
 
-    private final List<Card> cardHand;
+    private final List<Card> cards;
 
     public Cards(List<Card> cardHand) {
         validateDuplicate(cardHand);
-        this.cardHand = new ArrayList<>(cardHand);
+        this.cards = new ArrayList<>(cardHand);
     }
 
     private void validateDuplicate(List<Card> cards) {
@@ -27,45 +26,34 @@ public class Cards {
     }
 
     public void concat(Cards cards) {
-        cardHand.addAll(cards.getCardHand());
-        new Cards(cardHand);
+        this.cards.addAll(cards.getCards());
+        new Cards(this.cards);
     }
 
     public int getBestPossible() {
-        int lowestSum = getLowestSum();
-        for (Card card : cardHand) {
-            if (card.isAce() && lowestSum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
-                lowestSum += ACE_ADDITIONAL_NUMBER;
+        int sum = getLowestSum();
+
+        for (Card card : cards) {
+            if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
+                sum += ACE_ADDITIONAL_NUMBER;
             }
         }
-        return lowestSum;
+
+        return sum;
     }
 
     private int getLowestSum() {
-        return cardHand.stream()
+        return cards.stream()
                 .map(Card::getNumber)
                 .map(Number::getScore)
                 .reduce(0, Integer::sum);
     }
 
-    public int getHighestSum() {
-        int sum = cardHand.stream()
-                .map(Card::getNumber)
-                .map(number -> {
-                    if (number == Number.ACE) {
-                        return number.getScore() + ACE_ADDITIONAL_NUMBER;
-                    }
-                    return number.getScore();
-                })
-                .reduce(0, Integer::sum);
-
-        if (sum > BUST_THRESHOLD) {
-            return getLowestSum();
-        }
-        return sum;
+    public boolean isBusted() {
+        return getBestPossible() > BUST_THRESHOLD;
     }
 
-    public List<Card> getCardHand() {
-        return cardHand;
+    public List<Card> getCards() {
+        return cards;
     }
 }

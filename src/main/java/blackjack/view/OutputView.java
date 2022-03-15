@@ -29,7 +29,7 @@ public class OutputView {
     }
 
     private static void printInitDealerCardHandStatus(Dealer dealer) {
-        System.out.println(dealer.getName().getValue() + " 카드: " + dealer.getCards().getCardHand().get(0));
+        System.out.println(dealer.getName().getValue() + " 카드: " + dealer.getCards().getCards().get(0));
     }
 
     public static void printCardHandStatus(Participant participant) {
@@ -39,7 +39,7 @@ public class OutputView {
     public static String showCardHandStatus(Participant participant) {
         return String.format("%s 카드: %s",
                 participant.getName().getValue(),
-                participant.getCards().getCardHand().stream()
+                participant.getCards().getCards().stream()
                         .map(Card::toString)
                         .collect(Collectors.joining(", ")));
     }
