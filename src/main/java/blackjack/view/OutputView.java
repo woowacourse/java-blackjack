@@ -69,6 +69,6 @@ public class OutputView {
     }
 
     private static String toCardName(Card card) {
-        return card.getNumber().getName() + card.getSuit().getName();
+        return card.getDenomination().getName() + card.getSuit().getName();
     }
 }

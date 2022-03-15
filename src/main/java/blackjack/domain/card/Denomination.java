@@ -4,7 +4,7 @@ import java.util.List;
 
 import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
-public enum Number {
+public enum Denomination {
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -24,28 +24,28 @@ public enum Number {
     private final int value;
     private final String name;
 
-    Number(int value, String name) {
+    Denomination(int value, String name) {
         this.value = value;
         this.name = name;
     }
 
-    public static int sum(List<Number> numbers) {
-        return calculateBestNumber(sumTotal(numbers), countAce(numbers));
+    public static int sum(List<Denomination> denominations) {
+        return calculateBestNumber(sumTotal(denominations), countAce(denominations));
     }
 
     public String getName() {
         return name;
     }
 
-    private static int sumTotal(List<Number> numbers) {
-        return numbers.stream()
-                .mapToInt(number -> number.value)
+    private static int sumTotal(List<Denomination> denominations) {
+        return denominations.stream()
+                .mapToInt(denomination -> denomination.value)
                 .sum();
     }
 
-    private static long countAce(List<Number> numbers) {
-        return numbers.stream()
-                .filter(number -> number == ACE)
+    private static long countAce(List<Denomination> denominations) {
+        return denominations.stream()
+                .filter(denomination -> denomination == ACE)
                 .count();
     }
 
