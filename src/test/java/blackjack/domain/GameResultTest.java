@@ -12,80 +12,82 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
 
-    Dealer dealer;
-    Gambler gambler;
+    Dealer dealer = new Dealer();
+    Gambler gambler = new Gambler("돌범");
     CardDeck cardDeck;
     PlayingCard card1;
     PlayingCard card2;
 
-    @BeforeEach
-    void setUp() {
-        //given
-        dealer = new Dealer();
+    @DisplayName("버스트가 없는 경우에 한하여")
+    @Nested
+    class GameResultWithoutBurstTest {
+        @BeforeEach
+        void setUp() {
+            //given
+            card1 = new PlayingCard(Suit.CLUBS, Denomination.FIVE);
+            card2 = new PlayingCard(Suit.CLUBS, Denomination.SIX);
+            Deque<PlayingCard> rawCardDeck = new ArrayDeque<>();
+            rawCardDeck.push(card1);
+            rawCardDeck.push(card2);
+            cardDeck = new CardDeck(() -> rawCardDeck);
+        }
 
-        gambler = new Gambler("돌범");
+        @DisplayName("카드 점수에 따라 승에 해당하는 객체를 반환하는지 확인한다.")
+        @Test
+        void win() {
+            //given
+            cardDeck.drawTo(dealer); // six to dealer
+            cardDeck.drawTo(gambler); // five to gambler
 
-        card1 = new PlayingCard(Suit.CLUBS, Denomination.FIVE);
-        card2 = new PlayingCard(Suit.CLUBS, Denomination.SIX);
-        Deque<PlayingCard> rawCardDeck = new ArrayDeque<>();
-        rawCardDeck.push(card1);
-        rawCardDeck.push(card2);
-        cardDeck = new CardDeck(() -> rawCardDeck);
+            //when
+            final GameResult result = GameResult.of(dealer, gambler);
 
+            //then
+            assertThat(result).isEqualTo(GameResult.WIN);
+        }
+
+        @DisplayName("카드 점수에 따라 패에 해당하는 객체를 반환하는지 확인한다.")
+        @Test
+        void lose() {
+            //given
+            cardDeck.drawTo(gambler); // six to gambler
+            cardDeck.drawTo(dealer); // five to dealer
+
+            //when
+            final GameResult result = GameResult.of(dealer, gambler);
+
+            //then
+            assertThat(result).isEqualTo(GameResult.LOSE);
+        }
+
+        @DisplayName("카드 점수에 따라 무승부에 해당하는 객체를 반환하는지 확인한다.")
+        @Test
+        void draw() {
+            //given
+            PlayingCard card3 = new PlayingCard(Suit.CLUBS, Denomination.SEVEN);
+            PlayingCard card4 = new PlayingCard(Suit.HEARTS, Denomination.SEVEN);
+            Deque<PlayingCard> rawCardDeck = new ArrayDeque<>();
+            rawCardDeck.push(card3);
+            rawCardDeck.push(card4);
+            cardDeck = new CardDeck(() -> rawCardDeck);
+
+            cardDeck.drawTo(gambler);
+            cardDeck.drawTo(dealer);
+
+            //when
+            final GameResult result = GameResult.of(dealer, gambler);
+
+            //then
+            assertThat(result).isEqualTo(GameResult.DRAW);
+        }
     }
 
-    @DisplayName("카드 점수에 따라 승에 해당하는 객체를 반환하는지 확인한다.")
-    @Test
-    void win() {
-        //given
-        cardDeck.drawTo(dealer); // six to dealer
-        cardDeck.drawTo(gambler); // five to gambler
 
-        //when
-        final GameResult result = GameResult.of(dealer, gambler);
-
-        //then
-        assertThat(result).isEqualTo(GameResult.WIN);
-    }
-
-    @DisplayName("카드 점수에 따라 패에 해당하는 객체를 반환하는지 확인한다.")
-    @Test
-    void lose() {
-        //given
-        cardDeck.drawTo(gambler); // six to gambler
-        cardDeck.drawTo(dealer); // five to dealer
-
-        //when
-        final GameResult result = GameResult.of(dealer, gambler);
-
-        //then
-        assertThat(result).isEqualTo(GameResult.LOSE);
-    }
-
-    @DisplayName("카드 점수에 따라 무승부에 해당하는 객체를 반환하는지 확인한다.")
-    @Test
-    void draw() {
-        //given
-        PlayingCard card3 = new PlayingCard(Suit.CLUBS, Denomination.SEVEN);
-        PlayingCard card4 = new PlayingCard(Suit.HEARTS, Denomination.SEVEN);
-        Deque<PlayingCard> rawCardDeck = new ArrayDeque<>();
-        rawCardDeck.push(card3);
-        rawCardDeck.push(card4);
-        cardDeck = new CardDeck(() -> rawCardDeck);
-
-        cardDeck.drawTo(gambler);
-        cardDeck.drawTo(dealer);
-
-        //when
-        final GameResult result = GameResult.of(dealer, gambler);
-
-        //then
-        assertThat(result).isEqualTo(GameResult.DRAW);
-    }
 
     @DisplayName("딜러가 버스트인 경우, 패배 결과 객체를 반환하는지 확인한다.")
     @Test
@@ -140,7 +142,8 @@ class GameResultTest {
         //then
         assertThat(result).isEqualTo(GameResult.WIN);
     }
-//
+
+    //
     @DisplayName("둘다 버스트인 경우, 무승부 결과 객체를 반환하는지 확인한다.")
     @Test
     void burst_draw() {
