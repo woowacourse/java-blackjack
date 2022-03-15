@@ -6,21 +6,21 @@ public class Money {
 
     private final long value;
 
-    private Money(long value) {
+    private Money(final long value) {
         this.value = value;
     }
 
-    public static Money from(long value) {
+    public static Money from(final long value) {
         return new Money(value);
     }
 
-    public static Money from(String input) {
+    public static Money from(final String input) {
         checkNumber(input);
         checkPositive(input);
         return new Money(Long.parseLong(input));
     }
 
-    private static void checkNumber(String input) {
+    private static void checkNumber(final String input) {
         try {
             Long.parseLong(input);
         } catch (NumberFormatException exception) {
@@ -28,10 +28,14 @@ public class Money {
         }
     }
 
-    private static void checkPositive(String input) {
+    private static void checkPositive(final String input) {
         if (Long.parseLong(input) <= 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 양수여야 합니다.");
         }
+    }
+
+    Money geOpposite() {
+        return new Money(-value);
     }
 
     public long getValue() {

@@ -1,6 +1,8 @@
 package blackjack.controller;
 
+import blackjack.domain.BettingMachine;
 import blackjack.domain.BlackjackMachine;
+import blackjack.domain.Money;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
@@ -19,6 +21,9 @@ public class BlackjackController {
         final Dealer dealer = new Dealer();
         final Participants participants = generateParticipants();
 
+        final BettingMachine bettingMachine = new BettingMachine();
+        betMoneys(participants, bettingMachine);
+
         giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
         askAndGiveCardsToParticipants(blackJackMachine, participants);
         giveCardsToDealer(blackJackMachine, dealer);
@@ -34,6 +39,22 @@ public class BlackjackController {
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
             return generateParticipants();
+        }
+    }
+
+    private void betMoneys(final Participants participants, final BettingMachine bettingMachine) {
+        for (Participant participant : participants) {
+            final Money money = getMoney(participant);
+            bettingMachine.betMoney(participant, money);
+        }
+    }
+
+    private Money getMoney(final Participant participant) {
+        try {
+            return Money.from(InputView.getMoney(participant));
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            return getMoney(participant);
         }
     }
 

@@ -14,7 +14,7 @@ public class MoneyTest {
     @ValueSource(ints = {-10_000, 0, 10_000})
     @DisplayName("원하는 돈을 생성한다.")
     void generateMoney(int value) {
-        final Money money = Money.from(value);
+        Money money = Money.from(value);
 
         assertThat(money.getValue()).isEqualTo(value);
     }
@@ -23,7 +23,7 @@ public class MoneyTest {
     @CsvSource({"10000, 10_000", "20000, 20_000", "50000, 50_000"})
     @DisplayName("입력값을 받아 돈을 생성한다.")
     void generateMoneyByString(String input, int value) {
-        final Money money = Money.from(input);
+        Money money = Money.from(input);
 
         assertThat(money.getValue()).isEqualTo(value);
     }
@@ -35,5 +35,12 @@ public class MoneyTest {
         assertThatThrownBy(() -> Money.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 배팅 금액은 양수여야 합니다.");
+    }
+
+    @ParameterizedTest(name = "[{index}] {0}원 -> {1}원")
+    @CsvSource({"10_000, -10_000", "-20_000, 20_000", "0, 0"})
+    @DisplayName("반대 값을 반환한다.")
+    void getOpposite(int value, int expected) {
+        assertThat(Money.from(value).geOpposite()).isEqualTo(Money.from(expected));
     }
 }

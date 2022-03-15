@@ -33,7 +33,7 @@ public class OutputView {
         for (Participant participant : participants) {
             names.add(participant.getName());
         }
-        System.out.println("\n" + dealer.getName() + "와 " + String.join(CARD_DELIMITER, names) + "에게 2장의 나누었습니다.");
+        System.out.println("\n" + dealer.getName() + "와 " + String.join(CARD_DELIMITER, names) + "에게 2장을 나누었습니다.");
     }
 
     private static void printDealerCard(final Dealer dealer) {

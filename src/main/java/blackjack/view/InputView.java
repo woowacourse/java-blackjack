@@ -28,6 +28,11 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public static String getMoney(final Participant participant) {
+        System.out.printf("%n%s의 배팅 금액은?%n", participant.getName());
+        return scanner.nextLine();
+    }
+
     public static Choice getChoice(Participant participant) {
         System.out.println(participant.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return Choice.from(scanner.nextLine());
