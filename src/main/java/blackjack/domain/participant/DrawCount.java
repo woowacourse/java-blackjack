@@ -23,7 +23,7 @@ public enum DrawCount {
         return Arrays.stream(values())
             .filter(it -> it.value == value)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("최대 뽑는 횟수 초과"));
+            .orElseThrow(() -> new IllegalArgumentException("최대 뽑는 횟수 초과입니다."));
     }
 
     public boolean isDraw() {

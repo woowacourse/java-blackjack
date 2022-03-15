@@ -42,6 +42,6 @@ public enum Record {
         return Arrays.stream(Record.values())
             .filter(record -> record.name.equals(opposite))
             .findFirst()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalArgumentException("옳지 않은 결과 입력입니다."));
     }
 }
