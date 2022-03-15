@@ -18,14 +18,14 @@ public class BlackjackController {
         final BlackjackMachine blackJackMachine = new BlackjackMachine(new CardDeck());
         final Dealer dealer = new Dealer();
         final Participants participants = generateParticipants();
-        final MoneyResult bettingMachine = betMoneys(participants);
 
+        betParticipantsMoney(participants);
         giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
         askAndGiveCardsToParticipants(blackJackMachine, participants);
         giveCardsToDealer(blackJackMachine, dealer);
 
         calculateTotalScore(dealer, participants);
-        calculateTotalMoney(dealer, participants, bettingMachine);
+        calculateTotalMoney(dealer, participants);
     }
 
     private Participants generateParticipants() {
@@ -38,12 +38,10 @@ public class BlackjackController {
         }
     }
 
-    private MoneyResult betMoneys(final Participants participants) {
-        final MoneyResult bettingMachine = new MoneyResult();
+    private void betParticipantsMoney(final Participants participants) {
         for (Participant participant : participants) {
             participant.betMoney(getMoney(participant.getName()));
         }
-        return bettingMachine;
     }
 
     private Money getMoney(final String name) {
@@ -106,10 +104,10 @@ public class BlackjackController {
         }
     }
 
-    private void calculateTotalMoney(final Dealer dealer, final Participants participants,
-                                     final MoneyResult bettingMachine) {
-        bettingMachine.calculateParticipantMoney(dealer, participants);
-        OutputView.printTotalMoney(bettingMachine.getMoneys(),
-                dealer.getName(), bettingMachine.calculateDealerMoney());
+    private void calculateTotalMoney(final Dealer dealer, final Participants participants) {
+        final MoneyResult moneyResult = new MoneyResult();
+        moneyResult.calculateParticipantMoney(dealer, participants);
+        OutputView.printTotalMoney(moneyResult.getMoneys(),
+                dealer.getName(), moneyResult.calculateDealerMoney());
     }
 }
