@@ -10,6 +10,7 @@ import model.Result;
 
 public class Player extends Participator {
     private Betting betting;
+    private boolean isMatched = false;
 
     private Player(String playerName, Betting betting) {
         super(playerName);
@@ -33,6 +34,7 @@ public class Player extends Participator {
     }
 
     public Result matchWith(Dealer dealer) {
+        isMatched = true;
         return Result.of(this, dealer);
     }
 
@@ -44,6 +46,10 @@ public class Player extends Participator {
     public void winBet(Dealer dealer, BettingCalculateStrategy strategy) {
         dealer.subtractProfit(betting.getBettingAmount(strategy));
         this.addProfit(betting.getBettingAmount(strategy));
+    }
+
+    public boolean isMatched() {
+        return isMatched;
     }
 
     public long getBettingAmount() {

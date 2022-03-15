@@ -38,4 +38,9 @@ public class InputView {
             throw new IllegalArgumentException("Y 또는 N을 입력해주세요.");
         }
     }
+
+    public static long inputBetting(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        return Long.parseLong(SCANNER.nextLine());
+    }
 }

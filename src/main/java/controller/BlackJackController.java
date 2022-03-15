@@ -4,6 +4,7 @@ import static model.participator.Dealer.DEALER_NAME;
 
 import dto.AllParticipatorsDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -43,7 +44,10 @@ public class BlackJackController {
 
     private void initGame() {
         List<String> names = InputView.inputPlayerNames();
-        AllParticipatorsDto allParticipatorsDto = service.initGame(names);
+        List<Long> bettingAmounts = names.stream()
+                .map(InputView::inputBetting)
+                .collect(Collectors.toList());
+        AllParticipatorsDto allParticipatorsDto = service.initGame(names, bettingAmounts);
         OutputView.printInit(allParticipatorsDto);
     }
 

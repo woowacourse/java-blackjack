@@ -31,15 +31,15 @@ public class BlackJackService {
     private Players players;
     private CardDeck cardDeck;
 
-    public AllParticipatorsDto initGame(final List<String> names) {
-        initParticipatorsAndCardDeck(names);
+    public AllParticipatorsDto initGame(final List<String> names, final List<Long> bettingAmounts) {
+        initParticipatorsAndCardDeck(names, bettingAmounts);
         drawFirstTurn();
         return new AllParticipatorsDto(getPlayersDto(), toParticipatorDto(dealer));
     }
 
-    private void initParticipatorsAndCardDeck(List<String> names) {
+    private void initParticipatorsAndCardDeck(List<String> names, List<Long> bettingAmounts) {
         cardDeck = new CardDeck();
-        players = Players.of(names);
+        players = Players.of(names, bettingAmounts);
         dealer = new Dealer();
     }
 
