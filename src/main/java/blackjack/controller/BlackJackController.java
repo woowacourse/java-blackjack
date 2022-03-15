@@ -6,11 +6,13 @@ import blackjack.domain.BlackJack;
 import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
+import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -26,7 +28,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        BlackJack blackJack = BlackJack.from(getPlayerNames(), new ShuffledDeckGenerateStrategy());
+        BlackJack blackJack = BlackJack.from(getPlayerInfo(), new ShuffledDeckGenerateStrategy());
 
         blackJack.setInitCardsPerPlayer();
 
@@ -39,13 +41,44 @@ public class BlackJackController {
         printFinalResult(blackJack.getUsers());
     }
 
+    private Map<String, BettingMoney> getPlayerInfo() {
+        List<String> playerNames = getPlayerNames();
+
+        return getBettingMoney(playerNames);
+    }
+
     private List<String> getPlayerNames() {
         try {
             return inputView.inputPlayerNames();
-        }catch(IllegalArgumentException e) {
+        } catch(IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
             return getPlayerNames();
+        }
+    }
+
+    private Map<String, BettingMoney> getBettingMoney(List<String> playerNames) {
+        Map<String, BettingMoney> playerInfo = new HashMap<>();
+
+        for (String playerName : playerNames) {
+
+            BettingMoney bettingMoney = createBettingMoney(playerName);
+
+            playerInfo.put(playerName, bettingMoney);
+        }
+
+        return playerInfo;
+    }
+
+    private BettingMoney createBettingMoney(String playerName) {
+        try {
+            int money = inputView.inputBettingMoney(playerName);
+
+            return new BettingMoney(money);
+        } catch(IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+
+            return createBettingMoney(playerName);
         }
     }
 
