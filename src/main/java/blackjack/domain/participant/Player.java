@@ -34,7 +34,6 @@ public class Player extends AbstractParticipant {
         return super.calculateScore() > Cards.BLACKJACK_TARGET_NUMBER;
     }
 
-
     public GameOutcome fight(final Dealer dealer) {
         validateFightGame(dealer);
         return GameOutcome.calculateOutcome(this, dealer);

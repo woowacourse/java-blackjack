@@ -89,7 +89,7 @@ public abstract class AbstractParticipant implements Participant {
 
     @Override
     public List<Card> cards() {
-        return List.copyOf(cards.cards());
+        return cards.cards();
     }
 
     @Override
