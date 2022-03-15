@@ -12,7 +12,6 @@ public class CardFactory {
         for (CardPattern pattern : CardPattern.values()) {
             addAllNumberOf(pattern);
         }
-        System.out.println(cachingCard.size());
     }
 
     private static void addAllNumberOf(CardPattern pattern) {
