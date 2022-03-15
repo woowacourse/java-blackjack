@@ -44,17 +44,22 @@ public class GameController {
     }
 
     private void printInitialStatus(Game game) {
+        List<Participant> participants = getParticipants(game);
+
+        List<Status> statuses = participants.stream()
+                .map(Status::initialOf)
+                .collect(toList());
+        OutputView.printInitialStatus(statuses);
+    }
+
+    private List<Participant> getParticipants(Game game) {
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayersToList();
 
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players);
-
-        List<Status> statuses = participants.stream()
-                .map(Status::initialOf)
-                .collect(toList());
-        OutputView.printInitialStatus(statuses);
+        return participants;
     }
 
     private void executePlayerTurn(Game game) {
@@ -83,12 +88,7 @@ public class GameController {
     }
 
     private void printTotalScore(Game game) {
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayersToList();
-
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players);
+        List<Participant> participants = getParticipants(game);
 
         List<Status> statuses = participants.stream()
                 .map(Status::of)

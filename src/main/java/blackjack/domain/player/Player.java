@@ -36,8 +36,6 @@ public class Player extends Participant{
         stay = true;
     }
 
-
-
     public Outcome compareScoreWith(Dealer dealer) {
         if (dealer.isBust()) {
             return Outcome.WIN;
