@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.participant.Player;
+import blackjack.view.dto.ReceiveDecision;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -15,8 +16,8 @@ public class InputView {
         return Arrays.asList(scanner.nextLine().split(DELIMITER));
     }
 
-    public static boolean requestDecision(Player player) {
+    public static String requestDecision(Player player) {
         System.out.println(player.getName().getValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine().equals("y");
+        return scanner.nextLine();
     }
 }

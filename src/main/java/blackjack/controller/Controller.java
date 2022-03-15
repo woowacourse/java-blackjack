@@ -6,6 +6,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.ReceiveDecision;
 
 public class Controller {
 
@@ -55,6 +56,6 @@ public class Controller {
     }
 
     private boolean isPlayable(Player player) {
-        return player.isReceivable() && InputView.requestDecision(player);
+        return player.isReceivable() && ReceiveDecision.wantMore(InputView.requestDecision(player));
     }
 }
