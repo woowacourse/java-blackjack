@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import model.card.CardDeck;
 import model.participator.Dealer;
+import model.participator.Participator;
 import model.participator.Player;
 
 public class Players {
@@ -21,7 +22,7 @@ public class Players {
 
     public static Players of(List<String> names) {
         return new Players(names.stream()
-                .map(playerName -> new Player(playerName, 0))
+                .map(playerName -> new Player(playerName, 1))
                 .collect(toList()));
     }
 
@@ -52,7 +53,7 @@ public class Players {
 
     public Map<String, Result> matchWith(Dealer dealer) {
         return players.stream()
-                .collect(toMap(player -> player.getPlayerName(), player -> player.matchWith(dealer)));
+                .collect(toMap(Participator::getPlayerName, player -> player.matchWith(dealer)));
     }
 
     public List<Player> getPlayers() {

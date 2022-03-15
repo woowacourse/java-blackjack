@@ -32,7 +32,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("클레이", 0);
+        player = new Player("클레이", 1);
         thousandBettedPlayer = new Player("베팅한 플레이어", 1000);
         dealer = new Dealer();
     }
@@ -41,7 +41,7 @@ public class PlayerTest {
     @NullAndEmptySource
     @ValueSource(strings = {"딜러"})
     void invalidNameCreate(String name) {
-        assertThatThrownBy(() -> new Player(name, 0))
+        assertThatThrownBy(() -> new Player(name, 1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("이름 입력 실패 :");
     }
