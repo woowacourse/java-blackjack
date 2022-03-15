@@ -8,8 +8,6 @@ public class PlayingCards {
 
     private static final List<PlayingCard> PLAYING_CARDS = new ArrayList<>();
 
-    private final PlayingCardPickMachine playingCardPickMachine;
-
     static {
         for (Suit suit : Suit.values()) {
             Arrays.stream(Denomination.values())
@@ -17,12 +15,11 @@ public class PlayingCards {
         }
      }
 
-    public PlayingCards(PlayingCardPickMachine playingCardPickMachine) {
-        this.playingCardPickMachine = playingCardPickMachine;
-    }
+     private PlayingCards() {
+     }
 
-    public PlayingCard assignCard() {
-        return PLAYING_CARDS.get(playingCardPickMachine.assignIndex());
+    public static List<PlayingCard> getPlayingCards() {
+        return new ArrayList<>(PLAYING_CARDS);
     }
 
     @Override

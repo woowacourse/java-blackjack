@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.*;
-import blackjack.domain.card.PlayingPlayingCardShuffleMachine;
-import blackjack.domain.card.PlayingCards;
+import blackjack.domain.card.PlayingCardShuffleMachine;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -18,9 +17,11 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
 
+    private final PlayingCardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
+
     public void playGame() {
-        BlackjackGame blackjackGame = new BlackjackGame(new PlayingCards(new PlayingPlayingCardShuffleMachine()));
-        blackjackGame.initGames(receivePlayerNames());
+        BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.initGames(receivePlayerNames(), playingCardShuffleMachine);
 
         Players players = blackjackGame.getBlackjackPlayers();
         announceStartGame(players);
@@ -59,7 +60,7 @@ public class BlackjackController {
 
     private void hasMoreCard(BlackjackGame blackjackGame) {
         while (blackjackGame.isTurnGuest() && receiveForGetCard(blackjackGame.getTurnPlayer().getName())) {
-            blackjackGame.addCard(blackjackGame.getTurnPlayer());
+            blackjackGame.addCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
             announcePresentCard(blackjackGame.getTurnPlayer());
         }
         blackjackGame.nextTurn();
@@ -78,7 +79,7 @@ public class BlackjackController {
     }
 
     private void turnDealer(BlackjackGame blackjackGame) {
-        if (blackjackGame.turnDealer()) {
+        if (blackjackGame.turnDealer(playingCardShuffleMachine)) {
             OutputView.announceGetMoreCard(Dealer.MAX_POINT);
             return;
         }

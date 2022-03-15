@@ -2,6 +2,9 @@ package blackjack.domain;
 
 import java.util.List;
 
+import blackjack.domain.card.CardShuffleMachine;
+import blackjack.domain.card.PlayingCard;
+import blackjack.domain.card.PlayingCardShuffleMachine;
 import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
@@ -11,16 +14,16 @@ import blackjack.domain.result.Results;
 
 public class BlackjackGame {
 
-    private final PlayingCards playingCards;
+    private final List<PlayingCard> playingCards;
     private Players blackjackPlayers;
 
-    public BlackjackGame(PlayingCards playingCards) {
-        this.playingCards = playingCards;
+    public BlackjackGame() {
+        this.playingCards = PlayingCards.getPlayingCards();
     }
 
-    public void initGames(List<String> playerNames) {
+    public void initGames(List<String> playerNames, PlayingCardShuffleMachine playingCardShuffleMachine) {
         initPlayers(playerNames);
-        initCards();
+        initCards(playingCardShuffleMachine);
     }
 
     private void initPlayers(List<String> playerNames) {
@@ -31,10 +34,10 @@ public class BlackjackGame {
         }
     }
 
-    private void initCards() {
+    private void initCards(PlayingCardShuffleMachine playingCardShuffleMachine) {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
-            blackjackPlayer.addCard(playingCards.assignCard());
-            blackjackPlayer.addCard(playingCards.assignCard());
+            blackjackPlayer.addCard(playingCardShuffleMachine.assignCard(playingCards));
+            blackjackPlayer.addCard(playingCardShuffleMachine.assignCard(playingCards));
         }
     }
 
@@ -58,17 +61,17 @@ public class BlackjackGame {
         return !player.isOverMoreCardLimit();
     }
 
-    public boolean turnDealer() {
+    public boolean turnDealer(CardShuffleMachine playingCardShuffleMachine) {
         Player dealer = blackjackPlayers.getDealer();
         if (!dealer.isOverMoreCardLimit()) {
-            addCard(dealer);
+            addCard(dealer, playingCardShuffleMachine);
             return true;
         }
         return false;
     }
 
-    public void addCard(Player player) {
-        player.addCard(playingCards.assignCard());
+    public void addCard(Player player, CardShuffleMachine playingCardShuffleMachine) {
+        player.addCard(playingCardShuffleMachine.assignCard(playingCards));
     }
 
     public Results calculateResult(Players players) {

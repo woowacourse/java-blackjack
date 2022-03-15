@@ -4,27 +4,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayingCardsTest {
 
-    private PlayingCards playingCards;
+    private List<PlayingCard> playingCards;
 
     @BeforeEach
     public void setUp() {
-        playingCards = new PlayingCards(new AlwaysAscNumberMachinePlaying());
-    }
-    @Test
-    @DisplayName("Cards 객체 생성 확인")
-    public void createCards() {
-        assertThat(playingCards).isInstanceOf(PlayingCards.class);
+        playingCards = PlayingCards.getPlayingCards();
     }
 
     @Test
     @DisplayName("Cards 반환 확인")
     public void checkCardReturn() {
-        PlayingCard playingCard = playingCards.assignCard();
-
-        assertThat(playingCard.getRank()).isEqualTo(Denomination.ACE);
+        assertThat(playingCards.size()).isEqualTo(52);
     }
 }

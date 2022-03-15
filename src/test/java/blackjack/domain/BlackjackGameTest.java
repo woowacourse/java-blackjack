@@ -13,15 +13,20 @@ import blackjack.domain.result.Match;
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.Results;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackGameTest {
 
+    BlackjackGame blackjackGame;
     Player guest;
     Player dealer;
 
     @BeforeEach
     void setUp() {
+        blackjackGame = new BlackjackGame();
         guest = new Guest("haha");
         dealer = new Dealer();
     }
@@ -38,7 +43,6 @@ class BlackjackGameTest {
         dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.TEN));
         players.addPlayer(dealer);
 
-        BlackjackGame blackjackGame = new BlackjackGame(new PlayingCards(new PlayingPlayingCardShuffleMachine()));
         Results results = blackjackGame.calculateResult(players);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
@@ -59,11 +63,24 @@ class BlackjackGameTest {
         dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.SEVEN));
         players.addPlayer(dealer);
 
-        BlackjackGame blackjackGame = new BlackjackGame(new PlayingCards(new PlayingPlayingCardShuffleMachine()));
         Results results = blackjackGame.calculateResult(players);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
 
         assertThat(guestResult.getMatch().get(Match.BLACKJACK)).isEqualTo(dealerResult.getMatch().get(Match.LOSE));
+    }
+
+    @Test
+    @DisplayName("카드 뽑기 확인")
+    void pickCard() {
+        PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
+        blackjackGame.addCard(guest, playingCardFixMachine);
+        blackjackGame.addCard(guest, playingCardFixMachine);
+
+        Set<PlayingCard> cards = new LinkedHashSet<>();
+        cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
+        cards.add(new PlayingCard(Suit.SPADE, Denomination.TWO));
+
+        assertThat(guest.getDeck().getCards()).isEqualTo(cards);
     }
 }
