@@ -3,19 +3,18 @@ package blackjack.domain.deck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
 class DeckTest {
 
     @Test
-    @DisplayName("덱에 카드 수보다 더 많이 뽑을 경우")
+    @DisplayName("덱 카드가 모두 소진된 상황에서 뽑기를 시도할 경우 뽑을 수 없다는 예외 처리 확인")
     void drawTest() {
-        Deck deck = new Deck(Deck.initCards());
+        Deck deck = Deck.create();
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
@@ -28,9 +27,9 @@ class DeckTest {
     @Test
     @DisplayName("처음 두장 뽑는지 확인")
     void drawStartTest() {
-        Deck deck = new Deck(Deck.initCards());
-        List<Card> cards = deck.drawStartCards();
+        Deck deck = Deck.create();
+        Cards cards = deck.drawStartingCards();
 
-        assertThat(cards.size()).isEqualTo(2);
+        assertThat(cards.getCards()).hasSize(2);
     }
 }
