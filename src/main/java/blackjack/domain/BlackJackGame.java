@@ -4,10 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.DrawStrategy;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
@@ -18,7 +18,7 @@ import blackjack.dto.GamerDto;
 
 public class BlackJackGame {
 
-	private static final int INIT_DISTRIBUTION_COUNT = 2;
+	public static final int INIT_DISTRIBUTION_COUNT = 2;
 	private static final int DEFAULT_EARNING = 0;
 
 	private final Gamers gamers;
@@ -29,9 +29,10 @@ public class BlackJackGame {
 		this.deck = deck;
 	}
 
-	public void start(BiConsumer<GamerDto, List<GamerDto>> gamerSender) {
+	public void start(Function<String, Boolean> answerReceiver, BiConsumer<String, List<Card>> cardChecker) {
 		giveFirstCards();
-		gamerSender.accept(getDealerDto(), getPlayerDtos());
+		checkFirstCardsOfGamers(cardChecker);
+		askPlayerHitOrStay(answerReceiver, cardChecker);
 	}
 
 	private void giveFirstCards() {
@@ -40,18 +41,31 @@ public class BlackJackGame {
 		}
 	}
 
-	public void askPlayerHitOrStay(Function<String, Boolean> answerReceiver, Consumer<GamerDto> cardsSender) {
-		for (String name : gamers.findPlayerNames()) {
-			hitOrStay(name, answerReceiver, cardsSender);
+	private void checkFirstCardsOfGamers(BiConsumer<String, List<Card>> cardChecker) {
+		GamerDto dealerDto = getDealerDto();
+		cardChecker.accept(dealerDto.getName(), getDealerFirstCard(dealerDto));
+		getPlayerDtos().forEach(p -> cardChecker.accept(p.getName(), p.getCards()));
+	}
+
+	private List<Card> getDealerFirstCard(GamerDto dealerDto) {
+		return dealerDto.getCards().stream()
+			.limit(1)
+			.collect(Collectors.toList());
+	}
+
+	private void askPlayerHitOrStay(Function<String, Boolean> answerReceiver,
+		BiConsumer<String, List<Card>> cardChecker) {
+		for (GamerDto player : getPlayerDtos()) {
+			hitOrStay(player, answerReceiver, cardChecker);
 		}
 	}
 
-	private void hitOrStay(String name,
-		Function<String, Boolean> answerReceiver,
-		Consumer<GamerDto> cardsSender) {
-		while (!isBust(name) && answerReceiver.apply(name)) {
+	private void hitOrStay(GamerDto player, Function<String, Boolean> answerReceiver,
+		BiConsumer<String, List<Card>> cardChecker) {
+		while (!isBust(player.getName()) && answerReceiver.apply(player.getName())) {
+			String name = player.getName();
 			gamers.giveCardToPlayer(name, deck);
-			cardsSender.accept(getPlayerDto(name));
+			cardChecker.accept(name, findPlayerDtoByName(name).getCards());
 		}
 	}
 
@@ -59,13 +73,8 @@ public class BlackJackGame {
 		return gamers.checkPlayerDrawPossible(name);
 	}
 
-	public int askDealerHitOrStay() {
-		int count = 0;
-		while (gamers.checkDealerDrawPossible()) {
-			gamers.giveCardToDealer(deck);
-			count++;
-		}
-		return count;
+	private GamerDto findPlayerDtoByName(String name) {
+		return new GamerDto(gamers.findPlayerByName(name));
 	}
 
 	public GameResultDto createResult() {
@@ -84,7 +93,16 @@ public class BlackJackGame {
 			playerEarnings.put(player.getName(), playerEarning);
 			dealerEarning += result.getReverseEarning(playerEarning);
 		}
-		return new GameResultDto(dealerEarning, playerEarnings);
+		return new GameResultDto(askDealerHitOrStay(), dealerEarning, playerEarnings);
+	}
+
+	public int askDealerHitOrStay() {
+		int count = 0;
+		while (gamers.checkDealerDrawPossible()) {
+			gamers.giveCardToDealer(deck);
+			count++;
+		}
+		return count;
 	}
 
 	public GamerDto getDealerDto() {
@@ -95,9 +113,5 @@ public class BlackJackGame {
 		return gamers.getPlayers().stream()
 			.map(GamerDto::new)
 			.collect(Collectors.toList());
-	}
-
-	private GamerDto getPlayerDto(String name) {
-		return new GamerDto(gamers.findPlayerByName(name));
 	}
 }

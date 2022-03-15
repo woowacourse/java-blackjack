@@ -10,10 +10,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.result.BlackJackResult;
+import blackjack.domain.card.Deck;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.GamerDto;
 
@@ -23,7 +22,7 @@ class BlackJackGameTest {
     void initDistribution() {
         BlackJackGame blackJackGame = new BlackJackGame(
             Arrays.asList("a", "b"), s -> 10, new Deck(Card.getCards()));
-        blackJackGame.start((a, b) -> {});
+        blackJackGame.start(answer -> false, (s, c) -> {});
 
         GamerDto dealerDto = blackJackGame.getDealerDto();
         List<GamerDto> playerDtos = blackJackGame.getPlayerDtos();
@@ -50,7 +49,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(
             List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
-        blackJackGame.askPlayerHitOrStay(answer -> false, dto -> {});
+        blackJackGame.start(answer -> false, (s, c) -> {});
         GameResultDto result = blackJackGame.createResult();
 
         int dealerEarning = result.getDealerEarning();
@@ -66,7 +65,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(
             List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
-        blackJackGame.askPlayerHitOrStay(answer -> true, dto -> {});
+        blackJackGame.start(answer -> true, (s, c) -> {});
         GameResultDto result = blackJackGame.createResult();
 
         int dealerEarning = result.getDealerEarning();
