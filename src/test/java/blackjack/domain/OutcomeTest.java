@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.Outcome.DRAW;
 import static blackjack.domain.Outcome.LOSE;
 import static blackjack.domain.Outcome.WIN;
+import static blackjack.domain.Outcome.WIN_BLACKJACK;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.FIVE;
@@ -99,16 +100,16 @@ public class OutcomeTest {
     @DisplayName("똑같이 21점이어도 블랙잭이 이긴다.")
     void blackJackDoesNotDefeat() {
         // given
-        Dealer dealer = createDealer(ACE);
+        Dealer dealer = createDealer(SIX);
 
-        Player player = createPlayer(TEN);
-        player.hit(new CardDeck(List.of(new Card(HEART, ACE))));
+        Player player = createPlayer(ACE);
+        dealer.hit(new CardDeck(List.of(new Card(HEART, SIX))));
 
         // when
         Outcome actual = Outcome.judge(player, dealer);
 
         // then
-        assertThat(actual).isEqualTo(LOSE);
+        assertThat(actual).isEqualTo(WIN_BLACKJACK);
     }
 
     @Test
