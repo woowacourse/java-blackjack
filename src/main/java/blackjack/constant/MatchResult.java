@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.constant;
 
 import blackjack.domain.card.Hand;
 import java.util.Arrays;

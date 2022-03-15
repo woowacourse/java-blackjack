@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.constant.MatchResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.EnumMap;

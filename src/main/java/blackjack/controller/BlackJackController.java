@@ -1,5 +1,8 @@
 package blackjack.controller;
 
+import static blackjack.constant.Command.HIT;
+
+import blackjack.constant.Command;
 import blackjack.domain.ScoreBoard;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
@@ -57,7 +60,7 @@ public class BlackJackController {
     }
 
     private void takeMoreCardPlayerTurnForPlayer(Player player) {
-        while (player.canReceive() && InputView.inputOneMoreCard(player).equalsIgnoreCase(Y)) {
+        while (player.canReceive() && InputView.inputOneMoreCard(player) == HIT) {
             player.receiveCard(deck.draw());
             OutputView.showPlayerHand(player);
         }

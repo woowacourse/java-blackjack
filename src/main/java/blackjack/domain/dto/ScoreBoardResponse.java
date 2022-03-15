@@ -2,7 +2,7 @@ package blackjack.domain.dto;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.MatchResult;
+import blackjack.constant.MatchResult;
 import blackjack.domain.ScoreBoard;
 import blackjack.domain.participant.Player;
 import java.util.LinkedList;

@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import static blackjack.constant.CommonConstant.BLACKJACK_SYMBOL_NUMBER;
 import static blackjack.domain.card.Denomination.ACE_UPPER_SCORE;
 
-import blackjack.domain.MatchResult;
+import blackjack.constant.MatchResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

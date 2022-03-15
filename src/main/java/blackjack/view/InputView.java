@@ -1,7 +1,9 @@
 package blackjack.view;
 
+import static blackjack.constant.Command.NOT_FOUND_COMMAND_EXCEPTION_MESSAGE;
 import static java.lang.System.out;
 
+import blackjack.constant.Command;
 import blackjack.domain.participant.Player;
 import java.util.Scanner;
 
@@ -20,8 +22,8 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static String inputOneMoreCard(Player player) {
+    public static Command inputOneMoreCard(Player player) {
         out.printf(INPUT_ONE_MORE_CARD_MESSAGE, player.getName());
-        return SCANNER.nextLine();
+        return Command.of(SCANNER.nextLine()).orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND_EXCEPTION_MESSAGE));
     }
 }

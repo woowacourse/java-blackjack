@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import static blackjack.domain.MatchResult.DRAW;
-import static blackjack.domain.MatchResult.LOSE;
-import static blackjack.domain.MatchResult.WIN;
+import static blackjack.constant.MatchResult.DRAW;
+import static blackjack.constant.MatchResult.LOSE;
+import static blackjack.constant.MatchResult.WIN;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.FIVE;
@@ -20,6 +20,7 @@ import static blackjack.domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.constant.MatchResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.participant.Dealer;
