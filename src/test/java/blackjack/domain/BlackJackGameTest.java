@@ -22,7 +22,7 @@ class BlackJackGameTest {
     @DisplayName("딜러와 플레이어에게 게임 시작 시 2장씩 배분한다.")
     void initDistribution() {
         BlackJackGame blackJackGame = new BlackJackGame(
-            Arrays.asList("a", "b"), s -> 1, new Deck(Card.getCards()));
+            Arrays.asList("a", "b"), s -> 10, new Deck(Card.getCards()));
         blackJackGame.start((a, b) -> {});
 
         GamerDto dealerDto = blackJackGame.getDealerDto();
@@ -37,7 +37,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러의 점수가 17이상일 때 까지 카드를 1장씩 받는다.")
     void dealerDistribution() {
-        BlackJackGame blackJackGame = new BlackJackGame(List.of("name"), s -> 1, new Deck(Card.getCards()));
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("name"), s -> 10, new Deck(Card.getCards()));
         blackJackGame.askDealerHitOrStay();
         GamerDto dealer = blackJackGame.getDealerDto();
         int cardNumberSum = dealer.getCardNumberSum();

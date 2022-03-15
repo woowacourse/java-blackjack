@@ -28,4 +28,12 @@ class BetTest {
 		Bet bet = new Bet(1000);
 		assertThat(bet).isEqualTo(new Bet(1000));
 	}
+
+	@Test
+	@DisplayName("금액은 10원 단위여야 한다..")
+	void moneyDevidibleException() {
+		assertThatThrownBy(() -> new Bet(1001))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("금액은 10원 단위여야 합니다.");
+	}
 }
