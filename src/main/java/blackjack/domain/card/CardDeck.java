@@ -21,10 +21,14 @@ public class CardDeck {
     }
 
     public Card draw() {
+        validateNotEmpty();
+        return cards.poll();
+    }
+
+    private void validateNotEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 카드 덱이 비어 있습니다.");
         }
-        return cards.poll();
     }
 
     public List<Card> drawDouble() {
