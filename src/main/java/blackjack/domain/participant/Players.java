@@ -29,14 +29,6 @@ public class Players {
         }
     }
 
-    public Player findPlayer(Player player) {
-        return players.get(findIndex(player));
-    }
-
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
-    }
-
     public boolean isEnd() {
         return !(turn < players.size());
     }
@@ -49,9 +41,17 @@ public class Players {
         turn++;
     }
 
+    public Player findPlayer(Player player) {
+        return players.get(findIndex(player));
+    }
+
     public Player findNextPlayer() {
         Player player = players.get(turn);
         return Player.copy(player);
+    }
+
+    private int findIndex(Player player) {
+        return players.indexOf(player);
     }
 
     public void addCards(Dealer dealer, NumberGenerator numberGenerator) {
@@ -64,7 +64,7 @@ public class Players {
         players.set(findIndex(player), player);
     }
 
-    private int findIndex(Player player) {
-        return players.indexOf(player);
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }
