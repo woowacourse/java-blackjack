@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gambler extends Player {
-    private static final int MAXIMUM_SCORE = 21;
+    private static final int MAXIMUM_VALID_SCORE = 21;
 
     public Gambler(String name) {
         super(name);
@@ -14,7 +14,7 @@ public class Gambler extends Player {
 
     @Override
     public boolean isHittable() {
-        return !isBust() && getScore() < MAXIMUM_SCORE;
+        return !isBust() && getScore() < MAXIMUM_VALID_SCORE;
     }
 
     @Override
