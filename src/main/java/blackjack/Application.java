@@ -11,6 +11,6 @@ public class Application {
         ResultView.printStartResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
         blackjackGame.performEachTurn(InputView::inputHitOrStaySign, ResultView::printCurrentTurnResult);
         ResultView.printFinalResult(blackjackGame.getDealer(), blackjackGame.getGamers());
-        ResultView.printMatchResult(blackjackGame.createMatchResult());
+        //ResultView.printMatchResult(blackjackGame.createMatchResult());
     }
 }

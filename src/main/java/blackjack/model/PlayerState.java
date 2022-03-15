@@ -2,6 +2,7 @@ package blackjack.model;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
+import java.util.List;
 
 public class PlayerState extends State{
     private static final String FINISH = "Finish";

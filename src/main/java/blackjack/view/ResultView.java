@@ -50,12 +50,12 @@ public class ResultView {
         System.out.printf(GAMER_AND_CARDS_MESSAGE_FORMAT, name, cards.get(0), cards.get(1));
     }
 
-    public static void printCurrentTurnResult(String name, List<String> cards) {
-        if (name.equals("딜러")) {
-            printDealerHitResult(name, cards);
+    public static void printCurrentTurnResult(Participant player) {
+        if (player.getName().equals("딜러")) {
+            printDealerHitResult(player.getName(), player.getCards());
             return;
         }
-        printGamerHitResult(name, cards);
+        printGamerHitResult(player.getName(), player.getCards());
     }
 
     private static void printGamerHitResult(String name, List<String> cards) {
@@ -87,7 +87,7 @@ public class ResultView {
         }
         System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, dealer.getName(), cardJoiner);
     }
-
+/*
     public static void printMatchResult(final BlackJackGameResult blackJackGameResult) {
         printDealerMatchResult(blackJackGameResult.getDealerMatchResult());
         blackJackGameResult.getGamersMatchResult().forEach((name, matchResult) -> {
@@ -100,4 +100,6 @@ public class ResultView {
         dealerMatchResult.forEach((matchResult, count) -> matchResultJoiner.add(count + matchResult.getValue()));
         System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, "딜러", matchResultJoiner);
     }
+
+ */
 }

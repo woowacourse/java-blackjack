@@ -2,6 +2,7 @@ package blackjack.model;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
+import java.util.List;
 
 public abstract class State {
     protected static final String HIT = "Hit";
@@ -29,4 +30,8 @@ public abstract class State {
     protected abstract void choiceState();
 
     public abstract State addCard(Card card);
+
+    public List<String> getCards() {
+        return cards.getValues();
+    }
 }

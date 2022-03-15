@@ -20,6 +20,10 @@ public class Cards {
         return new Cards(values);
     }
 
+    public boolean hasTwoCard() {
+        return values.size() == 2;
+    }
+
     public boolean isBlackjack() {
         return sumScore() == 21 && values.size() == 2;
     }

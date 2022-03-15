@@ -2,8 +2,6 @@ package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.card.CardDeck;
-import blackjack.model.player.Participants;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;

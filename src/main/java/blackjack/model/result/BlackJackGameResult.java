@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJackGameResult {
+    /*
     private final Map<String, MatchResult> gamersMatchResult;
     private final Map<MatchResult, Integer> dealerMatchResult;
 
@@ -51,4 +52,6 @@ public class BlackJackGameResult {
     public Map<String, MatchResult> getGamersMatchResult() {
         return gamersMatchResult;
     }
+
+     */
 }
