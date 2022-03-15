@@ -12,7 +12,7 @@ public class Participant {
     private static final int ADDITIONAL_SCORE_FOR_ACE = 10;
     protected static final int GOAL_SCORE = 21;
 
-    private final String name;
+    protected final String name;
     private final List<Card> cards = new ArrayList<>();
     private int score = 0;
 

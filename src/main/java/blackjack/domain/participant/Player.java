@@ -13,7 +13,7 @@ public class Player extends Participant {
     }
 
     public PlayerResultDto computeResult(int comparisonScore) {
-        return new PlayerResultDto(getName(), isWin(comparisonScore));
+        return new PlayerResultDto(name, isWin(comparisonScore));
     }
 
     private boolean isWin(int comparisonScore) {

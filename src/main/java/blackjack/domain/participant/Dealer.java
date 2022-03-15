@@ -24,6 +24,6 @@ public class Dealer extends Participant {
                 .count();
         int winCount = totalPlayerResult.size() - loseCount;
 
-        return new DealerResultDto(getName(), winCount, loseCount);
+        return new DealerResultDto(name, winCount, loseCount);
     }
 }
