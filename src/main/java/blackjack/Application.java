@@ -7,6 +7,7 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Name;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
+import blackjack.view.Answer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -74,12 +75,8 @@ public class Application {
     }
 
     private static boolean isKeepTakeCard(Name name) {
-        String option = InputView.chooseOptions(message(name), "y", "n");
-        return option.equals("y");
-    }
-
-    private static String message(Name name) {
-        return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name.value());
+        Answer answer = InputView.isKeepTakeCard(name);
+        return answer.isKeepGoing();
     }
 
     private static void takeDealerCard(Dealer dealer, CardDispenser cardDispenser) {
