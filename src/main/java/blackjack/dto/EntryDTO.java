@@ -5,7 +5,7 @@ import blackjack.model.Game;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EntryDTO extends PlayerDTO {
+public final class EntryDTO extends PlayerDTO {
     private EntryDTO(String name, DeckDTO deck, int score) {
         super(name, deck, score);
     }

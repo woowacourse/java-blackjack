@@ -5,7 +5,7 @@ import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Players {
+public final class Players {
     private final Entries entries;
     private final Dealer dealer;
 

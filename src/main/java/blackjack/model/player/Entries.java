@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class Entries {
+public final class Entries {
     private static final String ERROR_DUPLICATE_NAME = "[ERROR] 중복된 이름이 있습니다.";
     private static final String ERROR_NO_ENTRY = "[ERROR] 더 이상 Entry가 없습니다.";
 

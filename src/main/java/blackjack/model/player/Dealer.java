@@ -3,7 +3,7 @@ package blackjack.model.player;
 import blackjack.model.Result;
 import blackjack.model.trumpcard.TrumpCard;
 
-public class Dealer extends Player {
+public final class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int SCORE_HIT_CRITERIA = 17;
 

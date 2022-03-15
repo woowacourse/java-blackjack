@@ -4,7 +4,7 @@ import blackjack.model.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResultDTO {
+public final class ResultDTO {
     private final EntryDTO entry;
     private final boolean win;
 

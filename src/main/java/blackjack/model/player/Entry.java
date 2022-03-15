@@ -2,7 +2,7 @@ package blackjack.model.player;
 
 import java.util.regex.Pattern;
 
-public class Entry extends Player {
+public final class Entry extends Player {
     private static final String ERROR_BLANK = "[ERROR] 이름은 공백일 수 없습니다.";
     private static final String ERROR_MAX_LENGTH = "[ERROR] 이름은 15자 이하로 입력해주세요.";
     private static final String ERROR_CONTAINS_NUMBER = "[ERROR] 이름에 숫자는 포함될 수 없습니다.";

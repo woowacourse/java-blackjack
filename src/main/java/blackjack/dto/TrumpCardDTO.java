@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TrumpCardDTO {
+public final class TrumpCardDTO {
     private static final Map<TrumpNumber, String> TRUMP_NUMBER_NAME_MAP;
     private static final String NAME_ACE = "A";
     private static final String NAME_JACK = "J";

@@ -3,7 +3,7 @@ package blackjack.dto;
 import blackjack.model.player.Dealer;
 import blackjack.model.Game;
 
-public class DealerDTO extends PlayerDTO {
+public final class DealerDTO extends PlayerDTO {
     private final int addedCount;
 
     private DealerDTO(String name, DeckDTO deck, int addedCount, int score) {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PlayersDTO {
+public final class PlayersDTO {
     private final DealerDTO dealer;
     private final List<EntryDTO> entries;
 

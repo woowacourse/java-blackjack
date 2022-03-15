@@ -3,7 +3,7 @@ package blackjack.dto;
 import blackjack.model.player.Player;
 import java.util.List;
 
-public class DeckDTO {
+public final class DeckDTO {
     private final List<TrumpCardDTO> cards;
 
     private DeckDTO(List<TrumpCardDTO> cards) {

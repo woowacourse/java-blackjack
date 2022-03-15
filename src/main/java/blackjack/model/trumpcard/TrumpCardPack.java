@@ -3,7 +3,7 @@ package blackjack.model.trumpcard;
 import java.util.Collections;
 import java.util.Stack;
 
-public class TrumpCardPack {
+public final class TrumpCardPack {
     private static final String ERROR_EMPTY = "[ERROR] 더 이상 카드를 꺼낼 수 없습니다.";
 
     private final Stack<TrumpCard> values;

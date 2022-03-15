@@ -3,7 +3,7 @@ package blackjack.dto;
 import blackjack.model.Results;
 import java.util.List;
 
-public class ResultsDTO {
+public final class ResultsDTO {
     private final List<ResultDTO> values;
     private final int dealerWinCount;
     private final int dealerLoseCount;

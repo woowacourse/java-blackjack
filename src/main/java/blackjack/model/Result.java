@@ -2,7 +2,7 @@ package blackjack.model;
 
 import blackjack.model.player.Entry;
 
-public class Result {
+public final class Result {
     private Entry entry;
     private Boolean win;
 

@@ -3,7 +3,7 @@ package blackjack.model.trumpcard;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Deck {
+public final class Deck {
     private static final int SCORE_LIMIT = 21;
     private static final int SCORE_ACE_ADVANTAGE = 10;
     private static final int SCORE_ADVANTAGE_CRITERIA = SCORE_LIMIT - SCORE_ACE_ADVANTAGE;

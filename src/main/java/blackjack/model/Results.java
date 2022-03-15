@@ -2,7 +2,7 @@ package blackjack.model;
 
 import java.util.List;
 
-public class Results {
+public final class Results {
     private final List<Result> values;
 
     public Results(List<Result> values) {

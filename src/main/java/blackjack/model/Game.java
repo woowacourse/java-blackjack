@@ -7,7 +7,7 @@ import blackjack.model.player.Players;
 import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
 
-public class Game {
+public final class Game {
     private static final int FIRST_DECK_SIZE = 2;
 
     private final Players players;

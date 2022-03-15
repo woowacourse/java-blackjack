@@ -2,7 +2,7 @@ package blackjack.model.trumpcard;
 
 import java.util.Objects;
 
-public class TrumpCard {
+public final class TrumpCard {
     private final TrumpNumber number;
     private final TrumpSymbol symbol;
 
