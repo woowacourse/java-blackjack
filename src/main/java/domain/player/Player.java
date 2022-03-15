@@ -15,8 +15,6 @@ public abstract class Player {
         this.cards = new Cards();
     }
 
-    public abstract boolean isDealer();
-
     public abstract boolean isHittable();
 
     public abstract List<Card> getOpenCards();

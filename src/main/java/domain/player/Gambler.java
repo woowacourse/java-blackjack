@@ -13,11 +13,6 @@ public class Gambler extends Player {
     }
 
     @Override
-    public boolean isDealer() {
-        return false;
-    }
-
-    @Override
     public boolean isHittable() {
         return !isBust() && getScore() < MAXIMUM_SCORE;
     }
