@@ -1,34 +1,34 @@
 package blackjack.domain;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class RecordFactory {
 
     private final int dealerScore;
-    private final Map<Record, Integer> dealerRecord;
+    private final Map<PlayRecord, Integer> dealerRecord;
 
     public RecordFactory(int dealerScore) {
         this.dealerScore = dealerScore;
-        this.dealerRecord = new HashMap<>();
+        this.dealerRecord = new EnumMap<>(PlayRecord.class);
     }
 
-    public Record getPlayerRecord(int score) {
-        Record playerRecord = createRecord(score);
-        updateDealerRecord(playerRecord.getOpposite());
+    public PlayRecord getPlayerRecord(int score) {
+        PlayRecord playerPlayRecord = createRecord(score);
+        updateDealerRecord(playerPlayRecord.getOpposite());
 
-        return playerRecord;
+        return playerPlayRecord;
     }
 
-    private Record createRecord(int score) {
-        return Record.of(dealerScore, score);
+    private PlayRecord createRecord(int score) {
+        return PlayRecord.of(dealerScore, score);
     }
 
-    private void updateDealerRecord(Record record) {
-        dealerRecord.put(record, dealerRecord.getOrDefault(record, 0) + 1);
+    private void updateDealerRecord(PlayRecord playRecord) {
+        dealerRecord.put(playRecord, dealerRecord.getOrDefault(playRecord, 0) + 1);
     }
 
-    public Map<Record, Integer> getDealerRecord() {
+    public Map<PlayRecord, Integer> getDealerRecord() {
         return Map.copyOf(dealerRecord);
     }
 }

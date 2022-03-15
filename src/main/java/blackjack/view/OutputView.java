@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Record;
+import blackjack.domain.PlayRecord;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.DrawCount;
 import blackjack.dto.ParticipantDto;
@@ -54,20 +54,20 @@ public class OutputView {
             + " - 결과: " + dto.getScore());
     }
 
-    public static void printDealerRecord(Map<Record, Integer> record) {
+    public static void printDealerRecord(Map<PlayRecord, Integer> record) {
         printEmptyLine();
         System.out.println("## 최종 승패");
 
         StringBuilder builder = new StringBuilder();
-        Arrays.stream(Record.values())
+        Arrays.stream(PlayRecord.values())
             .filter(it -> record.getOrDefault(it, 0) != 0)
             .forEach(it -> builder.append(record.get(it)).append(it.getName()));
 
         System.out.println("딜러: " + builder);
     }
 
-    public static void printPlayerRecord(String name, Record record) {
-        System.out.println(name + ": " + record.getName());
+    public static void printPlayerRecord(String name, PlayRecord playRecord) {
+        System.out.println(name + ": " + playRecord.getName());
     }
 
     public static void printEmptyLine() {

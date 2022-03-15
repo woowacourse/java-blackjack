@@ -10,8 +10,8 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Game;
+import blackjack.domain.PlayRecord;
 import blackjack.domain.PlayStatus;
-import blackjack.domain.Record;
 import blackjack.domain.RecordFactory;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.RandomDeck;
@@ -69,12 +69,12 @@ public class GameController {
 
     private void playRecord(Game game) {
         RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
-        Map<String, Record> map = game.getPlayers().stream()
+        Map<String, PlayRecord> map = game.getPlayers().stream()
             .collect(Collectors.toMap(Player::getName, player -> recordFactory.getPlayerRecord(player.getScore()),
                 (a, b) -> b, LinkedHashMap::new));
 
         printDealerRecord(recordFactory.getDealerRecord());
-        for (Entry<String, Record> entry : map.entrySet()) {
+        for (Entry<String, PlayRecord> entry : map.entrySet()) {
             printPlayerRecord(entry.getKey(), entry.getValue());
         }
     }
