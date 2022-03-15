@@ -1,21 +1,28 @@
 package blackjack.domain.card;
 
 public class CardDeck {
-	private final static Cards deck = new Cards();
+	private final Cards deck;
 
-	static {
+	private CardDeck(Cards cards) {
+		this.deck = cards;
+	}
+
+	public static CardDeck create() {
+		Cards cards = new Cards();
 		for (CardSymbol symbol : CardSymbol.values()) {
-			generateCardWith(symbol);
+			createWith(cards, symbol);
 		}
+
+		return new CardDeck(cards);
 	}
 
-	private static void generateCardWith(CardSymbol symbol) {
+	private static void createWith(Cards cards, CardSymbol symbol) {
 		for (CardValue value : CardValue.values()) {
-			deck.addCard(new Card(symbol, value));
+			cards.addCard(new Card(symbol, value));
 		}
 	}
 
-	public static Card pick() {
+	public Card pick() {
 		Card pickedCard = deck.pickRandomCard();
 		deck.remove(pickedCard);
 		return pickedCard;

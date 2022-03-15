@@ -31,8 +31,9 @@ public class ParticipantTest {
 	@Test
 	@DisplayName("카드를 한장 받으면, 플레이어의 카드가 한장 추가된다")
 	void receiveCard() {
+		CardDeck cardDeck = CardDeck.create();
 		Participant player = Participant.createPlayer("yaho");
-		player.receiveCard(CardDeck.pick());
+		player.receiveCard(cardDeck.pick());
 		assertThat(player.getCards().size()).isEqualTo(1);
 	}
 }

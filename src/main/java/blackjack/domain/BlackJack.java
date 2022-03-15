@@ -16,10 +16,12 @@ public class BlackJack {
 
 	private final Participant dealer;
 	private final List<Participant> players;
+	private final CardDeck cardDeck;
 
 	private BlackJack(Participant dealer, List<Participant> players) {
 		this.dealer = dealer;
 		this.players = players;
+		this.cardDeck = CardDeck.create();
 	}
 
 	public static BlackJack from(List<String> playerNames) {
@@ -51,7 +53,7 @@ public class BlackJack {
 	}
 
 	public void handOutCardTo(Participant participant) {
-		participant.receiveCard(CardDeck.pick());
+		participant.receiveCard(this.cardDeck.pick());
 	}
 
 	public boolean isDealerEnough() {
