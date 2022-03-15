@@ -13,7 +13,7 @@ public class BlackJackGame {
     private final CardDeck cardDeck;
 
     public BlackJackGame(List<String> playersNames) {
-        this.cardDeck = new CardDeck(new RandomCardGenerator());
+        this.cardDeck = new CardDeck(RandomCardGenerator.getInstance());
         this.dealer = new Dealer(cardDeck.drawTwoCards());
         validateEmptyNames(playersNames);
         this.players = createPlayers(playersNames);

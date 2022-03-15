@@ -9,6 +9,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RandomCardGenerator implements CardGenerator{
+
+    private static RandomCardGenerator randomCardGenerator = null;
+
+    private RandomCardGenerator(){}
+
+    public static RandomCardGenerator getInstance() {
+        if (randomCardGenerator == null) {
+            randomCardGenerator = new RandomCardGenerator();
+        }
+        return randomCardGenerator;
+    }
+
     @Override
     public List<Card> generate() {
         List<Card> cards = createCards();
