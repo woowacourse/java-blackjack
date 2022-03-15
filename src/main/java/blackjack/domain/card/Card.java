@@ -4,6 +4,9 @@ import java.util.Objects;
 
 public class Card {
 
+    private static final int ACE_ADDITIONAL_NUMBER = 10;
+    private static final int BEST_SCORE = 21;
+
     private final Number number;
     private final Kind kind;
 
@@ -18,6 +21,13 @@ public class Card {
 
     public boolean isAce() {
         return number == Number.ACE;
+    }
+
+    public int getBest(int sum) {
+        if (isAce() && sum + ACE_ADDITIONAL_NUMBER <= BEST_SCORE) {
+            sum += ACE_ADDITIONAL_NUMBER;
+        }
+        return sum;
     }
 
     public Number getNumber() {
