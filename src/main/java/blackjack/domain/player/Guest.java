@@ -33,9 +33,4 @@ public class Guest extends AbstractPlayer implements Player {
         }
         return false;
     }
-
-    @Override
-    public boolean isDraw(Player dealer) {
-        return playingCards.sumPoints() == dealer.getDeck().sumPoints();
-    }
 }

@@ -35,9 +35,4 @@ public class Dealer extends AbstractPlayer implements Player {
         }
         return false;
     }
-
-    @Override
-    public boolean isDraw(Player guest) {
-        return playingCards.sumPoints() == guest.getDeck().sumPoints();
-    }
 }

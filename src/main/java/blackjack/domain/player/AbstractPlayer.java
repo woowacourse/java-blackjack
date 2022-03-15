@@ -29,6 +29,11 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isDraw(Player player) {
+        return playingCards.sumPoints() == player.getDeck().sumPoints();
+    }
+
+    @Override
     public String getName() {
         return name;
     }
