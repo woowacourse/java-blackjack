@@ -13,7 +13,6 @@ public class BlackJackApplication {
     public static void main(String[] args) {
         List<String> names = InputView.getNames();
         BlackJackGame blackJackGame = new BlackJackGame(names);
-
         OutputView.printFirstCards(blackJackGame.getDealer(), blackJackGame.getPlayers());
 
         drawAdditionalCard(blackJackGame);
@@ -23,9 +22,9 @@ public class BlackJackApplication {
         OutputView.printFinalResult(blackJackGame.createResult());
     }
 
-    private static void printAdditionalDrawDealer(BlackJackGame controller) {
-        controller.distributeAdditionalToDealer();
-        OutputView.printAdditionalDrawDealer(controller.getDealerCardSize() - INIT_DISTRIBUTION_COUNT);
+    private static void printAdditionalDrawDealer(BlackJackGame blackJackGame) {
+        blackJackGame.distributeAdditionalToDealer();
+        OutputView.printAdditionalDrawDealer(blackJackGame.getDealerCardSize() - INIT_DISTRIBUTION_COUNT);
     }
 
     private static void drawAdditionalCard(BlackJackGame blackJackGame) {
@@ -35,7 +34,7 @@ public class BlackJackApplication {
     }
 
     private static void printPlayerDrawCard(BlackJackGame blackJackGame, Player player) {
-        while (blackJackGame.isDrawPossible(player, InputView.getAnswerOfAdditionalDraw(player.getName()))) {
+        while (blackJackGame.isDrawPossible(player, InputView::getAnswerOfAdditionalDraw)) {
             blackJackGame.distributeCardToPlayer(player);
             OutputView.printPlayerCard(player);
         }
