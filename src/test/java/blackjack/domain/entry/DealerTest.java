@@ -3,6 +3,7 @@ package blackjack.domain.entry;
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.EIGHT;
 import static blackjack.domain.card.CardNumber.KING;
+import static blackjack.domain.card.CardNumber.NINE;
 import static blackjack.domain.card.Suit.HEART;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,18 +17,24 @@ class DealerTest {
     @Test
     @DisplayName("두장의 카드를 지급받아 카드의 합을 계산한다.")
     void getTwoCards() {
-        Dealer dealer = new Dealer(HoldCards
-            .initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)));
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)));
 
         assertThat(dealer.countCards()).isEqualTo(21);
     }
 
     @Test
-    @DisplayName("보유한 카드의 합이 16이하인지 판단한다.")
+    @DisplayName("보유한 카드의 합이 16이하이면 True 반환한다.")
     void shouldHaveMoreCard() {
-        Dealer dealer = new Dealer(HoldCards
-            .initTwoCards(Card.valueOf(SPADE, EIGHT), Card.valueOf(HEART, EIGHT)));
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, EIGHT), Card.valueOf(HEART, EIGHT)));
 
         assertThat(dealer.canHit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("보유한 카드의 합이 17이상일 경우 False 반환한다.")
+    void shouldNotHaveMoreCard() {
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, NINE), Card.valueOf(HEART, EIGHT)));
+
+        assertThat(dealer.canHit()).isFalse();
     }
 }

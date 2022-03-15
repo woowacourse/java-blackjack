@@ -1,8 +1,9 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.CardNumber.*;
-import static blackjack.domain.card.Suit.*;
+import static blackjack.domain.card.CardNumber.ACE;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,22 @@ public class CardTest {
         Card card = Card.valueOf(SPADE, ACE);
 
         assertThat(card).isNotNull();
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 모양으로 생성시 예외를 발생한다.")
+    void throwExceptionNotExistedSuit() {
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> Card.valueOf(null, ACE))
+            .withMessage("존재하지 않는 카드입니다.");
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 카드 숫자로 생성시 예외를 발생한다.")
+    void throwExceptionNotExistedCardNumber() {
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> Card.valueOf(SPADE, null))
+            .withMessage("존재하지 않는 카드입니다.");
     }
 
     @Test
