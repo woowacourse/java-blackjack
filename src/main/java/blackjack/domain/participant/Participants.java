@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
 public class Participants {
@@ -38,14 +37,6 @@ public class Participants {
         return dealer.isBlackjack();
     }
 
-    public boolean isDealerMustHit() {
-        return dealer.checkMustHit();
-    }
-
-    public void dealToDealer(Card card) {
-        dealer.addCard(card);
-    }
-
     public boolean isAllPlayerTurnEnd() {
         try {
             getCurrentPlayer();
@@ -53,6 +44,22 @@ public class Participants {
             return true;
         }
         return false;
+    }
+
+    public void dealToPlayer(Deck deck) {
+        deck.dealCard(getCurrentPlayer());
+    }
+
+    public void stayCurrentPlayer() {
+        getCurrentPlayer().stay();
+    }
+
+    public boolean isDealerMustHit() {
+        return dealer.checkMustHit();
+    }
+
+    public void dealToDealer(Deck deck) {
+        deck.dealCard(dealer);
     }
 
     public Player getCurrentPlayer() {

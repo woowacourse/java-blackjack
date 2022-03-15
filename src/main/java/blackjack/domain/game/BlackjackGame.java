@@ -22,12 +22,11 @@ public class BlackjackGame {
     }
 
     public void playPlayerTurn(boolean isHit) {
-        Player player = participants.getCurrentPlayer();
         if (isHit) {
-            player.addCard(deck.pickCard());
+            participants.dealToPlayer(deck);
             return;
         }
-        player.stay();
+        participants.stayCurrentPlayer();
     }
 
     public boolean isDealerTurnEnd() {
@@ -35,7 +34,7 @@ public class BlackjackGame {
     }
 
     public void playDealerTurn() {
-        participants.dealToDealer(deck.pickCard());
+        participants.dealToDealer(deck);
     }
 
     public Player getCurrentPlayer() {

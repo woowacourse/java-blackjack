@@ -26,6 +26,10 @@ public class Deck {
         participant.initCards(List.of(pickCard(), pickCard()));
     }
 
+    public void dealCard(Participant participant) {
+        participant.addCard(pickCard());
+    }
+
     public Card pickCard() {
         validateDeckSize();
         return deck.remove(FIRST);
