@@ -32,13 +32,12 @@ public class JudgeTest {
         Players players = new Players(List.of(zero, corinne), dealer);
         GameResult result = Judge.calculateGameResult(players);
 
-        assertAll(() -> {
-            assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2);
-            assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0);
-            for (ParticipantResult participantResult : result.getParticipantResults()) {
-                assertThat(participantResult.getResult()).isEqualTo(Result.LOSE);
-            }
-        });
+        assertAll(
+                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2),
+                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
+                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.LOSE),
+                () -> assertThat(result.getParticipantResults().get(1).getResult()).isEqualTo(Result.LOSE)
+        );
     }
 
     @Test
@@ -63,11 +62,8 @@ public class JudgeTest {
         assertAll(
                 () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2),
                 () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
-                () -> {
-                    for (ParticipantResult participantResult : result.getParticipantResults()) {
-                        assertThat(participantResult.getResult()).isEqualTo(Result.LOSE);
-                    }
-                }
+                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.LOSE),
+                () -> assertThat(result.getParticipantResults().get(1).getResult()).isEqualTo(Result.LOSE)
         );
     }
 
@@ -92,25 +88,24 @@ public class JudgeTest {
         Players players = new Players(List.of(zero, corinne), dealer);
         GameResult result = Judge.calculateGameResult(players);
 
-        assertAll(() -> {
-            assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2);
-            assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0);
-            for (ParticipantResult participantResult : result.getParticipantResults()) {
-                assertThat(participantResult.getResult()).isEqualTo(Result.LOSE);
-            }
-        });
+        assertAll(
+                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2),
+                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
+                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.LOSE),
+                () -> assertThat(result.getParticipantResults().get(1).getResult()).isEqualTo(Result.LOSE)
+        );
     }
 
     @Test
     @DisplayName("참가자가 딜러보다 점수합이 높으면 참가자가 승리한다.")
     void participantWinWhenOverDealer() {
         Participant zero = new Participant("zero");
-        zero.addCard(new Card(Type.SPADE, Score.KING));
-        zero.addCard(new Card(Type.HEART, Score.SEVEN));
+        zero.addCard(new Card(Type.CLOVER, Score.ACE));
+        zero.addCard(new Card(Type.HEART, Score.SIX));
 
         Participant corinne = new Participant("corinne");
-        corinne.addCard(new Card(Type.CLOVER, Score.ACE));
-        corinne.addCard(new Card(Type.HEART, Score.TEN));
+        corinne.addCard(new Card(Type.SPADE, Score.KING));
+        corinne.addCard(new Card(Type.HEART, Score.SEVEN));
 
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(Type.HEART, Score.ACE));
@@ -122,11 +117,8 @@ public class JudgeTest {
         assertAll(
                 () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0),
                 () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(2),
-                () -> {
-                    for (ParticipantResult participantResult : result.getParticipantResults()) {
-                        assertThat(participantResult.getResult()).isEqualTo(Result.WIN);
-                    }
-                }
+                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.WIN),
+                () -> assertThat(result.getParticipantResults().get(1).getResult()).isEqualTo(Result.WIN)
         );
     }
 }
