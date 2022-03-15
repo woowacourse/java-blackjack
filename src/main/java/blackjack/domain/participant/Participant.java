@@ -31,6 +31,7 @@ public abstract class Participant {
         return hand;
     }
 
+    // TODO: 구현체의 canReceive 메소드와 상당히 겹침. 해결 필요.
     public boolean isBusted() {
         return hand.getScore().isGreaterThan(Score.BLACKJACK);
     }

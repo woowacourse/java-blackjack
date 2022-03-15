@@ -20,10 +20,6 @@ public class Referee {
         return results;
     }
 
-    public ResultType generatePlayerResult(Player player, Participant other) {
-        return player.compareWith(other);
-    }
-
     private Map<ResultType, ResultCount> generateDefaultResults() {
         Map<ResultType, ResultCount> results = new EnumMap<>(ResultType.class);
 
@@ -32,5 +28,9 @@ public class Referee {
         }
 
         return results;
+    }
+
+    public ResultType generatePlayerResult(Player player, Participant other) {
+        return player.compareWith(other);
     }
 }
