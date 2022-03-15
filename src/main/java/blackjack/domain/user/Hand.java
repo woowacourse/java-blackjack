@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
 public class Hand {
@@ -20,8 +19,8 @@ public class Hand {
         this(new ArrayList<>(), new Score());
     }
 
-    public void drawCard(Deck deck) {
-        cards.add(deck.drawCard());
+    public void addCard(Card card) {
+        cards.add(card);
         this.score = Score.addUpPointToScore(cards);
     }
 

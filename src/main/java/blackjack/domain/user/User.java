@@ -21,13 +21,8 @@ public abstract class User {
         this(new Hand(), new Name(input));
     }
 
-    public void drawInitCards(Deck deck) {
-        drawCard(deck);
-        drawCard(deck);
-    }
-
     public void drawCard(Deck deck) {
-        hand.drawCard(deck);
+        hand.addCard(deck.drawCard());
     }
 
     public boolean isBust() {
