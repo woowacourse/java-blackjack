@@ -30,7 +30,7 @@ public class Cards {
             .map(aceCount -> calculateSum() + aceCount * ACE_ADDITIONAL_VALUE)
             .filter(result -> result < BLACKJACK_MAX_VALUE_CRITERIA)
             .max()
-            .getAsInt();
+            .orElse(calculateSum());
     }
 
     public int calculateSum() {
