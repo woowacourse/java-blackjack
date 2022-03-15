@@ -3,7 +3,7 @@ package blackjack.domain.role;
 import java.util.function.Supplier;
 
 import blackjack.domain.card.Hand;
-import blackjack.service.BlackJackService;
+import blackjack.service.BlackJack;
 
 public class Dealer extends Role {
 
@@ -20,7 +20,7 @@ public class Dealer extends Role {
 
 	@Override
 	public boolean canDraw() {
-		if (hand.calculateOptimalScore() >= BlackJackService.OPTIMIZED_WINNING_NUMBER) {
+		if (hand.calculateOptimalScore() >= BlackJack.OPTIMIZED_WINNING_NUMBER) {
 			return false;
 		}
 		if (hand.calculateOptimalScore() <= CAN_DRAW_STANDARD) {

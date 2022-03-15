@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.service.BlackJackService;
+import blackjack.service.BlackJack;
 
 public class Hand {
 
@@ -22,8 +22,8 @@ public class Hand {
 
 	public String getFinalScore() {
 		int score = calculateOptimalScore();
-		if (score == BlackJackService.BUST) {
-			return BlackJackService.BUST_MESSAGE;
+		if (score == BlackJack.BUST) {
+			return BlackJack.BUST_MESSAGE;
 		}
 		return Integer.toString(score);
 	}
@@ -33,7 +33,7 @@ public class Hand {
 			.mapToInt(Card::getScore)
 			.sum();
 		if (isBust(totalScore)) {
-			return BlackJackService.BUST;
+			return BlackJack.BUST;
 		}
 		if (hasAce()) {
 			return getOptimizedScore(totalScore, totalScore + ACE_AS_ELEVEN);
@@ -42,7 +42,7 @@ public class Hand {
 	}
 
 	private boolean isBust(int totalScore) {
-		return totalScore > BlackJackService.OPTIMIZED_WINNING_NUMBER;
+		return totalScore > BlackJack.OPTIMIZED_WINNING_NUMBER;
 	}
 
 	public boolean hasAce() {

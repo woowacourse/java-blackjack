@@ -1,37 +1,12 @@
 package blackjack;
 
-import java.util.List;
-
-import blackjack.domain.RedrawChoice;
-import blackjack.domain.role.Role;
-import blackjack.service.BlackJackService;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.service.BlackJack;
 
 public class BlackJackApplication {
 
 	public static void main(String[] args) {
-		final BlackJackService blackJack = new BlackJackService();
-		blackJack.initBlackJack();
-		blackJack.joinPlayers(InputView.requestPlayerName());
-		final Role dealerStatus = blackJack.distributeCardToDealer();
-		List<Role> playersStatus = blackJack.distributeCardToPlayers();
-		OutputView.printInitialStatus(dealerStatus, playersStatus);
-
-		while (true) {
-			final String currentPlayer = blackJack.whoseTurn();
-			if (currentPlayer.isEmpty()) {
-				break;
-			}
-			String answer = InputView.drawOneMoreCard(currentPlayer);
-			final Role playerStatus = blackJack.drawPlayer(RedrawChoice.of(answer), currentPlayer);
-			OutputView.printPersonalHand(playerStatus);
-		}
-		OutputView.printDealerStatus(blackJack.drawDealer());
-		final List<Role> playersResult = blackJack.calculatePlayerResult();
-		final Role dealerResult = blackJack.calculateDealerResult();
-		OutputView.printFinalResult(dealerResult, playersResult);
-
+		final BlackJack blackJack = new BlackJack();
+		blackJack.startGame();
 	}
 
 }
