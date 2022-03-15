@@ -11,7 +11,7 @@ public class GamerDto {
 
     public static final int FIRST_CARD_INDEX = 0;
 
-    private final Name name;
+    private final String name;
     private final List<Card> cards;
     private final int cardNumberSum;
 
@@ -22,7 +22,7 @@ public class GamerDto {
     }
 
     public String getName() {
-        return name.getValue();
+        return name;
     }
 
     public List<Card> getCards() {

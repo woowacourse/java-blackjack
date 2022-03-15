@@ -68,7 +68,6 @@ public class Gamers {
 	public List<String> findPlayerNames() {
 		return players.stream()
 			.map(Player::getName)
-			.map(Name::getValue)
 			.collect(Collectors.toList());
 	}
 

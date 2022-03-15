@@ -43,14 +43,12 @@ public enum BlackJackResult {
 			.orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
 	}
 
-	public BlackJackResult getReverse() {
-		if (this == WIN) {
-			return LOSE;
-		}
-		if (this == LOSE) {
-			return WIN;
-		}
-		return DRAW;
+	public double calculateEarning(int bet) {
+		return bet * profit;
+	}
+
+	public double getReverseEarning(double earning) {
+		return LOSE.getProfit() * earning;
 	}
 
 	public String getName() {

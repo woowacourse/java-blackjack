@@ -45,34 +45,34 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("플레이어 카드 숫자 합과 딜러의 합이 같으면 무승부")
+    @DisplayName("1000원 배팅일 때 무승부이면 수익 0원")
     void createResultDraw() {
         BlackJackGame blackJackGame = new BlackJackGame(
-            List.of("name"), s -> 1, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
+            List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
         blackJackGame.askPlayerHitOrStay(answer -> false, dto -> {});
         GameResultDto result = blackJackGame.createResult();
 
-        Map<BlackJackResult, Integer> dealerResult = result.getDealerResult();
-        Map<String, BlackJackResult> playerResults = result.getPlayerResults();
+        double dealerEarning = result.getDealerEarning();
+        Map<String, Double> playerEarnings = result.getPlayerEarnings();
 
-        assertThat(playerResults.get("name")).isEqualTo(BlackJackResult.DRAW);
-        assertThat(dealerResult.get(BlackJackResult.DRAW)).isEqualTo(1);
+        assertThat(playerEarnings.get("name")).isEqualTo(0);
+        assertThat(dealerEarning).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("플레이어가 버스트이면 패배")
+    @DisplayName("1000원 배팅일 때 지면 수익 -1000원")
     void createResultLose() {
         BlackJackGame blackJackGame = new BlackJackGame(
-            List.of("name"), s -> 1, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
+            List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
         blackJackGame.askPlayerHitOrStay(answer -> true, dto -> {});
         GameResultDto result = blackJackGame.createResult();
 
-        Map<BlackJackResult, Integer> dealerResult = result.getDealerResult();
-        Map<String, BlackJackResult> playerResults = result.getPlayerResults();
+        double dealerEarning = result.getDealerEarning();
+        Map<String, Double> playerEarnings = result.getPlayerEarnings();
 
-        assertThat(playerResults.get("name")).isEqualTo(BlackJackResult.LOSE);
-        assertThat(dealerResult.get(BlackJackResult.WIN)).isEqualTo(1);
+        assertThat(playerEarnings.get("name")).isEqualTo(-1000);
+        assertThat(dealerEarning).isEqualTo(1000);
     }
 }

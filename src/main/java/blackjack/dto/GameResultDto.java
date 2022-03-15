@@ -1,26 +1,33 @@
 package blackjack.dto;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import blackjack.domain.result.BlackJackResult;
 
 public class GameResultDto {
 
-    private final Map<String, BlackJackResult> playerResults;
-    private final Map<BlackJackResult, Integer> dealerResult;
+    private final double dealerEarning;
+    private final Map<String, Double> playerEarnings;
 
-    public GameResultDto(Map<String, BlackJackResult> playerResults,
-        Map<BlackJackResult, Integer> dealerResult) {
-        this.playerResults = playerResults;
-        this.dealerResult = dealerResult;
+    public GameResultDto(double dealerEarning, Map<String, Double> playerEarnings) {
+        this.dealerEarning = dealerEarning;
+        this.playerEarnings = playerEarnings;
     }
 
-    public Map<String, BlackJackResult> getPlayerResults() {
-        return Collections.unmodifiableMap(playerResults);
+    public double getDealerEarning() {
+        return dealerEarning;
+    }
+
+    public Map<String, Double> getPlayerEarnings() {
+        return new HashMap<>(playerEarnings);
     }
 
     public Map<BlackJackResult, Integer> getDealerResult() {
-        return Collections.unmodifiableMap(dealerResult);
+        return null;
+    }
+
+    public Map<String, BlackJackResult> getPlayerResults() {
+        return null;
     }
 }

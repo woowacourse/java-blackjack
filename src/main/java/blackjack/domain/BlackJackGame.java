@@ -70,30 +70,22 @@ public class BlackJackGame {
 	}
 
 	public GameResultDto createResult() {
-		Map<BlackJackResult, Integer> dealerResult = createDealerResult();
-		Map<String, BlackJackResult> playerResults = createPlayerResults(dealerResult);
-		return new GameResultDto(playerResults, dealerResult);
-	}
-
-	private Map<String, BlackJackResult> createPlayerResults(Map<BlackJackResult, Integer> dealerResult) {
 		Dealer dealer = gamers.getDealer();
 		List<Player> players = gamers.getPlayers();
-
-		Map<String, BlackJackResult> playerResults = new LinkedHashMap<>();
-		for (Player player : players) {
-			BlackJackResult result = player.match(dealer);
-			playerResults.put(player.getName().getValue(), result);
-			dealerResult.merge(result.getReverse(), INCREASE_COUNT, Integer::sum);
-		}
-		return playerResults;
+		return makeResult(dealer, players);
 	}
 
-	private Map<BlackJackResult, Integer> createDealerResult() {
-		Map<BlackJackResult, Integer> dealerResult = new LinkedHashMap<>();
-		for (BlackJackResult blackJackResult : BlackJackResult.values()) {
-			dealerResult.put(blackJackResult, DEFAULT_COUNT);
+	private GameResultDto makeResult(Dealer dealer, List<Player> players) {
+		int dealerEarning = 0;
+		Map<String, Double> playerEarnings = new LinkedHashMap<>();
+
+		for (Player player : players) {
+			BlackJackResult result = player.match(dealer);
+			double playerEarning = result.calculateEarning(player.getBet());
+			playerEarnings.put(player.getName(), playerEarning);
+			dealerEarning += result.getReverseEarning(playerEarning);
 		}
-		return dealerResult;
+		return new GameResultDto(dealerEarning, playerEarnings);
 	}
 
 	public GamerDto getDealerDto() {

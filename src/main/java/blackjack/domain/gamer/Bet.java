@@ -20,6 +20,10 @@ public class Bet {
 		}
 	}
 
+	public int getAmount() {
+		return amount;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

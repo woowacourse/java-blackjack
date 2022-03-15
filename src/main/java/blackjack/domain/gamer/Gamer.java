@@ -32,7 +32,7 @@ public class Gamer {
         return getCardsNumberSum() > number;
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getValue();
     }
 }
