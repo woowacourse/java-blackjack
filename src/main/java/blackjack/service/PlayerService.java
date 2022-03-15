@@ -21,8 +21,8 @@ public class PlayerService {
         this.players = new Players(playerNames);
     }
 
-    public void prepareGame() {
-        players.prepareGame(deck);
+    public void initCards() {
+        players.initCards(deck);
     }
 
     public List<String> findAllNames() {

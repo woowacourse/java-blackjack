@@ -33,9 +33,9 @@ public class GameController {
         }
     }
 
-    public void prepare() {
-        dealerService.prepareGame();
-        playerService.prepareGame();
+    public void initParticipants() {
+        dealerService.initCards();
+        playerService.initCards();
 
         OutputView.printAssignmentResult(playerService.findAllNames());
         OutputView.printDealerFirstCard(dealerService.findFirstCard());

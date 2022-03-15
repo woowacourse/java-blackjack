@@ -27,7 +27,7 @@ class DealerTest {
     void canDrawCard(Deck deck, boolean expected) {
         // give
         final Dealer dealer = new Dealer();
-        dealer.prepareGame(deck);
+        dealer.initCards(deck);
 
         // when
         final boolean actual = dealer.canDrawCard();
@@ -53,7 +53,7 @@ class DealerTest {
         final Deck deck = Deck.createBy(List.of(secondCard, firstCard));
 
         final Dealer dealer = new Dealer();
-        dealer.prepareGame(deck);
+        dealer.initCards(deck);
 
         // when
         final Card actual = dealer.openFirstCard();

@@ -25,11 +25,11 @@ public class Players {
     }
 
     private void validateDuplicate(final List<String> names) {
-        final long countNoDuplicate = names.stream()
+        final long distinctNameCount = names.stream()
                 .distinct()
                 .count();
 
-        if (countNoDuplicate != names.size()) {
+        if (distinctNameCount != names.size()) {
             throw new IllegalArgumentException("이름은 중복을 허용하지 않습니다.");
         }
     }
@@ -43,8 +43,8 @@ public class Players {
         }
     }
 
-    public void prepareGame(final Deck deck) {
-        value.forEach(player -> player.prepareGame(deck));
+    public void initCards(final Deck deck) {
+        value.forEach(player -> player.initCards(deck));
     }
 
     public boolean isDrawablePlayerExist() {

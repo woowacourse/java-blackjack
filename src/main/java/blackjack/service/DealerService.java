@@ -16,8 +16,8 @@ public class DealerService {
         this.dealer = new Dealer();
     }
 
-    public void prepareGame() {
-        dealer.prepareGame(deck);
+    public void initCards() {
+        dealer.initCards(deck);
     }
 
     public CardDto findFirstCard() {

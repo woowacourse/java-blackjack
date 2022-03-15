@@ -20,7 +20,7 @@ public abstract class Participant {
         this.status = Status.HIT;
     }
 
-    public void prepareGame(Deck deck) {
+    public void initCards(Deck deck) {
         IntStream.range(0, INITIAL_CARD_COUNT)
                 .mapToObj(i -> deck.drawCard())
                 .forEach(cards::add);

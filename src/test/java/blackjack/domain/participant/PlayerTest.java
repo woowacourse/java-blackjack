@@ -73,7 +73,7 @@ class PlayerTest {
         final List<Card> cards = List.of(Card.of(DIAMOND, QUEEN), Card.of(DIAMOND, KING));
 
         // when
-        player.prepareGame(Deck.createBy(cards));
+        player.initCards(Deck.createBy(cards));
         final int actual = player.getScore();
 
         // then
