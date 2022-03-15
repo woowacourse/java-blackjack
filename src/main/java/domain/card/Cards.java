@@ -5,11 +5,10 @@ import java.util.List;
 
 public class Cards {
     private static final String ERROR_TO_CHECK_IF_BLACKJACK_FOR_INSUFFICIENT_CARDS = "카드가 두 장 미만인 경우, 블랙잭 여부확인이 불가합니다.";
-    private static final int MAXIMUM_SCORE = 21;
+    private static final int MAXIMUM_VALID_SCORE = 21;
     private static final int MINIMUM_CARDS_TO_CHECK_IF_BLACKJACK = 2;
-    private static final int FIRST_INDEX_INCLUSIVE = 0;
-    private static final int SECOND_INDEX_EXCLUSIVE = 2;
     private static final int ALTERNATIVE_ACE_GAP = 10;
+    private static final int CARD_QUANTITY_FOR_BLACKJACK = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -18,7 +17,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculateScore(cards) > MAXIMUM_SCORE;
+        return calculateScore(cards) > MAXIMUM_VALID_SCORE;
     }
 
     public boolean isBlackJack() {
@@ -26,7 +25,7 @@ public class Cards {
             throw new IllegalStateException(ERROR_TO_CHECK_IF_BLACKJACK_FOR_INSUFFICIENT_CARDS);
         }
 
-        return calculateScore(cards.subList(FIRST_INDEX_INCLUSIVE, SECOND_INDEX_EXCLUSIVE)) == MAXIMUM_SCORE;
+        return getScore() == MAXIMUM_VALID_SCORE && cards.size() == CARD_QUANTITY_FOR_BLACKJACK;
     }
 
     public int getScore() {
@@ -49,7 +48,7 @@ public class Cards {
     private static int calculateScoreWithAce(List<Card> cards) {
         int minimumScore = calculateScoreWithoutAce(cards);
 
-        if (minimumScore + ALTERNATIVE_ACE_GAP <= MAXIMUM_SCORE) {
+        if (minimumScore + ALTERNATIVE_ACE_GAP <= MAXIMUM_VALID_SCORE) {
             return minimumScore + ALTERNATIVE_ACE_GAP;
         }
 
