@@ -10,7 +10,15 @@ public class PlayingCards {
     private static final int ACE_ELEVEN_POSSIBLE = 10;
     private static final int BLACKJACK_SIZE = 2;
 
-    private final Set<PlayingCard> playingCards = new LinkedHashSet<>();
+    private final Set<PlayingCard> playingCards;
+
+    public PlayingCards(Set<PlayingCard> playingCards) {
+        this.playingCards = playingCards;
+    }
+
+    public PlayingCards() {
+        this(new LinkedHashSet<>());
+    }
 
     public void addCard(PlayingCard playingCard) {
         playingCards.add(playingCard);

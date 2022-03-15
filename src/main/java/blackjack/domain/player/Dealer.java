@@ -8,9 +8,13 @@ public class Dealer extends AbstractPlayer implements Player {
     public static final int MAX_POINT = 16;
     public static final int EXCEED_POINT = 17;
 
+    public Dealer(String name, PlayingCards playingCards) {
+        this.name = name;
+        this.playingCards = playingCards;
+    }
+
     public Dealer() {
-        this.playingCards = new PlayingCards();
-        this.name = NAME;
+        this(NAME, new PlayingCards());
     }
 
     @Override
