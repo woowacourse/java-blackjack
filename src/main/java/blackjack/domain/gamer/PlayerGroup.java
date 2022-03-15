@@ -55,10 +55,6 @@ public class PlayerGroup {
         }
     }
 
-    public void addAllTo(List<Gamer> gamers) {
-        gamers.addAll(players);
-    }
-
     public Map<String, Match> getPlayerResult(int sum) {
         Map<String, Match> result = new LinkedHashMap<>();
         for (Player player : players) {
