@@ -49,8 +49,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(
             List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
-        blackJackGame.play(answer -> true, (s, c) -> {});
-        GameResultDto result = blackJackGame.createResult();
+        GameResultDto result = blackJackGame.play(answer -> true, (s, c) -> {});
 
         int dealerEarning = result.getDealerEarning();
         Map<String, Integer> playerEarnings = result.getPlayerEarnings();

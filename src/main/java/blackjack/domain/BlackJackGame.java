@@ -29,11 +29,12 @@ public class BlackJackGame {
 		this.deck = deck;
 	}
 
-	public void play(Function<String, Boolean> answerReceiver, BiConsumer<String, List<Card>> cardChecker) {
+	public GameResultDto play(Function<String, Boolean> answerReceiver, BiConsumer<String, List<Card>> cardChecker) {
 		giveFirstCards();
 		checkFirstCardsOfGamers(cardChecker);
 		askPlayerHitOrStay(answerReceiver, cardChecker);
 		askDealerHitOrStay();
+		return createResult();
 	}
 
 	private void giveFirstCards() {
@@ -84,7 +85,7 @@ public class BlackJackGame {
 		}
 	}
 
-	public GameResultDto createResult() {
+	private GameResultDto createResult() {
 		Dealer dealer = gamers.getDealer();
 		List<Player> players = gamers.getPlayers();
 		return makeResult(dealer, players);

@@ -14,10 +14,10 @@ public class BlackJackApplication {
             InputView.askNames(),
             InputView::askBet,
             new Deck(Card.getCards()));
+
         OutputView.printGamers(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
 
-        blackJackGame.play(InputView::askHitOrStay, OutputView::checkHoldingCards);
-        GameResultDto result = blackJackGame.createResult();
+        GameResultDto result = blackJackGame.play(InputView::askHitOrStay, OutputView::checkHoldingCards);
 
         OutputView.printAdditionalDrawDealer(result.getDealerDrawCount());
         OutputView.printFinalCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
