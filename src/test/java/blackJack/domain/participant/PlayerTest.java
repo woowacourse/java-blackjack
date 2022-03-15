@@ -110,7 +110,37 @@ class PlayerTest {
         Dealer dealer = new Dealer();
         dealer.hit(Card.from(Symbol.HEART, Denomination.JACK));
         dealer.hit(Card.from(Symbol.DIAMOND, Denomination.JACK));
+        dealer.hit(Card.from(Symbol.DIAMOND, Denomination.TWO));
+
+        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("점수는 같지만 플레이어가 블랙잭으로 승리하는 경우 승부 결과 반환 테스트")
+    void getMatchResultPlayerBlackJack() {
+        Player player = new Player("rookie");
+        player.hit(Card.from(Symbol.CLOVER, Denomination.JACK));
+        player.hit(Card.from(Symbol.SPADE, Denomination.ACE));
+
+        Dealer dealer = new Dealer();
+        dealer.hit(Card.from(Symbol.HEART, Denomination.JACK));
+        dealer.hit(Card.from(Symbol.DIAMOND, Denomination.NINE));
+        dealer.hit(Card.from(Symbol.DIAMOND, Denomination.TWO));
+
+        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.WIN);
+    }
+
+    @Test
+    @DisplayName("점수는 같지만 딜러가 블랙잭으로 플레이어가 패배하는 경우 승부 결과 반환 테스트")
+    void getMatchResultDealerBlackJack() {
+        Player player = new Player("rookie");
+        player.hit(Card.from(Symbol.HEART, Denomination.JACK));
+        player.hit(Card.from(Symbol.DIAMOND, Denomination.NINE));
         player.hit(Card.from(Symbol.DIAMOND, Denomination.TWO));
+
+        Dealer dealer = new Dealer();
+        dealer.hit(Card.from(Symbol.CLOVER, Denomination.JACK));
+        dealer.hit(Card.from(Symbol.SPADE, Denomination.ACE));
 
         assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.LOSE);
     }

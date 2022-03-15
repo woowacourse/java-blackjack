@@ -32,6 +32,8 @@ public abstract class Participant {
 
     abstract boolean canHit();
 
+    abstract MatchResult getMatchResult(Participant participant);
+
     public void hit(Card card) {
         cards.add(card);
     }
@@ -45,14 +47,12 @@ public abstract class Participant {
         return score;
     }
 
-    protected MatchResult getMatchResult(int otherParticipantScore) {
-        if (this.getScore() > otherParticipantScore) {
-            return MatchResult.WIN;
-        }
-        if (this.getScore() == otherParticipantScore) {
-            return MatchResult.DRAW;
-        }
-        return MatchResult.LOSE;
+    public boolean isBlackJack() {
+        return MatchResult.isBlackJackScore(getScore()) && cards.getCardsInfo().size() == 2;
+    }
+
+    public boolean isBurst() {
+        return MatchResult.isBurstScore(getScore());
     }
 
     public List<String> getCardsInfo() {

@@ -15,17 +15,34 @@ public class Dealer extends Participant {
         return this.getScore() <= DEALER_MAXIMUM_RECEIVE_CARD_SCORE;
     }
 
-    public MatchResult getMatchResult(Player player) {
-        return calculateDealerMatchResult(player.getScore());
-    }
-
-    private MatchResult calculateDealerMatchResult(int playerScore) {
-        if (MatchResult.isBurst(playerScore)) {
+    @Override
+    public MatchResult getMatchResult(Participant player) {
+        if (player.isBurst()) {
             return MatchResult.WIN;
         }
-        if (MatchResult.isBurst(this.getScore())) {
+        if (this.getScore() == player.getScore()) {
+            return getResultAtSameScore(player);
+        }
+        return getResultAtDifferentScore(player);
+    }
+
+    private MatchResult getResultAtSameScore(Participant player) {
+        if (this.isBlackJack() && !player.isBlackJack()) {
+            return MatchResult.WIN;
+        }
+        if (!this.isBlackJack() && player.isBlackJack()) {
             return MatchResult.LOSE;
         }
-        return getMatchResult(playerScore);
+        return MatchResult.DRAW;
+    }
+
+    private MatchResult getResultAtDifferentScore(Participant player) {
+        if (this.isBurst()) {
+            return MatchResult.LOSE;
+        }
+        if (this.getScore() > player.getScore()) {
+            return MatchResult.WIN;
+        }
+        return MatchResult.LOSE;
     }
 }

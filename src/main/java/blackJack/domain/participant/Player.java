@@ -19,20 +19,37 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return !MatchResult.isBurst(this.getScore());
+        return !MatchResult.isBurstScore(this.getScore());
     }
 
-    public MatchResult getMatchResult(Dealer dealer) {
-        return calculatePlayerMatchResult(dealer.getScore());
-    }
-
-    private MatchResult calculatePlayerMatchResult(int dealerScore) {
-        if (MatchResult.isBurst(this.getScore())) {
+    @Override
+    public MatchResult getMatchResult(Participant dealer) {
+        if (this.isBurst()) {
             return MatchResult.LOSE;
         }
-        if (MatchResult.isBurst(dealerScore)) {
+        if (this.getScore() == dealer.getScore()) {
+            return getResultAtSameScore(dealer);
+        }
+        return getResultAtDifferentScore(dealer);
+    }
+
+    private MatchResult getResultAtSameScore(Participant dealer) {
+        if (this.isBlackJack() && !dealer.isBlackJack()) {
             return MatchResult.WIN;
         }
-        return getMatchResult(dealerScore);
+        if (!this.isBlackJack() && dealer.isBlackJack()) {
+            return MatchResult.LOSE;
+        }
+        return MatchResult.DRAW;
+    }
+
+    private MatchResult getResultAtDifferentScore(Participant dealer) {
+        if (dealer.isBurst()) {
+            return MatchResult.WIN;
+        }
+        if (this.getScore() > dealer.getScore()) {
+            return MatchResult.WIN;
+        }
+        return MatchResult.LOSE;
     }
 }
