@@ -3,10 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.Dealer;
-import blackjack.domain.entry.Participant;
-import blackjack.domain.entry.Player;
-import blackjack.domain.entry.Players;
+import blackjack.domain.entry.*;
 
 import java.util.List;
 import java.util.Map;
@@ -16,11 +13,11 @@ public class BlackjackGame {
     public static final int BLACKJACK_NUMBER = 21;
 
     private final Deck deck;
-    private final Players players;
+    private final GameParticipants gameParticipants;
 
     public BlackjackGame(List<String> names) {
         this.deck = Deck.of(Card.createDeck());
-        this.players = new Players(createDealer(), toPlayers(names));
+        this.gameParticipants = new GameParticipants(createDealer(), toPlayers(names));
     }
 
     public void receiveOneMoreCard(Player player) {
@@ -28,7 +25,7 @@ public class BlackjackGame {
     }
 
     public boolean canDealerHit() {
-        return players.isDealerHit(deck);
+        return gameParticipants.isDealerHit(deck);
     }
 
     public boolean canPlayerHit(Player player, Command command) {
@@ -41,24 +38,24 @@ public class BlackjackGame {
     }
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {
-        return players.getGameResult();
+        return gameParticipants.getGameResult();
     }
 
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return gameParticipants.getPlayers();
     }
 
     public List<Participant> getParticipant() {
-        return players.getParticipant();
+        return gameParticipants.getParticipant();
     }
 
     private Dealer createDealer() {
         return new Dealer(HoldCards.init(List.of(deck.draw(), deck.draw())));
     }
 
-    private List<Player> toPlayers(List<String> names) {
-        return names.stream()
+    private Players toPlayers(List<String> names) {
+        return new Players(names.stream()
                 .map(name -> new Player(name, HoldCards.init(List.of(deck.draw(), deck.draw()))))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 }
