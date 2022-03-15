@@ -1,6 +1,7 @@
 package domain.card;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,6 @@ public class DeckTest {
 	@DisplayName("덱에서 카드를 드로우 하는 기능")
 	void draw() {
 		Deck deck = Deck.from(new GeneralGenerationDeckStrategy());
-		Assertions.assertThat(deck.draw() instanceof Card).isTrue();
+		assertThat(deck.draw() instanceof Card).isTrue();
 	}
 }
