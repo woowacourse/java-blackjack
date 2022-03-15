@@ -6,6 +6,8 @@ import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.PlayerTableDto;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import java.util.List;
 
 import blackjack.domain.RedrawChoice;
@@ -14,6 +16,10 @@ import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTurnDto;
 import blackjack.service.BlackJackService;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class BlackJackController {
 
@@ -23,35 +29,57 @@ public class BlackJackController {
 		this.blackJackService = blackJackService;
 	}
 
-	public void initBlackJackGame() {
+	public void run(InputView inputView, OutputView outputView) {
+		initBlackJackGame();
+		addPlayers(inputView::requestPlayerName);
+		distributeCard(outputView::printInitialStatus);
+		takePlayersTurn(inputView::drawOneMoreCard, outputView::printPlayerHand);
+		takeDealerTurn(outputView::printDealerStatus);
+		getFinalResult(outputView::printFinalResult);
+	}
+
+	private void initBlackJackGame() {
 		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Hand(), DealerDrawable::chooseDraw));
 	}
 
-	public void addPlayers(List<String> names) {
-		blackJackService.joinPlayers(names);
+	private void addPlayers(Supplier<List<String>> playerNames) {
+		blackJackService.joinPlayers(playerNames.get());
 	}
 
-	public DealerTableDto distributeCardToDealer() {
-		return blackJackService.distributeCardToDealer();
+	private void distributeCard(BiConsumer<DealerTableDto, List<PlayerTableDto>> printerTable) {
+		DealerTableDto dealerTable = blackJackService.distributeCardToDealer();
+		List<PlayerTableDto> playersTable = blackJackService.distributeCardToPlayers();
+		printerTable.accept(dealerTable, playersTable);
 	}
 
-	public List<PlayerTableDto> distributeCardToPlayers() {
-		return blackJackService.distributeCardToPlayers();
+	private void takePlayersTurn(Function<PlayerTurnDto, String> answerFunction,
+								 Consumer<PlayerTableDto> printerPlayerStatus) {
+		while (true) {
+			String answer = answerFunction.apply(getWhoseTurn());
+			PlayerStatusDto playerStatus = drawPlayer(answer);
+			printerPlayerStatus.accept(playerStatus.getTableStatusDto());
+			if (playerStatus.isDraw()) {
+				continue;
+			}
+			if (!playerStatus.isHasNextPlayer()) {
+				break;
+			}
+		}
 	}
 
-	public PlayerTurnDto getWhoseTurn() {
+	private PlayerTurnDto getWhoseTurn() {
 		return blackJackService.whoseTurn();
 	}
 
-	public PlayerStatusDto drawPlayer(String answer) {
+	private PlayerStatusDto drawPlayer(String answer) {
 		return blackJackService.drawPlayer(RedrawChoice.of(answer));
 	}
 
-	public DealerTurnDto drawDealer() {
-		return blackJackService.drawDealer();
+	private void takeDealerTurn(Consumer<DealerTurnDto> printerDealerTurn) {
+		printerDealerTurn.accept(blackJackService.drawDealer());
 	}
 
-	public FinalResultDto getFinalResult() {
-		return blackJackService.calculateFinalResult();
+	private void getFinalResult(Consumer<FinalResultDto> printerFinalResult) {
+		printerFinalResult.accept(blackJackService.calculateFinalResult());
 	}
 }

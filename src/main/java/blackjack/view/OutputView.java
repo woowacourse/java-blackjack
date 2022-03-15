@@ -30,13 +30,13 @@ public class OutputView {
 	private static final String DEFEAT = "패";
 	private static final String TIE = "무";
 
-	public static void printInitialStatus(final DealerTableDto dealerTable,
-										  final List<PlayerTableDto> playersTable) {
+	public void printInitialStatus(final DealerTableDto dealerTable,
+								   final List<PlayerTableDto> playersTable) {
 		printNames(dealerTable, playersTable);
 		printHand(dealerTable, playersTable);
 	}
 
-	private static void printNames(final DealerTableDto dealerTable, final List<PlayerTableDto> playersTable) {
+	private void printNames(final DealerTableDto dealerTable, final List<PlayerTableDto> playersTable) {
 		final String playerNames = playersTable.stream()
 				.map(PlayerTableDto::getRoleName)
 				.collect(Collectors.joining(OUTPUT_CONTEXT_DISTRIBUTOR));
@@ -46,23 +46,23 @@ public class OutputView {
 		System.out.println(message);
 	}
 
-	private static void printHand(DealerTableDto dealerTable, List<PlayerTableDto> playersTable) {
+	private void printHand(DealerTableDto dealerTable, List<PlayerTableDto> playersTable) {
 		printDealerHand(dealerTable);
-		playersTable.forEach(OutputView::printPlayerHand);
+		playersTable.forEach(this::printPlayerHand);
 		System.out.print("\n");
 	}
 
-	private static void printDealerHand(final DealerTableDto dealerTable) {
+	private void printDealerHand(final DealerTableDto dealerTable) {
 		System.out.print(dealerTable.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, dealerTable.getCards()));
 	}
 
-	public static void printPlayerHand(final PlayerTableDto playerTable) {
+	public void printPlayerHand(final PlayerTableDto playerTable) {
 		System.out.print(playerTable.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, playerTable.getCards()));
 	}
 
-	public static void printDealerStatus(DealerTurnDto dealerTurn) {
+	public void printDealerStatus(DealerTurnDto dealerTurn) {
 		System.out.print("\n");
 		if (dealerTurn.isDraw()) {
 			System.out.println(
@@ -73,37 +73,37 @@ public class OutputView {
 				dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + FAIL_TO_RECEIVE_ONE_MORE_CARD + "\n");
 	}
 
-	public static void printFinalResult(FinalResultDto finalResult) {
+	public void printFinalResult(FinalResultDto finalResult) {
 		final DealerResultDto dealerResult = finalResult.getDealerResult();
 		final List<PlayerResultDto> playerResult = finalResult.getPlayerResults();
 		printDealerFinalResult(dealerResult);
-		playerResult.forEach(OutputView::printPlayerFinalResult);
+		playerResult.forEach(this::printPlayerFinalResult);
 		System.out.print("\n");
 		System.out.println(FINAL_OUTCOME);
 		printDealerOutcome(dealerResult);
 		printPlayerOutcome(playerResult);
 	}
 
-	private static void printDealerFinalResult(final DealerResultDto result) {
+	private void printDealerFinalResult(final DealerResultDto result) {
 		System.out.print(result.getName() + SPACE + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCards()));
 		System.out.println(RESULT + printTotalScore(result.getTotalScore(), result.isBust()));
 	}
 
-	private static void printPlayerFinalResult(final PlayerResultDto result) {
+	private void printPlayerFinalResult(final PlayerResultDto result) {
 		System.out.print(result.getName() + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCards()));
 		System.out.println(RESULT + printTotalScore(result.getTotalScore(), result.isBust()));
 	}
 
-	private static String printTotalScore(int score, boolean bust) {
+	private String printTotalScore(int score, boolean bust) {
 		if (bust) {
 			return BUST_MESSAGE;
 		}
 		return Integer.toString(score);
 	}
 
-	private static void printDealerOutcome(final DealerResultDto dealerResult) {
+	private void printDealerOutcome(final DealerResultDto dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		final String dealerOutcome = dealerResult.getCompeteResult().entrySet().stream()
 				.map(entry -> EMPTY + entry.getValue() + printOutcome(entry.getKey()))
@@ -111,14 +111,14 @@ public class OutputView {
 		System.out.println(dealerOutcome);
 	}
 
-	private static void printPlayerOutcome(final List<PlayerResultDto> playerResults) {
+	private void printPlayerOutcome(final List<PlayerResultDto> playerResults) {
 		for (PlayerResultDto playerResult : playerResults) {
 			System.out.print(playerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 			System.out.println(printOutcome(playerResult.getCompeteResult()));
 		}
 	}
 
-	private static String printOutcome(Outcome outcome) {
+	private String printOutcome(Outcome outcome) {
 		if (outcome == Outcome.VICTORY) {
 			return VICTORY;
 		}
