@@ -35,8 +35,8 @@ public class OutputView {
         System.out.println(StringFormatter.formatUserCards(userDto));
     }
 
-    public void printDealerHit() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public void printDealerHit(UserDto userDto) {
+        System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.\n", userDto.getUserName());
     }
 
     public void printAllUserCardsWithScore(UsersDto usersDto) {
