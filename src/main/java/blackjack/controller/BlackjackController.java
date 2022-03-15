@@ -39,16 +39,21 @@ public class BlackjackController {
         }
     }
 
-    // TODO: 2 depth 수정하기
     private void givePlayerCards(Player player, BlackjackGame game) {
-        while (player.canReceive()) {
-            if (!InputView.requestMorePlayerCardInput(player.getName())) {
-                return;
-            }
-            player.receiveCard(game.popCard()); // TODO: BlackjackGame 이 할 일 같음
-            OutputView.printSingleHand(ParticipantDto.from(player));
+        if (!InputView.requestMorePlayerCardInput(player.getName())) {
+            return;
+        }
+        if (game.giveExtraCardToPlayer(player)) {
+            OutputView.printParticipantHand(ParticipantDto.from(player));
+            givePlayerCards(player, game);
+            return;
         }
 
+        printHandAndBustMessage(player);
+    }
+
+    private void printHandAndBustMessage(Player player) {
+        OutputView.printParticipantHand(ParticipantDto.from(player));
         OutputView.printPlayerBustInfo();
     }
 

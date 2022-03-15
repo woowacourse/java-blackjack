@@ -46,6 +46,38 @@ public class BlackjackGameTest {
                 .hasMessage("플레이어가 없는 게임은 존재할 수 없습니다.");
     }
 
+    @DisplayName("giveExtraCardToPlayer 는 전달받은 플레이어에 카드를 추가하고, 카드를 더 받을 수 있다면 true 를 반환한다.")
+    @Test
+    void giveExtraCardToPlayer_addCardToHandOfPlayerAndReturnTrueIfPlayerCanReceiveMore() {
+        // given
+        CardStack cards = CardStackGenerator.ofReverse(
+                CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER6, CLOVER7, CLOVER8);
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
+        Player player = blackjackGame.getParticipants().get(0);
+
+        // when
+        boolean actual = blackjackGame.giveExtraCardToPlayer(player);
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("giveExtraCardToPlayer 는 전달받은 플레이어에 카드를 추가하고, 카드를 더 받을 수 없다면 false 를 반환한다.")
+    @Test
+    void giveExtraCardToPlayer_addCardToHandOfPlayerAndReturnFalseIfPlayerCanNotReceiveMore() {
+        // given
+        CardStack cards = CardStackGenerator.ofReverse(
+                CLOVER2, CLOVER3, CLOVER10, CLOVER5, CLOVER6, CLOVER7, CLOVER8);
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
+        Player player = blackjackGame.getParticipants().get(0);
+
+        // when
+        boolean actual = blackjackGame.giveExtraCardToPlayer(player);
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
     @DisplayName("딜러의 점수가 16이하인 점수가 17이상이 될 때까지 카드를 받는다.")
     @Test
     void giveExtraCardsToDealer_giveExtraCardsToDealerIfDealerScoreIsLessOrEqualThan16() {

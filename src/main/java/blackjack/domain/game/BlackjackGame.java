@@ -21,13 +21,13 @@ public class BlackjackGame {
         validatePlayerNames(playerNames);
 
         this.cardDeck = cardDeck;
-        this.dealer = Dealer.of(initializeHand());
+        this.dealer = Dealer.of(generateInitialHand());
         participants.addAll(initializePlayers(playerNames));
     }
 
     private List<Player> initializePlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> Player.of(name, initializeHand()))
+                .map(name -> Player.of(name, generateInitialHand()))
                 .collect(Collectors.toList());
     }
 
@@ -35,6 +35,15 @@ public class BlackjackGame {
         if (playerNames.size() == 0) {
             throw new IllegalArgumentException(NO_PLAYER_EXCEPTION_MESSAGE);
         }
+    }
+
+    private Hand generateInitialHand() {
+        return Hand.of(cardDeck.pop(), cardDeck.pop());
+    }
+
+    public boolean giveExtraCardToPlayer(Player player) {
+        player.receiveCard(cardDeck.pop());
+        return player.canReceive();
     }
 
     public int giveExtraCardsToDealer() {
@@ -55,12 +64,9 @@ public class BlackjackGame {
         return dealer;
     }
 
+
     public List<Player> getParticipants() {
         return List.copyOf(participants);
-    }
-
-    private Hand initializeHand() {
-        return Hand.of(cardDeck.pop(), cardDeck.pop());
     }
 
     @Override

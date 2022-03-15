@@ -39,11 +39,11 @@ public class OutputView {
     }
 
     public static void printInitialPlayersHand(List<ParticipantDto> playerDtos) {
-        playerDtos.forEach(OutputView::printSingleHand);
+        playerDtos.forEach(OutputView::printParticipantHand);
         printNewLine();
     }
 
-    public static void printSingleHand(ParticipantDto dto) {
+    public static void printParticipantHand(ParticipantDto dto) {
         String name = dto.getName();
         String cards = String.join(JOIN_DELIMITER, dto.getHandDto().getCards());
 

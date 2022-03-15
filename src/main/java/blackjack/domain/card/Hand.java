@@ -60,7 +60,6 @@ public class Hand {
         return Score.valueOf(adjustedScore);
     }
 
-
     @Override
     public String toString() {
         return "Hand{" +
