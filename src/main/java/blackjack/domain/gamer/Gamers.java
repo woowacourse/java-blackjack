@@ -53,12 +53,13 @@ public class Gamers {
         return dealer;
     }
 
-    public void distributeCardToPlayer(String name, Deck deck) {
-        findPlayerByName(name).addCard(deck.draw());
+    public void distributeCardToPlayer(Deck deck) {
+        for (Player player : players) {
+            player.addCard(deck.draw());
+        }
     }
 
-    public boolean canDraw(String name) {
-        Player player = findPlayerByName(name);
+    public boolean canDrawToPlayer(Player player) {
         return !player.isBurst();
     }
 

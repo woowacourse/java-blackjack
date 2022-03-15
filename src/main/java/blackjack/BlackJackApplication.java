@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.BlackJackGame;
 import blackjack.domain.gamer.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -15,7 +16,7 @@ public class BlackJackApplication {
 
         OutputView.printFirstCards(blackJackGame.getDealer(), blackJackGame.getPlayers());
 
-        drawAdditionalCard(names, blackJackGame);
+        drawAdditionalCard(blackJackGame);
 
         printAdditionalDrawDealer(blackJackGame);
         OutputView.printFinalCards(blackJackGame.getDealer(), blackJackGame.getPlayers());
@@ -27,17 +28,16 @@ public class BlackJackApplication {
         OutputView.printAdditionalDrawDealer(controller.getDealerCardSize() - INIT_DISTRIBUTION_COUNT);
     }
 
-    private static void drawAdditionalCard(List<String> names, BlackJackGame controller) {
-        for (String name : names) {
-            drawCardToPlayer(controller, name);
+    private static void drawAdditionalCard(BlackJackGame blackJackGame) {
+        for (Player player : blackJackGame.getPlayers()) {
+            printPlayerDrawCard(blackJackGame, player);
         }
     }
 
-    private static void drawCardToPlayer(BlackJackGame blackJackGame, String name) {
-        while (blackJackGame.isDrawPossible(name, InputView::getAnswerOfAdditionalDraw)) {
-            blackJackGame.distributeCardToPlayer(name);
-            Player playerDtoByName = blackJackGame.findPlayerByName(name);
-            OutputView.printPlayerCard(playerDtoByName);
+    private static void printPlayerDrawCard(BlackJackGame blackJackGame, Player player) {
+        while (blackJackGame.isDrawPossible(player, InputView.getAnswerOfAdditionalDraw(player.getName()))) {
+            blackJackGame.distributeCardToPlayer(player);
+            OutputView.printPlayerCard(player);
         }
     }
 }

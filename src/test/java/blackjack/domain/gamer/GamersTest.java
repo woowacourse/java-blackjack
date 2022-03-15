@@ -41,22 +41,12 @@ public class GamersTest {
     }
 
     @Test
-    @DisplayName("플레이어 이름을 입력 받아 카드를 뽑는다.")
-    void distributeCardToPlayer() {
-        String name = "범고래";
-        Gamers gamers = new Gamers(List.of(name));
-        Deck deck = new Deck();
-        Player players = gamers.findPlayerByName(name);
-        gamers.distributeCardToPlayer(name, deck);
-        assertThat(players.getCardsSize()).isEqualTo(1);
-    }
-
-    @Test
     @DisplayName("입력 받은 이름의 플레이어가 버스트인지 확인한다.")
     void isBurst() {
         String name = "범고래";
         Gamers gamers = new Gamers(List.of(name));
-        assertThat(gamers.canDraw(name)).isFalse();
+        Player player = gamers.getPlayers().get(0);
+        assertThat(gamers.canDrawToPlayer(player)).isFalse();
     }
 
     @Test
