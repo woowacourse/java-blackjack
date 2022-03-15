@@ -22,7 +22,7 @@ public abstract class Participant {
         this.cards = cards;
     }
 
-    abstract public List<Card> showFirstCards();
+    public abstract List<Card> showFirstCards();
 
     public void drawCard(final Deck deck) {
         cards.add(deck.drawCard());
