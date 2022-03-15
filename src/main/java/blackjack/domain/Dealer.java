@@ -19,10 +19,6 @@ public class Dealer extends Gamer {
 		return !isWin(player) && !isDraw(player);
 	}
 
-	public boolean isHit() {
-		return this.getScore() < HIT_THRESHOLD;
-	}
-
 	private boolean isPlayerAndDealerInNormalCase(Player player) {
 		return !this.isBlackJack() && !this.isBust() && !player.isBlackJack() && !player.isBust();
 	}
@@ -52,6 +48,6 @@ public class Dealer extends Gamer {
 
 	@Override
 	public boolean canHit() {
-		return !this.isBust() && !this.isBlackJack() && this.isHit();
+		return this.getScore() < HIT_THRESHOLD;
 	}
 }
