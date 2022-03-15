@@ -1,9 +1,13 @@
-package blackjack.domain.participant;
+package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import blackjack.domain.participant.BetMoney;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public class ProfitResult {
 

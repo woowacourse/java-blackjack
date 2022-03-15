@@ -1,4 +1,7 @@
-package blackjack.domain.participant;
+package blackjack.domain;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public enum Judgement {
 

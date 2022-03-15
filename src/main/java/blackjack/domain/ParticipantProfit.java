@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain;
 
 public class ParticipantProfit {
 
