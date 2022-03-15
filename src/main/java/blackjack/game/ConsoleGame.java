@@ -2,7 +2,7 @@ package blackjack.game;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
-import blackjack.domain.participant.Command;
+import blackjack.view.Command;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
