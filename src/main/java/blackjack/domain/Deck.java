@@ -29,7 +29,7 @@ public class Deck {
 		return cards.size();
 	}
 
-	public void shuffleDeck() {
+	public void shuffle() {
 		Collections.shuffle(cards);
 	}
 
