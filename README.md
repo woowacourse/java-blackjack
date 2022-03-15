@@ -61,14 +61,13 @@
 
 ## 피드백
 
-- [ ] Table 클래스 이름 변경, 클래스 역할 고민
 - [x] 파일 끝에 개행문자 추가
-    - [x] insert_final_newline 옵션을 true로 설정
+      - [x] insert_final_newline 옵션을 true로 설정
 - [x] 인풋 뷰 검증로직을 Players 클래스 안으로 이동, 정적팩토리메서드 추가
-- [x] GameController : 10라인 넘어가는 questAddCard 메서드 로직 효율화
-    - [x] while문 사용
-- [ ] 
-- [ ] 
+- [x] GameController : 10 라인 넘어가는 questAddCard 메서드 로직 효율화
+- [ ] suit 클래스 속 이름 중복 제거
+- [ ] 패키지에 위치한 클래스들 하위에 패키지를 더 나누기
+- [ ] Table 클래스 이름 변경, 클래스 역할 고민
 - [ ] 
 - [ ] 
 - [ ] 

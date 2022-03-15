@@ -3,8 +3,8 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
+import blackjack.domain.card.cardElement.Denomination;
+import blackjack.domain.card.cardElement.Suit;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
