@@ -1,29 +1,31 @@
 package blackjack.domain;
 
+import java.util.function.Function;
+
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public enum Judgement {
 
-    BLACKJACK("블랙잭") {
+    BLACKJACK("블랙잭", money -> money.calculateProfit(1.5)) {
         @Override
         public Judgement getOpposite() {
             return LOSE;
         }
     },
-    WIN("승") {
+    WIN("승", money -> money.calculateProfit(1)) {
         @Override
         public Judgement getOpposite() {
             return LOSE;
         }
     },
-    DRAW("무") {
+    DRAW("무", money -> money.calculateProfit(1)) {
         @Override
         public Judgement getOpposite() {
             return DRAW;
         }
     },
-    LOSE("패") {
+    LOSE("패", money -> money.calculateProfit(-1)) {
         @Override
         public Judgement getOpposite() {
             return WIN;
@@ -31,9 +33,11 @@ public enum Judgement {
     };
 
     private final String name;
+    private final Function<Money, Profit> profitFunction;
 
-    Judgement(String name) {
+    Judgement(String name, Function<Money, Profit> profitFunction) {
         this.name = name;
+        this.profitFunction = profitFunction;
     }
 
     abstract public Judgement getOpposite();
@@ -72,6 +76,10 @@ public enum Judgement {
 
         }
         return Judgement.WIN;
+    }
+
+    public Profit calculateProfit(Money betMoney) {
+        return profitFunction.apply(betMoney);
     }
 
     public String getName() {

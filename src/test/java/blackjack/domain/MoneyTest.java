@@ -42,4 +42,19 @@ public class MoneyTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 금액은 100원 단위어야 합니다.");
     }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {1.5, 1, -1})
+    @DisplayName("일정 배수를 곱한 Money 객체를 얻을 수 있다.")
+    void multiplyMoney(double multiple) {
+        // given
+        int amount = 1000;
+        Money money = new Money(amount);
+
+        // when
+        Profit profit = money.calculateProfit(multiple);
+
+        // then
+        assertThat(profit.getAmount()).isEqualTo((int)(amount * multiple));
+    }
 }
