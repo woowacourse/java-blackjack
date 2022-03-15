@@ -13,7 +13,7 @@ public class Deck {
     private final LinkedList<Card> cards;
 
     private Deck(LinkedList<Card> cards) {
-        this.cards = cards;
+        this.cards = new LinkedList<>(cards);
     }
 
     static {
