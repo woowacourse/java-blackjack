@@ -13,17 +13,17 @@ import static blackjack.domain.gamer.Gamer.MAX_CARD_VALUE;
 
 public enum BlackJackResult {
     WIN("승", (player, dealer) ->
-            (isBlackJack(player) && !isBlackJack(dealer)
-                    || player.getCardsNumberSum() <= MAX_CARD_VALUE
-                    && (player.getCardsNumberSum() > dealer.getCardsNumberSum() || dealer.getCardsNumberSum() > MAX_CARD_VALUE))),
+            ((isBlackJack(player) && !isBlackJack(dealer))
+                    || (player.getCardsNumberSum() <= MAX_CARD_VALUE
+                    && (player.getCardsNumberSum() > dealer.getCardsNumberSum() || dealer.getCardsNumberSum() > MAX_CARD_VALUE)))),
     LOSE("패", (player, dealer) ->
-            (!isBlackJack(player) && isBlackJack(dealer)
-                    || player.getCardsNumberSum() > MAX_CARD_VALUE) || (dealer.getCardsNumberSum() <= MAX_CARD_VALUE
-                    && player.getCardsNumberSum() < dealer.getCardsNumberSum())),
+            ((!isBlackJack(player) && isBlackJack(dealer))
+                    || (player.getCardsNumberSum() > MAX_CARD_VALUE) || (dealer.getCardsNumberSum() <= MAX_CARD_VALUE
+                    && player.getCardsNumberSum() < dealer.getCardsNumberSum()))),
     DRAW("무", (player, dealer) ->
-            (isBlackJack(player) && isBlackJack(dealer)
-                    || player.getCardsNumberSum() <= MAX_CARD_VALUE
-                    && dealer.getCardsNumberSum() <= MAX_CARD_VALUE && player.getCardsNumberSum() == dealer.getCardsNumberSum()));
+            ((isBlackJack(player) && isBlackJack(dealer))
+                    || (player.getCardsNumberSum() <= MAX_CARD_VALUE
+                    && dealer.getCardsNumberSum() <= MAX_CARD_VALUE && player.getCardsNumberSum() == dealer.getCardsNumberSum())));
 
     private static final String NOT_EXIST_ERROR = "옯바른 결과를 찾을 수 없습니다.";
 

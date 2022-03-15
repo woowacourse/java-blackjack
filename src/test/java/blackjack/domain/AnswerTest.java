@@ -14,7 +14,7 @@ class AnswerTest {
         assertThatThrownBy(() -> {
             Answer.from("Hi");
         }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("입려값이 y 또는 n이 아닙니다.");
+                .hasMessageContaining("입력값이 y 또는 n이 아닙니다.");
     }
 
     @Test
