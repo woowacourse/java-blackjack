@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.HitRequest;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,9 +14,8 @@ public class InputView {
                 .split(",", -1));
     }
 
-    public static String inputHitRequest(String playerName) {
-        System.out.printf("%s는(은) 한 장의 카드를 더 받으시겠습니까? (예는 y, 아니오는 n)", playerName);
-        System.out.println();
-        return scanner.nextLine().toLowerCase();
+    public static HitRequest inputHitRequest(String playerName) {
+        System.out.printf("%s는(은) 한 장의 카드를 더 받으시겠습니까? (예는 y, 아니오는 n)%n", playerName);
+        return HitRequest.find(scanner.nextLine());
     }
 }

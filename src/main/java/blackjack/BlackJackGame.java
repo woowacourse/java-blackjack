@@ -70,7 +70,7 @@ public class BlackJackGame {
 
     private HitRequest inputHitRequest(Player player) {
         try {
-            return HitRequest.find(InputView.inputHitRequest(player.getName()));
+            return InputView.inputHitRequest(player.getName());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputHitRequest(player);
