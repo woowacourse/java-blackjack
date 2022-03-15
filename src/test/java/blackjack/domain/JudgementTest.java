@@ -143,28 +143,4 @@ public class JudgementTest {
         // then
         assertThat(judgement).isEqualTo(DRAW);
     }
-
-    @ParameterizedTest
-    @MethodSource("provideJudgementMultiple")
-    @DisplayName("판결에 대한 수익을 계산할 수 있다.")
-    void calculateProfit(Judgement judgement, double multiple) {
-        // given
-        int amount = 1000;
-        BetMoney betMoney = new BetMoney(amount);
-
-        // when
-        Profit profit = judgement.calculateProfit(betMoney);
-
-        // then
-        assertThat(profit.getAmount()).isEqualTo((int)(amount * multiple));
-    }
-
-    private static Stream<Arguments> provideJudgementMultiple() {
-        return Stream.of(
-            Arguments.of(BLACKJACK, 1.5),
-            Arguments.of(WIN, 1),
-            Arguments.of(DRAW, 1),
-            Arguments.of(LOSE, -1)
-        );
-    }
 }

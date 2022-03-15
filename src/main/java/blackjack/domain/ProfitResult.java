@@ -28,7 +28,9 @@ public class ProfitResult {
 
     private ParticipantProfit calculateParticipantProfit(Player player, Dealer dealer) {
         Judgement playerJudgement = Judgement.judgePlayer(player, dealer);
-        return new ParticipantProfit(player.getName(), playerJudgement.calculateProfit(player.getBetMoney()));
+        BetMoney betMoney = player.getBetMoney();
+        double profitMultiple = playerJudgement.getProfitMultiple();
+        return new ParticipantProfit(player.getName(), betMoney.calculateProfit(profitMultiple));
     }
 
     private ParticipantProfit calculateDealerResult(List<ParticipantProfit> playersProfits, Dealer dealer) {

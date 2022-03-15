@@ -29,7 +29,7 @@ public enum Judgement {
         return DRAW;
     }
 
-    public Profit calculateProfit(BetMoney betMoney) {
-        return betMoney.calculateProfit(profitMultiple);
+    public double getProfitMultiple() {
+        return profitMultiple;
     }
 }
