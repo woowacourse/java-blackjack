@@ -14,9 +14,9 @@ public class PlayingCardsTest {
     @DisplayName("카드 묶음 생성 테스트")
     void createCards() {
         // given
-        PlayingCards playingCards = new PlayingCards();
-        playingCards.addCard(PlayingCard.of(Suit.CLUBS, Denomination.FIVE));
-        playingCards.addCard(PlayingCard.of(Suit.HEARTS, Denomination.SEVEN));
+        PlayingCards playingCards = new PlayingCards(List.of(
+                PlayingCard.of(Suit.CLUBS, Denomination.FIVE),
+                PlayingCard.of(Suit.HEARTS, Denomination.SEVEN)));
 
         // when
         List<PlayingCard> rawPlayingCards = playingCards.getCards();
@@ -35,9 +35,9 @@ public class PlayingCardsTest {
                         Suit suit2, Denomination denomination2,
                         int expected) {
         // given
-        PlayingCards playingCards = new PlayingCards();
-        playingCards.addCard(PlayingCard.of(suit, denomination));
-        playingCards.addCard(PlayingCard.of(suit2, denomination2));
+        PlayingCards playingCards = new PlayingCards(List.of(
+                PlayingCard.of(suit, denomination),
+                PlayingCard.of(suit2, denomination2)));
 
         // when
         int actual = playingCards.getScore();
@@ -57,10 +57,11 @@ public class PlayingCardsTest {
                 Suit suit3, Denomination denomination3,
                 boolean expected) {
         // given
-        PlayingCards playingCards = new PlayingCards();
-        playingCards.addCard(PlayingCard.of(suit, denomination));
-        playingCards.addCard(PlayingCard.of(suit2, denomination2));
-        playingCards.addCard(PlayingCard.of(suit3, denomination3));
+        PlayingCards playingCards = new PlayingCards(List.of(
+                PlayingCard.of(suit, denomination),
+                PlayingCard.of(suit2, denomination2),
+                PlayingCard.of(suit3, denomination3)
+        ));
 
         // when
         boolean actual = playingCards.isBust();
@@ -77,14 +78,8 @@ public class PlayingCardsTest {
         PlayingCard tenHearts = PlayingCard.of(Suit.HEARTS, Denomination.TEN);
         PlayingCard tenDiamonds = PlayingCard.of(Suit.DIAMONDS, Denomination.TEN);
 
-        PlayingCards blackjackPlayingCards = new PlayingCards();
-        blackjackPlayingCards.addCard(aClubs);
-        blackjackPlayingCards.addCard(tenHearts);
-
-        PlayingCards notBlackjackPlayingCards = new PlayingCards();
-        notBlackjackPlayingCards.addCard(tenHearts);
-        notBlackjackPlayingCards.addCard(tenDiamonds);
-        notBlackjackPlayingCards.addCard(aClubs);
+        PlayingCards blackjackPlayingCards = new PlayingCards(List.of(aClubs, tenHearts));
+        PlayingCards notBlackjackPlayingCards = new PlayingCards(List.of(tenHearts, tenDiamonds, aClubs));
 
         // when
         boolean shouldBeBlackjack = blackjackPlayingCards.isBlackJack();
