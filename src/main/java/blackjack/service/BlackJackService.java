@@ -1,12 +1,12 @@
 package blackjack.service;
 
 import blackjack.domain.game.Compete;
-import blackjack.domain.role.Dealer;
 import blackjack.domain.game.Deck;
+import blackjack.domain.game.RedrawChoice;
+import blackjack.domain.role.Dealer;
 import blackjack.domain.role.Hand;
 import blackjack.domain.role.Player;
 import blackjack.domain.role.PlayerTurns;
-import blackjack.domain.game.RedrawChoice;
 import blackjack.domain.role.Role;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
@@ -24,7 +24,6 @@ public class BlackJackService {
 	private Deck deck;
 	private Role dealer;
 	private List<Role> players;
-	private PlayerTurns playerTurns;
 
 	public void initBlackJackGame(Deck deck, Role dealer) {
 		this.deck = deck;
@@ -54,17 +53,19 @@ public class BlackJackService {
 	}
 
 	public PlayerTurnsDto startPlayerDrawPhase() {
-		playerTurns = new PlayerTurns(players);
-		return PlayerTurnsDto.from(playerTurns);
+		if (dealer.isBlackJack()) {
+			return PlayerTurnsDto.from(PlayerTurns.createEmpty());
+		}
+		return PlayerTurnsDto.from(new PlayerTurns(players));
 	}
 
 	public PlayerStatusDto drawPlayer(final RedrawChoice answer, final String name) {
 		Role player = getPlayerByName(name);
 		if (answer == RedrawChoice.NO) {
-			return PlayerStatusDto.from(false, playerTurns.hasNextPlayer(), player);
+			return PlayerStatusDto.from(false, player);
 		}
 		player.draw(deck.draw());
-		return PlayerStatusDto.from(player.canDraw(), playerTurns.hasNextPlayer(), player);
+		return PlayerStatusDto.from(player.canDraw(), player);
 	}
 
 	private Role getPlayerByName(String name) {

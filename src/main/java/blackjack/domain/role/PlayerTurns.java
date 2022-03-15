@@ -1,5 +1,6 @@
 package blackjack.domain.role;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,15 +16,15 @@ public class PlayerTurns {
 		this.players = new LinkedList<>(players);
 	}
 
+	public static PlayerTurns createEmpty() {
+		return new PlayerTurns(Collections.emptyList());
+	}
+
 	public Role getCurrentPlayer() {
 		if (players.isEmpty()) {
 			throw new NoSuchElementException(EMPTY_PLAYER_ERROR);
 		}
 		return players.poll();
-	}
-
-	public boolean hasNextPlayer() {
-		return !players.isEmpty();
 	}
 
 	public Queue<Role> getPlayers() {
