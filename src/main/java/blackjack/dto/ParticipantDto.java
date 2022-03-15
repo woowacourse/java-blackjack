@@ -19,11 +19,14 @@ public class ParticipantDto {
     }
 
     public static ParticipantDto toShowFirstCards(final Participant participant) {
-        return new ParticipantDto(participant.getName(), participant.showFirstCards(), participant.getScore());
+        return new ParticipantDto(
+                participant.getName(),
+                participant.showFirstCards(),
+                participant.getScore().getValue());
     }
 
     public static ParticipantDto toOpenAllCards(final Participant participant) {
-        return new ParticipantDto(participant.getName(), participant.getCards(), participant.getScore());
+        return new ParticipantDto(participant.getName(), participant.getCards(), participant.getScore().getValue());
     }
 
     public String getName() {

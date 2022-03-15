@@ -47,8 +47,8 @@ public abstract class Participant {
         return calculateScore().isOver(BLACKJACK_NUMBER);
     }
 
-    public int getScore() {
-        return calculateScore().getValue();
+    public Score getScore() {
+        return calculateScore();
     }
 
     public List<Card> getCards() {
