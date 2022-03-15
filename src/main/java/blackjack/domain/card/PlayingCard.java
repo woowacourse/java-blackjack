@@ -22,7 +22,7 @@ public class PlayingCard {
         return suit;
     }
 
-    public Denomination getRank() {
+    public Denomination getDenomination() {
         return denomination;
     }
 
