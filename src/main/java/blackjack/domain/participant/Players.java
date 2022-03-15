@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.machine.CardPickMachine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,13 +55,13 @@ public class Players {
         return players.indexOf(player);
     }
 
-    public void addCards(Dealer dealer, NumberGenerator numberGenerator) {
+    public void addCards(CardPickMachine cardPickMachine, NumberGenerator numberGenerator) {
         players.forEach(player -> player
-                .addCard(dealer.handOutCard(numberGenerator)));
+                .addCard(cardPickMachine.pickCard(numberGenerator)));
     }
 
-    public void addCard(Dealer dealer, Player player, NumberGenerator numberGenerator) {
-        player.addCard(dealer.handOutCard(numberGenerator));
+    public void addCard(CardPickMachine cardPickMachine, Player player, NumberGenerator numberGenerator) {
+        player.addCard(cardPickMachine.pickCard(numberGenerator));
         players.set(findIndex(player), player);
     }
 

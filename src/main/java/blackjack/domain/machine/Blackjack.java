@@ -13,22 +13,24 @@ public class Blackjack {
 
     private final Players players;
     private final Dealer dealer;
+    private final CardPickMachine cardPickMachine;
 
     public Blackjack(List<String> playerNames) {
         this.players = new Players(playerNames);
         this.dealer = new Dealer();
+        this.cardPickMachine = new CardPickMachine();
     }
 
     public void dealInitialCards(NumberGenerator numberGenerator) {
         for (int i = 0; i < NUMBER_OF_INIT_CARD; ++i) {
-            dealer.addCard(dealer.handOutCard(numberGenerator));
-            players.addCards(dealer, numberGenerator);
+            dealer.addCard(cardPickMachine.pickCard(numberGenerator));
+            players.addCards(cardPickMachine, numberGenerator);
         }
     }
 
     public boolean dealAdditionalCardToDealer(NumberGenerator numberGenerator) {
         if (dealer.isHit()) {
-            dealer.addCard(dealer.handOutCard(numberGenerator));
+            dealer.addCard(cardPickMachine.pickCard(numberGenerator));
             return true;
         }
 
@@ -54,7 +56,7 @@ public class Blackjack {
     }
 
     public void dealAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
-        players.addCard(dealer, player, numberGenerator);
+        players.addCard(cardPickMachine, player, numberGenerator);
     }
 
     public List<Player> getPlayers() {
