@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardGroup {
-    private static final int BLACKJACK_NUMBER = 21;
-    public static final int ACE_SPECIAL_SCORE = 10;
+    public static final int BLACKJACK_NUMBER = 21;
+    private static final int ACE_SPECIAL_SCORE = 10;
 
     private final List<Card> cards = new ArrayList<>();
 

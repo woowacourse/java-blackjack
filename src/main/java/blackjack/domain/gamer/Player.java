@@ -1,10 +1,11 @@
 package blackjack.domain.gamer;
 
+import static blackjack.domain.card.CardGroup.BLACKJACK_NUMBER;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Gamer{
-    private static final int BLACKJACK_NUMBER = 21;
 
     public Player(String name) {
         super(name);
@@ -18,19 +19,19 @@ public class Player extends Gamer{
         return players;
     }
 
-    public int compareCardsSumTo(int sum) {
+    public int compareCardsSumTo(int anotherCardsSum) {
         if (isBust()) {
             return -1;
         }
 
-        if (isDealerBust(sum)) {
+        if (isBust(anotherCardsSum)) {
             return 1;
         }
 
-        return Integer.compare(getCardGroupScore(), sum);
+        return Integer.compare(getCardGroupScore(), anotherCardsSum);
     }
 
-    private boolean isDealerBust(int sum) {
+    private boolean isBust(int sum) {
         return sum > BLACKJACK_NUMBER;
     }
 }
