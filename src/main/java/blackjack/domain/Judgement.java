@@ -43,14 +43,14 @@ public enum Judgement {
     abstract public Judgement getOpposite();
 
     public static Judgement judgePlayer(Player player, Dealer dealer) {
+        if (dealer.isBlackJack() || player.isBlackJack()) {
+            return judgePlayerByBlackJack(player, dealer);
+        }
         if (player.isBust()) {
             return Judgement.LOSE;
         }
         if (dealer.isBust()) {
             return Judgement.WIN;
-        }
-        if (dealer.isBlackJack() || player.isBlackJack()) {
-            return judgePlayerByBlackJack(player, dealer);
         }
         return judgePlayerByScore(player, dealer);
     }
