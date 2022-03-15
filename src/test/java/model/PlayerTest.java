@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
+import model.betting.BlackJacCalculateStrategy;
 import model.betting.NormalCalculateStrategy;
 import model.card.Card;
 import model.card.CardFace;
@@ -93,7 +94,6 @@ public class PlayerTest {
 
     @Test
     void matchWithDealerBothBust() {
-        Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(DIAMOND, QUEEN));
         dealer.receiveCard(new Card(SPADE, QUEEN));
         dealer.receiveCard(new Card(CLOVER, QUEEN));
@@ -111,7 +111,6 @@ public class PlayerTest {
 
     @Test
     void lostBet() {
-        Dealer dealer = new Dealer();
         thousandBettedPlayer.lostBet(dealer);
         assertThat(thousandBettedPlayer.getProfit()).isEqualTo(-1000);
         assertThat(dealer.getProfit()).isEqualTo(1000);
@@ -119,9 +118,15 @@ public class PlayerTest {
 
     @Test
     void normalWinBet() {
-        Dealer dealer = new Dealer();
         thousandBettedPlayer.winBet(dealer, new NormalCalculateStrategy());
         assertThat(thousandBettedPlayer.getProfit()).isEqualTo(1000);
         assertThat(dealer.getProfit()).isEqualTo(-1000);
+    }
+
+    @Test
+    void blackJackWinBet() {
+        thousandBettedPlayer.winBet(dealer, new BlackJacCalculateStrategy());
+        assertThat(thousandBettedPlayer.getProfit()).isEqualTo(1500);
+        assertThat(dealer.getProfit()).isEqualTo(-1500);
     }
 }
