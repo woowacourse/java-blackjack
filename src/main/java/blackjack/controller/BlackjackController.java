@@ -110,7 +110,8 @@ public class BlackjackController {
     private void calculateTotalMoney(final Dealer dealer, final Participants participants,
                                      final BettingMachine bettingMachine) {
         final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
-        bettingMachine.distributeMoney(participantResult.getResult());
-        OutputView.printTotalMoney(bettingMachine.getMoneys());
+        bettingMachine.calculateMoney(participantResult.getResult());
+        OutputView.printTotalMoney(bettingMachine.getMoneys(),
+                dealer.getName(), bettingMachine.calculateDealerMoney());
     }
 }

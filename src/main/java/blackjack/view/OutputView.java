@@ -8,13 +8,9 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.ParticipantResult;
-import blackjack.domain.result.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -39,7 +35,8 @@ public class OutputView {
 
     private static void printDealerCard(final Dealer dealer) {
         final Card firstCard = dealer.openFirstCard();
-        System.out.println(dealer.getName() + COLON_AND_BLANK + firstCard.getDenominationName() + firstCard.getSuitName());
+        System.out.println(
+                dealer.getName() + COLON_AND_BLANK + firstCard.getDenominationName() + firstCard.getSuitName());
     }
 
     private static void printParticipantsCards(final Participants participants) {
@@ -68,38 +65,17 @@ public class OutputView {
         System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards) + " - 결과: " + totalScore);
     }
 
-    public static void printTotalResult(final Dealer dealer, final DealerResult dealerResult,
-                                        final ParticipantResult results) {
-        System.out.println("\n## 최종 승패");
-        printDealerResult(dealer, dealerResult);
-        printParticipantResult(results);
-    }
-
-    private static void printDealerResult(final Dealer dealer, final DealerResult result) {
-        final Map<Result, Integer> dealerResult = result.getResult();
-
-        final String dealerResultString = dealerResult.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(Collectors.joining(RESULT_DELIMITER));
-
-        System.out.println(dealer.getName() + COLON_AND_BLANK + dealerResultString);
-    }
-
-    private static void printParticipantResult(final ParticipantResult result) {
-        final Map<Participant, Result> participantResult = result.getResult();
-
-        for (Participant participant : participantResult.keySet()) {
-            System.out.println(participant.getName() + COLON_AND_BLANK + participantResult.get(participant).getName());
-        }
-    }
-
-    public static void printTotalMoney(Map<Participant, Money> moneys) {
+    public static void printTotalMoney(final Map<Participant, Money> moneys,
+                                       final String dealerName, final Money dealerMoney) {
         System.out.printf("%n## 최종 수익%n");
+        printPlayerMoney(dealerName, dealerMoney.getValue());
         for (Participant participant : moneys.keySet()) {
-            System.out.printf("%s: %d%n", participant.getName(), moneys.get(participant).getValue());
+            printPlayerMoney(participant.getName(), moneys.get(participant).getValue());
         }
+    }
+
+    private static void printPlayerMoney(final String name, final long money) {
+        System.out.printf("%s: %d%n", name, money);
     }
 
     public static void printNewLine() {

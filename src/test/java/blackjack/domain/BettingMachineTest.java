@@ -33,10 +33,10 @@ public class BettingMachineTest {
         assertThat(bettingMachine.getMoneys()).contains(entry(participant, Money.from(expected)));
     }
 
-    @ParameterizedTest
-    @MethodSource("generateDistributeMoneyArguments")
-    @DisplayName("")
-    void distributeMoney(Card card1, Card card2, Card card3, Card card4, long expected) {
+    @ParameterizedTest(name = "[{index}] 딜러 {0}, {1}, 참가자 {2}, {3} -> {4} 원")
+    @MethodSource("generateCalculateMoneyArguments")
+    @DisplayName("참가자의 수익률을 계산한다.")
+    void calculateMoney(Card card1, Card card2, Card card3, Card card4, long expected) {
         Dealer dealer = new Dealer();
         dealer.takeCard(card1);
         dealer.takeCard(card2);
@@ -52,7 +52,7 @@ public class BettingMachineTest {
 
         ParticipantResult participantResult = new ParticipantResult(dealer, participants);
 
-        bettingMachine.distributeMoney(participantResult.getResult());
+        bettingMachine.calculateMoney(participantResult.getResult());
         Map<Participant, Money> moneys = bettingMachine.getMoneys();
 
         for (Participant participant : participants) {
@@ -60,7 +60,7 @@ public class BettingMachineTest {
         }
     }
 
-    static Stream<Arguments> generateDistributeMoneyArguments() {
+    static Stream<Arguments> generateCalculateMoneyArguments() {
         return Stream.of(
                 Arguments.of(
                         new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
@@ -81,6 +81,54 @@ public class BettingMachineTest {
                         new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
                         new Card(Denomination.THREE, Suit.HEART), new Card(Denomination.NINE, Suit.CLOVER),
                         -10_000
+                )
+        );
+    }
+
+    @ParameterizedTest(name = "[{index}] 딜러 {0}, {1}, 참가자 {2}, {3} -> {4} 원")
+    @MethodSource("generateCalculateDealerMoneyArguments")
+    @DisplayName("딜러의 수익률을 계산한다.")
+    void calculateDealerMoney(Card card1, Card card2, Card card3, Card card4, long expected) {
+        Dealer dealer = new Dealer();
+        dealer.takeCard(card1);
+        dealer.takeCard(card2);
+
+        BettingMachine bettingMachine = new BettingMachine();
+
+        Participants participants = new Participants(List.of("김제니", "박채영"));
+        for (Participant participant : participants) {
+            participant.takeCard(card3);
+            participant.takeCard(card4);
+            bettingMachine.betMoney(participant, Money.from(10_000));
+        }
+
+        ParticipantResult participantResult = new ParticipantResult(dealer, participants);
+
+        bettingMachine.calculateMoney(participantResult.getResult());
+        assertThat(bettingMachine.calculateDealerMoney()).isEqualTo(Money.from(expected));
+    }
+
+    static Stream<Arguments> generateCalculateDealerMoneyArguments() {
+        return Stream.of(
+                Arguments.of(
+                        new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
+                        new Card(Denomination.ACE, Suit.HEART), new Card(Denomination.KING, Suit.CLOVER),
+                        -30_000
+                ),
+                Arguments.of(
+                        new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
+                        new Card(Denomination.ACE, Suit.HEART), new Card(Denomination.NINE, Suit.CLOVER),
+                        -20_000
+                ),
+                Arguments.of(
+                        new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
+                        new Card(Denomination.ACE, Suit.HEART), new Card(Denomination.FIVE, Suit.CLOVER),
+                        0
+                ),
+                Arguments.of(
+                        new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
+                        new Card(Denomination.THREE, Suit.HEART), new Card(Denomination.NINE, Suit.CLOVER),
+                        20_000
                 )
         );
     }
