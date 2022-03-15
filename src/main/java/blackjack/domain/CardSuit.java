@@ -6,13 +6,13 @@ public enum CardSuit {
 	DIAMOND("다이아몬드"),
 	CLOVER("클로버");
 
-	private final String value;
+	private final String name;
 
-	CardSuit(final String value) {
-		this.value = value;
+	CardSuit(final String name) {
+		this.name = name;
 	}
 
 	public String getValue() {
-		return value;
+		return name;
 	}
 }
