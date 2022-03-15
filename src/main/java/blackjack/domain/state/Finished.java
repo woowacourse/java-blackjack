@@ -1,11 +1,17 @@
 package blackjack.domain.state;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Stand extends Finished {
+public abstract class Finished extends AbstractBlackjackGameState {
 
-    public Stand(final Cards cards) {
+    public Finished(final Cards cards) {
         super(cards);
+    }
+
+    @Override
+    public final BlackjackGameState hit(final Card card) {
+        throw new IllegalStateException("종료된 상태는 hit을 할 수 없습니다.");
     }
 
     @Override
