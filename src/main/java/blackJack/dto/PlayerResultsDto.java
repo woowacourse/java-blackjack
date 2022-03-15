@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class PlayerResultsDto {
     private final List<PlayerResultDto> playerResultDtos;
 
-    public PlayerResultsDto(List<PlayerResultDto> playerResultDtos) {
+    private PlayerResultsDto(List<PlayerResultDto> playerResultDtos) {
         this.playerResultDtos = new ArrayList<>(playerResultDtos);
     }
 

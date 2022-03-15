@@ -8,7 +8,7 @@ public class DealerResultDto {
     private final int drawCount;
     private final int loseCount;
 
-    public DealerResultDto(int winCount, int drawCount, int loseCount) {
+    private DealerResultDto(int winCount, int drawCount, int loseCount) {
         this.winCount = winCount;
         this.drawCount = drawCount;
         this.loseCount = loseCount;

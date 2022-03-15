@@ -11,7 +11,7 @@ public class UserDto {
     private final List<CardDto> cards;
     private final int score;
 
-    public UserDto(String name, List<CardDto> cards, int score) {
+    private UserDto(String name, List<CardDto> cards, int score) {
         this.name = name;
         this.cards = new ArrayList<>(cards);
         this.score = score;
