@@ -20,7 +20,7 @@ public class AbstractPlayerTest {
 
     @BeforeEach
     void setUp() {
-        abstractPlayer = new AbstractPlayer(new Name("aki"));
+        abstractPlayer = new Participant(new Name("alien"));
     }
 
     @Test
@@ -89,16 +89,6 @@ public class AbstractPlayerTest {
         abstractPlayer.hit(Card.of(CardNumber.THREE, Type.SPADE));
 
         assertThat(abstractPlayer.getScore()).isEqualTo(11);
-    }
-
-    @Test
-    @DisplayName("Player 클래스가 가진 카드의 점수가 21 이상이면 더이상 hit할 수 없다.")
-    void validate_range() {
-        abstractPlayer.hit(Card.of(CardNumber.EIGHT, Type.CLOVER));
-        abstractPlayer.hit(Card.of(CardNumber.FIVE, Type.SPADE));
-        abstractPlayer.hit(Card.of(CardNumber.TEN, Type.SPADE));
-
-        assertThat(abstractPlayer.isValidRange()).isFalse();
     }
 
     @Test

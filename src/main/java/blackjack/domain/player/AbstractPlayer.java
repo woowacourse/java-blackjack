@@ -3,22 +3,16 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.PlayerCards;
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class AbstractPlayer implements Player {
+public abstract class AbstractPlayer implements Player {
 
     private static final int BLACKJACK_CARD_COUNT = 2;
 
     private static final int MAX_SCORE = 21;
 
-    private final Name name;
-    private final PlayerCards playerCards;
-
-    public AbstractPlayer(Name name) {
-        this.name = name;
-        this.playerCards = new PlayerCards(new ArrayList<>());
-    }
+    protected Name name;
+    protected PlayerCards playerCards;
 
     @Override
     public void hit(Card card) {
@@ -42,11 +36,6 @@ public class AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isDealer() {
-        return false;
-    }
-
-    @Override
     public Name getName() {
         return name;
     }
@@ -61,10 +50,9 @@ public class AbstractPlayer implements Player {
         return playerCards.getTotalScore();
     }
 
-    @Override
-    public boolean isValidRange() {
-        return getScore() < MAX_SCORE;
-    }
+    public abstract boolean isDealer();
+
+    public abstract boolean canHit();
 
     @Override
     public boolean equals(Object o) {
@@ -81,13 +69,5 @@ public class AbstractPlayer implements Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, playerCards);
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "name=" + name +
-                ", playerCards=" + playerCards +
-                '}';
     }
 }

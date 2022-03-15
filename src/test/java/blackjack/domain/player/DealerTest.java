@@ -20,7 +20,7 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("isDealer 메서드는 자신이 딜러면 참을 반환한다.")
+    @DisplayName("딜러는 isDealer가 참을 반환한다.")
     void check_dealer() {
         Player dealer = new Dealer();
 
@@ -28,12 +28,22 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("isValidRange 메서드는 카드의 총합이 17이상인지 검사한다.")
-    void validate_range() {
+    @DisplayName("딜러는 카드의 총합이 16이하면 isValidRange가 참을 반환한다.")
+    void validate_range_true() {
+        Player dealer = new Dealer();
+        dealer.hit(Card.of(CardNumber.SIX, Type.CLOVER));
+        dealer.hit(Card.of(CardNumber.TEN, Type.SPADE));
+
+        assertThat(dealer.canHit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러는 카드의 총합이 16초과면 isValidRange가 거짓을 반환한다.")
+    void validate_range_false() {
         Player dealer = new Dealer();
         dealer.hit(Card.of(CardNumber.SEVEN, Type.CLOVER));
         dealer.hit(Card.of(CardNumber.TEN, Type.SPADE));
 
-        assertThat(dealer.isValidRange()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 }

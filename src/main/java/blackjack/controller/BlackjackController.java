@@ -67,7 +67,7 @@ public class BlackjackController {
     }
 
     private boolean canHit(Player player) {
-        if (!player.isValidRange()) {
+        if (!player.canHit()) {
             return false;
         }
 
@@ -76,7 +76,6 @@ public class BlackjackController {
             answer = InputView.requestHitOrStay(player.getName());
             printErrorIfNotContainsHitOrStay(answer);
         } while (!HitOrStayAnswer.containsValue(answer));
-
         return answer.equals(HitOrStayAnswer.HIT_ANSWER.get());
     }
 
@@ -87,7 +86,7 @@ public class BlackjackController {
     }
 
     private void takeDealerCards(Player dealer, Deck deck) {
-        while (dealer.isValidRange()) {
+        while (dealer.canHit()) {
             ResultView.printDealerHitMessage();
             dealer.hit(deck.pick());
         }

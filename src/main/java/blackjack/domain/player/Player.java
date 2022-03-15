@@ -11,13 +11,13 @@ public interface Player {
 
     boolean isBlackjack();
 
-    boolean isDealer();
-
     Name getName();
 
     PlayerCards getPlayerCards();
 
     int getScore();
 
-    boolean isValidRange();
+    boolean isDealer();
+
+    boolean canHit();
 }

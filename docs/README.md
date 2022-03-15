@@ -76,8 +76,10 @@
         - 추상 클래스 : `AbstractGamer` -> `AbstractPlayer`
         - 구현 클래스 : `Dealer` -> `Dealer`, `Player` -> `Participant`
         - Players에 Dealer도 포함하도록 수정
-        - [x] 승패 결과를 View로 보내는 Results
-            - 딜러와 참가자의 결과를 나눠서 보냈음 -> 딜러와 참가자의 결과를 함께 보내도록 수정
+        - `AbstractPlayer`을 abstract 클래스로 수정하였다.
+        - `isDealer()`와 `isValidRange()`를 추상 메서드가 되어야 할 것 같다.
+    - [x] 승패 결과를 View로 보내는 Results
+        - 딜러와 참가자의 결과를 나눠서 보냈음 -> 딜러와 참가자의 결과를 함께 보내도록 수정
     - [x] Cards라는 이름만 보면 단순하게 Card만을 모아둔 것인지 플레이어의 손에 들려있는 카드뭉치인지 알기 어려울 것 같다.
         - 조금 더 명확하게 플레이어가 가지고 있는 카드뭉치라는 것을 알려주기 위해 `Cards`를 `PlayerCards`로 이름을 수정했다.
         - `RandomDeck`에서도 `List<Card>`를 사용하는데 이부분도 일급컬렉션으로 포장할까 생각해봤는데 일급 컬렉션으로 묶어도 어떤 로직을 가지지않을 것 같아서 하지않았다.
@@ -106,6 +108,7 @@
       equals가 참이 나왔다.
     - `if (!(o instanceof AbstractPlayer))`를 `if (o == null || getClass() != o.getClass())`로 바꾸면서 구현 클래스가 다르다면 데이터가 같아도
       equals가 거짓이 나오도록 수정했다.
+    - toString()은 구현 클래스마다 다를 수 있다고 생각되어서 구현 클래스에서 재정의했다.
 - [x] 52장의 카드가 있는 `RandomDeck`의 List<Card>는 왜 static일까요?
     - static을 제거하도록 수정
     - 처음 RandomDeck의 코드를 작성할 때는 pick함수를 static으로 작성하면서 `List<Card>`도 static으로 작성했다.
