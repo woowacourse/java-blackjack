@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 
 public class OutputView {
 
-    public static void printAssignmentResult(List<String> names) {
+    public static void printInitResult(List<String> names) {
         System.out.printf(System.lineSeparator() + "딜러와 %s에게 2장의 카드를 나누어주었습니다." + System.lineSeparator(),
                 String.join(", ", names));
     }

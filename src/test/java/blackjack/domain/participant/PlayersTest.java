@@ -53,26 +53,13 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("카드를 뽑을 수 있는 플레이어가 존재하는지 확인한다.")
-    void isDrawablePlayerExist() {
-        // give
-        final Players players = new Players(List.of("rick", "pobi"));
-
-        // when
-        final boolean actual = players.isDrawablePlayerExist();
-
-        // then
-        assertThat(actual).isEqualTo(true);
-    }
-
-    @Test
     @DisplayName("카드를 뽑을 수 있는 플레이어를 찾는다.")
     void findHitPlayer() {
         // give
         final Players players = new Players(List.of("rick", "pobi"));
 
         // when
-        final Player actual = players.findHitPlayer();
+        final Player actual = players.findDrawablePlayer().get();
 
         // then
         assertThat(actual.getName()).isEqualTo("rick");

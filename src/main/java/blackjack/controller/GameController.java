@@ -43,32 +43,26 @@ public class GameController {
         dealer.initCards(deck);
         players.initCards(deck);
 
-        final List<String> allNames = players.getNames();
-        final CardDto firstCard = CardDto.from(dealer.openFirstCard());
-
-        OutputView.printAssignmentResult(allNames);
-        OutputView.printDealerFirstCard(firstCard);
+        OutputView.printInitResult(players.getNames());
+        OutputView.printDealerFirstCard(CardDto.from(dealer.openFirstCard()));
 
         final List<ParticipantDto> allPlayers = players.getValue().stream()
                 .map(ParticipantDto::from)
                 .collect(Collectors.toList());
-        for (ParticipantDto allPlayer : allPlayers) {
-            OutputView.printCards(allPlayer);
-        }
+        allPlayers.forEach(OutputView::printCards);
     }
 
     public void progressPlayerTurns() {
-        while (players.isDrawablePlayerExist()) {
-            final String playerName = players.findHitPlayer().getName();
-            final PlayerAnswer playerAnswer = InputView.getHitOrStay(playerName);
+        while (players.findDrawablePlayer().isPresent()) {
+            final Player drawablePlayer = players.findDrawablePlayer().get();
+            final PlayerAnswer playerAnswer = InputView.getHitOrStay(drawablePlayer.getName());
 
-            final ParticipantDto dto = progressPlayerTurn(playerName, playerAnswer);
+            final ParticipantDto dto = progressPlayerTurn(drawablePlayer, playerAnswer);
             OutputView.printCards(dto);
         }
     }
 
-    private ParticipantDto progressPlayerTurn(final String playerName, final PlayerAnswer playerAnswer) {
-        final Player player = players.findByName(playerName);
+    private ParticipantDto progressPlayerTurn(Player player, final PlayerAnswer playerAnswer) {
         if (playerAnswer.isDraw()) {
             player.hit(deck);
         }
@@ -106,6 +100,7 @@ public class GameController {
 
     private void printAllRecords() {
         final int dealerScore = dealer.getScore();
+
         final List<PlayerRecordDto> playerRecordDtos = players.getValue().stream()
                 .map(player -> PlayerRecordDto.of(player.getName(), Record.of(dealerScore, player.getScore())))
                 .collect(Collectors.toList());
