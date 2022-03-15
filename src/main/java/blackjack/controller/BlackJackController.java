@@ -57,7 +57,7 @@ public class BlackJackController {
     }
 
     private void takeMoreCardPlayerTurnForPlayer(Player player) {
-        while (!player.isBust() && InputView.inputOneMoreCard(player).equalsIgnoreCase(Y)) {
+        while (player.canReceive() && InputView.inputOneMoreCard(player).equalsIgnoreCase(Y)) {
             player.receiveCard(deck.draw());
             OutputView.showPlayerHand(player);
         }

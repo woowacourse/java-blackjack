@@ -31,10 +31,6 @@ abstract class Participant {
         hand.addAll(card);
     }
 
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
     public MatchResult match(Participant other) {
         return hand.compareMatchResult(other.hand);
     }

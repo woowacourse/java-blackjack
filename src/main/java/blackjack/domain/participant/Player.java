@@ -1,16 +1,15 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.MatchResult;
+
+import static blackjack.constant.CommonConstant.BLACKJACK_SYMBOL_NUMBER;
 
 public class Player extends Participant {
-
-    private MatchResult matchResult;
 
     public Player(String name) {
         this.name = new Name(name);
     }
 
-    public MatchResult getResult() {
-        return matchResult;
+    public boolean canReceive() {
+        return getScore() < BLACKJACK_SYMBOL_NUMBER;
     }
 }

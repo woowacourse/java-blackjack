@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.constant.CommonConstant.BLACKJACK_SYMBOL_NUMBER;
+
 import blackjack.domain.MatchResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,6 @@ import java.util.Objects;
 public class Hand {
 
     private static final int BLACKJACK_CARD_SIZE = 2;
-    private static final int BLACKJACK_SYMBOL_SCORE = 21;
     private static final int ACE_UPPER_SCORE = 11;
     private static final int ACE_LOWER_SCORE = 1;
     private static final int ACE_SCORE_DIFFERENCE = ACE_UPPER_SCORE - ACE_LOWER_SCORE;
@@ -33,7 +34,7 @@ public class Hand {
 
     private int getIncludingAceSum() {
         int sum = getSum() + ACE_SCORE_DIFFERENCE;
-        if (sum <= BLACKJACK_SYMBOL_SCORE) {
+        if (sum <= BLACKJACK_SYMBOL_NUMBER) {
             return sum;
         }
         return sum - ACE_SCORE_DIFFERENCE;
@@ -63,11 +64,11 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getScore() > BLACKJACK_SYMBOL_SCORE;
+        return getScore() > BLACKJACK_SYMBOL_NUMBER;
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_SIZE && getScore() == BLACKJACK_SYMBOL_SCORE;
+        return cards.size() == BLACKJACK_CARD_SIZE && getScore() == BLACKJACK_SYMBOL_NUMBER;
     }
 
     public MatchResult compareMatchResult(Hand opponentCardHand) {
