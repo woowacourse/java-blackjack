@@ -24,7 +24,7 @@ public class GameResultTest {
     @Test
     @DisplayName("수익을 Map에 저장한다")
     void saveIntoMap() {
-// given
+        // given
         Dealer dealer = createDealer(NINE);
         Betting betting = new Betting(1000);
 
