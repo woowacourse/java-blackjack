@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Kind;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Result;
@@ -17,7 +18,8 @@ class PlayerTest {
     @Test
     void create() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE))), 1);
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE))));
 
         assertThat(player).isNotNull();
     }
@@ -26,8 +28,9 @@ class PlayerTest {
     @Test
     void calculateBestScore_ConsideringAceIsOne_IsBest() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.KING, Kind.SPADE))), 2);
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE),
+                Card.from(Number.KING, Kind.SPADE))));
 
         assertThat(player.calculateBestScore()).isEqualTo(21);
     }
@@ -36,10 +39,11 @@ class PlayerTest {
     @Test
     void calculateBestScore_ConsideringAceIsEleven_IsBest() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE),
                 Card.from(Number.FIVE, Kind.SPADE),
                 Card.from(Number.SEVEN, Kind.SPADE),
-                Card.from(Number.EIGHT, Kind.SPADE))), 4);
+                Card.from(Number.EIGHT, Kind.SPADE))));
 
         assertThat(player.calculateBestScore()).isEqualTo(21);
     }
@@ -48,8 +52,9 @@ class PlayerTest {
     @Test
     void isWinner_Player20_isWin() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))), 2);
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE),
+                Card.from(Number.NINE, Kind.SPADE))));
 
         assertThat(player.judgeResult(19)).isEqualTo(Result.WIN);
     }
@@ -58,8 +63,9 @@ class PlayerTest {
     @Test
     void isWinner_Player20_isLose() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))), 2);
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE),
+                Card.from(Number.NINE, Kind.SPADE))));
 
         assertThat(player.judgeResult(21)).isEqualTo(Result.LOSE);
     }
@@ -68,9 +74,10 @@ class PlayerTest {
     @Test
     void isWinner_PlayerBusted_isLose() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.NINE, Kind.SPADE),
+        player.receive(new Cards(List.of(
+                Card.from(Number.NINE, Kind.SPADE),
                 Card.from(Number.NINE, Kind.CLOVER),
-                Card.from(Number.NINE, Kind.HEART))), 2);
+                Card.from(Number.NINE, Kind.HEART))));
 
         assertThat(player.judgeResult(19)).isEqualTo(Result.LOSE);
     }
@@ -79,8 +86,9 @@ class PlayerTest {
     @Test
     void isWinner_DealerBusted_isWin() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))), 2);
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE),
+                Card.from(Number.NINE, Kind.SPADE))));
 
         assertThat(player.judgeResult(22)).isEqualTo(Result.WIN);
     }
@@ -89,9 +97,10 @@ class PlayerTest {
     @Test
     void isWinner_BothBusted_isLose() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.NINE, Kind.SPADE),
+        player.receive(new Cards(List.of(
+                Card.from(Number.NINE, Kind.SPADE),
                 Card.from(Number.NINE, Kind.CLOVER),
-                Card.from(Number.NINE, Kind.HEART))), 3);
+                Card.from(Number.NINE, Kind.HEART))));
 
         assertThat(player.judgeResult(22)).isEqualTo(Result.TIE);
     }
@@ -100,10 +109,11 @@ class PlayerTest {
     @Test
     void calculateBestScore_FourAces_IsBest() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE),
                 Card.from(Number.ACE, Kind.DIAMOND),
                 Card.from(Number.ACE, Kind.CLOVER),
-                Card.from(Number.ACE, Kind.HEART))), 4);
+                Card.from(Number.ACE, Kind.HEART))));
 
         assertThat(player.calculateBestScore()).isEqualTo(14);
     }
@@ -112,8 +122,9 @@ class PlayerTest {
     @Test
     void isReceivable_BestScore21_IsTrue() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.KING, Kind.SPADE))), 1);
+        player.receive(new Cards(List.of(
+                Card.from(Number.ACE, Kind.SPADE),
+                Card.from(Number.KING, Kind.SPADE))));
 
         assertThat(player.isReceivable()).isTrue();
     }
@@ -122,9 +133,10 @@ class PlayerTest {
     @Test
     void isReceivable_BestScore22_IsFalse() {
         Player player = Player.of("Pobi");
-        player.receive(new CardDeck(List.of(Card.from(Number.TEN, Kind.SPADE),
+        player.receive(new Cards(List.of(
+                Card.from(Number.TEN, Kind.SPADE),
                 Card.from(Number.TWO, Kind.SPADE),
-                Card.from(Number.TEN, Kind.HEART))), 3);
+                Card.from(Number.TEN, Kind.HEART))));
 
         assertThat(player.isReceivable()).isFalse();
     }

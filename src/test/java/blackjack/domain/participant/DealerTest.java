@@ -17,7 +17,7 @@ class DealerTest {
     @Test
     void create() {
         Dealer dealer = Dealer.createDefaultNameDealer();
-        dealer.receive(new CardDeck(List.of(Card.from(Number.ACE, Kind.SPADE))), 1);
+        dealer.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE))));
 
         assertThat(dealer).isNotNull();
     }
@@ -26,9 +26,9 @@ class DealerTest {
     @Test
     void calculateBestScore() {
         Dealer dealer = Dealer.createDefaultNameDealer();
-        dealer.receive(new CardDeck(
+        dealer.receive(new Cards(
                 List.of(Card.from(Number.ACE, Kind.SPADE),
-                        Card.from(Number.EIGHT, Kind.HEART))), 2);
+                        Card.from(Number.EIGHT, Kind.HEART))));
 
         assertThat(dealer.calculateBestScore()).isEqualTo(19);
     }
@@ -37,9 +37,9 @@ class DealerTest {
     @Test
     void isReceivable_BestScoreAs16_IsTrue() {
         Dealer dealer = Dealer.createDefaultNameDealer();
-        dealer.receive(new CardDeck(
+        dealer.receive(new Cards(
                 List.of(Card.from(Number.ACE, Kind.SPADE),
-                        Card.from(Number.FIVE, Kind.SPADE))), 1);
+                        Card.from(Number.FIVE, Kind.SPADE))));
 
         assertThat(dealer.isReceivable()).isTrue();
     }
@@ -48,9 +48,9 @@ class DealerTest {
     @Test
     void isReceivable_BestScoreAs17_IsFalse() {
         Dealer dealer = Dealer.createDefaultNameDealer();
-        dealer.receive(new CardDeck(
+        dealer.receive(new Cards(
                 List.of(Card.from(Number.ACE, Kind.SPADE),
-                        Card.from(Number.SIX, Kind.SPADE))), 2);
+                        Card.from(Number.SIX, Kind.SPADE))));
 
         assertThat(dealer.isReceivable()).isFalse();
     }

@@ -6,9 +6,6 @@ import java.util.ArrayList;
 
 public abstract class Participant {
 
-    public static final int INITIAL_CARD_COUNT = 2;
-    public static final int NORMAL_CARD_COUNT = 1;
-
     protected final Cards cards;
     private final Name name;
 
@@ -23,8 +20,8 @@ public abstract class Participant {
         return cards.getBestScore();
     }
 
-    public void receive(CardDeck cardDeck, int count) {
-        this.cards.concat(cardDeck.distribute(count));
+    public void receive(Cards cards) {
+        this.cards.concat(cards);
     }
 
     public Name getName() {

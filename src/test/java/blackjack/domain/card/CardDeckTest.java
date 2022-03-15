@@ -29,7 +29,7 @@ public class CardDeckTest {
     @Test
     void distributeTwoCards() {
         CardDeck cardDeck = CardDeck.initShuffled();
-        Cards cards = cardDeck.distribute(2);
+        Cards cards = cardDeck.startCards();
 
         assertThat(cards.getSize()).isEqualTo(2);
     }
@@ -38,17 +38,8 @@ public class CardDeckTest {
     @Test
     void distributeOneCard() {
         CardDeck cardDeck = CardDeck.initShuffled();
-        Cards cards = cardDeck.distribute(1);
+        Cards cards = cardDeck.draw();
 
         assertThat(cards.getSize()).isEqualTo(1);
-    }
-
-    @DisplayName("53장 분배 실패 테스트")
-    @Test
-    void overCapacityDistributeCard() {
-        CardDeck cardDeck = CardDeck.initShuffled();
-        assertThatThrownBy(() -> cardDeck.distribute(53))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드가 부족합니다.");
     }
 }

@@ -1,8 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.domain.participant.Participant.INITIAL_CARD_COUNT;
-import static blackjack.domain.participant.Participant.NORMAL_CARD_COUNT;
-
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -27,12 +24,12 @@ public class Controller {
     }
 
     private void initDealerCards(CardDeck cardDeck, Dealer dealer) {
-        dealer.receive(cardDeck, INITIAL_CARD_COUNT);
+        dealer.receive(cardDeck.startCards());
     }
 
     private void initPlayerCards(CardDeck cardDeck, Players players) {
         for (Player player : players.getPlayers()) {
-            player.receive(cardDeck, INITIAL_CARD_COUNT);
+            player.receive(cardDeck.startCards());
         }
     }
 
@@ -44,7 +41,7 @@ public class Controller {
     private void playPlayersTurn(CardDeck cardDeck, Players players) {
         for (Player player : players.getPlayers()) {
             while (isPlayable(player)) {
-                player.receive(cardDeck, NORMAL_CARD_COUNT);
+                player.receive(cardDeck.draw());
                 OutputView.printCardHandStatus(player);
             }
         }
@@ -53,7 +50,7 @@ public class Controller {
     private void playDealerTurn(CardDeck cardDeck, Dealer dealer) {
         while (dealer.isReceivable()) {
             OutputView.printDealerStatus();
-            dealer.receive(cardDeck, NORMAL_CARD_COUNT);
+            dealer.receive(cardDeck.draw());
         }
     }
 
