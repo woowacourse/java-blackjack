@@ -27,7 +27,7 @@ public class Dealer extends Participant {
         return cards.findFirst();
     }
 
-    public String getName() {
-        return NAME;
+    public Name getName() {
+        return Name.of(NAME);
     }
 }

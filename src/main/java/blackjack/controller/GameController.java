@@ -17,6 +17,7 @@ import blackjack.domain.RecordFactory;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.RandomDeck;
 import blackjack.domain.participant.DrawCount;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
@@ -75,12 +76,12 @@ public class GameController {
 
     private void playRecord(Game game) {
         RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
-        Map<String, PlayRecord> map = game.getPlayers().stream()
+        Map<Name, PlayRecord> map = game.getPlayers().stream()
             .collect(Collectors.toMap(Player::getName, player -> recordFactory.getPlayerRecord(player.getScore()),
                 (recordA, recordB) -> recordB, LinkedHashMap::new));
 
         printDealerRecord(recordFactory.getDealerRecord());
-        for (Entry<String, PlayRecord> entry : map.entrySet()) {
+        for (Entry<Name, PlayRecord> entry : map.entrySet()) {
             printPlayerRecord(entry.getKey(), entry.getValue());
         }
     }
