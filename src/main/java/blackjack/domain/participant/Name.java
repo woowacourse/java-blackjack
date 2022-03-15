@@ -17,9 +17,10 @@ public class Name {
 	}
 
 	private static String validateName(String input) {
-		checkBlankName(input);
-		checkUnavailableName(input);
-		return input;
+		String name = input.trim();
+		checkBlankName(name);
+		checkUnavailableName(name);
+		return name;
 	}
 
 	private static void checkBlankName(String input) {
