@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -23,19 +22,17 @@ public class GameResult {
         Map<Outcome, Integer> dealerResult = new EnumMap<>(Outcome.class);
         Map<String, Outcome> playersResult = new LinkedHashMap<>();
 
-        initDealerResult(dealerResult);
         for (Player player : players) {
             Outcome playerOutcome = Outcome.judge(player, dealer);
             playersResult.put(player.getName(), playerOutcome);
-            dealerResult.merge(playerOutcome.getOpposite(), 1, Integer::sum);
+            putDealerResult(dealerResult, playerOutcome);
         }
 
         return new GameResult(dealerResult, playersResult);
     }
 
-    private static void initDealerResult(Map<Outcome, Integer> dealerResult) {
-        Arrays.stream(Outcome.values())
-                .forEach(value -> dealerResult.put(value, 0));
+    private static void putDealerResult(Map<Outcome, Integer> dealerResult, Outcome playerOutcome) {
+        dealerResult.merge(playerOutcome.getOpposite(), 1, Integer::sum);
     }
 
     public Map<Outcome, Integer> getDealerResult() {
