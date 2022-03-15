@@ -53,7 +53,7 @@ class DealerTest {
         dealer.addCard(Card.of(Suit.SPADES, Denomination.FIVE));
 
         // when
-        boolean actual = dealer.canGetMoreCard();
+        boolean actual = dealer.isHittable();
 
         // then
         assertThat(actual).isTrue();
@@ -68,7 +68,7 @@ class DealerTest {
         dealer.addCard(Card.of(Suit.SPADES, Denomination.KING));
 
         // when
-        boolean actual = dealer.canGetMoreCard();
+        boolean actual = dealer.isHittable();
 
         // then
         assertThat(actual).isFalse();

@@ -23,7 +23,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean canGetMoreCard() {
+    public boolean isHittable() {
         return getScore() <= MORE_CARD_CRITERIA;
     }
 

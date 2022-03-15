@@ -18,7 +18,7 @@ public class Gambler extends Player {
     }
 
     @Override
-    public boolean canGetMoreCard() {
+    public boolean isHittable() {
         return !isBust() && getScore() < MAXIMUM_SCORE;
     }
 

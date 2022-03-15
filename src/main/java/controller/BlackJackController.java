@@ -82,13 +82,13 @@ public class BlackJackController {
         do {
             gambler.addCard(cardDeck.getCard());
             OutputView.printCards(CardsDto.from(gambler));
-        } while (gambler.canGetMoreCard() && InputView.scanIsHit(gambler.getName()));
+        } while (gambler.isHittable() && InputView.scanIsHit(gambler.getName()));
     }
 
     private void playForDealer(Dealer dealer, CardDeck cardDeck) {
         OutputView.printLineSeparator();
 
-        while (dealer.canGetMoreCard()) {
+        while (dealer.isHittable()) {
             dealer.addCard(cardDeck.getCard());
             OutputView.printDealerAddCard(dealer);
         }

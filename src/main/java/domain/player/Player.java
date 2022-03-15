@@ -17,7 +17,7 @@ public abstract class Player {
 
     public abstract boolean isDealer();
 
-    public abstract boolean canGetMoreCard();
+    public abstract boolean isHittable();
 
     public abstract List<Card> getOpenCards();
 
