@@ -7,7 +7,7 @@ import blackjack.domain.card.HoldingCard;
 import java.util.List;
 
 public abstract class Participant {
-    protected final String name;
+    private final String name;
     protected final HoldingCard holdingCard;
 
     public Participant(String name, List<Card> cards) {
