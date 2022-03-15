@@ -39,11 +39,9 @@ public class Deck {
     }
 
     private int sumCardPoint() {
-        int points = 0;
-        for (PlayingCard playingCard : deck) {
-            points = playingCard.sumPoint(points);
-        }
-        return points;
+        return deck.stream()
+                .mapToInt(PlayingCard::getPoint)
+                .sum();
     }
 
     public Set<PlayingCard> getCards() {

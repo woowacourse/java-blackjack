@@ -14,8 +14,8 @@ public class PlayingCard {
         return denomination == Denomination.ACE;
     }
 
-    public int sumPoint(int points) {
-        return points + denomination.getPoint();
+    public int getPoint() {
+        return denomination.getPoint();
     }
 
     public Suit getSuit() {
