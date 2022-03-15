@@ -26,7 +26,7 @@ public class Gamers {
         }
     }
 
-    public Map<Player, ResultStrategy> compareResult(final int dealerPoint) {
+    public Map<Gamer, ResultStrategy> compareResult(final int dealerPoint) {
         return gamers.stream()
                 .collect(toMap(gamer -> gamer,
                         gamer -> CompareResult.findCompareResult(dealerPoint, gamer).getResult(),

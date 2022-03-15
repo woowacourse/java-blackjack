@@ -56,6 +56,10 @@ public class Gamer extends Player {
         return answer == Answer.YES;
     }
 
+    public Bet getBet() {
+        return bet;
+    }
+
     public Bet calculateCurrentBet(final ResultStrategy resultStrategy) {
         bet.calculateBenefit(resultStrategy);
         return bet;
