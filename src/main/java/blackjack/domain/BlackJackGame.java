@@ -55,23 +55,23 @@ public class BlackJackGame {
     }
 
     public String playNameOnTurn() {
-        return players.stream()
-                .filter(participant -> !participant.isFinished())
-                .findFirst().get()
-                .getName();
+        return findPlayerOnTurn().getName();
     }
 
     public List<Card> playerDrawCardOnDecision(boolean decision) {
-        Player playerOnTurn = players.stream()
-                .filter(participant -> !participant.isFinished())
-                .findFirst().get();
+        Player playerOnTurn = findPlayerOnTurn();
         if(decision) {
             playerOnTurn.receiveCard(cardDeck.drawCard());
+            return playerOnTurn.getHoldingCard().getCards();
         }
-        if(!decision) {
-            playerOnTurn.closeTurn();
-        }
+        playerOnTurn.closeTurn();
         return playerOnTurn.getHoldingCard().getCards();
+    }
+
+    private Player findPlayerOnTurn() {
+        return players.stream()
+                .filter(participant -> !participant.isFinished())
+                .findFirst().get();
     }
 
     public boolean dealerDrawMoreCard() {

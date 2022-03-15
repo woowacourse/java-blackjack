@@ -25,9 +25,9 @@ public class BlackJackController {
     private void playTurn(BlackJackGame blackJackGame) {
         String name = blackJackGame.playNameOnTurn();
         boolean decision = askMoreCard(name);
-        List<Card> updatedCard = blackJackGame.playerDrawCardOnDecision(decision);
+        List<Card> updatedCards = blackJackGame.playerDrawCardOnDecision(decision);
         if(decision) {
-            OutputView.showDrawResult(name, updatedCard);
+            OutputView.showDrawResult(name, updatedCards);
         }
     }
 
