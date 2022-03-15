@@ -17,10 +17,10 @@ public class Controller {
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, InitCards.generateInitCardsForPlayers(deck, names.size()));
 
-        OutputView.printParticipantInitHands(dealer, players);
+        OutputView.printInitHands(dealer, players);
 
         if (dealer.isBlackJack()) {
-            OutputView.printDealerBlackJackMessage();
+            OutputView.printDealerISBlackJackMessage();
             OutputView.printResult(players.getNames(), players.getResultAtDealerBlackJack(dealer));
             return;
         }

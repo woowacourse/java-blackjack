@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String INIT_MESSAGE_FORMAT = "\n딜러와 %s에게 2장의 나누었습니다.\n";
-    private static final String SHOW_DEALER_ONE_HAND_FORMAT = "딜러: %s\n";
+    private static final String SHOW_DEALER_FIRST_HAND_FORMAT = "딜러: %s\n";
     private static final String SHOW_HAND_FORMAT = "%s 카드: %s\n";
     private static final String STATUS_FORMAT = "%s 카드: %s - 결과 : %d\n";
     private static final String BUST_MESSAGE = "[ 🧨💥🧨 Bust!!! 💣💥💣 ]";
@@ -22,10 +22,10 @@ public class OutputView {
     private static final String DEALER_BLACK_JACK_MESSAGE = "\n== DEALER IS BLACK JACK ==";
     private static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n💵🤑💵 %s IS BLACK JACK 🎰🤑🎰\n";
 
-    public static void printParticipantInitHands(Dealer dealer, Players players) {
+    public static void printInitHands(Dealer dealer, Players players) {
         printInitHandsMessage(players.getNames());
         printNewLine();
-        System.out.printf(SHOW_DEALER_ONE_HAND_FORMAT, dealer.getFirstHand().combineRankAndSuit());
+        System.out.printf(SHOW_DEALER_FIRST_HAND_FORMAT, dealer.getFirstHand().combineRankAndSuit());
         for (Name name : players.getNames()) {
             printPlayerHand(name, players);
         }
@@ -40,7 +40,7 @@ public class OutputView {
         System.out.printf(SHOW_HAND_FORMAT, name.getName(), players.showHandByName(name));
     }
 
-    public static void printDealerBlackJackMessage() {
+    public static void printDealerISBlackJackMessage() {
         System.out.println(DEALER_BLACK_JACK_MESSAGE);
     }
 
@@ -51,13 +51,13 @@ public class OutputView {
     }
 
     private static void printIfPlayerIsBlackJackMessage(Name name, Players players) {
-        if (players.isMaxScoreByName(name)) {
+        if (players.isUpperBoundScoreByName(name)) {
             System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, name.getName());
         }
     }
 
     public static void printIfMaxScoreOrBust(Name name, Players players) {
-        if (players.isMaxScoreByName(name)) {
+        if (players.isUpperBoundScoreByName(name)) {
             System.out.println(MAX_SCORE_MESSAGE);
         }
         if (players.isBustByName(name)) {

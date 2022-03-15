@@ -69,7 +69,7 @@ public class Players {
         return bustPlayerCount != players.size();
     }
 
-    public boolean isMaxScoreByName(Name name) {
+    public boolean isUpperBoundScoreByName(Name name) {
         return findByName(name).isUpperBoundScore();
     }
 

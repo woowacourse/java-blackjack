@@ -6,7 +6,6 @@ import domain.result.Result;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -70,7 +69,7 @@ public class PlayersTest {
     @DisplayName("이름으로 플레이어가 블랙잭 인지 판별")
     void isBlackJackByName() {
         Name name = new Name("pobi");
-        assertThat(players.isMaxScoreByName(name)).isTrue();
+        assertThat(players.isUpperBoundScoreByName(name)).isTrue();
     }
 
     @Test
