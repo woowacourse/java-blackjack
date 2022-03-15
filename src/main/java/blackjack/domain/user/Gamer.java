@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 
-public class Gamer {
+public abstract class Gamer {
 	protected final Cards cards;
 	protected final Name name;
 

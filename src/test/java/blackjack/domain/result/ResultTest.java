@@ -33,12 +33,12 @@ public class ResultTest {
 	void all_player_lose() {
 		// given
 		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Denomination.QUEEN, Suit.CLOVER));
-		dealer.addCard(new Card(Denomination.KING, Suit.SPADE));
-		player1.addCard(new Card(Denomination.TEN, Suit.SPADE));
-		player1.addCard(new Card(Denomination.NINE, Suit.DIAMOND));
-		player2.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
-		player2.addCard(new Card(Denomination.NINE, Suit.SPADE));
+		dealer.addCard(Card.of(Denomination.QUEEN, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.KING, Suit.SPADE));
+		player1.addCard(Card.of(Denomination.TEN, Suit.SPADE));
+		player1.addCard(Card.of(Denomination.NINE, Suit.DIAMOND));
+		player2.addCard(Card.of(Denomination.TEN, Suit.DIAMOND));
+		player2.addCard(Card.of(Denomination.NINE, Suit.SPADE));
 		// when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
@@ -54,12 +54,12 @@ public class ResultTest {
 	void all_player_win() {
 		// given
 		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Denomination.QUEEN, Suit.CLOVER));
-		dealer.addCard(new Card(Denomination.NINE, Suit.SPADE));
-		player1.addCard(new Card(Denomination.TEN, Suit.SPADE));
-		player1.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
-		player2.addCard(new Card(Denomination.TEN, Suit.HEART));
-		player2.addCard(new Card(Denomination.TEN, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.QUEEN, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.NINE, Suit.SPADE));
+		player1.addCard(Card.of(Denomination.TEN, Suit.SPADE));
+		player1.addCard(Card.of(Denomination.TEN, Suit.DIAMOND));
+		player2.addCard(Card.of(Denomination.TEN, Suit.HEART));
+		player2.addCard(Card.of(Denomination.TEN, Suit.CLOVER));
 		// when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
@@ -74,12 +74,12 @@ public class ResultTest {
 	void all_player_draw() {
 	    //given
 		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Denomination.QUEEN, Suit.CLOVER));
-		dealer.addCard(new Card(Denomination.NINE, Suit.SPADE));
-		player1.addCard(new Card(Denomination.TEN, Suit.SPADE));
-		player1.addCard(new Card(Denomination.NINE, Suit.DIAMOND));
-		player2.addCard(new Card(Denomination.TEN, Suit.HEART));
-		player2.addCard(new Card(Denomination.NINE, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.QUEEN, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.NINE, Suit.SPADE));
+		player1.addCard(Card.of(Denomination.TEN, Suit.SPADE));
+		player1.addCard(Card.of(Denomination.NINE, Suit.DIAMOND));
+		player2.addCard(Card.of(Denomination.TEN, Suit.HEART));
+		player2.addCard(Card.of(Denomination.NINE, Suit.CLOVER));
 	    //when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);

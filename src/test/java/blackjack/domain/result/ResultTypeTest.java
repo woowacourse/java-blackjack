@@ -19,8 +19,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
-		player.addCard(new Card(Denomination.EIGHT, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.NINE, Suit.CLOVER));
+		player.addCard(Card.of(Denomination.EIGHT, Suit.CLOVER));
 		//when
 		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
 		//then
@@ -33,8 +33,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Denomination.EIGHT, Suit.CLOVER));
-		player.addCard(new Card(Denomination.NINE, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.EIGHT, Suit.CLOVER));
+		player.addCard(Card.of(Denomination.NINE, Suit.CLOVER));
 		//when
 		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
 		//then
@@ -47,8 +47,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
-		player.addCard(new Card(Denomination.NINE, Suit.HEART));
+		dealer.addCard(Card.of(Denomination.NINE, Suit.CLOVER));
+		player.addCard(Card.of(Denomination.NINE, Suit.HEART));
 		//when
 		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
 		//then
@@ -61,11 +61,11 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Denomination.ACE, Suit.CLOVER));
-		dealer.addCard(new Card(Denomination.JACK, Suit.HEART));
-		player.addCard(new Card(Denomination.ACE, Suit.HEART));
-		player.addCard(new Card(Denomination.EIGHT, Suit.HEART));
-		player.addCard(new Card(Denomination.TWO, Suit.HEART));
+		dealer.addCard(Card.of(Denomination.ACE, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.JACK, Suit.HEART));
+		player.addCard(Card.of(Denomination.ACE, Suit.HEART));
+		player.addCard(Card.of(Denomination.EIGHT, Suit.HEART));
+		player.addCard(Card.of(Denomination.TWO, Suit.HEART));
 		//when
 		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
 		//given
@@ -78,10 +78,10 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Denomination.ACE, Suit.CLOVER));
-		dealer.addCard(new Card(Denomination.JACK, Suit.HEART));
-		player.addCard(new Card(Denomination.ACE, Suit.HEART));
-		player.addCard(new Card(Denomination.QUEEN, Suit.HEART));
+		dealer.addCard(Card.of(Denomination.ACE, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.JACK, Suit.HEART));
+		player.addCard(Card.of(Denomination.ACE, Suit.HEART));
+		player.addCard(Card.of(Denomination.QUEEN, Suit.HEART));
 		//when
 		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
 		//given

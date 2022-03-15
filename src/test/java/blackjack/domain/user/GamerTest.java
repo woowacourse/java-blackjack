@@ -30,9 +30,9 @@ class GamerTest {
 		//given
 		Gamer gamer = new Dealer();
 		//when
-		gamer.addCard(new Card(Denomination.TEN, Suit.CLOVER));
-		gamer.addCard(new Card(Denomination.TEN, Suit.HEART));
-		gamer.addCard(new Card(Denomination.TWO, Suit.SPADE));
+		gamer.addCard(Card.of(Denomination.TEN, Suit.CLOVER));
+		gamer.addCard(Card.of(Denomination.TEN, Suit.HEART));
+		gamer.addCard(Card.of(Denomination.TWO, Suit.SPADE));
 		//then
 		assertThat(gamer.isBust()).isTrue();
 	}
@@ -42,9 +42,9 @@ class GamerTest {
 	void check_optimal_ace_sum() {
 		// given
 		Gamer gamer = new Player("pobi");
-		gamer.addCard(new Card(Denomination.ACE, Suit.HEART));
-		gamer.addCard(new Card(Denomination.ACE, Suit.SPADE));
-		gamer.addCard(new Card(Denomination.NINE, Suit.SPADE));
+		gamer.addCard(Card.of(Denomination.ACE, Suit.HEART));
+		gamer.addCard(Card.of(Denomination.ACE, Suit.SPADE));
+		gamer.addCard(Card.of(Denomination.NINE, Suit.SPADE));
 		// when
 		// then
 		assertThat(gamer.getScore()).isEqualTo(21);

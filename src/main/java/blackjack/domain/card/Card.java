@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Card {
+	private static final String INVALID_CARD_EXCEPTION = "존재하지 않는 카드입니다.";
 	private static final List<Card> CACHED_CARDS;
 
 	static {
@@ -26,9 +27,17 @@ public class Card {
 	private final Denomination denomination;
 	private final Suit suit;
 
-	public Card(final Denomination denomination, final Suit suit) {
+	private Card(final Denomination denomination, final Suit suit) {
 		this.denomination = denomination;
 		this.suit = suit;
+	}
+
+	public static Card of(final Denomination denomination, final Suit suit) {
+		return CACHED_CARDS.stream()
+			.filter(card -> card.denomination == denomination)
+			.filter(card -> card.suit == suit)
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException(INVALID_CARD_EXCEPTION));
 	}
 
 	public static List<Card> getCachedCards() {

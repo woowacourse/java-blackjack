@@ -11,7 +11,7 @@ public class Deck {
 	private final Deque<Card> deck;
 
 	public Deck() {
-		List<Card> cards = Card.getCachedCards();
+		final List<Card> cards = Card.getCachedCards();
 		Collections.shuffle(cards);
 		deck = new ArrayDeque<>(cards);
 	}

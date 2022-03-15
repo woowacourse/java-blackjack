@@ -17,8 +17,8 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
 		//when
-		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
-		player.addCard(new Card(Denomination.FIVE, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.NINE, Suit.CLOVER));
+		player.addCard(Card.of(Denomination.FIVE, Suit.CLOVER));
 		//then
 		assertThat(dealer.compare(player)).isGreaterThan(0);
 	}
@@ -30,8 +30,8 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
 		//when
-		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
-		player.addCard(new Card(Denomination.TEN, Suit.CLOVER));
+		dealer.addCard(Card.of(Denomination.NINE, Suit.CLOVER));
+		player.addCard(Card.of(Denomination.TEN, Suit.CLOVER));
 		//then
 		assertThat(dealer.compare(player)).isLessThan(0);
 	}
@@ -43,8 +43,8 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
 		//when
-		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
-		player.addCard(new Card(Denomination.NINE, Suit.HEART));
+		dealer.addCard(Card.of(Denomination.NINE, Suit.CLOVER));
+		player.addCard(Card.of(Denomination.NINE, Suit.HEART));
 		//then
 		assertThat(dealer.compare(player)).isEqualTo(0);
 	}
