@@ -22,11 +22,11 @@ public class ParticipantDto {
         return new ParticipantDto(
                 participant.getName(),
                 participant.showFirstCards(),
-                participant.getScore().getValue());
+                participant.calculateScore().getValue());
     }
 
     public static ParticipantDto toOpenAllCards(final Participant participant) {
-        return new ParticipantDto(participant.getName(), participant.getCards(), participant.getScore().getValue());
+        return new ParticipantDto(participant.getName(), participant.getCards(), participant.calculateScore().getValue());
     }
 
     public String getName() {

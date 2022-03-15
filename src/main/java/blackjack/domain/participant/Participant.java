@@ -12,6 +12,7 @@ import static blackjack.domain.result.Score.BLACKJACK_NUMBER;
 
 public abstract class Participant {
 
+    public static final int INITIAL_DRAW_COUNT = 2;
     private final String name;
     private final List<Card> cards;
 
@@ -28,7 +29,7 @@ public abstract class Participant {
         cards.add(deck.drawCard());
     }
 
-    protected Score calculateScore() {
+    public Score calculateScore() {
         int sumCardNumbers = cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
@@ -51,8 +52,17 @@ public abstract class Participant {
         return calculateScore().isOver(new Score(BLACKJACK_NUMBER));
     }
 
-    public Score getScore() {
-        return calculateScore();
+    public boolean isBlackjack() {
+        return calculateScore().equals(new Score(BLACKJACK_NUMBER)) &&
+                 cards.size() == INITIAL_DRAW_COUNT;
+    }
+
+    public boolean hasHigherScoreThan(Participant participant) {
+        return this.calculateScore().isOver(participant.calculateScore());
+    }
+
+    public boolean hasSameScoreWith(Participant participant) {
+        return this.calculateScore().equals(participant.calculateScore());
     }
 
     public List<Card> getCards() {

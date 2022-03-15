@@ -30,7 +30,7 @@ public class Dealer extends Participant {
     }
 
     public PlayerResult judgeWinner(final Player player) {
-        return PlayerResult.createResult(player, this);
+        return PlayerResult.of(player, this);
     }
 
     @Override
