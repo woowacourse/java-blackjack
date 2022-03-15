@@ -2,7 +2,6 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,19 +11,19 @@ import java.util.Map;
 
 public class GameResult {
 
-    private final Map<Participant, MatchResult> gameResult = new LinkedHashMap<>();
+    private final Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
 
     public GameResult(List<Player> players, Dealer dealer) {
-        initialGameResult(new ArrayList<>(players), dealer);
+        initGameResult(new ArrayList<>(players), dealer);
     }
 
-    private void initialGameResult(List<Participant> players, Participant dealer) {
-        for (Participant player : players) {
+    private void initGameResult(List<Player> players, Dealer dealer) {
+        for (Player player : players) {
             gameResult.put(player, playResult(player, dealer));
         }
     }
 
-    private MatchResult playResult(Participant player, Participant dealer) {
+    private MatchResult playResult(Player player, Dealer dealer) {
         Cards playerCards = player.getCards();
         Cards dealerCards = dealer.getCards();
 
@@ -43,7 +42,7 @@ public class GameResult {
         return cards1.isBust() || (!cards2.isBust() && cards1.sum() < cards2.sum());
     }
 
-    public MatchResult getMatchResult(Participant player) {
+    public MatchResult getMatchResult(Player player) {
         return gameResult.get(player);
     }
 
@@ -62,7 +61,7 @@ public class GameResult {
                 .count();
     }
 
-    public Map<Participant, MatchResult> getGameResult() {
+    public Map<Player, MatchResult> getGameResult() {
         return Collections.unmodifiableMap(gameResult);
     }
 
