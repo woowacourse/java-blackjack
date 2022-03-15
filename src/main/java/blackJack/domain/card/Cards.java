@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Cards {
     private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BLACK_JACK = 21;
-    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
+    private static final int ACE_BONUS_SCORE = 10;
 
     private final Set<Card> cards;
 
@@ -30,10 +30,14 @@ public class Cards {
 
     public int calculateFinalScore() {
         final int score = calculateScore();
-        if (hasAce() && score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore() <= BLACK_JACK) {
-            return score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
+        if (hasAce() && checkValidationAceBonusScore(score)) {
+            return score + ACE_BONUS_SCORE;
         }
         return score;
+    }
+
+    private boolean checkValidationAceBonusScore(int score) {
+        return score + ACE_BONUS_SCORE <= BLACK_JACK;
     }
 
     public boolean hasAce() {
