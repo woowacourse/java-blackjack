@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Players implements Function<Deck, Boolean> {
+public class Players {
 
     private static final int MIN_SIZE = 2;
     private static final int MAX_SIZE = 8;
@@ -54,8 +54,7 @@ public class Players implements Function<Deck, Boolean> {
         return List.copyOf(participants);
     }
 
-    @Override
-    public Boolean apply(Deck deck) {
+    public Boolean isParticipantAcceptCard(Deck deck) {
         validateEndParticipants();
         Player participant = copiedParticipants.getFirst();
         if (participant.acceptableCard()) {

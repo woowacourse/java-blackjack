@@ -63,7 +63,7 @@ public class Blackjack {
     private void decideParticipantsMoreCard(final Players players, final Deck deck) {
         while (!players.allParticipantsDecided()) {
             Player player = players.getParticipant();
-            boolean cardAccept = players.apply(deck);
+            boolean cardAccept = players.isParticipantAcceptCard(deck);
             printParticipantCardInfo(cardAccept, player);
         }
     }
