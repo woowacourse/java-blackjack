@@ -7,13 +7,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GameResultConvertor {
+    private static final String BLANK = " ";
 
     public static String convertToString(final GameResult gameResult) {
         return GameResultMapper.mapToString(gameResult);
     }
 
-    public static String convertToString(final List<String> results) {
-        return String.join(" ", GameResultMapper.convertToCountWithString(results));
+    public static String convertToString(final List<GameResult> results) {
+        return String.join(BLANK, GameResultMapper.convertToCountWithString(results));
     }
 
     private GameResultConvertor() {
@@ -33,7 +34,7 @@ public class GameResultConvertor {
             this.name = name;
         }
 
-        public static String mapToString(final GameResult other) {
+        static String mapToString(final GameResult other) {
             return Arrays.stream(GameResultMapper.values())
                     .filter(gameResult -> gameResult.gameResult == other)
                     .findFirst()
@@ -41,18 +42,18 @@ public class GameResultConvertor {
                     .name;
         }
 
-        public static List<String> convertToCountWithString(final List<String> results) {
+        static List<String> convertToCountWithString(final List<GameResult> results) {
             final List<String> convertedResults = new ArrayList<>();
             for (final GameResultMapper value : values()) {
-                addResult(results, convertedResults, value.name);
+                addResult(results, convertedResults, value);
             }
             return convertedResults;
         }
 
-        private static void addResult(final List<String> origin, final List<String> convertedResults, final String name) {
-            if (origin.contains(name)) {
-                final long matchingCount = origin.stream().filter(name::equals).count();
-                convertedResults.add(matchingCount + name);
+        private static void addResult(final List<GameResult> origin, final List<String> convertedResults, final GameResultMapper mapper) {
+            if (origin.contains(mapper.gameResult)) {
+                final long matchingCount = origin.stream().filter(mapper.gameResult::equals).count();
+                convertedResults.add(matchingCount + mapper.name);
             }
         }
     }

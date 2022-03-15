@@ -1,5 +1,6 @@
 package dto;
 
+import domain.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -14,9 +15,9 @@ public final class DealerResultDto {
 
     public DealerResultDto(final Dealer dealer, final Players players) {
         this.name = dealer.getName();
-        final List<String> results = new ArrayList<>();
+        final List<GameResult> results = new ArrayList<>();
         for (final Player player : players.getPlayers()) {
-            results.add(GameResultConvertor.convertToString(dealer.getGameResult(player)));
+            results.add(dealer.getGameResult(player));
         }
         this.gameResult = GameResultConvertor.convertToString(results);
     }
