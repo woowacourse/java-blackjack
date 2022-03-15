@@ -16,4 +16,13 @@ public class BattingMoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅 금액 최소 금액은 1원입니다.");
     }
+
+    @DisplayName("배팅금액은 숫자여야한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"오백원", " ", "1만원", ","})
+    void 배팅금액_숫자_외_예외(String value) {
+        assertThatThrownBy(() -> new BattingMoney(value))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("string");
+    }
 }

@@ -9,6 +9,10 @@ public class BattingMoney {
         this.value = value;
     }
 
+    public BattingMoney(String value) {
+        this(Integer.parseInt(value));
+    }
+
     private void checkNegative(int value) {
         if (value < BATTING_MIN_VALUE) {
             throw new IllegalArgumentException("배팅 금액 최소 금액은 1원입니다.");
