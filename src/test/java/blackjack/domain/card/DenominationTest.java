@@ -30,4 +30,20 @@ class DenominationTest {
                 Arguments.of(Arrays.asList(A, A, TEN, TEN), true)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("generateCalculateScoreValues")
+    void 가능한_가장_좋은_합을_계산한다(List<Denomination> cardNumbers, int expected) {
+        final int result = Denomination.calculateScore(cardNumbers);
+        assertThat(result).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> generateCalculateScoreValues() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(THREE, SEVEN, TEN), 20),
+                Arguments.of(Arrays.asList(A, TEN), 21),
+                Arguments.of(Arrays.asList(A, A, TEN), 12),
+                Arguments.of(Arrays.asList(A, A, TEN, TEN), 22)
+        );
+    }
 }

@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public enum Denomination {
 
@@ -49,5 +50,35 @@ public enum Denomination {
         return (int) denominations.stream()
                 .filter(denomination -> denomination == A)
                 .count();
+    }
+
+    public static int calculateScore(final List<Denomination> numbers) {
+        final int bonusMaxScore = calculateAceCount(numbers) * ACE_BONUS_VALUE;
+        final int defaultScore = sumDefaultScore(numbers);
+        final int startScore = defaultScore + bonusMaxScore;
+
+        return calculateScore(numbers, defaultScore, startScore);
+    }
+
+    private static int sumDefaultScore(final List<Denomination> numbers) {
+        return numbers.stream()
+                .mapToInt(number -> number.defaultValue)
+                .sum();
+    }
+
+    private static int calculateScore(final List<Denomination> numbers, final int defaultScore, final int startScore) {
+        return IntStream.range(0, calculateAceCount(numbers))
+                .map(aceCount -> decreaseByAceCount(startScore, aceCount))
+                .filter(Denomination::isLowerThanBlackjackTargetNumber)
+                .findFirst()
+                .orElse(defaultScore);
+    }
+
+    private static int decreaseByAceCount(final int startScore, final int aceCount) {
+        return startScore - aceCount * ACE_BONUS_VALUE;
+    }
+
+    private static boolean isLowerThanBlackjackTargetNumber(final int sumCount) {
+        return sumCount <= 21;
     }
 }
