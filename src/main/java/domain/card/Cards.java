@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.GameResult;
 import domain.HitThreshold;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public final class Cards {
         this.threshold = threshold;
     }
 
-    public boolean add(final Card card, boolean... request) {
+    public boolean add(final Card card, final boolean... request) {
         if (request.length == 0) {
             return addWithoutRequest(card);
         }
