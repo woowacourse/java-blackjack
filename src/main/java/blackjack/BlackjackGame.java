@@ -6,7 +6,6 @@ import blackjack.domain.PlayerOutcome;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
 import blackjack.dto.CardCountingResult;
-import blackjack.dto.FirstTurnCards;
 import blackjack.dto.PlayerCardResult;
 import blackjack.dto.PlayerGameResult;
 import blackjack.view.InputView;
@@ -26,9 +25,9 @@ public class BlackjackGame {
         OutputView.printGameResult(toGameResults(blackjackTable.countGameResult()));
     }
 
-    private List<FirstTurnCards> toFirstTurnCards(List<Participant> participants) {
+    private List<PlayerCardResult> toFirstTurnCards(List<Participant> participants) {
         return participants.stream()
-            .map(participant -> new FirstTurnCards(participant.getName(), participant.openCard()))
+            .map(participant -> new PlayerCardResult(participant.getName(), participant.openCard()))
             .collect(Collectors.toList());
     }
 

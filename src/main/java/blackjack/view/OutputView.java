@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.dto.CardCountingResult;
-import blackjack.dto.FirstTurnCards;
 import blackjack.dto.PlayerCardResult;
 import blackjack.dto.PlayerGameResult;
 import java.text.MessageFormat;
@@ -15,7 +14,7 @@ public class OutputView {
     private static final String LOSE = "패";
     private static final String DRAW = "무";
 
-    public static void printFirstTurnCards(List<FirstTurnCards> firstTurnCards) {
+    public static void printFirstTurnCards(List<PlayerCardResult> firstTurnCards) {
         System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", toCardName(firstTurnCards)));
         firstTurnCards.stream()
             .map(firstTurnCard -> printPlayerCard(firstTurnCard.getPlayerName(), firstTurnCard.getCards()))
@@ -52,9 +51,9 @@ public class OutputView {
         playerGameResults.forEach(result -> System.out.println(result.getPlayerName() + ": " + result.getOutcome()));
     }
 
-    private static String toCardName(List<FirstTurnCards> firstTurnCards) {
+    private static String toCardName(List<PlayerCardResult> firstTurnCards) {
         return firstTurnCards.stream()
-            .map(FirstTurnCards::getPlayerName)
+            .map(PlayerCardResult::getPlayerName)
             .filter(name -> !name.equals(DEALER_NAME))
             .collect(Collectors.joining(NAME_DELIMITER));
     }
