@@ -20,7 +20,7 @@ public class BlackjackGameTest {
         // when
         boolean match = blackjackGame
                 .getParticipants()
-                .findPlayers()
+                .getPlayers()
                 .stream()
                 .mapToInt(this::calculateCardsSize)
                 .anyMatch(cardSize -> cardSize != 2);

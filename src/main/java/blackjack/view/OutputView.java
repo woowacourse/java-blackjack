@@ -7,6 +7,7 @@ import blackjack.domain.game.GameResult;
 import blackjack.domain.game.MatchResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,16 +21,16 @@ public class OutputView {
 
     }
 
-    public static void printInitialCards(Participant dealer, List<Participant> players) {
+    public static void printInitialCards(Dealer dealer, List<Player> players) {
         System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), getPlayerNames(players));
         System.out.printf("%s: %s%n", dealer.getName(), getCardName(dealer.getCards().getValue().get(0)));
-        for (Participant player : players) {
+        for (Player player : players) {
             printCards(player);
         }
         System.out.println();
     }
 
-    private static String getPlayerNames(List<Participant> players) {
+    private static String getPlayerNames(List<Player> players) {
         return players.stream()
                 .map(Participant::getName)
                 .collect(Collectors.joining(JOIN_DELIMITER));
@@ -53,10 +54,10 @@ public class OutputView {
         System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DRAW_STANDARD);
     }
 
-    public static void printCardsResult(Participant dealer, List<Participant> players) {
+    public static void printCardsResult(Dealer dealer, List<Player> players) {
         System.out.println();
         printCardResult(dealer);
-        for (Participant player : players) {
+        for (Player player : players) {
             printCardResult(player);
         }
     }

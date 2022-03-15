@@ -21,11 +21,12 @@ public class BlackjackGame {
     private final CardDistributor cardDistributor = new CardDistributor();
 
     public BlackjackGame(List<Name> names) {
-        this.participants = new Participants(initializePlayers(new ArrayList<>(names)));
-        this.participants.add(new Dealer(new Name(DEALER_NAME), drawInitialCards()));
+        Dealer dealer = new Dealer(new Name(DEALER_NAME), drawInitialCards());
+        List<Player> players = initializePlayers(new ArrayList<>(names));
+        this.participants = new Participants(players, dealer);
     }
 
-    private List<Participant> initializePlayers(List<Name> names) {
+    private List<Player> initializePlayers(List<Name> names) {
         return names.stream()
                 .map(name -> new Player(name, drawInitialCards()))
                 .collect(Collectors.toUnmodifiableList());
@@ -44,7 +45,7 @@ public class BlackjackGame {
     }
 
     public GameResult createGameResult() {
-        return new GameResult(participants.findPlayers(), participants.findDealer());
+        return new GameResult(participants.getPlayers(), participants.getDealer());
     }
 
     public Participants getParticipants() {

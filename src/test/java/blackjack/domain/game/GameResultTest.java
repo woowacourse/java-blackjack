@@ -6,7 +6,6 @@ import static utils.TestUtil.getCards;
 import blackjack.domain.card.Number;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +43,7 @@ class GameResultTest {
     @DisplayName("딜러가 승리한 횟수")
     void dealer_count_test(Player player1, Player player2, Dealer dealer, MatchResult result, int expect) {
         // given
-        List<Participant> players = Arrays.asList(player1, player2);
+        List<Player> players = Arrays.asList(player1, player2);
         GameResult gameResult = new GameResult(players, dealer);
 
         // then

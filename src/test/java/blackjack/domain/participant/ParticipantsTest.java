@@ -19,29 +19,29 @@ class ParticipantsTest {
     void init() {
         names = Arrays.asList(new Name("pobi"), new Name("jason"));
 
-        participants = new Participants(toPlayerList(names));
-        participants.add(new Dealer(new Name("딜러"), getCards(Number.SEVEN, Number.QUEEN)));
+        participants = new Participants(toPlayerList(names),
+                new Dealer(new Name("딜러"), getCards(Number.SEVEN, Number.QUEEN)));
     }
 
     @Test
     @DisplayName("플레이어들 가져오기")
     void find_players() {
         // given
-        List<Participant> expectPlayers = toPlayerList(names);
+        List<Player> expectPlayers = toPlayerList(names);
 
         // when
-        List<Participant> playerNames = participants.findPlayers();
+        List<Player> playerNames = participants.getPlayers();
 
         // then
         assertThat(playerNames).containsAll(expectPlayers);
     }
 
-    private List<Participant> toPlayerList(List<Name> names) {
-        List<Participant> participantsList = new ArrayList<>();
+    private List<Player> toPlayerList(List<Name> names) {
+        List<Player> playerList = new ArrayList<>();
         for (Name name : names) {
-            participantsList.add(new Player(name, getCards(Number.SEVEN, Number.QUEEN)));
+            playerList.add(new Player(name, getCards(Number.SEVEN, Number.QUEEN)));
         }
-        return participantsList;
+        return playerList;
     }
 
     @Test
@@ -49,7 +49,7 @@ class ParticipantsTest {
     void find_dealer() {
         // then
         assertThat(participants
-                .findDealer())
+                .getDealer())
                 .isInstanceOf(Dealer.class);
     }
 }

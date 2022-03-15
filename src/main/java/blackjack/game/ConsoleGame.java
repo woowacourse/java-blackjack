@@ -2,13 +2,15 @@ package blackjack.game;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
-import blackjack.view.Command;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import java.util.List;
+import blackjack.domain.participant.Player;
+import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class ConsoleGame {
 
@@ -16,10 +18,10 @@ public class ConsoleGame {
         BlackjackGame blackjackGame = createBlackjackGame();
 
         Participants participants = blackjackGame.getParticipants();
-        Participant dealer = participants.findDealer();
-        List<Participant> players = participants.findPlayers();
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
 
-        OutputView.printInitialCards(participants.findDealer(), participants.findPlayers());
+        OutputView.printInitialCards(dealer, players);
 
         playPlayersTurn(blackjackGame, players);
         playDealerTurn(blackjackGame, dealer);
@@ -37,13 +39,13 @@ public class ConsoleGame {
         }
     }
 
-    private void playPlayersTurn(BlackjackGame blackjackGame, List<Participant> players) {
-        for (Participant player : players) {
+    private void playPlayersTurn(BlackjackGame blackjackGame, List<Player> players) {
+        for (Player player : players) {
             playPlayerTurn(blackjackGame, player);
         }
     }
 
-    private void playPlayerTurn(BlackjackGame blackjackGame, Participant player) {
+    private void playPlayerTurn(BlackjackGame blackjackGame, Player player) {
         while (!player.isFinished() && !inputCommand(player).isStay()) {
             blackjackGame.drawCard(player);
             OutputView.printCards(player);
@@ -60,17 +62,16 @@ public class ConsoleGame {
         }
     }
 
-    private void playDealerTurn(BlackjackGame blackjackGame, Participant dealer) {
+    private void playDealerTurn(BlackjackGame blackjackGame, Dealer dealer) {
         while (!dealer.isFinished()) {
             OutputView.printDealerDrawInfo();
             blackjackGame.drawCard(dealer);
         }
     }
 
-    private void showGameResult(BlackjackGame blackjackGame, Participant dealer, List<Participant> players) {
+    private void showGameResult(BlackjackGame blackjackGame, Dealer dealer, List<Player> players) {
         GameResult gameResult = blackjackGame.createGameResult();
         OutputView.printCardsResult(dealer, players);
         OutputView.printGameResult(gameResult);
     }
-
 }

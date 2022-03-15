@@ -1,7 +1,9 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -12,7 +14,7 @@ public class GameResult {
 
     private final Map<Participant, MatchResult> gameResult = new LinkedHashMap<>();
 
-    public GameResult(List<Participant> players, Participant dealer) {
+    public GameResult(List<Player> players, Dealer dealer) {
         initialGameResult(new ArrayList<>(players), dealer);
     }
 
