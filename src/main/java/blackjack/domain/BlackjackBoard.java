@@ -3,12 +3,12 @@ package blackjack.domain;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.OutComeResult;
-import blackjack.dto.ParticipantCards;
-import blackjack.dto.ParticipantScoreResult;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class BlackjackBoard {
@@ -36,9 +36,9 @@ public class BlackjackBoard {
         return players.isAllTurnEnd();
     }
 
-    public ParticipantCards takeCurrentPlayerTurn(final HitCommand command) {
+    public Player takeCurrentPlayerTurn(final HitCommand command) {
         if (command.isNo()) {
-            final ParticipantCards currentPlayer = players.getCurrentParticipantCards();
+            final Player currentPlayer = players.currentTurnPlayer();
             players.turnToNextParticipant();
             return currentPlayer;
         }
@@ -53,26 +53,26 @@ public class BlackjackBoard {
         dealer.hit(cardDeck.provideCard());
     }
 
-    public ParticipantCards getDealerFirstCard() {
-        return ParticipantCards.toParticipantFirstCards(dealer);
+    public Dealer getDealer() {
+        return dealer;
     }
 
-    public List<ParticipantCards> getPlayersFirstCards() {
-        return players.getFirstCards();
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 
     public String getCurrentTurnPlayerName() {
         return players.getCurrentParticipantName();
     }
 
-    public List<ParticipantScoreResult> allPlayerScoreResults() {
-        final List<ParticipantScoreResult> results = new ArrayList<>();
-        results.add(ParticipantScoreResult.from(dealer));
-        results.addAll(players.getParticipantScoreResults());
+    public List<Participant> getAllParticipants() {
+        final List<Participant> results = new ArrayList<>();
+        results.add(dealer);
+        results.addAll(players.getPlayers());
         return results;
     }
 
-    public OutComeResult calculateAllResults() {
-        return players.outcomeResult(dealer);
+    public Map<String, GameOutcome> calculateAllResults() {
+        return players.fight(dealer);
     }
 }

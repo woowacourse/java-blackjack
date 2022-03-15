@@ -96,7 +96,7 @@ class PlayersTest {
         final Players players = new Players(Collections.singletonList(player));
         players.turnToNextParticipant();
 
-        assertThatThrownBy(() -> players.getCurrentParticipantCards())
+        assertThatThrownBy(() -> players.getCurrentParticipantName())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }

@@ -6,9 +6,7 @@ import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
-import blackjack.dto.OutComeResult;
 import blackjack.dto.ParticipantCards;
-import blackjack.dto.ParticipantScoreResult;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -85,11 +83,11 @@ public class Players {
         return players.size() <= currentTurnIndex;
     }
 
-    public ParticipantCards hitCurrentParticipant(final Card card) {
+    public Player hitCurrentParticipant(final Card card) {
         final Player currentTurnPlayer = currentTurnPlayer();
         currentTurnPlayer.hit(card);
         checkCanTurnNext(currentTurnPlayer);
-        return ParticipantCards.toParticipantCards(currentTurnPlayer);
+        return currentTurnPlayer;
     }
 
     private void checkCanTurnNext(final Player currentPlayer) {
@@ -98,7 +96,13 @@ public class Players {
         }
     }
 
-    private Player currentTurnPlayer() {
+    public Map<String, GameOutcome> fight(Dealer dealer) {
+        return players.stream()
+                .map(player -> entry(player.getName(), player.fight(dealer)))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
+    }
+
+    public Player currentTurnPlayer() {
         validateAllTurnEnd();
         return players.get(currentTurnIndex);
     }
@@ -108,23 +112,7 @@ public class Players {
         return players.get(currentTurnIndex).getName();
     }
 
-    public ParticipantCards getCurrentParticipantCards() {
-        return ParticipantCards.toParticipantCards(currentTurnPlayer());
-    }
-
-    public List<ParticipantScoreResult> getParticipantScoreResults() {
-        return players.stream()
-                .map(ParticipantScoreResult::from)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public OutComeResult outcomeResult(Dealer dealer) {
-        return OutComeResult.from(calculateOutcomeResultWithDealer(dealer));
-    }
-
-    private Map<String, GameOutcome> calculateOutcomeResultWithDealer(final Dealer dealer) {
-        return players.stream()
-                .map(player -> entry(player.getName(), player.fight(dealer)))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }
