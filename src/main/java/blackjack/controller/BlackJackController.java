@@ -23,7 +23,6 @@ public class BlackJackController {
         initDistribute();
         playGameEachParticipant(priceByName.keySet());
         printGameScore();
-        //printFinalResult();
         printFinalProfit();
     }
 
@@ -40,12 +39,6 @@ public class BlackJackController {
         }
 
         return priceByName;
-    }
-
-    private void printFinalResult() {
-        DealerResult dealerResult = blackJack.calculateDealerResult();
-        List<UserResult> userResult = blackJack.calculateUserResult();
-        OutputView.printFinalResult(dealerResult, userResult);
     }
 
     private void printGameScore() {
