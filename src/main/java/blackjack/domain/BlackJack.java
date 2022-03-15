@@ -50,7 +50,7 @@ public class BlackJack {
 
 	private void handOutCardToAll() {
 		handOutCardTo(dealer);
-		for (Participant player : players) {
+		for (Player player : players) {
 			handOutCardTo(player);
 		}
 	}
@@ -59,20 +59,20 @@ public class BlackJack {
 		participant.receiveCard(this.cardDeck.pick());
 	}
 
-	public Map<Participant, Boolean> calculateResult() {
-		Map<Participant, Boolean> result = new HashMap<>();
-		for (Participant player : players) {
+	public Map<Player, Boolean> calculateResult() {
+		Map<Player, Boolean> result = new HashMap<>();
+		for (Player player : players) {
 			result.put(player, isWin(player));
 		}
 
 		return result;
 	}
 
-	private boolean isWin(Participant player) {
-		if (player.isOverMaxScore()) {
+	private boolean isWin(Player player) {
+		if (player.bust()) {
 			return false;
 		}
-		if (dealer.isOverMaxScore()) {
+		if (dealer.bust()) {
 			return true;
 		}
 		return dealer.getScore() < player.getScore();

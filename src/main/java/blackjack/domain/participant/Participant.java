@@ -20,7 +20,7 @@ public abstract class Participant {
 		cards.addCard(card);
 	}
 
-	public Boolean isOverMaxScore() {
+	public Boolean bust() {
 		return getScore() > MAX_SCORE;
 	}
 

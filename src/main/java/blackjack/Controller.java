@@ -10,8 +10,8 @@ public class Controller {
 	public void run() {
 		BlackJack blackJack = generateGame();
 		startGame(blackJack);
-		decidePlayersReceivingAdditionalCard(blackJack);
-		decideDealerReceivingAdditionalCard(blackJack);
+		decidePlayerHitOrNot(blackJack);
+		decideDealerHitOrNot(blackJack);
 		finishGame(blackJack);
 	}
 
@@ -29,34 +29,34 @@ public class Controller {
 		ResultView.showStartingStatus(blackJack);
 	}
 
-	private void decidePlayersReceivingAdditionalCard(BlackJack blackJack) {
+	private void decidePlayerHitOrNot(BlackJack blackJack) {
 		for (Player player : blackJack.getPlayers()) {
-			decidePlayerReceivingAdditionalCard(blackJack, player);
+			decideHitOrNot(blackJack, player);
 		}
 	}
 
-	private void decidePlayerReceivingAdditionalCard(BlackJack blackJack, Player player) {
+	private void decideHitOrNot(BlackJack blackJack, Player player) {
 
-		while (needAdditionalCard(player)) {
+		while (shouldHit(player)) {
 			blackJack.handOutCardTo(player);
 			ResultView.showEachPlayerStatus(player);
 		}
-		if (!player.isOverMaxScore()) {
+		if (!player.bust()) {
 			ResultView.showEachPlayerStatus(player);
 		}
 	}
 
-	private boolean needAdditionalCard(Player player) {
+	private boolean shouldHit(Player player) {
 		String name = ParticipantDto.from(player).getName();
-		return !(player.isOverMaxScore()) && InputView.askAdditionalCard(name);
+		return !(player.bust()) && InputView.askHit(name);
 	}
 
-	private void decideDealerReceivingAdditionalCard(BlackJack blackJack) {
+	private void decideDealerHitOrNot(BlackJack blackJack) {
 		boolean isDealerEnough = blackJack.getDealer().shouldHit();
 		if (!isDealerEnough) {
 			blackJack.handOutCardTo(blackJack.getDealer());
 		}
-		ResultView.showWhetherDealerReceivedOrNot(isDealerEnough);
+		ResultView.showDealerHitOrNot(isDealerEnough);
 	}
 
 	private void finishGame(BlackJack blackJack) {

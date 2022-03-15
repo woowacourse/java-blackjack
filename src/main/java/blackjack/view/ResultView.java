@@ -7,7 +7,8 @@ import java.util.stream.Collectors;
 import blackjack.ParticipantDto;
 import blackjack.domain.BlackJack;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public class ResultView {
 
@@ -43,14 +44,14 @@ public class ResultView {
 	}
 
 	private static void showPlayerStartingStatus(BlackJack blackJack) {
-		for (Participant player : blackJack.getPlayers()) {
+		for (Player player : blackJack.getPlayers()) {
 			showEachPlayerStatus(player);
 		}
 	}
 
-	public static void showEachPlayerStatus(Participant player) {
+	public static void showEachPlayerStatus(Player player) {
 		System.out.println(getStatus(ParticipantDto.from(player)));
-		if (player.isOverMaxScore()) {
+		if (player.bust()) {
 			System.out.println(MESSAGE_SCORE_OVER_21);
 		}
 	}
@@ -63,7 +64,7 @@ public class ResultView {
 		return participantDto.getName() + DELIMITER_COLON + String.join(DELIMITER_COMMA, playerCardStatus);
 	}
 
-	public static void showWhetherDealerReceivedOrNot(Boolean isEnough) {
+	public static void showDealerHitOrNot(Boolean isEnough) {
 		System.out.println();
 		if (isEnough) {
 			System.out.println(MESSAGE_DEALER_NOT_RECEIVE);
@@ -74,21 +75,21 @@ public class ResultView {
 
 	public static void showFinalStatus(BlackJack blackJack) {
 		System.out.println();
-		Participant dealer = blackJack.getDealer();
+		Dealer dealer = blackJack.getDealer();
 		System.out.println(getStatus(ParticipantDto.from(dealer)) + RESULT_DELIMITER + dealer.getScore());
-		for (Participant player : blackJack.getPlayers()) {
+		for (Player player : blackJack.getPlayers()) {
 			System.out.println(getStatus(ParticipantDto.from(player)) + RESULT_DELIMITER + player.getScore());
 		}
 	}
 
 	public static void showResult(BlackJack blackJack) {
 		System.out.println(MESSAGE_FINAL_RESULT);
-		Map<Participant, Boolean> result = blackJack.calculateResult();
+		Map<Player, Boolean> result = blackJack.calculateResult();
 		showDealerResult(blackJack, result);
 		showPlayerResults(result);
 	}
 
-	private static void showDealerResult(BlackJack blackJack, Map<Participant, Boolean> result) {
+	private static void showDealerResult(BlackJack blackJack, Map<Player, Boolean> result) {
 		int loseCount = (int)result.values().stream()
 			.filter(value -> value)
 			.count();
@@ -98,10 +99,10 @@ public class ResultView {
 		System.out.println(dealer.getName() + DELIMITER_COLON + winCount + MESSAGE_WIN + loseCount + MESSAGE_LOSE);
 	}
 
-	private static void showPlayerResults(Map<Participant, Boolean> result) {
+	private static void showPlayerResults(Map<Player, Boolean> result) {
 		result.keySet().stream()
-			.map(participant -> ParticipantDto.from(participant).getName() + DELIMITER_COLON + decodeResult(
-				result.get(participant)))
+			.map(player -> ParticipantDto.from(player).getName() + DELIMITER_COLON + decodeResult(
+				result.get(player)))
 			.forEach(System.out::println);
 	}
 
