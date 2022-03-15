@@ -35,9 +35,15 @@ public class BlackjackController {
 
         do {
             command = Command.find(InputView.inputCommand(player));
-            blackjackGame.isHitThenReceiveCard(player, command);
+            receiveCard(blackjackGame, player, command);
             OutputView.printPlayerCards(player);
         } while (blackjackGame.canHit(player, command));
+    }
+
+    private void receiveCard(BlackjackGame blackjackGame, Player player, Command command) {
+        if (command.isHit()) {
+            blackjackGame.receiveOneMoreCard(player);
+        }
     }
 
     private void hitDealer(BlackjackGame blackjackGame) {

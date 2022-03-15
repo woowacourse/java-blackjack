@@ -23,13 +23,7 @@ public class BlackjackGame {
         this.players = new Players(createDealer(), toPlayers(names));
     }
 
-    public void isHitThenReceiveCard(Player player, Command command) {
-        if (command == Command.HIT) {
-            receiveOneMoreCard(player);
-        }
-    }
-
-    private void receiveOneMoreCard(Player player) {
+    public void receiveOneMoreCard(Player player) {
         player.putCard(deck.draw());
     }
 
