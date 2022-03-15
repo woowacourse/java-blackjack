@@ -47,7 +47,7 @@ public class GameController {
 
     private Gamblers generatePlayers() {
         List<Gambler> gamblerList = new ArrayList<>();
-        String[] names = InputView.inputGamblerName();
+        String[] names = InputView.inputGamblerNames();
         for (String name : names) {
             gamblerList.add(Gambler.of(Name.of(name)));
         }
