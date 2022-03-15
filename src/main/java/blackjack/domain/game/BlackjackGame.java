@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 
 public class BlackjackGame {
 
@@ -12,21 +13,33 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public void initCards() {
+    public void dealInitialCards() {
         participants.dealInitialCards(deck);
     }
 
-    public void playPlayerTurn(TurnManager turnManager) {
-        turnManager.getCurrentPlayer().addCard(deck.pickCard());
+    public boolean isPlayersTurnEnd() {
+        return participants.isDealerBlackjack() || participants.isAllPlayerTurnEnd();
     }
 
-    public int playDealerTurnAndReturnTurnCount() {
-        int count = 0;
-        while (participants.getDealer().checkMustHit()) {
-            participants.getDealer().addCard(deck.pickCard());
-            count++;
+    public void playPlayerTurn(boolean isHit) {
+        Player player = participants.getCurrentPlayer();
+        if (isHit) {
+            player.addCard(deck.pickCard());
+            return;
         }
-        return count;
+        player.stay();
+    }
+
+    public boolean isDealerTurnEnd() {
+        return !participants.isDealerMustHit();
+    }
+
+    public void playDealerTurn() {
+        participants.dealToDealer(deck.pickCard());
+    }
+
+    public Player getCurrentPlayer() {
+        return participants.getCurrentPlayer();
     }
 
     public Participants getParticipants() {

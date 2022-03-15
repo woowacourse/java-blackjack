@@ -35,6 +35,34 @@ public class Participants {
         }
     }
 
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackjack();
+    }
+
+    public boolean isDealerMustHit() {
+        return dealer.checkMustHit();
+    }
+
+    public void dealToDealer(Card card) {
+        dealer.addCard(card);
+    }
+
+    public boolean isAllPlayerTurnEnd() {
+        try {
+            getCurrentPlayer();
+        } catch (Exception e) {
+            return true;
+        }
+        return false;
+    }
+
+    public Player getCurrentPlayer() {
+        return players.stream()
+            .filter(Player::canHit)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("플레이어 턴이 모두 종료되었습니다."));
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

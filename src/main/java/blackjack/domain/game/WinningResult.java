@@ -1,5 +1,8 @@
 package blackjack.domain.game;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public enum WinningResult {
 
     WIN("승"),
@@ -11,6 +14,18 @@ public enum WinningResult {
 
     WinningResult(String result) {
         this.result = result;
+    }
+
+    public static WinningResult of(Dealer dealer, Player player) {
+        if (dealer.isBlackjack() && !player.isBlackjack()
+            || player.isBust()
+            || player.getScore() < dealer.getScore()) {
+            return LOSE;
+        }
+        if (!dealer.isBlackjack() && player.isBlackjack() || player.getScore() > dealer.getScore()) {
+            return WIN;
+        }
+        return DRAW;
     }
 
     public WinningResult reverse() {

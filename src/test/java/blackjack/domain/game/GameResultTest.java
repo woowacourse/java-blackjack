@@ -10,9 +10,6 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.game.winningstrategy.BlackjackWinningStrategy;
-import blackjack.domain.game.winningstrategy.FinalWinningStrategy;
-import blackjack.domain.game.winningstrategy.PlayingWinningStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -20,7 +17,7 @@ import blackjack.domain.participant.Player;
 public class GameResultTest {
 
     @Test
-    @DisplayName("딜러가 버스트나도 이미 결정된 결과는 그대로여야함 - 패배 상태")
+    @DisplayName("플레이어 패배 상태에서 딜러 버스트")
     void getSameLoseResult() {
         List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.THREE),
             new Card(Suit.CLOVER, Denomination.TEN));
@@ -36,17 +33,12 @@ public class GameResultTest {
         player.initCards(playerCards);
 
         GameResult gameResult = new GameResult(participants);
-        gameResult.update(new BlackjackWinningStrategy());
-        gameResult.update(new PlayingWinningStrategy());
-
-        dealer.addCard(new Card(Suit.CLOVER, Denomination.KING));
-        gameResult.update(new FinalWinningStrategy());
 
         assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
-    @DisplayName("딜러가 버스트나도 이미 결정된 결과는 그대로여야함 - 승리 상태")
+    @DisplayName("플레이어 승리 상태에서 딜러 버스트")
     void getSameWinResult() {
         List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.THREE),
             new Card(Suit.CLOVER, Denomination.TEN));
@@ -61,10 +53,6 @@ public class GameResultTest {
         player.initCards(playerCards);
 
         GameResult gameResult = new GameResult(participants);
-        gameResult.update(new BlackjackWinningStrategy());
-
-        dealer.addCard(new Card(Suit.CLOVER, Denomination.EIGHT));
-        gameResult.update(new FinalWinningStrategy());
 
         assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.WIN);
     }
