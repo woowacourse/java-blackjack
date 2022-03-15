@@ -23,5 +23,5 @@ public interface Player {
 
     String getName();
 
-    PlayingCards getDeck();
+    PlayingCards getPlayingCards();
 }

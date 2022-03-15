@@ -81,7 +81,7 @@ class BlackjackGameTest {
         cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.TWO));
 
-        assertThat(guest.getDeck().getCards()).isEqualTo(cards);
+        assertThat(guest.getPlayingCards().getCards()).isEqualTo(cards);
     }
 
     @Test

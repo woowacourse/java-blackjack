@@ -80,7 +80,7 @@ public class BlackjackGame {
     public List<GameResponse> getGameResponse() {
         List<GameResponse> gameResponses = new ArrayList<>();
         for (Player player : blackjackPlayers.getPlayers()) {
-            gameResponses.add(new GameResponse(player.getName(), player.getDeck()));
+            gameResponses.add(new GameResponse(player.getName(), player.getPlayingCards()));
         }
         return gameResponses;
     }

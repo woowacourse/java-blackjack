@@ -30,7 +30,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isDraw(Player player) {
-        return playingCards.sumPoints() == player.getDeck().sumPoints();
+        return playingCards.sumPoints() == player.getPlayingCards().sumPoints();
     }
 
     @Override
@@ -39,7 +39,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public PlayingCards getDeck() {
+    public PlayingCards getPlayingCards() {
         return playingCards;
     }
 

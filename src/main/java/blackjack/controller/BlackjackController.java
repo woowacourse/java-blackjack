@@ -90,7 +90,7 @@ public class BlackjackController {
 
     private void announcePresentCard(Player player) {
         List<GameResponse> gameResponses = new ArrayList<>();
-        GameResponse gameResponse = new GameResponse(player.getName(), player.getDeck());
+        GameResponse gameResponse = new GameResponse(player.getName(), player.getPlayingCards());
         gameResponses.add(gameResponse);
         OutputView.announcePresentCards(gameResponses);
     }
