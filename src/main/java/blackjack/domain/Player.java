@@ -23,8 +23,4 @@ public class Player extends Human {
     public boolean canDraw() {
         return cards.isUnderBlackjack();
     }
-
-    public String getName() {
-        return name;
-    }
 }

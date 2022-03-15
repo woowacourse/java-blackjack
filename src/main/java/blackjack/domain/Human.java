@@ -32,4 +32,8 @@ public abstract class Human {
     public int getTotal() {
         return cards.calculateTotal();
     }
+
+    public String getName() {
+        return name;
+    }
 }

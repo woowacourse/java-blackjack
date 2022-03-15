@@ -15,10 +15,6 @@ public class Dealer extends Human {
         return getTotal() >= player.getTotal();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public List<String> getInitCard() {
         return cards.getFirstCardName();
     }
