@@ -78,7 +78,7 @@ public class BlackjackGame {
     }
 
     private void showStopReason(Player player) {
-        if (player.isBlackJack()) {
+        if (player.isBlackjack()) {
             OutputView.printBlackJackMessage(player.getName());
             return;
         }

@@ -30,7 +30,7 @@ public abstract class Participant {
         return State.from(cards) == State.BUST;
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return State.from(cards) == State.BLACKJACK;
     }
 

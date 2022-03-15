@@ -15,13 +15,13 @@ public enum Outcome {
     }
 
     public static Outcome judge(Player player, Dealer dealer) {
-        if (player.isBust() || !player.isBlackJack() && dealer.isBlackJack()) {
+        if (player.isBust() || !player.isBlackjack() && dealer.isBlackjack()) {
             return Outcome.LOSE;
         }
-        if (dealer.isBust() || player.isBlackJack() && !dealer.isBlackJack()) {
+        if (dealer.isBust() || player.isBlackjack() && !dealer.isBlackjack()) {
             return Outcome.WIN;
         }
-        if (player.isBlackJack() && dealer.isBlackJack()) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
             return Outcome.DRAW;
         }
         return judgeByScore(player.getScore(), dealer.getScore());
