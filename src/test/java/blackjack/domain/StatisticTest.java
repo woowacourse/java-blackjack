@@ -16,14 +16,14 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class StatisticTest {
-    private final Player player1 = Player.of("pobi");
-    private final Player player2 = Player.of("jason");
-    private final Player player3 = Player.of("bani");
-    private final Player player4 = Player.of("hunch");
+    private final Player player1 = Player.from("pobi");
+    private final Player player2 = Player.from("jason");
+    private final Player player3 = Player.from("bani");
+    private final Player player4 = Player.from("hunch");
     
     void addCardList(Human human, List<String> cards) {
         for (String card : cards) {
-            human.addCard(Card.of(Denomination.of(card), Suit.CLOVER));
+            human.addCard(Card.of(Denomination.valueof(card), Suit.CLOVER));
         }
     }
     
@@ -36,12 +36,12 @@ class StatisticTest {
         void setup() {
             addCardList(player1, List.of("A", "A", "A", "A", "A"));
             addCardList(player2, List.of("10", "10", "2"));
-            Players players = Players.of(List.of(player1, player2));
+            Players players = Players.from(List.of(player1, player2));
             
-            BlackjackTable blackjackTable = BlackjackTable.of(players);
+            BlackjackTable blackjackTable = BlackjackTable.from(players);
             addCardList(blackjackTable.getDealer(), List.of("8", "10", "10"));
             
-            statistic = Statistic.of(blackjackTable);
+            statistic = Statistic.from(blackjackTable);
         }
         
         @Test
@@ -72,12 +72,12 @@ class StatisticTest {
         void setup() {
             addCardList(player1, List.of("10", "10", "10"));
             addCardList(player2, List.of("10", "10", "10"));
-            Players players = Players.of(List.of(player1, player2));
+            Players players = Players.from(List.of(player1, player2));
             
-            BlackjackTable blackjackTable = BlackjackTable.of(players);
+            BlackjackTable blackjackTable = BlackjackTable.from(players);
             addCardList(blackjackTable.getDealer(), List.of("10", "10", "10", "10"));
             
-            statistic = Statistic.of(blackjackTable);
+            statistic = Statistic.from(blackjackTable);
         }
         
         @Test
@@ -110,11 +110,11 @@ class StatisticTest {
             addCardList(player2, List.of("5", "A"));
             addCardList(player3, List.of("10", "10"));
             addCardList(player4, List.of("10", "10", "A"));
-            Players players = Players.of(List.of(player1, player2, player3, player4));
+            Players players = Players.from(List.of(player1, player2, player3, player4));
             
-            BlackjackTable blackjackTable = BlackjackTable.of(players);
+            BlackjackTable blackjackTable = BlackjackTable.from(players);
             addCardList(blackjackTable.getDealer(), List.of("10", "10"));
-            statistic = Statistic.of(blackjackTable);
+            statistic = Statistic.from(blackjackTable);
         }
         
         @Test

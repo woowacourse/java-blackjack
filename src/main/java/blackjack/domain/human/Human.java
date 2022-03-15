@@ -8,7 +8,7 @@ public abstract class Human {
     protected final Cards cards;
     
     protected Human(Cards cards, String name) {
-        this.name = Name.of(name);
+        this.name = Name.valueOf(name);
         this.cards = cards;
     }
     

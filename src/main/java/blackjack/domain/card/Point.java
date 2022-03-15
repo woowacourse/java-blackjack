@@ -13,7 +13,7 @@ public final class Point {
         this.value = computeAce(getRawPoint(rawCards), getAceCount(rawCards));
     }
     
-    public static Point of(List<Card> rawCards) {
+    public static Point from(List<Card> rawCards) {
         return new Point(rawCards);
     }
     

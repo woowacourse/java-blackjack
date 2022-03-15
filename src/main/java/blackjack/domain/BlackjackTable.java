@@ -13,10 +13,10 @@ public final class BlackjackTable {
     
     private BlackjackTable(Players players) {
         this.players = players;
-        this.dealer = Dealer.getInstance();
+        this.dealer = Dealer.newInstance();
     }
     
-    public static BlackjackTable of(Players players) {
+    public static BlackjackTable from(Players players) {
         return new BlackjackTable(players);
     }
     

@@ -13,14 +13,14 @@ public final class Name {
         validateName(input);
     }
     
+    public static Name valueOf(final String name) {
+        return new Name(name);
+    }
+    
     private static void validateName(final String input) {
         if (!NAME_PATTERN.matcher(input).matches()) {
             throw new RuntimeException(NAME_ERROR_MESSAGE);
         }
-    }
-    
-    public static Name of(final String name) {
-        return new Name(name);
     }
     
     public String get() {

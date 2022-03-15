@@ -11,7 +11,7 @@ public final class Player extends Human {
         super(new Cards(), name);
     }
     
-    public static Player of(String name) {
+    public static Player from(String name) {
         return new Player(name);
     }
     

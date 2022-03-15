@@ -9,7 +9,7 @@ public final class Dealer extends Human {
         super(new Cards(), "딜러");
     }
     
-    public static Dealer getInstance() {
+    public static Dealer newInstance() {
         return new Dealer();
     }
     

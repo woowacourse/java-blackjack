@@ -11,7 +11,7 @@ import blackjack.view.OutputView;
 
 public final class GameController {
     public void run() {
-        BlackjackTable blackjackTable = BlackjackTable.of(getPlayers());
+        BlackjackTable blackjackTable = BlackjackTable.from(getPlayers());
         
         initGame(blackjackTable);
         startGame(blackjackTable);
@@ -19,7 +19,7 @@ public final class GameController {
     }
     
     private Players getPlayers() {
-        return Players.ofInputText(InputView.inputPlayerNames());
+        return Players.fromText(InputView.inputPlayerNames());
     }
     
     private void initGame(final BlackjackTable blackjackTable) {
@@ -55,7 +55,7 @@ public final class GameController {
     private void endGame(final BlackjackTable blackjackTable) {
         OutputView.printHandAndPoint(blackjackTable);
         
-        Statistic statistic = Statistic.of(blackjackTable);
+        Statistic statistic = Statistic.from(blackjackTable);
         
         OutputView.printDealerResult(statistic.getDealerResult());
         OutputView.printPlayerResult(statistic.getPlayersResult());

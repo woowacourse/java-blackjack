@@ -18,7 +18,7 @@ public final class Statistic {
         calculate(blackjackTable);
     }
     
-    public static Statistic of(BlackjackTable blackjackTable) {
+    public static Statistic from(BlackjackTable blackjackTable) {
         return new Statistic(blackjackTable);
     }
     

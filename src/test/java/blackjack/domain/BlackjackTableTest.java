@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class BlackjackTableTest {
-    private final Players players = Players.ofInputText("pobi");
+    private final Players players = Players.fromText("pobi");
     private BlackjackTable blackjackTable;
     
     @BeforeEach
     void 테이블생성() {
-        blackjackTable = BlackjackTable.of(players);
+        blackjackTable = BlackjackTable.from(players);
     }
     
     @Test

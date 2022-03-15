@@ -16,8 +16,8 @@ public class CardsTest {
     void setup() {
         cards = new Cards();
         
-        Card card5 = Card.of(Denomination.of("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.of("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.valueof("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.valueof("6"), Suit.SPADE);
         
         cards.add(card5);
         cards.add(card6);

@@ -26,7 +26,7 @@ class DenominationTest {
             , "K,KING"
     })
     void 테스트(String numStr, Denomination expectedDenomination) {
-        Denomination denomination = Denomination.of(numStr);
+        Denomination denomination = Denomination.valueof(numStr);
         assertThat(denomination)
                 .isEqualTo(expectedDenomination);
     }

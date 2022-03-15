@@ -16,11 +16,11 @@ public final class Players {
         this.players = players;
     }
     
-    public static Players of(final List<Player> players) {
+    public static Players from(final List<Player> players) {
         return new Players(players);
     }
     
-    public static Players ofInputText(final String playersText) {
+    public static Players fromText(final String playersText) {
         validateTextInput(playersText);
         return new Players(toPlayerList(playersText));
     }
@@ -34,7 +34,7 @@ public final class Players {
     
     private static List<Player> toPlayerList(final String input) {
         return Arrays.stream(input.split(NAME_SEPARATE_REGEX))
-                .map(Player::of)
+                .map(Player::from)
                 .collect(Collectors.toList());
     }
     

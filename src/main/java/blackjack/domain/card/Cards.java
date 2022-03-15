@@ -19,7 +19,7 @@ public final class Cards {
     }
     
     public int getPoint() {
-        return Point.of(cards).get();
+        return Point.from(cards).get();
     }
     
     @Override

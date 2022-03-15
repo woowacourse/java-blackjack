@@ -12,10 +12,10 @@ class DealerTest {
     
     @Test
     public void 참여자에_카드_추가() {
-        Dealer dealer = Dealer.getInstance();
+        Dealer dealer = Dealer.newInstance();
         
-        Card card5 = Card.of(Denomination.of("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.of("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.valueof("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.valueof("6"), Suit.SPADE);
         
         dealer.addCard(card5);
         dealer.addCard(card6);
@@ -26,10 +26,10 @@ class DealerTest {
     
     @Test
     public void 딜러_히트가능() {
-        Dealer dealer = Dealer.getInstance();
+        Dealer dealer = Dealer.newInstance();
         
-        Card card5 = Card.of(Denomination.of("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.of("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.valueof("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.valueof("6"), Suit.SPADE);
         
         dealer.addCard(card5);
         dealer.addCard(card6);

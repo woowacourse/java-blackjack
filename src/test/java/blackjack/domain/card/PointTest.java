@@ -24,7 +24,7 @@ class PointTest {
                 Card.of(d2, Suit.SPADE),
                 Card.of(d3, Suit.SPADE)
         );
-        assertThat(Point.of(rawCards).get())
+        assertThat(Point.from(rawCards).get())
                 .isEqualTo(expectedPoint);
     }
 }

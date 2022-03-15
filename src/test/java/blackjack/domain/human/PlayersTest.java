@@ -11,16 +11,16 @@ class PlayersTest {
     
     @Test
     public void 생성() {
-        Player player = Player.of("test");
-        Players players = Players.of(List.of(player));
+        Player player = Player.from("test");
+        Players players = Players.from(List.of(player));
         assertThat(players.size()).isEqualTo(1);
     }
     
     @Test
     public void 플레이어_카드_배분_테스트() {
-        Player player1 = Player.of("pobi");
-        Player player2 = Player.of("jason");
-        Players players = Players.of(List.of(player1, player2));
+        Player player1 = Player.from("pobi");
+        Player player2 = Player.from("jason");
+        Players players = Players.from(List.of(player1, player2));
         CardDeck cardDeck = CardDeck.newInstance();
         players.giveCard(cardDeck);
         players.giveCard(cardDeck);
@@ -30,9 +30,9 @@ class PlayersTest {
     
     @Test
     public void 플레이어_이름() {
-        Player player1 = Player.of("pobi");
-        Player player2 = Player.of("jason");
-        Players players = Players.of(List.of(player1, player2));
+        Player player1 = Player.from("pobi");
+        Player player2 = Player.from("jason");
+        Players players = Players.from(List.of(player1, player2));
         CardDeck cardDeck = CardDeck.newInstance();
         players.giveCard(cardDeck);
         players.giveCard(cardDeck);
