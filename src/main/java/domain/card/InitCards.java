@@ -12,10 +12,10 @@ public class InitCards {
     private final List<Card> intiCards;
 
     public InitCards(Deck deck) {
-        this.intiCards = createInitCards(deck);
+        this.intiCards = drawCards(deck);
     }
 
-    private List<Card> createInitCards(Deck deck) {
+    private List<Card> drawCards(Deck deck) {
         return IntStream.range(0, INIT_SIZE)
                 .mapToObj(i -> deck.draw())
                 .collect(Collectors.toList());

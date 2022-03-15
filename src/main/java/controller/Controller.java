@@ -1,14 +1,11 @@
 package controller;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.card.InitCards;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import view.InputView;
 import view.OutputView;
 
