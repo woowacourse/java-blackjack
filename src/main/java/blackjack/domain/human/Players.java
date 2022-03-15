@@ -52,9 +52,9 @@ public final class Players {
         return List.copyOf(players);
     }
     
-    public String getPlayerNames() {
+    public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
-                .collect(Collectors.joining(PLAYER_NAME_DELIMITER));
+                .collect(Collectors.toList());
     }
 }

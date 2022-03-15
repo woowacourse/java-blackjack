@@ -31,8 +31,10 @@ public final class OutputView {
     }
     
     private static void printInitCardState(final BlackjackTable blackjackTable) {
+        String playersNames = blackjackTable.getPlayers().getPlayerNames().toString();
         System.out.printf(INIT_CARD_MESSAGE,
-                blackjackTable.getDealer().getName(), blackjackTable.getPlayers().getPlayerNames());
+                blackjackTable.getDealer().getName(),
+                playersNames.substring(1, playersNames.length() - 1));
     }
     
     public static void printHandAndPoint(final BlackjackTable blackjackTable) {
