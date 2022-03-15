@@ -2,7 +2,7 @@ package blackjack.domain.human;
 
 import blackjack.domain.card.Cards;
 
-public class Dealer extends Human {
+public final class Dealer extends Human {
     private static final int HIT_STANDARD_NUMBER = 16;
     
     private Dealer() {

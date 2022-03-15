@@ -9,21 +9,21 @@ import org.junit.jupiter.api.Test;
 class CardDeckTest {
     @Test
     public void 카드덱_생성_테스트() {
-        CardDeck cardDeck = CardDeck.getInstance();
+        CardDeck cardDeck = CardDeck.newInstance();
         assertThat(cardDeck.size())
                 .isEqualTo(52);
     }
     
     @Test
     void 카드주기_테스트() {
-        CardDeck cardDeck = CardDeck.getInstance();
+        CardDeck cardDeck = CardDeck.newInstance();
         cardDeck.draw();
         assertThat(cardDeck.size()).isEqualTo(51);
     }
     
     @Test
     void 카드주기_테스트_error() {
-        CardDeck cardDeck = CardDeck.getInstance();
+        CardDeck cardDeck = CardDeck.newInstance();
         for (int i = 0; i < 52; i++) {
             cardDeck.draw();
         }

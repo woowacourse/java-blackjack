@@ -5,8 +5,8 @@ import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Players;
 import blackjack.util.Constants;
 
-public class BlackjackTable {
-    private static final CardDeck cardDeck = CardDeck.getInstance();
+public final class BlackjackTable {
+    private static final CardDeck cardDeck = CardDeck.newInstance();
     
     private final Dealer dealer;
     private final Players players;

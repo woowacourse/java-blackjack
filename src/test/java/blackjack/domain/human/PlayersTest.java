@@ -21,7 +21,7 @@ class PlayersTest {
         Player player1 = Player.of("pobi");
         Player player2 = Player.of("jason");
         Players players = Players.of(List.of(player1, player2));
-        CardDeck cardDeck = CardDeck.getInstance();
+        CardDeck cardDeck = CardDeck.newInstance();
         players.giveCard(cardDeck);
         players.giveCard(cardDeck);
         assertThat(player1.getCards().size()).isEqualTo(2);
@@ -33,7 +33,7 @@ class PlayersTest {
         Player player1 = Player.of("pobi");
         Player player2 = Player.of("jason");
         Players players = Players.of(List.of(player1, player2));
-        CardDeck cardDeck = CardDeck.getInstance();
+        CardDeck cardDeck = CardDeck.newInstance();
         players.giveCard(cardDeck);
         players.giveCard(cardDeck);
         assertThat(players.getPlayerNames())

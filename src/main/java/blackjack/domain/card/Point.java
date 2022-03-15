@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import blackjack.util.Constants;
 import java.util.List;
 
-public class Point {
+public final class Point {
     public static final int ACE_MINUS_NUMBER = 10;
     public static final int MIN_ACE_COUNT = 0;
     

@@ -7,7 +7,7 @@ import blackjack.domain.human.Players;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Statistic {
+public final class Statistic {
     private final Map<Result, Integer> dealerResult = new HashMap<>();
     private final Map<Player, Result> playerResult = new HashMap<>();
     

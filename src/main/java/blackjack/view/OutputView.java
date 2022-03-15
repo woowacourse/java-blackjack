@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import blackjack.domain.Result;
 import blackjack.domain.BlackjackTable;
+import blackjack.domain.Result;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
 import java.util.Map;
 
-public class OutputView {
+public final class OutputView {
     
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
             + System.lineSeparator();

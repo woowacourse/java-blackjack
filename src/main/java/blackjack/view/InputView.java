@@ -1,10 +1,8 @@
 package blackjack.view;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
     private static final String NULL_NAMES_ERROR_MESSAGE = "이름에 공백을 입력할 수 없습니다.";
     private static final String NULL_ANSWER_YN_ERROR_MESSAGE = "y,n 이외의 입력이 들어왔습니다.";
     

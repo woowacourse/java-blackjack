@@ -9,7 +9,7 @@ import blackjack.domain.human.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class GameController {
+public final class GameController {
     public void run() {
         BlackjackTable blackjackTable = BlackjackTable.of(getPlayers());
         

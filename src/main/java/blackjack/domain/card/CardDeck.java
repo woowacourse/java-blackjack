@@ -5,7 +5,7 @@ import blackjack.domain.card.cardElement.Suit;
 import java.util.Collections;
 import java.util.Stack;
 
-public class CardDeck {
+public final class CardDeck {
     private static final String NO_CARD_EXCEPTION_MESSAGE = "덱에 남은 카드가 없습니다";
     
     private final Stack<Card> value;
@@ -18,7 +18,7 @@ public class CardDeck {
         Collections.shuffle(value);
     }
     
-    public static CardDeck getInstance() {
+    public static CardDeck newInstance() {
         return new CardDeck();
     }
     
