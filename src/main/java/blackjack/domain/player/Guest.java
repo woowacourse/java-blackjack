@@ -1,11 +1,8 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.PlayingCards;
-import blackjack.domain.result.Match;
 
 public class Guest extends AbstractPlayer implements Player {
-
-    public static final int MAX_POINT = 21;
 
     public Guest(String name) {
         this.playingCards = new PlayingCards();
@@ -14,7 +11,7 @@ public class Guest extends AbstractPlayer implements Player {
 
     @Override
     public boolean isOverMoreCardLimit() {
-        return playingCards.sumPoints() > MAX_POINT;
+        return playingCards.sumPoints() > PlayingCards.BLACKJACK_POINT;
     }
 
     @Override
@@ -25,10 +22,10 @@ public class Guest extends AbstractPlayer implements Player {
     @Override
     public boolean isWin(Player guest, Player dealer) {
         int points = playingCards.sumPoints();
-        if (dealer.isLose(points) && points <= Match.MAX_WINNER_POINT) {
+        if (dealer.isLose(points) && points <= PlayingCards.BLACKJACK_POINT) {
             return true;
         }
-        if (dealer.isOverPointLimit() && points <= Match.MAX_WINNER_POINT) {
+        if (dealer.isOverPointLimit() && points <= PlayingCards.BLACKJACK_POINT) {
             return true;
         }
         return false;

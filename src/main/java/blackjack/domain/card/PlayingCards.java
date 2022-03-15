@@ -4,22 +4,21 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import blackjack.domain.result.Match;
-
 public class PlayingCards {
 
+    public static final int BLACKJACK_POINT = 21;
     private static final int ACE_ELEVEN_POSSIBLE = 10;
     private static final int BLACKJACK_SIZE = 2;
 
-    private final Set<PlayingCard> deck = new LinkedHashSet<>();
+    private final Set<PlayingCard> playingCards = new LinkedHashSet<>();
 
     public void addCard(PlayingCard playingCard) {
-        deck.add(playingCard);
+        playingCards.add(playingCard);
     }
 
     public int sumPoints() {
         int points = sumCardPoint();
-        boolean aceExist = deck.stream()
+        boolean aceExist = playingCards.stream()
                 .anyMatch(PlayingCard::isAce);
         if (!aceExist) {
             return points;
@@ -27,29 +26,29 @@ public class PlayingCards {
         return calculateAcePoint(points);
     }
 
-    public boolean isBust() {
-        return sumPoints() > Match.MAX_WINNER_POINT;
-    }
-
-    public boolean isBlackJack() {
-        return deck.size() == BLACKJACK_SIZE && sumPoints() == Match.MAX_WINNER_POINT;
-    }
-
     private int calculateAcePoint(int points) {
-        if (points + ACE_ELEVEN_POSSIBLE <= Match.MAX_WINNER_POINT) {
+        if (points + ACE_ELEVEN_POSSIBLE <= BLACKJACK_POINT) {
             return points + ACE_ELEVEN_POSSIBLE;
         }
         return points;
     }
 
     private int sumCardPoint() {
-        return deck.stream()
+        return playingCards.stream()
                 .mapToInt(PlayingCard::getPoint)
                 .sum();
     }
 
+    public boolean isBust() {
+        return sumPoints() > BLACKJACK_POINT;
+    }
+
+    public boolean isBlackJack() {
+        return playingCards.size() == BLACKJACK_SIZE && sumPoints() == BLACKJACK_POINT;
+    }
+
     public Set<PlayingCard> getCards() {
-        return Collections.unmodifiableSet(deck);
+        return Collections.unmodifiableSet(playingCards);
     }
 
     @Override
@@ -59,11 +58,11 @@ public class PlayingCards {
 
         PlayingCards playingCards = (PlayingCards) o;
 
-        return deck != null ? deck.equals(playingCards.deck) : playingCards.deck == null;
+        return this.playingCards != null ? this.playingCards.equals(playingCards.playingCards) : playingCards.playingCards == null;
     }
 
     @Override
     public int hashCode() {
-        return deck != null ? deck.hashCode() : 0;
+        return playingCards != null ? playingCards.hashCode() : 0;
     }
 }

@@ -13,8 +13,6 @@ public enum Match {
     DRAW("무", "무", Match::isDraw),
     ;
 
-    public static final int MAX_WINNER_POINT = 21;
-
     private final String result;
     private final String oppositeResult;
     private final BiFunction<Player, Player, Boolean> expression;
