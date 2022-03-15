@@ -1,9 +1,6 @@
 package blackjack;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.Participant;
-import blackjack.domain.dto.BlackJackDto;
-import blackjack.domain.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
@@ -19,7 +16,7 @@ public class Controller {
 
 	private BlackJack generateGame() {
 		try {
-			return BlackJack.createFrom(InputView.askPlayerName());
+			return BlackJack.from(InputView.askPlayerName());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return generateGame();
@@ -28,12 +25,11 @@ public class Controller {
 
 	private void startGame(BlackJack blackJack) {
 		blackJack.handOutStartingCards();
-		ResultView.showStartingStatus(BlackJackDto.from(blackJack));
+		ResultView.showStartingStatus(blackJack);
 	}
 
 	private void decidePlayersReceivingAdditionalCard(BlackJack blackJack) {
-		BlackJackDto blackJackDto = BlackJackDto.from(blackJack);
-		for (Participant player : blackJackDto.getPlayers()) {
+		for (Participant player : blackJack.getPlayers()) {
 			decidePlayerReceivingAdditionalCard(blackJack, player);
 		}
 	}
@@ -51,15 +47,14 @@ public class Controller {
 	private void decideDealerReceivingAdditionalCard(BlackJack blackJack) {
 		boolean isDealerEnough = blackJack.isDealerEnough();
 		if (!isDealerEnough) {
-			blackJack.handOutCardTo(BlackJackDto.from(blackJack).getDealer());
+			blackJack.handOutCardTo(blackJack.getDealer());
 		}
 		ResultView.showWhetherDealerReceivedOrNot(isDealerEnough);
 	}
 
 	private void finishGame(BlackJack blackJack) {
-		BlackJackDto blackJackDto = BlackJackDto.from(blackJack);
-		ResultView.showFinalStatus(blackJackDto);
+		ResultView.showFinalStatus(blackJack);
 		blackJack.calculateResult();
-		ResultView.showResult(blackJackDto);
+		ResultView.showResult(blackJack);
 	}
 }

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.Participant;
 import blackjack.domain.card.CardDeck;
 
 public class ParticipantTest {
@@ -32,6 +33,6 @@ public class ParticipantTest {
 	void receiveCard() {
 		Participant player = Participant.createPlayer("yaho");
 		player.receiveCard(CardDeck.pick());
-		assertThat(player.getCards().getCards().size()).isEqualTo(1);
+		assertThat(player.getCards().size()).isEqualTo(1);
 	}
 }

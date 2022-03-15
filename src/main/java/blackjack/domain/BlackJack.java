@@ -1,10 +1,11 @@
 package blackjack.domain;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import blackjack.Participant;
 import blackjack.domain.card.CardDeck;
 
 public class BlackJack {
@@ -15,15 +16,13 @@ public class BlackJack {
 
 	private final Participant dealer;
 	private final List<Participant> players;
-	private final Map<Participant, Boolean> result;
 
 	private BlackJack(Participant dealer, List<Participant> players) {
 		this.dealer = dealer;
 		this.players = players;
-		this.result = new LinkedHashMap<>();
 	}
 
-	public static BlackJack createFrom(List<String> playerNames) {
+	public static BlackJack from(List<String> playerNames) {
 		validatePlayerNumber(playerNames);
 		List<Participant> players = playerNames.stream()
 			.map(Participant::createPlayer)
@@ -59,8 +58,13 @@ public class BlackJack {
 		return dealer.getScore() > DEALER_ADDITIONAL_CARD_STANDARD;
 	}
 
-	public void calculateResult() {
-		players.forEach(player -> result.put(player, isWin(player)));
+	public Map<Participant, Boolean> calculateResult() {
+		Map<Participant, Boolean> result = new HashMap<>();
+		for (Participant player : players) {
+			result.put(player, isWin(player));
+		}
+
+		return result;
 	}
 
 	private boolean isWin(Participant player) {
@@ -79,9 +83,5 @@ public class BlackJack {
 
 	public List<Participant> getPlayers() {
 		return players;
-	}
-
-	public Map<Participant, Boolean> getResult() {
-		return result;
 	}
 }

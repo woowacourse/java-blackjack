@@ -1,14 +1,15 @@
-package blackjack.domain.dto;
+package blackjack;
 
-import blackjack.domain.Participant;
-import blackjack.domain.card.Cards;
+import java.util.List;
+
+import blackjack.domain.card.Card;
 
 public class ParticipantDto {
 
 	private final String name;
-	private final Cards cards;
+	private final List<Card> cards;
 
-	public ParticipantDto(String name, Cards cards) {
+	public ParticipantDto(String name, List<Card> cards) {
 		this.name = name;
 		this.cards = cards;
 	}
@@ -21,7 +22,7 @@ public class ParticipantDto {
 		return name;
 	}
 
-	public Cards getCards() {
+	public List<Card> getCards() {
 		return cards;
 	}
 }

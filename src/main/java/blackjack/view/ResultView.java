@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Participant;
+import blackjack.Participant;
+import blackjack.ParticipantDto;
+import blackjack.domain.BlackJack;
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.BlackJackDto;
-import blackjack.domain.dto.CardsDto;
-import blackjack.domain.dto.ParticipantDto;
 
 public class ResultView {
 
@@ -23,28 +22,27 @@ public class ResultView {
 	private static final String MESSAGE_WIN = "승 ";
 	private static final String MESSAGE_LOSE = "패 ";
 
-	public static void showStartingStatus(BlackJackDto blackJackDto) {
-		System.out.printf(MESSAGE_HAND_OUT_CARD, String.join(DELIMITER_COMMA, getPlayerNames(blackJackDto)));
-		showDealerStartingStatus(blackJackDto);
-		showPlayerStartingStatus(blackJackDto);
+	public static void showStartingStatus(BlackJack blackJack) {
+		System.out.printf(MESSAGE_HAND_OUT_CARD, String.join(DELIMITER_COMMA, getPlayerNames(blackJack)));
+		showDealerStartingStatus(blackJack);
+		showPlayerStartingStatus(blackJack);
 		System.out.println();
 	}
 
-	private static String[] getPlayerNames(BlackJackDto blackJackDto) {
-		return blackJackDto.getPlayers().stream()
+	private static String[] getPlayerNames(BlackJack blackJack) {
+		return blackJack.getPlayers().stream()
 			.map(ParticipantDto::from)
 			.map(ParticipantDto::getName)
 			.toArray(String[]::new);
 	}
 
-	private static void showDealerStartingStatus(BlackJackDto blackJackDto) {
-		ParticipantDto participantDto = ParticipantDto.from(blackJackDto.getDealer());
-		CardsDto cardsDto = CardsDto.from(participantDto.getCards());
-		System.out.println(participantDto.getName() + DELIMITER_COLON + cardsDto.getCards().get(0).getName());
+	private static void showDealerStartingStatus(BlackJack blackJack) {
+		ParticipantDto participantDto = ParticipantDto.from(blackJack.getDealer());
+		System.out.println(participantDto.getName() + DELIMITER_COLON + blackJack.getDealer().getCards().get(0).getName());
 	}
 
-	private static void showPlayerStartingStatus(BlackJackDto blackJackDto) {
-		for (Participant player : blackJackDto.getPlayers()) {
+	private static void showPlayerStartingStatus(BlackJack blackJack) {
+		for (Participant player : blackJack.getPlayers()) {
 			showEachPlayerStatus(player);
 		}
 	}
@@ -57,8 +55,7 @@ public class ResultView {
 	}
 
 	private static String getStatus(ParticipantDto participantDto) {
-		CardsDto cardsDto = CardsDto.from(participantDto.getCards());
-		List<String> playerCardStatus = cardsDto.getCards().stream()
+		List<String> playerCardStatus = participantDto.getCards().stream()
 			.map(Card::getName)
 			.collect(Collectors.toList());
 
@@ -74,29 +71,29 @@ public class ResultView {
 		System.out.println(MESSAGE_DEALER_RECEIVE);
 	}
 
-	public static void showFinalStatus(BlackJackDto blackJackDto) {
+	public static void showFinalStatus(BlackJack blackJack) {
 		System.out.println();
-		Participant dealer = blackJackDto.getDealer();
+		Participant dealer = blackJack.getDealer();
 		System.out.println(getStatus(ParticipantDto.from(dealer)) + RESULT_DELIMITER + dealer.getScore());
-		for (Participant player : blackJackDto.getPlayers()) {
+		for (Participant player : blackJack.getPlayers()) {
 			System.out.println(getStatus(ParticipantDto.from(player)) + RESULT_DELIMITER + player.getScore());
 		}
 	}
 
-	public static void showResult(BlackJackDto blackJackDto) {
+	public static void showResult(BlackJack blackJack) {
 		System.out.println(MESSAGE_FINAL_RESULT);
-		Map<Participant, Boolean> result = blackJackDto.getResult();
-		showDealerResult(blackJackDto, result);
+		Map<Participant, Boolean> result = blackJack.calculateResult();
+		showDealerResult(blackJack, result);
 		showPlayerResults(result);
 	}
 
-	private static void showDealerResult(BlackJackDto blackJackDto, Map<Participant, Boolean> result) {
+	private static void showDealerResult(BlackJack blackJack, Map<Participant, Boolean> result) {
 		int loseCount = (int)result.values().stream()
 			.filter(value -> value)
 			.count();
 		int winCount = result.size() - loseCount;
 
-		ParticipantDto dealer = ParticipantDto.from(blackJackDto.getDealer());
+		ParticipantDto dealer = ParticipantDto.from(blackJack.getDealer());
 		System.out.println(dealer.getName() + DELIMITER_COLON + winCount + MESSAGE_WIN + loseCount + MESSAGE_LOSE);
 	}
 
