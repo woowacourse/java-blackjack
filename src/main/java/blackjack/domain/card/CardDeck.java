@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class CardDeck {
     private final List<Card> cards;
 
     public CardDeck(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.cards = new LinkedList<>(cards);
     }
 
     public CardDeck() {
@@ -38,9 +39,7 @@ public class CardDeck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 카드 덱이 비어 있습니다.");
         }
-        Card card = cards.get(0);
-        cards.remove(0);
-        return card;
+        return cards.remove(0);
     }
 
     public List<Card> drawDouble() {
