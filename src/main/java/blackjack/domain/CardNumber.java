@@ -19,8 +19,8 @@ public enum CardNumber {
     JACK("J", 10),
     ;
 
-    public static final int ACE_MAXIMUM = 11;
-    public static final int ACE_EXTRA_NUMBER = 10;
+    private static final int ACE_MAXIMUM = 11;
+    private static final int ACE_EXTRA_NUMBER = 10;
 
     private final String name;
     private final int number;
