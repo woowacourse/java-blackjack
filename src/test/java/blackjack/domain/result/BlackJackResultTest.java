@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.player.Bet;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
+import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class BlackJackResultTest {
 
         Gamers gamers = new Gamers(List.of(huni, hani));
 
-        Map<Gamer, ResultStrategy> map = gamers.getGamers().stream()
+        Map<Player, ResultStrategy> map = gamers.getGamers().stream()
                 .collect(Collectors.toMap(gamer -> gamer,
                         gamer -> new Win()));
 

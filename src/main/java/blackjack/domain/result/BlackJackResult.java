@@ -1,17 +1,17 @@
 package blackjack.domain.result;
 
-import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Player;
 import java.util.Map;
 
 public class BlackJackResult {
 
-    public final Map<Gamer, ResultStrategy> result;
+    public final Map<Player, ResultStrategy> result;
 
-    public BlackJackResult(final Map<Gamer, ResultStrategy> result) {
+    public BlackJackResult(final Map<Player, ResultStrategy> result) {
         this.result = result;
     }
 
-    public Map<Gamer, ResultStrategy> getResult() {
+    public Map<Player, ResultStrategy> getResult() {
         return result;
     }
 }
