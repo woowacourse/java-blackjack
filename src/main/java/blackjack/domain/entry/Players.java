@@ -26,19 +26,15 @@ public class Players {
         dealer.addCard(card);
     }
 
-    public Map<PlayerOutcome, List<Player>> getGameResults() {
-        return players.stream()
-                .collect(Collectors.groupingBy(player -> player.match(dealer)));
-    }
-
-    public List<Participant> getParticipant() {
+    public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players);
         return participants;
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
+    public Map<PlayerOutcome, List<Player>> getGameResults() {
+        return players.stream()
+                .collect(Collectors.groupingBy(player -> player.match(dealer)));
     }
 }

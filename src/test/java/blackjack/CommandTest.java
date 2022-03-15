@@ -33,4 +33,16 @@ public class CommandTest {
                 .isThrownBy(() -> Command.find(input))
                 .withMessageContaining("존재하지 않는 명령입니다.");
     }
+
+    @Test
+    @DisplayName("자신이 HIT일 경우 True 반환한다.")
+    void isHit() {
+        assertThat(Command.HIT.isHit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("자신이 STAY일 경우 True 반환한다.")
+    void isStay() {
+        assertThat(Command.STAY.isStay()).isTrue();
+    }
 }

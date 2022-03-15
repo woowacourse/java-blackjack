@@ -38,26 +38,26 @@ public class BlackjackGame {
     }
 
     private void hitPlayers(BlackjackTable blackjackTable) {
-        List<Player> players = blackjackTable.getPlayers();
-        for (Player player : players) {
-            hitPlayer(blackjackTable, player);
+        List<Participant> participants = blackjackTable.getParticipants();
+        for (Participant participant : participants) {
+            hitPlayer(blackjackTable, participant);
         }
     }
 
-    private void hitPlayer(BlackjackTable blackjackTable, Player player) {
-        Command command = Command.find(InputView.inputCommand(player.getName()));
-        if (command == Command.STAY) {
-            OutputView.printPlayerCards(toPlayerCard(player));
+    private void hitPlayer(BlackjackTable blackjackTable, Participant participant) {
+        Command command = Command.find(InputView.inputCommand(participant.getName()));
+        if (command.isStay()) {
+            OutputView.printPlayerCards(toPlayerCard(participant));
             return;
         }
-        moreHit(blackjackTable, player, command);
+        moreHit(blackjackTable, participant, command);
     }
 
-    private void moreHit(BlackjackTable blackjackTable, Player player, Command command) {
-        while (blackjackTable.canHit(player, command)) {
-            blackjackTable.hit(player);
-            OutputView.printPlayerCards(toPlayerCard(player));
-            command = Command.find(InputView.inputCommand(player.getName()));
+    private void moreHit(BlackjackTable blackjackTable, Participant participant, Command command) {
+        while (command.isHit() && blackjackTable.canHit(participant)) {
+            blackjackTable.hit(participant);
+            OutputView.printPlayerCards(toPlayerCard(participant));
+            command = Command.find(InputView.inputCommand(participant.getName()));
         }
     }
 
@@ -68,8 +68,8 @@ public class BlackjackGame {
         }
     }
 
-    private PlayerCardResult toPlayerCard(Player player) {
-        return new PlayerCardResult(player.getName(), player.getHoldCards().getCards());
+    private PlayerCardResult toPlayerCard(Participant participant) {
+        return new PlayerCardResult(participant.getName(), participant.getHoldCards().getCards());
     }
 
     private List<CardCountingResult> toCardCountingResult(List<Participant> participants) {
@@ -86,7 +86,7 @@ public class BlackjackGame {
         );
     }
 
-    public List<PlayerGameResult> toGameResults(Map<PlayerOutcome, List<Player>> gameResults) {
+    private List<PlayerGameResult> toGameResults(Map<PlayerOutcome, List<Player>> gameResults) {
         return gameResults.keySet().stream()
             .flatMap(outcome -> toPlayerGameResult(gameResults, outcome))
             .collect(Collectors.toList());

@@ -18,4 +18,12 @@ public enum Command {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령입니다."));
     }
+
+    public boolean isHit() {
+        return this == HIT;
+    }
+
+    public boolean isStay() {
+        return this == STAY;
+    }
 }

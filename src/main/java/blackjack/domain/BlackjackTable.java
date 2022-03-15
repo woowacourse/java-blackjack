@@ -20,8 +20,8 @@ public class BlackjackTable {
         this.players = new Players(createDealer(), toPlayers(names));
     }
 
-    public void hit(Player player) {
-        player.addCard(deck.draw());
+    public void hit(Participant participant) {
+        participant.addCard(deck.draw());
     }
 
     public boolean needMoreCardByDealer() {
@@ -32,20 +32,16 @@ public class BlackjackTable {
         players.hitDealer(deck.draw());
     }
 
-    public boolean canHit(Player player, Command command) {
-        return player.canHit() && command == Command.HIT;
+    public boolean canHit(Participant participant) {
+        return participant.canHit();
     }
 
     public List<Participant> getParticipants() {
-        return players.getParticipant();
+        return players.getParticipants();
     }
 
     public Map<PlayerOutcome, List<Player>> countGameResult() {
         return players.getGameResults();
-    }
-
-    public List<Player> getPlayers() {
-        return players.getPlayers();
     }
 
     private Dealer createDealer() {
