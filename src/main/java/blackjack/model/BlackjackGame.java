@@ -21,11 +21,18 @@ public class BlackjackGame {
         this.participants = new Participants(names);
         this.cardDeck = new CardDeck();
         this.dealer = new Dealer();
-        this.players = new Players(names);
+        this.players = Players.from(names);
     }
 
-    public void start() {
-        participants.drawCardsBy(cardDeck);
+    private BlackjackGame(final Participants participants, final CardDeck cardDeck) {
+        this.participants = participants;
+        this.cardDeck = cardDeck;
+        this.dealer = new Dealer();
+        this.players = null;
+    }
+
+    public BlackjackGame start() {
+        return new BlackjackGame(participants.drawCardsBy(cardDeck), this.cardDeck);
     }
 
     public void hitOrStayUntilPossible(Predicate<String> predicate, Consumer<Participant> consumer) {
@@ -45,8 +52,16 @@ public class BlackjackGame {
         return new BlackJackGameResult(dealer, players);
     }
 
-    public Participant getDealer() {
+    public Participant getDealer2() {
         return dealer;
+    }
+
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
+    }
+
+    public Participant getDealer() {
+        return participants.getDealer();
     }
 
     public List<Participant> getGamers() {

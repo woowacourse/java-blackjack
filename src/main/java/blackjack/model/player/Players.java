@@ -8,18 +8,24 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Players {
-    private List<Participant> values;
+    private final List<Participant> values;
 
-    public Players(final List<String> names) {
-        this.values = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
+    private Players(final List<Participant> values) {
+        this.values = values;
     }
 
-    public void drawCardsBy(final CardDeck cardDeck) {
-        this.values = values.stream()
+    public static Players from(final List<String> names) {
+        List<Participant> values = names.stream()
+                .map(Player::new)
+                .collect(Collectors.toUnmodifiableList());
+        return new Players(values);
+    }
+
+    public Players drawCardsBy(final CardDeck cardDeck) {
+        List<Participant> newValues = values.stream()
                 .map(player -> player.drawCardsBy(cardDeck))
                 .collect(Collectors.toUnmodifiableList());
+        return new Players(newValues);
     }
 
     public void hitOrStayToGamer(Predicate<String> predicate, Consumer<Participant> consumer) {
