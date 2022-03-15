@@ -2,8 +2,6 @@ package blackjack.domain;
 
 import blackjack.utils.Validator;
 
-import java.util.List;
-
 public class Player extends Human {
 
     private static final String EQUALS_DEALER_NAME_MESSAGE = "딜러와 동일한 이름은 사용할 수 없습니다.";

@@ -72,7 +72,7 @@ public class Game {
         try {
             OutputView.printTakeCardInstruction(player.getName());
             String input = InputView.inputTakeCardAnswer();
-            return player.answer(input);
+            return Answer.findBySymbol(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
             return hitOrStay(player);
