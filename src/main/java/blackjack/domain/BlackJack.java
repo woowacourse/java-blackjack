@@ -5,20 +5,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.Participant;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 
 public class BlackJack {
 	private static final String ERROR_MESSAGE_PLAYER_NUMBER_EXCEED = "[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.";
 	private static final int MAX_PLAYER_NUMBER = 8;
-	private static final int DEALER_ADDITIONAL_CARD_STANDARD = 16;
 	private static final int STARTING_CARDS_COUNT = 2;
 
-	private final Participant dealer;
-	private final List<Participant> players;
+	private final Dealer dealer;
+	private final List<Player> players;
 	private final CardDeck cardDeck;
 
-	private BlackJack(Participant dealer, List<Participant> players) {
+	private BlackJack(Dealer dealer, List<Player> players) {
 		this.dealer = dealer;
 		this.players = players;
 		this.cardDeck = CardDeck.create();
@@ -26,11 +27,11 @@ public class BlackJack {
 
 	public static BlackJack from(List<String> playerNames) {
 		validatePlayerNumber(playerNames);
-		List<Participant> players = playerNames.stream()
-			.map(Participant::createPlayer)
+		List<Player> players = playerNames.stream()
+			.map(Player::from)
 			.collect(Collectors.toList());
 
-		return new BlackJack(Participant.createDealer(), players);
+		return new BlackJack(new Dealer(), players);
 	}
 
 	private static void validatePlayerNumber(List<String> players) {
@@ -56,10 +57,6 @@ public class BlackJack {
 		participant.receiveCard(this.cardDeck.pick());
 	}
 
-	public boolean isDealerEnough() {
-		return dealer.getScore() > DEALER_ADDITIONAL_CARD_STANDARD;
-	}
-
 	public Map<Participant, Boolean> calculateResult() {
 		Map<Participant, Boolean> result = new HashMap<>();
 		for (Participant player : players) {
@@ -79,11 +76,11 @@ public class BlackJack {
 		return dealer.getScore() < player.getScore();
 	}
 
-	public Participant getDealer() {
+	public Dealer getDealer() {
 		return dealer;
 	}
 
-	public List<Participant> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 }

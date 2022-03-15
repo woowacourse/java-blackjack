@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.Participant;
 import blackjack.ParticipantDto;
 import blackjack.domain.BlackJack;
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.Participant;
 
 public class ResultView {
 
@@ -38,7 +38,8 @@ public class ResultView {
 
 	private static void showDealerStartingStatus(BlackJack blackJack) {
 		ParticipantDto participantDto = ParticipantDto.from(blackJack.getDealer());
-		System.out.println(participantDto.getName() + DELIMITER_COLON + blackJack.getDealer().getCards().get(0).getName());
+		Card firstCard = participantDto.getCards().get(0);
+		System.out.println(participantDto.getName() + DELIMITER_COLON + firstCard.getName());
 	}
 
 	private static void showPlayerStartingStatus(BlackJack blackJack) {
@@ -99,7 +100,8 @@ public class ResultView {
 
 	private static void showPlayerResults(Map<Participant, Boolean> result) {
 		result.keySet().stream()
-			.map(participant -> ParticipantDto.from(participant).getName() + DELIMITER_COLON + decodeResult(result.get(participant)))
+			.map(participant -> ParticipantDto.from(participant).getName() + DELIMITER_COLON + decodeResult(
+				result.get(participant)))
 			.forEach(System.out::println);
 	}
 

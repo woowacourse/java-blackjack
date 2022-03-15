@@ -1,20 +1,19 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.Participant;
 import blackjack.domain.card.CardDeck;
 
-public class ParticipantTest {
+public class PlayerTest {
 
 	@Test
 	@DisplayName("이름이 공백이면 예외가 발생한다")
 	void nameException_Empty() {
 		assertThatThrownBy(() ->
-			Participant.createPlayer("")
+			Player.from("")
 		).isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("[ERROR] 이름은 공백일 수 없습니다.");
 	}
@@ -23,7 +22,7 @@ public class ParticipantTest {
 	@DisplayName("이름에 특수문자가 포한되면 예외가 발생한다")
 	void nameException_SpacialChar() {
 		assertThatThrownBy(() ->
-			Participant.createPlayer("@as!")
+			Player.from("@as!")
 		).isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("[ERROR] 이름에 특수문자가 포함될 수 없습니다.");
 	}
@@ -32,7 +31,7 @@ public class ParticipantTest {
 	@DisplayName("카드를 한장 받으면, 플레이어의 카드가 한장 추가된다")
 	void receiveCard() {
 		CardDeck cardDeck = CardDeck.create();
-		Participant player = Participant.createPlayer("yaho");
+		Player player = Player.from("yaho");
 		player.receiveCard(cardDeck.pick());
 		assertThat(player.getCards().size()).isEqualTo(1);
 	}
