@@ -23,14 +23,14 @@ class DealerTest {
         dealer.addCard(card);
 
         dealer.addCard(new Card(CardShape.HEART, CardNumber.ACE));
-        assertThat(dealer.getSumWithMaximumAce()).isEqualTo(result);
+        assertThat(dealer.getScore()).isEqualTo(result);
     }
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-                Arguments.of(new Card(CardShape.HEART, CardNumber.FIVE), 20, "카드 숫자 합 9에서 11 추가시에 20"),
-                Arguments.of(new Card(CardShape.HEART, CardNumber.SIX), 21, "카드 숫자 합 10에서 11 추가시에 21"),
-                Arguments.of(new Card(CardShape.HEART, CardNumber.SEVEN), 22, "카드 숫자 합 11에서 11 추가시에 22")
+                Arguments.of(new Card(CardShape.HEART, CardNumber.FIVE), 20, "카드 숫자 합 9에서 ACE 추가시에 20"),
+                Arguments.of(new Card(CardShape.HEART, CardNumber.SIX), 21, "카드 숫자 합 10에서 ACE 추가시에 21"),
+                Arguments.of(new Card(CardShape.HEART, CardNumber.SEVEN), 12, "카드 숫자 합 11에서 ACE 추가시에 12")
         );
     }
 }

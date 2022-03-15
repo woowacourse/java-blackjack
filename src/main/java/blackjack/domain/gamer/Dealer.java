@@ -12,7 +12,7 @@ public class Dealer extends Gamer {
 
     @Override
     public void addCard(Card card) {
-        if (getSumWithMaximumAce() > DEALER_STAND_CONDITION) {
+        if (getScore() > DEALER_STAND_CONDITION) {
             return;
         }
 
@@ -21,11 +21,6 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean isAddable() {
-        return getSumWithMaximumAce() <= DEALER_STAND_CONDITION;
-    }
-
-    @Override
-    public int getFinalScore() {
-        return super.getSumWithMaximumAce();
+        return getScore() <= DEALER_STAND_CONDITION;
     }
 }

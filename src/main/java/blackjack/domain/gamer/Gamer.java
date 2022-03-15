@@ -62,11 +62,7 @@ public class Gamer {
         return cardGroup.isAddable();
     }
 
-    public int getSumWithMaximumAce() {
-        return cardGroup.calculateSumWithMaximumAce();
-    }
-
-    public int getFinalScore() {
+    public int getScore() {
         return cardGroup.calculateScore();
     }
 

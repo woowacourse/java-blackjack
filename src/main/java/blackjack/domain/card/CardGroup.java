@@ -23,25 +23,29 @@ public class CardGroup {
         return calculateScore() < BLACKJACK_NUMBER;
     }
 
-    public int calculateSumWithMaximumAce() {
+    public int calculateScore() {
+        int score = calculateSumWithMaximumAce();
+        int aCount = countAce();
+        while (isReducingAceNumberBeneficial(score, aCount)) {
+            score -= ACE_SPECIAL_SCORE;
+            aCount--;
+        }
+        return score;
+    }
+
+    private int calculateSumWithMaximumAce() {
         int sum = cards.stream()
                 .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getNumber)
                 .sum();
-        return sum + countA() * ACE_SPECIAL_SCORE;
+        return sum + countAce() * ACE_SPECIAL_SCORE;
     }
 
-    public int calculateScore() {
-        int maxSum = calculateSumWithMaximumAce();
-        int aCount = countA();
-        while (maxSum > BLACKJACK_NUMBER && aCount > 0) {
-            maxSum -= ACE_SPECIAL_SCORE;
-            aCount--;
-        }
-        return maxSum;
+    private boolean isReducingAceNumberBeneficial(int score, int aCount) {
+        return score > BLACKJACK_NUMBER && aCount > 0;
     }
 
-    private int countA() {
+    private int countAce() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
