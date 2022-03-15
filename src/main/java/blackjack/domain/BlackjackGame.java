@@ -62,16 +62,16 @@ public class BlackjackGame {
         return player.isCanHit();
     }
 
-    public boolean turnDealer(CardShuffleMachine playingCardShuffleMachine) {
+    public boolean isTurnDealer(CardShuffleMachine playingCardShuffleMachine) {
         Player dealer = blackjackPlayers.getDealer();
         if (dealer.isCanHit()) {
-            addCard(dealer, playingCardShuffleMachine);
+            assignCard(dealer, playingCardShuffleMachine);
             return true;
         }
         return false;
     }
 
-    public void addCard(Player player, CardShuffleMachine playingCardShuffleMachine) {
+    public void assignCard(Player player, CardShuffleMachine playingCardShuffleMachine) {
         player.addCard(playingCardShuffleMachine.assignCard(playingCards));
     }
 
@@ -89,7 +89,7 @@ public class BlackjackGame {
         return gameResponses;
     }
 
-    public Players getBlackjackPlayers() {
+    public Players getPlayers() {
         return blackjackPlayers;
     }
 

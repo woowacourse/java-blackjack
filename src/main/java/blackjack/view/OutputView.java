@@ -71,7 +71,7 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public static void announceGetMoreCard(int number) {
+    public static void announceHit(int number) {
         System.out.println();
         System.out.printf(DEALER_MORE_CARD_GUIDE_MESSAGE, number);
         System.out.println();
@@ -81,14 +81,14 @@ public class OutputView {
         System.out.println();
         for (GameResponse gameResponse : gameResponses) {
             StringBuilder sb = new StringBuilder();
-            AccumulateCardResults(gameResponse, sb);
+            accumulateCardResults(gameResponse, sb);
             sb.append(FINAL_POINT_GUIDE_MESSAGE + RESULT_START_DELIMITER)
                     .append(gameResponse.getDeck().sumPoints());
             System.out.println(sb);
         }
     }
 
-    private static void AccumulateCardResults(GameResponse gameResponse, StringBuilder sb) {
+    private static void accumulateCardResults(GameResponse gameResponse, StringBuilder sb) {
         sb.append(gameResponse.getName())
                 .append(CARD_FORMAT)
                 .append(RESULT_START_DELIMITER);
@@ -104,12 +104,12 @@ public class OutputView {
         System.out.println(NEW_LINE + FINAL_WINNER_GUIDE_MESSAGE);
         for (Player player : results.getPlayers()) {
             MatchResult result = results.getResult(player);
-            String matchResult = AccumulateMatchResult(result.getMatch());
+            String matchResult = accumulateMatchResult(result.getMatch());
             System.out.println(player.getName() + RESULT_START_DELIMITER + matchResult);
         }
     }
 
-    private static String AccumulateMatchResult(Map<Match, Integer> matchResult) {
+    private static String accumulateMatchResult(Map<Match, Integer> matchResult) {
         StringBuilder sb = new StringBuilder();
         for (Match match : matchResult.keySet()) {
             sb.append(matchResult.get(match))

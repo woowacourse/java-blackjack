@@ -25,7 +25,7 @@ public class BlackjackController {
         BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), receivePlayerNames());
         blackjackGame.initGames(playingCardShuffleMachine);
 
-        Players players = blackjackGame.getBlackjackPlayers();
+        Players players = blackjackGame.getPlayers();
         announceStartGame(blackjackGame, players);
 
         turnPlayers(blackjackGame);
@@ -62,7 +62,7 @@ public class BlackjackController {
 
     private void hasHit(BlackjackGame blackjackGame) {
         while (blackjackGame.isTurnGuest() && receiveHit(blackjackGame.getTurnPlayer().getName())) {
-            blackjackGame.addCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
+            blackjackGame.assignCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
             announcePresentCard(blackjackGame.getTurnPlayer());
         }
         blackjackGame.nextTurn();
@@ -70,7 +70,7 @@ public class BlackjackController {
 
     private boolean receiveHit(String name) {
         try {
-            String answer = InputView.requestMoreCard(name);
+            String answer = InputView.requestHit(name);
             InputValidator.inputBlank(answer);
             InputValidator.isAnswerFormat(answer);
             return answer.equals(InputValidator.MORE_CARD);
@@ -81,11 +81,11 @@ public class BlackjackController {
     }
 
     private void turnDealer(BlackjackGame blackjackGame) {
-        if (blackjackGame.turnDealer(playingCardShuffleMachine)) {
-            OutputView.announceGetMoreCard(Dealer.MAX_POINT);
+        if (blackjackGame.isTurnDealer(playingCardShuffleMachine)) {
+            OutputView.announceHit(Dealer.MAX_POINT);
             return;
         }
-        OutputView.announceGetMoreCard(Dealer.EXCEED_POINT);
+        OutputView.announceHit(Dealer.EXCEED_POINT);
     }
 
     private void announcePresentCard(Player player) {

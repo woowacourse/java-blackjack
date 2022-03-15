@@ -21,7 +21,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String requestMoreCard(String name) {
+    public static String requestHit(String name) {
         System.out.println(name + ASK_MORE_CARD);
         return SCANNER.nextLine();
     }

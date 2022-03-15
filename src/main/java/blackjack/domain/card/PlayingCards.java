@@ -10,10 +10,10 @@ public class PlayingCards {
     private static final int ACE_ELEVEN_POSSIBLE = 10;
     private static final int BLACKJACK_SIZE = 2;
 
-    private final Set<PlayingCard> playingCards;
+    private final Set<PlayingCard> cards;
 
-    public PlayingCards(Set<PlayingCard> playingCards) {
-        this.playingCards = playingCards;
+    public PlayingCards(Set<PlayingCard> cards) {
+        this.cards = cards;
     }
 
     public PlayingCards() {
@@ -21,12 +21,12 @@ public class PlayingCards {
     }
 
     public void addCard(PlayingCard playingCard) {
-        playingCards.add(playingCard);
+        cards.add(playingCard);
     }
 
     public int sumPoints() {
-        int points = sumCardPoint();
-        boolean aceExist = playingCards.stream()
+        int points = sumCardPointWithAceIsOne();
+        boolean aceExist = cards.stream()
                 .anyMatch(PlayingCard::isAce);
         if (!aceExist) {
             return points;
@@ -41,8 +41,8 @@ public class PlayingCards {
         return points;
     }
 
-    private int sumCardPoint() {
-        return playingCards.stream()
+    private int sumCardPointWithAceIsOne() {
+        return cards.stream()
                 .mapToInt(PlayingCard::getPoint)
                 .sum();
     }
@@ -52,11 +52,11 @@ public class PlayingCards {
     }
 
     public boolean isBlackJack() {
-        return playingCards.size() == BLACKJACK_SIZE && sumPoints() == BLACKJACK_POINT;
+        return cards.size() == BLACKJACK_SIZE && sumPoints() == BLACKJACK_POINT;
     }
 
     public Set<PlayingCard> getCards() {
-        return Collections.unmodifiableSet(playingCards);
+        return Collections.unmodifiableSet(cards);
     }
 
     @Override
@@ -66,11 +66,11 @@ public class PlayingCards {
 
         PlayingCards playingCards = (PlayingCards) o;
 
-        return this.playingCards != null ? this.playingCards.equals(playingCards.playingCards) : playingCards.playingCards == null;
+        return this.cards != null ? this.cards.equals(playingCards.cards) : playingCards.cards == null;
     }
 
     @Override
     public int hashCode() {
-        return playingCards != null ? playingCards.hashCode() : 0;
+        return cards != null ? cards.hashCode() : 0;
     }
 }

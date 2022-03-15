@@ -74,8 +74,8 @@ class BlackjackGameTest {
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
         Guest guest = new Guest("haha");
         BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), new ArrayList<>());
-        blackjackGame.addCard(guest, playingCardFixMachine);
-        blackjackGame.addCard(guest, playingCardFixMachine);
+        blackjackGame.assignCard(guest, playingCardFixMachine);
+        blackjackGame.assignCard(guest, playingCardFixMachine);
 
         Set<PlayingCard> cards = new LinkedHashSet<>();
         cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
@@ -131,6 +131,6 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), players);
         blackjackGame.initGames(playingCardFixMachine);
 
-        assertThat(blackjackGame.turnDealer(playingCardFixMachine)).isTrue();
+        assertThat(blackjackGame.isTurnDealer(playingCardFixMachine)).isTrue();
     }
 }
