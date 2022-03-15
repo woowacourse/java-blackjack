@@ -27,7 +27,7 @@ public class CardDistributor {
 
     public Card distribute() {
         if (isEmpty()) {
-            throw new IllegalArgumentException(DECK_IS_EMPTY);
+            throw new IllegalStateException(DECK_IS_EMPTY);
         }
         return deck.pop();
     }

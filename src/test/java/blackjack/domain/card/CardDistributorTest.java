@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class CardDistributorTest {
 
@@ -31,7 +31,7 @@ public class CardDistributorTest {
 
         // then
         assertThatThrownBy(cardDistributor::distribute)
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("카드가 모두 소요됐습니다.");
     }
 }
