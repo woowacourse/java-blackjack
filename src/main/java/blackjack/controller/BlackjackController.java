@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,17 +17,16 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
 
-    private final CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-
     public void playGame() {
         BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), receivePlayerNames());
+        CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
         blackjackGame.initGames(playingCardShuffleMachine);
 
         Players players = blackjackGame.getPlayers();
         announceStartGame(blackjackGame, players);
 
-        turnPlayers(blackjackGame);
-        turnDealer(blackjackGame);
+        turnPlayers(blackjackGame, playingCardShuffleMachine);
+        turnDealer(blackjackGame, playingCardShuffleMachine);
         announceResult(blackjackGame, players);
     }
 
@@ -49,13 +47,13 @@ public class BlackjackController {
         OutputView.announcePresentCards(blackjackGame.getPlayersGameResponses());
     }
 
-    private void turnPlayers(BlackjackGame blackjackGame) {
+    private void turnPlayers(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
         while (blackjackGame.isExistNextPlayer()) {
-            hasHit(blackjackGame);
+            hasHit(blackjackGame, playingCardShuffleMachine);
         }
     }
 
-    private void hasHit(BlackjackGame blackjackGame) {
+    private void hasHit(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
         while (blackjackGame.isTurnGuest() && receiveHit(blackjackGame.getTurnPlayer().getName())) {
             blackjackGame.assignCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
             announcePresentCard(blackjackGame);
@@ -73,7 +71,7 @@ public class BlackjackController {
         return receiveHit(name);
     }
 
-    private void turnDealer(BlackjackGame blackjackGame) {
+    private void turnDealer(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
         if (blackjackGame.isTurnDealer(playingCardShuffleMachine)) {
             OutputView.announceHit(Dealer.MAX_POINT);
             return;
