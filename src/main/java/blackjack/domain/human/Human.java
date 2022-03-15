@@ -19,7 +19,7 @@ public abstract class Human {
     }
     
     public int getPoint() {
-        return getCards().getPoint();
+        return cards.getPoint();
     }
     
     public String getName() {

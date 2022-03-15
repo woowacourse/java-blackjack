@@ -62,11 +62,13 @@
 ## 피드백
 
 - [x] 파일 끝에 개행문자 추가
-      - [x] insert_final_newline 옵션을 true로 설정
+    - [x] insert_final_newline 옵션을 true로 설정
 - [x] 인풋 뷰 검증로직을 Players 클래스 안으로 이동, 정적팩토리메서드 추가
 - [x] GameController : 10 라인 넘어가는 questAddCard 메서드 로직 효율화
 - [x] suit 클래스 속 이름 중복 제거
 - [x] 상수와 인스턴스 변수 사이 개행
+- [x] cards 속 정적 팩토리 메소드 제거 및 생성자 public 화
+    - [ ] 상속불가 클래스에 final 추가
 - [ ] 패키지에 위치한 클래스들 하위에 패키지를 더 나누기
 - [ ] Table 클래스 이름 변경, 클래스 역할 고민
 - [ ] 
@@ -75,11 +77,23 @@
 - [ ] 
 - [ ] 
 - [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
+
+## 궁금증
+
+1.
+
+`public int getPoint() { return cards.getPoint(); }`
+여기서 getPoint()를 내부 변수를 가져와 재정의해야 하는데 위 방식이 맞을까?
 
 ## TODO
+
+- [ ] 불변화
+- [ ] final class 로 상속안함 표시
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
 
 - [x] final 적용
 - [x] statistic indent 줄이기 & test코드 수정
@@ -92,5 +106,4 @@
 - [x] indent 1로 수정
 - [x] Deck을 Stack으로 변경
 - [x] 테스트 코드 리팩토링
-- [ ] 불변화
-- [ ] 
+

@@ -14,7 +14,7 @@ public class CardsTest {
     
     @BeforeEach
     void setup() {
-        cards = Cards.of();
+        cards = new Cards();
         
         Card card5 = Card.of(Denomination.of("5"), Suit.SPADE);
         Card card6 = Card.of(Denomination.of("6"), Suit.SPADE);

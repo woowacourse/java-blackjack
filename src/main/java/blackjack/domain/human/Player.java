@@ -8,7 +8,7 @@ import blackjack.util.Constants;
 public class Player extends Human {
     
     private Player(String name) {
-        super(Cards.of(), name);
+        super(new Cards(), name);
     }
     
     public static Player of(String name) {
