@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Player extends Participant {
+public class Player extends AbstractParticipant {
 
     public Player(final String name) {
         super(name, new ArrayList<>());

@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -20,14 +21,14 @@ public enum PlayerResult {
             (dealer.hasHigherScoreThan(player)));
 
     private final String name;
-    private final BiPredicate<Participant, Participant> predicate;
+    private final BiPredicate<Player, Dealer> predicate;
 
-    PlayerResult(final String name, BiPredicate<Participant, Participant> predicate) {
+    PlayerResult(final String name, final BiPredicate<Player, Dealer> predicate) {
         this.name = name;
         this.predicate = predicate;
     }
 
-    public static PlayerResult of(Participant player, Participant dealer) {
+    public static PlayerResult of(final Player player, final Dealer dealer) {
         return Arrays.stream(values())
                 .filter(result -> result.predicate.test(player, dealer))
                 .findAny()
