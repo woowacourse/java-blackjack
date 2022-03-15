@@ -7,6 +7,6 @@ public class RandomNumberGenerator implements NumberGenerator {
     @Override
     public int generateNumber() {
         Random random = new Random();
-        return random.nextInt(48);
+        return random.nextInt(BlackjackCardType.values().length);
     }
 }
