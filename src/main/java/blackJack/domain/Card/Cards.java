@@ -28,10 +28,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean isBust() {
-        return getScore() > BUST_LINE;
-    }
-
     public int getScore() {
         int score = cards.stream()
                 .mapToInt(card -> card.getNumber().getValue())
@@ -64,5 +60,17 @@ public class Cards {
 
     public boolean isBlackJack() {
         return cards.size() == INIT_CARD_SIZE && getScore() == BUST_LINE;
+    }
+
+    public boolean isBust() {
+        return getScore() > BUST_LINE;
+    }
+
+    public boolean isGreaterThan(Cards cards){
+        return this.getScore() > cards.getScore();
+    }
+
+    public boolean isSameScore(Cards cards){
+        return this.getScore() == cards.getScore();
     }
 }

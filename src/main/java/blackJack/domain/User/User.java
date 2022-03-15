@@ -30,11 +30,11 @@ public abstract class User {
     }
 
     public boolean isSameScore(User user){
-        return this.getScore() == user.getScore();
+        return this.cards.isSameScore(user.cards);
     }
 
     public boolean isGreaterScoreThan(User user) {
-        return this.cards.getScore() > user.cards.getScore();
+        return this.cards.isGreaterThan(user.cards);
     }
 
     public boolean isBlackJack(){

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,14 +25,16 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 소지한 카드가 16 이하면 true를 반환한다.")
     void checkScoreWhenUnder16Test() {
-        Dealer dealer = new Dealer(cardFactory);
+        Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.FOUR)));
+        Dealer dealer = new Dealer(cards);
         assertThat(dealer.canOneMoreCard()).isEqualTo(true);
     }
 
     @Test
     @DisplayName("딜러가 소지한 카드가 16 초과면 false를 반환한다.")
     void checkScoreWhenOver16Test() {
-        Dealer dealer = new Dealer(cardFactory);
+        Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK)));
+        Dealer dealer = new Dealer(cards);
         dealer.hit(cardFactory);
         assertThat(dealer.canOneMoreCard()).isEqualTo(false);
     }
@@ -43,8 +46,9 @@ class DealerTest {
                 new Card(Shape.HEART, Number.JACK),
                 new Card(Shape.HEART, Number.TEN),
                 new Card(Shape.CLOVER, Number.TWO)));
+        Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK)));
         Player player = new Player("test", over21Cards);
-        Dealer dealer = new Dealer(cardFactory);
+        Dealer dealer = new Dealer(cards);
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);
 
@@ -59,8 +63,9 @@ class DealerTest {
         Cards playerCards = new Cards(Arrays.asList(
                new Card(Shape.HEART, Number.JACK),
                new Card(Shape.HEART, Number.TEN)));
+        Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.TWO)));
        Player player = new Player("test", playerCards);
-       Dealer dealer = new Dealer(cardFactory);
+       Dealer dealer = new Dealer(cards);
        PlayerResult actual = PlayerResult.decision(dealer, player);
        PlayerResult expected = PlayerResult.WIN;
        assertThat(actual).isEqualTo(expected);
@@ -72,10 +77,10 @@ class DealerTest {
         Cards playerCards = new Cards(Arrays.asList(
                        new Card(Shape.HEART, Number.JACK),
                        new Card(Shape.HEART, Number.TEN)));
-
+        Cards dealerCards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK),
+                new Card(Shape.CLOVER, Number.TEN)));
         Player player = new Player("test", playerCards);
-        Dealer dealer = new Dealer(cardFactory);
-        dealer.hit(cardFactory);
+        Dealer dealer = new Dealer(dealerCards);
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);
         PlayerResult actual = PlayerResult.decision(dealer, player);

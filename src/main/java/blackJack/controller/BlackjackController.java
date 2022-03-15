@@ -19,7 +19,7 @@ public class BlackjackController {
     public void run() {
         CardFactory cardFactory = new CardFactory();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        Dealer dealer = new Dealer(cardFactory);
+        Dealer dealer = new Dealer(cardFactory.initCards());
         Players players = Players.create(inputPlayerNames, cardFactory);
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToUserDtos(dealer, players));

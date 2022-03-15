@@ -27,7 +27,7 @@ class PlayersTest {
         CardFactory cardFactory = new FixedCardFactory();
         List<String> inputPlayerNames = List.of("giron", "tester");
         Players players = Players.create(inputPlayerNames, cardFactory);
-        Dealer dealer = new Dealer(cardFactory);
+        Dealer dealer = new Dealer(cardFactory.initCards());
 
         Map<String, String> statistics = players.getStatistics(dealer);
         assertAll(

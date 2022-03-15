@@ -1,6 +1,7 @@
 package blackJack.domain.User;
 
 import blackJack.domain.Card.CardFactory;
+import blackJack.domain.Card.Cards;
 
 public class Dealer extends User {
 
@@ -9,8 +10,8 @@ public class Dealer extends User {
     private int dealerLoseCount = 0;
     private int dealerWinCount = 0;
 
-    public Dealer(CardFactory cardFactory) {
-        super("딜러", cardFactory.initCards());
+    public Dealer(Cards cards) {
+        super("딜러", cards);
     }
 
     public boolean canOneMoreCard() {
