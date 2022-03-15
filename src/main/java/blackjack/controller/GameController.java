@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Game;
@@ -16,6 +17,7 @@ import blackjack.domain.RecordFactory;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.RandomDeck;
 import blackjack.domain.participant.DrawCount;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
 
@@ -38,10 +40,14 @@ public class GameController {
         printInitResult(names);
         printDealerFirstCard(game.dealerFirstCard());
         for (Player player : game.getPlayers()) {
-            printPlayerCards(new ParticipantDto(player));
+            printPlayerCards(Objects.requireNonNull(convertToDto(player)));
         }
         printEmptyLine();
         return game;
+    }
+
+    private ParticipantDto convertToDto(Participant participant) {
+        return ModelMapper.map(participant);
     }
 
     private void drawPlayerCards(Game game) {
@@ -51,7 +57,7 @@ public class GameController {
 
             game.drawPlayerCard(player, hitOrStay);
 
-            printPlayerCards(new ParticipantDto(player));
+            printPlayerCards(convertToDto(player));
         }
     }
 
@@ -61,9 +67,9 @@ public class GameController {
     }
 
     private void participantsResult(Game game) {
-        printParticipantCardsWithScore(new ParticipantDto(game.getDealer()));
+        printParticipantCardsWithScore(convertToDto(game.getDealer()));
         for (Player player : game.getPlayers()) {
-            printParticipantCardsWithScore(new ParticipantDto(player));
+            printParticipantCardsWithScore(convertToDto(player));
         }
     }
 

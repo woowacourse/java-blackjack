@@ -3,25 +3,28 @@ package blackjack.dto;
 import java.util.Set;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Participant;
 
 public class ParticipantDto {
 
-    private final Participant participant;
+    private final String name;
+    private final Set<Card> cards;
+    private final int score;
 
-    public ParticipantDto(Participant participant) {
-        this.participant = participant;
+    public ParticipantDto(String name, Set<Card> cards, int score) {
+        this.name = name;
+        this.cards = cards;
+        this.score = score;
     }
 
     public String getName() {
-        return participant.getName();
+        return name;
     }
 
     public Set<Card> getCards() {
-        return participant.getCards();
+        return cards;
     }
 
     public int getScore() {
-        return participant.getScore();
+        return score;
     }
 }
