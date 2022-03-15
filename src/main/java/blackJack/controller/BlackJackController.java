@@ -5,11 +5,14 @@ import blackJack.domain.card.Deck;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
+import blackJack.domain.result.BlackJackGameResult;
+import blackJack.domain.result.WinDrawLose;
 import blackJack.domain.result.YesOrNo;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
@@ -23,9 +26,7 @@ public class BlackJackController {
 
         final List<Player> players = playersTurn(participants, deck);
         final Dealer dealer = dealerTurn(blackJackGame);
-        OutputView.printGameResult(dealer, players);
-        OutputView.printWinDrawLoseResult(
-                dealer, blackJackGame.calculateDealerResult(), blackJackGame.calculatePlayersResult());
+        createBlackJackGameResult(players, dealer);
     }
 
     private Participants getParticipants() {
@@ -70,5 +71,13 @@ public class BlackJackController {
         final Dealer dealer = blackJackGame.doDealerGame();
         OutputView.printDealerReceiveCardCount(dealer);
         return dealer;
+    }
+
+    private void createBlackJackGameResult(List<Player> players, Dealer dealer) {
+        final BlackJackGameResult blackJackGameResult = new BlackJackGameResult(dealer, players);
+        final Map<WinDrawLose, Integer> dealerResult = blackJackGameResult.calculateDealerResult();
+        final Map<Player, WinDrawLose> playersResult = blackJackGameResult.calculatePlayersResult();
+        OutputView.printGameResult(dealer, players);
+        OutputView.printWinDrawLoseResult(dealer, dealerResult, playersResult);
     }
 }
