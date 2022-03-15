@@ -2,6 +2,7 @@ package blackjack.view;
 
 import static blackjack.domain.Rule.DEALER_HIT_STANDARD_SCORE;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
@@ -91,6 +92,13 @@ public class OutputView {
 
         for (Participant participant : participantResult.keySet()) {
             System.out.println(participant.getName() + COLON_AND_BLANK + participantResult.get(participant).getName());
+        }
+    }
+
+    public static void printTotalMoney(Map<Participant, Money> moneys) {
+        System.out.printf("%n## 최종 수익%n");
+        for (Participant participant : moneys.keySet()) {
+            System.out.printf("%s: %d%n", participant.getName(), moneys.get(participant).getValue());
         }
     }
 

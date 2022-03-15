@@ -8,7 +8,6 @@ import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
-import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.ParticipantResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -20,16 +19,14 @@ public class BlackjackController {
         final BlackjackMachine blackJackMachine = new BlackjackMachine(new CardDeck());
         final Dealer dealer = new Dealer();
         final Participants participants = generateParticipants();
-
-        final BettingMachine bettingMachine = new BettingMachine();
-        betMoneys(participants, bettingMachine);
+        final BettingMachine bettingMachine = betMoneys(participants);
 
         giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
         askAndGiveCardsToParticipants(blackJackMachine, participants);
         giveCardsToDealer(blackJackMachine, dealer);
 
         calculateTotalScore(dealer, participants);
-        decideTotalResult(dealer, participants);
+        calculateTotalMoney(dealer, participants, bettingMachine);
     }
 
     private Participants generateParticipants() {
@@ -42,11 +39,12 @@ public class BlackjackController {
         }
     }
 
-    private void betMoneys(final Participants participants, final BettingMachine bettingMachine) {
+    private BettingMachine betMoneys(final Participants participants) {
+        final BettingMachine bettingMachine = new BettingMachine();
         for (Participant participant : participants) {
-            final Money money = getMoney(participant);
-            bettingMachine.betMoney(participant, money);
+            bettingMachine.betMoney(participant, getMoney(participant));
         }
+        return bettingMachine;
     }
 
     private Money getMoney(final Participant participant) {
@@ -109,10 +107,10 @@ public class BlackjackController {
         }
     }
 
-    private void decideTotalResult(final Dealer dealer,
-                                   final Participants participants) {
+    private void calculateTotalMoney(final Dealer dealer, final Participants participants,
+                                     final BettingMachine bettingMachine) {
         final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
-        final DealerResult dealerResult = new DealerResult(participantResult);
-        OutputView.printTotalResult(dealer, dealerResult, participantResult);
+        bettingMachine.distributeMoney(participantResult.getResult());
+        OutputView.printTotalMoney(bettingMachine.getMoneys());
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.result.Result;
 import java.util.Objects;
 
 public class Money {
@@ -34,8 +35,17 @@ public class Money {
         }
     }
 
-    Money geOpposite() {
-        return new Money(-value);
+    Money calculate(final Result result) {
+        if (result ==  Result.BLACKJACK) {
+            return Money.from((long) (value * 1.5));
+        }
+        if (result == Result.WIN) {
+            return Money.from(value);
+        }
+        if (result == Result.DRAW) {
+            return Money.from(0);
+        }
+        return Money.from(-value);
     }
 
     public long getValue() {

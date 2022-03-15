@@ -30,6 +30,6 @@ public class ParticipantResult {
     }
 
     public Map<Participant, Result> getResult() {
-        return result;
+        return new LinkedHashMap<>(result);
     }
 }
