@@ -1,16 +1,16 @@
 package blackjack.view;
 
 import blackjack.domain.game.Players;
+import blackjack.domain.result.Grade;
 
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR] ";
     private static final String CARDS_FORMAT = "%s카드: %s";
     private static final String DELIMITER = Players.DELIMITER + " ";
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
 
     private OutputView() {
     }
@@ -57,20 +57,16 @@ public class OutputView {
         System.out.println("## 최종 승패");
     }
 
-    public static void printDealerResult(final String name, final int countOfWinning, final int countOfLosing) {
-        System.out.printf("%s: %d%s %d%s", name, countOfWinning, WIN, countOfLosing, LOSE);
+    public static void printDealerResult(final String name, final Map<Grade, Integer> numberOfResult) {
+        System.out.printf("%s: %d%s %d%s %d%s", name,
+                numberOfResult.get(Grade.LOSE), Grade.LOSE.getGrade(),
+                numberOfResult.get(Grade.TIE), Grade.TIE.getGrade(),
+                numberOfResult.get(Grade.WIN), Grade.WIN.getGrade());
         printNewLine();
     }
 
-    public static void printPlayerResult(final String name, final boolean isWinning) {
-        System.out.printf("%s: %s", name, getResult(isWinning));
+    public static void printPlayerResult(final String name, final Grade grade) {
+        System.out.printf("%s: %s", name, grade.getGrade());
         printNewLine();
-    }
-
-    private static String getResult(final boolean isWinning) {
-        if (isWinning) {
-            return WIN;
-        }
-        return LOSE;
     }
 }

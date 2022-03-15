@@ -42,4 +42,8 @@ public enum Grade {
         }
         return TIE;
     }
+
+    public String getGrade() {
+        return grade;
+    }
 }

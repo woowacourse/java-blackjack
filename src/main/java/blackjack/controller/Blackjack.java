@@ -130,10 +130,10 @@ public class Blackjack {
     }
 
     private void showResult(final Dealer dealer, final Result result, final Players players) {
-        OutputView.printDealerResult(dealer.getName(), result.numberOfLosers(), result.numberOfWinners());
+        OutputView.printDealerResult(dealer.getName(), result.numberOfResult());
 
         for (Player player : players.getPlayers()) {
-            OutputView.printPlayerResult(player.getName(), result.contains(player));
+            OutputView.printPlayerResult(player.getName(), result.getGrade(player));
         }
     }
 }

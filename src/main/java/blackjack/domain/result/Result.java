@@ -4,16 +4,12 @@ import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Result {
-
-    private final List<Player> winners = new ArrayList<>();
-    private final List<Player> losers = new ArrayList<>();
 
     private final Map<Player, Grade> result = new HashMap<>();
 
@@ -24,7 +20,7 @@ public class Result {
     }
 
     public boolean isKeepPlaying(final Dealer dealer) {
-        grade(dealer);
+        gradeToInitCards(dealer);
         return result.values().stream()
                 .anyMatch(grade -> grade.equals(Grade.PROCEED));
     }
@@ -36,19 +32,17 @@ public class Result {
         }
     }
 
-    public int numberOfWinners() {
-        return winners.size();
+    public Map<Grade, Integer> numberOfResult() {
+        final Map<Grade, Integer> numberOfResult = new HashMap<>();
+        for (Grade nowGrade : Grade.values()) {
+            numberOfResult.put(nowGrade, (int) result.values().stream().
+                    filter(grade -> grade.equals(nowGrade))
+                    .count());
+        }
+        return numberOfResult;
     }
 
-    public int numberOfLosers() {
-        return losers.size();
-    }
-
-    public boolean contains(final Player player) {
-        return winners.contains(player);
-    }
-
-    private void grade(final Dealer dealer) {
+    private void gradeToInitCards(final Dealer dealer) {
         result.replaceAll((player, grade) -> Grade.gradeToInitCards(dealer, player));
     }
 
