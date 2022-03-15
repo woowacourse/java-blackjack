@@ -3,6 +3,8 @@ package view;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.participant.ParticipantDTO;
+
 public class OutputView {
 
 	private static final String SHOW_HAND_FORMAT = "%s카드: %s";
@@ -22,17 +24,22 @@ public class OutputView {
 		System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
 	}
 
-	private static String joinNameAndCard(String name, List<String> cards) {
-		return String.format(SHOW_HAND_FORMAT, name, String.join(JOINING_DELIMITER, cards));
+	public static void printHand(ParticipantDTO participantInfo) {
+		System.out.println(joinNameAndCard(participantInfo));
 	}
 
-	public static void printHand(String name, List<String> cards) {
-		System.out.println(joinNameAndCard(name, cards));
-	}
-
-	public static void printHandAndScore(String name, List<String> cards, int score) {
+	public static void printHandAndScore(ParticipantDTO participantInfo, int score) {
 		System.out.println(
-			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(name, cards), String.valueOf(score)));
+			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(participantInfo), String.valueOf(score)));
+	}
+
+	private static String joinNameAndCard(ParticipantDTO participantInfo) {
+		List<String> cardList = participantInfo.getHand().stream()
+			.map(card -> String.join("", List.of(card.getRank().getRank(), card.getSuit().getSuit())))
+			.collect(Collectors.toList());
+
+		return String.format(SHOW_HAND_FORMAT, participantInfo.getName().getName(),
+			String.join(JOINING_DELIMITER, cardList));
 	}
 
 	public static void printBustMessage() {

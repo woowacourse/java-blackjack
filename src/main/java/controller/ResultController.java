@@ -1,12 +1,11 @@
 package controller;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.ParticipantDTO;
 import domain.participant.Players;
 import domain.result.Result;
 import view.OutputView;
@@ -19,30 +18,13 @@ public class ResultController {
 		return names.stream().map(Name::getName).collect(Collectors.toList());
 	}
 
-	private List<String> convertCardsToString(List<Card> cards) {
-		return cards.stream()
-			.map(Card::getCardInfo)
-			.collect(Collectors.toList());
-	}
-
-	private List<List<String>> convertCardsListToString(List<List<Card>> cardsList) {
-		return cardsList.stream()
-			.map(cards -> convertCardsToString(cards))
-			.collect(Collectors.toList());
-	}
-
 	public void printInitHands(Dealer dealer, Players players) {
 		OutputView.printInitMessage(convertNamesToString(players.getNames()));
-		OutputView.printHand(
-			dealer.getName().getName(),
-			Arrays.asList(dealer.getOneHand().getCardInfo())
-		);
+		OutputView.printHand(dealer.getOneHandInfo());
 
-		List<String> playerNames = convertNamesToString(players.getNames());
-		List<List<String>> playerCards = convertCardsListToString(players.getCardsOfAll());
-
-		for (int i = 0; i < playerNames.size(); i++) {
-			OutputView.printHand(playerNames.get(i), playerCards.get(i));
+		List<ParticipantDTO> playersInfo = players.getPlayerDTOs();
+		for (int i = 0; i < playersInfo.size(); i++) {
+			OutputView.printHand(playersInfo.get(i));
 		}
 	}
 
@@ -64,17 +46,15 @@ public class ResultController {
 
 	public void printHandAndResult(Dealer dealer, Players players) {
 		OutputView.printHandAndScore(
-			dealer.getName().getName(),
-			convertCardsToString(dealer.getHand()),
+			dealer.getInfo(),
 			dealer.getBestScore()
 		);
 
-		List<String> names = convertNamesToString(players.getNames());
-		List<List<String>> cards = convertCardsListToString(players.getCardsOfAll());
+		List<ParticipantDTO> playersInfo = players.getPlayerDTOs();
 		List<Integer> scores = players.getScores();
 
-		for (int i = 0; i < names.size(); i++) {
-			OutputView.printHandAndScore(names.get(i), cards.get(i), scores.get(i));
+		for (int i = 0; i < playersInfo.size(); i++) {
+			OutputView.printHandAndScore(playersInfo.get(i), scores.get(i));
 		}
 	}
 

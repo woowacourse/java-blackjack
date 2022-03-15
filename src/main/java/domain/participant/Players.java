@@ -59,21 +59,19 @@ public class Players {
 		return map;
 	}
 
-	public List<List<Card>> getCardsOfAll() {
-		return players.keySet().stream()
-			.map(name -> players.get(name).getHand())
-			.collect(Collectors.toList());
-	}
-
-	public List<String> getCardsByName(Name name) {
-		return players.get(name).getHand().stream()
-			.map(Card::getCardInfo)
-			.collect(Collectors.toList());
-	}
-
 	public List<Integer> getScores() {
 		return players.keySet().stream()
 			.map(name -> players.get(name).getBestScore())
+			.collect(Collectors.toList());
+	}
+
+	public ParticipantDTO getPlayerDTOByName(Name name) {
+		return players.get(name).getInfo();
+	}
+
+	public List<ParticipantDTO> getPlayerDTOs() {
+		return players.keySet().stream()
+			.map(name -> players.get(name).getInfo())
 			.collect(Collectors.toList());
 	}
 }

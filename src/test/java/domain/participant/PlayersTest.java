@@ -42,21 +42,6 @@ public class PlayersTest {
 	}
 
 	@Test
-	@DisplayName("이름으로 플레이어 손패 반환")
-	void showHandByName() {
-		Name name = new Name("pobi");
-		assertThat(players.getCardsByName(name)).isEqualTo(Arrays.asList("A클로버", "Q클로버"));
-	}
-	
-	@Test
-	@DisplayName("이름으로 플레이어 카드 추가")
-	void addCardByName() {
-		Name name = new Name("pobi");
-		players.addCardByName(name, new Card(Rank.RANK_ACE, Suit.DIAMOND));
-		assertThat(players.getCardsByName(name)).isEqualTo(Arrays.asList("A클로버", "Q클로버", "A다이아몬드"));
-	}
-
-	@Test
 	@DisplayName("이름으로 플레이어가 Bust 인지 판별")
 	void isBustByName() {
 		Name name = new Name("jason");

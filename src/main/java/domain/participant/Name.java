@@ -23,6 +23,10 @@ public class Name {
 		return new Name(name.name);
 	}
 
+	public NameDTO getInfo() {
+		return new NameDTO(name);
+	}
+
 	public String getName() {
 		return name;
 	}

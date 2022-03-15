@@ -5,7 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,18 +17,10 @@ import domain.card.Suit;
 
 public class ParticipantTest {
 
-	Card card1;
-	Card card2;
-	Card card3;
-	Card card4;
-
-	@BeforeEach
-	void setUp() {
-		card1 = new Card(Rank.RANK_KNIGHT, Suit.HEART);
-		card2 = new Card(Rank.RANK_ACE, Suit.SPADE);
-		card3 = new Card(Rank.RANK_ACE, Suit.CLOVER);
-		card4 = new Card(Rank.RANK_EIGHT, Suit.CLOVER);
-	}
+	Card card1 = new Card(Rank.RANK_KNIGHT, Suit.HEART);
+	Card card2 = new Card(Rank.RANK_ACE, Suit.SPADE);
+	Card card3 = new Card(Rank.RANK_ACE, Suit.CLOVER);
+	Card card4 = new Card(Rank.RANK_EIGHT, Suit.CLOVER);
 
 	@ParameterizedTest(name = "손패가 버스트 되었는지 확인하는 기능 - case : {0}")
 	@EnumSource(mode = EnumSource.Mode.EXCLUDE, names = {"RANK_ACE"})

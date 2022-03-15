@@ -2,6 +2,7 @@ package domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import domain.card.Card;
 
@@ -51,15 +52,20 @@ public class Participant {
 		return (int)hand.stream().filter(Card::isAce).count();
 	}
 
-	public Name getName() {
-		return Name.copyOf(name);
-	}
-
-	public List<Card> getHand() {
-		return new ArrayList<>(hand);
-	}
-
 	public boolean isBlackJack() {
 		return blackJack;
+	}
+
+	public ParticipantDTO getInfo() {
+		return new ParticipantDTO(
+			name.getInfo(),
+			hand.stream()
+				.map(Card::getInfo)
+				.collect(Collectors.toList())
+		);
+	}
+
+	public Name getName() {
+		return Name.copyOf(name);
 	}
 }

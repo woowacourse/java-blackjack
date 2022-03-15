@@ -68,7 +68,7 @@ public class MainController {
 
 		while (isKeepDraw && InputView.askDraw(name.getName())) {
 			players.addCardByName(name, deck.draw());
-			OutputView.printHand(name.getName(), players.getCardsByName(name));
+			OutputView.printHand(players.getPlayerDTOByName(name));
 			isKeepDraw = checkMaxScoreOrBust(players, name);
 		}
 	}

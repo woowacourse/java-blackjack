@@ -14,11 +14,14 @@ public class Dealer extends Participant {
 		super(new Name(DEALER_NAME), hand);
 	}
 
-	public Card getOneHand() {
-		return Card.copyOf(hand.get(FIRST_CARD_INDEX));
-	}
-
 	public boolean isEnoughCard() {
 		return getBestScore() > STANDARD_OF_ENOUGH_CARD;
+	}
+
+	public ParticipantDTO getOneHandInfo() {
+		return new ParticipantDTO(
+			name.getInfo(),
+			List.of(hand.get(FIRST_CARD_INDEX).getInfo())
+		);
 	}
 }
