@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
-import blackjack.domain.card.PlayingCard;
+import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
@@ -14,11 +14,11 @@ import blackjack.domain.result.Results;
 
 public class BlackjackGame {
 
-    private final List<PlayingCard> playingCards;
+    private final Deck deck;
     private final Players blackjackPlayers;
 
-    public BlackjackGame(List<PlayingCard> playingCards, List<String> playerNames) {
-        this.playingCards = playingCards;
+    public BlackjackGame(Deck deck, List<String> playerNames) {
+        this.deck = deck;
         this.blackjackPlayers = initPlayers(playerNames);
     }
 
@@ -37,8 +37,8 @@ public class BlackjackGame {
 
     private void initCards(CardShuffleMachine playingCardShuffleMachine) {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
-            blackjackPlayer.addCard(playingCardShuffleMachine.assignCard(playingCards));
-            blackjackPlayer.addCard(playingCardShuffleMachine.assignCard(playingCards));
+            blackjackPlayer.addCard(deck.assignCard(playingCardShuffleMachine));
+            blackjackPlayer.addCard(deck.assignCard(playingCardShuffleMachine));
         }
     }
 
@@ -72,7 +72,7 @@ public class BlackjackGame {
     }
 
     public void assignCard(Player player, CardShuffleMachine playingCardShuffleMachine) {
-        player.addCard(playingCardShuffleMachine.assignCard(playingCards));
+        player.addCard(deck.assignCard(playingCardShuffleMachine));
     }
 
     public Results calculateResult(Players players) {

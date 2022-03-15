@@ -7,6 +7,9 @@ import java.util.List;
 public class Deck {
 
     private static final List<PlayingCard> PLAYING_CARDS = new ArrayList<>();
+    private static final int POP = 0;
+
+    private final List<PlayingCard> playingCards;
 
     static {
         for (Suit suit : Suit.values()) {
@@ -15,11 +18,17 @@ public class Deck {
         }
      }
 
-     private Deck() {
-     }
+    public Deck(List<PlayingCard> playingCards) {
+        this.playingCards = new ArrayList<>(playingCards);
+    }
 
-    public static List<PlayingCard> getPlayingCards() {
-        return new ArrayList<>(PLAYING_CARDS);
+    public static Deck create() {
+        return new Deck(PLAYING_CARDS);
+    }
+
+    public PlayingCard assignCard(CardShuffleMachine playingCardShuffleMachine) {
+        playingCardShuffleMachine.shuffle(playingCards);
+        return playingCards.remove(POP);
     }
 
     @Override
@@ -29,11 +38,11 @@ public class Deck {
 
         Deck deck = (Deck) o;
 
-        return PLAYING_CARDS != null ? PLAYING_CARDS.equals(deck.PLAYING_CARDS) : deck.PLAYING_CARDS == null;
+        return playingCards != null ? playingCards.equals(deck.playingCards) : deck.playingCards == null;
     }
 
     @Override
     public int hashCode() {
-        return PLAYING_CARDS != null ? PLAYING_CARDS.hashCode() : 0;
+        return playingCards != null ? playingCards.hashCode() : 0;
     }
 }

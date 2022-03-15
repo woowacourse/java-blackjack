@@ -22,7 +22,7 @@ public class BlackjackController {
     private final CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
 
     public void playGame() {
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.getPlayingCards(), receivePlayerNames());
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), receivePlayerNames());
         blackjackGame.initGames(playingCardShuffleMachine);
 
         Players players = blackjackGame.getPlayers();
