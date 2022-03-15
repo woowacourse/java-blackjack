@@ -1,42 +1,53 @@
 package blackJack.dto;
 
-import blackJack.domain.User.Dealer;
+import java.util.Map;
 
 public class DealerResultDto {
 
-    private final String name;
-    private final int dealerLoseCount;
-    private final int dealerDrawCount;
-    private final int dealerWinCount;
+    private final int winCount;
+    private final int drawCount;
+    private final int loseCount;
 
-    public DealerResultDto(String name, int dealerLoseCount, int dealerDrawCount, int dealerWinCount) {
-        this.name = name;
-        this.dealerDrawCount = dealerDrawCount;
-        this.dealerLoseCount = dealerLoseCount;
-        this.dealerWinCount = dealerWinCount;
+    public DealerResultDto(int winCount, int drawCount, int loseCount) {
+        this.winCount = winCount;
+        this.drawCount = drawCount;
+        this.loseCount = loseCount;
     }
 
-    public static DealerResultDto from(Dealer dealer, int totalGameCount) {
-        int dealerLoseCount = dealer.getDealerLoseCount();
-        int dealerWinCount = dealer.getDealerWinCount();
-        int dealerDrawCount = totalGameCount - (dealerLoseCount + dealerWinCount);
-        return new DealerResultDto(dealer.getName(), dealerLoseCount, dealerDrawCount, dealerWinCount);
+    public int getDrawCount() {
+        return drawCount;
     }
 
-    public String getName() {
-        return name;
+    public int getLoseCount() {
+        return loseCount;
     }
 
-    public int getDealerDrawCount() {
-        return dealerDrawCount;
+    public int getWinCount() {
+        return winCount;
     }
 
-    public int getDealerLoseCount() {
-        return dealerLoseCount;
+    public static DealerResultDto from(Map<String, String> result) {
+        int winCount=0;
+        int loseCount=0;
+        for (String value : result.values()) {
+            winCount = getWinCount(winCount, value);
+            loseCount = getLoseCount(loseCount, value);
+        }
+        int drawCount = result.size() - (winCount+loseCount);
+        return new DealerResultDto(winCount, drawCount, loseCount);
     }
 
-    public int getDealerWinCount() {
-        return dealerWinCount;
+    private static int getLoseCount(int loseCount, String value) {
+        if (value.equals("패")) {
+            loseCount++;
+        }
+        return loseCount;
     }
 
+    private static int getWinCount(int winCount, String value) {
+        if (value.equals("승")) {
+            winCount++;
+        }
+        return winCount;
+    }
 }

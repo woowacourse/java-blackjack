@@ -27,7 +27,7 @@ public class BlackjackController {
         OutputView.printTotalResult(playGame(dealer, players, cardFactory));
 
         Map<String, String> statistics = players.getStatistics(dealer);
-        OutputView.printFinalResult(PlayerResultsDto.from(statistics), DealerResultDto.from(dealer, players.size()));
+        OutputView.printFinalResult(PlayerResultsDto.from(statistics), DealerResultDto.from(statistics));
     }
 
     private List<UserDto> playGame(Dealer dealer, Players players, CardFactory cardFactory) {

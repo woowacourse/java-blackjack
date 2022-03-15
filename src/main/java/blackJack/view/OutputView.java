@@ -51,7 +51,7 @@ public class OutputView {
     public static void printFinalResult(PlayerResultsDto resultDtos, DealerResultDto dealerDto) {
         System.out.println(FINAL_RESULT_MESSAGE);
 
-        System.out.println(String.format(NAME_FORMAT + DEALER_RESULT_FORMAT, dealerDto.getName(), dealerDto.getDealerWinCount(), dealerDto.getDealerLoseCount(), dealerDto.getDealerDrawCount()));
+        System.out.println(String.format(NAME_FORMAT + DEALER_RESULT_FORMAT, DEALER, dealerDto.getWinCount(), dealerDto.getLoseCount(), dealerDto.getDrawCount()));
         resultDtos.getPlayerResultDtos().stream()
                 .map(resultDto -> String.format(NAME_FORMAT + PLAYER_RESULT_FORMAT, resultDto.getName(), resultDto.getResult()))
                 .forEach(System.out::println);
