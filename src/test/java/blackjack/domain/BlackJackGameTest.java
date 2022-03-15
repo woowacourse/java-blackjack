@@ -18,16 +18,14 @@ import blackjack.dto.GamerDto;
 
 class BlackJackGameTest {
     @Test
-    @DisplayName("딜러와 플레이어에게 게임 시작 시 2장씩 배분한다.")
+    @DisplayName("플레이어에게 게임 시작 시 2장씩 배분한다.")
     void initDistribution() {
         BlackJackGame blackJackGame = new BlackJackGame(
             Arrays.asList("a", "b"), s -> 10, new Deck(Card.getCards()));
         blackJackGame.play(answer -> false, (s, c) -> {});
 
-        GamerDto dealerDto = blackJackGame.getDealerDto();
         List<GamerDto> playerDtos = blackJackGame.getPlayerDtos();
 
-        assertThat(dealerDto.getCards().size()).isEqualTo(2);
         assertThat(playerDtos)
                 .map(dto -> dto.getCards().size())
                 .containsExactly(2, 2);
