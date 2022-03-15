@@ -9,8 +9,6 @@ public class FirstCardsGettable implements CardsGettable {
 
     @Override
     public List<Card> getCards(Cards cards) {
-        return cards.getFirstCard()
-                .stream()
-                .collect(Collectors.toList());
+        return List.of(cards.getFirstCard());
     }
 }

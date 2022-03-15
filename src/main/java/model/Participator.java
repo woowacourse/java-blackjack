@@ -8,8 +8,8 @@ import model.card.Cards;
 import model.cardGettable.CardsGettable;
 
 public abstract class Participator {
-    protected final Cards cards;
     private final String name;
+    protected final Cards cards;
     protected CardsGettable cardsGettableStrategy;
 
     public Participator(String name) {

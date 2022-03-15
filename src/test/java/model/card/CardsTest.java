@@ -8,6 +8,7 @@ import static model.card.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -36,5 +37,13 @@ public class CardsTest {
         final Cards cards = new Cards(List.of(card1, card2, card3));
 
         assertThat(cards.getSum()).isEqualTo(21);
+    }
+
+    @Test
+    void getEmptyCards() {
+        Cards cards = new Cards(new ArrayList<>());
+        assertThatThrownBy(() -> cards.getFirstCard())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("보유한 카드가 없습니다.");
     }
 }
