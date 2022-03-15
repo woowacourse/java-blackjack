@@ -15,7 +15,7 @@ public final class Cards {
         addCards(cards);
     }
 
-    public static List<Card> createInitCards(Deck deck) {
+    public static List<Card> createInitCards(final Deck deck) {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i< INIT_DISTRIBUTE_SIZE; i++){
             cards.add(deck.draw());

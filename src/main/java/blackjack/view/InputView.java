@@ -50,7 +50,7 @@ public final class InputView {
         return input.equals(YES);
     }
 
-    public static Bet responseBetAmount(String name) {
+    public static Bet responseBetAmount(final String name) {
         System.out.println();
         System.out.println(name + "의 배팅 금액은?");
         String input = scanner.nextLine();
@@ -58,7 +58,7 @@ public final class InputView {
         return convertBetAmountInput(betAmount);
     }
 
-    private static int validateBetAmount(String input) {
+    private static int validateBetAmount(final String input) {
         validateName(input);
         int betAmount = validateTransInteger(input);
         validateRange(betAmount);
@@ -66,7 +66,7 @@ public final class InputView {
         return betAmount;
     }
 
-    private static int validateTransInteger(String input) {
+    private static int validateTransInteger(final String input) {
         try {
             return Integer.parseInt(input);
         } catch (IllegalArgumentException e) {
@@ -74,13 +74,13 @@ public final class InputView {
         }
     }
 
-    private static void validateRange(int betAmount) {
+    private static void validateRange(final int betAmount) {
         if (betAmount < 0) {
             throw new IllegalArgumentException("[ERROR] 양의 정수를 입력해주세요.");
         }
     }
 
-    private static Bet convertBetAmountInput(int betAmount) {
+    private static Bet convertBetAmountInput(final int betAmount) {
         return new Bet(betAmount);
     }
 }

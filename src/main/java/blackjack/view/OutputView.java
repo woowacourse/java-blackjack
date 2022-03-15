@@ -93,7 +93,7 @@ public final class OutputView {
         System.out.println(player.getName() + ": " + player.getBetProfit());
     }
 
-    public static void printErrorMessage(String message) {
+    public static void printErrorMessage(final String message) {
         System.out.println(message);
     }
 }

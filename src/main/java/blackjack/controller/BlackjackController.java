@@ -22,7 +22,7 @@ public final class BlackjackController {
         }
     }
 
-    private HashMap<String, Bet> createBets(List<String> names) {
+    private HashMap<String, Bet> createBets(final List<String> names) {
         HashMap<String, Bet> bets = new HashMap<>();
         for (String name : names) {
             bets.put(name, InputView.responseBetAmount(name));
@@ -39,13 +39,13 @@ public final class BlackjackController {
     }
 
     private void decideMoreCard(final GameMachine gameMachine) {
-        for (Player participant : gameMachine.getParicipants()) {
+        for (Player participant : gameMachine.getParticipants()) {
             fulfilParticipantOneMoreCard(participant, gameMachine);
         }
         decideOneMoreCard(gameMachine);
     }
 
-    private void fulfilParticipantOneMoreCard(Player participant, GameMachine gameMachine) {
+    private void fulfilParticipantOneMoreCard(final Player participant, final GameMachine gameMachine) {
         try {
             decideParticipantOneMoreCard(participant, gameMachine);
         } catch (IllegalArgumentException e) {

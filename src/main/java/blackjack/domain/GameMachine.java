@@ -20,7 +20,7 @@ public final class GameMachine {
 
     public GameMachine(final List<String> names, final HashMap<String, Bet> bets) {
         validationNames(names);
-        validationbets(bets);
+        validationBets(bets);
         this.deck = new Deck(new RandomGenerator());
         this.players = new Players(createParticipants(names, bets), createDealer());
     }
@@ -31,7 +31,7 @@ public final class GameMachine {
         }
     }
 
-    private void validationbets(HashMap<String, Bet> bets) {
+    private void validationBets(final HashMap<String, Bet> bets) {
         if (bets == null || bets.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 잘못된 배팅 입력입니다.");
         }
@@ -63,7 +63,7 @@ public final class GameMachine {
         return this.players;
     }
 
-    public List<Participant> getParicipants() {
+    public List<Participant> getParticipants() {
         return players.getParticipants();
     }
 }
