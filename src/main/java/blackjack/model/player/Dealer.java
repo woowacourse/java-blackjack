@@ -59,6 +59,6 @@ public final class Dealer extends Player {
     }
 
     private Score maxScore() {
-        return MAX_SCORE_CALCULATOR.score(cards());
+        return MAX_SCORE_CALCULATOR.calculate(cards());
     }
 }

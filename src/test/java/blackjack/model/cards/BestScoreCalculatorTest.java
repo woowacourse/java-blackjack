@@ -27,7 +27,7 @@ public class BestScoreCalculatorTest {
     @DisplayName("최고의 카드 점수 계산")
     void bestScore(Cards cards, int expect) {
         BestScoreCalculator calculator = new BestScoreCalculator();
-        assertThat(calculator.score(cards)).isEqualTo(new Score(expect));
+        assertThat(calculator.calculate(cards)).isEqualTo(new Score(expect));
     }
 
     protected static Stream<Arguments> provideCards() {

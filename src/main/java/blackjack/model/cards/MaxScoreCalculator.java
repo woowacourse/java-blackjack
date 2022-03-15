@@ -4,7 +4,7 @@ import blackjack.model.card.Card;
 
 public final class MaxScoreCalculator {
 
-    public Score score(Cards cards) {
+    public Score calculate(Cards cards) {
         return new Score(softHandScore(cards));
     }
 

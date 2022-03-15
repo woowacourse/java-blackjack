@@ -5,7 +5,7 @@ import blackjack.model.card.Rank;
 
 public final class BestScoreCalculator {
 
-    public Score score(Cards cards) {
+    public Score calculate(Cards cards) {
         if (hasAce(cards) && !softHandScore(cards).isBust()) {
             return softHandScore(cards);
         }

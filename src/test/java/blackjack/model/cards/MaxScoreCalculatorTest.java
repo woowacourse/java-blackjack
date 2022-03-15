@@ -25,7 +25,7 @@ public class MaxScoreCalculatorTest {
     @DisplayName("최대 카드 점수 계산")
     void maxScore(Cards cards, int expect) {
         MaxScoreCalculator calculator = new MaxScoreCalculator();
-        assertThat(calculator.score(cards)).isEqualTo(new Score(expect));
+        assertThat(calculator.calculate(cards)).isEqualTo(new Score(expect));
     }
 
     protected static Stream<Arguments> provideMaxCards() {

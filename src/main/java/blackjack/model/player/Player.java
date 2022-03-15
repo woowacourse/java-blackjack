@@ -43,7 +43,7 @@ public class Player {
     }
 
     public final Score score() {
-        return BEST_SCORE_CALCULATOR.score(cards);
+        return BEST_SCORE_CALCULATOR.calculate(cards);
     }
 
     public final boolean isBust() {
