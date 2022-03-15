@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
@@ -28,7 +29,8 @@ public class BlackJack {
 	public static BlackJack from(List<String> playerNames) {
 		validatePlayerNumber(playerNames);
 		List<Player> players = playerNames.stream()
-			.map(Player::from)
+			.map(Name::from)
+			.map(Player::new)
 			.collect(Collectors.toList());
 
 		return new BlackJack(new Dealer(), players);

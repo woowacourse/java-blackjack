@@ -8,10 +8,10 @@ import blackjack.domain.card.Cards;
 public abstract class Participant {
 	private static final int MAX_SCORE = 21;
 
-	private final String name;
+	private final Name name;
 	private final Cards cards;
 
-	public Participant(String name) {
+	public Participant(Name name) {
 		this.name = name;
 		this.cards = new Cards();
 	}
@@ -31,7 +31,7 @@ public abstract class Participant {
 	}
 
 	public String getName() {
-		return name;
+		return name.getName();
 	}
 
 	public List<Card> getCards() {

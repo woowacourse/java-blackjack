@@ -5,7 +5,7 @@ public class Dealer extends Participant {
 	private static final int DEALER_ADDITIONAL_CARD_STANDARD = 16;
 
 	public Dealer() {
-		super(DEALER_NAME);
+		super(Name.from(DEALER_NAME));
 	}
 
 	@Override
