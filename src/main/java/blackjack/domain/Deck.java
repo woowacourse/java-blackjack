@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
-    private static boolean lock = false;
-    private static final String DECK_GENERATE_LOCK_EXCEPTION
-            = "[ERROR] 덱은 이미 존재합니다.";
     private static final String FILE_PATH = "src/main/java/blackjack/domain/CardType";
     private static final String FILE_IO_EXCEPTION = "[ERROR] 파일 입력 에러";
     private static final String NO_AVAILABLE_CARD_EXCEPTION = "[ERROR] 덱이 비었습니다.";
@@ -41,12 +38,7 @@ public class Deck {
     }
 
     public static Deck generateDeck() {
-        if (lock) {
-            throw new RuntimeException(DECK_GENERATE_LOCK_EXCEPTION);
-        }
-        Deck deck = new Deck();
-        lock = true;
-        return deck;
+        return new Deck();
     }
 
     public Card randomPick(NumberGenerator numberGenerator) {
