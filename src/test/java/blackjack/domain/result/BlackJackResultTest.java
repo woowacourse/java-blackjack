@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackRuleTest {
+public class BlackJackResultTest {
 
     @Test
     @DisplayName("최초의 블랙잭 결과판을 만들 수 있다.")

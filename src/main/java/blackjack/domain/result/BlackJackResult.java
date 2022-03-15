@@ -19,7 +19,7 @@ public class BlackJackResult {
 
     }
 
-    private static LinkedHashMap<Gamer, ResultStrategy> createInitialGamerStrategy(Gamers gamers) {
+    private static LinkedHashMap<Gamer, ResultStrategy> createInitialGamerStrategy(final Gamers gamers) {
         return gamers.getGamers().stream()
                 .collect(Collectors.toMap(gamer -> gamer,
                         gamer -> new Keep()
