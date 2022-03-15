@@ -3,6 +3,7 @@ package utils;
 import domain.card.Card;
 import domain.card.Face;
 import domain.card.Suit;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -15,11 +16,7 @@ public class CardConvertor {
     public static List<String> convertToString(final List<Card> cards) {
         final List<String> result = new ArrayList<>();
         for (final Card card : cards) {
-            final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder
-                    .append(FaceMapper.get(card.getFace()))
-                    .append(SuitMapper.get(card.getSuit()));
-            result.add(stringBuilder.toString());
+            result.add(FaceMapper.get(card.getFace()) + SuitMapper.get(card.getSuit()));
         }
         return result;
     }
