@@ -37,7 +37,7 @@ public class BlackJackController {
 
     private void initialTurn(Players players, Dealer dealer, Deck deck) {
         players.runInitialTurn(deck);
-        dealer.hitInitialTurn(deck.handOutInitialTurn());
+        dealer.hitInitialTurn(deck);
         outputView.showInitialTurnStatus(players, dealer);
     }
 
@@ -50,7 +50,7 @@ public class BlackJackController {
 
     private void hitCardByPlayer(Player player, Deck deck) {
         while (player.canDrawCard() && inputView.inputMoreCardOrNot(player.getName())) {
-            player.hit(deck.handOut());
+            player.hit(deck);
             outputView.showPlayerCardStatus(player);
         }
     }
@@ -59,7 +59,7 @@ public class BlackJackController {
         int hitCount = 0;
         while (dealer.canDrawCard()) {
             hitCount++;
-            dealer.hit(deck.handOut());
+            dealer.hit(deck);
         }
         outputView.showDealerHitCardMessage(hitCount);
     }

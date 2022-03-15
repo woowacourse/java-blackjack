@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.Deck;
 import utils.ExceptionMessages;
 
 import java.util.ArrayList;
@@ -24,15 +25,15 @@ public abstract class Participant implements Comparable<Participant> {
 
     public abstract boolean canDrawCard();
 
-    public void hit(Card card) {
+    public void hit(Deck deck) {
         if (!canDrawCard()) {
             throw new IllegalStateException(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
         }
-        cards.addCard(card);
+        cards.addCard(deck.handOut());
     }
 
-    public void hitInitialTurn(List<Card> cards) {
-        this.cards.addCards(cards);
+    public void hitInitialTurn(Deck deck) {
+        this.cards.addCards(deck.handOutInitialTurn());
     }
 
     public int calculateScore() {
