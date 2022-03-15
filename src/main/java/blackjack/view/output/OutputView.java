@@ -5,35 +5,38 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.result.MatchStatus;
+import blackjack.dto.CardDto;
+import blackjack.dto.InitiallyDrewCardDto;
 import blackjack.dto.MatchResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.utils.Delimiter;
 
 public class OutputView {
 
-    public void printMessageOfInitiallyDistributeCards(final List<ParticipantDto> playerDtos) {
-        final List<String> playerNames = playerDtos.stream()
-                .map(ParticipantDto::getName)
+    public void printMessageOfInitiallyDistributeCards(final InitiallyDrewCardDto dealerInitiallyDrewCardDto,
+                                                       final List<InitiallyDrewCardDto> playerInitiallyDrewCardDtos) {
+        final String dealerName = dealerInitiallyDrewCardDto.getParticipantName();
+        final List<String> playerNames = playerInitiallyDrewCardDtos.stream()
+                .map(InitiallyDrewCardDto::getParticipantName)
                 .collect(Collectors.toUnmodifiableList());
         final String combinedPlayerNames = Delimiter.COMMA.joinWith(playerNames);
-        printMessage(String.format("딜러와 %s에게 2장의 카드를 나누었습니다.", combinedPlayerNames));
+        printMessage(String.format("%s와 %s에게 2장의 카드를 나누었습니다.", dealerName, combinedPlayerNames));
     }
 
-    public void printFirstCardOfDealer(final String dealerFirstCard) {
-        printMessage(Delimiter.COLON.joinWith("딜러", dealerFirstCard));
-    }
-
-    public void printDistributedCardsOfPlayer(final ParticipantDto participantDto) {
-        final String playerName = participantDto.getName();
-        final String distributedCards = Delimiter.COMMA.joinWith(participantDto.getCardNames());
-        printMessage(Delimiter.COLON.joinWith(playerName, distributedCards));
+    public void printDistributedCardsOfParticipant(final InitiallyDrewCardDto initiallyDrewCardDto) {
+        final String participantName = initiallyDrewCardDto.getParticipantName();
+        final String distributedCards = Delimiter.COMMA.joinWith(initiallyDrewCardDto.getCardNames());
+        printMessage(Delimiter.COLON.joinWith(participantName, distributedCards));
     }
 
     public void printMessageOfRequestDrawingCardChoice(final String playerName) {
         printMessage(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName));
     }
 
-    public void printCurrentCardsOfPlayer(final String playerName, final List<String> cardNames) {
+    public void printCurrentCardsOfPlayer(final String playerName, final List<CardDto> cardDtos) {
+        final List<String> cardNames = cardDtos.stream()
+                .map(CardDto::getCardName)
+                .collect(Collectors.toUnmodifiableList());
         final String distributedCards = Delimiter.COMMA.joinWith(cardNames);
         printMessage(Delimiter.COLON.joinWith(playerName, distributedCards));
     }

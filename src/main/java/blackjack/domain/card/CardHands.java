@@ -73,22 +73,8 @@ public class CardHands {
         return calculateScore() > BLACKJACK;
     }
 
-    public List<String> getCardNames() {
-        return cards.stream()
-                .map(Card::getCardName)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public String getFirstCardName() {
-        validateCardNotEmpty();
-        final Card firstCard = cards.get(0);
-        return firstCard.getCardName();
-    }
-
-    private void validateCardNotEmpty() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("카드가 존재하지 않습니다.");
-        }
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
 }

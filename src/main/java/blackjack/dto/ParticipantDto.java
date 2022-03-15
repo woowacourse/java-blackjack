@@ -1,24 +1,27 @@
 package blackjack.dto;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
 
 public class ParticipantDto {
 
     private final String name;
-    private final List<String> cardNames;
+    private final List<CardDto> cardDtos;
     private final int score;
 
-    public ParticipantDto(final String name, final List<String> cardNames, final int score) {
+    public ParticipantDto(final String name, final List<Card> cards, final int score) {
         this.name = name;
-        this.cardNames = new ArrayList<>(cardNames);
+        this.cardDtos = cards.stream()
+                .map(CardDto::toDto)
+                .collect(Collectors.toUnmodifiableList());
         this.score = score;
     }
 
     public static ParticipantDto toDto(final Participant participant) {
-        return new ParticipantDto(participant.getParticipantName(), participant.getCardNames(), participant.getScore());
+        return new ParticipantDto(participant.getParticipantName(), participant.getCards(), participant.getScore());
     }
 
     public String getName() {
@@ -26,7 +29,9 @@ public class ParticipantDto {
     }
 
     public List<String> getCardNames() {
-        return List.copyOf(cardNames);
+        return cardDtos.stream()
+                .map(CardDto::getCardName)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public int getScore() {

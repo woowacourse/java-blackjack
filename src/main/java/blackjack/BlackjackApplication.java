@@ -3,12 +3,15 @@ package blackjack;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.participant.CardDrawCallback;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.MatchResult;
+import blackjack.dto.CardDto;
+import blackjack.dto.InitiallyDrewCardDto;
 import blackjack.dto.MatchResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.BlackjackView;
@@ -35,12 +38,12 @@ public class BlackjackApplication {
     }
 
     private void announceInitiallyDistributedCards(final Dealer dealer, final Players players) {
-        final String firstCardNameOfDealer = dealer.getFirstCardName();
-        final List<ParticipantDto> playerDtos = players.getPlayers().stream()
-                .map(ParticipantDto::toDto)
+        final InitiallyDrewCardDto dealerInitiallyDrewCardDto = InitiallyDrewCardDto.toDto(dealer);
+        final List<InitiallyDrewCardDto> playerInitiallyDrewCardDtos = players.getPlayers().stream()
+                .map(InitiallyDrewCardDto::toDto)
                 .collect(Collectors.toList());
 
-        blackjackView.printInitiallyDistributedCards(firstCardNameOfDealer, playerDtos);
+        blackjackView.printInitiallyDistributedCards(dealerInitiallyDrewCardDto, playerInitiallyDrewCardDtos);
     }
 
     private void playGame(final Deck deck, final Players players, final Dealer dealer) {
@@ -56,8 +59,11 @@ public class BlackjackApplication {
             }
 
             @Override
-            public void onUpdate(final String playerName, final List<String> cardNames) {
-                blackjackView.printCurrentCardsOfPlayer(playerName, cardNames);
+            public void onUpdate(final String playerName, final List<Card> cards) {
+                final List<CardDto> cardDtos = cards.stream()
+                        .map(CardDto::toDto)
+                        .collect(Collectors.toUnmodifiableList());
+                blackjackView.printCurrentCardsOfPlayer(playerName, cardDtos);
             }
         });
     }
@@ -70,8 +76,8 @@ public class BlackjackApplication {
             }
 
             @Override
-            public void onUpdate(final String participantName, final List<String> cardNames) {
-                blackjackView.printMessageOfDealerDrewCard();
+            public void onUpdate(final String dealerName, final List<Card> cards) {
+                blackjackView.printMessageOfDealerDrewCard(dealerName);
             }
         });
     }

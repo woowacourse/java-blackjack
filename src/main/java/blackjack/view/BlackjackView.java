@@ -2,6 +2,8 @@ package blackjack.view;
 
 import java.util.List;
 
+import blackjack.dto.CardDto;
+import blackjack.dto.InitiallyDrewCardDto;
 import blackjack.dto.MatchResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.input.InputView;
@@ -22,11 +24,12 @@ public class BlackjackView {
         return inputView.requestPlayerNames();
     }
 
-    public void printInitiallyDistributedCards(final String dealerFirstCardName, final List<ParticipantDto> playerDtos) {
+    public void printInitiallyDistributedCards(final InitiallyDrewCardDto dealerInitiallyDrewCardDto,
+                                               final List<InitiallyDrewCardDto> playerInitiallyDrewCardDtos) {
         outputView.printEmptyLine();
-        outputView.printMessageOfInitiallyDistributeCards(playerDtos);
-        outputView.printFirstCardOfDealer(dealerFirstCardName);
-        playerDtos.forEach(outputView::printDistributedCardsOfPlayer);
+        outputView.printMessageOfInitiallyDistributeCards(dealerInitiallyDrewCardDto, playerInitiallyDrewCardDtos);
+        outputView.printDistributedCardsOfParticipant(dealerInitiallyDrewCardDto);
+        playerInitiallyDrewCardDtos.forEach(outputView::printDistributedCardsOfParticipant);
         outputView.printEmptyLine();
     }
 
@@ -35,12 +38,12 @@ public class BlackjackView {
         return inputView.requestDrawingCardChoice();
     }
 
-    public void printCurrentCardsOfPlayer(final String playerName, final List<String> cardNames) {
-        outputView.printCurrentCardsOfPlayer(playerName, cardNames);
+    public void printCurrentCardsOfPlayer(final String playerName, final List<CardDto> cardDtos) {
+        outputView.printCurrentCardsOfPlayer(playerName, cardDtos);
     }
 
-    public void printMessageOfDealerDrewCard() {
-        outputView.printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public void printMessageOfDealerDrewCard(final String dealerName) {
+        outputView.printMessage(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printFinalScoresOfParticipants(final ParticipantDto dealerDto, final List<ParticipantDto> playerDtos) {

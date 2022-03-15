@@ -1,12 +1,15 @@
 package blackjack.domain.participant;
 
+import java.util.List;
+
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.MatchStatus;
 
 public class Dealer extends Participant {
 
-    public static final String DEALER_NAME = "딜러";
-    public static final int DRAWABLE_SCORE_LIMIT = 16;
+    private static final String DEALER_NAME = "딜러";
+    private static final int DRAWABLE_SCORE_LIMIT = 16;
 
     private Dealer(final Deck deck) {
         super(DEALER_NAME, deck);
@@ -18,7 +21,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isPossibleToDrawCard() {
-        return cards.calculateScore() <= DRAWABLE_SCORE_LIMIT;
+        return this.getScore() <= DRAWABLE_SCORE_LIMIT;
     }
 
     public MatchStatus judgeWinner(final Player player) {
@@ -35,8 +38,15 @@ public class Dealer extends Participant {
         return this.getScore() < player.getScore();
     }
 
-    public String getFirstCardName() {
-        return cards.getFirstCardName();
+    public Card getFirstCard() {
+        final List<Card> cards = this.getCards();
+        validateCardNotEmpty(cards);
+        return cards.get(0);
     }
 
+    private void validateCardNotEmpty(final List<Card> cards) {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드가 존재하지 않습니다.");
+        }
+    }
 }

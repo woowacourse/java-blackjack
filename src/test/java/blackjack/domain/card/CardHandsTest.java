@@ -15,7 +15,7 @@ class CardHandsTest {
     @DisplayName("카드의 합계가 기댓값과 일치해야 한다.")
     @ParameterizedTest(name = "[{index}] 기댓값 : {1}, 카드 : {0}")
     @MethodSource("provideForParameterizedTest")
-    void calculateScoreTest(final List<Card> initializedCards, final int expectedScore, final boolean expectedBusted) {
+    void calculateScoreTest(final List<Card> initializedCards, final int expectedScore, final boolean expectedBust) {
         final CardHands cards = new CardHands();
         initializedCards.forEach(cards::addCard);
 
@@ -26,7 +26,7 @@ class CardHandsTest {
     @DisplayName("카드의 합계가 21을 넘으면 버스트된다.")
     @ParameterizedTest(name = "[{index}] 기댓값 : {2}, 카드 : {0}")
     @MethodSource("provideForParameterizedTest")
-    void isBustTest(final List<Card> initializedCards, final int expectedScore, final boolean expectedBust) {
+    void scoreBustTest(final List<Card> initializedCards, final int expectedScore, final boolean expectedBust) {
         final CardHands cards = new CardHands();
         initializedCards.forEach(cards::addCard);
 

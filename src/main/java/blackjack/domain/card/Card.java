@@ -15,15 +15,19 @@ public class Card {
         this.cardPattern = cardPattern;
     }
 
-    public String getCardName() {
-        return cardNumber.getInitial() + cardPattern.getName();
-    }
-
     public Set<Integer> addNumbers(final int otherNumber) {
         final List<Integer> numbers = cardNumber.getNumbers();
         return numbers.stream()
                 .map(number -> otherNumber + number)
                 .collect(Collectors.toSet());
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
+    public CardPattern getCardPattern() {
+        return cardPattern;
     }
 
     @Override
@@ -45,7 +49,10 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" + getCardName() + '}';
+        return "Card{" +
+                cardNumber.getInitial() +
+                cardPattern.getName() +
+                '}';
     }
 
 }

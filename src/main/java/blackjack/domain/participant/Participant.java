@@ -2,13 +2,14 @@ package blackjack.domain.participant;
 
 import java.util.List;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHands;
 import blackjack.domain.card.Deck;
 
 public abstract class Participant {
 
     private final String name;
-    protected CardHands cards = new CardHands();
+    private final CardHands cards = new CardHands();
 
     protected Participant(final String name, final Deck deck) {
         validateNameNotBlank(name);
@@ -36,7 +37,7 @@ public abstract class Participant {
     public void drawCards(final Deck deck, final CardDrawCallback callback) {
         while (isPossibleToDrawCard() && callback.isContinuable(getParticipantName())) {
             drawCard(deck);
-            callback.onUpdate(name, cards.getCardNames());
+            callback.onUpdate(name, cards.getCards());
         }
     }
 
@@ -54,8 +55,8 @@ public abstract class Participant {
         return name;
     }
 
-    public List<String> getCardNames() {
-        return cards.getCardNames();
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 
     public int getScore() {
