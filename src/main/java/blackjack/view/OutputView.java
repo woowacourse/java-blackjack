@@ -5,8 +5,6 @@ import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
-import blackjack.model.player.Name;
-import blackjack.model.player.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,23 +13,22 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printOpenCardMessage(Name dealerName, List<Name> playerNames) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealerName.value(),
+    public static void printOpenCardMessage(String dealerName, List<String> playerNames) {
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealerName,
             formattedPlayerNames(playerNames));
     }
 
-    private static String formattedPlayerNames(List<Name> names) {
+    private static String formattedPlayerNames(List<String> names) {
         return names.stream()
-            .map(Name::value)
             .collect(Collectors.joining(", "));
     }
 
-    public static void printOpenCard(Name name, Cards cards) {
-        System.out.printf("%s: %s%n", name.value(), formattedCardsText(cards));
+    public static void printOpenCard(String name, Cards cards) {
+        System.out.printf("%s: %s%n", name, formattedCardsText(cards));
     }
 
-    public static void printCards(Name name, Cards cards) {
-        System.out.printf("%s: %s%n", name.value(), formattedCardsText(cards));
+    public static void printCards(String name, Cards cards) {
+        System.out.printf("%s: %s%n", name, formattedCardsText(cards));
     }
 
     private static String formattedCardsText(Cards openCard) {
@@ -44,18 +41,12 @@ public class OutputView {
         return card.rank().symbol() + card.suit().symbol();
     }
 
-    private static String takenCards(Player player) {
-        return player.cards().values().stream()
-            .map(OutputView::cardText)
-            .collect(Collectors.joining(", "));
-    }
-
     public static void printDealerTakeCardMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printTotalScore(Name name, Cards cards, Score score) {
-        System.out.printf("%s 카드: %s - 결과: %d%n", name.value(), formattedCardsText(cards),
+    public static void printTotalScore(String name, Cards cards, Score score) {
+        System.out.printf("%s 카드: %s - 결과: %d%n", name, formattedCardsText(cards),
             score.getValue());
     }
 
@@ -74,7 +65,7 @@ public class OutputView {
             .filter(r -> r == result).count();
     }
 
-    private static void printEachPlayerRecord(Name name, Result result) {
-        System.out.printf("%s: %s%n", name.value(), result.symbol());
+    private static void printEachPlayerRecord(String name, Result result) {
+        System.out.printf("%s: %s%n", name, result.symbol());
     }
 }

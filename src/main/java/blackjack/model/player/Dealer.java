@@ -14,7 +14,7 @@ import blackjack.model.cards.Score;
 public final class Dealer extends Player {
 
     private static final MaxScoreCalculator MAX_SCORE_CALCULATOR = new MaxScoreCalculator();
-    private static final Name NAME = new Name("딜러");
+    private static final String NAME = "딜러";
     private static final Score HIT_BOUNDARY = new Score(17);
     private static final int OPEN_CARD_COUNT = 1;
 

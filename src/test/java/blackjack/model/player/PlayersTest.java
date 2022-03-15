@@ -26,8 +26,8 @@ public class PlayersTest {
     void blackjackWithTwoPlayer() {
         Dealer dealer = new Dealer(JACK, QUEEN);
 
-        Name pobi = new Name("pobi");
-        Name crong = new Name("crong");
+        String pobi = "pobi";
+        String crong = "crong";
 
         Player player1 = new Player(pobi, TWO, THREE);
         Player player2 = new Player(crong, ACE, JACK);
@@ -44,8 +44,8 @@ public class PlayersTest {
     void blackjackWithSameNamePlayers() {
         Dealer dealer = new Dealer(JACK, QUEEN);
 
-        Name pobi1 = new Name("pobi");
-        Name pobi2 = new Name("pobi");
+        String pobi1 = "pobi";
+        String pobi2 = "pobi";
 
         Player player1 = new Player(pobi1, TWO, THREE);
         Player player2 = new Player(pobi2, ACE, JACK);

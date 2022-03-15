@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 
 import blackjack.model.blackjack.CardDispenser;
 import blackjack.model.player.Dealer;
-import blackjack.model.player.Name;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.view.Answer;
@@ -35,10 +34,9 @@ public class Application {
             .collect(toUnmodifiableList());
     }
 
-    private static List<Name> names() {
+    private static List<String> names() {
         List<String> names = InputView.inputNames();
         return names.stream()
-            .map(Name::new)
             .collect(toUnmodifiableList());
     }
 
@@ -56,7 +54,7 @@ public class Application {
         }
     }
 
-    private static List<Name> playerNames(Players players) {
+    private static List<String> playerNames(Players players) {
         return players.values().stream().map(Player::name).collect(toUnmodifiableList());
     }
 
@@ -74,7 +72,7 @@ public class Application {
         }
     }
 
-    private static boolean isKeepTakeCard(Name name) {
+    private static boolean isKeepTakeCard(String name) {
         Answer answer = InputView.isKeepTakeCard(name);
         return answer.isKeepGoing();
     }

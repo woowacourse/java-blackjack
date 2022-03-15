@@ -1,19 +1,18 @@
 package blackjack.model.blackjack;
 
-import blackjack.model.player.Name;
 import java.util.Objects;
 
 public class Record {
 
-    private final Name name;
+    private final String name;
     private final Result result;
 
-    public Record(Name name, Result result) {
+    public Record(String name, Result result) {
         this.name = name;
         this.result = result;
     }
 
-    public Name name() {
+    public String name() {
         return name;
     }
 

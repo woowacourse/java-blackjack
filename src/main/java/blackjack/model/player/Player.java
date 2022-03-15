@@ -12,18 +12,18 @@ public class Player {
     private static final int OPEN_CARD_COUNT = 2;
 
     private final Cards cards;
-    private final Name name;
+    private final String name;
 
-    public Player(Name name, Card card1, Card card2, Card... cards) {
+    public Player(String name, Card card1, Card card2, Card... cards) {
         this(name, new Cards(card1, card2, cards));
     }
 
-    protected Player(Name name, Cards cards) {
+    protected Player(String name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public final Name name() {
+    public final String name() {
         return name;
     }
 

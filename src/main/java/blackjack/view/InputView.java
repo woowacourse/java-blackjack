@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.model.player.Name;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -22,13 +21,13 @@ public class InputView {
         return List.of(text.split(","));
     }
 
-    public static Answer isKeepTakeCard(Name name) {
+    public static Answer isKeepTakeCard(String name) {
         String value = chooseOptions(message(name), "y", "n");
         return Answer.of(value);
     }
 
-    private static String message(Name name) {
-        return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name.value());
+    private static String message(String name) {
+        return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
     }
 
     public static String chooseOptions(String message, String... options) {
