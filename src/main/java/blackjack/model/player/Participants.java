@@ -1,9 +1,10 @@
 package blackjack.model.player;
 
+import blackjack.model.card.CardDeck;
 import java.util.List;
 
 public class Participants {
-    private final Players players;
+    private Players players;
     private final Participant dealer;
 
     public Participants(final List<String> names) {
@@ -16,5 +17,10 @@ public class Participants {
         if (names.size() != names.stream().distinct().count()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름 중 중복되는 이름이 있습니다.");
         }
+    }
+
+    public void drawCardsBy(final CardDeck cardDeck) {
+        players.drawCardsBy(cardDeck);
+        dealer.drawCardsBy(cardDeck);
     }
 }

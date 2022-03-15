@@ -3,9 +3,7 @@ package blackjack.model.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.TrumpNumber;
-import blackjack.model.card.TrumpSymbol;
+import blackjack.model.card.CardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,14 +33,23 @@ public class PlayerTest {
         assertThat(liver).isInstanceOf(Player.class);
     }
 
-    @DisplayName("카드 점수의 합이 21점 이상이면 true를 반환한다.")
+    @DisplayName("Card를 여러번 뽑으면 새로운 Player 인스턴스를 반환한다.")
     @Test
-    void isImpossibleHit_true() {
-        Player player = new Player("리버");
-        player.receive(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
-        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
-        player.receive(new Card(TrumpNumber.TWO, TrumpSymbol.CLOVER));
+    void drawSeveral_new_Participant() {
+        CardDeck deck = new CardDeck();
+        Participant player = new Player("리버");
+        Participant otherDealer = player.drawCardsBy(deck);
 
-        assertThat(player.isImpossibleHit()).isTrue();
+        assertThat(player).isNotEqualTo(otherDealer);
+    }
+
+    @DisplayName("Card를 뽑으면 새로운 Player 인스턴스를 반환한다.")
+    @Test
+    void draw_new_Participant() {
+        CardDeck deck = new CardDeck();
+        Participant player = new Player("리버");
+        Participant otherDealer = player.drawBy(deck);
+
+        assertThat(player).isNotEqualTo(otherDealer);
     }
 }

@@ -1,12 +1,12 @@
 package blackjack;
 
-import blackjack.model.BlackJackGame;
+import blackjack.model.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
 public class Application {
     public static void main(String[] args) {
-        BlackJackGame blackJackGame = new BlackJackGame(InputView.inputPlayerNames());
+        BlackjackGame blackJackGame = new BlackjackGame(InputView.inputPlayerNames());
 
         blackJackGame.start();
         ResultView.printStartResult(blackJackGame.getDealer(), blackJackGame.getGamers());

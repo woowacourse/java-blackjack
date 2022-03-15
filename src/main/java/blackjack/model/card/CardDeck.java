@@ -8,7 +8,7 @@ public class CardDeck {
 
     private final Stack<Card> cards;
 
-    private CardDeck() {
+    public CardDeck() {
         this.cards = createCards();
         Collections.shuffle(cards);
     }

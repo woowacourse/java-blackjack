@@ -15,6 +15,15 @@ public class CardsTest {
         assertThat(cards).isInstanceOf(Cards.class);
     }
 
+    @DisplayName("Cards에 Card를 추가하면 새로운 Cards 인스턴스를 반환한다.")
+    @Test
+    void add_new_Cards() {
+        Cards cards = new Cards();
+        Cards otherCards = cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+
+        assertThat(cards).isNotEqualTo(otherCards);
+    }
+
     @DisplayName("9클로버, J하트 점수의 합은 19이다")
     @Test
     void sumCardScore_9clover_Jheat() {

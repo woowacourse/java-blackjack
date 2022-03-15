@@ -1,13 +1,15 @@
 package blackjack.model.player;
 
 import blackjack.model.card.Card;
+import blackjack.model.card.CardDeck;
 import blackjack.model.card.Cards;
 import java.util.List;
 
 public abstract class Participant {
+    protected static final int START_DRAW_COUNT = 2;
     protected static final int MAX_SCORE = 21;
 
-    private final String name;
+    protected final String name;
     protected final Cards cards;
 
     public Participant(final String name) {
@@ -16,15 +18,22 @@ public abstract class Participant {
         this.cards = new Cards();
     }
 
+    protected Participant(final String name, final Cards cards) {
+        this.name = name;
+        this.cards = cards;
+    }
+
     private void checkEmpty(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 이름은 공백이거나 없을 수 없습니다.");
         }
     }
 
-    public void receive(final Card card) {
-        this.cards.add(card);
-    }
+    public abstract Participant receive(final Card card);
+
+    public abstract Participant drawCardsBy(final CardDeck cardDeck);
+
+    public abstract Participant drawBy(final CardDeck cardDeck);
 
     public boolean isBlackJack() {
         return cards.sumScore() == MAX_SCORE && cards.hasTwoCard();

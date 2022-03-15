@@ -1,33 +1,25 @@
 package blackjack.model.player;
 
 import blackjack.model.card.CardDeck;
+
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Players {
-    private static final int START_CARD_COUNT = 2;
-
-    private final List<Participant> values;
+    private List<Participant> values;
 
     public Players(final List<String> names) {
         this.values = names.stream()
                 .map(Player::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
-    public void giveCardsToGamer() {
-        for (Participant gamer : values) {
-            giveCardsTo(gamer);
-        }
-    }
-
-    private void giveCardsTo(final Participant gamer) {
-        CardDeck deck = CardDeck.getInstance();
-        for (int i = 0; i < START_CARD_COUNT; i++) {
-            gamer.receive(deck.draw());
-        }
+    public void drawCardsBy(final CardDeck cardDeck) {
+        this.values = values.stream()
+                .map(player -> player.drawCardsBy(cardDeck))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public void hitOrStayToGamer(Predicate<String> predicate, Consumer<Participant> consumer) {

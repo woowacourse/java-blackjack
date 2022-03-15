@@ -1,5 +1,6 @@
 package blackjack.model.card;
 
+import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,8 +12,13 @@ public class Cards {
         this.values = new ArrayList<>();
     }
 
-    public void add(final Card card) {
-        this.values.add(card);
+    private Cards(List<Card> values) {
+        this.values = values;
+    }
+
+    public Cards add(final Card card) {
+        values.add(card);
+        return new Cards(values);
     }
 
     public int sumScore() {
