@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Cards {
 
-    private static final String ACE_LETTER = "A";
     private static final int ACE_ADDITION = 10;
     private static final int MAX_SCORE = 21;
 
@@ -26,7 +25,7 @@ public class Cards {
 
     private int countAceAmount() {
         return (int) cards.stream()
-                .filter(card -> card.getDenomination().equals(ACE_LETTER))
+                .filter(Card::isAceCard)
                 .count();
     }
 
