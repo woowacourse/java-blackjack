@@ -13,9 +13,11 @@ public enum MatchResult {
         this.result = result;
     }
 
-    public static boolean isBurst(int score) {
+    public static boolean isBurstScore(int score) {
         return score > BLACK_JACK;
     }
+
+    public static boolean isBlackJackScore(int score) { return score == BLACK_JACK; }
 
     public String getResult() {
         return result;
