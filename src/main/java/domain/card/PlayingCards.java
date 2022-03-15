@@ -28,10 +28,6 @@ public class PlayingCards {
     }
 
     public boolean isBlackJack() {
-        if (playingPlayingCards.size() < MINIMUM_CARDS_TO_CHECK_IF_BLACKJACK) {
-            return false;
-        }
-
         return getScore() == MAXIMUM_VALID_SCORE && playingPlayingCards.size() == CARD_QUANTITY_FOR_BLACKJACK;
     }
 
