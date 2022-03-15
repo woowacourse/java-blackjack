@@ -40,7 +40,7 @@ public abstract class Participant {
         playStatus = cards.getStatus();
     }
 
-    public abstract String getName();
+    public abstract Name getName();
 
     public Set<Card> getCards() {
         return cards.getValue();

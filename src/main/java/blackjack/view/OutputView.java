@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import blackjack.domain.PlayRecord;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.DrawCount;
+import blackjack.domain.participant.Name;
 import blackjack.dto.ParticipantDto;
 
 public class OutputView {
@@ -66,8 +67,8 @@ public class OutputView {
         System.out.println("딜러: " + builder);
     }
 
-    public static void printPlayerRecord(String name, PlayRecord playRecord) {
-        System.out.println(name + ": " + playRecord.getName());
+    public static void printPlayerRecord(Name name, PlayRecord playRecord) {
+        System.out.println(name.getValue() + ": " + playRecord.getName());
     }
 
     public static void printEmptyLine() {
