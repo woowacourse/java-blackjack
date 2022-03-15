@@ -10,6 +10,7 @@ import blackjack.domain.result.DistributeResult;
 import blackjack.domain.result.UserResult;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackJack {
 
@@ -20,11 +21,20 @@ public class BlackJack {
     private final Participants participants;
     private final Deck deck;
 
-    public BlackJack(String[] userNames) {
+    public BlackJack() {
         deck = new Deck(new CardGenerator());
         participants = new Participants();
         participants.addDealer();
+    }
+
+    public BlackJack(String[] userNames) {
+        this();
         participants.addUsers(userNames);
+    }
+
+    public BlackJack(Map<String, Integer> priceByName) {
+        this();
+        participants.addUsers(priceByName);
     }
 
     public List<DistributeResult> initDistribute() {

@@ -4,10 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.result.DistributeResult;
 import blackjack.domain.result.UserResult;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -27,6 +24,12 @@ public class Participants {
                 .map(User::new)
                 .collect(Collectors.toList());
         this.participants.addAll(users);
+    }
+
+    public void addUsers(Map<String, Integer> priceByName) {
+        for (Map.Entry<String, Integer> entries : priceByName.entrySet()) {
+            participants.add(new User(entries.getKey(), entries.getValue()));
+        }
     }
 
     public List<User> getUsers() {

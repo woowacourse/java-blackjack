@@ -7,7 +7,10 @@ import blackjack.domain.result.UserResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class BlackJackController {
 
@@ -15,12 +18,23 @@ public class BlackJackController {
     private BlackJack blackJack;
 
     public void play() {
-        String[] userNames = InputView.inputUsersName();
-        blackJack = new BlackJack(userNames);
+        Map<String, Integer> priceByName = getUserNameAndPrice();
+        blackJack = new BlackJack(priceByName);
         initDistribute();
-        playGameEachParticipant(userNames);
+        playGameEachParticipant(priceByName.keySet());
         printGameScore();
         printFinalResult();
+    }
+
+    public Map<String, Integer> getUserNameAndPrice() {
+        String[] userNames = InputView.inputUsersName();
+        Map<String, Integer> priceByName = new LinkedHashMap<>();
+        for (String userName : userNames) {
+            int price = InputView.getUserPrice(userName);
+            priceByName.put(userName, price);
+        }
+
+        return priceByName;
     }
 
     private void printFinalResult() {
@@ -38,7 +52,7 @@ public class BlackJackController {
         OutputView.printInitDistribute(distributeResults);
     }
 
-    private void playGameEachParticipant(String[] userNames) {
+    private void playGameEachParticipant(Set<String> userNames) {
         for (String userName : userNames) {
             playEachUser(userName);
         }

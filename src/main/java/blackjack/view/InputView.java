@@ -13,6 +13,7 @@ public class InputView {
     private static final String AGREE = "y";
     private static final String DISAGREE = "n";
     private static final String REGEX = ", |,";
+    private static final String ERROR_INVALID_INTEGER = "[ERROR] 정수만 입력 가능합니다.";
 
 
     public static String[] inputUsersName() {
@@ -34,4 +35,20 @@ public class InputView {
         }
         throw new IllegalArgumentException(INPUT_INVALID_ANSWER);
     }
+
+    public static int getUserPrice(String userName) {
+        System.out.println(userName + "의 베팅 금액은?");
+        String value = scanner.nextLine();
+        validateInteger(value);
+        return Integer.parseInt(value);
+    }
+
+    private static void validateInteger(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ERROR_INVALID_INTEGER);
+        }
+    }
+
 }
