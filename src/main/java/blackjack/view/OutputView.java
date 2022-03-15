@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class OutputView {
 
     private static String printDealerCard(Dealer dealer) {
         return String.format(CARD_INFORMATION_MESSAGE, dealer.getName(),
-            cardToString(dealer.getCards().getFirstCard()));
+            cardToString(dealer.getFirstCard()));
     }
 
     private static String printPlayersCard(Players players) {
@@ -45,8 +46,8 @@ public class OutputView {
             .collect(Collectors.joining("\n"));
     }
 
-    private static String cardsToString(Cards cards) {
-        return cards.getCards().stream()
+    private static String cardsToString(final List<Card> cards) {
+        return cards.stream()
             .map(OutputView::cardToString)
             .collect(Collectors.joining(", "));
     }

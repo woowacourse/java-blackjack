@@ -38,7 +38,7 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("카드의 합이 21 이하인지 확인")
+    @DisplayName("카드의 합이 21 이하여서 뽑을 수 있는지 확인")
     void canDrawTest() {
         Player player = new Player("a", deck.drawStartingCards());
 
@@ -46,16 +46,15 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("카드의 합이 21 초과일 때 예외 처리하는지 확인")
-    void canNotDrawTest() {
-        Player player = new Player("a", deck.drawStartingCards());
+    @DisplayName("플레이어 카드의 합이 21 초과여서 버스트인지 확인")
+    void bustTest() {
+        Deck deck = Deck.create();
+        Player a = new Player("a", this.deck.drawStartingCards());
 
-        assertThatThrownBy(() -> {
-            while (true) {
-                player.drawCard(deck.draw());
-            }
-        })
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("카드를 뽑을 수 없습니다.");
+        while (a.canDraw()) {
+            a.drawCard(deck.draw());
+        }
+
+        assertThat(a.isBust()).isTrue();
     }
 }

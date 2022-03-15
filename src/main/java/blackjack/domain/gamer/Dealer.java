@@ -12,18 +12,9 @@ import blackjack.domain.result.Results;
 public class Dealer extends Gamer {
 
     private static final int DRAWABLE_NUMBER = 16;
-    private static final String CAN_NOT_DRAWABLE_ERROR_MESSAGE = "%s 카드의 합이 %d을 초과했기 때문에 카드를 뽑을 수 없습니다.";
 
     public Dealer(final Cards cards) {
         super("딜러", cards);
-    }
-
-    @Override
-    public void drawCard(Card card) {
-        if (!canDraw()) {
-            throw new IllegalArgumentException(String.format(CAN_NOT_DRAWABLE_ERROR_MESSAGE, name, DRAWABLE_NUMBER));
-        }
-        cards.add(card);
     }
 
     @Override
@@ -49,5 +40,9 @@ public class Dealer extends Gamer {
             gameResult.get(this).add(judgeResult.get(this));
             gameResult.get(player).add(judgeResult.get(player));
         });
+    }
+
+    public Card getFirstCard() {
+        return getCards().get(0);
     }
 }

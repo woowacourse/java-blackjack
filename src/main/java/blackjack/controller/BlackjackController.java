@@ -14,8 +14,8 @@ public class BlackjackController {
 
     public void play() {
         Deck deck = Deck.create();
-        Dealer dealer = initDealer(deck);
-        Players players = participate(deck);
+        Dealer dealer = new Dealer(deck.drawStartingCards());
+        Players players = participatePlayers(deck);
         OutputView.printInitCard(dealer, players);
 
         hitOrStandPlayers(players, deck);
@@ -25,20 +25,16 @@ public class BlackjackController {
         OutputView.printTotalResult(dealer.judgeResult(players));
     }
 
-    private Dealer initDealer(Deck deck) {
-        return new Dealer(deck.drawStartingCards());
-    }
-
-    private Players participate(Deck deck) {
+    private Players participatePlayers(Deck deck) {
         try {
-            return new Players(stringToPlayer(InputView.inputPlayers(), deck));
+            return new Players(toPlayer(InputView.inputPlayers(), deck));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return participate(deck);
+            return participatePlayers(deck);
         }
     }
 
-    private List<Player> stringToPlayer(List<String> names, Deck deck) {
+    private List<Player> toPlayer(List<String> names, Deck deck) {
         return names.stream()
             .map(name -> new Player(name, deck.drawStartingCards()))
             .collect(Collectors.toList());
