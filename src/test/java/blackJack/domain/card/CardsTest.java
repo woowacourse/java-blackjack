@@ -43,42 +43,4 @@ public class CardsTest {
 
         assertThat(cards.isBust()).isTrue();
     }
-
-    @Test
-    @DisplayName("카드에 Ace가 11로 되는 경우 합계 계산 테스트")
-    void calculateScoreWithAceEleven() {
-        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
-        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
-
-        assertThat(cards.calculateFinalScore()).isEqualTo(21);
-    }
-
-    @Test
-    @DisplayName("카드에 Ace가 1로 되는 경우 합계 계산 테스트")
-    void calculateScoreWithAceOne() {
-        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
-        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
-        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
-
-        assertThat(cards.calculateFinalScore()).isEqualTo(19);
-    }
-
-    @Test
-    @DisplayName("카드에 Ace가 여러개인 경우 계산 테스트")
-    void calculateScoreWithAceCountThree() {
-        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
-        cards.receiveCard(Card.from(Suit.HEART, Denomination.ACE));
-        cards.receiveCard(Card.from(Suit.DIAMOND, Denomination.ACE));
-        cards.receiveCard(Card.from(Suit.SPADE, Denomination.EIGHT));
-
-        assertThat(cards.calculateFinalScore()).isEqualTo(21);
-    }
-
-    @Test
-    @DisplayName("ACE 카드 보유 여부 테스트")
-    void hasAce() {
-        cards.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
-
-        assertThat(cards.hasAce()).isTrue();
-    }
 }

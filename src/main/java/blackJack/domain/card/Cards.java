@@ -6,14 +6,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cards {
+
     private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BLACK_JACK = 21;
-    private static final int ACE_BONUS_SCORE = 10;
 
     private final Set<Card> cards;
+    private final Score score;
 
     public Cards() {
         cards = new HashSet<>();
+        score = new Score();
     }
 
     public void receiveCard(Card card) {
@@ -29,26 +31,7 @@ public class Cards {
     }
 
     public int calculateFinalScore() {
-        final int score = calculateScore();
-        if (hasAce() && checkValidationAceBonusScore(score)) {
-            return score + ACE_BONUS_SCORE;
-        }
-        return score;
-    }
-
-    private boolean checkValidationAceBonusScore(int score) {
-        return score + ACE_BONUS_SCORE <= BLACK_JACK;
-    }
-
-    public boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
-    }
-
-    private int calculateScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+        return score.calculateFinalScore(cards);
     }
 
     public List<Card> getCards() {
