@@ -22,6 +22,10 @@ public final class Cards {
         return Point.from(cards).get();
     }
     
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+    
     @Override
     public String toString() {
         return cards.toString().substring(1, cards.toString().length() - 1);

@@ -14,6 +14,10 @@ public abstract class Human {
     
     public abstract boolean isAbleToHit();
     
+    public Card getInitCard() {
+        return cards.getFirstCard();
+    }
+    
     public void addCard(final Card card) {
         cards.add(card);
     }

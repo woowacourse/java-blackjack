@@ -8,6 +8,7 @@ import java.util.Map;
 
 public final class OutputView {
     
+    public static final String drawChar = "무";
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
             + System.lineSeparator();
     private static final String CARD_STATE_MESSAGE = "%s%s: %s";
@@ -16,8 +17,7 @@ public final class OutputView {
     private static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %s%d패" + System.lineSeparator();
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
-    private static final String NAME_EXPLANATION = "카드";
-    public static final String drawChar = "무";
+    private static final String PLAYER_NAME_EXPLANATION = "카드";
     
     public static void printInitCards(final BlackjackTable blackjackTable) {
         OutputView.printInitCardState(blackjackTable);
@@ -29,12 +29,13 @@ public final class OutputView {
     }
     
     public static void printHumanHand(final Human human) {
-        String nameExplanation = "";
         if (human.getClass().equals(Player.class)) {
-            nameExplanation = NAME_EXPLANATION;
+            System.out.printf(CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), PLAYER_NAME_EXPLANATION,
+                    human.getCards());
+            return;
         }
-        System.out.printf(CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), nameExplanation,
-                human.getCards());
+        System.out.printf(CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), "",
+                human.getInitCard());
     }
     
     private static void printInitCardState(final BlackjackTable blackjackTable) {

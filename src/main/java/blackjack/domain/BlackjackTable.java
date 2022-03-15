@@ -12,8 +12,8 @@ public final class BlackjackTable {
     private final Players players;
     
     private BlackjackTable(Players players) {
-        this.players = players;
         this.dealer = Dealer.newInstance();
+        this.players = players;
     }
     
     public static BlackjackTable from(Players players) {
@@ -27,15 +27,15 @@ public final class BlackjackTable {
         }
     }
     
-    public Players getPlayers() {
-        return players;
+    public CardDeck getCardDeck() {
+        return cardDeck;
     }
     
     public Dealer getDealer() {
         return dealer;
     }
     
-    public CardDeck getCardDeck() {
-        return cardDeck;
+    public Players getPlayers() {
+        return players;
     }
 }
