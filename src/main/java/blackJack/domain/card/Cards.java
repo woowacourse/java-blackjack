@@ -41,7 +41,7 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    public int calculateScore() {
+    private int calculateScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
