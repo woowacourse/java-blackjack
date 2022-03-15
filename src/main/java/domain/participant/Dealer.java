@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Card;
 import dto.ResultDto;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class Dealer extends Participant {
         return (int) playersResult.stream()
             .filter(result -> result == targetResult)
             .count();
+    }
+
+    public Card getFirstCard() {
+        return cards.getCardByIndex(0);
     }
 
     @Override

@@ -55,14 +55,18 @@ public class OutputView {
     }
 
     private void showInitialDealerCardStatus(Dealer dealer) {
-        List<Card> card = dealer.getCards().subList(0, 1);
-        System.out.printf(STATUS_FORMAT, dealer.getName(), toString(card));
+        Card firstCard = dealer.getFirstCard();
+        System.out.printf(STATUS_FORMAT, dealer.getName(), expressCard(firstCard));
         System.out.print(System.lineSeparator());
+    }
+
+    private String expressCard(Card card) {
+        return card.getDenomination() + card.getSymbol();
     }
 
     private String toString(List<Card> cards) {
         List<String> cardRepresentation = cards.stream()
-            .map(card -> card.getDenomination() + card.getSymbol())
+            .map(this::expressCard)
             .collect(Collectors.toList());
 
         return String.join(COMMA, cardRepresentation);

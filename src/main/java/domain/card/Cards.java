@@ -63,6 +63,10 @@ public class Cards {
         this.cards.addAll(cards);
     }
 
+    public Card getCardByIndex(int index) {
+        return cards.get(index);
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
