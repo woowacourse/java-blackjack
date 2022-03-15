@@ -8,14 +8,13 @@ import java.util.List;
 public class CardStackGenerator {
 
     public static CardStack ofReverse(Card... cards) {
-        return new CardStackImpl(List.of(cards));
+        return new CardStackStub(List.of(cards));
     }
 
-    // TODO: 클래스명 변경
-    private static class CardStackImpl implements CardStack {
+    private static class CardStackStub implements CardStack {
         final LinkedList<Card> cards = new LinkedList<>();
 
-        CardStackImpl(List<Card> cards) {
+        CardStackStub(List<Card> cards) {
             this.cards.addAll(cards);
         }
 
