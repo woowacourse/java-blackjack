@@ -3,15 +3,13 @@ package blackjack.model.player;
 import static blackjack.model.blackjack.Result.DRAW;
 import static blackjack.model.blackjack.Result.LOSS;
 import static blackjack.model.blackjack.Result.WIN;
-import static java.util.stream.Collectors.toUnmodifiableMap;
 
-import blackjack.model.blackjack.Records;
+import blackjack.model.blackjack.Record;
 import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.MaxScoreCalculator;
 import blackjack.model.cards.Score;
-import java.util.Map;
 
 public final class Dealer extends Player {
 
@@ -28,16 +26,11 @@ public final class Dealer extends Player {
         super(NAME, cards);
     }
 
-    public Records matchAll(Players players) {
-        return new Records(collectResults(players));
+    public Record match(Player player) {
+        return new Record(player.name(), playerResult(player));
     }
 
-    private Map<Name, Result> collectResults(Players players) {
-        return players.stream()
-            .collect(toUnmodifiableMap(Player::name, this::eachPlayerResult));
-    }
-
-    private Result eachPlayerResult(Player player) {
+    public Result playerResult(Player player) {
         if (player.isBust()) {
             return LOSS;
         } else if (isBust()) {

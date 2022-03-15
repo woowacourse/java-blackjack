@@ -50,18 +50,18 @@ public class Application {
     private static void printOpenCard(Dealer dealer, Players players) {
         OutputView.printOpenCardMessage(dealer.name(), playerNames(players));
         OutputView.printOpenCard(dealer.name(), dealer.openCards());
-        for (Player player : players) {
+        for (Player player : players.values()) {
             OutputView.printOpenCard(player.name(), player.openCards());
         }
     }
 
-    private static List<Name> playerNames(Players gamers) {
-        return gamers.stream().map(Player::name).collect(toUnmodifiableList());
+    private static List<Name> playerNames(Players players) {
+        return players.values().stream().map(Player::name).collect(toUnmodifiableList());
     }
 
     private static void takeCards(CardDispenser cardDispenser, Dealer dealer, Players players) {
-        for (Player gamer : players) {
-            takePlayerCard(gamer, cardDispenser);
+        for (Player player : players.values()) {
+            takePlayerCard(player, cardDispenser);
         }
         takeDealerCard(dealer, cardDispenser);
     }
@@ -91,9 +91,9 @@ public class Application {
 
     private static void printResults(Dealer dealer, Players players) {
         OutputView.printTotalScore(dealer.name(), dealer.cards(), dealer.score());
-        for (Player gamer : players) {
-            OutputView.printTotalScore(gamer.name(), gamer.cards(), gamer.score());
+        for (Player player : players.values()) {
+            OutputView.printTotalScore(player.name(), player.cards(), player.score());
         }
-        OutputView.printRecords(dealer.matchAll(players), playerNames(players));
+        OutputView.printRecords(players.match(dealer));
     }
 }

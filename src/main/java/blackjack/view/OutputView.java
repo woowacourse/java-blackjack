@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.blackjack.Records;
+import blackjack.model.blackjack.Record;
 import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
@@ -59,20 +59,22 @@ public class OutputView {
             score.getValue());
     }
 
-    public static void printRecords(Records records, List<Name> playerNames) {
+    public static void printRecords(List<Record> records) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d무 %d패%n", countByResult(records, Result.LOSS),
             countByResult(records, Result.DRAW), countByResult(records, Result.WIN));
-        playerNames.stream()
-            .forEach(name -> printEachPlayerRecord(name, records.resultByName(name)));
+
+        records.stream().
+            forEach(record -> printEachPlayerRecord(record.name(), record.result()));
+    }
+
+    private static int countByResult(List<Record> records, Result result) {
+        return (int) records.stream()
+            .map(Record::result)
+            .filter(r -> r == result).count();
     }
 
     private static void printEachPlayerRecord(Name name, Result result) {
         System.out.printf("%s: %s%n", name.value(), result.symbol());
-    }
-
-    private static int countByResult(Records records, Result result) {
-        return (int) records.results().stream()
-            .filter(r -> r == result).count();
     }
 }

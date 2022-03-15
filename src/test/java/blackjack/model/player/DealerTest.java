@@ -7,7 +7,7 @@ import static blackjack.model.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.model.blackjack.Records;
+import blackjack.model.blackjack.Record;
 import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
@@ -37,32 +37,32 @@ public class DealerTest {
     @ParameterizedTest
     @MethodSource("providePlayerLosingCaseCards")
     @DisplayName("플레이어가 지는 경우 판별 테스트")
-    void dealerIsWinner(Dealer dealer, Players players) {
-        Records records = dealer.matchAll(players);
-        assertThat(records.resultByName(GAMER_NAME)).isEqualTo(Result.LOSS);
+    void dealerIsWinner(Dealer dealer, Player player) {
+        Record record = dealer.match(player);
+        assertThat(record).isEqualTo(new Record(player.name(), Result.LOSS));
     }
 
     private static Stream<Arguments> providePlayerLosingCaseCards() {
         return Stream.of(
-            Arguments.of(new Dealer(EIGHT, JACK), Players.of(new Player(GAMER_NAME, SEVEN, EIGHT))),
-            Arguments.of(new Dealer(EIGHT, JACK), Players.of(new Player(GAMER_NAME, JACK, QUEEN, FOUR))),
-            Arguments.of(new Dealer(ACE, FIVE), Players.of(new Player(GAMER_NAME, SEVEN, SIX))),
-            Arguments.of(new Dealer(ACE, JACK, QUEEN), Players.of(new Player(GAMER_NAME, QUEEN, JACK)))
+            Arguments.of(new Dealer(EIGHT, JACK), new Player(GAMER_NAME, SEVEN, EIGHT)),
+            Arguments.of(new Dealer(EIGHT, JACK), new Player(GAMER_NAME, JACK, QUEEN, FOUR)),
+            Arguments.of(new Dealer(ACE, FIVE), new Player(GAMER_NAME, SEVEN, SIX)),
+            Arguments.of(new Dealer(ACE, JACK, QUEEN), new Player(GAMER_NAME, QUEEN, JACK))
         );
     }
 
     @ParameterizedTest
     @MethodSource("providePlayerWinningCaseCards")
     @DisplayName("플레이어가 이기는 경우 판별 테스트")
-    void dealerIsLoser(Dealer dealer, Players players) {
-        Records records = dealer.matchAll(players);
-        assertThat(records.resultByName(GAMER_NAME)).isEqualTo(Result.WIN);
+    void dealerIsLoser(Dealer dealer, Player player) {
+        Record record = dealer.match(player);
+        assertThat(record).isEqualTo(new Record(player.name(), Result.WIN));
     }
 
     private static Stream<Arguments> providePlayerWinningCaseCards() {
         return Stream.of(
-            Arguments.of(new Dealer(SEVEN, EIGHT), Players.of(new Player(GAMER_NAME, QUEEN, JACK))),
-            Arguments.of(new Dealer(JACK, QUEEN, FOUR), Players.of(new Player(GAMER_NAME, QUEEN, JACK)))
+            Arguments.of(new Dealer(SEVEN, EIGHT), new Player(GAMER_NAME, QUEEN, JACK)),
+            Arguments.of(new Dealer(JACK, QUEEN, FOUR), new Player(GAMER_NAME, QUEEN, JACK))
         );
     }
 
@@ -70,40 +70,16 @@ public class DealerTest {
     @DisplayName("비기는 경우 판별 테스트")
     void dealerIsDraw() {
         Dealer dealer = new Dealer(JACK, FOUR);
-        Records records = dealer.matchAll(Players.of(new Player(GAMER_NAME, EIGHT, SIX)));
-        assertThat(records.resultByName(GAMER_NAME)).isEqualTo(Result.DRAW);
+        Record record = dealer.match(new Player(GAMER_NAME, EIGHT, SIX));
+        assertThat(record).isEqualTo(new Record(GAMER_NAME, Result.DRAW));
     }
 
     @Test
     @DisplayName("둘 다 버스트인 경우 테스트")
     void bothBust() {
         Dealer dealer = new Dealer(JACK, KING, SEVEN);
-        Records records = dealer.matchAll(Players.of(new Player(GAMER_NAME, EIGHT, SIX, KING)));
-        assertThat(records.resultByName(GAMER_NAME)).isEqualTo(Result.LOSS);
-    }
-
-    @Test
-    void blackjackWithTwoPlayer() {
-        Dealer dealer = new Dealer(JACK, QUEEN);
-        Player player1 = new Player(new Name("pobi"), TWO, THREE);
-        Player player2 = new Player(new Name("crong"), ACE, JACK);
-
-        Records records = dealer.matchAll(Players.of(player1, player2));
-
-        assertThat(records.resultByName(player1.name())).isEqualTo(Result.LOSS);
-        assertThat(records.resultByName(player2.name())).isEqualTo(Result.WIN);
-    }
-
-    @Test
-    void blackjackWithSameNamePlayers() {
-        Dealer dealer = new Dealer(JACK, QUEEN);
-        Player player1 = new Player(new Name("pobi"), TWO, THREE);
-        Player player2 = new Player(new Name("pobi"), ACE, JACK);
-
-        Records records = dealer.matchAll(Players.of(player1, player2));
-
-        assertThat(records.resultByName(player1.name())).isEqualTo(Result.LOSS);
-        assertThat(records.resultByName(player2.name())).isEqualTo(Result.WIN);
+        Record record = dealer.match(new Player(GAMER_NAME, EIGHT, SIX, KING));
+        assertThat(record).isEqualTo(new Record(GAMER_NAME, Result.LOSS));
     }
 
     @ParameterizedTest
