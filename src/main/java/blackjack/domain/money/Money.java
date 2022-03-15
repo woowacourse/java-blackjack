@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public class Money {
 
+    private static final double BLACKJACK_MULTIPLY = 1.5;
+    private static final long DRAW = 0;
+
     private final long value;
 
     private Money(final long value) {
@@ -37,13 +40,13 @@ public class Money {
 
     Money calculate(final Result result) {
         if (result ==  Result.BLACKJACK) {
-            return Money.from((long) (value * 1.5));
+            return Money.from((long) (value * BLACKJACK_MULTIPLY));
         }
         if (result == Result.WIN) {
             return Money.from(value);
         }
         if (result == Result.DRAW) {
-            return Money.from(0);
+            return Money.from(DRAW);
         }
         return Money.from(-value);
     }
