@@ -1,13 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.PlayingCard;
-import blackjack.domain.card.Suit;
 import blackjack.domain.cardGenerator.RandomCardGenerator;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import org.junit.jupiter.api.DisplayName;
@@ -37,5 +35,24 @@ public class CardDeckTest {
 
         //then
         assertThat(card).isEqualTo(expectedCard);
+    }
+
+    @DisplayName("카드덱에서 카드를 뽑아 player에게 전달되는지 확인")
+    @Test
+    void drawTo() {
+        //given
+        final Player dealer = new Dealer();
+
+        final PlayingCard expectedCard = new PlayingCard(Suit.CLUBS, Denomination.FIVE);
+        Deque<PlayingCard> playingCards = new ArrayDeque<>();
+        playingCards.push(expectedCard);
+        final CardDeck cardDeck = new CardDeck(() -> playingCards);
+
+        //when
+        cardDeck.drawTo(dealer);
+        final int actual = dealer.getSumOfCards();
+
+        //then
+        assertThat(actual).isEqualTo(5);
     }
 }
