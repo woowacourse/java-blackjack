@@ -53,13 +53,12 @@ class StatisticTest {
         
         @Test
         void dealerResult() {
-            assertThat(statistic.getDealerResult())
-                    .isEqualTo(Map.of(
-                                    Result.LOSE, 1,
-                                    Result.WIN, 1,
-                                    Result.DRAW, 0
-                            )
-                    );
+            assertThat(statistic.getDealerResult()).isEqualTo(Map.of(
+                            Result.LOSE, 1,
+                            Result.WIN, 1,
+                            Result.DRAW, 0
+                    )
+            );
         }
     }
     
@@ -89,13 +88,12 @@ class StatisticTest {
         
         @Test
         void dealerResult() {
-            assertThat(statistic.getDealerResult())
-                    .isEqualTo(Map.of(
-                                    Result.LOSE, 0,
-                                    Result.WIN, 2,
-                                    Result.DRAW, 0
-                            )
-                    );
+            assertThat(statistic.getDealerResult()).isEqualTo(Map.of(
+                            Result.LOSE, 0,
+                            Result.WIN, 2,
+                            Result.DRAW, 0
+                    )
+            );
         }
     }
     
@@ -128,13 +126,12 @@ class StatisticTest {
         
         @Test
         void dealerResult() {
-            assertThat(statistic.getDealerResult())
-                    .isEqualTo(Map.of(
-                                    Result.LOSE, 1,
-                                    Result.WIN, 2,
-                                    Result.DRAW, 1
-                            )
-                    );
+            assertThat(statistic.getDealerResult()).isEqualTo(Map.of(
+                            Result.LOSE, 1,
+                            Result.WIN, 2,
+                            Result.DRAW, 1
+                    )
+            );
         }
     }
 }

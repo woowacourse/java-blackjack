@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@SuppressWarnings("NonAsciiCharacters")
 class PointTest {
     
     @ParameterizedTest
@@ -18,13 +19,13 @@ class PointTest {
             "JACK,QUEEN,KING,30",
             "ACE,TEN,TEN,21",
     })
-    void get(Denomination d1, Denomination d2, Denomination d3, int expectedPoint) {
+    
+    void 올바른_포인트_계산되는지_검사(Denomination d1, Denomination d2, Denomination d3, int expectedPoint) {
         List<Card> rawCards = List.of(
                 Card.of(d1, Suit.SPADE),
                 Card.of(d2, Suit.SPADE),
                 Card.of(d3, Suit.SPADE)
         );
-        assertThat(Point.from(rawCards).get())
-                .isEqualTo(expectedPoint);
+        assertThat(Point.from(rawCards).get()).isEqualTo(expectedPoint);
     }
 }

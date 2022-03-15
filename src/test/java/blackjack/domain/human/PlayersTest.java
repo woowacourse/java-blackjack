@@ -22,8 +22,10 @@ class PlayersTest {
         Player player2 = Player.from("jason");
         Players players = Players.from(List.of(player1, player2));
         CardDeck cardDeck = CardDeck.newInstance();
+        
         players.giveCard(cardDeck);
         players.giveCard(cardDeck);
+        
         assertThat(player1.getCards().size()).isEqualTo(2);
         assertThat(player2.getCards().size()).isEqualTo(2);
     }
@@ -34,9 +36,10 @@ class PlayersTest {
         Player player2 = Player.from("jason");
         Players players = Players.from(List.of(player1, player2));
         CardDeck cardDeck = CardDeck.newInstance();
+        
         players.giveCard(cardDeck);
         players.giveCard(cardDeck);
-        assertThat(players.getPlayerNames())
-                .isEqualTo("pobi, jason");
+        
+        assertThat(players.getPlayerNames()).contains("pobi", "jason");
     }
 }

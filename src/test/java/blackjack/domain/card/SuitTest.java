@@ -15,8 +15,7 @@ class SuitTest {
             "DIAMOND,다이아몬드",
             "CLOVER,클로버"
     })
-    void 테스트(Suit expectedSuit, String inputSymbolName) {
-        assertThat(expectedSuit.getName())
-                .isEqualTo(inputSymbolName);
+    void 문양_알맞게_들어가는지_검사(Suit expectedSuit, String inputSymbolName) {
+        assertThat(expectedSuit.getName()).isEqualTo(inputSymbolName);
     }
 }

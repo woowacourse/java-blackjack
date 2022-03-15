@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.human.Players;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +20,11 @@ class BlackjackTableTest {
     @Test
     void 테이블_초기_카드나눠주기() {
         blackjackTable.initCard();
-        assertThat(blackjackTable.getPlayers().get().size() == 1 &&
-                blackjackTable.getPlayers().get().get(0).getCards().size() == 2 &&
-                blackjackTable.getDealer().getCards().size() == 2)
-                .isTrue();
+        assertAll(
+                () -> assertThat(blackjackTable.getPlayers().get().size()).isEqualTo(1),
+                () -> assertThat(blackjackTable.getPlayers().get().get(0).getCards().size()).isEqualTo(2),
+                () -> assertThat(blackjackTable.getDealer().getCards().size()).isEqualTo(2)
+        );
     }
     
     @Test

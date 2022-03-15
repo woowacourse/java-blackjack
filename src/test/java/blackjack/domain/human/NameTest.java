@@ -12,8 +12,7 @@ public class NameTest {
     
     @Test
     public void 참여자이름_객체_생성_통과() {
-        assertThat(Name.valueOf("jack").get())
-                .isEqualTo("jack");
+        assertThat(Name.valueOf("jack").get()).isEqualTo("jack");
     }
     
     @ParameterizedTest

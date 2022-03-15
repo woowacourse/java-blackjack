@@ -10,8 +10,7 @@ class CardDeckTest {
     @Test
     public void 카드덱_생성_테스트() {
         CardDeck cardDeck = CardDeck.newInstance();
-        assertThat(cardDeck.size())
-                .isEqualTo(52);
+        assertThat(cardDeck.size()).isEqualTo(52);
     }
     
     @Test

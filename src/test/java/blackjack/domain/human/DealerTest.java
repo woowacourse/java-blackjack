@@ -20,8 +20,7 @@ class DealerTest {
         dealer.addCard(card5);
         dealer.addCard(card6);
         
-        assertThat(dealer.getPoint())
-                .isEqualTo(11);
+        assertThat(dealer.getPoint()).isEqualTo(11);
     }
     
     @Test
@@ -34,7 +33,6 @@ class DealerTest {
         dealer.addCard(card5);
         dealer.addCard(card6);
         
-        assertThat(dealer.isAbleToHit())
-                .isTrue();
+        assertThat(dealer.isAbleToHit()).isTrue();
     }
 }
