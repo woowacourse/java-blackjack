@@ -1,4 +1,4 @@
-package model;
+package model.betting;
 
 public class Profit {
     private final long profit;

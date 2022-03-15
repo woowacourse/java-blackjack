@@ -3,7 +3,9 @@ package model.participator;
 import static model.participator.Dealer.DEALER_NAME;
 import static model.card.Cards.BLACK_JACK_SCORE;
 
-import model.Betting;
+import model.betting.Betting;
+import model.betting.BettingCalculateStrategy;
+import model.betting.NormalCalculateStrategy;
 import model.Result;
 
 public class Player extends Participator {
@@ -35,11 +37,16 @@ public class Player extends Participator {
     }
 
     public void lostBet(Dealer dealer) {
-        this.subtractProfit(betting.getBettingAmount());
-        dealer.addProfit(betting.getBettingAmount());
+        this.subtractProfit(betting.getBettingAmount(new NormalCalculateStrategy()));
+        dealer.addProfit(betting.getBettingAmount(new NormalCalculateStrategy()));
+    }
+
+    public void winBet(Dealer dealer, BettingCalculateStrategy strategy) {
+        dealer.subtractProfit(betting.getBettingAmount(strategy));
+        this.addProfit(betting.getBettingAmount(strategy));
     }
 
     public long getBettingAmount() {
-        return betting.getBettingAmount();
+        return betting.getBettingAmount(new NormalCalculateStrategy());
     }
 }

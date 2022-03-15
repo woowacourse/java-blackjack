@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
+import model.betting.NormalCalculateStrategy;
 import model.card.Card;
 import model.card.CardFace;
 import model.participator.Dealer;
@@ -114,5 +115,13 @@ public class PlayerTest {
         thousandBettedPlayer.lostBet(dealer);
         assertThat(thousandBettedPlayer.getProfit()).isEqualTo(-1000);
         assertThat(dealer.getProfit()).isEqualTo(1000);
+    }
+
+    @Test
+    void normalWinBet() {
+        Dealer dealer = new Dealer();
+        thousandBettedPlayer.winBet(dealer, new NormalCalculateStrategy());
+        assertThat(thousandBettedPlayer.getProfit()).isEqualTo(1000);
+        assertThat(dealer.getProfit()).isEqualTo(-1000);
     }
 }

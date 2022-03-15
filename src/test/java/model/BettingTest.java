@@ -2,6 +2,7 @@ package model;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import model.betting.Betting;
 import org.junit.jupiter.api.Test;
 
 public class BettingTest {

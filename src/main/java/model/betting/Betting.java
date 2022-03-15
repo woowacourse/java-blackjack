@@ -1,4 +1,4 @@
-package model;
+package model.betting;
 
 public class Betting {
     private final long bettingAmount;
@@ -14,7 +14,7 @@ public class Betting {
         }
     }
 
-    public long getBettingAmount() {
-        return bettingAmount;
+    public long getBettingAmount(BettingCalculateStrategy calculateStrategy) {
+        return calculateStrategy.calculate(bettingAmount);
     }
 }
