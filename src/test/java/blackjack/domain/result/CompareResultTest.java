@@ -24,7 +24,7 @@ public class CompareResultTest {
         judy.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
 
         assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy.calculateResult())).isEqualTo(CompareResult.WIN);
+                , judy)).isEqualTo(CompareResult.WIN);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class CompareResultTest {
         receiveCardBelowStandard(judy);
 
         assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy.calculateResult())).isEqualTo(CompareResult.WIN);
+                , judy)).isEqualTo(CompareResult.WIN);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class CompareResultTest {
         receiveCardOverStandard(judy);
 
         assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy.calculateResult())).isEqualTo(CompareResult.LOSE);
+                , judy)).isEqualTo(CompareResult.LOSE);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class CompareResultTest {
         receiveCardOverStandard(judy);
 
         assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy.calculateResult())).isEqualTo(CompareResult.LOSE);
+                , judy)).isEqualTo(CompareResult.LOSE);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class CompareResultTest {
         judy.receiveCard(new Card(Suit.CLOVER, Denomination.FOUR));
 
         assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy.calculateResult())).isEqualTo(CompareResult.LOSE);
+                , judy)).isEqualTo(CompareResult.LOSE);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class CompareResultTest {
         judy.receiveCard(new Card(Suit.CLOVER, Denomination.FIVE));
 
         assertThat(CompareResult.findCompareResult(dealer.calculateResult()
-                , judy.calculateResult())).isEqualTo(CompareResult.DRAW);
+                , judy)).isEqualTo(CompareResult.DRAW);
     }
 
     private void receiveCardOverStandard(final Player player) {

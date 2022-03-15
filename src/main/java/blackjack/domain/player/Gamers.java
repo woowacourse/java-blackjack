@@ -29,7 +29,7 @@ public class Gamers {
         return gamers.stream()
                 .collect(toMap(gamer -> gamer,
                         gamer -> gamer.calculateCurrentBet(
-                                CompareResult.findCompareResult(dealerPoint, gamer.calculateResult()).getResult()),
+                                CompareResult.findCompareResult(dealerPoint, gamer).getResult()),
                         (e1, e2) -> e1,
                         LinkedHashMap::new));
     }

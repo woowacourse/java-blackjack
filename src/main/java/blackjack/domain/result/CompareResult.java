@@ -1,28 +1,37 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum CompareResult {
 
-    WIN(new Keep(), CompareResult::isWin),
-    DRAW(new Draw(), CompareResult::isDraw),
-    LOSE(new Lose(), CompareResult::isLose);
+    BLACK_JACK(new BlackJack(), (dealerResult, gamer) -> isBlackJack(gamer)),
+    WIN(new Keep(), (dealerResult, gamer) -> isWin(dealerResult, gamer.calculateResult())),
+    DRAW(new Draw(), (dealerResult, gamer) -> isDraw(dealerResult, gamer.calculateResult())),
+    LOSE(new Lose(), (dealerResult, gamer) -> isLose(dealerResult, gamer.calculateResult()));
 
     private final ResultStrategy resultStrategy;
 
-    private final BiPredicate<Integer, Integer> predicate;
+    private final BiPredicate<Integer, Gamer> predicate;
 
-    CompareResult(final ResultStrategy resultStrategy, final BiPredicate<Integer, Integer> predicate) {
+    CompareResult(final ResultStrategy resultStrategy, final BiPredicate<Integer, Gamer> predicate) {
         this.resultStrategy = resultStrategy;
         this.predicate = predicate;
     }
-    public static CompareResult findCompareResult(final int dealerResult, final int gamerResult) {
+
+    public static CompareResult findCompareResult(final int dealerResult, final Gamer gamer) {
         return Arrays.stream(values())
-                .filter((result) -> result.predicate.test(dealerResult, gamerResult))
+                .filter((result) -> result.predicate.test(dealerResult, gamer))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하는 결과가 없습니다."));
+    }
+
+    private static boolean isBlackJack(Player player) {
+        return player.showCards().size() == Card.START_CARD_COUNT &&
+                player.calculateResult() == Gamer.LIMIT_GAMER_TOTAL_POINT;
     }
 
     private static boolean isWin(Integer dealerResult, Integer gamerResult) {
