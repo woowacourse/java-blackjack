@@ -1,8 +1,10 @@
 package model;
 
 import static model.card.CardFace.ACE;
+import static model.card.CardFace.EIGHT;
 import static model.card.CardFace.KING;
 import static model.card.CardFace.QUEEN;
+import static model.card.CardFace.TEN;
 import static model.card.CardFace.TWO;
 import static model.card.CardSuit.CLOVER;
 import static model.card.CardSuit.DIAMOND;
@@ -12,8 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
-import model.betting.BlackJacCalculateStrategy;
-import model.betting.NormalCalculateStrategy;
 import model.card.Card;
 import model.card.CardFace;
 import model.participator.Dealer;
@@ -118,14 +118,19 @@ public class PlayerTest {
 
     @Test
     void normalWinBet() {
-        thousandBettedPlayer.winBet(dealer, new NormalCalculateStrategy());
+        thousandBettedPlayer.receiveCard(new Card(SPADE, TEN));
+        thousandBettedPlayer.receiveCard(new Card(HEART, EIGHT));
+        thousandBettedPlayer.receiveCard(new Card(SPADE, TWO));
+        thousandBettedPlayer.winBet(dealer);
         assertThat(thousandBettedPlayer.getProfit()).isEqualTo(1000);
         assertThat(dealer.getProfit()).isEqualTo(-1000);
     }
 
     @Test
     void blackJackWinBet() {
-        thousandBettedPlayer.winBet(dealer, new BlackJacCalculateStrategy());
+        thousandBettedPlayer.receiveCard(new Card(SPADE, TEN));
+        thousandBettedPlayer.receiveCard(new Card(SPADE, ACE));
+        thousandBettedPlayer.winBet(dealer);
         assertThat(thousandBettedPlayer.getProfit()).isEqualTo(1500);
         assertThat(dealer.getProfit()).isEqualTo(-1500);
     }

@@ -1,25 +1,32 @@
 package model;
 
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import model.participator.Dealer;
 import model.participator.Player;
 
 public enum Result {
-    WIN((player, dealer) -> player.compareTo(dealer) > 0,
-            (playerSum, dealerSum) -> playerSum > dealerSum),
-    LOSE((player, dealer) -> (player.equals(Status.BUST) && dealer.equals(Status.BUST)) || player.compareTo(dealer) < 0,
-            (playerSum, dealerSum) -> playerSum < dealerSum),
+    WIN((player, dealer) -> player.compareTo(dealer) > 0 || dealer.equals(Status.BUST),
+            (playerSum, dealerSum) -> playerSum > dealerSum,
+            Player::winBet),
+    LOSE((player, dealer) -> player.compareTo(dealer) < 0,
+            (playerSum, dealerSum) -> playerSum < dealerSum,
+            (Player::lostBet)),
     DRAW((player, dealer) -> !player.equals(Status.BUST) && player.compareTo(dealer) == 0,
-            (playerSum, dealerSum) -> playerSum.equals(dealerSum));
+            Integer::equals,
+            ((player, dealer) -> {}));
 
     private final BiPredicate<Status, Status> statusCriteria;
     private final BiPredicate<Integer, Integer> cardsSumCriteria;
+    private final BiConsumer<Player, Dealer> bettingExecution;
 
     Result(BiPredicate<Status, Status> statusCriteria,
-           BiPredicate<Integer, Integer> cardsSumCriteria) {
+           BiPredicate<Integer, Integer> cardsSumCriteria,
+           BiConsumer<Player, Dealer> bettingExecution) {
         this.statusCriteria = statusCriteria;
         this.cardsSumCriteria = cardsSumCriteria;
+        this.bettingExecution = bettingExecution;
     }
 
     public static Result of(Player player, Dealer dealer) {
@@ -45,13 +52,7 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException("승부 결과를 내지 못했습니다."));
     }
 
-    public Result getOpposite() {
-        if (this.equals(WIN)) {
-            return LOSE;
-        }
-        if (this.equals(LOSE)) {
-            return WIN;
-        }
-        return this;
+    public void executeBetting(Player player, Dealer dealer) {
+        this.bettingExecution.accept(player, dealer);
     }
 }

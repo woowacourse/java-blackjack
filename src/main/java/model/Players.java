@@ -4,11 +4,12 @@ import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import model.card.CardDeck;
 import model.participator.Dealer;
-import model.participator.Participator;
+import model.matchplayerselect.MatchPlayerSelectStrategy;
 import model.participator.Player;
 
 public class Players {
@@ -56,12 +57,18 @@ public class Players {
         return findByName(name).canReceiveCard();
     }
 
-    public Map<String, Result> matchWith(Dealer dealer) {
+    public Map<Player, Result> matchWith(Dealer dealer, MatchPlayerSelectStrategy strategy) {
         return players.stream()
-                .collect(toMap(Participator::getPlayerName, player -> player.matchWith(dealer)));
+                .filter(strategy::canSelect)
+                .collect(toMap(Function.identity(), player -> player.matchWith(dealer)));
     }
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public boolean anyHasBlackJack() {
+        return players.stream()
+                .anyMatch(player -> player.getStatus().equals(Status.BLACKJACK));
     }
 }

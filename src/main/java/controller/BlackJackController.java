@@ -19,6 +19,7 @@ public class BlackJackController {
 
     public void run() {
         requestUntilValid(() -> initGame());
+        requestUntilValid(() -> matchFirstTurn());
         requestUntilValid(() -> hitPlayers());
         requestUntilValid(() -> hitDealer());
         requestUntilValid(() -> getCardsResults());
@@ -51,6 +52,10 @@ public class BlackJackController {
         OutputView.printInit(allParticipatorsDto);
     }
 
+    private void matchFirstTurn() {
+        service.matchFirstTurn();
+    }
+
     private void hitPlayers() {
         List<String> names = service.getPlayerNames();
         for (String name : names) {
@@ -71,11 +76,11 @@ public class BlackJackController {
         }
     }
 
-    private void getMatchResults() {
-        OutputView.printMatchResult(service.match());
-    }
-
     private void getCardsResults() {
         OutputView.printResult(service.getAllCardsAndSums());
+    }
+
+    private void getMatchResults() {
+        OutputView.printMatchResult(service.matchLastTurn());
     }
 }

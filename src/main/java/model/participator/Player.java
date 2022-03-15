@@ -3,14 +3,16 @@ package model.participator;
 import static model.participator.Dealer.DEALER_NAME;
 import static model.card.Cards.BLACK_JACK_SCORE;
 
+import model.Status;
 import model.betting.Betting;
 import model.betting.BettingCalculateStrategy;
+import model.betting.BlackJacCalculateStrategy;
 import model.betting.NormalCalculateStrategy;
 import model.Result;
 
 public class Player extends Participator {
     private Betting betting;
-    private boolean isMatched = false;
+    private boolean canMatch = true;
 
     private Player(String playerName, Betting betting) {
         super(playerName);
@@ -34,7 +36,7 @@ public class Player extends Participator {
     }
 
     public Result matchWith(Dealer dealer) {
-        isMatched = true;
+        canMatch = false;
         return Result.of(this, dealer);
     }
 
@@ -43,13 +45,17 @@ public class Player extends Participator {
         dealer.addProfit(betting.getBettingAmount(new NormalCalculateStrategy()));
     }
 
-    public void winBet(Dealer dealer, BettingCalculateStrategy strategy) {
+    public void winBet(Dealer dealer) {
+        BettingCalculateStrategy strategy = new NormalCalculateStrategy();
+        if (this.getStatus().equals(Status.BLACKJACK)) {
+            strategy = new BlackJacCalculateStrategy();
+        }
         dealer.subtractProfit(betting.getBettingAmount(strategy));
         this.addProfit(betting.getBettingAmount(strategy));
     }
 
-    public boolean isMatched() {
-        return isMatched;
+    public boolean canMatch() {
+        return canMatch;
     }
 
     public long getBettingAmount() {

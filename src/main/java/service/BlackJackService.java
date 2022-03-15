@@ -1,7 +1,5 @@
 package service;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 import static model.participator.Dealer.DEALER_NAME;
@@ -9,20 +7,21 @@ import static model.participator.Dealer.DEALER_NAME;
 import dto.AllCardsAndSumDto;
 import dto.AllParticipatorsDto;
 import dto.ParticipatorDto;
-import dto.TotalResultDto;
+import dto.TotalProfitDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Function;
-import model.participator.Dealer;
-import model.participator.Participator;
 import model.Players;
 import model.Result;
+import model.matchplayerselect.SelectBlackJackAndCanMatchStrategy;
+import model.matchplayerselect.SelectCanMatchStrategy;
+import model.Status;
 import model.card.Card;
 import model.card.CardDeck;
+import model.participator.Dealer;
+import model.participator.Participator;
+import model.participator.Player;
 import util.CardConvertor;
-import util.ResultConvertor;
 
 public class BlackJackService {
     private static final int INIT_CARD_COUNT = 2;
@@ -72,6 +71,12 @@ public class BlackJackService {
                 .collect(toList());
     }
 
+    public void matchFirstTurn() {
+        if(dealer.getStatus().equals(Status.BLACKJACK) || players.anyHasBlackJack()) {
+            executeBetting(players.matchWith(dealer, new SelectBlackJackAndCanMatchStrategy()));
+        }
+    }
+
     public boolean canReceiveCard(String name) {
         if (name.equals(DEALER_NAME)) {
             return dealer.canReceiveCard();
@@ -89,20 +94,16 @@ public class BlackJackService {
         return toParticipatorDto(dealer);
     }
 
-    public TotalResultDto match() {
-        Map<String, Result> playerResults = players.matchWith(dealer);
-        return new TotalResultDto(toPlayerResultDto(playerResults), toDealerResultDto(playerResults));
+    public TotalProfitDto matchLastTurn() {
+        Map<Player, Result> playerResultMap = players.matchWith(dealer, new SelectCanMatchStrategy());
+        executeBetting(playerResultMap);
+        return getTotalProfitDto(playerResultMap);
     }
 
-    private Map<String, String> toPlayerResultDto(Map<String, Result> playerMatchResults) {
-        return playerMatchResults.entrySet().stream()
-                .collect(toMap(Entry::getKey, entry -> ResultConvertor.convert(entry.getValue())));
-    }
-
-    private Map<String, Long> toDealerResultDto(Map<String, Result> playerResults) {
-        return playerResults.values().stream()
-                .map(result -> ResultConvertor.convert(result.getOpposite()))
-                .collect(groupingBy(Function.identity(), LinkedHashMap::new, counting()));
+    private TotalProfitDto getTotalProfitDto(Map<Player, Result> playerResultMap) {
+        Map<String, Long> playerProfits = playerResultMap.keySet().stream()
+                .collect(toMap(participator -> participator.getPlayerName(), participator -> participator.getProfit()));
+        return new TotalProfitDto(playerProfits, dealer.getProfit());
     }
 
     public AllCardsAndSumDto getAllCardsAndSums() {
@@ -113,5 +114,11 @@ public class BlackJackService {
     private LinkedHashMap<ParticipatorDto, Integer> getPlayerCardsAndSum() {
         return players.getPlayers().stream().collect(
                 toMap(this::toParticipatorDto, Participator::getSum, (participator, sum) -> sum, LinkedHashMap::new));
+    }
+
+    private void executeBetting(Map<Player, Result> participatorResults) {
+        for (Player player : participatorResults.keySet()) {
+            participatorResults.get(player).executeBetting(player, dealer);
+        }
     }
 }
