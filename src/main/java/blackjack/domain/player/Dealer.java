@@ -8,8 +8,7 @@ public class Dealer extends AbstractPlayer implements Player {
     public static final int HIT_MAX_POINT = 16;
 
     public Dealer(String name, PlayingCards playingCards) {
-        this.name = name;
-        this.playingCards = playingCards;
+        super(name, playingCards);
     }
 
     public Dealer() {

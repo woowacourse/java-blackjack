@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ class GuestTest {
     @Test
     @DisplayName("guest 객체 생성 확인")
     void createGuest() {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
 
         assertThat(guest).isInstanceOf(Guest.class);
     }
@@ -24,11 +25,11 @@ class GuestTest {
     @Test
     @DisplayName("카드를 할당 받았는지 확인")
     void checkAddCardToDeck() {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
         PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.FOUR);
         guest.addCard(playingCard);
 
-        Guest compareGuest = new Guest("compare_guest");
+        Guest compareGuest = new Guest("compare_guest", new PlayingCards());
         compareGuest.addCard(playingCard);
 
         assertThat(guest).isEqualTo(compareGuest);
@@ -37,7 +38,7 @@ class GuestTest {
     @Test
     @DisplayName("플레이어가 Bust인 경우")
     void checkPlayerIsBust() {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.TWO));
@@ -48,7 +49,7 @@ class GuestTest {
     @Test
     @DisplayName("플레이어가 Bust가 아닌 경우")
     void checkPlayerIsNotBust() {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
@@ -60,7 +61,7 @@ class GuestTest {
     @CsvSource(value = {"SPADE:TWO:JACK:false", "SPADE:JACK:TWO:true"}, delimiter = ':')
     @DisplayName("플레이어 승패 확인")
     void checkPlayerResult(Suit suit, Denomination denomination, Denomination secondDenomination, boolean expected) {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(suit, denomination));
 
         Dealer dealer = new Dealer();
@@ -73,7 +74,7 @@ class GuestTest {
     @CsvSource(value = {"SPADE:JACK:JACK", "SPADE:ACE:ACE"}, delimiter = ':')
     @DisplayName("플레이어와 딜러 무승부 확인")
     void checkPlayerDraw(Suit suit, Denomination denomination, Denomination secondDenomination) {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(suit, denomination));
 
         Dealer dealer = new Dealer();
@@ -85,7 +86,7 @@ class GuestTest {
     @Test
     @DisplayName("Hit 확인: 넘치지 않은 경우")
     void checkCanHit() {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
 
@@ -95,7 +96,7 @@ class GuestTest {
     @Test
     @DisplayName("Hit 확인: 넘친 경우")
     void checkCantHit() {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));

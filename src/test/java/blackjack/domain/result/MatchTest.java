@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -21,7 +22,7 @@ class MatchTest {
     @DisplayName("승무패 결정 로직 확인")
     public void checkInitCardFindWinner(Suit suit, Suit secondSuit, Denomination denomination,
                                         Denomination secondDenomination, Denomination thirdDenomination, Match result) {
-        Player guest = new Guest("green");
+        Player guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(suit, denomination));
         guest.addCard(new PlayingCard(secondSuit, secondDenomination));
 
@@ -37,7 +38,7 @@ class MatchTest {
     @DisplayName("처음 2장의 카드 이후(플레이어는 블랙잭이 아닌 21, 딜러는 블랙잭인 경우): 승무패 결정 로직 확인")
     public void checkBlackjackDealer(Suit suit, Suit secondSuit, Denomination denomination, Denomination secondDenomination,
                                      Denomination thirdDenomination, Match result) {
-        Player guest = new Guest("green");
+        Player guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(suit, denomination));
         guest.addCard(new PlayingCard(secondSuit, thirdDenomination));
         guest.addCard(new PlayingCard(secondSuit, thirdDenomination));
@@ -54,7 +55,7 @@ class MatchTest {
     @DisplayName("처음 2장의 카드 이후(플레이어는 블랙잭이 아닌 21, 딜러는 블랙잭인 경우): 승무패 결정 로직 확인")
     public void checkWinner(Suit suit, Suit secondSuit, Denomination denomination, Denomination secondDenomination,
                                   Denomination thirdDenomination, Match result) {
-        Player guest = new Guest("green");
+        Player guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(suit, denomination));
         guest.addCard(new PlayingCard(secondSuit, thirdDenomination));
         guest.addCard(new PlayingCard(secondSuit, thirdDenomination));
@@ -71,7 +72,7 @@ class MatchTest {
     @DisplayName("플레이어와 딜러 승무패 확인: 딜러보다 점수가 적지만, 딜러가 bust인 경우")
     public void checkWinnerGuest(Suit suit, Suit secondSuit, Suit thirdSuit, Denomination denomination,
                                  Denomination secondDenomination, Denomination thirdDenomination, Match result) {
-        Player guest = new Guest("green");
+        Player guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(suit, denomination));
         guest.addCard(new PlayingCard(secondSuit, secondDenomination));
 
@@ -88,7 +89,7 @@ class MatchTest {
     @DisplayName("플레이어와 딜러 승무패 확인: 게스트보다 점수가 적지만, 게스트가 bust인 경우")
     public void checkWinnerDealer(Suit suit, Suit secondSuit, Suit thirdSuit, Denomination denomination,
                                   Denomination secondDenomination, Denomination thirdDenomination, Match result) {
-        Player guest = new Guest("green");
+        Player guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(suit, thirdDenomination));
         guest.addCard(new PlayingCard(secondSuit, thirdDenomination));
         guest.addCard(new PlayingCard(thirdSuit, thirdDenomination));

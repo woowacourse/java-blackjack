@@ -25,7 +25,7 @@ class BlackjackGameTest {
     @DisplayName("게임 계산 결과: 딜러가 이긴 경우 확인")
     void isDealerBlackjack() {
         List<Player> players = new ArrayList<>();
-        Guest guest = new Guest("haha");
+        Guest guest = new Guest("guest", new PlayingCards());
         Dealer dealer = new Dealer();
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
@@ -48,7 +48,7 @@ class BlackjackGameTest {
     @DisplayName("게임 계산 결과: 플레이어가 이긴 경우 확인")
     void isPlayerBlackjack() {
         List<Player> players = new ArrayList<>();
-        Guest guest = new Guest("haha");
+        Guest guest = new Guest("guest", new PlayingCards());
         Dealer dealer = new Dealer();
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
         guest.addCard(new PlayingCard(Suit.SPADE, Denomination.TEN));
@@ -72,7 +72,7 @@ class BlackjackGameTest {
     @DisplayName("카드가 뽑히는지 확인")
     void pickCard() {
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
-        Guest guest = new Guest("haha");
+        Guest guest = new Guest("guest", new PlayingCards());
         BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), new ArrayList<>());
         blackjackGame.assignCard(guest, playingCardFixMachine);
         blackjackGame.assignCard(guest, playingCardFixMachine);

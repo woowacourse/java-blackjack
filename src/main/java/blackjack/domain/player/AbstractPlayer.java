@@ -5,8 +5,13 @@ import blackjack.domain.card.PlayingCards;
 
 public abstract class AbstractPlayer implements Player {
 
-    protected PlayingCards playingCards;
     protected String name;
+    protected PlayingCards playingCards;
+
+    protected AbstractPlayer(String name, PlayingCards playingCards) {
+        this.name = name;
+        this.playingCards = playingCards;
+    }
 
     @Override
     public void addCard(PlayingCard playingCard) {

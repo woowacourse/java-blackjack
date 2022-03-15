@@ -4,9 +4,8 @@ import blackjack.domain.card.PlayingCards;
 
 public class Guest extends AbstractPlayer implements Player {
 
-    public Guest(String name) {
-        this.playingCards = new PlayingCards();
-        this.name = name;
+    public Guest(String name, PlayingCards playingCards) {
+        super(name, playingCards);
     }
 
     @Override

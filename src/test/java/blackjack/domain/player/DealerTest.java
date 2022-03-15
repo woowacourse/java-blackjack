@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -58,7 +59,7 @@ class DealerTest {
     @CsvSource(value = {"SPADE:TWO:JACK:true", "SPADE:JACK:TWO:false"}, delimiter = ':')
     @DisplayName("딜러 승패 확인")
     void checkDealerResult(Suit suit, Denomination denomination, Denomination secondDenomination, boolean expected) {
-        Guest guest = new Guest("guest");
+        Guest guest = new Guest("guest", new PlayingCards());
         guest.addCard(new PlayingCard(suit, denomination));
 
         Dealer dealer = new Dealer();
