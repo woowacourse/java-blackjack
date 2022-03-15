@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.List;
 
@@ -8,11 +8,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import blackjack.domain.card.CardFactory;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
-import blackjack.domain.card.Cards;
 
 public class CardsTest {
 
