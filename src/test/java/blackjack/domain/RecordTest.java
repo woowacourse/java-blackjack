@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.machine.CardPickMachine;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -18,6 +19,7 @@ public class RecordTest {
     private Blackjack blackjack;
     private Player player;
     private Dealer dealer;
+    private CardPickMachine cardPickMachine;
 
     @BeforeEach
     void setUp() {
@@ -25,6 +27,7 @@ public class RecordTest {
         blackjack = new Blackjack(playerNames);
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 8));
         blackjack.dealInitialCards(intendedNumberGenerator);
+        cardPickMachine = new CardPickMachine();
 
         //dealer: 12점, player: 12점
         player = blackjack.getPlayers().get(0);
@@ -35,7 +38,7 @@ public class RecordTest {
     @Test
     void dealerBurst() {
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(10));
-        Card card = dealer.handOutCard(intendedNumberGenerator);
+        Card card =cardPickMachine.pickCard(intendedNumberGenerator);
         dealer.addCard(card);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.VICTORY);
@@ -45,7 +48,7 @@ public class RecordTest {
     @Test
     void playerBurst() {
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(10));
-        Card card = dealer.handOutCard(intendedNumberGenerator);
+        Card card = cardPickMachine.pickCard(intendedNumberGenerator);
         player.addCard(card);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
@@ -55,11 +58,11 @@ public class RecordTest {
     @Test
     void dealerPlayerBurst() {
         IntendedNumberGenerator intendedNumberGenerator1 = new IntendedNumberGenerator(List.of(10));
-        Card card1 = dealer.handOutCard(intendedNumberGenerator1);
+        Card card1 = cardPickMachine.pickCard(intendedNumberGenerator1);
         player.addCard(card1);
 
         IntendedNumberGenerator intendedNumberGenerator2 = new IntendedNumberGenerator(List.of(9));
-        Card card2 = dealer.handOutCard(intendedNumberGenerator2);
+        Card card2 = cardPickMachine.pickCard(intendedNumberGenerator2);
         dealer.addCard(card2);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
@@ -76,12 +79,12 @@ public class RecordTest {
     void ordinaryDefeatTest() {
         // 7하트
         IntendedNumberGenerator intendedNumberGenerator1 = new IntendedNumberGenerator(List.of(18));
-        Card card1 = dealer.handOutCard(intendedNumberGenerator1);
+        Card card1 = cardPickMachine.pickCard(intendedNumberGenerator1);
         player.addCard(card1);
 
         // 9하트
         IntendedNumberGenerator intendedNumberGenerator2 = new IntendedNumberGenerator(List.of(20));
-        Card card2 = dealer.handOutCard(intendedNumberGenerator2);
+        Card card2 = cardPickMachine.pickCard(intendedNumberGenerator2);
         dealer.addCard(card2);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
@@ -91,12 +94,12 @@ public class RecordTest {
     @Test
     void ordinaryVictoryTest() {
         IntendedNumberGenerator intendedNumberGenerator1 = new IntendedNumberGenerator(List.of(20));
-        Card card1 = dealer.handOutCard(intendedNumberGenerator1);
+        Card card1 = cardPickMachine.pickCard(intendedNumberGenerator1);
         System.out.println(card1.getName());
         player.addCard(card1);
 
         IntendedNumberGenerator intendedNumberGenerator2 = new IntendedNumberGenerator(List.of(18));
-        Card card2 = dealer.handOutCard(intendedNumberGenerator2);
+        Card card2 = cardPickMachine.pickCard(intendedNumberGenerator2);
         System.out.println(card2.getName());
         dealer.addCard(card2);
 

@@ -38,6 +38,10 @@ public class Players {
         return findPlayer(player).isBurst();
     }
 
+    public boolean isPlayerBlackJack(Player player) {
+        return findPlayer(player).isBlackjack();
+    }
+
     public void next() {
         turn++;
     }

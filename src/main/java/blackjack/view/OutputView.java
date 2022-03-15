@@ -21,6 +21,7 @@ public class OutputView {
     private static final String RESULT_MESSAGE = "## 최종 승패";
     private static final String COLON = ": ";
     private static final String BLANK = " ";
+    private static final String BLACKJACK_MESSAGE = "는 블랙잭입니다!";
 
     public static void printInitStatus(Dealer dealer, List<Player> players) {
         System.out.println();
@@ -101,5 +102,9 @@ public class OutputView {
         Map<String, String> outcome = playerResultDto.getOutcome();
         outcome.keySet()
                 .forEach(player -> System.out.println(player + COLON + outcome.get(player)));
+    }
+
+    public static void printBlackjack(Participant participant) {
+        System.out.println(participant.getName() + BLACKJACK_MESSAGE);
     }
 }

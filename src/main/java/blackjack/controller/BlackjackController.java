@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.machine.Blackjack;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.strategy.RandomNumberGenerator;
 import blackjack.view.InputView;
@@ -27,7 +28,15 @@ public class BlackjackController {
 
     private void progressBlackjack() {
         while (blackjack.isDealOneMore()) {
-            askDealCard(blackjack.getNextPlayer());
+            askDealCardToPlayer(blackjack.getNextPlayer());
+        }
+        askDealCardToDealer(blackjack.getDealer());
+    }
+
+    private void askDealCardToDealer(Dealer dealer) {
+        if(blackjack.isBlackjack(dealer)) {
+            OutputView.printBlackjack(dealer);
+            return;
         }
 
         if (blackjack.dealAdditionalCardToDealer(RandomNumberGenerator.getInstance())) {
@@ -35,7 +44,12 @@ public class BlackjackController {
         }
     }
 
-    private void askDealCard(Player player) {
+    private void askDealCardToPlayer(Player player) {
+        if(blackjack.isBlackjack(player)) {
+            OutputView.printBlackjack(player);
+            return;
+        }
+
         while (!blackjack.isPlayerBurst(player) && InputView.askAdditionalCard(player)) {
             blackjack.dealAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
             OutputView.printCards(blackjack.findPlayer(player));

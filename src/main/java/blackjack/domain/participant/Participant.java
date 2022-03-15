@@ -37,6 +37,10 @@ public abstract class Participant {
         return score() > Score.CONDITION_BURST;
     }
 
+    public boolean isBlackjack() {
+        return score() == Score.CONDITION_BURST;
+    }
+
     public List<Card> getMyCards() {
         return myCards;
     }

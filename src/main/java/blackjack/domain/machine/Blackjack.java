@@ -1,5 +1,6 @@
 package blackjack.domain.machine;
 
+import blackjack.domain.participant.Participant;
 import java.util.List;
 
 import blackjack.domain.dto.ResultDto;
@@ -43,6 +44,10 @@ public class Blackjack {
 
     public boolean isPlayerBurst(Player player) {
         return players.isPlayerBurst(player);
+    }
+
+    public boolean isBlackjack(Participant participant) {
+        return participant.isBlackjack();
     }
 
     public Player getNextPlayer() {
