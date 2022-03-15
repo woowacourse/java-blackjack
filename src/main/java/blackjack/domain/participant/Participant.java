@@ -27,6 +27,10 @@ public abstract class Participant {
         return cards.isBusted();
     }
 
+    protected boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public Name getName() {
         return name;
     }

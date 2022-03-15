@@ -34,11 +34,16 @@ public class Cards {
         int sum = getLowestSum();
 
         for (Card card : cards) {
-            if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
-                sum += ACE_ADDITIONAL_NUMBER;
-            }
+            sum = updateSum(sum, card);
         }
 
+        return sum;
+    }
+
+    private int updateSum(int sum, Card card) {
+        if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
+            sum += ACE_ADDITIONAL_NUMBER;
+        }
         return sum;
     }
 
@@ -51,6 +56,18 @@ public class Cards {
 
     public boolean isBusted() {
         return getBestPossible() > BUST_THRESHOLD;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && containsAce() && containsJQK();
+    }
+
+    private boolean containsAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+
+    private boolean containsJQK() {
+        return cards.stream().anyMatch(Card::isJQK);
     }
 
     public List<Card> getCards() {

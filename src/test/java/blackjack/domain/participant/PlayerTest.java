@@ -81,7 +81,7 @@ class PlayerTest {
         assertThat(player.calculateBestScore()).isEqualTo(21);
     }
 
-    @DisplayName("플레이어의 점수가 더 높은 경우 승리 테스트")
+    @DisplayName("플레이어의 점수가 더 높은 경우 승리")
     @Test
     void isWinner_Player20_isWin() {
         Player player = Player.of("쿼리치");
@@ -97,7 +97,7 @@ class PlayerTest {
         assertThat(player.isWinner(dealer)).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("딜러의 점수가 더 높은 경우 패배 테스트")
+    @DisplayName("딜러의 점수가 더 높은 경우 패배")
     @Test
     void isWinner_Player20_isLose() {
         Player player = Player.of("쿼리치");
@@ -113,7 +113,7 @@ class PlayerTest {
         assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
     }
 
-    @DisplayName("플레이어가 버스트된 경우 패배 테스트")
+    @DisplayName("플레이어가 버스트된 경우 패배")
     @Test
     void isWinner_PlayerBusted_isLose() {
         Player player = Player.of("쿼리치");
@@ -130,7 +130,7 @@ class PlayerTest {
         assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
     }
 
-    @DisplayName("딜러가 버스트된 경우 승리 테스트")
+    @DisplayName("딜러가 버스트된 경우 승리")
     @Test
     void isWinner_DealerBusted_isWin() {
         Player player = Player.of("쿼리치");
@@ -147,7 +147,7 @@ class PlayerTest {
         assertThat(player.isWinner(dealer)).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("둘 다 버스트된 경우 패배 테스트")
+    @DisplayName("둘 다 버스트된 경우 패배")
     @Test
     void isWinner_BothBusted_isLose() {
         Player player = Player.of("쿼리치");
@@ -165,7 +165,7 @@ class PlayerTest {
         assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
     }
 
-    @DisplayName("동일한 점수를 가질 경우 무승부 테스트")
+    @DisplayName("동일한 점수를 가질 경우 무승부")
     @Test
     void isWinner_SameScore_isDraw() {
         Player player = Player.of("쿼리치");
@@ -181,7 +181,7 @@ class PlayerTest {
         assertThat(player.isWinner(dealer)).isEqualTo(Result.DRAW);
     }
 
-    @DisplayName("동일한 점수를 가지고 버스트된 경우 패배 테스트")
+    @DisplayName("동일한 점수를 가지고 버스트된 경우 패배")
     @Test
     void isWinner_SameScoreAndBothBusted_isLose() {
         Player player = Player.of("쿼리치");
@@ -195,6 +195,56 @@ class PlayerTest {
                 new Card(Number.EIGHT, Kind.HEART),
                 new Card(Number.NINE, Kind.HEART),
                 new Card(Number.TEN, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("플레이어만 블랙잭일 경우 승리")
+    @Test
+    void isWinner_PlayerIsOnlyBlackJack_isWin() {
+        Player player = Player.of("쿼리치");
+        player.receive(new Cards(List.of(
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.KING, Kind.SPADE))));
+
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.ACE, Kind.HEART),
+                new Card(Number.JACK, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.WIN);
+    }
+
+    @DisplayName("둘 다 블랙잭일 경우 무승부")
+    @Test
+    void isWinner_BothAreBlackJack_isDraw() {
+        Player player = Player.of("쿼리치");
+        player.receive(new Cards(List.of(
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.KING, Kind.SPADE))));
+
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.ACE, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
+
+        assertThat(player.isWinner(dealer)).isEqualTo(Result.DRAW);
+    }
+
+    @DisplayName("딜러만 블랙잭일 경우 패배")
+    @Test
+    void isWinner_dealerIsOnlyBlackJack_isLose() {
+        Player player = Player.of("쿼리치");
+        player.receive(new Cards(List.of(
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.JACK, Kind.SPADE),
+                new Card(Number.KING, Kind.SPADE))));
+
+        Dealer dealer = new Dealer();
+        dealer.receive(new Cards(List.of(
+                new Card(Number.ACE, Kind.HEART),
+                new Card(Number.KING, Kind.HEART))));
 
         assertThat(player.isWinner(dealer)).isEqualTo(Result.LOSE);
     }
