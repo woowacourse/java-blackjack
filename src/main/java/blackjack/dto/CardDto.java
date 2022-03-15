@@ -13,7 +13,7 @@ public class CardDto {
     }
 
     public static CardDto from(Card card) {
-        return new CardDto(card.getPatternName(), card.getNumberName());
+        return new CardDto(card.getPatternName(), card.getCardNumber().getName());
     }
 
     public String getCardNumber() {
