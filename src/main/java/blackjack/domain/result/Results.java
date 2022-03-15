@@ -18,18 +18,6 @@ public class Results {
 
     private final Map<Player, MatchResult> results = new LinkedHashMap<>();
 
-    public void addResult(Player player, Match result) {
-        results.put(player, results.getOrDefault(player, new MatchResult()).addMatchResult(result));
-    }
-
-    public Set<Player> getPlayers() {
-        return Collections.unmodifiableSet(results.keySet());
-    }
-
-    public MatchResult getResult(Player player) {
-        return results.get(player);
-    }
-
     public void competeDealerWithPlayers() {
         Player dealer = players.getPlayers()
                 .stream()
@@ -53,5 +41,17 @@ public class Results {
         Match dealerResult = result.getDealerResult();
         addResult(dealer, dealerResult);
         addResult(guest, result);
+    }
+
+    public void addResult(Player player, Match result) {
+        results.put(player, results.getOrDefault(player, new MatchResult()).addMatchResult(result));
+    }
+
+    public Set<Player> getPlayers() {
+        return Collections.unmodifiableSet(results.keySet());
+    }
+
+    public MatchResult getResult(Player player) {
+        return results.get(player);
     }
 }

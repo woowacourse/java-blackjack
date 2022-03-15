@@ -5,7 +5,6 @@ import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.PlayingCard;
-import blackjack.domain.card.PlayingCardShuffleMachine;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
@@ -23,7 +22,7 @@ public class BlackjackGame {
         this.playingCards = Deck.getPlayingCards();
     }
 
-    public void initGames(List<String> playerNames, PlayingCardShuffleMachine playingCardShuffleMachine) {
+    public void initGames(List<String> playerNames, CardShuffleMachine playingCardShuffleMachine) {
         initPlayers(playerNames);
         initCards(playingCardShuffleMachine);
     }
@@ -37,7 +36,7 @@ public class BlackjackGame {
         blackjackPlayers = new Players(players);
     }
 
-    private void initCards(PlayingCardShuffleMachine playingCardShuffleMachine) {
+    private void initCards(CardShuffleMachine playingCardShuffleMachine) {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
             blackjackPlayer.addCard(playingCardShuffleMachine.assignCard(playingCards));
             blackjackPlayer.addCard(playingCardShuffleMachine.assignCard(playingCards));
@@ -60,13 +59,13 @@ public class BlackjackGame {
         return checkGetMoreCard(player);
     }
 
-    public boolean checkGetMoreCard(Player player) {
-        return !player.isCanHit();
+    private boolean checkGetMoreCard(Player player) {
+        return player.isCanHit();
     }
 
     public boolean turnDealer(CardShuffleMachine playingCardShuffleMachine) {
         Player dealer = blackjackPlayers.getDealer();
-        if (!dealer.isCanHit()) {
+        if (dealer.isCanHit()) {
             addCard(dealer, playingCardShuffleMachine);
             return true;
         }
