@@ -44,7 +44,7 @@ public final class Players {
     
     public void giveCard(CardDeck cardDeck) {
         for (Player player : players) {
-            player.addCard(cardDeck.draw());
+            player.addCard(cardDeck.pop());
         }
     }
     

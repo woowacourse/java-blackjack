@@ -22,7 +22,7 @@ public final class BlackjackTable {
     
     public void initCard() {
         for (int i = 0; i < Constants.INIT_CARD_NUMBER; i++) {
-            dealer.addCard(cardDeck.draw());
+            dealer.addCard(cardDeck.pop());
             players.giveCard(cardDeck);
         }
     }

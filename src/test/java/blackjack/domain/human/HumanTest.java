@@ -16,7 +16,7 @@ class HumanTest {
     void addCard() {
         // given
         Human human = Player.from("test");
-        Card card = Card.of(Denomination.valueof("10"), Suit.SPADE);
+        Card card = Card.of(Denomination.stringOf("10"), Suit.SPADE);
         
         // when
         human.addCard(card);
@@ -30,8 +30,8 @@ class HumanTest {
     public void isBustTest() {
         // given
         Human human = Player.from("test");
-        Card card5 = Card.of(Denomination.valueof("10"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.valueof("10"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.stringOf("10"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.stringOf("10"), Suit.SPADE);
         
         // when
         human.addCard(card5);
@@ -47,8 +47,8 @@ class HumanTest {
     public void isBustFalseTest() {
         // given
         Human human = Player.from("test");
-        Card card5 = Card.of(Denomination.valueof("10"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.valueof("10"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.stringOf("10"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.stringOf("10"), Suit.SPADE);
         
         // when
         human.addCard(card5);
@@ -63,8 +63,8 @@ class HumanTest {
     void getInitCardTest() {
         // given
         Human human = Player.from("test");
-        Card card = Card.of(Denomination.valueof("10"), Suit.SPADE);
-        Card card2 = Card.of(Denomination.valueof("2"), Suit.SPADE);
+        Card card = Card.of(Denomination.stringOf("10"), Suit.SPADE);
+        Card card2 = Card.of(Denomination.stringOf("2"), Suit.SPADE);
         
         // when
         human.addCard(card);
@@ -79,8 +79,8 @@ class HumanTest {
     void getPointTest() {
         // given
         Human human = Player.from("test");
-        Card card = Card.of(Denomination.valueof("5"), Suit.SPADE);
-        Card card2 = Card.of(Denomination.valueof("A"), Suit.SPADE);
+        Card card = Card.of(Denomination.stringOf("5"), Suit.SPADE);
+        Card card2 = Card.of(Denomination.stringOf("A"), Suit.SPADE);
         
         // when
         human.addCard(card);
@@ -103,8 +103,8 @@ class HumanTest {
         // given
         Cards cards = new Cards();
         Human human = Player.from("test");
-        Card card = Card.of(Denomination.valueof("5"), Suit.SPADE);
-        Card card2 = Card.of(Denomination.valueof("A"), Suit.SPADE);
+        Card card = Card.of(Denomination.stringOf("5"), Suit.SPADE);
+        Card card2 = Card.of(Denomination.stringOf("A"), Suit.SPADE);
         
         // when
         human.addCard(card);

@@ -4,8 +4,8 @@ import blackjack.domain.card.group.Cards;
 import blackjack.util.Constants;
 
 public final class Point {
-    public static final int ACE_MINUS_NUMBER = 10;
-    public static final int MIN_ACE_COUNT = 0;
+    private static final int ACE_MINUS_NUMBER = 10;
+    private static final int MIN_ACE_COUNT = 0;
     
     private final int value;
     
@@ -17,15 +17,15 @@ public final class Point {
         return new Point(cards);
     }
     
+    public int get() {
+        return value;
+    }
+    
     private static int computeWithAce(int point, int aceCount) {
         if (point > Constants.BLACKJACK_NUMBER && aceCount > MIN_ACE_COUNT) {
             point -= ACE_MINUS_NUMBER;
             return computeWithAce(point, --aceCount);
         }
         return point;
-    }
-    
-    public int get() {
-        return value;
     }
 }

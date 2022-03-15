@@ -22,8 +22,8 @@ class PlayerTest {
     public void addCardTest() {
         // given
         Player player = Player.from("test");
-        Card card5 = Card.of(Denomination.valueof("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.valueof("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.stringOf("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.stringOf("6"), Suit.SPADE);
         
         // when
         player.addCard(card5);
@@ -38,8 +38,8 @@ class PlayerTest {
     public void isTwoCardTest() {
         // given
         Player player = Player.from("test");
-        Card card5 = Card.of(Denomination.valueof("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.valueof("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.stringOf("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.stringOf("6"), Suit.SPADE);
         
         // when
         player.addCard(card5);
@@ -54,8 +54,8 @@ class PlayerTest {
     public void equalPointTest() {
         // given
         Player player = Player.from("test");
-        Card card5 = Card.of(Denomination.valueof("2"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.valueof("9"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.stringOf("2"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.stringOf("9"), Suit.SPADE);
         
         // when
         player.addCard(card5);

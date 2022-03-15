@@ -11,6 +11,10 @@ public final class Cards {
         this.cards = new ArrayList<>();
     }
     
+    public Cards(Cards copiedCards) {
+        this.cards = List.copyOf(copiedCards.cards);
+    }
+    
     public void add(final Card card) {
         cards.add(card);
     }

@@ -36,7 +36,7 @@ public final class GameController {
     
     private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
         while (!player.isBust() && InputView.inputOneMoreCard(player.getName())) {
-            player.addCard(cardDeck.draw());
+            player.addCard(cardDeck.pop());
             OutputView.printHumanHand(player);
         }
         if (player.isTwoCard()) {
@@ -47,7 +47,7 @@ public final class GameController {
     private void hitOrStayDealer(final BlackjackTable blackjackTable) {
         Dealer dealer = blackjackTable.getDealer();
         if (dealer.isAbleToHit()) {
-            dealer.addCard(blackjackTable.getCardDeck().draw());
+            dealer.addCard(blackjackTable.getCardDeck().pop());
             OutputView.printDealerHit();
         }
     }

@@ -9,8 +9,8 @@ public final class Name {
     private final String value;
     
     private Name(final String input) {
-        this.value = input;
         validateName(input);
+        this.value = input;
     }
     
     public static Name valueOf(final String name) {

@@ -98,7 +98,7 @@
 - [ ] players test 추가
 - [x] resultStatistic 로직 수정
 - [x] Point 생성자 인자를 Cards로 변경 및 메소드 Cards로 이동
-- [ ] 
+- [ ] 조합으로 구현로직 변경
 - [ ] 
 
 - [x] final 적용

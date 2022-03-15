@@ -22,7 +22,7 @@ public final class ResultStatistic {
     }
     
     public Map<Result, Integer> getDealerResults() {
-        return dealerResults;
+        return (dealerResults);
     }
     
     public Map<Player, Result> getPlayersResult() {

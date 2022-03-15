@@ -13,7 +13,11 @@ class CardDeckTest {
     @DisplayName("카드덱 생성되는지 검사")
     public void createTest() {
         CardDeck cardDeck = CardDeck.newInstance();
-        assertThat(cardDeck.size()).isEqualTo(52);
+        assertThat(cardDeck)
+                .extracting("value")
+                .asList()
+                .size()
+                .isEqualTo(52);
     }
     
     @Test
@@ -23,10 +27,13 @@ class CardDeckTest {
         CardDeck cardDeck = CardDeck.newInstance();
         
         // when
-        cardDeck.draw();
+        cardDeck.pop();
         
         // then
-        assertThat(cardDeck.size()).isEqualTo(51);
+        assertThat(cardDeck)
+                .extracting("value")
+                .asList()
+                .size().isEqualTo(51);
     }
     
     @Test
@@ -37,11 +44,11 @@ class CardDeckTest {
         
         // when
         for (int i = 0; i < 52; i++) {
-            cardDeck.draw();
+            cardDeck.pop();
         }
         
         // then
-        assertThatThrownBy(cardDeck::draw)
+        assertThatThrownBy(cardDeck::pop)
                 .isInstanceOf(Exception.class)
                 .hasMessage("덱에 남은 카드가 없습니다");
     }

@@ -20,10 +20,6 @@ public abstract class Human {
         cards.add(card);
     }
     
-    public boolean isBust() {
-        return getPoint() > BLACKJACK_NUMBER;
-    }
-    
     public Card getInitCard() {
         return cards.getFirstCard();
     }
@@ -32,12 +28,16 @@ public abstract class Human {
         return Point.fromCards(cards).get();
     }
     
+    public boolean isBust() {
+        return getPoint() > BLACKJACK_NUMBER;
+    }
+    
     public String getName() {
         return name.get();
     }
     
     public Cards getCards() {
-        return cards;
+        return new Cards(cards);
     }
     
     @Override
