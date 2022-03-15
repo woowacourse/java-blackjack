@@ -71,12 +71,15 @@ public class OutputView {
 
 	private static void printDealerFinalResult(final Role result) {
 		System.out.print(result.getName() + SPACE + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCardsInformation()));
-		System.out.println(RESULT + result.calculateFinalResult());
+		printPersonalFinalResult(result);
 	}
 
 	private static void printPlayerFinalResult(final Role result) {
 		System.out.print(result.getName() + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
+		printPersonalFinalResult(result);
+	}
+
+	private static void printPersonalFinalResult(final Role result) {
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCardsInformation()));
 		System.out.println(RESULT + result.calculateFinalResult());
 	}
