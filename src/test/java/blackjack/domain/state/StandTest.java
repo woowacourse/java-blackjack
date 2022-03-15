@@ -38,4 +38,11 @@ class StandTest {
         final BlackjackGameState stand = new Stand(createCards(Card.of(SPADE, KING), Card.of(SPADE, FIVE)));
         assertThat(stand.isFinished()).isTrue();
     }
+
+    @Test
+    @DisplayName("Stand는 score를 계산할 수 있다.")
+    void score() {
+        final BlackjackGameState stand = new Stand(createCards(Card.of(SPADE, KING), Card.of(SPADE, FIVE)));
+        assertThat(stand.score()).isEqualTo(15);
+    }
 }

@@ -25,7 +25,7 @@ public abstract class Finished extends AbstractBlackjackGameState {
     }
 
     @Override
-    public int score() {
-        return 0;
+    public final int score() {
+        return cards.calculateScore();
     }
 }
