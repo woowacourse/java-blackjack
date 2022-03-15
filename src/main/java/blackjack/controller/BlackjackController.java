@@ -33,6 +33,10 @@ public class BlackjackController {
                 .map(ParticipantDto::from)
                 .collect(Collectors.toList());
 
+        printInitialInfo(playerDtos, dealerDto);
+    }
+
+    private void printInitialInfo(List<ParticipantDto> playerDtos, ParticipantDto dealerDto) {
         OutputView.printInitialDistributionInfo(playerDtos);
         OutputView.printInitialDealerHand(dealerDto);
         OutputView.printInitialPlayersHand(playerDtos);
