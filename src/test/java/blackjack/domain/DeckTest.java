@@ -14,7 +14,7 @@ public class DeckTest {
 
     @BeforeAll
     static void setUp() {
-        deck = Deck.generateDeck();
+        deck = Deck.makeBlackjackDeck();
     }
 
     @DisplayName("카드 중복생성 안되는지 테스트")

@@ -35,7 +35,8 @@ public class Player {
 
     private int rawScore() {
         return myCards.stream()
-                .mapToInt(Card::getNumber)
+                .map(Card::type)
+                .mapToInt(BlackjackCardType::score)
                 .sum();
     }
 
@@ -53,7 +54,8 @@ public class Player {
 
     public boolean containAceCard() {
         List<String> cardNames = myCards.stream()
-                .map(Card::getName)
+                .map(Card::type)
+                .map(BlackjackCardType::getName)
                 .map(name -> name.substring(SUBSTRING_INDEX_START, SUBSTRING_INDEX_END))
                 .collect(Collectors.toList());
         return cardNames.contains(ACE);

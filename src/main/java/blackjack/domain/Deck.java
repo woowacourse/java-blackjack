@@ -1,44 +1,27 @@
 package blackjack.domain;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
-    private static final String FILE_PATH = "src/main/java/blackjack/domain/CardType";
-    private static final String FILE_IO_EXCEPTION = "[ERROR] 파일 입력 에러";
     private static final String NO_AVAILABLE_CARD_EXCEPTION = "[ERROR] 덱이 비었습니다.";
-    private static final String FILE_CONTENT_DELIMITER = " ";
-    private static final int NAME_INDEX = 0;
-    private static final int VALUE_INDEX = 1;
 
     private final List<Card> cards;
     private final List<Boolean> isExist;
 
-    private Deck() {
-        this.cards = new ArrayList<>();
-        this.isExist = new ArrayList<>();
-        addCardsFromFile();
+    private Deck(List<Card> cards) {
+        this.cards = cards;
+        this.isExist = new ArrayList<>(Collections.nCopies(cards.size(), true));
     }
 
-    private void addCardsFromFile() {
-        try {
-            BufferedReader bufReader = new BufferedReader(new FileReader(FILE_PATH));
-            String line;
-            while ((line = bufReader.readLine()) != null) {
-                List<String> nameAndValue = List.of(line.split(FILE_CONTENT_DELIMITER));
-                cards.add(Card.generateCard(nameAndValue.get(NAME_INDEX)
-                        , Integer.parseInt(nameAndValue.get(VALUE_INDEX))));
-                isExist.add(true);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(FILE_IO_EXCEPTION);
-        }
-    }
-
-    public static Deck generateDeck() {
-        return new Deck();
+    public static Deck makeBlackjackDeck() {
+        List<Card> cards = Arrays.stream(BlackjackCardType.values())
+                .map(Card::generateCard)
+                .collect(Collectors.toList());
+        return new Deck(cards);
     }
 
     public Card randomPick(NumberGenerator numberGenerator) {

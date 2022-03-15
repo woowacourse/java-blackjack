@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.BlackjackCardType;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
@@ -40,7 +41,8 @@ public class OutputView {
 
     private static String makeStatusFormat(String name, List<Card> cards) {
         List<String> cardNames = cards.stream()
-                .map(Card::getName)
+                .map(Card::type)
+                .map(BlackjackCardType::getName)
                 .collect(Collectors.toList());
         return name + NAME_CARD_DELIMITER + String.join(NAME_DELIMITER, cardNames);
     }

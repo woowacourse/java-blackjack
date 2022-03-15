@@ -23,8 +23,6 @@ public class BlackjackTest {
         blackjack.distributeInitialCards(intendedNumberGenerator);
         int playerCardNum = blackjack.getPlayers().getPlayers().get(0).getMyCards().size();
         int dealerCardNum = blackjack.getDealer().getMyCards().size();
-        System.out.println(playerCardNum);
-        System.out.println(dealerCardNum);
         assertThat(playerCardNum == 2 && dealerCardNum == 2).isTrue();
     }
 

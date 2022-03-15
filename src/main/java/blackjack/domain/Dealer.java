@@ -11,7 +11,7 @@ public class Dealer extends Player {
 
     public Dealer() {
         super(NAME);
-        deck = Deck.generateDeck();
+        deck = Deck.makeBlackjackDeck();
     }
 
     public Card handOutCard(NumberGenerator numberGenerator) {

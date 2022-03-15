@@ -15,6 +15,6 @@ public class DealerTest {
         NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(2));
         Card card = dealer.handOutCard(numberGenerator);
 
-        assertThat(card.getName()).isEqualTo("3다이아몬드");
+        assertThat(card.type()).isEqualTo(BlackjackCardType.DIAMOND_3);
     }
 }

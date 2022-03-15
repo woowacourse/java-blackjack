@@ -3,24 +3,18 @@ package blackjack.domain;
 import java.util.Objects;
 
 public class Card {
-    private final String name;
-    private final int number;
+    private final BlackjackCardType type;
 
-    private Card(String name, int number) {
-        this.name = name;
-        this.number = number;
+    private Card(BlackjackCardType type) {
+        this.type = type;
     }
 
-    public static Card generateCard(String name, int number) {
-        return new Card(name, number);
+    public static Card generateCard(BlackjackCardType type) {
+        return new Card(type);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getNumber() {
-        return number;
+    public BlackjackCardType type() {
+        return type;
     }
 
     @Override
@@ -32,11 +26,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return Objects.equals(name, card.name);
+        return Objects.equals(type, card.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(type);
     }
 }
