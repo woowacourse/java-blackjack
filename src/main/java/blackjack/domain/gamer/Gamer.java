@@ -23,23 +23,15 @@ public class Gamer {
     }
 
     private void validateEmpty(String name) {
-        if (isEmpty(name)) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(NAME_EMPTY_ERROR_MESSAGE);
         }
     }
 
-    private boolean isEmpty(String name) {
-        return name == null || name.isBlank();
-    }
-
     private void validateLength(String name) {
-        if (isWrongLength(name)) {
+        if (name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException(NAME_LENGTH_ERROR_MESSAGE);
         }
-    }
-
-    private boolean isWrongLength(String name) {
-        return name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH;
     }
 
     public void addCard(Card card) {
