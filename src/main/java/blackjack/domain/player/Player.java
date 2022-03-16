@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    private static final int MAX_SCORE_TO_RECEIVE_CARD = 21;
     private static final int FIRST_OPEN_COUNT = 2;
 
     public Player(String name, Cards cards) {
@@ -25,12 +24,7 @@ public class Player extends Participant {
     }
 
     public boolean isPossibleToHit(DrawStatus drawStatus) {
-        return isRangeScoreToReceive() && isHit(drawStatus);
-    }
-
-    @Override
-    public boolean isRangeScoreToReceive() {
-        return cards.calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
+        return isBust() && isHit(drawStatus);
     }
 
     @Override

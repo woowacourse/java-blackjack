@@ -70,7 +70,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 카드의 총합이 21이하일 경우, 카드를 더 받을 수 있다.")
+    @DisplayName("플레이어는 카드의 총합이 21이하일 경우, bust가 아니고 카드를 더 받을 수 있다.")
     void possibleToReceivedCard() {
         Cards cards = new Cards(Arrays.asList(
                 new Card(CardPattern.HEART, CardNumber.TEN),
@@ -79,13 +79,13 @@ class PlayerTest {
         ));
         Player player = new Player("slow", cards);
 
-        final boolean actual = player.isRangeScoreToReceive();
+        final boolean actual = player.isBust();
 
-        assertThat(actual).isTrue();
+        assertThat(actual).isFalse();
     }
 
     @Test
-    @DisplayName("플레이어는 카드의 총합이 21을 초과할 경우, 카드를 더 받을 수 없다.")
+    @DisplayName("플레이어는 카드의 총합이 21을 초과할 경우, bust이므로 카드를 더 받을 수 없다.")
     void impossibleToReceivedCard() {
         Cards cards = new Cards(Arrays.asList(
                 new Card(CardPattern.HEART, CardNumber.TEN),
@@ -94,8 +94,8 @@ class PlayerTest {
         ));
         Player player = new Player("slow", cards);
 
-        final boolean actual = player.isRangeScoreToReceive();
+        final boolean actual = player.isBust();
 
-        assertThat(actual).isFalse();
+        assertThat(actual).isTrue();
     }
 }

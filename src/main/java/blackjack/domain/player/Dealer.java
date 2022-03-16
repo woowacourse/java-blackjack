@@ -13,14 +13,13 @@ public class Dealer extends Participant {
         super("딜러", cards);
     }
 
-    @Override
-    public List<Card> openFirstCards() {
-        return cards.getCards().subList(0, FIRST_OPEN_COUNT);
+    public boolean isRangeScoreToReceive() {
+        return cards.calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
     }
 
     @Override
-    public boolean isRangeScoreToReceive() {
-        return cards.calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
+    public List<Card> openFirstCards() {
+        return cards.getCards().subList(0, FIRST_OPEN_COUNT);
     }
 
     @Override

@@ -45,7 +45,5 @@ public abstract class Participant {
 
     public abstract List<Card> openFirstCards();
 
-    public abstract boolean isRangeScoreToReceive();
-
     public abstract boolean isBust();
 }
