@@ -1,5 +1,6 @@
 package blackJack.controller;
 
+import blackJack.domain.card.Deck;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,7 @@ import blackJack.view.OutputView;
 public class BlackJackController {
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
+        BlackJackGame blackJackGame = new BlackJackGame(Deck.create(), getParticipants());
 
         defaultRound(blackJackGame);
         additionalRound(blackJackGame);

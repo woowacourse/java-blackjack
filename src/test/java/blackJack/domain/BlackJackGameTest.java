@@ -2,6 +2,7 @@ package blackJack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import blackJack.domain.card.Deck;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ class BlackJackGameTest {
     void createValidDealer() {
         Participants participants = new Participants(new Dealer(), List.of(new Player("rookie")));
 
-        assertThat(new BlackJackGame(participants)).isNotNull();
+        assertThat(new BlackJackGame(Deck.create(), participants)).isNotNull();
     }
 
     @Test
@@ -28,7 +29,7 @@ class BlackJackGameTest {
         Player player2 = new Player("rookie");
         Participants participants = new Participants(new Dealer(), List.of(player1, player2));
 
-        BlackJackGame blackJackGame = new BlackJackGame(participants);
+        BlackJackGame blackJackGame = new BlackJackGame(Deck.create(), participants);
         blackJackGame.defaultDistributeCards();
 
         assertThat(player1.getCards().size()).isEqualTo(2);
