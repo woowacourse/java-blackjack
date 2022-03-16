@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String NEW_LINE = System.lineSeparator();
+    public static final String NEW_LINE = System.lineSeparator();
     private static final String JOIN_DELIMITER = ", ";
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "%s에게 2장의 카드를 나누었습니다." + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s 카드: %s";
