@@ -3,24 +3,21 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
 
     @Test
-    void 카드덱에_중복되지않은_52장이_들어오지_않는_경우_예외발생() {
-        final Queue<Card> cards = new ArrayDeque<>();
-        assertThatThrownBy(() -> new CardDeck(cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드 덱은 중복되지 않은 52장으로만 생성할 수 있습니다.");
-    }
-
-    @Test
     void 셔플된_카드덱_생성() {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
         assertThat(cardDeck).isInstanceOf(CardDeck.class);
+    }
+
+    @Test
+    void cards가_null이_들어올_경우_예외발생() {
+        assertThatThrownBy(() -> new CardDeck(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("cards는 null이 들어올 수 없습니다.");
     }
 
     @Test
