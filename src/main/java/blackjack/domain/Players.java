@@ -59,12 +59,12 @@ public class Players {
         return getCurrentTurnPlayer().isBust();
     }
 
-    public boolean hasNoNext() {
-        return currentTurnIndex + ONE_INDEX >= players.size();
+    public boolean isLastPlayerTurn() {
+        return currentTurnIndex + ONE_INDEX > players.size();
     }
 
     public void proceedTurn() {
-        if (hasNoNext()) {
+        if (isLastPlayerTurn()) {
             throw new IllegalStateException("proceed 할 수 없습니다.");
         }
         currentTurnIndex++;

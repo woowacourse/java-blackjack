@@ -62,6 +62,6 @@ public class BlackjackGame {
     }
 
     public boolean isEndAllPlayersTurn() {
-        return players.hasNoNext();
+        return players.isLastPlayerTurn();
     }
 }

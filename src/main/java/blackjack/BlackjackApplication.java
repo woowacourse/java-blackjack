@@ -45,12 +45,10 @@ public class BlackjackApplication {
     }
 
     private static void takeTurnPlayers(BlackjackGame blackjackGame) {
-        Selection selection = Selection.YES;
-        while (selection == Selection.YES && !blackjackGame.isEndAllPlayersTurn()) {
-            selection = Selection.from(requestDrawCommand(blackjackGame.getNowTurnPlayerName()));
+        while (!blackjackGame.isEndAllPlayersTurn()) {
+            Selection selection = Selection.from(requestDrawCommand(blackjackGame.getNowTurnPlayerName()));
             takeTurn(blackjackGame, selection);
         }
-
     }
 
     private static void takeTurn(BlackjackGame blackjackGame, Selection selection) {

@@ -116,6 +116,31 @@ public class PlayersTest {
 
     @Nested
     @DisplayName("isBustNowTurnPlayer는")
+    class IsBustNowTurnPlayer {
+
+        @ParameterizedTest
+        @CsvSource(value = {"ACE|false", "QUEEN|true"}, delimiter = '|')
+        @DisplayName("현재 차례의 플레이어가 버스트되었는지 확인한다.")
+        void checkBustCurrentTurnPlayer(CardNumber cardNumber, boolean expected) {
+            Player roma = new Player("roma");
+            Player tonic = new Player("tonic");
+            Players players = new Players(List.of(roma, tonic));
+
+            MockDeck mockDeck = new MockDeck(List.of(
+                    Card.of(CardPattern.CLOVER, CardNumber.QUEEN),
+                    Card.of(CardPattern.CLOVER, CardNumber.QUEEN),
+                    Card.of(CardPattern.DIAMOND, cardNumber)
+            ));
+            for (int i = 0; i < 3; i++) {
+                players.drawPlayerCard(mockDeck);
+            }
+
+            assertThat(players.isBustCurrentTurnPlayer()).isEqualTo(expected);
+        }
+    }
+
+    @Nested
+    @DisplayName("isBustNowTurnPlayer는")
     class isBustNowTurnPlayer {
 
         @ParameterizedTest
