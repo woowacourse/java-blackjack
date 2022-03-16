@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final int MIN_SIZE = 2;
+    private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 8;
 
     private final List<Player> participants;
