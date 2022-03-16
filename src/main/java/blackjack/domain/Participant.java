@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
     private Name name;
@@ -33,7 +34,7 @@ public abstract class Participant {
         private final String name;
 
         private Name(String name) {
-            if (name.isEmpty()) {
+            if (Objects.isNull(name) || name.isEmpty()) {
                 throw new IllegalArgumentException("[ERROR] 빈 이름은 사용할 수 없습니다.");
             }
             this.name = name;
