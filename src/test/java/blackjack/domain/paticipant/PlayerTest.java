@@ -8,8 +8,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.state.BlackjackGameState;
-import blackjack.domain.state.PlayerRunning;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,12 +17,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 class PlayerTest {
 
     private Cards cards;
-    private BlackjackGameState runningState;
 
     @BeforeEach
     void setup() {
         cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
-        runningState = new PlayerRunning(cards);
     }
 
     @Test
