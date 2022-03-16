@@ -1,8 +1,9 @@
 package blackjack.domain.card;
 
 import blackjack.domain.game.Score;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Card {
     private final CardRank rank;
@@ -35,21 +36,29 @@ public class Card {
     }
 
     private static class CardCache {
-        static Set<Card> cache = new HashSet<>();
+        private static final String NOT_EXISTING_CARD_EXCEPTION_MESSAGE = "존재하지 않는 카드입니다.";
+
+        private static final Set<Card> cache;
+
+        static {
+            cache = Stream.of(CardSymbol.values())
+                    .flatMap(symbol -> Stream.of(CardRank.values())
+                            .map(rank -> new Card(rank, symbol)))
+                    .collect(Collectors.toSet());
+        }
 
         static Card getCache(CardRank rank, CardSymbol symbol) {
             return cache.stream()
-                    .filter(card -> card.rank == rank)
-                    .filter(card -> card.symbol == symbol)
+                    .filter(card -> isSameCard(card, rank, symbol))
                     .findAny()
-                    .orElseGet(() -> createNewCache(rank, symbol));
+                    .orElseThrow(() -> new IllegalArgumentException(NOT_EXISTING_CARD_EXCEPTION_MESSAGE));
         }
 
-        static Card createNewCache(CardRank rank, CardSymbol symbol) {
-            Card newCard = new Card(rank, symbol);
-            cache.add(newCard);
+        private static boolean isSameCard(Card card, CardRank rank, CardSymbol symbol) {
+            boolean isSameRank = card.rank == rank;
+            boolean isSameSymbol = card.symbol == symbol;
 
-            return newCard;
+            return isSameRank && isSameSymbol;
         }
     }
 }
