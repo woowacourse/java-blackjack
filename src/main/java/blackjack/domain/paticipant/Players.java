@@ -25,7 +25,8 @@ public class Players {
         return new Players(
                 names.stream()
                         .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList())
+        );
     }
 
     private void checkPlayersSize(final List<Player> players) {
