@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Money;
+import blackjack.domain.Record;
 
 public class Player extends Participant {
 
@@ -15,16 +16,24 @@ public class Player extends Participant {
         money.init(bettingAmount);
     }
 
-    public void updateBlackjackPrize() {
-        money.multiply();
-    }
+    public void calculatePrize(final boolean isDealerBlackjack, final int dealerScore) {
+        if (isDealerBlackjack && isBlackjack()) {
+            money.toZero();
+            return;
+        }
 
-    public void updatePushPrize() {
-        money.toZero();
-    }
+        if (isBlackjack()) {
+            money.multiply();
+            return;
+        }
 
-    public void updateNegativePrize() {
-        money.toNegative();
+        final Record playerRecord = Record.of(dealerScore, getScore());
+        if (playerRecord == Record.PUSH) {
+            money.toZero();
+        }
+        if (playerRecord == Record.LOSS) {
+            money.toNegative();
+        }
     }
 
     public int getPrize() {
