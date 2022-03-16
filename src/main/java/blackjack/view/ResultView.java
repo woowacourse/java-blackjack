@@ -36,10 +36,10 @@ public class ResultView {
         System.out.printf(DEALER_MESSAGE_FORMAT, dealer.getName());
     }
 
-    private static void printNamesOf(final List<Participant> gamers) {
+    private static void printNamesOf(final List<Participant> players) {
         final StringJoiner nameJoiner = new StringJoiner(DELIMITER);
-        for (Participant gamer : gamers) {
-            nameJoiner.add(gamer.getName());
+        for (Participant player : players) {
+            nameJoiner.add(player.getName());
         }
         System.out.printf(GAMERS_MESSAGE_FORMAT, nameJoiner);
     }
@@ -48,9 +48,9 @@ public class ResultView {
         System.out.printf(DEALER_AND_CARD_MESSAGE_FORMAT, dealer.getName(), dealer.getCards().get(0));
     }
 
-    private static void printNamesAndCardsOf(final List<Participant> gamers) {
-        for (Participant gamer : gamers) {
-            print(gamer.getName(), gamer.getCards());
+    private static void printNamesAndCardsOf(final List<Participant> players) {
+        for (Participant player : players) {
+            print(player.getName(), player.getCards());
         }
     }
 

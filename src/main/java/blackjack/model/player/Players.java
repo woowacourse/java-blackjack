@@ -41,9 +41,7 @@ public class Players {
     }
 
     public List<Participant> getPlayerGroup() {
-        return values.stream()
-                .map(Participant::getCopyInstance)
-                .collect(Collectors.toUnmodifiableList());
+        return values;
     }
 }
 

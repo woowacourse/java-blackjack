@@ -65,6 +65,6 @@ public class BlackjackGame {
     }
 
     public Participant getDealer() {
-        return dealer.getCopyInstance();
+        return dealer;
     }
 }

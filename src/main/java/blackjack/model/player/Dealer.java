@@ -28,10 +28,6 @@ public class Dealer extends Participant {
         this.state = null;
     }
 
-    public List<String> getCards() {
-        return state.getCards();
-    }
-
     @Override
     public Participant drawCardsBy(final CardDeck deck) {
         Cards copyOfCards = null;
@@ -49,12 +45,6 @@ public class Dealer extends Participant {
     @Override
     public Participant hitBy(final CardDeck deck) {
         State state = this.state.addCard(deck.draw());
-        return new Dealer(state);
-    }
-
-    @Override
-    public Participant getCopyInstance() {
-        State state = this.state.getCopyInstance();
         return new Dealer(state);
     }
 

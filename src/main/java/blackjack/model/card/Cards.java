@@ -30,7 +30,7 @@ public class Cards {
         return values.size() == START_CARD_COUNT;
     }
 
-    public List<String> getValues() {
+    public List<String> getCardGroup() {
         return values.stream()
                 .map(card -> card.getNumberOfString() + card.getSymbol())
                 .collect(Collectors.toUnmodifiableList());

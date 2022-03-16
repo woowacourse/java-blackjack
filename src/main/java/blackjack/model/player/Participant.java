@@ -29,15 +29,15 @@ public abstract class Participant {
         }
     }
 
-    public abstract Participant drawCardsBy(final CardDeck cardDeck);
-
     public String getName() {
         return name;
     }
 
-    public abstract List<String> getCards();
+    public List<String> getCards() {
+        return cards.getCardGroup();
+    }
 
-    public abstract Participant getCopyInstance();
+    public abstract Participant drawCardsBy(final CardDeck cardDeck);
 
     public abstract boolean canHit();
 
