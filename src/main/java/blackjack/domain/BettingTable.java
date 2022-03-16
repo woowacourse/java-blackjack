@@ -1,9 +1,8 @@
-package blackjack;
+package blackjack.domain;
 
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.PlayRecord;
 import blackjack.domain.participant.Name;
 
 public class BettingTable {

@@ -1,12 +1,12 @@
-package blackjack;
+package blackjack.domain;
 
 import java.util.Map;
 import java.util.Objects;
 
-import blackjack.domain.PlayRecord;
 import blackjack.domain.participant.Name;
 
 public class Betting {
+
     private final Name name;
     private final long money;
 

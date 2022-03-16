@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import blackjack.Betting;
-import blackjack.BettingTable;
+import blackjack.domain.Betting;
+import blackjack.domain.BettingTable;
 import blackjack.domain.Game;
 import blackjack.domain.PlayRecord;
 import blackjack.domain.PlayStatus;
@@ -37,6 +37,18 @@ public class GameController {
         playRecord(game, bettings);
     }
 
+    private List<Name> getNames() {
+        return requestPlayerNames().stream()
+            .map(Name::of)
+            .collect(toUnmodifiableList());
+    }
+
+    private List<Betting> getBettings(List<Name> names) {
+        return names.stream()
+            .map(name -> new Betting(name, inputBettingMoney(name)))
+            .collect(toUnmodifiableList());
+    }
+
     private Game initPlay(List<Name> names) {
         Game game = new Game(new CardDeck(new RandomDeck()), names);
 
@@ -47,18 +59,6 @@ public class GameController {
         }
         printEmptyLine();
         return game;
-    }
-
-    private List<Betting> getBettings(List<Name> names) {
-        return names.stream()
-            .map(name -> new Betting(name, inputBettingMoney(name)))
-            .collect(toUnmodifiableList());
-    }
-
-    private List<Name> getNames() {
-        return requestPlayerNames().stream()
-            .map(Name::of)
-            .collect(toUnmodifiableList());
     }
 
     private ParticipantDto convertToDto(Participant participant) {
