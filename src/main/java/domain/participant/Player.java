@@ -2,6 +2,7 @@ package domain.participant;
 
 public class Player extends Participant {
 
+    private static final int MAX_SCORE = 21;
     private static final int COMPARE_CRITERIA = 0;
 
     public Player(String name) {

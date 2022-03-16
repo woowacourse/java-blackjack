@@ -13,8 +13,6 @@ import static java.lang.Integer.compare;
 
 public abstract class Participant implements Comparable<Participant> {
 
-    protected static final int MAX_SCORE = 21;
-
     protected final Cards cards;
     protected final Name name;
 
@@ -41,7 +39,7 @@ public abstract class Participant implements Comparable<Participant> {
     }
 
     private boolean isBust() {
-        return calculateScore() > MAX_SCORE;
+        return cards.isBust();
     }
 
     public String getName() {

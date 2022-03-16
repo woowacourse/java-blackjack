@@ -55,6 +55,10 @@ public class Cards {
                 .sum();
     }
 
+    public boolean isBust() {
+        return calculateScore() > MAX_SCORE;
+    }
+
     public void addCard(Card card) {
         this.cards.add(card);
     }
