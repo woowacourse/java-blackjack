@@ -22,7 +22,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players fromNamesAndGeustHitStrategy(List<String> names, HitStrategy hitStrategy) {
+    public static Players fromNamesAndGuestHitStrategy(List<String> names, HitStrategy hitStrategy) {
         validate(names);
         List<Player> allPlayers = new ArrayList<>(toPlayers(names, hitStrategy));
         allPlayers.add(new Dealer());
@@ -57,16 +57,16 @@ public class Players {
         }
     }
 
-    public void playersHit(Deck deck, Consumer<Player> outputResultFunction) {
+    public void playersHit(Deck deck, Consumer<Player> hitCallback) {
         for (Player player : players) {
-            hitOrStand(player, deck, outputResultFunction);
+            hitOrStand(player, deck, hitCallback);
         }
     }
 
-    private void hitOrStand(Player player, Deck deck, Consumer<Player> outputResultFunction) {
+    private void hitOrStand(Player player, Deck deck, Consumer<Player> hitCallback) {
         while (player.isHittable()) {
             player.hit(deck.draw());
-            outputResultFunction.accept(player);
+            hitCallback.accept(player);
         }
     }
 

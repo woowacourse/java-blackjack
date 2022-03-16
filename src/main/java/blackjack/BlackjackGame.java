@@ -18,7 +18,7 @@ public class BlackjackGame {
 
     public void run() {
         Deck deck = new Deck();
-        Players players = Players.fromNamesAndGeustHitStrategy(
+        Players players = Players.fromNamesAndGuestHitStrategy(
                 InputView.inputPlayerName(),
                 (player) -> HitFlag.fromCommand(InputView.inputHitOrStand(player.getName()))
         );
