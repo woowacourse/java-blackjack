@@ -55,4 +55,106 @@ public class PlayerTest {
 
         assertThat(player).isNotEqualTo(otherDealer);
     }
+
+    @DisplayName("카드 숫자의 합이 21이상 이면 true를 반환한다.")
+    @Test
+    void finish_true() {
+        Player player = new Player("리버");
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.EIGHT, TrumpSymbol.HEART));
+        player.receive(new Card(TrumpNumber.THREE, TrumpSymbol.HEART));
+
+        assertThat(player.isFinish()).isTrue();
+    }
+
+    @DisplayName("카드 숫자의 합이 21미만 이면 false를 반환한다.")
+    @Test
+    void finish_false() {
+        Player player = new Player("리버");
+        player.receive(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.FIVE, TrumpSymbol.HEART));
+
+        assertThat(player.isFinish()).isFalse();
+    }
+
+    @DisplayName("카드 숫자의 합이 21을 초과하면 true를 반환한다.")
+    @Test
+    void bust_false() {
+        Participant player = new Player("리버");
+        player.receive(new Card(TrumpNumber.SEVEN, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.FIVE, TrumpSymbol.HEART));
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.HEART));
+
+        assertThat(player.isBust()).isTrue();
+    }
+
+    @DisplayName("카드 숫자의 합이 21이하 이면 false를 반환한다.")
+    @Test
+    void bust_true() {
+        Participant player = new Player("리버");
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.EIGHT, TrumpSymbol.HEART));
+        player.receive(new Card(TrumpNumber.THREE, TrumpSymbol.HEART));
+
+        assertThat(player.isBust()).isFalse();
+    }
+
+    @DisplayName("카드 숫자의 합이 21이고 카드가 두장이면 true를 반환한다.")
+    @Test
+    void blackjack_true() {
+        Participant player = new Player("리버");
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.ACE, TrumpSymbol.HEART));
+
+        assertThat(player.isBlackjack()).isTrue();
+    }
+
+    @DisplayName("카드 숫자의 합이 21이고 카드가 두장이 아니면 false를 반환한다.")
+    @Test
+    void blackjack_false() {
+        Participant player = new Player("리버");
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.EIGHT, TrumpSymbol.HEART));
+        player.receive(new Card(TrumpNumber.THREE, TrumpSymbol.HEART));
+
+        assertThat(player.isBlackjack()).isFalse();
+    }
+
+    @DisplayName("카드 숫자의 합이 21이 아니고 카드가 두장이면 false를 반환한다.")
+    @Test
+    void blackjack_false_2() {
+        Participant player = new Player("리버");
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.EIGHT, TrumpSymbol.HEART));
+
+        assertThat(player.isBust()).isFalse();
+    }
+
+    @DisplayName("다른 참가자보다 카드숫자 합이 높으면 true를 반환한다.")
+    @Test
+    void win_true(){
+        Participant player = new Player("리버");
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.EIGHT, TrumpSymbol.HEART));
+
+        Participant otherPlayer = new Player("포키");
+        otherPlayer.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        otherPlayer.receive(new Card(TrumpNumber.SEVEN, TrumpSymbol.HEART));
+
+        assertThat(player.isWinBy(otherPlayer)).isTrue();
+    }
+
+    @DisplayName("다른 참가자보다 카드숫자 합이 낮으면 false를 반환한다.")
+    @Test
+    void win_false(){
+        Participant player = new Player("리버");
+        player.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        player.receive(new Card(TrumpNumber.SEVEN, TrumpSymbol.HEART));
+
+        Participant otherPlayer = new Player("포키");
+        otherPlayer.receive(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+        otherPlayer.receive(new Card(TrumpNumber.EIGHT, TrumpSymbol.HEART));
+
+        assertThat(player.isWinBy(otherPlayer)).isFalse();
+    }
 }

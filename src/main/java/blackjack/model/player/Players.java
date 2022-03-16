@@ -2,6 +2,7 @@ package blackjack.model.player;
 
 import blackjack.model.card.CardDeck;
 
+import blackjack.model.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,9 +36,17 @@ public class Players {
 
     public Players drawBy(final CardDeck cardDeck) {
         List<Participant> copyOfValues = values.stream()
-                .map(player -> player.receive(cardDeck.draw()))
+                .map(player -> draw(player, cardDeck))
                 .collect(Collectors.toUnmodifiableList());
         return new Players(copyOfValues);
+    }
+
+    private Participant draw(Participant player, CardDeck cardDeck) {
+        Participant copyOfPlayer = null;
+        for (int i = 0; i < Cards.START_CARD_COUNT; i++) {
+            copyOfPlayer = player.receive(cardDeck.draw());
+        }
+        return copyOfPlayer;
     }
 
     public List<Participant> getPlayerGroup() {
