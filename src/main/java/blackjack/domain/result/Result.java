@@ -26,16 +26,6 @@ public enum Result {
                 .orElseThrow(NullPointerException::new);
     }
 
-    public static Result swap(Result result) {
-        if (result == WIN) {
-            return LOSE;
-        }
-        if (result == LOSE) {
-            return WIN;
-        }
-        return result;
-    }
-
     public String getName() {
         return name;
     }
