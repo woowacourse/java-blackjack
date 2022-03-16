@@ -3,11 +3,16 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Gamer {
-	protected final Cards cards = new Cards();
+	protected final Cards cards;
 	protected final Name name;
 
-	protected Gamer(Name name) {
+	protected Gamer(Cards cards, Name name) {
+		this.cards = cards;
 		this.name = name;
+	}
+
+	protected Gamer() {
+		this(new Cards(), new Name());
 	}
 
 	public void addCards(List<Card> cards) {

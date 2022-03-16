@@ -4,7 +4,7 @@ public class Dealer extends Gamer {
 	private static final int HIT_THRESHOLD = 17;
 
 	public Dealer() {
-		super(new Name("딜러"));
+		super(new Cards(), new Name("딜러"));
 	}
 
 	@Override

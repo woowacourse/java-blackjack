@@ -17,6 +17,10 @@ public class Name {
 		this.name = name;
 	}
 
+	public Name() {
+		this("");
+	}
+
 	public String getName() {
 		return name;
 	}
