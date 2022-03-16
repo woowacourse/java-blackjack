@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-import java.util.List;
-import java.util.regex.Pattern;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class Participant {
     private static final String DEALER_NAME = "딜러";
@@ -49,7 +49,7 @@ public class Participant {
         }
     }
 
-    public void betMoney(int betting) {
+    public void bet(int betting) {
         this.betting = betting;
     }
 

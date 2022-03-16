@@ -21,14 +21,18 @@ public class BlackJackController {
 
         startGame(blackJack, blackJackDto);
 
-        for (Participant player : blackJack.getPlayers()) {
-            player.betMoney(inputView.askBettingAmount(player.getName()));
-        }
+        betMoney(blackJack);
 
         decidePlayersReceivingAdditionalCard(blackJack, blackJackDto);
         decideDealerReceivingAdditionalCard(blackJack, blackJackDto);
         finishGame(blackJack, blackJackDto);
         inputView.terminate();
+    }
+
+    private void betMoney(BlackJack blackJack) {
+        for (Participant player : blackJack.getPlayers()) {
+            player.bet(inputView.askBettingAmount(player.getName()));
+        }
     }
 
     private void startGame(BlackJack blackJack, BlackJackDto blackJackDto) {

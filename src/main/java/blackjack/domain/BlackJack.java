@@ -25,11 +25,14 @@ public class BlackJack {
 
     public static BlackJack createFrom(List<String> playerNames) {
         validatePlayerNumber(playerNames);
-        List<Participant> players = playerNames.stream()
+
+        return new BlackJack(Participant.createDealer(), createPlayers(playerNames));
+    }
+
+    private static List<Participant> createPlayers(List<String> playerNames) {
+        return playerNames.stream()
             .map(Participant::createPlayer)
             .collect(Collectors.toList());
-
-        return new BlackJack(Participant.createDealer(), players);
     }
 
     private static void validatePlayerNumber(List<String> players) {
