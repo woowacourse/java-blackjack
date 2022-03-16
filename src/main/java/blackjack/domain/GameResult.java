@@ -6,6 +6,7 @@ import java.util.function.BiPredicate;
 
 public enum GameResult {
 
+    BLACKJACK("패", (dealer, gamblers) -> isGamblerBlackJack(gamblers)),
     WIN("승", GameResult::isDealerWin),
     DRAW("무", GameResult::isDraw),
     LOSE("패", GameResult::isDealerLose),
@@ -20,9 +21,6 @@ public enum GameResult {
     }
 
     public static GameResult of(final Player dealer, final Player gambler) {
-        if (gambler.isBlackjack()){
-            return LOSE;
-        }
         if (containsBurst(dealer, gambler)) {
             return getBurstResult(dealer, gambler);
         }
@@ -30,6 +28,10 @@ public enum GameResult {
             .filter(it -> it.condition.test(dealer, gambler))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 점수가 입력되었습니다."));
+    }
+
+    private static boolean isGamblerBlackJack(Player gamblers) {
+        return gamblers.isBlackjack();
     }
 
     private static boolean containsBurst(final Player dealer, final Player gambler) {
@@ -42,6 +44,9 @@ public enum GameResult {
         }
         if (!dealer.isBurst() && gambler.isBurst()) {
             return WIN;
+        }
+        if (dealer.isBurst() && gambler.isBlackjack()){
+            return BLACKJACK;
         }
         return LOSE;
     }

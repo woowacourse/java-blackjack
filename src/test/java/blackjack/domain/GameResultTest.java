@@ -111,6 +111,31 @@ class GameResultTest {
         assertThat(result).isEqualTo(GameResult.LOSE);
     }
 
+    @DisplayName("딜러가 버스트이면서 겜블러가 블랙잭인 경우, 단순 패배가 아니라 블랙잭으로 인한 패배 결과 객체를 반환하는지 확인한다.")
+    @Test
+    void burst_dealer_and_gambler_blackjack_lose() {
+        //given
+        cardDeck = createCardDeck(
+            new PlayingCard(Suit.CLUBS, Denomination.ACE),
+            new PlayingCard(Suit.CLUBS, Denomination.KING),
+            new PlayingCard(Suit.HEARTS, Denomination.KING),
+            new PlayingCard(Suit.HEARTS, Denomination.JACK),
+            new PlayingCard(Suit.HEARTS, Denomination.QUEEN)
+        );
+        this.cardDeck.drawTo(dealer);
+        this.cardDeck.drawTo(dealer);
+        this.cardDeck.drawTo(dealer);
+
+        this.cardDeck.drawTo(gambler);
+        this.cardDeck.drawTo(gambler);
+
+        //when
+        final GameResult result = GameResult.of(dealer, gambler);
+
+        //then
+        assertThat(result).isEqualTo(GameResult.BLACKJACK);
+    }
+
     @DisplayName("겜블러가 버스트인 경우, 승리 결과 객체를 반환하는지 확인한다.")
     @Test
     void burst_gambler_lose() {
@@ -163,7 +188,7 @@ class GameResultTest {
         assertThat(result).isEqualTo(GameResult.DRAW);
     }
 
-    @DisplayName("겜블러가 블랙잭인 경우, 딜러는 무조건 패를 반환 받는다.")
+    @DisplayName("겜블러가 블랙잭인 경우, 딜러는 블랙잭으로 인한 패배를 반환 받는다.")
     @Test
     void blackjack() {
         //given
@@ -184,10 +209,10 @@ class GameResultTest {
         final GameResult result = GameResult.of(dealer, gambler);
 
         //then
-        assertThat(result).isEqualTo(GameResult.LOSE);
+        assertThat(result).isEqualTo(GameResult.BLACKJACK);
     }
 
-    @DisplayName("겜블러와 딜러가 모두 블랙잭인 경우에도 딜러는 패배를 반환 받는다.")
+    @DisplayName("겜블러와 딜러가 모두 블랙잭인 경우에도 딜러는 gambler의 블랙잭으로 인한 패배를 반환 받는다.")
     @Test
     void blackjack_both() {
         //given
@@ -208,7 +233,7 @@ class GameResultTest {
         final GameResult result = GameResult.of(dealer, gambler);
 
         //then
-        assertThat(result).isEqualTo(GameResult.LOSE);
+        assertThat(result).isEqualTo(GameResult.BLACKJACK);
         System.out.println();
     }
 }
