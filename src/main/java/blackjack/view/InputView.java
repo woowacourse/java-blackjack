@@ -44,4 +44,15 @@ public class InputView {
             throw new IllegalArgumentException("y, n 이외의 값이 입력되었습니다.");
         }
     }
+
+    public static long inputBettingMoney(Name name) {
+        System.out.println(name.getValue() + "의 배팅 금액은?");
+        return getLong();
+    }
+
+    private static long getLong() {
+        long result = scanner.nextLong();
+        scanner.nextLine();
+        return result;
+    }
 }
