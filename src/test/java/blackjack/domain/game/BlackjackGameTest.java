@@ -97,12 +97,15 @@ public class BlackjackGameTest {
     @DisplayName("distributeAllPlayerCards 메서드 호출 후 모든 플레이어는 더 이상 드로우를 할 수 없게 된다.")
     @Test
     void distributeAllCards() {
-        BlackjackGame blackjackGame = new BlackjackGame(
-                new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
+        for (int i = 0; i < 1000; i++) {
+            BlackjackGame blackjackGame = new BlackjackGame(
+                    new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
 
-        blackjackGame.distributeAllCards(DRAW_CHOICE, VIEW_STRATEGY, DEALER_VIEW_STRATEGY);
-
-        blackjackGame.getPlayers()
-                .forEach(player -> assertThat(player.isBust() || player.isBlackjack()).isTrue());
+            blackjackGame.distributeAllCards(DRAW_CHOICE, VIEW_STRATEGY, DEALER_VIEW_STRATEGY);
+            blackjackGame.getPlayers()
+                    .stream()
+                    .map(Participant::canDraw)
+                    .forEach(playerCanDraw -> assertThat(playerCanDraw).isFalse());
+        }
     }
 }
