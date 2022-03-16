@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.card.Cards;
 import blackjack.model.state.State;
 import blackjack.model.card.CardDeck;
 
@@ -9,10 +10,17 @@ public abstract class Participant {
     protected static final int START_DRAW_COUNT = 2;
 
     protected final String name;
+    protected final Cards cards;
 
     protected Participant(final String name) {
         checkEmpty(name);
         this.name = name.trim();
+        this.cards = new Cards();
+    }
+
+    protected Participant(final String name, final Cards cards) {
+        this.name = name;
+        this.cards = cards;
     }
 
     private void checkEmpty(final String name) {
@@ -21,6 +29,8 @@ public abstract class Participant {
         }
     }
 
+    public abstract Participant drawCardsBy(final CardDeck cardDeck);
+
     public String getName() {
         return name;
     }
@@ -28,8 +38,6 @@ public abstract class Participant {
     public abstract List<String> getCards();
 
     public abstract Participant getCopyInstance();
-
-    public abstract Participant drawCardsBy(final CardDeck cardDeck);
 
     public abstract boolean canHit();
 

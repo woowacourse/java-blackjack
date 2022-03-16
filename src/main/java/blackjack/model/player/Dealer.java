@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.card.Cards;
 import blackjack.model.state.DealerState;
 import blackjack.model.state.State;
 import blackjack.model.card.CardDeck;
@@ -22,17 +23,22 @@ public class Dealer extends Participant {
         this.state = state;
     }
 
+    private Dealer(final Cards cards) {
+        super(NAME, cards);
+        this.state = null;
+    }
+
     public List<String> getCards() {
         return state.getCards();
     }
 
     @Override
     public Participant drawCardsBy(final CardDeck deck) {
-        State copyOfState = null;
-        for (int i = 0; i < Participant.START_DRAW_COUNT; i++) {
-            copyOfState = this.state.addCard(deck.draw());
+        Cards copyOfCards = null;
+        for (int i = 0; i < Cards.START_CARD_COUNT; i++) {
+            copyOfCards = this.cards.add(deck.draw());
         }
-        return new Dealer(copyOfState);
+        return new Dealer(copyOfCards);
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-    private static final int START_CARD_COUNT = 2;
+    public static final int START_CARD_COUNT = 2;
 
     private final List<Card> values;
 

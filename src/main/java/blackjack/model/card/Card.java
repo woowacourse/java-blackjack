@@ -9,12 +9,12 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public int getNumber() {
-        return number.getValue();
-    }
-
     public boolean hasSameNumber(TrumpNumber trumpNumber) {
         return this.number == trumpNumber;
+    }
+
+    public int getNumber() {
+        return number.getValue();
     }
 
     public String getNumberOfString() {

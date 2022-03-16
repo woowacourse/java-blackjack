@@ -22,9 +22,15 @@ public class Players {
     }
 
     private static void checkDuplicateIn(final List<String> names) {
-        if (names.size() != names.stream().distinct().count()) {
+        if (countDuplicateRemove(names) != names.size()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름 중 중복되는 이름이 있습니다.");
         }
+    }
+
+    private static long countDuplicateRemove(List<String> names) {
+        return names.stream()
+                .distinct()
+                .count();
     }
 
     public Players drawCardsBy(final CardDeck cardDeck) {
