@@ -92,7 +92,7 @@ class PlayerTest {
         assertThat(player.judgeResult(22)).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("둘 다 버스트된 경우 무승부 테스트")
+    @DisplayName("둘 다 버스트된 경우 딜러 승 테스트")
     @Test
     void isWinner_BothBusted_isLose() {
         Player player = Player.of("Pobi");
@@ -101,7 +101,7 @@ class PlayerTest {
                 Card.from(Number.NINE, Kind.CLOVER),
                 Card.from(Number.NINE, Kind.HEART))));
 
-        assertThat(player.judgeResult(22)).isEqualTo(Result.TIE);
+        assertThat(player.judgeResult(22)).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("Ace만 있을 시 베스트 점수 계산 테스트")

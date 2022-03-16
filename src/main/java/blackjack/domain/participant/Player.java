@@ -15,7 +15,7 @@ public class Player extends Participant {
     }
 
     public Result judgeResult(int score) {
-        if (isBusted(score) && isBusted(calculateBestScore()) || calculateBestScore() == score) {
+        if (calculateBestScore() == score) {
             return Result.TIE;
         }
         if (isBusted(calculateBestScore()) || (!isBusted(score) && !isCloserToBestScore(score))) {
