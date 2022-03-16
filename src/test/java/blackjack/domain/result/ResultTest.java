@@ -21,8 +21,13 @@ class ResultTest {
     @Test
     @DisplayName("딜러가 이긴 경우")
     void dealerWinTest() {
-        Dealer dealer = new Dealer(new Cards(List.of(new Card(Denomination.EIGHT, Suit.CLUBS))));
-        Player player = new Player("a", new Cards(List.of(new Card(Denomination.TWO, Suit.CLUBS))));
+        Cards winCards = new Cards(
+            List.of(new Card(Denomination.TWO, Suit.DIAMONDS), new Card(Denomination.EIGHT, Suit.DIAMONDS)));
+        Cards loseCards = new Cards(
+            List.of(new Card(Denomination.TWO, Suit.CLUBS), new Card(Denomination.THREE, Suit.DIAMONDS)));
+
+        Dealer dealer = new Dealer(winCards);
+        Player player = new Player("a", loseCards);
 
         Map<Gamer, Result> map = Result.judge(dealer, player);
 
@@ -32,8 +37,13 @@ class ResultTest {
     @Test
     @DisplayName("플레이어가 이긴 경우")
     void playerWinTest() {
-        Dealer dealer = new Dealer(new Cards(List.of(new Card(Denomination.EIGHT, Suit.CLUBS))));
-        Player player = new Player("a", new Cards(List.of(new Card(Denomination.NINE, Suit.CLUBS))));
+        Cards winCards = new Cards(
+            List.of(new Card(Denomination.TWO, Suit.DIAMONDS), new Card(Denomination.EIGHT, Suit.DIAMONDS)));
+        Cards loseCards = new Cards(
+            List.of(new Card(Denomination.TWO, Suit.CLUBS), new Card(Denomination.THREE, Suit.DIAMONDS)));
+
+        Dealer dealer = new Dealer(loseCards);
+        Player player = new Player("a", winCards);
 
         Map<Gamer, Result> map = Result.judge(dealer, player);
 
@@ -43,8 +53,13 @@ class ResultTest {
     @Test
     @DisplayName("비긴 경우")
     void drawTest() {
-        Dealer dealer = new Dealer(new Cards(List.of(new Card(Denomination.EIGHT, Suit.CLUBS))));
-        Player player = new Player("a", new Cards(List.of(new Card(Denomination.EIGHT, Suit.CLUBS))));
+        Cards drawCards1 = new Cards(
+            List.of(new Card(Denomination.TWO, Suit.DIAMONDS), new Card(Denomination.EIGHT, Suit.DIAMONDS)));
+        Cards drawCards2 = new Cards(
+            List.of(new Card(Denomination.TWO, Suit.CLUBS), new Card(Denomination.EIGHT, Suit.CLUBS)));
+
+        Dealer dealer = new Dealer(drawCards1);
+        Player player = new Player("a", drawCards2);
 
         Map<Gamer, Result> map = Result.judge(dealer, player);
 

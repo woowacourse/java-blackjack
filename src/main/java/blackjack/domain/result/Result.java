@@ -11,9 +11,9 @@ import blackjack.domain.gamer.Player;
 
 public enum Result {
 
-    WIN("승", (dealer, player) -> !player.isBust() && dealer.calculateScore() < player.calculateScore()),
+    WIN("승", (dealer, player) -> !player.isBust() && (dealer.isBust() || dealer.calculateScore() < player.calculateScore())),
     DRAW("무", (dealer, player) -> dealer.calculateScore() == player.calculateScore()),
-    LOSE("패", (dealer, player) -> !dealer.isBust() && dealer.calculateScore() > player.calculateScore()),
+    LOSE("패", (dealer, player) -> !dealer.isBust() && (player.isBust() || dealer.calculateScore() > player.calculateScore())),
     ;
 
     private final String value;
@@ -28,7 +28,7 @@ public enum Result {
         Map<Gamer, Result> judgeResult = new LinkedHashMap<>();
         Result judge = Arrays.stream(Result.values())
             .filter(result -> result.biPredicate.test(dealer, player))
-            .findFirst()
+            .findAny()
             .orElseThrow();
 
         judgeResult.put(dealer, judge.reverse());
