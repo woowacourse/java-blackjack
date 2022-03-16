@@ -36,7 +36,7 @@ public class Deck {
 
     private void validateDeckIsNotEmpty() {
         if (Boolean.FALSE.equals(isExist.contains(true))) {
-            throw new RuntimeException(NO_AVAILABLE_CARD_EXCEPTION);
+            throw new IllegalStateException(NO_AVAILABLE_CARD_EXCEPTION);
         }
     }
 }
