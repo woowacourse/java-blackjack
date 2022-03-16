@@ -1,41 +1,39 @@
 package blackjack.domain.dto;
 
+import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
+import blackjack.domain.Participant;
+import blackjack.domain.Player;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameResultDto {
-    private String name;
-    private String result;
+    private Participant participant;
+    private Map<GameResult, Integer> gameResults;
 
-    private GameResultDto(String name, String result) {
-        this.name = name;
-        this.result = result;
+    private GameResultDto(Participant participant, Map<GameResult, Integer> gameResults) {
+        this.participant = participant;
+        this.gameResults = gameResults;
     }
 
-    public static GameResultDto ofDealer(String name, List<GameResult> gameResults) {
-        return new GameResultDto(name, toDealerResultString(gameResults));
+    public static GameResultDto ofDealer(Dealer dealer, List<GameResult> gameResults) {
+        return new GameResultDto(dealer, GameResult.toGameResultMap(gameResults));
     }
 
-    public static GameResultDto ofPlayer(String name, GameResult gameResult) {
-        return new GameResultDto(name, gameResult.getResult());
+    public static GameResultDto ofPlayer(Player player, GameResult gameResult) {
+        return new GameResultDto(player, GameResult.toGameResultMap(gameResult));
     }
 
-    public static String toDealerResultString(List<GameResult> dealerResults) {
-        Map<GameResult, Integer> result = GameResult.toGameResultMap(dealerResults);
-        return result.keySet().stream()
-                .filter(key -> result.get(key) != 0)
-                .map(key -> result.get(key) + key.getResult())
-                .collect(Collectors.joining(" "));
+    public String  getParticipantName() {
+        return participant.getName();
     }
 
-    public String getName() {
-        return name;
+    public Participant getParticipant() {
+        return participant;
     }
 
-    public String getResult() {
-        return result;
+    public Map<GameResult, Integer> getGameResults() {
+        return gameResults;
     }
 }

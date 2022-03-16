@@ -88,9 +88,9 @@ public class BlackJackGame {
         for (Player player : players) {
             GameResult dealerResult = dealer.judgeResult(player);
             dealerResults.add(dealerResult);
-            gameResultDtos.add(GameResultDto.ofPlayer(player.getName(), GameResult.getPairResult(dealerResult)));
+            gameResultDtos.add(GameResultDto.ofPlayer(player, GameResult.getPairResult(dealerResult)));
         }
-        gameResultDtos.add(0, GameResultDto.ofDealer(Dealer.DEALER_NAME, dealerResults));
+        gameResultDtos.add(0, GameResultDto.ofDealer(dealer, dealerResults));
         return gameResultDtos;
     }
 
