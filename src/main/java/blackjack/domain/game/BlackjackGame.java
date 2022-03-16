@@ -24,10 +24,10 @@ public class BlackjackGame {
 
         this.cardDeck = cardDeck;
         this.dealer = Dealer.of(generateInitialHand());
-        players.addAll(initializePlayers(playerNames));
+        players.addAll(generatePlayers(playerNames));
     }
 
-    private List<Player> initializePlayers(List<String> playerNames) {
+    private List<Player> generatePlayers(List<String> playerNames) {
         return playerNames.stream()
                 .map(name -> Player.of(name, generateInitialHand()))
                 .collect(Collectors.toList());

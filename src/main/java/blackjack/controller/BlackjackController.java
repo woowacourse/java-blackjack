@@ -15,6 +15,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
+    public void run() {
+        BlackjackGame blackjackGame = initializeGame();
+
+        printInitialHand(blackjackGame);
+        giveExtraCardsToAllPlayer(blackjackGame);
+        giveExtraCardsToDealer(blackjackGame);
+        printFinalHandAndScore(blackjackGame);
+        printDealerMatchResult(blackjackGame);
+        printPlayersMatchResult(blackjackGame);
+    }
+
     public BlackjackGame initializeGame() {
         try {
             List<String> playerNames = InputView.requestPlayerNamesInput();
@@ -42,7 +53,7 @@ public class BlackjackController {
         OutputView.printInitialPlayersHand(playerDtos);
     }
 
-    public void giveCardsToAllPlayer(BlackjackGame game) {
+    public void giveExtraCardsToAllPlayer(BlackjackGame game) {
         List<Player> players = game.getPlayers();
         for (Player player : players) {
             giveCardsToPlayer(player, game);
@@ -79,7 +90,7 @@ public class BlackjackController {
         OutputView.printPlayerBustInfo();
     }
 
-    public void giveExtraCardToDealer(BlackjackGame game) {
+    public void giveExtraCardsToDealer(BlackjackGame game) {
         int extraCardCount = game.giveExtraCardsToDealer();
 
         if (extraCardCount > 0) {
@@ -98,12 +109,12 @@ public class BlackjackController {
         OutputView.printHandAndScore(participants);
     }
 
-    public void printDealerMatchDto(BlackjackGame game) {
+    public void printDealerMatchResult(BlackjackGame game) {
         DealerMatchDto dealerMatchDto = DealerMatchDto.of(game.getDealer(), game.getPlayers());
         OutputView.printDealerMatchResult(dealerMatchDto);
     }
 
-    public void printPlayersMatchDto(BlackjackGame game) {
+    public void printPlayersMatchResult(BlackjackGame game) {
         Dealer dealer = game.getDealer();
 
         List<PlayerMatchDto> playerMatchDtos = game.getPlayers()
@@ -113,6 +124,5 @@ public class BlackjackController {
 
         OutputView.printPlayerMatchResults(playerMatchDtos);
     }
-
 }
 
