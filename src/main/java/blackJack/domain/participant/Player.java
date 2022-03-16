@@ -1,7 +1,10 @@
 package blackJack.domain.participant;
 
+import blackJack.domain.card.Card;
 import blackJack.domain.result.WinDrawLose;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Player extends Participant {
@@ -14,11 +17,15 @@ public class Player extends Participant {
 
     private final int money;
 
-    public Player(String name, String money) {
-        super(name);
+    public Player(String name, String money, Set<Card> cards) {
+        super(name, cards);
         validateProhibitName(name);
         validateValidProfit(money);
         this.money = Integer.parseInt(money);
+    }
+
+    public Player(String name, String money) {
+        this(name, money, new HashSet<>());
     }
 
     private void validateProhibitName(String name) {

@@ -3,8 +3,10 @@ package blackJack.domain.participant;
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Cards;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Participant {
 
@@ -13,10 +15,14 @@ public abstract class Participant {
     private final String name;
     private final Cards cards;
 
-    protected Participant(String name) {
+    protected Participant(String name, Set<Card> cards) {
         validateName(name);
         this.name = name;
-        this.cards = new Cards();
+        this.cards = new Cards(cards);
+    }
+
+    protected Participant(String name) {
+        this(name, new HashSet<>());
     }
 
     private void validateName(String name) {

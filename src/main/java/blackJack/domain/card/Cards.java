@@ -9,8 +9,12 @@ public class Cards {
 
     private final Set<Card> cards;
 
+    public Cards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
     public Cards() {
-        cards = new HashSet<>();
+        this(new HashSet<>());
     }
 
     public void receiveCard(Card card) {

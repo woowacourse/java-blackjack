@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -46,10 +48,10 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
     void hasFalsePlayerNextTurn() {
-        Player player = new Player("kei", "1000");
-        player.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
-        player.receiveCard(Card.from(Suit.HEART, Denomination.JACK));
-        player.receiveCard(Card.from(Suit.SPADE, Denomination.TWO));
+        Card card1 = Card.from(Suit.SPADE, Denomination.JACK);
+        Card card2 = Card.from(Suit.HEART, Denomination.JACK);
+        Card card3 = Card.from(Suit.SPADE, Denomination.TWO);
+        Player player = new Player("kei", "1000", Set.of(card1, card2, card3));
 
         assertThat(player.hasNextTurn()).isFalse();
     }
@@ -57,9 +59,9 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
     void hasTruePlayerNextTurn() {
-        Player player = new Player("kei", "1000");
-        player.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
-        player.receiveCard(Card.from(Suit.HEART, Denomination.JACK));
+        Card card1 = Card.from(Suit.SPADE, Denomination.JACK);
+        Card card2 = Card.from(Suit.HEART, Denomination.JACK);
+        Player player = new Player("kei", "1000", Set.of(card1, card2));
 
         assertThat(player.hasNextTurn()).isTrue();
     }
