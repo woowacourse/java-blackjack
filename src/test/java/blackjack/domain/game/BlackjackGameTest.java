@@ -44,7 +44,7 @@ public class BlackjackGameTest {
             BlackjackGame blackjackGame = new BlackjackGame(
                     new CardDeck(), List.of("hudi", "jeong"), prodStrategy);
 
-            List<Player> participants = blackjackGame.getPlayers();
+            List<Player> participants = blackjackGame.getParticipants().getPlayers();
 
             assertThat(participants.size()).isEqualTo(2);
             assertThat(participants.get(0).getName()).isEqualTo("hudi");
@@ -86,7 +86,7 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(
                 new CardDeck(), List.of("p1", "p2", "p3"), cardBundleOfSixteenStrategy);
 
-        List<Participant> actual = blackjackGame.getParticipants();
+        List<Participant> actual = blackjackGame.getParticipants().getValue();
 
         assertThat(actual.get(0)).isInstanceOf(Dealer.class);
         for (int i = 1; i < actual.size(); i++) {
@@ -102,7 +102,8 @@ public class BlackjackGameTest {
                     new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
 
             blackjackGame.distributeAllCards(DRAW_CHOICE, VIEW_STRATEGY, DEALER_VIEW_STRATEGY);
-            blackjackGame.getPlayers()
+            blackjackGame.getParticipants()
+                    .getPlayers()
                     .stream()
                     .map(Participant::canDraw)
                     .forEach(playerCanDraw -> assertThat(playerCanDraw).isFalse());

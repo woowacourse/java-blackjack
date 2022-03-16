@@ -13,6 +13,7 @@ public class GameParticipants {
 
     private static final String NO_PLAYER_EXCEPTION_MESSAGE = "플레이어가 없는 게임은 존재할 수 없습니다.";
     private static final String DUPLICATE_PLAYER_NAMES_EXCEPTION_MESSAGE = "플레이어명은 중복될 수 없습니다.";
+    private static final String DEALER_NOT_FOUND_EXCEPTION_MESSAGE = "해당 게임에 딜러가 존재하지 않습니다.";
 
     private final List<Participant> value;
 
@@ -58,6 +59,20 @@ public class GameParticipants {
 
     public List<Participant> getValue() {
         return value;
+    }
+
+    public Dealer getDealer() {
+        return (Dealer) value.stream()
+                .filter(participant -> participant instanceof Dealer)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(DEALER_NOT_FOUND_EXCEPTION_MESSAGE));
+    }
+
+    public List<Player> getPlayers() {
+        return value.stream()
+                .filter(participant -> participant instanceof Player)
+                .map(participant -> (Player) participant)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override

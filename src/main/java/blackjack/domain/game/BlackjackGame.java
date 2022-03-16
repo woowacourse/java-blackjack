@@ -4,18 +4,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
 import blackjack.strategy.CardBundleSupplier;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
-
-    private static final String DEALER_NOT_FOUND_EXCEPTION_MESSAGE = "해당 게임에 딜러가 존재하지 않습니다.";
 
     private final CardStack cardDeck;
     private final GameParticipants participants;
@@ -38,25 +34,21 @@ public class BlackjackGame {
     public void distributeAllCards(final Function<String, Boolean> drawOrStayStrategy,
                                    final Consumer<Player> viewStrategy,
                                    final Runnable dealerViewStrategy) {
-        for (Player player : getPlayers()) {
+
+        List<Player> players = participants.getPlayers();
+
+        for (Player player : players) {
             player.drawAllCards(drawOrStayStrategy, this::popCard, viewStrategy);
         }
         drawAllDealerCards(dealerViewStrategy);
     }
 
     private void drawAllDealerCards(final Runnable dealerViewStrategy) {
-        while (dealerCanDraw()) {
-            drawDealerCard();
+        Dealer dealer = participants.getDealer();
+        while (dealer.canDraw()) {
+            dealer.receiveCard(popCard());
             dealerViewStrategy.run();
         }
-    }
-
-    private boolean dealerCanDraw() {
-        return getDealer().canDraw();
-    }
-
-    private void drawDealerCard() {
-        getDealer().receiveCard(popCard());
     }
 
     private Card popCard() {
@@ -64,27 +56,11 @@ public class BlackjackGame {
     }
 
     public boolean isBlackjackDealer() {
-        return getDealer().isBlackjack();
+        return participants.getDealer().isBlackjack();
     }
 
-    public List<Participant> getParticipants() {
-        return participants.getValue();
-    }
-
-    public Dealer getDealer() {
-        return (Dealer) participants.getValue()
-                .stream()
-                .filter(participant -> participant instanceof Dealer)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(DEALER_NOT_FOUND_EXCEPTION_MESSAGE));
-    }
-
-    public List<Player> getPlayers() {
-        return participants.getValue()
-                .stream()
-                .filter(participant -> participant instanceof Player)
-                .map(participant -> (Player) participant)
-                .collect(Collectors.toUnmodifiableList());
+    public GameParticipants getParticipants() {
+        return participants;
     }
 
     @Override
