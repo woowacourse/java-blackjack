@@ -13,6 +13,9 @@ public class Stand extends Finish {
         if (blackjackGameState.isBust()) {
             return 1;
         }
+        if (blackjackGameState.isBlackjack()) {
+            return 0;
+        }
         return 0;
     }
 }

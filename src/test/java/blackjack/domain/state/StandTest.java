@@ -53,4 +53,15 @@ class StandTest {
 
         assertThat(stand.earningRate(bust)).isEqualTo(1);
     }
+
+    @Test
+    void 상대가_블랙잭이면_수익률이_0() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Stand stand = new Stand(cards);
+
+        final Cards bustCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, A)));
+        final Blackjack bust = new Blackjack(bustCards);
+
+        assertThat(stand.earningRate(bust)).isEqualTo(0);
+    }
 }
