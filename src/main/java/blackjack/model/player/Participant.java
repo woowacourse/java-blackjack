@@ -1,7 +1,7 @@
 package blackjack.model.player;
 
+import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
-import blackjack.model.card.CardDeck;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public abstract class Participant {
 
     public abstract boolean isFinish();
 
-    public abstract Participant drawCardsBy(final CardDeck cardDeck);
+    public abstract Participant receive(final Card card);
 
-    public abstract Participant hitBy(final CardDeck cardDeck);
+    public abstract Participant hit(final Card card);
 }

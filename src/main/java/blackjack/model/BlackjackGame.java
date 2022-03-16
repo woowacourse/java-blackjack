@@ -2,6 +2,7 @@ package blackjack.model;
 
 import blackjack.dto.ParticipantDto;
 import blackjack.model.card.CardDeck;
+import blackjack.model.card.Cards;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Players;
@@ -30,7 +31,16 @@ public class BlackjackGame {
     }
 
     public BlackjackGame start() {
-        return new BlackjackGame(players.drawCardsBy(cardDeck), dealer.drawCardsBy(cardDeck));
+        Players copyOfPlayers = players.drawBy(cardDeck);
+        return new BlackjackGame(copyOfPlayers, drawToDealer());
+    }
+
+    private Participant drawToDealer() {
+        Participant newDealer = null;
+        for (int i = 0; i < Cards.START_CARD_COUNT; i++) {
+            newDealer = dealer.receive(cardDeck.draw());
+        }
+        return newDealer;
     }
 
     public void performEachTurn(Predicate<String> predicate, Consumer<Participant> consumer) {
@@ -42,7 +52,7 @@ public class BlackjackGame {
 
     private void hitOrStayToPlayer(Participant player, Predicate<String> predicate, Consumer<Participant> consumer) {
         while (canHit(player) && isHitSign(player, predicate)) {
-            consumer.accept(player.hitBy(cardDeck));
+            consumer.accept(player.hit(cardDeck.draw()));
         }
     }
 
@@ -53,7 +63,7 @@ public class BlackjackGame {
     private void hitOrStayToDealer(Consumer<Participant> consumer) {
         Participant dealer = null;
         while (canHit(this.dealer)) {
-            dealer = this.dealer.hitBy(cardDeck);
+            dealer = this.dealer.hit(cardDeck.draw());
         }
         consumer.accept(dealer);
     }

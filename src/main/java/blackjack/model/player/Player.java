@@ -1,6 +1,6 @@
 package blackjack.model.player;
 
-import blackjack.model.card.CardDeck;
+import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 
 public class Player extends Participant {
@@ -13,12 +13,8 @@ public class Player extends Participant {
         super(name, cards);
     }
 
-    @Override
-    public Participant drawCardsBy(final CardDeck deck) {
-        Cards copyOfCards = null;
-        for (int i = 0; i < Cards.START_CARD_COUNT; i++) {
-            copyOfCards = this.cards.add(deck.draw());
-        }
+    public Participant receive(final Card card) {
+        Cards copyOfCards = this.cards.add(card);
         return new Player(this.name, copyOfCards);
     }
 
@@ -28,8 +24,8 @@ public class Player extends Participant {
     }
 
     @Override
-    public Participant hitBy(final CardDeck deck) {
-        Cards copyOfCards = this.cards.add(deck.draw());
+    public Participant hit(final Card card) {
+        Cards copyOfCards = this.cards.add(card);
         return new Player(this.name, copyOfCards);
     }
 }

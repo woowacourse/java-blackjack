@@ -33,9 +33,9 @@ public class Players {
                 .count();
     }
 
-    public Players drawCardsBy(final CardDeck cardDeck) {
+    public Players drawBy(final CardDeck cardDeck) {
         List<Participant> copyOfValues = values.stream()
-                .map(player -> player.drawCardsBy(cardDeck))
+                .map(player -> player.receive(cardDeck.draw()))
                 .collect(Collectors.toUnmodifiableList());
         return new Players(copyOfValues);
     }

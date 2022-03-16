@@ -18,7 +18,7 @@ class PlayersTest {
         CardDeck deck = new CardDeck();
         Players players = Players.from(List.of("리버", "포키", "크리스"));
 
-        Players otherPlayers = players.drawCardsBy(deck);
+        Players otherPlayers = players.drawBy(deck);
 
         assertThat(players).isNotEqualTo(otherPlayers);
     }

@@ -2,8 +2,11 @@ package blackjack.model.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 
+import blackjack.model.card.TrumpNumber;
+import blackjack.model.card.TrumpSymbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,23 +20,29 @@ public class DealerTest {
         assertThat(liver).isInstanceOf(Dealer.class);
     }
 
-    @DisplayName("Card를 여러번 뽑으면 새로운 Dealer 인스턴스를 반환한다.")
+    @DisplayName("Card를 받으면 새로운 Dealer 인스턴스를 반환한다.")
     @Test
     void drawSeveral_new_Participant() {
-        CardDeck deck = new CardDeck();
         Participant dealer = new Dealer();
-        Participant otherDealer = dealer.drawCardsBy(deck);
+        Participant otherDealer = dealer.receive(new Card(TrumpNumber.EIGHT, TrumpSymbol.HEART));
 
         assertThat(dealer).isNotEqualTo(otherDealer);
     }
 
-    @DisplayName("Card를 뽑으면 새로운 Dealer 인스턴스를 반환한다.")
+    @DisplayName("Card를 hit 하면 새로운 Dealer 인스턴스를 반환한다.")
     @Test
     void draw_new_Participant() {
-        CardDeck deck = new CardDeck();
         Participant dealer = new Dealer();
-        Participant otherDealer = dealer.hitBy(deck);
+        Participant otherDealer = dealer.hit(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
 
         assertThat(dealer).isNotEqualTo(otherDealer);
+    }
+
+    @DisplayName("카드 숫자의 합이 16을 넘으면 true를 반환한다.")
+    @Test
+    void isfinish_true() {
+        CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer();
+
     }
 }
