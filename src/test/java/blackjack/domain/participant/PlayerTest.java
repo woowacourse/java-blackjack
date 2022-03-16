@@ -13,7 +13,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어가 버스트 상태인지 알려준다")
     void isPlayerBust() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new BetMoney(1000));
         player.receiveCards(List.of(
                 Card.valueOf(CardNumber.JACK, CardSymbol.SPADES), Card.valueOf(CardNumber.QUEEN, CardSymbol.SPADES),
                 Card.valueOf(CardNumber.KING, CardSymbol.SPADES)));
