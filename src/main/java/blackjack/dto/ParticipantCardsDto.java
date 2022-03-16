@@ -2,10 +2,8 @@ package blackjack.dto;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Score;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import java.util.List;
-import java.util.Objects;
 
 public class ParticipantCardsDto {
 
@@ -31,10 +29,6 @@ public class ParticipantCardsDto {
         Score score = participant.getScore();
 
         return new ParticipantCardsDto(name, openCardInfo, score);
-    }
-
-    public boolean isPlayer() {
-        return !Objects.equals(name, Dealer.UNIQUE_NAME);
     }
 
     public String getName() {

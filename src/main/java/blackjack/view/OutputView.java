@@ -14,7 +14,7 @@ public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
     private static final String JOIN_DELIMITER = ", ";
-    private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
+    private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "%s에게 2장의 카드를 나누었습니다." + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s 카드: %s";
     private static final String DEALER_BLACKJACK_MESSAGE = NEW_LINE + "블랙잭! 게임을 종료합니다.";
     private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
@@ -27,7 +27,7 @@ public class OutputView {
     private static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
 
     public static void printInitialParticipantsCards(final InitialDistributionDto dto) {
-        final String message = getParticipantsCardCountInfo(dto.getPlayerNames())
+        final String message = getParticipantsCardCountInfo(dto.getAllParticipantNames())
                 + getAllParticipantCardInfos(dto.getParticipantsInfo())
                 + NEW_LINE;
 
@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     public static void printDealerBlackjackInfo(final InitialDistributionDto dto) {
-        final String message = getParticipantsCardCountInfo(dto.getPlayerNames())
+        final String message = getParticipantsCardCountInfo(dto.getAllParticipantNames())
                 + DEALER_BLACKJACK_MESSAGE;
 
         print(message);

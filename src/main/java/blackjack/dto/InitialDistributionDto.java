@@ -30,9 +30,8 @@ public class InitialDistributionDto {
         return Collections.unmodifiableList(participantsInfo);
     }
 
-    public List<String> getPlayerNames() {
+    public List<String> getAllParticipantNames() {
         return participantsInfo.stream()
-                .filter(ParticipantCardsDto::isPlayer)
                 .map(ParticipantCardsDto::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
