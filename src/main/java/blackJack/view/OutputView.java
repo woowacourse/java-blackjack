@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackJack.domain.participant.Participants;
-import blackJack.domain.result.WinDrawLose;
+import blackJack.domain.result.OutCome;
 import blackJack.domain.card.Card;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
@@ -94,7 +94,7 @@ public class OutputView {
 
     public static void printWinOrLoseResult(Dealer dealer, BlackJackGameResult blackGameResult) {
         System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_WIN_OR_LOSE));
-        Map<WinDrawLose, Integer> winOrLoseIntegerMap = blackGameResult.calculateDealerResult();
+        Map<OutCome, Integer> winOrLoseIntegerMap = blackGameResult.calculateDealerResult();
         String winOrLoseInfo = getWinOrLoseInfo(winOrLoseIntegerMap);
 
         System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), winOrLoseInfo);
@@ -102,8 +102,8 @@ public class OutputView {
             OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, key.getName(), value.getResult()));
     }
 
-    private static String getWinOrLoseInfo(Map<WinDrawLose, Integer> winOrLoseInfo) {
-        List<String> winOrLoseEssentialInfo = winOrLoseInfo.entrySet().stream()
+    private static String getWinOrLoseInfo(Map<OutCome, Integer> outCome) {
+        List<String> winOrLoseEssentialInfo = outCome.entrySet().stream()
             .filter(resultCount -> resultCount.getValue() > 0)
             .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
             .collect(Collectors.toUnmodifiableList());

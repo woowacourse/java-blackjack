@@ -3,7 +3,7 @@ package blackJack.domain.result;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
 
-public enum WinDrawLose {
+public enum OutCome {
     WIN("승"),
     DRAW("무"),
     LOSE("패")
@@ -11,11 +11,11 @@ public enum WinDrawLose {
 
     private final String result;
 
-    WinDrawLose(String result) {
+    OutCome(String result) {
         this.result = result;
     }
 
-    public static WinDrawLose calculatePlayerWinDrawLose(Player player, Dealer dealer) {
+    public static OutCome calculatePlayerWinDrawLose(Player player, Dealer dealer) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -25,7 +25,7 @@ public enum WinDrawLose {
         return getWinDrawLose(player, dealer);
     }
 
-    private static WinDrawLose getWinDrawLose(Player player, Dealer dealer) {
+    private static OutCome getWinDrawLose(Player player, Dealer dealer) {
         final int playerScore = player.getScore();
         final int dealerScore = dealer.getScore();
         if (dealer.isBlackJack() && player.isBlackJack() ||
