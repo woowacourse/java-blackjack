@@ -33,4 +33,10 @@ class CardDeckTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드덱이 비어 카드를 제공할 수 없습니다.");
     }
+
+    @Test
+    void 카드덱에서_카드_1장_제공() {
+        final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
+        assertThat(cardDeck.provideCard()).isInstanceOf(Card.class);
+    }
 }
