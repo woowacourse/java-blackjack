@@ -14,9 +14,9 @@ import java.util.List;
 public class Blackjack {
 
     public void run() {
-        List<String> inputPlayerNames = InputView.inputPlayerNames();
-        Game game = new Game(inputPlayerNames, new Dealer());
-        OutputView.printDrawMessage(inputPlayerNames);
+        List<String> playerNames = InputView.inputPlayerNames();
+        Game game = new Game(playerNames, new Dealer());
+        OutputView.printDrawMessage(playerNames);
         OutputView.printTotalUserCards(game.getDealer(), game.getPlayers());
 
         checkDealerIsBlackJack(game);
