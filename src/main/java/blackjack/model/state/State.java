@@ -26,7 +26,7 @@ public abstract class State {
         return sign.equals(BUST);
     }
 
-    public boolean isBlackJack(){
+    public boolean isBlackjack(){
         return sign.equals(BLACKJACK);
     }
 

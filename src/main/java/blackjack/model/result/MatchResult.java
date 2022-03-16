@@ -8,18 +8,18 @@ import java.util.function.BiPredicate;
 public enum MatchResult {
 
     WIN("승", (dealerState, playerState) ->
-            dealerState.isBlackJack() && !playerState.isBlackJack() ||
+            dealerState.isBlackjack() && !playerState.isBlackjack() ||
                     !dealerState.isBust() && playerState.isBust() ||
                     !dealerState.isBust() && dealerState.isWinBy(playerState)),
 
     LOSE("패", (dealerState, playerState) ->
-            !dealerState.isBlackJack() && playerState.isBlackJack() ||
+            !dealerState.isBlackjack() && playerState.isBlackjack() ||
                     dealerState.isBust() && !playerState.isBust() ||
                     !dealerState.isBust() && !dealerState.isWinBy(playerState)),
 
     DRAW("무", (dealerState, playerState) ->
             dealerState.isBust() && playerState.isBust() ||
-                    dealerState.isBlackJack() && playerState.isBlackJack() ||
+                    dealerState.isBlackjack() && playerState.isBlackjack() ||
                     !dealerState.isBust() && dealerState.isDrawWith(playerState)),
     ;
 

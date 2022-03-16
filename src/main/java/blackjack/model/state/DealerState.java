@@ -29,7 +29,7 @@ public class DealerState extends State {
         return sign.equals(HIT);
     }
 
-    protected void choiceSign() {
+    private void choiceSign() {
         int score = cards.sumScore();
         if (score > DEALER_HIT_LIMIT_SCORE) {
             sign = FINISH;
