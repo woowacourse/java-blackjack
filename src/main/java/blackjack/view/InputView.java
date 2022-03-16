@@ -46,6 +46,7 @@ public class InputView {
     }
 
     public static long inputBettingMoney(Name name) {
+        printEmptyLine();
         System.out.println(name.getValue() + "의 배팅 금액은?");
         return getLong();
     }
@@ -54,5 +55,9 @@ public class InputView {
         long result = scanner.nextLong();
         scanner.nextLine();
         return result;
+    }
+
+    private static void printEmptyLine() {
+        System.out.println();
     }
 }
