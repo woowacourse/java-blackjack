@@ -24,4 +24,8 @@ public class Player extends Participant {
     public boolean canDrawCard() {
         return cards.calculateSum() < MAX_SCORE;
     }
+
+    public int getMoney() {
+        return money.getValue();
+    }
 }

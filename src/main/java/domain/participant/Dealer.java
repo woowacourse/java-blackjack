@@ -1,7 +1,5 @@
 package domain.participant;
 
-import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -13,20 +11,10 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    public Map<Result, Integer> checkResult(List<Result> playersResult) {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-
-        for (Result result : Result.values()) {
-            dealerResult.put(result.reverseResult(), countTargetResult(playersResult, result));
-        }
-
-        return dealerResult;
-    }
-
-    private int countTargetResult(List<Result> playersResult, Result targetResult) {
-        return (int) playersResult.stream()
-            .filter(result -> result == targetResult)
-            .count();
+    public int getResultMoney(Map<Player, Result> playersResult) {
+        return (int) playersResult.entrySet().stream()
+            .mapToDouble(entry -> entry.getKey().getMoney() * entry.getValue().getProfitRate() * -1)
+            .sum();
     }
 
     @Override

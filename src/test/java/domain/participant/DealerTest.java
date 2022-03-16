@@ -9,7 +9,9 @@ import domain.card.Symbol;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,8 +58,13 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 결과값을 받는다.")
     void checkResultTest() {
-        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.DRAW);
+        Map<Player, Result> testPlayerResult = new HashMap<>();
 
-        assertThat(dealer.checkResult(playerResult).values()).contains(1,1,2);
+        testPlayerResult.put(new Player("name", 1000), Result.LOSE);
+        testPlayerResult.put(new Player("name", 2000), Result.DRAW);
+        testPlayerResult.put(new Player("name", 3000), Result.WIN);
+        testPlayerResult.put(new Player("name", 4000), Result.BLACKJACK);
+
+        assertThat(dealer.getResultMoney(testPlayerResult)).isEqualTo(-8000);
     }
 }
