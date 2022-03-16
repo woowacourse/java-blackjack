@@ -1,5 +1,6 @@
 package blackJack.domain;
 
+import blackJack.domain.result.BlackJackGameBoard;
 import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.YesOrNo;
 import java.util.List;
@@ -38,13 +39,13 @@ public class BlackJackGame {
         return YesOrNo.hasYes(value);
     }
 
-    public BlackJackGameResult calculateResult() {
+    public BlackJackGameBoard calculateResult() {
         final BlackJackGameResult blackjackGameResult = new BlackJackGameResult();
         for (Player player : participants.getPlayers()) {
             blackjackGameResult.add(player, getDealer().calculateOutCome(player));
         }
 
-        return blackjackGameResult;
+        return blackjackGameResult.calculateEarning();
     }
 
     public Participants getParticipants() {
