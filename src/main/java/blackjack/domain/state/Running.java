@@ -1,20 +1,16 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
-import java.util.Objects;
 
-public final class Running implements BlackjackGameState {
-
-    private final Cards cards;
+public final class Running extends AbstractBlackjackGameState {
 
     public Running(final Cards cards) {
-        Objects.requireNonNull(cards, "cards는 null이 들어올 수 없습니다.");
-        this.cards = cards;
-        checkBustCards(cards);
+        super(cards);
+        checkBustCards();
     }
 
-    private void checkBustCards(final Cards cards) {
-        if (cards.isBust()) {
+    private void checkBustCards() {
+        if (isBust()) {
             throw new IllegalArgumentException("Running상태는 버스트된 카드가 들어올 수 없습니다.");
         }
     }

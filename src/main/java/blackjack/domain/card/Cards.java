@@ -13,8 +13,8 @@ public class Cards {
 
     public Cards(final Set<Card> cards) {
         Objects.requireNonNull(cards, "cards는 null이 들어올 수 없습니다.");
-        this.cards = new LinkedHashSet<>(cards);
         checkCardsSize(cards);
+        this.cards = new LinkedHashSet<>(cards);
     }
 
     private void checkCardsSize(final Set<Card> cards) {
