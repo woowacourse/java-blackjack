@@ -21,6 +21,9 @@ public final class Running implements BlackjackGameState {
     @Override
     public BlackjackGameState hit(final Card card) {
         cards.addCard(card);
+        if (cards.isBust()) {
+            return new Bust(cards);
+        }
         return new Running(cards);
     }
 

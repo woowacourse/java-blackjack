@@ -58,4 +58,13 @@ class RunningTest {
 
         assertThat(nextState).isInstanceOf(Running.class);
     }
+
+    @Test
+    void hit할_때_Bust면_Bust_반환() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final BlackjackGameState running = new Running(cards);
+        final BlackjackGameState nextState = running.hit(Card.of(SPADES, JACK));
+
+        assertThat(nextState).isInstanceOf(Bust.class);
+    }
 }
