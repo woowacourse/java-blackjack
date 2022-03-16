@@ -24,7 +24,7 @@ class BustTest {
     @ParameterizedTest
     @DisplayName("자신과 다른 State 비교해 수익를 반환한다.")
     @MethodSource("provideStateAndExpected")
-    void compare(State another, int expected) {
+    void getProfit(State another, int expected) {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
         final BattingMoney battingMoney = new BattingMoney("2000");
         State state = new Bust(cards, battingMoney);

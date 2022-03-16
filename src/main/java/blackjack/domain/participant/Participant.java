@@ -25,7 +25,7 @@ public abstract class Participant {
         return name.getValue();
     }
 
-    public int calculateScore() {
+    public int getScore() {
         checkTurnOver();
         return state.cards().getScore();
     }

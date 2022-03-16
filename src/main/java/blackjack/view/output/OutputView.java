@@ -64,7 +64,7 @@ public class OutputView {
 
     private static void printResultPlayerInfo(final Participant gameResult) {
         System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, gameResult.getName(),
-                joinCardsInfo(gameResult.getCards()), gameResult.calculateScore());
+                joinCardsInfo(gameResult.getCards()), gameResult.getScore());
     }
 
     public static void printAllOutcomeResult(final Map<String, Integer> participantsProfit) {

@@ -66,7 +66,7 @@ public class BlackJackGame {
     public List<Participant> getParticipants() {
         final List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
-        participants.addAll(players.getInitPlayers());
+        participants.addAll(players.getValues());
         return participants;
     }
 

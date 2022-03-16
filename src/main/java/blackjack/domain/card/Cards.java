@@ -34,11 +34,11 @@ public class Cards {
         return getScore() > BLACK_JACK_NUMBER;
     }
 
-    public List<Card> values() {
+    public List<Card> getValues() {
         return List.copyOf(cards);
     }
 
-    public List<Card> firstCard() {
+    public List<Card> getFirstCard() {
         return List.copyOf(cards.subList(0, 1));
     }
 

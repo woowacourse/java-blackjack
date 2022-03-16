@@ -27,7 +27,7 @@ class StayTest {
     @ParameterizedTest
     @DisplayName("자신과 다른 State 비교해 수익를 반환한다.")
     @MethodSource("provideStateAndExpected")
-    void compare(State another, int expected) {
+    void getProfit(State another, int expected) {
         State state = new Stay(
                 new Cards(Arrays.asList(Card.of(SPADE, A), Card.of(SPADE, FIVE))), new BattingMoney("2000"));
         assertThat(state.getProfit(another)).isEqualTo(expected);

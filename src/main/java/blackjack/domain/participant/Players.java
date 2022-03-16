@@ -28,7 +28,7 @@ public class Players {
                 .count();
     }
 
-    public List<Player> getInitPlayers() {
+    public List<Player> getValues() {
         return values;
     }
 

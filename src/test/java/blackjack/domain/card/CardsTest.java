@@ -31,7 +31,7 @@ class CardsTest {
 
     @Test
     @DisplayName("카드의 합의 반환한다.")
-    void calculateScore() {
+    void getScore() {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, TWO), Card.of(SPADE, THREE), Card.of(SPADE, TEN)));
         assertThat(cards.getScore()).isEqualTo(15);
     }
@@ -65,7 +65,7 @@ class CardsTest {
     void getValues() {
         final List<Card> initialCards = Arrays.asList(Card.of(SPADE, TWO), Card.of(SPADE, THREE), Card.of(SPADE, TEN));
         final Cards cards = new Cards(initialCards);
-        assertThat(cards.values()).isEqualTo(initialCards);
+        assertThat(cards.getValues()).isEqualTo(initialCards);
     }
 
     @ParameterizedTest
@@ -86,10 +86,10 @@ class CardsTest {
 
     @Test
     @DisplayName("첫번째 카드를 반환한다.")
-    void firstCard() {
+    void getFirstCard() {
         final Card firstCard = Card.of(SPADE, KING);
         final Cards cards = new Cards(Arrays.asList(firstCard, Card.of(SPADE, SEVEN)));
-        assertThat(cards.firstCard()).isEqualTo(Collections.singletonList(firstCard));
+        assertThat(cards.getFirstCard()).isEqualTo(Collections.singletonList(firstCard));
     }
 
     @ParameterizedTest

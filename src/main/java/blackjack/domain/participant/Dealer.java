@@ -23,7 +23,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> getInitCards() {
-        return state.cards().firstCard();
+        return state.cards().getFirstCard();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Dealer extends Participant {
     @Override
     public List<Card> getCards() {
         validateEndTurn();
-        return state.cards().values();
+        return state.cards().getValues();
     }
 
     private void validateEndTurn() {
