@@ -52,7 +52,7 @@ public class OutputView {
     }
 
     private static void printInitHoldCardMessage(Dealer dealer, List<Player> players) {
-        Card firstDealerCard = dealer.getCards().get(0);
+        Card firstDealerCard = dealer.getCards().iterator().next();
         String dealerCardInfo = firstDealerCard.getDenominationName() + firstDealerCard.getSymbolName();
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, dealer.getName(), dealerCardInfo);
 

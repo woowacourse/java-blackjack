@@ -2,8 +2,10 @@ package blackJack.domain.card;
 
 import static blackJack.domain.card.Denomination.ACE_BONUS_VALUE;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class Cards {
 
@@ -12,10 +14,15 @@ public class Cards {
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_COUNT = 2;
 
-    private final List<Card> cards;
+    private final Set<Card> cards;
 
     public Cards() {
-        this.cards = new ArrayList<>();
+        this(new HashSet<>());
+    }
+
+    public Cards(Set<Card> cards) {
+        Objects.requireNonNull(cards, "카드들의 값이 null 입니다.");
+        this.cards = new LinkedHashSet<>(cards);
     }
 
     public void addCard(Card card) {
@@ -54,7 +61,7 @@ public class Cards {
                 .anyMatch(Card::isSameDenominationAsAce);
     }
 
-    public List<Card> getCards() {
+    public Set<Card> getCards() {
         return cards;
     }
 }
