@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public enum Denomination {
@@ -30,7 +31,17 @@ public enum Denomination {
         this.printValue = printValue;
     }
 
-    public static int calculateScore(final List<Denomination> numbers) {
+    public static int calculateCardScore(final List<Card> cards) {
+        return calculateScore(denominationsToCards(cards));
+    }
+
+    private static List<Denomination> denominationsToCards(final List<Card> cards) {
+        return cards.stream()
+                .map(Card::getDenomination)
+                .collect(Collectors.toList());
+    }
+
+    private static int calculateScore(final List<Denomination> numbers) {
         final int bonusMaxScore = calculateAceCount(numbers) * ACE_BONUS_VALUE;
         final int defaultScore = sumDefaultScore(numbers);
         final int startScore = defaultScore + bonusMaxScore;
@@ -66,7 +77,11 @@ public enum Denomination {
         return sumCount <= 21;
     }
 
-    public static int calculateMaxScore(final List<Denomination> denominations) {
+    public static int calculateCardMaxScore(final List<Card> cards) {
+        return calculateMaxScore(denominationsToCards(cards));
+    }
+
+    private static int calculateMaxScore(final List<Denomination> denominations) {
         final int defaultScore = calculateDefaultScore(denominations);
 
         final int bonusMaxScore = calculateAceCount(denominations) * ACE_BONUS_VALUE;

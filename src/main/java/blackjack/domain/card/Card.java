@@ -46,6 +46,10 @@ public class Card {
         return new ArrayList<>(createCards());
     }
 
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
