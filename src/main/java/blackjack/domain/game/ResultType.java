@@ -2,14 +2,17 @@ package blackjack.domain.game;
 
 public enum ResultType {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK_WIN("승", 1.5),
+    WIN("승", 1),
+    LOSE("패", -1),
+    DRAW("무", 0);
 
-    private final String displayName;
+    private final String displayName; // TODO: should be deleted
+    private final double bettingYield;
 
-    ResultType(final String displayName) {
+    ResultType(final String displayName, double bettingYield) {
         this.displayName = displayName;
+        this.bettingYield = bettingYield;
     }
 
     public static ResultType from(final Score score, final Score targetScore) {
@@ -24,6 +27,7 @@ public enum ResultType {
         return ResultType.DRAW;
     }
 
+    // TODO: should be deleted
     public static ResultType getOppositeOf(final ResultType targetType) {
         if (targetType == ResultType.WIN) {
             return ResultType.LOSE;
@@ -34,7 +38,12 @@ public enum ResultType {
         return ResultType.DRAW;
     }
 
+    // TODO: should be deleted
     public String getDisplayName() {
         return displayName;
+    }
+
+    public double getBettingYield() {
+        return bettingYield;
     }
 }
