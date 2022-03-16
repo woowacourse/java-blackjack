@@ -10,7 +10,7 @@ import blackjack.domain.strategy.hit.HitStrategy;
 public abstract class User {
 
     protected final Hand hand;
-    protected final Name name;
+    private final Name name;
 
     private User(Hand hand, Name name) {
         this.hand = hand;
