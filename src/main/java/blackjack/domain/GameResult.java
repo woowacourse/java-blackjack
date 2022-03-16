@@ -11,7 +11,7 @@ public enum GameResult {
         this.result = result;
     }
 
-    public static GameResult compare(int score, int comparedScore) {
+    public static GameResult compareScore(int score, int comparedScore) {
         if (score > comparedScore) {
             return WIN;
         }
