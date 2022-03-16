@@ -10,12 +10,12 @@ public enum MatchResult {
     WIN("승", (dealerState, playerState) ->
             dealerState.isBlackjack() && !playerState.isBlackjack() ||
                     !dealerState.isBust() && playerState.isBust() ||
+                    dealerState.isBust() && playerState.isBust() ||
                     !dealerState.isBust() && dealerState.isWinBy(playerState)),
 
     LOSE("패", (dealerState, playerState) ->
             !dealerState.isBlackjack() && playerState.isBlackjack() ||
                     dealerState.isBust() && !playerState.isBust() ||
-                    dealerState.isBust() && playerState.isBust() ||
                     !dealerState.isBust() && !dealerState.isWinBy(playerState)),
 
     DRAW("무", (dealerState, playerState) ->
