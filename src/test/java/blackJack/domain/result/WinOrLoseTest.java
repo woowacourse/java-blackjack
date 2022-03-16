@@ -25,7 +25,7 @@ class WinOrLoseTest {
         Cards dealerCards = new Cards(
                 Set.of(Card.valueOf(Suit.SPADE, Denomination.ACE), Card.valueOf(Suit.SPADE, Denomination.THREE)));
 
-        assertThat(OutCome.of(dealerCards, playerCards)).isEqualTo(OutCome.WIN);
+        assertThat(OutCome.of(dealerCards, playerCards)).isEqualTo(OutCome.BLACKJACK);
     }
 
     @Test
@@ -82,7 +82,7 @@ class WinOrLoseTest {
                         Card.valueOf(Suit.HEART, Denomination.EIGHT),
                         Card.valueOf(Suit.HEART, Denomination.JACK)));
 
-        assertThat(OutCome.of(dealerCards, playerCards)).isEqualTo(OutCome.WIN);
+        assertThat(OutCome.of(dealerCards, playerCards)).isEqualTo(OutCome.BLACKJACK);
     }
 
     @Test
