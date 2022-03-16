@@ -47,6 +47,10 @@ public abstract class Participant {
         return this.cards.getAddedCount();
     }
 
+    public int getScore() {
+        return this.cards.sumScore();
+    }
+
     public abstract boolean isFinish();
 
     public abstract Participant drawCardsBy(final CardDeck cardDeck);

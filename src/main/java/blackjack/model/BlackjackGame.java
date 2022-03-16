@@ -1,11 +1,14 @@
 package blackjack.model;
 
+import blackjack.ParticipantDto;
 import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
+import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.model.result.BlackjackGameResult;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -58,6 +61,15 @@ public class BlackjackGame {
 
     private boolean canHit(Participant participant) {
         return !participant.isBust() && !participant.isBlackjack() && !participant.isFinish();
+    }
+
+    public List<ParticipantDto> getParticipant() {
+        List<ParticipantDto> participantDtos = new ArrayList<>();
+        participantDtos.add(ParticipantDto.from(dealer));
+        for (Participant player : players.getPlayerGroup()) {
+            participantDtos.add(ParticipantDto.from(player));
+        }
+        return participantDtos;
     }
 
     public BlackjackGameResult createMatchResult() {

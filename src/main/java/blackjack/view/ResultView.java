@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.ParticipantDto;
 import blackjack.model.BlackjackGame;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
@@ -80,20 +81,18 @@ public class ResultView {
         System.out.printf(GAMER_HIT_MESSAGE_FORMAT, name, cardJoiner);
     }
 
-    public static void printScoreResult(Participant dealer, List<Participant> gamers) {
-        printResultOf(dealer);
-        for (Participant gamer : gamers) {
-            printResultOf(gamer);
+    public static void printScoreResult(List<ParticipantDto> participants) {
+        for (ParticipantDto participant : participants) {
+            printResultOf(participant);
         }
     }
 
-    private static void printResultOf(Participant participant) {
+    private static void printResultOf(ParticipantDto participant) {
         StringJoiner cardJoiner = new StringJoiner(DELIMITER);
         for (String card : participant.getCards()) {
             cardJoiner.add(card);
         }
-        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, participant.getName(), cardJoiner,
-                participant.getState().sumScore());
+        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, participant.getName(), cardJoiner, participant.getScore());
     }
 
     public static void printMatchResult(final BlackjackGameResult blackJackGameResult) {
