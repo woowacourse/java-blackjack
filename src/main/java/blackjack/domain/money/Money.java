@@ -6,7 +6,7 @@ public class Money {
     private static final String ERROR_NOT_DIVIDE_BY_THOUSAND = "[ERROR] 투입 금액은 1000원 단위로 넣어야 합니다.";
     private static final int MINIMUM_STANDARD = 1000;
 
-    private int money;
+    private final int money;
 
     public Money(int money) {
         validateMoney(money);

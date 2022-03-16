@@ -19,7 +19,6 @@ public class InputView {
     private static final String AGREE = "y";
     private static final String DISAGREE = "n";
 
-
     public static List<String> inputUsersName() {
         System.out.println(INPUT_USERNAME_GUIDE);
         return Arrays.stream(scanner.nextLine().split(USERNAME_SEPARATOR, -1))

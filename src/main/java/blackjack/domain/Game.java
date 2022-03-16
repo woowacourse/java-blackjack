@@ -1,14 +1,13 @@
-package blackjack.domain.game;
+package blackjack.domain;
 
-import blackjack.domain.card.generator.CardGenerator;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.generator.CardGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.User;
 import blackjack.domain.participant.Users;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.UserResult;
 import blackjack.dto.ParticipantDto;
+import blackjack.dto.ProfitDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,12 +78,13 @@ public class Game {
         return participantDtos;
     }
 
-    public DealerResult getDealerResult() {
-        return new DealerResult(users.getUsersInfoWithResult(dealer.getScore()));
-    }
-
-    public List<UserResult> getUserResults() {
-        return users.getUsersInfoWithResult(dealer.getScore());
+    public List<ProfitDto> getParticipantProfits() {
+        List<ProfitDto> profitDtos = new ArrayList<>();
+        profitDtos.add(new ProfitDto(dealer.getName(), users.getDealerProfits(dealer.getScore())));
+        for (User user : users.getUsers()) {
+            profitDtos.add(new ProfitDto(user.getName(), user.calculateProfit(dealer.getScore())));
+        }
+        return profitDtos;
     }
 
     public List<String> getUserNames() {

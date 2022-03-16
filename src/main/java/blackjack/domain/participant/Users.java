@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.UserResult;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -34,9 +32,9 @@ public class Users {
         return Collections.unmodifiableList(users);
     }
 
-    public List<UserResult> getUsersInfoWithResult(int dealerSum) {
-        return users.stream()
-                .map(user -> user.getUserInfoWithResult(dealerSum))
-                .collect(Collectors.toList());
+    public int getDealerProfits(int dealerSum) {
+        return (-1) * users.stream()
+                .mapToInt(user -> user.calculateProfit(dealerSum))
+                .sum();
     }
 }

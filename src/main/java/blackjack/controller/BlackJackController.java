@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.game.Game;
+import blackjack.domain.Game;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -46,7 +46,7 @@ public class BlackJackController {
     }
 
     private void gameResult(Game game) {
-        OutputView.printFinalCard(game.getDealerAndPlayerCard());//
-        OutputView.printFinalResult(game.getDealerResult(), game.getUserResults());
+        OutputView.printFinalCard(game.getDealerAndPlayerCard());
+        OutputView.printFinalResult(game.getParticipantProfits());
     }
 }

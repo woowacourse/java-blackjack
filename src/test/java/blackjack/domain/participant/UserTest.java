@@ -5,7 +5,6 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.TestCardGenerator;
-import blackjack.domain.result.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,12 +43,13 @@ public class UserTest {
         Deck deck = new Deck(cardGenerator);
 
         User user = new User("Pobi");
+        user.betting(10000);
         user.receiveCard(deck);
         user.receiveCard(deck);
         user.receiveCard(deck);
 
-        assertThat(user.getUserInfoWithResult(19).getResult())
-                .isEqualTo(Result.LOSE);
+        assertThat(user.calculateProfit(19))
+                .isEqualTo(-10000);
     }
 
     @Test
@@ -61,11 +61,12 @@ public class UserTest {
         Deck deck = new Deck(cardGenerator);
 
         User user = new User("Pobi");
+        user.betting(10000);
         user.receiveCard(deck);
         user.receiveCard(deck);
 
-        assertThat(user.getUserInfoWithResult(20).getResult())
-                .isEqualTo(Result.LOSE);
+        assertThat(user.calculateProfit(20))
+                .isEqualTo(-10000);
     }
 
     @Test
@@ -77,11 +78,12 @@ public class UserTest {
         Deck deck = new Deck(cardGenerator);
 
         User user = new User("Pobi");
+        user.betting(10000);
         user.receiveCard(deck);
         user.receiveCard(deck);
 
-        assertThat(user.getUserInfoWithResult(17).getResult())
-                .isEqualTo(Result.WIN);
+        assertThat(user.calculateProfit(17))
+                .isEqualTo(10000);
     }
 
     @Test
@@ -93,11 +95,12 @@ public class UserTest {
         Deck deck = new Deck(cardGenerator);
 
         User user = new User("Pobi");
+        user.betting(10000);
         user.receiveCard(deck);
         user.receiveCard(deck);
 
-        assertThat(user.getUserInfoWithResult(18).getResult())
-                .isEqualTo(Result.DRAW);
+        assertThat(user.calculateProfit(18))
+                .isEqualTo(0);
     }
 
     @Test
@@ -110,12 +113,13 @@ public class UserTest {
         Deck deck = new Deck(cardGenerator);
 
         User user = new User("Pobi");
+        user.betting(10000);
         user.receiveCard(deck);
         user.receiveCard(deck);
         user.receiveCard(deck);
 
-        assertThat(user.getUserInfoWithResult(13).getResult())
-                .isEqualTo(Result.DRAW);
+        assertThat(user.calculateProfit(13))
+                .isEqualTo(0);
     }
 
     @Test
