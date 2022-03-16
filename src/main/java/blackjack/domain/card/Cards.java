@@ -9,6 +9,7 @@ import blackjack.domain.user.Score;
 
 public class Cards {
 	private static final int ELEVEN_ACE_SCORE = 11;
+	private static final int INITIAL_CARDS_SIZE = 2;
 
 	private final List<Card> cards;
 	private Score score;
@@ -92,6 +93,6 @@ public class Cards {
 	}
 
 	public boolean isBlackJack() {
-		return cards.size() == 2 && this.score.hasBlackJackScore();
+		return cards.size() == INITIAL_CARDS_SIZE && this.score.hasBlackJackScore();
 	}
 }
