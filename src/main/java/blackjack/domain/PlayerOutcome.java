@@ -1,18 +1,19 @@
 package blackjack.domain;
 
+import blackjack.domain.vo.BettingMoney;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum PlayerOutcome {
-    WIN("승", (player, dealer) -> player > dealer && player <= 21 || dealer > 21 && player <= 21),
-    LOSE("패", (player, dealer) -> player > 21 || dealer <= 21 && player < dealer),
-    DRAW("무", (player, dealer) -> player == dealer && player <= 21);
+    WIN((player, dealer) -> player > dealer && player <= 21 || dealer > 21 && player <= 21),
+    LOSE((player, dealer) -> player > 21 || dealer <= 21 && player < dealer),
+    DRAW((player, dealer) -> player == 21 && dealer == 21);
 
-    private String value;
+    private static final int LOSE_RATIO = -1;
+
     private BiPredicate<Integer, Integer> matcher;
 
-    PlayerOutcome(String value, BiPredicate<Integer, Integer> matcher) {
-        this.value = value;
+    PlayerOutcome(BiPredicate<Integer, Integer> matcher) {
         this.matcher = matcher;
     }
 
@@ -23,7 +24,10 @@ public enum PlayerOutcome {
             .orElse(LOSE);
     }
 
-    public String getValue() {
-        return this.value;
+    public double betting(BettingMoney bettingMoney) {
+        if (this == LOSE) {
+            return bettingMoney.getAmount() * LOSE_RATIO;
+        }
+        return bettingMoney.getAmount();
     }
 }

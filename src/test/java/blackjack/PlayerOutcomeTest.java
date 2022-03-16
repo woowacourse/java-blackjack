@@ -2,6 +2,7 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.PlayerOutcome;
+import blackjack.domain.vo.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,5 +54,17 @@ class PlayerOutcomeTest {
         PlayerOutcome match = PlayerOutcome.match(22, 22);
 
         assertThat(match).isEqualTo(PlayerOutcome.LOSE);
+    }
+
+    @Test
+    @DisplayName("이긴 경우 배팅금액을 반환 받는다.")
+    void isWin() {
+        assertThat(PlayerOutcome.WIN.betting(new BettingMoney(10000))).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("진 경우 배팅금액을 잃는다.")
+    void isLose() {
+        assertThat(PlayerOutcome.LOSE.betting(new BettingMoney(10000))).isEqualTo(-10000);
     }
 }

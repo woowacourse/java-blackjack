@@ -24,11 +24,11 @@ public class Player extends Participant {
         return PlayerOutcome.match(countCards(), dealer.countCards());
     }
 
-    public double getBettingResult() {
+    public double getBettingResult(Dealer dealer) {
         if (getHoldCards().isBlackjack()) {
             return this.bettingMoney.countBlackjackPay();
         }
-        return 0;
+        return match(dealer).betting(bettingMoney);
     }
 
     @Override

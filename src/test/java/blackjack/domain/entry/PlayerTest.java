@@ -4,6 +4,7 @@ import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.EIGHT;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.NINE;
+import static blackjack.domain.card.CardNumber.TWO;
 import static blackjack.domain.card.Suit.HEART;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +56,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어의 합이 낮을 경우 패배를 반환한다.")
     void playerIsWinByDealerOver21() {
-        Player player =new Player(NAME, BETTING_MONEY,
+        Player player = new Player(NAME, BETTING_MONEY,
             HoldCards.initTwoCards(Card.valueOf(SPADE, NINE), Card.valueOf(SPADE, ACE)));
 
         assertThat(player.match(new Dealer(HoldCards
@@ -99,6 +100,32 @@ public class PlayerTest {
         Player player = new Player(NAME, new BettingMoney(10000),
             HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)));
 
-        assertThat(player.getBettingResult()).isEqualTo(15000);
+        assertThat(player
+            .getBettingResult(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
+            .isEqualTo(15000);
+    }
+
+    @Test
+    @DisplayName("플레이어의 카드가 21이 넘는 경우 배팅 금액을 잃는다.")
+    void playersCardsIsBust() {
+        Player player = new Player(NAME, new BettingMoney(10000),
+            HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)));
+        player.addCard(Card.valueOf(SPADE, TWO));
+
+        assertThat(player
+            .getBettingResult(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
+            .isEqualTo(-10000);
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 모두 21인 경우 배팅 금액을 반환한다.")
+    void playersCardsIs21AndDealerCard21() {
+        Player player = new Player(NAME, new BettingMoney(10000),
+            HoldCards.initTwoCards(Card.valueOf(SPADE, EIGHT), Card.valueOf(SPADE, ACE)));
+        player.addCard(Card.valueOf(SPADE, TWO));
+
+        assertThat(player
+            .getBettingResult(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
+            .isEqualTo(10000);
     }
 }

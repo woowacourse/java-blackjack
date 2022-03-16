@@ -23,7 +23,7 @@ public class BlackjackGame {
         OutputView.printFirstTurnCards(toFirstTurnCards(blackjackTable.getParticipants()));
         hit(blackjackTable);
         OutputView.printCardCountingResult(toCardCountingResult(blackjackTable.getParticipants()));
-        OutputView.printGameResult(toGameResults(blackjackTable.countGameResult()));
+//        OutputView.printGameResult(toGameResults(blackjackTable.countGameResult()));
     }
 
     private List<PlayerRequest> toPlayerRequest(List<String> names) {

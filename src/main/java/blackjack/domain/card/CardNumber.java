@@ -29,7 +29,7 @@ public enum CardNumber {
     }
 
     public static boolean isBlackjack(List<CardNumber> cardNumbers) {
-        return sum(cardNumbers) == BLACK_JACK_NUMBER;
+        return cardNumbers.size() == 2 && sum(cardNumbers) == BLACK_JACK_NUMBER;
     }
 
     public static int sum(List<CardNumber> cardNumbers) {
