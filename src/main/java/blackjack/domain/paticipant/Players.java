@@ -68,7 +68,7 @@ public class Players {
     }
 
     private void checkCanTurnNextAndTurnNext(final Player currentTurnPlayer) {
-        if (currentTurnPlayer.isFinishied()) {
+        if (currentTurnPlayer.isFinished()) {
             currentPlayerTurnIndex++;
         }
     }

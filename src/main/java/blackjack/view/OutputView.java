@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.dto.ParticipantCards;
+import blackjack.dto.ParticipantScoreResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ public class OutputView {
     private static final String PROVIDED_CARD_TO_DEALER_CARD_MESSAGE = "%s: %s%n";
     private static final String PROVIDED_CARD_TO_PLAYER_CARD_MESSAGE = "%s 카드: %s%n";
     private static final String PROVIDE_CARD_TO_DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String PLAYER_CARD_RESULT_AND_SCORE_MESSAGE = "%s 카드: %s - 결과: %d%n";
 
     private static final String PLAYER_NAME_DELIMITER = ", ";
     private static final String CARD_DELIMITER = ", ";
@@ -25,7 +27,7 @@ public class OutputView {
                                                    final List<ParticipantCards> playerCards) {
         System.out.printf(PROVIDE_PARTICIPANTS_FIRST_CARD_MESSAGE, dealerCards.getName(), joinPlayerNames(playerCards));
         System.out.printf(PROVIDED_CARD_TO_DEALER_CARD_MESSAGE,
-                dealerCards.getName(), jointParticipantCards(dealerCards.getCards()));
+                dealerCards.getName(), joinParticipantCards(dealerCards.getCards()));
         playerCards.forEach(OutputView::printPlayerCards);
     }
 
@@ -35,7 +37,7 @@ public class OutputView {
                 .collect(Collectors.joining(PLAYER_NAME_DELIMITER));
     }
 
-    private static String jointParticipantCards(final List<Card> cards) {
+    private static String joinParticipantCards(final List<Card> cards) {
         return cards.stream()
                 .map(card -> joinCard(card.getSuit(), card.getDenomination()))
                 .collect(Collectors.joining(CARD_DELIMITER));
@@ -47,10 +49,19 @@ public class OutputView {
 
     public static void printPlayerCards(final ParticipantCards playerCards) {
         System.out.printf(PROVIDED_CARD_TO_PLAYER_CARD_MESSAGE,
-                playerCards.getName(), jointParticipantCards(playerCards.getCards()));
+                playerCards.getName(), joinParticipantCards(playerCards.getCards()));
     }
 
     public static void printDealerHit() {
         System.out.println(PROVIDE_CARD_TO_DEALER_MESSAGE);
+    }
+
+    public static void printParticipantScoreResults(final List<ParticipantScoreResult> participantScoreResults) {
+        participantScoreResults.forEach(OutputView::printPlayerScoreResult);
+    }
+
+    private static void printPlayerScoreResult(final ParticipantScoreResult participantScoreResult) {
+        System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, participantScoreResult.getName(),
+                joinParticipantCards(participantScoreResult.getCards()), participantScoreResult.getScore());
     }
 }

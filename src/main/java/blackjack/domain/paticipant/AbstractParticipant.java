@@ -5,7 +5,7 @@ import blackjack.domain.state.BlackjackGameState;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractParticipant {
+public abstract class AbstractParticipant implements Participant {
 
     private final String name;
     BlackjackGameState blackjackGameState;
@@ -32,7 +32,7 @@ public abstract class AbstractParticipant {
         blackjackGameState = blackjackGameState.stay();
     }
 
-    public boolean isFinishied() {
+    public boolean isFinished() {
         return blackjackGameState.isFinished();
     }
 

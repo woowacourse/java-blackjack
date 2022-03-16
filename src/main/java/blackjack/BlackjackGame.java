@@ -3,11 +3,15 @@ package blackjack;
 import blackjack.domain.HitCommand;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.paticipant.Dealer;
+import blackjack.domain.paticipant.Participant;
 import blackjack.domain.paticipant.Player;
 import blackjack.domain.paticipant.Players;
 import blackjack.dto.ParticipantCards;
+import blackjack.dto.ParticipantScoreResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -26,6 +30,7 @@ public class BlackjackGame {
         printParticipantsFirstCards();
         runPlayerTurn();
         runDealerTurn();
+        printAllResults();
     }
 
     private void printParticipantsFirstCards() {
@@ -58,11 +63,24 @@ public class BlackjackGame {
     }
 
     private void runDealerTurn() {
-        if (dealer.isFinishied()) {
+        if (dealer.isFinished()) {
             return;
         }
         dealer.hit(cardDeck.provideCard());
         OutputView.printDealerHit();
         runDealerTurn();
+    }
+
+    private void printAllResults() {
+        printAllParticipantCards();
+    }
+
+    private void printAllParticipantCards() {
+        final List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(players.players());
+        OutputView.printParticipantScoreResults(participants.stream()
+                .map(ParticipantScoreResult::from)
+                .collect(Collectors.toList()));
     }
 }
