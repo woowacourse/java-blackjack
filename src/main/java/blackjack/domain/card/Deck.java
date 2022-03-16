@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.generator.CardGenerateStrategy;
+import blackjack.domain.card.generator.CardGenerator;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -8,8 +11,8 @@ public class Deck {
     private static final String ERROR_EMPTY_DECK = "[ERROR] 더이상 뽑을 카드가 없습니다.";
     private final Queue<Card> cards;
 
-    public Deck(CardGenerator cardGenerator) {
-        this.cards = new LinkedList<>(cardGenerator.generate());
+    public Deck(CardGenerateStrategy cardGenerateStrategy) {
+        this.cards = new LinkedList<>(cardGenerateStrategy.generate());
     }
 
     public Card drawCard() {
