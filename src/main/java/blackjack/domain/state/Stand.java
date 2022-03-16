@@ -14,7 +14,7 @@ public class Stand extends Finish {
             return 1;
         }
         if (blackjackGameState.isBlackjack()) {
-            return 0;
+            return -1;
         }
         return Integer.compare(score(), blackjackGameState.score());
     }
