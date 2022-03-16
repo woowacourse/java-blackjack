@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardHandState;
+import blackjack.domain.game.ResultType;
+import blackjack.domain.game.Score;
 import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
 import java.util.function.Consumer;
@@ -89,6 +91,47 @@ public class Player extends Participant {
                 .stream()
                 .limit(INITIAL_PLAYER_OPEN_CARDS_COUNT)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+
+    public ResultType getDuelResultWith(Dealer dealer) {
+        if (dealer.isBlackjackOrBust() || this.isBlackjackOrBust()) {
+            return getSpecialDuelResultWith(dealer);
+        }
+        return getScoreCompareResultWith(dealer.getScore());
+    }
+
+    private ResultType getSpecialDuelResultWith(Dealer dealer) {
+        if (this.isWinConditionVersus(dealer)) {
+            return ResultType.WIN;
+        }
+        if (this.isAlsoBlackjackWith(dealer)) {
+            return ResultType.DRAW;
+        }
+        return ResultType.LOSE;
+    }
+
+    private boolean isWinConditionVersus(Dealer dealer) {
+        boolean isOnlyDealerBust = dealer.isBust() && !this.isBust();
+        boolean isOnlyPlayerBlackjack = !dealer.isBlackjack() && this.isBlackjack();
+
+        return isOnlyDealerBust || isOnlyPlayerBlackjack;
+    }
+
+    private boolean isAlsoBlackjackWith(Dealer dealer) {
+        return dealer.isBlackjack() && this.isBlackjack();
+    }
+
+    private ResultType getScoreCompareResultWith(final Score dealerScore) {
+        int compareResult = getScore().compareTo(dealerScore);
+
+        if (compareResult > 0) {
+            return ResultType.WIN;
+        }
+        if (compareResult < 0) {
+            return ResultType.LOSE;
+        }
+        return ResultType.DRAW;
     }
 
     @Override

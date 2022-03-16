@@ -33,6 +33,10 @@ public abstract class Participant {
         return cardHand.isBust();
     }
 
+    protected boolean isBlackjackOrBust() {
+        return cardHand.isBlackjack() || cardHand.isBust();
+    }
+
     public abstract String getName();
 
     public abstract List<Card> getInitialOpenCards();

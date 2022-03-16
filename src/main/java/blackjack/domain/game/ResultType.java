@@ -12,7 +12,7 @@ public enum ResultType {
         this.displayName = displayName;
     }
 
-    public static ResultType getOppositeTypeOf(final ResultType targetType) {
+    public static ResultType getOppositeOf(final ResultType targetType) {
         if (targetType == ResultType.WIN) {
             return ResultType.LOSE;
         }
