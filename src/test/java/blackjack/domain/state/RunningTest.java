@@ -76,14 +76,4 @@ class RunningTest {
 
         assertThat(nextState).isInstanceOf(Stand.class);
     }
-
-    @Test
-    void score_계산_시_예외발생() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final BlackjackGameState running = new Running(cards);
-
-        assertThatThrownBy(() -> running.score())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Running상태는 score를 계산할 수 없습니다.");
-    }
 }

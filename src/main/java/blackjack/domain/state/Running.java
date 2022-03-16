@@ -7,7 +7,7 @@ public final class Running extends AbstractBlackjackGameState {
 
     public Running(final Cards cards) {
         super(cards);
-        checkBustCards(super.cards);
+        checkBustCards(super.cards());
     }
 
     private void checkBustCards(final Cards cards) {
@@ -18,16 +18,16 @@ public final class Running extends AbstractBlackjackGameState {
 
     @Override
     public BlackjackGameState hit(final Card card) {
-        cards.addCard(card);
-        if (cards.isBust()) {
-            return new Bust(cards);
+        cards().addCard(card);
+        if (cards().isBust()) {
+            return new Bust(cards());
         }
-        return new Running(cards);
+        return new Running(cards());
     }
 
     @Override
     public BlackjackGameState stay() {
-        return new Stand(cards);
+        return new Stand(cards());
     }
 
     @Override
