@@ -28,6 +28,7 @@ class PlayersTest {
         playerList.add(new Dealer());
         Guest guest = new Guest("guest", new PlayingCards());
         playerList.add(guest);
+
         Players players = new Players(playerList);
         players.nextTurn();
 

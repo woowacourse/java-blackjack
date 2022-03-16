@@ -5,7 +5,6 @@ import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
@@ -18,7 +17,6 @@ public class BlackjackGame {
 
     private final Deck deck;
     private final Players blackjackPlayers;
-
     public BlackjackGame(Deck deck, Players players) {
         this.deck = deck;
         this.blackjackPlayers = players;

@@ -10,6 +10,9 @@ import blackjack.domain.card.Denomination;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
@@ -38,9 +41,10 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘는 경우")
     public void checkPlayerCantHit() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
+        Set<PlayingCard> dealerCards = new HashSet<>();
+        dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
+        dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
+        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
 
         assertThat(dealer.isCanHit()).isFalse();
     }
@@ -48,9 +52,10 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘지 않는 경우")
     public void checkPlayerCanHit() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        dealer.addCard(new PlayingCard(Suit.SPADE, Denomination.FIVE));
+        Set<PlayingCard> dealerCards = new HashSet<>();
+        dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
+        dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.FIVE));
+        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
 
         assertThat(dealer.isCanHit()).isTrue();
     }
@@ -59,11 +64,14 @@ class DealerTest {
     @CsvSource(value = {"SPADE:TWO:JACK:true", "SPADE:JACK:TWO:false"}, delimiter = ':')
     @DisplayName("딜러 승패 확인")
     void checkDealerResult(Suit suit, Denomination denomination, Denomination secondDenomination, boolean expected) {
-        Guest guest = new Guest("guest", new PlayingCards());
-        guest.addCard(new PlayingCard(suit, denomination));
+        Set<PlayingCard> guestCards = new HashSet<>();
+        guestCards.add(new PlayingCard(suit, denomination));
+        Guest guest = new Guest("guest", new PlayingCards(guestCards));
 
-        Dealer dealer = new Dealer();
-        dealer.addCard(new PlayingCard(suit, secondDenomination));
+        Set<PlayingCard> dealerCards = new HashSet<>();
+        dealerCards.add(new PlayingCard(suit, secondDenomination));
+        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
+
         assertThat(dealer.isWin(guest)).isEqualTo(expected);
     }
 }

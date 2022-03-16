@@ -1,9 +1,6 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,14 +22,16 @@ class BlackjackGameTest {
     @DisplayName("게임 계산 결과: 딜러가 이긴 경우 확인")
     void isDealerBlackjack() {
         List<Player> players = new ArrayList<>();
-        Guest guest = new Guest("guest", new PlayingCards());
-        Dealer dealer = new Dealer();
-        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
-        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
+        Set<PlayingCard> guestCards = new HashSet<>();
+        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
+        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
+        Guest guest = new Guest("guest", new PlayingCards(guestCards));
         players.add(guest);
 
-        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
-        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.TEN));
+        Set<PlayingCard> dealerCards = new HashSet<>();
+        dealerCards.add(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
+        dealerCards.add(new PlayingCard(Suit.DIAMOND, Denomination.TEN));
+        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
         players.add(dealer);
 
         Players playerList = new Players(players);
@@ -48,15 +47,17 @@ class BlackjackGameTest {
     @DisplayName("게임 계산 결과: 플레이어가 이긴 경우 확인")
     void isPlayerBlackjack() {
         List<Player> players = new ArrayList<>();
-        Guest guest = new Guest("guest", new PlayingCards());
-        Dealer dealer = new Dealer();
-        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.TEN));
+        Set<PlayingCard> guestCards = new HashSet<>();
+        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
+        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.TEN));
+        Guest guest = new Guest("guest", new PlayingCards(guestCards));
         players.add(guest);
 
-        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
-        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.THREE));
-        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.SEVEN));
+        Set<PlayingCard> dealerCards = new HashSet<>();
+        dealerCards.add(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
+        dealerCards.add(new PlayingCard(Suit.DIAMOND, Denomination.THREE));
+        dealerCards.add(new PlayingCard(Suit.DIAMOND, Denomination.SEVEN));
+        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
         players.add(dealer);
 
         Players playerList = new Players(players);
@@ -69,7 +70,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("카드가 뽑히는지 확인")
+    @DisplayName("카드가 할당되는지 확인")
     void pickCard() {
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
         Guest guest = new Guest("guest", new PlayingCards());
@@ -88,7 +89,6 @@ class BlackjackGameTest {
     @DisplayName("다음 순서가 존재하지 않는 경우: 딜러만 있는 경우")
     void checkNonExistNextTurn() {
         List<String> players = new ArrayList<>();
-
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
         BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
         blackjackGame.initGames(playingCardShuffleMachine);

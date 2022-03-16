@@ -25,6 +25,7 @@ class PlayingCardsTest {
     @DisplayName("cards에 card 더하는 로직 확인")
     void checkAddCard() {
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
+
         PlayingCards comparedPlayingCards = new PlayingCards();
         comparedPlayingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
 

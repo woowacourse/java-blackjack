@@ -10,9 +10,7 @@ class PlayingCardTest {
     @Test
     @DisplayName("카드 인스턴스 생성 확인")
     void createCard() {
-        Suit suit = Suit.SPADE;
-        Denomination denomination = Denomination.FOUR;
-        PlayingCard playingCard = new PlayingCard(suit, denomination);
+        PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.FOUR);
 
         assertThat(playingCard).isInstanceOf(PlayingCard.class);
     }
@@ -20,9 +18,7 @@ class PlayingCardTest {
     @Test
     @DisplayName("생성된 카드가 ACE인지 확인")
     void isAce() {
-        Suit suit = Suit.SPADE;
-        Denomination denomination = Denomination.ACE;
-        PlayingCard playingCard = new PlayingCard(suit, denomination);
+        PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.ACE);
         assertThat(playingCard.isAce()).isTrue();
     }
 }
