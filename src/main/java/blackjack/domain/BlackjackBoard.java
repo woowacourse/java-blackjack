@@ -35,10 +35,10 @@ public class BlackjackBoard {
 
     public HoldingCard drawCurrentPlayer(DrawCommand drawCommand) {
         Participant currentPlayer = players.getCurrentPlayer();
-        if (drawCommand.isHit()) {
+        if (drawCommand.isAccept()) {
             currentPlayer.receiveCard(cardDeck.drawCard());
         }
-        if (!drawCommand.isHit() || currentPlayer.isBust()) {
+        if (!drawCommand.isAccept() || currentPlayer.isBust()) {
             players.skipTurn();
         }
         return currentPlayer.getHoldingCard();
