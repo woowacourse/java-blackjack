@@ -1,8 +1,9 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.Cards.MAX_SCORE;
+
 import blackjack.domain.Money;
 import blackjack.domain.Name;
-import blackjack.domain.Record;
 
 public class Player extends Participant {
 
@@ -24,10 +25,10 @@ public class Player extends Participant {
             updateWhenBlackjack(isDealerBlackjack);
         }
 
-        if (Record.isPush(dealerScore, getScore())) {
+        if (isPush(dealerScore)) {
             money.toZero();
         }
-        if (Record.isLoss(dealerScore, getScore())) {
+        if (isLoss(dealerScore)) {
             money.toNegative();
         }
     }
@@ -40,6 +41,21 @@ public class Player extends Participant {
 
         money.multiply();
     }
+
+    private boolean isPush(final int dealerScore) {
+        return dealerScore == getScore() && getScore() <= MAX_SCORE;
+    }
+
+    private boolean isLoss(final int dealerScore) {
+        if (getScore() > MAX_SCORE) {
+            return true;
+        }
+        if (dealerScore > MAX_SCORE) {
+            return false;
+        }
+        return dealerScore > getScore();
+    }
+
 
     public int getPrize() {
         return money.getValue();
