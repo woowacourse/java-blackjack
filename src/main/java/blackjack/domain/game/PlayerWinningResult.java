@@ -5,17 +5,15 @@ import blackjack.domain.participant.Player;
 
 public enum PlayerWinningResult {
 
-    WIN("승", 1),
-    LOSE("패", -1),
-    DRAW("무", 0);
+    WIN(1),
+    LOSE(-1),
+    DRAW(0);
 
     private static final double BLACKJACK_BETTING_PROFIT_RATE = 1.5;
 
-    private final String result;
     private final int bettingProfitRate;
 
-    PlayerWinningResult(String result, int bettingMultiple) {
-        this.result = result;
+    PlayerWinningResult(int bettingMultiple) {
         this.bettingProfitRate = bettingMultiple;
     }
 
@@ -42,24 +40,10 @@ public enum PlayerWinningResult {
         return DRAW;
     }
 
-    public PlayerWinningResult reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return this;
-    }
-
     public int getBettingProfit(int money, boolean isBlackjack) {
         if (isBlackjack) {
             return (int)(money * BLACKJACK_BETTING_PROFIT_RATE);
         }
         return money * bettingProfitRate;
-    }
-
-    public String getResult() {
-        return result;
     }
 }
