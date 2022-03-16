@@ -1,6 +1,8 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
+import blackjack.view.DenominationView;
+import blackjack.view.SuitView;
 
 public class CardDto {
 
@@ -13,7 +15,9 @@ public class CardDto {
     }
 
     public static CardDto from(Card card) {
-        return new CardDto(card.getDenomination().getName(), card.getSuit().getName());
+        String denomination = DenominationView.getName(card.getDenomination());
+        String suit = SuitView.getName(card.getSuit());
+        return new CardDto(denomination, suit);
     }
 
     public String getDenomination() {
