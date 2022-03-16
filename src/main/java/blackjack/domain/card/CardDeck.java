@@ -24,7 +24,8 @@ public class CardDeck {
 
     private long cardsDistinctCount(final Queue<Card> cards) {
         return cards.stream()
-                .distinct().count();
+                .distinct()
+                .count();
     }
 
     public static CardDeck createNewShuffledCardDeck() {
