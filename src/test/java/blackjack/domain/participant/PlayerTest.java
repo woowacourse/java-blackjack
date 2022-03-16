@@ -30,7 +30,7 @@ public class PlayerTest {
     @DisplayName("이름과 카드 리스트가 주어지면 정상적으로 생성된다.")
     @Test
     void 플레이어_생성_정상() {
-        assertDoesNotThrow(() -> new Player("mat", generateCards()));
+        assertDoesNotThrow(() -> new Player("mat", generateCards(), "10000"));
     }
 
     @DisplayName("플레이어의 총 점수가 21점 이하인 경우 hit가 가능하다.")
@@ -38,7 +38,7 @@ public class PlayerTest {
     void 플레이어_게임_지속_가능() {
         String name = "mat";
         List<Card> cards = generateBlackjack();
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, "10000");
 
         assertThat(player.isDrawable()).isTrue();
     }
@@ -46,7 +46,7 @@ public class PlayerTest {
     @DisplayName("플레이어의 총 점수가 21점을 초과하는 경우 hit가 불가능하다.")
     @Test
     void 플레이어_게임_지속_불가능() {
-        Player player = new Player("sudal", generateBlackjack());
+        Player player = new Player("sudal", generateBlackjack(), "10000");
         player.append(new Card(ACE, SPADE));
 
         assertThat(player.isDrawable()).isFalse();
@@ -57,7 +57,7 @@ public class PlayerTest {
     void 카드_합침() {
         String name = "mat";
         List<Card> cards = generateCards();
-        Player player = new Player(name, cards);
+        Player player = new Player(name, cards, "10000");
         Card card = new Card(FIVE, SPADE);
 
         player.append(card);
@@ -81,7 +81,7 @@ public class PlayerTest {
         dealer.append(new Card(KING, SPADE));
         dealer.append(new Card(JACK, HEART));
 
-        Player player = new Player("sudal", generateBlackjack());
+        Player player = new Player("sudal", generateBlackjack(), "10000");
 
         GameResult gameResult = player.decideResult(dealer);
 
@@ -95,7 +95,7 @@ public class PlayerTest {
         dealer.append(new Card(KING, SPADE));
         dealer.append(new Card(JACK, HEART));
 
-        Player player = new Player("sudal", generateBlackjack());
+        Player player = new Player("sudal", generateBlackjack(), "10000");
         player.append(new Card(KING, HEART));
         player.append(new Card(JACK, SPADE));
 
@@ -108,7 +108,7 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_버스트_패() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", generateBlackjack());
+        Player player = new Player("sudal", generateBlackjack(), "10000");
         player.append(new Card(KING, SPADE));
         player.append(new Card(JACK, SPADE));
 
@@ -121,7 +121,7 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_점수_승() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", generateTotalScoreGraterThan17Cards());
+        Player player = new Player("sudal", generateTotalScoreGraterThan17Cards(), "10000");
 
         GameResult gameResult = player.decideResult(dealer);
 
@@ -132,7 +132,7 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_점수_패() {
         Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
-        Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards());
+        Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards(), "10000");
 
         GameResult gameResult = player.decideResult(dealer);
 
@@ -143,7 +143,7 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_점수_무() {
         Dealer dealer = new Dealer(generateCards());
-        Player player = new Player("sudal", generateCards());
+        Player player = new Player("sudal", generateCards(), "10000");
 
         GameResult gameResult = player.decideResult(dealer);
 

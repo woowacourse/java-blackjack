@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Players {
 
@@ -12,9 +13,10 @@ public class Players {
 
     private final List<Player> value;
 
-    public Players(Deck deck, List<String> names) {
-        this.value = names.stream()
-                .map(name -> new Player(name, deck.getInitCards()))
+    public Players(Deck deck, Map<String, String> names) {
+        this.value = names.keySet()
+                .stream()
+                .map(name -> new Player(name, deck.getInitCards(), names.get(name)))
                 .collect(toList());
         validateSize();
     }

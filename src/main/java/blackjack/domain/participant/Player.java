@@ -1,13 +1,17 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player extends Participant {
 
-    public Player(String name, List<Card> cards) {
+    private final Money money;
+
+    public Player(String name, List<Card> cards, String money) {
         super(name, cards);
+        this.money = new Money(money);
     }
 
     @Override

@@ -78,7 +78,7 @@ public class DealerTest {
         dealer.append(new Card(KING, SPADE));
         dealer.append(new Card(JACK, HEART));
 
-        Player player = new Player("sudal", generateBlackjack());
+        Player player = new Player("sudal", generateBlackjack(), "10000");
 
         GameResult gameResult = dealer.decideResult(player);
 
@@ -92,7 +92,7 @@ public class DealerTest {
         dealer.append(new Card(KING, SPADE));
         dealer.append(new Card(JACK, HEART));
 
-        Player player = new Player("sudal", generateBlackjack());
+        Player player = new Player("sudal", generateBlackjack(), "10000");
         player.append(new Card(KING, HEART));
         player.append(new Card(JACK, SPADE));
 
@@ -105,7 +105,7 @@ public class DealerTest {
     @Test
     void 딜러_승패_여부_버스트_승() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", generateBlackjack());
+        Player player = new Player("sudal", generateBlackjack(), "10000");
         player.append(new Card(KING, SPADE));
         player.append(new Card(JACK, SPADE));
 
@@ -118,7 +118,7 @@ public class DealerTest {
     @Test
     void 딜러_승패_여부_점수_패() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", generateTotalScoreGraterThan17Cards());
+        Player player = new Player("sudal", generateTotalScoreGraterThan17Cards(), "10000");
 
         GameResult gameResult = dealer.decideResult(player);
 
@@ -129,7 +129,7 @@ public class DealerTest {
     @Test
     void 플레이어_승패_여부_점수_승() {
         Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
-        Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards());
+        Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards(), "10000");
 
         GameResult gameResult = dealer.decideResult(player);
 
@@ -140,7 +140,7 @@ public class DealerTest {
     @Test
     void 딜러_승패_여부_점수_무() {
         Dealer dealer = new Dealer(generateCards());
-        Player player = new Player("sudal", generateCards());
+        Player player = new Player("sudal", generateCards(), "10000");
 
         GameResult gameResult = dealer.decideResult(player);
 
