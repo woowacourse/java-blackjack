@@ -24,11 +24,9 @@ public class Cards {
 
 	private int calculateScore() {
 		int score = cards.stream()
-			.mapToInt(Card::getScore).sum();
-		if (cards.stream().noneMatch(Card::isAce)) {
-			return score;
-		}
-		if (score + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD) {
+			.mapToInt(Card::getScore)
+			.sum();
+		if (cards.stream().anyMatch(Card::isAce) && score + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD) {
 			return score + ACE_SCORE_DIFFERENCE;
 		}
 		return score;
