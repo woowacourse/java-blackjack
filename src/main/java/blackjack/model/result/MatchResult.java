@@ -1,52 +1,52 @@
 package blackjack.model.result;
 
-import blackjack.model.state.State;
 import blackjack.model.player.Participant;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum MatchResult {
 
-    WIN("승", (dealerState, playerState) ->
-            dealerState.isBlackjack() && !playerState.isBlackjack() ||
-                    !dealerState.isBust() && playerState.isBust() ||
-                    dealerState.isBust() && playerState.isBust() ||
-                    !dealerState.isBust() && dealerState.isWinBy(playerState)),
+    WIN("승", (dealer, player) ->
+            dealer.isBlackjack() && !player.isBlackjack() ||
+                    !dealer.isBust() && player.isBust() ||
+                    dealer.isBust() && player.isBust() ||
+                    !dealer.isBust() && dealer.isWinBy(player)),
 
-    LOSE("패", (dealerState, playerState) ->
-            !dealerState.isBlackjack() && playerState.isBlackjack() ||
-                    dealerState.isBust() && !playerState.isBust() ||
-                    !dealerState.isBust() && !dealerState.isWinBy(playerState)),
+    LOSE("패", (dealer, player) ->
+            !dealer.isBlackjack() && player.isBlackjack() ||
+                    dealer.isBust() && !player.isBust() ||
+                    !dealer.isBust() && !dealer.isDrawWith(player) ||
+                    !dealer.isBust() && !dealer.isWinBy(player)),
 
-    DRAW("무", (dealerState, playerState) ->
-            dealerState.isBlackjack() && playerState.isBlackjack() ||
-                    !dealerState.isBust() && dealerState.isDrawWith(playerState)),
+    DRAW("무", (dealer, player) ->
+            dealer.isBlackjack() && player.isBlackjack() ||
+                    !dealer.isBust() && dealer.isDrawWith(player)),
     ;
 
     private final String value;
-    private final BiPredicate<State, State> biPredicate;
+    private final BiPredicate<Participant, Participant> biPredicate;
 
-    MatchResult(String value, BiPredicate<State, State> biPredicate) {
+    MatchResult(String value, BiPredicate<Participant, Participant> biPredicate) {
         this.value = value;
         this.biPredicate = biPredicate;
     }
 
     public static MatchResult match(Participant dealer, Participant gamer) {
         return Arrays.stream(values())
-                .filter(matchResult -> matchResult.biPredicate.test(dealer.getState(), gamer.getState()))
+                .filter(matchResult -> matchResult.biPredicate.test(dealer, gamer))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 값이 없습니다."));
     }
 
-    public String getValue() {
+    public String get() {
         return value;
     }
 
-    public String getReverseValue() {
-        if (value.equals(WIN.getValue())) {
+    public String getReverse() {
+        if (value.equals(WIN.get())) {
             return LOSE.value;
         }
-        if (value.equals(LOSE.getValue())) {
+        if (value.equals(LOSE.get())) {
             return WIN.value;
         }
         return DRAW.value;
