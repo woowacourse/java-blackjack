@@ -27,4 +27,8 @@ public class Betting {
     public long result(boolean isBlackjack) {
         return (long)(1.5 * money);
     }
+
+    public Name getName() {
+        return name;
+    }
 }
