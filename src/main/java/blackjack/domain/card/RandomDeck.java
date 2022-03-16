@@ -5,16 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class RandomDeck implements Deck {
-    public static final int FIRST_CARD_INDEX = 0;
 
-    private final List<Card> cards;
+    private final LinkedList<Card> cards;
 
     public RandomDeck() {
         cards = initCards();
     }
 
-    private List<Card> initCards() {
-        List<Card> cards = new LinkedList<>();
+    private LinkedList<Card> initCards() {
+        LinkedList<Card> cards = new LinkedList<>();
         for (Symbol symbol : Symbol.values()) {
             addDenomination(cards, symbol);
         }
@@ -29,7 +28,7 @@ public class RandomDeck implements Deck {
     }
 
     public Card draw() {
-        return cards.remove(FIRST_CARD_INDEX);
+        return cards.removeFirst();
     }
 
     public Cards initialDraw() {
