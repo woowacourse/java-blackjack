@@ -52,11 +52,10 @@ public class HoldingCards {
     }
 
     public List<Card> getAllCards() {
-        // 복사하여 반환하도록 변경
-        return Collections.unmodifiableList(cards);
+        return List.copyOf(cards);
     }
 
     public List<Card> getCardsWithOutHiddenCard() {
-        return Collections.unmodifiableList(cards).subList(WITHOUT_HIDDEN_CARD_INDEX, cards.size());
+        return List.copyOf(cards.subList(WITHOUT_HIDDEN_CARD_INDEX, cards.size()));
     }
 }
