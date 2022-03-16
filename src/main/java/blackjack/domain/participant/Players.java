@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Record;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,5 +70,11 @@ public class Players {
 
     public List<Player> getValue() {
         return new ArrayList<>(value);
+    }
+
+    public List<Record> findAllRecords(final int dealerScore) {
+        return value.stream()
+                .map(player -> Record.of(dealerScore, player.getScore()))
+                .collect(Collectors.toList());
     }
 }

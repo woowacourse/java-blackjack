@@ -4,17 +4,13 @@ import blackjack.domain.Record;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerAnswer;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameController {
 
@@ -93,33 +89,9 @@ public class GameController {
 
     private void printAllRecords() {
         final int dealerScore = dealer.getScore();
-
-        printDealerRecord(dealerScore);
-        printPlayerRecords(dealerScore);
-    }
-
-    private void printDealerRecord(final int dealerScore) {
-        final Map<String, Integer> map = initMap();
-        players.getValue().stream()
-                .map(Player::getScore)
-                .map(playerScore -> Record.of(dealerScore, playerScore))
-                .map(playerRecord -> Record.fromOppositeName(playerRecord.getName()))
-                .forEach(dealerRecord -> map.put(dealerRecord.getName(), map.get(dealerRecord.getName()) + 1));
+        final Map<Record, Integer> map = dealer.calculateRecord(players.findAllRecords(dealerScore));
 
         OutputView.printDealerRecord(map);
-    }
-
-    private Map<String, Integer> initMap() {
-        return Arrays.stream(Record.values())
-                .map(Record::getName)
-                .collect(Collectors.toMap(
-                        recordName -> recordName,
-                        recordName -> 0,
-                        (a, b) -> a,
-                        LinkedHashMap::new));
-    }
-
-    private void printPlayerRecords(final int dealerScore) {
         players.getValue().forEach(
                 player -> OutputView.printPlayerRecord(player.getName(), Record.of(dealerScore, player.getScore())));
     }

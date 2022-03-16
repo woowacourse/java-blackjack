@@ -54,13 +54,13 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다.");
     }
 
-    public static void printDealerRecord(final Map<String, Integer> records) {
+    public static void printDealerRecord(final Map<Record, Integer> records) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
 
         final String message = records.keySet()
                 .stream()
                 .filter(key -> records.get(key) != 0)
-                .map(key -> records.get(key) + key)
+                .map(key -> records.get(key) + key.getName())
                 .collect(Collectors.joining(" "));
 
         System.out.println("딜러: " + message);
