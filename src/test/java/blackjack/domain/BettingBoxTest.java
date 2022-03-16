@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

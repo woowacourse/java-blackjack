@@ -1,6 +1,8 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BettingBox;
 import blackjack.domain.card.Deck;
+import blackjack.domain.strategy.BetInputStrategy;
 import blackjack.domain.strategy.HitStrategy;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,6 +69,13 @@ public class Players {
         while (player.isHittable()) {
             player.hit(deck.draw());
             hitCallback.accept(player);
+        }
+    }
+
+    public void bet(BettingBox bettingBox, BetInputStrategy betInputStrategy) {
+        List<Player> guests = getGuests();
+        for (Player guest : guests) {
+            bettingBox.betGuest(guest, betInputStrategy.inputBettingMoney(guest));
         }
     }
 

@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.domain.BettingBox;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.BlackjackResult;
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Cards;
@@ -24,6 +26,8 @@ public class BlackjackGame {
         );
         players.initHit(deck, INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
+        BettingBox bettingBox = new BettingBox();
+        players.bet(bettingBox, (player) -> new BettingMoney(InputView.inputBettingMoney(player.getName())));
         players.playersHit(deck, OutputView::printPresentStatus);
         OutputView.printCardResults(getCardResults(players));
         OutputView.printResult(BlackjackResult.match(players.findDealer(), players.getGuests()).getResultMap());

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ public class InputView {
     public static final String INPUT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     public static final String NAME_SPLIT_DELIMITER = ",";
     public static final String HIT_OR_STAND_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
+    private static final String INPUT_BETTING_MONEY_MESSAGE = "%s의 베팅 금액은?";
 
     private InputView() {
     }
@@ -26,5 +28,11 @@ public class InputView {
         System.out.println();
         System.out.printf(HIT_OR_STAND_MESSAGE, name);
         return scanner.nextLine();
+    }
+
+    public static int inputBettingMoney(String name) {
+        System.out.println();
+        System.out.printf(INPUT_BETTING_MONEY_MESSAGE + "\n", name);
+        return Integer.parseInt(scanner.nextLine());
     }
 }
