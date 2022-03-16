@@ -2,8 +2,10 @@ package blackjack.model.trumpcard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class Deck {
+    private static final int FIRST_DECK_SIZE = 2;
     private static final int SCORE_LIMIT = 21;
     private static final int SCORE_ACE_ADVANTAGE = 10;
     private static final int SCORE_ADVANTAGE_CRITERIA = SCORE_LIMIT - SCORE_ACE_ADVANTAGE;
@@ -12,6 +14,12 @@ public final class Deck {
 
     public Deck() {
         this.cards = new ArrayList<>();
+    }
+
+    public void initializeDeck(Supplier<TrumpCard> cardSupplier) {
+        for (int i = 0; i < FIRST_DECK_SIZE; i++) {
+            add(cardSupplier.get());
+        }
     }
 
     public int sumScore() {
@@ -64,7 +72,7 @@ public final class Deck {
     }
 
     public boolean isBlackjack() {
-        return getSize() == 2 && sumScore() == SCORE_LIMIT;
+        return countAddedCards() == 0 && sumScore() == SCORE_LIMIT;
     }
 
     public boolean isScoreLessThan(int otherScore) {
@@ -75,7 +83,11 @@ public final class Deck {
         return cards;
     }
 
-    public int getSize() {
+    public int countAddedCards() {
+        return getSize() - FIRST_DECK_SIZE;
+    }
+
+    private int getSize() {
         return this.cards.size();
     }
 }

@@ -2,6 +2,7 @@ package blackjack.model.player;
 
 import blackjack.model.trumpcard.Deck;
 import blackjack.model.trumpcard.TrumpCard;
+import java.util.function.Supplier;
 
 public abstract class Player {
     private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";
@@ -25,6 +26,10 @@ public abstract class Player {
         return deck.sumScore();
     }
 
+    public void initializeDeck(Supplier<TrumpCard> cardSupplier) {
+        this.deck.initializeDeck(cardSupplier);
+    }
+
     public void addCard(TrumpCard card) {
         this.deck.add(card);
     }
@@ -33,8 +38,8 @@ public abstract class Player {
         return this.deck.isScoreLessThan(criteria);
     }
 
-    public int getDeckSize() {
-        return this.deck.getSize();
+    public int countAddedCards() {
+        return this.deck.countAddedCards();
     }
 
     public boolean isBust() {

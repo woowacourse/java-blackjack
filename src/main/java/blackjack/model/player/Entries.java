@@ -3,7 +3,7 @@ package blackjack.model.player;
 import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class Entries {
@@ -38,9 +38,9 @@ public final class Entries {
                 .count();
     }
 
-    public void operateToEach(Consumer<? super Entry> consumer) {
+    public void initializeDecks(Supplier<TrumpCard> cardSupplier) {
         for (Entry entry : values) {
-            consumer.accept(entry);
+            entry.initializeDeck(cardSupplier);
         }
     }
 

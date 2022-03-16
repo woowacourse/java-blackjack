@@ -3,7 +3,7 @@ package blackjack.model.player;
 import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class Players {
     private final Entries entries;
@@ -18,9 +18,9 @@ public final class Players {
         return new Players(Entries.from(names), new Dealer());
     }
 
-    public void operateToEach(Consumer<Player> consumer) {
-        consumer.accept(dealer);
-        this.entries.operateToEach(consumer);
+    public void initializeDecks(Supplier<TrumpCard> cardSupplier) {
+        this.dealer.initializeDeck(cardSupplier);
+        this.entries.initializeDecks(cardSupplier);
     }
 
     public boolean hasNextEntry() {
@@ -59,8 +59,8 @@ public final class Players {
         return this.dealer;
     }
 
-    public int getDealerDeckSize() {
-        return this.dealer.getDeckSize();
+    public int countCardsAddedToDealer() {
+        return this.dealer.countAddedCards();
     }
 
     public Entry getCurrentEntry() {
