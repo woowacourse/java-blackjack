@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.model.player.Participant;
+
 import java.util.List;
 
 public class ParticipantDto {
@@ -15,7 +16,7 @@ public class ParticipantDto {
     }
 
     public static ParticipantDto from(Participant participant) {
-        return new ParticipantDto(participant.getName(), participant.getCards(), participant.getScore());
+        return new ParticipantDto(participant.getName(), participant.getCards(), participant.sumScore());
     }
 
     public String getName() {

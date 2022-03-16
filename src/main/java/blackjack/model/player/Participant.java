@@ -1,12 +1,13 @@
 package blackjack.model.player;
 
 import blackjack.model.card.Cards;
-import blackjack.model.state.State;
 import blackjack.model.card.CardDeck;
 
 import java.util.List;
 
 public abstract class Participant {
+    private static final int MAX_SCORE = 21;
+
     protected final String name;
     protected final Cards cards;
 
@@ -36,19 +37,27 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return cards.sumScore() > 21;
+        return cards.sumScore() > MAX_SCORE;
     }
 
     public boolean isBlackjack() {
-        return cards.sumScore() == 21 && cards.hasOnlyStartCards();
+        return cards.sumScore() == MAX_SCORE && cards.hasOnlyStartCards();
     }
 
     public int getAddedCardCount() {
         return this.cards.getAddedCount();
     }
 
-    public int getScore() {
+    public int sumScore() {
         return this.cards.sumScore();
+    }
+
+    public boolean isWinBy(Participant otherParticipant) {
+        return this.cards.sumScore() > otherParticipant.sumScore();
+    }
+
+    public boolean isDrawWith(Participant otherParticipant) {
+        return this.cards.sumScore() == otherParticipant.sumScore();
     }
 
     public abstract boolean isFinish();
@@ -56,6 +65,4 @@ public abstract class Participant {
     public abstract Participant drawCardsBy(final CardDeck cardDeck);
 
     public abstract Participant hitBy(final CardDeck cardDeck);
-
-    public abstract State getState();
 }

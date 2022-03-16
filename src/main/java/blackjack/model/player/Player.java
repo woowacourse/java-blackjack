@@ -1,28 +1,16 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Cards;
-import blackjack.model.state.PlayerState;
-import blackjack.model.state.State;
 import blackjack.model.card.CardDeck;
-
-import java.util.List;
+import blackjack.model.card.Cards;
 
 public class Player extends Participant {
-    private final State state;
 
     public Player(final String name) {
         super(name);
-        this.state = new PlayerState();
-    }
-
-    private Player(final String name, final State state) {
-        super(name);
-        this.state = state;
     }
 
     private Player(final String name, final Cards cards) {
         super(name, cards);
-        this.state = null;
     }
 
     @Override
@@ -43,10 +31,5 @@ public class Player extends Participant {
     public Participant hitBy(final CardDeck deck) {
         Cards copyOfCards = this.cards.add(deck.draw());
         return new Player(this.name, copyOfCards);
-    }
-
-    @Override
-    public State getState() {
-        return this.state.getCopyInstance();
     }
 }

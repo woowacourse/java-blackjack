@@ -3,8 +3,8 @@ package blackjack.model.card;
 import java.util.List;
 
 public class CardScoreTotalizer {
-    public static final int ACE_ADVANTAGE = 10;
-    public static final int MAX_SCORE_FOR_ACE_ADVANTAGE = 10;
+    private static final int ACE_ADVANTAGE = 10;
+    private static final int MAX_SCORE_FOR_ACE_ADVANTAGE = 10;
 
     public static int sum(final List<Card> cards) {
         int score = 0;

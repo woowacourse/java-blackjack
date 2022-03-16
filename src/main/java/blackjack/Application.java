@@ -3,7 +3,6 @@ package blackjack;
 import blackjack.model.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
-import java.util.List;
 
 public class Application {
     public static void main(String[] args) {

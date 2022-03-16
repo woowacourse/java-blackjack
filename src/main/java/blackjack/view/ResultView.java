@@ -22,7 +22,6 @@ public class ResultView {
     private static final String PLAYER_MATCH_MESSAGE_FORMAT = "\n%s: %s";
 
     private static final String DELIMITER = ", ";
-    private static final int START_CARD_COUNT = 2;
 
     public static void printStartResult(final BlackjackGame blackjackGame) {
         final Participant dealer = blackjackGame.getDealer();
@@ -99,12 +98,12 @@ public class ResultView {
         System.out.println();
         printDealerMatchResult(blackJackGameResult.getDealerMatchResult());
         blackJackGameResult.getGamersMatchResult().forEach((name, matchResult) ->
-                System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, matchResult.getReverseValue()));
+                System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, matchResult.getReverse()));
     }
 
     private static void printDealerMatchResult(Map<MatchResult, Integer> dealerMatchResult) {
         StringJoiner matchResultJoiner = new StringJoiner(" ");
-        dealerMatchResult.forEach((matchResult, count) -> matchResultJoiner.add(count + matchResult.getValue()));
+        dealerMatchResult.forEach((matchResult, count) -> matchResultJoiner.add(count + matchResult.get()));
         System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, "딜러", matchResultJoiner);
     }
 }
