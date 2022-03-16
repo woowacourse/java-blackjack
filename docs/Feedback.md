@@ -72,7 +72,7 @@
 
 - [ ] IntelliJ에서 포맷팅 시 자동으로 import를 지워주니 실행하는 습관.
     - `Mac OS : ^(Control) + ⌥(Option) + O`
-- [ ] **함수 및 변수의 네이밍에 대한 수정 필요**
+- [x] **함수 및 변수의 네이밍에 대한 수정 필요**
     - [x] 블랙잭 규칙에 따른 용어에 맞춰 메서드명을 수정
         - 버스트(bust) : 카드를 더 받았는데 21이 초과하는 경우
         - 히트(hit) : 먼저 받은 카드 두장의 합이 21에 미치지 못했을 때, 카드를 더 받고자 할 경우
@@ -83,8 +83,10 @@
     - [x] `GameController`의 `checkFirstQuestion()`
         - 특정 조건을 검사하는 것만이 아닌 조건에 따라 View에 출력하는 기능을 포함.
         - 이를 나타낼 수 있는 이름으로 표현
-    - [ ] `Card` 클래스의 `of`메서드 안에서 "getCard"라는 변수명을 사용
+    - [x] `Card` 클래스의 `of`메서드 안에서 "getCard"라는 변수명을 사용
         - 메서드명과 헷갈릴 수 있으므로 적절한 이름으로 수정
+        - 반환하는 카드의 이름을 card -> findCard 수정
+        - filter() 내부에서 사용하는 변수명을 getCard -> card 수정
 - [ ] `GameResult`에서 `getDealerResult()` 메서드를 호출하는 경우에 대한 고민
 - [ ] `Statistic`의 gamblerResult의 타입을 `Map`에서 `LinkedHashMap`으로 구체화하게된 이유
 - [ ] `Map` 객체가 여러 메서드에 전달되며 어떤 값이 추가되는지 확인해야한다.

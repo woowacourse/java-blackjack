@@ -26,15 +26,15 @@ public class Card {
     }
 
     public static Card of(final Denomination inputDenomination, final Symbol inputSymbol) {
-        Card card = CACHE.stream()
-            .filter(getCard -> getCard.getDenomination().equals(inputDenomination))
-            .filter(getCard -> getCard.getSymbol().equals(inputSymbol))
+        Card findCard = CACHE.stream()
+            .filter(card -> card.getDenomination().equals(inputDenomination))
+            .filter(card -> card.getSymbol().equals(inputSymbol))
             .findFirst()
             .get();
-        if (Objects.isNull(card)) {
+        if (Objects.isNull(findCard)) {
             throw new IllegalArgumentException(CARD_CACHE_INDEX_ERROR_MESSAGE);
         }
-        return card;
+        return findCard;
     }
 
     public Denomination getDenomination() {
