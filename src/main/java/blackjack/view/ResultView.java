@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.BlackjackGame;
+import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.result.BlackJackGameResult;
 import blackjack.model.result.MatchResult;
@@ -15,12 +16,12 @@ public class ResultView {
     private static final String DEALER_AND_CARD_MESSAGE_FORMAT = "%s : %s\n";
     private static final String GAMER_AND_CARDS_MESSAGE_FORMAT = "%s : %s, %s\n";
     private static final String GAMER_HIT_MESSAGE_FORMAT = "\n%s : %s\n";
-    private static final String DEALER_DRAW_CARD_MESSAGE_FORMAT = "\n%s는 16이하라 1장의 카드를 더 받았습니다.";
-    private static final String PLAYER_SCORE_MESSAGE_FORMAT = "\n%s 카드: %s - 결과: %d\n";
+    private static final String DEALER_DRAW_CARD_MESSAGE_FORMAT = "\n%s는 16이하라 %d장의 카드를 더 받았습니다.\n";
+    private static final String PLAYER_SCORE_MESSAGE_FORMAT = "\n%s 카드: %s - 결과: %d";
     private static final String PLAYER_MATCH_MESSAGE_FORMAT = "\n%s: %s";
 
-    private static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ", ";
+    private static final int START_CARD_COUNT = 2;
 
     public static void printStartResult(final BlackjackGame blackjackGame) {
         final Participant dealer = blackjackGame.getDealer();
@@ -58,11 +59,18 @@ public class ResultView {
     }
 
     public static void printCurrentTurnResult(Participant player) {
-        if (player.getName().equals(DEALER_NAME)) {
+        if (player instanceof Dealer) {
             printDealerHitResult(player.getName(), player.getCards());
             return;
         }
         printGamerHitResult(player.getName(), player.getCards());
+    }
+
+    private static void printDealerHitResult(String name, List<String> cards) {
+        int addedCardCount = cards.size() - START_CARD_COUNT;
+        if (addedCardCount > 0) {
+            System.out.printf(DEALER_DRAW_CARD_MESSAGE_FORMAT, name, addedCardCount);
+        }
     }
 
     private static void printGamerHitResult(String name, List<String> cards) {
@@ -71,10 +79,6 @@ public class ResultView {
             cardJoiner.add(card);
         }
         System.out.printf(GAMER_HIT_MESSAGE_FORMAT, name, cardJoiner);
-    }
-
-    private static void printDealerHitResult(String name, List<String> cards) {
-        System.out.printf(DEALER_DRAW_CARD_MESSAGE_FORMAT, name);
     }
 
     public static void printScoreResult(Participant dealer, List<Participant> gamers) {

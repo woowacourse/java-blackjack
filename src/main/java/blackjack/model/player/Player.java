@@ -39,6 +39,7 @@ public class Player extends Participant {
 
     @Override
     public Participant hitBy(final CardDeck deck) {
+        state.canHit();
         State copyOfState = this.state.addCard(deck.draw());
         return new Player(this.name, copyOfState);
     }

@@ -49,9 +49,11 @@ public class BlackjackGame {
     }
 
     private void hitOrStayToDealer(Consumer<Participant> consumer) {
-        while (dealer.canHit()) {
-            consumer.accept(dealer.hitBy(cardDeck));
+        Participant dealer = null;
+        while (this.dealer.canHit()) {
+            dealer = this.dealer.hitBy(cardDeck);
         }
+        consumer.accept(dealer);
     }
 
     public BlackJackGameResult createMatchResult() {
