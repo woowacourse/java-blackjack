@@ -30,7 +30,8 @@ public class PlayerTest {
 	void compareAtBlackJack() {
 		List<Card> handForDealer = new ArrayList<>(
 			List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER)));
-		assertThat(player.compareAtBlackJack()).isEqualTo(WinOrLose.LOSE);
+		Dealer dealer = new Dealer(new Hand(handForDealer));
+		assertThat(player.getResult(dealer)).isEqualTo(WinOrLose.LOSE);
 	}
 
 	@Test
@@ -39,7 +40,7 @@ public class PlayerTest {
 		Hand handForDealer = new Hand(
 			List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
-		assertThat(player.compareAtFinal(dealer)).isEqualTo(WinOrLose.LOSE);
+		assertThat(player.getResult(dealer)).isEqualTo(WinOrLose.LOSE);
 	}
 
 }

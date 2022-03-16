@@ -9,21 +9,27 @@ public class Player extends Participant {
 		super(name, hand);
 	}
 
-	public WinOrLose compareAtBlackJack() {
+	public WinOrLose getResult(Participant other) {
+		if (other.isBlackJack()) {
+			return getResultAtBlackJack();
+		}
+
+		if (isBust()) {
+			return WinOrLose.LOSE;
+		}
+
+		if (isBlackJack() || other.isBust()) {
+			return WinOrLose.WIN;
+		}
+
+		return judgeVersus(other.getBestScore());
+	}
+
+	private WinOrLose getResultAtBlackJack() {
 		if (isBlackJack()) {
 			return WinOrLose.DRAW;
 		}
 		return WinOrLose.LOSE;
-	}
-
-	public WinOrLose compareAtFinal(Participant other) {
-		if (isBust()) {
-			return WinOrLose.LOSE;
-		}
-		if (isBlackJack() || other.isBust()) {
-			return WinOrLose.WIN;
-		}
-		return judgeVersus(other.getBestScore());
 	}
 
 	private WinOrLose judgeVersus(int otherScore) {

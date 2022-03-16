@@ -23,16 +23,13 @@ public class Controller {
 		Players players = new Players(makePlayers(makeNames(), deck));
 		printInitHands(dealer, players);
 
-		if (dealer.isBlackJack()) {
-			printBlackJackResult(dealer, players);
-			return;
+		if (!dealer.isBlackJack()) {
+			drawForPlayers(deck, players);
+			drawForDealer(deck, dealer, players);
 		}
 
-		drawForPlayers(deck, players);
-		drawForDealer(deck, dealer, players);
-
-		printHandAndResult(dealer, players);
-		printFinalResult(dealer, players);
+		printHandAndScore(dealer, players);
+		printResult(players, new Result(players.getResult(dealer)));
 	}
 
 	private List<Name> makeNames() {
@@ -42,7 +39,7 @@ public class Controller {
 				.map(Name::new)
 				.collect(Collectors.toList());
 		} catch (IllegalArgumentException e) {
-			OutputView.printErrorMessage(e.getMessage());
+			OutputView.printMessage(e.getMessage());
 			return makeNames();
 		}
 	}
@@ -99,21 +96,7 @@ public class Controller {
 		}
 	}
 
-	public void printBlackJackResult(Dealer dealer, Players players) {
-		Result blackjackResult = new Result(players.getResultAtBlackJack(dealer));
-
-		OutputView.printDealerResult(
-			blackjackResult.getDealerWinCount(),
-			blackjackResult.getDealerDrawCount(),
-			blackjackResult.getDealerLoseCount()
-		);
-
-		players.getNames().stream()
-			.forEach(name -> OutputView.printPlayerResult(name.getName(),
-				blackjackResult.getResultOfPlayer(name).getResult()));
-	}
-
-	public void printHandAndResult(Dealer dealer, Players players) {
+	public void printHandAndScore(Dealer dealer, Players players) {
 		OutputView.printHandAndScore(new ParticipantInfo(dealer));
 
 		List<ParticipantInfo> playersInfo = players.getPlayerInfo();
@@ -123,17 +106,15 @@ public class Controller {
 		}
 	}
 
-	public void printFinalResult(Dealer dealer, Players players) {
-		Result finalResult = new Result(players.getResultAtFinal(dealer));
-
+	public void printResult(Players players, Result result) {
 		OutputView.printDealerResult(
-			finalResult.getDealerWinCount(),
-			finalResult.getDealerDrawCount(),
-			finalResult.getDealerLoseCount()
+			result.getDealerWinCount(),
+			result.getDealerDrawCount(),
+			result.getDealerLoseCount()
 		);
 
 		players.getNames().stream()
 			.forEach(
-				name -> OutputView.printPlayerResult(name.getName(), finalResult.getResultOfPlayer(name).getResult()));
+				name -> OutputView.printPlayerResult(name.getName(), result.getResultOfPlayer(name).getResult()));
 	}
 }

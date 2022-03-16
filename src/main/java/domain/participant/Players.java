@@ -43,26 +43,11 @@ public class Players {
 		return players.get(name).isMaxScore();
 	}
 
-	public Map<Name, WinOrLose> getResultAtBlackJack(Participant other) {
-		if (!other.isBlackJack()) {
-			throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
-		}
-		Map<Name, WinOrLose> map = new LinkedHashMap<>();
-		players.keySet().stream().forEach(name -> map.put(name, players.get(name).compareAtBlackJack()));
-		return map;
-	}
-
-	public Map<Name, WinOrLose> getResultAtFinal(Participant other) {
+	public Map<Name, WinOrLose> getResult(Participant other) {
 		Map<Name, WinOrLose> map = new LinkedHashMap<>();
 		players.keySet().stream()
-			.forEach(name -> map.put(name, players.get(name).compareAtFinal(other)));
+			.forEach(name -> map.put(name, players.get(name).getResult(other)));
 		return map;
-	}
-
-	public List<Integer> getScores() {
-		return players.keySet().stream()
-			.map(name -> players.get(name).getBestScore())
-			.collect(Collectors.toList());
 	}
 
 	public ParticipantInfo getPlayerInfoByName(Name name) {

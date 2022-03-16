@@ -74,7 +74,7 @@ public class PlayersTest {
 	@Test
 	@DisplayName("딜러가 블랙잭일 경우 결과 반환")
 	void getResultAtBlackJack() {
-		Map<Name, WinOrLose> resultMap = players.getResultAtBlackJack(dealerBlackJack);
+		Map<Name, WinOrLose> resultMap = players.getResult(dealerBlackJack);
 		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.DRAW);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}
@@ -82,7 +82,7 @@ public class PlayersTest {
 	@Test
 	@DisplayName("최종 게임 결과 반환")
 	void getResultAtFinal() {
-		Map<Name, WinOrLose> resultMap = players.getResultAtFinal(dealer_17);
+		Map<Name, WinOrLose> resultMap = players.getResult(dealer_17);
 		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.WIN);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}
@@ -99,7 +99,7 @@ public class PlayersTest {
 		}
 		Deck deck = Deck.from(new TestGenerationDeckStrategy());
 		dealer_17.addCard(deck.draw());
-		Map<Name, WinOrLose> resultMap = players.getResultAtFinal(dealer_17);
+		Map<Name, WinOrLose> resultMap = players.getResult(dealer_17);
 		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.WIN);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}

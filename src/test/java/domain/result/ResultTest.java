@@ -55,8 +55,8 @@ public class ResultTest {
 				new Player(new Name("woni"), new Hand(cards_BURST)), new Player(new Name("gugu"), new Hand(cards_17))));
 		dealer_17 = new Dealer(new Hand(List.of(card_A, card_6)));
 		dealer_BURST = new Dealer(new Hand(List.of(card_K, card_Q, card_2)));
-		result = new Result(players.getResultAtFinal(dealer_17));
-		result_dealer_burst = new Result(players.getResultAtFinal(dealer_BURST));
+		result = new Result(players.getResult(dealer_17));
+		result_dealer_burst = new Result(players.getResult(dealer_BURST));
 	}
 
 	@Test
