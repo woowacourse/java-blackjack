@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class BetTest {
 
     @Test
-    @DisplayName("승리시 1.5배를 얻는다.")
+    @DisplayName("승리시 배팅금액을 얻는다.")
     void checkParticipantWinProfit(){
         Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
@@ -23,7 +23,7 @@ class BetTest {
         Participant participantWin = new Participant(initCards, "pobi", new Bet(1000));
         participantWin.win();
 
-        assertThat(participantWin.getBetProfit()).isEqualTo(500);
+        assertThat(participantWin.getBetProfit()).isEqualTo(1000);
     }
 
     @Test

@@ -4,8 +4,11 @@ import java.util.List;
 
 public final class Bet {
 
-    public static final double WIN = 1.5;
-    public static final double LOSE = -1.0;
+    private static final double WIN = 1.0;
+    private static final double LOSE = -1.0;
+    private static final double BLACKJACK = 1.5;
+    private static final double BOTH_BLACKJACK = 0.0;
+
 
     private final int betAmount;
     private int profit;
@@ -16,7 +19,7 @@ public final class Bet {
     }
 
     public void win() {
-        this.profit = (int) (betAmount * WIN) - betAmount;
+        this.profit = betAmount * (int) WIN;;
     }
 
     public void lose() {

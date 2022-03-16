@@ -149,7 +149,7 @@ class DealerTest {
                         ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
-                        )), 500),
+                        )), 1000),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.JACK),
@@ -177,7 +177,7 @@ class DealerTest {
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.TEN)
                         ), "zero", new Bet(1000)),
-                        dealer, 500),
+                        dealer, 1000),
                 Arguments.of(participant, dealer, -1000),
                 Arguments.of(participant2, dealer2, -1000
                 )
