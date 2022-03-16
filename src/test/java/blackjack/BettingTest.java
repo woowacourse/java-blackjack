@@ -40,4 +40,14 @@ class BettingTest {
         //then
         assertThat(actual).isEqualTo(0);
     }
+
+    @Test
+    @DisplayName("블랙잭인 경우 베팅 금액의 1.5배 반환")
+    void blackjack() {
+        //when
+        long actual = betting.result(true);
+
+        //then
+        assertThat(actual).isEqualTo(15000);
+    }
 }

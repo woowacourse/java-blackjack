@@ -23,4 +23,8 @@ public class Betting {
 
         return 0;
     }
+
+    public long result(boolean isBlackjack) {
+        return (long)(1.5 * money);
+    }
 }
