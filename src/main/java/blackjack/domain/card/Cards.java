@@ -34,7 +34,7 @@ public class Cards {
         return calculateDefaultScore();
     }
 
-    private int calculateExpandScore() {
+    public int calculateExpandScore() {
         if (containsAce()) {
             return calculateDefaultScore() + ANOTHER_ACE_SCORE;
         }

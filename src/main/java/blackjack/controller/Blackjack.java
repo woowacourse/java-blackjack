@@ -42,7 +42,6 @@ public class Blackjack {
         return new Dealer();
     }
 
-
     private void makeParticipantsInitCards(final List<Player> participants, final Deck deck) {
         for (Player participant : participants) {
             makePlayerInitCards(participant, deck);
@@ -61,15 +60,12 @@ public class Blackjack {
     }
 
     private void decideParticipantsMoreCard(final Players players, final Deck deck) {
-        while (!players.allParticipantsDecided()) {
-            Player player = players.getParticipant();
-            boolean cardAccept = players.isParticipantAcceptCard(deck);
-            printParticipantCardInfo(cardAccept, player);
-        }
+        players.additionalParticipantsDraw(player -> decideParticipantMoreCard(player, deck));
     }
 
-    private void printParticipantCardInfo(final boolean cardAccept, final Player participant) {
-        if(cardAccept) {
+    private void decideParticipantMoreCard(final Player participant, final Deck deck) {
+        while (participant.acceptableCard()) {
+            participant.addCard(deck.draw());
             OutputView.printPlayerCardInfo(participant);
         }
     }

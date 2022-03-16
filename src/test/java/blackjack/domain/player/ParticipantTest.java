@@ -45,9 +45,10 @@ class ParticipantTest {
     @DisplayName("참가자는 Burst가 되지 않으면 카드를 받을 수 있다.")
     void acceptCardWhenNotBurst() {
         Participant participant = new Participant("pobi", name -> true);
-        participant.addCard(new Card(Type.DIAMOND, Score.ACE));
-        participant.addCard(new Card(Type.SPADE, Score.KING));
-        participant.addCard(new Card(Type.SPADE, Score.THREE));
+
+        participant.addCard(new Card(Type.CLOVER, Score.TWO));
+        participant.addCard(new Card(Type.SPADE, Score.ACE));
+        participant.addCard(new Card(Type.DIAMOND, Score.NINE));
 
         assertThat(participant.acceptableCard()).isEqualTo(true);
     }
