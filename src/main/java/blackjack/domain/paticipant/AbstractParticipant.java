@@ -43,4 +43,8 @@ public abstract class AbstractParticipant {
     public List<Card> cards() {
         return blackjackGameState.cards();
     }
+
+    public String getName() {
+        return name;
+    }
 }
