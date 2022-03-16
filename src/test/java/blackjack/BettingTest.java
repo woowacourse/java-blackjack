@@ -45,7 +45,7 @@ class BettingTest {
     @DisplayName("블랙잭인 경우 베팅 금액의 1.5배 반환")
     void blackjack() {
         //when
-        long actual = betting.result(true);
+        long actual = betting.result(PlayRecord.BLACKJACK);
 
         //then
         assertThat(actual).isEqualTo(15000);

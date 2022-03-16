@@ -23,11 +23,10 @@ public class Betting {
             return money;
         }
 
+        if (playRecord == PlayRecord.BLACKJACK) {
+            return (long)(1.5 * money);
+        }
         return 0;
-    }
-
-    public long result(boolean isBlackjack) {
-        return (long)(1.5 * money);
     }
 
     public Name getName() {

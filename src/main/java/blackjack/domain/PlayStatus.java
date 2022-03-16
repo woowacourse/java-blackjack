@@ -19,4 +19,8 @@ public enum PlayStatus {
     static boolean isBust(int score) {
         return score > BUST_SCORE;
     }
+
+    static boolean isBlackjack(int score) {
+        return score == BUST_SCORE;
+    }
 }

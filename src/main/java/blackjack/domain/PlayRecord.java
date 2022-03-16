@@ -6,7 +6,8 @@ public enum PlayRecord {
 
     WIN("승"),
     PUSH("무"),
-    LOSS("패");
+    LOSS("패"),
+    BLACKJACK("블랙잭");
 
     private final String name;
 
@@ -21,6 +22,10 @@ public enum PlayRecord {
 
         if (dealerScore == score) {
             return PUSH;
+        }
+
+        if (PlayStatus.isBlackjack(score)) {
+            return BLACKJACK;
         }
 
         return WIN;
