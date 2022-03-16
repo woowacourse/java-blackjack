@@ -21,4 +21,8 @@ public class Cards {
             throw new IllegalArgumentException("cards는 2장이상이 들어와야 합니다.");
         }
     }
+
+    public boolean isBust() {
+        return Denomination.calculateCardScore(cards) > 21;
+    }
 }

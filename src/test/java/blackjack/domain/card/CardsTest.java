@@ -1,11 +1,20 @@
 package blackjack.domain.card;
 
 import static blackjack.domain.card.Denomination.A;
+import static blackjack.domain.card.Denomination.EIGHT;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.SEVEN;
+import static blackjack.domain.card.Denomination.TEN;
 import static blackjack.domain.card.Suit.SPADES;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Set;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CardsTest {
 
@@ -21,5 +30,20 @@ class CardsTest {
         assertThatThrownBy(() -> new Cards(Set.of(Card.of(SPADES, A))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("cards는 2장이상이 들어와야 합니다.");
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateIsBustValues")
+    void 카드상태가_버스트인지_확인(final Set<Card> inputCards, final boolean expected) {
+        final Cards cards = new Cards(inputCards);
+        assertThat(cards.isBust()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> generateIsBustValues() {
+        return Stream.of(
+                Arguments.of(Set.of(Card.of(SPADES, KING), Card.of(SPADES, SEVEN), Card.of(SPADES, TEN)), true),
+                Arguments.of(Set.of(Card.of(SPADES, A), Card.of(SPADES, TEN)), false),
+                Arguments.of(Set.of(Card.of(SPADES, A), Card.of(SPADES, EIGHT)), false)
+        );
     }
 }
