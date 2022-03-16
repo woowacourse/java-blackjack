@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Record;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.RandomGeneratingStrategy;
+import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -25,7 +25,7 @@ public class GameController {
     private final Dealer dealer;
 
     public GameController() {
-        this.deck = Deck.from(new RandomGeneratingStrategy());
+        this.deck = Deck.from(new ShuffleOrderStrategy());
         this.players = initPlayers();
         this.dealer = new Dealer();
     }

@@ -12,7 +12,7 @@ public class Deck {
         this.deck = deck;
     }
 
-    public static Deck from(CardGeneratingStrategy strategy) {
+    public static Deck from(CardOrderStrategy strategy) {
         final List<Card> cards = strategy.generate();
         return new Deck(new LinkedList<>(cards));
     }
