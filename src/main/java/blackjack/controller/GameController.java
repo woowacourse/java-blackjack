@@ -1,15 +1,10 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
-import blackjack.domain.dto.Status;
 import blackjack.domain.player.Command;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,12 +14,12 @@ public class GameController {
 
     public void run() {
         Game game = generateGame();
-        printInitialStatus(game);
+        OutputView.printInitialStatus(game.getDealer(), game.getPlayers());
 
         executePlayerTurn(game);
         executeDealerTurn(game);
 
-        printTotalScore(game);
+        OutputView.printTotalScore(game.getDealer(), game.getPlayers());
         printResult(game);
     }
 
@@ -43,31 +38,11 @@ public class GameController {
                 .collect(toList());
     }
 
-    private void printInitialStatus(Game game) {
-        List<Participant> participants = getParticipants(game);
-
-        List<Status> statuses = participants.stream()
-                .map(Status::initialOf)
-                .collect(toList());
-        OutputView.printInitialStatus(statuses);
-    }
-
-    private List<Participant> getParticipants(Game game) {
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayersToList();
-
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players);
-        return participants;
-    }
-
     private void executePlayerTurn(Game game) {
         while (game.isPossibleToPlay()) {
             String name = game.getCurrentHitablePlayerName();
-            Command command = inputCommand(name);
-            Status status = game.playTurn(command);
-            OutputView.printStatus(status);
+            game.playTurn(inputCommand(name));
+            OutputView.printCurrentCards(game.getCurrentPlayer());
         }
     }
 
@@ -81,19 +56,10 @@ public class GameController {
     }
 
     private void executeDealerTurn(Game game) {
-        while (game.doesDealerNeedToDraw()) {
+        while (game.dealerCanDraw()) {
             game.doDealerDraw();
             OutputView.printDealerHitMessage();
         }
-    }
-
-    private void printTotalScore(Game game) {
-        List<Participant> participants = getParticipants(game);
-
-        List<Status> statuses = participants.stream()
-                .map(Status::of)
-                .collect(toList());
-        OutputView.printTotalScore(statuses);
     }
 
     private void printResult(Game game) {

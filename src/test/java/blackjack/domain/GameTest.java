@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.player.Players;
+import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ class GameTest {
         List<String> names = List.of("pobi", "jason", "brown");
 
         Game game = new Game(names);
-        Players players = game.getPlayers();
+        List<Player> players = game.getPlayers();
 
         assertThat(players.size()).isEqualTo(3);
     }

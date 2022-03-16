@@ -1,10 +1,11 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static blackjack.domain.fixture.FixedSequenceDeck.generateDeck;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +18,7 @@ class DealerTest {
         Deck deck = generateDeck(new Card(Symbol.HEART, Denomination.SIX), new Card(Symbol.SPADE, Denomination.JACK));
         Dealer dealer = new Dealer(deck.initialDraw());
 
-        assertThat(dealer.doesNeedToDraw()).isTrue();
+        assertThat(dealer.canDraw()).isTrue();
     }
 
     @Test
@@ -26,7 +27,7 @@ class DealerTest {
         Deck deck = generateDeck(new Card(Symbol.HEART,Denomination.NINE), new Card(Symbol.SPADE,Denomination.EIGHT));
         Dealer dealer = new Dealer(deck.initialDraw());
 
-        assertThat(dealer.doesNeedToDraw()).isFalse();
+        assertThat(dealer.canDraw()).isFalse();
     }
 
     @Test

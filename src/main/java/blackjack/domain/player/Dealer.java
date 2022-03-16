@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
 
     public static final int BOUND_FOR_ADDITIONAL_CARD = 16;
     public static final String DEALER_DEFAULT_NAME = "딜러";
@@ -16,7 +16,7 @@ public class Dealer extends Participant{
         super(DEALER_DEFAULT_NAME, cards);
     }
 
-    public boolean doesNeedToDraw() {
+    public boolean canDraw() {
         return super.getScore() <= BOUND_FOR_ADDITIONAL_CARD;
     }
 

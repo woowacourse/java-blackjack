@@ -1,6 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.dto.Status;
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -11,41 +13,33 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class OutputView {
 
-    public static void printInitialStatus(List<Status> dtos) {
-        System.out.println(makeInitialDrawTitleString(dtos));
+    private static final String CARD_HANDOUT_MESSAGE_FORMAT = "\n%s와 %s에게 카드 2장을 나누었습니다.\n";
+    private static final String HAND_CARD_MESSAGE_FORMAT = "%s카드: %s\n";
+    private static final String RESULT_MESSAGE_FORMAT = "%s카드: %s - 결과: %s\n";
 
-        for (Status dto : dtos) {
-            printStatus(dto);
-        }
+    public static void printInitialStatus(Dealer dealer, List<Player> players) {
+        List<String> playerNames = players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
 
+        printCardHandOutMessage(dealer.getName(), playerNames);
+        printOpenedCards(dealer, players);
         System.out.println();
     }
 
-    private static String makeInitialDrawTitleString(List<Status> dtos) {
-        return "\n" + dtos.get(0).getName() +
-                "와 " +
-                dtos.subList(1, dtos.size()).stream()
-                        .map(Status::getName)
-                        .collect(Collectors.joining(", ")) +
-                "에게 2장을 나누었습니다.";
+    public static void printCurrentCards(Player player) {
+        System.out.printf(HAND_CARD_MESSAGE_FORMAT, player.getName(), join(format(player.getCards())));
     }
 
-    public static void printTotalScore(List<Status> dtos) {
-        System.out.println();
-        for (Status status : dtos) {
-            System.out.print(makeStatusString(status) + " - 결과: " + status.getScore() + "\n");
+    public static void printDealerHitMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printTotalScore(Dealer dealer, List<Player> players) {
+        System.out.printf(RESULT_MESSAGE_FORMAT, dealer.getName(), join(format(dealer.getCards())), dealer.getScore());
+        for (Player player : players) {
+            System.out.printf(RESULT_MESSAGE_FORMAT, player.getName(), join(format(player.getCards())), player.getScore());
         }
-    }
-
-    public static void printStatus(Status status) {
-        System.out.println(makeStatusString(status));
-    }
-
-    private static String makeStatusString(Status status) {
-        return status.getName() + "카드: " +
-                status.getCardDtos().stream()
-                        .map(cardDto -> (cardDto.getDenomination() + cardDto.getSymbol()))
-                        .collect(Collectors.joining(", "));
     }
 
     public static void printResult(Map<String, String> playerResults, List<String> dealerResult) {
@@ -57,6 +51,17 @@ public class OutputView {
         );
     }
 
+    private static void printCardHandOutMessage(String dealerName, List<String> playerNames) {
+        System.out.printf(CARD_HANDOUT_MESSAGE_FORMAT, dealerName, join(playerNames));
+    }
+
+    private static void printOpenedCards(Dealer dealer, List<Player> players) {
+        System.out.printf(HAND_CARD_MESSAGE_FORMAT, dealer.getName(), join(format(dealer.openCards())));
+        for (Player player : players) {
+            System.out.printf(HAND_CARD_MESSAGE_FORMAT, player.getName(), join(format(player.openCards())));
+        }
+    }
+
     private static String makeDealerResultString(List<String> dealerResult) {
         Map<String, Long> countMap = dealerResult.stream()
                 .collect(groupingBy(Function.identity(), Collectors.counting()));
@@ -64,7 +69,13 @@ public class OutputView {
                 countMap.getOrDefault("패", 0L) + "패";
     }
 
-    public static void printDealerHitMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    private static String join(List<String> strings) {
+        return String.join(", ", strings);
+    }
+
+    private static List<String> format(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getDenominationName() + card.getSymbolName())
+                .collect(Collectors.toList());
     }
 }

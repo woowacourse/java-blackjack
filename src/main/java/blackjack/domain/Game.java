@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.RandomDeck;
-import blackjack.domain.dto.Status;
 import blackjack.domain.player.*;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class Game {
                 .collect(toList()));
     }
 
-    public Status playTurn(Command command) {
+    public void playTurn(Command command) {
         Player currentTurn = players.getCurrentTurn();
         if (command.equals(Command.HIT)) {
             currentTurn.addCard(deck.draw());
@@ -36,7 +35,6 @@ public class Game {
         if (command.equals(Command.STAY)) {
             currentTurn.stay();
         }
-        return Status.of(currentTurn);
     }
 
     public boolean isPossibleToPlay() {
@@ -48,8 +46,8 @@ public class Game {
         return players.getCurrentTurn().getName();
     }
 
-    public boolean doesDealerNeedToDraw() {
-        return dealer.doesNeedToDraw();
+    public boolean dealerCanDraw() {
+        return dealer.canDraw();
     }
 
     public void doDealerDraw() {
@@ -58,10 +56,6 @@ public class Game {
 
     public Dealer getDealer() {
         return dealer;
-    }
-
-    public List<Player> getPlayersToList() {
-        return players.toList();
     }
 
     public Map<String, String> getPlayerResults() {
@@ -76,7 +70,11 @@ public class Game {
                 .collect(toList());
     }
 
-    public Players getPlayers() {
-        return players;
+    public List<Player> getPlayers() {
+        return players.toList();
+    }
+
+    public Player getCurrentPlayer() {
+        return players.getCurrentTurn();
     }
 }
