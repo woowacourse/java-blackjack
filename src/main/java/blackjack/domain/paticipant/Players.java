@@ -48,7 +48,7 @@ public class Players {
     public Player hitCurrentTurnPlayer(final Card card) {
         final Player currentTurnPlayer = currentTurnPlayer();
         currentTurnPlayer.hit(card);
-        currentPlayerTurnIndex++;
+        checkCanTurnNextAndTurnNext(currentTurnPlayer);
         return currentTurnPlayer;
     }
 
@@ -65,6 +65,12 @@ public class Players {
 
     private boolean isAllTurnEnd() {
         return players.size() <= currentPlayerTurnIndex;
+    }
+
+    private void checkCanTurnNextAndTurnNext(final Player currentTurnPlayer) {
+        if (currentTurnPlayer.isFinishied()) {
+            currentPlayerTurnIndex++;
+        }
     }
 
     public void stayCurrentTurnPlayer() {
