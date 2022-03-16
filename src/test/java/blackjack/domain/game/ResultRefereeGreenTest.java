@@ -31,15 +31,18 @@ public class ResultRefereeGreenTest {
 
     @DisplayName("딜러가 획득한 돈은 모든 플레이어들이 잃은 돈의 합과 같다.")
     @Test
-    void dealerBettingSum() {
+    void dealerBetting_sumIsEqualToOppositeOfPlayerSum() {
         ResultRefereeGreen referee = new ResultRefereeGreen(
                 dealerBlackjack, List.of(player10, player15, player20));
 
-        int dealerBetting = referee.getResults().get(0).getValue();
-        int playerBettings = (player10.getBettingAmount() * -1)
-                + (player15.getBettingAmount() * -1)
-                + (player20.getBettingAmount() * -1);
+        int playerBettings = 0;
+        for (int i = 1; i < 4; i++) {
+            playerBettings += referee.getResults().get(i).getMoneyOutcome();
+        }
 
-        assertThat(dealerBetting).isEqualTo(playerBettings * -1);
+        int actual = referee.getResults().get(0).getMoneyOutcome();
+        int expected = playerBettings * -1;
+
+        assertThat(actual).isEqualTo(expected);
     }
 }
