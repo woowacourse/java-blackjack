@@ -7,9 +7,11 @@ import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
 import blackjack.strategy.CardBundleSupplier;
+import blackjack.strategy.CardSupplier;
+import blackjack.strategy.DealerViewStrategy;
+import blackjack.strategy.HitOrStayChoiceStrategy;
+import blackjack.strategy.PlayerViewStrategy;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class BlackjackGame {
 
@@ -31,23 +33,35 @@ public class BlackjackGame {
         return GameParticipants.of(playerNames, cardBundleSupplier);
     }
 
-    public void distributeAllCards(final Function<String, Boolean> drawOrStayStrategy,
-                                   final Consumer<Player> viewStrategy,
-                                   final Runnable dealerViewStrategy) {
+    public void distributeAllCards(final HitOrStayChoiceStrategy hitOrStayStrategy,
+                                   final PlayerViewStrategy viewStrategy,
+                                   final DealerViewStrategy dealerViewStrategy) {
 
         List<Player> players = participants.getPlayers();
 
         for (Player player : players) {
-            player.drawAllCards(drawOrStayStrategy, this::popCard, viewStrategy);
+            drawAllPlayerCards(player, hitOrStayStrategy, this::popCard, viewStrategy);
         }
         drawAllDealerCards(dealerViewStrategy);
     }
 
-    private void drawAllDealerCards(final Runnable dealerViewStrategy) {
+    public void drawAllPlayerCards(final Player player,
+                                   final HitOrStayChoiceStrategy hitOrStayStrategy,
+                                   final CardSupplier cardSupplier,
+                                   final PlayerViewStrategy viewStrategy) {
+
+        viewStrategy.printOf(player);
+        while (player.canDraw()) {
+            player.hitOrStay(hitOrStayStrategy, cardSupplier);
+            viewStrategy.printOf(player);
+        }
+    }
+
+    private void drawAllDealerCards(final DealerViewStrategy dealerView) {
         Dealer dealer = participants.getDealer();
         while (dealer.canDraw()) {
             dealer.receiveCard(popCard());
-            dealerViewStrategy.run();
+            dealerView.print();
         }
     }
 

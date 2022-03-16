@@ -11,9 +11,10 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
+import blackjack.strategy.DealerViewStrategy;
+import blackjack.strategy.HitOrStayChoiceStrategy;
+import blackjack.strategy.PlayerViewStrategy;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,12 +28,11 @@ public class BlackjackGameTest {
     private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> getCardBundleOfSixteen();
     private static final CardBundleStrategy cardBundleOfBlackjackStrategy = (cardStack) -> getCardBundleOfBlackjack();
 
-    private static final Function<String, Boolean> DRAW_CHOICE = (s) -> true;
-    private static final Consumer<Player> VIEW_STRATEGY = player -> {
+    private static final HitOrStayChoiceStrategy DRAW_CHOICE = (s) -> true;
+    private static final PlayerViewStrategy VIEW_STRATEGY = player -> {
     };
-    private static final Runnable DEALER_VIEW_STRATEGY = () -> {
+    private static final DealerViewStrategy DEALER_VIEW_STRATEGY = () -> {
     };
-
 
     @DisplayName("생성자 테스트")
     @Nested

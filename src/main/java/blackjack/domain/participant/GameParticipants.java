@@ -1,12 +1,10 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardBundle;
 import blackjack.strategy.CardBundleSupplier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class GameParticipants {
@@ -27,7 +25,7 @@ public class GameParticipants {
         List<Participant> participants = new ArrayList<>();
         validatePlayerNames(playerNames);
 
-        participants.add(Dealer.of(strategy.get()));
+        participants.add(Dealer.of(strategy.getInitialCardBundle()));
         participants.addAll(initializePlayers(playerNames, strategy));
 
         return new GameParticipants(participants);
@@ -51,9 +49,9 @@ public class GameParticipants {
     }
 
     private static List<Participant> initializePlayers(final List<String> playerNames,
-                                                       final Supplier<CardBundle> strategy) {
+                                                       final CardBundleSupplier strategy) {
         return playerNames.stream()
-                .map(name -> Player.of(name, strategy.get()))
+                .map(name -> Player.of(name, strategy.getInitialCardBundle()))
                 .collect(Collectors.toUnmodifiableList());
     }
 

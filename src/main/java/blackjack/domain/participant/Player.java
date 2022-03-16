@@ -6,10 +6,9 @@ import blackjack.domain.card.CardHandState;
 import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
 import blackjack.strategy.CardHandStateStrategy;
+import blackjack.strategy.CardSupplier;
+import blackjack.strategy.HitOrStayChoiceStrategy;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class Player extends Participant {
@@ -49,27 +48,10 @@ public class Player extends Participant {
         }
     }
 
-    public void drawAllCards(final Function<String, Boolean> drawOrStayStrategy,
-                             final Supplier<Card> cardSupplier,
-                             final Consumer<Player> printInfo) {
-
-        announceBlackjackOrNot(printInfo);
-        while (canDraw()) {
-            drawOrStay(drawOrStayStrategy, cardSupplier);
-            printInfo.accept(this);
-        }
-    }
-
-    private void announceBlackjackOrNot(final Consumer<Player> printInfo) {
-        if (isBlackjack()) {
-            printInfo.accept(this);
-        }
-    }
-
-    private void drawOrStay(final Function<String, Boolean> drawOrStayChoice,
-                            final Supplier<Card> cardSupplier) {
-        if (drawOrStayChoice.apply(name)) {
-            receiveCard(cardSupplier.get());
+    public void hitOrStay(final HitOrStayChoiceStrategy hitOrStay,
+                          final CardSupplier cardSupplier) {
+        if (hitOrStay.shouldHit(name)) {
+            receiveCard(cardSupplier.getCard());
             return;
         }
         cardHand.stay();
@@ -92,7 +74,6 @@ public class Player extends Participant {
                 .limit(INITIAL_PLAYER_OPEN_CARDS_COUNT)
                 .collect(Collectors.toUnmodifiableList());
     }
-
 
     public ResultType getDuelResultWith(Dealer dealer) {
         if (dealer.isBlackjackOrBust() || this.isBlackjackOrBust()) {
