@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,25 +21,43 @@ import domain.participant.Players;
 
 public class ResultTest {
 
-	Card card_A = new Card(Rank.RANK_ACE, Suit.CLOVER);
-	Card card_2 = new Card(Rank.RANK_TWO, Suit.CLOVER);
-	Card card_Q = new Card(Rank.RANK_QUEEN, Suit.CLOVER);
-	Card card_K = new Card(Rank.RANK_KNIGHT, Suit.CLOVER);
-	Card card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
-	Card card_9 = new Card(Rank.RANK_NINE, Suit.CLOVER);
-	List<Card> cards_20 = new ArrayList<>(Arrays.asList(card_A, card_9));
-	List<Card> cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
-	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
-	List<Card> cards_17 = new ArrayList<>(Arrays.asList(card_A, card_6));
-	Players players = new Players(
-		Arrays.asList(new Player(new Name("pobi"), new Hand(cards_20)),
-			new Player(new Name("jason"), new Hand(cards_15)),
-			new Player(new Name("woni"), new Hand(cards_BURST)), new Player(new Name("gugu"), new Hand(cards_17))));
-	Dealer dealer_17 = new Dealer(new Hand(List.of(card_A, card_6)));
-	Dealer dealer_BURST = new Dealer(new Hand(List.of(card_K, card_Q, card_2)));
+	private Card card_A;
+	private Card card_2;
+	private Card card_Q;
+	private Card card_K;
+	private Card card_6;
+	private Card card_9;
+	private List<Card> cards_20;
+	private List<Card> cards_15;
+	private List<Card> cards_BURST;
+	private List<Card> cards_17;
+	private Players players;
+	private Dealer dealer_17;
+	private Dealer dealer_BURST;
+	private Result result;
+	private Result result_dealer_burst;
 
-	Result result = new Result(players.getResultAtFinal(dealer_17));
-	Result result_dealer_burst = new Result(players.getResultAtFinal(dealer_BURST));
+	@BeforeEach
+	void setUp() {
+		card_A = new Card(Rank.RANK_ACE, Suit.CLOVER);
+		card_2 = new Card(Rank.RANK_TWO, Suit.CLOVER);
+		card_Q = new Card(Rank.RANK_QUEEN, Suit.CLOVER);
+		card_K = new Card(Rank.RANK_KNIGHT, Suit.CLOVER);
+		card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
+		card_9 = new Card(Rank.RANK_NINE, Suit.CLOVER);
+		cards_20 = new ArrayList<>(Arrays.asList(card_A, card_9));
+		cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
+		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
+		cards_17 = new ArrayList<>(Arrays.asList(card_A, card_6));
+		players = new Players(
+			Arrays.asList(new Player(new Name("pobi"), new Hand(cards_20)),
+				new Player(new Name("jason"), new Hand(cards_15)),
+				new Player(new Name("woni"), new Hand(cards_BURST)), new Player(new Name("gugu"), new Hand(cards_17))));
+		dealer_17 = new Dealer(new Hand(List.of(card_A, card_6)));
+		dealer_BURST = new Dealer(new Hand(List.of(card_K, card_Q, card_2)));
+		result = new Result(players.getResultAtFinal(dealer_17));
+		result_dealer_burst = new Result(players.getResultAtFinal(dealer_BURST));
+	}
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 승")

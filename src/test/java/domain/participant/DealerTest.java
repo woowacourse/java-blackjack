@@ -15,8 +15,8 @@ import domain.card.Suit;
 
 public class DealerTest {
 
-	Card card1;
-	Card card2;
+	private Card card1;
+	private Card card2;
 
 	@BeforeEach
 	void setup() {

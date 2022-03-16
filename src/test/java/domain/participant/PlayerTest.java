@@ -16,12 +16,11 @@ import domain.card.Suit;
 import domain.result.WinOrLose;
 
 public class PlayerTest {
-	private Hand handForPlayer;
 	private Player player;
 
 	@BeforeEach
 	void setUp() {
-		handForPlayer = new Hand(
+		Hand handForPlayer = new Hand(
 			List.of(new Card(Rank.RANK_EIGHT, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
 		player = new Player(new Name("pobi"), handForPlayer);
 	}

@@ -23,20 +23,27 @@ import domain.result.WinOrLose;
 
 public class PlayersTest {
 
-	Card card_A = new Card(Rank.RANK_ACE, Suit.CLOVER);
-	Card card_2 = new Card(Rank.RANK_TWO, Suit.CLOVER);
-	Card card_Q = new Card(Rank.RANK_QUEEN, Suit.CLOVER);
-	Card card_K = new Card(Rank.RANK_KNIGHT, Suit.CLOVER);
-	Card card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
-	List<Card> cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
-	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
-	Dealer dealerBlackJack = new Dealer(new Hand(cards_21));
-
-	Players players;
-	Dealer dealer_17;
+	private Card card_A;
+	private Card card_2;
+	private Card card_Q;
+	private Card card_K;
+	private Card card_6;
+	private List<Card> cards_21;
+	private List<Card> cards_BURST;
+	private Dealer dealerBlackJack;
+	private Dealer dealer_17;
+	private Players players;
 
 	@BeforeEach
 	void setUp() {
+		card_A = new Card(Rank.RANK_ACE, Suit.CLOVER);
+		card_2 = new Card(Rank.RANK_TWO, Suit.CLOVER);
+		card_Q = new Card(Rank.RANK_QUEEN, Suit.CLOVER);
+		card_K = new Card(Rank.RANK_KNIGHT, Suit.CLOVER);
+		card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
+		cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
+		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
+		dealerBlackJack = new Dealer(new Hand(cards_21));
 		players = new Players(
 			Arrays.asList(new Player(new Name("pobi"), new Hand(cards_21)),
 				new Player(new Name("jason"), new Hand(cards_BURST))));
