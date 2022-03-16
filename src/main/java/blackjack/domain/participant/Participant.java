@@ -17,7 +17,7 @@ public abstract class Participant {
     }
 
     private void validateName(String name) {
-        if (name.length() == 0) {
+        if (name.isEmpty()) {
             throw new IllegalArgumentException(ERROR_INVALID_NAME);
         }
     }
