@@ -25,9 +25,15 @@ public enum GameResult {
         return DRAW;
     }
 
+    public static Map<GameResult, Integer> toGameResultMap(GameResult gameResult) {
+        Map<GameResult, Integer> result = new EnumMap<>(GameResult.class);
+        result.put(gameResult, 1);
+        return result;
+    }
+
     public static Map<GameResult, Integer> toGameResultMap(List<GameResult> gameResults) {
         Map<GameResult, Integer> result = new EnumMap<>(GameResult.class);
-        for (GameResult gameResult : GameResult.values()) {
+        for (GameResult gameResult : gameResults) {
             result.put(gameResult, result.getOrDefault(gameResult, 0) + 1);
         }
         return result;
