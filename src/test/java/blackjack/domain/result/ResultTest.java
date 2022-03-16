@@ -18,7 +18,6 @@ class ResultTest {
 
     private Dealer dealer;
     private Players players;
-    private Player player;
     private Result result;
     private Card aceSpade;
     private Card twoSpade;
@@ -29,7 +28,6 @@ class ResultTest {
     void init() {
         dealer = new Dealer();
         players = new Players("test1, test2");
-        player = new Player("pobi");
         result = new Result(players);
         aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
         twoSpade = Card.of(CardNumber.TWO, CardShape.SPADE);
