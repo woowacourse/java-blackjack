@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static blackjack.domain.DrawCommand.*;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.HoldingCard;
 import blackjack.domain.participant.Dealer;
@@ -28,12 +27,8 @@ public class BlackjackGame {
 
     private List<Participant> createPlayers(List<String> playersNames) {
         return playersNames.stream()
-                .map(playerName -> new Player(playerName.trim(), setPlayerInitCards()))
+                .map(playerName -> new Player(playerName.trim(), List.of(cardDeck.drawCard(), cardDeck.drawCard())))
                 .collect(Collectors.toList());
-    }
-
-    private List<Card> setPlayerInitCards() {
-        return List.of(cardDeck.drawCard(), cardDeck.drawCard());
     }
 
     public boolean isAllPlayerFinished() {
