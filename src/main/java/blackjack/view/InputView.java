@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static final String SPLIT_REGEX = ",";
 
     private InputView() {
     }
@@ -18,7 +19,7 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = SCANNER.nextLine();
 
-        String[] splitNames = input.split(",", -1);
+        String[] splitNames = input.split(SPLIT_REGEX, -1);
 
         return Arrays.stream(splitNames)
                 .collect(toList());
