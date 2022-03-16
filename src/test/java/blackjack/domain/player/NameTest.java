@@ -6,6 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class NameTest {
@@ -18,11 +19,11 @@ public class NameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"ja ck", "jac.k",""})
+    @CsvSource(value = {"ja ck,[ERROR] 이름에 공백은 포함될 수 없습니다.", "jac.k,[ERROR] 입력 형식에 맞춰 입력해주세요."})
     @DisplayName("플레이어 이름 객체 생성 실패 테스트")
-    public void exceptionNameTest(String input) {
+    public void exceptionNameTest(String input, String expectedMessage) {
         assertThatThrownBy(() -> Name.of(input))
                 .isInstanceOf(Exception.class)
-                .hasMessage("[ERROR] 입력 형식에 맞춰 입력해주세요.");
+                .hasMessage(expectedMessage);
     }
 }
