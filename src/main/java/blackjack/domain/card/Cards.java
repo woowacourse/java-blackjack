@@ -33,7 +33,6 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        System.out.println(Denomination.calculateCardScore(cards));
         return cards.size() == BLACKJACK_CARD_SIZE && score() == BLACKJACK_TARGET_NUMBER;
     }
 
