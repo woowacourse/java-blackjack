@@ -22,19 +22,37 @@ public final class Dealer extends Player {
     }
 
     public void compete(final Participant participant) {
+        if (isBlackjack(participant)) {
+            return;
+        }
+        if (isDealerWin(participant)) {
+            return;
+        }
+        isParticipantWin(participant);
+    }
+
+    private boolean isBlackjack(Participant participant) {
         if (isDealerParticipantBlackJack(participant)) {
             this.bothBlackjack();
-            return;
+            return true;
         }
         if (isParticipantBlackJack(participant)){
             participant.blackjack();
-            return;
+            return true;
         }
+        return false;
+    }
+
+    private boolean isDealerWin(Participant participant) {
         if (isDealerWin(calculateFinalScore(), participant.calculateFinalScore())) {
             this.win();
             participant.lose();
-            return;
+            return true;
         }
+        return false;
+    }
+
+    private void isParticipantWin(Participant participant) {
         participant.win();
         this.lose();
     }
