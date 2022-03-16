@@ -52,7 +52,7 @@ class GradeTest {
         dealer.dealCards(List.of(tenSpade, tenSpade));
         player.dealCards(List.of(aceSpade, tenSpade));
 
-        assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.WIN);
+        assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.BLACKJACK_WIN);
     }
 
     @DisplayName("딜러와 플레이어 모두 블랙잭이 없을 경우 게임을 진행하는 것을 확인한다.")

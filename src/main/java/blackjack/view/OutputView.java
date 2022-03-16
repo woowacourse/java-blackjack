@@ -1,14 +1,12 @@
 package blackjack.view;
 
+import blackjack.domain.bet.Profit;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
-import blackjack.domain.result.Grade;
-import blackjack.domain.result.Result;
 import blackjack.dto.GamerDto;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -74,11 +72,11 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printResult(final Dealer dealer, final Result result, final Players players) {
-        System.out.println("## 최종 승패");
-        printDealerResult(dealer.getName(), result.numberOfResult());
+    public static void printProfit(final Dealer dealer, final Profit profit, final Players players) {
+        System.out.println("## 최종 수익");
+        printDealerProfit(dealer, profit);
         for (Player player : players.getPlayers()) {
-            printPlayerResult(player.getName(), result.getGrade(player));
+            printPlayerProfit(player, profit);
         }
     }
 
@@ -87,16 +85,13 @@ public class OutputView {
         printNewLine();
     }
 
-    private static void printDealerResult(final String name, final Map<Grade, Integer> numberOfResult) {
-        System.out.printf("%s: %d%s %d%s %d%s", name,
-                numberOfResult.get(Grade.LOSE), Grade.WIN.getGrade(),
-                numberOfResult.get(Grade.TIE), Grade.TIE.getGrade(),
-                numberOfResult.get(Grade.WIN), Grade.LOSE.getGrade());
+    private static void printDealerProfit(final Dealer dealer, final Profit profit) {
+        System.out.printf("%s: %d", dealer.getName(), profit.dealerProfit());
         printNewLine();
     }
 
-    private static void printPlayerResult(final String name, final Grade grade) {
-        System.out.printf("%s: %s", name, grade.getGrade());
+    private static void printPlayerProfit(final Player player, final Profit profit) {
+        System.out.printf("%s: %d", player.getName(), profit.getBetting(player));
         printNewLine();
     }
 }

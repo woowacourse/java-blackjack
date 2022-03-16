@@ -1,14 +1,20 @@
 package blackjack.domain.bet;
 
+import blackjack.domain.result.Grade;
+
 public class Betting {
 
     private static final int MONEY_UNIT = 10;
 
-    private final int betting;
+    private int betting;
 
     public Betting(final int betting) {
         validateBetting(betting);
         this.betting = betting;
+    }
+
+    public void calculateProfit(final Grade grade) {
+        betting = Grade.rate(grade, betting);
     }
 
     private void validateBetting(final int betting) {
@@ -26,5 +32,9 @@ public class Betting {
         if (betting % MONEY_UNIT != 0) {
             throw new IllegalArgumentException("베팅 금액은 10원 단위로 입력해주세요.");
         }
+    }
+
+    public int getBetting() {
+        return betting;
     }
 }
