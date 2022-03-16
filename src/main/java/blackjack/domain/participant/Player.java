@@ -49,9 +49,9 @@ public class Player extends Participant {
     }
 
     public void hitOrStay(final HitOrStayChoiceStrategy hitOrStay,
-                          final CardSupplier cardSupplier) {
+                          final CardSupplier supplier) {
         if (hitOrStay.shouldHit(name)) {
-            receiveCard(cardSupplier.getCard());
+            receiveCard(supplier.getCard());
             return;
         }
         cardHand.stay();
