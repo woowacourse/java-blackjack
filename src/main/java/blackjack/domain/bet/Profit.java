@@ -12,17 +12,12 @@ import java.util.function.Supplier;
 public class Profit {
 
     private final Map<Player, Betting> bettings = new HashMap<>();
-    private final Result result;
-
-    public Profit(final Result result) {
-        this.result = result;
-    }
 
     public void bet(final Player player, final Supplier<Betting> supplier) {
         bettings.put(player, createBetting(supplier));
     }
 
-    public void calculate() {
+    public void calculate(final Result result) {
         for (Player player : bettings.keySet()) {
             Grade grade = result.getGrade(player);
             bettings.get(player).calculateProfit(grade);

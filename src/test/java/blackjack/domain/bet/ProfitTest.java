@@ -29,7 +29,7 @@ public class ProfitTest {
         players = new Players("test1, test2");
         dealer = new Dealer();
         result = new Result(players);
-        profit = new Profit(result);
+        profit = new Profit();
         aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
         queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
@@ -44,7 +44,7 @@ public class ProfitTest {
         }
 
         result.isKeepPlaying(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         for (Player player : players.getPlayers()) {
             assertThat(profit.getBetting(player)).isEqualTo(1500);
@@ -61,7 +61,7 @@ public class ProfitTest {
         }
 
         result.isKeepPlaying(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         for (Player player : players.getPlayers()) {
             assertThat(profit.getBetting(player)).isEqualTo(0);
@@ -78,7 +78,7 @@ public class ProfitTest {
         }
 
         result.isKeepPlaying(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         for (Player player : players.getPlayers()) {
             assertThat(profit.getBetting(player)).isEqualTo(-1000);
@@ -96,7 +96,7 @@ public class ProfitTest {
 
         result.isKeepPlaying(dealer);
         result.compete(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         for (Player player : players.getPlayers()) {
             assertThat(profit.getBetting(player)).isEqualTo(-1000);
@@ -114,7 +114,7 @@ public class ProfitTest {
 
         result.isKeepPlaying(dealer);
         result.compete(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         for (Player player : players.getPlayers()) {
             assertThat(profit.getBetting(player)).isEqualTo(1000);
@@ -132,7 +132,7 @@ public class ProfitTest {
 
         result.isKeepPlaying(dealer);
         result.compete(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         for (Player player : players.getPlayers()) {
             assertThat(profit.getBetting(player)).isEqualTo(1000);
@@ -150,7 +150,7 @@ public class ProfitTest {
 
         result.isKeepPlaying(dealer);
         result.compete(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         for (Player player : players.getPlayers()) {
             assertThat(profit.getBetting(player)).isEqualTo(0);
@@ -168,7 +168,7 @@ public class ProfitTest {
 
         result.isKeepPlaying(dealer);
         result.compete(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         for (Player player : players.getPlayers()) {
             assertThat(profit.getBetting(player)).isEqualTo(-1000);
@@ -186,7 +186,7 @@ public class ProfitTest {
 
         result.isKeepPlaying(dealer);
         result.compete(dealer);
-        profit.calculate();
+        profit.calculate(result);
 
         assertThat(profit.dealerProfit()).isEqualTo(2000);
     }

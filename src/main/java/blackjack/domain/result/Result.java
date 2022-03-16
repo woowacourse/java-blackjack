@@ -32,16 +32,6 @@ public class Result {
         }
     }
 
-    public Map<Grade, Integer> numberOfResult() {
-        final Map<Grade, Integer> numberOfResult = new HashMap<>();
-        for (Grade nowGrade : Grade.values()) {
-            numberOfResult.put(nowGrade, (int) result.values().stream().
-                    filter(grade -> grade.equals(nowGrade))
-                    .count());
-        }
-        return numberOfResult;
-    }
-
     private void gradeToInitCards(final Dealer dealer) {
         result.replaceAll((player, grade) -> Grade.gradeToInitCards(dealer, player));
     }

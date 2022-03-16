@@ -21,6 +21,7 @@ public enum CardNumber {
     JACK("J", 10),
     ;
 
+    private static final int BLACKJACK_CARD_COUNT = 2;
     private static final int NUMBER_TEN = 10;
     private static final int ACE_EXTRA_NUMBER = 10;
 
@@ -33,7 +34,7 @@ public enum CardNumber {
     }
 
     public static boolean isBlackjack(final List<CardNumber> cardNumbers) {
-        if (cardNumbers.size() != 2) {
+        if (cardNumbers.size() != BLACKJACK_CARD_COUNT) {
             return false;
         }
         return hasAce(cardNumbers) && hasTen(cardNumbers);

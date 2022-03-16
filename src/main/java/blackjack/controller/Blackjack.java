@@ -17,11 +17,15 @@ public class Blackjack {
         Players players = InputConverter.createPlayers();
         Result result = new Result(players);
 
-        Profit profit = new Profit(result);
-        players.bet(profit, OutputView::printBetting, InputConverter::createBetting);
+        Profit profit = new Profit();
+        bet(players, profit);
 
         drawCards(dealer, players, result);
         showProfit(dealer, players, result, profit);
+    }
+
+    private void bet(final Players players, final Profit profit) {
+        players.bet(profit, OutputView::printBetting, InputConverter::createBetting);
     }
 
     private void drawCards(final Dealer dealer, final Players players, final Result result) {
@@ -46,7 +50,7 @@ public class Blackjack {
     private void showProfit(final Dealer dealer, final Players players, final Result result, final Profit profit) {
         OutputView.printTotalScore(dealer, players);
         result.compete(dealer);
-        profit.calculate();
+        profit.calculate(result);
         OutputView.printProfit(dealer, profit, players);
     }
 }

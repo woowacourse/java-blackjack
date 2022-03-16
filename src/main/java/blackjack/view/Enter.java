@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Enter implements Enterable {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     public String enter() {

@@ -7,18 +7,16 @@ import java.util.Arrays;
 
 public enum Grade {
 
-    BLACKJACK_WIN("승", 1.5),
-    WIN("승", 1),
-    TIE("무", 0),
-    LOSE("패", -1),
-    PROCEED("진행", 0)
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    TIE(0),
+    LOSE(-1),
+    PROCEED(0)
     ;
 
-    private final String grade;
     private final double rate;
 
-    Grade(final String grade, final double rate) {
-        this.grade = grade;
+    Grade(final double rate) {
         this.rate = rate;
     }
 
@@ -54,9 +52,5 @@ public enum Grade {
                 .map(nowGrade -> (int) (betting * nowGrade.rate))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Grade 입니다."));
-    }
-
-    public String getGrade() {
-        return grade;
     }
 }
