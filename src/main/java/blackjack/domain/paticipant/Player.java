@@ -45,4 +45,8 @@ public class Player {
     public void stay() {
         gameState = gameState.stay();
     }
+
+    public boolean isFinishied() {
+        return gameState.isFinished();
+    }
 }
