@@ -31,10 +31,8 @@ public abstract class Participant {
     public abstract boolean isNeedToDraw();
 
     public String showHand() {
-        return String.join(
-                JOINING_DELIMITER,
-                hand.stream().map(Card::combineRankAndSuit).collect(Collectors.toList())
-        );
+        List<String> cardsOfHand = hand.stream().map(Card::combineRankAndSuit).collect(Collectors.toList());
+        return String.join(JOINING_DELIMITER, cardsOfHand);
     }
 
     public boolean isBust() {

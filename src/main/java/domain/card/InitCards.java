@@ -24,10 +24,4 @@ public class InitCards {
     public List<Card> getInitCards() {
         return Collections.unmodifiableList(intiCards);
     }
-
-    public static List<List<Card>> generateInitCardsForPlayers(Deck deck, int playerCount) {
-        return IntStream.range(0, playerCount)
-                .mapToObj(i -> new InitCards(deck).getInitCards())
-                .collect(Collectors.toList());
-    }
 }

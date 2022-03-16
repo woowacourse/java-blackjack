@@ -5,7 +5,9 @@ import domain.card.Deck;
 import domain.card.InitCards;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Player;
 import domain.participant.Players;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -15,9 +17,7 @@ public class Controller {
     public void run() {
         Deck deck = new Deck(Cards.getInstance().getCards());
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
-
-        List<Name> names = InputView.inputNames();
-        Players players = new Players(names, InitCards.generateInitCardsForPlayers(deck, names.size()));
+        Players players = new Players(createPlayers(deck));
 
         OutputView.printInitHands(dealer, players);
 
@@ -32,6 +32,14 @@ public class Controller {
         drawForDealer(deck, dealer, players);
         OutputView.printStatuses(dealer, players);
         OutputView.printResult(players.getNames(), players.getResultAtFinal(dealer));
+    }
+
+    private List<Player> createPlayers(Deck deck) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : InputView.inputNames()) {
+            players.add(new Player(name, new InitCards(deck).getInitCards(), InputView.inputMoney(name)));
+        }
+        return players;
     }
 
     private void drawForPlayers(Deck deck, Players players) {

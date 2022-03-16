@@ -9,9 +9,9 @@ public class Player extends Participant {
 
     private Money money;
 
-    public Player(Name name, List<Card> hand, Money money) {
+    public Player(Name name, List<Card> hand, int money) {
         super(name, hand);
-        this.money = money;
+        this.money = new Money(money);
     }
 
     @Override
