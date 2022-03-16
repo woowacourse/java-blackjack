@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Dealer;
@@ -30,10 +31,11 @@ public class ResultTest {
 	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
 	List<Card> cards_17 = new ArrayList<>(Arrays.asList(card_A, card_6));
 	Players players = new Players(
-		Arrays.asList(new Player(new Name("pobi"), cards_20), new Player(new Name("jason"), cards_15),
-			new Player(new Name("woni"), cards_BURST), new Player(new Name("gugu"), cards_17)));
-	Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
-	Dealer dealer_BURST = new Dealer(List.of(card_K, card_Q, card_2));
+		Arrays.asList(new Player(new Name("pobi"), new Hand(cards_20)),
+			new Player(new Name("jason"), new Hand(cards_15)),
+			new Player(new Name("woni"), new Hand(cards_BURST)), new Player(new Name("gugu"), new Hand(cards_17))));
+	Dealer dealer_17 = new Dealer(new Hand(List.of(card_A, card_6)));
+	Dealer dealer_BURST = new Dealer(new Hand(List.of(card_K, card_Q, card_2)));
 
 	Result result = new Result(players.getResultAtFinal(dealer_17));
 	Result result_dealer_burst = new Result(players.getResultAtFinal(dealer_BURST));

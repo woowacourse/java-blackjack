@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.card.deckstrategy.GenerationDeckStrategy;
@@ -29,7 +30,7 @@ public class PlayersTest {
 	Card card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
 	List<Card> cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
 	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
-	Dealer dealerBlackJack = new Dealer(cards_21);
+	Dealer dealerBlackJack = new Dealer(new Hand(cards_21));
 
 	Players players;
 	Dealer dealer_17;
@@ -37,8 +38,10 @@ public class PlayersTest {
 	@BeforeEach
 	void setUp() {
 		players = new Players(
-			Arrays.asList(new Player(new Name("pobi"), cards_21), new Player(new Name("jason"), cards_BURST)));
-		dealer_17 = new Dealer(List.of(card_A, card_6));
+			Arrays.asList(new Player(new Name("pobi"), new Hand(cards_21)),
+				new Player(new Name("jason"), new Hand(cards_BURST))));
+		List<Card> cards = new ArrayList<>(List.of(card_A, card_6));
+		dealer_17 = new Dealer(new Hand(cards));
 	}
 
 	@Test

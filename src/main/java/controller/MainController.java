@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Deck;
+import domain.card.Hand;
 import domain.card.deckstrategy.GeneralGenerationDeckStrategy;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -17,7 +18,7 @@ public class MainController {
 	public void run() {
 		ParticipantInformationPrintController participantsInfoPrintController = new ParticipantInformationPrintController();
 		Deck deck = Deck.from(new GeneralGenerationDeckStrategy());
-		Dealer dealer = new Dealer(deck.generateInitCards());
+		Dealer dealer = new Dealer(new Hand(deck.generateInitCards()));
 		Players players = new Players(makePlayers(makeNames(), deck));
 		participantsInfoPrintController.printInitHands(dealer, players);
 
@@ -47,7 +48,7 @@ public class MainController {
 
 	private List<Player> makePlayers(List<Name> names, Deck deck) {
 		List<Player> players = names.stream()
-			.map(name -> new Player(name, deck.generateInitCards()))
+			.map(name -> new Player(name, new Hand(deck.generateInitCards())))
 			.collect(Collectors.toList());
 		return players;
 	}

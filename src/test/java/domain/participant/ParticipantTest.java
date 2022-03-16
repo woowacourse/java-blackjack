@@ -2,7 +2,6 @@ package domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
 
@@ -26,7 +26,7 @@ public class ParticipantTest {
 	@EnumSource(mode = EnumSource.Mode.EXCLUDE, names = {"RANK_ACE"})
 	void isBurst(Rank rank) {
 		Card card = new Card(rank, Suit.HEART);
-		Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card, card1, card1)));
+		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card, card1, card1)));
 		assertThat(participant.isBust()).isTrue();
 	}
 
@@ -37,7 +37,7 @@ public class ParticipantTest {
 		Card card1 = new Card(Rank.valueOf(input1), Suit.HEART);
 		Card card2 = new Card(Rank.valueOf(input2), Suit.SPADE);
 		Card card3 = new Card(Rank.valueOf(input3), Suit.CLOVER);
-		Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2, card3)));
+		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card1, card2, card3)));
 		assertThat(participant.isMaxScore()).isTrue();
 	}
 
@@ -45,7 +45,7 @@ public class ParticipantTest {
 	@DisplayName("베스트 스코어 계산하는 기능")
 	void getBestScore() {
 		Participant participant = new Participant(new Name("pobi"),
-			new ArrayList<>(List.of(card1, card2, card3, card4)));
+			new Hand(List.of(card1, card2, card3, card4)));
 		assertThat(participant.getBestScore()).isEqualTo(20);
 	}
 }

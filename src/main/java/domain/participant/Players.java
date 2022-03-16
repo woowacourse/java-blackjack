@@ -48,7 +48,7 @@ public class Players {
 			throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
 		}
 		Map<Name, WinOrLose> map = new LinkedHashMap<>();
-		players.keySet().stream().forEach(name -> map.put(name, players.get(name).compareAtBlackJack(other)));
+		players.keySet().stream().forEach(name -> map.put(name, players.get(name).compareAtBlackJack()));
 		return map;
 	}
 

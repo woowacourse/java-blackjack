@@ -1,24 +1,17 @@
 package domain.participant;
 
-import java.util.List;
-
-import domain.card.Card;
+import domain.card.Hand;
 import domain.result.WinOrLose;
 
 public class Player extends Participant {
 
-	public Player(Name name, List<Card> hand) {
+	public Player(Name name, Hand hand) {
 		super(name, hand);
 	}
 
-	public WinOrLose compareAtBlackJack(Participant other) {
-		boolean isPlayerBlackJack = isBlackJack();
-		boolean isOtherBlackJack = other.isBlackJack();
-		if (isOtherBlackJack && isPlayerBlackJack) {
+	public WinOrLose compareAtBlackJack() {
+		if (isBlackJack()) {
 			return WinOrLose.DRAW;
-		}
-		if (!isOtherBlackJack && isPlayerBlackJack) {
-			return WinOrLose.WIN;
 		}
 		return WinOrLose.LOSE;
 	}

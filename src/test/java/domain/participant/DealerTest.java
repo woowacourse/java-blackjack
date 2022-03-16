@@ -2,7 +2,6 @@ package domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
 
@@ -28,7 +28,7 @@ public class DealerTest {
 	@DisplayName("딜러가 손패를 더 받아야 하는 경우")
 	void isEnoughCard_False() {
 		Card card = new Card(Rank.RANK_FIVE, Suit.HEART);
-		Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
+		Dealer dealer = new Dealer(new Hand(List.of(card, card1, card2)));
 		assertThat(dealer.isEnoughCard()).isFalse();
 	}
 
@@ -36,7 +36,7 @@ public class DealerTest {
 	@DisplayName("딜러가 손패를 더 안 받아야 하는 경우")
 	void isEnoughCard_True() {
 		Card card = new Card(Rank.RANK_SIX, Suit.HEART);
-		Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
+		Dealer dealer = new Dealer(new Hand(List.of(card, card1, card2)));
 		assertThat(dealer.isEnoughCard()).isTrue();
 	}
 }
