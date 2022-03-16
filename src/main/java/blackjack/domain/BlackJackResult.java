@@ -2,47 +2,45 @@ package blackjack.domain;
 
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackJackResult {
 
-    private final Map<GameResult, Integer> dealerResult;
-    private final Map<Player, GameResult> gamblerResult;
+    private static final int DEALER_FLIP_UNIT = -1;
 
-    private BlackJackResult(final Map<GameResult, Integer> dealerResult,
-                            final Map<Player, GameResult> gamblerResult) {
-        this.dealerResult = dealerResult;
-        this.gamblerResult = gamblerResult;
+    private final Map<Player, Long> value;
+
+    public BlackJackResult(final Map<Player, Long> value) {
+        this.value = value;
     }
 
-    public static BlackJackResult of(final Players players) {
-        final Map<Player, GameResult> gamblerResult = new LinkedHashMap<>();
-        final Map<GameResult, Integer> dealerResult = players.getGamblers()
+    public static BlackJackResult from(final Players players) {
+        return new BlackJackResult(players.getGamblers()
             .stream()
-            .collect(Collectors.groupingBy(
-                gambler -> getResultPlayer(players.getDealer(), gamblerResult, gambler),
-                () -> new EnumMap<>(GameResult.class),
-                Collectors.summingInt(count -> 1)
+            .collect(Collectors.toMap(
+                Function.identity(),
+                gambler -> calculateProfit(players, gambler),
+                (x, y) -> y,
+                LinkedHashMap::new)
             ));
-        return new BlackJackResult(dealerResult, gamblerResult);
     }
 
-    private static GameResult getResultPlayer(final Player dealer,
-                                              final Map<Player, GameResult> gamblerResult,
-                                              final Player gambler) {
-        final GameResult currentDealerResult = dealer.compare(gambler);
-        gamblerResult.put(gambler, currentDealerResult.reverse());
-        return dealer.compare(gambler);
+    private static Long calculateProfit(final Players players, final Player gambler) {
+        final GameResult gameResult = players.getDealer().compare(gambler);
+        return gameResult.calculateProfit(gambler.getBetMoney());
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
-        return dealerResult;
+    public long calculateDealerProfit() {
+        return this.value.values()
+            .stream()
+            .mapToLong(Long::valueOf)
+            .sum() * DEALER_FLIP_UNIT;
     }
 
-    public Map<Player, GameResult> getGamblerResult() {
-        return gamblerResult;
+    public Map<Player, Long> getValue() {
+        return value;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Player {
 
-    private final String name;
+    protected String name;
     private final PlayingCards playingCards;
 
     protected Player(final String name) {
@@ -60,4 +60,7 @@ public abstract class Player {
     public boolean isLose(final Player otherPlayer) {
         return this.getSumOfCards() < otherPlayer.getSumOfCards();
     }
+
+    public abstract int getBetMoney();
+
 }

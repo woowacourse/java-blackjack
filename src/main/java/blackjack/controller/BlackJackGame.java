@@ -10,7 +10,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.dto.BlackJackResultDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
@@ -85,7 +84,8 @@ public class BlackJackGame {
     }
 
     private boolean canGamblerReceiveCard(final Player gambler, final CardDeck cardDeck) {
-        return isHitThenReceiveCard(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished(GAMBLER_GET_CARD_UPPER_BOUND);
+        return isHitThenReceiveCard(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished(
+            GAMBLER_GET_CARD_UPPER_BOUND);
     }
 
     private boolean isHitThenReceiveCard(final Player gambler, final CardDeck cardDeck) {
@@ -122,7 +122,7 @@ public class BlackJackGame {
     private void processResult(Players players) {
         outputView.printNewLine();
         outputView.printCardAndScore(PlayersDto.from(players));
-        final BlackJackResult result = BlackJackResult.of(players);
-        outputView.printResult(BlackJackResultDto.from(result));
+        final BlackJackResult blackJackResult = BlackJackResult.from(players);
+        outputView.printResult(blackJackResult);
     }
 }

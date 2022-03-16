@@ -1,38 +1,58 @@
 package blackjack.domain;
 
+import static blackjack.domain.testutil.CardDeckFixtureGenerator.createCardDeck;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.PlayingCard;
+import blackjack.domain.card.Suit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackResultTest {
+    Player dealer;
+    Player gambler;
     Players players;
+    CardDeck cardDeck;
 
     @BeforeEach
     void setup() {
-        Player dealer = new Dealer();
-        final List<Player> gamblers = List.of(new Gambler("포비"), new Gambler("돌범"), new Gambler("리차드"));
-        players = new Players(dealer, gamblers);
+        dealer = new Dealer();
+        gambler = new Gambler("돌범");
+        players = new Players(dealer, List.of(gambler));
+
+        cardDeck = createCardDeck(
+            new PlayingCard(Suit.CLUBS, Denomination.KING),
+            new PlayingCard(Suit.CLUBS, Denomination.JACK),
+            new PlayingCard(Suit.HEARTS, Denomination.ACE),
+            new PlayingCard(Suit.HEARTS, Denomination.JACK)
+        );
     }
 
     @Test
-    @DisplayName("딜러에게 겜블러들을 전달해서 승무패를 반환받는다")
+    @DisplayName("겜블러들의 총 수익에 -1을 곱한 값이 딜러의 수익이 되는지 확인한다.")
     void judge_by_dealer() {
         // given &  when
-        BlackJackResult blackJackResult = BlackJackResult.of(players);
-        final Map<GameResult, Integer> dealerResult = blackJackResult.getDealerResult();
-        final List<GameResult> gameResults = Arrays.stream(GameResult.values()).collect(Collectors.toList());
+        this.cardDeck.drawTo(gambler);
+        this.cardDeck.drawTo(gambler);
+
+        this.cardDeck.drawTo(dealer);
+        this.cardDeck.drawTo(dealer);
+
+        //when
+        final BlackJackResult blackJackResult = BlackJackResult.from(players);
+
+        final long dealerProfit = blackJackResult.calculateDealerProfit();
+        final long gamblerProfit = blackJackResult.getValue().values().stream().mapToLong(Long::valueOf).sum();
 
         // then
-        dealerResult.keySet().forEach(result -> assertThat(gameResults).contains(result));
+        assertThat(dealerProfit).isEqualTo(-1 * gamblerProfit);
     }
 }
