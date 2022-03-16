@@ -19,6 +19,10 @@ public class Cards {
         return score > BLACKJACK_NUMBER;
     }
 
+    public boolean isSameBlackJackNumber(int score) {
+        return score == BLACKJACK_NUMBER;
+    }
+
     public int getScore() {
         if (containsAce(cards)) {
             return sumWithAce();

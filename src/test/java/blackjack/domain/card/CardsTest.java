@@ -5,6 +5,7 @@ import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.FIVE;
 import static blackjack.domain.card.Denomination.KING;
 import static blackjack.domain.card.Denomination.NINE;
+import static blackjack.domain.card.Denomination.TEN;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
@@ -113,6 +114,24 @@ public class CardsTest {
 
         //then
         Assertions.assertThat(score).isEqualTo(21);
+    }
+
+    @DisplayName("블랙잭 넘버와 같은지 여부를 판단하는 메소드 테스트")
+    @Test
+    public void testIsSameBlackJackNumber() {
+        //given
+        List<Card> initCards = List.of(
+                new Card(SPADE, ACE),
+                new Card(DIAMOND, TEN)
+        );
+
+        //when
+        Cards cards = createCards(initCards);
+
+        int score = cards.getScore();
+
+        // then
+        Assertions.assertThat(cards.isSameBlackJackNumber(score)).isTrue();
     }
 
     private Cards createCards(List<Card> initCards) {
