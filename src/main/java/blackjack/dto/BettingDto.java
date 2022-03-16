@@ -3,14 +3,14 @@ package blackjack.dto;
 public class BettingDto {
 
 	private final String name;
-	private final Integer money;
+	private final String money;
 
-	private BettingDto(String name, Integer money) {
+	private BettingDto(String name, String money) {
 		this.name = name;
 		this.money = money;
 	}
 
-	public static BettingDto from(String name, Integer money) {
+	public static BettingDto from(String name, String money) {
 		return new BettingDto(name, money);
 	}
 
@@ -18,7 +18,7 @@ public class BettingDto {
 		return name;
 	}
 
-	public Integer getMoney() {
+	public String getMoney() {
 		return money;
 	}
 }

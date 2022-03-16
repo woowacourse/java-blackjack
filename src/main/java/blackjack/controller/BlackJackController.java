@@ -53,7 +53,7 @@ public class BlackJackController {
 		List<BettingDto> betting = new ArrayList<>();
 		for (String player : playerTurns.getNames()) {
 			String money = bettingFunction.apply(player);
-			betting.add(BettingDto.from(player, Integer.parseInt(money)));
+			betting.add(BettingDto.from(player, money));
 		}
 		blackJackService.betMoney(betting);
 	}
