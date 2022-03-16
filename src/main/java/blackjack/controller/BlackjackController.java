@@ -33,7 +33,7 @@ public class BlackjackController {
         final InitialDistributionDto gameInfoDto = InitialDistributionDto.of(game);
 
         printInitialDistributionAnnouncement(gameInfoDto);
-        if (!gameInfoDto.getIsGameOver()) {
+        if (!gameInfoDto.isGameOver()) {
             distributeAllCards(game);
         }
     }

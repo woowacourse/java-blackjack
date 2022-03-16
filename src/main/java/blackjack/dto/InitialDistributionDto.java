@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 public class InitialDistributionDto {
 
     private final List<ParticipantCardsDto> participantsInfo = new ArrayList<>();
-    private final boolean isGameOver;
+    private final boolean gameOver;
 
     private InitialDistributionDto(final GameParticipants participants,
-                                   final boolean isGameOver) {
+                                   final boolean gameOver) {
         participants.getValue()
                 .forEach(this::initParticipantInfo);
-        this.isGameOver = isGameOver;
+        this.gameOver = gameOver;
     }
 
     public static InitialDistributionDto of(final BlackjackGame game) {
@@ -40,15 +40,15 @@ public class InitialDistributionDto {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public boolean getIsGameOver() {
-        return isGameOver;
+    public boolean isGameOver() {
+        return gameOver;
     }
 
     @Override
     public String toString() {
         return "InitialDistributionDto{" +
                 "participantsInfo=" + participantsInfo +
-                ", isGameOver=" + isGameOver +
+                ", isGameOver=" + gameOver +
                 '}';
     }
 }

@@ -25,7 +25,7 @@ public class OutputView {
     private static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
 
     public static void printInitialDistributionAnnouncement(final InitialDistributionDto dto) {
-        if (dto.getIsGameOver()) {
+        if (dto.isGameOver()) {
             printDealerBlackjackInfo(dto);
             return;
         }
