@@ -12,7 +12,7 @@ public abstract class Participant {
 
     protected Participant(final String name) {
         checkEmpty(name);
-        this.name = name;
+        this.name = name.trim();
     }
 
     private void checkEmpty(final String name) {
