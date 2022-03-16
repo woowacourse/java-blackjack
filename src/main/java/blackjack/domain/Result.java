@@ -1,11 +1,12 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toMap;
+
 import blackjack.domain.user.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 public enum Result {
 
@@ -28,11 +29,10 @@ public enum Result {
         this.biPredicate = biPredicate;
     }
 
-    public static Map<String, Result> getMap(List<User> players, User dealer) {
+    public static Map<User, Result> getResult(List<User> players, User dealer) {
         return players.stream()
-                .collect(Collectors.toMap(
-                        User::getName,
-                        player -> findResult(player, dealer)
+                .collect(toMap(
+                        player -> player, player -> findResult(player, dealer)
                 ));
     }
 

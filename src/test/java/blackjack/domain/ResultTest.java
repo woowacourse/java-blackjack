@@ -48,11 +48,11 @@ class ResultTest {
         dealer.drawCard(deck);
 
         //when
-        Map<String, Result> result = Result.getMap(players, dealer);
+        Map<User, Result> result = Result.getResult(players, dealer);
 
         //then
-        assertThat(result.get("pobi")).isEqualTo(LOSS);
-        assertThat(result.get("jason")).isEqualTo(WIN);
+        assertThat(result.get(players.get(0))).isEqualTo(LOSS);
+        assertThat(result.get(players.get(1))).isEqualTo(WIN);
     }
 
     private Deck initDeck() {
