@@ -4,14 +4,28 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
 
 public enum WinDrawLose {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+
+    WIN_BLACKJACK("승", 1.5),
+    WIN("승", 1),
+    DRAW("무", 0),
+    LOSE("패", -1);
 
     private final String result;
+    private final double profitRatio;
 
-    WinDrawLose(String result) {
+    WinDrawLose(String result, double profitRatio) {
         this.result = result;
+        this.profitRatio = profitRatio;
+    }
+
+    public static double calculateProfitRatio(Player player, Dealer dealer) {
+        final WinDrawLose resultByBust = getWinLoseByBust(player, dealer);
+        if (resultByBust != null) return resultByBust.profitRatio;
+
+        final WinDrawLose resultByBlackJack = getWinDrawByBlackJack(player, dealer);
+        if (resultByBlackJack != null) return resultByBlackJack.profitRatio;
+
+        return getWinDrawLoseByScore(player, dealer).profitRatio;
     }
 
     public static WinDrawLose calculateWinDrawLose(Player player, Dealer dealer) {
@@ -36,7 +50,7 @@ public enum WinDrawLose {
 
     private static WinDrawLose getWinDrawByBlackJack(Player player, Dealer dealer) {
         if (getWinByBlackJack(player, dealer)) {
-            return WIN;
+            return WIN_BLACKJACK;
         }
         if (getDrawByBlackJack(player, dealer)) {
             return DRAW;
@@ -70,6 +84,10 @@ public enum WinDrawLose {
             return WIN;
         }
         return DRAW;
+    }
+
+    public double getProfitRatio() {
+        return profitRatio;
     }
 
     public String getResult() {

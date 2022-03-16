@@ -20,7 +20,7 @@ class WinDrawLoseTest {
         player.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.WIN);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(1);
     }
 
     @Test
@@ -29,7 +29,7 @@ class WinDrawLoseTest {
         player.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.DIAMOND, Denomination.JACK));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.DRAW);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(0);
     }
 
     @Test
@@ -38,7 +38,7 @@ class WinDrawLoseTest {
         player.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.LOSE);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(-1);
     }
 
     @Test
@@ -49,7 +49,7 @@ class WinDrawLoseTest {
         player.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.LOSE);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(-1);
     }
 
     @Test
@@ -60,7 +60,7 @@ class WinDrawLoseTest {
         dealer.receiveCard(Card.from(Suit.DIAMOND, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.WIN);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(1);
     }
 
     @Test
@@ -73,7 +73,7 @@ class WinDrawLoseTest {
         dealer.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.LOSE);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(-1);
     }
 
     @Test
@@ -85,7 +85,7 @@ class WinDrawLoseTest {
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.WIN);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(1.5);
     }
 
     @Test
@@ -96,7 +96,7 @@ class WinDrawLoseTest {
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.DRAW);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(0);
     }
 
     @Test
@@ -109,6 +109,6 @@ class WinDrawLoseTest {
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
-        assertThat(WinDrawLose.calculateWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.DRAW);
+        assertThat(WinDrawLose.calculateProfitRatio(player, dealer)).isEqualTo(0);
     }
 }
