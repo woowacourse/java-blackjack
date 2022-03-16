@@ -1,0 +1,31 @@
+package blackjack.domain.participant;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+class BetAmountTest {
+
+    @DisplayName("베팅 금액은 양수여야 합니다.")
+    @ParameterizedTest
+    @ValueSource(ints = {-10, -1, 0})
+    void betAmountNotPositiveExceptionTest(final int amount) {
+        assertThatThrownBy(() -> new BetAmount(amount))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("베팅 금액은 양수여야 합니다.");
+    }
+
+    @DisplayName("베팅 금액은 생성 당시의 값을 지니고 있어야 합니다.")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 10, 100, 10000})
+    void createBetAmountTest(final int expectedAmount) {
+        final BetAmount betAmount = new BetAmount(expectedAmount);
+
+        final int actualAmount = betAmount.getAmount();
+        assertThat(actualAmount).isEqualTo(expectedAmount);
+    }
+
+}
