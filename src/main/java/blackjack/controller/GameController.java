@@ -33,6 +33,19 @@ public class GameController {
         }
     }
 
+    public void bet() {
+        players.getValue().forEach(this::initMoney);
+    }
+
+    private void initMoney(final Player player) {
+        try {
+            player.initMoney(InputView.getBettingAmount(player.getName()));
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            initMoney(player);
+        }
+    }
+
     public void initParticipants() {
         dealer.initCards(deck);
         players.initCards(deck);
