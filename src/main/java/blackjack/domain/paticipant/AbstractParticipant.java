@@ -2,6 +2,7 @@ package blackjack.domain.paticipant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.state.BlackjackGameState;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractParticipant {
@@ -33,5 +34,13 @@ public abstract class AbstractParticipant {
 
     public boolean isFinishied() {
         return blackjackGameState.isFinished();
+    }
+
+    public int score() {
+        return blackjackGameState.score();
+    }
+
+    public List<Card> cards() {
+        return blackjackGameState.cards();
     }
 }
