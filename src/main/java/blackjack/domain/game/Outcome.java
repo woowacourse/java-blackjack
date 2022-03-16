@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
@@ -48,5 +49,9 @@ public enum Outcome {
 
 	public Outcome getOppositeOutcome() {
 		return Outcome.valueOf(oppositeValue);
+	}
+
+	public Money applyBettingMultiplier(Money bettingMoney) {
+		return bettingMoney.multiply(new BigDecimal(bettingMultiplier));
 	}
 }

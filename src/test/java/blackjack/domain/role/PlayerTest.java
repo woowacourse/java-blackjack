@@ -1,19 +1,18 @@
 package blackjack.domain.role;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.factory.CardMockFactory;
+import blackjack.factory.HandMockFactory;
+import blackjack.util.CreateHand;
 import java.util.List;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import blackjack.factory.CardMockFactory;
-import blackjack.util.CreateHand;
 
 @DisplayName("Player 테스트")
 class PlayerTest {
@@ -27,16 +26,10 @@ class PlayerTest {
 	}
 
 	private static Stream<Arguments> createHand() {
-		final Hand hand1 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
-		final Hand hand2 = CreateHand.create(CardMockFactory.of("2클로버"), CardMockFactory.of("K클로버"),
-				CardMockFactory.of("J클로버"));
-		final Hand hand3 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"),
-				CardMockFactory.of("J클로버"));
-
 		return Stream.of(
-				Arguments.of(hand1, true),
-				Arguments.of(hand2, false),
-				Arguments.of(hand3, true)
+				Arguments.of(HandMockFactory.getBlackJackHand(), true),
+				Arguments.of(HandMockFactory.getBustHand(), false),
+				Arguments.of(HandMockFactory.getNotBlackjackTopHand(), true)
 		);
 	}
 
