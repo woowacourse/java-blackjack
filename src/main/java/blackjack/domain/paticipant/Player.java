@@ -1,5 +1,6 @@
 package blackjack.domain.paticipant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.BlackjackGameState;
 import blackjack.domain.state.Running;
@@ -35,5 +36,9 @@ public class Player {
         if (betMoney <= 0) {
             throw new IllegalArgumentException("배팅금액은 0이하의 값이 들어올 수 없습니다.");
         }
+    }
+
+    public void hit(final Card card) {
+        gameState = gameState.hit(card);
     }
 }
