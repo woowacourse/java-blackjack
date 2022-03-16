@@ -7,6 +7,9 @@ import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.dto.ParticipantDto;
+import blackjack.dto.ParticipantsDto;
+import blackjack.dto.ProfitResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -23,14 +26,14 @@ public class BlackjackController {
 
     private Participants createParticipants() {
         List<String> names = inputPlayersName();
-        return new Participants(inputPlayersBettingMoney(names));
+        return new Participants(createPlayersWithBettingMoney(names));
     }
 
     private List<String> inputPlayersName() {
         return InputView.inputPlayerName();
     }
 
-    private List<Player> inputPlayersBettingMoney(List<String> names) {
+    private List<Player> createPlayersWithBettingMoney(List<String> names) {
         return names.stream()
             .map(name -> new Player(name, InputView.inputBettingMoney(name)))
             .collect(Collectors.toList());
@@ -38,7 +41,7 @@ public class BlackjackController {
 
     private void dealInitialCards(BlackjackGame blackjackGame) {
         blackjackGame.dealInitialCards();
-        OutputView.printInitialCardInformation(blackjackGame.getParticipants());
+        OutputView.printInitialCardInformation(ParticipantsDto.from(blackjackGame.getParticipants()));
     }
 
     private void dealMoreCards(BlackjackGame blackjackGame) {
@@ -50,7 +53,7 @@ public class BlackjackController {
         while (!blackjackGame.isPlayersTurnEnd()) {
             Player player = blackjackGame.getCurrentPlayer();
             blackjackGame.playPlayerTurn(InputView.inputPlayerHit(player.getName()));
-            OutputView.printPlayerCardInformation(player);
+            OutputView.printPlayerCardInformation(ParticipantDto.from(player));
         }
     }
 
@@ -62,9 +65,9 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants) {
-        OutputView.printCardsAndPoint(participants);
+        OutputView.printCardsAndPoint(ParticipantsDto.from(participants));
         GameResult gameResult = new GameResult(participants);
-        OutputView.printProfitResult(gameResult.calculateTotalProfitResult());
+        OutputView.printProfitResult(ProfitResultDto.from(gameResult.calculateTotalProfitResult()));
     }
 }
 
