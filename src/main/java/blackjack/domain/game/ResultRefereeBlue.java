@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResultReferee {
+public class ResultRefereeBlue {
 
     private final ResultStatistics dealerResultStat;
     private final List<ResultStatistics> playerResultStats;
 
-    public ResultReferee(final Dealer dealer, final List<Player> players) {
+    public ResultRefereeBlue(final Dealer dealer, final List<Player> players) {
         this.dealerResultStat = ResultStatistics.of(dealer);
         this.playerResultStats = players.stream()
                 .map(player -> initPlayerResultStatFrom(player, dealer))

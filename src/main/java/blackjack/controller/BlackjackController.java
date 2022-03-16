@@ -9,7 +9,7 @@ import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.ResultReferee;
+import blackjack.domain.game.ResultRefereeBlue;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
@@ -54,7 +54,7 @@ public class BlackjackController {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
 
-        final ResultReferee referee = new ResultReferee(dealer, players);
+        final ResultRefereeBlue referee = new ResultRefereeBlue(dealer, players);
         final GameResultDto dto = new GameResultDto(referee.getResults());
 
         printGameResult(dto);

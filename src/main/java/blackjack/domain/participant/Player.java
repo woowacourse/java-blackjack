@@ -65,6 +65,10 @@ public class Player extends Participant {
         return name;
     }
 
+    public int getBettingAmount() {
+        return 10000;
+    }
+
     @Override
     public List<Card> getInitialOpenCards() {
         return cardHand.getCards()
