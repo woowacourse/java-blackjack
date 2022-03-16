@@ -9,6 +9,11 @@ public class Card {
         this.number = number;
     }
 
+
+    public boolean isAce() {
+        return this.getNumber().getDenomination().equals("A");
+    }
+
     public Number getNumber() {
         return number;
     }
