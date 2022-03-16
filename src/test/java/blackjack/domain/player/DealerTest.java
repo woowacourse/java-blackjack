@@ -111,7 +111,7 @@ class DealerTest {
         dealer.compete(participant);
         assertThat(participant.getBet().getProfit()).isEqualTo(0);
     }
-    
+
     @ParameterizedTest
     @MethodSource("participantAndResultWin")
     @DisplayName("딜러는 참여자와 점수를 비교해 승패를 결정한다(승리 테스트).")
@@ -204,17 +204,6 @@ class DealerTest {
                         new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.JACK)
-                        )),
-                        -1000
-                ),
-                Arguments.of(
-                        new Participant(List.of(
-                                new Card(Type.SPADE, Score.ACE),
-                                new Card(Type.HEART, Score.TEN)
-                        ), "zero", new Bet(1000)),
-                        new Dealer(List.of(
-                                new Card(Type.SPADE, Score.ACE),
-                                new Card(Type.HEART, Score.TEN)
                         )),
                         -1000
                 ),
