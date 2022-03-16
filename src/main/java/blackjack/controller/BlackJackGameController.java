@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.BettingMoney;
-import blackjack.domain.BettingMoneys;
+import blackjack.domain.BettingToken;
+import blackjack.domain.BettingTokens;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Name;
@@ -27,11 +27,11 @@ public class BlackJackGameController {
 		Players players = generatePlayers();
 		Dealer dealer = new Dealer();
 		Deck deck = new Deck();
-		BettingMoneys bettingMoneys = generateBettingMoneys(players);
+		BettingTokens bettingTokens = generateBettingMoneys(players);
 		initializeCard(players, dealer, deck);
 		progressPlayerTurn(players, deck);
 		progressDealerTurn(players, dealer, deck);
-		makeResult(players, dealer);
+		makeResult(players, dealer, bettingTokens);
 	}
 
 	private Players generatePlayers() {
@@ -43,23 +43,23 @@ public class BlackJackGameController {
 		}
 	}
 
-	private BettingMoneys generateBettingMoneys(Players players) {
-		BettingMoneys bettingMoneys = new BettingMoneys(players.getPlayersSize());
+	private BettingTokens generateBettingMoneys(Players players) {
+		BettingTokens bettingTokens = new BettingTokens(players.getPlayersSize());
 		for (Player player : players.getPlayers()) {
-			bettingMoneys.addBettingMoney(inputMoney(player.getName()));
+			bettingTokens.addBettingMoney(inputMoney(player.getName()));
 		}
-		return bettingMoneys;
+		return bettingTokens;
 	}
 
-	private void makeResult(Players players, Dealer dealer) {
+	private void makeResult(Players players, Dealer dealer, BettingTokens bettingTokens) {
 		outputView.displayNewLine();
 		outputView.displayAllCardAndScore(dealer);
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player);
 		}
-		Result result = Result.of(players, dealer);
+		Result result = new Result(players, bettingTokens);
 		outputView.displayNewLine();
-		outputView.displayResult(result, dealer);
+		outputView.displayResult(dealer, result);
 	}
 
 	private void progressDealerTurn(Players players, Dealer dealer, Deck deck) {
@@ -94,9 +94,9 @@ public class BlackJackGameController {
 		}
 	}
 
-	private BettingMoney inputMoney(String name) {
+	private BettingToken inputMoney(String name) {
 		try {
-			return new BettingMoney(inputView.inputMoney(name));
+			return new BettingToken(inputView.inputMoney(name));
 		} catch (IllegalArgumentException exception) {
 			System.out.println(exception.getMessage());
 			return inputMoney(name);

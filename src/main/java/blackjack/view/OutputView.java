@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.Card;
 import blackjack.domain.Player;
-import blackjack.domain.ResultType;
 
 public class OutputView {
 	private static final String DELIMITER = ", ";
@@ -53,14 +52,12 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public void displayResult(Result result, Dealer dealer) {
+	public void displayResult(Dealer dealer, Result result) {
 		System.out.println("## 최종 승패");
-		System.out.println(
-			dealer.getName() + ": " + result.calculateCount(ResultType.WIN) + "승 " + result.calculateCount(
-				ResultType.LOSE) + "패 " + result.calculateCount(ResultType.DRAW) + "무");
-		Map<Player, ResultType> gameResults = result.getGameResult();
-		for (Player player : gameResults.keySet()) {
-			System.out.println(player.getName() + ": " + gameResults.get(player).getValue());
+		System.out.println(dealer.getName() + ": " + result.getDealerMoney(dealer));
+		Map<String, Integer> playersMoney = result.getPlayersMoney(dealer);
+		for (String playerName : playersMoney.keySet()) {
+			System.out.println(playerName + ": " + playersMoney.get(playerName));
 		}
 	}
 

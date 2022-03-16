@@ -1,9 +1,9 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,7 @@ public class ResultTest {
 	Player player1;
 	Player player2;
 	Player player3;
+	BettingTokens bettingTokens;
 
 	@BeforeEach
 	void gamer_init() {
@@ -20,6 +21,8 @@ public class ResultTest {
 		player2 = getBlackJackedPlayer();
 		player3 = getNormalPlayer();
 		players = new Players(List.of(player1, player2, player3));
+		bettingTokens = new BettingTokens(
+			List.of(new BettingToken(3000), new BettingToken(1000), new BettingToken(2000)));
 	}
 
 	@Test
@@ -27,24 +30,27 @@ public class ResultTest {
 		Dealer dealer = new Dealer(new Cards(
 			List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER), new Card(CardDenomination.KING, CardSuit.SPADE),
 				new Card(CardDenomination.TWO, CardSuit.SPADE))));
-		Map<Player, ResultType> gameResult = Result.of(players, dealer).getGameResult();
-		assertThat(gameResult.values()).containsSequence(ResultType.WIN, ResultType.LOSE, ResultType.WIN);
+		Result result = new Result(players, bettingTokens);
+		assertAll(() -> assertThat(result.getPlayersMoney(dealer).values()).containsSequence(-3000, 1500, 2000),
+			() -> assertThat(result.getDealerMoney(dealer)).isEqualTo(2500));
 	}
 
 	@Test
 	void dealer_blackjack() {
 		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
 			new Card(CardDenomination.ACE, CardSuit.SPADE))));
-		Map<Player, ResultType> gameResult = Result.of(players, dealer).getGameResult();
-		assertThat(gameResult.values()).containsSequence(ResultType.DRAW, ResultType.LOSE, ResultType.LOSE);
+		Result result = new Result(players, bettingTokens);
+		assertAll(() -> assertThat(result.getPlayersMoney(dealer).values()).containsSequence(-3000, 1000, -2000),
+			() -> assertThat(result.getDealerMoney(dealer)).isEqualTo(5000));
 	}
 
 	@Test
 	void dealer_normal() {
 		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
 			new Card(CardDenomination.NINE, CardSuit.SPADE))));
-		Map<Player, ResultType> gameResult = Result.of(players, dealer).getGameResult();
-		assertThat(gameResult.values()).containsSequence(ResultType.WIN, ResultType.LOSE, ResultType.LOSE);
+		Result result = new Result(players, bettingTokens);
+		assertAll(() -> assertThat(result.getPlayersMoney(dealer).values()).containsSequence(-3000, 1500, -2000),
+			() -> assertThat(result.getDealerMoney(dealer)).isEqualTo(4500));
 	}
 
 	private Player getBustedPlayer() {
