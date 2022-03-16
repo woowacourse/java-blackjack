@@ -8,6 +8,7 @@ import java.util.List;
 public class Cards {
 
     private static final int ANOTHER_ACE_SCORE = 10;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -53,7 +54,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateEndScore() == Judge.MAX_SCORE;
+        return cards.size() == BLACKJACK_SIZE && calculateEndScore() == Judge.MAX_SCORE;
     }
 
     public List<Card> getCards() {
