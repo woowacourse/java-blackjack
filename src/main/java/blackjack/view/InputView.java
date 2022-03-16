@@ -54,21 +54,19 @@ public final class InputView {
         System.out.println();
         System.out.println(name + "의 배팅 금액은?");
         String input = scanner.nextLine();
-        int betAmount = validateBetAmount(input);
-        return convertBetAmountInput(betAmount);
+        validateBetAmount(input);
+        return convertBetAmountInput(Integer.parseInt(input));
     }
 
-    private static int validateBetAmount(final String input) {
+    private static void validateBetAmount(final String input) {
         validateName(input);
-        int betAmount = validateTransInteger(input);
-        validateRange(betAmount);
-
-        return betAmount;
+        validateTransInteger(input);
+        validateRange(Integer.parseInt(input));
     }
 
-    private static int validateTransInteger(final String input) {
+    private static void validateTransInteger(final String input) {
         try {
-            return Integer.parseInt(input);
+            Integer.parseInt(input);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("[ERROR] 양의 정수를 입력해주세요.");
         }
