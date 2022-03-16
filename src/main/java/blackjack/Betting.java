@@ -1,5 +1,7 @@
 package blackjack;
 
+import java.util.Map;
+
 import blackjack.domain.PlayRecord;
 import blackjack.domain.participant.Name;
 
@@ -30,5 +32,13 @@ public class Betting {
 
     public Name getName() {
         return name;
+    }
+
+    public PlayRecord getPlayRecord(Map<Name, PlayRecord> recordMap) {
+        return recordMap.get(name);
+    }
+
+    public long result(Map<Name, PlayRecord> recordMap) {
+        return result(getPlayRecord(recordMap));
     }
 }
