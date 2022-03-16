@@ -4,7 +4,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.BlackjackGameState;
 import blackjack.domain.state.PlayerRunning;
-import java.util.Set;
+import java.util.List;
 
 public class Player extends AbstractParticipant {
 
@@ -21,7 +21,7 @@ public class Player extends AbstractParticipant {
     }
 
     public static Player createPlayer(final String name, final int betMoney, final CardDeck cardDeck) {
-        final Cards cards = new Cards(Set.of(cardDeck.provideCard(), cardDeck.provideCard()));
+        final Cards cards = new Cards(List.of(cardDeck.provideCard(), cardDeck.provideCard()));
         return new Player(name, betMoney, cards);
     }
 

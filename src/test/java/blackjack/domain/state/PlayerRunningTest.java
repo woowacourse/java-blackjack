@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class PlayerRunningTest {
@@ -27,7 +27,7 @@ class PlayerRunningTest {
 
     @Test
     void 생성_시_score가_bust_score인_경우_예외발생() {
-        final Set<Card> cards = Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, JACK));
+        final List<Card> cards = List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, JACK));
         assertThatThrownBy(() -> new PlayerRunning(new Cards(cards)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Running상태는 버스트된 카드가 들어올 수 없습니다.");
@@ -35,7 +35,7 @@ class PlayerRunningTest {
 
     @Test
     void 게임_종료여부_반환() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
         final Running running = new PlayerRunning(cards);
 
         assertThat(running.isFinished()).isFalse();
@@ -43,7 +43,7 @@ class PlayerRunningTest {
 
     @Test
     void 수익률_계산시_예외발생() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
         final Running running = new PlayerRunning(cards);
 
         assertThatThrownBy(() -> running.profit(1000, running))
@@ -53,7 +53,7 @@ class PlayerRunningTest {
 
     @Test
     void hit할_때_Bust가_아니면_Running_반환() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, TWO), Card.of(SPADES, THREE)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, TWO), Card.of(SPADES, THREE)));
         final BlackjackGameState running = new PlayerRunning(cards);
         final BlackjackGameState nextState = running.hit(Card.of(SPADES, FOUR));
 
@@ -62,7 +62,7 @@ class PlayerRunningTest {
 
     @Test
     void hit할_때_Bust면_Bust_반환() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
         final BlackjackGameState running = new PlayerRunning(cards);
         final BlackjackGameState nextState = running.hit(Card.of(SPADES, JACK));
 
@@ -71,7 +71,7 @@ class PlayerRunningTest {
 
     @Test
     void stay할_때_Stand_반환() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
         final BlackjackGameState running = new PlayerRunning(cards);
         final BlackjackGameState nextState = running.stay();
 
@@ -80,7 +80,7 @@ class PlayerRunningTest {
 
     @Test
     void stay할_때_Blackjack_반환() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
         final BlackjackGameState running = new PlayerRunning(cards);
         final BlackjackGameState nextState = running.stay();
 

@@ -11,14 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class DealerRunningTest {
 
     @Test
     void hit할_때_최대_값이_21이_넘으면_Bust_반환() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, SEVEN), Card.of(SPADES, EIGHT)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, SEVEN), Card.of(SPADES, EIGHT)));
         final BlackjackGameState running = DealerRunning.createDealerGameState(cards);
         final BlackjackGameState nextState = running.hit(Card.of(SPADES, A));
 
@@ -27,7 +27,7 @@ class DealerRunningTest {
 
     @Test
     void hit할_때_최대_값이_21이_넘지않고_17이_넘으면_STAND_반환() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, FOUR), Card.of(SPADES, TWO)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, FOUR), Card.of(SPADES, TWO)));
         final BlackjackGameState running = DealerRunning.createDealerGameState(cards);
         final BlackjackGameState nextState = running.hit(Card.of(SPADES, A));
 
@@ -36,7 +36,7 @@ class DealerRunningTest {
 
     @Test
     void hit할_때_최대_값이_17이_넘지않으면_Running_반환() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, THREE), Card.of(SPADES, TWO)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, THREE), Card.of(SPADES, TWO)));
         final BlackjackGameState running = DealerRunning.createDealerGameState(cards);
         final BlackjackGameState nextState = running.hit(Card.of(SPADES, A));
 

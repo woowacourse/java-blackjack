@@ -9,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class BlackjackTest {
 
     @Test
     void 서로_블랙잭이면_수익률이_제로() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
         final Blackjack blackjack = new Blackjack(cards);
         final BlackjackGameState compareState = new Blackjack(cards);
 
@@ -25,10 +25,10 @@ class BlackjackTest {
 
     @Test
     void 본인만_블랙잭이면_수익률이_1_5배() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
         final Blackjack blackjack = new Blackjack(cards);
 
-        final Cards compareCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, TWO)));
+        final Cards compareCards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, TWO)));
         final BlackjackGameState compareState = new Bust(compareCards, compareCards.score());
 
         assertThat(blackjack.earningRate(compareState)).isEqualTo(1.5);

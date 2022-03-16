@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import static blackjack.domain.state.Blackjack.BLACKJACK_TARGET_NUMBER;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -34,11 +33,11 @@ public enum Denomination {
         this.printValue = printValue;
     }
 
-    public static int calculateCardScore(final Set<Card> cards) {
+    public static int calculateCardScore(final List<Card> cards) {
         return calculateScore(denominationsToCards(cards));
     }
 
-    private static List<Denomination> denominationsToCards(final Set<Card> cards) {
+    private static List<Denomination> denominationsToCards(final List<Card> cards) {
         return cards.stream()
                 .map(Card::getDenomination)
                 .collect(Collectors.toList());
@@ -80,7 +79,7 @@ public enum Denomination {
         return sumCount <= BLACKJACK_TARGET_NUMBER;
     }
 
-    public static int calculateCardMaxScore(final Set<Card> cards) {
+    public static int calculateCardMaxScore(final List<Card> cards) {
         return calculateMaxScore(denominationsToCards(cards));
     }
 

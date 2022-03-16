@@ -13,7 +13,6 @@ import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
@@ -47,7 +46,7 @@ class PlayersTest {
 
     @Test
     void 모든_턴이_종료될_때_hit_하는_경우_예외발생() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
         final Player player = new Player("name", 1000, cards);
         final Players players = new Players(List.of(player));
         players.hitCurrentTurnPlayer(Card.of(SPADES, JACK));
@@ -59,7 +58,7 @@ class PlayersTest {
 
     @Test
     void 모든_턴이_종료될_때_stay_하는_경우_예외발생() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
         final Player player = new Player("name", 1000, cards);
         final Players players = new Players(List.of(player));
         players.stayCurrentTurnPlayer();

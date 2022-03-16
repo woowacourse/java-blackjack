@@ -10,7 +10,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.BlackjackGameState;
 import blackjack.domain.state.PlayerRunning;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +24,7 @@ class PlayerTest {
 
     @BeforeEach
     void setup() {
-        cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
+        cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
         runningState = new PlayerRunning(cards);
     }
 
@@ -60,7 +60,7 @@ class PlayerTest {
 
     @Test
     void 카드를_받아_유저_생성() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
+        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
         final Player player = new Player("name", 1000, cards);
 
         assertThat(player).isInstanceOf(Player.class);
