@@ -33,12 +33,9 @@ public final class PlayersDTO {
         return entries;
     }
 
-    public List<String> getNames() {
-        List<String> names = new ArrayList<>();
-        names.add(dealer.getName());
-        names.addAll(entries.stream()
+    public List<String> getEntryNames() {
+        return entries.stream()
                 .map(EntryDTO::getName)
-                .collect(Collectors.toList()));
-        return names;
+                .collect(Collectors.toList());
     }
 }

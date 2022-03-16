@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResultView {
-    private static final String FORMAT_MESSAGE_DECK_INITIALIZED = "%n딜러와 %s에게 2장의 카드를 나누었습니다.%n";
+    private static final String FORMAT_MESSAGE_DECK_INITIALIZED = "%n%s와 %s에게 2장의 카드를 나누었습니다.%n";
     private static final String FORMAT_DECK_INITIALIZED = "%s : %s%n";
     private static final String FORMAT_MESSAGE_BUST = "%n%s의 점수 합이 21을 넘어, 다음 참가자로 넘어갑니다.%n%n";
-    private static final String FORMAT_MESSAGE_DEALER_HIT = "%n딜러는 16이하라 %d장의 카드를 더 받았습니다.%n";
+    private static final String FORMAT_MESSAGE_DEALER_HIT = "%n%s는 16이하라 %d장의 카드를 더 받았습니다.%n";
     private static final String FORMAT_SCORE = "%s 카드: %s - 결과: %d%n";
     private static final String FORMAT_DEALER_RESULT = "%s: %d승 %d패%n";
     private static final String FORMAT_ENTRY_RESULT = "%s: %s%n";
@@ -28,7 +28,8 @@ public class ResultView {
     private static final String DELIMITER_JOIN = ", ";
 
     public void printDeckInitialized(PlayersDTO players) {
-        System.out.printf(FORMAT_MESSAGE_DECK_INITIALIZED, joinStrings(players.getNames()));
+        DealerDTO dealer = players.getDealer();
+        System.out.printf(FORMAT_MESSAGE_DECK_INITIALIZED, dealer.getName(), joinStrings(players.getEntryNames()));
     }
 
     public void printInitializedDecks(PlayersDTO players) {
@@ -63,7 +64,7 @@ public class ResultView {
     }
 
     public void printDealerHitCount(DealerDTO dealer) {
-        System.out.printf(FORMAT_MESSAGE_DEALER_HIT, dealer.getAddedCount());
+        System.out.printf(FORMAT_MESSAGE_DEALER_HIT, dealer.getName(), dealer.getAddedCount());
     }
 
     public void printScores(PlayersDTO players) {
