@@ -25,7 +25,7 @@ public class BlackJackResultTest {
     @BeforeEach
     void setup() {
         dealer = new Dealer();
-        gambler = new Gambler("돌범");
+        gambler = new Gambler("돌범", new BetMoney(1000));
         players = new Players(dealer, List.of(gambler));
 
         cardDeck = createCardDeck(

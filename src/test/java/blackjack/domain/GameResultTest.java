@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 class GameResultTest {
 
     Dealer dealer = new Dealer();
-    Gambler gambler = new Gambler("돌범");
+    Gambler gambler = new Gambler("돌범", new BetMoney(1000));
     CardDeck cardDeck;
 
 
