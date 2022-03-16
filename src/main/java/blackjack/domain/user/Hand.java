@@ -7,29 +7,31 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 
 public class Hand {
-    private final List<Card> cards;
-    private Score score;
 
-    public Hand(List<Card> cards, Score score) {
+    private final List<Card> cards;
+
+    private Hand(List<Card> cards) {
         this.cards = cards;
-        this.score = score;
     }
 
     public Hand() {
-        this(new ArrayList<>(), Score.getZero());
+        this(new ArrayList<>());
     }
 
     public void addCard(Card card) {
         cards.add(card);
-        this.score = Score.addUpPointToScore(cards);
     }
 
     public boolean isWinTo(Hand other) {
-        return this.score.isGreaterThan(other.score);
+        return this.calculateScore().isGreaterThan(other.calculateScore());
+    }
+
+    public Score calculateScore() {
+        return Score.addUpPointToScore(cards);
     }
 
     public boolean isBust() {
-        return score.isBust();
+        return calculateScore().isBust();
     }
 
     public List<Card> getCards() {
@@ -47,9 +49,5 @@ public class Hand {
                 String.format("보유한 카드의 개수(%d)가 %d보다 작습니다.", cards.size(), count)
             );
         }
-    }
-
-    public Score getScore() {
-        return score;
     }
 }

@@ -50,7 +50,7 @@ public abstract class User {
     }
 
     public Score getScore() {
-        return hand.getScore();
+        return hand.calculateScore();
     }
 
     public abstract List<Card> showInitCards();
