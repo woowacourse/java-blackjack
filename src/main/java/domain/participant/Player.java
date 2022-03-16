@@ -1,6 +1,8 @@
 package domain.participant;
 
-public class Player extends Participant {
+import static java.lang.Integer.compare;
+
+public class Player extends Participant implements Comparable<Participant> {
 
     private static final int MAX_SCORE = 21;
     private static final int COMPARE_CRITERIA = 0;
@@ -22,5 +24,19 @@ public class Player extends Participant {
     @Override
     public boolean canHit() {
         return cards.calculateSum() < MAX_SCORE;
+    }
+
+
+    @Override
+    public int compareTo(Participant participant) {
+        if (isBust()) {
+            return -1;
+        }
+
+        if(participant.isBust()){
+            return 1;
+        }
+
+        return compare(calculateScore(), participant.calculateScore());
     }
 }

@@ -3,15 +3,12 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
-import utils.ExceptionMessages;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import utils.ExceptionMessages;
 
-import static java.lang.Integer.compare;
-
-public abstract class Participant implements Comparable<Participant> {
+public abstract class Participant {
 
     protected final Cards cards;
     protected final Name name;
@@ -38,7 +35,7 @@ public abstract class Participant implements Comparable<Participant> {
         return cards.calculateScore();
     }
 
-    private boolean isBust() {
+    protected boolean isBust() {
         return cards.isBust();
     }
 
@@ -50,15 +47,4 @@ public abstract class Participant implements Comparable<Participant> {
         return Collections.unmodifiableList(cards.getCards());
     }
 
-    @Override
-    public int compareTo(Participant participant) {
-        if (participant.isBust()) {
-            return 1;
-        }
-        if (isBust()) {
-            return -1;
-        }
-
-        return compare(calculateScore(), participant.calculateScore());
-    }
 }
