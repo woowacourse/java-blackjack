@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.game.Revenue;
+import blackjack.domain.role.Players;
 import blackjack.domain.role.Role;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,8 +18,8 @@ public class FinalResultDto {
 				.collect(Collectors.toList());
 	}
 
-	public static FinalResultDto from(final Role dealer, final List<Role> players, Revenue revenue) {
-		return new FinalResultDto(dealer, players, revenue);
+	public static FinalResultDto from(final Role dealer, final Players players, Revenue revenue) {
+		return new FinalResultDto(dealer, players.getPlayers(), revenue);
 	}
 
 	public DealerResultDto getDealerResult() {

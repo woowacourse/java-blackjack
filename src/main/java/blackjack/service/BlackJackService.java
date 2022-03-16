@@ -10,6 +10,7 @@ import blackjack.domain.role.Dealer;
 import blackjack.domain.role.Hand;
 import blackjack.domain.role.Player;
 import blackjack.domain.role.PlayerTurns;
+import blackjack.domain.role.Players;
 import blackjack.domain.role.Role;
 import blackjack.dto.BettingDto;
 import blackjack.dto.DealerTableDto;
@@ -18,18 +19,16 @@ import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTableDto;
 import blackjack.dto.PlayerTurnsDto;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class BlackJackService {
 
 	private Deck deck;
 	private Role dealer;
-	private List<Role> players;
+	private Players players;
 	private Betting betting;
 
 	public void initBlackJackGame(Deck deck, Role dealer) {
@@ -38,19 +37,20 @@ public class BlackJackService {
 	}
 
 	public void joinPlayers(final List<String> names) {
-		players = names.stream()
+		final List<Role> joinPlayers = names.stream()
 				.map(name -> new Player(name, new Hand()))
 				.collect(Collectors.toList());
+		players = new Players(joinPlayers);
 	}
 
 	public PlayerTurnsDto startBettingPhase() {
-		return PlayerTurnsDto.from(new PlayerTurns(players));
+		return PlayerTurnsDto.from(players.getPlayerTurn());
 	}
 
 	public void betMoney(List<BettingDto> bettingMoneys) {
 		Map<Role, Money> betting = new HashMap<>();
 		for (BettingDto bettingDto : bettingMoneys) {
-			Role player = getPlayerByName(bettingDto.getName());
+			Role player = players.getPlayerByName(bettingDto.getName());
 			Money money = new Money(bettingDto.getMoney());
 			betting.put(player, money);
 		}
@@ -64,36 +64,25 @@ public class BlackJackService {
 	}
 
 	public List<PlayerTableDto> distributeCardToPlayers() {
-		List<PlayerTableDto> playerStatuses = new ArrayList<>();
-		for (Role player : players) {
-			player.draw(deck.draw());
-			player.draw(deck.draw());
-			playerStatuses.add(PlayerTableDto.from(player));
-		}
-		return playerStatuses;
+		return players.distributeCard(deck).stream()
+				.map(PlayerTableDto::from)
+				.collect(Collectors.toList());
 	}
 
 	public PlayerTurnsDto startPlayerDrawPhase() {
 		if (dealer.isBlackJack()) {
 			return PlayerTurnsDto.from(PlayerTurns.createEmpty());
 		}
-		return PlayerTurnsDto.from(new PlayerTurns(players));
+		return PlayerTurnsDto.from(players.getPlayerTurn());
 	}
 
 	public PlayerStatusDto drawPlayer(final RedrawChoice answer, final String name) {
-		Role player = getPlayerByName(name);
+		Role player = players.getPlayerByName(name);
 		if (answer == RedrawChoice.NO) {
 			return PlayerStatusDto.from(false, player);
 		}
 		player.draw(deck.draw());
 		return PlayerStatusDto.from(player.canDraw(), player);
-	}
-
-	private Role getPlayerByName(String name) {
-		return players.stream()
-				.filter(player -> player.getName().equals(name))
-				.findFirst()
-				.orElseThrow(NoSuchElementException::new);
 	}
 
 	public DealerTurnDto drawDealer() {
@@ -105,10 +94,7 @@ public class BlackJackService {
 	}
 
 	public FinalResultDto calculateFinalResult() {
-		final Compete compete = new Compete();
-		for (Role player : players) {
-			compete.judgeCompete(player, dealer);
-		}
+		final Compete compete = players.competeToDealer(dealer);
 		final Revenue revenue = new Revenue(betting.settle(compete));
 		return FinalResultDto.from(dealer, players, revenue);
 	}
