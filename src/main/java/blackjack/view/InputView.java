@@ -19,6 +19,11 @@ public class InputView {
         return toNames(SCANNER.nextLine().trim());
     }
 
+    public static PlayerRequest inputBettingMoney(String name) {
+        System.out.println(MessageFormat.format("{0}의 배팅 금액은?", name));
+        return new PlayerRequest(name, isNumeric(SCANNER.nextLine()));
+    }
+
     public static String inputCommand(String name) {
         System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
         return validateCommand(SCANNER.nextLine().trim().toLowerCase());
@@ -37,9 +42,11 @@ public class InputView {
         return command;
     }
 
-    public static PlayerRequest inputBettingMoney(String name) {
-        System.out.println(MessageFormat.format("{0}의 배팅 금액은?", name));
-        int bettingMoney = Integer.parseInt(SCANNER.nextLine());
-        return new PlayerRequest(name, bettingMoney);
+    private static int isNumeric(String number) {
+        try {
+            return Integer.parseInt(number);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액은 숫자여야 합니다.");
+        }
     }
 }
