@@ -48,7 +48,7 @@ public enum CardNumber {
             .anyMatch(cardNumber -> cardNumber == ACE);
     }
 
-    public static boolean isBust(int totalNumber) {
+    private static boolean isBust(int totalNumber) {
         return totalNumber <= BLACKJACK_NUMBER;
     }
 
