@@ -10,11 +10,11 @@ import utils.ExceptionMessages;
 
 public abstract class Participant {
 
-    protected final Cards cards;
+    protected Cards cards;
     protected final Name name;
 
     public Participant(String name) {
-        this.cards = new Cards(new ArrayList<>());
+        this.cards = Cards.of(new ArrayList<>());
         this.name = new Name(name);
     }
 
@@ -24,11 +24,11 @@ public abstract class Participant {
         if (!canHit()) {
             throw new IllegalStateException(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
         }
-        cards.addCard(deck.handOut());
+        this.cards = cards.addCard(deck.handOut());
     }
 
     public void pickTwoCards(Deck deck) {
-        this.cards.addCards(deck.handOutCards());
+        this.cards = cards.addCards(deck.handOutCards());
     }
 
     public int calculateScore() {

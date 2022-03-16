@@ -9,10 +9,14 @@ public final class Cards {
     private static final int ACE_ADDITION = 10;
     private static final int MAX_SCORE = 21;
 
-    private final List<Card> cards;
+    public final List<Card> cards;
 
-    public Cards(List<Card> initialCards) {
+    private Cards(List<Card> initialCards) {
         cards = new ArrayList<>(initialCards);
+    }
+
+    public static Cards of(List<Card> cards) {
+        return new Cards(cards);
     }
 
     public int calculateScore() {
@@ -59,12 +63,14 @@ public final class Cards {
         return calculateScore() > MAX_SCORE;
     }
 
-    public void addCard(Card card) {
-        this.cards.add(card);
+    public Cards addCard(Card card) {
+        cards.add(card);
+        return new Cards(cards);
     }
 
-    public void addCards(List<Card> cards) {
+    public Cards addCards(List<Card> cards) {
         this.cards.addAll(cards);
+        return new Cards(this.cards);
     }
 
     public Card getCardByIndex(int index) {

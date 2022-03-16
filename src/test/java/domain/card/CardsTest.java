@@ -17,7 +17,7 @@ class CardsTest {
     @MethodSource("provideCardAndScore")
     @DisplayName("List에 들어있는 Card의 총합을 계산하여 확인한다.")
     void CalculateSumTest(List<Card> card, int score) {
-        Cards cards = new Cards(card);
+        Cards cards = Cards.of(card);
 
         assertThat(cards.calculateScore()).isEqualTo(score);
     }
