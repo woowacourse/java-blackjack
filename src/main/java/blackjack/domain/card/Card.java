@@ -42,7 +42,7 @@ public class Card {
     }
 
     public static List<Card> cards() {
-        return new ArrayList<>(createCards());
+        return new ArrayList<>(CARDS_CACHE);
     }
 
     public Suit getSuit() {
