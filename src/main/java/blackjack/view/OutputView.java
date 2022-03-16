@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
@@ -52,14 +53,12 @@ public class OutputView {
             + " - 결과: " + dto.getScore());
     }
 
-    public static void printDealerRecord(long dealerRevenue) {
+    public static void printFinalRevenues(Map<Name, Long> revenues) {
         printEmptyLine();
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + dealerRevenue);
-    }
-
-    public static void printPlayerRecord(Name name, long revenue) {
-        System.out.println(name.getValue() + ": " + revenue);
+        for (Map.Entry<Name, Long> entry : revenues.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
     public static void printEmptyLine() {

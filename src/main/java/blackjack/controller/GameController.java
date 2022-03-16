@@ -100,10 +100,6 @@ public class GameController {
         Map<Name, PlayRecord> recordMap = recordFactory.getPlayerRecords(game.getPlayers());
 
         BettingTable bettingTable = new BettingTable(bettings);
-
-        printDealerRecord(bettingTable.dealerRevenue(recordMap));
-        for (Betting betting : bettings) {
-            printPlayerRecord(betting.getName(), betting.revenue(recordMap));
-        }
+        printFinalRevenues(bettingTable.getRevenues(recordMap));
     }
 }
