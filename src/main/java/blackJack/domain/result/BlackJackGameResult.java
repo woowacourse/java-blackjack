@@ -3,7 +3,6 @@ package blackJack.domain.result;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
 
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,5 +42,14 @@ public class BlackJackGameResult {
             gameResult.put(player, winOrLose);
         }
         return gameResult;
+    }
+
+    public double calculateDealerProfit() {
+        final Map<Player, WinDrawLose> playersResult = calculatePlayersResult();
+        double dealerProfit = 0;
+        for (Player player : playersResult.keySet()) {
+            dealerProfit -= player.calculateProfit(dealer);
+        }
+        return dealerProfit;
     }
 }
