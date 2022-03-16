@@ -45,9 +45,9 @@ class RunningTest {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
         final Running running = new Running(cards);
 
-        assertThatThrownBy(() -> running.earningRate(running))
+        assertThatThrownBy(() -> running.profit(1000, running))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Running상태는 수익률을 계산할 수 없습니다.");
+                .hasMessage("Running상태는 수익을 계산할 수 없습니다.");
     }
 
     @Test

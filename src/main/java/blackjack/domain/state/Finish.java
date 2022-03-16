@@ -28,4 +28,11 @@ public abstract class Finish extends AbstractBlackjackGameState {
     public int score() {
         return cards.score();
     }
+
+    @Override
+    public double profit(final int betMoney, final BlackjackGameState blackjackGameState) {
+        return betMoney * earningRate(blackjackGameState);
+    }
+
+    abstract double earningRate(final BlackjackGameState blackjackGameState);
 }

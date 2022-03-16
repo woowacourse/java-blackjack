@@ -36,8 +36,8 @@ public final class Running extends AbstractBlackjackGameState {
     }
 
     @Override
-    public double earningRate(final BlackjackGameState blackjackGameState) {
-        throw new IllegalStateException("Running상태는 수익률을 계산할 수 없습니다.");
+    public double profit(final int betMoney, final BlackjackGameState blackjackGameState) {
+        throw new IllegalStateException("Running상태는 수익을 계산할 수 없습니다.");
     }
 
     @Override

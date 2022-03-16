@@ -9,17 +9,13 @@ public class Stand extends Finish {
     }
 
     @Override
-    public double earningRate(final BlackjackGameState blackjackGameState) {
+    double earningRate(final BlackjackGameState blackjackGameState) {
         if (blackjackGameState.isBust()) {
             return 1;
         }
         if (blackjackGameState.isBlackjack()) {
             return 0;
         }
-        return earningRateWithStand(blackjackGameState);
-    }
-
-    private double earningRateWithStand(final BlackjackGameState blackjackGameState) {
         return Integer.compare(cards.score(), blackjackGameState.score());
     }
 }

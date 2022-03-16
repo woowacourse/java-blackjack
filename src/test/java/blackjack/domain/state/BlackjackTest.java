@@ -17,7 +17,7 @@ class BlackjackTest {
     @Test
     void 서로_블랙잭이면_수익률이_제로() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
-        final BlackjackGameState blackjack = new Blackjack(cards);
+        final Blackjack blackjack = new Blackjack(cards);
         final BlackjackGameState compareState = new Blackjack(cards);
 
         assertThat(blackjack.earningRate(compareState)).isEqualTo(0);
@@ -26,7 +26,7 @@ class BlackjackTest {
     @Test
     void 본인만_블랙잭이면_수익률이_1_5배() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
-        final BlackjackGameState blackjack = new Blackjack(cards);
+        final Blackjack blackjack = new Blackjack(cards);
 
         final Cards compareCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, TWO)));
         final BlackjackGameState compareState = new Bust(compareCards);

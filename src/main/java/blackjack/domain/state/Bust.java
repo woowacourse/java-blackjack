@@ -9,7 +9,7 @@ public class Bust extends Finish {
     }
 
     @Override
-    public double earningRate(final BlackjackGameState blackjackGameState) {
+    double earningRate(final BlackjackGameState blackjackGameState) {
         return -1;
     }
 }

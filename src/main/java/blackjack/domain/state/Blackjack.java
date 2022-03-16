@@ -9,7 +9,7 @@ public class Blackjack extends Finish {
     }
 
     @Override
-    public double earningRate(final BlackjackGameState blackjackGameState) {
+    double earningRate(final BlackjackGameState blackjackGameState) {
         if (blackjackGameState.isBlackjack()) {
             return 0;
         }
