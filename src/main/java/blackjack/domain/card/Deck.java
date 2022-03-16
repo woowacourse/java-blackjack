@@ -37,7 +37,7 @@ public class Deck {
 
     private void validateDeckSize() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException(DECK_EMPTY_ERROR);
+            throw new IndexOutOfBoundsException(DECK_EMPTY_ERROR);
         }
     }
 }

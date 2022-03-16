@@ -9,12 +9,14 @@ public enum PlayerWinningResult {
     LOSE("패", -1),
     DRAW("무", 0);
 
+    private static final double BLACKJACK_BETTING_PROFIT_RATE = 1.5;
+
     private final String result;
-    private final int bettingMultiple;
+    private final int bettingProfitRate;
 
     PlayerWinningResult(String result, int bettingMultiple) {
         this.result = result;
-        this.bettingMultiple = bettingMultiple;
+        this.bettingProfitRate = bettingMultiple;
     }
 
     public static PlayerWinningResult of(Dealer dealer, Player player) {
@@ -52,9 +54,9 @@ public enum PlayerWinningResult {
 
     public int getBettingProfit(int money, boolean isBlackjack) {
         if (isBlackjack) {
-            return (int)(money * 1.5);
+            return (int)(money * BLACKJACK_BETTING_PROFIT_RATE);
         }
-        return money * bettingMultiple;
+        return money * bettingProfitRate;
     }
 
     public String getResult() {

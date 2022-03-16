@@ -52,7 +52,7 @@ public class InputView {
         try {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
-            throw new NumberFormatException(BETTING_MONEY_FORMAT_ERROR_MESSAGE);
+            throw new IllegalArgumentException(BETTING_MONEY_FORMAT_ERROR_MESSAGE);
         }
     }
 }

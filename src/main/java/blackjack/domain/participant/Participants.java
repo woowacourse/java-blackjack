@@ -41,7 +41,7 @@ public class Participants {
     public boolean isAllPlayerTurnEnd() {
         try {
             getCurrentPlayer();
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             return true;
         }
         return false;
@@ -67,7 +67,7 @@ public class Participants {
         return players.stream()
             .filter(Player::canHit)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(PLAYER_TURN_ACCESS_ERROR_MESSAGE));
+            .orElseThrow(() -> new NullPointerException(PLAYER_TURN_ACCESS_ERROR_MESSAGE));
     }
 
     public Dealer getDealer() {
