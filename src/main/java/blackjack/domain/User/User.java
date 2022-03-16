@@ -1,6 +1,6 @@
 package blackjack.domain.User;
 
-import blackjack.domain.Card.CardFactory;
+import blackjack.domain.Card.Deck;
 import blackjack.domain.Card.Cards;
 
 public abstract class User {
@@ -41,5 +41,5 @@ public abstract class User {
         return cards.isBlackJack();
     }
 
-    abstract public void hit(CardFactory cardFactory);
+    abstract public void hit(Deck cardFactory);
 }

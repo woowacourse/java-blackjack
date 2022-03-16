@@ -2,13 +2,13 @@ package blackjack.domain.Card;
 
 import java.util.*;
 
-public class CardFactory {
+public class Deck {
 
     public static final int INIT_CARD_SIZE = 2;
 
     private final Queue<Card> deck;
 
-    public CardFactory() {
+    public Deck() {
         List<Card> cards = createCards();
         Collections.shuffle(cards);
         deck = new LinkedList<>(cards);
@@ -28,7 +28,7 @@ public class CardFactory {
         }
     }
 
-    public Cards initCards() {
+    public Cards drawInitCards() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_SIZE; i++) {
             cards.add(drawOneCard());

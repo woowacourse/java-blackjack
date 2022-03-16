@@ -1,6 +1,6 @@
 package blackjack.domain.User;
 
-import blackjack.domain.Card.CardFactory;
+import blackjack.domain.Card.Deck;
 import blackjack.domain.Card.Cards;
 
 public class Dealer extends User {
@@ -16,9 +16,9 @@ public class Dealer extends User {
     }
 
     @Override
-    public void hit(CardFactory cardFactory) {
+    public void hit(Deck deck) {
         while (canOneMoreCard()) {
-            cards.add(cardFactory.drawOneCard());
+            cards.add(deck.drawOneCard());
         }
     }
 

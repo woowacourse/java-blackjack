@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
-    private CardFactory cardFactory;
+    private Deck cardFactory;
 
     @BeforeEach
     public void setUp() {

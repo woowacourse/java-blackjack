@@ -1,6 +1,6 @@
 package blackjack.domain.User;
 
-import blackjack.domain.Card.CardFactory;
+import blackjack.domain.Card.Deck;
 import blackjack.domain.PlayerResult;
 
 import java.util.ArrayList;
@@ -15,10 +15,10 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players create(List<String> playerNames, List<Betting> bettings, CardFactory cardFactory) {
+    public static Players create(List<String> playerNames, List<Betting> bettings, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < playerNames.size(); i++) {
-            players.add(new Player(playerNames.get(i), bettings.get(i), cardFactory.initCards()));
+            players.add(new Player(playerNames.get(i), bettings.get(i), deck.drawInitCards()));
         }
         return new Players(players);
     }

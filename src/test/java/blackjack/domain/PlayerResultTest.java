@@ -16,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerResultTest {
-    private CardFactory cardFactory;
+    private Deck cardFactory;
 
     @BeforeEach
     public void setUp() {

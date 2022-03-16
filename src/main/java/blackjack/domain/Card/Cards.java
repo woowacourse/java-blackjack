@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static blackjack.domain.Card.CardFactory.INIT_CARD_SIZE;
+import static blackjack.domain.Card.Deck.INIT_CARD_SIZE;
 
 public class Cards {
     private static final int BUST_LINE = 21;

@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Card.CardFactory;
+import blackjack.domain.Card.Deck;
 import blackjack.domain.User.Betting;
 import blackjack.domain.User.Dealer;
 import blackjack.domain.User.Player;
@@ -18,23 +18,23 @@ import java.util.Map;
 public class BlackjackController {
 
     public void run() {
-        CardFactory cardFactory = new CardFactory();
+        Deck deck = new Deck();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        List<Betting> bettings = startBettings(inputPlayerNames, cardFactory);
+        List<Betting> bettings = startBettings(inputPlayerNames);
 
-        Dealer dealer = new Dealer(cardFactory.initCards());
-        Players players = Players.create(inputPlayerNames, bettings, cardFactory);
+        Dealer dealer = new Dealer(deck.drawInitCards());
+        Players players = Players.create(inputPlayerNames, bettings, deck);
 
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToUserDtos(dealer, players));
 
-        OutputView.printTotalResult(playGame(dealer, players, cardFactory));
+        OutputView.printTotalResult(playGame(dealer, players, deck));
 
         Map<String, String> statistics = players.getStatistics(dealer);
         OutputView.printFinalResult(PlayerResultsDto.from(statistics), DealerResultDto.from(statistics));
     }
 
-    private List<Betting> startBettings(List<String> inputPlayerNames, CardFactory cardFactory) {
+    private List<Betting> startBettings(List<String> inputPlayerNames) {
         List<Betting> bettings = new ArrayList<>();
         for (String inputPlayerName : inputPlayerNames) {
             bettings.add(Betting.from(InputView.askBetAmount(inputPlayerName)));
@@ -42,20 +42,20 @@ public class BlackjackController {
         return bettings;
     }
 
-    private List<UserDto> playGame(Dealer dealer, Players players, CardFactory cardFactory) {
+    private List<UserDto> playGame(Dealer dealer, Players players, Deck deck) {
 
         players.getPlayers()
-                .forEach(player -> askOneMoreCard(player, cardFactory));
-        dealer.hit(cardFactory);
+                .forEach(player -> askOneMoreCard(player, deck));
+        dealer.hit(deck);
         OutputView.printAddDealerCard();
 
         return convertToUserDtos(dealer, players);
 
     }
 
-    private void askOneMoreCard(Player player, CardFactory cardFactory) {
+    private void askOneMoreCard(Player player, Deck deck) {
         while (!player.isBust() && InputView.askOneMoreCard(player.getName())) {
-            player.hit(cardFactory);
+            player.hit(deck);
             OutputView.printPlayerCard(UserDto.from(player));
         }
     }
