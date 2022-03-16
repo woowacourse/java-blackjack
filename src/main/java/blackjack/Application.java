@@ -9,6 +9,7 @@ public class Application {
         gameController.initParticipants();
         gameController.progressPlayerTurns();
         gameController.progressDealerTurn();
-        gameController.endGame();
+        gameController.printAllCards();
+        gameController.printAllPrize();
     }
 }
