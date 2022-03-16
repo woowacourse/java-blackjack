@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.state.DealerRunning;
 import java.util.List;
 
-public class Dealer extends AbstractParticipant {
+public final class Dealer extends AbstractParticipant {
 
     private static final String DEALER_NAME = "딜러";
 

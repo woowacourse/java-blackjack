@@ -6,7 +6,7 @@ import blackjack.domain.state.BlackjackGameState;
 import blackjack.domain.state.PlayerRunning;
 import java.util.List;
 
-public class Player extends AbstractParticipant {
+public final class Player extends AbstractParticipant {
 
     private final int betMoney;
 
