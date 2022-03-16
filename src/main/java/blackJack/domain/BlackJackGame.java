@@ -1,5 +1,6 @@
 package blackJack.domain;
 
+import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.YesOrNo;
 import java.util.List;
 
@@ -35,6 +36,15 @@ public class BlackJackGame {
 
     public boolean isApproveDrawCard(YesOrNo value) {
         return YesOrNo.hasYes(value);
+    }
+
+    public BlackJackGameResult calculateResult() {
+        final BlackJackGameResult blackjackGameResult = new BlackJackGameResult();
+        for (Player player : participants.getPlayers()) {
+            blackjackGameResult.add(player, getDealer().calculateOutCome(player));
+        }
+
+        return blackjackGameResult;
     }
 
     public Participants getParticipants() {

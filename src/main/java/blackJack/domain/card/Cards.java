@@ -63,6 +63,10 @@ public class Cards {
         return cards.size() == BLACK_JACK_COUNT && addScore() == BLACKJACK_NUMBER;
     }
 
+    public boolean isBust() {
+        return addScore() > BLACKJACK_NUMBER;
+    }
+
     public Set<Card> getCards() {
         return cards;
     }

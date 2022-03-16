@@ -17,9 +17,9 @@ public class BlackJackController {
         defaultRound(blackJackGame);
         additionalRound(blackJackGame);
 
+        final BlackJackGameResult blackJackGameResult = blackJackGame.calculateResult();
         OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printWinOrLoseResult(blackJackGame.getDealer(),
-                BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
+        OutputView.printWinOrLoseResult(blackJackGame.getDealer(), blackJackGameResult);
     }
 
     private void defaultRound(BlackJackGame blackJackGame) {

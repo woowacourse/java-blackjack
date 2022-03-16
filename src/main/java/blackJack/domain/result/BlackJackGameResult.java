@@ -1,35 +1,21 @@
 package blackJack.domain.result;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BlackJackGameResult {
 
-    private final Map<Player, OutCome> gameResult;
+    private final Map<Player, OutCome> outComes = new LinkedHashMap<>();
 
-    private BlackJackGameResult(Map<Player, OutCome> gameResult) {
-        this.gameResult = gameResult;
-    }
-
-    public static BlackJackGameResult ofGameResult(Dealer dealer, List<Player> players) {
-        final Map<Player, OutCome> gameResult = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            final OutCome winOrLose = OutCome.calculatePlayerWinDrawLose(player, dealer);
-            gameResult.put(player, winOrLose);
-        }
-
-        return new BlackJackGameResult(gameResult);
+    public void add(Player player, OutCome outCome) {
+        outComes.put(player, outCome);
     }
 
     public Map<OutCome, Integer> calculateDealerResult() {
         final Map<OutCome, Integer> dealerGameScore = getWinOrLose();
 
-        for (OutCome value : gameResult.values()) {
+        for (OutCome value : outComes.values()) {
             dealerGameScore.computeIfPresent(value, (k, v) -> v + 1);
         }
         swapResult(dealerGameScore);
@@ -54,6 +40,6 @@ public class BlackJackGameResult {
     }
 
     public Map<Player, OutCome> getGameResult() {
-        return gameResult;
+        return outComes;
     }
 }

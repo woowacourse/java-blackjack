@@ -1,5 +1,7 @@
 package blackJack.domain.participant;
 
+import blackJack.domain.result.OutCome;
+
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
@@ -7,6 +9,10 @@ public class Dealer extends Participant {
 
     public Dealer() {
         super(DEALER_NAME);
+    }
+
+    public OutCome calculateOutCome(Player player) {
+        return OutCome.of(this.getCardsInfo(), player.getCardsInfo());
     }
 
     @Override
