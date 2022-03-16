@@ -63,7 +63,7 @@ public class Players {
         }
     }
 
-    private boolean isAllTurnEnd() {
+    public boolean isAllTurnEnd() {
         return players.size() <= currentPlayerTurnIndex;
     }
 
@@ -87,5 +87,9 @@ public class Players {
 
     public List<Player> players() {
         return List.copyOf(players);
+    }
+
+    public String currentTurnPlayerName() {
+        return currentTurnPlayer().getName();
     }
 }
