@@ -4,18 +4,16 @@ import blackjack.domain.Record;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.CardDto;
-import blackjack.dto.DealerRecordDto;
-import blackjack.dto.DealerTurnResultDto;
-import blackjack.dto.ParticipantDto;
-import blackjack.dto.ParticipantResultDto;
-import blackjack.dto.PlayerRecordDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerAnswer;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameController {
@@ -44,11 +42,9 @@ public class GameController {
         players.initCards(deck);
 
         OutputView.printInitResult(players.getNames());
-        OutputView.printDealerFirstCard(CardDto.from(dealer.openFirstCard()));
+        OutputView.printDealerFirstCard(dealer.openFirstCard());
 
-        final List<ParticipantDto> allPlayers = players.getValue().stream()
-                .map(ParticipantDto::from)
-                .collect(Collectors.toList());
+        final List<Player> allPlayers = players.getValue();
         allPlayers.forEach(OutputView::printCards);
     }
 
@@ -57,12 +53,12 @@ public class GameController {
             final Player drawablePlayer = players.findDrawablePlayer().get();
             final PlayerAnswer playerAnswer = InputView.getHitOrStay(drawablePlayer.getName());
 
-            final ParticipantDto dto = progressPlayerTurn(drawablePlayer, playerAnswer);
-            OutputView.printCards(dto);
+            final Player player = progressPlayerTurn(drawablePlayer, playerAnswer);
+            OutputView.printCards(player);
         }
     }
 
-    private ParticipantDto progressPlayerTurn(Player player, final PlayerAnswer playerAnswer) {
+    private Player progressPlayerTurn(Player player, final PlayerAnswer playerAnswer) {
         if (playerAnswer.isDraw()) {
             player.hit(deck);
         }
@@ -70,7 +66,7 @@ public class GameController {
             player.stay();
         }
 
-        return ParticipantDto.from(player);
+        return player;
     }
 
     public void progressDealerTurn() {
@@ -80,7 +76,7 @@ public class GameController {
             count++;
         }
 
-        OutputView.printDealerTurnResult(new DealerTurnResultDto(count));
+        OutputView.printDealerTurnResult(count);
     }
 
     public void endGame() {
@@ -89,24 +85,42 @@ public class GameController {
     }
 
     private void printAllCards() {
-        final List<ParticipantResultDto> dto = players.getValue().stream()
-                .map(ParticipantResultDto::from)
-                .collect(Collectors.toList());
-        dto.add(0, ParticipantResultDto.from(dealer));
-
         OutputView.breakLine();
-        dto.forEach(OutputView::printCardsAndScore);
+
+        OutputView.printCardsAndScore(dealer);
+        players.getValue().forEach(OutputView::printCardsAndScore);
     }
 
     private void printAllRecords() {
         final int dealerScore = dealer.getScore();
 
-        final List<PlayerRecordDto> playerRecordDtos = players.getValue().stream()
-                .map(player -> PlayerRecordDto.of(player.getName(), Record.of(dealerScore, player.getScore())))
-                .collect(Collectors.toList());
-        final DealerRecordDto dealerRecordDto = DealerRecordDto.from(playerRecordDtos);
+        printDealerRecord(dealerScore);
+        printPlayerRecords(dealerScore);
+    }
 
-        OutputView.printDealerRecord(dealerRecordDto);
-        playerRecordDtos.forEach(OutputView::printPlayerRecord);
+    private void printDealerRecord(final int dealerScore) {
+        final Map<String, Integer> map = initMap();
+        players.getValue().stream()
+                .map(Player::getScore)
+                .map(playerScore -> Record.of(dealerScore, playerScore))
+                .map(playerRecord -> Record.fromOppositeName(playerRecord.getName()))
+                .forEach(dealerRecord -> map.put(dealerRecord.getName(), map.get(dealerRecord.getName()) + 1));
+
+        OutputView.printDealerRecord(map);
+    }
+
+    private Map<String, Integer> initMap() {
+        return Arrays.stream(Record.values())
+                .map(Record::getName)
+                .collect(Collectors.toMap(
+                        recordName -> recordName,
+                        recordName -> 0,
+                        (a, b) -> a,
+                        LinkedHashMap::new));
+    }
+
+    private void printPlayerRecords(final int dealerScore) {
+        players.getValue().forEach(
+                player -> OutputView.printPlayerRecord(player.getName(), Record.of(dealerScore, player.getScore())));
     }
 }
