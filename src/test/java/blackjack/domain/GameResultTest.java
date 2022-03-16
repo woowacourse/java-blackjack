@@ -7,6 +7,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
+import blackjack.domain.player.Users;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class GameResultTest {
         final Dealer dealer = new Dealer(createFirstReceivedCard(CardNumber.KING, CardNumber.FIVE));
         final User user1 = new User("pobi", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK));
         final User user2 = new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
-        final List<User> users = List.of(user1, user2);
+        final Users users = new Users(List.of(user1, user2));
 
         gameResult = GameResult.createPlayerGameResult(dealer, users);
     }

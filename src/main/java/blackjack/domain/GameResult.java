@@ -2,10 +2,9 @@ package blackjack.domain;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.User;
+import blackjack.domain.player.Users;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameResult {
@@ -18,10 +17,10 @@ public class GameResult {
         this.dealerResult = dealerResult;
     }
 
-    public static GameResult createPlayerGameResult(final Dealer dealer, final List<User> users) {
+    public static GameResult createPlayerGameResult(final Dealer dealer, final Users users) {
         Map<String, Result> userResult = new HashMap<>();
         Map<Result, Integer> dealerResult = initializeDealerResultCount();
-        for (final Player user : users) {
+        for (final Player user : users.getUsers()) {
             userResult.put(user.getName(), user.findResult(dealer));
             dealerResult.compute(dealer.findResult(user), (result, count) -> count + 1);
         }

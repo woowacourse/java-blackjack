@@ -24,17 +24,17 @@ public abstract class Player {
         }
     }
 
-    public abstract boolean isPossibleToPickCard();
+    public abstract boolean canDrawCard();
 
     public final boolean isBlackJack() {
         return cards.isBlackJack();
     }
 
-    public final boolean exceedMaxScore() {
-        return cards.exceedMaxScore();
+    public final boolean isBust() {
+        return cards.isBust();
     }
 
-    public final void pickCard(final Card card) {
+    public final void drawCard(final Card card) {
         cards.addCard(card);
     }
 

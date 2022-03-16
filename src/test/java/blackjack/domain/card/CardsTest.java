@@ -64,7 +64,7 @@ class CardsTest {
     @MethodSource("provideCardsAndExpectedForExceed")
     @DisplayName("카드의 총합이 21을 넘었는지 확인한다.")
     void exceedMaxScore(final Cards cards, final boolean expected) {
-        final boolean actual = cards.exceedMaxScore();
+        final boolean actual = cards.isBust();
         assertThat(actual).isEqualTo(expected);
     }
 

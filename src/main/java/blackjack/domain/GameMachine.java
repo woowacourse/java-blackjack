@@ -3,6 +3,8 @@ package blackjack.domain;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
+import blackjack.domain.player.Users;
+import blackjack.view.InputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,14 +20,15 @@ public class GameMachine {
     }
 
     public Dealer createDealer() {
-        return new Dealer(cardDeck.drawInitialCard());
+        return new Dealer(cardDeck.selectOriginalCard());
     }
 
-    public List<User> createUsers(final List<String> users) {
-        validateUserCount(users);
-        return users.stream()
-                .map(user -> new User(user, cardDeck.drawInitialCard()))
+    public Users createUsers(final List<String> userNames) {
+        validateUserCount(userNames);
+        List<User> users = userNames.stream()
+                .map(userName -> new User(userName, cardDeck.selectOriginalCard()))
                 .collect(Collectors.toList());
+        return new Users(users);
     }
 
     private static void validateUserCount(final List<String> users) {
@@ -35,7 +38,7 @@ public class GameMachine {
     }
 
     public boolean checkPlayerReceiveCard(final Player player) {
-        if (player.isPossibleToPickCard()) {
+        if (player.canDrawCard()) {
             drawCardToPlayer(player);
             return true;
         }
@@ -43,11 +46,10 @@ public class GameMachine {
     }
 
     public void drawCardToPlayer(final Player player) {
-        player.pickCard(cardDeck.drawCard());
+        player.drawCard(cardDeck.selectCard());
     }
 
-    public boolean haveBlackJack(List<User> users, Dealer dealer) {
-        return dealer.isBlackJack() || users.stream()
-                .anyMatch(Player::isBlackJack);
+    public boolean hasBlackJack(Dealer dealer, Users users) {
+        return dealer.isBlackJack() || users.hasBlackJack();
     }
 }

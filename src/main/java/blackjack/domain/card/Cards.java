@@ -27,7 +27,7 @@ public class Cards {
         return isFirstReceivedCards() && getTotalScore() == BLACK_JACK_SCORE;
     }
 
-    public boolean exceedMaxScore() {
+    public boolean isBust() {
         return calculateScore(getTotalScore(), getCountOfAce()) > BLACK_JACK_SCORE;
     }
 

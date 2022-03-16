@@ -15,13 +15,13 @@ public enum Result {
     }
 
     public static Result findResult(final Player player, final Player otherPlayer) {
-        if (player.exceedMaxScore() && otherPlayer.exceedMaxScore()) {
+        if (player.isBust() && otherPlayer.isBust()) {
             return DRAW;
         }
-        if (player.exceedMaxScore()) {
+        if (player.isBust()) {
             return LOSE;
         }
-        if (otherPlayer.exceedMaxScore()) {
+        if (otherPlayer.isBust()) {
             return WIN;
         }
         return compareScore(player.getTotalScore(), otherPlayer.getTotalScore());

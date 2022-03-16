@@ -8,6 +8,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
+import blackjack.domain.player.Users;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,7 @@ public class GameMachineTest {
         final List<String> users = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
         final int expected = 7;
 
-        final int actual = gameMachine.createUsers(users).size();
+        final int actual = gameMachine.createUsers(users).getUsers().size();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -65,14 +66,14 @@ public class GameMachineTest {
     void haveBlackJack() {
         final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
                 new Card(CardPattern.HEART, CardNumber.SEVEN))));
-        final List<User> users = Arrays.asList(
+        final Users users = new Users(Arrays.asList(
                 new User("pobi", new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
                         new Card(CardPattern.HEART, CardNumber.ACE)))),
                 new User("jun", new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
-                        new Card(CardPattern.HEART, CardNumber.SEVEN)))));
+                        new Card(CardPattern.HEART, CardNumber.SEVEN))))));
         final boolean expected = true;
 
-        final boolean actual = gameMachine.haveBlackJack(users, dealer);
+        final boolean actual = gameMachine.hasBlackJack(dealer, users);
         assertThat(actual).isEqualTo(expected);
     }
 }

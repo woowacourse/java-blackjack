@@ -60,7 +60,7 @@ class ResultTest {
     }
 
     static Player makeHavingExceedMaxScorePlayer(Player player, CardNumber cardNumber) {
-        player.pickCard(new Card(CardPattern.DIAMOND, cardNumber));
+        player.drawCard(new Card(CardPattern.DIAMOND, cardNumber));
         return player;
     }
 }

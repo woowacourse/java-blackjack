@@ -30,7 +30,7 @@ public class PlayerTest {
         final User user = new User("pobi", initializeCardsForUser());
         final boolean expected = true;
 
-        final boolean actual = user.isPossibleToPickCard();
+        final boolean actual = user.canDrawCard();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -38,10 +38,10 @@ public class PlayerTest {
     @DisplayName("유저의 카드 총합이 21을 초과하면, false를 반환한다.")
     void isImpossibleToPickCardForUser() {
         final User user = new User("pobi", initializeCardsForUser());
-        user.pickCard(new Card(CardPattern.CLOVER, CardNumber.TWO));
+        user.drawCard(new Card(CardPattern.CLOVER, CardNumber.TWO));
         final boolean expected = false;
 
-        final boolean actual = user.isPossibleToPickCard();
+        final boolean actual = user.canDrawCard();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -58,7 +58,7 @@ public class PlayerTest {
         final Dealer dealer = new Dealer(cards);
         final boolean expected = true;
 
-        final boolean actual = dealer.isPossibleToPickCard();
+        final boolean actual = dealer.canDrawCard();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -70,7 +70,7 @@ public class PlayerTest {
         final Dealer dealer = new Dealer(cards);
         final boolean expected = false;
 
-        final boolean actual = dealer.isPossibleToPickCard();
+        final boolean actual = dealer.canDrawCard();
         assertThat(actual).isEqualTo(expected);
     }
 

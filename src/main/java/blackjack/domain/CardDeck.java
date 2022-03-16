@@ -10,18 +10,18 @@ public class CardDeck {
 
     private final Queue<Card> cardDeck;
 
-    public CardDeck(final LinkedList<Card> cardDeck) {
-        this.cardDeck = cardDeck;
+    public CardDeck(final List<Card> cardDeck) {
+        this.cardDeck = (LinkedList<Card>) cardDeck;
     }
 
-    public List<Card> drawInitialCard() {
+    public List<Card> selectOriginalCard() {
         List<Card> cards = new ArrayList<>();
-        cards.add(drawCard());
-        cards.add(drawCard());
+        cards.add(selectCard());
+        cards.add(selectCard());
         return cards;
     }
 
-    public Card drawCard() {
+    public Card selectCard() {
         return cardDeck.poll();
     }
 

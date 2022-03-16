@@ -5,7 +5,7 @@ import blackjack.domain.Result;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
-import java.util.List;
+import blackjack.domain.player.Users;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -18,9 +18,9 @@ public class ResultView {
     private static final String DEALER_RECEIVE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String COLON = ": ";
 
-    public static void printPlayersCards(final Dealer dealer, final List<User> users) {
+    public static void printPlayersCards(final Dealer dealer, final Users users) {
         printPlayerCards(dealer);
-        for (final User user : users) {
+        for (final User user : users.getUsers()) {
             printPlayerCards(user);
         }
     }
@@ -54,12 +54,23 @@ public class ResultView {
         System.out.println(DEALER_RECEIVE_CARD_MESSAGE);
     }
 
-    public static void printTotalCardResult(final Dealer dealer, final List<User> users) {
+    public static void printTotalCardResult(final Dealer dealer, final Users users) {
         System.out.println();
-        System.out.println(makePlayerCardsToString(dealer) + RESULT_MARK_MESSAGE + dealer.getTotalScore());
-        for (final User user : users) {
+        System.out.println(makeDealerFinalCards(dealer) + RESULT_MARK_MESSAGE + dealer.getTotalScore());
+        for (final User user : users.getUsers()) {
             System.out.println(makePlayerCardsToString(user) + RESULT_MARK_MESSAGE + user.getTotalScore());
         }
+    }
+
+    private static String makeDealerFinalCards(final Dealer dealer) {
+        StringBuilder sb = new StringBuilder();
+        String dealerCards = String.join(", ", dealer.getCardsToList().stream()
+                .map(card -> card.getCardNumberType() + card.getCardPattern())
+                .collect(Collectors.toList()));
+        sb.append(dealer.getName())
+                .append(CARD_MARK_MESSAGE)
+                .append(dealerCards);
+        return sb.toString();
     }
 
     public static void printGameResult(final GameResult gameResult) {

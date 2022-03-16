@@ -12,7 +12,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean isPossibleToPickCard() {
+    public boolean canDrawCard() {
         return getTotalScore() <= MAX_SCORE_TO_PICK;
     }
 }
