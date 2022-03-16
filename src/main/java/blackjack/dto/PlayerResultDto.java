@@ -13,7 +13,7 @@ public class PlayerResultDto {
 	private final List<String> cards;
 	private final int totalScore;
 	private final boolean bust;
-	private final String revenueResult;
+	private final int revenueResult;
 
 	private PlayerResultDto(final String name, final Hand hand, final Money money) {
 		this.name = name;
@@ -22,7 +22,7 @@ public class PlayerResultDto {
 				.collect(Collectors.toList());
 		this.totalScore = hand.calculateOptimalScore();
 		this.bust = hand.isBust(totalScore);
-		this.revenueResult = money.getValue().toString();
+		this.revenueResult = money.getValue().intValue();
 	}
 
 	public static PlayerResultDto from(final Role player, final Money money) {
@@ -45,7 +45,7 @@ public class PlayerResultDto {
 		return bust;
 	}
 
-	public String getRevenueResult() {
+	public int getRevenueResult() {
 		return revenueResult;
 	}
 }
