@@ -70,7 +70,7 @@
 
 ### 📋 2차 피드백 수정 필요 항목
 
-- [ ] IntelliJ에서 포맷팅 시 자동으로 import를 지워주니 실행하는 습관.
+- [x] IntelliJ에서 포맷팅 시 자동으로 import를 지워주니 실행하는 습관.
     - `Mac OS : ^(Control) + ⌥(Option) + O`
 - [x] **함수 및 변수의 네이밍에 대한 수정 필요**
     - [x] 블랙잭 규칙에 따른 용어에 맞춰 메서드명을 수정
@@ -98,8 +98,9 @@
     - `Optional.get`은 무엇을 반환하는가
         - 객체를 반환하지만 값이 없을 경우 `NoSuchElementException` 발생
         - `orElseThrow` 사용
-- [ ] `Cards`의 `getCards` 메서드가 사용하는 필드 자체를 반환
+- [x] `Cards`의 `getCards` 메서드가 사용하는 필드 자체를 반환
     - 새 컬렉션에 담아 반환하면 어떤지
+      - `List.copyOf()`를 이용하여 반환
     - 새 컬렉션에 담아 반환하는 이유, 장점 알아보기
 
 ### 2차 피드백 학습

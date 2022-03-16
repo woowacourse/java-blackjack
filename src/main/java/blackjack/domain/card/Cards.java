@@ -56,6 +56,6 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 }
