@@ -9,46 +9,41 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackResult {
-    private static final String WIN_DRAW_LOSE_RESULT_DELIMITER = " ";
 
-    private final Map<String, String> resultMap;
+    private final Map<String, Map<WinDrawLose, Integer>> resultMap;
 
-    private BlackjackResult(Map<String, String> resultMap) {
+    private BlackjackResult(Map<String, Map<WinDrawLose, Integer>> resultMap) {
         this.resultMap = resultMap;
     }
 
     public static BlackjackResult match(Player dealer, List<Player> guests) {
-        Map<String, String> result = judgeResult(dealer, guests);
+        Map<String, Map<WinDrawLose, Integer>> result = judgeResult(dealer, guests);
         return new BlackjackResult(result);
     }
 
-    private static Map<String, String> judgeResult(Player dealer, List<Player> guests) {
-        Map<String, String> resultStrings = new LinkedHashMap<>();
+    private static Map<String, Map<WinDrawLose, Integer>> judgeResult(Player dealer, List<Player> guests) {
+        Map<String, Map<WinDrawLose, Integer>> resultMap = new LinkedHashMap<>();
         Map<WinDrawLose, Integer> dealerResult = new EnumMap<>(WinDrawLose.class);
-        judgeAndPutResult(dealer, guests, resultStrings, dealerResult);
-        resultStrings.put(dealer.getName(), getWinDrawLoseString(dealerResult));
-        return resultStrings;
+        judgeAndPutResult(dealer, guests, resultMap, dealerResult);
+        resultMap.put(dealer.getName(), dealerResult);
+        return resultMap;
     }
 
     private static void judgeAndPutResult(
             Player dealer, List<Player> guests,
-            Map<String, String> resultStrings,
+            Map<String, Map<WinDrawLose, Integer>> resultMap,
             Map<WinDrawLose, Integer> dealerResult
     ) {
         for (Player guest : guests) {
             WinDrawLose result = WinDrawLose.judgeDealerWinDrawLose(dealer, guest);
             dealerResult.merge(result, 1, Integer::sum);
-            resultStrings.put(guest.getName(), result.reverse().getName());
+            EnumMap<WinDrawLose, Integer> guestResult = new EnumMap<>(WinDrawLose.class);
+            guestResult.put(result.reverse(), 1);
+            resultMap.put(guest.getName(), guestResult);
         }
     }
 
-    private static String getWinDrawLoseString(Map<WinDrawLose, Integer> winDrawLoseResult) {
-        return winDrawLoseResult.entrySet().stream()
-                .map(set -> set.getValue() + set.getKey().getName())
-                .collect(Collectors.joining(WIN_DRAW_LOSE_RESULT_DELIMITER));
-    }
-
-    public Map<String, String> getResultMap() {
+    public Map<String, Map<WinDrawLose, Integer>> getResultMap() {
         return Collections.unmodifiableMap(resultMap);
     }
 }

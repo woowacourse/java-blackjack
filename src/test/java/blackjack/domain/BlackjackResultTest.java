@@ -31,7 +31,8 @@ public class BlackjackResultTest {
         guest2.hit(new Card(Denomination.FIVE, Suit.CLUBS));
         BlackjackResult result = BlackjackResult.match(dealer, List.of(guest1, guest2));
 
-        Map<String, String> resultMap = result.getResultMap();
-        assertThat(resultMap.get("딜러")).isEqualTo("1승 1패");
+        Map<String, Map<WinDrawLose, Integer>> resultMap = result.getResultMap();
+        assertThat(resultMap.get("딜러").get(WinDrawLose.WIN)).isEqualTo(1);
+        assertThat(resultMap.get("딜러").get(WinDrawLose.LOSE)).isEqualTo(1);
     }
 }
