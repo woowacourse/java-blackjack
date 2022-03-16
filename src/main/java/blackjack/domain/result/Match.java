@@ -45,17 +45,11 @@ public enum Match {
     }
 
     private static boolean winPlayerCondition(Player player, Player competitor) {
-        if (competitor.isDealer()) {
-            return player.isWin(competitor);
-        }
-        return competitor.isWin(player);
+        return player.isWin(competitor);
     }
 
     private static boolean losePlayerCondition(Player player, Player competitor) {
-        if (competitor.isDealer()) {
-            return competitor.isWin(player);
-        }
-        return player.isWin(competitor);
+        return competitor.isWin(player);
     }
 
     private static Boolean isDraw(Player player, Player competitor) {

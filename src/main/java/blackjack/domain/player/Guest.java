@@ -19,14 +19,16 @@ public class Guest extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isWin(Player dealer) {
-        int points = playingCards.sumPoints();
-        if (dealer.isBlackJack() && !isBlackJack()) {
+    public boolean isWin(Player player) {
+        if (!player.isDealer()) {
+            return player.isWin(this);
+        }
+        if (player.isBlackJack() && !isBlackJack()) {
             return false;
         }
-        if (dealer.isBust() && !this.isBust()) {
+        if (player.isBust() && !this.isBust()) {
             return true;
         }
-        return (dealer.isLose(points)) && (!this.isBust());
+        return (player.isLose(playingCards.sumPoints())) && (!this.isBust());
     }
 }
