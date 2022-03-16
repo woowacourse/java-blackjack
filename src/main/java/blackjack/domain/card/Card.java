@@ -45,6 +45,10 @@ public class Card {
         return new ArrayList<>(createCards());
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }

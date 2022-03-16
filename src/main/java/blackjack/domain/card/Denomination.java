@@ -94,4 +94,8 @@ public enum Denomination {
                 .mapToInt(denomination -> denomination.defaultValue)
                 .sum();
     }
+
+    public String getPrintValue() {
+        return printValue;
+    }
 }

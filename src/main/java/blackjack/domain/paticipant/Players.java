@@ -48,4 +48,8 @@ public class Players {
                 .map(player -> player.profit(dealer))
                 .count();
     }
+
+    public List<Player> players() {
+        return List.copyOf(players);
+    }
 }
