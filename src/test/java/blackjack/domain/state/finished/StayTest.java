@@ -8,13 +8,11 @@ import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardNumber.SIX;
 import static blackjack.domain.card.CardPattern.SPADE;
-import static blackjack.domain.game.GameOutcome.LOSE;
-import static blackjack.domain.game.GameOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.GameOutcome;
+import blackjack.domain.game.BattingMoney;
 import blackjack.domain.state.State;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,10 +27,10 @@ class StayTest {
     @ParameterizedTest
     @DisplayName("자신과 다른 State 비교해 승부 결과를 반환한다.")
     @MethodSource("provideStateAndExpected")
-    void compare(State another, GameOutcome expected) {
+    void compare(State another, int expected) {
         State state = new Stay(
-                new Cards(Arrays.asList(Card.of(SPADE, A), Card.of(SPADE, FIVE))));
-        assertThat(state.compare(another)).isEqualTo(expected);
+                new Cards(Arrays.asList(Card.of(SPADE, A), Card.of(SPADE, FIVE))), new BattingMoney("2000"));
+        assertThat(state.getProfit(another)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideStateAndExpected() {
@@ -43,10 +41,10 @@ class StayTest {
                 new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
 
         return Stream.of(
-                Arguments.of(new BlackJack(blackJackCards), LOSE),
-                Arguments.of(new Stay(lowerScoreStayCards), WIN),
-                Arguments.of(new Stay(higherScoreStayCards), LOSE),
-                Arguments.of(new Bust(bustCards), WIN)
+                Arguments.of(new BlackJack(blackJackCards, new BattingMoney("2000")), -2000),
+                Arguments.of(new Stay(lowerScoreStayCards, new BattingMoney("2000")), 2000),
+                Arguments.of(new Stay(higherScoreStayCards, new BattingMoney("2000")), -2000),
+                Arguments.of(new Bust(bustCards, new BattingMoney("2000")), 2000)
         );
     }
 }
