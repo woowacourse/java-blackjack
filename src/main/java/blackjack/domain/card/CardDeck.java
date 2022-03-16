@@ -4,6 +4,8 @@ import java.util.List;
 
 public class CardDeck {
 
+    private static final int CARD_DECK_DEFAULT_SIZE = 52;
+
     private final List<Card> cards;
 
     public CardDeck(final List<Card> cards) {
@@ -12,9 +14,13 @@ public class CardDeck {
     }
 
     private void checkCardDeckSize(final List<Card> cards) {
-        if (52 != cards.stream()
-                .distinct().count()) {
+        if (cardsDistinctCount(cards) != CARD_DECK_DEFAULT_SIZE) {
             throw new IllegalArgumentException("카드 덱은 중복되지 않은 52장으로만 생성할 수 있습니다.");
         }
+    }
+
+    private long cardsDistinctCount(final List<Card> cards) {
+        return cards.stream()
+                .distinct().count();
     }
 }
