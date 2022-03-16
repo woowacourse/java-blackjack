@@ -82,10 +82,7 @@ public final class Cards {
     }
 
     private List<Card> getInitCards() {
-        List<Card> initCards = new ArrayList<>();
-        IntStream.range(0, INIT_DISTRIBUTE_SIZE)
-                .forEach(i -> initCards.add(cards.get(i)));
-        return initCards;
+        return cards.subList(0, INIT_DISTRIBUTE_SIZE);
     }
 
     public List<Card> getCards() {

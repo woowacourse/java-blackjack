@@ -76,7 +76,9 @@ public final class Dealer extends Player {
 
     private List<Integer> convertProfits(final List<Participant> participants) {
         List<Integer> profits = new ArrayList<>();
-        participants.stream().forEach(participant -> profits.add(participant.getBetProfit()));
+        for (Participant participant : participants) {
+            profits.add(participant.getBetProfit());
+        }
         return profits;
     }
 
