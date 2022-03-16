@@ -3,11 +3,11 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.DealerMatchResult;
+import blackjack.domain.game.PlayerMatchResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DealerMatchDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayerMatchDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -110,19 +110,19 @@ public class BlackjackController {
     }
 
     public void printDealerMatchResult(BlackjackGame game) {
-        DealerMatchDto dealerMatchDto = DealerMatchDto.of(game.getDealer(), game.getPlayers());
-        OutputView.printDealerMatchResult(dealerMatchDto);
+        DealerMatchResult dealerMatchResult = DealerMatchResult.of(game.getDealer(), game.getPlayers());
+        OutputView.printDealerMatchResult(dealerMatchResult);
     }
 
     public void printPlayersMatchResult(BlackjackGame game) {
         Dealer dealer = game.getDealer();
 
-        List<PlayerMatchDto> playerMatchDtos = game.getPlayers()
+        List<PlayerMatchResult> playerMatchResults = game.getPlayers()
                 .stream()
-                .map(player -> PlayerMatchDto.of(player, dealer))
+                .map(player -> PlayerMatchResult.of(player, dealer))
                 .collect(Collectors.toList());
 
-        OutputView.printPlayerMatchResults(playerMatchDtos);
+        OutputView.printPlayerMatchResults(playerMatchResults);
     }
 }
 

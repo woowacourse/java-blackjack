@@ -1,23 +1,20 @@
-package blackjack.dto;
+package blackjack.domain.game;
 
-import blackjack.domain.game.Referee;
-import blackjack.domain.game.ResultType;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-public class PlayerMatchDto {
-    private static final Referee REFEREE = new Referee();
+public class PlayerMatchResult {
 
     private final ResultType matchResult;
     private final String name;
 
-    private PlayerMatchDto(ResultType matchResult, String name) {
+    private PlayerMatchResult(ResultType matchResult, String name) {
         this.matchResult = matchResult;
         this.name = name;
     }
 
-    public static PlayerMatchDto of(Player player, Dealer dealer) {
-        return new PlayerMatchDto(REFEREE.generatePlayerResult(player, dealer), player.getName());
+    public static PlayerMatchResult of(Player player, Dealer dealer) {
+        return new PlayerMatchResult(player.compareWith(dealer), player.getName());
     }
 
     public String getName() {
@@ -30,7 +27,7 @@ public class PlayerMatchDto {
 
     @Override
     public String toString() {
-        return "PlayerMatchDto{" +
+        return "PlayerMatchResult{" +
                 "matchResult=" + matchResult +
                 ", name='" + name + '\'' +
                 '}';

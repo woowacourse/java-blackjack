@@ -1,10 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.game.DealerMatchResult;
+import blackjack.domain.game.PlayerMatchResult;
 import blackjack.domain.game.ResultCount;
 import blackjack.domain.game.ResultType;
-import blackjack.dto.DealerMatchDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayerMatchDto;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
@@ -71,11 +71,11 @@ public class OutputView {
         System.out.printf(PARTICIPANT_HAND_AND_SCORE_FORMAT, name, cards, score);
     }
 
-    public static void printDealerMatchResult(DealerMatchDto dealerMatchDto) {
+    public static void printDealerMatchResult(DealerMatchResult dealerMatchResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
-        System.out.print(dealerMatchDto.getName() + COLON_SEPARATOR);
+        System.out.print(dealerMatchResult.getName() + COLON_SEPARATOR);
 
-        dealerMatchDto.getMatchResult()
+        dealerMatchResult.getMatchResult()
                 .entrySet()
                 .forEach(OutputView::printSingleDealerMatchResult);
 
@@ -91,17 +91,17 @@ public class OutputView {
         }
     }
 
-    public static void printPlayerMatchResults(Collection<PlayerMatchDto> playerMatchDtos) {
-        playerMatchDtos.forEach(OutputView::printSinglePlayerMatchResult);
+    public static void printPlayerMatchResults(Collection<PlayerMatchResult> playerMatchResults) {
+        playerMatchResults.forEach(OutputView::printSinglePlayerMatchResult);
     }
 
     public static void printException(RuntimeException exception) {
         System.out.printf(EXCEPTION_MESSAGE_FORMAT, exception.getMessage());
     }
 
-    private static void printSinglePlayerMatchResult(PlayerMatchDto playerMatchDto) {
-        String name = playerMatchDto.getName();
-        String matchResult = playerMatchDto.getMatchResult().getDisplayName();
+    private static void printSinglePlayerMatchResult(PlayerMatchResult playerMatchResult) {
+        String name = playerMatchResult.getName();
+        String matchResult = playerMatchResult.getMatchResult().getDisplayName();
 
         System.out.printf(PLAYER_MATCH_RESULT_FORMAT, name, matchResult);
     }
