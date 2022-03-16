@@ -15,6 +15,7 @@ import java.util.List;
 public class Game {
 
     private static final int INIT_DISTRIBUTE_NUM = 2;
+    public static final int PROFIT_REVERSE = -1;
 
     private final Dealer dealer;
     private final Users users;
@@ -28,6 +29,10 @@ public class Game {
 
     public void initBettingMoney(String userName, int money) {
         users.getUserByName(userName).betting(money);
+    }
+
+    public List<String> getUserNames() {
+        return users.getUserNames();
     }
 
     public List<ParticipantDto> initDistributed() {
@@ -80,14 +85,10 @@ public class Game {
 
     public List<ProfitDto> getParticipantProfits() {
         List<ProfitDto> profitDtos = new ArrayList<>();
-        profitDtos.add(new ProfitDto(dealer.getName(), users.getDealerProfits(dealer.getScore())));
+        profitDtos.add(new ProfitDto(dealer.getName(), PROFIT_REVERSE * users.getTotalProfit(dealer.getScore())));
         for (User user : users.getUsers()) {
             profitDtos.add(new ProfitDto(user.getName(), user.calculateProfit(dealer.getScore())));
         }
         return profitDtos;
-    }
-
-    public List<String> getUserNames() {
-        return users.getUserNames();
     }
 }

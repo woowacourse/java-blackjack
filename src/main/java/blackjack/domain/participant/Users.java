@@ -32,8 +32,8 @@ public class Users {
         return Collections.unmodifiableList(users);
     }
 
-    public int getDealerProfits(int dealerSum) {
-        return (-1) * users.stream()
+    public int getTotalProfit(int dealerSum) {
+        return users.stream()
                 .mapToInt(user -> user.calculateProfit(dealerSum))
                 .sum();
     }
