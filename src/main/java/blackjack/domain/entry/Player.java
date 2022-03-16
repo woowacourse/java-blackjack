@@ -11,7 +11,7 @@ public class Player extends Participant {
     private static final int BLACKJACK_NUMBER = 21;
 
     private final String name;
-    private BettingMoney bettingMoney;
+    private final BettingMoney bettingMoney;
 
     public Player(String name, BettingMoney bettingMoney, HoldCards holdCards) {
         super(holdCards);
