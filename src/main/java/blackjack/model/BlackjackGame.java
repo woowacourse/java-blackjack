@@ -32,7 +32,7 @@ public class BlackjackGame {
     }
 
     public void performEachTurn(Predicate<String> predicate, Consumer<Participant> consumer) {
-        for (Participant player : players.getValues()) {
+        for (Participant player : players.getPlayerGroup()) {
             hitOrStayToPlayer(player, predicate, consumer);
         }
         hitOrStayToDealer(consumer);
@@ -61,7 +61,7 @@ public class BlackjackGame {
     }
 
     public List<Participant> getPlayers() {
-        return players.getValues();
+        return players.getPlayerGroup();
     }
 
     public Participant getDealer() {

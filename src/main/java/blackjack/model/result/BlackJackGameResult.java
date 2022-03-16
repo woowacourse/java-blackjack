@@ -17,7 +17,7 @@ public class BlackJackGameResult {
 
     private Map<String, MatchResult> createGamersMatchResult(Participant dealer, Players players) {
         Map<String, MatchResult> gamersMatchResult = new LinkedHashMap<>();
-        for (Participant gamer : players.getValues()) {
+        for (Participant gamer : players.getPlayerGroup()) {
             MatchResult matchResult = MatchResult.match(dealer, gamer);
             gamersMatchResult.put(gamer.getName(), matchResult);
         }
@@ -26,7 +26,7 @@ public class BlackJackGameResult {
 
     private Map<MatchResult, Integer> createDealerMatchResult(Participant dealer, Players players) {
         Map<MatchResult, Integer> dealerMatchResult = initDealerMatchResult();
-        for (Participant gamer : players.getValues()) {
+        for (Participant gamer : players.getPlayerGroup()) {
             MatchResult matchResult = MatchResult.match(dealer, gamer);
             dealerMatchResult.merge(matchResult, 1, Integer::sum);
         }

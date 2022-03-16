@@ -34,7 +34,7 @@ public class Players {
         return new Players(copyOfValues);
     }
 
-    public List<Participant> getValues() {
+    public List<Participant> getPlayerGroup() {
         return values.stream()
                 .map(Participant::getCopyInstance)
                 .collect(Collectors.toUnmodifiableList());
