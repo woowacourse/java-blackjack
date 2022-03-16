@@ -31,16 +31,20 @@ public abstract class Participant implements Comparable<Participant> {
 
     public abstract boolean canDrawCard();
 
-    public void hitInitialTurn(Deck deck) {
-        cards.addCards(deck.handOutInitialTurn());
+    public boolean isBurst() {
+        return calculateScore() > MAX_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return calculateScore() == MAX_SCORE;
     }
 
     public int calculateScore() {
         return cards.calculateScore();
     }
 
-    private boolean isOverMaxScore() {
-        return calculateScore() > MAX_SCORE;
+    public void hitInitialTurn(Deck deck) {
+        cards.addCards(deck.handOutInitialTurn());
     }
 
     public String getName() {
@@ -53,10 +57,10 @@ public abstract class Participant implements Comparable<Participant> {
 
     @Override
     public int compareTo(Participant participant) {
-        if (participant.isOverMaxScore()) {
+        if (participant.isBurst()) {
             return 1;
         }
-        if (isOverMaxScore()) {
+        if (isBurst()) {
             return -1;
         }
 
