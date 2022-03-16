@@ -2,7 +2,6 @@ package blackjack;
 
 import static java.util.stream.Collectors.*;
 
-import blackjack.domain.BattingMoney;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
@@ -36,7 +35,7 @@ public class Application {
 
     private static Players createPlayers(Deck deck) {
         List<Player> players = InputView.getNames().stream()
-                .map(name -> new Player(name, BATTING_MONEY_INIT_VALUE, getInitCards(deck)))
+                .map(name -> new Player(name, createBattingMoney(name), getInitCards(deck)))
                 .collect(toList());
         return new Players(players);
     }
@@ -81,6 +80,10 @@ public class Application {
             OutputView.printDealerDrawableInfo();
             dealer.addCard(deck.draw());
         }
+    }
+
+    private static int createBattingMoney(String playerName) {
+        return InputView.insertBattingMoney(playerName);
     }
 
     private static Map<String, GameResultDto> createPlayerResult(Players players, Dealer dealer) {

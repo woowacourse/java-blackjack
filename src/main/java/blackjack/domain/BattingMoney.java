@@ -18,4 +18,8 @@ public class BattingMoney {
             throw new IllegalArgumentException("배팅 금액 최소 금액은 0원입니다.");
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }

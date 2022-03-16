@@ -24,6 +24,11 @@ public class InputView {
                 .collect(toList());
     }
 
+    public static int insertBattingMoney(String playerName) {
+        OutputView.printGuideMessage(playerName + "의 배팅 금액은?");
+        return Integer.parseInt(SCANNER.nextLine());
+    }
+
     public static PlayCommand getPlayCommand(Player player) {
         OutputView.printGuideMessage(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return PlayCommand.of(SCANNER.nextLine());

@@ -39,4 +39,8 @@ public abstract class Gamer {
     public Cards getCards() {
         return cards;
     }
+
+    public int getBattingMoney() {
+        return battingMoney.getValue();
+    }
 }
