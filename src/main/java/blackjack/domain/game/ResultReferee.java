@@ -14,47 +14,47 @@ public class ResultReferee {
     public ResultReferee(final Dealer dealer, final List<Player> players) {
         this.dealerResult = ResultStatistics.of(dealer);
         this.playerResults = players.stream()
-                .map(player -> addDuelResult(player, dealer))
+                .map(player -> initPlayerResultOf(player, getDuelResultFrom(player, dealer)))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private ResultStatistics addDuelResult(final Player player, final Dealer dealer) {
+    private ResultType getDuelResultFrom(final Player player, final Dealer dealer) {
         if (dealer.isBlackjack()) {
-            return addBlackjackDealerDuelResult(player);
+            return getBlackjackDealerDuelResult(player);
         }
         if (player.isBust() || dealer.isBust()) {
             return getBustDuelResult(player);
         }
         if (player.isBlackjack()) {
-            return initPlayerResultOf(player, ResultType.WIN);
+            return ResultType.WIN;
         }
-        return addNoBustDuelResult(player, dealer.getCurrentScore());
+        return addNoBustDuelResult(player, dealer.getScore());
     }
 
-    private ResultStatistics addBlackjackDealerDuelResult(final Player player) {
+    private ResultType getBlackjackDealerDuelResult(final Player player) {
         if (player.isBlackjack()) {
-            return initPlayerResultOf(player, ResultType.DRAW);
+            return ResultType.DRAW;
         }
-        return initPlayerResultOf(player, ResultType.LOSE);
+        return ResultType.LOSE;
     }
 
-    private ResultStatistics getBustDuelResult(final Player player) {
+    private ResultType getBustDuelResult(final Player player) {
         if (player.isBust()) {
-            return initPlayerResultOf(player, ResultType.LOSE);
+            return ResultType.LOSE;
         }
-        return initPlayerResultOf(player, ResultType.WIN);
+        return ResultType.WIN;
     }
 
-    private ResultStatistics addNoBustDuelResult(final Player player, final Score dealerScore) {
-        int compareResult = player.getCurrentScore().compareTo(dealerScore);
+    private ResultType addNoBustDuelResult(final Player player, final Score dealerScore) {
+        int compareResult = player.getScore().compareTo(dealerScore);
 
         if (compareResult > 0) {
-            return initPlayerResultOf(player, ResultType.WIN);
+            return ResultType.WIN;
         }
         if (compareResult < 0) {
-            return initPlayerResultOf(player, ResultType.LOSE);
+            return ResultType.LOSE;
         }
-        return initPlayerResultOf(player, ResultType.DRAW);
+        return ResultType.DRAW;
     }
 
     private ResultStatistics initPlayerResultOf(final Player player, final ResultType playerResultType) {

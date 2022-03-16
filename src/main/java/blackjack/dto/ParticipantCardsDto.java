@@ -20,7 +20,7 @@ public class ParticipantCardsDto {
     public static ParticipantCardsDto of(final Participant participant) {
         String name = participant.getName();
         List<Card> cards = participant.getCards();
-        Score score = participant.getCurrentScore();
+        Score score = participant.getScore();
 
         return new ParticipantCardsDto(name, cards, score);
     }
@@ -28,7 +28,7 @@ public class ParticipantCardsDto {
     public static ParticipantCardsDto ofInitial(final Participant participant) {
         String name = participant.getName();
         List<Card> openCardInfo = participant.getInitialOpenCards();
-        Score score = participant.getCurrentScore();
+        Score score = participant.getScore();
 
         return new ParticipantCardsDto(name, openCardInfo, score);
     }

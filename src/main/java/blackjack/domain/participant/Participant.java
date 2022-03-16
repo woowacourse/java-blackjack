@@ -21,7 +21,7 @@ public abstract class Participant {
         return !cardHand.isFinished();
     }
 
-    public Score getCurrentScore() {
+    public Score getScore() {
         return cardHand.getScore();
     }
 
