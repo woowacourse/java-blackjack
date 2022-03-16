@@ -5,13 +5,15 @@ import blackjack.domain.card.Cards;
 
 public class DealerRunning extends Running {
 
-    public DealerRunning(final Cards cards) {
+    private DealerRunning(final Cards cards) {
         super(cards);
     }
 
-    @Override
-    public BlackjackGameState hit(final Card card) {
-        cards.addCard(card);
+    public static BlackjackGameState createDealerGameState(final Cards cards) {
+        return crerateDealerGameState(cards);
+    }
+
+    private static BlackjackGameState crerateDealerGameState(final Cards cards) {
         if (cards.isMaxScoreBust()) {
             return new Bust(cards, cards.maxScore());
         }
@@ -19,5 +21,11 @@ public class DealerRunning extends Running {
             return new Stand(cards, cards.maxScore());
         }
         return new DealerRunning(cards);
+    }
+
+    @Override
+    public BlackjackGameState hit(final Card card) {
+        cards.addCard(card);
+        return crerateDealerGameState(cards);
     }
 }
