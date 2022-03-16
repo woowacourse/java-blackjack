@@ -57,8 +57,7 @@ public class Player extends Participant {
         cardHand.stay();
     }
 
-    @Override
-    public void receiveCard(final Card card) {
+    private void receiveCard(final Card card) {
         cardHand.hit(card, STATE_UPDATE_STRATEGY);
     }
 
