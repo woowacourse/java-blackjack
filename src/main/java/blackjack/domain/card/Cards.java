@@ -6,7 +6,8 @@ import java.util.Set;
 
 public class Cards {
 
-    private static final int CARDS_MINIMUM_CREATE_SIZE = 2;
+    public static final int BLACKJACK_TARGET_NUMBER = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final Set<Card> cards;
 
@@ -17,17 +18,17 @@ public class Cards {
     }
 
     private void checkCardsSize(final Set<Card> cards) {
-        if (cards.size() < CARDS_MINIMUM_CREATE_SIZE) {
+        if (cards.size() < BLACKJACK_CARD_SIZE) {
             throw new IllegalArgumentException("cards는 2장이상이 들어와야 합니다.");
         }
     }
 
     public boolean isBust() {
-        return Denomination.calculateCardScore(cards) > 21;
+        return Denomination.calculateCardScore(cards) > BLACKJACK_TARGET_NUMBER;
     }
 
     public boolean isBlackjack() {
         System.out.println(Denomination.calculateCardScore(cards));
-        return cards.size() == 2 && Denomination.calculateCardScore(cards) == 21;
+        return cards.size() == BLACKJACK_CARD_SIZE && Denomination.calculateCardScore(cards) == BLACKJACK_TARGET_NUMBER;
     }
 }
