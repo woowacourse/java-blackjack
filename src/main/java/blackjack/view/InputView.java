@@ -21,7 +21,7 @@ public class InputView {
 
     public static PlayerRequest inputBettingMoney(String name) {
         System.out.println(MessageFormat.format("{0}의 배팅 금액은?", name));
-        return new PlayerRequest(name, isNumeric(SCANNER.nextLine()));
+        return new PlayerRequest(name, validateNaturalNumber(isNumeric(SCANNER.nextLine())));
     }
 
     public static String inputCommand(String name) {
@@ -35,18 +35,25 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
-    private static String validateCommand(String command) {
-        if (!YES.equals(command) && !NO.equals(command)) {
-            throw new IllegalArgumentException("입력은 y 또는 n이어야 합니다.");
-        }
-        return command;
-    }
-
     private static int isNumeric(String number) {
         try {
             return Integer.parseInt(number);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("배팅 금액은 숫자여야 합니다.");
         }
+    }
+
+    private static int validateNaturalNumber(int number) {
+        if (number < 0) {
+            throw new IllegalArgumentException("배팅 금액은 음수일 수 없습니다.");
+        }
+        return number;
+    }
+
+    private static String validateCommand(String command) {
+        if (!YES.equals(command) && !NO.equals(command)) {
+            throw new IllegalArgumentException("입력은 y 또는 n이어야 합니다.");
+        }
+        return command;
     }
 }
