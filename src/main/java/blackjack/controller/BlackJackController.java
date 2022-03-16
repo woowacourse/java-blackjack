@@ -119,7 +119,7 @@ public class BlackJackController {
     }
 
     private void printFinalResult(Users users) {
-        Consumer<User> consumer = user -> outputView.printWithScore(from(user), user.calculateScore());
+        Consumer<User> consumer = user -> outputView.printWithScore(from(user), user.getScore());
 
         users.printResult(consumer);
 

@@ -30,7 +30,7 @@ public class CardsTest {
         Cards cards = createCards(initCards);
 
         //when
-        int score = cards.getScore();
+        int score = cards.calculateScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(15);
@@ -48,7 +48,7 @@ public class CardsTest {
         Cards cards = createCards(initCards);
 
         //when
-        int score = cards.getScore();
+        int score = cards.calculateScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(16);
@@ -69,7 +69,7 @@ public class CardsTest {
         Cards cards = createCards(initCards);
 
         //when
-        int score = cards.getScore();
+        int score = cards.calculateScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(14);
@@ -88,7 +88,7 @@ public class CardsTest {
         Cards cards = createCards(initCards);
 
         //when
-        int score = cards.getScore();
+        int score = cards.calculateScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(21);
@@ -110,7 +110,7 @@ public class CardsTest {
         Cards cards = createCards(initCards);
 
         //when
-        int score = cards.getScore();
+        int score = cards.calculateScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(21);
@@ -128,7 +128,7 @@ public class CardsTest {
         //when
         Cards cards = createCards(initCards);
 
-        int score = cards.getScore();
+        int score = cards.calculateScore();
 
         // then
         Assertions.assertThat(cards.isSameBlackJackNumber(score)).isTrue();

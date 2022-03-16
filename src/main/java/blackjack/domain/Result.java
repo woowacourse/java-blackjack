@@ -15,12 +15,12 @@ public enum Result {
             (player, dealer) -> player.isBlackJack())
     ),
     PRINCIPAL(1.0, (
-            (player, dealer) -> ((player.calculateScore() == 21 && dealer.calculateScore() == 21) || (dealer.isBust())
-            || (!player.isBust() && !dealer.isBust() && player.calculateScore() > dealer.calculateScore())))
+            (player, dealer) -> ((player.getScore() == 21 && dealer.getScore() == 21) || (dealer.isBust())
+            || (!player.isBust() && !dealer.isBust() && player.getScore() > dealer.getScore())))
     ),
     LOSS(-1.0, (
             (player, dealer) -> ((!player.isBust() && !dealer.isBust())
-                    && (player.calculateScore() < dealer.calculateScore())))
+                    && (player.getScore() < dealer.getScore())))
     );
 
     private final Double rate;

@@ -30,18 +30,18 @@ public abstract class User {
     }
 
     public boolean isBust() {
-        return cards.isBust(cards.getScore());
+        return cards.isBust(cards.calculateScore());
     }
 
-    public int calculateScore() {
-        int score = cards.getScore();
+    public int getScore() {
+        int score = cards.calculateScore();
         validateNegative(score);
 
         return score;
     }
 
     public boolean isBlackJack() {
-        return ((cards.getCards().size() == 2) && cards.isSameBlackJackNumber(calculateScore()));
+        return ((cards.getCards().size() == 2) && cards.isSameBlackJackNumber(getScore()));
     }
 
     public abstract boolean isDealer();

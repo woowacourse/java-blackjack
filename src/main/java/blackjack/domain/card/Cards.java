@@ -23,7 +23,7 @@ public class Cards {
         return score == BLACKJACK_NUMBER;
     }
 
-    public int getScore() {
+    public int calculateScore() {
         if (containsAce(cards)) {
             return sumWithAce();
         }
