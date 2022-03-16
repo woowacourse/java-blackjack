@@ -16,7 +16,7 @@ public abstract class Running extends AbstractBlackjackGameState {
     }
 
     @Override
-    public BlackjackGameState stay() {
+    public final BlackjackGameState stay() {
         if (cards.isBlackjack()) {
             return new Blackjack(cards);
         }
@@ -29,12 +29,12 @@ public abstract class Running extends AbstractBlackjackGameState {
     }
 
     @Override
-    public double profit(final int betMoney, final BlackjackGameState blackjackGameState) {
+    public final double profit(final int betMoney, final BlackjackGameState blackjackGameState) {
         throw new IllegalStateException("Running상태는 수익을 계산할 수 없습니다.");
     }
 
     @Override
-    public int score() {
+    public final int score() {
         throw new IllegalStateException("Running상태는 score를 계산할 수 없습니다.");
     }
 }
