@@ -1,6 +1,8 @@
 package blackjack.domain.paticipant;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.state.BlackjackGameState;
+import blackjack.domain.state.Running;
 import java.util.Objects;
 
 public class Player {
@@ -17,6 +19,10 @@ public class Player {
         this.name = name;
         this.betMoney = betMoney;
         this.gameState = gameState;
+    }
+
+    public Player(final String name, final int betMoney, final Cards cards) {
+        this(name, betMoney, new Running(cards));
     }
 
     private void checkEmptyName(final String name) {
