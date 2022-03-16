@@ -35,7 +35,7 @@ public class Card {
     }
 
     private static String makeCardKey(CardShape shape, CardNumber number) {
-        return number.getName() + shape.getName();
+        return number.getName() + shape.getSymbol();
     }
 
     public boolean isAce() {
@@ -54,8 +54,8 @@ public class Card {
         return cardNumber.getName();
     }
 
-    public String getShape() {
-        return cardShape.getName();
+    public String getSymbol() {
+        return cardShape.getSymbol();
     }
 
     @Override

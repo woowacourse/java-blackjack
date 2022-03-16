@@ -51,7 +51,7 @@ public class OutputView {
 
 	private static String getCardNames(List<Card> cards) {
 		return cards.stream()
-			.map(card -> card.getName() + card.getShape())
+			.map(card -> card.getName() + card.getSymbol())
 			.collect(Collectors.joining(", "));
 	}
 

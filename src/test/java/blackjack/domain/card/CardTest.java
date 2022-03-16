@@ -24,7 +24,7 @@ class CardTest {
     void getInstance() {
         Card card = Card.getInstance(CardShape.CLOVER, CardNumber.FIVE);
         assertThat(card.getName()).isEqualTo("5");
-        assertThat(card.getShape()).isEqualTo("클로버");
+        assertThat(card.getSymbol()).isEqualTo("♣");
     }
 
     @Test
