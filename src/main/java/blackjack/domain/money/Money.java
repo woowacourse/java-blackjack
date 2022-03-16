@@ -25,4 +25,8 @@ public class Money {
             throw new IllegalArgumentException("[ERROR] 투입 금액은 1000원 단위로 넣어야 합니다.");
         }
     }
+
+    public int getMoney() {
+        return money;
+    }
 }

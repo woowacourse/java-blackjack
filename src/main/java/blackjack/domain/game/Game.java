@@ -27,6 +27,10 @@ public class Game {
         this.dealer = new Dealer();
     }
 
+    public void initBettingMoney(String userName, int money) {
+        users.getUserByName(userName).betting(money);
+    }
+
     public List<ParticipantDto> initDistributed() {
         List<ParticipantDto> participantDtos = new ArrayList<>();
         cardDistribute(dealer);

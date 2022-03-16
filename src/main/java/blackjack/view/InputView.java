@@ -39,7 +39,12 @@ public class InputView {
         throw new IllegalArgumentException(INPUT_INVALID_ANSWER);
     }
 
-    private int validateNonIntegerAndConvert(String input) {
+    public static int inputBettingMoney(String userName) {
+        System.out.printf(lineSeparator() + "%s의 배팅 금액은?" + lineSeparator(), userName);
+        return validateNonIntegerAndConvert(scanner.nextLine());
+    }
+
+    private static int validateNonIntegerAndConvert(String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {

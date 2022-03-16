@@ -9,9 +9,17 @@ public class BlackJackController {
     public void run() {
         Game game = new Game(InputView.inputUsersName());
 
+        initBettingMoney(game);
         initDistribute(game);
         playAllUser(game);
         gameResult(game);
+    }
+
+    private void initBettingMoney(Game game) {
+        for (String userName : game.getUserNames()) {
+            int money = InputView.inputBettingMoney(userName);
+            game.initBettingMoney(userName, money);
+        }
     }
 
     private void initDistribute(Game game) {
