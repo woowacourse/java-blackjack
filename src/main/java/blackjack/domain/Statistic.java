@@ -3,14 +3,15 @@ package blackjack.domain;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Gamblers;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Statistic {
 
-    private LinkedHashMap<Gambler, GameResult> gamblerResult;
+    private final Map<Gambler, GameResult> gamblerResult;
 
     private Statistic(Dealer dealer, Gamblers gamblers) {
-        this.gamblerResult = new LinkedHashMap<>();
+        this.gamblerResult = new HashMap<>();
         calculate(gamblerResult, dealer, gamblers);
     }
 
@@ -28,7 +29,7 @@ public class Statistic {
         return gamblerResult.get(gambler);
     }
 
-    private void calculate(LinkedHashMap<Gambler, GameResult> gamblerResult, Dealer dealer,
+    private void calculate(Map<Gambler, GameResult> gamblerResult, Dealer dealer,
         Gamblers gamblers) {
         if (dealer.isBust()) {
             calculateDealerBurst(gamblerResult, gamblers);
@@ -37,7 +38,7 @@ public class Statistic {
         calculateDealerNotBurst(gamblerResult, dealer, gamblers);
     }
 
-    private void calculateDealerBurst(LinkedHashMap<Gambler, GameResult> playerResult,
+    private void calculateDealerBurst(Map<Gambler, GameResult> playerResult,
         Gamblers gamblers) {
         for (Gambler gambler : gamblers.getGamblers()) {
             GameResult gameResult = getResultAtBurst(gambler);
@@ -52,7 +53,7 @@ public class Statistic {
         return GameResult.LOSE;
     }
 
-    private void calculateDealerNotBurst(LinkedHashMap<Gambler, GameResult> gamblerResult,
+    private void calculateDealerNotBurst(Map<Gambler, GameResult> gamblerResult,
         Dealer dealer, Gamblers gamblers) {
         int dealerPoint = dealer.getPoint();
         for (Gambler gambler : gamblers.getGamblers()) {
