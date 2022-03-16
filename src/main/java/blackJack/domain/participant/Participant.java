@@ -14,9 +14,13 @@ public abstract class Participant {
     private final Cards cards;
 
     public Participant(String name) {
+        this(name, new Cards());
+    }
+
+    public Participant(String name, Cards cards) {
         validateName(name);
         this.name = name;
-        this.cards = new Cards();
+        this.cards = cards;
     }
 
     private void validateName(String name) {

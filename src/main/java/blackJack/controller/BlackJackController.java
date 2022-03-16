@@ -1,11 +1,7 @@
 package blackJack.controller;
 
-import blackJack.domain.card.Deck;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import blackJack.domain.BlackJackGame;
-import blackJack.domain.participant.Dealer;
+import blackJack.domain.card.Deck;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
 import blackJack.domain.result.BlackJackGameResult;
@@ -23,7 +19,7 @@ public class BlackJackController {
 
         OutputView.printGameResult(blackJackGame.getParticipants());
         OutputView.printWinOrLoseResult(blackJackGame.getDealer(),
-            BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
+                BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
     }
 
     private void defaultRound(BlackJackGame blackJackGame) {
@@ -54,19 +50,10 @@ public class BlackJackController {
 
     private Participants getParticipants() {
         try {
-            List<String> playerNames = InputView.inputPlayerNames();
-            List<Player> players = createPlayers(playerNames);
-            return new Participants(new Dealer(), players);
+            return Participants.fromNames(InputView.inputPlayerNames());
         } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e);
             return getParticipants();
         }
-    }
-
-    private List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
     }
 
     private YesOrNo getYesOrNo(Player player) {
