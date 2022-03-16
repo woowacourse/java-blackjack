@@ -7,7 +7,7 @@ import java.util.List;
 public class Cards {
 
     private static final int ACE_ADDITIONAL_VALUE = 10;
-    protected static final int BLACKJACK_VALUE = 21;
+    public static final int BLACKJACK_VALUE = 21;
     protected static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> value;

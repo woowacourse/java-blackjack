@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
-import blackjack.domain.game.MatchResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -68,17 +67,13 @@ public class OutputView {
     }
 
     public static void printGameResult(GameResult gameResult) {
-        Map<Player, MatchResult> map = gameResult.getGameResult();
+        Map<Player, Long> map = gameResult.getBettingResult();
 
-        System.out.printf("%n%s: %d승 %d무 %d패%n"
-                , BlackjackGame.DEALER_NAME
-                , gameResult.calculateDealerMatchResultCount(MatchResult.WIN)
-                , gameResult.calculateDealerMatchResultCount(MatchResult.PUSH)
-                , gameResult.calculateDealerMatchResultCount(MatchResult.LOSE)
-        );
+        System.out.printf("%n## 최종 수익%n");
+        System.out.printf("%s: %d%n", BlackjackGame.DEALER_NAME, gameResult.getDealerProfit());
 
         for (Player player : map.keySet()) {
-            System.out.printf("%s: %s%n", player.getName(), gameResult.getMatchResult(player).getValue());
+            System.out.printf("%s: %d%n", player.getName(), gameResult.getBettingResult(player));
         }
     }
 

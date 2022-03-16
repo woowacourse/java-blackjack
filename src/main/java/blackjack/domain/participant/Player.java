@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Status;
 
 public class Player extends Participant {
     private final BettingAmount bettingAmount;
@@ -17,7 +16,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isFinished() {
-        return cards.getStatus() != Status.NONE;
+        return cards.sum() >= Cards.BLACKJACK_VALUE;
     }
 
     @Override
