@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
-public class Stand extends Finish {
+public final class Stand extends Finish {
 
     Stand(final Cards cards, final int score) {
         super(cards, score);

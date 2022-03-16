@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
-public class Blackjack extends Finish {
+public final class Blackjack extends Finish {
 
     public static final int BLACKJACK_TARGET_NUMBER = 21;
 

@@ -3,7 +3,9 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class DealerRunning extends Running {
+public final class DealerRunning extends Running {
+
+    private static final int DEALER_LIMIT_SCORE = 17;
 
     private DealerRunning(final Cards cards) {
         super(cards);
@@ -17,7 +19,7 @@ public class DealerRunning extends Running {
         if (cards.isMaxScoreBust()) {
             return new Bust(cards, cards.maxScore());
         }
-        if (cards.maxScore() >= 17) {
+        if (cards.maxScore() >= DEALER_LIMIT_SCORE) {
             return new Stand(cards, cards.maxScore());
         }
         return new DealerRunning(cards);
