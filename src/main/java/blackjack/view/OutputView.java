@@ -22,7 +22,7 @@ public class OutputView {
 	private static final String CARD = "카드";
 	private static final String RECEIVED_ONE_MORE_CARD = "이하라 한장의 카드를 더 받았습니다.";
 	private static final String FAIL_TO_RECEIVE_ONE_MORE_CARD = "이상이라 카드를 더 받지 않았습니다.";
-	private static final String BUST_MESSAGE = "파산";
+	private static final String BUST_MESSAGE = "\uD83D\uDCA3";
 
 	public void printInitialStatus(final DealerTableDto dealerTable,
 								   final List<PlayerTableDto> playersTable) {
