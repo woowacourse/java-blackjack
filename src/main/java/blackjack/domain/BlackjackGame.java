@@ -18,7 +18,7 @@ public class BlackjackGame {
     private final Players players;
     private final Dealer dealer;
 
-    public BlackjackGame(Deck deck, Players players, Dealer dealer) {
+    private BlackjackGame(Deck deck, Players players, Dealer dealer) {
         this.deck = deck;
         this.players = players;
         this.dealer = dealer;
@@ -32,12 +32,12 @@ public class BlackjackGame {
     }
 
     public void run() {
-        printPlayersCard(toDto(players), PlayerDto.from(dealer));
+        printPlayersCard(toPlayersDto(), PlayerDto.from(dealer));
 
-        takeTurnsPlayers(players, deck);
-        takeTurnDealer(dealer, deck);
+        takeTurnsPlayers();
+        takeTurnDealer();
 
-        printPlayersResult(toDto(players), PlayerDto.from(dealer));
+        printPlayersResult(toPlayersDto(), PlayerDto.from(dealer));
         printScoreResult(players.compete(dealer));
     }
 
@@ -56,28 +56,32 @@ public class BlackjackGame {
         }
     }
 
-    private static void takeTurnsPlayers(Players players, Deck deck) {
+    private void takeTurnsPlayers() {
         for (Player player : players.getValue()) {
-            takeTurn(player, deck);
+            takeTurn(player);
         }
     }
 
-    private static void takeTurn(Player player, Deck deck) {
-        Selection selection = Selection.YES;
-        while (selection == Selection.YES && !player.isBust()) {
-            selection = requestSelection(player);
-            draw(player, deck, selection);
+    private void takeTurn(Player player) {
+        if (player.isBust()) {
+            return;
         }
+        if (!Selection.isYes(requestSelection(player))) {
+            return;
+        }
+        player.drawCard(deck);
+        printPlayerCards(PlayerDto.from(player));
+        takeTurn(player);
     }
 
-    private static void takeTurnDealer(Dealer dealer, Deck deck) {
+    private void takeTurnDealer() {
         while (dealer.isDrawable()) {
             printDealerDrawMessage();
             dealer.drawCard(deck);
         }
     }
 
-    private static Selection requestSelection(Player player) {
+    private Selection requestSelection(Player player) {
         try {
             return Selection.from(InputView.requestDrawCommand(PlayerDto.from(player)));
         } catch (IllegalArgumentException exception) {
@@ -86,14 +90,7 @@ public class BlackjackGame {
         }
     }
 
-    private static void draw(Player player, Deck deck, Selection selection) {
-        if (selection == Selection.YES) {
-            player.drawCard(deck);
-        }
-        printPlayerCards(PlayerDto.from(player));
-    }
-
-    private static List<PlayerDto> toDto(Players players) {
+    private List<PlayerDto> toPlayersDto() {
         return players.getValue()
             .stream()
             .map(PlayerDto::from)
