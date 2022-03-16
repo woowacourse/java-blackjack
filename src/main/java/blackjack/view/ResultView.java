@@ -98,8 +98,8 @@ public class ResultView {
     }
 
     public static void printMatchResult(final BlackjackGameResult blackJackGameResult) {
+        System.out.println();
         printDealerMatchResult(blackJackGameResult.getDealerMatchResult());
-
         blackJackGameResult.getGamersMatchResult().forEach((name, matchResult) ->
                 System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, matchResult.getReverseValue()));
     }
