@@ -25,7 +25,7 @@ public abstract class AbstractBlackjackGameState implements BlackjackGameState {
     }
 
     @Override
-    public List<Card> cards() {
+    public final List<Card> cards() {
         return cards.cards();
     }
 }
