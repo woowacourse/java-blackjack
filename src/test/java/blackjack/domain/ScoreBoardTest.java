@@ -39,7 +39,7 @@ public class ScoreBoardTest {
         Player player = createPlayerWithDenominations("user A", JACK, NINE);
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(player));
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchResultScore = scoreBoard.findDealerMatchScore(WIN);
         MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
 
@@ -56,7 +56,7 @@ public class ScoreBoardTest {
         Player player = createPlayerWithDenominations("user A", QUEEN, TEN);
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(player));
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchResultScore = scoreBoard.findDealerMatchScore(LOSE);
         MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
 
@@ -73,7 +73,7 @@ public class ScoreBoardTest {
         Player player = createPlayerWithDenominations("user a", JACK, NINE);
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(player));
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchResultScore = scoreBoard.findDealerMatchScore(LOSE);
         MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
 
@@ -92,7 +92,7 @@ public class ScoreBoardTest {
         Player player = createPlayerWithDenominations("user b", QUEEN, TEN, TWO);
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(player));
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchScore = scoreBoard.findDealerMatchScore(WIN);
         MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
 
@@ -111,7 +111,7 @@ public class ScoreBoardTest {
         Player player = createPlayerWithDenominations("user a", JACK, TWO);
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(player));
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchScore = scoreBoard.findDealerMatchScore(DRAW);
         MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
 
@@ -130,7 +130,7 @@ public class ScoreBoardTest {
         Player player = createPlayerWithDenominations("user a", JACK, TWO, QUEEN);
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(player));
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchScore = scoreBoard.findDealerMatchScore(DRAW);
         MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
 
@@ -151,7 +151,7 @@ public class ScoreBoardTest {
         Player playerC = createPlayerWithDenominations("user c", THREE, SIX); // 9
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(playerA, playerB, playerC));
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(playerA, playerB, playerC));
         EnumMap<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
         Map<Player, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
 
@@ -176,7 +176,7 @@ public class ScoreBoardTest {
         Player playerC = createPlayerWithDenominations("user c", QUEEN, SIX, TWO); // 18
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, List.of(playerA, playerB, playerC));
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(playerA, playerB, playerC));
         EnumMap<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
         Map<Player, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
 

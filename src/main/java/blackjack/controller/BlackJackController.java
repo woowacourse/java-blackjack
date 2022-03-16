@@ -26,7 +26,7 @@ public class BlackJackController {
         takeOneMoreCardDuringDealerTurn();
         OutputView.printParticipantScore(dealer, players);
 
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, players);
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, players);
         ScoreBoardResponse scoreBoardResponse = ScoreBoardResponse.from(scoreBoard);
         OutputView.printBlackjackGameResult2(scoreBoardResponse);
     }
