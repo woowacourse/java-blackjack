@@ -50,4 +50,14 @@ public class DealerTest {
         dealer.drawCard(Card.valueOf(Denomination.ACE, Suit.CLOVER));
         assertThat(dealer.getCards().getValue().size()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("딜러의 첫번째 카드를 반환한다.")
+    void get_first_card() {
+        Dealer dealer = new Dealer(new Name("딜러"),
+                new Cards(getCardList(Denomination.SEVEN, Denomination.QUEEN)));
+        Card dealerFirstCard = dealer.getFirstCard();
+
+        assertThat(dealerFirstCard).isEqualTo(Card.valueOf(Denomination.SEVEN, Suit.CLOVER));
+    }
 }

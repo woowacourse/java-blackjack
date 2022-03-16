@@ -31,7 +31,7 @@ class PlayersTest {
     @Test
     @DisplayName("현재 게임 플레이어를 반환한다.")
     void get_present_player() {
-        String presentPlayerName = players.getPresentPlayer().getName();
+        String presentPlayerName = players.findPresentPlayer().getName();
         assertThat(presentPlayerName).isEqualTo("pobi");
     }
 
@@ -45,7 +45,7 @@ class PlayersTest {
     @DisplayName("다음 게임 플레이어로 턴을 넘긴다")
     void pass_to_next_player() {
         players.passToNextPlayer();
-        String presentPlayerName = players.getPresentPlayer().getName();
+        String presentPlayerName = players.findPresentPlayer().getName();
         assertThat(presentPlayerName).isEqualTo("jason");
     }
 
@@ -53,14 +53,14 @@ class PlayersTest {
     @DisplayName("현재 게임 플레이어의 상태를 stay로 만든다")
     void make_present_player_stay() {
         players.makePresentPlayerStay();
-        assertThat(players.getPresentPlayer().isStay()).isTrue();
+        assertThat(players.findPresentPlayer().isStay()).isTrue();
     }
 
     @Test
     @DisplayName("현재 게임 플레이어가 카드를 한장 뽑는다")
     void draw_card_present_player() {
         players.drawCardPresentPlayer(Card.valueOf(Denomination.JACK, Suit.HEART));
-        List<Card> presentPlayerCards = players.getPresentPlayer().getCards().getValue();
+        List<Card> presentPlayerCards = players.findPresentPlayer().getCards().getValue();
         assertThat(presentPlayerCards).contains(Card.valueOf(Denomination.JACK, Suit.HEART));
     }
 

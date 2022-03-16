@@ -20,9 +20,9 @@ public class Players {
     }
 
     public boolean isPresentPlayerFinished() {
-        return getPresentPlayer().isFinished();
+        return findPresentPlayer().isFinished();
     }
-    
+
     public void drawCardPresentPlayer(Card card) {
         players.peek().drawCard(card);
     }
@@ -43,7 +43,7 @@ public class Players {
         return gameResult;
     }
 
-    public Player getPresentPlayer() {
+    public Player findPresentPlayer() {
         return players.peek();
     }
 

@@ -60,12 +60,12 @@ public class BlackJackController {
     private void playPresentPlayer(Players players) {
         while (!players.isPresentPlayerFinished()) {
             decideContinueToPlay(players);
-            OutputView.printCards(players.getPresentPlayer());
+            OutputView.printCards(players.findPresentPlayer());
         }
     }
 
     private void decideContinueToPlay(Players players) {
-        boolean isDrawable = wantDraw(players.getPresentPlayer());
+        boolean isDrawable = wantDraw(players.findPresentPlayer());
         if (isDrawable) {
             players.drawCardPresentPlayer(cardDistributor.distribute());
             return;
