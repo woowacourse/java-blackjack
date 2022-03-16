@@ -52,9 +52,8 @@ public class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "1000", "n");
-                    assertThat(output()).contains("딜러와 ori에게 2장을 나누었습니다.\n"
-                            + "딜러: K하트\n"
-                            + "ori 카드: K스페이드, Q스페이드");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s",
+                            "딜러와 ori에게 2장을 나누었습니다.", "딜러: K하트", "ori 카드: K스페이드, Q스페이드"));
                 },
                 Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SEVEN),
                         Card.of(SPADES, KING), Card.of(SPADES, QUEEN))
@@ -66,9 +65,8 @@ public class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "10000", "y");
-                    assertThat(output()).contains("## 최종 수익\n"
-                            + "딜러: 10000\n"
-                            + "ori: -10000");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s",
+                            "## 최종 수익", "딜러: 10000", "ori: -10000"));
                 },
                 Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SIX),
                         Card.of(SPADES, KING), Card.of(SPADES, QUEEN),
@@ -82,9 +80,8 @@ public class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "10000", "n");
-                    assertThat(output()).contains("## 최종 수익\n"
-                            + "딜러: 0\n"
-                            + "ori: 0");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s",
+                            "## 최종 수익", "딜러: 0", "ori: 0"));
                 },
                 Arrays.asList(Card.of(SPADES, KING), Card.of(SPADES, A),
                         Card.of(HEARTS, KING), Card.of(HEARTS, A))
@@ -96,9 +93,8 @@ public class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "10000", "n");
-                    assertThat(output()).contains("## 최종 수익\n"
-                            + "딜러: -15000\n"
-                            + "ori: 15000");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s",
+                            "## 최종 수익", "딜러: -15000", "ori: 15000"));
                 },
                 Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SIX),
                         Card.of(SPADES, KING), Card.of(SPADES, A),
@@ -111,9 +107,8 @@ public class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "10000", "n");
-                    assertThat(output()).contains("## 최종 수익\n"
-                            + "딜러: -10000\n"
-                            + "ori: 10000");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s",
+                            "## 최종 수익", "딜러: -10000", "ori: 10000"));
                 },
                 Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SIX),
                         Card.of(SPADES, KING), Card.of(SPADES, SEVEN),
@@ -126,9 +121,8 @@ public class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "10000", "y", "n");
-                    assertThat(output()).contains("## 최종 수익\n"
-                            + "딜러: 10000\n"
-                            + "ori: -10000");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s",
+                            "## 최종 수익", "딜러: 10000", "ori: -10000"));
                 },
                 Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SIX),
                         Card.of(SPADES, KING), Card.of(SPADES, SEVEN),
