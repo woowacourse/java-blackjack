@@ -11,4 +11,10 @@ public class Players {
         Objects.requireNonNull(players, "players는 null이 들어올 수 없습니다.");
         this.players = players;
     }
+
+    public int dealerProfit(final Dealer dealer) {
+        return (int) - players.stream()
+                .map(player -> player.profit(dealer))
+                .count();
+    }
 }
