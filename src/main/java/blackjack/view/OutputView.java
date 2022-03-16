@@ -4,9 +4,9 @@ import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.ScoreBoardResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.ScoreBoardResponse;
 import java.util.List;
 
 public class OutputView {

@@ -9,9 +9,9 @@ import blackjack.domain.BettingMoney;
 import blackjack.domain.ScoreBoard;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
-import blackjack.domain.dto.ScoreBoardResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.ScoreBoardResponse;
 import blackjack.view.OutputView;
 import java.util.List;
 

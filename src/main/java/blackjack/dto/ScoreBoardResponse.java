@@ -1,4 +1,4 @@
-package blackjack.domain.dto;
+package blackjack.dto;
 
 import static java.util.stream.Collectors.joining;
 
