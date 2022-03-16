@@ -14,7 +14,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
@@ -35,13 +34,6 @@ class PlayerTest {
                 .hasMessage("이름은 null이 들어올 수 없습니다.");
     }
 
-    @ParameterizedTest
-    @EmptySource
-    void 플레이어의_이름이_공백인_경우_예외발생(final String name) {
-        assertThatThrownBy(() -> new Player(name, 1000, cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름은 공백이 들어올 수 없습니다.");
-    }
 
     @ParameterizedTest
     @ValueSource(ints = {0, -1000})
