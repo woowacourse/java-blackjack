@@ -57,11 +57,15 @@ public class Players {
         return findByName(name).isNeedToDraw();
     }
 
+    public boolean isBlackJackByName(Name name) {
+        return findByName(name).isBlackJack();
+    }
+
     public List<Name> getNames() {
         return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
-    public Result getResultAtDealerBlackJack(Dealer dealer) {
+    public Result generateResultAtDealerBlackJack(Dealer dealer) {
         validateDealerIsBlackJack(dealer);
         Map<Name, Versus> playerResult = new LinkedHashMap<>();
         players.forEach(player -> playerResult.put(player.getName(), player.compareAtDealerBlackJack()));
@@ -74,7 +78,7 @@ public class Players {
         }
     }
 
-    public Result getResultAtFinal(Dealer dealer) {
+    public Result generateResultAtFinal(Dealer dealer) {
         Map<Name, Versus> playerResult = new LinkedHashMap<>();
         players.forEach(player -> playerResult.put(player.getName(), player.compareAtFinal(dealer)));
         return new Result(playerResult);

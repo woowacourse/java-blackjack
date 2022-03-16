@@ -1,25 +1,18 @@
 package domain.participant;
 
-import java.util.List;
-
 import domain.card.Card;
 import domain.result.Versus;
+import java.util.List;
 
 public class Player extends Participant {
 
-    private Money money;
-
-    public Player(Name name, List<Card> hand, int money) {
+    public Player(Name name, List<Card> hand) {
         super(name, hand);
-        this.money = new Money(money);
     }
 
     @Override
     public boolean isNeedToDraw() {
-        if (isBlackJack() || isUpperBoundScore() || isBust()) {
-            return false;
-        }
-        return true;
+        return !isBlackJack() && !isUpperBoundScore() && !isBust();
     }
 
     public boolean isNameMatch(Name name) {
@@ -33,14 +26,14 @@ public class Player extends Participant {
         return Versus.LOSE;
     }
 
-    public Versus compareAtFinal(Participant other) {
+    public Versus compareAtFinal(Dealer dealer) {
         if (isBust()) {
             return Versus.LOSE;
         }
-        if (this.isBlackJack() || other.isBust()) {
+        if (this.isBlackJack() || dealer.isBust()) {
             return Versus.WIN;
         }
-        return judgeVersus(other.calculateBestScore());
+        return judgeVersus(dealer.calculateBestScore());
     }
 
     private Versus judgeVersus(int otherScore) {

@@ -1,5 +1,6 @@
 package view;
 
+import domain.betting.Profits;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
@@ -21,6 +22,9 @@ public class OutputView {
     private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_BLACK_JACK_MESSAGE = "\n== DEALER IS BLACK JACK ==";
     private static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n💵🤑💵 %s IS BLACK JACK 🎰🤑🎰\n";
+    private static final String PROFIT_TITLE_MESSAGE = "\n## 최종 수익";
+    private static final String PROFIT_OF_DEALER_FORMAT = "딜러: %s\n";
+    private static final String PROFIT_OF_PLAYER_FORMAT = "%s: %s\n";
 
     public static void printInitHands(Dealer dealer, Players players) {
         printInitHandsMessage(players.getNames());
@@ -74,7 +78,8 @@ public class OutputView {
         System.out.printf(STATUS_FORMAT, "딜러", dealer.showHand(), dealer.calculateBestScore());
         for (Name name : players.getNames()) {
             System.out.printf(
-                    STATUS_FORMAT, name.getName(),
+                    STATUS_FORMAT,
+                    name.getName(),
                     players.showHandByName(name),
                     players.getBestScoreByName(name)
             );
@@ -83,13 +88,9 @@ public class OutputView {
 
     public static void printResult(List<Name> names, Result result) {
         OutputView.printResultTitle();
-        OutputView.printDealerResult(
-                result.getDealerWinCount(),
-                result.getDealerDrawCount(),
-                result.getDealerLoseCount()
-        );
+        OutputView.printResultOfDealer(result.countDealerWin(), result.countDealerDraw(), result.countDealerLose());
         for (Name name : names) {
-            OutputView.printPlayerResult(name.getName(), result.getVersusOfPlayer(name).getResult());
+            OutputView.printResultOfPlayer(name.getName(), result.getVersusOfPlayer(name).getResult());
         }
     }
 
@@ -97,12 +98,32 @@ public class OutputView {
         System.out.println(RESULT_TITLE_MESSAGE);
     }
 
-    private static void printDealerResult(int winCount, int drawCount, int loseCount) {
+    private static void printResultOfDealer(int winCount, int drawCount, int loseCount) {
         System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, winCount, drawCount, loseCount);
     }
 
-    private static void printPlayerResult(String name, String result) {
+    private static void printResultOfPlayer(String name, String result) {
         System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, name, result);
+    }
+
+    public static void printProfit(List<Name> names, Profits profits) {
+        OutputView.printProfitTitle();
+        OutputView.printProfitOfDealer(profits.calculateDealerProfit());
+        for (Name name : names) {
+            OutputView.printProFitOfPlayer(name.getName(), profits.getProfit(name));
+        }
+    }
+
+    private static void printProfitTitle() {
+        System.out.println(PROFIT_TITLE_MESSAGE);
+    }
+
+    private static void printProfitOfDealer(double profit) {
+        System.out.printf(PROFIT_OF_DEALER_FORMAT, String.format("%.2f", profit));
+    }
+
+    private static void printProFitOfPlayer(String name, double profit) {
+        System.out.printf(PROFIT_OF_PLAYER_FORMAT, name, String.format("%.2f", profit));
     }
 
     private static void printNewLine() {
