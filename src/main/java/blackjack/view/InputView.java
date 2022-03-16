@@ -38,4 +38,12 @@ public class InputView {
         }
         throw new IllegalArgumentException(INPUT_INVALID_ANSWER);
     }
+
+    private int validateNonIntegerAndConvert(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 투입 금액은 양의 정수여야 합니다.");
+        }
+    }
 }
