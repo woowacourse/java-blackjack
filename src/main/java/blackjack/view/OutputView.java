@@ -1,15 +1,14 @@
 package blackjack.view;
 
 import blackjack.domain.game.Outcome;
-import blackjack.dto.DealerTableDto;
-import blackjack.dto.PlayerTableDto;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import blackjack.dto.DealerResultDto;
+import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerResultDto;
+import blackjack.dto.PlayerTableDto;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -26,6 +25,7 @@ public class OutputView {
 	private static final String RECEIVED_ONE_MORE_CARD = "이하라 한장의 카드를 더 받았습니다.";
 	private static final String FAIL_TO_RECEIVE_ONE_MORE_CARD = "이상이라 카드를 더 받지 않았습니다.";
 	private static final String BUST_MESSAGE = "파산";
+	private static final String BLACKJACK_VICTORY = "블랙잭 승";
 	private static final String VICTORY = "승";
 	private static final String DEFEAT = "패";
 	private static final String TIE = "무";
@@ -119,6 +119,9 @@ public class OutputView {
 	}
 
 	private String printOutcome(Outcome outcome) {
+		if (outcome == Outcome.BLACKJACK_VICTORY) {
+			return BLACKJACK_VICTORY;
+		}
 		if (outcome == Outcome.VICTORY) {
 			return VICTORY;
 		}
