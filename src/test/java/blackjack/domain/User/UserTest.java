@@ -26,9 +26,9 @@ class UserTest {
     @DisplayName("플레이어와 딜러의 점수가 같다면 True")
     void isSameScoreTest() {
         Cards cards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK)));
-        Player player = new Player("test", bettings.get(i), cards);
+        Player player = new Player("test", Betting.from(1000), cards);
         Dealer dealer = new Dealer(cards);
-        assertThat(player.isSameScore(dealer)).isTrue();
+        assertThat(player.isSameScoreWithNotBlackJack(dealer)).isTrue();
     }
 
     @Test
@@ -36,7 +36,7 @@ class UserTest {
     void isGreaterScoreThanTest() {
         Cards playerCards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK)));
         Cards dealerCards = new Cards(List.of(new Card(Shape.CLOVER, Number.FOUR)));
-        Player player = new Player("test", bettings.get(i), playerCards);
+        Player player = new Player("test", Betting.from(1000), playerCards);
         Dealer dealer = new Dealer(dealerCards);
         assertThat(player.isGreaterScoreThan(dealer)).isTrue();
     }

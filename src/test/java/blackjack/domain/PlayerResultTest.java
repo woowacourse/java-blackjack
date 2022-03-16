@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.Card.Number;
 import blackjack.domain.Card.*;
+import blackjack.domain.User.Betting;
 import blackjack.domain.User.Dealer;
 import blackjack.domain.User.Player;
 import blackjack.domain.utils.FixedCardFactory;
@@ -30,12 +31,12 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.TEN),
                 new Card(Shape.CLOVER, Number.TWO)));
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK)));
-        Player player = new Player("test", bettings.get(i), over21Cards);
+        Player player = new Player("test", Betting.from(1000), over21Cards);
         Dealer dealer = new Dealer(cards);
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);
 
-        PlayerResult actual = PlayerResult.decision(dealer, player);
+        PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.LOSE;
         assertThat(actual).isEqualTo(expected);
     }
@@ -47,9 +48,9 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.JACK),
                 new Card(Shape.HEART, Number.TEN)));
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.TWO)));
-        Player player = new Player("test", bettings.get(i), playerCards);
+        Player player = new Player("test", Betting.from(1000), playerCards);
         Dealer dealer = new Dealer(cards);
-        PlayerResult actual = PlayerResult.decision(dealer, player);
+        PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.WIN;
         assertThat(actual).isEqualTo(expected);
     }
@@ -62,11 +63,11 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.TEN)));
         Cards dealerCards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK),
                 new Card(Shape.CLOVER, Number.TEN)));
-        Player player = new Player("test", bettings.get(i), playerCards);
+        Player player = new Player("test", Betting.from(1000), playerCards);
         Dealer dealer = new Dealer(dealerCards);
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);
-        PlayerResult actual = PlayerResult.decision(dealer, player);
+        PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.WIN;
         assertThat(actual).isEqualTo(expected);
     }

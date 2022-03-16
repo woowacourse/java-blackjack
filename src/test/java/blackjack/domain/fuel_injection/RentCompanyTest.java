@@ -1,5 +1,9 @@
-package fuel_injection;
+package blackjack.domain.fuel_injection;
 
+import fuel_injection.Avante;
+import fuel_injection.K5;
+import fuel_injection.RentCompany;
+import fuel_injection.Sonata;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

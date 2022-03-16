@@ -67,7 +67,10 @@ public class Cards {
         return this.getScore() > cards.getScore();
     }
 
-    public boolean isSameScore(Cards cards) {
+    public boolean isSameScoreWithNotBlackJack(Cards cards) {
+        if(this.isBlackJack() && cards.isBlackJack()){
+            return false;
+        }
         return !isBust() && this.getScore() == cards.getScore();
     }
 }

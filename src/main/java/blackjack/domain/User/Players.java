@@ -34,7 +34,7 @@ public class Players {
     public Map<String, String> getStatistics(Dealer dealer) {
         Map<String, String> result = new HashMap<>();
         for (Player player : players) {
-            PlayerResult compare = PlayerResult.decision(dealer, player);
+            PlayerResult compare = PlayerResult.valueOf(dealer, player);
             result.put(player.getName(), compare.getValue());
         }
         return result;

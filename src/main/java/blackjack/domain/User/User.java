@@ -29,8 +29,8 @@ public abstract class User {
         return cards.isBust();
     }
 
-    public boolean isSameScore(User user) {
-        return this.cards.isSameScore(user.cards);
+    public boolean isSameScoreWithNotBlackJack(User user) {
+        return this.cards.isSameScoreWithNotBlackJack(user.cards);
     }
 
     public boolean isGreaterScoreThan(User user) {
