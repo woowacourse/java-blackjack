@@ -6,6 +6,8 @@ import blackjack.model.card.Card;
 import blackjack.model.card.TrumpNumber;
 import blackjack.model.card.TrumpSymbol;
 
+import blackjack.model.state.DealerState;
+import blackjack.model.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

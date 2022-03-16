@@ -1,6 +1,6 @@
 package blackjack.model.result;
 
-import blackjack.model.State;
+import blackjack.model.state.State;
 import blackjack.model.player.Participant;
 import java.util.Arrays;
 import java.util.function.BiPredicate;

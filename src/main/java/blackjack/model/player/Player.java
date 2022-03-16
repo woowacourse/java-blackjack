@@ -1,7 +1,7 @@
 package blackjack.model.player;
 
-import blackjack.model.PlayerState;
-import blackjack.model.State;
+import blackjack.model.state.PlayerState;
+import blackjack.model.state.State;
 import blackjack.model.card.CardDeck;
 
 import java.util.List;
