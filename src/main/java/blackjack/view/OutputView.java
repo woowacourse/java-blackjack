@@ -36,7 +36,7 @@ public class OutputView {
     }
 
     public static void printInitialDealerHand(ParticipantDto dealerDto) {
-        System.out.printf(NAME_AND_HAND_FORMAT, dealerDto.getName(), dealerDto.getHandDto().getFirstCard());
+        System.out.printf(NAME_AND_HAND_FORMAT, dealerDto.getName(), dealerDto.getFirstCard());
     }
 
     public static void printInitialPlayersHand(List<ParticipantDto> playerDtos) {
@@ -46,7 +46,7 @@ public class OutputView {
 
     public static void printParticipantHand(ParticipantDto dto) {
         String name = dto.getName();
-        String cards = String.join(JOIN_DELIMITER, dto.getHandDto().getCards());
+        String cards = String.join(JOIN_DELIMITER, dto.getCards());
 
         System.out.printf(NAME_AND_HAND_FORMAT, name, cards);
     }
@@ -65,8 +65,8 @@ public class OutputView {
 
     private static void printSingleHandAndScore(ParticipantDto dto) {
         String name = dto.getName();
-        String cards = String.join(JOIN_DELIMITER, dto.getHandDto().getCards());
-        int score = dto.getHandDto().getScore();
+        String cards = String.join(JOIN_DELIMITER, dto.getCards());
+        int score = dto.getScore();
 
         System.out.printf(PARTICIPANT_HAND_AND_SCORE_FORMAT, name, cards, score);
     }

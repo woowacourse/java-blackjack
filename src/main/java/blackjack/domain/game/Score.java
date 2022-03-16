@@ -46,6 +46,7 @@ public class Score implements Comparable<Score> {
         return "Score{" + "value=" + value + '}';
     }
 
+    // 메모: (앨런 리뷰) 멀티쓰레드 환경에서는 한번에 N건의 put이 일어날 수도 있습니다.
     private static class ScoreCache {
         static Map<Integer, Score> cache = new HashMap<>();
 
