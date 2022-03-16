@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
+import blackjack.domain.vo.Name;
 import java.util.ArrayDeque;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -31,7 +32,7 @@ class UsersTest {
                 .collect(toList());
 
         //when
-        Users users = Users.of(players, new Dealer());
+        Users users = Users.of(players, Dealer.create());
 
         //then
         Assertions.assertAll(
@@ -50,7 +51,7 @@ class UsersTest {
                 .map(name -> createPlayerByName(name))
                 .collect(toList());
 
-        Users users = Users.of(players, new Dealer());
+        Users users = Users.of(players, Dealer.create());
 
         Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
 
@@ -75,7 +76,9 @@ class UsersTest {
     @Test
     public void testBlackJack() {
         //given
-        User player = Player.from("pobi", new BettingMoney(10000));
+        Name name = Name.of("pobi");
+
+        User player = Player.from(name, new BettingMoney(10000));
 
         Deck deck = new Deck(() -> new ArrayDeque<>(
                 List.of(new Card(SPADE, ACE), new Card(DIAMOND, TEN)))
@@ -91,6 +94,6 @@ class UsersTest {
     }
 
     private Player createPlayerByName(String name) {
-        return Player.from(name, new BettingMoney(MINIMUM_BETTING_AMOUNT));
+        return Player.from(Name.of(name), new BettingMoney(MINIMUM_BETTING_AMOUNT));
     }
 }

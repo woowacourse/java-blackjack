@@ -21,6 +21,7 @@ import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
+import blackjack.domain.vo.Name;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ class ResultTest {
             player.drawCard(deck);
         }
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = Dealer.create();
         dealer.drawCard(deck);
         dealer.drawCard(deck);
 
@@ -77,7 +78,7 @@ class ResultTest {
             player.drawCard(deck);
         }
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = Dealer.create();
         dealer.drawCard(deck);
         dealer.drawCard(deck);
 
@@ -100,6 +101,6 @@ class ResultTest {
     }
 
     private Player createPlayerByName(String name) {
-        return Player.from(name, new BettingMoney(MINIMUM_BETTING_AMOUNT));
+        return Player.from(Name.of(name), new BettingMoney(MINIMUM_BETTING_AMOUNT));
     }
 }

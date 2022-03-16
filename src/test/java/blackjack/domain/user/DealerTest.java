@@ -78,6 +78,6 @@ public class DealerTest {
     }
 
     private Dealer createDealer() {
-        return new Dealer();
+        return Dealer.create();
     }
 }

@@ -7,6 +7,7 @@ import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
+import blackjack.domain.vo.Name;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ class BlackJackTest {
     @Test
     public void setInitCardsPerPlayer() {
         //given
-        Map<String, BettingMoney> playerInfo = createPlayerInfo(List.of("pobi", "jason"));
+        Map<Name, BettingMoney> playerInfo = createPlayerInfo(List.of("pobi", "jason"));
 
         BlackJack blackJack = BlackJack.from(playerInfo, new ShuffledDeckGenerateStrategy());
 
@@ -44,11 +45,11 @@ class BlackJackTest {
         assertThat(size).isEqualTo(2);
     }
 
-    private Map<String, BettingMoney> createPlayerInfo(List<String> names) {
-        Map<String, BettingMoney> playerInfo = new HashMap<>();
+    private Map<Name, BettingMoney> createPlayerInfo(List<String> names) {
+        Map<Name, BettingMoney> playerInfo = new HashMap<>();
 
         names.stream()
-                .forEach(name -> playerInfo.put(name, new BettingMoney(MINIMUM_BETTING_AMOUNT)));
+                .forEach(name -> playerInfo.put(Name.of(name), new BettingMoney(MINIMUM_BETTING_AMOUNT)));
 
         return playerInfo;
     }

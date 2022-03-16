@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import static blackjack.dto.UserDto.from;
+import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.card.Deck;
@@ -8,6 +9,7 @@ import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
+import blackjack.domain.vo.Name;
 import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -38,15 +40,19 @@ public class BlackJackController {
         printFinalResult(blackJack.getUsers());
     }
 
-    private Map<String, BettingMoney> getPlayerInfo() {
-        List<String> playerNames = getPlayerNames();
+    private Map<Name, BettingMoney> getPlayerInfo() {
+        List<Name> playerNames = getPlayerNames();
 
         return getBettingMoney(playerNames);
     }
 
-    private List<String> getPlayerNames() {
+    private List<Name> getPlayerNames() {
         try {
-            return inputView.inputPlayerNames();
+            List<String> names = inputView.inputPlayerNames();
+
+            return names.stream()
+                    .map(name -> Name.of(name))
+                    .collect(toList());
         } catch(IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
@@ -54,10 +60,10 @@ public class BlackJackController {
         }
     }
 
-    private Map<String, BettingMoney> getBettingMoney(List<String> playerNames) {
-        Map<String, BettingMoney> playerInfo = new HashMap<>();
+    private Map<Name, BettingMoney> getBettingMoney(List<Name> playerNames) {
+        Map<Name, BettingMoney> playerInfo = new HashMap<>();
 
-        for (String playerName : playerNames) {
+        for (Name playerName : playerNames) {
 
             BettingMoney bettingMoney = createBettingMoney(playerName);
 
@@ -67,9 +73,9 @@ public class BlackJackController {
         return playerInfo;
     }
 
-    private BettingMoney createBettingMoney(String playerName) {
+    private BettingMoney createBettingMoney(Name playerName) {
         try {
-            int money = inputView.inputBettingMoney(playerName);
+            int money = inputView.inputBettingMoney(playerName.getName());
 
             return new BettingMoney(money);
         } catch(IllegalArgumentException e) {

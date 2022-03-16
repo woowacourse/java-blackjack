@@ -3,14 +3,15 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.vo.Name;
 import java.util.List;
 
 public abstract class User {
 
     protected final Cards cards;
-    protected final String name;
+    private final Name name;
 
-    protected User(String name) {
+    protected User(Name name) {
         cards = new Cards();
         this.name = name;
     }
@@ -51,6 +52,6 @@ public abstract class User {
     public abstract boolean isDrawable();
 
     public String getName(){
-        return name;
+        return name.getName();
     }
 }

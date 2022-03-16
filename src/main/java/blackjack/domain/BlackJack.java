@@ -9,6 +9,7 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
+import blackjack.domain.vo.Name;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -23,7 +24,7 @@ public class BlackJack {
         this.users = users;
     }
 
-    public static BlackJack from(Map<String, BettingMoney> playerInfo, DeckGenerateStrategy deckGenerateStrategy) {
+    public static BlackJack from(Map<Name, BettingMoney> playerInfo, DeckGenerateStrategy deckGenerateStrategy) {
         Users users = createUser(playerInfo);
 
         Deck deck = new Deck(deckGenerateStrategy);
@@ -31,13 +32,13 @@ public class BlackJack {
         return new BlackJack(deck, users);
     }
 
-    private static Users createUser(Map<String, BettingMoney> playerInfo) {
+    private static Users createUser(Map<Name, BettingMoney> playerInfo) {
         List<User> players = playerInfo.entrySet()
                 .stream()
                 .map(entry -> Player.from(entry.getKey(), entry.getValue()))
                 .collect(toList());
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = Dealer.create();
 
         return Users.of(players, dealer);
     }
