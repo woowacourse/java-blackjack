@@ -3,21 +3,26 @@ package blackjack.domain;
 import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 public enum GameResult {
 
-    BLACKJACK("패", (dealer, gamblers) -> isGamblerBlackJack(gamblers)),
-    WIN("승", GameResult::isDealerWin),
-    DRAW("무", GameResult::isDraw),
-    LOSE("패", GameResult::isDealerLose),
+    BLACKJACK("패", (dealer, gamblers) -> isGamblerBlackJack(gamblers), betMoney -> betMoney * 2),
+    WIN("승", GameResult::isDealerWin, betMoney -> betMoney * -1),
+    DRAW("무", GameResult::isDraw, betMoney -> 0),
+    LOSE("패", GameResult::isDealerLose, betMoney -> betMoney),
     ;
 
     private final String result;
     private final BiPredicate<Player, Player> condition;
+    private final Function<Integer, Integer> calculateProfit;
 
-    GameResult(final String result, final BiPredicate<Player, Player> condition) {
+
+    GameResult(final String result, final BiPredicate<Player, Player> condition,
+               final Function<Integer, Integer> calculateProfit) {
         this.result = result;
         this.condition = condition;
+        this.calculateProfit = calculateProfit;
     }
 
     public static GameResult of(final Player dealer, final Player gambler) {
@@ -75,5 +80,9 @@ public enum GameResult {
 
     public String getResult() {
         return result;
+    }
+
+    public Integer calculateProfit(final int betMoney) {
+        return this.calculateProfit.apply(betMoney);
     }
 }
