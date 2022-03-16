@@ -4,6 +4,7 @@ import static blackjack.model.card.Suit.CLOVER;
 import static blackjack.model.card.Suit.DIAMOND;
 import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
@@ -192,6 +193,19 @@ public class MatcherTest {
     @DisplayName("플레이어만 블랙잭이고 딜러는 여러장을 받아 21점인 경우")
     void playerBlackjackByInitialCardsDealerJustBlackjack() {
         Dealer dealer = new Dealer(ACE, JACK, QUEEN);
+        Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, ACE);
+        Matcher matcher = Matcher.of(dealer);
+
+        Record record = matcher.match(gamer);
+
+        assertThat(record.name()).isEqualTo(GAMER_NAME);
+        assertThat(record.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+    }
+
+    @Test
+    @DisplayName("플레이어는 블랙잭이고 딜러는 버스트인 경우")
+    void playerBlackjackAndDealerBust() {
+        Dealer dealer = new Dealer(THREE, JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, ACE);
         Matcher matcher = Matcher.of(dealer);
 

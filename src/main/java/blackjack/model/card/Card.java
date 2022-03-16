@@ -1,10 +1,12 @@
 package blackjack.model.card;
 
-import static blackjack.model.card.Rank.ACE;
-
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Card {
+
     private final Rank rank;
     private final Suit suit;
 
@@ -22,7 +24,7 @@ public final class Card {
     }
 
     public boolean isAce() {
-        return rank == ACE;
+        return rank.isAce();
     }
 
     public Rank rank() {
@@ -53,5 +55,16 @@ public final class Card {
     @Override
     public String toString() {
         return rank.hard() + "-" + suit;
+    }
+
+    public static List<Card> createPool() {
+        return Stream.of(Suit.values())
+            .flatMap(Card::createEachSuitCards)
+            .collect(Collectors.toList());
+    }
+
+    private static Stream<Card> createEachSuitCards(Suit suit) {
+        return Stream.of(Rank.values())
+            .map(rank -> new Card(rank, suit));
     }
 }

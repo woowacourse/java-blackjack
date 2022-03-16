@@ -15,10 +15,14 @@ public enum Rank {
     }
 
     public int soft() {
-        if (this == ACE) {
+        if (isAce()) {
             return 11;
         }
         return value;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
     }
 
     public int hard() {

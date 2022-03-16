@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class CardDispenser {
 
@@ -16,17 +14,9 @@ public final class CardDispenser {
     }
 
     private List<Card> shuffledCards() {
-        List<Card> cardPool = createCardPool();
+        List<Card> cardPool = Card.createPool();
         Collections.shuffle(cardPool);
         return cardPool;
-    }
-
-    private List<Card> createCardPool() {
-        return Stream.of(Suit.values())
-            .flatMap(
-                suit -> Stream.of(Rank.values())
-                    .map(rank -> new Card(rank, suit)))
-            .collect(Collectors.toList());
     }
 
     public Card issue() {
