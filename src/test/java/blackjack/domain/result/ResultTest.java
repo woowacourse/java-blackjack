@@ -14,7 +14,7 @@ class ResultTest {
     @ParameterizedTest(name = "{index} {displayName} userScore = {0}, dealerScore = {1}, result = {2}")
     @MethodSource("provideScoreAndExpected")
     @DisplayName("유저와 딜러의 점수에 따라 결과가 올바르게 나온다.")
-    void dealerAndUserExceedTest(final int userScore, final int dealerScore, final Result expected) {
+    void checkUserResultTest(final int userScore, final int dealerScore, final Result expected) {
         assertThat(Result.checkUserResult(userScore, dealerScore)).isEqualTo(expected);
     }
 
