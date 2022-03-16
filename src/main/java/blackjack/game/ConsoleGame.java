@@ -1,5 +1,7 @@
 package blackjack.game;
 
+import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.card.RandomGenerator;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.BettingAmount;
@@ -17,7 +19,8 @@ import java.util.List;
 public class ConsoleGame {
 
     public void run() {
-        BlackjackGame blackjackGame = createBlackjackGame();
+        RandomGenerator randomGenerator = new RandomGenerator();
+        BlackjackGame blackjackGame = createBlackjackGame(randomGenerator);
 
         Participants participants = blackjackGame.getParticipants();
         Dealer dealer = participants.getDealer();
@@ -31,15 +34,15 @@ public class ConsoleGame {
         showGameResult(blackjackGame, dealer, players);
     }
 
-    private BlackjackGame createBlackjackGame() {
+    private BlackjackGame createBlackjackGame(DeckGenerator deckGenerator) {
         try {
             List<Name> playerNames = InputView.inputPlayerNames();
             List<BettingAmount> bettingAmounts = getBettingAmounts(playerNames);
-            return new BlackjackGame(playerNames, bettingAmounts);
+            return new BlackjackGame(playerNames, bettingAmounts, deckGenerator);
 
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
-            return createBlackjackGame();
+            return createBlackjackGame(deckGenerator);
         }
     }
 

@@ -12,7 +12,7 @@ public class CardDistributorTest {
     @DisplayName("생성 확인")
     void distribute() {
         // given
-        CardDistributor cardDistributor = new CardDistributor();
+        CardDistributor cardDistributor = new CardDistributor(new RandomGenerator());
 
         // then
         assertThatNoException().isThrownBy(cardDistributor::distribute);
@@ -22,7 +22,7 @@ public class CardDistributorTest {
     @DisplayName("카드가 다 소요되면 에러가 발생한다.")
     void failed() {
         // given
-        CardDistributor cardDistributor = new CardDistributor();
+        CardDistributor cardDistributor = new CardDistributor(new RandomGenerator());
 
         // when
         for (int i = 0; i < 52; i++) {

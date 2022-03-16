@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDistributor;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
@@ -20,9 +21,10 @@ public class BlackjackGame {
     private static final int INIT_CARD_COUNT = 2;
 
     private final Participants participants;
-    private final CardDistributor cardDistributor = new CardDistributor();
+    private final CardDistributor cardDistributor;
 
-    public BlackjackGame(List<Name> names, List<BettingAmount> bettingAmounts) {
+    public BlackjackGame(List<Name> names, List<BettingAmount> bettingAmounts, DeckGenerator deckGenerator) {
+        cardDistributor = new CardDistributor(deckGenerator);
         Dealer dealer = new Dealer(new Name(DEALER_NAME), drawInitialCards());
         List<Player> players = initializePlayers(new ArrayList<>(names), new ArrayList<>(bettingAmounts));
         this.participants = new Participants(players, dealer);

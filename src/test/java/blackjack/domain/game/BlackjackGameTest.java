@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.RandomGenerator;
 import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
@@ -18,9 +19,10 @@ public class BlackjackGameTest {
         // given
         List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
         List<BettingAmount> bettingAmounts = List.of(new BettingAmount(1000L));
+        RandomGenerator randomGenerator = new RandomGenerator();
 
         // then
-        assertThatThrownBy(() -> new BlackjackGame(names, bettingAmounts))
+        assertThatThrownBy(() -> new BlackjackGame(names, bettingAmounts, randomGenerator))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -30,7 +32,9 @@ public class BlackjackGameTest {
         // given
         List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
         List<BettingAmount> bettingAmounts = Arrays.asList(new BettingAmount(1000L), new BettingAmount(1000L));
-        BlackjackGame blackjackGame = new BlackjackGame(names, bettingAmounts);
+        RandomGenerator randomGenerator = new RandomGenerator();
+
+        BlackjackGame blackjackGame = new BlackjackGame(names, bettingAmounts, randomGenerator);
 
         // when
         boolean match = blackjackGame
