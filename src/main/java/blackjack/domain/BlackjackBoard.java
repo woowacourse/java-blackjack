@@ -10,23 +10,22 @@ import blackjack.dto.ParticipantDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class BlackjackGame {
+public class BlackjackBoard {
     private final Players players;
     private final Participant dealer;
     private final CardDeck cardDeck;
 
-    public BlackjackGame(List<String> playersNames) {
-        this.cardDeck = CardDeck.createNewCardDeck();
-        this.dealer = new Dealer(List.of(cardDeck.drawCard()));
-        this.players = new Players(createPlayers(playersNames));
+    public BlackjackBoard(CardDeck cardDeck, List<Player> players) {
+        this.cardDeck = cardDeck;
+        this.dealer = new Dealer();
+        this.players = new Players(players);
+        distributeCards();
     }
 
-    private List<Player> createPlayers(List<String> playersNames) {
-        return playersNames.stream()
-                .map(playerName -> new Player(playerName.trim(), List.of(cardDeck.drawCard(), cardDeck.drawCard())))
-                .collect(Collectors.toList());
+    private void distributeCards() {
+        dealer.receiveCard(cardDeck.drawCard());
+        players.getPlayers().forEach(player -> player.receiveCards(cardDeck.drawCard(2)));
     }
 
     public boolean isAllPlayerFinished() {
