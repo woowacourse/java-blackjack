@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.dto;
 
 import blackjack.model.player.Participant;
 

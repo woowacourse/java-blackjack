@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.ParticipantDto;
+import blackjack.dto.ParticipantDto;
 import blackjack.model.BlackjackGame;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
