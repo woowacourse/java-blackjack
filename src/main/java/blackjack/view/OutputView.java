@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.model.dto.CardDTO;
 import blackjack.model.dto.PlayerDTO;
 import blackjack.model.dto.PlayersDTO;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class OutputView {
     public static final String DEALER_TAKE_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public static final String DISPLAY_RESULT_MSG = "%s 카드: %s - 결과: %d%n";
     public static final String GAME_RESULT_GUIDE_MSG = "## 최종 승패";
-    public static final String DEALER_GAME_RESULT_MSG = "딜러: %d승 %d무 %d패%n";
+    public static final String DEALER_GAME_RESULT_MSG = "딜러: %d%s %d%s %d%s%n";
 
     private OutputView() {
     }
@@ -66,15 +67,30 @@ public class OutputView {
         }
     }
 
-    public static void printDealerRecord(Map<String, Integer> result) {
-        System.out.println("\n" + GAME_RESULT_GUIDE_MSG);
-        System.out.printf(DEALER_GAME_RESULT_MSG,
-                result.getOrDefault("WIN", 0),
-                result.getOrDefault("DRAW", 0),
-                result.getOrDefault("LOSE", 0));
+    public static void printResults(Map<String, String> gamersResult) {
+        printDealerResult(createDealerResult(gamersResult));
+        for (String name : gamersResult.keySet()) {
+            printGamerResult(name, ResultSymbol.getMappingSymbol(gamersResult.get(name)));
+        }
     }
 
-    public static void printGamerRecord(String name, String result) {
+    private static Map<ResultSymbol, Integer> createDealerResult(Map<String, String> gamersResult) {
+        Map<ResultSymbol, Integer> dealerResult = new HashMap<>();
+        for (String result : gamersResult.values()) {
+            dealerResult.merge(ResultSymbol.getOpposite(result), 1, Integer::sum);
+        }
+        return dealerResult;
+    }
+
+    public static void printDealerResult(Map<ResultSymbol, Integer> result) {
+        System.out.println("\n" + GAME_RESULT_GUIDE_MSG);
+        System.out.printf(DEALER_GAME_RESULT_MSG,
+                result.getOrDefault(ResultSymbol.WIN, 0), ResultSymbol.WIN.getSymbol(),
+                result.getOrDefault(ResultSymbol.DRAW, 0), ResultSymbol.DRAW.getSymbol(),
+                result.getOrDefault(ResultSymbol.LOSE, 0), ResultSymbol.LOSE.getSymbol());
+    }
+
+    public static void printGamerResult(String name, String result) {
         System.out.printf(CARD_DISPLAY_MSG, name, result);
     }
 }

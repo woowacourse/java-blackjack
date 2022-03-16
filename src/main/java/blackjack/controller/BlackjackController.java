@@ -7,7 +7,6 @@ import blackjack.model.dto.*;
 import blackjack.model.player.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,45 +16,32 @@ public class BlackjackController {
 
     public void play() {
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = createDealer(cardDeck);
-        List<Gamer> gamers = createGamers(InputView.inputNames(), cardDeck);
-        OutputView.printOpenCard(createPlayerDto(dealer, dealer.openCards()), createGamersDto(gamers));
+        Dealer dealer = new Dealer(List.of(cardDeck.selectCard(), cardDeck.selectCard()));
+        Gamers gamers = new Gamers(InputView.inputNames(), cardDeck);
+        OutputView.printOpenCard(createPlayerDto(dealer, dealer.openCards()), createPlayersDto(gamers));
+
         takeCards(cardDeck, dealer, gamers);
-        displayResult(dealer, gamers);
-    }
+        OutputView.printTotalScore(createPlayerDto(dealer, dealer.getCards().getEachCard()), createPlayersDto(gamers));
 
-    private Dealer createDealer(CardDeck cardDeck) {
-        return new Dealer(List.of(cardDeck.selectCard(), cardDeck.selectCard()));
-    }
-
-    private List<Gamer> createGamers(List<String> names, CardDeck cardDeck) {
-        return names.stream()
-                .map(name -> createEachGamer(name, cardDeck))
-                .collect(Collectors.toList());
-    }
-
-    private Gamer createEachGamer(String name, CardDeck cardDeck) {
-        return new Gamer(name, List.of(cardDeck.selectCard(), cardDeck.selectCard()));
-    }
-
-    private PlayersDTO createGamersDto(List<Gamer> gamers) {
-        List<PlayerDTO> players = new ArrayList<>();
-        for (Gamer gamer : gamers) {
-            players.add(createPlayerDto(gamer, gamer.getCards().getEachCard()));
-        }
-        return new PlayersDTO(players);
+        matchAndDisplayResult(dealer, gamers);
     }
 
     private PlayerDTO createPlayerDto(Player player, List<Card> playerCards) {
-        List<CardDTO> cards = new ArrayList<>();
-        for (Card card : playerCards) {
-            cards.add(new CardDTO(card.getRank().name(), card.getSuit().name()));
-        }
+        List<CardDTO> cards = playerCards.stream()
+                .map(card -> new CardDTO(card.getRank().name(), card.getSuit().name()))
+                .collect(Collectors.toList());
         return new PlayerDTO(player.getName(), player.score().getValue(), cards);
     }
 
-    private void takeCards(CardDeck cardDeck, Dealer dealer, List<Gamer> gamers) {
-        for (Gamer gamer : gamers) {
+    private PlayersDTO createPlayersDto(Gamers gamers) {
+        List<PlayerDTO> players = gamers.getGamers().stream()
+                .map(gamer -> createPlayerDto(gamer, gamer.getCards().getEachCard()))
+                .collect(Collectors.toList());
+        return new PlayersDTO(players);
+    }
+
+    private void takeCards(CardDeck cardDeck, Dealer dealer, Gamers gamers) {
+        for (Gamer gamer : gamers.getGamers()) {
             takeGamerCard(gamer, cardDeck);
         }
         takeDealerCard(dealer, cardDeck);
@@ -68,6 +54,10 @@ public class BlackjackController {
         }
     }
 
+    private boolean isKeepTakeCard(Player gamer) {
+        return InputView.chooseOptions(gamer.getName()).equals("y");
+    }
+
     private void takeDealerCard(Dealer dealer, CardDeck cardDeck) {
         while (dealer.isHittable()) {
             dealer.take(cardDeck.selectCard());
@@ -75,32 +65,12 @@ public class BlackjackController {
         }
     }
 
-    private boolean isKeepTakeCard(Player gamer) {
-        return InputView.chooseOptions(gamer.getName()).equals("y");
-    }
-
-    private void displayResult(Dealer dealer, List<Gamer> gamers) {
-        OutputView.printTotalScore(createPlayerDto(dealer, dealer.getCards().getEachCard()), createGamersDto(gamers));
-        printRecord(dealer, gamers);
-    }
-
-    private void printRecord(Dealer dealer, List<Gamer> gamers) {
-        printDealerRecord(dealer, gamers);
-        printGamerRecords(dealer, gamers);
-    }
-
-    private void printDealerRecord(Dealer dealer, List<Gamer> gamers) {
-        Map<String, Integer> result = new LinkedHashMap<>();
-        for (Gamer gamer : gamers) {
-            result.merge(dealer.match(gamer.getCards()).name(), 1, Integer::sum);
-        }
-        OutputView.printDealerRecord(result);
-    }
-
-    private void printGamerRecords(Dealer dealer, List<Gamer> gamers) {
-        for (Gamer gamer : gamers) {
+    private void matchAndDisplayResult(Dealer dealer, Gamers gamers) {
+        Map<String, String> gamersResult = new LinkedHashMap<>();
+        for (Gamer gamer : gamers.getGamers()) {
             Result result = dealer.match(gamer.getCards());
-            OutputView.printGamerRecord(gamer.getName(), result.opposite().name());
+            gamersResult.put(gamer.getName(), result.opposite().name());
         }
+        OutputView.printResults(gamersResult);
     }
 }
