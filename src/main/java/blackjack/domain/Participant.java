@@ -29,7 +29,7 @@ public abstract class Participant {
 
     public abstract boolean isFinished();
 
-    private class Name {
+    private static class Name {
         private final String name;
 
         private Name(String name) {
