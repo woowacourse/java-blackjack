@@ -75,52 +75,35 @@ class PlayerTest {
         assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
     }
 
-//    @Test
-//    @DisplayName("Player가 21이 넘고, 딜러도 21을 경우 Win을 반환한다.")
-//    void isWinTest2() {
-//        while (player.canHit()) {
-//            player.hit(deck);
-//        }
-//
-//        while (dealer.calculateScore() < 21) {
-//            dealer.hit(deck);
-//        }
-//
-//        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
-//    }
+    @Test
+    @DisplayName("Player가 21을 경우, Dealer와 상관 없이 Lose를 반환한다.")
+    void isWinTest2() {
+        while (player.canHit()) {
+            player.hit(deck);
+        }
 
-//    @Test
-//    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Player가 총 점수가 클 경우 Win을 반환한다.")
-//    void isWinTest3() {
-//        playe
-//
-//        dealer.hit(new Card(Symbol.SPADE, Denomination.SEVEN));
-//        dealer.hit(new Card(Symbol.SPADE, Denomination.EIGHT));
-//
-//        assertThat(player.isWin(dealer)).isEqualTo(Result.WIN);
-//    }
-//
-//    @Test
-//    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Dealer가 총 점수가 클 경우 Lose를 반환한다.")
-//    void isWinTest4() {
-//        player.hit(new Card(Symbol.SPADE, Denomination.EIGHT));
-//        player.hit(new Card(Symbol.SPADE, Denomination.FIVE));
-//
-//        dealer.hit(new Card(Symbol.SPADE, Denomination.SEVEN));
-//        dealer.hit(new Card(Symbol.SPADE, Denomination.EIGHT));
-//
-//        assertThat(player.isWin(dealer)).isEqualTo(Result.LOSE);
-//    }
-//
-//    @Test
-//    @DisplayName("Player와 딜러 모두 21을 넘지 않고, 점수가 같을 경우 Draw를 반환한다.")
-//    void isWinTest5() {
-//        player.hit(new Card(Symbol.SPADE, Denomination.FIVE));
-//        player.hit(new Card(Symbol.SPADE, Denomination.FIVE));
-//
-//        dealer.hit(new Card(Symbol.SPADE, Denomination.SIX));
-//        dealer.hit(new Card(Symbol.SPADE, Denomination.FOUR));
-//
-//        assertThat(player.isWin(dealer)).isEqualTo(Result.DRAW);
-//    }
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Player가 총 점수가 클 경우 Win을 반환한다.")
+    void isWinTest3() {
+        player.hit(deck);
+
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Dealer가 총 점수가 클 경우 Lose를 반환한다.")
+    void isWinTest4() {
+        dealer.hit(deck);
+
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("Player와 딜러 모두 21을 넘지 않고, 점수가 같을 경우 Draw를 반환한다.")
+    void isWinTest5() {
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.DRAW);
+    }
 }
