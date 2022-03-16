@@ -8,7 +8,8 @@ public enum WinDrawLose {
     WIN_BLACKJACK("승", 1.5),
     WIN("승", 1),
     DRAW("무", 0),
-    LOSE("패", -1);
+    LOSE("패", -1),
+    LOSE_BLACK_JACK("패", -1.5);
 
     private final String result;
     private final double profitRatio;
@@ -55,6 +56,9 @@ public enum WinDrawLose {
         if (getDrawByBlackJack(player, dealer)) {
             return DRAW;
         }
+        if (getLoseByBlackJack(player, dealer)) {
+            return LOSE_BLACK_JACK;
+        }
         return null;
     }
 
@@ -64,6 +68,10 @@ public enum WinDrawLose {
 
     private static boolean getDrawByBlackJack(Player player, Dealer dealer) {
         return player.isBlackJack() && dealer.isBlackJack();
+    }
+
+    private static boolean getLoseByBlackJack(Player player, Dealer dealer) {
+        return !player.isBlackJack() && dealer.isBlackJack();
     }
 
     private static WinDrawLose getWinDrawLoseByScore(Player player, Dealer dealer) {
@@ -77,6 +85,9 @@ public enum WinDrawLose {
     }
 
     public static WinDrawLose swapResult(WinDrawLose result) {
+        WinDrawLose swapBlackJackResult = swapResultBlackJack(result);
+        if (swapBlackJackResult != null) return swapBlackJackResult;
+
         if (result == WIN) {
             return LOSE;
         }
@@ -84,6 +95,16 @@ public enum WinDrawLose {
             return WIN;
         }
         return DRAW;
+    }
+
+    private static WinDrawLose swapResultBlackJack(WinDrawLose result) {
+        if (result == WIN_BLACKJACK) {
+            return LOSE_BLACK_JACK;
+        }
+        if (result == LOSE_BLACK_JACK) {
+            return WIN_BLACKJACK;
+        }
+        return null;
     }
 
     public double getProfitRatio() {

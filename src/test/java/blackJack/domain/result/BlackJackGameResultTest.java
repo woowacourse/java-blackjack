@@ -29,12 +29,53 @@ class BlackJackGameResultTest {
         player2.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
         player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
 
-        final Map<WinDrawLose, Integer> dealerResult = blackJackGameResult.calculateDealerResult();
+        final Map<String, Integer> dealerResult = blackJackGameResult.calculateDealerResult();
 
         assertThat(dealerResult).contains(
-                Map.entry(WinDrawLose.WIN, 1),
-                Map.entry(WinDrawLose.DRAW, 0),
-                Map.entry(WinDrawLose.LOSE, 2)
+                Map.entry("승", 1),
+                Map.entry("무", 0),
+                Map.entry("패", 2)
+        );
+    }
+
+    @Test
+    @DisplayName("플레이어 중 블랙잭이 있을 때 딜러의 승패 결과 테스트")
+    void calculateDealerResultWhenBlackJackPlayer() {
+        BlackJackGameResult blackJackGameResult = new BlackJackGameResult(dealer, List.of(player1, player2, player3));
+        dealer.receiveCard(Card.from(Suit.SPADE, Denomination.NINE));
+        player1.receiveCard(Card.from(Suit.DIAMOND, Denomination.ACE));
+        player1.receiveCard(Card.from(Suit.DIAMOND, Denomination.JACK));
+        player2.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
+        player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
+
+        final Map<String, Integer> dealerResult = blackJackGameResult.calculateDealerResult();
+
+        assertThat(dealerResult).contains(
+                Map.entry("승", 0),
+                Map.entry("무", 0),
+                Map.entry("패", 3)
+        );
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭일 때 딜러의 승패 결과 테스트")
+    void calculateDealerResultWhenBlackJackDealer() {
+        BlackJackGameResult blackJackGameResult = new BlackJackGameResult(dealer, List.of(player1, player2, player3));
+        dealer.receiveCard(Card.from(Suit.DIAMOND, Denomination.ACE));
+        dealer.receiveCard(Card.from(Suit.DIAMOND, Denomination.JACK));
+        player1.receiveCard(Card.from(Suit.HEART, Denomination.ACE));
+        player1.receiveCard(Card.from(Suit.HEART, Denomination.JACK));
+        player2.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
+        player2.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
+        player2.receiveCard(Card.from(Suit.CLOVER, Denomination.THREE));
+        player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
+
+        final Map<String, Integer> dealerResult = blackJackGameResult.calculateDealerResult();
+
+        assertThat(dealerResult).contains(
+                Map.entry("승", 2),
+                Map.entry("무", 1),
+                Map.entry("패", 0)
         );
     }
 

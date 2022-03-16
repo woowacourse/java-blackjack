@@ -88,7 +88,7 @@ public class OutputView {
                 participant.getScore());
     }
 
-    public static void printWinDrawLoseResult(Dealer dealer, Map<WinDrawLose, Integer> dealerResult, Map<Player, WinDrawLose> playersResult) {
+    public static void printWinDrawLoseResult(Dealer dealer, Map<String, Integer> dealerResult, Map<Player, WinDrawLose> playersResult) {
         System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_WIN_OR_LOSE));
         String dealerGameResult = getDealerGameResult(dealerResult);
 
@@ -97,10 +97,10 @@ public class OutputView {
                 OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, key.getName(), value.getResult()));
     }
 
-    private static String getDealerGameResult(Map<WinDrawLose, Integer> winDrawLoseInfo) {
+    private static String getDealerGameResult(Map<String, Integer> winDrawLoseInfo) {
         List<String> winDrawLoseEssentialInfo = winDrawLoseInfo.entrySet().stream()
                 .filter(resultCount -> resultCount.getValue() > 0)
-                .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
+                .map(resultCount -> resultCount.getValue() + resultCount.getKey())
                 .collect(Collectors.toUnmodifiableList());
         return String.join(JOINING_DELIMITER_SPACE, winDrawLoseEssentialInfo);
     }

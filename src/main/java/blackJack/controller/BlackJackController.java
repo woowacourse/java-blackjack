@@ -75,7 +75,7 @@ public class BlackJackController {
 
     private void createBlackJackGameResult(List<Player> players, Dealer dealer) {
         final BlackJackGameResult blackJackGameResult = new BlackJackGameResult(dealer, players);
-        final Map<WinDrawLose, Integer> dealerResult = blackJackGameResult.calculateDealerResult();
+        final Map<String, Integer> dealerResult = blackJackGameResult.calculateDealerResult();
         final Map<Player, WinDrawLose> playersResult = blackJackGameResult.calculatePlayersResult();
         OutputView.printGameResult(dealer, players);
         OutputView.printWinDrawLoseResult(dealer, dealerResult, playersResult);

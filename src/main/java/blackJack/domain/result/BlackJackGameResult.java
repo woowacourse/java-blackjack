@@ -18,20 +18,20 @@ public class BlackJackGameResult {
         this.players = players;
     }
 
-    public Map<WinDrawLose, Integer> calculateDealerResult() {
-        final Map<WinDrawLose, Integer> gameResult = initializeDealerResult();
+    public Map<String, Integer> calculateDealerResult() {
+        final Map<String, Integer> gameResult = initializeDealerResult();
         for (Player player : players) {
             final WinDrawLose playerWinDrawLose = WinDrawLose.calculateWinDrawLose(player, dealer);
-            final WinDrawLose winDrawLose = WinDrawLose.swapResult(playerWinDrawLose);
-            gameResult.computeIfPresent(winDrawLose, (k, v) -> v + 1);
+            final String winDrawLoseResult = WinDrawLose.swapResult(playerWinDrawLose).getResult();
+            gameResult.computeIfPresent(winDrawLoseResult, (k, v) -> v + 1);
         }
         return gameResult;
     }
 
-    private Map<WinDrawLose, Integer> initializeDealerResult() {
-        final Map<WinDrawLose, Integer> gameResult = new EnumMap<>(WinDrawLose.class);
-        for (WinDrawLose value : WinDrawLose.values()) {
-            gameResult.put(value, 0);
+    private Map<String, Integer> initializeDealerResult() {
+        final Map<String, Integer> gameResult = new LinkedHashMap<>();
+        for (WinDrawLose winDrawLose : WinDrawLose.values()) {
+            gameResult.put(winDrawLose.getResult(), 0);
         }
         return gameResult;
     }
