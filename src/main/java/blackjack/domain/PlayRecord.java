@@ -4,16 +4,10 @@ import static blackjack.domain.PlayStatus.*;
 
 public enum PlayRecord {
 
-    WIN("승"),
-    PUSH("무"),
-    LOSS("패"),
-    BLACKJACK("블랙잭");
-
-    private final String name;
-
-    PlayRecord(String name) {
-        this.name = name;
-    }
+    WIN,
+    PUSH,
+    LOSS,
+    BLACKJACK;
 
     public static PlayRecord of(int dealerScore, int score) {
         if (isPlayerLoss(dealerScore, score)) {
@@ -45,9 +39,5 @@ public enum PlayRecord {
         }
 
         return PUSH;
-    }
-
-    public String getName() {
-        return name;
     }
 }
