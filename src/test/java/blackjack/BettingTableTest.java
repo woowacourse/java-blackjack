@@ -18,11 +18,11 @@ public class BettingTableTest {
     void dealerRevenue() {
         //given
         BettingTable table = new BettingTable(List.of(new Betting(Name.of("pobi"), 10000),
-                                              new Betting(Name.of("jason"), 20000)));
+            new Betting(Name.of("jason"), 20000)));
 
         //when
         long actual = table.dealerRevenue(Map.of(Name.of("pobi"), PlayRecord.WIN,
-                                                 Name.of("jason"), PlayRecord.LOSS));
+            Name.of("jason"), PlayRecord.LOSS));
         //then
         assertThat(actual).isEqualTo(10000);
     }

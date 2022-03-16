@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static blackjack.view.InputView.*;
 import static blackjack.view.OutputView.*;
+import static java.util.stream.Collectors.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import blackjack.Betting;
 import blackjack.domain.Game;
 import blackjack.domain.PlayRecord;
 import blackjack.domain.PlayStatus;
@@ -35,7 +37,9 @@ public class GameController {
     }
 
     private Game initPlay() {
-        List<String> names = requestPlayerNames();
+        List<Name> names = getNames();
+        List<Betting> bettings = getBettings(names);
+
         Game game = new Game(new CardDeck(new RandomDeck()), names);
 
         printInitResult(names);
@@ -45,6 +49,18 @@ public class GameController {
         }
         printEmptyLine();
         return game;
+    }
+
+    private List<Betting> getBettings(List<Name> names) {
+         return names.stream()
+            .map(name -> new Betting(name, inputBettingMoney(name)))
+            .collect(toUnmodifiableList());
+    }
+
+    private List<Name> getNames() {
+        return requestPlayerNames().stream()
+            .map(Name::of)
+            .collect(toUnmodifiableList());
     }
 
     private ParticipantDto convertToDto(Participant participant) {
@@ -85,7 +101,7 @@ public class GameController {
     private void playRecord(Game game) {
         RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
         Map<Name, PlayRecord> map = game.getPlayers().stream()
-            .collect(Collectors.toMap(Player::getName, player -> recordFactory.getPlayerRecord(player.getScore()),
+            .collect(toMap(Player::getName, player -> recordFactory.getPlayerRecord(player.getScore()),
                 (recordA, recordB) -> recordB, LinkedHashMap::new));
 
         printDealerRecord(recordFactory.getDealerRecord());
