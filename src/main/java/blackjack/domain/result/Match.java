@@ -29,17 +29,6 @@ public enum Match {
                 .orElseThrow();
     }
 
-    public String getResult() {
-        return result;
-    }
-
-    public Match getDealerResult() {
-        return Arrays.stream(values())
-                .filter(this::findOppositeResult)
-                .findFirst()
-                .orElseThrow();
-    }
-
     private boolean findOppositeResult(Match match) {
         return match.result.equals(this.oppositeResult);
     }
@@ -54,5 +43,16 @@ public enum Match {
 
     private static Boolean isDraw(Player player, Player competitor) {
         return player.isDraw(competitor);
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public Match getDealerResult() {
+        return Arrays.stream(values())
+                .filter(this::findOppositeResult)
+                .findFirst()
+                .orElseThrow();
     }
 }
