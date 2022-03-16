@@ -17,6 +17,12 @@ public class ResultOfProfit {
         }
     }
 
+    public int getDealerProfit(Dealer dealer) {
+        return getPlayersProfit(dealer).values().stream()
+                .mapToInt(profit -> -profit)
+                .sum();
+    }
+
     public Map<Player, Integer> getPlayersProfit(Dealer dealer) {
         Map<Player, Integer> playersProfit = new LinkedHashMap<>();
         for (Entry<Player, BettingAmount> entry : bettingAmounts.entrySet()) {
