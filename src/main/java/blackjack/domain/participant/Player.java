@@ -8,12 +8,12 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    Player(final ParticipantName name, final State state) {
+    private Player(final ParticipantName name, final State state) {
         super(name, state);
     }
 
     public Player(final String name, final String battingMoney, final List<Card> card) {
-        super(name, new BattingMoney(battingMoney), card);
+        super(new ParticipantName(name), new BattingMoney(battingMoney), card);
     }
 
     public Player stay() {

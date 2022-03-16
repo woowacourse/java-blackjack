@@ -10,11 +10,11 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private static final String DEALER_NAME = "딜러";
+    private static final ParticipantName DEALER_NAME = new ParticipantName("딜러");
     private static final int DEALER_LIMIT_SCORE = 17;
 
     private Dealer(final State state) {
-        super(new ParticipantName(DEALER_NAME), state);
+        super(DEALER_NAME, state);
     }
 
     public Dealer(final List<Card> cards) {

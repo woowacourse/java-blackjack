@@ -17,8 +17,8 @@ public abstract class Participant {
         this.state = state;
     }
 
-    Participant(final String name, final BattingMoney battingMoney, final List<Card> cards) {
-        this(new ParticipantName(name), State.create(new Cards(cards), battingMoney));
+    Participant(final ParticipantName name, final BattingMoney battingMoney, final List<Card> cards) {
+        this(name, State.create(new Cards(cards), battingMoney));
     }
 
     public String getName() {
