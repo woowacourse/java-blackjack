@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import static blackjack.domain.card.Denomination.A;
 import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.NINE;
 import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.SPADES;
@@ -72,5 +73,16 @@ class StandTest {
         final Stand compareStand = new Stand(cards);
 
         assertThat(stand.earningRate(compareStand)).isEqualTo(0);
+    }
+
+    @Test
+    void 상대보다_스코어가_크면_수익률이_1() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Stand stand = new Stand(cards);
+
+        final Cards standCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, NINE)));
+        final Stand compareStand = new Stand(standCards);
+
+        assertThat(stand.earningRate(compareStand)).isEqualTo(1);
     }
 }

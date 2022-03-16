@@ -23,6 +23,9 @@ public class Stand extends Finish {
         if (cards.score() == blackjackGameState.score()) {
             return 0;
         }
+        if (cards.score() > blackjackGameState.score()) {
+            return 1;
+        }
         return 100;
     }
 }
