@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.BlackjackGameState;
-import blackjack.domain.state.Running;
+import blackjack.domain.state.PlayerRunning;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class PlayerTest {
     @BeforeEach
     void setup() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
-        runningState = new Running(cards);
+        runningState = new PlayerRunning(cards);
     }
 
     @Test

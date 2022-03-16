@@ -15,11 +15,11 @@ import blackjack.domain.card.Cards;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-class RunningTest {
+class PlayerRunningTest {
 
     @Test
     void 생성_시_cards가_null인_경우_예외발생() {
-        assertThatThrownBy(() -> new Running(null))
+        assertThatThrownBy(() -> new PlayerRunning(null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("cards는 null이 들어올 수 없습니다.");
     }
@@ -27,7 +27,7 @@ class RunningTest {
     @Test
     void 생성_시_score가_bust_score인_경우_예외발생() {
         final Set<Card> cards = Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, JACK));
-        assertThatThrownBy(() -> new Running(new Cards(cards)))
+        assertThatThrownBy(() -> new PlayerRunning(new Cards(cards)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Running상태는 버스트된 카드가 들어올 수 없습니다.");
     }
@@ -35,7 +35,7 @@ class RunningTest {
     @Test
     void 게임_종료여부_반환() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Running running = new Running(cards);
+        final Running running = new PlayerRunning(cards);
 
         assertThat(running.isFinished()).isFalse();
     }
@@ -43,7 +43,7 @@ class RunningTest {
     @Test
     void 수익률_계산시_예외발생() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Running running = new Running(cards);
+        final Running running = new PlayerRunning(cards);
 
         assertThatThrownBy(() -> running.profit(1000, running))
                 .isInstanceOf(IllegalStateException.class)
@@ -53,7 +53,7 @@ class RunningTest {
     @Test
     void hit할_때_Bust가_아니면_Running_반환() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, TWO), Card.of(SPADES, THREE)));
-        final BlackjackGameState running = new Running(cards);
+        final BlackjackGameState running = new PlayerRunning(cards);
         final BlackjackGameState nextState = running.hit(Card.of(SPADES, FOUR));
 
         assertThat(nextState).isInstanceOf(Running.class);
@@ -62,7 +62,7 @@ class RunningTest {
     @Test
     void hit할_때_Bust면_Bust_반환() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final BlackjackGameState running = new Running(cards);
+        final BlackjackGameState running = new PlayerRunning(cards);
         final BlackjackGameState nextState = running.hit(Card.of(SPADES, JACK));
 
         assertThat(nextState).isInstanceOf(Bust.class);
@@ -71,7 +71,7 @@ class RunningTest {
     @Test
     void stay할_때_Stand_반환() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final BlackjackGameState running = new Running(cards);
+        final BlackjackGameState running = new PlayerRunning(cards);
         final BlackjackGameState nextState = running.stay();
 
         assertThat(nextState).isInstanceOf(Stand.class);

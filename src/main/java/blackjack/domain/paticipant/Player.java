@@ -3,7 +3,7 @@ package blackjack.domain.paticipant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.BlackjackGameState;
-import blackjack.domain.state.Running;
+import blackjack.domain.state.PlayerRunning;
 import java.util.Objects;
 
 public class Player {
@@ -23,7 +23,7 @@ public class Player {
     }
 
     public Player(final String name, final int betMoney, final Cards cards) {
-        this(name, betMoney, new Running(cards));
+        this(name, betMoney, new PlayerRunning(cards));
     }
 
     private void checkEmptyName(final String name) {

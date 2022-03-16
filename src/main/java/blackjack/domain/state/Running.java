@@ -1,9 +1,8 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public final class Running extends AbstractBlackjackGameState {
+public abstract class Running extends AbstractBlackjackGameState {
 
     public Running(final Cards cards) {
         super(cards);
@@ -14,15 +13,6 @@ public final class Running extends AbstractBlackjackGameState {
         if (cards.isBust()) {
             throw new IllegalArgumentException("Running상태는 버스트된 카드가 들어올 수 없습니다.");
         }
-    }
-
-    @Override
-    public BlackjackGameState hit(final Card card) {
-        cards().addCard(card);
-        if (cards().isBust()) {
-            return new Bust(cards());
-        }
-        return new Running(cards());
     }
 
     @Override
