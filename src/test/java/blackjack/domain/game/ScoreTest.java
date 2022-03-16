@@ -1,7 +1,16 @@
 package blackjack.domain.game;
 
+import static blackjack.domain.fixture.CardRepository.CLOVER2;
+import static blackjack.domain.fixture.CardRepository.CLOVER4;
+import static blackjack.domain.fixture.CardRepository.CLOVER5;
+import static blackjack.domain.fixture.CardRepository.CLOVER9;
+import static blackjack.domain.fixture.CardRepository.CLOVER_ACE;
+import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
+import static blackjack.domain.fixture.CardRepository.CLOVER_QUEEN;
+import static blackjack.domain.fixture.CardRepository.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -34,6 +43,17 @@ public class ScoreTest {
         Score newScore = score.add(anotherScore);
 
         assertThat(newScore.getValue()).isEqualTo(25);
+    }
+
+    @DisplayName("calculateSumFrom 는 각 카드가 지닌 값들의 합을 합산하여 반환한다.")
+    @Test
+    void calculateSumFrom() {
+        Hand hand = Hand.of(CLOVER4, CLOVER5);
+
+        Score actual = Score.calculateSumFrom(hand);
+        Score expected = Score.valueOf(9);
+
+        assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("compareTo 는 각 점수 인스턴스의 크기를 비교한다.")
@@ -70,6 +90,86 @@ public class ScoreTest {
             int actual = score.compareTo(biggerScore);
 
             assertThat(actual).isNegative();
+        }
+    }
+
+    @DisplayName("calculateSumFrom 은 ACE 가 포함된 패를 전달 받았을 때 최대한 버스트되지 않고 최대가 되도록 ACE 값을 선택하여 점수의 합을 반환한다.")
+    @Nested
+    class CalculateSumFromTest {
+
+        @DisplayName("패가 ACE, 2 일경우 ACE 는 11로 취급된다.")
+        @Test
+        void calculateSumFrom_withAceAnd2() {
+            // given
+            Hand hand = Hand.of(CLOVER_ACE, CLOVER2);
+
+            // when
+            Score actual = Score.calculateSumFrom(hand);
+            Score expected = Score.valueOf(13);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("패가 ACE, ACE 일경우 첫번째 ACE는 11로, 두번째 ACE는 1로 취급된다.")
+        @Test
+        void calculateSumFrom_withTwoAces() {
+            // given
+            Hand hand = Hand.of(CLOVER_ACE, HEART_ACE);
+
+            // when
+            Score actual = Score.calculateSumFrom(hand);
+            Score expected = Score.valueOf(12);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("패가 KING, QUEEN, ACE 일경우 ACE는 1로 취급된다.")
+        @Test
+        void calculateSumFrom_withKingQueenAndAce() {
+            // given
+            Hand hand = Hand.of(CLOVER_KING, CLOVER_QUEEN);
+            hand.add(CLOVER_ACE);
+
+            // when
+            Score actual = Score.calculateSumFrom(hand);
+            Score expected = Score.valueOf(21);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("패가 KING, 9, ACE, ACE 일경우 두 ACE는 모두 1로 취급된다.")
+        @Test
+        void calculateSumFrom_withKingAceAnd9() {
+            // given
+            Hand hand = Hand.of(CLOVER_KING, CLOVER9);
+            hand.add(CLOVER_ACE);
+            hand.add(HEART_ACE);
+
+            // when
+            Score actual = Score.calculateSumFrom(hand);
+            Score expected = Score.valueOf(21);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("패가 KING, QUEEN, ACE, ACE 일경우 두 ACE는 모두 1로 취급된다.")
+        @Test
+        void calculateSumFrom_withKingQueenAndTwoAces() {
+            // given
+            Hand hand = Hand.of(CLOVER_KING, CLOVER_QUEEN);
+            hand.add(CLOVER_ACE);
+            hand.add(HEART_ACE);
+
+            // when
+            Score actual = Score.calculateSumFrom(hand);
+            Score expected = Score.valueOf(22);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
         }
     }
 }

@@ -1,12 +1,17 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class Score implements Comparable<Score> {
     public static final int DEALER_EXTRA_CARD_LIMIT = 16;
     public static final int BLACKJACK = 21;
+
+    private static final int VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL = 10;
 
     private final int value;
 
@@ -17,6 +22,33 @@ public class Score implements Comparable<Score> {
 
     public static Score valueOf(final int value) {
         return ScoreCache.getCache(value);
+    }
+
+    public static Score calculateSumFrom(Hand hand) {
+        Set<Card> cards = hand.getCards();
+
+        int maximumScore = cards.stream()
+                .mapToInt(card -> card.getRankValue().getValue())
+                .sum();
+
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+
+        return calculateScoreIncludingAce(maximumScore, aceCount);
+    }
+
+    private static Score calculateScoreIncludingAce(int maximumScore, int aceCount) {
+        int adjustedScore = maximumScore;
+
+        for (int i = 0; i < aceCount; i++) {
+            if (adjustedScore <= Score.BLACKJACK) {
+                break; // TODO: 2 depth 수정하기
+            }
+            adjustedScore -= VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL;
+        }
+
+        return Score.valueOf(adjustedScore);
     }
 
     public Score add(Score anotherScore) {

@@ -20,7 +20,7 @@ public abstract class Participant {
     public abstract boolean canReceive();
 
     public Score getCurrentScore() {
-        return hand.getScore();
+        return Score.calculateSumFrom(hand);
     }
 
     public String getName() {
@@ -33,7 +33,7 @@ public abstract class Participant {
 
     // TODO: 구현체의 canReceive 메소드와 상당히 겹침. 해결 필요.
     public boolean isBusted() {
-        return hand.getScore().isGreaterThan(Score.BLACKJACK);
+        return Score.calculateSumFrom(hand).isGreaterThan(Score.BLACKJACK);
     }
 
     // TODO: 조건식 단순화
