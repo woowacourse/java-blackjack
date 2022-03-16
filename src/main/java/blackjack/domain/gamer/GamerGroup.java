@@ -40,7 +40,7 @@ public class GamerGroup {
 
     public int addCardToDealer(CardPack cardPack) {
         int addedCardsCount = 0;
-        while (dealer.isAddable()) {
+        while (dealer.isNotBust()) {
             dealer.addCard(cardPack.pickOne());
             addedCardsCount++;
         }

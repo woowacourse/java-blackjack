@@ -57,7 +57,7 @@ public class BlackJackController {
     }
 
     private void requestCardAdditionToPlayer(Player player) {
-        if (player.isAddable()) {
+        if (player.isNotBust()) {
             requestCardAddition(player);
         }
     }

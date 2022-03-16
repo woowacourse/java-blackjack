@@ -58,8 +58,8 @@ public class Gamer {
         return cardGroup.isBust();
     }
 
-    public boolean isAddable() {
-        return cardGroup.isAddable();
+    public boolean isNotBust() {
+        return cardGroup.isNotBust();
     }
 
     public int getScore() {

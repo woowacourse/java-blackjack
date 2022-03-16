@@ -20,7 +20,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean isAddable() {
+    public boolean isNotBust() {
         return getScore() <= DEALER_STAND_CONDITION;
     }
 }

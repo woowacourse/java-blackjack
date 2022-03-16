@@ -19,7 +19,7 @@ public class CardGroup {
         return calculateScore() > BLACKJACK_NUMBER;
     }
 
-    public boolean isAddable() {
+    public boolean isNotBust() {
         return calculateScore() < BLACKJACK_NUMBER;
     }
 
