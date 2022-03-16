@@ -7,11 +7,10 @@ import static java.util.stream.Collectors.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import blackjack.Betting;
+import blackjack.BettingTable;
 import blackjack.domain.Game;
 import blackjack.domain.PlayRecord;
 import blackjack.domain.PlayStatus;
@@ -27,19 +26,18 @@ import blackjack.dto.ParticipantDto;
 public class GameController {
 
     public void play() {
-        Game game = initPlay();
+        List<Name> names = getNames();
+        List<Betting> bettings = getBettings(names);
+        Game game = initPlay(names);
 
         drawPlayerCards(game);
         drawDealerCards(game);
 
         participantsResult(game);
-        playRecord(game);
+        playRecord(game, bettings);
     }
 
-    private Game initPlay() {
-        List<Name> names = getNames();
-        List<Betting> bettings = getBettings(names);
-
+    private Game initPlay(List<Name> names) {
         Game game = new Game(new CardDeck(new RandomDeck()), names);
 
         printInitResult(names);
@@ -52,7 +50,7 @@ public class GameController {
     }
 
     private List<Betting> getBettings(List<Name> names) {
-         return names.stream()
+        return names.stream()
             .map(name -> new Betting(name, inputBettingMoney(name)))
             .collect(toUnmodifiableList());
     }
@@ -98,15 +96,17 @@ public class GameController {
         }
     }
 
-    private void playRecord(Game game) {
+    private void playRecord(Game game, List<Betting> bettings) {
         RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
         Map<Name, PlayRecord> map = game.getPlayers().stream()
             .collect(toMap(Player::getName, player -> recordFactory.getPlayerRecord(player.getScore()),
                 (recordA, recordB) -> recordB, LinkedHashMap::new));
 
-        printDealerRecord(recordFactory.getDealerRecord());
-        for (Entry<Name, PlayRecord> entry : map.entrySet()) {
-            printPlayerRecord(entry.getKey(), entry.getValue());
+        BettingTable bettingTable = new BettingTable(bettings);
+
+        printDealerRecord(bettingTable.dealerRevenue(map));
+        for (Betting betting : bettings) {
+            printPlayerRecord(betting.getName(), betting.result(map));
         }
     }
 }

@@ -1,11 +1,8 @@
 package blackjack.view;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.PlayRecord;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
@@ -55,20 +52,14 @@ public class OutputView {
             + " - 결과: " + dto.getScore());
     }
 
-    public static void printDealerRecord(Map<PlayRecord, Integer> record) {
+    public static void printDealerRecord(long dealerRevenue) {
         printEmptyLine();
-        System.out.println("## 최종 승패");
-
-        StringBuilder builder = new StringBuilder();
-        Arrays.stream(PlayRecord.values())
-            .filter(it -> record.getOrDefault(it, 0) != 0)
-            .forEach(it -> builder.append(record.get(it)).append(it.getName()));
-
-        System.out.println("딜러: " + builder);
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerRevenue);
     }
 
-    public static void printPlayerRecord(Name name, PlayRecord playRecord) {
-        System.out.println(name.getValue() + ": " + playRecord.getName());
+    public static void printPlayerRecord(Name name, long revenue) {
+        System.out.println(name.getValue() + ": " + revenue);
     }
 
     public static void printEmptyLine() {
