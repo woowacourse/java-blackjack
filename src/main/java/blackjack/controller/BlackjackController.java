@@ -64,7 +64,7 @@ public class BlackjackController {
     private void printResult(Participants participants) {
         OutputView.printCardsAndPoint(participants);
         GameResult gameResult = new GameResult(participants);
-        OutputView.printProfitResult(gameResult.calculateBettingResult());
+        OutputView.printProfitResult(gameResult.calculateTotalProfitResult());
     }
 }
 

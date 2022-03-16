@@ -98,11 +98,11 @@ public class OutputView {
                 key.getName() + RESULT_DELIMITER + value.getResult()));
     }
 
-    public static void printProfitResult(Map<Participant, Double> profitResult) {
+    public static void printProfitResult(Map<Participant, Integer> profitResult) {
         System.out.println("\n" + PROFIT_TITLE_MESSAGE);
         for (Participant participant : profitResult.keySet()) {
             System.out.print(
-                participant.getName() + RESULT_DELIMITER + Double.toString(profitResult.get(participant)) + "\n"
+                participant.getName() + RESULT_DELIMITER + profitResult.get(participant) + "\n"
             );
         }
     }

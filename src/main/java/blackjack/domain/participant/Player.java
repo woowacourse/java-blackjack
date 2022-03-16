@@ -25,16 +25,7 @@ public class Player extends Participant {
         isTurnEnd = true;
     }
 
-    public double calculateProfit(PlayerWinningResult winningResult) {
-        if (isBlackjack()) {
-            return bettingMoney * 1.5;
-        }
-        if (winningResult == PlayerWinningResult.WIN) {
-            return bettingMoney;
-        }
-        if (winningResult == PlayerWinningResult.LOSE) {
-            return -bettingMoney;
-        }
-        return 0;
+    public int calculateProfit(PlayerWinningResult winningResult) {
+        return winningResult.getBettingProfit(bettingMoney, isBlackjack());
     }
 }

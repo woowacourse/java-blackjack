@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjack.domain.participant.Dealer;
@@ -21,10 +22,6 @@ public class GameResult {
         }
     }
 
-    public Map<Player, PlayerWinningResult> getPlayerResult() {
-        return playerResult;
-    }
-
     public Map<PlayerWinningResult, Integer> getDealerResult() {
         Map<PlayerWinningResult, Integer> dealerResult = new HashMap<>();
         for (PlayerWinningResult winningResult : playerResult.values()) {
@@ -34,16 +31,26 @@ public class GameResult {
         return dealerResult;
     }
 
-    public Map<Participant, Double> calculateBettingResult() {
-        Map<Participant, Double> bettingResult = new HashMap<>();
-        bettingResult.put(dealer, 0.0);
-        double dealerProfit = bettingResult.get(dealer);
-        for (Player player : playerResult.keySet()) {
-            double profit = player.calculateProfit(playerResult.get(player));
-            bettingResult.put(player, profit);
-            dealerProfit -= profit;
-        }
-        bettingResult.put(dealer, dealerProfit);
+    public Map<Participant, Integer> calculateTotalProfitResult() {
+        Map<Participant, Integer> bettingResult = calculatePlayerBettingProfitResult();
+        int playerProfitSum = bettingResult.values().stream()
+            .mapToInt(Integer::intValue)
+            .sum();
+        bettingResult.put(dealer, -playerProfitSum);
         return bettingResult;
+    }
+
+    public Map<Participant, Integer> calculatePlayerBettingProfitResult() {
+        Map<Participant, Integer> bettingResult = new LinkedHashMap<>();
+        bettingResult.put(dealer, 0);
+        for (Map.Entry<Player, PlayerWinningResult> entry : playerResult.entrySet()) {
+            Player player = entry.getKey();
+            bettingResult.put(player, player.calculateProfit(entry.getValue()));
+        }
+        return bettingResult;
+    }
+
+    public Map<Player, PlayerWinningResult> getPlayerResult() {
+        return playerResult;
     }
 }

@@ -75,7 +75,7 @@ public class GameResultTest {
 
         GameResult gameResult = new GameResult(participants);
 
-        assertThat(gameResult.calculateBettingResult().get(dealer)).isEqualTo(-2000);
+        assertThat(gameResult.calculateTotalProfitResult().get(dealer)).isEqualTo(-2000);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class GameResultTest {
 
         GameResult gameResult = new GameResult(participants);
 
-        assertThat(gameResult.calculateBettingResult().get(player)).isEqualTo(2000);
+        assertThat(gameResult.calculateTotalProfitResult().get(player)).isEqualTo(2000);
     }
 
 }
