@@ -22,15 +22,6 @@ public class GameResult {
         }
     }
 
-    public Map<PlayerWinningResult, Integer> getDealerResult() {
-        Map<PlayerWinningResult, Integer> dealerResult = new HashMap<>();
-        for (PlayerWinningResult winningResult : playerResult.values()) {
-            PlayerWinningResult convertedResult = winningResult.reverse();
-            dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
-        }
-        return dealerResult;
-    }
-
     public Map<Participant, Integer> calculateTotalProfitResult() {
         Map<Participant, Integer> bettingResult = calculatePlayerBettingProfitResult();
         int playerProfitSum = bettingResult.values().stream()
