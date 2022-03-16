@@ -73,14 +73,14 @@
 - [ ] IntelliJ에서 포맷팅 시 자동으로 import를 지워주니 실행하는 습관.
     - `Mac OS : ^(Control) + ⌥(Option) + O`
 - [ ] **함수 및 변수의 네이밍에 대한 수정 필요**
-    - [ ] 블랙잭 규칙에 따른 용어에 맞춰 메서드명을 수정
+    - [x] 블랙잭 규칙에 따른 용어에 맞춰 메서드명을 수정
         - 버스트(bust) : 카드를 더 받았는데 21이 초과하는 경우
         - 히트(hit) : 먼저 받은 카드 두장의 합이 21에 미치지 못했을 때, 카드를 더 받고자 할 경우
         - 스탠드(stand) : 먼저 받은 카드 두장의 합이 21에 미치지 못했을 때, 카드를 더 받는 것을 멈출 경우
         - 블랙잭(blackjack) : 처음 받은 카드의 합이 21인 경우
-    - [ ] `Cards` 클래스 `getAceCount` -> `countAce`
-    - [ ] `Cards` 클래스 `isOverThanMaxPoint` -> `isBust`
-    - [ ] `GameController`의 `checkFirstQuestion()`
+    - [x] `Cards` 클래스 `getAceCount` -> `countAce`
+    - [x] `Cards` 클래스 `isOverThanMaxPoint` -> `isBust`
+    - [x] `GameController`의 `checkFirstQuestion()`
         - 특정 조건을 검사하는 것만이 아닌 조건에 따라 View에 출력하는 기능을 포함.
         - 이를 나타낼 수 있는 이름으로 표현
     - [ ] `Card` 클래스의 `of`메서드 안에서 "getCard"라는 변수명을 사용

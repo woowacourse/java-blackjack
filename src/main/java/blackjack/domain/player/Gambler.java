@@ -11,7 +11,7 @@ public class Gambler extends Player {
     }
 
     @Override
-    public boolean isOneMoreCard() {
-        return !isOverThanMaxPoint();
+    public boolean isHit() {
+        return !isBust();
     }
 }

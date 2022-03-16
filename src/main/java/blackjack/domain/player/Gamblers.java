@@ -28,7 +28,7 @@ public class Gamblers {
 
     public List<Gambler> getCardNeedGamblers() {
         return gamblers.stream()
-            .filter(Gambler::isOneMoreCard)
+            .filter(Gambler::isHit)
             .collect(Collectors.toList());
     }
 

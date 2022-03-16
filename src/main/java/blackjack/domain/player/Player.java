@@ -13,7 +13,7 @@ public abstract class Player {
         this.cards = Cards.create();
     }
 
-    public abstract boolean isOneMoreCard();
+    public abstract boolean isHit();
 
     public void addCard(Card card) {
         cards.add(card);
@@ -27,8 +27,8 @@ public abstract class Player {
         return getCards().getPoint();
     }
 
-    public boolean isOverThanMaxPoint() {
-        return getCards().isOverThanMaxPoint();
+    public boolean isBust() {
+        return getCards().isBust();
     }
 
     public String getName() {

@@ -22,13 +22,11 @@ public class GameController {
         Gamblers gamblers = initPlayers(cardDeck);
         OutputView.printInitGameState(gamblers, dealer);
 
-        askPlayersOneMoreCard(gamblers, cardDeck);
-        addDealerOneMoreCard(dealer, cardDeck);
+        hitOrStandGambler(gamblers, cardDeck);
+        hitOrStandDealer(dealer, cardDeck);
 
         OutputView.printCardAndPoint(gamblers, dealer);
-
-        Statistic statistic = Statistic.of(dealer, gamblers);
-        printGameResult(statistic, gamblers);
+        printGameResult(Statistic.of(dealer, gamblers), gamblers);
     }
 
     private Dealer initDealer(CardDeck cardDeck) {
@@ -54,35 +52,33 @@ public class GameController {
         return Gamblers.of(gamblerList);
     }
 
-    private void askPlayersOneMoreCard(Gamblers gamblers, CardDeck cardDeck) {
+    private void hitOrStandGambler(Gamblers gamblers, CardDeck cardDeck) {
         for (Gambler gambler : gamblers.getCardNeedGamblers()) {
-            askOneMoreCardByPlayer(gambler, cardDeck);
+            askHitOrStand(gambler, cardDeck);
         }
     }
 
-    private void addDealerOneMoreCard(Dealer dealer, CardDeck cardDeck) {
-        if (dealer.isOneMoreCard()) {
+    private void hitOrStandDealer(Dealer dealer, CardDeck cardDeck) {
+        if (dealer.isHit()) {
             dealer.addCard(cardDeck.draw());
             OutputView.printDealerCardAdded();
         }
     }
 
-    private void askOneMoreCardByPlayer(Gambler gambler, CardDeck cardDeck) {
-        if (gambler.isOneMoreCard()) {
-            askNeedCardPlayer(gambler, cardDeck);
-            checkFirstQuestion(gambler);
-        }
+    private void askHitOrStand(Gambler gambler, CardDeck cardDeck) {
+        decideHitGambler(gambler, cardDeck);
+        printStateAtFirstQuestion(gambler);
     }
 
-    private void askNeedCardPlayer(Gambler gambler, CardDeck cardDeck) {
+    private void decideHitGambler(Gambler gambler, CardDeck cardDeck) {
         if (InputView.inputOneMoreCard(gambler.getName())) {
             gambler.addCard(cardDeck.draw());
             OutputView.printPlayerCardState(gambler);
-            askOneMoreCardByPlayer(gambler, cardDeck);
+            askHitOrStand(gambler, cardDeck);
         }
     }
 
-    private void checkFirstQuestion(Gambler gambler) {
+    private void printStateAtFirstQuestion(Gambler gambler) {
         if (gambler.getCards().size() <= DEFAULT_CARD_AMOUNT) {
             OutputView.printPlayerCardState(gambler);
         }

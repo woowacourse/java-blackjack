@@ -30,7 +30,7 @@ public class Statistic {
 
     private void calculate(LinkedHashMap<Gambler, GameResult> gamblerResult, Dealer dealer,
         Gamblers gamblers) {
-        if (dealer.isOverThanMaxPoint()) {
+        if (dealer.isBust()) {
             calculateDealerBurst(gamblerResult, gamblers);
             return;
         }
@@ -46,7 +46,7 @@ public class Statistic {
     }
 
     private GameResult getResultAtBurst(Gambler gambler) {
-        if (!gambler.isOverThanMaxPoint()) {
+        if (!gambler.isBust()) {
             return GameResult.WIN;
         }
         return GameResult.LOSE;
@@ -63,7 +63,7 @@ public class Statistic {
 
     private GameResult getResultAtNotBurst(int dealerPoint, Gambler gambler) {
         int gamblerPoint = gambler.getPoint();
-        if (gambler.isOverThanMaxPoint() || dealerPoint > gamblerPoint) {
+        if (gambler.isBust() || dealerPoint > gamblerPoint) {
             return GameResult.LOSE;
         }
         if (dealerPoint == gamblerPoint) {

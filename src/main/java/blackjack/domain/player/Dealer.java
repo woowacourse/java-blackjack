@@ -14,7 +14,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean isOneMoreCard() {
+    public boolean isHit() {
         return getPoint() <= AVAILABLE_POINT_FOR_ADD_CARD;
     }
 }

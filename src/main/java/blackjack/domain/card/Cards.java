@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Cards {
 
-    private final int MAX_POINT = 21;
+    private final int BLACKJACK = 21;
     private final int DIFFERENCE_POINT_OF_ACE = 10;
     private final int MINIMUM_ACE_AMOUNT = 1;
 
@@ -27,8 +27,8 @@ public class Cards {
         return cards.size();
     }
 
-    public boolean isOverThanMaxPoint() {
-        return getPoint() > MAX_POINT;
+    public boolean isBust() {
+        return getPoint() > BLACKJACK;
     }
 
     public int getPoint() {
@@ -41,15 +41,15 @@ public class Cards {
     }
 
     private int calculateAcePoint(int sumOfPoint) {
-        int aceCount = getAceCount();
-        while (sumOfPoint > MAX_POINT && aceCount >= MINIMUM_ACE_AMOUNT) {
+        int aceCount = countAce();
+        while (sumOfPoint > BLACKJACK && aceCount >= MINIMUM_ACE_AMOUNT) {
             sumOfPoint -= DIFFERENCE_POINT_OF_ACE;
             aceCount--;
         }
         return sumOfPoint;
     }
 
-    private int getAceCount() {
+    private int countAce() {
         return (int) cards.stream()
             .filter(card -> card.getDenomination().equals(Denomination.ACE))
             .count();
