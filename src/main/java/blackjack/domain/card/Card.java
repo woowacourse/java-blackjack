@@ -34,12 +34,12 @@ public class Card {
 
     public static Card valueOf(final CardNumber cardNumber, final CardSymbol cardSymbol) {
         return CACHE.stream()
-                .filter(card -> isEqual(cardNumber, cardSymbol, card))
+                .filter(card -> card.hasSame(cardNumber, cardSymbol, card))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 카드는 없습니다."));
     }
 
-    private static boolean isEqual(final CardNumber cardNumber, final CardSymbol cardSymbol, final Card targetCard) {
+    private boolean hasSame(final CardNumber cardNumber, final CardSymbol cardSymbol, final Card targetCard) {
         return targetCard.number == cardNumber && targetCard.symbol == cardSymbol;
     }
 
