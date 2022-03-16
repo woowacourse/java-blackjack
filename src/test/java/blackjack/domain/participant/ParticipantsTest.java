@@ -38,8 +38,9 @@ class ParticipantsTest {
 
     private List<Player> toPlayerList(List<Name> names) {
         List<Player> playerList = new ArrayList<>();
+        BettingAmount bettingAmount = new BettingAmount(1000L);
         for (Name name : names) {
-            playerList.add(new Player(name, getCards(Number.SEVEN, Number.QUEEN)));
+            playerList.add(new Player(name, getCards(Number.SEVEN, Number.QUEEN), bettingAmount));
         }
         return playerList;
     }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static utils.TestUtil.getCards;
 
 import blackjack.domain.card.Number;
+import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
@@ -28,16 +29,20 @@ class GameResultTest {
     }
 
     private static Stream<Arguments> provideParameters() {
+        Name playerName = new Name("yeonLog");
+        Name dealerName = new Name("딜러");
+        BettingAmount bettingAmount = new BettingAmount(1000L);
+
         return Stream.of(
                 Arguments.arguments("플레이어가 버스트가 아니고 딜러가 버스트인 경우",
-                        new Player(new Name("abc"), getCards(Number.ACE, Number.NINE)),
-                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.KING, Number.JACK))),
+                        new Player(playerName, getCards(Number.ACE, Number.NINE), bettingAmount),
+                        new Dealer(dealerName, getCards(Number.QUEEN, Number.KING, Number.JACK))),
                 Arguments.arguments("둘 다 버스트가 아니고 딜러보다 숫자가 높은 경우",
-                        new Player(new Name("abc"), getCards(Number.KING, Number.QUEEN)),
-                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.NINE))),
+                        new Player(playerName, getCards(Number.KING, Number.QUEEN), bettingAmount),
+                        new Dealer(dealerName, getCards(Number.QUEEN, Number.NINE))),
                 Arguments.arguments("플레이어만 블랙잭",
-                        new Player(new Name("abc"), getCards(Number.KING, Number.ACE)),
-                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.TEN, Number.ACE)))
+                        new Player(playerName, getCards(Number.KING, Number.ACE), bettingAmount),
+                        new Dealer(dealerName, getCards(Number.QUEEN, Number.TEN, Number.ACE)))
         );
     }
 
@@ -54,18 +59,23 @@ class GameResultTest {
     }
 
     private static Stream<Arguments> provideParameters2() {
+        Name playerName1 = new Name("yeonLog1");
+        Name playerName2 = new Name("yeonLog2");
+        Name dealerName = new Name("딜러");
+        BettingAmount bettingAmount = new BettingAmount(1000L);
+
         return Stream.of(
                 Arguments.arguments(
-                        new Player(new Name("abc1"), getCards(Number.ACE, Number.NINE)),
-                        new Player(new Name("abc2"), getCards(Number.EIGHT, Number.NINE)),
-                        new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.NINE)),
+                        new Player(playerName1, getCards(Number.ACE, Number.NINE), bettingAmount),
+                        new Player(playerName2, getCards(Number.EIGHT, Number.NINE), bettingAmount),
+                        new Dealer(dealerName, getCards(Number.QUEEN, Number.NINE)),
                         MatchResult.WIN,
                         1
                 ),
                 Arguments.arguments(
-                        new Player(new Name("abc1"), getCards(Number.ACE, Number.NINE)),
-                        new Player(new Name("abc2"), getCards(Number.NINE, Number.NINE)),
-                        new Dealer(new Name("딜러"), getCards(Number.EIGHT, Number.NINE)),
+                        new Player(playerName1, getCards(Number.ACE, Number.NINE), bettingAmount),
+                        new Player(playerName2, getCards(Number.NINE, Number.NINE), bettingAmount),
+                        new Dealer(dealerName, getCards(Number.EIGHT, Number.NINE)),
                         MatchResult.LOSE,
                         2
                 )

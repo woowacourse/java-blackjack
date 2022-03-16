@@ -2,6 +2,7 @@ package blackjack.game;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
@@ -10,6 +11,7 @@ import blackjack.domain.participant.Player;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConsoleGame {
@@ -32,10 +34,29 @@ public class ConsoleGame {
     private BlackjackGame createBlackjackGame() {
         try {
             List<Name> playerNames = InputView.inputPlayerNames();
-            return new BlackjackGame(playerNames);
+            List<BettingAmount> bettingAmounts = getBettingAmounts(playerNames);
+            return new BlackjackGame(playerNames, bettingAmounts);
+
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
             return createBlackjackGame();
+        }
+    }
+
+    private List<BettingAmount> getBettingAmounts(List<Name> names) {
+        List<BettingAmount> bettingAmounts = new ArrayList<>();
+        for (Name name : names) {
+            bettingAmounts.add(inputBettingAmounts(name));
+        }
+        return bettingAmounts;
+    }
+
+    private BettingAmount inputBettingAmounts(Name name) {
+        try {
+            return InputView.inputBettingAmount(name);
+        } catch (IllegalArgumentException e) {
+            OutputView.printException(e);
+            return inputBettingAmounts(name);
         }
     }
 

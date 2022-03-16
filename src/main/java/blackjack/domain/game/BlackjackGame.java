@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDistributor;
 import blackjack.domain.card.Cards;
+import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
@@ -11,6 +12,7 @@ import blackjack.domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BlackjackGame {
 
@@ -20,15 +22,18 @@ public class BlackjackGame {
     private final Participants participants;
     private final CardDistributor cardDistributor = new CardDistributor();
 
-    public BlackjackGame(List<Name> names) {
+    public BlackjackGame(List<Name> names, List<BettingAmount> bettingAmounts) {
         Dealer dealer = new Dealer(new Name(DEALER_NAME), drawInitialCards());
-        List<Player> players = initializePlayers(new ArrayList<>(names));
+        List<Player> players = initializePlayers(new ArrayList<>(names), new ArrayList<>(bettingAmounts));
         this.participants = new Participants(players, dealer);
     }
 
-    private List<Player> initializePlayers(List<Name> names) {
-        return names.stream()
-                .map(name -> new Player(name, drawInitialCards()))
+    private List<Player> initializePlayers(List<Name> names, List<BettingAmount> bettingAmounts) {
+        if (names.size() != bettingAmounts.size()) {
+            throw new IllegalArgumentException("TODO");
+        }
+        return IntStream.range(0, names.size())
+                .mapToObj(i -> new Player(names.get(i), drawInitialCards(), bettingAmounts.get(i)))
                 .collect(Collectors.toUnmodifiableList());
     }
 

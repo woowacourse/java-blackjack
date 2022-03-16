@@ -21,7 +21,7 @@ public class PlayerTest {
     @DisplayName("턴 강제 종료 여부")
     void player(String comment, Cards cards, boolean expect) {
         // given
-        Player player = new Player(new Name("name"), cards);
+        Player player = new Player(new Name("name"), cards, new BettingAmount(1000L));
 
         // then
         assertThat(player.isFinished()).isEqualTo(expect);
@@ -38,7 +38,7 @@ public class PlayerTest {
     @Test
     void drawCard() {
         // given
-        Player player = new Player(new Name("name"), getCards(Number.QUEEN));
+        Player player = new Player(new Name("name"), getCards(Number.QUEEN), new BettingAmount(1000L));
         Card newCard = new Card(Number.ACE, Suit.CLOVER);
 
         // when

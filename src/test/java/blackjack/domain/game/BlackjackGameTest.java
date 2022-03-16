@@ -1,7 +1,9 @@
 package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import java.util.Arrays;
@@ -11,11 +13,24 @@ import org.junit.jupiter.api.Test;
 
 public class BlackjackGameTest {
     @Test
+    @DisplayName("생성 실패")
+    void failed() {
+        // given
+        List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
+        List<BettingAmount> bettingAmounts = List.of(new BettingAmount(1000L));
+
+        // then
+        assertThatThrownBy(() -> new BlackjackGame(names, bettingAmounts))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("게임 초기화 시 각 플레이어는 2장의 카드를 분배받는다.")
     void create() {
         // given
         List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
-        BlackjackGame blackjackGame = new BlackjackGame(names);
+        List<BettingAmount> bettingAmounts = Arrays.asList(new BettingAmount(1000L), new BettingAmount(1000L));
+        BlackjackGame blackjackGame = new BlackjackGame(names, bettingAmounts);
 
         // when
         boolean match = blackjackGame
