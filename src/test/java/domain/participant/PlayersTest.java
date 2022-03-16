@@ -3,6 +3,7 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
 import domain.card.Deck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +18,7 @@ class PlayersTest {
     @BeforeEach
     void init() {
         players = Players.of("runa, kun");
-        deck = Deck.getInstance();
+        deck = Deck.of(Card.getShuffledCardCache());
     }
 
     @Test

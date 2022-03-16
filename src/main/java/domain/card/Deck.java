@@ -15,10 +15,8 @@ public class Deck {
         deck = new LinkedList<>(cards);
     }
 
-    public static Deck getInstance() {
-        List<Card> tmpCards = new LinkedList<>(Card.getCardCache());
-        Collections.shuffle(tmpCards);
-        return new Deck(tmpCards);
+    public static Deck of(List<Card> cards) {
+        return new Deck(cards);
     }
 
     public List<Card> handOutInitialTurn() {

@@ -1,5 +1,6 @@
 package controller;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -17,7 +18,7 @@ public class BlackJackController {
     public void run() {
         Players players = createPlayers();
         Dealer dealer = new Dealer();
-        Deck deck = Deck.getInstance();
+        Deck deck = Deck.of(Card.getShuffledCardCache());
 
         initialTurn(players, dealer, deck);
         hitCard(players, dealer, deck);
