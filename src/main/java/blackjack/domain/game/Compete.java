@@ -1,10 +1,8 @@
 package blackjack.domain.game;
 
 import blackjack.domain.role.Role;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Compete {
 
@@ -14,12 +12,12 @@ public class Compete {
 		this.competeResults = new HashMap<>();
 	}
 
-	public void judgeCompete(Role player, Role dealer) {
+	public void judgeCompete(final Role player, final Role dealer) {
 		Outcome result = createOutcome(player, dealer);
 		competeResults.put(player.getName(), result);
 	}
 
-	private Outcome createOutcome(Role player, Role dealer) {
+	private Outcome createOutcome(final Role player, final Role dealer) {
 		if (player.isBlackJack() || dealer.isBlackJack()) {
 			return Outcome.ofBlackJack(player.isBlackJack(), dealer.isBlackJack());
 		}
@@ -32,13 +30,7 @@ public class Compete {
 		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
 	}
 
-	public Map<Outcome, Long> getDealerCompeteResults() {
-		return competeResults.values().stream()
-				.collect(Collectors.groupingBy(Outcome::getOppositeOutcome, () -> new EnumMap<>(Outcome.class),
-						Collectors.counting()));
-	}
-
-	public Outcome getPlayerCompeteResults(Role player) {
+	public Outcome getPlayerCompeteResults(final Role player) {
 		return competeResults.get(player.getName());
 	}
 }

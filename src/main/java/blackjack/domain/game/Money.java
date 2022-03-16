@@ -7,22 +7,22 @@ public class Money {
 
 	private final BigDecimal value;
 
-	public Money(String money) {
+	public Money(final String money) {
 		this.value = new BigDecimal(money);
 	}
 
-	private Money(BigDecimal money) {
+	private Money(final BigDecimal money) {
 		this.value = money;
 	}
 
-	public static Money sumOf(Collection<Money> monies) {
+	public static Money sumOf(final Collection<Money> monies) {
 		BigDecimal value = monies.stream()
 				.map(Money::getValue)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		return new Money(value);
 	}
 
-	public Money multiply(BigDecimal value) {
+	public Money multiply(final BigDecimal value) {
 		BigDecimal afterMultiply = this.value.multiply(value);
 		return new Money(afterMultiply);
 	}

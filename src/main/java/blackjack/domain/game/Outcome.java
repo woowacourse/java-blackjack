@@ -7,22 +7,20 @@ import java.util.function.Predicate;
 
 public enum Outcome {
 
-	BLACKJACK_VICTORY("DEFEAT", "1.5", gapScore -> gapScore > 0),
-	VICTORY("DEFEAT", "1", gapScore -> gapScore > 0),
-	DEFEAT("VICTORY", "-1", gapScore -> gapScore < 0),
-	TIE("TIE", "0", gapScore -> gapScore == 0);
+	BLACKJACK_VICTORY("1.5", gapScore -> gapScore > 0),
+	VICTORY("1", gapScore -> gapScore > 0),
+	DEFEAT("-1", gapScore -> gapScore < 0),
+	TIE("0", gapScore -> gapScore == 0);
 
-	private final String oppositeValue;
 	private final String bettingMultiplier;
 	private final Predicate<Integer> competeStander;
 
-	Outcome(final String oppositeValue, final String bettingMultiplier, final Predicate<Integer> competeStander) {
-		this.oppositeValue = oppositeValue;
+	Outcome(final String bettingMultiplier, final Predicate<Integer> competeStander) {
 		this.bettingMultiplier = bettingMultiplier;
 		this.competeStander = competeStander;
 	}
 
-	public static Outcome ofBlackJack(boolean playerBlackjack, boolean dealerBlackJack) {
+	public static Outcome ofBlackJack(final boolean playerBlackjack, final boolean dealerBlackJack) {
 		if (playerBlackjack && !dealerBlackJack) {
 			return BLACKJACK_VICTORY;
 		}
@@ -30,12 +28,12 @@ public enum Outcome {
 		return createOutcome(gapScore);
 	}
 
-	public static Outcome of(int playerScore, int dealerScore) {
+	public static Outcome of(final int playerScore, final int dealerScore) {
 		final int gapScore = playerScore - dealerScore;
 		return createOutcome(gapScore);
 	}
 
-	private static Outcome createOutcome(int gapScore) {
+	private static Outcome createOutcome(final int gapScore) {
 		return Arrays.stream(values())
 				.filter(outcome -> outcome != BLACKJACK_VICTORY)
 				.filter(outcome -> outcome.matchThisOutcome(gapScore))
@@ -47,11 +45,7 @@ public enum Outcome {
 		return competeStander.test(gapScore);
 	}
 
-	public Outcome getOppositeOutcome() {
-		return Outcome.valueOf(oppositeValue);
-	}
-
-	public Money applyBettingMultiplier(Money bettingMoney) {
+	public Money applyBettingMultiplier(final Money bettingMoney) {
 		return bettingMoney.multiply(new BigDecimal(bettingMultiplier));
 	}
 }

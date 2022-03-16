@@ -8,11 +8,11 @@ public class Betting {
 
 	private final Map<Role, Money> betting;
 
-	public Betting(Map<Role, Money> bettingMoney) {
+	public Betting(final Map<Role, Money> bettingMoney) {
 		this.betting = new HashMap<>(bettingMoney);
 	}
 
-	public Map<Role, Money> settle(Compete compete) {
+	public Map<Role, Money> settle(final Compete compete) {
 		Map<Role, Money> revenue = new HashMap<>();
 		for (Role player : betting.keySet()) {
 			Outcome outcome = compete.getPlayerCompeteResults(player);
@@ -21,7 +21,7 @@ public class Betting {
 		return revenue;
 	}
 
-	private Money getBettingResult(Outcome outcome, Money bettingMoney) {
+	private Money getBettingResult(final Outcome outcome, final Money bettingMoney) {
 		return outcome.applyBettingMultiplier(bettingMoney);
 	}
 }

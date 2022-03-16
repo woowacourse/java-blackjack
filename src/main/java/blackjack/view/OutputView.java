@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.game.Outcome;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
@@ -16,19 +15,14 @@ public class OutputView {
 	private static final String WITH = "와 ";
 	private static final String IS = "는";
 	private static final String SPACE = " ";
-	private static final String EMPTY = "";
 	private static final String DISTRIBUTED_TWO_CARDS = "에게 2장의 카드를 나누었습니다.";
 	private static final String ROLE_NAME_INFORMATION_DISTRIBUTOR = ": ";
 	private static final String RESULT = " - 결과: ";
-	private static final String FINAL_OUTCOME = "## 최종 승패";
+	private static final String FINAL_OUTCOME = "## 최종 수익";
 	private static final String CARD = "카드";
 	private static final String RECEIVED_ONE_MORE_CARD = "이하라 한장의 카드를 더 받았습니다.";
 	private static final String FAIL_TO_RECEIVE_ONE_MORE_CARD = "이상이라 카드를 더 받지 않았습니다.";
 	private static final String BUST_MESSAGE = "파산";
-	private static final String BLACKJACK_VICTORY = "블랙잭 승";
-	private static final String VICTORY = "승";
-	private static final String DEFEAT = "패";
-	private static final String TIE = "무";
 
 	public void printInitialStatus(final DealerTableDto dealerTable,
 								   final List<PlayerTableDto> playersTable) {
@@ -80,8 +74,8 @@ public class OutputView {
 		playerResult.forEach(this::printPlayerFinalResult);
 		System.out.print("\n");
 		System.out.println(FINAL_OUTCOME);
-		printDealerOutcome(dealerResult);
-		printPlayerOutcome(playerResult);
+		printDealerRevenue(dealerResult);
+		printPlayerRevenue(playerResult);
 	}
 
 	private void printDealerFinalResult(final DealerResultDto result) {
@@ -103,31 +97,15 @@ public class OutputView {
 		return Integer.toString(score);
 	}
 
-	private void printDealerOutcome(final DealerResultDto dealerResult) {
+	private void printDealerRevenue(final DealerResultDto dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		final String dealerOutcome = dealerResult.getCompeteResult().entrySet().stream()
-				.map(entry -> EMPTY + entry.getValue() + printOutcome(entry.getKey()))
-				.collect(Collectors.joining(SPACE));
-		System.out.println(dealerOutcome);
+		System.out.println(dealerResult.getRevenueResult());
 	}
 
-	private void printPlayerOutcome(final List<PlayerResultDto> playerResults) {
+	private void printPlayerRevenue(final List<PlayerResultDto> playerResults) {
 		for (PlayerResultDto playerResult : playerResults) {
 			System.out.print(playerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-			System.out.println(printOutcome(playerResult.getCompeteResult()));
+			System.out.println(playerResult.getRevenueResult());
 		}
-	}
-
-	private String printOutcome(Outcome outcome) {
-		if (outcome == Outcome.BLACKJACK_VICTORY) {
-			return BLACKJACK_VICTORY;
-		}
-		if (outcome == Outcome.VICTORY) {
-			return VICTORY;
-		}
-		if (outcome == Outcome.DEFEAT) {
-			return DEFEAT;
-		}
-		return TIE;
 	}
 }

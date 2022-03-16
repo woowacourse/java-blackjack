@@ -5,6 +5,7 @@ import blackjack.domain.game.Compete;
 import blackjack.domain.game.Deck;
 import blackjack.domain.game.Money;
 import blackjack.domain.game.RedrawChoice;
+import blackjack.domain.game.Revenue;
 import blackjack.domain.role.Dealer;
 import blackjack.domain.role.Hand;
 import blackjack.domain.role.Player;
@@ -104,10 +105,11 @@ public class BlackJackService {
 	}
 
 	public FinalResultDto calculateFinalResult() {
-		Compete compete = new Compete();
+		final Compete compete = new Compete();
 		for (Role player : players) {
 			compete.judgeCompete(player, dealer);
 		}
-		return FinalResultDto.from(dealer, players, compete);
+		final Revenue revenue = new Revenue(betting.settle(compete));
+		return FinalResultDto.from(dealer, players, revenue);
 	}
 }
