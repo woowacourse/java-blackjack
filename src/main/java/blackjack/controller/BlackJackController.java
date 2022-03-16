@@ -16,10 +16,10 @@ public class BlackJackController {
     private BlackJack blackJack;
 
     public void play() {
-        Map<String, Integer> priceByName = getUserNameAndPrice();
-        blackJack = new BlackJack(priceByName);
+        Map<String, Integer> bettingPriceByName = getUserNameAndBettingPrice();
+        blackJack = new BlackJack(bettingPriceByName);
         initDistribute();
-        playGameEachParticipant(priceByName.keySet());
+        playGameEachParticipant(bettingPriceByName.keySet());
         printGameScore();
         printFinalProfit();
     }
@@ -28,11 +28,11 @@ public class BlackJackController {
         OutputView.printProfitResult(blackJack.calculateProfitResult());
     }
 
-    public Map<String, Integer> getUserNameAndPrice() {
+    public Map<String, Integer> getUserNameAndBettingPrice() {
         String[] userNames = InputView.inputUsersName();
         Map<String, Integer> priceByName = new LinkedHashMap<>();
         for (String userName : userNames) {
-            int price = InputView.getUserPrice(userName);
+            int price = InputView.getUserBettingPrice(userName);
             priceByName.put(userName, price);
         }
 

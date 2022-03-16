@@ -69,13 +69,5 @@ public class BlackJack {
     public List<DistributeResult> getCardResults() {
         return participants.getDistributeResult();
     }
-
-    public DealerResult calculateDealerResult() {
-        return new DealerResult(participants);
-    }
-
-    public List<UserResult> calculateUserResult() {
-        return participants.getUserResults();
-    }
 }
 

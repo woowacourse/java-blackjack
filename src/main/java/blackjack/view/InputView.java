@@ -36,7 +36,7 @@ public class InputView {
         throw new IllegalArgumentException(INPUT_INVALID_ANSWER);
     }
 
-    public static int getUserPrice(String userName) {
+    public static int getUserBettingPrice(String userName) {
         System.out.println(userName + "의 베팅 금액은?");
         String value = scanner.nextLine();
         validateInteger(value);
