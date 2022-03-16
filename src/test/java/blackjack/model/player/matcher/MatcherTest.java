@@ -40,9 +40,9 @@ public class MatcherTest {
     @MethodSource("providePlayerLosingCaseCards")
     @DisplayName("블랙잭과 버스트 경우를 제외하고 플레이어가 지는 경우")
     void dealerIsWinner(Dealer dealer, Gamer gamer) {
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY.negate());
@@ -60,9 +60,9 @@ public class MatcherTest {
     @MethodSource("providePlayerWinningCaseCards")
     @DisplayName("블랙잭과 버스트인 경우를 제외하고 플레이어가 이기는 경우")
     void dealerIsLoser(Dealer dealer, Gamer gamer) {
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY);
@@ -82,9 +82,9 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, FOUR);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX);
 
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(new Money(BigDecimal.ZERO));
@@ -96,9 +96,9 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, QUEEN, TWO);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX);
 
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY);
@@ -110,9 +110,9 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, JACK, QUEEN, TWO);
 
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY.negate());
@@ -124,9 +124,9 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, KING, SEVEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX, KING);
 
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY.negate());
@@ -138,9 +138,9 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, KING);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, ACE, JACK);
 
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
@@ -152,9 +152,9 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, ACE);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, JACK);
 
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY.negate());
@@ -166,9 +166,9 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, ACE);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, ACE, JACK);
 
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(new Money(BigDecimal.ZERO));
@@ -180,9 +180,9 @@ public class MatcherTest {
         Dealer dealer = new Dealer(ACE, JACK);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, JACK, ACE);
 
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY.negate());
@@ -193,9 +193,9 @@ public class MatcherTest {
     void playerBlackjackByInitialCardsDealerJustBlackjack() {
         Dealer dealer = new Dealer(ACE, JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, ACE);
-        Matcher matcher = Matcher.of(dealer, gamer);
+        Matcher matcher = Matcher.of(dealer);
 
-        Record record = matcher.match();
+        Record record = matcher.match(gamer);
 
         assertThat(record.name()).isEqualTo(GAMER_NAME);
         assertThat(record.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));

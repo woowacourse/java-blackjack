@@ -6,11 +6,11 @@ import java.util.Objects;
 public class Record {
 
     private final String name;
-    private final Money profit;
+    private final Result result;
 
-    public Record(String name, Money profit) {
+    public Record(String name, Result result) {
         this.name = name;
-        this.profit = profit;
+        this.result = result;
     }
 
     public String name() {
@@ -18,7 +18,7 @@ public class Record {
     }
 
     public Money profit() {
-        return profit;
+        return result.profit();
     }
 
     @Override
@@ -30,12 +30,11 @@ public class Record {
             return false;
         }
         Record record = (Record) o;
-        return Objects.equals(name, record.name) && Objects
-            .equals(this.profit, record.profit);
+        return Objects.equals(name, record.name) && Objects.equals(this.result, record.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, profit);
+        return Objects.hash(name, result);
     }
 }

@@ -16,14 +16,10 @@ public class Gamers {
     }
 
     public List<Record> match(Dealer dealer) {
+        Matcher matcher = Matcher.of(dealer);
         return players.stream()
-            .map(player -> matchEachPlayer(dealer, player))
+            .map(matcher::match)
             .collect(toUnmodifiableList());
-    }
-
-    public Record matchEachPlayer(Dealer dealer, Gamer gamer) {
-        Matcher matcher = Matcher.of(dealer, gamer);
-        return matcher.match();
     }
 
     public Collection<Gamer> values() {

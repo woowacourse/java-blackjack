@@ -1,21 +1,36 @@
 package blackjack.model.player.matcher;
 
 import blackjack.model.player.Money;
-import java.math.BigDecimal;
+import java.util.Objects;
 
-public enum Result {
-    WIN, DRAW, LOSS, BLACKJACK;
+public class Result {
 
-    private static final BigDecimal BLACKJACK_PROFIT_RATE = new BigDecimal("1.5");
+    private final ResultStatus status;
+    private final Money bettingMoney;
 
-    public Money profit(Money money) {
-        if (this == WIN) {
-            return money;
-        } else if (this == LOSS) {
-            return money.negate();
-        } else if (this == BLACKJACK) {
-            return money.multiply(BLACKJACK_PROFIT_RATE);
+    public Result(ResultStatus status, Money bettingMoney) {
+        this.status = status;
+        this.bettingMoney = bettingMoney;
+    }
+
+    public Money profit() {
+        return status.profit(bettingMoney);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        return new Money(BigDecimal.ZERO);
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Result result = (Result) o;
+        return status == result.status && Objects.equals(bettingMoney, result.bettingMoney);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, bettingMoney);
     }
 }
