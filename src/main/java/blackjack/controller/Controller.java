@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.bet.Money;
+import blackjack.domain.bet.PlayersBet;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -19,6 +21,7 @@ public class Controller {
         Dealer dealer = Dealer.createDefaultNameDealer();
         Players players = Players.of(InputView.requestPlayerNames());
 
+        PlayersBet playersBet = askPlayersBetMoney(players);
         initDealerCards(cardDeck, dealer);
         initPlayerCards(cardDeck, players);
         OutputView.printInitCardHandStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
@@ -26,6 +29,15 @@ public class Controller {
         playBlackJack(cardDeck, dealer, players);
         OutputView.printFinalStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
         OutputView.printFinalResult(ResultCounterDto.of(Result.judgeResult(dealer, players), dealer, players));
+    }
+
+    private PlayersBet askPlayersBetMoney(Players players) {
+        PlayersBet playersBet = new PlayersBet();
+        for (Player player : players.getPlayers()) {
+            Money money = new Money(InputView.requestMoney(player.getName().getValue()));
+            playersBet.add(player, money);
+        }
+        return playersBet;
     }
 
     private void initDealerCards(CardDeck cardDeck, Dealer dealer) {

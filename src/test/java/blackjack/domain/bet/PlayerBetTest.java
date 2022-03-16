@@ -11,14 +11,14 @@ public class PlayerBetTest {
     @Test
     @DisplayName("생성자 테스트")
     void create() {
-        PlayerBet playerBet = new PlayerBet();
+        PlayersBet playerBet = new PlayersBet();
         assertThat(playerBet).isNotNull();
     }
 
     @Test
     @DisplayName("플레이어와 배팅금 추가 테스트")
     void testAdd() {
-        PlayerBet playerBet = new PlayerBet();
+        PlayersBet playerBet = new PlayersBet();
         Player player = Player.of("pobi");
         Money money = new Money(10000);
 

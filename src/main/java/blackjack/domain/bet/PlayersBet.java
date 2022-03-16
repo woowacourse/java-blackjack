@@ -1,15 +1,15 @@
 package blackjack.domain.bet;
 
 import blackjack.domain.participant.Player;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class PlayerBet {
+public class PlayersBet {
 
     private final Map<Player, Money> playerBetTable;
 
-    public PlayerBet() {
-        playerBetTable = new HashMap<>();
+    public PlayersBet() {
+        playerBetTable = new LinkedHashMap<>();
     }
 
     public void add(Player player, Money money) {
