@@ -28,13 +28,21 @@ public class HoldCards {
     }
 
     public int countBestNumber() {
-        return CardNumber.sum(cards.stream()
-            .map(Card::getNumber)
-            .collect(Collectors.toList()));
+        return CardNumber.sum(toCardNumbers());
     }
 
     public Optional<Card> getFirstCard() {
         return Optional.ofNullable(cards.get(FIRST_CARD));
+    }
+
+    public boolean isBlackjack() {
+        return CardNumber.isBlackjack(toCardNumbers());
+    }
+
+    private List<CardNumber> toCardNumbers() {
+        return cards.stream()
+            .map(Card::getNumber)
+            .collect(Collectors.toList());
     }
 
     private void validateSize(List<Card> cards) {

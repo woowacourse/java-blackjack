@@ -4,21 +4,31 @@ import blackjack.domain.PlayerOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 
+import blackjack.domain.vo.BettingMoney;
 import java.util.List;
 
 public class Player extends Participant {
     private static final int BLACKJACK_NUMBER = 21;
 
     private final String name;
+    private BettingMoney bettingMoney;
 
-    public Player(String name, HoldCards holdCards) {
+    public Player(String name, BettingMoney bettingMoney, HoldCards holdCards) {
         super(holdCards);
         validateName(name);
+        this.bettingMoney = bettingMoney;
         this.name = name;
     }
 
     public PlayerOutcome match(Dealer dealer) {
         return PlayerOutcome.match(countCards(), dealer.countCards());
+    }
+
+    public double getBettingResult() {
+        if (getHoldCards().isBlackjack()) {
+            return this.bettingMoney.countBlackjackPay();
+        }
+        return 0;
     }
 
     @Override

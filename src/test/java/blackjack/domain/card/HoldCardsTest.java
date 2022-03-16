@@ -62,4 +62,12 @@ class HoldCardsTest {
             .isThrownBy(() -> holdCards.addCard(Card.valueOf(CLUB, ACE)))
             .withMessage("카드가 중복될 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("두 장의 카드 합이 블랙잭(21)인 경우 true를 반환한다.")
+    void isBlackjack() {
+        HoldCards holdCards = HoldCards.initTwoCards(Card.valueOf(CLUB, ACE), Card.valueOf(CLUB, TEN));
+
+        assertThat(holdCards.isBlackjack()).isTrue();
+    }
 }

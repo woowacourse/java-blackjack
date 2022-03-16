@@ -1,6 +1,8 @@
 package blackjack.domain.vo;
 
 public class BettingMoney {
+    private static final double BLACKJACK_RATIO = 1.5;
+
     private static final int MINIMUM_AMOUNT_UNIT = 1000;
     private static final int MAXIMUM_AMOUNT = 5_000_000;
 
@@ -18,5 +20,9 @@ public class BettingMoney {
         if (amount > MAXIMUM_AMOUNT) {
             throw new IllegalArgumentException("배팅 금액은 500만을 넘을 수 없습니다.");
         }
+    }
+
+    public double countBlackjackPay() {
+        return this.amount * BLACKJACK_RATIO;
     }
 }

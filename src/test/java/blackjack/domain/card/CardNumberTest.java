@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,6 +18,12 @@ class CardNumberTest {
         int expected = sum(cardNumbers);
 
         assertThat(expected).isEqualTo(total);
+    }
+
+    @Test
+    @DisplayName("두 수의 합이 21(블랙잭)인지 확인한다.")
+    void checkBlackjack() {
+        assertThat(CardNumber.isBlackjack(List.of(ACE, TEN))).isTrue();
     }
 
     static Stream<Arguments> getNumbers() {

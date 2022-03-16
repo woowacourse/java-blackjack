@@ -28,6 +28,10 @@ public enum CardNumber {
         this.name = name;
     }
 
+    public static boolean isBlackjack(List<CardNumber> cardNumbers) {
+        return sum(cardNumbers) == BLACK_JACK_NUMBER;
+    }
+
     public static int sum(List<CardNumber> cardNumbers) {
         return calculateBestNumber(sumTotal(cardNumbers), countAce(cardNumbers));
     }

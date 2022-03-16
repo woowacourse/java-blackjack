@@ -7,6 +7,7 @@ import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
 import blackjack.domain.entry.Participants;
+import blackjack.domain.vo.BettingMoney;
 import blackjack.dto.request.PlayerRequest;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class BlackjackTable {
 
     private List<Player> toPlayers(List<PlayerRequest> playersRequests) {
         return playersRequests.stream()
-            .map(playerRequest -> new Player(playerRequest.getName(), HoldCards.initTwoCards(deck.draw(), deck.draw())))
+            .map(playerRequest -> new Player(playerRequest.getName(), new BettingMoney(1000), HoldCards.initTwoCards(deck.draw(), deck.draw())))
             .collect(Collectors.toList());
     }
 }
