@@ -6,7 +6,7 @@ public abstract class Gamer {
 	protected final Cards cards = new Cards();
 	protected final Name name;
 
-	public Gamer(Name name) {
+	protected Gamer(Name name) {
 		this.name = name;
 	}
 
