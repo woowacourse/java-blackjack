@@ -9,6 +9,14 @@ public class Bust extends Finish {
     }
 
     @Override
+    public int score() {
+        if (cards().isBust()) {
+            return cards().score();
+        }
+        return cards().maxScore();
+    }
+
+    @Override
     double earningRate(final BlackjackGameState blackjackGameState) {
         return -1;
     }
