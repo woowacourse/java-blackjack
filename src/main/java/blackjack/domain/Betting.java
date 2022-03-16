@@ -22,7 +22,7 @@ public class Betting {
         }
     }
 
-    public long revenue(Map<Name, PlayRecord> recordMap) {
+    long revenue(Map<Name, PlayRecord> recordMap) {
         return getMoney(getPlayRecord(recordMap));
     }
 
@@ -45,7 +45,7 @@ public class Betting {
         return recordMap.get(name);
     }
 
-    public Name getName() {
+    Name getName() {
         return name;
     }
 
