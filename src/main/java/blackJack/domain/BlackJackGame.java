@@ -20,7 +20,7 @@ public class BlackJackGame {
         this.participants = participants;
     }
 
-    public void initDistributeCards() {
+    public void defaultDistributeCards() {
         participants.distributeCards(deck);
     }
 

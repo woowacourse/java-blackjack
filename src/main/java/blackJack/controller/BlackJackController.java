@@ -16,7 +16,7 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
-        blackJackGame.initDistributeCards();
+        blackJackGame.defaultDistributeCards();
         OutputView.printInitCardResult(blackJackGame.getParticipants());
 
         doPlayerGame(blackJackGame);
