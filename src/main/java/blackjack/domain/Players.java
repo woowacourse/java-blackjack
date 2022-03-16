@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 public class Players {
 	private static final String EMPTY_PLAYERS = "[ERROR] 한 명 이상의 플레이어가 필요합니다.";
-	private static final String OVER_FULL_PLAYERS = "[ERROR] 26명 이상의 플레이어로는 원활한 진행이 불가합니다.";
-	private static final int FULL_PLAYER_THRESHOLD = 26;
+	private static final String OVER_FULL_PLAYERS = "[ERROR] 7명 이상의 플레이어로는 원활한 진행이 불가합니다.";
+	private static final int FULL_PLAYER_THRESHOLD = 7;
 	private final List<Player> players;
 
 	public Players(List<Player> players) {
