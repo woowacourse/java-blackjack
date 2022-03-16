@@ -36,17 +36,35 @@ public abstract class Participant {
         return Score.calculateSumFrom(hand).isGreaterThan(Score.BLACKJACK);
     }
 
-    // TODO: 조건식 단순화
     public ResultType compareWith(Participant other) {
+        if (isWin(other)) {
+            return ResultType.WIN;
+        }
+
+        if (isLose(other)) {
+            return ResultType.LOSE;
+        }
+
+        return ResultType.DRAW;
+    }
+
+    private boolean isWin(Participant other) {
         int playerScore = getCurrentScore().getValue();
         int otherScore = other.getCurrentScore().getValue();
 
-        if ((playerScore > otherScore && !isBusted()) || (!isBusted() && other.isBusted())) {
-            return ResultType.WIN;
-        }
-        if ((playerScore < otherScore && !other.isBusted()) || (isBusted() && !other.isBusted())) {
-            return ResultType.LOSE;
-        }
-        return ResultType.DRAW;
+        boolean isGreaterThanOtherAndNotBusted = playerScore > otherScore && !isBusted();
+        boolean isNotBustedButOtherIsBusted = !isBusted() && other.isBusted();
+
+        return isGreaterThanOtherAndNotBusted || isNotBustedButOtherIsBusted;
+    }
+
+    private boolean isLose(Participant other) {
+        int playerScore = getCurrentScore().getValue();
+        int otherScore = other.getCurrentScore().getValue();
+
+        boolean isLessThanOtherAndOtherIsNotBusted = playerScore < otherScore && !other.isBusted();
+        boolean isBustedButOtherIsNotBusted = isBusted() && !other.isBusted();
+
+        return isLessThanOtherAndOtherIsNotBusted || isBustedButOtherIsNotBusted;
     }
 }
