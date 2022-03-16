@@ -32,6 +32,8 @@ public class PlayersTest {
 	private List<Card> cards_BURST;
 	private Dealer dealerBlackJack;
 	private Dealer dealer_17;
+	private Player pobi;
+	private Player jason;
 	private Players players;
 
 	@BeforeEach
@@ -44,9 +46,10 @@ public class PlayersTest {
 		cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
 		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
 		dealerBlackJack = new Dealer(new Hand(cards_21));
+		pobi = new Player(new Name("pobi"), new Hand(cards_21));
+		jason = new Player(new Name("jason"), new Hand(cards_BURST));
 		players = new Players(
-			Arrays.asList(new Player(new Name("pobi"), new Hand(cards_21)),
-				new Player(new Name("jason"), new Hand(cards_BURST))));
+			Arrays.asList(pobi, jason));
 		List<Card> cards = new ArrayList<>(List.of(card_A, card_6));
 		dealer_17 = new Dealer(new Hand(cards));
 	}

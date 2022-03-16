@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import domain.card.Deck;
 import domain.card.Hand;
-import domain.card.deckstrategy.GeneralGenerationDeckStrategy;
+import domain.card.deckstrategy.GenerationStandardDeckStrategy;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.ParticipantInfo;
@@ -18,7 +18,7 @@ import view.OutputView;
 public class Controller {
 
 	public void run() {
-		Deck deck = Deck.from(new GeneralGenerationDeckStrategy());
+		Deck deck = Deck.from(new GenerationStandardDeckStrategy());
 		Dealer dealer = new Dealer(new Hand(deck.generateInitCards()));
 		Players players = new Players(makePlayers(makeNames(), deck));
 		printInitHands(dealer, players);
@@ -51,15 +51,19 @@ public class Controller {
 		return players;
 	}
 
+	public void printInitHands(Dealer dealer, Players players) {
+		OutputView.printInitMessage(players.getNames());
+		OutputView.printOneHandForDealer(new ParticipantInfo(dealer));
+
+		List<ParticipantInfo> playersInfo = players.getPlayerInfo();
+		for (int i = 0; i < playersInfo.size(); i++) {
+			OutputView.printHand(playersInfo.get(i));
+		}
+	}
+
 	private void drawForPlayers(Deck deck, Players players) {
 		players.getNames().stream()
 			.forEach(name -> askAndDrawForPlayer(deck, players, name));
-	}
-
-	private void drawForDealer(Deck deck, Dealer dealer, Players players) {
-		if (!players.checkAllBust()) {
-			drawForDealer(deck, dealer);
-		}
 	}
 
 	private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
@@ -79,20 +83,14 @@ public class Controller {
 		return true;
 	}
 
-	private void drawForDealer(Deck deck, Dealer dealer) {
+	private void drawForDealer(Deck deck, Dealer dealer, Players players) {
+		if (players.checkAllBust()) {
+			return;
+		}
+
 		while (!dealer.isEnoughCard()) {
 			OutputView.printDealerDrawMessage();
 			dealer.addCard(deck.draw());
-		}
-	}
-
-	public void printInitHands(Dealer dealer, Players players) {
-		OutputView.printInitMessage(players.getNames());
-		OutputView.printOneHandForDealer(new ParticipantInfo(dealer));
-
-		List<ParticipantInfo> playersInfo = players.getPlayerInfo();
-		for (int i = 0; i < playersInfo.size(); i++) {
-			OutputView.printHand(playersInfo.get(i));
 		}
 	}
 

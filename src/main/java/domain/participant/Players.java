@@ -10,8 +10,6 @@ import domain.card.Card;
 import domain.result.WinOrLose;
 
 public class Players {
-	private static final String NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] BlackJack 이 없습니다.";
-
 	private final LinkedHashMap<Name, Player> players;
 
 	public Players(List<Player> players) {

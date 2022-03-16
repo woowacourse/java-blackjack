@@ -11,7 +11,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 
-public class GeneralGenerationDeckStrategy implements GenerationDeckStrategy {
+public class GenerationStandardDeckStrategy implements GenerationDeckStrategy {
 
 	@Override
 	public Queue<Card> generateCardsForBlackJack() {

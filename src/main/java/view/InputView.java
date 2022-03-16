@@ -28,7 +28,7 @@ public class InputView {
 			checkDuplicate(names);
 			return names;
 		} catch (IllegalArgumentException e) {
-			OutputView.printErrorMessage(e.getMessage());
+			OutputView.printMessage(e.getMessage());
 			return inputNames();
 		}
 	}
@@ -46,7 +46,7 @@ public class InputView {
 			validateAskDraw(resultAskDraw);
 			return giveOpinion(resultAskDraw);
 		} catch (IllegalArgumentException e) {
-			OutputView.printErrorMessage(e.getMessage());
+			OutputView.printMessage(e.getMessage());
 			return askDraw(name);
 		}
 	}

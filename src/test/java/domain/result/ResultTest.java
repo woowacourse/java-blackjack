@@ -34,6 +34,10 @@ public class ResultTest {
 	private Players players;
 	private Dealer dealer_17;
 	private Dealer dealer_BURST;
+	private Player pobi;
+	private Player jason;
+	private Player woni;
+	private Player gugu;
 	private Result result;
 	private Result result_dealer_burst;
 
@@ -49,10 +53,11 @@ public class ResultTest {
 		cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
 		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
 		cards_17 = new ArrayList<>(Arrays.asList(card_A, card_6));
-		players = new Players(
-			Arrays.asList(new Player(new Name("pobi"), new Hand(cards_20)),
-				new Player(new Name("jason"), new Hand(cards_15)),
-				new Player(new Name("woni"), new Hand(cards_BURST)), new Player(new Name("gugu"), new Hand(cards_17))));
+		pobi = new Player(new Name("pobi"), new Hand(cards_20));
+		jason = new Player(new Name("jason"), new Hand(cards_15));
+		woni = new Player(new Name("woni"), new Hand(cards_BURST));
+		gugu = new Player(new Name("gugu"), new Hand(cards_17));
+		players = new Players(Arrays.asList(pobi, jason, woni, gugu));
 		dealer_17 = new Dealer(new Hand(List.of(card_A, card_6)));
 		dealer_BURST = new Dealer(new Hand(List.of(card_K, card_Q, card_2)));
 		result = new Result(players.getResult(dealer_17));
