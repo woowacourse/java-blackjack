@@ -9,9 +9,8 @@ public class ResultOfProfit {
 
     private final Map<Player, BettingAmount> bettingAmounts;
 
-    public ResultOfProfit(Map<Player, String> inputs) {
-        bettingAmounts = new LinkedHashMap<>();
-        inputs.forEach((key, value) -> bettingAmounts.put(key, BettingAmount.newInstanceByString(value)));
+    public ResultOfProfit(Map<Player, BettingAmount> bettingAmounts) {
+        this.bettingAmounts = bettingAmounts;
     }
 
     public int getDealerProfit(Dealer dealer) {

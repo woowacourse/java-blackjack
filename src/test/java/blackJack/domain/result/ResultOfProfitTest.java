@@ -32,7 +32,10 @@ class ResultOfProfitTest {
         player2.hit(Card.from(Symbol.CLOVER, Denomination.SEVEN));
         player2.hit(Card.from(Symbol.CLOVER, Denomination.KING));
 
-        resultOfProfit = new ResultOfProfit(Map.of(player1, "10000", player2, "20000"));
+        resultOfProfit = new ResultOfProfit(Map.of(
+                player1, BettingAmount.newInstanceByString("10000"),
+                player2, BettingAmount.newInstanceByString("20000")
+        ));
     }
 
     @Test
