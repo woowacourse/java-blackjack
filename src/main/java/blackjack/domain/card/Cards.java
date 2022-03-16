@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class Cards {
 
+    private static final int CARDS_MINIMUM_CREATE_SIZE = 2;
+
     private final Set<Card> cards;
 
     public Cards(final Set<Card> cards) {
@@ -15,7 +17,7 @@ public class Cards {
     }
 
     private void checkCardsSize(final Set<Card> cards) {
-        if (cards.size() < 2) {
+        if (cards.size() < CARDS_MINIMUM_CREATE_SIZE) {
             throw new IllegalArgumentException("cards는 2장이상이 들어와야 합니다.");
         }
     }
