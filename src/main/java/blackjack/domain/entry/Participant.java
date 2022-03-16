@@ -19,6 +19,8 @@ public abstract class Participant {
 
     public abstract String getName();
 
+    public abstract boolean isPlayer();
+
     public int countCards() {
         return holdCards.countBestNumber();
     }

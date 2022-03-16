@@ -1,21 +1,19 @@
 package blackjack.dto.response;
 
-import blackjack.domain.PlayerOutcome;
-
 public class PlayerGameResult {
     private final String playerName;
-//    private final String outcome;
+    private final double profit;
 
-    public PlayerGameResult(String playerName, PlayerOutcome outcome) {
+    public PlayerGameResult(String playerName, double profit) {
         this.playerName = playerName;
-//        this.outcome = outcome.g();
+        this.profit = profit;
     }
 
     public String getPlayerName() {
         return playerName;
     }
 
-//    public String getOutcome() {
-//        return outcome;
-//    }
+    public double getProfit() {
+        return profit;
+    }
 }

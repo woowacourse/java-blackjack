@@ -1,8 +1,6 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.PlayerOutcome;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +31,8 @@ public class Participants {
         return participants;
     }
 
-    public Map<PlayerOutcome, List<Player>> getGameResults() {
+    public Map<Player, Double> getGameResults() {
         return players.stream()
-                .collect(Collectors.groupingBy(player -> player.match(dealer)));
+            .collect(Collectors.toMap(player -> player, player -> player.getBettingResult(dealer)));
     }
 }

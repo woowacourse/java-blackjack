@@ -42,7 +42,7 @@ public class BlackjackTable {
         return participants.getParticipants();
     }
 
-    public Map<PlayerOutcome, List<Player>> countGameResult() {
+    public Map<Player, Double> countGameResult() {
         return participants.getGameResults();
     }
 
@@ -52,7 +52,15 @@ public class BlackjackTable {
 
     private List<Player> toPlayers(List<PlayerRequest> playersRequests) {
         return playersRequests.stream()
-            .map(playerRequest -> new Player(playerRequest.getName(), new BettingMoney(1000), HoldCards.initTwoCards(deck.draw(), deck.draw())))
+            .map(this::toPlayer)
             .collect(Collectors.toList());
+    }
+
+    private Player toPlayer(PlayerRequest playerRequest) {
+        return new Player(
+            playerRequest.getName(),
+            new BettingMoney(playerRequest.getBettingMoney()),
+            HoldCards.initTwoCards(deck.draw(), deck.draw())
+        );
     }
 }

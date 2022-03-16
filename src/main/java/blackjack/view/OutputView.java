@@ -41,15 +41,11 @@ public class OutputView {
         System.out.println();
     }
 
-//    public static void printGameResult(List<PlayerGameResult> playerGameResults) {
-//        System.out.println("## 최종 승패");
-//        System.out.println("딜러: "
-//            + countDealerResult(playerGameResults, LOSE) + "승 "
-//            + countDealerResult(playerGameResults, WIN) + "패 "
-//            + countDealerResult(playerGameResults, DRAW) + "무"
-//        );
-//        playerGameResults.forEach(result -> System.out.println(result.getPlayerName() + ": " + result.getOutcome()));
-//    }
+    public static void printGameResult(List<PlayerGameResult> playerGameResults) {
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + countDealerProfit(playerGameResults));
+        playerGameResults.forEach(result -> System.out.println(result.getPlayerName() + ": " + result.getProfit()));
+    }
 
     private static String toCardName(List<PlayerCardResult> firstTurnCards) {
         return firstTurnCards.stream()
@@ -62,9 +58,9 @@ public class OutputView {
         return MessageFormat.format("{0}카드: {1}", playerName, String.join(NAME_DELIMITER, cardNames));
     }
 
-//    private static long countDealerResult(List<PlayerGameResult> playerGameResults, String outcome) {
-//        return playerGameResults.stream()
-//            .filter(playerGameResult -> playerGameResult.getOutcome().equals(outcome))
-//            .count();
-//    }
+    private static double countDealerProfit(List<PlayerGameResult> playerGameResults) {
+        return Math.abs(playerGameResults.stream()
+            .mapToDouble(PlayerGameResult::getProfit)
+            .sum());
+    }
 }

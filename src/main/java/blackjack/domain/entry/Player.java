@@ -47,6 +47,11 @@ public class Player extends Participant {
         return name;
     }
 
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
+
     private void validateName(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException("플레이어의 이름은 공백이 될 수 없습니다.");

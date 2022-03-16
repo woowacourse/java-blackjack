@@ -2,19 +2,17 @@ package blackjack;
 
 import blackjack.domain.BlackjackTable;
 import blackjack.domain.Command;
-import blackjack.domain.PlayerOutcome;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
+import blackjack.dto.request.PlayerRequest;
 import blackjack.dto.response.CardCountingResult;
 import blackjack.dto.response.PlayerCardResult;
 import blackjack.dto.response.PlayerGameResult;
-import blackjack.dto.request.PlayerRequest;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BlackjackGame {
 
@@ -23,7 +21,7 @@ public class BlackjackGame {
         OutputView.printFirstTurnCards(toFirstTurnCards(blackjackTable.getParticipants()));
         hit(blackjackTable);
         OutputView.printCardCountingResult(toCardCountingResult(blackjackTable.getParticipants()));
-//        OutputView.printGameResult(toGameResults(blackjackTable.countGameResult()));
+        OutputView.printGameResult(toGameResults(blackjackTable.countGameResult()));
     }
 
     private List<PlayerRequest> toPlayerRequest(List<String> names) {
@@ -51,6 +49,9 @@ public class BlackjackGame {
     }
 
     private void hitPlayer(BlackjackTable blackjackTable, Participant participant) {
+        if (!participant.isPlayer()) {
+            return;
+        }
         Command command = Command.find(InputView.inputCommand(participant.getName()));
         if (command.isStay()) {
             OutputView.printPlayerCards(toPlayerCard(participant));
@@ -92,17 +93,10 @@ public class BlackjackGame {
         );
     }
 
-    private List<PlayerGameResult> toGameResults(Map<PlayerOutcome, List<Player>> gameResults) {
-        return gameResults.keySet().stream()
-            .flatMap(outcome -> toPlayerGameResult(gameResults, outcome))
+    private List<PlayerGameResult> toGameResults(Map<Player, Double> countGameResult) {
+        return countGameResult.keySet().stream()
+            .map(player -> new PlayerGameResult(player.getName(), countGameResult.get(player)))
             .collect(Collectors.toList());
-    }
 
-    private Stream<PlayerGameResult> toPlayerGameResult(
-        Map<PlayerOutcome, List<Player>> gameResult,
-        PlayerOutcome outcome
-    ) {
-        return gameResult.get(outcome).stream()
-            .map(player -> new PlayerGameResult(player.getName(), outcome));
     }
 }
