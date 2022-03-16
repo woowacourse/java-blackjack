@@ -47,10 +47,6 @@ public final class Cards {
         }
     }
 
-    public int calculateScore() {
-        return cards.stream().mapToInt(card -> card.getScoreAmount()).sum();
-    }
-
     public int calculateMaxScore() {
         if (containsAce()) {
             return calculateScore() + Score.getDifferenceAcesScore();
@@ -62,16 +58,27 @@ public final class Cards {
         return cards.stream().anyMatch(Card::isScoreAce);
     }
 
+    public int calculateScore() {
+        return cards.stream().mapToInt(card -> card.getScoreAmount()).sum();
+    }
+
     public int calculateInitCardScore() {
         if (containsInitAce()) {
-            return getInitCards().stream().mapToInt(card -> card.getScoreAmount()).sum()
-                    + Score.getDifferenceAcesScore();
+            return calculateInitMaxScore();
         }
-        return getInitCards().stream().mapToInt(card -> card.getScoreAmount()).sum();
+        return calculateInitScore();
     }
 
     private boolean containsInitAce() {
         return getInitCards().stream().anyMatch(Card::isScoreAce);
+    }
+
+    private int calculateInitMaxScore() {
+        return calculateInitScore() + Score.getDifferenceAcesScore();
+    }
+
+    private int calculateInitScore() {
+        return getInitCards().stream().mapToInt(card -> card.getScoreAmount()).sum();
     }
 
     private List<Card> getInitCards() {
