@@ -24,7 +24,7 @@ public abstract class Running extends AbstractBlackjackGameState {
     }
 
     @Override
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return false;
     }
 
