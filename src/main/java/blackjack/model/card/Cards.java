@@ -39,4 +39,8 @@ public class Cards {
                 .map(card -> card.getNumberOfString() + card.getSymbol())
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public Cards getCopyInstance() {
+        return new Cards(values);
+    }
 }

@@ -44,4 +44,10 @@ public class Dealer extends Participant {
         State state = this.state.addCard(deck.draw());
         return new Dealer(state);
     }
+
+    @Override
+    public Participant getCopyInstance() {
+        State state = this.state.getCopyInstance();
+        return new Dealer(state);
+    }
 }

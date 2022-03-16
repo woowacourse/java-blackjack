@@ -39,4 +39,10 @@ public class PlayerState extends State {
             this.sign = BLACKJACK;
         }
     }
+
+    @Override
+    public State getCopyInstance() {
+        Cards cards = this.cards.getCopyInstance();
+        return new PlayerState(cards, sign);
+    }
 }

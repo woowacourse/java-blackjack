@@ -77,19 +77,19 @@ public class ResultView {
         }
     }
 
-    public static void printFinalResult(Participant dealer, List<Participant> gamers) {
+    public static void printScoreResult(Participant dealer, List<Participant> gamers) {
         printResultOf(dealer);
         for (Participant gamer : gamers) {
             printResultOf(gamer);
         }
     }
 
-    private static void printResultOf(Participant dealer) {
+    private static void printResultOf(Participant player) {
         StringJoiner cardJoiner = new StringJoiner(DELIMITER);
-        for (String card : dealer.getCards()) {
+        for (String card : player.getCards()) {
             cardJoiner.add(card);
         }
-        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, dealer.getName(), cardJoiner);
+        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, player.getName(), cardJoiner);
     }
 /*
     public static void printMatchResult(final BlackJackGameResult blackJackGameResult) {

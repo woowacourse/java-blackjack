@@ -41,4 +41,10 @@ public class Player extends Participant {
         State copyOfState = this.state.addCard(deck.draw());
         return new Player(this.name, copyOfState);
     }
+
+    @Override
+    public Participant getCopyInstance() {
+        State state = this.state.getCopyInstance();
+        return new Player(name, state);
+    }
 }

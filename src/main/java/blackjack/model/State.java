@@ -26,6 +26,8 @@ public abstract class State {
         return cards.getValues();
     }
 
+    public abstract State getCopyInstance();
+
     public abstract boolean canHit();
 
     public abstract State addCard(Card card);

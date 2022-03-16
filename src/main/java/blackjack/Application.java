@@ -9,7 +9,7 @@ public class Application {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
         ResultView.printStartResult(blackjackGame.start());
         blackjackGame.performEachTurn(InputView::inputHitOrStaySign, ResultView::printCurrentTurnResult);
-        ResultView.printFinalResult(blackjackGame.getDealer(), blackjackGame.getGamers());
+        ResultView.printScoreResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
         //ResultView.printMatchResult(blackjackGame.createMatchResult());
     }
 }

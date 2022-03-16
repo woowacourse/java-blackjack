@@ -41,4 +41,10 @@ public class DealerState extends State {
             sign = BLACKJACK;
         }
     }
+
+    @Override
+    public State getCopyInstance() {
+        Cards cards = this.cards.getCopyInstance();
+        return new DealerState(cards, sign);
+    }
 }

@@ -34,7 +34,9 @@ public class Players {
     }
 
     public List<Participant> getValues() {
-        return values;
+        return values.stream()
+                .map(Participant::getCopyInstance)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
 

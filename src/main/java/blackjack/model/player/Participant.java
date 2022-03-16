@@ -23,13 +23,15 @@ public abstract class Participant {
         return name;
     }
 
+    public abstract List<String> getCards();
+
+    public abstract Participant getCopyInstance();
+
     public abstract Participant drawCardsBy(final CardDeck cardDeck);
 
     public abstract boolean canHit();
 
     public abstract Participant hitBy(final CardDeck cardDeck);
-
-    public abstract List<String> getCards();
 
     /*
     public boolean isWinBy(Participant otherParticipant) {
