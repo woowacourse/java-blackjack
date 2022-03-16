@@ -16,7 +16,7 @@ public class Players {
 
     public void recieveCard() {
         for (Player player : players) {
-            player.initCard(CARD_CACHE.poll());
+            player.dealCard(CARD_CACHE.poll());
         }
     }
 

@@ -28,7 +28,7 @@ public class Game {
 
     private void handOutInitCard() {
         for (int i = 0; i < HAND_OUT_COUNT; i++) {
-            dealer.initCard(CARD_CACHE.poll());
+            dealer.dealCard(CARD_CACHE.poll());
             players.recieveCard();
         }
     }

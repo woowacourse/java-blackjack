@@ -22,7 +22,7 @@ public class Blackjack {
         checkDealerIsBlackJack(game);
 
         playGame(game.getDealer(), game.getPlayers());
-        OutputView.printTotalResult(calculateDealerAndPlayersScore(game));
+        OutputView.printTotalResult(makeUserList(game));
 
         makeResults(game);
 
@@ -33,7 +33,7 @@ public class Blackjack {
         );
     }
 
-    private List<User> calculateDealerAndPlayersScore(Game game) {
+    private List<User> makeUserList(Game game) {
         List<User> users = new ArrayList<>();
         users.add(game.getDealer());
         for (Player player : game.getPlayers().getPlayers()) {

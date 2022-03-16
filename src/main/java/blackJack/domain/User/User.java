@@ -28,7 +28,7 @@ public abstract class User {
         throw new IllegalArgumentException(ExeptionMessage.CANNOT_ADD_CARD);
     }
 
-    public void initCard(Card card) {
+    public void dealCard(Card card) {
         this.cards.add(card);
     }
 
