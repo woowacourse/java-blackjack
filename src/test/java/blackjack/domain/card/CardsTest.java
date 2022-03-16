@@ -62,4 +62,10 @@ class CardsTest {
                 Arguments.of(Set.of(Card.of(SPADES, A), Card.of(SPADES, EIGHT)), false)
         );
     }
+
+    @Test
+    void 최대_스코어가_버스트인지_확인() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, SEVEN), Card.of(SPADES, EIGHT), Card.of(SPADES, A)));
+        assertThat(cards.isMaxScoreBust()).isTrue();
+    }
 }

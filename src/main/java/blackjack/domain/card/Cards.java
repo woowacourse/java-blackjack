@@ -36,6 +36,14 @@ public class Cards {
         return cards.size() == BLACKJACK_CARD_SIZE && score() == BLACKJACK_TARGET_NUMBER;
     }
 
+    public int maxScore() {
+        return Denomination.calculateCardMaxScore(cards);
+    }
+
+    public boolean isMaxScoreBust() {
+        return maxScore() > BLACKJACK_TARGET_NUMBER;
+    }
+
     public void addCard(final Card card) {
         cards.add(card);
     }
