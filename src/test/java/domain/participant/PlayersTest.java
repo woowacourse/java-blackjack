@@ -24,24 +24,34 @@ class PlayersTest {
     @Test
     @DisplayName("입력 받은 플레이어 이름이 쉼표만 있을 경우 에러를 발생시킨다.")
     void playersCommaErrorTest() {
-        List<String> names = Arrays.asList("kun","", "", "runa");
+        List<String> names = Arrays.asList("kun", "", "", "runa");
 
-        assertThatThrownBy(()-> Players.of(names))
+        assertThatThrownBy(() -> Players.of(names))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }
 
     @Test
     @DisplayName("첫 턴에서 모든 참가자가 카드를 두개씩 뽑는지 확인")
-    void initialTurnTest(){
+    void initialTurnTest() {
         Players players = Players.of(Arrays.asList("runa", "kun"));
         Deck deck = Deck.initDeck();
 
         players.runInitialTurn(deck);
-        int actual = (int)players.getPlayers().stream()
+        int actual = (int) players.getPlayers().stream()
             .filter(participant -> participant.getCards().size() == 2)
             .count();
 
         assertThat(actual).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("Players의 이름이 잘 변환이 되는지 확인한다.")
+    void toNamesTest() {
+        Players players = Players.of(Arrays.asList("kun", "runa"));
+        List<String> playerNames = players.toNames();
+
+        assertThat(playerNames.get(0)).isEqualTo("kun");
+        assertThat(playerNames.get(1)).isEqualTo("runa");
     }
 }

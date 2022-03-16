@@ -2,6 +2,7 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -31,8 +32,20 @@ class CardsTest {
                 new Card(Symbol.CLOVER, Denomination.ACE),
                 new Card(Symbol.DIAMOND, Denomination.ACE)), 13),
             Arguments.of(List.of(new Card(Symbol.SPADE, Denomination.FIVE),
-                new Card(Symbol.CLOVER, Denomination.ACE), new Card(Symbol.DIAMOND, Denomination.ACE),
+                new Card(Symbol.CLOVER, Denomination.ACE),
+                new Card(Symbol.DIAMOND, Denomination.ACE),
                 new Card(Symbol.HEART, Denomination.ACE)), 18)
         );
     }
+
+    @Test
+    @DisplayName("Cards에 카드가 잘 추가되는지 확인한다.")
+    public void addTest() {
+        Cards cards = Cards.of(new ArrayList<>());
+        Card card = new Card(Symbol.SPADE, Denomination.NINE);
+        Cards addedCards = cards.addCard(card);
+
+        assertThat(addedCards.getCardByIndex(0)).isEqualTo(card);
+    }
+
 }
