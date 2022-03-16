@@ -22,8 +22,7 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         handForPlayer = new ArrayList<>(
-                List.of(new Card(Rank.RANK_8, Suit.CLOVER),
-                        new Card(Rank.RANK_A, Suit.CLOVER))
+                List.of(new Card(Rank.RANK_8, Suit.CLOVER), new Card(Rank.RANK_A, Suit.CLOVER))
         );
         player = new Player(new Name("pobi"), handForPlayer);
     }

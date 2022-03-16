@@ -13,6 +13,8 @@ public class InputView {
     private static final String NAME_DUPLICATE_ERROR_MESSAGE = "[Error] 이름은 중복일 수 없습니다.";
     private static final String INPUT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_ASk_DRAW_MESSAGE_FORMAT = "\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
+    private static final String INPUT_BETTING_MONEY_FORMAT = "%s의 배팅 금액은?\n";
+    private static final String AVAILABLE_ASK_DRAW_ERROR_MESSAGE = "[Error] 질문에 대한 대답은 y 혹은 n 만 가능합니다.";
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -34,7 +36,7 @@ public class InputView {
     }
 
     public static int inputMoney(Name name) {
-        System.out.printf("%s의 배팅 금액은?", name.getName());
+        System.out.printf(INPUT_BETTING_MONEY_FORMAT, name.getName());
         String input = scanner.nextLine();
         return Integer.parseInt(input);
     }
@@ -48,7 +50,7 @@ public class InputView {
 
     private static void validateAskDraw(String askDraw) {
         if (!(askDraw.equals("y") || askDraw.equals("n"))) {
-            throw new IllegalArgumentException("[Error] 질문에 대한 대답은 y 혹은 n 만 가능합니다.");
+            throw new IllegalArgumentException(AVAILABLE_ASK_DRAW_ERROR_MESSAGE);
         }
     }
 }

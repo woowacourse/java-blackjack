@@ -26,12 +26,4 @@ class InitCardsTest {
         InitCards initCards = new InitCards(deck);
         assertThat(initCards.getInitCards()).containsExactly(card_A, card_6);
     }
-
-    @Test
-    @DisplayName("복수의 플레이어를 위한 초기화 카드들을 생성하는 기능")
-    void generateInitCardsForPlayers() {
-        List<List<Card>> initCardsForPlayers = InitCards.generateInitCardsForPlayers(deck, 2);
-        assertThat(initCardsForPlayers.get(0)).containsExactly(card_A, card_6);
-        assertThat(initCardsForPlayers.get(1)).containsExactly(card_Q, card_9);
-    }
 }
