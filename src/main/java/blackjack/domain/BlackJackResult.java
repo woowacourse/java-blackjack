@@ -20,7 +20,7 @@ public class BlackJackResult {
 
     public static BlackJackResult of(final Players players) {
         final Map<Player, GameResult> gamblerResult = new LinkedHashMap<>();
-        final EnumMap<GameResult, Integer> dealerResult = players.getGamblers()
+        final Map<GameResult, Integer> dealerResult = players.getGamblers()
             .stream()
             .collect(Collectors.groupingBy(
                 gambler -> getResultPlayer(players.getDealer(), gamblerResult, gambler),

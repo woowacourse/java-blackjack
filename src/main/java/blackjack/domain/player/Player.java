@@ -19,6 +19,10 @@ public abstract class Player {
         playingCards.addCard(playingCard);
     }
 
+    public boolean isBlackjack() {
+        return playingCards.isBlackjack();
+    }
+
     public boolean isBurst() {
         return playingCards.isBurst();
     }
@@ -29,8 +33,8 @@ public abstract class Player {
 
     public abstract boolean isDealer();
 
-    public GameResult compare(final Player gambler) {
-        return GameResult.of(this, gambler);
+    public GameResult compare(final Player player) {
+        return GameResult.of(this, player);
     }
 
     public int getSumOfCards() {

@@ -10,8 +10,6 @@ public class PlayingCards {
     private static final int NO_COUNT = 0;
     private static final int ACE_DECREASE_UNIT = 1;
     private static final int ACE_DIFFERENCE_UNIT = 10;
-    private static final int BURST_NUMBER = 21;
-
 
     private final List<PlayingCard> playingCards;
 
@@ -23,8 +21,20 @@ public class PlayingCards {
         playingCards.add(playingCard);
     }
 
+    public boolean isBlackjack() {
+        return isCardSumBlackjack() && hasCardJustTwo();
+    }
+
+    private boolean isCardSumBlackjack() {
+        return getCardSum() == BLACKJACK_NUMBER;
+    }
+
+    private boolean hasCardJustTwo() {
+        return playingCards.size() == 2;
+    }
+
     public boolean isBurst() {
-        return getCardSum() > BURST_NUMBER;
+        return getCardSum() > BLACKJACK_NUMBER;
     }
 
     public boolean isNotFinishedWithBound(final int boundNumber) {
@@ -36,7 +46,7 @@ public class PlayingCards {
     }
 
     private int adjustSumByAce(int currentSum) {
-        int aceCount = aceCount();
+        int aceCount = getAceCount();
         while (currentSum > BLACKJACK_NUMBER && aceCount > NO_COUNT) {
             aceCount -= ACE_DECREASE_UNIT;
             currentSum -= ACE_DIFFERENCE_UNIT;
@@ -54,7 +64,7 @@ public class PlayingCards {
             .sum();
     }
 
-    private int aceCount() {
+    private int getAceCount() {
         return (int) playingCards.stream()
             .filter(PlayingCard::isAce)
             .count();

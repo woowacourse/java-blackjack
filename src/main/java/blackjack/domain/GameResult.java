@@ -20,6 +20,9 @@ public enum GameResult {
     }
 
     public static GameResult of(final Player dealer, final Player gambler) {
+        if (gambler.isBlackjack()){
+            return LOSE;
+        }
         if (containsBurst(dealer, gambler)) {
             return getBurstResult(dealer, gambler);
         }

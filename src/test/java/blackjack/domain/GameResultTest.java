@@ -135,7 +135,6 @@ class GameResultTest {
         assertThat(result).isEqualTo(GameResult.WIN);
     }
 
-    //
     @DisplayName("둘다 버스트인 경우, 무승부 결과 객체를 반환하는지 확인한다.")
     @Test
     void burst_draw() {
@@ -162,5 +161,54 @@ class GameResultTest {
 
         //then
         assertThat(result).isEqualTo(GameResult.DRAW);
+    }
+
+    @DisplayName("겜블러가 블랙잭인 경우, 딜러는 무조건 패를 반환 받는다.")
+    @Test
+    void blackjack() {
+        //given
+        cardDeck = createCardDeck(
+            new PlayingCard(Suit.HEARTS, Denomination.JACK),
+            new PlayingCard(Suit.HEARTS, Denomination.QUEEN),
+            new PlayingCard(Suit.CLUBS, Denomination.ACE),
+            new PlayingCard(Suit.CLUBS, Denomination.KING)
+        );
+
+        cardDeck.drawTo(gambler);
+        cardDeck.drawTo(gambler);
+
+        cardDeck.drawTo(dealer);
+        cardDeck.drawTo(dealer);
+
+        //when
+        final GameResult result = GameResult.of(dealer, gambler);
+
+        //then
+        assertThat(result).isEqualTo(GameResult.LOSE);
+    }
+
+    @DisplayName("겜블러와 딜러가 모두 블랙잭인 경우에도 딜러는 패배를 반환 받는다.")
+    @Test
+    void blackjack_both() {
+        //given
+        cardDeck = createCardDeck(
+            new PlayingCard(Suit.HEARTS, Denomination.ACE),
+            new PlayingCard(Suit.HEARTS, Denomination.QUEEN),
+            new PlayingCard(Suit.CLUBS, Denomination.ACE),
+            new PlayingCard(Suit.CLUBS, Denomination.KING)
+        );
+
+        cardDeck.drawTo(gambler);
+        cardDeck.drawTo(gambler);
+
+        cardDeck.drawTo(dealer);
+        cardDeck.drawTo(dealer);
+
+        //when
+        final GameResult result = GameResult.of(dealer, gambler);
+
+        //then
+        assertThat(result).isEqualTo(GameResult.LOSE);
+        System.out.println();
     }
 }
