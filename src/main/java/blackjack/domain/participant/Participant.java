@@ -14,13 +14,17 @@ public abstract class Participant {
 
     protected final String name;
     protected int score = 0;
+    protected final BettingMoney bettingMoney;
     private final List<Card> cards = new ArrayList<>();
 
     public Participant(String name) {
         this.name = name;
+        this.bettingMoney = new BettingMoney();
     }
 
     public abstract boolean isHittable();
+
+    public abstract void betMoney(int money);
 
     public void addCard(Card card) {
         cards.add(card);
@@ -42,6 +46,10 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
     }
 
     private void computeAce() {

@@ -5,11 +5,13 @@ import java.util.Scanner;
 public class InputView {
 
     private static final String DELIMITER = ",";
-    private static final String REGEX = "^[a-zA-Z]+$";
+    private static final String NAME_REGEX = "^[a-zA-Z]+$";
+    private static final String BETTING_MONEY_REGEX = "^[0-9]+$";
     private static final String HIT = "y";
     private static final String STAY = "n";
     private static final String MUST_NOT_EMPTY = "입력은 빈 입력일 수 없습니다.";
     private static final String WRONG_FORM = "입력형식에 맞춰 입력해주세요.";
+    private static final String BETTING_MONEY_MUST_BE_POSITIVE_INTEGER = "양의 정수를 입력해주세요.";
     private static final String WRONG_HIT_OR_STAY = HIT + " 혹은 " + STAY + "만 입력 가능합니다.";
 
     private InputView() {
@@ -22,6 +24,14 @@ public class InputView {
         String[] names = input.split(DELIMITER);
         validateInputName(names);
         return names;
+    }
+
+    public static int inputBettingMoney(String name) {
+        System.out.println("\n" + name + "의 베팅 금액은?");
+        String input = inputLine();
+        validateEmpty(input);
+        validatePositiveInteger(input);
+        return Integer.parseInt(input);
     }
 
     public static boolean isRequestHit(String name) {
@@ -45,8 +55,14 @@ public class InputView {
     }
 
     private static void validateInputNameForm(String name) {
-        if (!name.matches(REGEX)) {
+        if (!name.matches(NAME_REGEX)) {
             throw new IllegalArgumentException(WRONG_FORM);
+        }
+    }
+
+    public static void validatePositiveInteger(String input) {
+        if (!input.matches(BETTING_MONEY_REGEX)) {
+            throw new IllegalArgumentException(BETTING_MONEY_MUST_BE_POSITIVE_INTEGER);
         }
     }
 

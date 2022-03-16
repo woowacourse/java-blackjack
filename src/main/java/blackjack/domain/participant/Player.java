@@ -8,6 +8,10 @@ public class Player extends Participant {
         super(name);
     }
 
+    public void betMoney(int money) {
+        bettingMoney.betMoney(money * (-1));
+    }
+
     public boolean isHittable() {
         return score < GOAL_SCORE;
     }

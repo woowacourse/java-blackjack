@@ -9,8 +9,7 @@ import blackjack.dto.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blackjack.view.InputView.inputNames;
-import static blackjack.view.InputView.isRequestHit;
+import static blackjack.view.InputView.*;
 import static blackjack.view.OutputView.*;
 
 public class BlackjackController {
@@ -22,13 +21,14 @@ public class BlackjackController {
     private final Deck deck;
 
     public BlackjackController() {
-        players = new Players(inputNames());
-        dealer = new Dealer();
-        deck = new Deck();
+        this.players = new Players(inputNames());
+        this.dealer = new Dealer();
+        this.deck = new Deck();
     }
 
     public void run() {
         try {
+            betMoney();
             firstDistribute();
             hitOrStayForAllPlayers();
             addCardForDealerIfNeed();
@@ -37,6 +37,11 @@ public class BlackjackController {
         } catch (IllegalArgumentException e) {
             printErrorMessage(e.getMessage());
         }
+    }
+
+    private void betMoney() {
+        players.getPlayers().forEach(player -> player.betMoney(inputBettingMoney(player.getName())));
+        dealer.betMoney(players.getTotalBettingMoney());
     }
 
     private void firstDistribute() {

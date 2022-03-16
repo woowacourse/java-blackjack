@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.dto.CurrentCardsDto;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +34,17 @@ public class PlayersTest {
     void createPlayers() {
         Players players = new Players(new String[]{"a", "b", "c"});
         assertThat(players.getPlayers().size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("전체 플레이어의 베팅 금액을 양의 정수로 반환한다.")
+    void getTotalBettingMoney() {
+        Players players = new Players(new String[]{"a", "b", "c"});
+        for (Player player : players.getPlayers()) {
+            player.betMoney(1000);
+        }
+
+        assertThat(players.getTotalBettingMoney()).isEqualTo(3000);
     }
 
     @Test

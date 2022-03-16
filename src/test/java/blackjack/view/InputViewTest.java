@@ -8,8 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static blackjack.view.InputView.inputNames;
-import static blackjack.view.InputView.isRequestHit;
+import static blackjack.view.InputView.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class InputViewTest {
@@ -43,6 +42,25 @@ public class InputViewTest {
     }
 
     @Test
+    @DisplayName("빈 입력으로 베팅금액을 입력한 경우 에러 발생")
+    void inputEmptyBettingMoney() {
+        setInput("\n");
+        assertThatThrownBy(() -> inputBettingMoney("pobi"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("입력은 빈 입력일 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"abc","#&$","-12345"})
+    @DisplayName("허용되지 않은 문자로 배팅금액을 입력한 경우 에러 발생")
+    void inputWrongBettingMoney(String input){
+        setInput(input);
+        assertThatThrownBy(() -> inputBettingMoney("pobi"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("양의 정수를 입력해주세요.");
+    }
+
+    @Test
     @DisplayName("빈 입력으로 hitOrNot을 입력한 경우 에러 발생")
     void inputEmptyHitOrNot() {
         setInput("\n");
@@ -53,7 +71,7 @@ public class InputViewTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"1", "@", "a"})
-    @DisplayName("허용되지 않다 문자로 hitOrNot을 입력한 경우 에러 발생")
+    @DisplayName("허용되지 않는 문자로 hitOrNot을 입력한 경우 에러 발생")
     void inputWrongHitOrNot(String input) {
         setInput(input);
         assertThatThrownBy(() -> isRequestHit("pobi"))

@@ -15,7 +15,7 @@ class ParticipantTest {
     ParticipantForTest participant;
 
     @BeforeEach
-    void setParticipantForTest(){
+    void setParticipantForTest() {
         participant = new ParticipantForTest("pobi");
     }
 
@@ -49,12 +49,15 @@ class ParticipantTest {
         assertThat(participant.computeTotalScore().getScore()).isEqualTo(21);
     }
 
-    class ParticipantForTest extends Participant{
-        ParticipantForTest(String name){
+    class ParticipantForTest extends Participant {
+        ParticipantForTest(String name) {
             super(name);
         }
 
-        public boolean isHittable(){
+        public void betMoney(int money) {
+        }
+
+        public boolean isHittable() {
             return true;
         }
     }

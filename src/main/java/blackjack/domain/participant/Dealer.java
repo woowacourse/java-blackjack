@@ -14,6 +14,10 @@ public class Dealer extends Participant {
         super(NAME_OF_DEALER);
     }
 
+    public void betMoney(int money) {
+        bettingMoney.betMoney(money);
+    }
+
     public boolean isHittable() {
         return score <= BOUND_FOR_ADDITIONAL_CARD;
     }

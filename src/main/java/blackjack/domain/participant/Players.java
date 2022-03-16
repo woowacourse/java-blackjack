@@ -23,6 +23,10 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public int getTotalBettingMoney() {
+        return (players.stream().mapToInt(Player::getBettingMoney).sum()) * (-1);
+    }
+
     public void addForAllPlayers(Deck deck) {
         players.forEach(player -> player.addCard(deck.draw()));
     }
