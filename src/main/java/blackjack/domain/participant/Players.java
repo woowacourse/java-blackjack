@@ -72,9 +72,11 @@ public class Players {
         return new ArrayList<>(value);
     }
 
-    public List<Record> findAllRecords(final int dealerScore) {
-        return value.stream()
-                .map(player -> Record.of(dealerScore, player.getScore()))
-                .collect(Collectors.toList());
+    public int calculateDealerPrize() {
+        final int sum = value.stream()
+                .mapToInt(Player::getPrize)
+                .sum();
+
+        return sum * -1;
     }
 }

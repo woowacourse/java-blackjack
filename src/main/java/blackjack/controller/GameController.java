@@ -87,26 +87,24 @@ public class GameController {
         OutputView.printDealerTurnResult(count);
     }
 
-    public void printAllCards() {
+    public void endGame() {
+        printAllCards();
+        players.getValue().forEach(this::calculatePlayerPrize);
+        printAllPrize();
+    }
+
+    private void printAllCards() {
         OutputView.breakLine();
 
         OutputView.printCardsAndScore(dealer);
         players.getValue().forEach(OutputView::printCardsAndScore);
     }
 
-    public void printAllPrize() {
-        calculatePrize();
-        int sum = players.getValue().stream()
-                .mapToInt(Player::getPrize)
-                .sum();
+    private void printAllPrize() {
+        final int dealerPrize = players.calculateDealerPrize();
 
-        OutputView.printPrizePrefix();
-        OutputView.printPrize(dealer.getName(), sum * -1);
+        OutputView.printDealerPrize(dealerPrize);
         players.getValue().forEach(player -> OutputView.printPrize(player.getName(), player.getPrize()));
-    }
-
-    private void calculatePrize() {
-        players.getValue().forEach(this::calculatePlayerPrize);
     }
 
     private void calculatePlayerPrize(final Player player) {
