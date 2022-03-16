@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,8 +11,8 @@ public class BattingMoney {
         this.amount = bigDecimal;
     }
 
-    public BattingMoney(String money) {
-        this(new BigDecimal(money));
+    public BattingMoney(String input) {
+        this(new BigDecimal(Integer.parseInt(input)));
     }
 
     public BattingMoney add(BattingMoney money) {

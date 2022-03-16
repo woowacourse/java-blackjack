@@ -4,7 +4,6 @@ import static blackjack.domain.BattingResult.LOSE;
 import static blackjack.domain.BattingResult.WIN;
 import static blackjack.domain.BattingResult.WIN_BY_BLACKJACK;
 
-import blackjack.domain.BattingMoney;
 import blackjack.domain.BattingResult;
 import blackjack.domain.card.Card;
 import java.util.List;
