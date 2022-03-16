@@ -1,10 +1,10 @@
 package blackjack.controller;
 
 import blackjack.domain.game.Deck;
-import blackjack.domain.game.RedrawChoice;
 import blackjack.domain.role.Dealer;
-import blackjack.domain.role.DealerDrawable;
+import blackjack.domain.role.DealerDrawChoice;
 import blackjack.domain.role.Hand;
+import blackjack.domain.role.PlayerDrawChoice;
 import blackjack.dto.BettingDto;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
@@ -41,7 +41,7 @@ public class BlackJackController {
 	}
 
 	private void initBlackJackGame() {
-		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Hand(), DealerDrawable::chooseDraw));
+		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Hand(), DealerDrawChoice::chooseDraw));
 	}
 
 	private void addPlayers(Supplier<List<String>> playerNames) {
@@ -76,7 +76,7 @@ public class BlackJackController {
 							Consumer<PlayerTableDto> printerPlayerStatus,
 							String player) {
 		String answer = answerFunction.apply(player);
-		PlayerStatusDto playerStatus = blackJackService.drawPlayer(RedrawChoice.of(answer), player);
+		PlayerStatusDto playerStatus = blackJackService.drawPlayer(PlayerDrawChoice.of(answer), player);
 		printerPlayerStatus.accept(playerStatus.getTableStatusDto());
 		if (playerStatus.isDraw()) {
 			drawPlayer(answerFunction, printerPlayerStatus, player);

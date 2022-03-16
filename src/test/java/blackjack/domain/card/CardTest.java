@@ -26,7 +26,7 @@ class CardTest {
 	@DisplayName("카드의 정보가 제대로 반환되는지 확인")
 	void check_Card_Information() {
 		final String expectedInformation = "A클로버";
-		final String actualInformation = card.getInformation();
+		final String actualInformation = card.getDenominationAndSuit();
 
 		assertThat(actualInformation).isEqualTo(expectedInformation);
 	}

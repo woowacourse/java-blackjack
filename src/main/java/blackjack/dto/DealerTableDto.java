@@ -13,7 +13,7 @@ public class DealerTableDto {
 	private DealerTableDto(final String roleName, final List<Card> cards) {
 		this.roleName = roleName;
 		this.cards = cards.stream()
-				.map(Card::getInformation)
+				.map(Card::getDenominationAndSuit)
 				.collect(Collectors.toList());
 	}
 

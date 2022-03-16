@@ -1,10 +1,9 @@
 package blackjack.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.role.Role;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerTableDto {
 
@@ -14,7 +13,7 @@ public class PlayerTableDto {
 	private PlayerTableDto(final String roleName, final List<Card> cards) {
 		this.roleName = roleName;
 		this.cards = cards.stream()
-				.map(Card::getInformation)
+				.map(Card::getDenominationAndSuit)
 				.collect(Collectors.toList());
 	}
 

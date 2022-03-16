@@ -16,7 +16,7 @@ public class Card implements Comparable<Card> {
 		return denomination.getScore() == Denomination.ACE.getScore();
 	}
 
-	public String getInformation() {
+	public String getDenominationAndSuit() {
 		return denomination.getName() + suit.getName();
 	}
 

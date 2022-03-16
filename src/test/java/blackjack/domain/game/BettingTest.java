@@ -6,7 +6,7 @@ import static blackjack.factory.HandMockFactory.getNotBlackjackTopHand;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.role.Dealer;
-import blackjack.domain.role.DealerDrawable;
+import blackjack.domain.role.DealerDrawChoice;
 import blackjack.domain.role.Player;
 import blackjack.domain.role.Role;
 import java.util.HashMap;
@@ -39,15 +39,15 @@ class BettingTest {
 	private static Stream<Arguments> createRole() {
 		return Stream.of(
 				Arguments.of(new Player("player", getBlackJackHand()),
-						new Dealer(getNotBlackjackTopHand(), DealerDrawable::chooseDraw), 15000),
+						new Dealer(getNotBlackjackTopHand(), DealerDrawChoice::chooseDraw), 15000),
 				Arguments.of(new Player("player", getNotBlackjackTopHand()),
-						new Dealer(getBottomHand(), DealerDrawable::chooseDraw), 10000),
+						new Dealer(getBottomHand(), DealerDrawChoice::chooseDraw), 10000),
 
 				Arguments.of(new Player("player", getNotBlackjackTopHand()),
-						new Dealer(getBlackJackHand(), DealerDrawable::chooseDraw), -10000),
+						new Dealer(getBlackJackHand(), DealerDrawChoice::chooseDraw), -10000),
 
 				Arguments.of(new Player("player", getBlackJackHand()),
-						new Dealer(getBlackJackHand(), DealerDrawable::chooseDraw), 0)
+						new Dealer(getBlackJackHand(), DealerDrawChoice::chooseDraw), 0)
 		);
 	}
 }

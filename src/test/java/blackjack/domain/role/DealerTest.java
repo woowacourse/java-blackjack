@@ -45,7 +45,7 @@ class DealerTest {
 	@DisplayName("딜러의 패 오픈 전략 확인")
 	void check_Open_Hand() {
 		final Hand hand = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
-		Role dealer = new Dealer(hand, DealerDrawable::chooseDraw);
+		Role dealer = new Dealer(hand, DealerDrawChoice::chooseDraw);
 		List<Card> expectedOpenCards = List.of(CardMockFactory.of("A클로버"));
 		assertThat(dealer.openHand()).isEqualTo(expectedOpenCards);
 	}

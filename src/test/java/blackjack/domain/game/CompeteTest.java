@@ -7,7 +7,7 @@ import static blackjack.factory.HandMockFactory.getNotBlackjackTopHand;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.role.Dealer;
-import blackjack.domain.role.DealerDrawable;
+import blackjack.domain.role.DealerDrawChoice;
 import blackjack.domain.role.Hand;
 import blackjack.domain.role.Player;
 import blackjack.domain.role.Role;
@@ -26,7 +26,7 @@ class CompeteTest {
 	void check_Judge_Compete(Hand playerHand, Hand dealerHand, Outcome expectedOutcome) {
 		Compete compete = new Compete();
 		Role player = new Player("player", playerHand);
-		Role dealer = new Dealer(dealerHand, DealerDrawable::chooseDraw);
+		Role dealer = new Dealer(dealerHand, DealerDrawChoice::chooseDraw);
 		compete.judgeCompete(player, dealer);
 		assertThat(compete.getPlayerCompeteResults(player)).isEqualTo(expectedOutcome);
 	}

@@ -18,7 +18,7 @@ public class DealerResultDto {
 	private DealerResultDto(final String name, final Hand hand, final Money money) {
 		this.name = name;
 		this.cards = hand.getCards().stream()
-				.map(Card::getInformation)
+				.map(Card::getDenominationAndSuit)
 				.collect(Collectors.toList());
 		this.totalScore = hand.calculateOptimalScore();
 		this.bust = hand.isBust(totalScore);

@@ -1,21 +1,21 @@
-package blackjack.domain.game;
+package blackjack.domain.role;
 
 import java.util.Arrays;
 
-public enum RedrawChoice {
+public enum PlayerDrawChoice {
 	YES("y"),
 	NO("n"),
 	;
 
 	private final String value;
 
-	RedrawChoice(final String value) {
+	PlayerDrawChoice(final String value) {
 		this.value = value;
 	}
 
-	public static RedrawChoice of(String choice) {
+	public static PlayerDrawChoice of(String choice) {
 		return Arrays.stream(values())
-				.filter(redrawChoice -> choice.equals(redrawChoice.getValue()))
+				.filter(playerDrawChoice -> choice.equals(playerDrawChoice.getValue()))
 				.findAny()
 				.orElseThrow(IllegalArgumentException::new);
 	}

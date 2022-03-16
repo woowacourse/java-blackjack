@@ -4,11 +4,11 @@ import blackjack.domain.game.Betting;
 import blackjack.domain.game.Compete;
 import blackjack.domain.game.Deck;
 import blackjack.domain.game.Money;
-import blackjack.domain.game.RedrawChoice;
 import blackjack.domain.game.Revenue;
 import blackjack.domain.role.Dealer;
 import blackjack.domain.role.Hand;
 import blackjack.domain.role.Player;
+import blackjack.domain.role.PlayerDrawChoice;
 import blackjack.domain.role.PlayerTurns;
 import blackjack.domain.role.Players;
 import blackjack.domain.role.Role;
@@ -76,9 +76,9 @@ public class BlackJackService {
 		return PlayerTurnsDto.from(players.getPlayerTurn());
 	}
 
-	public PlayerStatusDto drawPlayer(final RedrawChoice answer, final String name) {
+	public PlayerStatusDto drawPlayer(final PlayerDrawChoice answer, final String name) {
 		Role player = players.getPlayerByName(name);
-		if (answer == RedrawChoice.NO) {
+		if (answer == PlayerDrawChoice.NO) {
 			return PlayerStatusDto.from(false, player);
 		}
 		player.draw(deck.draw());
