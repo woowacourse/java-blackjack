@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Cards;
 import java.util.Objects;
 
-public class Running implements BlackjackGameState {
+public final class Running implements BlackjackGameState {
 
     private final Cards cards;
 

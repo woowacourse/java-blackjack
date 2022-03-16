@@ -4,6 +4,7 @@ import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.KING;
 import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Suit.SPADES;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
@@ -26,5 +27,13 @@ class RunningTest {
         assertThatThrownBy(() -> new Running(new Cards(cards)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Running상태는 버스트된 카드가 들어올 수 없습니다.");
+    }
+
+    @Test
+    void Running상태의_종료여부_반환() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Running running = new Running(cards);
+
+        assertThat(running.isFinished()).isFalse();
     }
 }
