@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.user.Score.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +8,7 @@ import java.util.stream.Collectors;
 import blackjack.domain.user.Score;
 
 public class Cards {
+	private static final int ELEVEN_ACE_SCORE = 11;
 
 	private final List<Card> cards;
 	private Score score;
