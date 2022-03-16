@@ -4,11 +4,14 @@ import blackJack.domain.BlackJackGame;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
+import blackJack.domain.result.BettingAmount;
+import blackJack.domain.result.ResultOfProfit;
 import blackJack.domain.result.YesOrNo;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class BlackJackController {
 
@@ -16,13 +19,14 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
+        ResultOfProfit resultOfProfit = new ResultOfProfit(getBettingAmounts(blackJackGame.getPlayers()));
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(blackJackGame.getParticipants());
 
         doPlayerGame(blackJackGame);
         doDealerGame(blackJackGame);
         OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printFinalMatchResult(blackJackGame);
+        OutputView.printResultOfProfit(resultOfProfit, blackJackGame.getDealer());
     }
 
     private Participants getParticipants() {
@@ -31,6 +35,23 @@ public class BlackJackController {
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getParticipants();
+        }
+    }
+
+    private Map<Player, BettingAmount> getBettingAmounts(List<Player> players) {
+        Map<Player, BettingAmount> bettingAmounts = new LinkedHashMap<>();
+        for (Player player : players) {
+            bettingAmounts.put(player, getBettingAmount(player));
+        }
+        return bettingAmounts;
+    }
+
+    private BettingAmount getBettingAmount(Player player) {
+        try {
+            return BettingAmount.newInstanceByString(InputView.inputBettingAmount(player));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            return getBettingAmount(player);
         }
     }
 
