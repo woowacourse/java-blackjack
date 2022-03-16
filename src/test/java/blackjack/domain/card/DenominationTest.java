@@ -19,7 +19,7 @@ class DenominationTest {
     @ParameterizedTest
     @MethodSource("generateBustCheckValues")
     void 버스트_가능여부를_반환한다(final List<Denomination> denominations, final int expected) {
-        int result = Denomination.calculateMaxScore(denominations);
+        final int result = Denomination.calculateMaxScore(denominations);
         assertThat(result).isEqualTo(expected);
     }
 
