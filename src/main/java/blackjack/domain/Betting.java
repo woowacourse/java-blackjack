@@ -11,8 +11,15 @@ public class Betting {
     private final long money;
 
     public Betting(Name name, long money) {
+        validatePositiveMoney(money);
         this.name = name;
         this.money = money;
+    }
+
+    private void validatePositiveMoney(long money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("배팅 금액은 양수여야 합니다.");
+        }
     }
 
     public long revenue(Map<Name, PlayRecord> recordMap) {
