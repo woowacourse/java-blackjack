@@ -9,11 +9,12 @@ import blackjack.domain.participant.Players;
 import blackjack.dto.ParticipantDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackBoard {
+    public static final int INIT_CARD_COUNT = 2;
+
     private final Players players;
-    private final Participant dealer;
+    private final Dealer dealer;
     private final CardDeck cardDeck;
 
     public BlackjackBoard(CardDeck cardDeck, List<Player> players) {
@@ -25,7 +26,7 @@ public class BlackjackBoard {
 
     private void distributeCards() {
         dealer.receiveCard(cardDeck.drawCard());
-        players.getPlayers().forEach(player -> player.receiveCards(cardDeck.drawCard(2)));
+        players.getPlayers().forEach(player -> player.receiveCards(cardDeck.drawCard(INIT_CARD_COUNT)));
     }
 
     public boolean isAllPlayerFinished() {
@@ -66,13 +67,7 @@ public class BlackjackBoard {
         return participantDtos;
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
-        int score = dealer.calculateScore();
-        return players.getDealerGameResult(score);
-    }
-
-    public Map<String, GameResult> getPlayersResult() {
-        int score = dealer.calculateScore();
-        return players.getPlayersGameResult(score);
+    public BettingResult getBettingResult() {
+        return BettingResult.of(dealer, players.getPlayers());
     }
 }

@@ -37,6 +37,10 @@ public abstract class Participant {
         return holdingCard.isBust();
     }
 
+    public boolean isBlackjack() {
+        return holdingCard.isBlackjack();
+    }
+
     public abstract boolean isFinished();
 
     public int calculateScore() {

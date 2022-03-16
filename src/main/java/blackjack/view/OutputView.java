@@ -1,14 +1,13 @@
 package blackjack.view;
 
+import blackjack.domain.BettingResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.GameResult;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.HoldingCard;
+import blackjack.domain.participant.Participant;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.ScoreResultDto;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -57,19 +56,6 @@ public class OutputView {
                         + COLON + participantDto.getSum());
     }
 
-    public static void printFinalScore(ScoreResultDto finalScore) {
-        printEmptyLine();
-        System.out.println("## 최종승패");
-        System.out.println("딜러" + COLON + finalScore.getDealerResult().keySet().stream()
-                .map(gameResult -> finalScore.getDealerResult().get(gameResult).toString() + gameResult)
-                .collect(Collectors.joining()));
-
-        Map<String, GameResult> playersResult = finalScore.getPlayersResult();
-        for (String playerName : playersResult.keySet()) {
-            System.out.println(playerName + COLON + playersResult.get(playerName));
-        }
-    }
-
     private static String showCards(List<Card> cards) {
         return cards.stream()
                 .map(card -> showCard(card.getNumber(), card.getSymbol()))
@@ -90,5 +76,13 @@ public class OutputView {
 
     private static void printEmptyLine() {
         System.out.println();
+    }
+
+    public static void printFinalScore(BettingResult bettingResult) {
+        printEmptyLine();
+        System.out.println("## 최종 수익");
+        for (Participant participant : bettingResult.getBettingResult().keySet()) {
+            System.out.println(participant.getName() + COLON + bettingResult.getBettingResult().get(participant));
+        }
     }
 }

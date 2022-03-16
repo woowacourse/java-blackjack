@@ -1,17 +1,15 @@
 package blackjack;
 
+import blackjack.domain.BettingResult;
 import blackjack.domain.BlackjackBoard;
 import blackjack.domain.DrawCommand;
-import blackjack.domain.GameResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.HoldingCard;
 import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Player;
-import blackjack.dto.ScoreResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -23,8 +21,7 @@ public class BlackjackGame {
 
     public void start() {
         OutputView.printInitialCardStatus(blackjackBoard.getParticipantsDto());
-        runAllPlayersTurn();
-        runDealerTurn();
+        runAllParticipantsTurn();
         OutputView.printPlayerFinalCards(blackjackBoard.getParticipantsDto());
         OutputView.printFinalScore(createFinalScore());
     }
@@ -40,13 +37,18 @@ public class BlackjackGame {
         }
     }
 
-    private BetMoney makeBetMoney(String name) {
+    private BetMoney makeBetMoney(final String name) {
         try {
             return new BetMoney(InputView.askBetMoney(name));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return makeBetMoney(name);
         }
+    }
+
+    private void runAllParticipantsTurn() {
+        runAllPlayersTurn();
+        runDealerTurn();
     }
 
     private void runAllPlayersTurn() {
@@ -64,7 +66,7 @@ public class BlackjackGame {
         OutputView.printDealerGainCardCount(gainCardCount);
     }
 
-    private DrawCommand askDrawCommand(String name) {
+    private DrawCommand askDrawCommand(final String name) {
         try {
             return DrawCommand.from(InputView.askDrawCommand(name));
         } catch (IllegalArgumentException e) {
@@ -73,9 +75,13 @@ public class BlackjackGame {
         }
     }
 
-    private ScoreResultDto createFinalScore() {
-        Map<GameResult, Integer> dealerResult = blackjackBoard.getDealerResult();
-        Map<String, GameResult> playersResult = blackjackBoard.getPlayersResult();
-        return ScoreResultDto.from(dealerResult, playersResult);
+    //    private ScoreResultDto createFinalScore() {
+//        Map<GameResult, Integer> dealerResult = blackjackBoard.getDealerResult();
+//        Map<String, GameResult> playersResult = blackjackBoard.getPlayersResult();
+//        return ScoreResultDto.from(dealerResult, playersResult);
+//    }
+    private BettingResult createFinalScore() {
+        return blackjackBoard.getBettingResult();
     }
+
 }

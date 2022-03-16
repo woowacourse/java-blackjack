@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 public class BetMoney {
-
     private final int amount;
 
     public BetMoney(int betMoney) {
@@ -13,5 +12,9 @@ public class BetMoney {
         if (betMoney <= 0) {
             throw new IllegalArgumentException("[ERROR] 베팅 금액은 1원 이상부터 가능합니다.");
         }
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

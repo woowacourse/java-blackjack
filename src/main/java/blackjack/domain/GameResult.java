@@ -1,28 +1,32 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import java.util.Arrays;
+import java.util.function.BiPredicate;
+
 public enum GameResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK_WIN(1.5, (dealer, player) -> !dealer.isBlackjack() && player.isBlackjack()),
+    WIN(1, ((dealer, player) -> !player.isBust() &&player.calculateScore() > dealer.calculateScore())),
+    DRAW(0, (dealer, player) -> !player.isBust() && player.calculateScore() == dealer.calculateScore()),
+    LOSE(-1, (dealer, player) -> player.isBust() || player.calculateScore() < dealer.calculateScore());
 
-    private final String result;
+    private final double rate;
+    private final BiPredicate<Dealer, Player> isMatch;
 
-    GameResult(String result) {
-        this.result = result;
+    GameResult(double rate, BiPredicate<Dealer, Player> isMatch) {
+        this.rate = rate;
+        this.isMatch = isMatch;
     }
 
-    public static GameResult compareScore(int score, int comparedScore) {
-        if (score > comparedScore) {
-            return WIN;
-        }
-        if (score < comparedScore) {
-            return LOSE;
-        }
-        return DRAW;
+    public static GameResult compareScore(Dealer dealer, Player player) {
+        return Arrays.stream(values())
+                .filter(gameResult -> gameResult.isMatch.test(dealer, player))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 결과가 없습니다."));
     }
 
-    @Override
-    public String toString() {
-        return result;
+    public double getRate() {
+        return rate;
     }
 }

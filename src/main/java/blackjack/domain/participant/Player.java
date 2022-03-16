@@ -19,4 +19,8 @@ public class Player extends Participant {
     public boolean isFinished() {
         return holdingCard.isBust();
     }
+
+    public int getBetMoney() {
+        return betMoney.getAmount();
+    }
 }
