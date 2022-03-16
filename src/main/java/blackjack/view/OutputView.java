@@ -13,11 +13,13 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String NEW_LINE = System.lineSeparator();
+
     private OutputView() {
     }
 
     public static void printStart(Dealer dealer, List<Player> players) {
-        System.out.println("\n딜러와 " + generateNames(players) + "에게 2장씩 나누었습니다.");
+        System.out.println(NEW_LINE + "딜러와 " + generateNames(players) + "에게 2장씩 나누었습니다.");
         printDealerCard(dealer);
 
         players.forEach(OutputView::printPlayerCard);
@@ -69,7 +71,7 @@ public class OutputView {
     }
 
     public static void printGameResult(DealerResult dealerResult, List<PlayerResult> playerResults) {
-        System.out.println("\n## 최종 승패");
+        System.out.println(NEW_LINE + "## 최종 승패");
         System.out.println("딜러: " + generateDealerResultMessage(dealerResult.getResults()));
         System.out.println(generatePlayerResultsMessage(playerResults));
     }
@@ -88,7 +90,7 @@ public class OutputView {
     private static String generatePlayerResultsMessage(List<PlayerResult> playerResults) {
         return playerResults.stream()
                 .map(playerResult -> playerResult.getName() + ": " + playerResult.getGameResult())
-                .collect(joining("\n"));
+                .collect(joining(NEW_LINE));
     }
 }
 
