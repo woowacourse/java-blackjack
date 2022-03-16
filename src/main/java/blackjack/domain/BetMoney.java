@@ -1,8 +1,10 @@
 package blackjack.domain;
 
 public class BetMoney {
+
     private static final String INVALID_RANGE_MESSAGE = "배팅 금액이 정상 범위가 아닙니다";
     private static final int LOWER_BOUND = 0;
+
     private final Integer value;
 
     public BetMoney(final Integer value) {
