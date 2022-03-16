@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack;
 
 import blackjack.domain.Game;
 import blackjack.domain.player.Command;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class GameController {
+public class GameRunner {
 
     public void run() {
         Game game = generateGame();
