@@ -17,6 +17,7 @@ public class Players {
     private static final String PLAYER_NAME_DUPLICATE_ERROR_MESSAGE = "참가자 이름은 중복될 수 없습니다.";
     private static final String PLAYER_COUNT_OVER_ERROR_MESSAGE = "참가자는 딜러 포함 8명 까지만 가능합니다.";
     private static final int MAX_SIZE = 8;
+    public static final int INIT_CARD_SIZE = 2;
 
     private final List<Player> players;
 

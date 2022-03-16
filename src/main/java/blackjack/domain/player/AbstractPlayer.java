@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.BlackjackGame;
+import blackjack.BlackjackController;
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -25,17 +25,17 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBust() {
-        return cards.calculateScore() > BlackjackGame.MAX_SCORE;
+        return cards.calculateScore() > Cards.MAX_SCORE;
     }
 
     @Override
     public boolean isMaxScore() {
-        return cards.calculateScore() == BlackjackGame.MAX_SCORE;
+        return cards.calculateScore() == Cards.MAX_SCORE;
     }
 
     @Override
     public boolean isBlackjack() {
-        return isMaxScore() && cards.getCardValues().size() == BlackjackGame.INIT_CARD_SIZE;
+        return isMaxScore() && cards.getCardValues().size() == Players.INIT_CARD_SIZE;
     }
 
     @Override

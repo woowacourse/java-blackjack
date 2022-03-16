@@ -14,9 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackjackGame {
-    public static final int INIT_CARD_SIZE = 2;
-    public static final int MAX_SCORE = 21;
+public class BlackjackController {
 
     public void run() {
         Deck deck = new Deck();
@@ -24,7 +22,7 @@ public class BlackjackGame {
                 InputView.inputPlayerName(),
                 (player) -> HitFlag.fromCommand(InputView.inputHitOrStand(player.getName()))
         );
-        players.initHit(deck, INIT_CARD_SIZE);
+        players.initHit(deck, Players.INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
         BettingBox bettingBox = new BettingBox();
         players.bet(bettingBox, (player) -> new BettingMoney(InputView.inputBettingMoney(player.getName())));
