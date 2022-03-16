@@ -48,10 +48,6 @@ public class Players {
                 .count();
     }
 
-    private static void checkEmptyNames(final List<String> playerNames) {
-
-    }
-
     public Player hitCurrentTurnPlayer(final Card card) {
         final Player currentTurnPlayer = currentTurnPlayer();
         currentTurnPlayer.hit(card);
