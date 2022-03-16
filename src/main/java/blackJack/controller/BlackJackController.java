@@ -16,14 +16,23 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
-        blackJackGame.defaultDistributeCards();
-        OutputView.printInitCardResult(blackJackGame.getParticipants());
 
-        doPlayerGame(blackJackGame);
-        doDealerGame(blackJackGame);
+        defaultRound(blackJackGame);
+        additionalRound(blackJackGame);
+
         OutputView.printGameResult(blackJackGame.getParticipants());
         OutputView.printWinOrLoseResult(blackJackGame.getDealer(),
             BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
+    }
+
+    private void defaultRound(BlackJackGame blackJackGame) {
+        blackJackGame.defaultDistributeCards();
+        OutputView.printInitCardResult(blackJackGame.getParticipants());
+    }
+
+    private void additionalRound(BlackJackGame blackJackGame) {
+        doPlayerGame(blackJackGame);
+        doDealerGame(blackJackGame);
     }
 
     private Participants getParticipants() {
@@ -35,12 +44,6 @@ public class BlackJackController {
             OutputView.printErrorMessage(e);
             return getParticipants();
         }
-    }
-
-    private List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
     }
 
     private void doPlayerGame(BlackJackGame blackJackGame) {
@@ -55,6 +58,12 @@ public class BlackJackController {
             blackJackGame.distributeCard(player);
             OutputView.printNowHoldCardInfo(player);
         }
+    }
+
+    private List<Player> createPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private boolean getOneMoreCard(Player player) {
