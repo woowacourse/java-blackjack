@@ -25,8 +25,9 @@ public class Cards {
         return CardNumber.calculateScore(cardNumbers);
     }
 
-    public void add(final Card card) {
+    public Cards add(final Card card) {
         cards.add(card);
+        return new Cards(cards);
     }
 
     public boolean isBust() {

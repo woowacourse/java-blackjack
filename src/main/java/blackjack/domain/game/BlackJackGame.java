@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
 
     private final CardDeck cardDeck;
-    private final Dealer dealer;
+    private Dealer dealer;
     private final Players players;
 
     public BlackJackGame(final Map<String, String> playerNames) {
@@ -50,21 +50,13 @@ public class BlackJackGame {
     }
 
     public void drawDealer() {
-        dealer.draw(cardDeck.provideCard());
+        dealer = dealer.draw(cardDeck.provideCard());
     }
 
     public void stayDealer() {
         if (!dealer.isBust()) {
-            dealer.stay();
+            dealer = dealer.stay();
         }
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getInitPlayers() {
-        return players.getInitPlayers();
     }
 
     public Player getCurrentTurnPlayer() {

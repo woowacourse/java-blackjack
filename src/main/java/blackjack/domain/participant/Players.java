@@ -34,7 +34,8 @@ public class Players {
 
     public void turnToNextPlayer() {
         validateAllTurnEnd();
-        currentTurnPlayer().stay();
+        Player currentPlayerAfterStay = currentTurnPlayer().stay();
+        values.set(currentTurnIndex, currentPlayerAfterStay);
         currentTurnIndex++;
     }
 
@@ -49,10 +50,10 @@ public class Players {
     }
 
     public Player drawCurrentPlayer(final Card card) {
-        final Player currentPlayer = currentTurnPlayer();
-        currentPlayer.draw(card);
-        checkCanTurnNext(currentPlayer);
-        return currentPlayer;
+        final Player currentPlayerAfterDraw = currentTurnPlayer().draw(card);
+        values.set(currentTurnIndex, currentPlayerAfterDraw);
+        checkCanTurnNext(currentPlayerAfterDraw);
+        return currentPlayerAfterDraw;
     }
 
     private Player currentTurnPlayer() {

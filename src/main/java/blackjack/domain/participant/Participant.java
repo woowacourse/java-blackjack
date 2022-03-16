@@ -12,21 +12,17 @@ public abstract class Participant {
     final PlayerName name;
     State state;
 
-    Participant(final String name, final BattingMoney battingMoney, final List<Card> cards) {
-        this.name = new PlayerName(name);
-        this.state = State.create(new Cards(cards), battingMoney);
+    Participant(final PlayerName name, final State state) {
+        this.name = name;
+        this.state = state;
     }
 
-    public void draw(final Card card) {
-        state = state.draw(card);
+    Participant(final String name, final BattingMoney battingMoney, final List<Card> cards) {
+        this(new PlayerName(name), State.create(new Cards(cards), battingMoney));
     }
 
     public String getName() {
         return name.getValue();
-    }
-
-    public void stay() {
-        state = state.stay();
     }
 
     public int calculateScore() {

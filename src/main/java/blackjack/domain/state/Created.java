@@ -5,7 +5,7 @@ import blackjack.domain.game.BattingMoney;
 
 public abstract class Created implements State {
 
-    protected final Cards cards;
+    protected Cards cards;
     protected final BattingMoney battingMoney;
 
     protected Created(final Cards cards, final BattingMoney battingMoney) {

@@ -4,12 +4,18 @@ import static blackjack.domain.card.Cards.BLACK_JACK_NUMBER;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BattingMoney;
+import blackjack.domain.participant.vo.PlayerName;
+import blackjack.domain.state.State;
 import java.util.List;
 
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_LIMIT_SCORE = 17;
+
+    private Dealer(final State state) {
+        super(new PlayerName(DEALER_NAME), state);
+    }
 
     public Dealer(final List<Card> cards) {
         super(DEALER_NAME, BattingMoney.getDealerBattingMoney(), cards);
@@ -27,6 +33,16 @@ public class Dealer extends Participant {
 
     public boolean isBust() {
         return state.cards().getScore() > BLACK_JACK_NUMBER;
+    }
+
+    public Dealer stay() {
+        state = state.stay();
+        return new Dealer(state);
+    }
+
+    public Dealer draw(final Card card) {
+        state = state.draw(card);
+        return new Dealer(state);
     }
 
     @Override

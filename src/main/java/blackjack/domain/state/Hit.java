@@ -14,7 +14,7 @@ public class Hit extends Created {
 
     @Override
     public State draw(final Card card) {
-        cards.add(card);
+        cards = cards.add(card);
         if (cards.isBust()) {
             return new Bust(cards, battingMoney);
         }
