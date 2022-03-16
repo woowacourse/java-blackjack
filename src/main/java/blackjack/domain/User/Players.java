@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
@@ -16,13 +15,12 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players create(List<String> playerNames, CardFactory cardFactory) {
-        return playerNames.stream()
-                .map(name -> new Player(name, cardFactory.initCards()))
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        Players::new
-                ));
+    public static Players create(List<String> playerNames, List<Betting> bettings, CardFactory cardFactory) {
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < playerNames.size(); i++) {
+            players.add(new Player(playerNames.get(i), bettings.get(i), cardFactory.initCards()));
+        }
+        return new Players(players);
     }
 
     public int size() {

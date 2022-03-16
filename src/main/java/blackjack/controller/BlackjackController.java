@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Card.CardFactory;
+import blackjack.domain.User.Betting;
 import blackjack.domain.User.Dealer;
 import blackjack.domain.User.Player;
 import blackjack.domain.User.Players;
@@ -19,8 +20,11 @@ public class BlackjackController {
     public void run() {
         CardFactory cardFactory = new CardFactory();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
+        List<Betting> bettings = startBettings(inputPlayerNames, cardFactory);
+
         Dealer dealer = new Dealer(cardFactory.initCards());
-        Players players = Players.create(inputPlayerNames, cardFactory);
+        Players players = Players.create(inputPlayerNames, bettings, cardFactory);
+
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToUserDtos(dealer, players));
 
@@ -28,6 +32,14 @@ public class BlackjackController {
 
         Map<String, String> statistics = players.getStatistics(dealer);
         OutputView.printFinalResult(PlayerResultsDto.from(statistics), DealerResultDto.from(statistics));
+    }
+
+    private List<Betting> startBettings(List<String> inputPlayerNames, CardFactory cardFactory) {
+        List<Betting> bettings = new ArrayList<>();
+        for (String inputPlayerName : inputPlayerNames) {
+            bettings.add(Betting.from(InputView.askBetAmount(inputPlayerName)));
+        }
+        return bettings;
     }
 
     private List<UserDto> playGame(Dealer dealer, Players players, CardFactory cardFactory) {

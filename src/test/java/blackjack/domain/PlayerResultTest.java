@@ -30,7 +30,7 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.TEN),
                 new Card(Shape.CLOVER, Number.TWO)));
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK)));
-        Player player = new Player("test", over21Cards);
+        Player player = new Player("test", bettings.get(i), over21Cards);
         Dealer dealer = new Dealer(cards);
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);
@@ -47,7 +47,7 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.JACK),
                 new Card(Shape.HEART, Number.TEN)));
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.TWO)));
-        Player player = new Player("test", playerCards);
+        Player player = new Player("test", bettings.get(i), playerCards);
         Dealer dealer = new Dealer(cards);
         PlayerResult actual = PlayerResult.decision(dealer, player);
         PlayerResult expected = PlayerResult.WIN;
@@ -62,7 +62,7 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.TEN)));
         Cards dealerCards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK),
                 new Card(Shape.CLOVER, Number.TEN)));
-        Player player = new Player("test", playerCards);
+        Player player = new Player("test", bettings.get(i), playerCards);
         Dealer dealer = new Dealer(dealerCards);
         dealer.hit(cardFactory);
         dealer.hit(cardFactory);

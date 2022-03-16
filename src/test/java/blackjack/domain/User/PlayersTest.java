@@ -17,7 +17,8 @@ class PlayersTest {
     @DisplayName("유저가 이름을 입력한만큼 참가자들 생성되는지 테스트")
     void joinTest() {
         List<String> input = List.of("기론", "열음");
-        Players players = Players.create(input, new CardFactory());
+        List<Betting> bettings = List.of(Betting.from(1000), Betting.from(5000));
+        Players players = Players.create(input, bettings, new CardFactory());
         assertThat(players.size()).isEqualTo(input.size());
     }
 
@@ -26,7 +27,8 @@ class PlayersTest {
     void getStatisticsTest() {
         CardFactory cardFactory = new FixedCardFactory();
         List<String> inputPlayerNames = List.of("giron", "tester");
-        Players players = Players.create(inputPlayerNames, cardFactory);
+        List<Betting> bettings = List.of(Betting.from(1000), Betting.from(5000));
+        Players players = Players.create(inputPlayerNames, bettings, cardFactory);
         Dealer dealer = new Dealer(cardFactory.initCards());
 
         Map<String, String> statistics = players.getStatistics(dealer);

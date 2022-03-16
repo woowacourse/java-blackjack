@@ -14,6 +14,7 @@ public class InputView {
     private static final String INPUT_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String ONE_MORE_CARD = "y";
     private static final String STOP_CARD = "n";
+    private static final String ASK_BET_AMOUNT = "%s의 배팅 금액은?\n";
 
     private static String input() {
         Scanner scanner = new Scanner(System.in);
@@ -55,4 +56,16 @@ public class InputView {
         }
     }
 
+    public static Integer askBetAmount(String inputPlayerName) {
+        System.out.printf(ASK_BET_AMOUNT, inputPlayerName);
+        return convertToInt(input());
+    }
+
+    private static int convertToInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("[ERROR] 숫자형식이 아닙니다.");
+        }
+    }
 }
