@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
 public enum WinDrawLose {
