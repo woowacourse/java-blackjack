@@ -6,13 +6,23 @@ import java.util.List;
 
 public class CardsForBlackJack {
 
-    public static final List<Card> cards = CardsForBlackJack.gatherCards();
+    public static final CardsForBlackJack cardsForBlackJack = new CardsForBlackJack(gatherCards());
+
+    private List<Card> cards;
+
+    private CardsForBlackJack(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static CardsForBlackJack getInstance() {
+        return cardsForBlackJack;
+    }
 
     private static List<Card> gatherCards() {
         List<Card> cards = new ArrayList<>();
         createCards(cards);
         Collections.shuffle(cards);
-        return Collections.unmodifiableList(cards);
+        return cards;
     }
 
     private static void createCards(List<Card> cards) {
@@ -21,5 +31,9 @@ public class CardsForBlackJack {
                 cards.add(new Card(rank, suit));
             }
         }
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -6,13 +6,13 @@ import java.util.Queue;
 
 public class Deck {
 
-    private final Queue<Card> cards;
+    private final Queue<Card> deck;
 
     public Deck(List<Card> cards) {
-        this.cards = new LinkedList<>(cards);
+        this.deck = new LinkedList<>(cards);
     }
 
     public Card draw() {
-        return cards.poll();
+        return deck.poll();
     }
 }
