@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Player extends Gamer {
 
+    public static final int CONVERT_POSITIVE_VALUE = -1;
+
     public Player(String name, int battingMoney, List<Card> cards) {
         super(name, battingMoney, cards);
     }
@@ -29,5 +31,9 @@ public class Player extends Gamer {
     public boolean calculateBattingMoneyResult(Gamer dealer) {
         GameResult gameResult = createResult(dealer);
         return addMoney((int) gameResult.getBattingMoneyResult() * getBattingMoney());
+    }
+
+    public int reverseBattingMoney(){
+        return getBattingMoney() * CONVERT_POSITIVE_VALUE;
     }
 }
