@@ -32,6 +32,10 @@ public abstract class Player {
         cards.addCard(card);
     }
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
     public List<Card> getCards() {
         return this.cards.getCards();
     }
@@ -39,5 +43,4 @@ public abstract class Player {
     public String getName() {
         return this.name;
     }
-
 }

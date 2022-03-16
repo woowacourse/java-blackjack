@@ -52,7 +52,11 @@ public class Cards {
                 .sum();
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateEndScore() == Judge.MAX_SCORE;
+    }
+
     public List<Card> getCards() {
-        return List.copyOf(this.cards);
+        return List.copyOf(cards);
     }
 }
