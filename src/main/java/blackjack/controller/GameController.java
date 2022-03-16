@@ -4,7 +4,6 @@ import static blackjack.view.InputView.*;
 import static blackjack.view.OutputView.*;
 import static java.util.stream.Collectors.*;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -98,15 +97,13 @@ public class GameController {
 
     private void playRecord(Game game, List<Betting> bettings) {
         RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
-        Map<Name, PlayRecord> map = game.getPlayers().stream()
-            .collect(toMap(Player::getName, player -> recordFactory.getPlayerRecord(player.getScore()),
-                (recordA, recordB) -> recordB, LinkedHashMap::new));
+        Map<Name, PlayRecord> recordMap = recordFactory.getPlayerRecords(game.getPlayers());
 
         BettingTable bettingTable = new BettingTable(bettings);
 
-        printDealerRecord(bettingTable.dealerRevenue(map));
+        printDealerRecord(bettingTable.dealerRevenue(recordMap));
         for (Betting betting : bettings) {
-            printPlayerRecord(betting.getName(), betting.revenue(map));
+            printPlayerRecord(betting.getName(), betting.revenue(recordMap));
         }
     }
 }
