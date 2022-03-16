@@ -16,12 +16,10 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean hit(CardFactory cardFactory) {
-        if (canOneMoreCard()) {
+    public void hit(CardFactory cardFactory) {
+        while (canOneMoreCard()) {
             cards.add(cardFactory.drawOneCard());
-            return true;
         }
-        return false;
     }
 
 }

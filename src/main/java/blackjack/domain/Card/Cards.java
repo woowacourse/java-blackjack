@@ -24,8 +24,8 @@ public class Cards {
         return new HashSet<>(cards);
     }
 
-    public boolean add(Card card) {
-        return cards.add(card);
+    public void add(Card card) {
+        cards.add(card);
     }
 
     public int getScore() {

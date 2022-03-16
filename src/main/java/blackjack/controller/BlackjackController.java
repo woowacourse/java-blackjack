@@ -34,9 +34,9 @@ public class BlackjackController {
 
         players.getPlayers()
                 .forEach(player -> askOneMoreCard(player, cardFactory));
-        while (dealer.hit(cardFactory)) {
-            OutputView.printAddDealerCard();
-        }
+        dealer.hit(cardFactory);
+        OutputView.printAddDealerCard();
+
         return convertToUserDtos(dealer, players);
 
     }
