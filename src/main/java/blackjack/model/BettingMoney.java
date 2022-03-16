@@ -1,13 +1,13 @@
 package blackjack.model;
 
-public class Money {
+public class BettingMoney {
     private static final String ERROR_NEGATIVE = "[ERROR] 금액은 음수일 수 없습니다.";
     private static final String ERROR_UNIT = "[ERROR] 금액은 1000원 단위여야 합니다.";
     private static final int UNIT = 1000;
 
     private final int amount;
 
-    public Money(int amount) {
+    public BettingMoney(int amount) {
         validateAmount(amount);
         this.amount = amount;
     }
