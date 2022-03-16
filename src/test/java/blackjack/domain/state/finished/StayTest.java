@@ -25,7 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class StayTest {
 
     @ParameterizedTest
-    @DisplayName("자신과 다른 State 비교해 승부 결과를 반환한다.")
+    @DisplayName("자신과 다른 State 비교해 수익를 반환한다.")
     @MethodSource("provideStateAndExpected")
     void compare(State another, int expected) {
         State state = new Stay(

@@ -20,7 +20,7 @@ class FinishedTest {
     private final State state = new Stay(cards, battingMoney);
 
     @Test
-    @DisplayName("턴이 종료된 상태에서 카드를 더 받으려하면 예외를 발생시킨다.")
+    @DisplayName("자신과 다른 State 비교해 수익를 반환한다.")
     void drawException() {
         final Card card = Card.of(CardPattern.SPADE, CardNumber.TWO);
         assertThatThrownBy(() -> state.draw(card))
