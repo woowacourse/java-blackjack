@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -68,22 +69,33 @@ public class Users {
     }
 
     public Map<String, Integer> calculateRevenue() {
-        Map<Player, Double> result = Result.decideResult(getPlayers(), getDealer());
+        Map<String, Integer> revenue = new LinkedHashMap<>();
 
-        Map<String, Integer> revenue = result.keySet()
-                .stream()
-                .collect(
-                        toMap(player -> player.getName(), player -> player.getRevenue(result.get(player)))
-                );
+        Map<String, Integer> playerRevenue = getPlayerRevenue();
 
-        revenue.put(
-                getDealer().getName(),
-                -(revenue.values()
-                        .stream()
-                        .mapToInt(value -> value).sum())
-        );
+        revenue.put(getDealer().getName(), calculateDealerRevenue(playerRevenue));
+
+        revenue.putAll(playerRevenue);
 
         return revenue;
+    }
+
+    private int calculateDealerRevenue(Map<String, Integer> playerRevenue) {
+        return - (playerRevenue.values()
+                .stream()
+                .mapToInt(value -> value).sum());
+    }
+
+    private Map<String, Integer> getPlayerRevenue() {
+        Map<Player, Double> result = Result.decideResult(getPlayers(), getDealer());
+
+        return result.keySet()
+                .stream()
+                .collect(
+                        toMap(player -> player.getName(), player -> player.getRevenue(result.get(player)),
+                                (e1, e2) -> e1,
+                                LinkedHashMap::new)
+                );
     }
 
     public List<User> getPlayers() {
