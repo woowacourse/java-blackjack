@@ -18,7 +18,7 @@ public class OutputView {
 	private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d무 %d패\n";
 	private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
 	private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
-	private static final String BLACK_JACK_RESuLT_TITLE_MESSAGE = "[ BLACK JACK ]";
+	private static final int LIMIT_TO_NOT_BUST_SCORE = 21;
 	private static final int FIRST_CARD_INDEX = 0;
 
 	public static void printInitMessage(List<Name> names) {
@@ -34,11 +34,21 @@ public class OutputView {
 
 	public static void printHand(ParticipantInfo participantInfo) {
 		System.out.println(joinNameAndCard(participantInfo));
+		int score = participantInfo.getHand().getScore();
+
+		if (score > LIMIT_TO_NOT_BUST_SCORE) {
+			printMessage(BUST_MESSAGE);
+		}
+
+		if (score == LIMIT_TO_NOT_BUST_SCORE) {
+			printMessage(MAX_SCORE_MESSAGE);
+		}
 	}
 
-	public static void printHandAndScore(ParticipantInfo participantInfo, int score) {
+	public static void printHandAndScore(ParticipantInfo participantInfo) {
 		System.out.println(
-			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(participantInfo), String.valueOf(score)));
+			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(participantInfo),
+				String.valueOf(participantInfo.getHand().getScore())));
 	}
 
 	private static String joinNameAndCard(ParticipantInfo participantInfo) {
@@ -55,19 +65,8 @@ public class OutputView {
 		return cardInfo;
 	}
 
-	public static void printBustMessage() {
-		System.out.println(BUST_MESSAGE);
-	}
-
-	public static void printMaxScoreMessage() {
-		System.out.println(MAX_SCORE_MESSAGE);
-	}
-
-	public static void printResultTitle() {
-		System.out.println(RESULT_TITLE_MESSAGE);
-	}
-
 	public static void printDealerResult(int winCount, int drawCount, int loseCount) {
+		printMessage(RESULT_TITLE_MESSAGE);
 		System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, winCount, drawCount, loseCount);
 	}
 
@@ -75,12 +74,12 @@ public class OutputView {
 		System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, name, result);
 	}
 
-	public static void printDealerDrawMessage() {
-		System.out.println(DEALER_DRAW_MESSAGE);
+	private static void printMessage(String message) {
+		System.out.println(message);
 	}
 
-	public static void printBlackJackResultTitle() {
-		System.out.println(BLACK_JACK_RESuLT_TITLE_MESSAGE);
+	public static void printDealerDrawMessage() {
+		System.out.println(DEALER_DRAW_MESSAGE);
 	}
 
 	public static void printErrorMessage(String message) {

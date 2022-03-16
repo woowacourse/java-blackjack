@@ -76,13 +76,7 @@ public class MainController {
 	}
 
 	private boolean checkMaxScoreOrBust(Players players, Name name) {
-		if (players.checkMaxScoreByName(name)) {
-			OutputView.printMaxScoreMessage();
-			return false;
-		}
-
-		if (players.checkBustByName(name)) {
-			OutputView.printBustMessage();
+		if (players.checkMaxScoreByName(name) || players.checkBustByName(name)) {
 			return false;
 		}
 		return true;

@@ -28,10 +28,8 @@ public class ParticipantInformationPrintController {
 	}
 
 	public void printBlackJackResult(Dealer dealer, Players players) {
-		OutputView.printBlackJackResultTitle();
 		Result blackjackResult = new Result(players.getResultAtBlackJack(dealer));
 
-		OutputView.printResultTitle();
 		OutputView.printDealerResult(
 			blackjackResult.getDealerWinCount(),
 			blackjackResult.getDealerDrawCount(),
@@ -44,23 +42,18 @@ public class ParticipantInformationPrintController {
 	}
 
 	public void printHandAndResult(Dealer dealer, Players players) {
-		OutputView.printHandAndScore(
-			new ParticipantInfo(dealer),
-			dealer.getBestScore()
-		);
+		OutputView.printHandAndScore(new ParticipantInfo(dealer));
 
 		List<ParticipantInfo> playersInfo = players.getPlayerInfo();
-		List<Integer> scores = players.getScores();
 
 		for (int i = 0; i < playersInfo.size(); i++) {
-			OutputView.printHandAndScore(playersInfo.get(i), scores.get(i));
+			OutputView.printHandAndScore(playersInfo.get(i));
 		}
 	}
 
 	public void printFinalResult(Dealer dealer, Players players) {
 		Result finalResult = new Result(players.getResultAtFinal(dealer));
 
-		OutputView.printResultTitle();
 		OutputView.printDealerResult(
 			finalResult.getDealerWinCount(),
 			finalResult.getDealerDrawCount(),
