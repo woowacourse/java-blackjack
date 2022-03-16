@@ -12,11 +12,42 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
 
-    ParticipantForTest participant;
+    private ParticipantForTest participant;
 
     @BeforeEach
     void setParticipantForTest() {
         participant = new ParticipantForTest("pobi");
+    }
+
+    @Test
+    @DisplayName("처음 두 장의 카드 합이 21일경우 블랙잭이다")
+    void isBlackjackWhenTrue() {
+        participant.addCard(new Card(Symbol.SPADE, Denomination.KING));
+        participant.addCard(new Card(Symbol.HEART, Denomination.ACE));
+        participant.computeTotalScore();
+
+        assertThat(participant.isBlackjack(2)).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 합이 21이지만 카드가 2장 초과인 경우 블랙잭이 아니다")
+    void isBlackjackWhenFalse_MoreThanTwoCards() {
+        participant.addCard(new Card(Symbol.SPADE, Denomination.KING));
+        participant.addCard(new Card(Symbol.HEART, Denomination.THREE));
+        participant.addCard(new Card(Symbol.DIAMOND, Denomination.EIGHT));
+        participant.computeTotalScore();
+
+        assertThat(participant.isBlackjack(2)).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 합이 21이 아닐 경우 블랙잭이 아니다")
+    void isBlackjackWhenFalse_NotGoalScore() {
+        participant.addCard(new Card(Symbol.SPADE, Denomination.KING));
+        participant.addCard(new Card(Symbol.HEART, Denomination.THREE));
+        participant.computeTotalScore();
+
+        assertThat(participant.isBlackjack(2)).isFalse();
     }
 
     @Test
@@ -52,9 +83,6 @@ class ParticipantTest {
     class ParticipantForTest extends Participant {
         ParticipantForTest(String name) {
             super(name);
-        }
-
-        public void betMoney(int money) {
         }
 
         public boolean isHittable() {

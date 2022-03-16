@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import blackjack.dto.CurrentCardsDto;
-import blackjack.dto.PlayerResultDto;
+import blackjack.dto.ProfitDTO;
 import blackjack.dto.TotalScoreDto;
 
 import java.util.*;
@@ -21,10 +21,6 @@ public class Players {
         players = Arrays.stream(names)
                 .map(Player::new)
                 .collect(Collectors.toList());
-    }
-
-    public int getTotalBettingMoney() {
-        return (players.stream().mapToInt(Player::getBettingMoney).sum()) * (-1);
     }
 
     public void addForAllPlayers(Deck deck) {
@@ -47,9 +43,9 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<PlayerResultDto> computeResult(int comparisonScore) {
+    public List<ProfitDTO> computeTotalProfit(Dealer dealer) {
         return players.stream()
-                .map(player -> player.computeResult(comparisonScore))
+                .map(player -> new ProfitDTO(player, Profit.of(player, dealer)))
                 .collect(Collectors.toList());
     }
 
@@ -70,5 +66,4 @@ public class Players {
             throw new IllegalArgumentException(NAME_DUPLICATED);
         }
     }
-
 }

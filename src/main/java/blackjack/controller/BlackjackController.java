@@ -4,7 +4,10 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.*;
+import blackjack.dto.CurrentCardsDto;
+import blackjack.dto.ProfitDTO;
+import blackjack.dto.TotalProfitDTO;
+import blackjack.dto.TotalScoreDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,7 @@ public class BlackjackController {
             hitOrStayForAllPlayers();
             addCardForDealerIfNeed();
             printTotalScore(computeTotalScore());
-            printTotalResult(computeTotalResult());
+            printTotalProfit(computeTotalProfit());
         } catch (IllegalArgumentException e) {
             printErrorMessage(e.getMessage());
         }
@@ -41,7 +44,6 @@ public class BlackjackController {
 
     private void betMoney() {
         players.getPlayers().forEach(player -> player.betMoney(inputBettingMoney(player.getName())));
-        dealer.betMoney(players.getTotalBettingMoney());
     }
 
     private void firstDistribute() {
@@ -66,21 +68,21 @@ public class BlackjackController {
     private void addCardForDealerIfNeed() {
         while (dealer.isHittable()) {
             dealer.addCard(deck.draw());
-            printDealerAdded(dealer.getName());
+            printDealerAdded(dealer.getName(), dealer.getBound());
         }
     }
 
     private List<TotalScoreDto> computeTotalScore() {
-        List<TotalScoreDto> totalScoreDtos = new ArrayList<>();
-        totalScoreDtos.add(dealer.computeTotalScore());
-        totalScoreDtos.addAll(players.computeTotalScore());
-        return totalScoreDtos;
+        List<TotalScoreDto> totalScore = new ArrayList<>();
+        totalScore.add(dealer.computeTotalScore());
+        totalScore.addAll(players.computeTotalScore());
+        return totalScore;
     }
 
-    private TotalResultDto computeTotalResult() {
-        List<PlayerResultDto> playersResult = players.computeResult(dealer.getScore());
-        DealerResultDto dealerResult = dealer.computeResult(playersResult);
-        return new TotalResultDto(playersResult, dealerResult);
+    private TotalProfitDTO computeTotalProfit() {
+        List<ProfitDTO> profitOfPlayers = players.computeTotalProfit(dealer);
+        ProfitDTO profitOrDealer = dealer.computeProfit(profitOfPlayers);
+        return new TotalProfitDTO(profitOrDealer, profitOfPlayers);
     }
 
 }

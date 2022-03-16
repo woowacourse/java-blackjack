@@ -12,15 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerTest {
 
     @Test
-    @DisplayName("입력된 배팅금액을 음수로 변환하여 저장한다")
-    void betMoney(){
-        Player player = new Player("pobi");
-        player.betMoney(1000);
-
-        assertThat(player.getBettingMoney()).isEqualTo(-1000);
-    }
-
-    @Test
     @DisplayName("hit이 가능하다면 참을 반환한다")
     void canHitWhenTrue() {
         Player player = new Player("pobi");
@@ -47,8 +38,8 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.FIVE));
         player.addCard(new Card(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.computeResult(16).isWin()).isFalse();
-        assertThat(player.computeResult(6).isWin()).isTrue();
+        assertThat(player.isWin(16)).isFalse();
+        assertThat(player.isWin(7)).isTrue();
     }
 
     @Test
@@ -59,7 +50,7 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.QUEEN));
         player.addCard(new Card(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.computeResult(1).isWin()).isFalse();
+        assertThat(player.isWin(1)).isFalse();
     }
 
     @Test
@@ -69,6 +60,6 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
         player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
 
-        assertThat(player.computeResult(22).isWin()).isTrue();
+        assertThat(player.isWin(22)).isTrue();
     }
 }

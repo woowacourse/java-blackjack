@@ -1,26 +1,22 @@
 package blackjack.domain.participant;
 
-import blackjack.dto.PlayerResultDto;
-
 public class Player extends Participant {
+
+    private int bettingMoney;
 
     public Player(String name) {
         super(name);
     }
 
     public void betMoney(int money) {
-        bettingMoney.betMoney(money * (-1));
+        this.bettingMoney = money;
     }
 
     public boolean isHittable() {
         return score < GOAL_SCORE;
     }
 
-    public PlayerResultDto computeResult(int comparisonScore) {
-        return new PlayerResultDto(name, isWin(comparisonScore));
-    }
-
-    private boolean isWin(int comparisonScore) {
+    public boolean isWin(int comparisonScore) {
         if (score > GOAL_SCORE) {
             return false;
         }
@@ -28,5 +24,9 @@ public class Player extends Participant {
             return true;
         }
         return score >= comparisonScore;
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 }

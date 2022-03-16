@@ -1,8 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.dto.*;
+import blackjack.dto.CurrentCardsDto;
+import blackjack.dto.ProfitDTO;
+import blackjack.dto.TotalProfitDTO;
+import blackjack.dto.TotalScoreDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,8 +35,8 @@ public class OutputView {
         System.out.println(makeCurrentCardToString(dto.getName(), dto.getCards()));
     }
 
-    public static void printDealerAdded(String name) {
-        System.out.println("\n" + name + "는 " + Dealer.BOUND_FOR_ADDITIONAL_CARD
+    public static void printDealerAdded(String name, int bound) {
+        System.out.println("\n" + name + "는 " + bound
                 + "이하라 카드를 1장 더 받았습니다.");
     }
 
@@ -46,11 +48,11 @@ public class OutputView {
         }
     }
 
-    public static void printTotalResult(TotalResultDto totalResult) {
-        System.out.println("\n## 최종 승패");
-        printDealerResult(totalResult.getDealerResult());
-        for (PlayerResultDto playerResult : totalResult.getTotalPlayerResult()) {
-            printPlayerResult(playerResult);
+    public static void printTotalProfit(TotalProfitDTO totalProfit) {
+        System.out.println("\n## 최종 수익");
+        printProfit(totalProfit.getProfitOfDealer());
+        for (ProfitDTO profit : totalProfit.getProfitOfPlayers()) {
+            printProfit(profit);
         }
     }
 
@@ -77,18 +79,8 @@ public class OutputView {
         return result.toString();
     }
 
-    private static void printDealerResult(DealerResultDto dealerResult) {
-        System.out.println(dealerResult.getName() + ": "
-                + dealerResult.getWinCount() + "승 "
-                + dealerResult.getLoseCount() + "패");
+    private static void printProfit(ProfitDTO profit) {
+        System.out.println(profit.getName() + ": " + profit.getProfit());
     }
 
-    private static void printPlayerResult(PlayerResultDto playerResult) {
-        System.out.print(playerResult.getName() + ": ");
-        if (playerResult.isWin()) {
-            System.out.print("승\n");
-            return;
-        }
-        System.out.print("패\n");
-    }
 }
