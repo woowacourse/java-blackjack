@@ -17,8 +17,7 @@ public class Deck {
 	}
 
 	public Card distributeCard() {
-		final int cardSize = deck.size();
-		if (cardSize <= 0) {
+		if (deck.isEmpty()) {
 			throw new IllegalStateException(EMPTY_DECK_EXCEPTION);
 		}
 		return deck.removeLast();
