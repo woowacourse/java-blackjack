@@ -23,9 +23,4 @@ public abstract class Finish extends AbstractBlackjackGameState {
     public final boolean isFinished() {
         return true;
     }
-
-    @Override
-    public double earningRate(final BlackjackGameState blackjackGameState) {
-        return 0;
-    }
 }
