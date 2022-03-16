@@ -1,8 +1,10 @@
 package blackjack.domain.paticipant;
 
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.BlackjackGameState;
 import blackjack.domain.state.PlayerRunning;
+import java.util.Set;
 
 public class Player extends AbstractParticipant {
 
@@ -16,6 +18,11 @@ public class Player extends AbstractParticipant {
 
     public Player(final String name, final int betMoney, final Cards cards) {
         this(name, betMoney, new PlayerRunning(cards));
+    }
+
+    public static Player createPlayer(final String name, final int betMoney, final CardDeck cardDeck) {
+        final Cards cards = new Cards(Set.of(cardDeck.provideCard(), cardDeck.provideCard()));
+        return new Player(name, betMoney, cards);
     }
 
     private void checkNotPositiveBetMoney(final int betMoney) {
