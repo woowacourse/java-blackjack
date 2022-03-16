@@ -18,7 +18,7 @@ public class ScoreResult {
         return dealerResult.get(score);
     }
 
-    public Score getPlayerScore(Player player) {
+    public Score getPlayerScore(Participant player) {
         return playerResult.get(player.getName());
     }
 

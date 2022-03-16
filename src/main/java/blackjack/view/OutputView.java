@@ -7,39 +7,39 @@ import java.util.stream.Collectors;
 import blackjack.domain.Score;
 import blackjack.domain.ScoreResult;
 import blackjack.dto.CardDto;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.ParticipantDto;
 
 public class OutputView {
 
     private OutputView() {
     }
 
-    public static void printInitGameMessage(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
+    public static void printInitGameMessage(List<ParticipantDto> participantDtos, ParticipantDto dealerDto) {
         System.out.printf("%s와 %s에게 2장을 나누었습니다.", dealerDto.getName(),
-                playerDtos.stream().map(PlayerDto::getName).collect(Collectors.joining(", ")));
+                participantDtos.stream().map(ParticipantDto::getName).collect(Collectors.joining(", ")));
         System.out.println();
     }
 
-    public static void printOpenCard(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
+    public static void printOpenCard(List<ParticipantDto> participantDtos, ParticipantDto dealerDto) {
         CardDto dealerOpenCard = dealerDto.getCards().get(0);
         System.out.printf("%s: %s%s", dealerDto.getName(), dealerOpenCard.getCardNumber(),
                 dealerOpenCard.getCardPattern());
         System.out.println();
-        for (PlayerDto playerDto : playerDtos) {
-            printPlayerCards(playerDto);
+        for (ParticipantDto participantDto : participantDtos) {
+            printPlayerCards(participantDto);
         }
     }
 
-    public static void printPlayersResult(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
+    public static void printPlayersResult(List<ParticipantDto> participantDtos, ParticipantDto dealerDto) {
         System.out.println();
         printPlayerResult(dealerDto);
 
-        for (PlayerDto playerDto : playerDtos) {
-            printPlayerResult(playerDto);
+        for (ParticipantDto participantDto : participantDtos) {
+            printPlayerResult(participantDto);
         }
     }
 
-    private static void printPlayerResult(PlayerDto dealerDto) {
+    private static void printPlayerResult(ParticipantDto dealerDto) {
         System.out.printf("%s: %s - 결과: %d%n",
                 dealerDto.getName(),
                 dealerDto.getCards()
@@ -49,9 +49,9 @@ public class OutputView {
                 dealerDto.getTotalNumber());
     }
 
-    public static void printPlayerCards(PlayerDto playerDto) {
-        System.out.printf("%s: %s%n", playerDto.getName(),
-                playerDto.getCards()
+    public static void printPlayerCards(ParticipantDto participantDto) {
+        System.out.printf("%s: %s%n", participantDto.getName(),
+                participantDto.getCards()
                         .stream()
                         .map(cardDto -> cardDto.getCardNumber() + cardDto.getCardPattern())
                         .collect(Collectors.joining(", ")));

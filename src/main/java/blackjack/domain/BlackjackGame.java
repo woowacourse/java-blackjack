@@ -4,19 +4,19 @@ public class BlackjackGame {
 
     private static final int INITIAL_CARD_NUMBER = 2;
 
-    private final Players players;
-    private final Player dealer;
+    private final Participants participants;
+    private final Participant dealer;
     private final Drawable drawable;
 
-    public BlackjackGame(Players players, Drawable drawable) {
-        this.players = players;
+    public BlackjackGame(Participants participants, Drawable drawable) {
+        this.participants = participants;
         this.dealer = new Dealer();
         this.drawable = drawable;
     }
 
     public void drawStartingCard() {
         for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
-            players.drawAll(drawable);
+            participants.drawAll(drawable);
             dealer.drawCard(drawable.draw());
         }
     }
@@ -30,22 +30,22 @@ public class BlackjackGame {
     }
 
     public ScoreResult makeResults() {
-        return players.compete(dealer);
+        return participants.compete(dealer);
     }
 
     public void drawPlayerCard() {
-        players.drawPlayerCard(drawable);
+        participants.drawPlayerCard(drawable);
     }
 
     public void proceedTurn() {
-        players.proceedTurn();
+        participants.proceedTurn();
     }
 
-    public Players getPlayers() {
-        return players;
+    public Participants getPlayers() {
+        return participants;
     }
 
-    public Player getDealer() {
+    public Participant getDealer() {
         return dealer;
     }
 
@@ -53,15 +53,15 @@ public class BlackjackGame {
         return getNowTurnPlayer().getName();
     }
 
-    public Player getNowTurnPlayer() {
-        return players.getCurrentTurnPlayer();
+    public Participant getNowTurnPlayer() {
+        return participants.getCurrentTurnPlayer();
     }
 
     public boolean isBustCurrentTurn() {
-        return players.isBustCurrentTurnPlayer();
+        return participants.isBustCurrentTurnPlayer();
     }
 
     public boolean isEndAllPlayersTurn() {
-        return players.isLastPlayerTurn();
+        return participants.isEndPlayersTurn();
     }
 }

@@ -1,28 +1,27 @@
 package blackjack.dto;
 
+import blackjack.domain.Participant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Player;
-
-public class PlayerDto {
+public class ParticipantDto {
 
     private final List<CardDto> cards;
     private final String name;
     private final int totalNumber;
 
-    private PlayerDto(List<CardDto> cards, String name, int totalNumber) {
+    private ParticipantDto(List<CardDto> cards, String name, int totalNumber) {
         this.cards = cards;
         this.name = name;
         this.totalNumber = totalNumber;
     }
 
-    public static PlayerDto from(Player player) {
+    public static ParticipantDto from(Participant player) {
         List<CardDto> cardDtos = player.getCards()
-            .stream()
-            .map(CardDto::from)
-            .collect(Collectors.toList());
-        return new PlayerDto(cardDtos, player.getName(), player.getTotalNumber());
+                .stream()
+                .map(CardDto::from)
+                .collect(Collectors.toList());
+        return new ParticipantDto(cardDtos, player.getName(), player.getTotalNumber());
     }
 
     public String getName() {

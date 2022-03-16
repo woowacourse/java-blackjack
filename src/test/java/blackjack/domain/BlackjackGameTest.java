@@ -14,12 +14,12 @@ class BlackjackGameTest {
     @Test
     @DisplayName("drawStringCard는 초기 카드를 뽑는다.")
     void drawStartingCard() {
-        Player roma = new Player("roma");
-        Player tonic = new Player("tonic");
-        BlackjackGame blackjackGame = new BlackjackGame(new Players(List.of(roma, tonic)), new Deck());
+        Participant roma = new Player("roma");
+        Participant tonic = new Player("tonic");
+        BlackjackGame blackjackGame = new BlackjackGame(new Participants(List.of(roma, tonic)), new Deck());
 
         blackjackGame.drawStartingCard();
-        Player dealer = blackjackGame.getDealer();
+        Participant dealer = blackjackGame.getDealer();
 
         assertAll(
                 () -> assertThat(roma.getCards().size()).isEqualTo(INITIAL_CARD_NUMBER),

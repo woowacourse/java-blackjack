@@ -11,11 +11,12 @@ import static blackjack.view.OutputView.printResult;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.Deck;
 import blackjack.domain.Name;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.Participants;
 import blackjack.domain.ScoreResult;
 import blackjack.domain.Selection;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,10 +34,10 @@ public class BlackjackApplication {
     private static void startSetting(BlackjackGame blackjackGame) {
         blackjackGame.drawStartingCard();
 
-        List<PlayerDto> playerDtos = toDto(blackjackGame.getPlayers());
-        PlayerDto dealerDto = toDto(blackjackGame.getDealer());
-        printInitGameMessage(playerDtos, dealerDto);
-        printOpenCard(playerDtos, dealerDto);
+        List<ParticipantDto> participantDtos = toDto(blackjackGame.getPlayers());
+        ParticipantDto dealerDto = toDto(blackjackGame.getDealer());
+        printInitGameMessage(participantDtos, dealerDto);
+        printOpenCard(participantDtos, dealerDto);
     }
 
     private static void takeTurns(BlackjackGame blackjackGame) {
@@ -77,27 +78,27 @@ public class BlackjackApplication {
         }
     }
 
-    private static PlayerDto toDto(Player player) {
-        return PlayerDto.from(player);
+    private static ParticipantDto toDto(Participant player) {
+        return ParticipantDto.from(player);
     }
 
-    private static List<PlayerDto> toDto(Players players) {
-        return players.getValue()
+    private static List<ParticipantDto> toDto(Participants participants) {
+        return participants.getValue()
                 .stream()
-                .map(PlayerDto::from)
+                .map(ParticipantDto::from)
                 .collect(Collectors.toList());
     }
 
-    private static Players requestPlayers() {
+    private static Participants requestPlayers() {
         List<String> inputNames = InputView.requestNames();
 
         try {
-            List<Player> players = inputNames.stream()
+            List<Participant> players = inputNames.stream()
                     .map(String::trim)
                     .map(Name::new)
                     .map(Player::new)
                     .collect(Collectors.toList());
-            return new Players(players);
+            return new Participants(players);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return requestPlayers();

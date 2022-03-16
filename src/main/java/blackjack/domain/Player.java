@@ -1,28 +1,19 @@
 package blackjack.domain;
 
-import java.util.List;
-
-public class Player {
+public class Player extends Participant {
 
     public static final int BLACKJACK_NUMBER = 21;
 
-    private final Cards cards;
-    private final Name name;
-
     public Player(String name) {
-        this(new Name(name));
+        super(name);
     }
 
     public Player(Name name) {
-        this.name = name;
-        this.cards = new Cards();
+        super(name);
     }
 
-    public void drawCard(Card card) {
-        cards.add(card);
-    }
-
-    public Score compete(Player player) {
+    @Override
+    public Score compete(Participant player) {
         if (player.isBust()) {
             return getScoreWithBust();
         }
@@ -41,23 +32,8 @@ public class Player {
         return Score.WIN;
     }
 
-    public boolean isBust() {
-        return getTotalNumber() > BLACKJACK_NUMBER;
-    }
-
+    @Override
     public boolean isDrawable() {
         return !isBust();
-    }
-
-    public int getTotalNumber() {
-        return cards.getTotalNumber();
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
     }
 }

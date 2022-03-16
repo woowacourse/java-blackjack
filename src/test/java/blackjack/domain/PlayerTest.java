@@ -20,7 +20,7 @@ public class PlayerTest {
         @Test
         @DisplayName("Card를 자신의 패에 추가한다.")
         void addCard() {
-            Player player = new Player(new Name("roma"));
+            Participant player = new Player(new Name("roma"));
             player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.JACK));
             Assertions.assertThat(player.getTotalNumber()).isEqualTo(10);
         }
@@ -34,7 +34,7 @@ public class PlayerTest {
         @CsvSource(value = {"ACE|false", "TWO|true"}, delimiter = '|')
         @DisplayName("패의 합이 21이 넘는지 유무를 알려준다.")
         void returnFalse(CardNumber cardNumber, boolean expected) {
-            Player player = new Player(new Name("roma"));
+            Participant player = new Player(new Name("roma"));
             player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.JACK));
             player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.KING));
             player.drawCard(Card.of(CardPattern.CLOVER, cardNumber));
