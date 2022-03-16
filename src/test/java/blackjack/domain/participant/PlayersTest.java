@@ -22,7 +22,7 @@ class PlayersTest {
     void playersSkipTest() {
         Player pobi = new Player("pobi", new ArrayList<>());
         Player elsa = new Player("elsa", new ArrayList<>());
-        List<Participant> players = Arrays.asList(pobi, elsa);
+        List<Player> players = Arrays.asList(pobi, elsa);
 
         Players participants = new Players(players);
         participants.skipTurn();
@@ -36,7 +36,7 @@ class PlayersTest {
     void allPlayersFinished() {
         Player pobi = new Player("pobi", new ArrayList<>());
         Player elsa = new Player("elsa", new ArrayList<>());
-        List<Participant> players = Arrays.asList(pobi, elsa);
+        List<Player> players = Arrays.asList(pobi, elsa);
 
         Players participants = new Players(players);
         participants.skipTurn();

@@ -10,7 +10,7 @@ class CardTest {
     @DisplayName("심볼과 카드번호를 주면 카드를 제대로 만들 수 있는지")
     void makeCard_returnRightValue() {
         int expected = CardNumber.ACE.getCardNumberValue();
-        Card aceClover = Card.valueOf(CardNumber.ACE, CardSymbol.CLOVER);
+        Card aceClover = Card.valueOf(CardNumber.ACE, CardSymbol.CLUBS);
         Assertions.assertThat(aceClover.getCardNumberValue()).isEqualTo(expected);
     }
 }

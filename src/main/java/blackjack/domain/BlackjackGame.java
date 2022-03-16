@@ -25,7 +25,7 @@ public class BlackjackGame {
         this.players = new Players(createPlayers(playersNames));
     }
 
-    private List<Participant> createPlayers(List<String> playersNames) {
+    private List<Player> createPlayers(List<String> playersNames) {
         return playersNames.stream()
                 .map(playerName -> new Player(playerName.trim(), List.of(cardDeck.drawCard(), cardDeck.drawCard())))
                 .collect(Collectors.toList());
