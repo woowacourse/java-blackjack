@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WinDrawLoseTest {
-    private final Player player = new Player("k");
+    private final Player player = new Player("k", "100");
     private final Dealer dealer = new Dealer();
 
     @Test
