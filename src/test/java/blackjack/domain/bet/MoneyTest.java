@@ -14,12 +14,4 @@ class MoneyTest {
         Money money = new Money(10000);
         assertThat(money).isNotNull();
     }
-
-    @Test
-    @DisplayName("돈 금액 음수 예외 테스트")
-    void money_Positive_() {
-        assertThatThrownBy(() -> new Money(-1))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("금액은 양수여야 합니다.");
-    }
 }

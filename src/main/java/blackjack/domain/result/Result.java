@@ -10,6 +10,7 @@ public enum Result {
     WIN("승리"),
     LOSE("패배"),
     TIE("무승부"),
+    Blackjack("블랙잭")
     ;
 
     private final String result;
@@ -23,7 +24,6 @@ public enum Result {
     }
 
     public static Map<Player, Result> judgeResult(Dealer dealer, Players players) {
-        Map<Player, Result> resultCounter = players.judgeResult(dealer.calculateBestScore());
-        return resultCounter;
+        return players.judgeResult(dealer.calculateBestScore());
     }
 }

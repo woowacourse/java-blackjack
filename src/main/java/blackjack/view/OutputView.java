@@ -1,9 +1,15 @@
 package blackjack.view;
 
+import blackjack.domain.bet.Money;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.domain.result.Result;
 import blackjack.view.dto.ParticipantDto;
 import blackjack.view.dto.PlayersDto;
 import blackjack.view.dto.ResultCounterDto;
+import java.util.Map;
 
 public class OutputView {
 
@@ -41,5 +47,13 @@ public class OutputView {
         System.out.println("## 최종 승패");
         System.out.println(resultCounterDto.showDealerResult());
         System.out.println(resultCounterDto.showEachPlayersResult());
+    }
+
+    public static void printFinalResult(Map<Participant, Money> calculateHitProfit) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        for (Participant participant : calculateHitProfit.keySet()) {
+            System.out.printf("%s: %d%n", participant.getName().getValue(), calculateHitProfit.get(participant).getValue());
+        }
     }
 }

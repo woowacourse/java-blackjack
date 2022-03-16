@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.result.Result;
 
 public class Player extends Participant {
@@ -21,7 +22,14 @@ public class Player extends Participant {
         if (isBusted(calculateBestScore()) || (!isBusted(score) && !isCloserToBestScore(score))) {
             return Result.LOSE;
         }
+        if (isBlackjack()) {
+            return Result.Blackjack;
+        }
         return Result.WIN;
+    }
+
+    private boolean isBlackjack() {
+        return cards.getSize() == CardDeck.INITIAL_CARD_COUNT && calculateBestScore() == BEST_SCORE;
     }
 
     private boolean isBusted(int score) {
