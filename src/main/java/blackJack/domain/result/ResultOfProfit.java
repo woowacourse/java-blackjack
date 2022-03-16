@@ -4,7 +4,6 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class ResultOfProfit {
 
@@ -12,9 +11,7 @@ public class ResultOfProfit {
 
     public ResultOfProfit(Map<Player, String> inputs) {
         bettingAmounts = new LinkedHashMap<>();
-        for (Entry<Player, String> entry : inputs.entrySet()) {
-            bettingAmounts.put(entry.getKey(), BettingAmount.newInstanceByString(entry.getValue()));
-        }
+        inputs.forEach((key, value) -> bettingAmounts.put(key, BettingAmount.newInstanceByString(value)));
     }
 
     public int getDealerProfit(Dealer dealer) {
@@ -25,10 +22,8 @@ public class ResultOfProfit {
 
     public Map<Player, Integer> getPlayersProfit(Dealer dealer) {
         Map<Player, Integer> playersProfit = new LinkedHashMap<>();
-        for (Entry<Player, BettingAmount> entry : bettingAmounts.entrySet()) {
-            MatchResult playerMatchResult = entry.getKey().getMatchResult(dealer);
-            playersProfit.put(entry.getKey(), entry.getValue().calculateProfit(playerMatchResult));
-        }
+        bettingAmounts.forEach(
+                (key, value) -> playersProfit.put(key, value.calculateProfit(key.getMatchResult(dealer))));
         return playersProfit;
     }
 }
