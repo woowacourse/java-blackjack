@@ -79,10 +79,10 @@ public class Players {
         currentPlayerTurnIndex++;
     }
 
-    public int dealerProfit(final Dealer dealer) {
-        return (int) - players.stream()
-                .map(player -> player.profit(dealer))
-                .count();
+    public double dealerProfit(final Dealer dealer) {
+        return - players.stream()
+                .mapToDouble(player -> player.profit(dealer))
+                .sum();
     }
 
     public List<Player> players() {

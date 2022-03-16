@@ -31,6 +31,7 @@ public class BlackjackGame {
         runPlayerTurn();
         runDealerTurn();
         printAllResults();
+        printAllProfits();
     }
 
     private void printParticipantsFirstCards() {
@@ -82,5 +83,12 @@ public class BlackjackGame {
         OutputView.printParticipantScoreResults(participants.stream()
                 .map(ParticipantScoreResult::from)
                 .collect(Collectors.toList()));
+    }
+
+    private void printAllProfits() {
+        OutputView.printProfitTitle();
+        OutputView.printParticipantProfit(dealer.getName(), players.dealerProfit(dealer));
+        players.players()
+                .forEach(player -> OutputView.printParticipantProfit(player.getName(), player.profit(dealer)));
     }
 }

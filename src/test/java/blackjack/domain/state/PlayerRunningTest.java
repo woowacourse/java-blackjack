@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import static blackjack.domain.card.Denomination.A;
 import static blackjack.domain.card.Denomination.FOUR;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.KING;
@@ -75,5 +76,14 @@ class PlayerRunningTest {
         final BlackjackGameState nextState = running.stay();
 
         assertThat(nextState).isInstanceOf(Stand.class);
+    }
+
+    @Test
+    void stay할_때_Blackjack_반환() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
+        final BlackjackGameState running = new PlayerRunning(cards);
+        final BlackjackGameState nextState = running.stay();
+
+        assertThat(nextState).isInstanceOf(Blackjack.class);
     }
 }
