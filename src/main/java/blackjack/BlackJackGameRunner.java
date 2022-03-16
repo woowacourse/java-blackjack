@@ -5,19 +5,27 @@ import blackjack.view.input.DrawCommand;
 import blackjack.view.input.InputView;
 import blackjack.view.output.OutputView;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackGameRunner {
 
     public void run() {
         final List<String> playerNames = InputView.inputPlayerNames();
-        final GameCommunicator gameCommunicator = new GameCommunicator(playerNames);
+        final Map<String, String> battingMoneysByName = inputBattingMoney(playerNames);
+        final GameCommunicator gameCommunicator = new GameCommunicator(battingMoneysByName);
         OutputView.showGameInitInfo(gameCommunicator.getInitDealerInfo(), gameCommunicator.getInitPlayerInfo());
 
         runPlayerTurn(gameCommunicator);
         runDealerTurn(gameCommunicator);
 
         OutputView.printResultPlayerInfos(gameCommunicator.getPlayerResultInfos());
-        OutputView.printAllOutcomeResult(gameCommunicator.getWinningResult());
+        OutputView.printAllOutcomeResult(gameCommunicator.getParticipantsProfit());
+    }
+
+    private Map<String, String> inputBattingMoney(final List<String> names) {
+        return names.stream()
+                .collect(Collectors.toMap(name -> name, InputView::inputBattingMoney));
     }
 
     private void runDealerTurn(final GameCommunicator gameCommunicator) {

@@ -1,11 +1,13 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.BattingMoney;
 import java.util.List;
 
 public class Player extends Participant {
-    public Player(final String name, final List<Card> cards) {
-        super(name, cards);
+
+    public Player(final String name, final String battingMoney, final List<Card> card) {
+        super(name, new BattingMoney(battingMoney), card);
     }
 
     public boolean canDraw() {

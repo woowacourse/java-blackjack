@@ -25,14 +25,16 @@ class PlayerTest {
         @Test
         @DisplayName("가능하다면 true를 반환한다.")
         void canDraw() {
-            final Player player = new Player("user", Arrays.asList(Card.of(SPADE, FIVE), Card.of(SPADE, KING)));
+            final Player player = new Player("user", "2000",
+                    Arrays.asList(Card.of(SPADE, FIVE), Card.of(SPADE, KING)));
             assertTrue(player.canDraw());
         }
 
         @Test
         @DisplayName("불가능하다면 false를 반환한다.")
         void cannotDraw() {
-            final Player player = new Player("user", Arrays.asList(Card.of(SPADE, A), Card.of(SPADE, KING)));
+            final Player player = new Player("user", "2000",
+                    Arrays.asList(Card.of(SPADE, A), Card.of(SPADE, KING)));
             assertFalse(player.canDraw());
         }
     }
@@ -40,7 +42,7 @@ class PlayerTest {
     @Test
     @DisplayName("카드를 받을 수 있다.")
     void draw() {
-        final Player player = new Player("user", new ArrayList<>());
+        final Player player = new Player("user", "2000", new ArrayList<>());
         final Card card = Card.getAllCards().get(0);
         player.draw(card);
         assertThat(player.getCards()).containsExactly(card);
@@ -50,7 +52,7 @@ class PlayerTest {
     @DisplayName("카드를 받은 후, 버스트가 되면 종료 상태가 된다.")
     void drawBust() {
         final List<Card> cards = new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, KING)));
-        final Player player = new Player("user", cards);
+        final Player player = new Player("user", "2000", cards);
         player.draw(Card.of(SPADE, FIVE));
         assertFalse(player.canDraw());
     }
@@ -58,7 +60,7 @@ class PlayerTest {
     @Test
     @DisplayName("턴을 종료할 수 있다.")
     void endTurn() {
-        final Player player = new Player("user", new ArrayList<>());
+        final Player player = new Player("user", "2000", new ArrayList<>());
         player.stay();
         assertFalse(player.canDraw());
     }

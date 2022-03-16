@@ -3,8 +3,6 @@ package blackjack.view.output;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
-import blackjack.domain.game.GameOutcome;
-import blackjack.domain.game.OutComeResult;
 import blackjack.dto.CurrentTurnParticipant;
 import blackjack.dto.GameResult;
 import java.util.List;
@@ -21,9 +19,9 @@ public class OutputView {
 
     private static final String PLAYER_CARD_RESULT_AND_SCORE_MESSAGE = "%s 카드: %s - 결과: %d\n";
 
-    private static final String OUTCOME_TITLE = "## 최종 승패";
-    private static final String DEALER_OUTCOME_RESULT_MESSAGE = "딜러: %s\n";
-    private static final String PLAYER_OUTCOME_RESULT_MESSAGE = "%s: %s\n";
+    private static final String PROFIT_MESSAGE = "%s: %d\n";
+
+    private static final String OUTCOME_TITLE = "## 최종 수익";
 
     private static final String PLAYER_NAME_DELIMITER = ", ";
     private static final String CARD_INFO_DELIMITER = ", ";
@@ -74,24 +72,9 @@ public class OutputView {
                 joinPlayerCardInfos(gameResult.getCards()), gameResult.getScore());
     }
 
-    public static void printAllOutcomeResult(final OutComeResult outComeResult) {
+    public static void printAllOutcomeResult(final Map<String, Integer> participantsProfit) {
         System.out.println(OUTCOME_TITLE);
-        System.out.printf(DEALER_OUTCOME_RESULT_MESSAGE, printDealerResult(outComeResult.getDealerResult()));
-        printPlayerResults(outComeResult.getPlayerResults());
-    }
-
-    private static String printDealerResult(final Map<GameOutcome, Integer> dealerResult) {
-        return dealerResult.keySet().stream()
-                .filter(key -> dealerResult.get(key) > 0)
-                .map(key -> dealerResult.get(key) + key.getPrintValue())
-                .collect(Collectors.joining(" "));
-    }
-
-    private static void printPlayerResults(final Map<String, GameOutcome> playerResult) {
-        playerResult.forEach(OutputView::printPlayerResult);
-    }
-
-    private static void printPlayerResult(final String playerName, final GameOutcome gameOutcome) {
-        System.out.printf(PLAYER_OUTCOME_RESULT_MESSAGE, playerName, gameOutcome.getPrintValue());
+        participantsProfit.keySet()
+                .forEach(name -> System.out.printf(PROFIT_MESSAGE, name, participantsProfit.get(name)));
     }
 }

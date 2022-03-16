@@ -1,18 +1,18 @@
 package blackjack;
 
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.OutComeResult;
 import blackjack.domain.participant.Participant;
 import blackjack.dto.CurrentTurnParticipant;
 import blackjack.dto.GameResult;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameCommunicator {
 
     private final BlackJackGame blackJackGame;
 
-    public GameCommunicator(final List<String> playerNames) {
+    public GameCommunicator(final Map<String, String> playerNames) {
         blackJackGame = new BlackJackGame(playerNames);
     }
 
@@ -62,7 +62,7 @@ public class GameCommunicator {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public OutComeResult getWinningResult() {
-        return blackJackGame.getWinningResult();
+    public Map<String, Integer> getParticipantsProfit() {
+        return blackJackGame.getParticipantsProfit();
     }
 }

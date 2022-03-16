@@ -5,9 +5,16 @@ import java.util.regex.Pattern;
 
 public class BattingMoney {
 
+    private static final BattingMoney dealerBattingMoney = new BattingMoney(0);
+
     private static final Pattern NATURAL_NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]*$");
     private static final int BATTING_MONEY_UNIT = 10;
+
     private final int value;
+
+    private BattingMoney(final int value) {
+        this.value = value;
+    }
 
     public BattingMoney(final String value) {
         Objects.requireNonNull(value, "배팅 금액에는 null이 들어올 수 없습니다.");
@@ -34,5 +41,13 @@ public class BattingMoney {
         if (value % BATTING_MONEY_UNIT != 0) {
             throw new IllegalArgumentException("배팅 금액의 단위는 10입니다.");
         }
+    }
+
+    public int getProfit(final double profitRate) {
+        return (int) (value * profitRate);
+    }
+
+    public static BattingMoney getDealerBattingMoney() {
+        return dealerBattingMoney;
     }
 }

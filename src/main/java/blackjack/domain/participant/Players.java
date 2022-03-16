@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameOutcome;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,8 +70,8 @@ public class Players {
         return currentTurnPlayer();
     }
 
-    public Map<String, GameOutcome> calculateAllResults(final Dealer dealer) {
+    public Map<String, Integer> calculateProfit(final Dealer dealer) {
         return values.stream()
-                .collect(Collectors.toUnmodifiableMap(Player::getName, dealer::judgeOutcomeOfPlayer));
+                .collect(Collectors.toUnmodifiableMap(Player::getName, dealer::calculateProfitOf));
     }
 }

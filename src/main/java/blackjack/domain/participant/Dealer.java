@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import static blackjack.domain.card.Cards.BLACK_JACK_NUMBER;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameOutcome;
+import blackjack.domain.game.BattingMoney;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     private static final int DEALER_LIMIT_SCORE = 17;
 
     public Dealer(final List<Card> cards) {
-        super(DEALER_NAME, cards);
+        super(DEALER_NAME, BattingMoney.getDealerBattingMoney(), cards);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Dealer extends Participant {
         }
     }
 
-    public GameOutcome judgeOutcomeOfPlayer(final Player player) {
-        return player.state.compare(this.state);
+    public int calculateProfitOf(final Player player) {
+        return player.state.getProfit(this.state);
     }
 }

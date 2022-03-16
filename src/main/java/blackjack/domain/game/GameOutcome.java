@@ -1,20 +1,17 @@
 package blackjack.domain.game;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public enum GameOutcome {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    BLACKJACK_WIN(1.5),
+    WIN(1.0),
+    DRAW(0.0),
+    LOSE(-1.0)
     ;
 
-    private final String printValue;
+    private final double profitRate;
 
-    GameOutcome(final String printValue) {
-        this.printValue = printValue;
+    GameOutcome(final double profitRate) {
+        this.profitRate = profitRate;
     }
 
     public static GameOutcome calculateOutcome(final int score, final int compareScore) {
@@ -26,21 +23,7 @@ public enum GameOutcome {
         return DRAW;
     }
 
-    public static Map<GameOutcome, Integer> createResultFormat() {
-        return Arrays.stream(values())
-                .collect(Collectors.toMap(value -> value, value -> 0));
-    }
-
-    public GameOutcome reverse() {
-        if (this == WIN) {
-            return LOSE;
-        } else if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
-    public String getPrintValue() {
-        return printValue;
+    public double getProfitRate() {
+        return profitRate;
     }
 }
