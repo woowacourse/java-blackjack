@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// TODO: should be deleted
 public class ResultRefereeBlue {
 
     private final ResultStatistics dealerResultStat;
