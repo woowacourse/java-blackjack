@@ -2,6 +2,7 @@ package blackJack.domain.participant;
 
 import static org.assertj.core.api.Assertions.*;
 
+import blackJack.domain.money.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -109,5 +110,14 @@ class PlayerTest {
         assertThatThrownBy(() -> participant.receiveCard(card2))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("중복된 카드는 받을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("플레이어가 배팅 금액을 추가하는 기능 테스트")
+    void playerAddBetting() {
+        Player player = new Player("rookie");
+        player.betting(1000);
+
+        assertThat(player.getBet()).isEqualTo(new Bet(1000));
     }
 }

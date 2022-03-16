@@ -14,12 +14,19 @@ public class BlackJackController {
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(Deck.create(), getParticipants());
 
+        additionalBattingMoney(blackJackGame);
         defaultRound(blackJackGame);
         additionalRound(blackJackGame);
 
         final BlackJackGameResult blackJackGameResult = blackJackGame.calculateResult();
         OutputView.printGameResult(blackJackGame.getParticipants());
         OutputView.printWinOrLoseResult(blackJackGame.getDealer(), blackJackGameResult);
+    }
+
+    private void additionalBattingMoney(BlackJackGame blackJackGame) {
+        for (Player player : blackJackGame.getPlayers()) {
+            player.betting(getBettingMoney(player));
+        }
     }
 
     private void defaultRound(BlackJackGame blackJackGame) {
@@ -53,6 +60,15 @@ public class BlackJackController {
             return Participants.fromNames(InputView.inputPlayerNames());
         } catch (IllegalArgumentException e) {
             return getParticipants();
+        }
+    }
+
+    private int getBettingMoney(Player player) {
+        try {
+            return InputView.inputBattingMoney(player.getName());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            return getBettingMoney(player);
         }
     }
 
