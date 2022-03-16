@@ -41,4 +41,8 @@ public class Player {
     public void hit(final Card card) {
         gameState = gameState.hit(card);
     }
+
+    public void stay() {
+        gameState = gameState.stay();
+    }
 }
