@@ -19,9 +19,10 @@ public class Player {
         this.name = name;
     }
 
-    public static Player withTwoCards(String name, Drawable deck) {
+    public static Player withTwoCards(String text, Drawable deck) {
+        Name name = new Name(text);
         HoldCards holdCards = HoldCards.drawTwoCards(deck);
-        return new Player(new Name(name), holdCards);
+        return new Player(name, holdCards);
     }
 
     public void drawCard(Drawable drawable) {

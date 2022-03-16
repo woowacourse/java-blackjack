@@ -34,7 +34,7 @@ public class ScoreResult {
         for (Player player : players) {
             Score score = player.compete(dealer);
             playerResults.put(player.getName(), score);
-            dealerResult.merge(Score.inverse(score), 1, Integer::sum);
+            dealerResult.merge(score.inverse(), 1, Integer::sum);
         }
         return new ScoreResult(dealerResult, playerResults);
     }

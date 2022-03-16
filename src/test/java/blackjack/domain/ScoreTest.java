@@ -16,7 +16,7 @@ public class ScoreTest {
         @CsvSource(value = {"WIN|LOSE", "DRAW|DRAW", "LOSE|WIN"}, delimiter = '|')
         @DisplayName("입력한 스코어의 반대 스코어를 반환한다.")
         void returnInverseScore(Score score, Score expected) {
-            Assertions.assertThat(Score.inverse(score)).isEqualTo(expected);
+            Assertions.assertThat(score.inverse()).isEqualTo(expected);
         }
     }
 }

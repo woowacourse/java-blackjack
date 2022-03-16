@@ -1,9 +1,41 @@
 package blackjack.domain;
 
+import java.util.Arrays;
+
 public enum Score {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN("승") {
+        @Override
+        public boolean match(int competeNumber) {
+            return competeNumber > 0;
+        }
+
+        @Override
+        public Score inverse() {
+            return LOSE;
+        }
+    },
+    DRAW("무") {
+        @Override
+        public boolean match(int competeNumber) {
+            return competeNumber == 0;
+        }
+
+        @Override
+        public Score inverse() {
+            return DRAW;
+        }
+    },
+    LOSE("패") {
+        @Override
+        public boolean match(int competeNumber) {
+            return competeNumber < 0;
+        }
+
+        @Override
+        public Score inverse() {
+            return WIN;
+        }
+    };
 
     private final String value;
 
@@ -11,26 +43,15 @@ public enum Score {
         this.value = value;
     }
 
-    public static Score inverse(Score score) {
-        if (score == WIN) {
-            return LOSE;
-        }
-        if (score == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
+    abstract public boolean match(int competeNumber);
+    abstract public Score inverse();
 
     public static Score compete(int playerTotalNumber, int dealerTotalNumber) {
         int competeNumber = playerTotalNumber - dealerTotalNumber;
 
-        if (competeNumber > 0) {
-            return Score.WIN;
-        }
-        if (competeNumber == 0) {
-            return Score.DRAW;
-        }
-        return Score.LOSE;
+        return Arrays.stream(values())
+            .filter(score -> score.match(competeNumber))
+            .findAny().orElse(Score.LOSE);
     }
 
     public String getValue(){
