@@ -1,5 +1,6 @@
 package blackJack.domain.card;
 
+import static blackJack.domain.BlackJackGame.BLACKJACK_NUMBER;
 import static blackJack.domain.card.Denomination.OTHER_ACE_SCORE;
 
 import java.util.HashSet;
@@ -11,7 +12,6 @@ public class Cards {
 
     private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
-    private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_COUNT = 2;
 
     private final Set<Card> cards;
@@ -36,17 +36,11 @@ public class Cards {
         }
     }
 
-    public boolean isBlackJack() {
-        return cards.size() == BLACK_JACK_COUNT && addScore() == BLACK_JACK;
-    }
-
     public int addScore() {
         int score = calculateScore();
-
-        if (hasDenominationAce() && score + OTHER_ACE_SCORE <= BLACK_JACK) {
+        if (hasDenominationAce() && isPossibleBonusAce(score)) {
             score += OTHER_ACE_SCORE;
         }
-
         return score;
     }
 
@@ -59,6 +53,14 @@ public class Cards {
     private boolean hasDenominationAce() {
         return cards.stream()
                 .anyMatch(Card::isSameDenominationAsAce);
+    }
+
+    private boolean isPossibleBonusAce(int score) {
+        return score + OTHER_ACE_SCORE <= BLACKJACK_NUMBER;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_COUNT && addScore() == BLACKJACK_NUMBER;
     }
 
     public Set<Card> getCards() {

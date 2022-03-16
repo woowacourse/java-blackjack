@@ -10,6 +10,8 @@ import blackJack.domain.participant.Player;
 
 public class BlackJackGame {
 
+    public static final int BLACKJACK_NUMBER = 21;
+
     private final Deck deck;
     private final Participants participants;
 
