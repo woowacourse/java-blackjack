@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.constant.MatchResult;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +10,10 @@ abstract class Participant {
 
     protected Name name;
     protected final Hand hand = new Hand();
+
+    public Participant(Name name) {
+        this.name = name;
+    }
 
     public String getName() {
         return name.getValue();

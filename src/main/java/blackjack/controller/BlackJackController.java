@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import static blackjack.constant.Command.HIT;
 
-import blackjack.constant.Command;
 import blackjack.domain.ScoreBoard;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
-
-    private static final String Y = "Y";
 
     private Deck deck = new Deck(new RandomCardsGenerateStrategy());
     private Dealer dealer = new Dealer();

@@ -19,14 +19,14 @@ public class RandomCardsGenerateStrategy implements CardsGenerateStrategy {
         return cards;
     }
 
-    public static LinkedList<Card> makeCards() {
+    private static LinkedList<Card> makeCards() {
         return Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Denomination.values())
                         .map(denomination -> new Card(denomination, suit)))
                 .collect(toCollection(LinkedList::new));
     }
 
-    public void shuffleCards(List<Card> cards) {
+    private void shuffleCards(List<Card> cards) {
         Collections.shuffle(cards);
     }
 }
