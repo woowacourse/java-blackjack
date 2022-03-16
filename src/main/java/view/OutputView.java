@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String COMMA = ", ";
     private static final String HAND_OUT_FORMAT = "%s와 %s에게 2장의 카드를 나누었습니다.";

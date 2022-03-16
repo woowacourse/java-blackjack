@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public final class Cards {
 
     private static final int ACE_ADDITION = 10;
     private static final int MAX_SCORE = 21;

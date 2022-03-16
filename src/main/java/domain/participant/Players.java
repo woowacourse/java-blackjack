@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Players {
+public final class Players {
 
     private final List<Player> players;
 

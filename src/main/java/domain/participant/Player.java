@@ -2,7 +2,7 @@ package domain.participant;
 
 import static java.lang.Integer.compare;
 
-public class Player extends Participant implements Comparable<Participant> {
+public final class Player extends Participant implements Comparable<Participant> {
 
     private static final int MAX_SCORE = 21;
     private static final int COMPARE_CRITERIA = 0;

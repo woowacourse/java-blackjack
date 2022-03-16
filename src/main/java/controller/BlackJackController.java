@@ -9,7 +9,7 @@ import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-public class BlackJackController {
+public final class BlackJackController {
 
     private final InputView inputView = InputView.getInstance();
     private final OutputView outputView = OutputView.getInstance();

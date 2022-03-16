@@ -2,7 +2,7 @@ package domain.card;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
 
     private final Symbol symbol;
     private final Denomination denomination;

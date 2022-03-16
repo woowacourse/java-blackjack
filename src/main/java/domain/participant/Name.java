@@ -2,7 +2,7 @@ package domain.participant;
 
 import utils.ExceptionMessages;
 
-public class Name {
+public final class Name {
 
     private final String value;
 
