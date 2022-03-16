@@ -1,0 +1,61 @@
+package blackjack.domain.result;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
+
+public class Results {
+
+    private final Map<Player, MatchResult> results;
+    private final Players players;
+
+    public Results(Players players, Map<Player, MatchResult> results) {
+        this.players = players;
+        this.results = results;
+    }
+
+    public static Results from(Players players) {
+        return new Results(players, new LinkedHashMap<>());
+    }
+
+    public void competeDealerWithPlayers() {
+        Player dealer = players.getPlayers()
+                .stream()
+                .filter(Player::isDealer)
+                .findFirst()
+                .orElseThrow();
+        for (Player player : players.getPlayers()) {
+            scoreResultIfGuest(dealer, player);
+        }
+    }
+
+    private void scoreResultIfGuest(Player dealer, Player guest) {
+        if (guest.isDealer()) {
+            return;
+        }
+        scorePlay(dealer, guest);
+    }
+
+    private void scorePlay(Player dealer, Player guest) {
+        Match result = Match.findWinner(guest, dealer);
+        Match dealerResult = result.getDealerResult();
+        addResult(dealer, dealerResult);
+        addResult(guest, result);
+    }
+
+    public void addResult(Player player, Match result) {
+        results.put(player, results.getOrDefault(player, new MatchResult()).addMatchResult(result));
+    }
+
+    public Set<Player> getPlayers() {
+        return Collections.unmodifiableSet(results.keySet());
+    }
+
+    public MatchResult getResult(Player player) {
+        return results.get(player);
+    }
+}
