@@ -2,9 +2,7 @@ package blackJack.view;
 
 import blackJack.domain.participant.Player;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -13,9 +11,9 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     private static final String NEWLINE = System.getProperty("line.separator");
+    public static final String INPUT_MESSAGE_BETTING_AMOUNT = NEWLINE.concat("%s의 베팅 금액은?").concat(NEWLINE);
     private static final String INPUT_MESSAGE_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_DELIMITER_PLAYER_NAMES = ",";
-    public static final String INPUT_MESSAGE_BETTING_AMOUNT = "%s의 베팅 금액은?".concat(NEWLINE);
     private static final String INPUT_MESSAGE_ONE_MORE_CARD =
             "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".concat(NEWLINE);
 
@@ -30,14 +28,9 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    private static Map<Player, String> inputBettingAmount(List<Player> players) {
-        Map<Player, String> inputs = new LinkedHashMap<>();
-        for (Player player : players) {
-            System.out.printf(INPUT_MESSAGE_BETTING_AMOUNT, player.getName());
-            inputs.put(player, scanner.nextLine());
-            System.out.println();
-        }
-        return inputs;
+    public static String inputBettingAmount(Player player) {
+        System.out.printf(INPUT_MESSAGE_BETTING_AMOUNT, player.getName());
+        return scanner.nextLine();
     }
 
     public static String inputOneMoreCard(String name) {
