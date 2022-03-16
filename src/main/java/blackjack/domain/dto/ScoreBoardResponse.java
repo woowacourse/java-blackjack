@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.constant.MatchResult;
 import blackjack.domain.ScoreBoard;
-import blackjack.domain.participant.Player;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -36,8 +35,8 @@ public class ScoreBoardResponse {
     }
 
     private void makePlayerMatchResultMessage(ScoreBoard scoreBoard) {
-        for (Entry<Player, MatchResult> entry : scoreBoard.getPlayersMatchResult().entrySet()) {
-            String playerName = entry.getKey().getName();
+        for (Entry<String, MatchResult> entry : scoreBoard.getPlayersMatchResult().entrySet()) {
+            String playerName = entry.getKey();
             String matchResultName = entry.getValue().getName();
             playerMatchResultMessages.add(playerName + COLON_DELIMINATOR + matchResultName);
         }

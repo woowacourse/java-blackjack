@@ -31,11 +31,21 @@ public enum MatchResult {
         return self.isBust() && other.isBust() || self.getScore() == other.getScore();
     }
 
-    public static MatchResult get(Hand self, Hand other) {
+    public static MatchResult get(Hand player, Hand dealer) {
         return Arrays.stream(values())
-                .filter(matchResult -> matchResult.condition.test(self, other))
+                .filter(matchResult -> matchResult.condition.test(player, dealer))
                 .findFirst()
                 .orElse(DRAW);
+    }
+
+    public MatchResult reverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
     }
 
     public String getName() {

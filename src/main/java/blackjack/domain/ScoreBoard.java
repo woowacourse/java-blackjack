@@ -11,7 +11,7 @@ import java.util.Map;
 public class ScoreBoard {
 
     private EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap(MatchResult.class);
-    private Map<Player, MatchResult> playersMatchResult = new LinkedHashMap<>();
+    private Map<String, MatchResult> playersMatchResult = new LinkedHashMap<>();
 
     private ScoreBoard(Dealer dealer, List<Player> players) {
         initDealerMatchResult();
@@ -30,26 +30,26 @@ public class ScoreBoard {
 
     private void matchEachOthers(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            makeDealerMatchResult(dealer, player);
             makePlayerMatchResult(dealer, player);
+            makeDealerMatchResult(player);
         }
-    }
-
-    private void makeDealerMatchResult(Dealer dealer, Player player) {
-        MatchResult matchResult = dealer.match(player);
-        dealerMatchResult.put(matchResult, dealerMatchResult.get(matchResult) + 1);
     }
 
     private void makePlayerMatchResult(Dealer dealer, Player player) {
         MatchResult matchResult = player.match(dealer);
-        playersMatchResult.put(player, matchResult);
+        playersMatchResult.put(player.getName(), matchResult);
+    }
+
+    private void makeDealerMatchResult(Player player) {
+        MatchResult matchResult = playersMatchResult.get(player.getName()).reverse();
+        dealerMatchResult.put(matchResult, dealerMatchResult.get(matchResult) + 1);
     }
 
     public EnumMap<MatchResult, Integer> getDealerMatchResults() {
         return dealerMatchResult;
     }
 
-    public Map<Player, MatchResult> getPlayersMatchResult() {
+    public Map<String, MatchResult> getPlayersMatchResult() {
         return playersMatchResult;
     }
 

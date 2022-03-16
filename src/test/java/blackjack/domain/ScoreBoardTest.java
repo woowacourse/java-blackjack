@@ -41,7 +41,7 @@ public class ScoreBoardTest {
                 // when
                 ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
                 int dealerMatchResultScore = scoreBoard.findDealerMatchScore(WIN);
-                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
+                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
 
                 // then
                 assertThat(dealerMatchResultScore).isEqualTo(1);
@@ -58,7 +58,7 @@ public class ScoreBoardTest {
                 // when
                 ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
                 int dealerMatchResultScore = scoreBoard.findDealerMatchScore(LOSE);
-                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
+                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
 
                 // then
                 assertThat(dealerMatchResultScore).isEqualTo(1);
@@ -75,7 +75,7 @@ public class ScoreBoardTest {
                 // when
                 ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
                 int dealerMatchResultScore = scoreBoard.findDealerMatchScore(LOSE);
-                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
+                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
 
                 // then
                 assertAll(
@@ -93,7 +93,7 @@ public class ScoreBoardTest {
                 // when
                 ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
                 int dealerMatchScore = scoreBoard.findDealerMatchScore(WIN);
-                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
+                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
 
                 // then
                 assertAll(
@@ -111,7 +111,7 @@ public class ScoreBoardTest {
                 // when
                 ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
                 int dealerMatchScore = scoreBoard.findDealerMatchScore(DRAW);
-                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
+                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
 
                 // then
                 assertAll(
@@ -129,7 +129,7 @@ public class ScoreBoardTest {
                 // when
                 ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
                 int dealerMatchScore = scoreBoard.findDealerMatchScore(DRAW);
-                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player);
+                MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
 
                 // then
                 assertAll(
@@ -149,16 +149,16 @@ public class ScoreBoardTest {
                 // when
                 ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(playerA, playerB, playerC));
                 EnumMap<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
-                Map<Player, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
+                Map<String, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
 
                 // then
                 assertAll(
                                 () -> assertThat(dealerMatchResults.get(WIN)).isEqualTo(2),
                                 () -> assertThat(dealerMatchResults.get(LOSE)).isEqualTo(1),
 
-                                () -> assertThat(playersMatchResult.get(playerA)).isEqualTo(LOSE),
-                                () -> assertThat(playersMatchResult.get(playerB)).isEqualTo(WIN),
-                                () -> assertThat(playersMatchResult.get(playerC)).isEqualTo(LOSE));
+                                () -> assertThat(playersMatchResult.get(playerA.getName())).isEqualTo(LOSE),
+                                () -> assertThat(playersMatchResult.get(playerB.getName())).isEqualTo(WIN),
+                                () -> assertThat(playersMatchResult.get(playerC.getName())).isEqualTo(LOSE));
         }
 
         @Test
@@ -173,7 +173,7 @@ public class ScoreBoardTest {
                 // when
                 ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(playerA, playerB, playerC));
                 EnumMap<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
-                Map<Player, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
+                Map<String, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
 
                 // then
                 assertAll(
@@ -181,8 +181,8 @@ public class ScoreBoardTest {
                                 () -> assertThat(dealerMatchResults.get(LOSE)).isEqualTo(1),
                                 () -> assertThat(dealerMatchResults.get(DRAW)).isEqualTo(1),
 
-                                () -> assertThat(playersMatchResult.get(playerA)).isEqualTo(WIN),
-                                () -> assertThat(playersMatchResult.get(playerB)).isEqualTo(LOSE),
-                                () -> assertThat(playersMatchResult.get(playerC)).isEqualTo(DRAW));
+                                () -> assertThat(playersMatchResult.get(playerA.getName())).isEqualTo(WIN),
+                                () -> assertThat(playersMatchResult.get(playerB.getName())).isEqualTo(LOSE),
+                                () -> assertThat(playersMatchResult.get(playerC.getName())).isEqualTo(DRAW));
         }
 }
