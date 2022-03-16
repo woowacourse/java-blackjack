@@ -24,6 +24,10 @@ public final class Card {
         return type;
     }
 
+    public int getScoreAmount() {
+        return score.getAmount();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

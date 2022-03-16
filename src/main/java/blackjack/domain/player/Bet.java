@@ -26,6 +26,13 @@ public final class Bet {
         this.profit = betAmount * (int) LOSE;
     }
 
+    public void bothBlackjack() {
+        this.profit = betAmount * (int) BOTH_BLACKJACK;
+    }
+
+    public void blackjack() {
+    }
+
     public void calculateFinalProfit(List<Integer> profits){
         for (Integer profit : profits) {
             this.profit -= profit;
@@ -35,4 +42,5 @@ public final class Bet {
     public int getProfit() {
         return profit;
     }
+
 }
