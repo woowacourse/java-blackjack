@@ -28,6 +28,36 @@ public class InputViewTest {
                 .hasMessage("빈 값을 입력할 수 없습니다.");
     }
 
+    @DisplayName("베팅 금액에 null 을 입력했을 때 예외 발생을 확인한다.")
+    @Test
+    void betting_null() {
+        Enterable enterable = () -> null;
+
+        assertThatThrownBy(() -> InputView.inputBetting(enterable))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("빈 값을 입력할 수 없습니다.");
+    }
+
+    @DisplayName("베팅 금액에 빈 값을 입력했을 때 예외 발생을 확인한다.")
+    @Test
+    void betting_empty() {
+        Enterable enterable = () -> "";
+
+        assertThatThrownBy(() -> InputView.inputBetting(enterable))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("빈 값을 입력할 수 없습니다.");
+    }
+
+    @DisplayName("베팅 금액에 문자를 입력했을 때 예외 발생을 확인한다.")
+    @Test
+    void betting_not_number() {
+        Enterable enterable = () -> "betting";
+
+        assertThatThrownBy(() -> InputView.inputBetting(enterable))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("숫자를 입력해주세요.");
+    }
+
     @DisplayName("카드 추가 대답에 null 을 입력했을 때 예외 발생을 확인한다.")
     @Test
     void receive_more_card_answer_null() {

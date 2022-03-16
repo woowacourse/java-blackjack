@@ -1,8 +1,13 @@
 package blackjack.domain.game;
 
+import blackjack.domain.bet.Betting;
+import blackjack.domain.bet.Profit;
+
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -19,6 +24,14 @@ public class Players {
 
         for (String name : names) {
             players.add(new Player(name));
+        }
+    }
+
+    public void bet(final Profit profit,
+                    final Consumer<String> consumer, final Supplier<Betting> supplier) {
+        for (Player player : players) {
+            player.bet(consumer);
+            profit.bet(player, supplier);
         }
     }
 

@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.bet.Profit;
 import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Players;
@@ -15,6 +16,9 @@ public class Blackjack {
         OutputView.printPlayerNameInstruction();
         Players players = InputConverter.createPlayers();
         Result result = new Result(players);
+
+        Profit profit = new Profit();
+        players.bet(profit, OutputView::printBetting, InputConverter::createBetting);
 
         drawCards(dealer, players, result);
         showWinner(dealer, players, result);
@@ -40,6 +44,7 @@ public class Blackjack {
     }
 
     private void showWinner(final Dealer dealer, final Players players, final Result result) {
+        // TODO: 최종 수익 출력
         OutputView.printTotalScore(dealer, players);
         result.compete(dealer);
         OutputView.printResult(dealer, result, players);

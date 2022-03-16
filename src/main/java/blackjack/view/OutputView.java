@@ -31,6 +31,12 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
+    public static void printBetting(final String name) {
+        printNewLine();
+        System.out.printf("%s의 배팅 금액은?", name);
+        printNewLine();
+    }
+
     public static void printDealCards(final String dealerName, final List<String> playerNames) {
         printNewLine();
         System.out.printf("%s와 %s에게 2장씩 나누었습니다.", dealerName, String.join(DELIMITER, playerNames));

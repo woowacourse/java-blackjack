@@ -4,6 +4,7 @@ import blackjack.dto.GamerDto;
 
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class Player extends Gamer {
@@ -11,6 +12,10 @@ public class Player extends Gamer {
     public Player(final String name) {
         super(name);
         validateEqualsDealerName(name);
+    }
+
+    public void bet(final Consumer<String> consumer) {
+        consumer.accept(name);
     }
 
     public void draw(final CardDeck cardDeck,
