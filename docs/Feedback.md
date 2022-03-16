@@ -88,6 +88,8 @@
         - 반환하는 카드의 이름을 card -> findCard 수정
         - filter() 내부에서 사용하는 변수명을 getCard -> card 수정
 - [ ] `GameResult`에서 `getDealerResult()` 메서드를 호출하는 경우에 대한 고민
+    - 현재까지 구현에서 `Dealer`가 따로 호출하는 경우가 없음.
+    - `OutputView`에서 딜러 게임 통계를 출력하기 위해서만 사용 중
 - [x] `Statistic`의 gamblerResult의 타입을 `Map`에서 `LinkedHashMap`으로 구체화하게된 이유
     - Gambler 목록의 순서대로 게임 결과를 출력하고자 `LinkedHashMap`으로 구현
     - Statistic의 사용할 때 `Player`, `GameResult`의 값을 통한 반복문을 사용하기때문에 불필요한 구체화로 생각되어 다시 `Map`으로 변경
@@ -100,7 +102,7 @@
         - `orElseThrow` 사용
 - [x] `Cards`의 `getCards` 메서드가 사용하는 필드 자체를 반환
     - 새 컬렉션에 담아 반환하면 어떤지
-      - `List.copyOf()`를 이용하여 반환
+        - `List.copyOf()`를 이용하여 반환
     - 새 컬렉션에 담아 반환하는 이유, 장점 알아보기
 
 ### 2차 피드백 학습
@@ -126,3 +128,10 @@
     - 예외 던지기, orElseThrow
         - 객체에 래핑된 값이 없는 경우 예외를 발생한다.
         - get과는 다르게 예외를 직접 선택할 수 있다.
+- 방어적 복사
+    - 방어적 복사 미사용 시
+        - 복사된 객체(original)와 복사한 객체(Copy)가 같은 주소를 공유하고 있다.
+        - 복사 후, 복사 대상 객체(original)를 수정하면 복사한 객체(Copy) 또한 수정 된다.
+    - 방어적 복사 사용 시
+        - 복사된 객체(original)와 복사한 객체(Copy)의 주소 공유를 끊는다.
+        - 덕분에 복사 대상 객체(original)을 수정하여도 복사한 객체(Copy)는 영향을 받지 않는다.
