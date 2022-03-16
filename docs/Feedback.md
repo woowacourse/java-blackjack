@@ -91,9 +91,33 @@
 - [ ] `Statistic`의 gamblerResult의 타입을 `Map`에서 `LinkedHashMap`으로 구체화하게된 이유
 - [ ] `Map` 객체가 여러 메서드에 전달되며 어떤 값이 추가되는지 확인해야한다.
     - 각 메서드에서 결과 계산과 집계를 하고 Map에 담는 역할을 나누는 것은 어떨지
-- [ ] `Card`에서 `if(Objects.isNull(ard))` 조건식의 사용
+- [x] `Card`에서 `if(Objects.isNull())` 조건식의 사용
     - `Optional.get`은 무엇을 반환하는가
+      - 객체를 반환하지만 값이 없을 경우 `NoSuchElementException` 발생
 - [ ] `Cards`의 `getCards` 메서드가 사용하는 필드 자체를 반환
     - 새 컬렉션에 담아 반환하면 어떤지
-    - 새 컬렉션에 담아 반환하는 이유, 장점 알아보기 
+    - 새 컬렉션에 담아 반환하는 이유, 장점 알아보기
 
+### 2차 피드백 학습
+
+- Optional.get()
+    - Optional 객체에서 값을 꺼낼 수 있는 가장 간단한 메서드
+    - Wrapping된 값이 없다면 NoSuchElementException 발생
+      ```java
+      public T get() {
+          if (value == null) {
+              throw new NoSuchElementException("No value present");
+          }
+          return value;
+      }```
+    - 위와 같이 구현되어있기때문에 반드시 객체에 값이 있는 것으로 판단되는 경우에만 사용한다.
+- Optional.get 이외 메서드
+    - 기본 값 설정하기, orElse
+        - orEsle를 통해 비어있는 Optional 객체의 기본값을 설정할 수 있다.
+        - Optional의 값이 있든 없든 **항상** 실행
+    - 기본 값 설정하기 2, orElseGett
+        - orElse와 유사하지만 인자로 Supplier를 받는다는 차이점이 존재
+        - 또한, Optional에 **값이 없을 경우**에만 실행
+    - 예외 던지기, orElseThrow
+        - 객체에 래핑된 값이 없는 경우 예외를 발생한다.
+        - get과는 다르게 예외를 직접 선택할 수 있다.

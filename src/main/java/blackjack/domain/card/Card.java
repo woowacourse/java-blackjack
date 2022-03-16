@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Card {
 
@@ -26,15 +25,11 @@ public class Card {
     }
 
     public static Card of(final Denomination inputDenomination, final Symbol inputSymbol) {
-        Card findCard = CACHE.stream()
+        return CACHE.stream()
             .filter(card -> card.getDenomination().equals(inputDenomination))
             .filter(card -> card.getSymbol().equals(inputSymbol))
             .findFirst()
-            .get();
-        if (Objects.isNull(findCard)) {
-            throw new IllegalArgumentException(CARD_CACHE_INDEX_ERROR_MESSAGE);
-        }
-        return findCard;
+            .orElseThrow(() -> new IllegalArgumentException(CARD_CACHE_INDEX_ERROR_MESSAGE));
     }
 
     public Denomination getDenomination() {
