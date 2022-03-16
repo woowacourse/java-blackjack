@@ -8,7 +8,6 @@ public class Cards {
 
     private static final int ACE_ADDITIONAL_VALUE = 10;
     public static final int BLACKJACK_VALUE = 21;
-    protected static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> value;
 
@@ -25,7 +24,7 @@ public class Cards {
     }
 
     public Status getStatus() {
-        return Status.findStatus(this);
+        return Status.findStatus(getCount(), sum());
     }
 
     public int getCount() {
