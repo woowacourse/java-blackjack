@@ -56,6 +56,10 @@ public abstract class Participant {
         return this.cards.sumScore() > otherParticipant.sumScore();
     }
 
+    public boolean isLoseBy(Participant otherParticipant) {
+        return this.cards.sumScore() < otherParticipant.sumScore();
+    }
+
     public boolean isDrawWith(Participant otherParticipant) {
         return this.cards.sumScore() == otherParticipant.sumScore();
     }

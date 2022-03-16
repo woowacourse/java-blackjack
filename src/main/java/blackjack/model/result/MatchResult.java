@@ -10,17 +10,16 @@ public enum MatchResult {
             dealer.isBlackjack() && !player.isBlackjack() ||
                     !dealer.isBust() && player.isBust() ||
                     dealer.isBust() && player.isBust() ||
-                    !dealer.isBust() && dealer.isWinBy(player)),
+                    !dealer.isBust() && !player.isBust() && dealer.isWinBy(player)),
 
     LOSE("패", (dealer, player) ->
             !dealer.isBlackjack() && player.isBlackjack() ||
                     dealer.isBust() && !player.isBust() ||
-                    !dealer.isBust() && !dealer.isDrawWith(player) ||
-                    !dealer.isBust() && !dealer.isWinBy(player)),
+                    !dealer.isBust() && !player.isBust() && dealer.isLoseBy(player)),
 
     DRAW("무", (dealer, player) ->
             dealer.isBlackjack() && player.isBlackjack() ||
-                    !dealer.isBust() && dealer.isDrawWith(player)),
+                    !dealer.isBust() && !player.isBust() && dealer.isDrawWith(player)),
     ;
 
     private final String value;
