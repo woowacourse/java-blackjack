@@ -9,10 +9,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BettingMoneyTest {
 
-    @Test
-    @DisplayName("배팅 금액이 1000단위인지 검증한다.")
-    void createBettingMoney() {
-        assertThatCode(() -> new BettingMoney(1000))
+    @ParameterizedTest
+    @ValueSource(ints = {1000, 1_000_000, 4_999_000})
+    @DisplayName("배팅 금액이 1000단위로 생성할 수 있다.")
+    void createBettingMoney(int amount) {
+        assertThatCode(() -> new BettingMoney(amount))
             .doesNotThrowAnyException();
     }
 
@@ -23,5 +24,14 @@ class BettingMoneyTest {
         assertThatIllegalArgumentException()
             .isThrownBy(() -> new BettingMoney(value))
             .withMessage("배팅 금액은 1000단위어야 합니다.");
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 500만이 넘는 경우 예외를 발생한다.")
+    void throwExceptionBettingMoneyOver5_000_000() {
+
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> new BettingMoney(5_001_000))
+            .withMessage("배팅 금액은 500만을 넘을 수 없습니다.");
     }
 }
