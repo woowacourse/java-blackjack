@@ -14,7 +14,7 @@ public class BlackJackGame {
     private final Participants participants;
 
     public BlackJackGame(Participants participants) {
-        this.deck = Deck.createNewDeck();
+        this.deck = Deck.create();
         this.participants = participants;
     }
 
