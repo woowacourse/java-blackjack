@@ -15,4 +15,6 @@ public interface BlackjackGameState {
     boolean isBust();
 
     boolean isBlackjack();
+
+    int score();
 }

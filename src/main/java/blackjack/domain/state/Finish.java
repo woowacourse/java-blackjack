@@ -23,4 +23,9 @@ public abstract class Finish extends AbstractBlackjackGameState {
     public final boolean isFinished() {
         return true;
     }
+
+    @Override
+    public int score() {
+        return cards.score();
+    }
 }

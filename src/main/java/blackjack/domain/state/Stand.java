@@ -16,6 +16,13 @@ public class Stand extends Finish {
         if (blackjackGameState.isBlackjack()) {
             return 0;
         }
-        return 0;
+        return earningRateWithStand(blackjackGameState);
+    }
+
+    private double earningRateWithStand(final BlackjackGameState blackjackGameState) {
+        if (cards.score() == blackjackGameState.score()) {
+            return 0;
+        }
+        return 100;
     }
 }

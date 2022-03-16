@@ -64,4 +64,13 @@ class StandTest {
 
         assertThat(stand.earningRate(bust)).isEqualTo(0);
     }
+
+    @Test
+    void 상대와_스코어가_같으면_수익률이_0() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Stand stand = new Stand(cards);
+        final Stand compareStand = new Stand(cards);
+
+        assertThat(stand.earningRate(compareStand)).isEqualTo(0);
+    }
 }

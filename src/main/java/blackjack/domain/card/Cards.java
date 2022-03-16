@@ -35,4 +35,8 @@ public class Cards {
     public void addCard(final Card card) {
         cards.add(card);
     }
+
+    public int score() {
+        return Denomination.calculateCardScore(cards);
+    }
 }
