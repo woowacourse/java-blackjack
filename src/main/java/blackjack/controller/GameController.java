@@ -106,7 +106,7 @@ public class GameController {
 
         printDealerRecord(bettingTable.dealerRevenue(map));
         for (Betting betting : bettings) {
-            printPlayerRecord(betting.getName(), betting.result(map));
+            printPlayerRecord(betting.getName(), betting.revenue(map));
         }
     }
 }

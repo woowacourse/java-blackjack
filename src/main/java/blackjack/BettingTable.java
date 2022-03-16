@@ -16,7 +16,7 @@ public class BettingTable {
 
     public long dealerRevenue(Map<Name, PlayRecord> recordMap) {
         return bettings.stream()
-            .mapToLong(betting -> -betting.result(recordMap))
+            .mapToLong(betting -> -betting.revenue(recordMap))
             .sum();
     }
 }

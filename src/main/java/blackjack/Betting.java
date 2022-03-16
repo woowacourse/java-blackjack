@@ -1,6 +1,7 @@
 package blackjack;
 
 import java.util.Map;
+import java.util.Objects;
 
 import blackjack.domain.PlayRecord;
 import blackjack.domain.participant.Name;
@@ -14,7 +15,11 @@ public class Betting {
         this.money = money;
     }
 
-    public long result(PlayRecord playRecord) {
+    public long revenue(Map<Name, PlayRecord> recordMap) {
+        return getMoney(getPlayRecord(recordMap));
+    }
+
+    private long getMoney(PlayRecord playRecord) {
         if (playRecord == PlayRecord.LOSS) {
             return -money;
         }
@@ -29,15 +34,26 @@ public class Betting {
         return 0;
     }
 
+    private PlayRecord getPlayRecord(Map<Name, PlayRecord> recordMap) {
+        return recordMap.get(name);
+    }
+
     public Name getName() {
         return name;
     }
 
-    public PlayRecord getPlayRecord(Map<Name, PlayRecord> recordMap) {
-        return recordMap.get(name);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Betting betting = (Betting)o;
+        return money == betting.money && Objects.equals(name, betting.name);
     }
 
-    public long result(Map<Name, PlayRecord> recordMap) {
-        return result(getPlayRecord(recordMap));
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, money);
     }
 }
