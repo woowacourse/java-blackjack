@@ -26,7 +26,10 @@ public final class Dealer extends Player {
             this.bothBlackjack();
             return;
         }
-
+        if (isParticipantBlackJack(participant)){
+            participant.blackjack();
+            return;
+        }
         if (isDealerWin(calculateFinalScore(), participant.calculateFinalScore())) {
             this.win();
             participant.lose();
@@ -38,6 +41,10 @@ public final class Dealer extends Player {
 
     private boolean isDealerParticipantBlackJack(Participant participant) {
         return this.calculateInitCardScore() == MAX_SCORE && participant.calculateInitCardScore() == MAX_SCORE;
+    }
+
+    private boolean isParticipantBlackJack(Participant participant) {
+        return this.calculateInitCardScore() != MAX_SCORE && participant.calculateInitCardScore() == MAX_SCORE;
     }
 
     private boolean isDealerWin(final int dealerScore, final int participantScore) {

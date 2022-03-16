@@ -112,6 +112,20 @@ class DealerTest {
         assertThat(participant.getBet().getProfit()).isEqualTo(0);
     }
 
+    @Test
+    @DisplayName("딜러는 참여자와 점수를 비교해 승패를 결정한다(참가자만 블랙잭).")
+    void calculateBlackjack() {
+        Participant participant = new Participant(List.of(
+                new Card(Type.SPADE, Score.ACE),
+                new Card(Type.HEART, Score.TEN)), "zero", new Bet(2000));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Type.DIAMOND, Score.ACE),
+                new Card(Type.CLOVER, Score.TWO)
+        ));
+        dealer.compete(participant);
+        assertThat(participant.getBet().getProfit()).isEqualTo(3000);
+    }
+
     @ParameterizedTest
     @MethodSource("participantAndResultWin")
     @DisplayName("딜러는 참여자와 점수를 비교해 승패를 결정한다(승리 테스트).")
@@ -121,12 +135,6 @@ class DealerTest {
     }
 
     private static Stream<Arguments> participantAndResultWin() {
-        Dealer dealer = new Dealer(List.of(
-                new Card(Type.SPADE, Score.TEN),
-                new Card(Type.HEART, Score.TEN)
-        ));
-        dealer.addCard(new Card(Type.DIAMOND, Score.TWO));
-
         return Stream.of(
                 Arguments.of(
                         new Participant(List.of(
@@ -138,10 +146,12 @@ class DealerTest {
                         )), 1000),
                 Arguments.of(
                         new Participant(List.of(
-                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.SPADE, Score.TEN),
                                 new Card(Type.HEART, Score.TEN)
-                        ), "zero", new Bet(1000)),
-                        dealer, 1000)
+                        ), "zero", new Bet(1000)), new Dealer(List.of(
+                                new Card(Type.SPADE, Score.TEN),
+                                new Card(Type.HEART, Score.NINE)
+                        )), 1000)
         );
     }
 
@@ -155,23 +165,14 @@ class DealerTest {
 
     private static Stream<Arguments> participantAndResultLose() {
         Participant participant = new Participant(List.of(
-                new Card(Type.SPADE, Score.TEN),
-                new Card(Type.HEART, Score.TEN)), "zero", new Bet(1000));
-        participant.addCard(new Card(Type.HEART, Score.THREE));
-        Participant participant2 = new Participant(List.of(
                 new Card(Type.SPADE, Score.SIX),
                 new Card(Type.HEART, Score.SIX)), "zero", new Bet(1000));
-        participant2.addCard(new Card(Type.HEART, Score.TWO));
+        participant.addCard(new Card(Type.HEART, Score.TWO));
         Dealer dealer = new Dealer(List.of(
-                new Card(Type.SPADE, Score.TEN),
-                new Card(Type.HEART, Score.TEN)
-        ));
-        dealer.addCard(new Card(Type.DIAMOND, Score.TWO));
-        Dealer dealer2 = new Dealer(List.of(
                 new Card(Type.SPADE, Score.ACE),
                 new Card(Type.HEART, Score.FOUR)
         ));
-        dealer2.addCard(new Card(Type.DIAMOND, Score.KING));
+        dealer.addCard(new Card(Type.DIAMOND, Score.KING));
 
         return Stream.of(
                 Arguments.of(
@@ -208,15 +209,17 @@ class DealerTest {
                         -1000
                 ),
                 Arguments.of(
-                        participant,
+                        new Participant(List.of(
+                                new Card(Type.SPADE, Score.TEN),
+                                new Card(Type.HEART, Score.TEN)
+                        ),"zero", new Bet(1000)),
                         new Dealer(List.of(
-                                new Card(Type.SPADE, Score.ACE),
-                                new Card(Type.HEART, Score.JACK)
+                                new Card(Type.SPADE, Score.TEN),
+                                new Card(Type.HEART, Score.ACE)
                         )),
                         -1000
                 ),
-                Arguments.of(participant, dealer, -1000),
-                Arguments.of(participant2, dealer2, -1000)
+                Arguments.of(participant, dealer, -1000)
         );
     }
 }

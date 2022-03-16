@@ -19,18 +19,19 @@ public final class Bet {
     }
 
     public void win() {
-        this.profit = betAmount * (int) WIN;;
+        this.profit = (int) (betAmount * WIN);
     }
 
     public void lose() {
-        this.profit = betAmount * (int) LOSE;
+        this.profit = (int) (betAmount * LOSE);
     }
 
     public void bothBlackjack() {
-        this.profit = betAmount * (int) BOTH_BLACKJACK;
+        this.profit = (int) (betAmount * BOTH_BLACKJACK);
     }
 
     public void blackjack() {
+        this.profit = (int) (betAmount * BLACKJACK);
     }
 
     public void calculateFinalProfit(List<Integer> profits){
