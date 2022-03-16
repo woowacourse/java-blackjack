@@ -16,7 +16,21 @@ public class BettingBox {
         bettingBox.put(guest, bettingMoney);
     }
 
-    public Map<Player, BettingMoney> getValues() {
-        return Collections.unmodifiableMap(bettingBox);
+    public double getPrizeMoney(Player guest, WinDrawLose winDrawLose, boolean isBlackjack) {
+        BettingMoney bettingMoney = bettingBox.get(guest);
+        if (winDrawLose == WinDrawLose.DRAW) {
+            return 0;
+        }
+        if (winDrawLose == WinDrawLose.WIN) {
+            return getWinningGuestPrizeMoney(bettingMoney, isBlackjack);
+        }
+        return bettingMoney.getAmount() * -1;
+    }
+
+    private double getWinningGuestPrizeMoney(BettingMoney bettingMoney, boolean isBlackjack) {
+        if (isBlackjack) {
+            return bettingMoney.getAmount() * 1.5;
+        }
+        return bettingMoney.getAmount();
     }
 }
