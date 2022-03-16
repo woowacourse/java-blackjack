@@ -31,4 +31,8 @@ public class Cards {
         System.out.println(Denomination.calculateCardScore(cards));
         return cards.size() == BLACKJACK_CARD_SIZE && Denomination.calculateCardScore(cards) == BLACKJACK_TARGET_NUMBER;
     }
+
+    public void addCard(final Card card) {
+        cards.add(card);
+    }
 }
