@@ -1,7 +1,5 @@
 package domain.participant;
 
-import static java.lang.Integer.compare;
-
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
@@ -10,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import utils.ExceptionMessages;
 
-public abstract class Participant implements Comparable<Participant> {
+public abstract class Participant {
 
     protected static final int MAX_SCORE = 21;
 
@@ -53,17 +51,5 @@ public abstract class Participant implements Comparable<Participant> {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
-    }
-
-    @Override
-    public int compareTo(Participant participant) {
-        if (participant.isBurst()) {
-            return 1;
-        }
-        if (isBurst()) {
-            return -1;
-        }
-
-        return compare(calculateScore(), participant.calculateScore());
     }
 }
