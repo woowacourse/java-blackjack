@@ -1,11 +1,16 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 
 public class ParticipantsTest {
 
@@ -38,4 +43,19 @@ public class ParticipantsTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    @DisplayName("플레이 차례가 온 플레이어를 반환")
+    void getCurrentPlayer() {
+        Player player = new Player("player");
+        player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
+            new Card(Suit.HEART, Denomination.SEVEN)));
+        Player player2 = new Player("player2");
+        player2.initCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
+            new Card(Suit.HEART, Denomination.SEVEN)));
+        player.stay();
+
+        Participants participants = new Participants(List.of(player, player2));
+
+        assertThat(participants.getCurrentPlayer().getName()).isEqualTo("player2");
+    }
 }

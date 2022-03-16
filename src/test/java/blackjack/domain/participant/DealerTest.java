@@ -46,16 +46,12 @@ public class DealerTest {
     @Test
     @DisplayName("딜러는 맨 처음 자신의 첫번째 카드를 오픈한다.")
     void getFirstCard() {
+        List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.KING),
+            new Card(Suit.HEART, Denomination.SEVEN));
         Dealer dealer = new Dealer();
 
-        dealer.initCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
-            new Card(Suit.HEART, Denomination.SEVEN)));
+        dealer.initCards(cards);
 
-        Card card = dealer.getFirstCard();
-
-        String cardInfo = card.getDenomination().getName() + card.getSuit().getName();
-        String answer = "K다이아몬드";
-
-        assertThat(cardInfo).isEqualTo(answer);
+        assertThat(dealer.getFirstCard()).isEqualTo(cards.get(0));
     }
 }
