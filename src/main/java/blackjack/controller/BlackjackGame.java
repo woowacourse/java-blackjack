@@ -6,7 +6,8 @@ import blackjack.view.OutputView;
 
 public class BlackjackGame {
 
-    public void play(Dealer dealer, Players players) {
+    public Players play(Dealer dealer) {
+        Players players = createPlayers();
         CardDeck cardDeck = new CardDeck();
 
         dealInitCards(cardDeck, dealer, players);
@@ -14,6 +15,18 @@ public class BlackjackGame {
 
         drawPlayers(players, cardDeck);
         drawDealer(dealer, cardDeck);
+
+        return players;
+    }
+
+    private Players createPlayers() {
+        try {
+            OutputView.printPlayerNameInstruction();
+            return new Players(InputView.inputPlayerName());
+        } catch (IllegalArgumentException exception) {
+            OutputView.printExceptionMessage(exception.getMessage());
+            return createPlayers();
+        }
     }
 
     private void dealInitCards(CardDeck cardDeck, Dealer dealer, Players players) {

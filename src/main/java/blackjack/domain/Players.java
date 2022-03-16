@@ -62,4 +62,12 @@ public class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+
+    public Winner win(Dealer dealer) {
+        Winner winner = new Winner();
+        for (Player player : players) {
+            winner.decide(dealer, player);
+        }
+        return winner;
+    }
 }

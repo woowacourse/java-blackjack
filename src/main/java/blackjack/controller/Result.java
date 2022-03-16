@@ -27,10 +27,7 @@ public class Result {
     }
 
     public void win(final Dealer dealer, final Players players) {
-        Winner winner = new Winner();
-        for (Player player : players.getPlayers()) {
-            winner.decide(dealer, player);
-        }
+        Winner winner = players.win(dealer);
         OutputView.printWinnerTitle();
         winDealer(winner, dealer, players);
         winPlayers(winner, players);
