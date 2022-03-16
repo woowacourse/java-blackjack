@@ -13,9 +13,10 @@ import view.OutputView;
 public class Controller {
 
     public void run() {
-        List<Name> names = InputView.inputNames();
         Deck deck = new Deck(Cards.getInstance().getCards());
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
+
+        List<Name> names = InputView.inputNames();
         Players players = new Players(names, InitCards.generateInitCardsForPlayers(deck, names.size()));
 
         OutputView.printInitHands(dealer, players);

@@ -33,6 +33,12 @@ public class InputView {
         }
     }
 
+    public static int inputMoney(Name name) {
+        System.out.printf("%s의 배팅 금액은?", name.getName());
+        String input = scanner.nextLine();
+        return Integer.parseInt(input);
+    }
+
     public static boolean inputAskDraw(String name) {
         System.out.printf(INPUT_ASk_DRAW_MESSAGE_FORMAT, name);
         String askDraw = scanner.nextLine();

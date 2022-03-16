@@ -16,11 +16,15 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Name> names, List<List<Card>> initCards) {
-        this.players = IntStream.range(0, names.size())
-                .mapToObj(i -> new Player(names.get(i), initCards.get(i)))
-                .collect(Collectors.toList());
+    public Players(List<Player> players) {
+        this.players = List.copyOf(players);
     }
+
+//    public Players(List<Name> names, List<List<Card>> initCards) {
+//        this.players = IntStream.range(0, names.size())
+//                .mapToObj(i -> new Player(names.get(i), initCards.get(i)))
+//                .collect(Collectors.toList());
+//    }
 
     public Player findByName(Name name) {
         return players.stream()

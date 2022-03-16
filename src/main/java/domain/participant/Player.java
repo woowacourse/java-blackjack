@@ -7,8 +7,11 @@ import domain.result.Versus;
 
 public class Player extends Participant {
 
-    public Player(Name name, List<Card> hand) {
+    private Money money;
+
+    public Player(Name name, List<Card> hand, Money money) {
         super(name, hand);
+        this.money = money;
     }
 
     @Override
