@@ -9,7 +9,6 @@ public abstract class User {
 
     protected final Cards cards;
     protected final String name;
-    protected int score = 0;
 
     protected User(String name) {
         cards = new Cards();
@@ -24,11 +23,6 @@ public abstract class User {
         cards.add(deck.drawCard());
     }
 
-    public void calculate() {
-        score = cards.getScore();
-        validateNegative(score);
-    }
-
     private void validateNegative(int score) {
         if (score < 0) {
             throw new RuntimeException("점수 계산에 문제가 있습니다.");
@@ -36,7 +30,7 @@ public abstract class User {
     }
 
     public boolean isBust() {
-        return cards.isBust(score);
+        return cards.isBust(cards.getScore());
     }
 
     public abstract boolean isDealer();
@@ -45,7 +39,10 @@ public abstract class User {
 
     public abstract boolean isDrawable();
 
-    public int getScore() {
+    public int calculateScore() {
+        int score = cards.getScore();
+        validateNegative(score);
+
         return score;
     }
 
@@ -53,7 +50,7 @@ public abstract class User {
         return name;
     }
 
-    public int getCardCount() {
-        return cards.getCards().size();
+    public boolean isBlackJack() {
+        return ((cards.getCards().size() == 2) && cards.isSameBlackJackNumber(calculateScore()));
     }
 }
