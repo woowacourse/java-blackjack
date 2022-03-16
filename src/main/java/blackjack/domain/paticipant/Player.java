@@ -10,17 +10,17 @@ public class Player extends AbstractParticipant {
 
     private final int betMoney;
 
-    private Player(final String name, final int betMoney, final BlackjackGameState gameState) {
+    private Player(final Name name, final int betMoney, final BlackjackGameState gameState) {
         super(name, gameState);
         checkNotPositiveBetMoney(betMoney);
         this.betMoney = betMoney;
     }
 
-    public Player(final String name, final int betMoney, final Cards cards) {
+    public Player(final Name name, final int betMoney, final Cards cards) {
         this(name, betMoney, new PlayerRunning(cards));
     }
 
-    public static Player createPlayer(final String name, final int betMoney, final CardDeck cardDeck) {
+    public static Player createPlayer(final Name name, final int betMoney, final CardDeck cardDeck) {
         final Cards cards = new Cards(List.of(cardDeck.provideCard(), cardDeck.provideCard()));
         return new Player(name, betMoney, cards);
     }

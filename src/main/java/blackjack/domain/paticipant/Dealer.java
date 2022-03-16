@@ -11,7 +11,7 @@ public class Dealer extends AbstractParticipant {
     private static final String DEALER_NAME = "딜러";
 
     public Dealer(final Cards cards) {
-        super(DEALER_NAME, DealerRunning.createDealerGameState(cards));
+        super(new Name(DEALER_NAME), DealerRunning.createDealerGameState(cards));
     }
 
     public Dealer(final CardDeck cardDeck) {

@@ -13,6 +13,7 @@ import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
@@ -27,17 +28,10 @@ class PlayersTest {
     @Test
     void 생성_시_중복이름_예외발생() {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
-        final List<String> names = Arrays.asList("name", "name");
-
-        assertThatThrownBy(() -> Players.createPlayer(names, text -> 1000, cardDeck))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름 간에 중복이 있으면 안됩니다.");
-    }
-
-    @Test
-    void 생성_시_공백이름_예외발생() {
-        final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
-        final List<String> names = Arrays.asList(" ", " ");
+        final List<Name> names = Arrays.asList("name", "name")
+                .stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
 
         assertThatThrownBy(() -> Players.createPlayer(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -47,7 +41,7 @@ class PlayersTest {
     @Test
     void 생성_시_유저가_없는_경우_예외발생() {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
-        final List<String> names = new ArrayList<>();
+        final List<Name> names = new ArrayList<>();
 
         assertThatThrownBy(() -> Players.createPlayer(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -57,7 +51,7 @@ class PlayersTest {
     @Test
     void 모든_턴이_종료될_때_hit_하는_경우_예외발생() {
         final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Player player = new Player("name", 1000, cards);
+        final Player player = new Player(new Name("name"), 1000, cards);
         final Players players = new Players(List.of(player));
         players.hitCurrentTurnPlayer(Card.of(SPADES, JACK));
 
@@ -69,7 +63,7 @@ class PlayersTest {
     @Test
     void 모든_턴이_종료될_때_stay_하는_경우_예외발생() {
         final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Player player = new Player("name", 1000, cards);
+        final Player player = new Player(new Name("name"), 1000, cards);
         final Players players = new Players(List.of(player));
         players.stayCurrentTurnPlayer();
 

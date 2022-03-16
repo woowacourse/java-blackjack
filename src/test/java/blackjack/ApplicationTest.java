@@ -34,7 +34,7 @@ public class ApplicationTest extends NsTest {
     @Test
     void 중복된_사람_이름에_대한_예외_처리() {
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("ori, ori", "1000", "1000"))
+                assertThatThrownBy(() -> runException("ori, ori"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }

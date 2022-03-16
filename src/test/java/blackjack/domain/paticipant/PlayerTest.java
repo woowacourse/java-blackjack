@@ -38,14 +38,14 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -1000})
     void 배팅금액이_0이하인_경우_예외발생(final int betMoney) {
-        assertThatThrownBy(() -> new Player("name", betMoney, cards))
+        assertThatThrownBy(() -> new Player(new Name("name"), betMoney, cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅금액은 0이하의 값이 들어올 수 없습니다.");
     }
 
     @Test
     void 게임상태가_null인_경우_예외발생() {
-        assertThatThrownBy(() -> new Player("name", 1000, null))
+        assertThatThrownBy(() -> new Player(new Name("name"), 1000, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("cards는 null이 들어올 수 없습니다.");
     }
@@ -53,7 +53,7 @@ class PlayerTest {
     @Test
     void 카드를_받아_유저_생성() {
         final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
-        final Player player = new Player("name", 1000, cards);
+        final Player player = new Player(new Name("name"), 1000, cards);
 
         assertThat(player).isInstanceOf(Player.class);
     }

@@ -19,7 +19,7 @@ public class Players {
         checkPlayersSize(this.players);
     }
 
-    public static Players createPlayer(final List<String> names, final Function<String, Integer> betMoney,
+    public static Players createPlayer(final List<Name> names, final Function<Name, Integer> betMoney,
                                        final CardDeck cardDeck) {
         checkDuplicationNames(names);
         return new Players(
@@ -34,14 +34,15 @@ public class Players {
         }
     }
 
-    private static void checkDuplicationNames(final List<String> playerNames) {
+    private static void checkDuplicationNames(final List<Name> playerNames) {
         if (calculateDistinctCount(playerNames) != playerNames.size()) {
             throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
         }
     }
 
-    private static int calculateDistinctCount(final List<String> playerNames) {
+    private static int calculateDistinctCount(final List<Name> playerNames) {
         return (int) playerNames.stream()
+                .map(Name::getName)
                 .distinct()
                 .count();
     }

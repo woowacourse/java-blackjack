@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.paticipant.Name;
 import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +25,8 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static int inputPlayerBetMoney(final String name) {
-        System.out.printf(INPUT_PLAYER_BET_MONEY_MESSAGE, name);
+    public static int inputPlayerBetMoney(final Name name) {
+        System.out.printf(INPUT_PLAYER_BET_MONEY_MESSAGE, name.getName());
         return Integer.parseInt(Console.readLine());
     }
 
