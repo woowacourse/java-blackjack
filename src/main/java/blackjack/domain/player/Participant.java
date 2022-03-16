@@ -17,7 +17,7 @@ public class Participant extends Player {
     }
 
     private boolean isUnderMaxScore() {
-        return cards.calculateScore() <= Judge.MAX_SCORE;
+        return cards.calculateDefaultScore() <= Judge.MAX_SCORE;
     }
 
     private boolean acceptCard() {

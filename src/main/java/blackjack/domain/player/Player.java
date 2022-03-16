@@ -25,7 +25,7 @@ public abstract class Player {
     public abstract boolean acceptableCard();
 
     public int calculateFinalScore() {
-        return cards.calculateFinalScore();
+        return cards.calculateEndScore();
     }
 
     public void addCard(final Card card) {

@@ -43,7 +43,7 @@ public class CardsTest {
         cards.addCard(new Card(Type.DIAMOND, Score.TWO));
         cards.addCard(new Card(Type.CLOVER, Score.THREE));
 
-        assertThat(cards.calculateFinalScore()).isEqualTo(16);
+        assertThat(cards.calculateEndScore()).isEqualTo(16);
     }
 
 
@@ -56,7 +56,7 @@ public class CardsTest {
             cards.addCard(card);
         }
 
-        Assertions.assertThat(cards.calculateFinalScore()).isEqualTo(score);
+        Assertions.assertThat(cards.calculateEndScore()).isEqualTo(score);
     }
 
     private static Stream<Arguments> cardOverMaxScore() {
@@ -83,7 +83,7 @@ public class CardsTest {
             cards.addCard(card);
         }
 
-        Assertions.assertThat(cards.calculateFinalScore()).isEqualTo(score);
+        Assertions.assertThat(cards.calculateEndScore()).isEqualTo(score);
     }
 
     private static Stream<Arguments> containsAce() {

@@ -26,19 +26,19 @@ public class Cards {
         }
     }
 
-    public int calculateFinalScore() {
-        final int score = calculateScoreByAceEleven();
+    public int calculateEndScore() {
+        final int score = calculateExpandScore();
         if (score <= Judge.MAX_SCORE) {
             return score;
         }
-        return calculateScore();
+        return calculateDefaultScore();
     }
 
-    public int calculateScoreByAceEleven() {
+    private int calculateExpandScore() {
         if (containsAce()) {
-            return calculateScore() + ANOTHER_ACE_SCORE;
+            return calculateDefaultScore() + ANOTHER_ACE_SCORE;
         }
-        return calculateScore();
+        return calculateDefaultScore();
     }
 
     private boolean containsAce() {
@@ -46,7 +46,7 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    public int calculateScore() {
+    public int calculateDefaultScore() {
         return cards.stream()
                 .mapToInt(card -> card.getScore().getAmount())
                 .sum();
