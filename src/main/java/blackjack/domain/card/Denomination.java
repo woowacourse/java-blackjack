@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,13 +36,13 @@ public enum Denomination {
         return calculateScore(denominationsToCards(cards));
     }
 
-    private static Set<Denomination> denominationsToCards(final Set<Card> cards) {
+    private static List<Denomination> denominationsToCards(final Set<Card> cards) {
         return cards.stream()
                 .map(Card::getDenomination)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
-    private static int calculateScore(final Set<Denomination> numbers) {
+    private static int calculateScore(final List<Denomination> numbers) {
         final int bonusMaxScore = calculateAceCount(numbers) * ACE_BONUS_VALUE;
         final int defaultScore = sumDefaultScore(numbers);
         final int startScore = defaultScore + bonusMaxScore;
@@ -49,19 +50,19 @@ public enum Denomination {
         return calculateScore(numbers, defaultScore, startScore);
     }
 
-    private static int calculateAceCount(final Set<Denomination> denominations) {
+    private static int calculateAceCount(final List<Denomination> denominations) {
         return (int) denominations.stream()
                 .filter(denomination -> denomination == A)
                 .count();
     }
 
-    private static int sumDefaultScore(final Set<Denomination> numbers) {
+    private static int sumDefaultScore(final List<Denomination> numbers) {
         return numbers.stream()
                 .mapToInt(number -> number.defaultValue)
                 .sum();
     }
 
-    private static int calculateScore(final Set<Denomination> numbers, final int defaultScore, final int startScore) {
+    private static int calculateScore(final List<Denomination> numbers, final int defaultScore, final int startScore) {
         return IntStream.range(0, calculateAceCount(numbers))
                 .map(aceCount -> decreaseByAceCount(startScore, aceCount))
                 .filter(Denomination::isLowerThanBlackjackTargetNumber)
@@ -81,14 +82,14 @@ public enum Denomination {
         return calculateMaxScore(denominationsToCards(cards));
     }
 
-    private static int calculateMaxScore(final Set<Denomination> denominations) {
+    private static int calculateMaxScore(final List<Denomination> denominations) {
         final int defaultScore = calculateDefaultScore(denominations);
 
         final int bonusMaxScore = calculateAceCount(denominations) * ACE_BONUS_VALUE;
         return defaultScore + bonusMaxScore;
     }
 
-    private static int calculateDefaultScore(final Set<Denomination> denominations) {
+    private static int calculateDefaultScore(final List<Denomination> denominations) {
         return denominations.stream()
                 .mapToInt(denomination -> denomination.defaultValue)
                 .sum();
