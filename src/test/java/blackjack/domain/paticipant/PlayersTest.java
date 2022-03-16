@@ -56,4 +56,16 @@ class PlayersTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }
+
+    @Test
+    void 모든_턴이_종료될_때_stay_하는_경우_예외발생() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Player player = new Player("name", 1000, cards);
+        final Players players = new Players(List.of(player));
+        players.stayCurrentTurnPlayer();
+
+        assertThatThrownBy(() -> players.stayCurrentTurnPlayer())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("모든 턴이 종료되었습니다.");
+    }
 }

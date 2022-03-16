@@ -53,14 +53,24 @@ public class Players {
     }
 
     public Player currentTurnPlayer() {
+        checkAllTurnEnd();
+        return players.get(currentPlayerTurnIndex);
+    }
+
+    private void checkAllTurnEnd() {
         if (isAllTurnEnd()) {
             throw new IllegalStateException("모든 턴이 종료되었습니다.");
         }
-        return players.get(currentPlayerTurnIndex);
     }
 
     private boolean isAllTurnEnd() {
         return players.size() <= currentPlayerTurnIndex;
+    }
+
+    public void stayCurrentTurnPlayer() {
+        checkAllTurnEnd();
+        currentTurnPlayer().stay();
+        currentPlayerTurnIndex++;
     }
 
     public int dealerProfit(final Dealer dealer) {
