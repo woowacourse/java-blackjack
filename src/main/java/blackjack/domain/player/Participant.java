@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 public class Participant extends AbstractPlayer implements Player {
 
-    private static final int MAX_SCORE = 21;
-
     public Participant(Name name) {
         this.name = name;
         this.playerCards = new PlayerCards(new ArrayList<>());

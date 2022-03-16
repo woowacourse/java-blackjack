@@ -68,10 +68,6 @@ public class Players {
         }
     }
 
-    public List<Player> get() {
-        return players;
-    }
-
     public Player getDealer() {
         return players.stream()
                 .filter(Player::isDealer)
