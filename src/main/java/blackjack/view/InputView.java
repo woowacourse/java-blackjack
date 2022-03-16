@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import static blackjack.constant.Command.NOT_FOUND_COMMAND_EXCEPTION_MESSAGE;
 import static java.lang.System.out;
 
 import blackjack.constant.Command;
@@ -24,6 +23,6 @@ public class InputView {
 
     public static Command inputOneMoreCard(Player player) {
         out.printf(INPUT_ONE_MORE_CARD_MESSAGE, player.getName());
-        return Command.of(SCANNER.nextLine()).orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND_EXCEPTION_MESSAGE));
+        return Command.of(SCANNER.nextLine());
     }
 }

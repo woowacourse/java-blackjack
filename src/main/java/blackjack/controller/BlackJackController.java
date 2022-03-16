@@ -12,13 +12,15 @@ import java.util.List;
 
 public class BlackJackController {
 
+    private static final String COMMA_DELIMINATOR = ",";
+
     private BlackJackController() {
     }
 
     public static List<Player> createPlayers() {
         List<Player> players = new ArrayList<>();
         String participantsNames = InputView.inputParticipantsNames();
-        for (String participantName : participantsNames.split(",")) {
+        for (String participantName : participantsNames.split(COMMA_DELIMINATOR)) {
             players.add(new Player(participantName));
         }
         return players;

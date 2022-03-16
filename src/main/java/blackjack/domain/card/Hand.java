@@ -14,7 +14,7 @@ public class Hand {
     private static final int ACE_LOWER_SCORE = 1;
     private static final int ACE_SCORE_DIFFERENCE = ACE_UPPER_SCORE - ACE_LOWER_SCORE;
 
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public void addAll(Card... cards) {
         this.cards.addAll(List.of(cards));
