@@ -85,4 +85,15 @@ class StandTest {
 
         assertThat(stand.earningRate(compareStand)).isEqualTo(1);
     }
+
+    @Test
+    void 상대보다_스코어가_작으면_수익률이_마이너스1() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Stand stand = new Stand(cards);
+
+        final Cards standCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, A)));
+        final Stand compareStand = new Stand(standCards);
+
+        assertThat(stand.earningRate(compareStand)).isEqualTo(-1);
+    }
 }
