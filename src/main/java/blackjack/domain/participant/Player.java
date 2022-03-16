@@ -23,4 +23,9 @@ public class Player extends AbstractParticipant {
     public List<Card> showFirstCards() {
         return Collections.unmodifiableList(getCards());
     }
+
+    @Override
+    public boolean canDraw() {
+        return !isBust();
+    }
 }

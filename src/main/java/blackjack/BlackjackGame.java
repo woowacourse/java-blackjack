@@ -1,10 +1,11 @@
 package blackjack;
 
+import blackjack.domain.DrawCallback;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.CardStrategy;
 import blackjack.domain.card.strategy.RandomCardStrategy;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.MatchResult;
 import blackjack.dto.MatchResultDto;
@@ -53,27 +54,35 @@ public class BlackjackGame {
     }
 
     private void proceedDealerTurn(final Deck deck, final Dealer dealer) {
-        while (dealer.shouldDraw()) {
-            dealer.drawCard(deck);
-            outputView.printMessageOfDealerDrawCard();
-        }
+        dealer.hitOrStand(deck, new DrawCallback() {
+            @Override
+            public boolean canContinue(final String dealerName) {
+                return true;
+            }
+
+            @Override
+            public void onUpdate(final String dealerName, final List<Card> cards) {
+                outputView.printCards(dealerName, cards);
+            }
+        });
     }
 
     private void proceedPlayersTurn(final Deck deck, final Players players) {
-        for (Player player : players.getStatuses()) {
-            takeTurn(deck, player);
-        }
+        players.takeTurn(deck, new DrawCallback() {
+            @Override
+            public boolean canContinue(final String playerName) {
+                return requestContinue(playerName);
+            }
+
+            @Override
+            public void onUpdate(final String playerName, final List<Card> cards) {
+                outputView.printCards(playerName, cards);
+            }
+        });
     }
 
-    private void takeTurn(Deck deck, Player player) {
-        while (!player.isBust() && requestContinue(player)) {
-            player.drawCard(deck);
-            outputView.printDistributedCards(ParticipantDto.toOpenAllCards(player));
-        }
-    }
-
-    private boolean requestContinue(final Player player) {
-        outputView.printMessageOfRequestContinuable(player);
+    private boolean requestContinue(final String playerName) {
+        outputView.printMessageOfRequestContinuable(playerName);
         return inputView.requestContinuable();
     }
 

@@ -56,8 +56,8 @@ public class OutputView {
         printMessage(playerName + ": " + cardDetails);
     }
 
-    public void printMessageOfRequestContinuable(final Player player) {
-        printMessage(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public void printMessageOfRequestContinuable(final String playerName) {
+        printMessage(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
     public void printMessageOfDealerDrawCard() {
@@ -86,5 +86,16 @@ public class OutputView {
             playerCardDetails.add(card.getCardName());
         }
         return String.join(", ", playerCardDetails);
+    }
+
+    public void printDistributedCards(Player player) {
+        printMessage(player.getName() + ": " + player.getCards());
+    }
+
+    public void printCards(String playerName, List<Card> cards) {
+        String cardNames = cards.stream()
+                .map(Card::getCardName)
+                .collect(Collectors.joining(", "));
+        printMessage(playerName + ": " + cardNames);
     }
 }

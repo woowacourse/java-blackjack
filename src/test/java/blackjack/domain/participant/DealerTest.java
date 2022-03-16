@@ -37,7 +37,7 @@ class DealerTest {
         Deck deck = new Deck(initializedCards);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
-        assertThat(dealer.shouldDraw()).isEqualTo(drawable);
+        assertThat(dealer.canDraw()).isEqualTo(drawable);
     }
 
     private static Stream<Arguments> provideForStartWithDrawCardTest() {

@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.DrawCallback;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.Score;
@@ -26,8 +27,20 @@ public abstract class AbstractParticipant implements Participant {
 
     public abstract List<Card> showFirstCards();
 
+    public abstract boolean canDraw();
+
+    @Override
     public void drawCard(final Deck deck) {
         cards.add(deck.drawCard());
+    }
+
+    @Override
+    public void hitOrStand(Deck deck, DrawCallback callback) {
+        while (canDraw() && callback.canContinue(name)) {
+            drawCard(deck);
+
+            callback.onUpdate(name, cards);
+        }
     }
 
     @Override

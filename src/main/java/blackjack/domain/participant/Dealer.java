@@ -25,12 +25,13 @@ public class Dealer extends AbstractParticipant {
         return dealer;
     }
 
-    public boolean shouldDraw() {
-        return calculateScore().isBelow(new Score(DEALER_MIN_SCORE));
-    }
-
     public PlayerResult judgeWinner(final Player player) {
         return PlayerResult.of(player, this);
+    }
+
+    @Override
+    public boolean canDraw() {
+        return calculateScore().isBelow(new Score(DEALER_MIN_SCORE));
     }
 
     @Override

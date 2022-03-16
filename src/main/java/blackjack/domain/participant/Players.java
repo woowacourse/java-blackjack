@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.DrawCallback;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.PlayerResult;
@@ -29,6 +30,12 @@ public class Players {
         Players players = new Players(names);
         players.distributeCards(deck);
         return players;
+    }
+
+    public void takeTurn(Deck deck, DrawCallback callback) {
+        for (Player player : players) {
+            player.hitOrStand(deck, callback);
+        }
     }
 
     public MatchResult judgeWinners(Dealer dealer) {
