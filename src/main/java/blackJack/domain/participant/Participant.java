@@ -17,6 +17,8 @@ public abstract class Participant {
     }
 
     public Participant(String name, Cards cards) {
+        Objects.requireNonNull(name, "이름의 값이 null 입니다.");
+        Objects.requireNonNull(cards, "카드들의 값이 null 입니다.");
         validateName(name);
         this.name = name;
         this.cards = cards;
