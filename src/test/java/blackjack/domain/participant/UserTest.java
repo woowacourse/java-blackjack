@@ -95,7 +95,7 @@ public class UserTest {
         user.receiveCard(new Card(CardNumber.QUEEN, CardType.HEART));
         user.receiveCard(new Card(CardNumber.QUEEN, CardType.DIAMOND));
 
-        assertThat(user.getHoldingCards().checkBust()).isTrue();
+        assertThat(user.isBust()).isTrue();
     }
 
     @Test
@@ -106,6 +106,6 @@ public class UserTest {
         user.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
         user.receiveCard(new Card(CardNumber.ACE, CardType.DIAMOND));
 
-        assertThat(user.getHoldingCards().checkBust()).isFalse();
+        assertThat(user.isBust()).isFalse();
     }
 }

@@ -9,14 +9,6 @@ public class User extends Participant {
         super(name);
     }
 
-    public ParticipantDto getUserInfo() {
-        return ParticipantDto.of(name, holdingCards.getAllCards());
-    }
-
-    public ParticipantDto getUserInfoWithScore() {
-        return ParticipantDto.of(name, holdingCards.getAllCards(), holdingCards.cardSum());
-    }
-
     public UserResult getUserInfoWithResult(int dealerSum) {
         return new UserResult(name, checkResult(dealerSum));
     }

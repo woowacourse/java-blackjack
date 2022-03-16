@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldingCards;
 
+import java.util.List;
+
 public abstract class Participant {
 
     private static final String ERROR_INVALID_NAME = "[ERROR] 유저의 이름은 한 글자 이상이어야 합니다.";
@@ -22,12 +24,20 @@ public abstract class Participant {
         }
     }
 
+    public boolean isBust() {
+        return holdingCards.isBust();
+    }
+
     public void receiveCard(Card card) {
         holdingCards.addCard(card);
     }
 
-    public HoldingCards getHoldingCards() {
-        return holdingCards;
+    public int getScore() {
+        return holdingCards.cardSum();
+    }
+
+    public List<Card> getHoldingCards() {
+        return holdingCards.getAllCards();
     }
 
     public String getName() {

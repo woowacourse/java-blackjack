@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.participant.User;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -26,8 +24,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean inputMoreCard(User user) {
-        System.out.printf(INPUT_MORE_CARD_FORMAT, user.getName());
+    public static boolean inputMoreCard(String userName) {
+        System.out.printf(INPUT_MORE_CARD_FORMAT, userName);
         return isContinue(scanner.nextLine());
     }
 

@@ -32,7 +32,7 @@ public enum OriginCardNumber {
     public static String getOriginalName(CardNumber cardNumber) {
         return Arrays.stream(values())
                 .filter(c -> c.getCardNumber() == cardNumber)
-                .map(OriginCardNumber::getname)
+                .map(OriginCardNumber::getName)
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }
@@ -41,7 +41,7 @@ public enum OriginCardNumber {
         return cardNumber;
     }
 
-    private String getname() {
+    private String getName() {
         return name;
     }
 }

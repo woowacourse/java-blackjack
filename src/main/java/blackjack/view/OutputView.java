@@ -1,16 +1,16 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.ParticipantDto;
-import blackjack.domain.participant.Users;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.Result;
 import blackjack.domain.result.UserResult;
+import blackjack.dto.ParticipantDto;
 import blackjack.view.cardview.OriginCardNumber;
 import blackjack.view.cardview.OriginalCardType;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.lang.System.lineSeparator;
 
@@ -25,8 +25,16 @@ public class OutputView {
     private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
     private static final String USER_RESULT_FORMAT = "%s: %s";
 
-    public static void printInitDistribute(Users users) {
-        System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT + lineSeparator(), String.join(CARD_SEPARATOR, users.getUserNames()));
+    public static void printInitDistribute(List<ParticipantDto> participantDtos) {
+        System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT + lineSeparator(),
+                participantDtos.stream()
+                        .map(ParticipantDto::getName)
+                        .collect(Collectors.joining(CARD_SEPARATOR)));
+
+        for (ParticipantDto participantDto : participantDtos) {
+            printParticipantCards(participantDto);
+        }
+        System.out.print(lineSeparator());
     }
 
     public static void printParticipantCards(ParticipantDto participant) {
@@ -48,10 +56,9 @@ public class OutputView {
         System.out.println(lineSeparator() + MORE_DEALER_DRAW_CARD);
     }
 
-    public static void printFinalCard(ParticipantDto dealer, List<ParticipantDto> users) {
-        printParticipantCardsWithScore(dealer);
-        for (ParticipantDto user : users) {
-            printParticipantCardsWithScore(user);
+    public static void printFinalCard(List<ParticipantDto> participantDtos) {
+        for (ParticipantDto participantDto : participantDtos) {
+            printParticipantCardsWithScore(participantDto);
         }
     }
 
@@ -77,9 +84,5 @@ public class OutputView {
 
     private static void printUserResult(UserResult userResult) {
         System.out.printf(USER_RESULT_FORMAT + lineSeparator(), userResult.getName(), userResult.getResult().getName());
-    }
-
-    public static void printLineSeparators() {
-        System.out.print(lineSeparator());
     }
 }

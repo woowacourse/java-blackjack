@@ -20,7 +20,7 @@ public class HoldingCards {
         cards.add(card);
     }
 
-    public boolean checkBust() {
+    public boolean isBust() {
         return cardSum() > BUST_STANDARD;
     }
 
@@ -52,6 +52,7 @@ public class HoldingCards {
     }
 
     public List<Card> getAllCards() {
+        // 복사하여 반환하도록 변경
         return Collections.unmodifiableList(cards);
     }
 

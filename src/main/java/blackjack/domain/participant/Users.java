@@ -4,6 +4,7 @@ import blackjack.domain.result.UserResult;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class Users {
@@ -22,14 +23,15 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(users);
+    public User getUserByName(String name) {
+        return users.stream()
+                .filter(user -> user.getName().equals(name))
+                .findAny()
+                .orElseThrow(NoSuchElementException::new);
     }
 
-    public List<ParticipantDto> getUsersInfoWithScore() {
-        return users.stream()
-                .map(User::getUserInfoWithScore)
-                .collect(Collectors.toList());
+    public List<User> getUsers() {
+        return Collections.unmodifiableList(users);
     }
 
     public List<UserResult> getUsersInfoWithResult(int dealerSum) {
