@@ -3,10 +3,7 @@ package blackjack.domain.User;
 import blackjack.domain.Card.Deck;
 import blackjack.domain.PlayerResult;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Players {
     private final List<Player> players;
@@ -31,11 +28,10 @@ public class Players {
         return new ArrayList<>(players);
     }
 
-    public Map<String, String> getStatistics(Dealer dealer) {
-        Map<String, String> result = new HashMap<>();
+    public Map<Player, PlayerResult> getStatistics(Dealer dealer) {
+        Map<Player, PlayerResult> result = new LinkedHashMap<>();
         for (Player player : players) {
-            PlayerResult compare = PlayerResult.valueOf(dealer, player);
-            result.put(player.getName(), compare.getValue());
+            result.put(player, PlayerResult.valueOf(dealer, player));
         }
         return result;
     }

@@ -12,6 +12,10 @@ public class Player extends User {
         this.betting = betting;
     }
 
+    public Betting getBetting() {
+        return betting;
+    }
+
     @Override
     public void hit(Deck deck) {
         cards.add(deck.drawOneCard());

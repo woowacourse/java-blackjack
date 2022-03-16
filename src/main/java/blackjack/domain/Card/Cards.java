@@ -1,6 +1,7 @@
 package blackjack.domain.Card;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,15 +14,15 @@ public class Cards {
     private final Set<Card> cards;
 
     public Cards(List<Card> deck) {
-        this(new HashSet<>(deck));
+        this(new LinkedHashSet<>(deck));
     }
 
     private Cards(Set<Card> deck) {
-        this.cards = new HashSet<>(deck);
+        this.cards = new LinkedHashSet<>(deck);
     }
 
     public Set<Card> getCards() {
-        return new HashSet<>(cards);
+        return new LinkedHashSet<>(cards);
     }
 
     public void add(Card card) {

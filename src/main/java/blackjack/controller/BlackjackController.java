@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.Card.Deck;
+import blackjack.domain.PlayerResult;
+import blackjack.domain.Settlement;
 import blackjack.domain.User.Betting;
 import blackjack.domain.User.Dealer;
 import blackjack.domain.User.Player;
@@ -30,8 +32,9 @@ public class BlackjackController {
 
         OutputView.printTotalResult(playGame(dealer, players, deck));
 
-        Map<String, String> statistics = players.getStatistics(dealer);
-        OutputView.printFinalResult(PlayerResultsDto.from(statistics), DealerResultDto.from(statistics));
+        Map<Player, PlayerResult> statistics = players.getStatistics(dealer);
+        Map<String, Double> calculate = Settlement.calculate(statistics);
+        OutputView.printFinalResult(calculate);
     }
 
     private List<Betting> startBettings(List<String> inputPlayerNames) {

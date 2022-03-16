@@ -28,10 +28,6 @@ public enum PlayerResult {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 결과를 찾을 수 없습니다."));
     }
 
-    public String getValue() {
-        return value;
-    }
-
     private static boolean isAllBlackJack(Dealer dealer, Player player) {
         return dealer.isBlackJack() && player.isBlackJack();
     }

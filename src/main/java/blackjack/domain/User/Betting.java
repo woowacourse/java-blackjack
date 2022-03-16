@@ -2,6 +2,7 @@ package blackjack.domain.User;
 
 public class Betting {
     private static final int MIN_MONEY_VALUE = 0;
+    private static final double BLACK_JACK_MUL = 1.5;
 
     private final int amount;
 
@@ -16,9 +17,24 @@ public class Betting {
         }
     }
 
+    public double getBlackJackRevenue() {
+        return amount * BLACK_JACK_MUL - amount;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
     public static Betting from(int amount) {
         return new Betting(amount);
     }
 
 
+    public double getLoseRevenue() {
+        return -amount;
+    }
+
+    public double getDrawRevenue() {
+        return 0;
+    }
 }
