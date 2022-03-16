@@ -24,7 +24,7 @@ public enum Outcome {
         if (player.isBust() || !player.isBlackjack() && dealer.isBlackjack()) {
             return Outcome.LOSE;
         }
-        if (dealer.isBust() || player.isBlackjack() && !dealer.isBlackjack()) {
+        if (dealer.isBust()) {
             return Outcome.WIN;
         }
         if (player.isBlackjack() && dealer.isBlackjack()) {
