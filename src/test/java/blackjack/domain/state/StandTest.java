@@ -22,4 +22,14 @@ class StandTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("Finish상태는 hit할 수 없습니다.");
     }
+
+    @Test
+    void stand상태에서_stay하는_경우_예외발생() {
+        final Set<Card> cards = Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN));
+        final Stand stand = new Stand(new Cards(cards));
+
+        assertThatThrownBy(() -> stand.stay())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Finish상태는 stay할 수 없습니다.");
+    }
 }
