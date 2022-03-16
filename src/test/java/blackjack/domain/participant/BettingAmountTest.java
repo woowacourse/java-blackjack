@@ -17,9 +17,9 @@ class BettingAmountTest {
     }
 
     @ParameterizedTest
-    @ValueSource(longs = {999L, 1000_001L})
+    @ValueSource(longs = {999L, 1000_001L, -1000L})
     @DisplayName("생성 실패")
-    public void creat2(long amount) {
+    public void create2(long amount) {
         assertThatThrownBy(() -> new BettingAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
