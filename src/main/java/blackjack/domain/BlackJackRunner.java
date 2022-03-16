@@ -3,13 +3,16 @@ package blackjack.domain;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.BlackJackResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackRunner {
 
@@ -45,8 +48,17 @@ public class BlackJackRunner {
     private static Gamers toGamers() {
         List<String> names = InputView.requestPlayerName();
         return new Gamers(names.stream()
-                .map(Gamer::new)
+                .map(name -> new Gamer(name, toBet(name)))
                 .collect(toList()));
+    }
+
+    private static Bet toBet(final String name) {
+        try {
+            return new Bet(InputView.requestBettingMoney(name));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return toBet(name);
+        }
     }
 
     private static void dealsCard() {
@@ -77,17 +89,18 @@ public class BlackJackRunner {
     }
 
     private static void progressDealerAdditionalCard(final Player dealer) {
-        boolean receivable = dealer.isSatisfyReceiveCondition();
-        OutputView.printDealerReceive(receivable);
-        if (receivable) {
+        while (dealer.isSatisfyReceiveCondition()) {
+            OutputView.printDealerReceive();
             dealer.receiveCard(deck.draw());
         }
+        OutputView.printDealerNotReceive();
     }
 
     private static void payOuts() {
         OutputView.printFinalResult(blackJackGame.getDealer(), blackJackGame.getGamers());
-        OutputView.printFinalResultBoard(blackJackGame.calculateDealerResultBoard(),
-                blackJackGame.calculateResultBoard());
+        BlackJackResult blackJackResult = blackJackGame.calculateBlackJackResult();
+        Map<Gamer, Integer> gamerReturns = blackJackResult.calculateGamerReturn();
+        OutputView.printFinalResultBoard(blackJackResult.calculateDealerReturn(gamerReturns), gamerReturns);
     }
 
 }

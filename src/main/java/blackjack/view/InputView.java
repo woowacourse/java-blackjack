@@ -14,6 +14,7 @@ public class InputView {
     private static final String INPUT_BLANK = " ";
     private static final String INPUT_NOT_BLANK = "";
     private static final String REQUEST_PLAYER_ANSWER_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
+    private static final String REQUEST_PLAYER_BETTING_MESSAGE = "%s의 배팅 금액은?\n";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -29,6 +30,14 @@ public class InputView {
         return name.replaceAll(INPUT_BLANK, INPUT_NOT_BLANK);
     }
 
+    public static int requestBettingMoney(final String name) {
+        System.out.printf(REQUEST_PLAYER_BETTING_MESSAGE, name);
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("[ERROR] 베팅금은 숫자만 입력 가능합니다.");
+        }
+    }
 
     public static String requestAnswer(final String name) {
         System.out.printf(REQUEST_PLAYER_ANSWER_MESSAGE, name);

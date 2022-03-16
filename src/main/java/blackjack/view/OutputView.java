@@ -2,7 +2,6 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
@@ -17,10 +16,9 @@ public class OutputView {
     private static final String PRINT_JOINING_DELIMITER = ", ";
     private static final String PRINT_DEFAULT_FORMAT_MESSAGE = "%s: %s\n";
     private static final String PRINT_SHOW_CARD_FORMAT_MESSAGE = "%s카드: %s\n";
-    private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
+    private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.\n";
     private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
-    private static final String PRINT_BLANK = " ";
 
     public static void printOpenCards(final Player dealer, final List<Gamer> gamers) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -63,11 +61,11 @@ public class OutputView {
                 joinCards(gamer.showCards()));
     }
 
-    public static void printDealerReceive(final boolean receivable) {
-        if (receivable) {
-            System.out.println(PRINT_DEALER_RECEIVE_CARD);
-            return;
-        }
+    public static void printDealerReceive() {
+        System.out.println(PRINT_DEALER_RECEIVE_CARD);
+    }
+
+    public static void printDealerNotReceive() {
         System.out.println(PRINT_DEALER_NOT_RECEIVE_CARD);
     }
 
@@ -83,24 +81,14 @@ public class OutputView {
                 player.calculateResult());
     }
 
-    public static void printFinalResultBoard(final Map<Result, Integer> dealerResultBoard, final Map<Player, Result> gamerResultBoard) {
+    public static void printFinalResultBoard(final int dealerResult,
+                                             final Map<Gamer, Integer> gamerReturns) {
         System.out.println("\n## 최종 승패");
         System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
-                joinDealerString(dealerResultBoard));
-        gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
+                dealerResult);
+        gamerReturns.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
                 key.getName(),
-                value.getResult()));
-    }
-
-    private static String joinDealerString(final Map<Result, Integer> dealerResultBoard) {
-        return dealerResultBoard.entrySet().stream()
-                .map(board -> dealerResultToString(board.getKey(),
-                        board.getValue()))
-                .collect(joining(PRINT_BLANK));
-    }
-
-    private static String dealerResultToString(final Result result, final int value) {
-        return value + result.getResult();
+                value));
     }
 
     public static void printErrorMessage(final String message) {

@@ -19,7 +19,7 @@ public class GamerTest {
     @Test
     @DisplayName("이름이 공백인 경우 예외를 발생시킨다.")
     void createGamerExceptionNameEmpty() {
-        assertThatThrownBy(() -> new Gamer(""))
+        assertThatThrownBy(() -> new Gamer("", new Bet(1000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] Gamer의 이름은 공백일 수 없습니다.");
     }
@@ -27,7 +27,7 @@ public class GamerTest {
     @Test
     @DisplayName("이름이 딜러인경우 예외를 발생시킨다.")
     void createGamerExceptionNameDealer() {
-        assertThatThrownBy(() -> new Gamer("딜러"))
+        assertThatThrownBy(() -> new Gamer("딜러", new Bet(1000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] Gamer의 이름은 딜러일 수 없습니다.");
     }
@@ -60,9 +60,12 @@ public class GamerTest {
     }
 
     @Test
-    @DisplayName("21이하 일 때 카드를 받을 수 있다.")
+    @DisplayName("21미만 일 때 카드를 받을 수 있다.")
     void checkReceivableConditionTrue() {
-        Gamer gamer = initGamer();
+        Gamer gamer = new Gamer("judy", new Bet(1000));
+        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        gamer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
+
         assertTrue(gamer.isSatisfyReceiveCondition());
     }
 
@@ -70,21 +73,18 @@ public class GamerTest {
     @DisplayName("21이상 일 때 카드를 받을 수 없다.")
     void checkReceivableConditionFalse() {
         Gamer gamer = initGamer();
-        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
-        gamer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
-
         assertFalse(gamer.isSatisfyReceiveCondition());
     }
 
     @Test
     @DisplayName("gamer가 hit한다는 응답을 받는다")
     void checkGamerAnswerHit() {
-        Gamer gamer = new Gamer("judy");
+        Gamer gamer = new Gamer("judy", new Bet(1000));
         assertTrue(gamer.isHit(Answer.YES));
     }
 
     private Gamer initGamer() {
-        Gamer gamer = new Gamer("judy");
+        Gamer gamer = new Gamer("judy", new Bet(1000));
 
         gamer.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));

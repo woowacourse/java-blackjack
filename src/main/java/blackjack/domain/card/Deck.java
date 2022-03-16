@@ -34,7 +34,7 @@ public class Deck {
     }
 
     private void checkCardSize() {
-        if (size() == NO_CARD) {
+        if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
         }
     }

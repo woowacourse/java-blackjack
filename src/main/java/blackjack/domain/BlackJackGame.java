@@ -5,14 +5,10 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
-import java.util.EnumMap;
+import blackjack.domain.result.BlackJackResult;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class BlackJackGame {
-
-    private static final int COUNT_UNIT = 1;
 
     private final Player dealer;
     private final Gamers gamers;
@@ -35,27 +31,8 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Player, Result> calculateResultBoard() {
-        return gamers.compareResult(dealer.calculateResult());
-    }
-
-    public Map<Result, Integer> calculateDealerResultBoard() {
-        Map<Result, Integer> enumMap = new EnumMap<>(Result.class);
-        for (Entry<Player, Result> gamerResultEntry : calculateResultBoard().entrySet()) {
-            Result dealerResult = convertToDealerResult(gamerResultEntry.getValue());
-            enumMap.put(dealerResult, enumMap.getOrDefault(dealerResult, 0) + COUNT_UNIT);
-        }
-        return enumMap;
-    }
-
-    private static Result convertToDealerResult(final Result result) {
-        if (result == Result.WIN) {
-            return Result.LOSE;
-        }
-        if (result == Result.LOSE) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
+    public BlackJackResult calculateBlackJackResult() {
+        return new BlackJackResult(gamers.compareResult(dealer.calculateResult()));
     }
 
     public Player getDealer() {
