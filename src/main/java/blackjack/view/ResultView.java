@@ -6,7 +6,7 @@ import blackjack.domain.player.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.Outcome;
 import blackjack.domain.OutcomeResults;
-import blackjack.domain.Results;
+import blackjack.domain.PlayerOutcomeResults;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -91,35 +91,30 @@ public class ResultView {
                 dealer.getScore());
     }
 
-    public static void printOutcomeResults(Results results) {
+    public static void printOutcomeResults(PlayerOutcomeResults results) {
         System.out.println(PRINT_OUTCOME_RESULTS_MESSAGE);
 
         OutcomeResults dealerResult = results.getDealerResult();
         printDealerOutcomeState(dealerResult);
 
-        Map<Player, OutcomeResults> outcomeResults = results.getParticipantsResults();
+        Map<Player, Outcome> outcomeResults = results.getResults();
         for (Player player : outcomeResults.keySet()) {
-            printPlayerOutcomeState(player, outcomeResults.get(player));
+            Outcome outcome = outcomeResults.get(player);
+            printPlayerOutcomeState(player, outcome);
         }
     }
 
     private static void printDealerOutcomeState(OutcomeResults outcomeResults) {
-        Map<Outcome, Integer> outcomes = outcomeResults.getOutcomes();
         System.out.print(DEALER_NAME + PRINT_RESULTS_DELIMITER);
 
-        for (Outcome outcome : outcomes.keySet()) {
-            System.out.print(outcomes.get(outcome) + outcome.get() + SPACE_DELIMITER);
+        for (Outcome outcome : Outcome.values()) {
+            System.out.print(outcomeResults.getCount(outcome) + outcome.get() + SPACE_DELIMITER);
         }
         System.out.println();
     }
 
-    private static void printPlayerOutcomeState(Player player, OutcomeResults outcomeResults) {
-        Map<Outcome, Integer> outcomes = outcomeResults.getOutcomes();
-
-        for (Outcome outcome : outcomes.keySet()) {
-            System.out.print(player.getName().get() + PRINT_RESULTS_DELIMITER + outcome.get());
-        }
-        System.out.println();
+    private static void printPlayerOutcomeState(Player player, Outcome outcome) {
+        System.out.println(player.getName().get() + PRINT_RESULTS_DELIMITER + outcome.get());
     }
 
     public static void printErrorNames(String message) {

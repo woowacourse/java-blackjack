@@ -8,11 +8,10 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.player.Name;
-import blackjack.domain.OutcomeResults;
 import blackjack.domain.player.Participant;
 import blackjack.domain.card.RandomDeck;
 import blackjack.domain.Outcome;
-import blackjack.domain.Results;
+import blackjack.domain.PlayerOutcomeResults;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.LinkedHashMap;
@@ -112,17 +111,14 @@ public class BlackjackController {
         ResultView.printOutcomeResults(calculateOutcomeResults(players));
     }
 
-    private Results calculateOutcomeResults(Players players) {
-        Map<Player, OutcomeResults> results = new LinkedHashMap<>();
+    private PlayerOutcomeResults calculateOutcomeResults(Players players) {
+        Map<Player, Outcome> results = new LinkedHashMap<>();
         Player dealer = players.getDealer();
-        results.put(dealer, new OutcomeResults());
 
         for (Player player : players.getParticipants()) {
-            Outcome outcome = Outcome.match((Dealer) dealer, player);
-            results.get(dealer).increase(outcome);
-            results.put(player, new OutcomeResults());
-            results.get(player).increase(outcome.not());
+            Outcome dealerOutcome = Outcome.matchAboutDealer((Dealer) dealer, player);
+            results.put(player, dealerOutcome.not());
         }
-        return new Results(results);
+        return new PlayerOutcomeResults(results);
     }
 }

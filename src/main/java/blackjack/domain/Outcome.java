@@ -16,7 +16,7 @@ public enum Outcome {
         this.outcome = outcome;
     }
 
-    public static Outcome match(Dealer dealer, Player player) {
+    public static Outcome matchAboutDealer(Dealer dealer, Player player) {
         if (checkWin(dealer, player)) {
             return WIN;
         }
