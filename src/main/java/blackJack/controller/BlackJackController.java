@@ -95,5 +95,6 @@ public class BlackJackController {
         final Map<Player, WinDrawLose> playersResult = blackJackGameResult.calculatePlayersResult();
         OutputView.printGameResult(dealer, players);
         OutputView.printWinDrawLoseResult(dealer, dealerResult, playersResult);
+        OutputView.printProfitResult(dealer, blackJackGameResult.calculateDealerProfit(), playersResult);
     }
 }
