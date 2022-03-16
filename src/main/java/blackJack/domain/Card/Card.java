@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Card {
     private static final int TOTAL_CARDS_SIZE = 52;
-    private static final Map<String,Card> CACHE = new ArrayList<>(TOTAL_CARDS_SIZE);
+    private static final Map<String, Card> CACHE = new HashMap<>(TOTAL_CARDS_SIZE);
 
     private final Shape shape;
     private final Number number;
