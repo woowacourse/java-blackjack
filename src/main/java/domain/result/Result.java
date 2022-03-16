@@ -16,19 +16,19 @@ public class Result {
         return playerResults.get(name);
     }
 
-    public int getDealerWinCount() {
+    public int countDealerWin() {
         return (int) playerResults.keySet().stream()
                 .filter(key -> playerResults.get(key) == Versus.LOSE)
                 .count();
     }
 
-    public int getDealerDrawCount() {
+    public int countDealerDraw() {
         return (int) playerResults.keySet().stream()
                 .filter(key -> playerResults.get(key) == Versus.DRAW)
                 .count();
     }
 
-    public int getDealerLoseCount() {
+    public int countDealerLose() {
         return (int) playerResults.keySet().stream()
                 .filter(key -> playerResults.get(key) == Versus.WIN)
                 .count();
