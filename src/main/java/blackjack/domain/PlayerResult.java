@@ -22,13 +22,13 @@ public enum PlayerResult {
         if (isAllBlackJack(dealer, player) || dealer.isSameScore(player)) {
             return PlayerResult.DRAW;
         }
-        if (isLose(dealer, player)) {
+        if (isDealerLose(dealer, player)) {
             return PlayerResult.WIN;
         }
         return PlayerResult.LOSE;
     }
 
-    private static boolean isLose(Dealer dealer, Player player) {
+    private static boolean isDealerLose(Dealer dealer, Player player) {
         return player.isBlackJack() || dealer.isBust() || (player.isGreaterScoreThan(dealer) && !player.isBust());
     }
 
