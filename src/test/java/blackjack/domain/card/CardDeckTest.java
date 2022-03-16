@@ -22,4 +22,15 @@ class CardDeckTest {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
         assertThat(cardDeck).isInstanceOf(CardDeck.class);
     }
+
+    @Test
+    void 카드가_없을_때_카드반환_요청_시_예외발생() {
+        final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
+        for (int i = 1; i <= 52; i++) {
+            cardDeck.provideCard();
+        }
+        assertThatThrownBy(() -> cardDeck.provideCard())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("카드덱이 비어 카드를 제공할 수 없습니다.");
+    }
 }

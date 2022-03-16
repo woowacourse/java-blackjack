@@ -31,4 +31,15 @@ public class CardDeck {
         final List<Card> cards = Card.cards();
         return new CardDeck(new ArrayDeque<>(Randoms.shuffle(cards)));
     }
+
+    public Card provideCard() {
+        checkCardDeckEmpty();
+        return cards.poll();
+    }
+
+    private void checkCardDeckEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드덱이 비어 카드를 제공할 수 없습니다.");
+        }
+    }
 }
