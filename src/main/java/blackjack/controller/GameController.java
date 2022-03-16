@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.Record;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
@@ -88,8 +87,9 @@ public class GameController {
     }
 
     public void endGame() {
+        players.calculatePlayersPrize(dealer);
+
         printAllCards();
-        players.getValue().forEach(this::calculatePlayerPrize);
         printAllPrize();
     }
 
@@ -105,25 +105,5 @@ public class GameController {
 
         OutputView.printDealerPrize(dealerPrize);
         players.getValue().forEach(player -> OutputView.printPrize(player.getName(), player.getPrize()));
-    }
-
-    private void calculatePlayerPrize(final Player player) {
-        if (dealer.isBlackjack() && player.isBlackjack()) {
-            player.updatePushPrize();
-            return;
-        }
-
-        if (player.isBlackjack()) {
-            player.updateBlackjackPrize();
-            return;
-        }
-
-        final Record playerRecord = Record.of(dealer.getScore(), player.getScore());
-        if (playerRecord == Record.PUSH) {
-            player.updatePushPrize();
-        }
-        if (playerRecord == Record.LOSS) {
-            player.updateNegativePrize();
-        }
     }
 }

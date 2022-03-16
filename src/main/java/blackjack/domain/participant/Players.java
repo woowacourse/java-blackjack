@@ -72,6 +72,30 @@ public class Players {
         return new ArrayList<>(value);
     }
 
+    public void calculatePlayersPrize(final Dealer dealer) {
+        value.forEach(player -> calculatePlayerPrize(dealer, player));
+    }
+
+    private void calculatePlayerPrize(final Dealer dealer, final Player player) {
+        if (dealer.isBlackjack() && player.isBlackjack()) {
+            player.updatePushPrize();
+            return;
+        }
+
+        if (player.isBlackjack()) {
+            player.updateBlackjackPrize();
+            return;
+        }
+
+        final Record playerRecord = Record.of(dealer.getScore(), player.getScore());
+        if (playerRecord == Record.PUSH) {
+            player.updatePushPrize();
+        }
+        if (playerRecord == Record.LOSS) {
+            player.updateNegativePrize();
+        }
+    }
+
     public int calculateDealerPrize() {
         final int sum = value.stream()
                 .mapToInt(Player::getPrize)
