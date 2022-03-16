@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import blackjack.domain.Betting;
 import blackjack.domain.BettingTable;
@@ -32,8 +31,8 @@ public class GameController {
         drawPlayerCards(game);
         drawDealerCards(game);
 
-        participantsResult(game);
-        playRecord(game, bettings);
+        finalParticipantsCards(game);
+        finalRevenue(game, bettings);
     }
 
     private List<Name> getNames() {
@@ -53,8 +52,9 @@ public class GameController {
 
         printInitResult(names);
         printDealerFirstCard(game.dealerFirstCard());
+
         for (Player player : game.getPlayers()) {
-            printPlayerCards(Objects.requireNonNull(convertToDto(player)));
+            printPlayerCards(convertToDto(player));
         }
         printEmptyLine();
         return game;
@@ -88,14 +88,14 @@ public class GameController {
         printDealerDrawCardCount(drawCount);
     }
 
-    private void participantsResult(Game game) {
+    private void finalParticipantsCards(Game game) {
         printParticipantCardsWithScore(convertToDto(game.getDealer()));
         for (Player player : game.getPlayers()) {
             printParticipantCardsWithScore(convertToDto(player));
         }
     }
 
-    private void playRecord(Game game, List<Betting> bettings) {
+    private void finalRevenue(Game game, List<Betting> bettings) {
         RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
         Map<Name, PlayRecord> recordMap = recordFactory.getPlayerRecords(game.getPlayers());
 
