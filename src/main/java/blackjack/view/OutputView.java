@@ -63,13 +63,20 @@ public class OutputView {
 
     public static void printResult(ScoreResult result) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n",
-                result.getDealerScoreCount(Score.WIN),
-                result.getDealerScoreCount(Score.DRAW),
-                result.getDealerScoreCount(Score.LOSE));
-
+        System.out.print("딜러: ");
+        for (Score score : Score.values()) {
+            int dealerScoreCount = result.getDealerScoreCount(score);
+            printResultByScore(score, dealerScoreCount);
+        }
+        System.out.println();
         for (Map.Entry<String, String> entry : result.getPlayerResult().entrySet()) {
             System.out.printf("%s: %s%n", entry.getKey(), entry.getValue());
+        }
+    }
+
+    private static void printResultByScore(Score score, int dealerScoreCount) {
+        if (dealerScoreCount > 0) {
+            System.out.printf("%d%s ", dealerScoreCount, score.getValue());
         }
     }
 
