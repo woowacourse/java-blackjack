@@ -2,6 +2,7 @@ package blackjack.model.player;
 
 import blackjack.model.State;
 import blackjack.model.card.CardDeck;
+
 import java.util.List;
 
 public abstract class Participant {

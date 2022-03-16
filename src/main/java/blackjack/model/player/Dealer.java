@@ -3,7 +3,7 @@ package blackjack.model.player;
 import blackjack.model.DealerState;
 import blackjack.model.State;
 import blackjack.model.card.CardDeck;
-import java.net.PortUnreachableException;
+
 import java.util.List;
 
 

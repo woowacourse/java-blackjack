@@ -5,6 +5,7 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Players;
 import blackjack.model.result.BlackJackGameResult;
+
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -63,9 +64,5 @@ public class BlackjackGame {
 
     public Participant getDealer() {
         return dealer.getCopyInstance();
-    }
-
-    public List<Participant> getGamers() {
-        return players.getValues();
     }
 }

@@ -4,6 +4,7 @@ import blackjack.model.BlackjackGame;
 import blackjack.model.player.Participant;
 import blackjack.model.result.BlackJackGameResult;
 import blackjack.model.result.MatchResult;
+
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -20,7 +21,6 @@ public class ResultView {
 
     private static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ", ";
-    private static final int START_CARD_COUNT = 2;
 
     public static void printStartResult(final BlackjackGame blackjackGame) {
         final Participant dealer = blackjackGame.getDealer();
