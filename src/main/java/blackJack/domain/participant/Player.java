@@ -14,6 +14,7 @@ public class Player extends Participant {
     private static final String DEALER_NAME = "딜러";
     private static final String ERROR_MESSAGE_PROHIBIT_NAME = "플레이어의 이름은 '딜러'일 수 없습니다.";
     private static final String ERROR_MESSAGE_INVALID_MONEY = "배팅 금액은 자연수여야 합니다.";
+    private static final String PRIMARY_MONEY = "1000";
 
     private final int money;
 
@@ -26,6 +27,10 @@ public class Player extends Participant {
 
     public Player(String name, String money) {
         this(name, money, new HashSet<>());
+    }
+
+    public Player(String name) {
+        this(name, PRIMARY_MONEY, new HashSet<>());
     }
 
     private void validateProhibitName(String name) {

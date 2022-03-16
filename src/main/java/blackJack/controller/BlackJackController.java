@@ -14,6 +14,7 @@ import blackJack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -32,12 +33,20 @@ public class BlackJackController {
     private Participants getParticipants() {
         try {
             final List<String> playerNames = InputView.inputPlayerNames();
+            checkValidPlayerNames(playerNames);
             final List<Player> players = getPlayersBetMoney(playerNames);
             return new Participants(new Dealer(), players);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getParticipants();
         }
+    }
+
+    private Participants checkValidPlayerNames(List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toUnmodifiableList());
+        return new Participants(new Dealer(), players);
     }
 
     private List<Player> getPlayersBetMoney(List<String> playerNames) {
