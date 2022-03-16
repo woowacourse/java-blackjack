@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
@@ -23,7 +24,7 @@ class ModelMapperTest {
     @BeforeAll
     static void setUp() {
         CardDeck cardDeck = new CardDeck(new TestDeck());
-        Participant player = new Player("pobi");
+        Participant player = new Player(Name.of("pobi"));
 
         player.init(cardDeck);
         dto = ModelMapper.map(player);

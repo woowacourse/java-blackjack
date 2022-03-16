@@ -24,7 +24,7 @@ public class ParticipantTest {
     void init() {
         // give
         CardDeck cardDeck = new CardDeck(new TestDeck());
-        Participant player = new Player("pobi");
+        Participant player = new Player(Name.of("pobi"));
 
         // when
         player.init(cardDeck);
@@ -38,7 +38,7 @@ public class ParticipantTest {
     @DisplayName("카드를 받아 저장한다.")
     void hit() {
         // give
-        Participant player = new Player("pobi");
+        Participant player = new Player(Name.of("pobi"));
         Card card = new Card(DIAMOND, JACK);
 
         // when
@@ -54,7 +54,7 @@ public class ParticipantTest {
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
     void returnBust(CardNumber cardNumber, PlayStatus expected) {
         // give
-        Participant player = new Player("pobi");
+        Participant player = new Player(Name.of("pobi"));
         player.hit(new Card(DIAMOND, JACK));
         player.hit(new Card(DIAMOND, QUEEN));
         player.hit(new Card(DIAMOND, cardNumber));
@@ -70,7 +70,7 @@ public class ParticipantTest {
     @DisplayName("카드 목록 반환을 검증한다.")
     void getCards() {
         // give
-        Participant player = new Player("pobi");
+        Participant player = new Player(Name.of("pobi"));
         CardDeck cardDeck = new CardDeck(new TestDeck());
 
         // when

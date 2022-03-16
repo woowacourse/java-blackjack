@@ -6,8 +6,8 @@ public class Player extends Participant {
 
     private final Name name;
 
-    public Player(String name) {
-        this.name = Name.of(name);
+    public Player(Name name) {
+        this.name = name;
     }
 
     public void stay() {

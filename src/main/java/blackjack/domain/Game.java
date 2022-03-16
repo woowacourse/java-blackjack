@@ -8,6 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.DrawCount;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 
 public class Game {
@@ -16,7 +17,7 @@ public class Game {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Game(CardDeck cardDeck, List<String> playerNames) {
+    public Game(CardDeck cardDeck, List<Name> playerNames) {
         this.cardDeck = cardDeck;
         this.dealer = new Dealer();
         this.players = List.copyOf(playerNames).stream()

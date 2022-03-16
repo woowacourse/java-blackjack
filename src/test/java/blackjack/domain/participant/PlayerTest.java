@@ -13,7 +13,7 @@ class PlayerTest {
     @DisplayName("상태를 STAY로 변경한다.")
     void stay() {
         // give
-        Player player = new Player("pobi");
+        Player player = new Player(Name.of("pobi"));
 
         // when
         player.stay();
