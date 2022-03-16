@@ -14,12 +14,10 @@ import utils.ExceptionMessages;
 class PlayerTest {
 
     private Player player;
-    private Dealer dealer;
 
     @BeforeEach
     void init() {
         player = new Player("test", 10000);
-        dealer = new Dealer();
     }
 
     @Test
@@ -70,67 +68,5 @@ class PlayerTest {
         player.hit(Card.of(Symbol.SPADE, Denomination.NINE));
 
         assertThat(player.canDrawCard()).isTrue();
-    }
-
-    @Test
-    @DisplayName("Player가 21이 넘고, 딜러가 21이 넘지 않을 경우 Lose를 반환한다.")
-    void isWinTest() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        player.hit(Card.of(Symbol.SPADE, Denomination.NINE));
-        player.hit(Card.of(Symbol.HEART, Denomination.NINE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    @DisplayName("Player가 21이 넘고, 딜러도 21을 경우 Win을 반환한다.")
-    void isWinTest2() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        player.hit(Card.of(Symbol.SPADE, Denomination.NINE));
-        player.hit(Card.of(Symbol.HEART, Denomination.NINE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.QUEEN));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.WIN);
-    }
-
-    @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Player가 총 점수가 클 경우 Win을 반환한다.")
-    void isWinTest3() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        player.hit(Card.of(Symbol.SPADE, Denomination.NINE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.WIN);
-    }
-
-    @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Dealer가 총 점수가 클 경우 Lose를 반환한다.")
-    void isWinTest4() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        player.hit(Card.of(Symbol.SPADE, Denomination.FIVE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, 점수가 같을 경우 Draw를 반환한다.")
-    void isWinTest5() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.FIVE));
-        player.hit(Card.of(Symbol.SPADE, Denomination.FIVE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SIX));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.FOUR));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.DRAW);
     }
 }
