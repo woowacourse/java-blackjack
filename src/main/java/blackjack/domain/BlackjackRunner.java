@@ -1,10 +1,14 @@
 package blackjack.domain;
 
+import static blackjack.view.PlayCommand.YES;
+import static java.util.stream.Collectors.toList;
+
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.RandomCardsGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.dto.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
@@ -17,20 +21,20 @@ public class BlackjackRunner {
         Dealer dealer = new Dealer(deck.getInitCards());
         Players players = new Players(deck, InputView.getNames());
 
-        List<Player> primaryPlayers = players.getValue();
-        OutputView.printStart(dealer, primaryPlayers);
+        OutputView.printStart(dealer, players.getValue());
 
-        primaryPlayers.forEach(player -> playing(deck, player));
+        players.getValue().forEach(player -> playing(deck, player, YES));
         drawDealer(deck, dealer);
 
         OutputView.printResult(dealer, players.getValue());
+        OutputView.printProfit(getDealerProfit(dealer, players), createPlayerResults(dealer, players.getValue()));
     }
 
-    private void playing(Deck deck, Player player) {
-        PlayCommand playCommand = InputView.getPlayCommand(player);
+    private void playing(Deck deck, Player player, PlayCommand playCommand) {
         if (isPlaying(player, playCommand)) {
+            playCommand = InputView.getPlayCommand(player);
             drawCard(deck, player);
-            playing(deck, player);
+            playing(deck, player, playCommand);
         }
     }
 
@@ -49,5 +53,18 @@ public class BlackjackRunner {
             OutputView.printDealerDrawable();
             drawDealer(deck, dealer);
         }
+    }
+
+    private int getDealerProfit(Dealer dealer, Players players) {
+        return players.getValue()
+                .stream()
+                .mapToInt(player -> -player.calculateBattingMoney(dealer))
+                .sum();
+    }
+
+    private List<PlayerResult> createPlayerResults(Dealer dealer, List<Player> players) {
+        return players.stream()
+                .map(player -> new PlayerResult(player.getName(), player.calculateBattingMoney(dealer)))
+                .collect(toList());
     }
 }
