@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.request.PlayerRequest;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -34,5 +35,11 @@ public class InputView {
             throw new IllegalArgumentException("입력은 y 또는 n이어야 합니다.");
         }
         return command;
+    }
+
+    public static PlayerRequest inputBettingMoney(String name) {
+        System.out.println(MessageFormat.format("{0}의 배팅 금액은?", name));
+        int bettingMoney = Integer.parseInt(SCANNER.nextLine());
+        return new PlayerRequest(name, bettingMoney);
     }
 }

@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.dto.CardCountingResult;
-import blackjack.dto.PlayerCardResult;
-import blackjack.dto.PlayerGameResult;
+import blackjack.dto.response.CardCountingResult;
+import blackjack.dto.response.PlayerCardResult;
+import blackjack.dto.response.PlayerGameResult;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.Collectors;

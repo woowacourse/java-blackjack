@@ -1,30 +1,24 @@
-package blackjack.dto;
+package blackjack.dto.response;
 
 import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CardCountingResult {
-    private final String name;
+public class PlayerCardResult {
+    private final String playerName;
     private final List<String> cards;
-    private final int count;
 
-    public CardCountingResult(String playerName, List<Card> cards, int count) {
-        this.name = playerName;
+    public PlayerCardResult(String playerName, List<Card> cards) {
+        this.playerName = playerName;
         this.cards = toCardNames(cards);
-        this.count = count;
     }
 
-    public String getName() {
-        return name;
+    public String getPlayerName() {
+        return playerName;
     }
 
     public List<String> getCards() {
         return cards;
-    }
-
-    public int getCount() {
-        return count;
     }
 
     private List<String> toCardNames(List<Card> cards) {

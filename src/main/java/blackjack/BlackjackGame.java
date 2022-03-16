@@ -5,9 +5,10 @@ import blackjack.domain.Command;
 import blackjack.domain.PlayerOutcome;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
-import blackjack.dto.CardCountingResult;
-import blackjack.dto.PlayerCardResult;
-import blackjack.dto.PlayerGameResult;
+import blackjack.dto.response.CardCountingResult;
+import blackjack.dto.response.PlayerCardResult;
+import blackjack.dto.response.PlayerGameResult;
+import blackjack.dto.request.PlayerRequest;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -18,11 +19,17 @@ import java.util.stream.Stream;
 public class BlackjackGame {
 
     public void start() {
-        BlackjackTable blackjackTable = new BlackjackTable(InputView.inputNames());
+        BlackjackTable blackjackTable = new BlackjackTable(toPlayerRequest(InputView.inputNames()));
         OutputView.printFirstTurnCards(toFirstTurnCards(blackjackTable.getParticipants()));
         hit(blackjackTable);
         OutputView.printCardCountingResult(toCardCountingResult(blackjackTable.getParticipants()));
         OutputView.printGameResult(toGameResults(blackjackTable.countGameResult()));
+    }
+
+    private List<PlayerRequest> toPlayerRequest(List<String> names) {
+        return names.stream()
+            .map(InputView::inputBettingMoney)
+            .collect(Collectors.toList());
     }
 
     private List<PlayerCardResult> toFirstTurnCards(List<Participant> participants) {
