@@ -1,11 +1,15 @@
 package blackjack.domain;
 
 import static blackjack.domain.Result.LOSS;
+import static blackjack.domain.Result.PRINCIPAL;
 import static blackjack.domain.Result.WIN;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.FIVE;
 import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.SEVEN;
 import static blackjack.domain.card.Denomination.SIX;
+import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
@@ -51,8 +55,37 @@ class ResultTest {
         Map<Player, Double> result = Result.decideResult(players, dealer);
 
         //then
-        assertThat(result.get(players.get(0))).isEqualTo(LOSS);
-        assertThat(result.get(players.get(1))).isEqualTo(WIN);
+        assertThat(result.get(players.get(0))).isEqualTo(LOSS.getRate());
+        assertThat(result.get(players.get(1))).isEqualTo(WIN.getRate());
+    }
+
+    @DisplayName("둘 다 버스트가 아니고 딜러가 작은 경우")
+    @Test
+    public void testWinPlayerWithNotBust() {
+        //given
+        Deck deck = new Deck(() -> new ArrayDeque<>(List.of(
+                new Card(SPADE,ACE),
+                new Card(SPADE,SEVEN),
+                new Card(SPADE, TWO),
+                new Card(SPADE, QUEEN)
+        )));
+
+        List<User> players = List.of(createPlayerByName("pobi"));
+
+        for (User player : players) {
+            player.drawCard(deck);
+            player.drawCard(deck);
+        }
+
+        Dealer dealer = new Dealer();
+        dealer.drawCard(deck);
+        dealer.drawCard(deck);
+
+        //when
+        Map<Player, Double> result = Result.decideResult(players, dealer);
+
+        //then
+        assertThat(result.get(players.get(0))).isEqualTo(PRINCIPAL.getRate());
     }
 
     private Deck initDeck() {

@@ -15,7 +15,8 @@ public enum Result {
             (player, dealer) -> player.isBlackJack())
     ),
     PRINCIPAL(1.0, (
-            (player, dealer) -> ((player.calculateScore() == 21 && dealer.calculateScore() == 21) || (dealer.isBust())))
+            (player, dealer) -> ((player.calculateScore() == 21 && dealer.calculateScore() == 21) || (dealer.isBust())
+            || (!player.isBust() && !dealer.isBust() && player.calculateScore() > dealer.calculateScore())))
     ),
     LOSS(-1.0, (
             (player, dealer) -> ((!player.isBust() && !dealer.isBust())
@@ -44,7 +45,7 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
     }
 
-    private Double getRate() {
+    public Double getRate() {
         return rate;
     }
 }
