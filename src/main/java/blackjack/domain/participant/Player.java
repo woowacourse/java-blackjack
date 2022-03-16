@@ -29,7 +29,7 @@ public class Player extends Participant {
 
     public boolean canReceive() {
         Score score = Score.calculateSumFrom(getHand());
-        return score.isLessOrEqualThan(Score.BLACKJACK);
+        return !score.isBusted();
     }
 
     @Override

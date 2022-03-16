@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Score implements Comparable<Score> {
-    public static final int DEALER_EXTRA_CARD_LIMIT = 16;
+    public static final int DEALER_HIT_THRESHOLD = 16;
     public static final int BLACKJACK = 21;
 
     private static final int VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL = 10;
@@ -56,12 +56,12 @@ public class Score implements Comparable<Score> {
         return ScoreCache.getCache(addedValue);
     }
 
-    public boolean isGreaterThan(int score) {
-        return this.value > score;
+    public boolean isBusted() {
+        return this.value > BLACKJACK;
     }
 
-    public boolean isLessOrEqualThan(int score) {
-        return this.value <= score;
+    public boolean isOverDealerHitThreshold() {
+        return this.value > DEALER_HIT_THRESHOLD;
     }
 
     public int getValue() {

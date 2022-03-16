@@ -33,7 +33,7 @@ public abstract class Participant {
 
     // TODO: 구현체의 canReceive 메소드와 상당히 겹침. 해결 필요.
     public boolean isBusted() {
-        return Score.calculateSumFrom(hand).isGreaterThan(Score.BLACKJACK);
+        return Score.calculateSumFrom(hand).isBusted();
     }
 
     public ResultType compareWith(Participant other) {
