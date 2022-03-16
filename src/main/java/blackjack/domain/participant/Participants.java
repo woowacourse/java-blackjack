@@ -43,4 +43,10 @@ public class Participants {
     public Dealer getDealer() {
         return dealer;
     }
+
+    public long sumBettingAmount() {
+        return players.stream()
+                .mapToLong(Player::getBettingAmount)
+                .sum();
+    }
 }

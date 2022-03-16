@@ -53,4 +53,11 @@ class ParticipantsTest {
                 .getDealer())
                 .isInstanceOf(Dealer.class);
     }
+
+
+    @Test
+    @DisplayName("합계 구하기")
+    void sum() {
+        assertThat(participants.sumBettingAmount()).isEqualTo(2000L);
+    }
 }
