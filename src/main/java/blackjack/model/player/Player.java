@@ -5,11 +5,10 @@ import blackjack.model.cards.BestScoreCalculator;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
 
-public class Player {
+public abstract class Player {
 
     private static final BestScoreCalculator BEST_SCORE_CALCULATOR = new BestScoreCalculator();
-    private static final Score HIT_BOUNDARY = new Score(21);
-    private static final int OPEN_CARD_COUNT = 2;
+    public static final Score BLACKJACK_SCORE = new Score(21);
 
     private final Cards cards;
     private final String name;
@@ -25,10 +24,6 @@ public class Player {
 
     public final String name() {
         return name;
-    }
-
-    public Cards openCards() {
-        return cards.openedCards(OPEN_CARD_COUNT);
     }
 
     public final Cards cards() {
@@ -50,15 +45,19 @@ public class Player {
         return score().isBust();
     }
 
-    protected final boolean lessScoreThan(Player other) {
+    public final boolean isBlackjack() {
+        return cards().isInitialCards() && score().equals(BLACKJACK_SCORE);
+    }
+
+    public final boolean lessScoreThan(Player other) {
         return score().lessThan(other.score());
     }
 
-    protected final boolean moreScoreThan(Player other) {
+    public final boolean moreScoreThan(Player other) {
         return score().moreThan(other.score());
     }
 
-    public boolean isHittable() {
-        return score().lessThan(HIT_BOUNDARY);
-    }
+    public abstract Cards openCards();
+
+    public abstract boolean isHittable();
 }

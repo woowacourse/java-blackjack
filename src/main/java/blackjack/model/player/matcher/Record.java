@@ -1,23 +1,24 @@
-package blackjack.model.blackjack;
+package blackjack.model.player.matcher;
 
+import blackjack.model.player.Money;
 import java.util.Objects;
 
 public class Record {
 
     private final String name;
-    private final Result result;
+    private final Money profit;
 
-    public Record(String name, Result result) {
+    public Record(String name, Money profit) {
         this.name = name;
-        this.result = result;
+        this.profit = profit;
     }
 
     public String name() {
         return name;
     }
 
-    public Result result() {
-        return result;
+    public Money profit() {
+        return profit;
     }
 
     @Override
@@ -29,11 +30,12 @@ public class Record {
             return false;
         }
         Record record = (Record) o;
-        return Objects.equals(name, record.name) && result == record.result;
+        return Objects.equals(name, record.name) && Objects
+            .equals(this.profit, record.profit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, result);
+        return Objects.hash(name, profit);
     }
 }

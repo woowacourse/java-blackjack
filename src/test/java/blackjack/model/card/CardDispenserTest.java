@@ -1,10 +1,11 @@
-package blackjack.model.blackjack;
+package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import blackjack.model.card.Card;
+import blackjack.model.card.CardDispenser;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;

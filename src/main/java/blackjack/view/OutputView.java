@@ -1,10 +1,11 @@
 package blackjack.view;
 
-import blackjack.model.blackjack.Record;
-import blackjack.model.blackjack.Result;
+import blackjack.model.player.Money;
+import blackjack.model.player.matcher.Record;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,21 +52,21 @@ public class OutputView {
     }
 
     public static void printRecords(List<Record> records) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n", countByResult(records, Result.LOSS),
-            countByResult(records, Result.DRAW), countByResult(records, Result.WIN));
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %s%n", dealerProfit(records));
 
-        records.stream().
-            forEach(record -> printEachPlayerRecord(record.name(), record.result()));
+        records.stream().forEach(record -> printEachPlayerRecord(record.name(), record.profit()));
     }
 
-    private static int countByResult(List<Record> records, Result result) {
-        return (int) records.stream()
-            .map(Record::result)
-            .filter(r -> r == result).count();
+    private static String dealerProfit(List<Record> records) {
+        return records.stream()
+            .map(Record::profit)
+            .map(Money::negate)
+            .reduce(new Money(BigDecimal.ZERO), Money::add)
+            .amount();
     }
 
-    private static void printEachPlayerRecord(String name, Result result) {
-        System.out.printf("%s: %s%n", name, result.symbol());
+    private static void printEachPlayerRecord(String name, Money profit) {
+        System.out.printf("%s: %s%n", name, profit.amount());
     }
 }

@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 public class Cards {
 
+    public static final int INITIAL_CARDS_SIZE = 2;
     private final List<Card> values;
 
     public Cards(Card card1, Card card2, Card... cards) {
@@ -38,6 +39,10 @@ public class Cards {
 
     public void take(Card card) {
         values.add(card);
+    }
+
+    public boolean isInitialCards() {
+        return values.size() == INITIAL_CARDS_SIZE;
     }
 
     @Override

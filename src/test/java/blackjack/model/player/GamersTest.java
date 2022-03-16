@@ -5,38 +5,40 @@ import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.blackjack.Record;
-import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
+import blackjack.model.player.matcher.Record;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+public class GamersTest {
 
     private static final Card ACE = new Card(Rank.ACE, SPADE);
     private static final Card TWO = new Card(Rank.TWO, SPADE);
     private static final Card THREE = new Card(Rank.THREE, CLOVER);
     private static final Card JACK = new Card(Rank.JACK, HEART);
     private static final Card QUEEN = new Card(Rank.QUEEN, SPADE);
+    private static final Money MONEY = new Money(new BigDecimal("1000"));
+
 
     @Test
     @DisplayName("여러 플레이어 결과 수집")
     void blackjackWithTwoPlayer() {
-        Dealer dealer = new Dealer(JACK, QUEEN);
+        Dealer dealer = new Dealer(THREE, QUEEN);
 
         String pobi = "pobi";
         String crong = "crong";
 
-        Player player1 = new Player(pobi, TWO, THREE);
-        Player player2 = new Player(crong, ACE, JACK);
-        Players players = new Players(List.of(player1, player2));
+        Gamer player1 = new Gamer(pobi, MONEY, TWO, THREE);
+        Gamer player2 = new Gamer(crong, MONEY, ACE, JACK);
+        Gamers gamers = new Gamers(List.of(player1, player2));
 
-        List<Record> records = players.match(dealer);
+        List<Record> records = gamers.match(dealer);
 
         assertThat(records).hasSize(2);
-        assertThat(records).contains(new Record(pobi, Result.LOSS), new Record(crong, Result.WIN));
+        assertThat(records).contains(new Record(pobi, MONEY.negate()), new Record(crong, MONEY.multiply(new BigDecimal("1.5"))));
     }
 
     @Test
@@ -47,13 +49,13 @@ public class PlayersTest {
         String pobi1 = "pobi";
         String pobi2 = "pobi";
 
-        Player player1 = new Player(pobi1, TWO, THREE);
-        Player player2 = new Player(pobi2, ACE, JACK);
-        Players players = new Players(List.of(player1, player2));
+        Gamer player1 = new Gamer(pobi1, MONEY, TWO, THREE);
+        Gamer player2 = new Gamer(pobi2, MONEY, ACE, JACK);
+        Gamers gamers = new Gamers(List.of(player1, player2));
 
-        List<Record> records = players.match(dealer);
+        List<Record> records = gamers.match(dealer);
 
         assertThat(records).hasSize(2);
-        assertThat(records).contains(new Record(pobi1, Result.LOSS), new Record(pobi2, Result.WIN));
+        assertThat(records).contains(new Record(pobi1, MONEY.negate()), new Record(pobi2, MONEY.multiply(new BigDecimal("1.5"))));
     }
 }

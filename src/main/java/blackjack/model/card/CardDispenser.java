@@ -1,8 +1,5 @@
-package blackjack.model.blackjack;
+package blackjack.model.card;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Rank;
-import blackjack.model.card.Suit;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
