@@ -39,7 +39,7 @@ public class BlackjackGame {
     }
 
     private void hitOrStayToPlayer(Participant player, Predicate<String> predicate, Consumer<Participant> consumer) {
-        while (player.canHit() && isHitSign(player, predicate)) {
+        while (canHit(player) && isHitSign(player, predicate)) {
             consumer.accept(player.hitBy(cardDeck));
         }
     }
@@ -50,10 +50,14 @@ public class BlackjackGame {
 
     private void hitOrStayToDealer(Consumer<Participant> consumer) {
         Participant dealer = null;
-        while (this.dealer.canHit()) {
+        while (canHit(this.dealer)) {
             dealer = this.dealer.hitBy(cardDeck);
         }
         consumer.accept(dealer);
+    }
+
+    private boolean canHit(Participant participant) {
+        return !participant.isBust() && !participant.isBlackjack() && !participant.isFinish();
     }
 
     public BlackjackGameResult createMatchResult() {

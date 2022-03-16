@@ -58,18 +58,17 @@ public class ResultView {
         System.out.printf(GAMER_AND_CARDS_MESSAGE_FORMAT, name, cards.get(0), cards.get(1));
     }
 
-    public static void printCurrentTurnResult(Participant player) {
-        if (player instanceof Dealer) {
-            printDealerHitResult(player.getName(), player.getCards());
+    public static void printCurrentTurnResult(Participant participant) {
+        if (participant instanceof Dealer) {
+            printDealerHitResult(participant.getName(), participant.getAddedCardCount());
             return;
         }
-        printGamerHitResult(player.getName(), player.getCards());
+        printGamerHitResult(participant.getName(), participant.getCards());
     }
 
-    private static void printDealerHitResult(String name, List<String> cards) {
-        int addedCardCount = cards.size() - START_CARD_COUNT;
-        if (addedCardCount > 0) {
-            System.out.printf(DEALER_DRAW_CARD_MESSAGE_FORMAT, name, addedCardCount);
+    private static void printDealerHitResult(String name, int count) {
+        if (count > 0) {
+            System.out.printf(DEALER_DRAW_CARD_MESSAGE_FORMAT, name, count);
         }
     }
 

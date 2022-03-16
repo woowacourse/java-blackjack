@@ -35,15 +35,14 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canHit() {
-        return state.canHit();
+    public boolean isFinish() {
+        return this.cards.sumScore() >= 21;
     }
 
     @Override
     public Participant hitBy(final CardDeck deck) {
-        state.canHit();
-        State copyOfState = this.state.addCard(deck.draw());
-        return new Player(this.name, copyOfState);
+        Cards copyOfCards = this.cards.add(deck.draw());
+        return new Player(this.name, copyOfCards);
     }
 
     @Override

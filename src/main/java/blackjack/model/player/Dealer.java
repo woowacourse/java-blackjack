@@ -38,14 +38,14 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canHit() {
-        return state.canHit();
+    public boolean isFinish() {
+        return this.cards.sumScore() > 16;
     }
 
     @Override
     public Participant hitBy(final CardDeck deck) {
-        State state = this.state.addCard(deck.draw());
-        return new Dealer(state);
+        Cards copyOfCards = this.cards.add(deck.draw());
+        return new Dealer(copyOfCards);
     }
 
     @Override

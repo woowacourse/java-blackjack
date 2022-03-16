@@ -36,6 +36,10 @@ public class Cards {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    public int getAddedCount() {
+        return values.size() - START_CARD_COUNT;
+    }
+
     public Cards getCopyInstance() {
         return new Cards(values);
     }

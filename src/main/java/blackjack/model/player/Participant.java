@@ -7,8 +7,6 @@ import blackjack.model.card.CardDeck;
 import java.util.List;
 
 public abstract class Participant {
-    protected static final int START_DRAW_COUNT = 2;
-
     protected final String name;
     protected final Cards cards;
 
@@ -37,9 +35,21 @@ public abstract class Participant {
         return cards.getCardGroup();
     }
 
-    public abstract Participant drawCardsBy(final CardDeck cardDeck);
+    public boolean isBust() {
+        return cards.sumScore() > 21;
+    }
 
-    public abstract boolean canHit();
+    public boolean isBlackjack() {
+        return cards.sumScore() == 21 && cards.hasOnlyStartCards();
+    }
+
+    public int getAddedCardCount() {
+        return this.cards.getAddedCount();
+    }
+
+    public abstract boolean isFinish();
+
+    public abstract Participant drawCardsBy(final CardDeck cardDeck);
 
     public abstract Participant hitBy(final CardDeck cardDeck);
 
