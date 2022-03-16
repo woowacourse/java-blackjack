@@ -23,10 +23,12 @@ public class ConsoleGame {
         BlackjackGame blackjackGame = createBlackjackGame(randomGenerator);
 
         Participants participants = blackjackGame.getParticipants();
+        blackjackGame.initCardsAllParticipants();
+
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
 
-        OutputView.printInitialCards(dealer, players);
+        OutputView.printInitialCards(participants);
 
         playPlayersTurn(blackjackGame, players);
         playDealerTurn(blackjackGame, dealer);

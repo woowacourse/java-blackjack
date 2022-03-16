@@ -7,11 +7,11 @@ import java.util.Objects;
 public abstract class Participant {
 
     protected final Name name;
-    protected final Cards cards;
+    protected Cards cards;
 
-    public Participant(Name name, Cards cards) {
+    public Participant(Name name) {
         this.name = name;
-        this.cards = cards;
+        this.cards = new Cards();
     }
 
     public abstract boolean isFinished();

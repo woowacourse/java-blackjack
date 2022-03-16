@@ -6,6 +6,7 @@ import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,10 @@ public class OutputView {
 
     }
 
-    public static void printInitialCards(Dealer dealer, List<Player> players) {
+    public static void printInitialCards(Participants participants) {
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
+
         System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), getPlayerNames(players));
         System.out.printf("%s: %s%n", dealer.getName(), getCardName(dealer.getCards().getValue().get(0)));
         for (Player player : players) {

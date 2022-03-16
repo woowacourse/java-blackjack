@@ -12,6 +12,10 @@ public class Cards {
 
     private final List<Card> value;
 
+    public Cards() {
+        this.value = new ArrayList<>();
+    }
+
     public Cards(List<Card> cards) {
         this.value = new ArrayList<>(cards);
     }

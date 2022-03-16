@@ -27,7 +27,7 @@ public class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("게임 초기화 시 각 플레이어는 2장의 카드를 분배받는다.")
+    @DisplayName("각 플레이어는 2장의 카드를 분배받는다.")
     void create() {
         // given
         List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
@@ -37,14 +37,15 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(names, bettingAmounts, randomGenerator);
 
         // when
+        blackjackGame.initCardsAllParticipants();
+
+        // then
         boolean match = blackjackGame
                 .getParticipants()
                 .getPlayers()
                 .stream()
                 .mapToInt(this::calculateCardsSize)
                 .anyMatch(cardSize -> cardSize != 2);
-
-        // then
         assertThat(match).isFalse();
     }
 
