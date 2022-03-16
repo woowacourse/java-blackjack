@@ -2,13 +2,13 @@ package blackjack.domain.player;
 
 public class Gambler extends Player {
 
-    private int betMoney = 1000;
+    private Integer betMoney = 1000;
 
     public Gambler(final String name) {
         super(name);
     }
 
-    public Gambler(final String name, final int betMoney) {
+    public Gambler(final String name, final Integer betMoney) {
         super(name);
         this.betMoney = betMoney;
     }

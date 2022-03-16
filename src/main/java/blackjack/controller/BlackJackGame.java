@@ -42,8 +42,12 @@ public class BlackJackGame {
     private List<Player> getGambler() {
         final List<String> playerNames = inputView.scanPlayerNames();
         return playerNames.stream()
-            .map(Gambler::new)
+            .map(name -> new Gambler(name, getBetMoney(name)))
             .collect(toList());
+    }
+
+    private Integer getBetMoney(final String name) {
+        return Integer.valueOf(inputView.scanBetMoney(name));
     }
 
     private void spreadCards(final Players players, final CardDeck cardDeck) {

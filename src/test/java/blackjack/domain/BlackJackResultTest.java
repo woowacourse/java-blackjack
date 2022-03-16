@@ -38,7 +38,7 @@ public class BlackJackResultTest {
 
     @Test
     @DisplayName("겜블러들의 총 수익에 -1을 곱한 값이 딜러의 수익이 되는지 확인한다.")
-    void judge_by_dealer() {
+    void opposite_blackjackResult() {
         // given &  when
         this.cardDeck.drawTo(gambler);
         this.cardDeck.drawTo(gambler);
@@ -50,9 +50,37 @@ public class BlackJackResultTest {
         final BlackJackResult blackJackResult = BlackJackResult.from(players);
 
         final long dealerProfit = blackJackResult.calculateDealerProfit();
-        final long gamblerProfit = blackJackResult.getValue().values().stream().mapToLong(Long::valueOf).sum();
+        final long gamblerProfit = blackJackResult.getValue()
+            .values()
+            .stream()
+            .mapToLong(Long::valueOf)
+            .sum();
 
         // then
         assertThat(dealerProfit).isEqualTo(-1 * gamblerProfit);
+    }
+
+    @Test
+    @DisplayName("겜블러가 블랙잭시 배팅 금액의 2배를 수익으로 가지는지 확인한다")
+    void gambler_blackjack_result() {
+        // given &  when
+        this.cardDeck.drawTo(gambler);
+        this.cardDeck.drawTo(gambler);
+
+        this.cardDeck.drawTo(dealer);
+        this.cardDeck.drawTo(dealer);
+
+        //when
+        final BlackJackResult blackJackResult = BlackJackResult.from(players);
+
+        final long gamblerProfit = blackJackResult.getValue()
+            .values()
+            .stream()
+            .mapToLong(Long::valueOf)
+            .sum();
+
+
+        // then
+        assertThat(gamblerProfit).isEqualTo(gambler.getBetMoney()* 2L);
     }
 }
