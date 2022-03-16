@@ -17,23 +17,25 @@ public class Player extends Participant {
     }
 
     public void calculatePrize(final boolean isDealerBlackjack, final int dealerScore) {
-        if (isDealerBlackjack && isBlackjack()) {
-            money.toZero();
-            return;
-        }
-
         if (isBlackjack()) {
-            money.multiply();
-            return;
+            updateWhenBlackjack(isDealerBlackjack);
         }
 
-        final Record playerRecord = Record.of(dealerScore, getScore());
-        if (playerRecord == Record.PUSH) {
+        if (Record.isPush(dealerScore, getScore())) {
             money.toZero();
         }
-        if (playerRecord == Record.LOSS) {
+        if (Record.isLoss(dealerScore, getScore())) {
             money.toNegative();
         }
+    }
+
+    private void updateWhenBlackjack(final boolean isDealerBlackjack) {
+        if (isDealerBlackjack) {
+            money.toZero();
+            return;
+        }
+
+        money.multiply();
     }
 
     public int getPrize() {

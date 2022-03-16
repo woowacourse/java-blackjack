@@ -87,7 +87,7 @@ public class GameController {
     }
 
     public void endGame() {
-        players.calculatePlayersPrize(dealer);
+        players.calculatePlayersPrize(dealer.isBlackjack(), dealer.getScore());
 
         printAllCards();
         printAllPrize();

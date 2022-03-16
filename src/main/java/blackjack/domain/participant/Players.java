@@ -61,18 +61,8 @@ public class Players {
                 .orElseThrow();
     }
 
-    public List<String> getNames() {
-        return value.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
-    public List<Player> getValue() {
-        return new ArrayList<>(value);
-    }
-
-    public void calculatePlayersPrize(final Dealer dealer) {
-        value.forEach(player -> player.calculatePrize(dealer.isBlackjack(), dealer.getScore()));
+    public void calculatePlayersPrize(final boolean isDealerBlackjack, final int dealerScore) {
+        value.forEach(player -> player.calculatePrize(isDealerBlackjack, dealerScore));
     }
 
     public int calculateDealerPrize() {
@@ -81,5 +71,15 @@ public class Players {
                 .sum();
 
         return sum * -1;
+    }
+
+    public List<String> getNames() {
+        return value.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
+    public List<Player> getValue() {
+        return new ArrayList<>(value);
     }
 }

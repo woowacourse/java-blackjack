@@ -39,6 +39,14 @@ public enum Record {
                 .orElseThrow();
     }
 
+    public static boolean isPush(final int dealerScore, final int playerScore) {
+        return PUSH.predicate.test(dealerScore, playerScore);
+    }
+
+    public static boolean isLoss(final int dealerScore, final int playerScore) {
+        return LOSS.predicate.test(dealerScore, playerScore);
+    }
+
     public static Record fromOppositeName(final String name) {
         if (name.equals(WIN.getName())) {
             return LOSS;
