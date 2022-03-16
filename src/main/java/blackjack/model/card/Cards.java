@@ -30,10 +30,6 @@ public class Cards {
         return values.size() == START_CARD_COUNT;
     }
 
-    public boolean isBlackjack() {
-        return sumScore() == 21 && values.size() == 2;
-    }
-
     public List<String> getValues() {
         return values.stream()
                 .map(card -> card.getNumberOfString() + card.getSymbol())

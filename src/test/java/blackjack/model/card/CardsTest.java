@@ -54,4 +54,25 @@ public class CardsTest {
 
         assertThat(cards.sumScore()).isEqualTo(20);
     }
+
+    @DisplayName("카드를 두장 가지고 있으면 true를 반환한다.")
+    @Test
+    void hasOnlyStartCards_true() {
+        Cards cards = new Cards();
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.HEART));
+        cards.add(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
+
+        assertThat(cards.hasOnlyStartCards()).isTrue();
+    }
+
+    @DisplayName("카드를 두장이상 가지고 있으면 false를 반환한다.")
+    @Test
+    void hasOnlyStartCards_false() {
+        Cards cards = new Cards();
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.HEART));
+        cards.add(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.JACK, TrumpSymbol.CLOVER));
+
+        assertThat(cards.hasOnlyStartCards()).isFalse();
+    }
 }
