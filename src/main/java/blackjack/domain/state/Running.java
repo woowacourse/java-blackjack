@@ -36,6 +36,6 @@ public final class Running implements BlackjackGameState {
 
     @Override
     public double earningRate(final BlackjackGameState blackjackGameState) {
-        return 0;
+        throw new IllegalStateException("Running상태는 수익률을 계산할 수 없습니다.");
     }
 }

@@ -36,4 +36,14 @@ class RunningTest {
 
         assertThat(running.isFinished()).isFalse();
     }
+
+    @Test
+    void Running상태_수익률_계산시_예외발생() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Running running = new Running(cards);
+
+        assertThatThrownBy(() -> running.earningRate(running))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Running상태는 수익률을 계산할 수 없습니다.");
+    }
 }
