@@ -29,8 +29,9 @@ public class Cards {
     }
 
     public int getScore() {
-        int score = cards.stream().mapToInt(card -> card.getNumber().getValue()).sum();
-
+        int score = cards.stream()
+                .mapToInt(card -> card.getNumber().getValue())
+                .sum();
         return addAceScore(score);
     }
 

@@ -11,9 +11,13 @@ public class Card {
 
     static {
         for (Shape shape : Shape.values()) {
-            for (Number number : Number.values()) {
-                CACHE.put(createKey(shape, number), new Card(shape, number));
-            }
+            createCardCache(shape);
+        }
+    }
+
+    private static void createCardCache(Shape shape) {
+        for (Number number : Number.values()) {
+            CACHE.put(createKey(shape, number), new Card(shape, number));
         }
     }
 

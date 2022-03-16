@@ -1,8 +1,6 @@
 package blackJack.domain.Card;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class CardFactory {
 
@@ -18,17 +16,23 @@ public class CardFactory {
 
     private List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
-        Arrays.stream(Shape.values())
-                .forEach(shape -> Arrays.stream(Number.values())
-                        .map(number -> Card.valueOf(shape, number))
-                        .forEach(cards::add));
+        for (Shape shape : Shape.values()) {
+            makeCards(cards, shape);
+        }
         return cards;
     }
 
+    private void makeCards(List<Card> cards, Shape shape) {
+        for (Number number : Number.values()) {
+            cards.add(Card.valueOf(shape, number));
+        }
+    }
+
     public Cards initCards() {
-        List<Card> cards = IntStream.range(0, INIT_CARD_SIZE)
-                .mapToObj(i -> drawOneCard())
-                .collect(Collectors.toList());
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < INIT_CARD_SIZE; i++) {
+            cards.add(drawOneCard());
+        }
 
         return new Cards(cards);
     }
