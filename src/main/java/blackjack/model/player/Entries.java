@@ -9,9 +9,10 @@ import java.util.stream.Collectors;
 public final class Entries {
     private static final String ERROR_DUPLICATE_NAME = "[ERROR] 중복된 이름이 있습니다.";
     private static final String ERROR_NO_ENTRY = "[ERROR] 더 이상 Entry가 없습니다.";
+    private static final int INITIAL_INDEX = -1;
 
     private final List<Entry> values;
-    private int currentIndex = -1;
+    private int currentIndex = INITIAL_INDEX;
 
     private Entries(List<Entry> values) {
         this.values = List.copyOf(values);
@@ -48,6 +49,10 @@ public final class Entries {
             throw new RuntimeException(ERROR_NO_ENTRY);
         }
         this.currentIndex++;
+    }
+
+    public void resetCursor() {
+        this.currentIndex = INITIAL_INDEX;
     }
 
     public boolean hasNoNext() {

@@ -5,6 +5,7 @@ import blackjack.dto.EntryDTO;
 import blackjack.dto.PlayersDTO;
 import blackjack.dto.ResultsDTO;
 import blackjack.model.Game;
+import blackjack.model.Money;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Application {
         final ResultView resultView = new ResultView();
 
         Game game = startGame(inputView, resultView);
+        betMoney(inputView, game);
         playEntries(inputView, resultView, game);
         inputView.closeInput();
         playDealer(resultView, game);
@@ -33,7 +35,16 @@ public class Application {
         return game;
     }
 
+    private static void betMoney(InputView inputView, Game game) {
+        do {
+            game.toNextEntry();
+            int bettingAmount = inputView.askBettingMoney(EntryDTO.fromCurrent(game));
+            new Money(bettingAmount);
+        } while (game.hasNextEntry());
+    }
+
     private static void playEntries(InputView inputView, ResultView resultView, Game game) {
+        game.resetEntriesCursor();
         do {
             game.toNextEntry();
             playTurn(inputView, game, resultView);

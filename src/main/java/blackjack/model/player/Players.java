@@ -31,6 +31,10 @@ public final class Players {
         this.entries.toNextEntry();
     }
 
+    public void resetEntriesCursor() {
+        this.entries.resetCursor();
+    }
+
     public void addToCurrentEntry(TrumpCard card) {
         this.entries.addToCurrentEntry(card);
     }

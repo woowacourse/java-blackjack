@@ -36,6 +36,10 @@ public final class Game {
         this.players.toNextEntry();
     }
 
+    public void resetEntriesCursor() {
+        this.players.resetEntriesCursor();
+    }
+
     public void hitCurrentEntry() {
         this.players.addToCurrentEntry(trumpCardPack.draw());
     }
