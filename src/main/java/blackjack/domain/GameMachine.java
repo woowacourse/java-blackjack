@@ -9,8 +9,8 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class GameMachine {
@@ -18,7 +18,7 @@ public final class GameMachine {
     private final Deck deck;
     private final Players players;
 
-    public GameMachine(final List<String> names, final HashMap<String, Bet> bets) {
+    public GameMachine(final List<String> names, final Map<String, Bet> bets) {
         validationNames(names);
         validationBets(bets);
         this.deck = new Deck(new RandomGenerator());
@@ -31,13 +31,13 @@ public final class GameMachine {
         }
     }
 
-    private void validationBets(final HashMap<String, Bet> bets) {
+    private void validationBets(final Map<String, Bet> bets) {
         if (bets == null || bets.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 잘못된 배팅 입력입니다.");
         }
     }
 
-    public List<Participant> createParticipants(final List<String> names, final HashMap<String, Bet> bets) {
+    public List<Participant> createParticipants(final List<String> names, final Map<String, Bet> bets) {
         return names.stream()
                 .map(name -> new Participant(Cards.createInitCards(deck), name, bets.get(name)))
                 .collect(Collectors.toList());

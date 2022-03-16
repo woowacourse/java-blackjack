@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class Players {
 
@@ -31,7 +32,7 @@ public final class Players {
     }
 
     private void validateDuplicated(final List<Participant> participants) {
-        final HashSet<Participant> notDuplicatedParticipants = new HashSet<>(participants);
+        final Set<Participant> notDuplicatedParticipants = new HashSet<>(participants);
 
         if (notDuplicatedParticipants.size() != participants.size()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름은 중복될 수 없습니다.");

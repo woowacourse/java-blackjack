@@ -8,13 +8,14 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class BlackjackController {
 
     public GameMachine createGameMachine() {
         try {
             List<String> names = InputView.responseNames();
-            HashMap<String, Bet> bets = createBets(names);
+            Map<String, Bet> bets = createBets(names);
             return new GameMachine(names, bets);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
@@ -22,8 +23,8 @@ public final class BlackjackController {
         }
     }
 
-    private HashMap<String, Bet> createBets(final List<String> names) {
-        HashMap<String, Bet> bets = new HashMap<>();
+    private Map<String, Bet> createBets(final List<String> names) {
+        Map<String, Bet> bets = new HashMap<>();
         for (String name : names) {
             bets.put(name, InputView.responseBetAmount(name));
         }

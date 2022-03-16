@@ -1,9 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.player.Bet;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ class GameMachineTest {
     @Test
     @DisplayName("참가자 이름을 올바르게 작성되어야 한다.")
     public void checkParticipantNames() {
-        HashMap<String, Bet> bets = new HashMap<>();
+        Map<String, Bet> bets = new HashMap<>();
         bets.put("1", new Bet(1000));
         bets.put("2", new Bet(1000));
 
