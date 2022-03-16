@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 public class ScoreBoardResponse {
 
     private static final String SPACE_DELIMINATOR = " ";
-    public static final String COLON_DELIMINATOR = ": ";
+    private static final String COLON_DELIMINATOR = ": ";
     private static final String DEALER_MATCH_RESULT_MESSAGE = "딜러: ";
 
     private String dealerMatchResultMessage;

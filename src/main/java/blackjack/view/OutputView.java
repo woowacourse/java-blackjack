@@ -77,7 +77,7 @@ public class OutputView {
         return card.getDenomination() + card.getSuit();
     }
 
-    public static void printBlackjackGameResult2(ScoreBoardResponse scoreBoardResponse) {
+    public static void printMatchResult(ScoreBoardResponse scoreBoardResponse) {
         String dealerMatchResultMessage = scoreBoardResponse.getDealerMatchResultMessage();
         out.println(BLACKJACK_GAME_RESULT_MESSAGE);
         out.println(dealerMatchResultMessage);

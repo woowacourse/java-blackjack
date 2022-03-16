@@ -13,10 +13,13 @@ public class ScoreBoard {
     private EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap(MatchResult.class);
     private Map<Player, MatchResult> playersMatchResult = new LinkedHashMap<>();
 
-
-    public ScoreBoard(Dealer dealer, List<Player> players) {
+    private ScoreBoard(Dealer dealer, List<Player> players) {
         initDealerMatchResult();
         matchEachOthers(dealer, players);
+    }
+
+    public static ScoreBoard of(Dealer dealer, List<Player> players) {
+        return new ScoreBoard(dealer, players);
     }
 
     private void initDealerMatchResult() {
