@@ -15,7 +15,7 @@ public class Deck {
     }
 
     public static Deck createNewDeck() {
-        List<Card> cards = Card.createNewCards();
+        List<Card> cards = Card.valuesOf();
         Collections.shuffle(cards);
         return new Deck(new ArrayDeque<>(cards));
     }
