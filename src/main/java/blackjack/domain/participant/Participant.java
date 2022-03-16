@@ -9,10 +9,10 @@ public abstract class Participant {
 
     protected static final int BLACKJACK_SCORE = 21;
 
-    protected final Name name;
-    protected final Cards cards;
+    private final Name name;
+    private final Cards cards;
 
-    public Participant(String name, List<Card> cards) {
+    protected Participant(String name, List<Card> cards) {
         this.name = new Name(name);
         this.cards = new Cards(cards);
     }

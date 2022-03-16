@@ -15,7 +15,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return cards.calculateTotalScore() <= DRAWABLE_LIMIT_VALUE;
+        return getTotalScore() <= DRAWABLE_LIMIT_VALUE;
     }
 
     @Override
