@@ -89,14 +89,15 @@
         - filter() 내부에서 사용하는 변수명을 getCard -> card 수정
 - [ ] `GameResult`에서 `getDealerResult()` 메서드를 호출하는 경우에 대한 고민
 - [x] `Statistic`의 gamblerResult의 타입을 `Map`에서 `LinkedHashMap`으로 구체화하게된 이유
-  - Gambler 목록의 순서대로 게임 결과를 출력하고자 `LinkedHashMap`으로 구현
-  - Statistic의 사용할 때 `Player`, `GameResult`의 값을 통한 반복문을 사용하기때문에 불필요한 구체화로 생각되어 다시 `Map`으로 변경
-- [ ] `Map` 객체가 여러 메서드에 전달되며 어떤 값이 추가되는지 확인해야한다.
+    - Gambler 목록의 순서대로 게임 결과를 출력하고자 `LinkedHashMap`으로 구현
+    - Statistic의 사용할 때 `Player`, `GameResult`의 값을 통한 반복문을 사용하기때문에 불필요한 구체화로 생각되어 다시 `Map`으로 변경
+- [x] `Map` 객체가 여러 메서드에 전달되며 어떤 값이 추가되는지 확인해야한다.
     - 각 메서드에서 결과 계산과 집계를 하고 Map에 담는 역할을 나누는 것은 어떨지
+    - 메서드 별로 Map을 생성하여 값을 담고 반환하는 형태로 수정
 - [x] `Card`에서 `if(Objects.isNull())` 조건식의 사용
     - `Optional.get`은 무엇을 반환하는가
-      - 객체를 반환하지만 값이 없을 경우 `NoSuchElementException` 발생
-      - `orElseThrow` 사용 
+        - 객체를 반환하지만 값이 없을 경우 `NoSuchElementException` 발생
+        - `orElseThrow` 사용
 - [ ] `Cards`의 `getCards` 메서드가 사용하는 필드 자체를 반환
     - 새 컬렉션에 담아 반환하면 어떤지
     - 새 컬렉션에 담아 반환하는 이유, 장점 알아보기

@@ -11,8 +11,7 @@ public class Statistic {
     private final Map<Gambler, GameResult> gamblerResult;
 
     private Statistic(Dealer dealer, Gamblers gamblers) {
-        this.gamblerResult = new HashMap<>();
-        calculate(gamblerResult, dealer, gamblers);
+        this.gamblerResult = calculate(dealer, gamblers);
     }
 
     public static Statistic of(Dealer dealer, Gamblers gamblers) {
@@ -29,21 +28,20 @@ public class Statistic {
         return gamblerResult.get(gambler);
     }
 
-    private void calculate(Map<Gambler, GameResult> gamblerResult, Dealer dealer,
-        Gamblers gamblers) {
+    private Map<Gambler, GameResult> calculate(Dealer dealer, Gamblers gamblers) {
         if (dealer.isBust()) {
-            calculateDealerBurst(gamblerResult, gamblers);
-            return;
+            return calculateDealerBurst(gamblers);
         }
-        calculateDealerNotBurst(gamblerResult, dealer, gamblers);
+        return calculateDealerNotBurst(dealer, gamblers);
     }
 
-    private void calculateDealerBurst(Map<Gambler, GameResult> playerResult,
-        Gamblers gamblers) {
+    private Map<Gambler, GameResult> calculateDealerBurst(Gamblers gamblers) {
+        Map<Gambler, GameResult> playerResult = new HashMap<>();
         for (Gambler gambler : gamblers.getGamblers()) {
             GameResult gameResult = getResultAtBurst(gambler);
             playerResult.put(gambler, gameResult);
         }
+        return playerResult;
     }
 
     private GameResult getResultAtBurst(Gambler gambler) {
@@ -53,13 +51,14 @@ public class Statistic {
         return GameResult.LOSE;
     }
 
-    private void calculateDealerNotBurst(Map<Gambler, GameResult> gamblerResult,
-        Dealer dealer, Gamblers gamblers) {
+    private Map<Gambler, GameResult> calculateDealerNotBurst(Dealer dealer, Gamblers gamblers) {
+        Map<Gambler, GameResult> gamblerResult = new HashMap<>();
         int dealerPoint = dealer.getPoint();
         for (Gambler gambler : gamblers.getGamblers()) {
             GameResult gameResult = getResultAtNotBurst(dealerPoint, gambler);
             gamblerResult.put(gambler, gameResult);
         }
+        return gamblerResult;
     }
 
     private GameResult getResultAtNotBurst(int dealerPoint, Gambler gambler) {
