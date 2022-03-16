@@ -2,8 +2,16 @@ package blackjack.domain;
 
 public class Player extends Gamer {
 
+	public Player(Cards cards, Name name) {
+		super(cards, name);
+	}
+
 	public Player(Name name) {
 		super(new Cards(), name);
+	}
+
+	public Player() {
+		super(new Cards(), new Name());
 	}
 
 	@Override

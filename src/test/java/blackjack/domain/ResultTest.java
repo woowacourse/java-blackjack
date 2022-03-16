@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ResultTest {
-	Dealer dealer;
 	Players players;
 	Player player1;
 	Player player2;
@@ -17,60 +16,52 @@ public class ResultTest {
 
 	@BeforeEach
 	void gamer_init() {
-		dealer = new Dealer();
-		player1 = new Player(new Name("pobi"));
-		player2 = new Player(new Name("jason"));
-		player3 = new Player(new Name("alpha"));
+		player1 = getBustedPlayer();
+		player2 = getBlackJackedPlayer();
+		player3 = getNormalPlayer();
 		players = new Players(List.of(player1, player2, player3));
 	}
 
 	@Test
 	void dealer_bust() {
-		dealer.addCards(
+		Dealer dealer = new Dealer(new Cards(
 			List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER), new Card(CardDenomination.KING, CardSuit.SPADE),
-				new Card(CardDenomination.TWO, CardSuit.SPADE)));
-		setPlayerBlackJack(player1);
-		setPlayerBust(player2);
-		setPlayerBlackNormal(player3);
+				new Card(CardDenomination.TWO, CardSuit.SPADE))));
 		Map<Player, ResultType> gameResult = Result.of(players, dealer).getGameResult();
 		assertThat(gameResult.values()).containsSequence(ResultType.WIN, ResultType.LOSE, ResultType.WIN);
 	}
 
 	@Test
 	void dealer_blackjack() {
-		dealer.addCards(
-			List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER), new Card(CardDenomination.ACE, CardSuit.SPADE)));
-		setPlayerBlackJack(player1);
-		setPlayerBust(player2);
-		setPlayerBlackNormal(player3);
+		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
+			new Card(CardDenomination.ACE, CardSuit.SPADE))));
 		Map<Player, ResultType> gameResult = Result.of(players, dealer).getGameResult();
 		assertThat(gameResult.values()).containsSequence(ResultType.DRAW, ResultType.LOSE, ResultType.LOSE);
 	}
 
 	@Test
 	void dealer_normal() {
-		dealer.addCards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
-			new Card(CardDenomination.NINE, CardSuit.SPADE)));
-		setPlayerBlackJack(player1);
-		setPlayerBust(player2);
-		setPlayerBlackNormal(player3);
+		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
+			new Card(CardDenomination.NINE, CardSuit.SPADE))));
 		Map<Player, ResultType> gameResult = Result.of(players, dealer).getGameResult();
 		assertThat(gameResult.values()).containsSequence(ResultType.WIN, ResultType.LOSE, ResultType.LOSE);
 	}
 
-	private void setPlayerBust(Player player) {
-		player.addCards(
+	private Player getBustedPlayer() {
+		return new Player(new Cards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.SPADE), new Card(CardDenomination.TEN, CardSuit.DIAMOND),
-				new Card(CardDenomination.TWO, CardSuit.HEART)));
+				new Card(CardDenomination.TWO, CardSuit.HEART))), new Name("pobi"));
 	}
 
-	private void setPlayerBlackJack(Player player) {
-		player.addCards(
-			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.ACE, CardSuit.DIAMOND)));
+	private Player getBlackJackedPlayer() {
+		return new Player(new Cards(
+			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.ACE, CardSuit.DIAMOND))),
+			new Name("jason"));
 	}
 
-	private void setPlayerBlackNormal(Player player) {
-		player.addCards(
-			List.of(new Card(CardDenomination.SIX, CardSuit.HEART), new Card(CardDenomination.FIVE, CardSuit.DIAMOND)));
+	private Player getNormalPlayer() {
+		return new Player(new Cards(
+			List.of(new Card(CardDenomination.SIX, CardSuit.HEART), new Card(CardDenomination.FIVE, CardSuit.DIAMOND))),
+			new Name("alpha"));
 	}
 }

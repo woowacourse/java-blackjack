@@ -16,36 +16,33 @@ class GamerTest {
 
 	@Test
 	void isBust() {
-		Gamer gamer = new Dealer();
-		gamer.addCards(
+		Gamer gamer = new Dealer(new Cards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.CLOVER), new Card(CardDenomination.TEN, CardSuit.HEART),
-				new Card(CardDenomination.TWO, CardSuit.SPADE)));
+				new Card(CardDenomination.TWO, CardSuit.SPADE))));
 		assertThat(gamer.isBust()).isTrue();
 	}
 
 	@Test
 	void check_optimal_ace_sum() {
-		Gamer gamer = new Player(new Name("pobi"));
-		gamer.addCards(
+		Gamer gamer = new Player(new Cards(
 			List.of(new Card(CardDenomination.ACE, CardSuit.HEART), new Card(CardDenomination.ACE, CardSuit.SPADE),
-				new Card(CardDenomination.NINE, CardSuit.SPADE)));
+				new Card(CardDenomination.NINE, CardSuit.SPADE))), new Name("pobi"));
 		assertThat(gamer.getScore()).isEqualTo(21);
 	}
 
 	@Test
 	void check_blackjack() {
-		Gamer gamer = new Player(new Name("pobi"));
-		gamer.addCards(
-			List.of(new Card(CardDenomination.ACE, CardSuit.HEART), new Card(CardDenomination.TEN, CardSuit.SPADE)));
+		Gamer gamer = new Player(new Cards(
+			List.of(new Card(CardDenomination.ACE, CardSuit.HEART), new Card(CardDenomination.TEN, CardSuit.SPADE))),
+			new Name("pobi"));
 		assertThat(gamer.isBlackJack()).isTrue();
 	}
 
 	@Test
 	void check_not_blackjack() {
-		Gamer gamer = new Player(new Name("pobi"));
-		gamer.addCards(
+		Gamer gamer = new Player(new Cards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.SPADE), new Card(CardDenomination.TEN, CardSuit.CLOVER),
-				new Card(CardDenomination.ACE, CardSuit.HEART)));
+				new Card(CardDenomination.ACE, CardSuit.HEART))), new Name("pobi"));
 		assertThat(gamer.isBlackJack()).isFalse();
 	}
 }
