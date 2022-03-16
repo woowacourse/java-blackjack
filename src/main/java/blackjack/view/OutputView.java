@@ -14,11 +14,11 @@ import blackjack.domain.participant.Player;
 public class OutputView {
 
     private static final String NAME_DELIMITER = ", ";
-    private static final String HANDOUT_MESSAGE = "\n딜러와 %s에게 2장의 카드를 나누어 주었습니다.\n";
+    private static final String HANDOUT_MESSAGE = "딜러와 %s에게 2장의 카드를 나누어 주었습니다.";
     private static final String CARD_INFORMATION_FORMAT = "%s카드: %s";
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PARTICIPANT_POINT_RESULT = " - 결과: %d";
-    private static final String PARTICIPANT_WINNING_RESULT_MESSAGE = "\n## 최종 승패";
+    private static final String PARTICIPANT_WINNING_RESULT_MESSAGE = "## 최종 승패";
     private static final String DEALER_DIRECTION = "딜러:";
     private static final String RESULT_DELIMITER = ": ";
     private static final String PROFIT_TITLE_MESSAGE = "## 최종 수익";
@@ -28,7 +28,7 @@ public class OutputView {
             .map(Participant::getName)
             .collect(Collectors.toList());
 
-        System.out.printf(HANDOUT_MESSAGE, String.join(NAME_DELIMITER, participantName));
+        System.out.printf("\n" + HANDOUT_MESSAGE + "\n", String.join(NAME_DELIMITER, participantName));
 
         printInitialDealerCardInformation(participants.getDealer());
         printInitialPlayersCardInformation(participants.getPlayers());
@@ -89,7 +89,7 @@ public class OutputView {
 
     public static void printResult(Map<PlayerWinningResult, Integer> dealerResult,
         Map<Player, PlayerWinningResult> playerResult) {
-        System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
+        System.out.println("\n" + PARTICIPANT_WINNING_RESULT_MESSAGE);
         System.out.print(DEALER_DIRECTION);
         dealerResult.forEach((key, value) -> System.out.print(" " + value + key.getResult()));
         System.out.println();

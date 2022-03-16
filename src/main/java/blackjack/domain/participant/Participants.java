@@ -10,7 +10,8 @@ public class Participants {
 
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 8;
-    private static final String PLAYER_NUMBER_ERROR_MESSAGE = "[ERROR] 플레이어 수는 1~8명 사이여야 합니다.";
+    private static final String PLAYER_NUMBER_ERROR_MESSAGE = "플레이어 수는 1~8명 사이여야 합니다.";
+    public static final String PLAYER_TURN_ACCESS_ERROR_MESSAGE = "플레이어 턴이 모두 종료되어 접근 할 수 없습니다.";
 
     private final Dealer dealer = new Dealer();
     private final List<Player> players;
@@ -66,7 +67,7 @@ public class Participants {
         return players.stream()
             .filter(Player::canHit)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("플레이어 턴이 모두 종료되었습니다."));
+            .orElseThrow(() -> new IllegalArgumentException(PLAYER_TURN_ACCESS_ERROR_MESSAGE));
     }
 
     public Dealer getDealer() {
