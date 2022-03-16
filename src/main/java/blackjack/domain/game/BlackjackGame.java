@@ -52,7 +52,7 @@ public class BlackjackGame {
     }
 
     public GameResult createGameResult() {
-        return new GameResult(participants.getPlayers(), participants.getDealer());
+        return new GameResult(participants);
     }
 
     public Participants getParticipants() {

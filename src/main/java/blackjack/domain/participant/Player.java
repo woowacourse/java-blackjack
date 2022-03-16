@@ -11,6 +11,10 @@ public class Player extends Participant {
         this.bettingAmount = bettingAmount;
     }
 
+    public long getBettingAmount() {
+        return bettingAmount.getValue();
+    }
+
     @Override
     public boolean isFinished() {
         return cards.getStatus() != Status.NONE;

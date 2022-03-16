@@ -3,28 +3,33 @@ package blackjack.domain.game;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GameResult {
+    private static final int DIVISION_NUMBER_FOR_WINNER = 2;
+    private static final int MULTIPLE_NUMBER_FOR_WINNER = 3;
+    private static final long DEFAULT_BETTING_PRIZE = 0L;
 
     private final Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
+    private final Map<Player, Long> bettingResult = new LinkedHashMap<>();
 
-    public GameResult(List<Player> players, Dealer dealer) {
-        initGameResult(new ArrayList<>(players), dealer);
+    public GameResult(Participants participants) {
+        initGameResult(participants.getPlayers(), participants.getDealer());
     }
 
     private void initGameResult(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            gameResult.put(player, playResult(player, dealer));
+            gameResult.put(player, elicitMatchResult(player, dealer));
+            bettingResult.put(player, elicitBettingResult(player, dealer));
         }
     }
 
-    private MatchResult playResult(Player player, Dealer dealer) {
+    private MatchResult elicitMatchResult(Player player, Dealer dealer) {
         Cards playerCards = player.getCards();
         Cards dealerCards = dealer.getCards();
 
@@ -54,8 +59,39 @@ public class GameResult {
                 || (status1 == Status.NONE && status2 == Status.NONE && cards1.sum() > cards2.sum());
     }
 
+    private Long elicitBettingResult(Player player, Dealer dealer) {
+        Status playerStatus = player.getCards().getStatus();
+        Status dealerStatus = dealer.getCards().getStatus();
+
+        if (playerStatus == Status.BLACKJACK && dealerStatus != Status.BLACKJACK) {
+            return player.getBettingAmount() / DIVISION_NUMBER_FOR_WINNER * MULTIPLE_NUMBER_FOR_WINNER;
+        }
+
+        if (getMatchResult(player) == MatchResult.WIN) {
+            return player.getBettingAmount();
+        }
+
+        if (getMatchResult(player) == MatchResult.LOSE) {
+            return -player.getBettingAmount();
+        }
+
+        return DEFAULT_BETTING_PRIZE;
+    }
+
+    public long getDealerProfit() {
+        long allBettingAmount = DEFAULT_BETTING_PRIZE;
+        for (Map.Entry<Player, Long> entry : bettingResult.entrySet()) {
+            allBettingAmount -= entry.getValue();
+        }
+        return allBettingAmount;
+    }
+
     public MatchResult getMatchResult(Player player) {
         return gameResult.get(player);
+    }
+
+    public Long getBettingResult(Player player) {
+        return bettingResult.get(player);
     }
 
     public long calculateDealerMatchResultCount(MatchResult matchResult) {

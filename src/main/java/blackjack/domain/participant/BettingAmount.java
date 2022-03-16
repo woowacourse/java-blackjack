@@ -30,4 +30,7 @@ public class BettingAmount {
         }
     }
 
+    public long getValue() {
+        return value;
+    }
 }
