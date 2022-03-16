@@ -2,6 +2,8 @@ package blackjack.domain.state;
 
 import static blackjack.domain.card.Denomination.A;
 import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.SPADES;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,5 +21,16 @@ class BlackjackTest {
         final BlackjackGameState compareState = new Blackjack(cards);
 
         assertThat(blackjack.earningRate(compareState)).isEqualTo(0);
+    }
+
+    @Test
+    void 본인만_블랙잭이면_수익률이_1_5배() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
+        final BlackjackGameState blackjack = new Blackjack(cards);
+
+        final Cards compareCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, TWO)));
+        final BlackjackGameState compareState = new Bust(compareCards);
+
+        assertThat(blackjack.earningRate(compareState)).isEqualTo(1.5);
     }
 }
