@@ -3,7 +3,8 @@ package view;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.participant.ParticipantDTO;
+import domain.participant.Name;
+import domain.participant.ParticipantInfo;
 
 public class OutputView {
 
@@ -17,44 +18,53 @@ public class OutputView {
 	private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d무 %d패\n";
 	private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
 	private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
-	private static final String BLACK_JACK_RESuLT_TITLE_MESSAGE = "[ BLACK JACK ]";
+	private static final String BLACKJACK_MESSAGE = "[ BlackJack!!! ]";
+	private static final int LIMIT_TO_NOT_BUST_SCORE = 21;
+	private static final int FIRST_CARD_INDEX = 0;
 
-	public static void printInitMessage(List<String> names) {
-		String namesForPrint = names.stream().collect(Collectors.joining(", "));
+	public static void printInitMessage(List<Name> names) {
+		List<String> nameInfo = names.stream().map(Name::getName).collect(Collectors.toList());
+		String namesForPrint = nameInfo.stream().collect(Collectors.joining(", "));
 		System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
 	}
 
-	public static void printHand(ParticipantDTO participantInfo) {
+	public static void printOneHandForDealer(ParticipantInfo participantInfo) {
+		System.out.println(String.format(SHOW_HAND_FORMAT, participantInfo.getName().getName(),
+			getCardInfo(participantInfo).get(FIRST_CARD_INDEX)));
+	}
+
+	public static void printHand(ParticipantInfo participantInfo) {
 		System.out.println(joinNameAndCard(participantInfo));
+		int score = participantInfo.getHand().getScore();
+
+		if (participantInfo.getHand().isBlackJack()) {
+			printMessage(BLACKJACK_MESSAGE);
+			return;
+		}
+
+		printStatusMessage(score);
 	}
 
-	public static void printHandAndScore(ParticipantDTO participantInfo, int score) {
+	private static void printStatusMessage(int score) {
+		if (score > LIMIT_TO_NOT_BUST_SCORE) {
+			printMessage(BUST_MESSAGE);
+			return;
+		}
+
+		if (score == LIMIT_TO_NOT_BUST_SCORE) {
+			printMessage(MAX_SCORE_MESSAGE);
+			return;
+		}
+	}
+
+	public static void printHandAndScore(ParticipantInfo participantInfo) {
 		System.out.println(
-			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(participantInfo), String.valueOf(score)));
-	}
-
-	private static String joinNameAndCard(ParticipantDTO participantInfo) {
-		List<String> cardList = participantInfo.getHand().stream()
-			.map(card -> String.join("", List.of(card.getRank().getRank(), card.getSuit().getSuit())))
-			.collect(Collectors.toList());
-
-		return String.format(SHOW_HAND_FORMAT, participantInfo.getName().getName(),
-			String.join(JOINING_DELIMITER, cardList));
-	}
-
-	public static void printBustMessage() {
-		System.out.println(BUST_MESSAGE);
-	}
-
-	public static void printMaxScoreMessage() {
-		System.out.println(MAX_SCORE_MESSAGE);
-	}
-
-	public static void printResultTitle() {
-		System.out.println(RESULT_TITLE_MESSAGE);
+			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(participantInfo),
+				String.valueOf(participantInfo.getHand().getScore())));
 	}
 
 	public static void printDealerResult(int winCount, int drawCount, int loseCount) {
+		printMessage(RESULT_TITLE_MESSAGE);
 		System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, winCount, drawCount, loseCount);
 	}
 
@@ -62,15 +72,26 @@ public class OutputView {
 		System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, name, result);
 	}
 
+	public static void printMessage(String message) {
+		System.out.println(message);
+	}
+
 	public static void printDealerDrawMessage() {
 		System.out.println(DEALER_DRAW_MESSAGE);
 	}
 
-	public static void printBlackJackResultTitle() {
-		System.out.println(BLACK_JACK_RESuLT_TITLE_MESSAGE);
+	private static String joinNameAndCard(ParticipantInfo participantInfo) {
+		List<String> cardInfo = getCardInfo(participantInfo);
+
+		return String.format(SHOW_HAND_FORMAT, participantInfo.getName().getName(),
+			String.join(JOINING_DELIMITER, cardInfo));
 	}
 
-	public static void printErrorMessage(String message) {
-		System.out.println(message);
+	private static List<String> getCardInfo(ParticipantInfo participantInfo) {
+		List<String> cardInfo = participantInfo.getHand().getCards().stream()
+			.map(card -> String.join("", List.of(card.getRank().getRank(), card.getSuit().getSuit())))
+			.collect(Collectors.toList());
+		return cardInfo;
 	}
+
 }

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.card.deckstrategy.GenerationDeckStrategy;
@@ -22,23 +23,35 @@ import domain.result.WinOrLose;
 
 public class PlayersTest {
 
-	Card card_A = new Card(Rank.RANK_ACE, Suit.CLOVER);
-	Card card_2 = new Card(Rank.RANK_TWO, Suit.CLOVER);
-	Card card_Q = new Card(Rank.RANK_QUEEN, Suit.CLOVER);
-	Card card_K = new Card(Rank.RANK_KNIGHT, Suit.CLOVER);
-	Card card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
-	List<Card> cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
-	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
-	Dealer dealerBlackJack = new Dealer(cards_21);
-
-	Players players;
-	Dealer dealer_17;
+	private Card card_A;
+	private Card card_2;
+	private Card card_Q;
+	private Card card_K;
+	private Card card_6;
+	private List<Card> cards_21;
+	private List<Card> cards_BURST;
+	private Dealer dealerBlackJack;
+	private Dealer dealer_17;
+	private Player pobi;
+	private Player jason;
+	private Players players;
 
 	@BeforeEach
 	void setUp() {
+		card_A = new Card(Rank.ACE, Suit.CLOVER);
+		card_2 = new Card(Rank.TWO, Suit.CLOVER);
+		card_Q = new Card(Rank.QUEEN, Suit.CLOVER);
+		card_K = new Card(Rank.KNIGHT, Suit.CLOVER);
+		card_6 = new Card(Rank.SIX, Suit.CLOVER);
+		cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
+		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
+		dealerBlackJack = new Dealer(new Hand(cards_21));
+		pobi = new Player(new Name("pobi"), new Hand(cards_21));
+		jason = new Player(new Name("jason"), new Hand(cards_BURST));
 		players = new Players(
-			Arrays.asList(new Player(new Name("pobi"), cards_21), new Player(new Name("jason"), cards_BURST)));
-		dealer_17 = new Dealer(List.of(card_A, card_6));
+			Arrays.asList(pobi, jason));
+		List<Card> cards = new ArrayList<>(List.of(card_A, card_6));
+		dealer_17 = new Dealer(new Hand(cards));
 	}
 
 	@Test
@@ -64,7 +77,7 @@ public class PlayersTest {
 	@Test
 	@DisplayName("딜러가 블랙잭일 경우 결과 반환")
 	void getResultAtBlackJack() {
-		Map<Name, WinOrLose> resultMap = players.getResultAtBlackJack(dealerBlackJack);
+		Map<Name, WinOrLose> resultMap = players.getResult(dealerBlackJack);
 		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.DRAW);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}
@@ -72,7 +85,7 @@ public class PlayersTest {
 	@Test
 	@DisplayName("최종 게임 결과 반환")
 	void getResultAtFinal() {
-		Map<Name, WinOrLose> resultMap = players.getResultAtFinal(dealer_17);
+		Map<Name, WinOrLose> resultMap = players.getResult(dealer_17);
 		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.WIN);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}
@@ -84,12 +97,12 @@ public class PlayersTest {
 
 			@Override
 			public Queue<Card> generateCardsForBlackJack() {
-				return new LinkedList<>(Arrays.asList(new Card(Rank.RANK_FOUR, Suit.CLOVER)));
+				return new LinkedList<>(Arrays.asList(new Card(Rank.FOUR, Suit.CLOVER)));
 			}
 		}
 		Deck deck = Deck.from(new TestGenerationDeckStrategy());
 		dealer_17.addCard(deck.draw());
-		Map<Name, WinOrLose> resultMap = players.getResultAtFinal(dealer_17);
+		Map<Name, WinOrLose> resultMap = players.getResult(dealer_17);
 		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.WIN);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}

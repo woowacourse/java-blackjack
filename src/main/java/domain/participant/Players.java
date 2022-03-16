@@ -10,8 +10,6 @@ import domain.card.Card;
 import domain.result.WinOrLose;
 
 public class Players {
-	private static final String NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] BlackJack 이 없습니다.";
-
 	private final LinkedHashMap<Name, Player> players;
 
 	public Players(List<Player> players) {
@@ -43,35 +41,20 @@ public class Players {
 		return players.get(name).isMaxScore();
 	}
 
-	public Map<Name, WinOrLose> getResultAtBlackJack(Participant other) {
-		if (!other.isBlackJack()) {
-			throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
-		}
-		Map<Name, WinOrLose> map = new LinkedHashMap<>();
-		players.keySet().stream().forEach(name -> map.put(name, players.get(name).compareAtBlackJack(other)));
-		return map;
-	}
-
-	public Map<Name, WinOrLose> getResultAtFinal(Participant other) {
+	public Map<Name, WinOrLose> getResult(Participant other) {
 		Map<Name, WinOrLose> map = new LinkedHashMap<>();
 		players.keySet().stream()
-			.forEach(name -> map.put(name, players.get(name).compareAtFinal(other)));
+			.forEach(name -> map.put(name, players.get(name).getResult(other)));
 		return map;
 	}
 
-	public List<Integer> getScores() {
-		return players.keySet().stream()
-			.map(name -> players.get(name).getBestScore())
-			.collect(Collectors.toList());
+	public ParticipantInfo getPlayerInfoByName(Name name) {
+		return new ParticipantInfo(players.get(name));
 	}
 
-	public ParticipantDTO getPlayerDTOByName(Name name) {
-		return players.get(name).getInfo();
-	}
-
-	public List<ParticipantDTO> getPlayerDTOs() {
+	public List<ParticipantInfo> getPlayerInfo() {
 		return players.keySet().stream()
-			.map(name -> players.get(name).getInfo())
+			.map(name -> new ParticipantInfo(players.get(name)))
 			.collect(Collectors.toList());
 	}
 }
