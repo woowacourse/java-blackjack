@@ -21,7 +21,7 @@ public class Controller {
         OutputView.printInitHands(dealer, players);
 
         if (dealer.isBlackJack()) {
-            OutputView.printDealerISBlackJackMessage();
+            OutputView.printDealerIsBlackJackMessage();
             OutputView.printResult(players.getNames(), players.getResultAtDealerBlackJack(dealer));
             return;
         }

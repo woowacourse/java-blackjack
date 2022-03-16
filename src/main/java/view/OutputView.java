@@ -40,7 +40,7 @@ public class OutputView {
         System.out.printf(SHOW_HAND_FORMAT, name.getName(), players.showHandByName(name));
     }
 
-    public static void printDealerISBlackJackMessage() {
+    public static void printDealerIsBlackJackMessage() {
         System.out.println(DEALER_BLACK_JACK_MESSAGE);
     }
 

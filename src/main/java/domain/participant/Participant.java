@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.InitCards;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,9 +13,6 @@ public abstract class Participant {
     private static final int BLACK_JACK_NUMBER = 21;
     private static final int ACE_COUNT_LOWER_BOUND = 0;
     private static final int ADDITIONAL_SCORE_OF_ACE = 10;
-    private static final int SECOND_INDEX_OF_HAND = 1;
-    private static final int POINT_OF_ACE = 1;
-    private static final int POINT_OF_TEN = 10;
 
     protected static final int FIRST_INDEX_OF_HAND = 0;
 
@@ -66,12 +64,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        int firstCardPoint = hand.get(FIRST_INDEX_OF_HAND).getPoint();
-        int secondCardPoint = hand.get(SECOND_INDEX_OF_HAND).getPoint();
-        if (firstCardPoint == POINT_OF_ACE && secondCardPoint == POINT_OF_TEN) {
-            return true;
-        }
-        if (firstCardPoint == POINT_OF_TEN && secondCardPoint == POINT_OF_ACE) {
+        if (hand.size() == InitCards.INIT_CARDS_SIZE && isUpperBoundScore()) {
             return true;
         }
         return false;
