@@ -8,7 +8,7 @@ public class Dealer extends Participant {
     private static final String NAME = "딜러";
 
     public Dealer() {
-        super(NAME);
+        super();
     }
 
     public boolean canDrawCard() {
@@ -17,5 +17,10 @@ public class Dealer extends Participant {
 
     public Card openFirstCard() {
         return getCards().findFirst();
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }

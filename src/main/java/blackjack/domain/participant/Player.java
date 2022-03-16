@@ -1,15 +1,18 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Money;
+import blackjack.domain.Name;
 import blackjack.domain.Record;
 
 public class Player extends Participant {
 
     private final Money money;
+    private final Name name;
 
     public Player(final String name) {
-        super(name);
+        super();
         this.money = new Money();
+        this.name = new Name(name);
     }
 
     public void initMoney(final int bettingAmount) {
@@ -40,5 +43,10 @@ public class Player extends Participant {
 
     public int getPrize() {
         return money.getValue();
+    }
+
+    @Override
+    public String getName() {
+        return name.getValue();
     }
 }

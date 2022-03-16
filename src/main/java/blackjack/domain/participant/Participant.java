@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Name;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Status;
@@ -12,12 +11,10 @@ public abstract class Participant {
     private static final int BLACKJACK_STANDARD = 21;
 
     private final Cards cards;
-    private final Name name;
     private Status status;
 
-    public Participant(String name) {
+    public Participant() {
         this.cards = new Cards();
-        this.name = new Name(name);
         this.status = Status.HIT;
     }
 
@@ -51,11 +48,9 @@ public abstract class Participant {
         return cards;
     }
 
-    public String getName() {
-        return name.getValue();
-    }
-
     public boolean isBlackjack() {
         return cards.sumValue() == BLACKJACK_STANDARD && cards.getValue().size() == 2;
     }
+
+    public abstract String getName();
 }
