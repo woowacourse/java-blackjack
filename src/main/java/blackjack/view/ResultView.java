@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.model.BlackjackGame;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
-import blackjack.model.result.BlackJackGameResult;
+import blackjack.model.result.BlackjackGameResult;
 import blackjack.model.result.MatchResult;
 
 import java.util.List;
@@ -97,7 +97,7 @@ public class ResultView {
                 participant.getState().sumScore());
     }
 
-    public static void printMatchResult(final BlackJackGameResult blackJackGameResult) {
+    public static void printMatchResult(final BlackjackGameResult blackJackGameResult) {
         printDealerMatchResult(blackJackGameResult.getDealerMatchResult());
 
         blackJackGameResult.getGamersMatchResult().forEach((name, matchResult) ->

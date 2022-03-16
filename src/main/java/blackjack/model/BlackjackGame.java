@@ -4,7 +4,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Players;
-import blackjack.model.result.BlackJackGameResult;
+import blackjack.model.result.BlackjackGameResult;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -56,8 +56,8 @@ public class BlackjackGame {
         consumer.accept(dealer);
     }
 
-    public BlackJackGameResult createMatchResult() {
-        return new BlackJackGameResult(dealer, players);
+    public BlackjackGameResult createMatchResult() {
+        return new BlackjackGameResult(dealer, players);
     }
 
     public List<Participant> getPlayers() {

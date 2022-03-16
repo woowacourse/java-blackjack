@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BlackJackGameResult {
+public class BlackjackGameResult {
     private final Map<String, MatchResult> gamersMatchResult;
     private final Map<MatchResult, Integer> dealerMatchResult;
 
-    public BlackJackGameResult(Participant dealer, Players players) {
+    public BlackjackGameResult(Participant dealer, Players players) {
         this.gamersMatchResult = createGamersMatchResult(dealer, players);
         this.dealerMatchResult = createDealerMatchResult(dealer, players);
     }
