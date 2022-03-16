@@ -43,6 +43,10 @@ public class Player extends User {
         }
     }
 
+    public int getRevenue(double earningRate) {
+        return money.calculateRevenue(earningRate);
+    }
+
     @Override
     public List<Card> showInitCards() {
         return cards.getLimitedCard(INIT_COUNT);

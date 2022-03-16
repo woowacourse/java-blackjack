@@ -25,7 +25,7 @@ public class BettingMoney {
         }
     }
 
-    public int getBettingMoney() {
-        return this.bettingMoney;
+    public int calculateRevenue(double earningRate) {
+        return (int) (bettingMoney * earningRate);
     }
 }
