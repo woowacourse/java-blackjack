@@ -24,10 +24,10 @@ class BlackGameResultTest {
         Player player3 = new Player("parang");
         Dealer dealer = new Dealer();
 
-        player1.receiveCard(new Card(Suit.SPADE, Denomination.EIGHT));
-        player2.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
-        player3.receiveCard(new Card(Suit.SPADE, Denomination.ACE));
-        dealer.receiveCard(new Card(Suit.SPADE, Denomination.NINE));
+        player1.receiveCard(Card.valueOf(Suit.SPADE, Denomination.EIGHT));
+        player2.receiveCard(Card.valueOf(Suit.SPADE, Denomination.JACK));
+        player3.receiveCard(Card.valueOf(Suit.SPADE, Denomination.ACE));
+        dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.NINE));
 
         BlackJackGameResult blackJackGameResult =
             BlackJackGameResult.ofGameResult(dealer, List.of(player1, player2, player3));

@@ -30,6 +30,13 @@ public class Card {
         return new ArrayList<>(CARDS);
     }
 
+    public static Card valueOf(Suit suit, Denomination denomination) {
+        return CARDS.stream()
+                .filter(card -> card.suit == suit && card.denomination == denomination)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
+    }
+
     public boolean isSameDenominationAsAce() {
         return denomination == Denomination.ACE;
     }
