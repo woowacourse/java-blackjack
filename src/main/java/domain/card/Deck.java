@@ -11,12 +11,12 @@ public class Deck {
 
     private final LinkedList<Card> deck;
 
-    private Deck(LinkedList<Card> cards) {
-        deck = cards;
+    private Deck(List<Card> cards) {
+        deck = new LinkedList<>(cards);
     }
 
     public static Deck getInstance() {
-        LinkedList<Card> tmpCards = new LinkedList<>(Card.getCardCache());
+        List<Card> tmpCards = new LinkedList<>(Card.getCardCache());
         Collections.shuffle(tmpCards);
         return new Deck(tmpCards);
     }
