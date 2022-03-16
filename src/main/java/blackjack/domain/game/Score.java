@@ -3,9 +3,9 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public class Score implements Comparable<Score> {
     public static final int DEALER_EXTRA_CARD_LIMIT = 16;
@@ -25,7 +25,7 @@ public class Score implements Comparable<Score> {
     }
 
     public static Score calculateSumFrom(Hand hand) {
-        Set<Card> cards = hand.getCards();
+        List<Card> cards = hand.getCards();
 
         int maximumScore = cards.stream()
                 .mapToInt(card -> card.getRankValue().getValue())

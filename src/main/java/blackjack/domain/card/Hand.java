@@ -1,19 +1,19 @@
 package blackjack.domain.card;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hand {
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
 
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
-    private Hand(Set<Card> cards) {
+    private Hand(List<Card> cards) {
         this.cards = cards;
     }
 
     public static Hand of(Card card1, Card card2) {
-        Set<Card> initialCards = new HashSet<>(Set.of(card1, card2));
+        List<Card> initialCards = new ArrayList<>(List.of(card1, card2));
         return new Hand(initialCards);
     }
 
@@ -28,8 +28,8 @@ public class Hand {
         }
     }
 
-    public Set<Card> getCards() {
-        return Set.copyOf(cards);
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
     @Override
