@@ -21,5 +21,11 @@ public class Application {
                 .stream()
                 .map(ParticipantCards::from)
                 .collect(Collectors.toList()));
+
+
+    }
+
+    private static void runPlayerTurn(final Players players) {
+//        if ()
     }
 }

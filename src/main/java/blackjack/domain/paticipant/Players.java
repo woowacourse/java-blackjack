@@ -1,5 +1,6 @@
 package blackjack.domain.paticipant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 public class Players {
 
     private final List<Player> players;
+    private int currentPlayerTurnIndex;
 
     public Players(final List<Player> players) {
         Objects.requireNonNull(players, "players는 null이 들어올 수 없습니다.");
@@ -41,6 +43,24 @@ public class Players {
                 .map(Player::getName)
                 .distinct()
                 .count();
+    }
+
+    public Player hitCurrentTurnPlayer(final Card card) {
+        final Player currentTurnPlayer = currentTurnPlayer();
+        currentTurnPlayer.hit(card);
+        currentPlayerTurnIndex++;
+        return currentTurnPlayer;
+    }
+
+    public Player currentTurnPlayer() {
+        if (isAllTurnEnd()) {
+            throw new IllegalStateException("모든 턴이 종료되었습니다.");
+        }
+        return players.get(currentPlayerTurnIndex);
+    }
+
+    private boolean isAllTurnEnd() {
+        return players.size() <= currentPlayerTurnIndex;
     }
 
     public int dealerProfit(final Dealer dealer) {
