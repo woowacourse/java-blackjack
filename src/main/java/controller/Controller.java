@@ -1,7 +1,7 @@
 package controller;
 
 import domain.betting.BettingReceipt;
-import domain.betting.Money;
+import domain.betting.BettingMoney;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.card.InitCards;
@@ -23,7 +23,7 @@ public class Controller {
         Deck deck = new Deck(Cards.getInstance().getCards());
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(createPlayers(deck));
-        BettingReceipt bettingReceipt = new BettingReceipt(createBettingLog(players));
+        BettingReceipt bettingReceipt = new BettingReceipt(createBettingReceipt(players));
 
         OutputView.printInitHands(dealer, players);
 
@@ -48,12 +48,12 @@ public class Controller {
         return players;
     }
 
-    private Map<Name, Money> createBettingLog(Players players) {
-        Map<Name, Money> bettingLog = new LinkedHashMap<>();
+    private Map<Name, BettingMoney> createBettingReceipt(Players players) {
+        Map<Name, BettingMoney> bettingReceipt = new LinkedHashMap<>();
         for (Name name : players.getNames()) {
-            bettingLog.put(name, new Money(InputView.inputMoney(name)));
+            bettingReceipt.put(name, new BettingMoney(InputView.inputMoney(name)));
         }
-        return bettingLog;
+        return bettingReceipt;
     }
 
     private void drawForPlayers(Deck deck, Players players) {

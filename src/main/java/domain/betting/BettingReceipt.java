@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class BettingReceipt {
 
-    private final Map<Name, Money> bettingReceipt;
+    private final Map<Name, BettingMoney> bettingReceipt;
 
-    public BettingReceipt(Map<Name, Money> bettingReceipt) {
+    public BettingReceipt(Map<Name, BettingMoney> bettingReceipt) {
         this.bettingReceipt = Map.copyOf(bettingReceipt);
     }
 
@@ -24,7 +24,7 @@ public class BettingReceipt {
     }
 
     private double calculatePlayerProfit(Name name, Result result, boolean isBlackJack) {
-        int bettingMoney = bettingReceipt.get(name).getMoney();
+        int bettingMoney = bettingReceipt.get(name).getBettingMoney();
         if (result.getVersusOfPlayer(name) == Versus.WIN) {
             return bettingMoney * getBlackJackBonusRate(isBlackJack);
         }
