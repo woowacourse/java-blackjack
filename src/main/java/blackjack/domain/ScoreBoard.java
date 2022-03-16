@@ -56,4 +56,8 @@ public class ScoreBoard {
     public int findDealerMatchScore(MatchResult matchResult) {
         return dealerMatchResult.get(matchResult);
     }
+
+    public MatchResult findPlayerMatchResult(String playerName) {
+        return playersMatchResult.get(playerName);
+    }
 }

@@ -43,7 +43,7 @@ public class ScoreBoardTest {
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchResultScore = scoreBoard.findDealerMatchScore(WIN);
-        MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
+        MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(player.getName());
 
         // then
         assertThat(dealerMatchResultScore).isEqualTo(1);
@@ -60,7 +60,7 @@ public class ScoreBoardTest {
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchResultScore = scoreBoard.findDealerMatchScore(LOSE);
-        MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
+        MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(player.getName());
 
         // then
         assertThat(dealerMatchResultScore).isEqualTo(1);
@@ -77,7 +77,7 @@ public class ScoreBoardTest {
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchResultScore = scoreBoard.findDealerMatchScore(LOSE);
-        MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
+        MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(player.getName());
 
         // then
         assertAll(
@@ -95,7 +95,7 @@ public class ScoreBoardTest {
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchScore = scoreBoard.findDealerMatchScore(WIN);
-        MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
+        MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(player.getName());
 
         // then
         assertAll(
@@ -113,7 +113,7 @@ public class ScoreBoardTest {
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchScore = scoreBoard.findDealerMatchScore(DRAW);
-        MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
+        MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(player.getName());
 
         // then
         assertAll(
@@ -131,7 +131,7 @@ public class ScoreBoardTest {
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         int dealerMatchScore = scoreBoard.findDealerMatchScore(DRAW);
-        MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
+        MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(player.getName());
 
         // then
         assertAll(

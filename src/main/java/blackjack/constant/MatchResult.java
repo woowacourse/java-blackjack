@@ -6,18 +6,21 @@ import java.util.function.BiPredicate;
 
 public enum MatchResult {
 
-    BLACKJACK("블랙잭", (player, dealer) -> blackjackCondition(player, dealer)),
-    WIN("승", (player, dealer) -> winCondition(player, dealer)),
-    LOSE("패", (player, dealer) -> loseCondition(player, dealer)),
-    DRAW("무", (player, dealer) -> drawCondition(player, dealer));
+    BLACKJACK("블랙잭", (player, dealer) -> blackjackCondition(player, dealer), 1.5),
+    WIN("승", (player, dealer) -> winCondition(player, dealer), 1),
+    LOSE("패", (player, dealer) -> loseCondition(player, dealer), -1),
+    DRAW("무", (player, dealer) -> drawCondition(player, dealer), 0);
 
     private final String name;
-
     private final BiPredicate<Hand, Hand> condition;
+    private final double earningsRate;
 
-    MatchResult(String name, BiPredicate<Hand, Hand> condition) {
+    MatchResult(String name,
+                BiPredicate<Hand, Hand> condition,
+                double earningsRate) {
         this.name = name;
         this.condition = condition;
+        this.earningsRate = earningsRate;
     }
 
     private static boolean blackjackCondition(Hand player, Hand dealer) {
@@ -55,6 +58,10 @@ public enum MatchResult {
             return WIN;
         }
         return DRAW;
+    }
+
+    public int getEarnings(int bettingMoney) {
+        return (int) (earningsRate * bettingMoney);
     }
 
     public String getName() {
