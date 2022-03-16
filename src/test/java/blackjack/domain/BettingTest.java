@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import blackjack.domain.Betting;
-import blackjack.domain.PlayRecord;
 import blackjack.domain.participant.Name;
 
 class BettingTest {
