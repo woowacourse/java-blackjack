@@ -33,12 +33,6 @@ public abstract class User {
         return cards.isBust(cards.getScore());
     }
 
-    public abstract boolean isDealer();
-
-    public abstract List<Card> showInitCards();
-
-    public abstract boolean isDrawable();
-
     public int calculateScore() {
         int score = cards.getScore();
         validateNegative(score);
@@ -46,11 +40,17 @@ public abstract class User {
         return score;
     }
 
-    public String getName(){
-        return name;
-    }
-
     public boolean isBlackJack() {
         return ((cards.getCards().size() == 2) && cards.isSameBlackJackNumber(calculateScore()));
+    }
+
+    public abstract boolean isDealer();
+
+    public abstract List<Card> showInitCards();
+
+    public abstract boolean isDrawable();
+
+    public String getName(){
+        return name;
     }
 }
