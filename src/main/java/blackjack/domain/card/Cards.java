@@ -15,8 +15,8 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public boolean isBust(int score) {
-        return score > BLACKJACK_NUMBER;
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_NUMBER;
     }
 
     public boolean isSameBlackJackNumber(int score) {

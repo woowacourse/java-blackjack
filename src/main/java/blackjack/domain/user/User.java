@@ -30,7 +30,7 @@ public abstract class User {
     }
 
     public boolean isBust() {
-        return cards.isBust(cards.calculateScore());
+        return cards.isBust();
     }
 
     public int getScore() {
