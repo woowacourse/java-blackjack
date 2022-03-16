@@ -15,11 +15,11 @@ public enum MatchResult {
     LOSE("패", (dealerState, playerState) ->
             !dealerState.isBlackjack() && playerState.isBlackjack() ||
                     dealerState.isBust() && !playerState.isBust() ||
+                    dealerState.isBust() && playerState.isBust() ||
                     !dealerState.isBust() && !dealerState.isWinBy(playerState)),
 
     DRAW("무", (dealerState, playerState) ->
-            dealerState.isBust() && playerState.isBust() ||
-                    dealerState.isBlackjack() && playerState.isBlackjack() ||
+            dealerState.isBlackjack() && playerState.isBlackjack() ||
                     !dealerState.isBust() && dealerState.isDrawWith(playerState)),
     ;
 
