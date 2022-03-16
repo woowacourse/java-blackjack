@@ -18,8 +18,4 @@ public enum Selection {
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력하여야 합니다."));
     }
-
-    public static boolean isYes(Selection selection) {
-        return selection == YES;
-    }
 }

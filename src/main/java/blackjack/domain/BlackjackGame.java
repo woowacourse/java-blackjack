@@ -65,7 +65,7 @@ public class BlackjackGame {
         if (player.isBust()) {
             return;
         }
-        if (!Selection.isYes(requestSelection(player))) {
+        if (Selection.NO == requestSelection(player)) {
             return;
         }
         player.drawCard(deck);
