@@ -50,6 +50,10 @@ public class Cards {
                 .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
     }
 
+    public boolean isBlackjack(final int initialCardCount) {
+        return sumValue() == MAX_SCORE && value.size() == initialCardCount;
+    }
+
     public Set<Card> getValue() {
         return new LinkedHashSet<>(value);
     }

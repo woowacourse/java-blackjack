@@ -8,7 +8,6 @@ import java.util.stream.IntStream;
 public abstract class Participant {
 
     private static final int INITIAL_CARD_COUNT = 2;
-    private static final int BLACKJACK_STANDARD = 21;
 
     private final Cards cards;
     private Status status;
@@ -49,7 +48,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return cards.sumValue() == BLACKJACK_STANDARD && cards.getValue().size() == 2;
+        return cards.isBlackjack(INITIAL_CARD_COUNT);
     }
 
     public abstract String getName();
