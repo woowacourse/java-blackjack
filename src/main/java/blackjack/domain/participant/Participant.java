@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -25,13 +24,15 @@ public abstract class Participant {
         cards.append(card);
     }
 
+    protected boolean isBlackjack() {
+        return getCards().size() == 2 && cards.calculateTotalScore() == BLACKJACK_SCORE;
+    }
+
     protected boolean isBust() {
         return cards.calculateTotalScore() > BLACKJACK_SCORE;
     }
 
-    public abstract boolean isDrawable();
-
-    public abstract GameResult decideResult(Participant participant);
+    public abstract boolean canHit();
 
     public String getName() {
         return name.getValue();

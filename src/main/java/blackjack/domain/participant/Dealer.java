@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import java.util.List;
 
@@ -14,20 +13,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isDrawable() {
+    public boolean canHit() {
         return getTotalScore() <= DRAWABLE_LIMIT_VALUE;
-    }
-
-    @Override
-    public GameResult decideResult(Participant participant) {
-        if (participant.isBust()) {
-            return GameResult.WIN;
-        }
-
-        if (isBust()) {
-            return GameResult.LOSE;
-        }
-
-        return GameResult.of(getTotalScore(), participant.getTotalScore());
     }
 }

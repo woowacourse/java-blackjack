@@ -1,7 +1,11 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.BattingResult.LOSE;
+import static blackjack.domain.BattingResult.WIN;
+import static blackjack.domain.BattingResult.WIN_BY_BLACKJACK;
+
 import blackjack.domain.BattingMoney;
-import blackjack.domain.GameResult;
+import blackjack.domain.BattingResult;
 import blackjack.domain.card.Card;
 import java.util.List;
 
@@ -15,20 +19,23 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean isDrawable() {
-        return getTotalScore() <= BLACKJACK_SCORE;
+    public boolean canHit() {
+        return getTotalScore() < BLACKJACK_SCORE;
     }
 
-    @Override
-    public GameResult decideResult(Participant participant) {
+    public int calculateBattingMoney(Participant participant) {
         if (isBust()) {
-            return GameResult.LOSE;
+            return LOSE.getResult(battingMoney);
         }
 
         if (participant.isBust()) {
-            return GameResult.WIN;
+            return WIN.getResult(battingMoney);
         }
 
-        return GameResult.of(getTotalScore(), participant.getTotalScore());
+        if (isBlackjack() && !participant.isBlackjack()) {
+            return WIN_BY_BLACKJACK.getResult(battingMoney);
+        }
+
+        return BattingResult.of(getTotalScore(), participant.getTotalScore()).getResult(battingMoney);
     }
 }

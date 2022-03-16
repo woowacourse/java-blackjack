@@ -1,14 +1,10 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.toList;
-
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.RandomCardsGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.DealerResult;
-import blackjack.dto.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
@@ -28,7 +24,6 @@ public class BlackjackRunner {
         drawDealer(deck, dealer);
 
         OutputView.printResult(dealer, players.getValue());
-        OutputView.printGameResult(new DealerResult(players, dealer), createPlayerResults(players, dealer));
     }
 
     private void playing(Deck deck, Player player) {
@@ -40,7 +35,7 @@ public class BlackjackRunner {
     }
 
     private boolean isPlaying(Player player, PlayCommand playCommand) {
-        return player.isDrawable() && playCommand.isYes();
+        return player.canHit() && playCommand.isYes();
     }
 
     private void drawCard(Deck deck, Player player) {
@@ -49,17 +44,10 @@ public class BlackjackRunner {
     }
 
     private void drawDealer(Deck deck, Dealer dealer) {
-        if (dealer.isDrawable()) {
+        if (dealer.canHit()) {
             dealer.append(deck.draw());
             OutputView.printDealerDrawable();
             drawDealer(deck, dealer);
         }
-    }
-
-    private List<PlayerResult> createPlayerResults(Players players, Dealer dealer) {
-        return players.getValue()
-                .stream()
-                .map(player -> new PlayerResult(player, dealer))
-                .collect(toList());
     }
 }

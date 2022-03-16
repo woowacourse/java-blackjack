@@ -2,14 +2,10 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DealerResult;
-import blackjack.dto.PlayerResult;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -69,28 +65,4 @@ public class OutputView {
     private static String generateCardMessage(Card card) {
         return card.getDenomination().getName() + card.getSuit().getName();
     }
-
-    public static void printGameResult(DealerResult dealerResult, List<PlayerResult> playerResults) {
-        System.out.println(NEW_LINE + "## 최종 승패");
-        System.out.println("딜러: " + generateDealerResultMessage(dealerResult.getResults()));
-        System.out.println(generatePlayerResultsMessage(playerResults));
-    }
-
-    private static String generateDealerResultMessage(Map<GameResult, Long> results) {
-        return results.keySet()
-                .stream()
-                .map(gameResult -> generateResultMessage(results, gameResult))
-                .collect(joining(" "));
-    }
-
-    private static String generateResultMessage(Map<GameResult, Long> results, GameResult gameResult) {
-        return results.get(gameResult).toString() + gameResult.getValue();
-    }
-
-    private static String generatePlayerResultsMessage(List<PlayerResult> playerResults) {
-        return playerResults.stream()
-                .map(playerResult -> playerResult.getName() + ": " + playerResult.getGameResult())
-                .collect(joining(NEW_LINE));
-    }
 }
-
