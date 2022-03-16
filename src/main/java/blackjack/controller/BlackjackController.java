@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.Command;
+import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
 import blackjack.view.InputView;
@@ -37,17 +38,19 @@ public class BlackjackController {
             command = Command.find(InputView.inputCommand(player));
             receiveCard(blackjackGame, player, command);
             OutputView.printPlayerCards(player);
-        } while (blackjackGame.canPlayerHit(player, command));
+        } while (command.isHit() && player.canHit());
     }
 
     private void receiveCard(BlackjackGame blackjackGame, Player player, Command command) {
         if (command.isHit()) {
-            blackjackGame.receiveOneMoreCard(player);
+            blackjackGame.hit(player);
         }
     }
 
     private void hitDealer(BlackjackGame blackjackGame) {
-        while (blackjackGame.canDealerHit()) {
+        Dealer dealer = blackjackGame.getDealer();
+        while (dealer.canHit()) {
+            blackjackGame.hit(dealer);
             OutputView.printReceivingMoreCardOfDealer();
         }
     }

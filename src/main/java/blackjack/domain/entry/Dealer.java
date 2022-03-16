@@ -14,10 +14,6 @@ public class Dealer extends Participant {
         super(holdCards);
     }
 
-    public boolean shouldHaveMoreCard() {
-        return countCards() <= MORE_CARD_STANDARD;
-    }
-
     @Override
     public String getName() {
         return NAME;
@@ -26,6 +22,11 @@ public class Dealer extends Participant {
     @Override
     public List<Card> openCard() {
         return Collections.singletonList(findFirstCard(getHoldCards()));
+    }
+
+    @Override
+    public boolean canHit() {
+        return countCards() <= MORE_CARD_STANDARD;
     }
 
     private Card findFirstCard(HoldCards holdCards) {

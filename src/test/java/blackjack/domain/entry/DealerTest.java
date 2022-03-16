@@ -26,6 +26,6 @@ class DealerTest {
     void shouldHaveMoreCard() {
         Dealer dealer = new Dealer(HoldCards.init(List.of(Card.valueOf(Suit.SPADE, Denomination.EIGHT), Card.valueOf(Suit.HEART, Denomination.EIGHT))));
 
-        assertThat(dealer.shouldHaveMoreCard()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 }

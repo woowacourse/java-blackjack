@@ -20,16 +20,8 @@ public class BlackjackGame {
         this.gameParticipants = new GameParticipants(createDealer(), toPlayers(names));
     }
 
-    public void receiveOneMoreCard(Player player) {
-        player.putCard(deck.draw());
-    }
-
-    public boolean canDealerHit() {
-        return gameParticipants.isDealerHit(deck);
-    }
-
-    public boolean canPlayerHit(Player player, Command command) {
-        return command.isHit() && player.countCards() < BLACKJACK_NUMBER;
+    public void hit(Participant participant) {
+        participant.putCard(deck.draw());
     }
 
     public Map<Participant, Integer> getCardResult(List<Participant> participants) {
@@ -47,6 +39,10 @@ public class BlackjackGame {
 
     public List<Participant> getParticipant() {
         return gameParticipants.getParticipant();
+    }
+
+    public Dealer getDealer() {
+        return gameParticipants.getDealer();
     }
 
     private Dealer createDealer() {

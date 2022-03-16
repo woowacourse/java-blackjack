@@ -6,6 +6,8 @@ import blackjack.domain.card.HoldCards;
 
 import java.util.List;
 
+import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
+
 public class Player extends Participant {
     private final String name;
 
@@ -27,5 +29,10 @@ public class Player extends Participant {
     public List<Card> openCard() {
         HoldCards holdCards = getHoldCards();
         return List.copyOf(holdCards.getCards());
+    }
+
+    @Override
+    public boolean canHit() {
+        return countCards() < BLACKJACK_NUMBER;
     }
 }

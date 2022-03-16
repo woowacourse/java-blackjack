@@ -1,12 +1,10 @@
 package blackjack.domain.entry;
 
 import blackjack.domain.PlayerOutcome;
-import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameParticipants {
     private final Dealer dealer;
@@ -15,14 +13,6 @@ public class GameParticipants {
     public GameParticipants(Dealer dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
-    }
-
-    public boolean isDealerHit(Deck deck) {
-        if (dealer.shouldHaveMoreCard()) {
-            dealer.putCard(deck.draw());
-            return true;
-        }
-        return false;
     }
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {
@@ -38,5 +28,9 @@ public class GameParticipants {
 
     public List<Player> getPlayers() {
         return players.getPlayers();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }
