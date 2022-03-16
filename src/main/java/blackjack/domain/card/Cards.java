@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static blackjack.domain.state.Blackjack.BLACKJACK_TARGET_NUMBER;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,5 +47,9 @@ public class Cards {
 
     public void addCard(final Card card) {
         cards.add(card);
+    }
+
+    public List<Card> cards() {
+        return List.copyOf(cards);
     }
 }

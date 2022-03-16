@@ -11,13 +11,13 @@ public class DealerRunning extends Running {
 
     @Override
     public BlackjackGameState hit(final Card card) {
-        cards().addCard(card);
-        if (cards().isMaxScoreBust()) {
-            return new Bust(cards(), cards().maxScore());
+        cards.addCard(card);
+        if (cards.isMaxScoreBust()) {
+            return new Bust(cards, cards.maxScore());
         }
-        if (cards().maxScore() >= 17) {
-            return new Stand(cards(), cards().maxScore());
+        if (cards.maxScore() >= 17) {
+            return new Stand(cards, cards.maxScore());
         }
-        return new DealerRunning(cards());
+        return new DealerRunning(cards);
     }
 }

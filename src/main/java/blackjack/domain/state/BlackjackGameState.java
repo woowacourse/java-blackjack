@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import java.util.List;
 
 public interface BlackjackGameState {
 
@@ -19,5 +19,5 @@ public interface BlackjackGameState {
 
     int score();
 
-    Cards cards();
+    List<Card> cards();
 }

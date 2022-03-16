@@ -6,7 +6,7 @@ public abstract class Running extends AbstractBlackjackGameState {
 
     public Running(final Cards cards) {
         super(cards);
-        checkBustCards(super.cards());
+        checkBustCards(super.cards);
     }
 
     private void checkBustCards(final Cards cards) {
@@ -17,7 +17,7 @@ public abstract class Running extends AbstractBlackjackGameState {
 
     @Override
     public BlackjackGameState stay() {
-        return new Stand(cards(), cards().score());
+        return new Stand(cards, cards.score());
     }
 
     @Override
