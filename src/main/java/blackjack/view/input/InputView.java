@@ -22,6 +22,19 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    public int requestBetAmount() {
+        final String inputLine = reader.readLine();
+        return parseNumber(inputLine);
+    }
+
+    private int parseNumber(final String inputLine) {
+        try {
+            return Integer.parseInt(inputLine);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("베팅 금액은 숫자여야 합니다.");
+        }
+    }
+
     public boolean requestDrawingCardChoice() {
         final String inputLine = reader.readLine();
         return DrawingCardChoice.isChoiceYes(inputLine);

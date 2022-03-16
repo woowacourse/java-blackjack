@@ -1,6 +1,8 @@
 package blackjack.view;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.InitiallyDrewCardDto;
@@ -19,9 +21,22 @@ public class BlackjackView {
         this.outputView = outputView;
     }
 
+    public Map<String, Integer> requestPlayerNamesAndBetAmounts() {
+        final Map<String, Integer> playerBetAmounts = new LinkedHashMap<>();
+        for (final String playerName : requestPlayerNames()) {
+            playerBetAmounts.put(playerName, requestPlayerBetAmount(playerName));
+        }
+        return playerBetAmounts;
+    }
+
     public List<String> requestPlayerNames() {
         outputView.printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return inputView.requestPlayerNames();
+    }
+
+    private int requestPlayerBetAmount(final String playerName) {
+        outputView.printMessage(playerName + "의 베팅 금액은?");
+        return inputView.requestBetAmount();
     }
 
     public void printInitiallyDistributedCards(final InitiallyDrewCardDto dealerInitiallyDrewCardDto,

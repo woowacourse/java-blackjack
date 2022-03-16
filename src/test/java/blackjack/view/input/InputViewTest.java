@@ -41,6 +41,28 @@ public class InputViewTest {
         );
     }
 
+    @DisplayName("플레이어의 베팅 금액을 입력받을 수 있어야 한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"-10", "0", "100"})
+    void requestBetAmountTest(final String inputLine) {
+        customReader.initTest(inputLine);
+
+        final int actualBetAmount = inputView.requestBetAmount();
+        final int expectedBetAmount = Integer.parseInt(inputLine);
+        assertThat(actualBetAmount).isEqualTo(expectedBetAmount);
+    }
+
+    @DisplayName("플레이어의 베팅 금액은 숫자여야 한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"", "a", "1a"})
+    void betAmountNotNumericTest(final String inputLine) {
+        customReader.initTest(inputLine);
+
+        assertThatThrownBy(inputView::requestBetAmount)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("베팅 금액은 숫자여야 합니다.");
+    }
+
     @DisplayName("y 또는 n을 입력받을 수 있어야 한다.")
     @ParameterizedTest
     @MethodSource("provideForRequestDrawingCardChoiceTest")
