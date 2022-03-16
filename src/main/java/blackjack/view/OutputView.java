@@ -1,12 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.Record;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -54,20 +52,12 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다.");
     }
 
-    public static void printDealerRecord(final Map<Record, Integer> records) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-
-        final String message = records.keySet()
-                .stream()
-                .filter(key -> records.get(key) != 0)
-                .map(key -> records.get(key) + key.getName())
-                .collect(Collectors.joining(" "));
-
-        System.out.println("딜러: " + message);
+    public static void printPrizePrefix() {
+        System.out.printf("%n## 최종 수익%n");
     }
 
-    public static void printPlayerRecord(final String name, final Record record) {
-        System.out.println(name + ": " + record.getName());
+    public static void printPrize(final String name, final int prize) {
+        System.out.println(name + ": " + prize);
     }
 
     public static void printError(final String message) {

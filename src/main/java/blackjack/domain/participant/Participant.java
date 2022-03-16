@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 public abstract class Participant {
 
     private static final int INITIAL_CARD_COUNT = 2;
+    private static final int BLACKJACK_STANDARD = 21;
 
     private final Cards cards;
     private final Name name;
@@ -59,5 +60,25 @@ public abstract class Participant {
 
     public String getName() {
         return name.getValue();
+    }
+
+    public boolean isBlackjack() {
+        return cards.sumValue() == BLACKJACK_STANDARD && cards.getValue().size() == 2;
+    }
+
+    public void updateBlackjackPrize() {
+        money.multiply();
+    }
+
+    public void updatePushPrize() {
+        money.toZero();
+    }
+
+    public void updateNegativePrize() {
+        money.toNegative();
+    }
+
+    public int getPrize() {
+        return money.getValue();
     }
 }

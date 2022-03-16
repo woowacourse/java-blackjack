@@ -10,7 +10,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerAnswer;
 import java.util.List;
-import java.util.Map;
 
 public class GameController {
 
@@ -90,7 +89,8 @@ public class GameController {
 
     public void endGame() {
         printAllCards();
-        printAllRecords();
+        calculatePrize();
+        printAllPrize();
     }
 
     private void printAllCards() {
@@ -100,12 +100,37 @@ public class GameController {
         players.getValue().forEach(OutputView::printCardsAndScore);
     }
 
-    private void printAllRecords() {
-        final int dealerScore = dealer.getScore();
-        final Map<Record, Integer> map = dealer.calculateRecord(players.findAllRecords(dealerScore));
+    private void calculatePrize() {
+        players.getValue().forEach(this::calculatePlayerPrize);
+    }
 
-        OutputView.printDealerRecord(map);
-        players.getValue().forEach(
-                player -> OutputView.printPlayerRecord(player.getName(), Record.of(dealerScore, player.getScore())));
+    private void calculatePlayerPrize(final Player player) {
+        if (dealer.isBlackjack() && player.isBlackjack()) {
+            player.updatePushPrize();
+            return;
+        }
+
+        if (player.isBlackjack()) {
+            player.updateBlackjackPrize();
+            return;
+        }
+
+        final Record playerRecord = Record.of(dealer.getScore(), player.getScore());
+        if (playerRecord == Record.PUSH) {
+            player.updatePushPrize();
+        }
+        if (playerRecord == Record.LOSS) {
+            player.updateNegativePrize();
+        }
+    }
+
+    private void printAllPrize() {
+        int sum = players.getValue().stream()
+                .mapToInt(Player::getPrize)
+                .sum();
+
+        OutputView.printPrizePrefix();
+        OutputView.printPrize(dealer.getName(), sum * -1);
+        players.getValue().forEach(player -> OutputView.printPrize(player.getName(), player.getPrize()));
     }
 }

@@ -29,4 +29,20 @@ public class Money {
             throw new IllegalArgumentException("베팅 금액은 10으로 나누어 떨어져야 합니다.");
         }
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void multiply() {
+        value *= 1.5;
+    }
+
+    public void toZero() {
+        value = 0;
+    }
+
+    public void toNegative() {
+        value *= -1;
+    }
 }
