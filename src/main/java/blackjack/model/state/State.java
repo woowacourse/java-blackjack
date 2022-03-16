@@ -8,7 +8,6 @@ public abstract class State {
     protected static final String HIT = "Hit";
     protected static final String BLACKJACK = "Blackjack";
     protected static final String BUST = "Bust";
-    public static final String FINISH = "Finish";
 
     protected final Cards cards;
     protected String sign;
@@ -23,29 +22,20 @@ public abstract class State {
         this.sign = state;
     }
 
-    public boolean isWin(State otherState) {
-        if (sign.equals(otherState.sign) && isNotFinish(otherState)) {
-            return false;
-        }
-        return cards.sumScore() > otherState.cards.sumScore();
+    public boolean isBust(){
+        return sign.equals(BUST);
     }
 
-    public boolean isLose(State otherState) {
-        if (sign.equals(otherState.sign) && isNotFinish(otherState)) {
-            return false;
-        }
-        return cards.sumScore() < otherState.cards.sumScore();
+    public boolean isBlackJack(){
+        return sign.equals(BLACKJACK);
     }
 
-    private boolean isNotFinish(State otherState) {
-        return !this.sign.equals(FINISH) || !otherState.sign.equals(FINISH);
+    public boolean isWinBy(State otherState) {
+        return this.sumScore() > otherState.sumScore();
     }
 
-    public boolean isDraw(State otherState) {
-        if (sign.equals(otherState.sign)) {
-            return true;
-        }
-        return cards.sumScore() == otherState.cards.sumScore();
+    public boolean isDrawWith(State otherState) {
+        return this.sumScore() == otherState.sumScore();
     }
 
     public int sumScore() {

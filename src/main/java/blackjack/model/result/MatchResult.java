@@ -7,9 +7,20 @@ import java.util.function.BiPredicate;
 
 public enum MatchResult {
 
-    WIN("승", State::isWin),
-    LOSE("패", State::isLose),
-    DRAW("무", State::isDraw),
+    WIN("승", (dealerState, playerState) ->
+            dealerState.isBlackJack() && !playerState.isBlackJack() ||
+                    !dealerState.isBust() && playerState.isBust() ||
+                    !dealerState.isBust() && dealerState.isWinBy(playerState)),
+
+    LOSE("패", (dealerState, playerState) ->
+            !dealerState.isBlackJack() && playerState.isBlackJack() ||
+                    dealerState.isBust() && !playerState.isBust() ||
+                    !dealerState.isBust() && !dealerState.isWinBy(playerState)),
+
+    DRAW("무", (dealerState, playerState) ->
+            dealerState.isBust() && playerState.isBust() ||
+                    dealerState.isBlackJack() && playerState.isBlackJack() ||
+                    !dealerState.isBust() && dealerState.isDrawWith(playerState)),
     ;
 
     private final String value;
@@ -20,7 +31,7 @@ public enum MatchResult {
         this.biPredicate = biPredicate;
     }
 
-    public static MatchResult findBy(Participant dealer, Participant gamer) {
+    public static MatchResult match(Participant dealer, Participant gamer) {
         return Arrays.stream(values())
                 .filter(matchResult -> matchResult.biPredicate.test(dealer.getState(), gamer.getState()))
                 .findAny()
