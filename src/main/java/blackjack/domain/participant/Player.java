@@ -2,13 +2,13 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BattingMoney;
-import blackjack.domain.participant.vo.PlayerName;
+import blackjack.domain.participant.vo.ParticipantName;
 import blackjack.domain.state.State;
 import java.util.List;
 
 public class Player extends Participant {
 
-    Player(final PlayerName name, final State state) {
+    Player(final ParticipantName name, final State state) {
         super(name, state);
     }
 

@@ -4,7 +4,7 @@ import static blackjack.domain.card.Cards.BLACK_JACK_NUMBER;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BattingMoney;
-import blackjack.domain.participant.vo.PlayerName;
+import blackjack.domain.participant.vo.ParticipantName;
 import blackjack.domain.state.State;
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class Dealer extends Participant {
     private static final int DEALER_LIMIT_SCORE = 17;
 
     private Dealer(final State state) {
-        super(new PlayerName(DEALER_NAME), state);
+        super(new ParticipantName(DEALER_NAME), state);
     }
 
     public Dealer(final List<Card> cards) {

@@ -2,10 +2,10 @@ package blackjack.domain.participant.vo;
 
 import java.util.Objects;
 
-public class PlayerName {
+public class ParticipantName {
     private final String value;
 
-    public PlayerName(final String value) {
+    public ParticipantName(final String value) {
         Objects.requireNonNull(value, "이름에는 null이 들어올 수 없습니다.");
         validateEmptyName(value);
         this.value = value;
