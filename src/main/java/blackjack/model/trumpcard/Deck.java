@@ -63,6 +63,10 @@ public final class Deck {
         return sumScore() > SCORE_LIMIT;
     }
 
+    public boolean isBlackjack() {
+        return getSize() == 2 && sumScore() == SCORE_LIMIT;
+    }
+
     public boolean isScoreLessThan(int otherScore) {
         return sumScore() < otherScore;
     }

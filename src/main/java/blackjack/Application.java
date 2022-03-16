@@ -3,9 +3,8 @@ package blackjack;
 import blackjack.dto.DealerDTO;
 import blackjack.dto.EntryDTO;
 import blackjack.dto.PlayersDTO;
-import blackjack.dto.ResultsDTO;
 import blackjack.model.Game;
-import blackjack.model.BettingMoney;
+import blackjack.model.Money;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;
@@ -39,7 +38,7 @@ public class Application {
         do {
             game.toNextEntry();
             int bettingAmount = inputView.askBettingMoney(EntryDTO.fromCurrent(game));
-            new BettingMoney(bettingAmount);
+            new Money(bettingAmount);
         } while (game.hasNextEntry());
     }
 
@@ -79,6 +78,7 @@ public class Application {
 
     private static void showResults(ResultView resultView, Game game) {
         resultView.printScores(PlayersDTO.from(game));
-        resultView.printResults(ResultsDTO.from(game.getResults()), DealerDTO.from(game));
+        //TODO: 결과 출력
+        //resultView.printResults(ResultsDTO.from(game.getResults()), DealerDTO.from(game));
     }
 }

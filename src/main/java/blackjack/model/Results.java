@@ -1,25 +1,16 @@
 package blackjack.model;
 
-import java.util.List;
+import blackjack.model.player.Entry;
+import java.util.Map;
 
 public final class Results {
-    private final List<Result> values;
+    private final Map<Entry, Result> values;
 
-    public Results(List<Result> values) {
-        this.values = List.copyOf(values);
+    public Results(Map<Entry, Result> values) {
+        this.values = Map.copyOf(values);
     }
 
-    public int countDealerWin() {
-        return (int) values.stream()
-                .filter(result -> !result.isWin())
-                .count();
-    }
-
-    public int getSize() {
-        return this.values.size();
-    }
-
-    public List<Result> getValues() {
+    public Map<Entry, Result> getValues() {
         return values;
     }
 }

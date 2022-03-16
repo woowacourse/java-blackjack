@@ -1,21 +1,15 @@
 package blackjack.model;
 
-import blackjack.model.player.Entry;
+public enum Result {
+    WIN(1),
+    LOSE(-1),
+    TIE(0),
+    BLACKJACK(1.5),
+    ;
 
-public final class Result {
-    private Entry entry;
-    private Boolean win;
+    private final double houseEdge;
 
-    public Result(Entry entry, Boolean win) {
-        this.entry = entry;
-        this.win = win;
-    }
-
-    public Entry getEntry() {
-        return entry;
-    }
-
-    public Boolean isWin() {
-        return win;
+    Result(double houseEdge) {
+        this.houseEdge = houseEdge;
     }
 }

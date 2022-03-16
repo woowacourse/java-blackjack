@@ -81,7 +81,6 @@ public final class Entries {
 
     public Results compareAllWith(Dealer dealer) {
         return new Results(this.values.stream()
-                .map(dealer::compareWith)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toMap(entry -> entry, dealer::compareWith, (a, b) -> b)));
     }
 }

@@ -41,6 +41,10 @@ public abstract class Player {
         return this.deck.isBust();
     }
 
+    public boolean isBlackjack() {
+        return this.deck.isBlackjack();
+    }
+
     public String getName() {
         return this.name;
     }
