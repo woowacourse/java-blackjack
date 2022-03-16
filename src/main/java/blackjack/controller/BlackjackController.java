@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.HitOrStayAnswer;
+import blackjack.domain.bet.BetMoney;
+import blackjack.domain.bet.PlayerBetMonies;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
@@ -24,6 +26,8 @@ public class BlackjackController {
         Deck deck = new RandomDeck();
 
         Players players = createPlayers(deck);
+
+        PlayerBetMonies betMonies = createPlayerBetMonies(players.getParticipants());
         ResultView.printInitCard(players);
 
         play(players, deck);
@@ -47,6 +51,17 @@ public class BlackjackController {
                 .map(Name::new)
                 .map(Participant::new)
                 .collect(Collectors.toList());
+    }
+
+    private PlayerBetMonies createPlayerBetMonies(List<Player> players) {
+        Map<Player, BetMoney> betMonies = new LinkedHashMap<>();
+
+        for (Player player : players) {
+            int input = InputView.requestBetMoney(player.getName());
+            betMonies.put(player, new BetMoney(input));
+        }
+
+        return new PlayerBetMonies(betMonies);
     }
 
     private void play(Players players, Deck deck) {
