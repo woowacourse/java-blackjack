@@ -3,13 +3,11 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public final class Running implements BlackjackGameState {
-
-    private final Cards cards;
+public final class Running extends AbstractBlackjackGameState {
 
     public Running(final Cards cards) {
-        checkBustCards(cards);
-        this.cards = cards;
+        super(cards);
+        checkBustCards(super.cards);
     }
 
     private void checkBustCards(final Cards cards) {
@@ -29,7 +27,7 @@ public final class Running implements BlackjackGameState {
 
     @Override
     public BlackjackGameState stay() {
-        return null;
+        return new Stand(cards);
     }
 
     @Override

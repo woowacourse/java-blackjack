@@ -67,4 +67,13 @@ class RunningTest {
 
         assertThat(nextState).isInstanceOf(Bust.class);
     }
+
+    @Test
+    void stay할_때_Stand_반환() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final BlackjackGameState running = new Running(cards);
+        final BlackjackGameState nextState = running.stay();
+
+        assertThat(nextState).isInstanceOf(Stand.class);
+    }
 }
