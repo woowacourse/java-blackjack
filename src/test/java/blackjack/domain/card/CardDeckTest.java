@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayDeque;
@@ -14,5 +15,11 @@ class CardDeckTest {
         assertThatThrownBy(() -> new CardDeck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 덱은 중복되지 않은 52장으로만 생성할 수 있습니다.");
+    }
+
+    @Test
+    void 셔플된_카드덱_생성() {
+        final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
+        assertThat(cardDeck).isInstanceOf(CardDeck.class);
     }
 }

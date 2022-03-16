@@ -1,6 +1,8 @@
 package blackjack.domain.card;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayDeque;
+import java.util.List;
 import java.util.Queue;
 
 public class CardDeck {
@@ -23,5 +25,10 @@ public class CardDeck {
     private long cardsDistinctCount(final Queue<Card> cards) {
         return cards.stream()
                 .distinct().count();
+    }
+
+    public static CardDeck createNewShuffledCardDeck() {
+        final List<Card> cards = Card.cards();
+        return new CardDeck(new ArrayDeque<>(Randoms.shuffle(cards)));
     }
 }
