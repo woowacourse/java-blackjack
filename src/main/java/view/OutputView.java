@@ -6,9 +6,9 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.Result;
-import dto.ResultDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -88,18 +88,18 @@ public class OutputView {
         }
     }
 
-    public void showResult(ResultDto resultDto, List<String> names, List<Result> results) {
+    public void showResult(String dealerName, Map<Result,Integer> dealerResult, List<String> names, List<Result> results) {
         System.out.print(System.lineSeparator());
 
         System.out.println(FINAL_RESULT_MESSAGE);
-        showDealerResult(resultDto);
+        showDealerResult(dealerName, dealerResult);
         showPlayersResult(names, results);
     }
 
-    private void showDealerResult(ResultDto resultDto) {
-        String record = String.format(RECORD_FORMAT, resultDto.getWinCount(),
-            resultDto.getDrawCount(), resultDto.getLoseCount());
-        System.out.printf(STATUS_FORMAT, resultDto.getDealerName(), record);
+    private void showDealerResult(String dealerName, Map<Result, Integer> dealerResult) {
+        String record = String.format(RECORD_FORMAT, dealerResult.get(Result.WIN),
+            dealerResult.get(Result.DRAW), dealerResult.get(Result.LOSE));
+        System.out.printf(STATUS_FORMAT, dealerName, record);
         System.out.print(System.lineSeparator());
     }
 

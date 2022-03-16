@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Deck;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,15 +52,15 @@ class DealerTest {
 
         assertThat(dealer.canHit()).isTrue();
     }
-//
-//    @Test
-//    @DisplayName("딜러의 결과값을 받는다.")
-//    void checkResultTest() {
-//        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.DRAW);
-//        ResultDto resultDto = dealer.checkResult(playerResult);
-//
-//        assertThat(resultDto.getWinCount()).isEqualTo(1);
-//        assertThat(resultDto.getDrawCount()).isEqualTo(1);
-//        assertThat(resultDto.getLoseCount()).isEqualTo(2);
-//    }
+
+    @Test
+    @DisplayName("딜러의 결과값을 받는다.")
+    void checkResultTest() {
+        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.DRAW);
+        Map<Result, Integer> dealerResult = dealer.checkResult(playerResult);
+
+        assertThat(dealerResult.get(Result.WIN)).isEqualTo(1);
+        assertThat(dealerResult.get(Result.DRAW)).isEqualTo(1);
+        assertThat(dealerResult.get(Result.LOSE)).isEqualTo(2);
+    }
 }

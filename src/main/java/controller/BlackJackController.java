@@ -67,8 +67,8 @@ public class BlackJackController {
 
     private void showResult(Players players, Dealer dealer) {
         List<Result> playersResult = players.checkResults(dealer);
-        
-        outputView.showResult(dealer.checkResult(playersResult), players.toNames(),
+
+        outputView.showResult(dealer.getName(), dealer.checkResult(playersResult), players.toNames(),
             players.checkResults(dealer));
     }
 }

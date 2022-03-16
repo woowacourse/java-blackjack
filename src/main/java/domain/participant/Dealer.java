@@ -1,9 +1,9 @@
 package domain.participant;
 
 import domain.card.Card;
-import dto.ResultDto;
-
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -14,12 +14,12 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    public ResultDto checkResult(List<Result> playersResult) {
-        int winCount = countTargetResult(playersResult, Result.LOSE);
-        int loseCount = countTargetResult(playersResult, Result.WIN);
-        int drawCount = playersResult.size() - winCount - loseCount;
-
-        return ResultDto.of(NAME, winCount, drawCount, loseCount);
+    public Map<Result, Integer> checkResult(List<Result> playersResult) {
+        Map<Result, Integer> dealerResult = new EnumMap<Result, Integer>(Result.class);
+        dealerResult.put(Result.WIN, countTargetResult(playersResult, Result.LOSE));
+        dealerResult.put(Result.DRAW, countTargetResult(playersResult, Result.DRAW));
+        dealerResult.put(Result.LOSE, countTargetResult(playersResult, Result.WIN));
+        return dealerResult;
     }
 
     private int countTargetResult(List<Result> playersResult, Result targetResult) {
