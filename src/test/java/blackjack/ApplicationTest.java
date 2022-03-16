@@ -40,6 +40,14 @@ public class ApplicationTest extends NsTest {
     }
 
     @Test
+    void 사람_수가_0에_대한_예외_처리() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException(","))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
     void 딜러는_첫드로우를_한장만_보여준다() {
         assertShuffleTest(
                 () -> {

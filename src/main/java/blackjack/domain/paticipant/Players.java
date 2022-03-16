@@ -17,13 +17,15 @@ public class Players {
         Objects.requireNonNull(players, "players는 null이 들어올 수 없습니다.");
         this.players = new ArrayList<>(players);
         checkPlayersSize(this.players);
-        checkDuplicationPlayers(this.players);
     }
 
-    public Players(final List<String> names, final Function<String, Integer> betMoney, final CardDeck cardDeck) {
-        this(names.stream()
-                .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
-                .collect(Collectors.toList()));
+    public static Players createPlayer(final List<String> names, final Function<String, Integer> betMoney,
+                                       final CardDeck cardDeck) {
+        checkDuplicationNames(names);
+        return new Players(
+                names.stream()
+                        .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
+                        .collect(Collectors.toList()));
     }
 
     private void checkPlayersSize(final List<Player> players) {
@@ -32,17 +34,20 @@ public class Players {
         }
     }
 
-    private void checkDuplicationPlayers(final List<Player> players) {
-        if (calculateDistinctCount(players) != players.size()) {
+    private static void checkDuplicationNames(final List<String> playerNames) {
+        if (calculateDistinctCount(playerNames) != playerNames.size()) {
             throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
         }
     }
 
-    private int calculateDistinctCount(final List<Player> players) {
-        return (int) players.stream()
-                .map(Player::getName)
+    private static int calculateDistinctCount(final List<String> playerNames) {
+        return (int) playerNames.stream()
                 .distinct()
                 .count();
+    }
+
+    private static void checkEmptyNames(final List<String> playerNames) {
+
     }
 
     public Player hitCurrentTurnPlayer(final Card card) {

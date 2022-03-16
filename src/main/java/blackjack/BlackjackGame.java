@@ -23,7 +23,7 @@ public class BlackjackGame {
     public BlackjackGame() {
         this.cardDeck = CardDeck.createNewShuffledCardDeck();
         this.dealer = new Dealer(cardDeck);
-        this.players = new Players(InputView.inputPlayerNames(), InputView::inputPlayerBetMoney, cardDeck);
+        this.players = Players.createPlayer(InputView.inputPlayerNames(), InputView::inputPlayerBetMoney, cardDeck);
     }
 
     public void run() {

@@ -29,7 +29,17 @@ class PlayersTest {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
         final List<String> names = Arrays.asList("name", "name");
 
-        assertThatThrownBy(() -> new Players(names, text -> 1000, cardDeck))
+        assertThatThrownBy(() -> Players.createPlayer(names, text -> 1000, cardDeck))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름 간에 중복이 있으면 안됩니다.");
+    }
+
+    @Test
+    void 생성_시_공백이름_예외발생() {
+        final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
+        final List<String> names = Arrays.asList(" ", " ");
+
+        assertThatThrownBy(() -> Players.createPlayer(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름 간에 중복이 있으면 안됩니다.");
     }
@@ -39,7 +49,7 @@ class PlayersTest {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
         final List<String> names = new ArrayList<>();
 
-        assertThatThrownBy(() -> new Players(names, text -> 1000, cardDeck))
+        assertThatThrownBy(() -> Players.createPlayer(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 0명이 될 수 없습니다.");
     }
