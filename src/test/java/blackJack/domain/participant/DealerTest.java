@@ -33,7 +33,7 @@ public class DealerTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.SEVEN));
         dealer.receiveCard(Card.valueOf(Suit.HEART, Denomination.JACK));
 
-        assertThat(dealer.hasNextTurn()).isFalse();
+        assertThat(dealer.isAvailableHit()).isFalse();
     }
 
     @Test
@@ -43,6 +43,6 @@ public class DealerTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.SIX));
         dealer.receiveCard(Card.valueOf(Suit.HEART, Denomination.JACK));
 
-        assertThat(dealer.hasNextTurn()).isTrue();
+        assertThat(dealer.isAvailableHit()).isTrue();
     }
 }

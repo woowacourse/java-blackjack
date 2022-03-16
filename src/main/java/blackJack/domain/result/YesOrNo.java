@@ -22,4 +22,8 @@ public enum YesOrNo {
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_YES_OR_NO));
     }
+
+    public static boolean hasYes(YesOrNo value) {
+        return value == YES;
+    }
 }

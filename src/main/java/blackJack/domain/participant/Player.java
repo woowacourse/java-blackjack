@@ -18,7 +18,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean hasNextTurn() {
+    public boolean isAvailableHit() {
         return this.getScore() <= BLACK_JACK;
     }
 }

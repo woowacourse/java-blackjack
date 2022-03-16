@@ -31,8 +31,24 @@ public class BlackJackController {
     }
 
     private void additionalRound(BlackJackGame blackJackGame) {
-        doPlayerGame(blackJackGame);
-        doDealerGame(blackJackGame);
+        for (Player player : blackJackGame.getPlayers()) {
+            additionalPlayerTurn(blackJackGame, player);
+        }
+        additionalDealerTurn(blackJackGame);
+    }
+
+    private void additionalPlayerTurn(BlackJackGame blackjackGame, Player player) {
+        while (blackjackGame.isAvailableDistributeCard(player) && blackjackGame.isApproveDrawCard(getYesOrNo(player))) {
+            blackjackGame.distributeCard(player);
+            OutputView.printNowHoldCardInfo(player);
+        }
+    }
+
+    private void additionalDealerTurn(BlackJackGame blackjackGame) {
+        while (blackjackGame.isAvailableDistributeCard(blackjackGame.getDealer())) {
+            blackjackGame.distributeCard(blackjackGame.getDealer());
+        }
+        OutputView.printDealerReceiveCardCount(blackjackGame.getDealer());
     }
 
     private Participants getParticipants() {
@@ -46,41 +62,18 @@ public class BlackJackController {
         }
     }
 
-    private void doPlayerGame(BlackJackGame blackJackGame) {
-        List<Player> players = blackJackGame.getPlayers();
-        for (Player player : players) {
-            doEachPlayerTurn(blackJackGame, player);
-        }
-    }
-
-    private void doEachPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (player.hasNextTurn() && getOneMoreCard(player)) {
-            blackJackGame.distributeCard(player);
-            OutputView.printNowHoldCardInfo(player);
-        }
-    }
-
     private List<Player> createPlayers(List<String> playerNames) {
         return playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private boolean getOneMoreCard(Player player) {
+    private YesOrNo getYesOrNo(Player player) {
         try {
-            String choice = InputView.inputOneMoreCard(player.getName());
-            return YesOrNo.YES == YesOrNo.find(choice);
+            return YesOrNo.find(InputView.inputOneMoreCard(player.getName()));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
-            return getOneMoreCard(player);
+            return getYesOrNo(player);
         }
-    }
-
-    private void doDealerGame(BlackJackGame blackJackGame) {
-        Dealer dealer = blackJackGame.getDealer();
-        while (dealer.hasNextTurn()) {
-            blackJackGame.distributeCard(dealer);
-        }
-        OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
     }
 }

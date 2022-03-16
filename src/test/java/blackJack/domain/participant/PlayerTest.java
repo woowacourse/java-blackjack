@@ -43,7 +43,7 @@ class PlayerTest {
         player.receiveCard(Card.valueOf(Suit.HEART, Denomination.JACK));
         player.receiveCard(Card.valueOf(Suit.SPADE, Denomination.TWO));
 
-        assertThat(player.hasNextTurn()).isFalse();
+        assertThat(player.isAvailableHit()).isFalse();
     }
 
     @Test
@@ -53,7 +53,7 @@ class PlayerTest {
         player.receiveCard(Card.valueOf(Suit.SPADE, Denomination.JACK));
         player.receiveCard(Card.valueOf(Suit.HEART, Denomination.JACK));
 
-        assertThat(player.hasNextTurn()).isTrue();
+        assertThat(player.isAvailableHit()).isTrue();
     }
 
     @Test

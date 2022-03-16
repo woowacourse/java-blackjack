@@ -1,5 +1,6 @@
 package blackJack.domain;
 
+import blackJack.domain.result.YesOrNo;
 import java.util.List;
 
 import blackJack.domain.card.Deck;
@@ -26,6 +27,14 @@ public class BlackJackGame {
 
     public void distributeCard(Participant participant) {
         participant.receiveCard(deck.getCard());
+    }
+
+    public boolean isAvailableDistributeCard(Participant participant) {
+        return participant.isAvailableHit();
+    }
+
+    public boolean isApproveDrawCard(YesOrNo value) {
+        return YesOrNo.hasYes(value);
     }
 
     public Participants getParticipants() {

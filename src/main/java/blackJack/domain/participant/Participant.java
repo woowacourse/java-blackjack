@@ -25,7 +25,7 @@ public abstract class Participant {
         }
     }
 
-    abstract boolean hasNextTurn();
+    public abstract boolean isAvailableHit();
 
     public void receiveCard(Card card) {
         cards.addCard(card);
