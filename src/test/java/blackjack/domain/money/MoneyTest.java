@@ -13,14 +13,14 @@ class MoneyTest {
     @ParameterizedTest(name = "{index} {displayName} money = {0}")
     @ValueSource(ints = {1000, 15000, 3000})
     void RightInputMoneyTest(final int money) {
-        assertDoesNotThrow(() -> new Money(money));
+        assertDoesNotThrow(() -> new BetMoney(money));
     }
 
     @DisplayName("금액이 양의 정수가 아닐경우 예외를 발생시킨다.")
     @ParameterizedTest(name = "{index} {displayName} money = {0}")
     @ValueSource(ints = {-1, 0, -10000})
     void NonPositiveInputTest(final int money) {
-        assertThatThrownBy(() -> new Money(money))
+        assertThatThrownBy(() -> new BetMoney(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 투입 금액은 양의 정수여야 합니다.");
     }
@@ -29,7 +29,7 @@ class MoneyTest {
     @ParameterizedTest(name = "{index} {displayName} money = {0}")
     @ValueSource(ints = {100, 900, 10800, 2009})
     void NotDivideByThousandInputTest(final int money) {
-        assertThatThrownBy(() -> new Money(money))
+        assertThatThrownBy(() -> new BetMoney(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 투입 금액은 1000원 단위로 넣어야 합니다.");
     }

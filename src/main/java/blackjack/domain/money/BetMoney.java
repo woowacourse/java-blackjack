@@ -1,6 +1,6 @@
 package blackjack.domain.money;
 
-public class Money {
+public class BetMoney {
 
     private static final String ERROR_NEGATIVE_MONEY = "[ERROR] 투입 금액은 양의 정수여야 합니다.";
     private static final String ERROR_NOT_DIVIDE_BY_THOUSAND = "[ERROR] 투입 금액은 1000원 단위로 넣어야 합니다.";
@@ -8,7 +8,7 @@ public class Money {
 
     private final int money;
 
-    public Money(int money) {
+    public BetMoney(int money) {
         validateMoney(money);
         this.money = money;
     }
