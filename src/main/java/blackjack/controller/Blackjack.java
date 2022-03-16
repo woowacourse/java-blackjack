@@ -71,10 +71,9 @@ public class Blackjack {
     }
 
     private void decideDealerMoreCard(final Player dealer, final Deck deck) {
-        if (dealer.acceptableCard()) {
+        while (dealer.acceptableCard()) {
             dealer.addCard(deck.draw());
             OutputView.printDealerAcceptCard();
-            return;
         }
         OutputView.printDealerDenyCard();
     }

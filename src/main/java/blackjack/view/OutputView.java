@@ -63,7 +63,7 @@ public class OutputView {
 
     public static void printDealerAcceptCard() {
         System.out.println("딜러는 " + ADD_CARD_CONDITION + "이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
+
     }
 
     public static void printDealerDenyCard() {
