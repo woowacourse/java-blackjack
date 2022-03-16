@@ -19,6 +19,12 @@ public class Players {
         checkPlayersSize(this.players);
     }
 
+    private void checkPlayersSize(final List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("플레이어는 0명이 될 수 없습니다.");
+        }
+    }
+
     public static Players createPlayer(final List<Name> names, final Function<Name, Integer> betMoney,
                                        final CardDeck cardDeck) {
         checkDuplicationNames(names);
@@ -27,12 +33,6 @@ public class Players {
                         .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
                         .collect(Collectors.toList())
         );
-    }
-
-    private void checkPlayersSize(final List<Player> players) {
-        if (players.isEmpty()) {
-            throw new IllegalArgumentException("플레이어는 0명이 될 수 없습니다.");
-        }
     }
 
     private static void checkDuplicationNames(final List<Name> playerNames) {
