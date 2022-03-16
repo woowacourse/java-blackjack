@@ -18,7 +18,7 @@ import domain.card.Suit;
 public class ParticipantTest {
 
 	@ParameterizedTest(name = "손패가 버스트 되었는지 확인하는 기능 - case : {0}")
-	@EnumSource(mode = EnumSource.Mode.EXCLUDE, names = {"RANK_ACE"})
+	@EnumSource(mode = EnumSource.Mode.EXCLUDE, names = {"ACE"})
 	void isBurst(Rank rank) {
 		Card card = new Card(rank, Suit.HEART);
 		Card card1 = new Card(Rank.KNIGHT, Suit.HEART);
@@ -27,8 +27,7 @@ public class ParticipantTest {
 	}
 
 	@ParameterizedTest(name = "손패가 MAX SCORE인지 확인하는 기능 - case : {0}, {1}, {2}")
-	@CsvSource(value = {"RANK_ACE, RANK_ACE, RANK_NINE", "RANK_KNIGHT, RANK_QUEEN, RANK_ACE",
-		"RANK_KNIGHT, RANK_EIGHT, RANK_THREE"})
+	@CsvSource(value = {"ACE, ACE, NINE", "KNIGHT, QUEEN, ACE", "KNIGHT, EIGHT, THREE"})
 	void isBlackJack(String input1, String input2, String input3) {
 		Card card1 = new Card(Rank.valueOf(input1), Suit.HEART);
 		Card card2 = new Card(Rank.valueOf(input2), Suit.SPADE);

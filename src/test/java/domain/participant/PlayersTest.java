@@ -94,7 +94,7 @@ public class PlayersTest {
 
 			@Override
 			public Queue<Card> generateCardsForBlackJack() {
-				return new LinkedList<>(Arrays.asList(new Card(Rank.RANK_FOUR, Suit.CLOVER)));
+				return new LinkedList<>(Arrays.asList(new Card(Rank.FOUR, Suit.CLOVER)));
 			}
 		}
 		Deck deck = Deck.from(new TestGenerationDeckStrategy());

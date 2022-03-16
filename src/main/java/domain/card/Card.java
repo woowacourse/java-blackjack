@@ -20,8 +20,12 @@ public class Card {
 		return rank.isAce();
 	}
 
-	public CardDTO getInfo() {
-		return new CardDTO(rank, suit);
+	public Rank getRank() {
+		return rank;
+	}
+
+	public Suit getSuit() {
+		return suit;
 	}
 
 	@Override

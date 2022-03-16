@@ -3,7 +3,8 @@ package view;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.participant.ParticipantDTO;
+import domain.participant.Name;
+import domain.participant.ParticipantInfo;
 
 public class OutputView {
 
@@ -18,28 +19,40 @@ public class OutputView {
 	private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
 	private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
 	private static final String BLACK_JACK_RESuLT_TITLE_MESSAGE = "[ BLACK JACK ]";
+	private static final int FIRST_CARD_INDEX = 0;
 
-	public static void printInitMessage(List<String> names) {
-		String namesForPrint = names.stream().collect(Collectors.joining(", "));
+	public static void printInitMessage(List<Name> names) {
+		List<String> nameInfo = names.stream().map(Name::getName).collect(Collectors.toList());
+		String namesForPrint = nameInfo.stream().collect(Collectors.joining(", "));
 		System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
 	}
 
-	public static void printHand(ParticipantDTO participantInfo) {
+	public static void printOneHandForDealer(ParticipantInfo participantInfo) {
+		System.out.println(String.format(SHOW_HAND_FORMAT, participantInfo.getName().getName(),
+			getCardInfo(participantInfo).get(FIRST_CARD_INDEX)));
+	}
+
+	public static void printHand(ParticipantInfo participantInfo) {
 		System.out.println(joinNameAndCard(participantInfo));
 	}
 
-	public static void printHandAndScore(ParticipantDTO participantInfo, int score) {
+	public static void printHandAndScore(ParticipantInfo participantInfo, int score) {
 		System.out.println(
 			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(participantInfo), String.valueOf(score)));
 	}
 
-	private static String joinNameAndCard(ParticipantDTO participantInfo) {
-		List<String> cardList = participantInfo.getHand().stream()
-			.map(card -> String.join("", List.of(card.getRank().getRank(), card.getSuit().getSuit())))
-			.collect(Collectors.toList());
+	private static String joinNameAndCard(ParticipantInfo participantInfo) {
+		List<String> cardInfo = getCardInfo(participantInfo);
 
 		return String.format(SHOW_HAND_FORMAT, participantInfo.getName().getName(),
-			String.join(JOINING_DELIMITER, cardList));
+			String.join(JOINING_DELIMITER, cardInfo));
+	}
+
+	private static List<String> getCardInfo(ParticipantInfo participantInfo) {
+		List<String> cardInfo = participantInfo.getHand().getCards().stream()
+			.map(card -> String.join("", List.of(card.getRank().getRank(), card.getSuit().getSuit())))
+			.collect(Collectors.toList());
+		return cardInfo;
 	}
 
 	public static void printBustMessage() {
@@ -73,4 +86,5 @@ public class OutputView {
 	public static void printErrorMessage(String message) {
 		System.out.println(message);
 	}
+
 }

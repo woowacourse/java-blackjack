@@ -1,11 +1,10 @@
 package controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import domain.participant.Dealer;
 import domain.participant.Name;
-import domain.participant.ParticipantDTO;
+import domain.participant.ParticipantInfo;
 import domain.participant.Players;
 import domain.result.Result;
 import view.OutputView;
@@ -14,19 +13,15 @@ public class ParticipantInformationPrintController {
 	public ParticipantInformationPrintController() {
 	}
 
-	private List<String> convertNamesToString(List<Name> names) {
-		return names.stream().map(Name::getName).collect(Collectors.toList());
-	}
-
 	public void printHand(Players players, Name name) {
 		OutputView.printHand(players.getPlayerDTOByName(name));
 	}
 
 	public void printInitHands(Dealer dealer, Players players) {
-		OutputView.printInitMessage(convertNamesToString(players.getNames()));
-		OutputView.printHand(dealer.getOneHandInfo());
+		OutputView.printInitMessage(players.getNames());
+		OutputView.printOneHandForDealer(new ParticipantInfo(dealer));
 
-		List<ParticipantDTO> playersInfo = players.getPlayerDTOs();
+		List<ParticipantInfo> playersInfo = players.getPlayerDTOs();
 		for (int i = 0; i < playersInfo.size(); i++) {
 			OutputView.printHand(playersInfo.get(i));
 		}
@@ -50,11 +45,11 @@ public class ParticipantInformationPrintController {
 
 	public void printHandAndResult(Dealer dealer, Players players) {
 		OutputView.printHandAndScore(
-			dealer.getInfo(),
+			new ParticipantInfo(dealer),
 			dealer.getBestScore()
 		);
 
-		List<ParticipantDTO> playersInfo = players.getPlayerDTOs();
+		List<ParticipantInfo> playersInfo = players.getPlayerDTOs();
 		List<Integer> scores = players.getScores();
 
 		for (int i = 0; i < playersInfo.size(); i++) {

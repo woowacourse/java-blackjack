@@ -1,7 +1,5 @@
 package domain.participant;
 
-import java.util.List;
-
 import domain.card.Hand;
 
 public class Dealer extends Participant {
@@ -14,13 +12,6 @@ public class Dealer extends Participant {
 	}
 
 	public boolean isEnoughCard() {
-		return hand.getBestScore() > STANDARD_OF_ENOUGH_CARD;
-	}
-
-	public ParticipantDTO getOneHandInfo() {
-		return new ParticipantDTO(
-			name.getInfo(),
-			List.of(hand.getOneHand().getInfo())
-		);
+		return hand.getScore() > STANDARD_OF_ENOUGH_CARD;
 	}
 }

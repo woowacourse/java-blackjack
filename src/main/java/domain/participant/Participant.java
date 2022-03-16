@@ -6,13 +6,11 @@ import domain.card.Hand;
 public class Participant {
 
 	protected final Name name;
-	protected final boolean blackJack;
 	protected final Hand hand;
 
 	public Participant(Name name, Hand hand) {
 		this.name = name;
 		this.hand = hand;
-		this.blackJack = isMaxScore();
 	}
 
 	public void addCard(Card card) {
@@ -28,21 +26,18 @@ public class Participant {
 	}
 
 	public int getBestScore() {
-		return hand.getBestScore();
+		return hand.getScore();
 	}
 
 	public boolean isBlackJack() {
-		return blackJack;
-	}
-
-	public ParticipantDTO getInfo() {
-		return new ParticipantDTO(
-			name.getInfo(),
-			hand.getInfo()
-		);
+		return hand.isBlackJack();
 	}
 
 	public Name getName() {
 		return Name.copyOf(name);
+	}
+
+	public Hand getHand() {
+		return Hand.copyOf(hand);
 	}
 }
