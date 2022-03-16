@@ -17,8 +17,8 @@ public class Card {
         return cardNumber == CardNumber.ACE;
     }
 
-    @Override
-    public String toString() {
-        return cardNumber.toString() + symbol.toString();
+    public String getCardInfo() {
+        return cardNumber.getCardNumberName() + symbol.getSymbolName();
     }
+
 }
