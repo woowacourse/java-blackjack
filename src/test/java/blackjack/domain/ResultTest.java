@@ -48,7 +48,7 @@ class ResultTest {
         dealer.drawCard(deck);
 
         //when
-        Map<User, Result> result = Result.getResult(players, dealer);
+        Map<Player, Double> result = Result.decideResult(players, dealer);
 
         //then
         assertThat(result.get(players.get(0))).isEqualTo(LOSS);

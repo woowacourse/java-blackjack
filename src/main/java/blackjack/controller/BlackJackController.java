@@ -123,8 +123,8 @@ public class BlackJackController {
 
         users.printResult(consumer);
 
-//        Map<String, Result> yield = users.getYield();
+        Map<String, Integer> revenue = users.calculateRevenue();
 
-//        outputView.printYield(yield);
+        outputView.printRevenue(revenue);
     }
 }

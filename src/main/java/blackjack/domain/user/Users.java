@@ -1,6 +1,8 @@
 package blackjack.domain.user;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
@@ -8,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class Users {
 
@@ -66,14 +67,29 @@ public class Users {
         }
     }
 
-    public Map<String, Result> getYield() {
-        return Result.getMap(getPlayers(), getDealer());
+    public Map<String, Integer> calculateRevenue() {
+        Map<Player, Double> result = Result.decideResult(getPlayers(), getDealer());
+
+        Map<String, Integer> revenue = result.keySet()
+                .stream()
+                .collect(
+                        toMap(player -> player.getName(), player -> player.getRevenue(result.get(player)))
+                );
+
+        revenue.put(
+                getDealer().getName(),
+                -(revenue.values()
+                        .stream()
+                        .mapToInt(value -> value).sum())
+        );
+
+        return revenue;
     }
 
     public List<User> getPlayers() {
         return users.stream()
                 .filter(user -> !user.isDealer())
-                .collect(Collectors.toUnmodifiableList());
+                .collect(toUnmodifiableList());
     }
 
     public User getDealer() {

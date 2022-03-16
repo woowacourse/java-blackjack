@@ -1,18 +1,14 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Result;
+import blackjack.domain.user.User;
 import blackjack.dto.CardDto;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 public class OutputView {
 
@@ -68,29 +64,12 @@ public class OutputView {
         System.out.printf("\n%s카드: %s - 결과: %d", userDto.getUserName(), String.join(", ", cardInfo), score);
     }
 
-    public void printYield(Map<String, Result> map) {
-        System.out.println("\n\n## 최종승패");
+    public void printRevenue(Map<String, Integer> revenue) {
+        System.out.println("\n\n## 최종 수익");
 
-        String dealerYield = calculateDealerYield(map);
-        System.out.printf("딜러: %s\n", dealerYield);
-
-        printPlayerYield(map);
-    }
-
-    private String calculateDealerYield(Map<String, Result> map) {
-        return map.values().stream()
-                .collect(groupingBy(
-                        Result::reverseResult, TreeMap::new, counting()
-                ))
-                .entrySet()
-                .stream()
-                .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(joining(" "));
-    }
-
-    private void printPlayerYield(Map<String, Result> map) {
-        for (Entry<String, Result> entry : map.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getName());
+        for (Entry<String, Integer> entry : revenue.entrySet()) {
+            System.out.printf("%s: %d\n", entry.getKey(), entry.getValue());
         }
+
     }
 }

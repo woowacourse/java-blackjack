@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import java.util.Arrays;
 import java.util.List;
@@ -21,18 +22,18 @@ public enum Result {
                     && (player.calculateScore() < dealer.calculateScore())))
     );
 
-    private final Double reward;
+    private final Double rate;
     private final BiPredicate<User, User> biPredicate;
 
-    Result(Double reward, BiPredicate<User, User> biPredicate) {
-        this.reward = reward;
+    Result(Double rate, BiPredicate<User, User> biPredicate) {
+        this.rate = rate;
         this.biPredicate = biPredicate;
     }
 
-    public static Map<User, Result> getResult(List<User> players, User dealer) {
+    public static Map<Player, Double> decideResult(List<User> players, User dealer) {
         return players.stream()
                 .collect(toMap(
-                        player -> player, player -> findResult(player, dealer)
+                        user -> (Player) user, player -> findResult(player, dealer).getRate()
                 ));
     }
 
@@ -43,7 +44,7 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
     }
 
-    public Double getReward() {
-        return reward;
+    private Double getRate() {
+        return rate;
     }
 }
