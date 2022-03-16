@@ -24,16 +24,7 @@ public class OutputView {
     private static final String FINAL_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 승패" + NEW_LINE;
     private static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
 
-    public static void printInitialDistributionAnnouncement(final InitialDistributionDto dto) {
-        if (dto.isGameOver()) {
-            printDealerBlackjackInfo(dto);
-            return;
-        }
-
-        printInitialParticipantsCards(dto);
-    }
-
-    private static void printInitialParticipantsCards(final InitialDistributionDto dto) {
+    public static void printInitialParticipantsCards(final InitialDistributionDto dto) {
         final String message = getParticipantsCardCountInfo(dto.getPlayerNames())
                 + getAllParticipantCardInfos(dto.getParticipantsInfo())
                 + NEW_LINE;
@@ -41,7 +32,7 @@ public class OutputView {
         print(message);
     }
 
-    private static void printDealerBlackjackInfo(final InitialDistributionDto dto) {
+    public static void printDealerBlackjackInfo(final InitialDistributionDto dto) {
         final String message = getParticipantsCardCountInfo(dto.getPlayerNames())
                 + DEALER_BLACKJACK_MESSAGE;
 

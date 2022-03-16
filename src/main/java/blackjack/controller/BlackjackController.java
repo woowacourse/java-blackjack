@@ -1,8 +1,9 @@
 package blackjack.controller;
 
 import static blackjack.view.InputView.requestPlayerNamesInput;
+import static blackjack.view.OutputView.printDealerBlackjackInfo;
 import static blackjack.view.OutputView.printGameResult;
-import static blackjack.view.OutputView.printInitialDistributionAnnouncement;
+import static blackjack.view.OutputView.printInitialParticipantsCards;
 
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
@@ -30,12 +31,15 @@ public class BlackjackController {
     }
 
     public void playGame(final BlackjackGame game) {
-        final InitialDistributionDto gameInfoDto = InitialDistributionDto.of(game);
+        final InitialDistributionDto dto = InitialDistributionDto.of(game);
 
-        printInitialDistributionAnnouncement(gameInfoDto);
-        if (!gameInfoDto.isGameOver()) {
-            distributeAllCards(game);
+        if (game.isBlackjackDealer()) {
+            printDealerBlackjackInfo(dto);
+            return;
         }
+
+        printInitialParticipantsCards(dto);
+        distributeAllCards(game);
     }
 
     private void distributeAllCards(final BlackjackGame game) {

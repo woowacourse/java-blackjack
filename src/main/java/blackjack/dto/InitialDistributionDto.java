@@ -11,17 +11,14 @@ import java.util.stream.Collectors;
 public class InitialDistributionDto {
 
     private final List<ParticipantCardsDto> participantsInfo = new ArrayList<>();
-    private final boolean gameOver;
 
-    private InitialDistributionDto(final GameParticipants participants,
-                                   final boolean gameOver) {
+    private InitialDistributionDto(final GameParticipants participants) {
         participants.getValue()
                 .forEach(this::initParticipantInfo);
-        this.gameOver = gameOver;
     }
 
     public static InitialDistributionDto of(final BlackjackGame game) {
-        return new InitialDistributionDto(game.getParticipants(), game.isBlackjackDealer());
+        return new InitialDistributionDto(game.getParticipants());
     }
 
     private void initParticipantInfo(final Participant participant) {
@@ -40,15 +37,8 @@ public class InitialDistributionDto {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
     @Override
     public String toString() {
-        return "InitialDistributionDto{" +
-                "participantsInfo=" + participantsInfo +
-                ", isGameOver=" + gameOver +
-                '}';
+        return "InitialDistributionDto{" + "participantsInfo=" + participantsInfo + '}';
     }
 }
