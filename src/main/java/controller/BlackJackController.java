@@ -6,6 +6,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.Result;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -27,9 +28,10 @@ public class BlackJackController {
     }
 
     private Players createPlayers() {
-        String playerNames = inputView.inputPlayerName();
+        List<String> playerNames = inputView.inputPlayerName();
+        List<Integer> playerMoneys = inputView.inputPlayerMoney(playerNames);
         try {
-            return Players.of(playerNames);
+            return Players.of(playerNames, playerMoneys);
         } catch (IllegalArgumentException exception) {
             outputView.printError(exception.getMessage());
             return createPlayers();
@@ -73,7 +75,7 @@ public class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        List<Result> playerResult = (List<Result>) players.checkResults(dealer).values();
+        List<Result> playerResult = new ArrayList<>(players.checkResults(dealer).values());
         outputView.showResult(dealer.checkResult(playerResult), players.checkResults(dealer));
     }
 }

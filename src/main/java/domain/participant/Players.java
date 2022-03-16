@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Deck;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,21 +11,18 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final String DELIMITER = ",";
-
     private final List<Player> players;
 
     private Players(List<Player> players) {
         this.players = players;
     }
 
-    public static Players of(String names) {
-        List<Player> players = Arrays.stream(names.split(DELIMITER))
-            .map(String::trim)
-            .map(Player::new)
-            .collect(Collectors.toList());
-
-        return new Players(players);
+    public static Players of(List<String> names, List<Integer> moneys) {
+        List<Player> tmpPlayers = new ArrayList<>();
+        for (int idx = 0; idx < names.size(); idx++) {
+            tmpPlayers.add(new Player(names.get(idx), moneys.get(idx)));
+        }
+        return new Players(tmpPlayers);
     }
 
     public void runInitialTurn(Deck deck) {

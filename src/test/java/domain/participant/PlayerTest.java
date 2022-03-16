@@ -18,7 +18,7 @@ class PlayerTest {
 
     @BeforeEach
     void init() {
-        player = new Player("test");
+        player = new Player("test", 10000);
         dealer = new Dealer();
     }
 
@@ -27,7 +27,7 @@ class PlayerTest {
     void playerEmptyNameTest() {
         String name = "";
 
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, 10))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }
