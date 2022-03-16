@@ -1,13 +1,11 @@
 package blackjack.domain;
 
-import static blackjack.domain.DrawCommand.*;
-
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.HoldingCard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.dto.ParticipantDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +35,10 @@ public class BlackjackGame {
 
     public HoldingCard drawCurrentPlayer(DrawCommand drawCommand) {
         Participant currentPlayer = players.getCurrentPlayer();
-        if (drawCommand == YES) {
+        if (drawCommand.isHit()) {
             currentPlayer.receiveCard(cardDeck.drawCard());
         }
-        if (drawCommand == NO || currentPlayer.isBust()) {
+        if (!drawCommand.isHit() || currentPlayer.isBust()) {
             players.skipTurn();
         }
         return currentPlayer.getHoldingCard();
