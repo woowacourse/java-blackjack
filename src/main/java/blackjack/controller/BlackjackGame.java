@@ -32,9 +32,7 @@ public class BlackjackGame {
     private void dealInitCards(CardDeck cardDeck, Dealer dealer, Players players) {
         OutputView.printDealCardMessage(dealer.getName(), players.getNames());
         dealer.dealInit(cardDeck.dealInit());
-        for (Player player : players.getPlayers()) {
-            player.dealInit(cardDeck.dealInit());
-        }
+        players.dealInit(cardDeck);
     }
 
     private void openInitCards(Dealer dealer, Players players) {

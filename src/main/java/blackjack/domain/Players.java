@@ -49,6 +49,20 @@ public class Players {
         }
     }
 
+    public void dealInit(CardDeck cardDeck) {
+        for (Player player : players) {
+            player.dealInit(cardDeck.dealInit());
+        }
+    }
+
+    public Winner win(Dealer dealer) {
+        Winner winner = new Winner();
+        for (Player player : players) {
+            winner.decide(dealer, player);
+        }
+        return winner;
+    }
+
     public int countLoser(int countWinner) {
         return players.size() - countWinner;
     }
@@ -61,13 +75,5 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public Winner win(Dealer dealer) {
-        Winner winner = new Winner();
-        for (Player player : players) {
-            winner.decide(dealer, player);
-        }
-        return winner;
     }
 }
