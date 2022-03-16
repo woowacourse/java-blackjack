@@ -13,7 +13,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Application {
@@ -33,6 +32,10 @@ public class Application {
         printResult(dealer, players);
     }
 
+    private static List<Card> getInitCards(Deck deck) {
+        return List.of(deck.draw(), deck.draw());
+    }
+
     private static Players createPlayers(Deck deck) {
         List<Player> players = InputView.getNames().stream()
                 .map(name -> new Player(name, createBattingMoney(name), getInitCards(deck)))
@@ -40,8 +43,8 @@ public class Application {
         return new Players(players);
     }
 
-    private static List<Card> getInitCards(Deck deck) {
-        return List.of(deck.draw(), deck.draw());
+    private static int createBattingMoney(String playerName) {
+        return InputView.insertBattingMoney(playerName);
     }
 
     private static List<GamerDto> toPlayersDto(Players players) {
@@ -82,24 +85,19 @@ public class Application {
         }
     }
 
-    private static int createBattingMoney(String playerName) {
-        return InputView.insertBattingMoney(playerName);
-    }
-
-    private static Map<String, GameResultDto> createPlayerResult(Players players, Dealer dealer) {
-        return players.getValue().stream()
-                .collect(toMap(player -> player.getName(),
-                        player -> GameResultDto.from(player.createResult(dealer))));
-    }
-
-    private static Map<GameResultDto, Long> createDealerResult(Players players, Dealer dealer) {
-        return players.getValue().stream()
-                .collect(groupingBy(player -> GameResultDto.from(dealer.createResult(player)),
-                        counting()));
-    }
-
     private static void printResult(Dealer dealer, Players players) {
-        OutputView.printDealerGameResult(createDealerResult(players, dealer));
-        OutputView.printPlayerGameResult(createPlayerResult(players, dealer));
+        OutputView.printGameResult(createPlayerResult(players, dealer), createDealerResult(players, dealer));
+    }
+
+    private static List<GameResultDto> createPlayerResult(Players players, Dealer dealer) {
+        return players.getValue().stream()
+                .filter(player -> player.calculateBattingMoneyResult(dealer))
+                .map(player -> GameResultDto.from(player))
+                .collect(toList());
+    }
+
+    private static GameResultDto createDealerResult(Players players, Dealer dealer) {
+        players.getValue().forEach(player -> dealer.calculateBattingMoneyResult(player));
+        return GameResultDto.from(dealer);
     }
 }

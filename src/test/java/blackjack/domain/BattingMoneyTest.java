@@ -1,8 +1,10 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -24,5 +26,16 @@ public class BattingMoneyTest {
         assertThatThrownBy(() -> new BattingMoney(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("string");
+    }
+
+    @DisplayName("배팅금액을 추가한다.")
+    @Test
+    void 게임_결과_얻은_금액() {
+        // given
+        BattingMoney battingMoney = new BattingMoney(0);
+        // when
+        battingMoney.addMoney(1000);
+        // then
+        assertThat(battingMoney.getValue()).isEqualTo(1000);
     }
 }

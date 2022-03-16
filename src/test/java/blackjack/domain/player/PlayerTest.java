@@ -160,4 +160,48 @@ public class PlayerTest {
 
         assertThat(gameResult).isEqualTo(GameResult.TIE);
     }
+
+    @DisplayName("플레이어가 이겼을 때 최종 배팅 머니 계산")
+    @Test
+    void 배팅금액_합계_승리() {
+        Player player = new Player("sudal", 1000, generateTotalScoreGraterThan17Cards());
+        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards(), 0);
+
+        player.calculateBattingMoneyResult(dealer);
+
+        assertThat(player.getBattingMoney()).isEqualTo(1000);
+    }
+
+    @DisplayName("플레이어가 블랙잭이라서 이겼을 때 최종 배팅 머니 계산")
+    @Test
+    void 배팅금액_합계_블랙잭_승리() {
+        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards(), 0);
+        Player player = new Player("sudal", 1000, generateCards());
+
+        player.calculateBattingMoneyResult(dealer);
+
+        assertThat(player.getBattingMoney()).isEqualTo(2000);
+    }
+
+    @DisplayName("플레이어가 졌을 때 최종 배팅 머니 계산")
+    @Test
+    void 배팅금액_합계_패배() {
+        Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards(), 0);
+        Player player = new Player("sudal", 1000, generateTotalScoreNotMoreThan16Cards());
+
+        player.calculateBattingMoneyResult(dealer);
+
+        assertThat(player.getBattingMoney()).isEqualTo(-1000);
+    }
+
+    @DisplayName("플레이어와 딜러 무승부일 때 배팅 머니 계산")
+    @Test
+    void 배팅금액_합계_무승부() {
+        Dealer dealer = new Dealer(generateCards(), 0);
+        Player player = new Player("sudal", 1000, generateCards());
+
+        player.calculateBattingMoneyResult(dealer);
+
+        assertThat(player.getBattingMoney()).isEqualTo(1000);
+    }
 }

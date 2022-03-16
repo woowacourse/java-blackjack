@@ -1,8 +1,10 @@
 package blackjack.domain;
 
 public class BattingMoney {
+
     public static final int BATTING_MIN_VALUE = 0;
-    private final int value;
+
+    private int value;
 
     public BattingMoney(int value) {
         checkNegative(value);
@@ -21,5 +23,10 @@ public class BattingMoney {
 
     public int getValue() {
         return value;
+    }
+
+    public boolean addMoney(int money) {
+        value += money;
+        return true;
     }
 }

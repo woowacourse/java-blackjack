@@ -5,9 +5,7 @@ import static java.util.stream.Collectors.joining;
 import blackjack.dto.CardDto;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.GamerDto;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -69,19 +67,20 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + cardsInfo + " - 결과: " + dealer.getCards().getTotalScore());
     }
 
-    public static void printDealerGameResult(Map<GameResultDto, Long> result) {
-        Map<GameResultDto, Long> results = new LinkedHashMap<>(result);
-        String resultInfo = results.keySet().stream()
-                .map(score -> result.get(score) + score.getValue())
-                .collect(joining(" "));
 
-        System.out.printf("\n## 최종 승패\n딜러: %s\n", resultInfo);
+    public static void printGameResult(List<GameResultDto> playerResults, GameResultDto dealerResult) {
+        printDealerGameResult(dealerResult);
+        printPlayerGameResult(playerResults);
     }
 
-    public static void printPlayerGameResult(Map<String, GameResultDto> results) {
-        String resultInfo = results.keySet()
+    private static void printDealerGameResult(GameResultDto result) {
+        System.out.printf("\n## 최종 수익\n" + result.getName() + ": %s\n", result.getBattingMoney());
+    }
+
+    private static void printPlayerGameResult(List<GameResultDto> results) {
+        String resultInfo = results
                 .stream()
-                .map(name -> name + ": " + results.get(name).getValue())
+                .map(player -> player.getName() + ": " + player.getBattingMoney())
                 .collect(joining("\n"));
 
         System.out.println(resultInfo);

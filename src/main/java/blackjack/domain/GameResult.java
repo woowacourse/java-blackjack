@@ -5,15 +5,18 @@ import java.util.function.BiPredicate;
 
 public enum GameResult {
 
-    WIN("승", (score, otherScore) -> score > otherScore),
-    TIE("무", (score, otherScore) -> score == otherScore),
-    LOSE("패", (score, otherScore) -> score < otherScore);
+    BLACKJACK("블랙잭", 1.5, (score, otherScore) -> score == 21 && score > otherScore),
+    WIN("승", 0, (score, otherScore) -> score > otherScore),
+    TIE("무", 0, (score, otherScore) -> score == otherScore),
+    LOSE("패", -2, (score, otherScore) -> score < otherScore);;
 
     private final String value;
+    private final double battingMoneyResult;
     private final BiPredicate<Integer, Integer> condition;
 
-    GameResult(String value, BiPredicate<Integer, Integer> condition) {
+    GameResult(String value, double battingMoneyResult, BiPredicate<Integer, Integer> condition) {
         this.value = value;
+        this.battingMoneyResult = battingMoneyResult;
         this.condition = condition;
     }
 
@@ -26,5 +29,9 @@ public enum GameResult {
 
     public String getValue() {
         return value;
+    }
+
+    public double getBattingMoneyResult() {
+        return battingMoneyResult;
     }
 }

@@ -28,9 +28,11 @@ public abstract class Gamer {
         return getTotalScore() > BLACKJACK_SCORE;
     }
 
-    abstract GameResult createResult(Gamer gamer);
-
     abstract boolean canHit();
+
+    public boolean addMoney(int value) {
+        return battingMoney.addMoney(value);
+    }
 
     public String getName() {
         return name.getValue();
