@@ -28,7 +28,7 @@ public class Deck {
         return new Deck(cards);
     }
 
-    public List<Card> handOutInitialTurn() {
+    public List<Card> handOutCards() {
         return Arrays.asList(handOut(), handOut());
     }
 

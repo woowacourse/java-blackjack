@@ -28,7 +28,7 @@ public abstract class Participant {
     }
 
     public void pickTwoCards(Deck deck) {
-        this.cards.addCards(deck.handOutInitialTurn());
+        this.cards.addCards(deck.handOutCards());
     }
 
     public int calculateScore() {

@@ -38,7 +38,7 @@ public class DeckTest {
         Card card1 = deck.getCards().get(0);
         Card card2 = deck.getCards().get(1);
 
-        List<Card> cards = deck.handOutInitialTurn();
+        List<Card> cards = deck.handOutCards();
         assertThat(cards).contains(card1);
         assertThat(cards).contains(card2);
     }
