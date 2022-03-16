@@ -23,8 +23,8 @@ public class BettingTableTest {
             new Betting(Name.of("jason"), 20000)));
 
         //when
-        long actual = table.dealerRevenue(Map.of(Name.of("pobi"), PlayRecord.WIN,
-            Name.of("jason"), PlayRecord.LOSS));
+        long actual = table.getRevenues(Map.of(Name.of("pobi"), PlayRecord.WIN,
+            Name.of("jason"), PlayRecord.LOSS)).get(Name.of("딜러"));
         //then
         assertThat(actual).isEqualTo(10000);
     }
