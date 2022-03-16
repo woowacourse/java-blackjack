@@ -2,6 +2,10 @@ package blackjack.domain;
 
 public class Money {
 
+    private static final int VALUE_LOWER_BOUND = 100;
+    private static final int VALUE_UPPER_BOUND = 1_000_000_000;
+    private static final double BONUS_MULTIPLIER = 1.5;
+
     private int value;
 
     public Money() {
@@ -19,7 +23,7 @@ public class Money {
     }
 
     private void validateBound(final int value) {
-        if (value < 100 || value > 1_000_000_000) {
+        if (value < VALUE_LOWER_BOUND || value > VALUE_UPPER_BOUND) {
             throw new IllegalArgumentException("베팅 금액은 100이상 10억 이하여야 합니다.");
         }
     }
@@ -35,7 +39,7 @@ public class Money {
     }
 
     public void multiply() {
-        value *= 1.5;
+        value *= BONUS_MULTIPLIER;
     }
 
     public void toZero() {

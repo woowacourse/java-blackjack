@@ -31,7 +31,7 @@ public class GameController {
         }
     }
 
-    public void bet() {
+    public void betMoney() {
         players.getValue().forEach(this::initMoney);
     }
 
