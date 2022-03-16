@@ -14,14 +14,14 @@ public class ParticipantInformationPrintController {
 	}
 
 	public void printHand(Players players, Name name) {
-		OutputView.printHand(players.getPlayerDTOByName(name));
+		OutputView.printHand(players.getPlayerInfoByName(name));
 	}
 
 	public void printInitHands(Dealer dealer, Players players) {
 		OutputView.printInitMessage(players.getNames());
 		OutputView.printOneHandForDealer(new ParticipantInfo(dealer));
 
-		List<ParticipantInfo> playersInfo = players.getPlayerDTOs();
+		List<ParticipantInfo> playersInfo = players.getPlayerInfo();
 		for (int i = 0; i < playersInfo.size(); i++) {
 			OutputView.printHand(playersInfo.get(i));
 		}
@@ -49,7 +49,7 @@ public class ParticipantInformationPrintController {
 			dealer.getBestScore()
 		);
 
-		List<ParticipantInfo> playersInfo = players.getPlayerDTOs();
+		List<ParticipantInfo> playersInfo = players.getPlayerInfo();
 		List<Integer> scores = players.getScores();
 
 		for (int i = 0; i < playersInfo.size(); i++) {

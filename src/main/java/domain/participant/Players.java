@@ -65,11 +65,11 @@ public class Players {
 			.collect(Collectors.toList());
 	}
 
-	public ParticipantInfo getPlayerDTOByName(Name name) {
+	public ParticipantInfo getPlayerInfoByName(Name name) {
 		return new ParticipantInfo(players.get(name));
 	}
 
-	public List<ParticipantInfo> getPlayerDTOs() {
+	public List<ParticipantInfo> getPlayerInfo() {
 		return players.keySet().stream()
 			.map(name -> new ParticipantInfo(players.get(name)))
 			.collect(Collectors.toList());
