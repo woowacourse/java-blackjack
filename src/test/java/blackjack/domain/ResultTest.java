@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static blackjack.domain.Result.LOSS;
-import static blackjack.domain.Result.PRINCIPAL;
 import static blackjack.domain.Result.WIN;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.FIVE;
@@ -20,7 +19,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.User;
 import blackjack.domain.vo.Name;
 import java.util.ArrayDeque;
 import java.util.List;
@@ -38,12 +36,12 @@ class ResultTest {
         //given
         Deck deck = initDeck();
 
-        List<User> players = List.of(
+        List<Player> players = List.of(
                 createPlayerByName("pobi"),
                 createPlayerByName("jason")
         );
 
-        for (User player : players) {
+        for (Player player : players) {
             player.drawCard(deck);
             player.drawCard(deck);
         }
@@ -53,11 +51,11 @@ class ResultTest {
         dealer.drawCard(deck);
 
         //when
-        Map<Player, Double> result = Result.decideResult(players, dealer);
+        Map<String, Integer> result = Result.calculateRevenue(players, dealer);
 
         //then
-        assertThat(result.get(players.get(0))).isEqualTo(LOSS.getRate());
-        assertThat(result.get(players.get(1))).isEqualTo(WIN.getRate());
+        assertThat(result.get(players.get(0).getName())).isEqualTo((int)(MINIMUM_BETTING_AMOUNT * LOSS.getRate()));
+        assertThat(result.get(players.get(1).getName())).isEqualTo((int)(MINIMUM_BETTING_AMOUNT * WIN.getRate()));
     }
 
     @DisplayName("둘 다 버스트가 아니고 딜러가 작은 경우")
@@ -71,9 +69,9 @@ class ResultTest {
                 new Card(SPADE, QUEEN)
         )));
 
-        List<User> players = List.of(createPlayerByName("pobi"));
+        List<Player> players = List.of(createPlayerByName("pobi"));
 
-        for (User player : players) {
+        for (Player player : players) {
             player.drawCard(deck);
             player.drawCard(deck);
         }
@@ -83,10 +81,10 @@ class ResultTest {
         dealer.drawCard(deck);
 
         //when
-        Map<Player, Double> result = Result.decideResult(players, dealer);
+        Map<String, Integer> result = Result.calculateRevenue(players, dealer);
 
         //then
-        assertThat(result.get(players.get(0))).isEqualTo(PRINCIPAL.getRate());
+        assertThat(result.get(players.get(0).getName())).isEqualTo(MINIMUM_BETTING_AMOUNT);
     }
 
     private Deck initDeck() {

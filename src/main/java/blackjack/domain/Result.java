@@ -2,9 +2,11 @@ package blackjack.domain;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
@@ -31,11 +33,21 @@ public enum Result {
         this.biPredicate = biPredicate;
     }
 
-    public static Map<Player, Double> decideResult(List<User> players, User dealer) {
-        return players.stream()
+    public static Map<String, Integer> calculateRevenue(List<Player> players, Dealer dealer) {
+        Map<String, Integer> revenue = new LinkedHashMap<>();
+
+        Map<String, Integer> playerRevenue = players.stream()
                 .collect(toMap(
-                        user -> (Player) user, player -> findResult(player, dealer).getRate()
-                ));
+                        player -> player.getName(), player -> player.getRevenue(findResult(player, dealer).getRate()),
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new)
+                );
+
+        revenue.put(dealer.getName(), calculateDealerRevenue(playerRevenue));
+
+        revenue.putAll(playerRevenue);
+
+        return revenue;
     }
 
     private static Result findResult(User player, User dealer) {
@@ -43,6 +55,12 @@ public enum Result {
                 .filter(value -> value.biPredicate.test(player, dealer))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
+    }
+
+    private static int calculateDealerRevenue(Map<String, Integer> playerRevenue) {
+        return - (playerRevenue.values()
+                .stream()
+                .mapToInt(value -> value).sum());
     }
 
     public Double getRate() {
