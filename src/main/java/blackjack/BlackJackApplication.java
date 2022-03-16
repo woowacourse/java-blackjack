@@ -2,8 +2,10 @@ package blackjack;
 
 import static blackjack.controller.BlackJackController.createPlayers;
 import static blackjack.controller.BlackJackController.initiateParticipantsHand;
+import static blackjack.controller.BlackJackController.receiveBettingMoney;
 import static blackjack.controller.BlackJackController.takeMoreCard;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.ScoreBoard;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
@@ -18,12 +20,13 @@ public class BlackJackApplication {
     public static void main(final String... args) {
         Deck deck = new Deck(new RandomCardsGenerateStrategy());
         Dealer dealer = new Dealer();
-        List<Player> players = createPlayers();
 
-        runGame(deck, dealer, players);
+        runGame(deck, dealer);
     }
 
-    private static void runGame(Deck deck, Dealer dealer, List<Player> players) {
+    private static void runGame(Deck deck, Dealer dealer) {
+        List<Player> players = createPlayers();
+        List<BettingMoney> bettingMonies = receiveBettingMoney(players);
         initiateParticipantsHand(dealer, players, deck);
         takeMoreCard(players, dealer, deck);
         OutputView.printParticipantScore(dealer, players);

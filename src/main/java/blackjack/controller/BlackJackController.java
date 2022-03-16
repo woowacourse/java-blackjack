@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static blackjack.constant.Command.HIT;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -24,6 +25,10 @@ public class BlackJackController {
             players.add(new Player(participantName));
         }
         return players;
+    }
+
+    public static List<BettingMoney> receiveBettingMoney(List<Player> players) {
+        return InputView.inputBettingMoney(players);
     }
 
     public static void initiateParticipantsHand(Dealer dealer, List<Player> players, Deck deck) {
