@@ -10,15 +10,14 @@ import java.util.stream.Collectors;
 public enum Result {
 
     WIN(1.5, (
-            (player, dealer) -> (player.getCardCount() == 2) &&
-                    (player.getScore() == 21))
+            (player, dealer) -> player.isBlackJack())
     ),
     PRINCIPAL(1.0, (
-            (player, dealer) -> ((player.getScore() == 21 && dealer.getScore() == 21) || (dealer.isBust())))
+            (player, dealer) -> ((player.calculateScore() == 21 && dealer.calculateScore() == 21) || (dealer.isBust())))
     ),
     LOSS(-1.0, (
             (player, dealer) -> ((!player.isBust() && !dealer.isBust())
-                    && (player.getScore() < dealer.getScore())))
+                    && (player.calculateScore() < dealer.calculateScore())))
     );
 
     private final Double reward;

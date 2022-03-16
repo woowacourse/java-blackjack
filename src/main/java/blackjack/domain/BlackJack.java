@@ -51,10 +51,6 @@ public class BlackJack {
         users.drawAdditionalCard(consumerPlayer, consumerDealer);
     }
 
-    public void calculateScore() {
-        users.calculateAllUser();
-    }
-
     public Users getUsers() {
         return this.users;
     }

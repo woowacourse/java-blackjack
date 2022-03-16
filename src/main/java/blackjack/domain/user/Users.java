@@ -38,12 +38,6 @@ public class Users {
         }
     }
 
-    public void calculateAllUser() {
-        for (User user : users) {
-            user.calculate();
-        }
-    }
-
     public void drawCards(Deck deck) {
         for (User user : users) {
             user.drawCard(deck);

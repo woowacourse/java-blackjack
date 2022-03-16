@@ -3,7 +3,6 @@ package blackjack.controller;
 import static blackjack.dto.UserDto.from;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import blackjack.domain.user.BettingMoney;
@@ -35,8 +34,6 @@ public class BlackJackController {
         printInitCardInfo(blackJack.getUsers());
 
         drawAdditionalCard(blackJack);
-
-        blackJack.calculateScore();
 
         printFinalResult(blackJack.getUsers());
     }
@@ -122,12 +119,12 @@ public class BlackJackController {
     }
 
     private void printFinalResult(Users users) {
-        Consumer<User> consumer = user -> outputView.printWithScore(from(user), user.getScore());
+        Consumer<User> consumer = user -> outputView.printWithScore(from(user), user.calculateScore());
 
         users.printResult(consumer);
 
-        Map<String, Result> yield = users.getYield();
+//        Map<String, Result> yield = users.getYield();
 
-        outputView.printYield(yield);
+//        outputView.printYield(yield);
     }
 }
