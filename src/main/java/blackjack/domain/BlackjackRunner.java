@@ -52,6 +52,7 @@ public class BlackjackRunner {
         if (dealer.isDrawable()) {
             dealer.append(deck.draw());
             OutputView.printDealerDrawable();
+            drawDealer(deck, dealer);
         }
     }
 
