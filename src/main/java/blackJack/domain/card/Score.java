@@ -23,8 +23,11 @@ public class Score {
         return score > BLACK_JACK;
     }
 
-    public boolean hasPossibleAcePoint() {
-        return score + ACE_BONUS_SCORE <= BLACK_JACK;
+    public int plusAcePoint() {
+        if (score + ACE_BONUS_SCORE <= BLACK_JACK) {
+            return score + ACE_BONUS_SCORE;
+        }
+        return score;
     }
 
     public boolean isPossibleDealerHit() {

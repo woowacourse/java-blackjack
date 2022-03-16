@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private static final int ACE_BONUS_SCORE = 10;
-
     private final Set<Card> cards;
 
     public Cards() {
@@ -31,9 +29,9 @@ public class Cards {
 
     public int calculateScore() {
         final int sumScore = calculateCardsSum();
-        final Score score = new Score(sumScore);
-        if (hasAce(cards) && score.hasPossibleAcePoint()) {
-            return sumScore + ACE_BONUS_SCORE;
+        if (hasAce(cards)) {
+            final Score score = new Score(sumScore);
+            return score.plusAcePoint();
         }
         return sumScore;
     }
