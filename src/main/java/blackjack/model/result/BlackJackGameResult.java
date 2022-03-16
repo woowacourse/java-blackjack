@@ -2,11 +2,11 @@ package blackjack.model.result;
 
 import blackjack.model.player.Players;
 import blackjack.model.player.Participant;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJackGameResult {
-    /*
     private final Map<String, MatchResult> gamersMatchResult;
     private final Map<MatchResult, Integer> dealerMatchResult;
 
@@ -15,7 +15,7 @@ public class BlackJackGameResult {
         this.dealerMatchResult = createDealerMatchResult(dealer, players);
     }
 
-    public Map<String, MatchResult> createGamersMatchResult(Participant dealer, Players players) {
+    private Map<String, MatchResult> createGamersMatchResult(Participant dealer, Players players) {
         Map<String, MatchResult> gamersMatchResult = new LinkedHashMap<>();
         for (Participant gamer : players.getValues()) {
             MatchResult matchResult = match(dealer, gamer);
@@ -46,12 +46,10 @@ public class BlackJackGameResult {
     }
 
     public Map<MatchResult, Integer> getDealerMatchResult() {
-        return dealerMatchResult;
+        return Collections.unmodifiableMap(dealerMatchResult);
     }
 
     public Map<String, MatchResult> getGamersMatchResult() {
-        return gamersMatchResult;
+        return Collections.unmodifiableMap(gamersMatchResult);
     }
-
-     */
 }

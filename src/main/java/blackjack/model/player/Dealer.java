@@ -3,6 +3,7 @@ package blackjack.model.player;
 import blackjack.model.DealerState;
 import blackjack.model.State;
 import blackjack.model.card.CardDeck;
+import java.net.PortUnreachableException;
 import java.util.List;
 
 
@@ -49,5 +50,10 @@ public class Dealer extends Participant {
     public Participant getCopyInstance() {
         State state = this.state.getCopyInstance();
         return new Dealer(state);
+    }
+
+    @Override
+    public State getState() {
+        return this.state.getCopyInstance();
     }
 }

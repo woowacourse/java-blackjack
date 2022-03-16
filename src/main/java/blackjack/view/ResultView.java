@@ -2,7 +2,10 @@ package blackjack.view;
 
 import blackjack.model.BlackjackGame;
 import blackjack.model.player.Participant;
+import blackjack.model.result.BlackJackGameResult;
+import blackjack.model.result.MatchResult;
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class ResultView {
@@ -11,7 +14,7 @@ public class ResultView {
     private static final String DEALER_AND_CARD_MESSAGE_FORMAT = "%s : %s\n";
     private static final String GAMER_AND_CARDS_MESSAGE_FORMAT = "%s : %s, %s\n";
     private static final String GAMER_HIT_MESSAGE_FORMAT = "\n%s : %s\n";
-    private static final String DEALER_ADD_CARD_MESSAGE_FORMAT = "\n%s는 16이하라 %d장의 카드를 더 받았습니다.\n";
+    private static final String DEALER_DRAW_CARD_MESSAGE_FORMAT = "\n%s는 16이하라 1장의 카드를 더 받았습니다.";
     private static final String PLAYER_SCORE_MESSAGE_FORMAT = "\n%s 카드: %s - 결과: %d\n";
     private static final String PLAYER_MATCH_MESSAGE_FORMAT = "\n%s: %s";
 
@@ -71,10 +74,7 @@ public class ResultView {
     }
 
     private static void printDealerHitResult(String name, List<String> cards) {
-        int addedCount = cards.size() - START_CARD_COUNT;
-        if (addedCount > 0) {
-            System.out.printf(DEALER_ADD_CARD_MESSAGE_FORMAT, name, addedCount);
-        }
+        System.out.printf(DEALER_DRAW_CARD_MESSAGE_FORMAT, name);
     }
 
     public static void printScoreResult(Participant dealer, List<Participant> gamers) {
@@ -84,19 +84,20 @@ public class ResultView {
         }
     }
 
-    private static void printResultOf(Participant player) {
+    private static void printResultOf(Participant participant) {
         StringJoiner cardJoiner = new StringJoiner(DELIMITER);
-        for (String card : player.getCards()) {
+        for (String card : participant.getCards()) {
             cardJoiner.add(card);
         }
-        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, player.getName(), cardJoiner);
+        System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, participant.getName(), cardJoiner,
+                participant.getState().sumScore());
     }
-/*
+
     public static void printMatchResult(final BlackJackGameResult blackJackGameResult) {
         printDealerMatchResult(blackJackGameResult.getDealerMatchResult());
-        blackJackGameResult.getGamersMatchResult().forEach((name, matchResult) -> {
-            System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, matchResult);
-        });
+
+        blackJackGameResult.getGamersMatchResult().forEach((name, matchResult) ->
+                System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, matchResult.getReverseValue()));
     }
 
     private static void printDealerMatchResult(Map<MatchResult, Integer> dealerMatchResult) {
@@ -104,6 +105,4 @@ public class ResultView {
         dealerMatchResult.forEach((matchResult, count) -> matchResultJoiner.add(count + matchResult.getValue()));
         System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, "딜러", matchResultJoiner);
     }
-
- */
 }

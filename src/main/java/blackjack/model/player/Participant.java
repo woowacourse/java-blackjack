@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.State;
 import blackjack.model.card.CardDeck;
 import java.util.List;
 
@@ -33,26 +34,5 @@ public abstract class Participant {
 
     public abstract Participant hitBy(final CardDeck cardDeck);
 
-    /*
-    public boolean isWinBy(Participant otherParticipant) {
-        return cards.sumScore() > otherParticipant.cards.sumScore();
-    }
-
-    public boolean isDrawWith(Participant otherParticipant) {
-        return cards.sumScore() == otherParticipant.cards.sumScore();
-    }
-
-    public List<String> getCards() {
-        return cards.getValues();
-    }
-
-
-    public boolean isBust() {
-        return cards.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return cards.isBlackjack();
-    }
-     */
+    public abstract State getState();
 }

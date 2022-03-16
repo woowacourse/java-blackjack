@@ -1,34 +1,28 @@
 package blackjack.model.result;
 
+import blackjack.model.State;
 import blackjack.model.player.Participant;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum MatchResult {
-/*
-    WIN("승", (dealer, gamer) ->
-            dealer.isBlackjack() && !gamer.isBlackjack() || !dealer.isBust() && gamer.isBust()
-                    || !dealer.isBust() && dealer.isWinBy(gamer)
-    ),
-    LOSE("패", (dealer, gamer) ->
-            dealer.isBust() && !gamer.isBust() || !dealer.isBlackjack() && gamer.isBlackjack()
-                    || !dealer.isBust() && !dealer.isWinBy(gamer)),
-    DRAW("무", (dealer, gamer) ->
-            dealer.isBust() && gamer.isBust() || dealer.isBlackjack() && dealer.isBlackjack()
-                    || !dealer.isBust() && dealer.isDrawWith(gamer)),
+
+    WIN("승", State::isWin),
+    LOSE("패", State::isLose),
+    DRAW("무", State::isDraw),
     ;
 
     private final String value;
-    private final BiPredicate<Participant, Participant> biPredicate;
+    private final BiPredicate<State, State> biPredicate;
 
-    MatchResult(String value, BiPredicate<Participant, Participant> biPredicate) {
+    MatchResult(String value, BiPredicate<State, State> biPredicate) {
         this.value = value;
         this.biPredicate = biPredicate;
     }
 
     public static MatchResult findBy(Participant dealer, Participant gamer) {
         return Arrays.stream(values())
-                .filter(matchResult -> matchResult.biPredicate.test(dealer, gamer))
+                .filter(matchResult -> matchResult.biPredicate.test(dealer.getState(), gamer.getState()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 값이 없습니다."));
     }
@@ -37,15 +31,13 @@ public enum MatchResult {
         return value;
     }
 
-    public String getReversValue() {
-        if (value.equals(MatchResult.WIN.value)) {
-            return MatchResult.LOSE.value;
+    public String getReverseValue() {
+        if (value.equals(WIN.getValue())) {
+            return LOSE.value;
         }
-        if (value.equals(MatchResult.LOSE.value)) {
-            return MatchResult.WIN.value;
+        if (value.equals(LOSE.getValue())) {
+            return WIN.value;
         }
-        return MatchResult.DRAW.value;
+        return DRAW.value;
     }
-
- */
 }

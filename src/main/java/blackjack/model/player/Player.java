@@ -47,4 +47,9 @@ public class Player extends Participant {
         State state = this.state.getCopyInstance();
         return new Player(name, state);
     }
+
+    @Override
+    public State getState() {
+        return this.state.getCopyInstance();
+    }
 }

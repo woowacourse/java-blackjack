@@ -10,6 +10,6 @@ public class Application {
         ResultView.printStartResult(blackjackGame.start());
         blackjackGame.performEachTurn(InputView::inputHitOrStaySign, ResultView::printCurrentTurnResult);
         ResultView.printScoreResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        //ResultView.printMatchResult(blackjackGame.createMatchResult());
+        ResultView.printMatchResult(blackjackGame.createMatchResult());
     }
 }
