@@ -10,6 +10,9 @@ public class Stand extends Finish {
 
     @Override
     public double earningRate(final BlackjackGameState blackjackGameState) {
+        if (blackjackGameState.isBust()) {
+            return 1;
+        }
         return 0;
     }
 }
