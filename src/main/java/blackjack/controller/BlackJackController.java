@@ -33,7 +33,7 @@ public class BlackJackController {
             player.receiveCard(deck.draw());
             player.receiveCard(deck.draw());
         }
-        OutputView.printGiveCardsToParticipants(dealer, players);
+        OutputView.printInitialParticipantsHand(dealer, players);
     }
 
     public static void takeMoreCard(List<Player> players, Dealer dealer, Deck deck) {

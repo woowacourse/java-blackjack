@@ -21,7 +21,7 @@ public class OutputView {
     private static final String COMMA_DELIMITER = ", ";
     private static final String BLACKJACK_GAME_RESULT_MESSAGE = "## 최종 승패";
 
-    public static void printGiveCardsToParticipants(Dealer dealer, List<Player> players) {
+    public static void printInitialParticipantsHand(Dealer dealer, List<Player> players) {
         out.printf(GIVE_CARDS_TO_PLAYERS_MESSAGE, getPlayerNames(players));
         out.printf(GIVE_CARDS_TO_DEALER_MESSAGE, dealer.getName(), cardDisplayContents(dealer.getOpenCard()));
         for (Player player : players) {
