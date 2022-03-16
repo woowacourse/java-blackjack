@@ -1,6 +1,6 @@
 package blackJack.domain.card;
 
-import static blackJack.domain.card.Denomination.ACE_BONUS_VALUE;
+import static blackJack.domain.card.Denomination.OTHER_ACE_SCORE;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -43,8 +43,8 @@ public class Cards {
     public int addScore() {
         int score = calculateScore();
 
-        if (hasDenominationAce() && score + ACE_BONUS_VALUE <= BLACK_JACK) {
-            score += ACE_BONUS_VALUE;
+        if (hasDenominationAce() && score + OTHER_ACE_SCORE <= BLACK_JACK) {
+            score += OTHER_ACE_SCORE;
         }
 
         return score;
