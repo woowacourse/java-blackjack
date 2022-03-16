@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardHandState;
 import blackjack.domain.game.ResultType;
-import blackjack.domain.game.Score;
 import blackjack.strategy.CardHandStateStrategy;
 import blackjack.strategy.CardSupplier;
 import blackjack.strategy.HitOrStayChoiceStrategy;
@@ -16,8 +15,8 @@ public class Player extends Participant {
     private static final int INITIAL_PLAYER_OPEN_CARDS_COUNT = 2;
     private static final String BLACK_NAME_INPUT_EXCEPTION_MESSAGE = "플레이어는 이름을 지녀야 합니다.";
     private static final String INVALID_PLAYER_NAME_EXCEPTION_MESSAGE = "플레이어의 이름은 딜러가 될 수 없습니다.";
-    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY
-            = (cards) -> CardHandState.of(cards, CardBundle::isBlackjackScore);
+    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY =
+            (cards) -> CardHandState.of(cards, CardBundle::isBlackjackScore);
 
     private final String name;
 
@@ -78,7 +77,7 @@ public class Player extends Participant {
         if (dealer.isBlackjackOrBust() || this.isBlackjackOrBust()) {
             return getSpecialDuelResultWith(dealer);
         }
-        return getScoreCompareResultWith(dealer.getScore());
+        return ResultType.from(this.getScore(), dealer.getScore());
     }
 
     private ResultType getSpecialDuelResultWith(Dealer dealer) {
@@ -100,18 +99,6 @@ public class Player extends Participant {
 
     private boolean isAlsoBlackjackWith(Dealer dealer) {
         return dealer.isBlackjack() && this.isBlackjack();
-    }
-
-    private ResultType getScoreCompareResultWith(final Score dealerScore) {
-        int compareResult = getScore().compareTo(dealerScore);
-
-        if (compareResult > 0) {
-            return ResultType.WIN;
-        }
-        if (compareResult < 0) {
-            return ResultType.LOSE;
-        }
-        return ResultType.DRAW;
     }
 
     @Override

@@ -11,8 +11,8 @@ public class Dealer extends Participant {
 
     public static final String UNIQUE_NAME = "딜러";
     private static final int INITIAL_DEALER_OPEN_CARDS_COUNT = 1;
-    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY
-            = (cards) -> CardHandState.of(cards, CardBundle::isDealerFinished);
+    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY =
+            (cards) -> CardHandState.of(cards, CardBundle::isDealerFinished);
 
     private Dealer(final CardBundle cardBundle) {
         super(cardBundle, STATE_UPDATE_STRATEGY);
