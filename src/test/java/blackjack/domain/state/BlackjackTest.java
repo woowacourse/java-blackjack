@@ -1,0 +1,23 @@
+package blackjack.domain.state;
+
+import static blackjack.domain.card.Denomination.A;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Suit.SPADES;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+
+class BlackjackTest {
+
+    @Test
+    void 서로_블랙잭이면_수익률이_제로() {
+        final Cards cards = new Cards(Set.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
+        final BlackjackGameState blackjack = new Blackjack(cards);
+        final BlackjackGameState compareState = new Blackjack(cards);
+
+        assertThat(blackjack.earningRate(compareState)).isEqualTo(0);
+    }
+}

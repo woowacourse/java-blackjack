@@ -11,4 +11,14 @@ public abstract class AbstractBlackjackGameState implements BlackjackGameState {
         Objects.requireNonNull(cards, "cards는 null이 들어올 수 없습니다.");
         this.cards = cards;
     }
+
+    @Override
+    public final boolean isBust() {
+        return cards.isBust();
+    }
+
+    @Override
+    public final boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
 }

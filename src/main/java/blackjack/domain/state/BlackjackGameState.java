@@ -11,4 +11,8 @@ public interface BlackjackGameState {
     boolean isFinished();
 
     double earningRate(final BlackjackGameState blackjackGameState);
+
+    boolean isBust();
+
+    boolean isBlackjack();
 }
