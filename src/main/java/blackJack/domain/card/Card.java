@@ -9,20 +9,20 @@ public class Card {
     private static final List<Card> CARDS = new ArrayList<>();
     
     static {
-        for (Symbol value : Symbol.values()) {
+        for (Suit value : Suit.values()) {
             createSymbolCards(value);
         }
     }
 
-    private final Symbol symbol;
+    private final Suit symbol;
     private final Denomination denomination;
 
-    public Card(Symbol symbol, Denomination denomination) {
+    public Card(Suit symbol, Denomination denomination) {
         this.symbol = symbol;
         this.denomination = denomination;
     }
 
-    private static void createSymbolCards(Symbol value) {
+    private static void createSymbolCards(Suit value) {
         for (Denomination denomination : Denomination.values()) {
             CARDS.add(new Card(value, denomination));
         }
