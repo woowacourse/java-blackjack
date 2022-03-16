@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private static final int MAX_DRAWABLE_COUNT = 11;
-    private static final int MINIMUM_BETTING_AMOUNT = 1;
+    private static final int MINIMUM_BETTING_AMOUNT = 10;
 
     @DisplayName("플레이어 생성 검증")
     @Test

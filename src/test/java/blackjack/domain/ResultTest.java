@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 class ResultTest {
 
-    private static final int MINIMUM_BETTING_AMOUNT = 1;
+    private static final int MINIMUM_BETTING_AMOUNT = 10;
 
     @DisplayName("게임 결과를 제대로 반환하는지 테스트")
     @Test
@@ -41,13 +41,11 @@ class ResultTest {
         for (User player : players) {
             player.drawCard(deck);
             player.drawCard(deck);
-            player.calculate();
         }
 
         Dealer dealer = new Dealer();
         dealer.drawCard(deck);
         dealer.drawCard(deck);
-        dealer.calculate();
 
         //when
         Map<String, Result> result = Result.getMap(players, dealer);

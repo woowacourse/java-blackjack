@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 class BlackJackTest {
 
-    private static final int MINIMUM_BETTING_AMOUNT = 1;
+    private static final int MINIMUM_BETTING_AMOUNT = 10;
 
     @DisplayName("플레이어 초기 카드 세팅 테스트")
     @Test
