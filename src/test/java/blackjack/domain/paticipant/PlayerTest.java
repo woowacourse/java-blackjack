@@ -19,17 +19,18 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
+    private Cards cards;
     private BlackjackGameState runningState;
 
     @BeforeEach
     void setup() {
-        final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
+        cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
         runningState = new PlayerRunning(cards);
     }
 
     @Test
     void 플레이어의_이름이_null인_경우_예외발생() {
-        assertThatThrownBy(() -> new Player(null, 1000, runningState))
+        assertThatThrownBy(() -> new Player(null, 1000, cards))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("이름은 null이 들어올 수 없습니다.");
     }
@@ -37,7 +38,7 @@ class PlayerTest {
     @ParameterizedTest
     @EmptySource
     void 플레이어의_이름이_공백인_경우_예외발생(final String name) {
-        assertThatThrownBy(() -> new Player(name, 1000, runningState))
+        assertThatThrownBy(() -> new Player(name, 1000, cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 공백이 들어올 수 없습니다.");
     }
@@ -45,16 +46,16 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -1000})
     void 배팅금액이_0이하인_경우_예외발생(final int betMoney) {
-        assertThatThrownBy(() -> new Player("name", betMoney, runningState))
+        assertThatThrownBy(() -> new Player("name", betMoney, cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅금액은 0이하의 값이 들어올 수 없습니다.");
     }
 
     @Test
     void 게임상태가_null인_경우_예외발생() {
-        assertThatThrownBy(() -> new Player("name", 1000, (BlackjackGameState) null))
+        assertThatThrownBy(() -> new Player("name", 1000, null))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("게임 상태는 null이 들어올 수 없습니다.");
+                .hasMessage("cards는 null이 들어올 수 없습니다.");
     }
 
     @Test
