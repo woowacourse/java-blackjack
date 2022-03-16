@@ -205,6 +205,21 @@ public class ScoreBoardTest {
     }
 
     @Test
+    @DisplayName("플레이어의 점수가 21이지만 카드가 3개 이상일때 플레이어의 상태는 블랙잭이 아닌 WIN 이다")
+    void player_not_blackjack_but_win_when_score_21_but_card_num_3() {
+        // given
+        Player player = createPlayerWithDenominations("user a", SIX, SEVEN, EIGHT);
+        Dealer dealer = createDealerWithDenominations(JACK, TWO);
+
+        // when
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
+        MatchResult playerMatchResult = scoreBoard.getPlayersMatchResult().get(player.getName());
+
+        // then
+        assertThat(playerMatchResult).isEqualTo(WIN);
+    }
+
+    @Test
     @DisplayName("플레이어와 딜러 모두 블랙잭일 때 플레이어의 상태는 DRAW 이다")
     void player_win_when_player_and_dealer_all_blackjack() {
         // given

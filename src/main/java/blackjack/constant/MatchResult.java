@@ -33,7 +33,7 @@ public enum MatchResult {
     }
 
     private static boolean loseCondition(Hand player, Hand dealer) {
-        return player.isBust() && !dealer.isBust() ||
+        return player.isBust() ||
                 (!player.isBust() && !dealer.isBust() && player.getScore() < dealer.getScore());
     }
 
