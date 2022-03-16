@@ -43,7 +43,7 @@ public enum ResultType {
         return displayName;
     }
 
-    public double getBettingYield() {
-        return bettingYield;
+    public int getProfitOf(int bettingAmount) {
+        return (int) (bettingAmount * this.bettingYield);
     }
 }
