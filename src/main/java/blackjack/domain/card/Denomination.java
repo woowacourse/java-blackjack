@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.state.Blackjack.BLACKJACK_TARGET_NUMBER;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -75,7 +77,7 @@ public enum Denomination {
     }
 
     private static boolean isLowerThanBlackjackTargetNumber(final int sumCount) {
-        return sumCount <= 21;
+        return sumCount <= BLACKJACK_TARGET_NUMBER;
     }
 
     public static int calculateCardMaxScore(final Set<Card> cards) {
