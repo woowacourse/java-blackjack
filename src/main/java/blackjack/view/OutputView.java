@@ -59,7 +59,7 @@ public final class OutputView {
     }
 
     public static void printParticipantOverMaxScore(final String name) {
-        System.out.println(name + "은 최고점수를 초과하여 카드를 더 이상 받을 수 없습니다.");
+        System.out.println(name + "은 최고점수 이상이기에 카드를 더 이상 받을 수 없습니다.");
     }
 
     public static void printDealerAcceptCard() {

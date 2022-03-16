@@ -37,7 +37,7 @@ public abstract class Player {
     public abstract boolean acceptableCard();
 
     public int calculateFinalScore() {
-        final int score = getScoreByAceEleven();
+        final int score = getMaxScore();
 
         if (score <= MAX_SCORE) {
             return score;
@@ -89,7 +89,7 @@ public abstract class Player {
         return cards.calculateScore();
     }
 
-    protected int getScoreByAceEleven() {
+    protected int getMaxScore() {
         return cards.calculateMaxScore();
     }
 
