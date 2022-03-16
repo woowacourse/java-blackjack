@@ -119,11 +119,11 @@ public class OutputView {
     }
 
     private static void printProfitOfDealer(double profit) {
-        System.out.printf(PROFIT_OF_DEALER_FORMAT, String.format("%.2f", profit));
+        System.out.printf(PROFIT_OF_DEALER_FORMAT, String.format("%.1f", profit));
     }
 
     private static void printProFitOfPlayer(String name, double profit) {
-        System.out.printf(PROFIT_OF_PLAYER_FORMAT, name, String.format("%.2f", profit));
+        System.out.printf(PROFIT_OF_PLAYER_FORMAT, name, String.format("%.1f", profit));
     }
 
     private static void printNewLine() {
