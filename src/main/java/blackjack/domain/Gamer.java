@@ -41,7 +41,15 @@ public abstract class Gamer {
 		return isGamersInNormalCase(gamer) && this.getScore() > gamer.getScore();
 	}
 
-	protected abstract boolean isWinBySpecialCase(Gamer gamer);
+	private boolean isWinBySpecialCase(Gamer gamer) {
+		return isWinByBlackJack(gamer) || isWinByBust(gamer) || isDrawByNormalCase(gamer);
+	};
+
+	private boolean isWinByBlackJack(Gamer gamer) {
+		return this.isBlackJack() && !gamer.isBlackJack();
+	}
+
+	protected abstract boolean isWinByBust(Gamer gamer);
 
 	private boolean isDrawBySpecialCase(Gamer gamer) {
 		return this.isBlackJack() && gamer.isBlackJack();

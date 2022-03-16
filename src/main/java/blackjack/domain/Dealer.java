@@ -13,10 +13,7 @@ public class Dealer extends Gamer {
 	}
 
 	@Override
-	protected boolean isWinBySpecialCase(Gamer gamer) {
-		if (this.isBlackJack() && !gamer.isBlackJack()) {
-			return true;
-		}
+	protected boolean isWinByBust(Gamer gamer) {
 		return gamer.isBust();
 	}
 

@@ -33,6 +33,10 @@ public class Players {
 			.count();
 	}
 
+	public int getPlayersSize() {
+		return this.players.size();
+	}
+
 	private void validateEmptyPlayers(List<Player> players) {
 		if (players.isEmpty()) {
 			throw new IllegalArgumentException(EMPTY_PLAYERS);
