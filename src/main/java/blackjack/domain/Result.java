@@ -9,22 +9,23 @@ import java.util.stream.Collectors;
 
 public enum Result {
 
-    WIN("승", (
-            (player, dealer) -> (dealer.isBust() && !player.isBust())
-            || ((!player.isBust()) && (dealer.getScore() < player.getScore())))
+    WIN(1.5, (
+            (player, dealer) -> (player.getCardCount() == 2) &&
+                    (player.getScore() == 21))
     ),
-    TIE("무", (
-            (player, dealer) -> player.getScore() == dealer.getScore())
+    PRINCIPAL(1.0, (
+            (player, dealer) -> ((player.getScore() == 21 && dealer.getScore() == 21) || (dealer.isBust())))
     ),
-    LOSS("패", (
-            (player, dealer) -> player.isBust() || dealer.getScore() > player.getScore())
+    LOSS(-1.0, (
+            (player, dealer) -> ((!player.isBust() && !dealer.isBust())
+                    && (player.getScore() < dealer.getScore())))
     );
 
-    private final String name;
+    private final Double reward;
     private final BiPredicate<User, User> biPredicate;
 
-    Result(String name, BiPredicate<User, User> biPredicate) {
-        this.name = name;
+    Result(Double reward, BiPredicate<User, User> biPredicate) {
+        this.reward = reward;
         this.biPredicate = biPredicate;
     }
 
@@ -43,17 +44,7 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
     }
 
-    public Result reverseResult() {
-        if (this == LOSS) {
-            return WIN;
-        }
-        if (this == WIN) {
-            return LOSS;
-        }
-        return TIE;
-    }
-
-    public String getName() {
-        return name;
+    public Double getReward() {
+        return reward;
     }
 }

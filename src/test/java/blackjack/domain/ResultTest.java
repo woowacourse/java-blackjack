@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static blackjack.domain.Result.LOSS;
-import static blackjack.domain.Result.TIE;
 import static blackjack.domain.Result.WIN;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.FIVE;
@@ -56,20 +55,6 @@ class ResultTest {
         //then
         assertThat(result.get("pobi")).isEqualTo(LOSS);
         assertThat(result.get("jason")).isEqualTo(WIN);
-    }
-
-    @DisplayName("게임 결과 뒤집어서 반환하는지 테스트")
-    @Test
-    public void testReverseResult() {
-        //given & when
-        Result reverseResultByLoss = LOSS.reverseResult();
-        Result reverseResultByWin = WIN.reverseResult();
-        Result reverseResultByTie = TIE.reverseResult();
-
-        //then
-        assertThat(reverseResultByLoss).isEqualTo(WIN);
-        assertThat(reverseResultByWin).isEqualTo(LOSS);
-        assertThat(reverseResultByTie).isEqualTo(TIE);
     }
 
     private Deck initDeck() {

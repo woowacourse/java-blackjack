@@ -52,4 +52,8 @@ public abstract class User {
     public String getName(){
         return name;
     }
+
+    public int getCardCount() {
+        return cards.getCards().size();
+    }
 }
