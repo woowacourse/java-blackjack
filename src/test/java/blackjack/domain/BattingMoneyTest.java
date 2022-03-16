@@ -8,13 +8,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class BattingMoneyTest {
 
-    @DisplayName("배팅금액은 1원 이상이어야 한다.")
+    @DisplayName("배팅금액은 0원 이상이어야 한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"-1", "0", "-1220"})
+    @ValueSource(strings = {"-1", "-1220"})
     void 배팅금액_음수_예외(int value) {
         assertThatThrownBy(() -> new BattingMoney(value))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("배팅 금액 최소 금액은 1원입니다.");
+                .hasMessage("배팅 금액 최소 금액은 0원입니다.");
     }
 
     @DisplayName("배팅금액은 숫자여야한다.")

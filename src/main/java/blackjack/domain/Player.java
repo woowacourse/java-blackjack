@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Player extends Gamer {
 
-    public Player(String name, List<Card> cards) {
-        super(name, cards);
+    public Player(String name, int battingMoney, List<Card> cards) {
+        super(name, battingMoney, cards);
     }
 
     @Override

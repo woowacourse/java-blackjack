@@ -7,10 +7,12 @@ import java.util.List;
 public abstract class Gamer {
 
     private final Name name;
+    private final BattingMoney battingMoney;
     private final Cards cards;
 
-    public Gamer(String name, List<Card> cards) {
+    public Gamer(String name, int battingMoney, List<Card> cards) {
         this.name = new Name(name);
+        this.battingMoney = new BattingMoney(battingMoney);
         this.cards = new Cards(cards);
     }
 

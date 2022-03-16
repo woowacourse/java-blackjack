@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 public class BattingMoney {
-    public static final int BATTING_MIN_VALUE = 1;
+    public static final int BATTING_MIN_VALUE = 0;
     private final int value;
 
     public BattingMoney(int value) {
@@ -15,7 +15,7 @@ public class BattingMoney {
 
     private void checkNegative(int value) {
         if (value < BATTING_MIN_VALUE) {
-            throw new IllegalArgumentException("배팅 금액 최소 금액은 1원입니다.");
+            throw new IllegalArgumentException("배팅 금액 최소 금액은 0원입니다.");
         }
     }
 }
