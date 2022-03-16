@@ -28,7 +28,8 @@ class BlackjackTest {
         final Cards cards = new Cards(List.of(Card.of(SPADES, A), Card.of(SPADES, KING)));
         final Blackjack blackjack = new Blackjack(cards);
 
-        final Cards compareCards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, TWO)));
+        final Cards compareCards =
+                new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, TWO)));
         final BlackjackGameState compareState = new Bust(compareCards, compareCards.score());
 
         assertThat(blackjack.earningRate(compareState)).isEqualTo(1.5);
