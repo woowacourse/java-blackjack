@@ -52,7 +52,7 @@ public class BlackjackController {
 
         while (!blackjack.isPlayerBurst(player) && InputView.askAdditionalCard(player)) {
             blackjack.dealAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
-            OutputView.printCards(blackjack.findPlayer(player));
+            OutputView.printCards(blackjack.getPlayer(player));
         }
     }
 

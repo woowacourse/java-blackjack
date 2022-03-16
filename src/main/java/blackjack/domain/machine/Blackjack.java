@@ -29,6 +29,10 @@ public class Blackjack {
         }
     }
 
+    public void dealAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
+        players.addCard(cardPickMachine, player, numberGenerator);
+    }
+
     public boolean dealAdditionalCardToDealer(NumberGenerator numberGenerator) {
         if (dealer.isHit()) {
             dealer.addCard(cardPickMachine.pickCard(numberGenerator));
@@ -50,18 +54,14 @@ public class Blackjack {
         return participant.isBlackjack();
     }
 
+    public Player getPlayer(Player player) {
+        return players.findPlayer(player);
+    }
+
     public Player getNextPlayer() {
         Player player = players.findNextPlayer();
         players.next();
         return player;
-    }
-
-    public Player findPlayer(Player player) {
-        return players.findPlayer(player);
-    }
-
-    public void dealAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
-        players.addCard(cardPickMachine, player, numberGenerator);
     }
 
     public List<Player> getPlayers() {
