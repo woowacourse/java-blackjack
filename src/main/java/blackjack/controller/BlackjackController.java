@@ -36,12 +36,12 @@ public class BlackjackController {
 
         do {
             command = Command.find(InputView.inputCommand(player));
-            receiveCard(blackjackGame, player, command);
+            hit(blackjackGame, player, command);
             OutputView.printPlayerCards(player);
         } while (command.isHit() && player.canHit());
     }
 
-    private void receiveCard(BlackjackGame blackjackGame, Player player, Command command) {
+    private void hit(BlackjackGame blackjackGame, Player player, Command command) {
         if (command.isHit()) {
             blackjackGame.hit(player);
         }
