@@ -9,16 +9,15 @@ public enum HitFlag {
     private static final String FLAG_INPUT_ERROR_MESSAGE = "예는 y, 아니오는 n을 입력해 주세요.";
 
     public static HitFlag fromCommand(String input) {
-        input = input.toLowerCase();
         validate(input);
-        if (input.equals(HIT_FLAG)) {
+        if (input.equalsIgnoreCase(HIT_FLAG)) {
             return HitFlag.Y;
         }
         return HitFlag.N;
     }
 
     private static void validate(String input) {
-        if (!input.equals(HIT_FLAG) && !input.equals(STAND_FLAG)) {
+        if (!input.equalsIgnoreCase(HIT_FLAG) && !input.equalsIgnoreCase(STAND_FLAG)) {
             throw new IllegalArgumentException(FLAG_INPUT_ERROR_MESSAGE);
         }
     }
