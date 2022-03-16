@@ -5,6 +5,7 @@ public class BettingMoney {
     private final int amount;
 
     public BettingMoney(int amount) {
+        validate(amount);
         this.amount = amount;
     }
 
