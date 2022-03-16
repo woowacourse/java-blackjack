@@ -19,7 +19,7 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(new Players(List.of(roma, tonic)), new Deck());
 
         blackjackGame.drawStartingCard();
-        Dealer dealer = blackjackGame.getDealer();
+        Player dealer = blackjackGame.getDealer();
 
         assertAll(
                 () -> assertThat(roma.getCards().size()).isEqualTo(INITIAL_CARD_NUMBER),

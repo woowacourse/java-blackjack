@@ -45,8 +45,8 @@ public class BlackjackGame {
         return players;
     }
 
-    public Dealer getDealer() {
-        return (Dealer) dealer;
+    public Player getDealer() {
+        return dealer;
     }
 
     public String getNowTurnPlayerName() {
