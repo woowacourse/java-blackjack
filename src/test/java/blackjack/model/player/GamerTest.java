@@ -73,16 +73,16 @@ public class GamerTest {
     @Test
     @DisplayName("게이머 카드 발급")
     void gamerTakeCards() {
-        Gamer dealer = new Gamer(GAMER_NAME, MONEY, JACK, QUEEN);
-        dealer.take(ACE);
-        assertThat(dealer.score()).isEqualTo(new Score(21));
+        Gamer gamer = new Gamer(GAMER_NAME, MONEY, JACK, QUEEN);
+        gamer.take(ACE);
+        assertThat(gamer.score()).isEqualTo(new Score(21));
     }
 
     @Test
     @DisplayName("게이머 카드 발급 실패")
     void gamerTakeInvalidCard() {
-        Gamer dealer = new Gamer(GAMER_NAME, MONEY, JACK, ACE);
-        assertThatThrownBy(() -> dealer.take(FOUR))
+        Gamer gamer = new Gamer(GAMER_NAME, MONEY, JACK, ACE);
+        assertThatThrownBy(() -> gamer.take(FOUR))
             .isInstanceOf(IllegalStateException.class);
     }
 
