@@ -23,20 +23,20 @@ public class Cards {
         }
     }
 
+    public int score() {
+        return Denomination.calculateCardScore(cards);
+    }
+
     public boolean isBust() {
-        return Denomination.calculateCardScore(cards) > BLACKJACK_TARGET_NUMBER;
+        return score() > BLACKJACK_TARGET_NUMBER;
     }
 
     public boolean isBlackjack() {
         System.out.println(Denomination.calculateCardScore(cards));
-        return cards.size() == BLACKJACK_CARD_SIZE && Denomination.calculateCardScore(cards) == BLACKJACK_TARGET_NUMBER;
+        return cards.size() == BLACKJACK_CARD_SIZE && score() == BLACKJACK_TARGET_NUMBER;
     }
 
     public void addCard(final Card card) {
         cards.add(card);
-    }
-
-    public int score() {
-        return Denomination.calculateCardScore(cards);
     }
 }
