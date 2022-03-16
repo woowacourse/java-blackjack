@@ -17,7 +17,7 @@ public abstract class Running extends AbstractBlackjackGameState {
 
     @Override
     public BlackjackGameState stay() {
-        return new Stand(cards());
+        return new Stand(cards(), cards().score());
     }
 
     @Override

@@ -13,7 +13,7 @@ public class PlayerRunning extends Running {
     public BlackjackGameState hit(final Card card) {
         cards().addCard(card);
         if (cards().isBust()) {
-            return new Bust(cards());
+            return new Bust(cards(), cards().score());
         }
         return new PlayerRunning(cards());
     }

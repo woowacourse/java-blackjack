@@ -4,8 +4,8 @@ import blackjack.domain.card.Cards;
 
 public class Stand extends Finish {
 
-    Stand(final Cards cards) {
-        super(cards);
+    Stand(final Cards cards, final int score) {
+        super(cards, score);
     }
 
     @Override

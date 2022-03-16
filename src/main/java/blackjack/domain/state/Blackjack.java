@@ -4,8 +4,10 @@ import blackjack.domain.card.Cards;
 
 public class Blackjack extends Finish {
 
+    public static final int BLACKJACK_TARGET_NUMBER = 21;
+
     Blackjack(final Cards cards) {
-        super(cards);
+        super(cards, BLACKJACK_TARGET_NUMBER);
     }
 
     @Override

@@ -19,7 +19,7 @@ class StandTest {
     @Test
     void stand상태에서_hit하는_경우_예외발생() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Stand stand = new Stand(cards);
+        final Stand stand = new Stand(cards, cards.score());
 
         assertThatThrownBy(() -> stand.hit(Card.of(SPADES, A)))
                 .isInstanceOf(IllegalStateException.class)
@@ -29,7 +29,7 @@ class StandTest {
     @Test
     void stand상태에서_stay하는_경우_예외발생() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Stand stand = new Stand(cards);
+        final Stand stand = new Stand(cards, cards.score());
 
         assertThatThrownBy(() -> stand.stay())
                 .isInstanceOf(IllegalStateException.class)
@@ -39,7 +39,7 @@ class StandTest {
     @Test
     void 게임_종료여부_반환() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Stand stand = new Stand(cards);
+        final Stand stand = new Stand(cards, cards.score());
 
         assertThat(stand.isFinished()).isTrue();
     }
@@ -47,10 +47,10 @@ class StandTest {
     @Test
     void 상대가_버스트면_수익률이_1() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Stand stand = new Stand(cards);
+        final Stand stand = new Stand(cards, cards.score());
 
         final Cards bustCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, TWO)));
-        final Bust bust = new Bust(bustCards);
+        final Bust bust = new Bust(bustCards, bustCards.maxScore());
 
         assertThat(stand.earningRate(bust)).isEqualTo(1);
     }
@@ -58,7 +58,7 @@ class StandTest {
     @Test
     void 상대가_블랙잭이면_수익률이_0() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Stand stand = new Stand(cards);
+        final Stand stand = new Stand(cards, cards.score());
 
         final Cards bustCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, A)));
         final Blackjack bust = new Blackjack(bustCards);
@@ -69,8 +69,8 @@ class StandTest {
     @Test
     void 상대와_스코어가_같으면_수익률이_0() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Stand stand = new Stand(cards);
-        final Stand compareStand = new Stand(cards);
+        final Stand stand = new Stand(cards, cards.score());
+        final Stand compareStand = new Stand(cards, cards.score());
 
         assertThat(stand.earningRate(compareStand)).isEqualTo(0);
     }
@@ -78,10 +78,10 @@ class StandTest {
     @Test
     void 상대보다_스코어가_크면_수익률이_1() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Stand stand = new Stand(cards);
+        final Stand stand = new Stand(cards, cards.score());
 
         final Cards standCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, NINE)));
-        final Stand compareStand = new Stand(standCards);
+        final Stand compareStand = new Stand(standCards, standCards.score());
 
         assertThat(stand.earningRate(compareStand)).isEqualTo(1);
     }
@@ -89,10 +89,10 @@ class StandTest {
     @Test
     void 상대보다_스코어가_작으면_수익률이_마이너스1() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
-        final Stand stand = new Stand(cards);
+        final Stand stand = new Stand(cards, cards.score());
 
         final Cards standCards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, A)));
-        final Stand compareStand = new Stand(standCards);
+        final Stand compareStand = new Stand(standCards, standCards.score());
 
         assertThat(stand.earningRate(compareStand)).isEqualTo(-1);
     }

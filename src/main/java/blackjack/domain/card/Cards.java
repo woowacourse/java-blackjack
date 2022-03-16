@@ -1,12 +1,13 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.state.Blackjack.BLACKJACK_TARGET_NUMBER;
+
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class Cards {
 
-    public static final int BLACKJACK_TARGET_NUMBER = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final Set<Card> cards;

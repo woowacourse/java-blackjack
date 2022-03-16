@@ -5,8 +5,11 @@ import blackjack.domain.card.Cards;
 
 public abstract class Finish extends AbstractBlackjackGameState {
 
-    Finish(final Cards cards) {
+    private final int score;
+
+    Finish(final Cards cards, final int score) {
         super(cards);
+        this.score = score;
     }
 
     @Override
@@ -25,8 +28,8 @@ public abstract class Finish extends AbstractBlackjackGameState {
     }
 
     @Override
-    public int score() {
-        return cards().score();
+    public final int score() {
+        return score;
     }
 
     @Override

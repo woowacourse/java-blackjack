@@ -23,7 +23,7 @@ class BustTest {
     @Test
     void 수익률이_마이너스1() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, JACK)));
-        final Bust bust = new Bust(cards);
+        final Bust bust = new Bust(cards, cards.score());
 
         assertThat(bust.earningRate(bust)).isEqualTo(-1);
     }
@@ -32,7 +32,7 @@ class BustTest {
     @MethodSource("generateScoreValues")
     void 스코어_계산() {
         final Cards cards = new Cards(Set.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, JACK)));
-        final Bust bust = new Bust(cards);
+        final Bust bust = new Bust(cards, cards.score());
 
         assertThat(bust.score()).isEqualTo(30);
     }
