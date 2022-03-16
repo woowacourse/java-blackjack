@@ -21,8 +21,6 @@ public class OutputView {
     private static final String BURST_INSTRUCTION = "님 버스트로 패배하였습니다.";
     private static final String FINAL_RESULT_INSTRUCTION = "## 최종 수익";
     private static final String DEALER_NAME = "딜러";
-    private static final String BLANK_DELIMITER = " ";
-    private static final String NEWLINE_DELIMITER = "\n";
     private static final String BURST = "BURST";
 
     public String getCardNames(List<PlayingCard> playingCards) {

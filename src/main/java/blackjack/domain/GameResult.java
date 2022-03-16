@@ -7,20 +7,18 @@ import java.util.function.Function;
 
 public enum GameResult {
 
-    BLACKJACK("패", (dealer, gamblers) -> isGamblerBlackJack(gamblers), betMoney -> betMoney * 2L),
-    WIN("승", GameResult::isDealerWin, betMoney -> betMoney * -1L),
-    DRAW("무", GameResult::isDraw, betMoney -> 0L),
-    LOSE("패", GameResult::isDealerLose, Long::valueOf),
+    BLACKJACK((dealer, gamblers) -> isGamblerBlackJack(gamblers), betMoney -> betMoney * 2L),
+    WIN(GameResult::isDealerWin, betMoney -> betMoney * -1L),
+    DRAW(GameResult::isDraw, betMoney -> 0L),
+    LOSE(GameResult::isDealerLose, Long::valueOf),
     ;
 
-    private final String result;
     private final BiPredicate<Player, Player> condition;
     private final Function<Integer, Long> calculateProfit;
 
 
-    GameResult(final String result, final BiPredicate<Player, Player> condition,
+    GameResult(final BiPredicate<Player, Player> condition,
                final Function<Integer, Long> calculateProfit) {
-        this.result = result;
         this.condition = condition;
         this.calculateProfit = calculateProfit;
     }
@@ -66,20 +64,6 @@ public enum GameResult {
 
     private static boolean isDealerLose(final Player dealer, final Player gambler) {
         return dealer.isLose(gambler);
-    }
-
-    public GameResult reverse() {
-        if (this.equals(WIN)) {
-            return LOSE;
-        }
-        if (this.equals(LOSE)) {
-            return WIN;
-        }
-        return this;
-    }
-
-    public String getResult() {
-        return result;
     }
 
     public Long calculateProfit(final int betMoney) {
