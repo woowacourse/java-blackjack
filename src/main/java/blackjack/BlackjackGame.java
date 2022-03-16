@@ -5,6 +5,7 @@ import blackjack.domain.DrawCommand;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.HoldingCard;
+import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ScoreResultDto;
 import blackjack.view.InputView;
@@ -22,8 +23,8 @@ public class BlackjackGame {
 
     public void start() {
         OutputView.printInitialCardStatus(blackjackBoard.getParticipantsDto());
-
         runAllPlayersTurn();
+        runDealerTurn();
         OutputView.printPlayerFinalCards(blackjackBoard.getParticipantsDto());
         OutputView.printFinalScore(createFinalScore());
     }
@@ -31,7 +32,7 @@ public class BlackjackGame {
     private List<Player> initializePlayers() {
         try {
             return InputView.askPlayerNames().stream()
-                    .map(Player::new)
+                    .map((String name) -> new Player(name, makeBetMoney(name)))
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
@@ -39,19 +40,23 @@ public class BlackjackGame {
         }
     }
 
-    private void runAllPlayersTurn() {
-        runPlayerTurn();
-        runDealerTurn();
+    private BetMoney makeBetMoney(String name) {
+        try {
+            return new BetMoney(InputView.askBetMoney(name));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            return makeBetMoney(name);
+        }
     }
 
-    private void runPlayerTurn() {
+    private void runAllPlayersTurn() {
         if (blackjackBoard.isAllPlayerFinished()) {
             return;
         }
         String currentPlayerName = blackjackBoard.getCurrentPlayerName();
         HoldingCard currentPlayerCards = blackjackBoard.drawCurrentPlayer(askDrawCommand(currentPlayerName));
         OutputView.printPlayerCards(currentPlayerName, currentPlayerCards);
-        runPlayerTurn();
+        runAllPlayersTurn();
     }
 
     private void runDealerTurn() {

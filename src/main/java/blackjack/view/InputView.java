@@ -15,6 +15,15 @@ public class InputView {
         return Arrays.asList(scanner.nextLine().split(","));
     }
 
+    public static int askBetMoney(String name) {
+        try {
+            System.out.printf("%s의 배팅 금액은?\n", name);
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 번호는 숫자로 입력해주세요.");
+        }
+    }
+
     public static String askDrawCommand(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         System.out.println();

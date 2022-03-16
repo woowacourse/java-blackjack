@@ -4,9 +4,11 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player extends Participant {
+    private final BetMoney betMoney;
 
-    public Player(String name) {
+    public Player(String name, BetMoney betMoney) {
         super(name);
+        this.betMoney = betMoney;
     }
 
     public void receiveCards(List<Card> cards) {
