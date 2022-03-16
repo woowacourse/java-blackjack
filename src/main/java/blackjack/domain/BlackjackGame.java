@@ -9,7 +9,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 
 public class BlackjackGame {
@@ -32,12 +31,12 @@ public class BlackjackGame {
     }
 
     public void run() {
-        printPlayersCard(toPlayersDto(), PlayerDto.from(dealer));
+        printPlayersCard(players.copy(), dealer.copy());
 
         takeTurnsPlayers();
         takeTurnDealer();
 
-        printPlayersResult(toPlayersDto(), PlayerDto.from(dealer));
+        printPlayersResult(players.copy(), dealer.copy());
         printScoreResult(players.compete(dealer));
     }
 
@@ -47,7 +46,7 @@ public class BlackjackGame {
         try {
             List<Player> players = inputNames.stream()
                 .map(String::trim)
-                .map(input -> new Player(input, deck))
+                .map(input -> Player.withTwoCards(input, deck))
                 .collect(Collectors.toList());
             return new Players(players);
         } catch (IllegalArgumentException exception) {
@@ -70,7 +69,7 @@ public class BlackjackGame {
             return;
         }
         player.drawCard(deck);
-        printPlayerCards(PlayerDto.from(player));
+        printPlayerCards(player);
         takeTurn(player);
     }
 
@@ -83,18 +82,10 @@ public class BlackjackGame {
 
     private Selection requestSelection(Player player) {
         try {
-            return Selection.from(InputView.requestDrawCommand(PlayerDto.from(player)));
+            return Selection.from(InputView.requestDrawCommand(player));
         } catch (IllegalArgumentException exception) {
             printException(exception);
             return requestSelection(player);
         }
     }
-
-    private List<PlayerDto> toPlayersDto() {
-        return players.getValue()
-            .stream()
-            .map(PlayerDto::from)
-            .collect(Collectors.toList());
-    }
-
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import blackjack.dto.PlayerDto;
+import blackjack.domain.player.Player;
 
 public class InputView {
 
@@ -19,8 +19,8 @@ public class InputView {
         return Arrays.asList(split);
     }
 
-    public static String requestDrawCommand(PlayerDto playerDto) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerDto.getName());
+    public static String requestDrawCommand(Player player) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
         return scanner.nextLine();
     }
 }

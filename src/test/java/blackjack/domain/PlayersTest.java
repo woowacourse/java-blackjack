@@ -27,9 +27,9 @@ public class PlayersTest {
         void throwExceptionOverEight() {
             Deck deck = Deck.create();
             Assertions.assertThatThrownBy(() -> new Players(List.of(
-                new Player("a", deck), new Player("b", deck), new Player("c", deck), new Player("d", deck),
-                new Player("e", deck), new Player("f", deck), new Player("g", deck), new Player("h", deck),
-                new Player("q", deck)
+                Player.withTwoCards("a", deck), Player.withTwoCards("b", deck), Player.withTwoCards("c", deck), Player.withTwoCards("d", deck),
+                Player.withTwoCards("e", deck), Player.withTwoCards("f", deck), Player.withTwoCards("g", deck), Player.withTwoCards("h", deck),
+                Player.withTwoCards("q", deck)
             ))).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("인원수는 8명을 넘을 수 없습니다.");
         }
@@ -47,9 +47,9 @@ public class PlayersTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.ACE),
                 Card.of(CardPattern.SPADE, CardNumber.TEN)));
 
-            Player roma = new Player("roma", () -> Card.of(CardPattern.DIAMOND, CardNumber.NINE));
-            Player tonic = new Player("tonic", () -> Card.of(CardPattern.DIAMOND, CardNumber.EIGHT));
-            Player pobi = new Player("pobi", () -> Card.of(CardPattern.DIAMOND, CardNumber.SEVEN));
+            Player roma = Player.withTwoCards("roma", () -> Card.of(CardPattern.DIAMOND, CardNumber.NINE));
+            Player tonic =Player.withTwoCards("tonic", () -> Card.of(CardPattern.DIAMOND, CardNumber.EIGHT));
+            Player pobi = Player.withTwoCards("pobi", () -> Card.of(CardPattern.DIAMOND, CardNumber.SEVEN));
 
             Players players = new Players(List.of(roma, tonic, pobi));
 

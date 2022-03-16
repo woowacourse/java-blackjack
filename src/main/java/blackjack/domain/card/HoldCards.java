@@ -31,6 +31,10 @@ public class HoldCards {
         cards.add(card);
     }
 
+    public HoldCards copy() {
+        return new HoldCards(cards);
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

@@ -6,50 +6,51 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.Score;
 import blackjack.domain.ScoreResult;
-import blackjack.dto.CardDto;
-import blackjack.dto.PlayerDto;
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
 public class OutputView {
 
-    public static void printPlayersCard(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealerDto.getName(),
-            playerDtos.stream().map(PlayerDto::getName).collect(Collectors.joining(", ")));
-        printOpenCard(playerDtos, dealerDto);
+    public static void printPlayersCard(Players players, Player dealer) {
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(),
+            players.getValue().stream().map(Player::getName).collect(Collectors.joining(", ")));
+        printOpenCard(players.getValue(), dealer);
     }
 
-    private static void printOpenCard(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
-        CardDto dealerOpenCard = dealerDto.getCards().get(0);
-        System.out.printf("%s: %s%s%n", dealerDto.getName(), dealerOpenCard.getCardNumber(),
-            dealerOpenCard.getCardPattern());
-        for (PlayerDto playerDto : playerDtos) {
-            printPlayerCards(playerDto);
+    private static void printOpenCard(List<Player> players, Player dealer) {
+        Card dealerOpenCard = dealer.getCards().get(0);
+        System.out.printf("%s: %s%s%n", dealer.getName(), dealerOpenCard.getCardNumber().getName(),
+            dealerOpenCard.getPatternName());
+        for (Player player : players) {
+            printPlayerCards(player);
         }
     }
 
-    private static void printPlayerResult(PlayerDto dealerDto) {
+    private static void printPlayerResult(Player player) {
         System.out.printf("%s: %s - 결과: %d%n",
-            dealerDto.getName(),
-            dealerDto.getCards()
+            player.getName(),
+            player.getCards()
                 .stream()
-                .map(cardDto -> cardDto.getCardNumber() + cardDto.getCardPattern())
+                .map(card -> card.getCardNumber().getName() + card.getPatternName())
                 .collect(Collectors.joining(", ")),
-            dealerDto.getTotalNumber());
+            player.getTotalNumber());
     }
 
-    public static void printPlayersResult(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
+    public static void printPlayersResult(Players players, Player dealer) {
         System.out.println();
-        printPlayerResult(dealerDto);
+        printPlayerResult(dealer);
 
-        for (PlayerDto playerDto : playerDtos) {
-            printPlayerResult(playerDto);
+        for (Player player : players.getValue()) {
+            printPlayerResult(player);
         }
     }
 
-    public static void printPlayerCards(PlayerDto playerDto) {
-        System.out.printf("%s: %s%n", playerDto.getName(),
-            playerDto.getCards()
+    public static void printPlayerCards(Player player) {
+        System.out.printf("%s: %s%n", player.getName(),
+            player.getCards()
                 .stream()
-                .map(cardDto -> cardDto.getCardNumber() + cardDto.getCardPattern())
+                .map(card -> card.getCardNumber().getName() + card.getPatternName())
                 .collect(Collectors.joining(", ")));
     }
 

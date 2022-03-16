@@ -27,7 +27,7 @@ public class PlayerTest {
         void addCard() {
             MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK),
                 Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.CLOVER, CardNumber.JACK)));
-            Player player = new Player("roma", mockDeck);
+            Player player = Player.withTwoCards("roma", mockDeck);
             player.drawCard(mockDeck);
             Assertions.assertThat(player.getTotalNumber()).isEqualTo(30);
         }
@@ -44,7 +44,7 @@ public class PlayerTest {
             MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK)
                 , Card.of(CardPattern.CLOVER, CardNumber.KING),
                 Card.of(CardPattern.CLOVER, cardNumber)));
-            Player player = new Player("roma", mockDeck);
+            Player player = Player.withTwoCards("roma", mockDeck);
             player.drawCard(mockDeck);
 
             Assertions.assertThat(player.isBust()).isEqualTo(expected);
@@ -59,7 +59,7 @@ public class PlayerTest {
         @CsvSource(value = {"FOUR|LOSE", "FIVE|DRAW", "SIX|WIN"}, delimiter = '|')
         @DisplayName("딜러와 점수를 비교하여 승부 결과를 반환한다.")
         void returnFalse(CardNumber cardNumber, Score expected) {
-            Player player = new Player("player", () -> Card.of(CardPattern.CLOVER, cardNumber));
+            Player player = Player.withTwoCards("player", () -> Card.of(CardPattern.CLOVER, cardNumber));
             Dealer dealer = new Dealer(() -> Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
             Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
         }
@@ -74,7 +74,7 @@ public class PlayerTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN),
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN)
             ));
-            Player player = new Player("player", mockDeck);
+            Player player = Player.withTwoCards("player", mockDeck);
             Dealer dealer = new Dealer(mockDeck);
             player.drawCard(() -> Card.of(CardPattern.DIAMOND, cardNumber));
             dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TWO));

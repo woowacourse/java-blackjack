@@ -14,13 +14,31 @@ public class Player {
     private final HoldCards cards;
     private final Name name;
 
-    public Player(String name, Drawable deck) {
-        this.cards = HoldCards.drawTwoCards(deck);
-        this.name = new Name(name);
+    public Player(Name name, HoldCards holdCards) {
+        this.cards = holdCards;
+        this.name = name;
+    }
+
+    public static Player withTwoCards(String name, Drawable deck) {
+        HoldCards holdCards = HoldCards.drawTwoCards(deck);
+        return new Player(new Name(name), holdCards);
     }
 
     public void drawCard(Drawable drawable) {
         cards.add(drawable.draw());
+    }
+
+    public Score compete(Player otherPlayer) {
+        if (!this.isBust() && !otherPlayer.isBust()) {
+            return Score.compete(this.getTotalNumber(), otherPlayer.getTotalNumber());
+        }
+        if (this.isBust() && otherPlayer.isBust()) {
+            return Score.DRAW;
+        }
+        if (otherPlayer.isBust()) {
+            return Score.WIN;
+        }
+        return Score.LOSE;
     }
 
     public boolean isBust() {
@@ -39,16 +57,7 @@ public class Player {
         return cards.getCards();
     }
 
-    public Score compete(Player otherPlayer) {
-        if (!this.isBust() && !otherPlayer.isBust()) {
-            return Score.compete(this.getTotalNumber(), otherPlayer.getTotalNumber());
-        }
-        if (this.isBust() && otherPlayer.isBust()) {
-            return Score.DRAW;
-        }
-        if (otherPlayer.isBust()) {
-            return Score.WIN;
-        }
-        return Score.LOSE;
+    public Player copy() {
+        return new Player(name, cards.copy());
     }
 }

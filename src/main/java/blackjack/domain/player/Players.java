@@ -2,24 +2,19 @@ package blackjack.domain.player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjack.domain.ScoreResult;
-import blackjack.domain.card.Drawable;
 
 public class Players {
 
     private static final int CAPACITY = 8;
+
     private final List<Player> players;
 
     public Players(List<Player> players) {
         validateCapacity(players);
         this.players = new ArrayList<>(players);
-    }
-
-    public void drawAll(Drawable drawable) {
-        for (Player player : players) {
-            player.drawCard(drawable);
-        }
     }
 
     private void validateCapacity(List<Player> players) {
@@ -30,6 +25,12 @@ public class Players {
 
     public List<Player> getValue() {
         return List.copyOf(players);
+    }
+
+    public Players copy() {
+        return new Players(List.copyOf(players.stream()
+            .map(Player::copy)
+            .collect(Collectors.toList())));
     }
 
     public ScoreResult compete(Dealer dealer) {
