@@ -19,6 +19,7 @@ class PlayingCardTest {
     @DisplayName("생성된 카드가 ACE인지 확인")
     void isAce() {
         PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.ACE);
+
         assertThat(playingCard.isAce()).isTrue();
     }
 }

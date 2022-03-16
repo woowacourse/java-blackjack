@@ -112,7 +112,7 @@ class BlackjackGameTest {
 
     @Test
     @DisplayName("플레이어 턴이 맞는지 확인")
-    void checkPlayerTurn() {
+    void checkRightPlayerTurn() {
         List<String> players = new ArrayList<>();
         players.add("green");
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();

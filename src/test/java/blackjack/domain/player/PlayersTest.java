@@ -13,7 +13,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("다음 플레이어가 있는지 확인")
-    void checkNextPlayer() {
+    void checkIsExistNextPlayer() {
         List<Player> playerList = new ArrayList<>();
         playerList.add(new Guest("guest", new PlayingCards()));
         Players players = new Players(playerList);

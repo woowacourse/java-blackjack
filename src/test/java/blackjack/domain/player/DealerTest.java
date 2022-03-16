@@ -40,7 +40,7 @@ class DealerTest {
 
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘는 경우")
-    public void checkPlayerCantHit() {
+    public void checkDealerCantHit() {
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
@@ -51,7 +51,7 @@ class DealerTest {
 
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘지 않는 경우")
-    public void checkPlayerCanHit() {
+    public void checkDealerCanHit() {
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
         dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.FIVE));

@@ -39,8 +39,8 @@ class GuestTest {
     }
 
     @Test
-    @DisplayName("플레이어가 Bust인 경우")
-    void checkPlayerIsBust() {
+    @DisplayName("게스트가 Bust인 경우")
+    void checkGuestIsBust() {
         Set<PlayingCard> cards = new HashSet<>();
         cards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
@@ -51,8 +51,8 @@ class GuestTest {
     }
 
     @Test
-    @DisplayName("플레이어가 Bust가 아닌 경우")
-    void checkPlayerIsNotBust() {
+    @DisplayName("게스트가 Bust가 아닌 경우")
+    void checkGuestIsNotBust() {
         Set<PlayingCard> cards = new HashSet<>();
         cards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
@@ -93,8 +93,8 @@ class GuestTest {
     }
 
     @Test
-    @DisplayName("Hit 확인: 넘치지 않은 경우")
-    void checkCanHit() {
+    @DisplayName("게스트 Hit 확인: 넘치지 않은 경우")
+    void checkGuestCanHit() {
         Set<PlayingCard> guestCards = new HashSet<>();
         guestCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guestCards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
@@ -104,8 +104,8 @@ class GuestTest {
     }
 
     @Test
-    @DisplayName("Hit 확인: 넘친 경우")
-    void checkCantHit() {
+    @DisplayName("게스트 Hit 확인: 넘친 경우")
+    void checkGuestCantHit() {
         Set<PlayingCard> guestCards = new HashSet<>();
         guestCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guestCards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
