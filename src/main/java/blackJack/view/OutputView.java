@@ -6,6 +6,7 @@ import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
 import blackJack.domain.result.MatchResult;
+import blackJack.domain.result.ResultOfProfit;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,6 +29,8 @@ public class OutputView {
             "%s 카드: %s - 결과: %d".concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT = NEWLINE.concat("## 최종 승패");
     private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO = "%s: %s".concat(NEWLINE);
+    private static final String OUTPUT_MESSAGE_RESULT_OF_PROFIT_TITLE = NEWLINE.concat("## 최종 수익");
+    private static final String OUTPUT_MESSAGE_RESULT_OF_PROFIT = "%s: %d".concat(NEWLINE);
 
     public static void printErrorMessage(RuntimeException error) {
         System.out.println(error.getMessage());
@@ -102,5 +105,12 @@ public class OutputView {
                 .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
                 .collect(Collectors.toUnmodifiableList());
         return String.join(JOINING_DELIMITER_SPACE, matchResult);
+    }
+
+    public static void printResultOfProfit(ResultOfProfit resultOfProfit, Dealer dealer) {
+        System.out.println(OUTPUT_MESSAGE_RESULT_OF_PROFIT_TITLE);
+        System.out.printf(OUTPUT_MESSAGE_RESULT_OF_PROFIT, dealer.getName(), resultOfProfit.getDealerProfit(dealer));
+        resultOfProfit.getPlayersProfit(dealer)
+                .forEach((key, value) -> System.out.printf(OUTPUT_MESSAGE_RESULT_OF_PROFIT, key.getName(), value));
     }
 }
