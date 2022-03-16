@@ -13,7 +13,7 @@ public final class Bet {
     private final int betAmount;
     private int profit;
 
-    public Bet(int betAmount) {
+    public Bet(final int betAmount) {
         this.betAmount = betAmount;
         this.profit = 0;
     }
@@ -34,7 +34,7 @@ public final class Bet {
         this.profit = (int) (betAmount * BLACKJACK);
     }
 
-    public void calculateFinalProfit(List<Integer> profits){
+    public void calculateFinalProfit(final List<Integer> profits) {
         for (Integer profit : profits) {
             this.profit -= profit;
         }

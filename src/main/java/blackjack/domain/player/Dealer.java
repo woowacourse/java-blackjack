@@ -31,19 +31,19 @@ public final class Dealer extends Player {
         isParticipantWin(participant);
     }
 
-    private boolean isBlackjack(Participant participant) {
+    private boolean isBlackjack(final Participant participant) {
         if (isDealerParticipantBlackJack(participant)) {
             this.bothBlackjack();
             return true;
         }
-        if (isParticipantBlackJack(participant)){
+        if (isParticipantBlackJack(participant)) {
             participant.blackjack();
             return true;
         }
         return false;
     }
 
-    private boolean isDealerWin(Participant participant) {
+    private boolean isDealerWin(final Participant participant) {
         if (isDealerWin(calculateFinalScore(), participant.calculateFinalScore())) {
             this.win();
             participant.lose();
@@ -52,16 +52,16 @@ public final class Dealer extends Player {
         return false;
     }
 
-    private void isParticipantWin(Participant participant) {
+    private void isParticipantWin(final Participant participant) {
         participant.win();
         this.lose();
     }
 
-    private boolean isDealerParticipantBlackJack(Participant participant) {
+    private boolean isDealerParticipantBlackJack(final Participant participant) {
         return this.calculateInitCardScore() == MAX_SCORE && participant.calculateInitCardScore() == MAX_SCORE;
     }
 
-    private boolean isParticipantBlackJack(Participant participant) {
+    private boolean isParticipantBlackJack(final Participant participant) {
         return this.calculateInitCardScore() != MAX_SCORE && participant.calculateInitCardScore() == MAX_SCORE;
     }
 
@@ -69,7 +69,7 @@ public final class Dealer extends Player {
         return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
     }
 
-    public void calculateDealerProfit(final List<Participant> participants){
+    public void calculateDealerProfit(final List<Participant> participants) {
         List<Integer> profits = convertProfits(participants);
         getBet().calculateFinalProfit(profits);
     }

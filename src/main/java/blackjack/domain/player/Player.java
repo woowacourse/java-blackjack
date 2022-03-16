@@ -57,15 +57,15 @@ public abstract class Player {
         bet.lose();
     }
 
-    public void bothBlackjack(){
+    public void bothBlackjack() {
         bet.bothBlackjack();
     }
 
-    public void blackjack(){
+    public void blackjack() {
         bet.blackjack();
     }
 
-    protected int calculateInitCardScore(){
+    protected int calculateInitCardScore() {
         return cards.calculateInitCardScore();
     }
 
@@ -81,7 +81,7 @@ public abstract class Player {
         return bet;
     }
 
-    public int getBetProfit(){
+    public int getBetProfit() {
         return bet.getProfit();
     }
 
