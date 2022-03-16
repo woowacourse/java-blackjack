@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,16 +23,30 @@ public class CardDistributorTest {
     @DisplayName("카드가 다 소요되면 에러가 발생한다.")
     void failed() {
         // given
-        CardDistributor cardDistributor = new CardDistributor(new RandomGenerator());
+        TestGenerator testGenerator = new TestGenerator(new Card(Number.ACE, Suit.CLOVER));
+        CardDistributor cardDistributor = new CardDistributor(testGenerator);
 
         // when
-        for (int i = 0; i < 52; i++) {
-            cardDistributor.distribute();
-        }
+        cardDistributor.distribute();
 
         // then
         assertThatThrownBy(cardDistributor::distribute)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("카드가 모두 소요됐습니다.");
+    }
+
+    @Test
+    @DisplayName("카드 꺼내기")
+    void draw() {
+        // given
+        Card card = new Card(Number.ACE, Suit.CLOVER);
+        TestGenerator testGenerator = new TestGenerator(card);
+        CardDistributor cardDistributor = new CardDistributor(testGenerator);
+
+        // when
+        Card cardFromDeck = cardDistributor.distribute();
+
+        // then
+        assertThat(cardFromDeck).isEqualTo(card);
     }
 }
