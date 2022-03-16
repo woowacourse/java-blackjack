@@ -6,11 +6,13 @@ import java.util.function.BiPredicate;
 
 public enum MatchResult {
 
-    WIN("승", (self, other) -> winCondition(self, other)),
-    LOSE("패", (self, other) -> loseCondition(self, other)),
-    DRAW("무", (self, other) -> drawCondition(self, other));
+    BLACKJACK("블랙잭", (player, dealer) -> blackjackCondition(player, dealer)),
+    WIN("승", (player, dealer) -> winCondition(player, dealer)),
+    LOSE("패", (player, dealer) -> loseCondition(player, dealer)),
+    DRAW("무", (player, dealer) -> drawCondition(player, dealer));
 
     private final String name;
+
     private final BiPredicate<Hand, Hand> condition;
 
     MatchResult(String name, BiPredicate<Hand, Hand> condition) {
@@ -18,17 +20,24 @@ public enum MatchResult {
         this.condition = condition;
     }
 
-    private static boolean winCondition(Hand self, Hand other) {
-        return !self.isBust() && other.isBust() ||
-                (!self.isBust() && !other.isBust() && self.getScore() > other.getScore());
+    private static boolean blackjackCondition(Hand player, Hand dealer) {
+        return player.isBlackjack() && !dealer.isBlackjack();
     }
 
-    private static boolean loseCondition(Hand self, Hand other) {
-        return WIN.condition.test(other, self);
+    private static boolean winCondition(Hand player, Hand dealer) {
+        return (!player.isBust() && dealer.isBust()) ||
+                (!player.isBust() && !dealer.isBust() && player.getScore() > dealer.getScore());
     }
 
-    private static boolean drawCondition(Hand self, Hand other) {
-        return self.isBust() && other.isBust() || self.getScore() == other.getScore();
+    private static boolean loseCondition(Hand player, Hand dealer) {
+        return player.isBust() && !dealer.isBust() ||
+                (!player.isBust() && !dealer.isBust() && player.getScore() < dealer.getScore());
+    }
+
+    private static boolean drawCondition(Hand player, Hand dealer) {
+        return player.isBust() && dealer.isBust() ||
+                player.getScore() == dealer.getScore() ||
+                player.isBlackjack() && dealer.isBlackjack();
     }
 
     public static MatchResult get(Hand player, Hand dealer) {
@@ -39,7 +48,7 @@ public enum MatchResult {
     }
 
     public MatchResult reverse() {
-        if (this == WIN) {
+        if (this == WIN || this == BLACKJACK) {
             return LOSE;
         }
         if (this == LOSE) {
