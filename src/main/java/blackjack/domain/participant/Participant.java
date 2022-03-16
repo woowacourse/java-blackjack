@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.constant.MatchResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import java.util.List;
@@ -33,10 +32,6 @@ abstract class Participant {
 
     public void receiveCard(Card card) {
         hand.addAll(card);
-    }
-
-    public MatchResult match(Participant other) {
-        return hand.compareMatchResult(other.hand);
     }
 
     @Override
