@@ -6,6 +6,7 @@ import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class Players {
 
@@ -24,6 +25,12 @@ public class Players {
     private void validateSize() {
         if (value.size() < MINIMUM_PLAYER_SIZE) {
             throw new IllegalArgumentException("플레이어는 최소 1명입니다.");
+        }
+    }
+
+    public void forEach(Consumer<Player> consumer) {
+        for (Player player : value) {
+            consumer.accept(player);
         }
     }
 

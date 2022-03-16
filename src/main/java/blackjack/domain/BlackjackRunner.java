@@ -23,11 +23,12 @@ public class BlackjackRunner {
 
         OutputView.printStart(dealer, players.getValue());
 
-        players.getValue().forEach(player -> playing(deck, player, YES));
+        players.forEach(player -> playing(deck, player, YES));
         drawDealer(deck, dealer);
 
-        OutputView.printResult(dealer, players.getValue());
-        OutputView.printProfit(getDealerProfit(dealer, players), createPlayerResults(dealer, players.getValue()));
+        List<Player> playersValue = players.getValue();
+        OutputView.printResult(dealer, playersValue);
+        OutputView.printProfit(getDealerProfit(dealer, playersValue), createPlayerResults(dealer, playersValue));
     }
 
     private void playing(Deck deck, Player player, PlayCommand playCommand) {
@@ -55,9 +56,8 @@ public class BlackjackRunner {
         }
     }
 
-    private int getDealerProfit(Dealer dealer, Players players) {
-        return players.getValue()
-                .stream()
+    private int getDealerProfit(Dealer dealer, List<Player> players) {
+        return players.stream()
                 .mapToInt(player -> -player.calculateBattingMoney(dealer))
                 .sum();
     }
