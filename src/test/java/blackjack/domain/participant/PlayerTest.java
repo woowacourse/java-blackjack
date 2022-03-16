@@ -36,6 +36,7 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("드로우 카드")
     void drawCard() {
         // given
         Player player = new Player(new Name("name"), getCards(Number.QUEEN), new BettingAmount(1000L));
