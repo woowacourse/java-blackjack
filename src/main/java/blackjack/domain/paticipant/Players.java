@@ -80,9 +80,17 @@ public class Players {
     }
 
     public double dealerProfit(final Dealer dealer) {
-        return - players.stream()
+        final double result = calculateAllPlayersProfit(dealer);
+        if (result == 0) {
+            return 0;
+        }
+        return result;
+    }
+
+    private double calculateAllPlayersProfit(final Dealer dealer) {
+        return players.stream()
                 .mapToDouble(player -> player.profit(dealer))
-                .sum();
+                .sum() * (-1);
     }
 
     public List<Player> players() {
