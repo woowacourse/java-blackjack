@@ -28,12 +28,11 @@ public class Cards {
     }
 
     public int calculateScore() {
-        final int sumScore = calculateCardsSum();
+        final Score sumScore = calculateCardsSum();
         if (hasAce(cards)) {
-            final Score score = new Score(sumScore);
-            return score.plusAcePoint();
+            return sumScore.plusAcePoint();
         }
-        return sumScore;
+        return sumScore.getScore();
     }
 
     private boolean hasAce(Set<Card> cards) {
@@ -41,10 +40,10 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private int calculateCardsSum() {
-        return cards.stream()
+    private Score calculateCardsSum() {
+        return new Score(cards.stream()
                 .mapToInt(Card::getScore)
-                .sum();
+                .sum());
     }
 
     public List<Card> getCards() {
