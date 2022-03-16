@@ -18,7 +18,7 @@ public class BettingResult {
         Map<Participant, Integer> playersResult = new LinkedHashMap<>();
         for (Player player : players) {
             GameResult gameResult = GameResult.compareScore(dealer, player);
-            int earning = (int) gameResult.getRate() * player.getBetMoney();
+            int earning = (int) gameResult.getEarnRate() * player.getBetMoney();
             playersResult.merge(dealer, getDealerEarning(earning), Integer::sum);
             playersResult.put(player, earning);
         }

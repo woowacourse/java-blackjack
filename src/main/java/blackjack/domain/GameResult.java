@@ -11,11 +11,11 @@ public enum GameResult {
     DRAW(0, (dealer, player) -> !player.isBust() && player.calculateScore() == dealer.calculateScore()),
     LOSE(-1, (dealer, player) -> player.isBust() || player.calculateScore() < dealer.calculateScore());
 
-    private final double rate;
+    private final double earnRate;
     private final BiPredicate<Dealer, Player> isMatch;
 
     GameResult(double rate, BiPredicate<Dealer, Player> isMatch) {
-        this.rate = rate;
+        this.earnRate = rate;
         this.isMatch = isMatch;
     }
 
@@ -26,7 +26,7 @@ public enum GameResult {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 결과가 없습니다."));
     }
 
-    public double getRate() {
-        return rate;
+    public double getEarnRate() {
+        return earnRate;
     }
 }
