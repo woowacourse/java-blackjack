@@ -44,8 +44,12 @@ public class MatchRecordDto {
 
     private static String joinToString(Map<MatchRecord, Long> dealerRecordCounts) {
         return dealerRecordCounts.entrySet().stream()
-            .map(entry -> entry.getValue() + entry.getKey().getName())
+            .map(MatchRecordDto::toMatchRecordCountString)
             .collect(Collectors.joining(" "));
+    }
+
+    private static String toMatchRecordCountString(Map.Entry<MatchRecord, Long> entry) {
+        return entry.getValue() + entry.getKey().getName();
     }
 
     public Map<String, String> getPlayerRecords() {
