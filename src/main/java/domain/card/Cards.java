@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardsForBlackJack {
+public class Cards {
 
-    public static final CardsForBlackJack cardsForBlackJack = new CardsForBlackJack(gatherCards());
+    public static final Cards instance = new Cards(gatherCards());
 
     private List<Card> cards;
 
-    private CardsForBlackJack(List<Card> cards) {
+    private Cards(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static CardsForBlackJack getInstance() {
-        return cardsForBlackJack;
+    public static Cards getInstance() {
+        return instance;
     }
 
     private static List<Card> gatherCards() {

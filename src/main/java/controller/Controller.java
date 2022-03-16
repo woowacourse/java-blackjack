@@ -1,6 +1,6 @@
 package controller;
 
-import domain.card.CardsForBlackJack;
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.card.InitCards;
 import domain.participant.Dealer;
@@ -14,7 +14,7 @@ public class Controller {
 
     public void run() {
         List<Name> names = InputView.inputNames();
-        Deck deck = new Deck(CardsForBlackJack.getInstance().getCards());
+        Deck deck = new Deck(Cards.getInstance().getCards());
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, InitCards.generateInitCardsForPlayers(deck, names.size()));
 

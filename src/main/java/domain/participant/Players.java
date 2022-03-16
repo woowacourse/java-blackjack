@@ -11,39 +11,22 @@ import java.util.stream.IntStream;
 
 public class Players {
 
-    private static final String NOT_ENOUGH_CARDS_FOR_INIT_PLAYER_ERROR_MESSAGE = "[Error] 초기화할 카드가 모자랍니다.";
     private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
     private static final String CANT_FIND_PLAYER_ERROR_MESSAGE = "[Error] 플레이어를 찾을 수 없습니다.";
-    private static final int SINGLE_ELEMENT_COUNT = 1;
-    private static final int FIND_FIRST_INDEX = 0;
 
     private final List<Player> players;
 
     public Players(List<Name> names, List<List<Card>> initCards) {
-        validateInitCardsForPlayers(names, initCards);
         this.players = IntStream.range(0, names.size())
                 .mapToObj(i -> new Player(names.get(i), initCards.get(i)))
                 .collect(Collectors.toList());
     }
 
-    private void validateInitCardsForPlayers(List<Name> names, List<List<Card>> initCards) {
-        if (names.size() > initCards.size()) {
-            throw new IllegalArgumentException(NOT_ENOUGH_CARDS_FOR_INIT_PLAYER_ERROR_MESSAGE);
-        }
-    }
-
     public Player findByName(Name name) {
-        List<Player> matchNamePlayers = players.stream()
+        return players.stream()
                 .filter(player -> player.isNameMatch(name))
-                .collect(Collectors.toList());
-        validateNameForFindByName(matchNamePlayers);
-        return matchNamePlayers.get(FIND_FIRST_INDEX);
-    }
-
-    private void validateNameForFindByName(List<Player> matchNamePlayers) {
-        if (matchNamePlayers.size() != SINGLE_ELEMENT_COUNT) {
-            throw new IllegalArgumentException(CANT_FIND_PLAYER_ERROR_MESSAGE);
-        }
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(CANT_FIND_PLAYER_ERROR_MESSAGE));
     }
 
     public void addCardByName(Name name, Card card) {
