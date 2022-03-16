@@ -23,4 +23,8 @@ public class Player extends AbstractParticipant {
             throw new IllegalArgumentException("배팅금액은 0이하의 값이 들어올 수 없습니다.");
         }
     }
+
+    public double profit(final Dealer dealer) {
+        return blackjackGameState.profit(betMoney, dealer.blackjackGameState);
+    }
 }
