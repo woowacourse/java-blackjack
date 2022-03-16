@@ -74,4 +74,16 @@ public class CardsTest {
                 )
         );
     }
+
+    @Test
+    @DisplayName("초기 카드 2장의 점수 합을 구한다.")
+    void sumInitCardScore() {
+        Cards cards = new Cards(List.of(
+                new Card(Type.SPADE, Score.JACK),
+                new Card(Type.DIAMOND, Score.FIVE)
+        ));
+        cards.addCard(new Card(Type.CLOVER, Score.THREE));
+
+        assertThat(cards.calculateInitCardScore()).isEqualTo(15);
+    }
 }
