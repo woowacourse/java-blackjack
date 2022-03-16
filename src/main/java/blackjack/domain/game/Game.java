@@ -42,13 +42,13 @@ public class Game {
 
     private void cardDistribute(Participant participant) {
         for (int i = 0; i < INIT_DISTRIBUTE_NUM; i++) {
-            participant.receiveCard(deck.drawCard());
+            participant.receiveCard(deck);
         }
     }
 
     public ParticipantDto playEachUser(String userName) {
         User user = users.getUserByName(userName);
-        user.receiveCard(deck.drawCard());
+        user.receiveCard(deck);
         return ParticipantDto.of(user.getName(), user.getHoldingCards());
     }
 
@@ -58,7 +58,7 @@ public class Game {
 
     public boolean playDealer() {
         if (dealer.checkUnderScoreStandard()) {
-            dealer.receiveCard(deck.drawCard());
+            dealer.receiveCard(deck);
             return true;
         }
         return false;

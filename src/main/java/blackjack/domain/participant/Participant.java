@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldingCards;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public abstract class Participant {
         return holdingCards.isBust();
     }
 
-    public void receiveCard(Card card) {
-        holdingCards.addCard(card);
+    public void receiveCard(Deck deck) {
+        holdingCards.addCard(deck.drawCard());
     }
 
     public int getScore() {

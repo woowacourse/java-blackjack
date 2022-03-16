@@ -8,11 +8,14 @@ public class BlackJackController {
 
     public void run() {
         Game game = new Game(InputView.inputUsersName());
-        OutputView.printInitDistribute(game.initDistributed());
 
-
+        initDistribute(game);
         playAllUser(game);
         gameResult(game);
+    }
+
+    private void initDistribute(Game game) {
+        OutputView.printInitDistribute(game.initDistributed());
     }
 
     private void playAllUser(Game game) {
