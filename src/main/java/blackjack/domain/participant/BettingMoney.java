@@ -3,24 +3,24 @@ package blackjack.domain.participant;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class BattingMoney {
+public class BettingMoney {
 
     private final BigDecimal amount;
 
-    private BattingMoney(BigDecimal bigDecimal) {
+    private BettingMoney(BigDecimal bigDecimal) {
         this.amount = bigDecimal;
     }
 
-    public BattingMoney(String input) {
+    public BettingMoney(String input) {
         this(new BigDecimal(Integer.parseInt(input)));
     }
 
-    public BattingMoney add(BattingMoney money) {
-        return new BattingMoney(amount.add(money.amount));
+    public BettingMoney add(BettingMoney money) {
+        return new BettingMoney(amount.add(money.amount));
     }
 
-    public BattingMoney times(double percent) {
-        return new BattingMoney(amount.multiply(BigDecimal.valueOf(percent)));
+    public BettingMoney times(double percent) {
+        return new BettingMoney(amount.multiply(BigDecimal.valueOf(percent)));
     }
 
     public int getAmount() {
@@ -35,7 +35,7 @@ public class BattingMoney {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        BattingMoney that = (BattingMoney) o;
+        BettingMoney that = (BettingMoney) o;
         return Objects.equals(amount.intValue(), that.amount.intValue());
     }
 

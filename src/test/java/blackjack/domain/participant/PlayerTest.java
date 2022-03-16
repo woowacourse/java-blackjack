@@ -80,9 +80,9 @@ public class PlayerTest {
 
         Player player = new Player("sudal", generateBlackjack(), "10000");
 
-        int battingMoney = player.calculateBattingMoney(dealer);
+        int bettingMoney = player.calculateBettingMoney(dealer);
 
-        assertThat(battingMoney).isEqualTo(10000);
+        assertThat(bettingMoney).isEqualTo(10000);
     }
 
     @DisplayName("플레이어와 딜러 모두 버스트일 경우 패배한다.")
@@ -96,9 +96,9 @@ public class PlayerTest {
         player.append(new Card(KING, HEART));
         player.append(new Card(JACK, SPADE));
 
-        int battingMoney = player.calculateBattingMoney(dealer);
+        int bettingMoney = player.calculateBettingMoney(dealer);
 
-        assertThat(battingMoney).isEqualTo(-10000);
+        assertThat(bettingMoney).isEqualTo(-10000);
     }
 
     @DisplayName("플레이어만 버스트이면 패배한다.")
@@ -109,9 +109,9 @@ public class PlayerTest {
         player.append(new Card(KING, SPADE));
         player.append(new Card(JACK, SPADE));
 
-        int battingMoney = player.calculateBattingMoney(dealer);
+        int bettingMoney = player.calculateBettingMoney(dealer);
 
-        assertThat(battingMoney).isEqualTo(-10000);
+        assertThat(bettingMoney).isEqualTo(-10000);
     }
 
     @DisplayName("플레이어가 딜러보다 점수가 높으면 승리한다.")
@@ -120,9 +120,9 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", generateTotalScoreGraterThan17Cards(), "10000");
 
-        int battingMoney = player.calculateBattingMoney(dealer);
+        int bettingMoney = player.calculateBettingMoney(dealer);
 
-        assertThat(battingMoney).isEqualTo(10000);
+        assertThat(bettingMoney).isEqualTo(10000);
     }
 
     @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배이다.")
@@ -131,9 +131,9 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
         Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards(), "10000");
 
-        int battingMoney = player.calculateBattingMoney(dealer);
+        int bettingMoney = player.calculateBettingMoney(dealer);
 
-        assertThat(battingMoney).isEqualTo(-10000);
+        assertThat(bettingMoney).isEqualTo(-10000);
     }
 
     @DisplayName("플레이어와 딜러가 점수가 같으면 무승부이다.")
@@ -142,9 +142,9 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateCards());
         Player player = new Player("sudal", generateCards(), "10000");
 
-        int battingMoney = player.calculateBattingMoney(dealer);
+        int bettingMoney = player.calculateBettingMoney(dealer);
 
-        assertThat(battingMoney).isEqualTo(0);
+        assertThat(bettingMoney).isEqualTo(0);
     }
 
     @DisplayName("플레이어가 블랙잭이면 승리와 배팅 금액의 1.5배를 획득한다.")
@@ -153,9 +153,9 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateCards());
         Player player = new Player("sudal", generateBlackjack(), "10000");
 
-        int battingMoney = player.calculateBattingMoney(dealer);
+        int bettingMoney = player.calculateBettingMoney(dealer);
 
-        assertThat(battingMoney).isEqualTo(15000);
+        assertThat(bettingMoney).isEqualTo(15000);
     }
 
     @DisplayName("플레이어와 딜러 모두 블랙잭이면 무승부이다.")
@@ -164,8 +164,8 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateBlackjack());
         Player player = new Player("sudal", generateBlackjack(), "10000");
 
-        int battingMoney = player.calculateBattingMoney(dealer);
+        int bettingMoney = player.calculateBettingMoney(dealer);
 
-        assertThat(battingMoney).isEqualTo(0);
+        assertThat(bettingMoney).isEqualTo(0);
     }
 }

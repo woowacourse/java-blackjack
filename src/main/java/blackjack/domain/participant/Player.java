@@ -1,20 +1,20 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.BattingResult.LOSE;
-import static blackjack.domain.BattingResult.WIN;
-import static blackjack.domain.BattingResult.WIN_BY_BLACKJACK;
+import static blackjack.domain.BettingResult.LOSE;
+import static blackjack.domain.BettingResult.WIN;
+import static blackjack.domain.BettingResult.WIN_BY_BLACKJACK;
 
-import blackjack.domain.BattingResult;
+import blackjack.domain.BettingResult;
 import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player extends Participant {
 
-    private final BattingMoney battingMoney;
+    private final BettingMoney bettingMoney;
 
     public Player(String name, List<Card> cards, String money) {
         super(name, cards);
-        this.battingMoney = new BattingMoney(money);
+        this.bettingMoney = new BettingMoney(money);
     }
 
     @Override
@@ -22,19 +22,19 @@ public class Player extends Participant {
         return getTotalScore() < BLACKJACK_SCORE;
     }
 
-    public int calculateBattingMoney(Participant participant) {
+    public int calculateBettingMoney(Participant participant) {
         if (isBust()) {
-            return LOSE.getResult(battingMoney);
+            return LOSE.getResult(bettingMoney);
         }
 
         if (participant.isBust()) {
-            return WIN.getResult(battingMoney);
+            return WIN.getResult(bettingMoney);
         }
 
         if (isBlackjack() && !participant.isBlackjack()) {
-            return WIN_BY_BLACKJACK.getResult(battingMoney);
+            return WIN_BY_BLACKJACK.getResult(bettingMoney);
         }
 
-        return BattingResult.of(getTotalScore(), participant.getTotalScore()).getResult(battingMoney);
+        return BettingResult.of(getTotalScore(), participant.getTotalScore()).getResult(bettingMoney);
     }
 }
