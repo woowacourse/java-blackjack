@@ -25,6 +25,7 @@ public class BlackjackGame {
     public void run() {
         printParticipantsFirstCards();
         runPlayerTurn();
+        runDealerTurn();
     }
 
     private void printParticipantsFirstCards() {
@@ -54,5 +55,14 @@ public class BlackjackGame {
             return currentPlayer;
         }
         return players.hitCurrentTurnPlayer(cardDeck.provideCard());
+    }
+
+    private void runDealerTurn() {
+        if (dealer.isFinishied()) {
+            return;
+        }
+        dealer.hit(cardDeck.provideCard());
+        OutputView.printDealerHit();
+        runDealerTurn();
     }
 }
