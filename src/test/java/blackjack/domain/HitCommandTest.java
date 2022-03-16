@@ -17,7 +17,7 @@ class HitCommandTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"y,YES", "n,NO)"})
+    @CsvSource(value = {"y,YES", "n,NO"})
     void 원하는_커맨드를_생성(final String input, final HitCommand expected) {
         assertThat(HitCommand.from(input)).isEqualTo(expected);
     }
