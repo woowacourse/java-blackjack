@@ -16,7 +16,7 @@ public class Hand {
     }
 
     public Hand() {
-        this(new ArrayList<>(), new Score());
+        this(new ArrayList<>(), Score.getZero());
     }
 
     public void addCard(Card card) {

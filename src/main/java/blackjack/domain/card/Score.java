@@ -9,6 +9,7 @@ public class Score {
 
     private static final int ACE_POINT_DIFFERENCE = 10;
     private static final int ZERO = 0;
+    private static final Score ZERO_SCORE = new Score(ZERO);
 
     private int score;
 
@@ -17,8 +18,8 @@ public class Score {
         this.score = score;
     }
 
-    public Score() {
-        this(ZERO);
+    public static Score getZero() {
+        return ZERO_SCORE;
     }
 
     private void validatePositive(int score) {
