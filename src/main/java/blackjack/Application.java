@@ -4,10 +4,9 @@ import blackjack.dto.DealerDTO;
 import blackjack.dto.EntryDTO;
 import blackjack.dto.PlayersDTO;
 import blackjack.model.Game;
-import blackjack.model.Money;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
-import java.util.List;
+import java.util.function.Function;
 
 public class Application {
 
@@ -15,31 +14,32 @@ public class Application {
         final InputView inputView = new InputView();
         final ResultView resultView = new ResultView();
 
-        Game game = startGame(inputView, resultView);
+        Game game = new Game(inputView.askEntryNames());
         betMoney(inputView, game);
+        start(game, resultView);
         playEntries(inputView, resultView, game);
         inputView.closeInput();
         playDealer(resultView, game);
         showResults(resultView, game);
     }
 
-    private static Game startGame(InputView inputView, ResultView resultView) {
-        List<String> names = inputView.askEntryNames();
-        Game game = new Game(names);
+    private static void betMoney(InputView inputView, Game game) {
+        do {
+            game.toNextEntry();
+            game.betToCurrentEntry(giveMoneyInput(inputView));
+        } while (game.hasNextEntry());
+    }
+
+    private static Function<Game, Integer> giveMoneyInput(InputView inputView) {
+        return game -> inputView.askBetAmount(EntryDTO.fromCurrent(game));
+    }
+
+    private static void start(Game game, ResultView resultView) {
         game.start();
 
         PlayersDTO playersDTO = PlayersDTO.from(game);
         resultView.printDeckInitialized(playersDTO);
         resultView.printInitializedDecks(playersDTO);
-        return game;
-    }
-
-    private static void betMoney(InputView inputView, Game game) {
-        do {
-            game.toNextEntry();
-            int bettingAmount = inputView.askBettingMoney(EntryDTO.fromCurrent(game));
-            new Money(bettingAmount);
-        } while (game.hasNextEntry());
     }
 
     private static void playEntries(InputView inputView, ResultView resultView, Game game) {

@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.Money;
 import blackjack.model.trumpcard.Deck;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.function.Supplier;
@@ -20,10 +21,6 @@ public abstract class Player {
         if (name == null) {
             throw new IllegalArgumentException(ERROR_NULL);
         }
-    }
-
-    public int getScore() {
-        return deck.sumScore();
     }
 
     public void initializeDeck(Supplier<TrumpCard> cardSupplier) {
@@ -48,6 +45,10 @@ public abstract class Player {
 
     public boolean isBlackjack() {
         return this.deck.isBlackjack();
+    }
+
+    public int getScore() {
+        return deck.sumScore();
     }
 
     public String getName() {

@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.Money;
 import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
@@ -36,6 +37,10 @@ public final class Entries {
         return (int) names.stream()
                 .distinct()
                 .count();
+    }
+
+    public void betToCurrent(Money money) {
+        getCurrentEntry().bet(money);
     }
 
     public void initializeDecks(Supplier<TrumpCard> cardSupplier) {

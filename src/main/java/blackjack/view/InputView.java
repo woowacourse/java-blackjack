@@ -32,7 +32,7 @@ public class InputView {
         return Arrays.asList((rawNames.split(REGEX_NAME)));
     }
 
-    public int askBettingMoney(EntryDTO entry) {
+    public int askBetAmount(EntryDTO entry) {
         System.out.printf(FORMAT_BETTING_MONEY, entry.getName());
         return readInt();
     }

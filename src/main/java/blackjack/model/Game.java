@@ -6,6 +6,7 @@ import blackjack.model.player.Players;
 import blackjack.model.trumpcard.TrumpCard;
 import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public final class Game {
@@ -17,11 +18,15 @@ public final class Game {
         this.players = Players.from(names);
     }
 
+    public void betToCurrentEntry(Function<Game, Integer> betInputFunction) {
+        this.players.betToCurrent(new Money(betInputFunction.apply(this)));
+    }
+
     public void start() {
         this.players.initializeDecks(supplyCard());
     }
 
-    public Supplier<TrumpCard> supplyCard() {
+    private Supplier<TrumpCard> supplyCard() {
         return trumpCardPack::draw;
     }
 

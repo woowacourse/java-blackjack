@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.Money;
 import java.util.regex.Pattern;
 
 public final class Entry extends Player {
@@ -7,11 +8,14 @@ public final class Entry extends Player {
     private static final String ERROR_MAX_LENGTH = "[ERROR] 이름은 15자 이하로 입력해주세요.";
     private static final String ERROR_CONTAINS_NUMBER = "[ERROR] 이름에 숫자는 포함될 수 없습니다.";
     private static final String ERROR_CONTAINS_SIGN = "[ERROR] 이름에 기호는 포함될 수 없습니다.";
+    private static final String ERROR_ALREADY_BETTED = "[ERROR] 이미 배팅하였습니다.";
 
     private static final String REGEX_NAME_CONTAINS_NUMBER = "^\\D*[0-9]+\\D*$";
     private static final String REGEX_NAME_CONTAINS_SIGN = "^\\D*[!\"#$%&'()*+,./:;<=>?@\\\\^_`{|}~-]+\\D*$";
 
     private static final int MAX_LENGTH = 15;
+
+    private Money bet;
 
     public Entry(String name) {
         super(name);
@@ -47,5 +51,12 @@ public final class Entry extends Player {
         if (Pattern.matches(REGEX_NAME_CONTAINS_SIGN, name)) {
             throw new IllegalArgumentException(ERROR_CONTAINS_SIGN);
         }
+    }
+
+    public void bet(Money money) {
+        if (this.bet != null) {
+            throw new IllegalArgumentException(ERROR_ALREADY_BETTED);
+        }
+        this.bet = money;
     }
 }
