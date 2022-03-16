@@ -180,7 +180,7 @@ public class PlayerTest {
 
         player.calculateBattingMoneyResult(dealer);
 
-        assertThat(player.getBattingMoney()).isEqualTo(2000);
+        assertThat(player.getBattingMoney()).isEqualTo(1500);
     }
 
     @DisplayName("플레이어가 졌을 때 최종 배팅 머니 계산")

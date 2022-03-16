@@ -5,7 +5,7 @@ import java.util.function.BiPredicate;
 
 public enum GameResult {
 
-    BLACKJACK("블랙잭", 1.5, (score, otherScore) -> score == 21 && score > otherScore),
+    BLACKJACK("블랙잭", 0.5, (score, otherScore) -> score == 21 && score > otherScore),
     WIN("승", 0, (score, otherScore) -> score > otherScore),
     TIE("무", 0, (score, otherScore) -> score == otherScore),
     LOSE("패", -2, (score, otherScore) -> score < otherScore);;

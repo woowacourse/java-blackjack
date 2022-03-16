@@ -30,7 +30,8 @@ public class Player extends Gamer {
 
     public boolean calculateBattingMoneyResult(Gamer dealer) {
         GameResult gameResult = createResult(dealer);
-        return addMoney((int) gameResult.getBattingMoneyResult() * getBattingMoney());
+        double result = gameResult.getBattingMoneyResult() * getBattingMoney();
+        return addMoney((int)result);
     }
 
     public int reverseBattingMoney(){

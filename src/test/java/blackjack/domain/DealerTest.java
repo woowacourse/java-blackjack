@@ -102,7 +102,7 @@ public class DealerTest {
         player.calculateBattingMoneyResult(dealer);
         dealer.calculateBattingMoneyResult(player);
 
-        assertThat(dealer.getBattingMoney()).isEqualTo(-2000);
+        assertThat(dealer.getBattingMoney()).isEqualTo(-1500);
     }
 
     @DisplayName("플레이어와 딜러 무승부일 때 배팅 머니 계산")
