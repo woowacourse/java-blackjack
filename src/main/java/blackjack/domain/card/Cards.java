@@ -25,4 +25,9 @@ public class Cards {
     public boolean isBust() {
         return Denomination.calculateCardScore(cards) > 21;
     }
+
+    public boolean isBlackjack() {
+        System.out.println(Denomination.calculateCardScore(cards));
+        return cards.size() == 2 && Denomination.calculateCardScore(cards) == 21;
+    }
 }

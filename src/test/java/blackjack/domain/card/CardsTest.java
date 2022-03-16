@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static blackjack.domain.card.Denomination.A;
 import static blackjack.domain.card.Denomination.EIGHT;
+import static blackjack.domain.card.Denomination.FOUR;
 import static blackjack.domain.card.Denomination.KING;
 import static blackjack.domain.card.Denomination.SEVEN;
 import static blackjack.domain.card.Denomination.TEN;
@@ -43,6 +44,21 @@ class CardsTest {
         return Stream.of(
                 Arguments.of(Set.of(Card.of(SPADES, KING), Card.of(SPADES, SEVEN), Card.of(SPADES, TEN)), true),
                 Arguments.of(Set.of(Card.of(SPADES, A), Card.of(SPADES, TEN)), false),
+                Arguments.of(Set.of(Card.of(SPADES, A), Card.of(SPADES, EIGHT)), false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateIsBlackjackValues")
+    void 카드상태가_블랙잭인지_확인(final Set<Card> inputCards, final boolean expected) {
+        final Cards cards = new Cards(inputCards);
+        assertThat(cards.isBlackjack()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> generateIsBlackjackValues() {
+        return Stream.of(
+                Arguments.of(Set.of(Card.of(SPADES, A), Card.of(SPADES, TEN)), true),
+                Arguments.of(Set.of(Card.of(SPADES, KING), Card.of(SPADES, SEVEN), Card.of(SPADES, FOUR)), false),
                 Arguments.of(Set.of(Card.of(SPADES, A), Card.of(SPADES, EIGHT)), false)
         );
     }
