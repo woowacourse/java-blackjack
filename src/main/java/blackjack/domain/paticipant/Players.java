@@ -14,6 +14,7 @@ public class Players {
     public Players(final List<Player> players) {
         Objects.requireNonNull(players, "players는 null이 들어올 수 없습니다.");
         this.players = new ArrayList<>(players);
+        checkPlayersSize(this.players);
         checkDuplicationPlayers(this.players);
     }
 
@@ -21,6 +22,12 @@ public class Players {
         this(names.stream()
                 .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
                 .collect(Collectors.toList()));
+    }
+
+    private void checkPlayersSize(final List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("플레이어는 0명이 될 수 없습니다.");
+        }
     }
 
     private void checkDuplicationPlayers(final List<Player> players) {
