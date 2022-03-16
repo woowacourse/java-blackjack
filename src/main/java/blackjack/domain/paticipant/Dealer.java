@@ -24,9 +24,13 @@ public final class Dealer extends AbstractParticipant {
 
     @Override
     public List<Card> cards() {
+        checkDealerCanReturnCards();
+        return super.cards();
+    }
+
+    private void checkDealerCanReturnCards() {
         if (!isFinished()) {
             throw new IllegalStateException("딜러는 완료되지 않으면 카드리스트를 반환하지 않습니다.");
         }
-        return super.cards();
     }
 }
