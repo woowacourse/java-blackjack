@@ -39,12 +39,12 @@ public class ResultTest {
 
 	@BeforeEach
 	void setUp() {
-		card_A = new Card(Rank.RANK_ACE, Suit.CLOVER);
-		card_2 = new Card(Rank.RANK_TWO, Suit.CLOVER);
-		card_Q = new Card(Rank.RANK_QUEEN, Suit.CLOVER);
-		card_K = new Card(Rank.RANK_KNIGHT, Suit.CLOVER);
-		card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
-		card_9 = new Card(Rank.RANK_NINE, Suit.CLOVER);
+		card_A = new Card(Rank.ACE, Suit.CLOVER);
+		card_2 = new Card(Rank.TWO, Suit.CLOVER);
+		card_Q = new Card(Rank.QUEEN, Suit.CLOVER);
+		card_K = new Card(Rank.KNIGHT, Suit.CLOVER);
+		card_6 = new Card(Rank.SIX, Suit.CLOVER);
+		card_9 = new Card(Rank.NINE, Suit.CLOVER);
 		cards_20 = new ArrayList<>(Arrays.asList(card_A, card_9));
 		cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
 		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));

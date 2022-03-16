@@ -21,7 +21,7 @@ public class ParticipantTest {
 	@EnumSource(mode = EnumSource.Mode.EXCLUDE, names = {"RANK_ACE"})
 	void isBurst(Rank rank) {
 		Card card = new Card(rank, Suit.HEART);
-		Card card1 = new Card(Rank.RANK_KNIGHT, Suit.HEART);
+		Card card1 = new Card(Rank.KNIGHT, Suit.HEART);
 		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card, card1, card1)));
 		assertThat(participant.isBust()).isTrue();
 	}
@@ -40,10 +40,10 @@ public class ParticipantTest {
 	@Test()
 	@DisplayName("베스트 스코어 계산하는 기능")
 	void getBestScore() {
-		Card card1 = new Card(Rank.RANK_KNIGHT, Suit.HEART);
-		Card card2 = new Card(Rank.RANK_ACE, Suit.SPADE);
-		Card card3 = new Card(Rank.RANK_ACE, Suit.CLOVER);
-		Card card4 = new Card(Rank.RANK_EIGHT, Suit.CLOVER);
+		Card card1 = new Card(Rank.KNIGHT, Suit.HEART);
+		Card card2 = new Card(Rank.ACE, Suit.SPADE);
+		Card card3 = new Card(Rank.ACE, Suit.CLOVER);
+		Card card4 = new Card(Rank.EIGHT, Suit.CLOVER);
 		Participant participant = new Participant(new Name("pobi"),
 			new Hand(List.of(card1, card2, card3, card4)));
 		assertThat(participant.getBestScore()).isEqualTo(20);
