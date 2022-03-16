@@ -18,10 +18,12 @@ public class InputView {
     private static final String PLAYER_NAMES_DUPLICATE_MESSAGE = "입력값이 중복될 수 없습니다.";
     private static final String SPLIT_UNIT = ",";
     private static final int SPLIT_LIMIT_NUMBER = -1;
-    private static final String PLAYER_NAMES_NOT_NULL_MESSAGE = "null을 허용하지 않습니다.";
+    private static final String PLAYER_NAMES_NOT_NULL_MESSAGE = "플레이어 이름은 null일 수 없습니다.";
     private static final String SCAN_BET_MONEY_INSTRUCTION = "의 배팅 금액은?";
     private static final String HIT_OR_STAY_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String BET_MONEY_NOT_NULL_MESSAGE = "배팅금액은 null일 수 없습니다.";
+    private static final String BET_MONEY_EMPTY_MESSAGE = "배팅 금액에 빈칸 입력은 허용하지 않는다.";
+    private static final String BET_MONEY_FORMAT_MESSAGE = "입력한 값이 숫자의 형태가 아닙니다.";
 
     public List<String> scanPlayerNames() {
         System.out.println(SCAN_PLAYER_NAMES_INSTRUCTION);
@@ -55,6 +57,12 @@ public class InputView {
         }
     }
 
+    private boolean isDuplicate(final List<String> names) {
+        return names.size() != names.stream()
+            .distinct()
+            .count();
+    }
+
     private List<String> getPlayerNames() {
         final String inputNames = SCANNER.nextLine();
         Objects.requireNonNull(inputNames, PLAYER_NAMES_NOT_NULL_MESSAGE);
@@ -68,40 +76,26 @@ public class InputView {
         System.out.println();
         System.out.println(name + SCAN_BET_MONEY_INSTRUCTION);
         final String betMoney = SCANNER.nextLine();
-        Objects.requireNonNull(betMoney, BET_MONEY_NOT_NULL_MESSAGE);
         validateBetMoney(betMoney);
         return betMoney;
     }
 
     private void validateBetMoney(final String betMoney) {
+        Objects.requireNonNull(betMoney, BET_MONEY_NOT_NULL_MESSAGE);
         checkBetMoneyEmpty(betMoney);
-        checkBetMoneyRange(betMoney);
         checkBetMoneyFormat(betMoney);
     }
 
-    private void checkBetMoneyEmpty(final String rawBetMoney) {
-        if (rawBetMoney == null || rawBetMoney.trim().isEmpty()) {
-            throw new IllegalArgumentException("배팅 금액에 빈칸 입력은 허용하지 않는다.");
+    private void checkBetMoneyEmpty(final String betMoney) {
+        if (betMoney == null || betMoney.trim().isEmpty()) {
+            throw new IllegalArgumentException(BET_MONEY_EMPTY_MESSAGE);
         }
     }
 
     private void checkBetMoneyFormat(final String betMoney) {
         if (!(betMoney.chars().allMatch(Character::isDigit))) {
-            throw new IllegalArgumentException("입력한 값이 숫자의 형태가 아닙니다.");
+            throw new IllegalArgumentException(BET_MONEY_FORMAT_MESSAGE);
         }
-    }
-
-    private void checkBetMoneyRange(final String betMoney) {
-        int number = Integer.parseInt(betMoney);
-        if (number < 0) {
-            throw new IllegalArgumentException("배팅 금액이 정상 범위가 아닙니다");
-        }
-    }
-
-    private boolean isDuplicate(final List<String> names) {
-        return names.size() != names.stream()
-            .distinct()
-            .count();
     }
 
     public String scanHitOrStay(final PlayerDto playerDto) {

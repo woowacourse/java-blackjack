@@ -1,14 +1,16 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BetMoney;
+
 public class Gambler extends Player {
 
-    private Integer betMoney = 1000;
+    private BetMoney betMoney;
 
     public Gambler(final String name) {
         super(name);
     }
 
-    public Gambler(final String name, final Integer betMoney) {
+    public Gambler(final String name, final BetMoney betMoney) {
         super(name);
         this.betMoney = betMoney;
     }
@@ -19,6 +21,6 @@ public class Gambler extends Player {
     }
 
     public int getBetMoney() {
-        return betMoney;
+        return betMoney.getValue();
     }
 }

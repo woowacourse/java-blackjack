@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.BetMoney;
 import blackjack.domain.BlackJackCommand;
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.card.CardDeck;
@@ -46,8 +47,8 @@ public class BlackJackGame {
             .collect(toList());
     }
 
-    private Integer getBetMoney(final String name) {
-        return Integer.valueOf(inputView.scanBetMoney(name));
+    private BetMoney getBetMoney(final String name) {
+        return new BetMoney(Integer.valueOf(inputView.scanBetMoney(name)));
     }
 
     private void spreadCards(final Players players, final CardDeck cardDeck) {
@@ -56,7 +57,6 @@ public class BlackJackGame {
         }
         printSpreadCards(players);
     }
-
 
     private void spreadCard(final Players players, final CardDeck cardDeck) {
         players.receiveCard(cardDeck);
