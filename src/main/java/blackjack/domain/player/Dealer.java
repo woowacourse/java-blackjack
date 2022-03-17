@@ -12,9 +12,11 @@ public class Dealer extends Player {
     private static final int DEALER_OPEN_CARD_SIZE = 1;
 
     private final String name = DEALER_NAME;
+    private final int PossessionMoney;
 
     public Dealer() {
         super(new Cards());
+        this.PossessionMoney = 0;
     }
 
     @Override

@@ -11,11 +11,13 @@ public class Gamer extends Player {
     private static final int GAMER_OPEN_CARDS_SIZE = 2;
 
     private final String name;
+    private final int betMoney;
 
-    public Gamer(final String name) {
+    public Gamer(final String name, final int betMoney) {
         super(new Cards());
         checkName(name);
         this.name = name;
+        this.betMoney = betMoney;
     }
 
     private void checkName(final String name) {
@@ -54,6 +56,10 @@ public class Gamer extends Player {
 
     public String getName() {
         return name;
+    }
+
+    public int getBetMoney() {
+        return betMoney;
     }
 
 }
