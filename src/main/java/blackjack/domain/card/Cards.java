@@ -1,21 +1,19 @@
 package blackjack.domain.card;
 
+import blackjack.domain.participant.Score;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Cards {
-
-    private static final int ACE_ADDITIONAL_NUMBER = 10;
-    private static final int BUST_THRESHOLD = 21;
     private static final String DUPLICATE_EXCEPTION_MESSAGE = "카드 패에 중복된 카드가 존재할 수 없습니다.";
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cardHand) {
-        validateDuplicate(cardHand);
-        this.cards = new ArrayList<>(cardHand);
+    public Cards(List<Card> cards) {
+        validateDuplicate(cards);
+        this.cards = new ArrayList<>(cards);
     }
 
     private void validateDuplicate(List<Card> cards) {
@@ -31,31 +29,11 @@ public class Cards {
     }
 
     public int getBestPossible() {
-        int sum = getLowestSum();
-
-        for (Card card : cards) {
-            sum = updateSum(sum, card);
-        }
-
-        return sum;
-    }
-
-    private int updateSum(int sum, Card card) {
-        if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
-            sum += ACE_ADDITIONAL_NUMBER;
-        }
-        return sum;
-    }
-
-    private int getLowestSum() {
-        return cards.stream()
-                .map(Card::getNumber)
-                .map(Number::getScore)
-                .reduce(0, Integer::sum);
+        return Score.calculate(cards).getScore();
     }
 
     public boolean isBusted() {
-        return getBestPossible() > BUST_THRESHOLD;
+        return Score.calculate(cards).isBusted();
     }
 
     public boolean isBlackJack() {
