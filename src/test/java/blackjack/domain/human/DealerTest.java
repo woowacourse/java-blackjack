@@ -16,8 +16,8 @@ class DealerTest {
     public void addCardToPlayerTest() {
         // given
         Dealer dealer = Dealer.newInstance();
-        Card card5 = Card.of(Denomination.from("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.from("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.fromInitial("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.fromInitial("6"), Suit.SPADE);
 
         // when
         dealer.addCard(card5);
@@ -33,8 +33,8 @@ class DealerTest {
     public void isAbleToHitTest() {
         // given
         Dealer dealer = Dealer.newInstance();
-        Card card5 = Card.of(Denomination.from("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.from("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.fromInitial("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.fromInitial("6"), Suit.SPADE);
 
         // when
         dealer.addCard(card5);

@@ -18,8 +18,8 @@ public class CardsTest {
     @BeforeEach
     void setup() {
         cards = new Cards();
-        cards.add(Card.of(Denomination.from("A"), Suit.SPADE));
-        cards.add(Card.of(Denomination.from("A"), Suit.CLOVER));
+        cards.add(Card.of(Denomination.fromInitial("A"), Suit.SPADE));
+        cards.add(Card.of(Denomination.fromInitial("A"), Suit.CLOVER));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class CardsTest {
     @DisplayName("첫 카드 리턴 기능 테스트")
     void getFirstCardTest() {
         assertThat(cards.getFirstCard())
-                .isEqualTo(Card.of(Denomination.from("A"), Suit.SPADE));
+                .isEqualTo(Card.of(Denomination.fromInitial("A"), Suit.SPADE));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CardsTest {
     void get() {
         assertThat(cards.getCopy())
                 .isEqualTo(List.of(
-                        Card.of(Denomination.from("A"), Suit.SPADE),
-                        Card.of(Denomination.from("A"), Suit.CLOVER)));
+                        Card.of(Denomination.fromInitial("A"), Suit.SPADE),
+                        Card.of(Denomination.fromInitial("A"), Suit.CLOVER)));
     }
 }

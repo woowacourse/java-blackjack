@@ -25,6 +25,10 @@ public final class Card {
         return denomination;
     }
 
+    public int getPoint() {
+        return denomination.getPoint();
+    }
+
     public Suit getSuit() {
         return suit;
     }

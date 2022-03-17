@@ -28,7 +28,7 @@ class DenominationTest {
 
     @DisplayName("숫자 알맞게 들어가는지 테스트")
     void setExpectedDenominationTest(String numStr, Denomination expectedDenomination, int expectedPoint) {
-        Denomination denomination = Denomination.from(numStr);
+        Denomination denomination = Denomination.fromInitial(numStr);
         assertThat(denomination)
                 .isEqualTo(expectedDenomination);
         assertThat(denomination.getPoint())

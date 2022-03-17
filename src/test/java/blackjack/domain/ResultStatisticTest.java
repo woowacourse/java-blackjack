@@ -26,7 +26,7 @@ class ResultStatisticTest {
 
     void addCardList(Human human, List<String> cards) {
         for (String card : cards) {
-            human.addCard(Card.of(Denomination.from(card), Suit.CLOVER));
+            human.addCard(Card.of(Denomination.fromInitial(card), Suit.CLOVER));
         }
     }
 

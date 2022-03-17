@@ -41,7 +41,7 @@ public final class BlackjackGame {
             player.addCard(cardDeck.pop());
             OutputView.printHumanHand(player);
         }
-        if (player.isThatSize(INIT_CARD_NUMBER)) {
+        if (player.isCardsThatSize(INIT_CARD_NUMBER)) {
             OutputView.printHumanHand(player);
         }
     }

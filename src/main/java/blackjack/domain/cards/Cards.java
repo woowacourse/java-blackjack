@@ -27,7 +27,7 @@ public final class Cards {
 
     public int getRawPoint() {
         return value.stream()
-                .mapToInt(card -> card.getDenomination().getPoint())
+                .mapToInt(Card::getPoint)
                 .sum();
     }
 

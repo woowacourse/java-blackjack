@@ -33,9 +33,9 @@ public final class ResultStatistic {
         return result;
     }
 
-    private void calculate(final Participant table) {
-        for (Player player : table.getPlayers().get()) {
-            Result playerResult = calculatePlayerResult(player, table.getDealer());
+    private void calculate(final Participant participant) {
+        for (Player player : participant.getRawPlayers()) {
+            Result playerResult = calculatePlayerResult(player, participant.getDealer());
             Result dealerResult = playerResult.toReverse();
             playersResult.put(player.getName(), playerResult);
             dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);

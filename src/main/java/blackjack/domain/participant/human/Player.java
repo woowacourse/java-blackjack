@@ -12,7 +12,7 @@ public final class Player extends Human {
         return new Player(name);
     }
 
-    public boolean isThatSize(final int size) {
+    public boolean isCardsThatSize(final int size) {
         return cards.size() == size;
     }
 

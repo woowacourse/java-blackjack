@@ -27,7 +27,7 @@ public final class OutputView {
     public static void printInitCards(final Participant participant) {
         OutputView.printInitCardState(participant);
         OutputView.printHumanHand(participant.getDealer());
-        for (Player player : participant.getPlayers().get()) {
+        for (Player player : participant.getRawPlayers()) {
             OutputView.printHumanHand(player);
         }
         System.out.println();
@@ -59,7 +59,7 @@ public final class OutputView {
     public static void printHandAndPoint(final Participant participant) {
         System.out.println();
         OutputView.printHumanCardPointState(participant.getDealer());
-        for (Player player : participant.getPlayers().get()) {
+        for (Player player : participant.getRawPlayers()) {
             OutputView.printHumanCardPointState(player);
         }
     }
