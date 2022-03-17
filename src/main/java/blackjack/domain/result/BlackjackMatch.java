@@ -19,16 +19,6 @@ public enum BlackjackMatch {
         this.profitRatio = profitRatio;
     }
 
-    public static double calculateProfitRatio(Player player, Dealer dealer) {
-        final BlackjackMatch resultByBust = getWinLoseByBust(player, dealer);
-        if (resultByBust != null) return resultByBust.profitRatio;
-
-        final BlackjackMatch resultByBlackjack = getWinDrawByBlackjack(player, dealer);
-        if (resultByBlackjack != null) return resultByBlackjack.profitRatio;
-
-        return getWinDrawLoseByScore(player, dealer).profitRatio;
-    }
-
     public static BlackjackMatch calculateMatch(Player player, Dealer dealer) {
         final BlackjackMatch resultByBust = getWinLoseByBust(player, dealer);
         if (resultByBust != null) return resultByBust;
