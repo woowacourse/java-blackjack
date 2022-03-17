@@ -32,14 +32,6 @@ public abstract class Participant {
         return Score.from(myCards);
     }
 
-    public boolean isBust() {
-        return score().isBust();
-    }
-
-    public boolean isBlackjack() {
-        return score().isBlackjack();
-    }
-
     public List<Card> getMyCards() {
         return myCards;
     }

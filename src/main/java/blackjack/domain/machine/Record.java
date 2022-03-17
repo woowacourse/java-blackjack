@@ -43,15 +43,15 @@ public enum Record {
     }
 
     private static boolean isBust(Player player, Dealer dealer) {
-        return player.isBust() || dealer.isBust();
+        return player.score().isBust() || dealer.score().isBust();
     }
 
     private static Record getRecordForBurst(Player player, Dealer dealer) {
-        if (player.isBust()) {
+        if (player.score().isBust()) {
             return DEFEAT;
         }
 
-        if (dealer.isBust()) {
+        if (dealer.score().isBust()) {
             return VICTORY;
         }
 

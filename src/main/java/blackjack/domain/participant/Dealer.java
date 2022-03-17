@@ -6,8 +6,4 @@ public class Dealer extends Participant {
     public Dealer() {
         super(NAME);
     }
-
-    public boolean isHit() {
-        return score().isHit();
-    }
 }
