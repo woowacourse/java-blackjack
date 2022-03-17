@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.BlackjackController;
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;

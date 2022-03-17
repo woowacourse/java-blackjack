@@ -1,7 +1,6 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
@@ -18,7 +17,7 @@ class BettingBoxTest {
         assertThat(bettingBox.getPrizeMoney(guest, WinDrawLose.WIN, true))
                 .isEqualTo(15000);
     }
-    
+
     @Test
     @DisplayName("게스트가 블랙잭이 아니고 승리했을 때 상금을 잘 받는지 확인한다.")
     void checkPrizeMoneyNotBlackjack() {

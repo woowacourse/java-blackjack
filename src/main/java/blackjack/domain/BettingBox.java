@@ -28,7 +28,7 @@ public class BettingBox {
 
     private int getWinningGuestPrizeMoney(BettingMoney bettingMoney, boolean isBlackjack) {
         if (isBlackjack) {
-            return (int)(bettingMoney.getAmount() * 1.5);
+            return (int) (bettingMoney.getAmount() * 1.5);
         }
         return bettingMoney.getAmount();
     }

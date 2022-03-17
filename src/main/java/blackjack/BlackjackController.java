@@ -11,6 +11,7 @@ import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,18 +19,30 @@ public class BlackjackController {
 
     public void run() {
         Deck deck = new Deck();
-        Players players = Players.fromNamesAndGuestHitStrategy(
-                InputView.inputPlayerName(),
-                (player) -> HitFlag.fromCommand(InputView.inputHitOrStand(player.getName()))
-        );
+        Players players = Players.fromNamesAndGuestHitStrategy(inputPlayerNames(), this::inputHitCommand);
+        BettingBox bettingBox = bet(players);
         players.initHit(deck, Players.INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
-        BettingBox bettingBox = new BettingBox();
-        players.bet(bettingBox, (player) -> new BettingMoney(InputView.inputBettingMoney(player.getName())));
         players.playersHit(deck, OutputView::printPresentStatus);
-        OutputView.printCardResults(getCardResults(players));
-        BlackjackResult result = BlackjackResult.match(players.findDealer(), players.getGuests());
-        OutputView.printResult(result.getPrizeResult(players.findDealer(), bettingBox));
+        outputGameResult(players, bettingBox);
+    }
+
+    private List<String> inputPlayerNames() {
+        try {
+            return InputView.inputPlayerNames();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayerNames();
+        }
+    }
+
+    private HitFlag inputHitCommand(Player player) {
+        try {
+            return HitFlag.fromCommand(InputView.inputHitOrStand(player.getName()));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputHitCommand(player);
+        }
     }
 
     private Map<String, Cards> getCardStatus(Players players) {
@@ -38,6 +51,27 @@ public class BlackjackController {
             result.put(player.getName(), player.getShowCards());
         }
         return result;
+    }
+
+    private BettingBox bet(Players players) {
+        BettingBox bettingBox = new BettingBox();
+        players.bet(bettingBox, this::inputBettingMoney);
+        return bettingBox;
+    }
+
+    private BettingMoney inputBettingMoney(Player player) {
+        try {
+            return new BettingMoney(InputView.inputBettingMoney(player.getName()));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputBettingMoney(player);
+        }
+    }
+
+    private void outputGameResult(Players players, BettingBox bettingBox) {
+        OutputView.printCardResults(getCardResults(players));
+        BlackjackResult result = BlackjackResult.match(players.findDealer(), players.getGuests());
+        OutputView.printResult(result.getPrizeResult(players.findDealer(), bettingBox));
     }
 
     private Map<String, Cards> getCardResults(Players players) {

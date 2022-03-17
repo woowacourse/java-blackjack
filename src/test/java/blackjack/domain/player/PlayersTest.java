@@ -54,7 +54,8 @@ public class PlayersTest {
     @Test
     @DisplayName("참가자 이름을 8명 이상 입력하면 에러를 던지는지 확인")
     void maxSizeOverErrorTest() {
-        assertThatThrownBy(() -> Players.fromNamesAndGuestHitStrategy(List.of("a", "b", "c", "d", "e", "f", "g", "h"), (p) -> HitFlag.Y))
+        assertThatThrownBy(() -> Players.fromNamesAndGuestHitStrategy(List.of("a", "b", "c", "d", "e", "f", "g", "h"),
+                (p) -> HitFlag.Y))
                 .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("참가자는 딜러 포함 8명 까지만 가능합니다.");
     }
 }

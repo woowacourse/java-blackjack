@@ -1,9 +1,7 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +14,7 @@ class BettingMoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("베팅 금액은 음수를 입력할 수 없습니다.");
     }
-    
+
     @Test
     @DisplayName("베팅 금액이 최소금액의 배수가 아닌 경우 에러를 던지는지 확인한다.")
     void checkNotMultiplesOfLeastUnit() {
