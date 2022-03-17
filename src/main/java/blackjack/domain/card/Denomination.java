@@ -32,10 +32,10 @@ public enum Denomination {
     }
 
     public static Score calculateCardScore(final List<Card> cards) {
-        return calculateScore(denominationsToCards(cards));
+        return calculateScore(cardsToDenominations(cards));
     }
 
-    private static List<Denomination> denominationsToCards(final List<Card> cards) {
+    private static List<Denomination> cardsToDenominations(final List<Card> cards) {
         return cards.stream()
                 .map(Card::getDenomination)
                 .collect(Collectors.toList());
@@ -74,7 +74,7 @@ public enum Denomination {
     }
 
     public static Score calculateCardMaxScore(final List<Card> cards) {
-        return calculateMaxScore(denominationsToCards(cards));
+        return calculateMaxScore(cardsToDenominations(cards));
     }
 
     private static Score calculateMaxScore(final List<Denomination> denominations) {
