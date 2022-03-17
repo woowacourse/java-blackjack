@@ -29,6 +29,6 @@ public class ParticipantTest {
         player.addCard(Card.K_CLOVER);
         player.addCard(Card.THREE_DIAMOND);
 
-        assertThat(player.isBurst()).isTrue();
+        assertThat(player.isBust()).isTrue();
     }
 }

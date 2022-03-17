@@ -33,7 +33,7 @@ public abstract class Participant {
                 .getSum();
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return score() > Score.CONDITION_BURST;
     }
 

@@ -27,7 +27,7 @@ public class BlackjackController {
     }
 
     private void progressBlackjack() {
-        while (blackjack.isDealOneMore()) {
+        while (blackjack.isDealOneMoreToPlayer()) {
             askDealCardToPlayer(blackjack.getNextPlayer());
         }
         askDealCardToDealer(blackjack.getDealer());
@@ -50,7 +50,7 @@ public class BlackjackController {
             return;
         }
 
-        while (!blackjack.isPlayerBurst(player) && InputView.askAdditionalCard(player)) {
+        while (!blackjack.isPlayerBust(player) && InputView.askAdditionalCard(player)) {
             blackjack.dealAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
             OutputView.printCards(blackjack.getPlayer(player));
         }

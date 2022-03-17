@@ -34,8 +34,8 @@ public class Players {
         return !(turn < players.size());
     }
 
-    public boolean isPlayerBurst(Player player) {
-        return findPlayer(player).isBurst();
+    public boolean isPlayerBust(Player player) {
+        return findPlayer(player).isBust();
     }
 
     public void next() {

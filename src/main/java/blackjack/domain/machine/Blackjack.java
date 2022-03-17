@@ -42,12 +42,12 @@ public class Blackjack {
         return false;
     }
 
-    public boolean isDealOneMore() {
+    public boolean isDealOneMoreToPlayer() {
         return !players.isEnd();
     }
 
-    public boolean isPlayerBurst(Player player) {
-        return players.isPlayerBurst(player);
+    public boolean isPlayerBust(Player player) {
+        return players.isPlayerBust(player);
     }
 
     public boolean isBlackjack(Participant participant) {
