@@ -56,6 +56,14 @@ public final class Players {
         return this.dealer.canHit();
     }
 
+    public int countCardsAddedToDealer() {
+        return this.dealer.countAddedCards();
+    }
+
+    public Profits getProfits() {
+        return this.entries.compareAllWith(dealer);
+    }
+
     public List<Entry> getEntries() {
         return this.entries.getValues();
     }
@@ -64,15 +72,7 @@ public final class Players {
         return this.dealer;
     }
 
-    public int countCardsAddedToDealer() {
-        return this.dealer.countAddedCards();
-    }
-
     public Entry getCurrentEntry() {
         return this.entries.getCurrentEntry();
-    }
-
-    public Profits getProfits() {
-        return this.entries.compareAllWith(dealer);
     }
 }

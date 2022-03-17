@@ -22,12 +22,14 @@ public class ResultView {
 
     private static final String DELIMITER_JOIN = ", ";
 
-    public void printHandInitialized(PlayersDto players) {
+    public void printThatHandInitialized(PlayersDto players) {
         DealerDto dealer = players.getDealer();
-        System.out.printf(FORMAT_MESSAGE_HAND_INITIALIZED, dealer.getName(), joinStrings(players.getEntryNames()));
+        System.out.printf(
+                FORMAT_MESSAGE_HAND_INITIALIZED,
+                dealer.getName(), joinStrings(players.getEntryNames()));
     }
 
-    public void printInitializedHands(PlayersDto players) {
+    public void printFirstHands(PlayersDto players) {
         for (PlayerDto player : players.getPlayers()) {
             printFirstHand(player);
         }
@@ -38,28 +40,31 @@ public class ResultView {
             printOnlyFirstCard((DealerDto) player);
             return;
         }
-        printHand(player);
+        printFullHand(player);
     }
 
     private void printOnlyFirstCard(DealerDto dealer) {
-        System.out.printf(FORMAT_HAND_INITIALIZED, dealer.getName(), getFirstCardToString(dealer.getHand()));
+        System.out.printf(FORMAT_HAND_INITIALIZED,
+                dealer.getName(), concatFirstCardToString(dealer.getHand()));
     }
 
-    private String getFirstCardToString(HandDto hand) {
+    private String concatFirstCardToString(HandDto hand) {
         TrumpCardDto firstCard = hand.getCards().get(0);
         return firstCard.getNumber() + firstCard.getSymbol();
     }
 
-    public void printHand(PlayerDto player) {
-        System.out.printf(FORMAT_HAND_INITIALIZED, player.getName(), joinHand(player.getHand()));
+    public void printFullHand(PlayerDto player) {
+        System.out.printf(FORMAT_HAND_INITIALIZED,
+                player.getName(), joinHand(player.getHand()));
     }
 
     public void printBustMessage(EntryDto entry) {
         System.out.printf(FORMAT_MESSAGE_BUST, entry.getName());
     }
 
-    public void printDealerHitCount(DealerDto dealer) {
-        System.out.printf(FORMAT_MESSAGE_DEALER_HIT, dealer.getName(), dealer.getAddedCount());
+    public void printDealerAddedCount(DealerDto dealer) {
+        System.out.printf(FORMAT_MESSAGE_DEALER_HIT,
+                dealer.getName(), dealer.getAddedCount());
     }
 
     public void printScores(PlayersDto players) {
@@ -69,7 +74,8 @@ public class ResultView {
     }
 
     private void printScore(PlayerDto player) {
-        System.out.printf(FORMAT_SCORE, player.getName(), joinHand(player.getHand()), player.getScore());
+        System.out.printf(FORMAT_SCORE, player.getName(),
+                joinHand(player.getHand()), player.getScore());
     }
 
     public void printProfits(ProfitsDto profits) {

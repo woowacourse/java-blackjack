@@ -26,7 +26,7 @@ public final class Hand {
     }
 
     private void checkInitialized() {
-        if (getSize() != 0) {
+        if (hasCardAdded()) {
             throw new IllegalArgumentException(ERROR_ALREADY_INITIALIZED);
         }
     }

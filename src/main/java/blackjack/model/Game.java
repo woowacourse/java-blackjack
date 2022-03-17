@@ -49,7 +49,7 @@ public final class Game {
         this.players.addToCurrentEntry(trumpCardPack.draw());
     }
 
-    public boolean isCurrentEntryBust() {
+    public boolean canCurrentEntryHit() {
         return this.players.isCurrentEntryBust();
     }
 
@@ -63,6 +63,10 @@ public final class Game {
         return this.players.countCardsAddedToDealer();
     }
 
+    public Profits getProfits() {
+        return this.players.getProfits();
+    }
+
     public List<Entry> getEntries() {
         return this.players.getEntries();
     }
@@ -73,9 +77,5 @@ public final class Game {
 
     public Entry getCurrentEntry() {
         return this.players.getCurrentEntry();
-    }
-
-    public Profits getProfits() {
-        return this.players.getProfits();
     }
 }

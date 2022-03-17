@@ -1,6 +1,6 @@
 package blackjack.model.bet;
 
-public class Amount {
+public final class Amount {
     private final int value;
 
     public Amount(int value) {

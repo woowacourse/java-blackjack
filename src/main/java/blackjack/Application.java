@@ -39,8 +39,8 @@ public class Application {
         game.start();
 
         PlayersDto playersDto = PlayersDto.from(game);
-        resultView.printHandInitialized(playersDto);
-        resultView.printInitializedHands(playersDto);
+        resultView.printThatHandInitialized(playersDto);
+        resultView.printFirstHands(playersDto);
     }
 
     private static void playEntries(InputView inputView, ResultView resultView, Game game) {
@@ -52,13 +52,13 @@ public class Application {
     }
 
     private static void playTurn(InputView inputView, Game game, ResultView resultView) {
-        EntryDto entryDto = EntryDto.fromCurrentEntryOf(game);
-        if (game.isCurrentEntryBust()) {
+        final EntryDto entryDto = EntryDto.fromCurrentEntryOf(game);
+        if (game.canCurrentEntryHit()) {
             resultView.printBustMessage(entryDto);
             return;
         }
         if (!inputView.askForHit(entryDto)) {
-            resultView.printHand(entryDto);
+            resultView.printFullHand(entryDto);
             return;
         }
         hitCurrentEntry(inputView, game, resultView);
@@ -66,14 +66,14 @@ public class Application {
 
     private static void hitCurrentEntry(InputView inputView, Game game, ResultView resultView) {
         game.hitCurrentEntry();
-        resultView.printHand(EntryDto.fromCurrentEntryOf(game));
+        resultView.printFullHand(EntryDto.fromCurrentEntryOf(game));
         playTurn(inputView, game, resultView);
     }
 
     private static void playDealer(ResultView resultView, Game game) {
         game.hitDealer();
         if (game.countCardsAddedToDealer() > 0) {
-            resultView.printDealerHitCount(DealerDto.from(game));
+            resultView.printDealerAddedCount(DealerDto.from(game));
         }
     }
 
