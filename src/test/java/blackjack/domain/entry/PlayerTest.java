@@ -18,7 +18,7 @@ public class PlayerTest {
     void getTwoCards() {
         Player player = new Player("jason", HoldCards.init(List.of(Card.valueOf(Suit.SPADE, Denomination.KING), Card.valueOf(Suit.SPADE, Denomination.ACE))));
 
-        assertThat(player.countCards()).isEqualTo(21);
+        assertThat(player.calculateCardsSum()).isEqualTo(21);
     }
 
     @Test
@@ -27,7 +27,7 @@ public class PlayerTest {
         Player player = new Player("jason", HoldCards.init(List.of(Card.valueOf(Suit.SPADE, Denomination.NINE), Card.valueOf(Suit.SPADE, Denomination.ACE))));
         player.putCard(Card.valueOf(Suit.HEART, Denomination.ACE));
 
-        assertThat(player.countCards()).isEqualTo(21);
+        assertThat(player.calculateCardsSum()).isEqualTo(21);
     }
 
     @Test

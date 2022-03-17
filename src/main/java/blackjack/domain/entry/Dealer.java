@@ -26,7 +26,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return countCards() <= MORE_CARD_STANDARD;
+        return calculateCardsSum() <= MORE_CARD_STANDARD;
     }
 
     private Card findFirstCard(HoldCards holdCards) {

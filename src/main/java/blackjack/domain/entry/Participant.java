@@ -18,8 +18,12 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public int countCards() {
+    public int calculateCardsSum() {
         return holdCards.countBestSum();
+    }
+
+    public int countCardSize() {
+        return holdCards.getCards().size();
     }
 
     public void putCard(Card card) {

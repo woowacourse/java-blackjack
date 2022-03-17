@@ -18,7 +18,7 @@ class DealerTest {
     void getTwoCards() {
         Dealer dealer = new Dealer(HoldCards.init(List.of(Card.valueOf(Suit.SPADE, Denomination.KING), Card.valueOf(Suit.SPADE, Denomination.ACE))));
 
-        assertThat(dealer.countCards()).isEqualTo(21);
+        assertThat(dealer.calculateCardsSum()).isEqualTo(21);
     }
 
     @Test

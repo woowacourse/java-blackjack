@@ -26,7 +26,7 @@ public class BlackjackGame {
 
     public Map<Participant, Integer> getCardResult(List<Participant> participants) {
         return participants.stream()
-                .collect(Collectors.toMap(participant -> participant, Participant::countCards));
+                .collect(Collectors.toMap(participant -> participant, Participant::calculateCardsSum));
     }
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {

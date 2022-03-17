@@ -22,7 +22,12 @@ public class Player extends Participant {
     }
 
     public PlayerOutcome match(Dealer dealer) {
-        return PlayerOutcome.match(dealer.countCards(), countCards());
+        return PlayerOutcome.match(
+                dealer.calculateCardsSum(),
+                calculateCardsSum(),
+                dealer.countCardSize(),
+                countCardSize()
+        );
     }
 
     @Override
@@ -38,7 +43,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return countCards() < BLACKJACK_NUMBER;
+        return calculateCardsSum() < BLACKJACK_NUMBER;
     }
 
     public int getBettingMoney() {
