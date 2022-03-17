@@ -1,6 +1,8 @@
 package blackjack.view;
 
+import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,8 +45,14 @@ public class InputView {
         }
     }
 
-    public static boolean inputWantDraw(String name) {
-        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
+    public static BetMoney inputPlayerMoney(String name) {
+        System.out.printf("%n%s의 베팅 금액은?%n", name);
+        String input = scanner.nextLine();
+        return new BetMoney(Integer.parseInt(input));
+    }
+
+    public static boolean inputWantDraw(Player player) {
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", player.getName(), YES, NO);
         String input = scanner.nextLine().toLowerCase();
         return toBoolean(input);
     }
