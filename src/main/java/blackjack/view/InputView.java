@@ -24,6 +24,19 @@ public class InputView {
         return convertNameInput(names);
     }
 
+    public static int responseBetting(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        validateNumber(input);
+        return Integer.parseInt(input);
+    }
+
+    private static void validateNumber(String input) {
+        if (!input.chars().allMatch(Character::isDigit)) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자이어야 합니다.");
+        }
+    }
+
     private static void validateName(final String nameInput) {
         if (nameInput == null || nameInput.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 참여자의 이름을 입력해주세요.");
@@ -48,4 +61,5 @@ public class InputView {
         }
         return input.equals(YES);
     }
+    
 }

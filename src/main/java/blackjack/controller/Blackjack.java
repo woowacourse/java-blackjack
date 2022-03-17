@@ -35,8 +35,12 @@ public class Blackjack {
 
     private List<Player> createParticipants(final List<String> names) {
         return names.stream()
-                .map(name -> new Participant(name, new ParticipantAcceptStrategy(), new Money(0)))
+                .map(this::createParticipant)
                 .collect(Collectors.toList());
+    }
+
+    private Participant createParticipant(final String name) {
+        return new Participant(name, new ParticipantAcceptStrategy(), new Money(InputView.responseBetting(name)));
     }
 
     private Dealer createDealer() {
