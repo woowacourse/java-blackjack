@@ -5,12 +5,14 @@ import blackjack.domain.card.Score;
 
 public final class Bust extends Finish {
 
+    private static final double BUST_LOSE_RATE = -1;
+
     Bust(final Cards cards, final Score score) {
         super(cards, score);
     }
 
     @Override
     double earningRate(final BlackjackGameState blackjackGameState) {
-        return -1;
+        return BUST_LOSE_RATE;
     }
 }
