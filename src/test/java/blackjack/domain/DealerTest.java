@@ -14,8 +14,8 @@ class DealerTest {
     void under16_dealerGetCard() {
         Dealer dealer = new Dealer();
         dealer.receiveCards(
-                List.of(new Card(CardNumber.TEN, Symbol.SPADE),
-                        new Card(CardNumber.SIX, Symbol.SPADE)));
+                List.of(Card.valueOf(CardNumber.TEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SIX, Symbol.SPADE)));
         assertThat(dealer.isFinished()).isFalse();
     }
 
@@ -24,8 +24,8 @@ class DealerTest {
     void over16_dealerCannotGetCard() {
         Dealer dealer = new Dealer();
         dealer.receiveCards(
-                List.of(new Card(CardNumber.TEN, Symbol.SPADE),
-                        new Card(CardNumber.SEVEN, Symbol.SPADE)));
+                List.of(Card.valueOf(CardNumber.TEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SEVEN, Symbol.SPADE)));
         assertThat(dealer.isFinished()).isTrue();
     }
 
@@ -34,14 +34,14 @@ class DealerTest {
     void playerIsBust_dealerWin() {
         Player player = new Player("dog");
         player.receiveCards(
-                List.of(new Card(CardNumber.TEN, Symbol.SPADE),
-                        new Card(CardNumber.SEVEN, Symbol.SPADE),
-                        new Card(CardNumber.FIVE, Symbol.SPADE)));
+                List.of(Card.valueOf(CardNumber.TEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SEVEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.FIVE, Symbol.SPADE)));
 
         Dealer dealer = new Dealer();
         dealer.receiveCards(
-                List.of(new Card(CardNumber.TEN, Symbol.SPADE),
-                        new Card(CardNumber.SEVEN, Symbol.SPADE)));
+                List.of(Card.valueOf(CardNumber.TEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SEVEN, Symbol.SPADE)));
         assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.WIN);
     }
 
@@ -50,14 +50,14 @@ class DealerTest {
     void onlyDealerIsBlackJack_dealerWin() {
         Player player = new Player("dog");
         player.receiveCards(
-                List.of(new Card(CardNumber.TEN, Symbol.SPADE),
-                        new Card(CardNumber.SEVEN, Symbol.SPADE),
-                        new Card(CardNumber.FOUR, Symbol.SPADE)));
+                List.of(Card.valueOf(CardNumber.TEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SEVEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.FOUR, Symbol.SPADE)));
 
         Dealer dealer = new Dealer();
         dealer.receiveCards(
-                List.of(new Card(CardNumber.KING, Symbol.SPADE),
-                        new Card(CardNumber.ACE, Symbol.SPADE)));
+                List.of(Card.valueOf(CardNumber.KING, Symbol.SPADE),
+                        Card.valueOf(CardNumber.ACE, Symbol.SPADE)));
         assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.WIN);
     }
 
@@ -66,15 +66,15 @@ class DealerTest {
     void dealerIsBust_dealerLose() {
         Player player = new Player("dog");
         player.receiveCards(
-                List.of(new Card(CardNumber.TEN, Symbol.SPADE),
-                        new Card(CardNumber.SEVEN, Symbol.SPADE),
-                        new Card(CardNumber.THREE, Symbol.SPADE)));
+                List.of(Card.valueOf(CardNumber.TEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SEVEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.THREE, Symbol.SPADE)));
 
         Dealer dealer = new Dealer();
         dealer.receiveCards(
-                List.of(new Card(CardNumber.TEN, Symbol.SPADE),
-                        new Card(CardNumber.SEVEN, Symbol.SPADE),
-                        new Card(CardNumber.FIVE, Symbol.CLOVER)));
+                List.of(Card.valueOf(CardNumber.TEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SEVEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.FIVE, Symbol.CLOVER)));
         assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.LOSE);
     }
 
@@ -83,15 +83,15 @@ class DealerTest {
     void bothNotBust_dealerScoreHigher_win() {
         Player player = new Player("dog");
         player.receiveCards(
-                List.of(new Card(CardNumber.TEN, Symbol.SPADE),
-                        new Card(CardNumber.SIX, Symbol.SPADE),
-                        new Card(CardNumber.TWO, Symbol.CLOVER)));
+                List.of(Card.valueOf(CardNumber.TEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SIX, Symbol.SPADE),
+                        Card.valueOf(CardNumber.TWO, Symbol.CLOVER)));
 
         Dealer dealer = new Dealer();
         dealer.receiveCards(
-                List.of(new Card(CardNumber.ACE, Symbol.SPADE),
-                        new Card(CardNumber.SIX, Symbol.SPADE),
-                        new Card(CardNumber.TWO, Symbol.CLOVER)));
+                List.of(Card.valueOf(CardNumber.ACE, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SIX, Symbol.SPADE),
+                        Card.valueOf(CardNumber.TWO, Symbol.CLOVER)));
         assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.WIN);
     }
 
@@ -100,15 +100,15 @@ class DealerTest {
     void bothNotBust_equalScore_draw() {
         Player player = new Player("dog");
         player.receiveCards(
-                List.of(new Card(CardNumber.SIX, Symbol.SPADE),
-                        new Card(CardNumber.SEVEN, Symbol.SPADE),
-                        new Card(CardNumber.FIVE, Symbol.CLOVER)));
+                List.of(Card.valueOf(CardNumber.SIX, Symbol.SPADE),
+                        Card.valueOf(CardNumber.SEVEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.FIVE, Symbol.CLOVER)));
 
         Dealer dealer = new Dealer();
         dealer.receiveCards(
-                List.of(new Card(CardNumber.THREE, Symbol.SPADE),
-                        new Card(CardNumber.FOUR, Symbol.SPADE),
-                        new Card(CardNumber.ACE, Symbol.CLOVER)));
+                List.of(Card.valueOf(CardNumber.THREE, Symbol.SPADE),
+                        Card.valueOf(CardNumber.FOUR, Symbol.SPADE),
+                        Card.valueOf(CardNumber.ACE, Symbol.CLOVER)));
         assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.DRAW);
     }
 }

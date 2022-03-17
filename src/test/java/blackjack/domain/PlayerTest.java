@@ -18,9 +18,9 @@ public class PlayerTest {
     void isPlayerBust() {
         Player player = new Player("pobi");
         player.receiveCards(
-                List.of(new Card(CardNumber.JACK, Symbol.SPADE),
-                        new Card(CardNumber.QUEEN, Symbol.SPADE),
-                        new Card(CardNumber.KING, Symbol.SPADE)));
+                List.of(Card.valueOf(CardNumber.JACK, Symbol.SPADE),
+                        Card.valueOf(CardNumber.QUEEN, Symbol.SPADE),
+                        Card.valueOf(CardNumber.KING, Symbol.SPADE)));
 
         assertThat(player.isFinished()).isTrue();
     }
@@ -47,8 +47,8 @@ public class PlayerTest {
         Player player = new Player("dog");
         player.putBettingMoney(10000);
         player.receiveCards(
-                List.of(new Card(CardNumber.ACE, Symbol.CLOVER),
-                        new Card(CardNumber.JACK, Symbol.DIAMOND)));
+                List.of(Card.valueOf(CardNumber.ACE, Symbol.CLOVER),
+                        Card.valueOf(CardNumber.JACK, Symbol.DIAMOND)));
         assertThat(player.moneyToExchange(GameResult.WIN)).isEqualTo(15000);
     }
 
@@ -58,8 +58,8 @@ public class PlayerTest {
         Player player = new Player("dog");
         player.putBettingMoney(10000);
         player.receiveCards(
-                List.of(new Card(CardNumber.ACE, Symbol.CLOVER),
-                        new Card(CardNumber.JACK, Symbol.DIAMOND)));
+                List.of(Card.valueOf(CardNumber.ACE, Symbol.CLOVER),
+                        Card.valueOf(CardNumber.JACK, Symbol.DIAMOND)));
         assertThat(player.moneyToExchange(GameResult.DRAW)).isEqualTo(0);
     }
 
