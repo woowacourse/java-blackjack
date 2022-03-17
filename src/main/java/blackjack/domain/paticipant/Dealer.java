@@ -3,7 +3,7 @@ package blackjack.domain.paticipant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
-import blackjack.domain.state.DealerRunning;
+import blackjack.domain.state.running.DealerRunning;
 import java.util.List;
 
 public final class Dealer extends AbstractParticipant {

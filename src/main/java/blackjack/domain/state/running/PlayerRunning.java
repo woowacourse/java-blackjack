@@ -1,7 +1,11 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.BlackjackGameState;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stand;
 
 public final class PlayerRunning extends Running {
 

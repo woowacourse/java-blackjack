@@ -1,4 +1,4 @@
-package blackjack.domain.state;
+package blackjack.domain.state.finished;
 
 import static blackjack.domain.card.Denomination.A;
 import static blackjack.domain.card.Denomination.KING;
@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.BlackjackGameState;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

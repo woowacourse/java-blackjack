@@ -3,7 +3,7 @@ package blackjack.domain.paticipant;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.BlackjackGameState;
-import blackjack.domain.state.PlayerRunning;
+import blackjack.domain.state.running.PlayerRunning;
 import java.util.List;
 
 public final class Player extends AbstractParticipant {

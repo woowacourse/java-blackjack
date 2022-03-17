@@ -1,4 +1,4 @@
-package blackjack.domain.state;
+package blackjack.domain.state.finished;
 
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.KING;

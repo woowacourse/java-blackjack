@@ -1,4 +1,4 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
 import static blackjack.domain.card.Denomination.A;
 import static blackjack.domain.card.Denomination.FOUR;
@@ -13,6 +13,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.BlackjackGameState;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stand;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

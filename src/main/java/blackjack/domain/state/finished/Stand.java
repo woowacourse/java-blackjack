@@ -1,7 +1,8 @@
-package blackjack.domain.state;
+package blackjack.domain.state.finished;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
+import blackjack.domain.state.BlackjackGameState;
 
 public final class Stand extends Finished {
 
@@ -9,7 +10,7 @@ public final class Stand extends Finished {
     private static final double STAND_DRAW_RATE = 0;
     private static final double STAND_LOSE_RATE = -1;
 
-    Stand(final Cards cards, final Score score) {
+    public Stand(final Cards cards, final Score score) {
         super(cards, score);
     }
 

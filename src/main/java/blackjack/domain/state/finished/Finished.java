@@ -1,8 +1,10 @@
-package blackjack.domain.state;
+package blackjack.domain.state.finished;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
+import blackjack.domain.state.AbstractBlackjackGameState;
+import blackjack.domain.state.BlackjackGameState;
 import java.util.Objects;
 
 public abstract class Finished extends AbstractBlackjackGameState {

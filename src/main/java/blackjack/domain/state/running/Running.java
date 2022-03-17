@@ -1,6 +1,8 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.AbstractBlackjackGameState;
+import blackjack.domain.state.BlackjackGameState;
 
 public abstract class Running extends AbstractBlackjackGameState {
 
