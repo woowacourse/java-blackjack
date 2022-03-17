@@ -18,26 +18,66 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class JudgeTest {
 
     @Test
-    @DisplayName("딜러가 참여자보다 점수가 크거나 같으면 딜러가 승리한다.")
-    void dealerWinWhenOverThanParticipant() {
+    @DisplayName("딜러와 참가자가 모두 블랙잭이라면 무승부로 판정한다.")
+    void drawWhenBothBlackjack() {
         Participant zero = new Participant("zero", new ParticipantAcceptStrategy());
         zero.addCard(new Card(Type.SPADE, Score.ACE));
         zero.addCard(new Card(Type.HEART, Score.KING));
-        Participant corinne = new Participant("corinne", new ParticipantAcceptStrategy());
-        corinne.addCard(new Card(Type.HEART, Score.SIX));
-        corinne.addCard(new Card(Type.HEART, Score.TEN));
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(Type.HEART, Score.ACE));
         dealer.addCard(new Card(Type.DIAMOND, Score.KING));
 
-        Players players = new Players(List.of(zero, corinne), dealer);
+        Players players = new Players(List.of(zero), dealer);
         GameResult result = Judge.calculateGameResult(players);
 
         assertAll(
-                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2),
+                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0),
                 () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
-                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.LOSE),
-                () -> assertThat(result.getParticipantResults().get(1).getResult()).isEqualTo(Result.LOSE)
+                () -> assertThat(result.getDealerResult().getDraw().getCount()).isEqualTo(1),
+                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.DRAW)
+        );
+    }
+
+    @Test
+    @DisplayName("딜러와 참가자의 점수합이 같다면 무승부로 판단한다.")
+    void drawWhenScoreEqual() {
+        Participant zero = new Participant("zero", new ParticipantAcceptStrategy());
+        zero.addCard(new Card(Type.SPADE, Score.TEN));
+        zero.addCard(new Card(Type.HEART, Score.SIX));
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Type.HEART, Score.EIGHT));
+        dealer.addCard(new Card(Type.DIAMOND, Score.EIGHT));
+
+        Players players = new Players(List.of(zero), dealer);
+        GameResult result = Judge.calculateGameResult(players);
+
+        assertAll(
+                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0),
+                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
+                () -> assertThat(result.getDealerResult().getDraw().getCount()).isEqualTo(1),
+                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.DRAW)
+        );
+    }
+
+    @Test
+    @DisplayName("21점과 blackjack이 겨루면 blackjack을 가진 쪽이 승리한다.")
+    void winBlackjackOwner() {
+        Participant zero = new Participant("zero", new ParticipantAcceptStrategy());
+        zero.addCard(new Card(Type.SPADE, Score.ACE));
+        zero.addCard(new Card(Type.HEART, Score.KING));
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Type.HEART, Score.EIGHT));
+        dealer.addCard(new Card(Type.DIAMOND, Score.EIGHT));
+        dealer.addCard(new Card(Type.CLOVER, Score.FIVE));
+
+        Players players = new Players(List.of(zero), dealer);
+        GameResult result = Judge.calculateGameResult(players);
+
+        assertAll(
+                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0),
+                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(1),
+                () -> assertThat(result.getDealerResult().getDraw().getCount()).isEqualTo(0),
+                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.WIN)
         );
     }
 

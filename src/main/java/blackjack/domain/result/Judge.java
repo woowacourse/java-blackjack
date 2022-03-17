@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
@@ -15,35 +14,54 @@ public class Judge {
         final DealerResult dealerResult = new DealerResult();
         final List<ParticipantResult> participantResults = new ArrayList<>();
         for (Player participant : players.getParticipants()) {
-            boolean isDealerWin = compete(players.getDealer(), participant);
-            updateDealerResult(dealerResult, isDealerWin);
-            participantResults.add(makeParticipantResult(participant, isDealerWin));
+            Result participantResult = competeResult(players.getDealer(), participant);
+            participantResults.add(makeParticipantResult(participant, participantResult));
+            updateDealerResult(dealerResult, participantResult);
         }
 
         return new GameResult(dealerResult, participantResults);
     }
 
-    public static boolean compete(final Player dealer, final Player participant) {
-        return isDealerWin(dealer.calculateFinalScore(), participant.calculateFinalScore());
-    }
+    private static void updateDealerResult(final DealerResult dealerResult, final Result result) {
+        if (result == Result.WIN) {
+            dealerResult.increaseLose();
+            return;
+        }
 
-    private static boolean isDealerWin(int dealerScore, int participantScore) {
-        return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
-    }
-
-    private static void updateDealerResult(DealerResult dealerResult, boolean isDealerWin) {
-        if (isDealerWin) {
+        if (result == Result.LOSE) {
             dealerResult.increaseWin();
             return;
         }
-        dealerResult.increaseLose();
+        dealerResult.increaseDraw();
     }
 
-    private static ParticipantResult makeParticipantResult(Player participant, boolean isDealerWin) {
-        ParticipantResult participantResult = new ParticipantResult(participant.getName());
-        if (!isDealerWin) {
-            participantResult.makeWin();
+    private static boolean compete(final Player dealer, final Player participant) {
+        return isParticipantWin(dealer.calculateFinalScore(), participant.calculateFinalScore());
+    }
+
+    private static boolean isParticipantWin(int dealerScore, int participantScore) {
+        return dealerScore > MAX_SCORE || (participantScore <= MAX_SCORE && participantScore >= dealerScore);
+    }
+
+    private static Result competeResult(Player dealer, Player participant) {
+        if (checkDraw(dealer, participant)) {
+            return Result.DRAW;
         }
-        return participantResult;
+        if (compete(dealer, participant)) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
+    }
+
+    private static boolean checkDraw(Player dealer, Player participant) {
+        if (dealer.isBlackjack() && participant.isBlackjack()) {
+            return true;
+        }
+
+        return !dealer.isBlackjack() && !participant.isBlackjack() && dealer.calculateFinalScore() == participant.calculateFinalScore();
+    }
+
+    private static ParticipantResult makeParticipantResult(Player participant, Result result) {
+        return new ParticipantResult(participant.getName(), result);
     }
 }

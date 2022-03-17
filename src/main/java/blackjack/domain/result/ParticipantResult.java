@@ -3,15 +3,11 @@ package blackjack.domain.result;
 public class ParticipantResult {
 
     private final String name;
-    private Result result;
+    private final Result result;
 
-    public ParticipantResult(String name) {
+    public ParticipantResult(String name, Result result) {
         this.name = name;
-        this.result = Result.LOSE;
-    }
-
-    public void makeWin() {
-        result = Result.WIN;
+        this.result = result;
     }
 
     public String getName() {
