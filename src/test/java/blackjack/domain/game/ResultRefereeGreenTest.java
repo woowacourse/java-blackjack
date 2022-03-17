@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,7 @@ public class ResultRefereeGreenTest {
     @Test
     void init() {
         ResultRefereeGreen referee = new ResultRefereeGreen(
-                dealerBlackjack, List.of(player10, player15));
+                dealerBlackjack, generateBettingsOf(List.of(player10, player15)));
 
         assertThat(referee.getResults()).hasSize(3);
     }
@@ -33,7 +34,7 @@ public class ResultRefereeGreenTest {
     @Test
     void dealerBetting_sumIsEqualToOppositeOfPlayerSum() {
         ResultRefereeGreen referee = new ResultRefereeGreen(
-                dealerBlackjack, List.of(player10, player15, player20));
+                dealerBlackjack, generateBettingsOf(List.of(player10, player15, player20)));
 
         int playerBettings = 0;
         for (int i = 1; i < 4; i++) {
@@ -44,5 +45,11 @@ public class ResultRefereeGreenTest {
         int expected = playerBettings * -1;
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    private List<PlayerBetting> generateBettingsOf(List<Player> players) {
+        return players.stream()
+                .map(player -> new PlayerBetting(player, 1000))
+                .collect(Collectors.toUnmodifiableList());
     }
 }

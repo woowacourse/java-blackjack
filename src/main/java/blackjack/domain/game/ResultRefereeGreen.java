@@ -11,8 +11,8 @@ public class ResultRefereeGreen {
 
     private final List<BettingResult> bettingResults;
 
-    public ResultRefereeGreen(final Dealer dealer, final List<Player> players) {
-        List<BettingResult> playerBettingResults = getPlayerBettingResultsFrom(dealer, players);
+    public ResultRefereeGreen(final Dealer dealer, final List<PlayerBetting> playerBettings) {
+        List<BettingResult> playerBettingResults = getPlayerBettingResultsFrom(dealer, playerBettings);
         BettingResult dealerBettingResult = initDealerResultFrom(
                 dealer, getTotalProfitOf(playerBettingResults));
 
@@ -29,17 +29,20 @@ public class ResultRefereeGreen {
         return Collections.unmodifiableList(bettingResults);
     }
 
-    private List<BettingResult> getPlayerBettingResultsFrom(Dealer dealer, List<Player> players) {
-        return players.stream()
-                .map(player -> initPlayerBettingResultFrom(player, dealer))
+    private List<BettingResult> getPlayerBettingResultsFrom(Dealer dealer,
+                                                            List<PlayerBetting> playerBettings) {
+        return playerBettings.stream()
+                .map(playerBetting -> initPlayerBettingResultFrom(playerBetting, dealer))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private BettingResult initPlayerBettingResultFrom(final Player player, final Dealer dealer) {
-        final ResultType playerResult = player.getDuelResultWith(dealer);
-        final int bettingAmount = player.getBettingAmount();
+    private BettingResult initPlayerBettingResultFrom(final PlayerBetting playerBetting,
+                                                      final Dealer dealer) {
+        Player player = playerBetting.getPlayer();
+        final int bettingAmount = playerBetting.getBettingAmount();
 
-        final int winAmount = playerResult.getProfitOf(bettingAmount);
+        final int winAmount = player.getDuelResultWith(dealer)
+                .getProfitOf(bettingAmount);
 
         return new BettingResult(player, winAmount);
     }
