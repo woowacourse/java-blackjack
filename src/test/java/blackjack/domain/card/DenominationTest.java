@@ -20,8 +20,8 @@ class DenominationTest {
     @ParameterizedTest
     @MethodSource("generateMaxCalculateScoreValues")
     void 가능한_가장_큰_합을_계산(final List<Card> cards, final int expected) {
-        final int result = Denomination.calculateCardMaxScore(cards);
-        assertThat(result).isEqualTo(expected);
+        final Score result = Denomination.calculateCardMaxScore(cards);
+        assertThat(result).isEqualTo(new Score(expected));
     }
 
     private static Stream<Arguments> generateMaxCalculateScoreValues() {
@@ -37,8 +37,8 @@ class DenominationTest {
     @ParameterizedTest
     @MethodSource("generateCalculateScoreValues")
     void 가능한_가장_좋은_합을_계산(List<Card> cards, int expected) {
-        final int result = Denomination.calculateCardScore(cards);
-        assertThat(result).isEqualTo(expected);
+        final Score result = Denomination.calculateCardScore(cards);
+        assertThat(result).isEqualTo(new Score(expected));
     }
 
     private static Stream<Arguments> generateCalculateScoreValues() {

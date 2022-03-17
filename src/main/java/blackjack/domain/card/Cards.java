@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.state.Blackjack.BLACKJACK_TARGET_NUMBER;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,24 +28,28 @@ public class Cards {
                 .count();
     }
 
-    public int score() {
+    public Score score() {
         return Denomination.calculateCardScore(cards);
     }
 
     public boolean isBust() {
-        return score() > BLACKJACK_TARGET_NUMBER;
+        return score().isBustScore();
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_SIZE && score() == BLACKJACK_TARGET_NUMBER;
+        return score().isBlackjackScore() && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
-    public int maxScore() {
+    public Score maxScore() {
         return Denomination.calculateCardMaxScore(cards);
     }
 
     public boolean isMaxScoreBust() {
-        return maxScore() > BLACKJACK_TARGET_NUMBER;
+        return maxScore().isBustScore();
+    }
+
+    public boolean isDealerStandScore() {
+        return maxScore().isDealerStandScore();
     }
 
     public void addCard(final Card card) {
@@ -56,5 +58,12 @@ public class Cards {
 
     public List<Card> cards() {
         return List.copyOf(cards);
+    }
+
+    public Score createBlackjackScore() {
+        if (!isBlackjack()) {
+            throw new IllegalStateException("블랙잭 아니면 생성 불가능");
+        }
+        return score();
     }
 }

@@ -25,6 +25,13 @@ class StandTest {
     }
 
     @Test
+    void score가_null인_경우_예외발생() {
+        assertThatThrownBy(() -> new Stand(kingQueenCards, null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("score는 null이 들어올 수 없습니다.");
+    }
+
+    @Test
     void stand상태에서_hit하는_경우_예외발생() {
         final Stand stand = new Stand(kingQueenCards, kingQueenCards.score());
 

@@ -2,13 +2,16 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Score;
+import java.util.Objects;
 
 public abstract class Finish extends AbstractBlackjackGameState {
 
-    private final int score;
+    private final Score score;
 
-    Finish(final Cards cards, final int score) {
+    Finish(final Cards cards, final Score score) {
         super(cards);
+        Objects.requireNonNull(score, "score는 null이 들어올 수 없습니다.");
         this.score = score;
     }
 
@@ -29,7 +32,7 @@ public abstract class Finish extends AbstractBlackjackGameState {
 
     @Override
     public final int score() {
-        return score;
+        return score.getScore();
     }
 
     @Override

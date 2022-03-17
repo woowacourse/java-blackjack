@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.state.Blackjack.BLACKJACK_TARGET_NUMBER;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -33,7 +31,7 @@ public enum Denomination {
         this.printValue = printValue;
     }
 
-    public static int calculateCardScore(final List<Card> cards) {
+    public static Score calculateCardScore(final List<Card> cards) {
         return calculateScore(denominationsToCards(cards));
     }
 
@@ -43,7 +41,7 @@ public enum Denomination {
                 .collect(Collectors.toList());
     }
 
-    private static int calculateScore(final List<Denomination> numbers) {
+    private static Score calculateScore(final List<Denomination> numbers) {
         final int bonusMaxScore = calculateAceCount(numbers) * ACE_BONUS_VALUE;
         final int defaultScore = sumDefaultScore(numbers);
         final int startScore = defaultScore + bonusMaxScore;
@@ -63,31 +61,27 @@ public enum Denomination {
                 .sum();
     }
 
-    private static int calculateScore(final List<Denomination> numbers, final int defaultScore, final int startScore) {
+    private static Score calculateScore(final List<Denomination> numbers, final int defaultScore, final int startScore) {
         return IntStream.range(0, calculateAceCount(numbers))
-                .map(aceCount -> decreaseByAceCount(startScore, aceCount))
-                .filter(Denomination::isLowerThanBlackjackTargetNumber)
+                .mapToObj(aceCount -> decreaseByAceCount(startScore, aceCount))
+                .filter(score -> !score.isBustScore())
                 .findFirst()
-                .orElse(defaultScore);
+                .orElse(new Score(defaultScore));
     }
 
-    private static int decreaseByAceCount(final int startScore, final int aceCount) {
-        return startScore - aceCount * ACE_BONUS_VALUE;
+    private static Score decreaseByAceCount(final int startScore, final int aceCount) {
+        return new Score(startScore - aceCount * ACE_BONUS_VALUE);
     }
 
-    private static boolean isLowerThanBlackjackTargetNumber(final int sumCount) {
-        return sumCount <= BLACKJACK_TARGET_NUMBER;
-    }
-
-    public static int calculateCardMaxScore(final List<Card> cards) {
+    public static Score calculateCardMaxScore(final List<Card> cards) {
         return calculateMaxScore(denominationsToCards(cards));
     }
 
-    private static int calculateMaxScore(final List<Denomination> denominations) {
+    private static Score calculateMaxScore(final List<Denomination> denominations) {
         final int defaultScore = calculateDefaultScore(denominations);
 
         final int bonusMaxScore = calculateAceCount(denominations) * ACE_BONUS_VALUE;
-        return defaultScore + bonusMaxScore;
+        return new Score(defaultScore + bonusMaxScore);
     }
 
     private static int calculateDefaultScore(final List<Denomination> denominations) {

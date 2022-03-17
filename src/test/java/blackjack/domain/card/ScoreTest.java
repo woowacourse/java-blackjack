@@ -1,13 +1,8 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Denomination.A;
-import static blackjack.domain.card.Suit.HEARTS;
-import static blackjack.domain.card.Suit.SPADES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -36,19 +31,10 @@ class ScoreTest {
         assertThat(score.isBustScore()).isEqualTo(expected);
     }
 
-    @Test
-    void 카드의_최대점수로_생성() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, A), Card.of(HEARTS, A)));
-        final Score score = Score.createMaxScore(cards);
-
-        assertThat(score).isEqualTo(new Score(22));
-    }
-
-    @Test
-    void 카드의_점수계산으로_생성() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, A), Card.of(HEARTS, A)));
-        final Score score = Score.createScore(cards);
-
-        assertThat(score).isEqualTo(new Score(12));
+    @ParameterizedTest
+    @CsvSource(value = {"21,true", "17,true", "16,false"})
+    void 딜러_Stand점수인지_확인(final int inputScore, final boolean expected) {
+        final Score score = new Score(inputScore);
+        assertThat(score.isDealerStandScore()).isEqualTo(expected);
     }
 }
