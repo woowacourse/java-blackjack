@@ -20,7 +20,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BettingRefereeTest {
+public class BettingResultsTest {
 
     private static final int BETTING_AMOUNT = 1000;
     private static final HitOrStayChoiceStrategy HIT_CHOICE = () -> true;
@@ -40,16 +40,16 @@ public class BettingRefereeTest {
     @DisplayName("ResultReferee 인스턴스는 생성될 때 딜러와 플레이어별 정보를 지니게 된다.")
     @Test
     void init() {
-        BettingReferee referee = new BettingReferee(
+        BettingResults referee = new BettingResults(
                 dealerBlackjack, generateBettingsOf(List.of(player10, player15)));
 
-        assertThat(referee.getResults()).hasSize(3);
+        assertThat(referee.getValue()).hasSize(3);
     }
 
     @DisplayName("딜러가 획득한 돈은 모든 플레이어들이 잃은 돈의 합과 같다.")
     @Test
     void dealerBetting_isOppositeOfPlayerSum() {
-        BettingReferee referee = new BettingReferee(
+        BettingResults referee = new BettingResults(
                 dealerBlackjack, generateBettingsOf(List.of(player10, player15, player20)));
 
         int actual = extractDealerBettingResultFrom(referee).getMoneyOutcome();
@@ -61,7 +61,7 @@ public class BettingRefereeTest {
     @DisplayName("플레이어가 블랙잭으로 승리한 경우, 베팅금액의 1.5배를 획득한다.")
     @Test
     void playerBetting_blackjackWin() {
-        BettingReferee referee = new BettingReferee(
+        BettingResults referee = new BettingResults(
                 dealer17, generateBettingsOf(List.of(playerBlackjack)));
 
         int actual = extractOnePlayerBettingResultFrom(referee).getMoneyOutcome();
@@ -73,7 +73,7 @@ public class BettingRefereeTest {
     @DisplayName("플레이어가 승리한 경우, 베팅금액만큼 얻는다.")
     @Test
     void playerBetting_win() {
-        BettingReferee referee = new BettingReferee(
+        BettingResults referee = new BettingResults(
                 dealer17, generateBettingsOf(List.of(player20)));
 
         int actual = extractOnePlayerBettingResultFrom(referee).getMoneyOutcome();
@@ -84,7 +84,7 @@ public class BettingRefereeTest {
     @DisplayName("무승부인 경우 플레이어는 돈을 얻지도, 잃지도 않는다.")
     @Test
     void playerBetting_draw() {
-        BettingReferee referee = new BettingReferee(
+        BettingResults referee = new BettingResults(
                 dealer20, generateBettingsOf(List.of(player20)));
 
         int actual = extractOnePlayerBettingResultFrom(referee).getMoneyOutcome();
@@ -96,7 +96,7 @@ public class BettingRefereeTest {
     @DisplayName("플레이어가 패배한 경우, 베팅금액만큼 잃는다.")
     @Test
     void playerBetting_lose() {
-        BettingReferee referee = new BettingReferee(
+        BettingResults referee = new BettingResults(
                 dealerBlackjack, generateBettingsOf(List.of(player10)));
 
         int actual = extractOnePlayerBettingResultFrom(referee).getMoneyOutcome();
@@ -108,7 +108,7 @@ public class BettingRefereeTest {
     @DisplayName("딜러와 플레이어 모두 Bust인 경우, 딜러가 승리하므로 플레이어는 베팅금액만큼 잃는다.")
     @Test
     void playerBetting_loseOnBothBust() {
-        BettingReferee referee = new BettingReferee(
+        BettingResults referee = new BettingResults(
                 getDealerBust(), generateBettingsOf(List.of(getPlayerBust())));
 
         int actual = extractOnePlayerBettingResultFrom(referee).getMoneyOutcome();
@@ -124,21 +124,21 @@ public class BettingRefereeTest {
         return PlayerBettings.of(players, (name) -> BETTING_AMOUNT);
     }
 
-    private int extractPlayerBettingSum(BettingReferee referee) {
-        final int size = referee.getResults().size();
-        return referee.getResults()
+    private int extractPlayerBettingSum(BettingResults referee) {
+        final int size = referee.getValue().size();
+        return referee.getValue()
                 .subList(1, size)
                 .stream()
                 .mapToInt(BettingResult::getMoneyOutcome)
                 .sum();
     }
 
-    private BettingResult extractDealerBettingResultFrom(BettingReferee referee) {
-        return referee.getResults().get(0);
+    private BettingResult extractDealerBettingResultFrom(BettingResults referee) {
+        return referee.getValue().get(0);
     }
 
-    private BettingResult extractOnePlayerBettingResultFrom(BettingReferee referee) {
-        return referee.getResults().get(1);
+    private BettingResult extractOnePlayerBettingResultFrom(BettingResults referee) {
+        return referee.getValue().get(1);
     }
 
     private Dealer getDealerBust() {

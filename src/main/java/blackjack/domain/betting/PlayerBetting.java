@@ -1,6 +1,7 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.participant.Participant;
+import blackjack.domain.state.CardHand;
 
 public class PlayerBetting {
 
@@ -16,8 +17,16 @@ public class PlayerBetting {
         return player;
     }
 
-    public int getBettingAmount() {
-        return bettingAmount;
+    public int getProfit(Participant dealer) {
+        final double bettingYield = getBettingYield(dealer);
+        return (int) (bettingYield * bettingAmount);
+    }
+
+    private double getBettingYield(Participant dealer) {
+        final CardHand playerHand = player.getCardHand();
+        final CardHand dealerHand = dealer.getCardHand();
+
+        return playerHand.getBettingYieldVersus(dealerHand);
     }
 
     @Override

@@ -6,7 +6,7 @@ import static blackjack.view.OutputView.printDealerBlackjackInfo;
 import static blackjack.view.OutputView.printInitialParticipantsCards;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.betting.BettingReferee;
+import blackjack.domain.betting.BettingResults;
 import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
@@ -58,7 +58,7 @@ public class BlackjackController {
         final GameParticipants participants = game.getParticipants();
         final Participant dealer = participants.getDealer();
 
-        final BettingReferee referee = new BettingReferee(dealer, bettings);
-        printBettingResults(referee.getResults());
+        final BettingResults results = new BettingResults(dealer, bettings);
+        printBettingResults(results.getValue());
     }
 }
