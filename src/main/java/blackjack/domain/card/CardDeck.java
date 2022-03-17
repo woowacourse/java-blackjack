@@ -17,7 +17,7 @@ public class CardDeck {
 	}
 
 	private static void createWith(Cards cards, CardSymbol symbol) {
-		for (CardValue value : CardValue.values()) {
+		for (CardNumber value : CardNumber.values()) {
 			cards.addCard(new Card(symbol, value));
 		}
 	}

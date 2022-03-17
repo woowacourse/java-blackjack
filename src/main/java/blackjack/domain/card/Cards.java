@@ -21,7 +21,7 @@ public class Cards {
 
 	public int sum() {
 		int sum = cards.stream()
-			.mapToInt(Card::getValue)
+			.mapToInt(Card::getNumber)
 			.sum();
 		if (hasAce()) {
 			return selectAceValue(sum);
