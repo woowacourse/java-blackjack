@@ -195,7 +195,7 @@ public class PlayerTest {
         }
 
         // when
-        boolean actual = player.isBlackJack();
+        boolean actual = player.isBlackjack();
 
         // then
         assertThat(actual).isEqualTo(expected);

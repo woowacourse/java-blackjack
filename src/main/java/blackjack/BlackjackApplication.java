@@ -17,7 +17,7 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackApplication {
+public class BlackjackApplication {
 
     public static void main(String[] args) {
         CardDeck deck = new CardDeck(CardFactory.createBlackJackCards());
@@ -101,7 +101,7 @@ public class BlackJackApplication {
     }
 
     private static void showStopReason(Player player) {
-        if (player.isBlackJack()) {
+        if (player.isBlackjack()) {
             OutputView.printBlackJackMessage(player.getName());
             return;
         }

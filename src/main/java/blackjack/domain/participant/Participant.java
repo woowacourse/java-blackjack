@@ -41,7 +41,7 @@ public abstract class Participant {
         return cards.isOverScoreThan(BLACKJACK_SCORE);
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return cards.isSameSize(BLACKJACK_COUNT) && cards.isSameScore(BLACKJACK_SCORE);
     }
 

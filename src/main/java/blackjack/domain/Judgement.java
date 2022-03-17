@@ -16,9 +16,8 @@ public enum Judgement {
         this.profitMultiple = profitMultiple;
     }
 
-
     public static Judgement judgePlayer(Player player, Dealer dealer) {
-        if (isPlayerBlackJack(player, dealer)) {
+        if (isPlayerBlackjack(player, dealer)) {
             return BLACKJACK;
         }
         if (isPlayerLose(player, dealer)) {
@@ -30,8 +29,8 @@ public enum Judgement {
         return DRAW;
     }
 
-    private static boolean isPlayerBlackJack(Player player, Dealer dealer) {
-        return player.isBlackJack() && !dealer.isBlackJack();
+    private static boolean isPlayerBlackjack(Player player, Dealer dealer) {
+        return player.isBlackjack() && !dealer.isBlackjack();
     }
 
     private static boolean isPlayerLose(Player player, Dealer dealer) {
