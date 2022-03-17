@@ -7,6 +7,8 @@ import java.util.List;
 
 public abstract class Player {
 
+    public static final int BLACKJACK_NUMBER = 21;
+
     protected final Cards cards;
     private final String name;
 
@@ -23,6 +25,10 @@ public abstract class Player {
         return cards;
     }
 
+    public int getCardSize() {
+        return cards.getEachCard().size();
+    }
+
     public void take(Card card) {
         if (!isHittable()) {
             throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
@@ -32,6 +38,10 @@ public abstract class Player {
 
     public Score score() {
         return cards.bestScore();
+    }
+
+    public boolean isBlackjack() {
+        return score().getValue() == BLACKJACK_NUMBER;
     }
 
     public abstract List<Card> openCards();
