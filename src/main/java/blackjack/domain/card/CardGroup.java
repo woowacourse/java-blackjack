@@ -57,6 +57,10 @@ public class CardGroup {
         }
     }
 
+    public boolean isBlackJack() {
+        return cards.size() == 2 && getScore() == BLACKJACK_NUMBER;
+    }
+
     public int getSize() {
         return cards.size();
     }
