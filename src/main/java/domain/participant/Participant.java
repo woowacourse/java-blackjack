@@ -6,14 +6,13 @@ import domain.card.Card;
 import domain.card.Cards;
 
 import java.util.List;
-import java.util.Map;
 
 public abstract class Participant {
     protected final Cards cards;
     private final String name;
 
-    protected Participant(final HitThreshold canAddCardThreshold, final String name) {
-        this.cards = new Cards(canAddCardThreshold);
+    protected Participant(final HitThreshold hitThreshold, final String name) {
+        this.cards = new Cards(hitThreshold);
         this.name = name;
     }
 
@@ -27,10 +26,6 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return cards.getCards();
-    }
-
-    public Map<String, List<Card>> getNameWithCards() {
-        return Map.of(name, getCards());
     }
 
     public String getName() {
