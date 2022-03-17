@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import static blackjack.domain.card.CardGroup.BLACKJACK_NUMBER;
 
+import blackjack.domain.result.Match;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,16 +20,16 @@ public class Player extends Gamer{
         return players;
     }
 
-    public int compareCardsSumTo(int anotherCardsSum) {
+    public Match compareCardsSumTo(int anotherCardsSum) {
         if (isBust()) {
-            return -1;
+            return Match.WIN;
         }
 
         if (isBust(anotherCardsSum)) {
-            return 1;
+            return Match.LOSE;
         }
 
-        return Integer.compare(getScore(), anotherCardsSum);
+        return Match.of(Integer.compare(getScore(), anotherCardsSum));
     }
 
     private boolean isBust(int sum) {

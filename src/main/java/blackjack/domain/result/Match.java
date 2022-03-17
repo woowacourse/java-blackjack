@@ -1,7 +1,6 @@
 package blackjack.domain.result;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum Match {
     WIN(1, "승"),
@@ -17,10 +16,11 @@ public enum Match {
         this.result = result;
     }
 
-    public static Optional<Match> of(int number) {
+    public static Match of(int number) {
         return Arrays.stream(values())
                 .filter(value -> value.number == number)
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("결과가 존재하지 않습니다."));
     }
 
     public String getResult() {
