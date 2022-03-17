@@ -27,13 +27,19 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printSpreadAnnouncement(List<NameDto> names) {
+    public static void printInitialInfo(List<NameDto> nameDtos, List<CardsDto> cardsDtos) {
+        printSpreadAnnouncement(nameDtos);
+        printInitialOpenCards(cardsDtos);
+        System.out.println();
+    }
+
+    private static void printSpreadAnnouncement(List<NameDto> names) {
         System.out.println();
         NameDto dealerNameDto = getDealerNameByNameDtos(names);
         String gamblerNames = getGamblerNamesByNameDtos(names);
 
-        System.out.printf(INFO_FOR_INITIAL_SPREAD, dealerNameDto.getName(),
-                String.join(GAMBLER_NAME_DELIMITER, gamblerNames));
+        System.out.printf(INFO_FOR_INITIAL_SPREAD,
+                dealerNameDto.getName(), String.join(GAMBLER_NAME_DELIMITER, gamblerNames));
     }
 
     private static NameDto getDealerNameByNameDtos(List<NameDto> names) {
@@ -50,25 +56,24 @@ public class OutputView {
                 .collect(joining(GAMBLER_NAME_DELIMITER));
     }
 
-    public static void printInitialOpenCards(List<CardsDto> cardsDtos) {
-        cardsDtos.forEach(
-                cardsDto -> System.out.printf(
-                        INFO_CARD_STATUS_AFTER_INITIAL_SPREAD,
-                        cardsDto.getName(), getJoinedCardNames(cardsDto.getCards())
-                ));
+    private static void printInitialOpenCards(List<CardsDto> cardsDtos) {
+        for (CardsDto cardsDto : cardsDtos) {
+            System.out.printf(INFO_CARD_STATUS_AFTER_INITIAL_SPREAD,
+                    cardsDto.getName(), getJoinedCardNames(cardsDto.getCards()));
+        }
     }
 
     private static String getJoinedCardNames(List<String> cardNames) {
         return String.join(CARD_NAME_JOIN_CHARACTER, cardNames);
     }
 
-    public static void printLineSeparator() {
-        System.out.println();
-    }
-
     public static void printCards(CardsDto playerDto) {
         System.out.println(
                 playerDto.getName() + COLON_FOR_NAME_AND_REVENUE + getJoinedCardNames(playerDto.getCards()));
+    }
+
+    public static void breakLine(String lineSeparator) {
+        System.out.print(lineSeparator);
     }
 
     public static void printDealerAddCard(String dealerName) {

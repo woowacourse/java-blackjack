@@ -33,11 +33,6 @@ public class InputView {
                 .collect(toList());
     }
 
-    private static int scanBattingMoney(String name) {
-        System.out.printf(INPUT_BATTING_MONEY, NEWLINE, name);
-        return Integer.parseInt(SCANNER.nextLine());
-    }
-
     private static List<String> scanRawPlayerNames() {
         return Arrays.stream(SCANNER.nextLine()
                         .split(COMMA_DELIMITER, IGNORE_EMPTY_INPUT))
@@ -45,7 +40,12 @@ public class InputView {
                 .collect(toList());
     }
 
-    public static void validateDuplicateNames(List<String> names) {
+    private static int scanBattingMoney(String name) {
+        System.out.printf(INPUT_BATTING_MONEY, NEWLINE, name);
+        return Integer.parseInt(SCANNER.nextLine());
+    }
+
+    private static void validateDuplicateNames(List<String> names) {
         boolean isDuplicate = names.size() != names.stream()
                 .distinct()
                 .count();
