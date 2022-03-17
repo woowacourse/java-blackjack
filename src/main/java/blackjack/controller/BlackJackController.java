@@ -24,18 +24,39 @@ public class BlackJackController {
     }
 
     private void initialize() {
-        playerGroup = initializePlayerGroup();
-        blackJack = new BlackJack(playerGroup);
-        blackJack.divideCards();
+        initializePlayerGroup();
+        addInputMoney();
+        initializeBlackJack();
         OutputView.printGamersCards(GamerCardsDto.of(blackJack.getGamers()));
     }
 
-    private PlayerGroup initializePlayerGroup() {
+    private void initializeBlackJack() {
+        blackJack = new BlackJack(playerGroup);
+        blackJack.divideCards();
+    }
+
+    private void addInputMoney() {
         try {
-            return new PlayerGroup(Player.of(InputView.requestPlayerNames()));
+            requestAndAddInputMoney();
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
-            return initializePlayerGroup();
+            addInputMoney();
+        }
+    }
+
+    private void requestAndAddInputMoney() {
+        List<Player> players = playerGroup.getPlayers();
+        for (Player player : players) {
+            player.addMoney(InputView.requestInputMoney(player.getName()));
+        }
+    }
+
+    private void initializePlayerGroup() {
+        try {
+            playerGroup =  new PlayerGroup(Player.of(InputView.requestPlayerNames()));
+        } catch (IllegalArgumentException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            initializePlayerGroup();
         }
     }
 

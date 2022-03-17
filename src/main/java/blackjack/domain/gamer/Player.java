@@ -3,6 +3,7 @@ package blackjack.domain.gamer;
 import java.util.ArrayList;
 import java.util.List;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 
@@ -14,10 +15,12 @@ public class Player{
 
     private final CardGroup cardGroup = new CardGroup();
     private final String name;
+    private final Money betMoney;
 
     public Player(String name) {
         validateName(name);
         this.name = name;
+        this.betMoney = new Money(0);
     }
 
     public static List<Player> of(List<String> playerNames) {
@@ -94,5 +97,9 @@ public class Player{
 
     public int getCardsSize() {
         return cardGroup.getSize();
+    }
+
+    public void addMoney(int amount) {
+        betMoney.add(amount);
     }
 }
