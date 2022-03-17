@@ -36,15 +36,31 @@ public enum Result {
             return true;
         }
 
-        return !dealer.isBlackjack() && !participant.isBlackjack() && dealer.calculateFinalScore() == participant.calculateFinalScore();
+        return bothNotBust(dealer, participant) && bothNotBlackjack(dealer, participant) && isScoreSame(dealer, participant);
+    }
+
+    private static boolean bothNotBust(Player dealer, Player participant) {
+        return !dealer.isBust() && !participant.isBust();
+    }
+
+    private static boolean bothNotBlackjack(Player dealer, Player participant) {
+        return !dealer.isBlackjack() && !participant.isBlackjack();
+    }
+
+    private static boolean isScoreSame(Player dealer, Player participant) {
+        return dealer.calculateFinalScore() == participant.calculateFinalScore();
     }
 
     private static boolean compete(final Player dealer, final Player participant) {
+        if (participant.isBlackjack()) {
+            return true;
+        }
+
         return isParticipantWin(dealer.calculateFinalScore(), participant.calculateFinalScore());
     }
 
     private static boolean isParticipantWin(int dealerScore, int participantScore) {
-        return dealerScore > MAX_SCORE || (participantScore <= MAX_SCORE && participantScore >= dealerScore);
+        return participantScore <= MAX_SCORE && participantScore > dealerScore;
     }
 
     public boolean isWin() {
@@ -53,9 +69,5 @@ public enum Result {
 
     public boolean isLose() {
         return this == LOSE;
-    }
-
-    public boolean isDraw() {
-        return this == DRAW;
     }
 }

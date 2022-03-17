@@ -57,6 +57,10 @@ public class Cards {
         return cards.size() == BLACKJACK_SIZE && calculateEndScore() == Result.MAX_SCORE;
     }
 
+    public boolean isBust() {
+        return calculateEndScore() > Result.MAX_SCORE;
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

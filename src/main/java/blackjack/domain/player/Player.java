@@ -40,6 +40,10 @@ public abstract class Player {
         return cards.isBlackjack();
     }
 
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public List<Card> getCards() {
         return this.cards.getCards();
     }
