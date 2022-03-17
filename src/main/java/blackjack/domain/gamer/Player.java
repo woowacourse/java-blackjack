@@ -9,7 +9,7 @@ public class Player extends Gamer {
 	}
 
 	public Player(Name name) {
-		super(new Cards(), name);
+		this(new Cards(), name);
 	}
 
 	@Override
