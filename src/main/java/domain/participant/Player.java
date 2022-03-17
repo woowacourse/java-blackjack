@@ -15,7 +15,7 @@ public final class Player extends Participant {
         if (isBlackJack() && !dealer.isBlackJack()) {
             return Result.BLACKJACK;
         }
-        if (isBust()) {
+        if (!isBlackJack() && dealer.isBlackJack() || isBust()) {
             return Result.LOSE;
         }
 
