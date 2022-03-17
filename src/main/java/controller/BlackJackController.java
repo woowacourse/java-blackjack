@@ -74,7 +74,8 @@ public final class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        List<Integer> cal = players.calculateIncomes(dealer);
-        outputView.showResult(dealer.getName(), dealer.calculateIncome(cal), players.toNames(), cal);
+        List<Integer> playerIncomes = players.calculateIncomes(dealer);
+        outputView.showResult(dealer.getName(), dealer.calculateIncome(playerIncomes),
+            players.toNames(), playerIncomes);
     }
 }
