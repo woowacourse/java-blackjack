@@ -39,7 +39,7 @@ public class BlackjackGame {
         printParticipantsFirstCards();
         runPlayerTurn();
         runDealerTurn();
-        printAllResults();
+        printAllParticipantCards();
         printAllProfits();
     }
 
@@ -79,10 +79,6 @@ public class BlackjackGame {
         dealer.hit(cardDeck.provideCard());
         OutputView.printDealerHit();
         runDealerTurn();
-    }
-
-    private void printAllResults() {
-        printAllParticipantCards();
     }
 
     private void printAllParticipantCards() {
