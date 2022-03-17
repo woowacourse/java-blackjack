@@ -19,7 +19,7 @@ public final class Deck {
         return new Deck(cards);
     }
 
-    public List<Card> handOutCards() {
+    public List<Card> handOutInitialTwoCards() {
         return Arrays.asList(handOut(), handOut());
     }
 
