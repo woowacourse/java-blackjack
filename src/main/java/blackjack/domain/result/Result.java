@@ -1,16 +1,16 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Cards;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.function.BiPredicate;
 
 public enum Result {
 
+    BLACKJACK_WIN("승", (dealer, participant) ->
+            participant.isBlackJack() && !dealer.isBlackJack()
+    ),
     WIN("승", (dealer, participant) ->
             (dealer.getTotal() < participant.getTotal() && !participant.isBust())
-                    || (dealer.isBust() && !participant.isBust())
-                    || !dealer.isBlackJack() && participant.isBlackJack()),
+                    || (dealer.isBust() && !participant.isBust())),
 
     DRAW("무승부", (dealer, participant) ->
             (!dealer.isBlackJack() && (dealer.getTotal() == participant.getTotal()) && !participant.isBust())

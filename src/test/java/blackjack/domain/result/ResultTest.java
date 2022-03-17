@@ -38,8 +38,11 @@ public class ResultTest {
 
     static Stream<Arguments> parameters1() {
         return Stream.of(
-                Arguments.of(Result.WIN, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
+                Arguments.of(Result.BLACKJACK_WIN, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
                         new Card(Denomination.ACE, Suit.DIAMOND))),
+                Arguments.of(Result.WIN, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
+                        new Card(Denomination.THREE, Suit.DIAMOND),
+                        new Card(Denomination.EIGHT, Suit.DIAMOND))),
                 Arguments.of(Result.LOSE, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
                         new Card(Denomination.NINE, Suit.DIAMOND))),
                 Arguments.of(Result.DRAW, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
@@ -70,7 +73,7 @@ public class ResultTest {
 
     static Stream<Arguments> parameters2() {
         return Stream.of(
-                Arguments.of(Result.WIN, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
+                Arguments.of(Result.BLACKJACK_WIN, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
                         new Card(Denomination.ACE, Suit.DIAMOND))),
                 Arguments.of(Result.DRAW, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
                         new Card(Denomination.FIVE, Suit.DIAMOND),
@@ -105,6 +108,8 @@ public class ResultTest {
 
     static Stream<Arguments> parameters3() {
         return Stream.of(
+                Arguments.of(Result.BLACKJACK_WIN, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
+                        new Card(Denomination.ACE, Suit.DIAMOND))),
                 Arguments.of(Result.WIN, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
                         new Card(Denomination.KING, Suit.DIAMOND))),
                 Arguments.of(Result.LOSE, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
@@ -144,6 +149,39 @@ public class ResultTest {
                         new Card(Denomination.NINE, Suit.DIAMOND))),
                 Arguments.of(Result.LOSE, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
                         new Card(Denomination.KING, Suit.DIAMOND)))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("parameters5")
+    @DisplayName("참가자가 블랙잭일 때 승패를 결정한다.")
+    void getResultWhenParticipantBlackJack(Result result, List<Card> cards) {
+        Participant participant = new Participant("배카라");
+
+        participant.addCard(new Card(Denomination.ACE, Suit.DIAMOND));
+        participant.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
+
+        Dealer dealer = new Dealer();
+        for (Card card : cards) {
+            dealer.addCard(card);
+        }
+
+        Score dealerScore = new Score(dealer);
+        Score participantScore = new Score(participant);
+
+        assertThat(Result.decide(dealerScore, participantScore)).isEqualTo(result);
+    }
+
+    static Stream<Arguments> parameters5() {
+        return Stream.of(
+                Arguments.of(Result.DRAW, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
+                        new Card(Denomination.ACE, Suit.DIAMOND))),
+                Arguments.of(Result.BLACKJACK_WIN, List.of(new Card(Denomination.TEN, Suit.DIAMOND),
+                        new Card(Denomination.FIVE, Suit.DIAMOND),
+                        new Card(Denomination.SIX, Suit.DIAMOND))),
+                Arguments.of(Result.BLACKJACK_WIN, List.of(new Card(Denomination.FOUR, Suit.DIAMOND),
+                        new Card(Denomination.FIVE, Suit.DIAMOND),
+                        new Card(Denomination.SIX, Suit.DIAMOND)))
         );
     }
 }
