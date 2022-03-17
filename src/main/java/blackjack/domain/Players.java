@@ -55,16 +55,11 @@ public class Players {
         }
     }
 
-    public Winner win(final Dealer dealer) {
-        Winner winner = new Winner();
+    public GameResult determine(GameResult gameResult, Dealer dealer) {
         for (Player player : players) {
-            winner.decide(dealer, player);
+            gameResult.determine(dealer, player);
         }
-        return winner;
-    }
-
-    public int countLoser(int countWinner) {
-        return players.size() - countWinner;
+        return gameResult;
     }
 
     public List<String> getNames() {

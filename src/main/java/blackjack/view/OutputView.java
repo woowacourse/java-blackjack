@@ -12,11 +12,9 @@ public class OutputView {
     private static final String TAKE_CARD_INSTRUCTION = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
     private static final String DRAW_DEALER_CARD_MESSAGE = "%s는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_FORMAT = " - 결과: %d";
-    private static final String WINNER_TITLE = "## 최종 승패";
-    private static final String DEALER_SCORE_FORMAT = "%s: %d%s %d%s";
-    private static final String PLAYER_SCORE_FORMAT = "%s: %s";
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
+    private static final String PROFIT_TITLE = "## 최종 수익";
+    private static final String PROFIT_FORMAT = "%s: %d";
+    public static final String BETTING_PRICE_INSTRUCTION = "%s의 배팅 금액은?";
 
     private OutputView() {
     }
@@ -31,6 +29,12 @@ public class OutputView {
 
     public static void printPlayerNameInstruction() {
         System.out.println(PLAYER_NAME_MESSAGE);
+    }
+
+    public static void printBettingInstruction(final String playerName) {
+        printNewLine();
+        System.out.printf(BETTING_PRICE_INSTRUCTION, playerName);
+        printNewLine();
     }
 
     public static void printDealCardMessage(final String dealerName, final List<String> playerNames) {
@@ -55,24 +59,12 @@ public class OutputView {
         System.out.printf(RESULT_FORMAT, total);
     }
 
-    public static void printWinnerTitle() {
-        System.out.println(WINNER_TITLE);
+    public static void printProfitTitle() {
+        System.out.println(PROFIT_TITLE);
     }
 
-    public static void printDealerScore(final String name, final int losePlayersCount, final int winPlayersCount) {
-        System.out.printf(DEALER_SCORE_FORMAT, name, losePlayersCount, WIN, winPlayersCount, LOSE);
+    public static void printProfit(final String name, final int profit) {
+        System.out.printf(PROFIT_FORMAT, name, profit);
         printNewLine();
-    }
-
-    public static void printPlayerScore(final String name, final boolean result) {
-        System.out.printf(PLAYER_SCORE_FORMAT, name, getResult(result));
-        printNewLine();
-    }
-
-    private static String getResult(final boolean result) {
-        if (result) {
-            return WIN;
-        }
-        return LOSE;
     }
 }

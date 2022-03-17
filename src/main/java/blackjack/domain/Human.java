@@ -19,19 +19,19 @@ public abstract class Human {
         cards.add(card);
     }
 
-    public boolean isBust() {
-        return cards.isOverBlackjack();
-    }
-
-    boolean isBlackjack() {
-        return cards.isBlackjack();
-    }
-
     public boolean isWinner(final Human human) {
         if (human.isSameTotal(getTotal())) {
             return isBlackjack();
         }
         return human.isBust() || human.hasTotalLowerThan(getTotal());
+    }
+
+    private boolean isBust() {
+        return cards.isOverBlackjack();
+    }
+
+    boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 
     boolean isSameTotal(final int total) {

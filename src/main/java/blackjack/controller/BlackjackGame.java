@@ -6,17 +6,13 @@ import blackjack.view.OutputView;
 
 public class BlackjackGame {
 
-    public Players play(final Dealer dealer) {
+    public void run() {
         Players players = createPlayers();
         CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer();
+        Betting betting = new Betting();
 
-        dealInitCards(cardDeck, dealer, players);
-        openInitCards(dealer, players);
-
-        drawPlayers(players, cardDeck);
-        drawDealer(dealer, cardDeck);
-
-        return players;
+        play(players, cardDeck, dealer, betting);
     }
 
     private Players createPlayers() {
@@ -29,13 +25,26 @@ public class BlackjackGame {
         }
     }
 
+    private void play(Players players, CardDeck cardDeck, Dealer dealer, Betting betting) {
+        dealInitCards(cardDeck, dealer, players);
+        Bank bank = betting.play(players);
+        openInitCards(dealer, players);
+
+        drawPlayers(players, cardDeck);
+        drawDealer(dealer, cardDeck);
+
+        Result result = new Result();
+        result.openResult(players, dealer);
+        result.openProfits(bank, dealer, players);
+    }
+
     private void dealInitCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
-        OutputView.printDealCardMessage(dealer.getName(), players.getNames());
         dealer.dealInit(cardDeck.dealInit());
         players.dealInit(cardDeck);
     }
 
     private void openInitCards(final Dealer dealer, final Players players) {
+        OutputView.printDealCardMessage(dealer.getName(), players.getNames());
         OutputView.printCard(dealer.getName(), dealer.getInitCard());
         OutputView.printNewLine();
         for (Player player : players.getPlayers()) {

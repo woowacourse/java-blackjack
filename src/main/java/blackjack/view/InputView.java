@@ -13,6 +13,10 @@ public class InputView {
         return userInput();
     }
 
+    public static String inputBettingMoney() {
+        return userInput();
+    }
+
     public static String inputTakeCardAnswer() {
         return userInput();
     }
