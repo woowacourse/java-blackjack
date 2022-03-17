@@ -6,7 +6,7 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
 import blackJack.domain.result.BlackJackGameResult;
-import blackJack.domain.result.WinDrawLose;
+import blackJack.domain.result.BlackJackMatch;
 import blackJack.domain.result.YesOrNo;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
@@ -101,9 +101,9 @@ public class BlackJackController {
     private void createBlackJackGameResult(List<Player> players, Dealer dealer) {
         final BlackJackGameResult blackJackGameResult = new BlackJackGameResult(dealer, players);
         final Map<String, Integer> dealerResult = blackJackGameResult.calculateDealerResult();
-        final Map<Player, WinDrawLose> playersResult = blackJackGameResult.calculatePlayersResult();
+        final Map<Player, BlackJackMatch> playersResult = blackJackGameResult.calculatePlayersResult();
         OutputView.printGameResult(dealer, players);
-        OutputView.printWinDrawLoseResult(dealer, dealerResult, playersResult);
+        OutputView.printMatchResult(dealer, dealerResult, playersResult);
         OutputView.printProfitResult(dealer, blackJackGameResult.calculateDealerProfit(), playersResult);
     }
 }

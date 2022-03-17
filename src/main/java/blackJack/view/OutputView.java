@@ -5,7 +5,7 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.WinDrawLose;
+import blackJack.domain.result.BlackJackMatch;
 
 import java.util.List;
 import java.util.Map;
@@ -25,8 +25,8 @@ public class OutputView {
             NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
             "%s 카드: %s - 결과: %d".concat(NEWLINE);
-    private static final String OUTPUT_MESSAGE_WIN_OR_LOSE = "## 최종 승패";
-    private static final String OUTPUT_MESSAGE_WIN_OR_LOSE_INFO = "%s: %s".concat(NEWLINE);
+    private static final String OUTPUT_MESSAGE_MATCH = "## 최종 승패";
+    private static final String OUTPUT_MESSAGE_MATCH_INFO = "%s: %s".concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PROFIT = NEWLINE.concat("## 최종 수익");
     private static final String OUTPUT_MESSAGE_PROFIT_RESULT = "%s: %.0f".concat(NEWLINE);
 
@@ -88,24 +88,24 @@ public class OutputView {
                 participant.getScore());
     }
 
-    public static void printWinDrawLoseResult(Dealer dealer, Map<String, Integer> dealerResult, Map<Player, WinDrawLose> playersResult) {
-        System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_WIN_OR_LOSE));
+    public static void printMatchResult(Dealer dealer, Map<String, Integer> dealerResult, Map<Player, BlackJackMatch> playersResult) {
+        System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_MATCH));
         String dealerGameResult = getDealerGameResult(dealerResult);
 
-        System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), dealerGameResult);
+        System.out.printf(OUTPUT_MESSAGE_MATCH_INFO, dealer.getName(), dealerGameResult);
         playersResult.forEach((key, value) -> System.out.printf(
-                OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, key.getName(), value.getResult()));
+                OUTPUT_MESSAGE_MATCH_INFO, key.getName(), value.getResult()));
     }
 
-    private static String getDealerGameResult(Map<String, Integer> winDrawLoseInfo) {
-        List<String> winDrawLoseEssentialInfo = winDrawLoseInfo.entrySet().stream()
+    private static String getDealerGameResult(Map<String, Integer> matchInfo) {
+        List<String> matchEssentialInfo = matchInfo.entrySet().stream()
                 .filter(resultCount -> resultCount.getValue() > 0)
                 .map(resultCount -> resultCount.getValue() + resultCount.getKey())
                 .collect(Collectors.toUnmodifiableList());
-        return String.join(JOINING_DELIMITER_SPACE, winDrawLoseEssentialInfo);
+        return String.join(JOINING_DELIMITER_SPACE, matchEssentialInfo);
     }
 
-    public static void printProfitResult(Dealer dealer, double dealerProfit, Map<Player, WinDrawLose> playersResult) {
+    public static void printProfitResult(Dealer dealer, double dealerProfit, Map<Player, BlackJackMatch> playersResult) {
         System.out.println(OUTPUT_MESSAGE_PROFIT);
         System.out.printf(OUTPUT_MESSAGE_PROFIT_RESULT, dealer.getName(), dealerProfit);
         for (Player player : playersResult.keySet()) {

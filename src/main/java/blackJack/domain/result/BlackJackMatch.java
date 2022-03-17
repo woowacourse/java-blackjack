@@ -3,7 +3,7 @@ package blackJack.domain.result;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
 
-public enum WinDrawLose {
+public enum BlackJackMatch {
 
     WIN_BLACKJACK("승", 1.5),
     WIN("승", 1),
@@ -14,32 +14,32 @@ public enum WinDrawLose {
     private final String result;
     private final double profitRatio;
 
-    WinDrawLose(String result, double profitRatio) {
+    BlackJackMatch(String result, double profitRatio) {
         this.result = result;
         this.profitRatio = profitRatio;
     }
 
     public static double calculateProfitRatio(Player player, Dealer dealer) {
-        final WinDrawLose resultByBust = getWinLoseByBust(player, dealer);
+        final BlackJackMatch resultByBust = getWinLoseByBust(player, dealer);
         if (resultByBust != null) return resultByBust.profitRatio;
 
-        final WinDrawLose resultByBlackJack = getWinDrawByBlackJack(player, dealer);
+        final BlackJackMatch resultByBlackJack = getWinDrawByBlackJack(player, dealer);
         if (resultByBlackJack != null) return resultByBlackJack.profitRatio;
 
         return getWinDrawLoseByScore(player, dealer).profitRatio;
     }
 
-    public static WinDrawLose calculateWinDrawLose(Player player, Dealer dealer) {
-        final WinDrawLose resultByBust = getWinLoseByBust(player, dealer);
+    public static BlackJackMatch calculateMatch(Player player, Dealer dealer) {
+        final BlackJackMatch resultByBust = getWinLoseByBust(player, dealer);
         if (resultByBust != null) return resultByBust;
 
-        final WinDrawLose resultByBlackJack = getWinDrawByBlackJack(player, dealer);
+        final BlackJackMatch resultByBlackJack = getWinDrawByBlackJack(player, dealer);
         if (resultByBlackJack != null) return resultByBlackJack;
 
         return getWinDrawLoseByScore(player, dealer);
     }
 
-    private static WinDrawLose getWinLoseByBust(Player player, Dealer dealer) {
+    private static BlackJackMatch getWinLoseByBust(Player player, Dealer dealer) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -49,7 +49,7 @@ public enum WinDrawLose {
         return null;
     }
 
-    private static WinDrawLose getWinDrawByBlackJack(Player player, Dealer dealer) {
+    private static BlackJackMatch getWinDrawByBlackJack(Player player, Dealer dealer) {
         if (getWinByBlackJack(player, dealer)) {
             return WIN_BLACKJACK;
         }
@@ -74,7 +74,7 @@ public enum WinDrawLose {
         return !player.isBlackJack() && dealer.isBlackJack();
     }
 
-    private static WinDrawLose getWinDrawLoseByScore(Player player, Dealer dealer) {
+    private static BlackJackMatch getWinDrawLoseByScore(Player player, Dealer dealer) {
         if (player.getScore() > dealer.getScore()) {
             return WIN;
         }
@@ -84,8 +84,8 @@ public enum WinDrawLose {
         return LOSE;
     }
 
-    public static WinDrawLose swapResult(WinDrawLose result) {
-        WinDrawLose swapBlackJackResult = swapResultBlackJack(result);
+    public static BlackJackMatch swapResult(BlackJackMatch result) {
+        BlackJackMatch swapBlackJackResult = swapResultBlackJack(result);
         if (swapBlackJackResult != null) return swapBlackJackResult;
 
         if (result == WIN) {
@@ -97,7 +97,7 @@ public enum WinDrawLose {
         return DRAW;
     }
 
-    private static WinDrawLose swapResultBlackJack(WinDrawLose result) {
+    private static BlackJackMatch swapResultBlackJack(BlackJackMatch result) {
         if (result == WIN_BLACKJACK) {
             return LOSE_BLACK_JACK;
         }

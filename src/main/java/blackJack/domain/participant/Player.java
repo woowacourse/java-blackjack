@@ -1,7 +1,7 @@
 package blackJack.domain.participant;
 
 import blackJack.domain.card.Card;
-import blackJack.domain.result.WinDrawLose;
+import blackJack.domain.result.BlackJackMatch;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -46,7 +46,7 @@ public class Player extends Participant {
     }
 
     public double calculateProfit(Dealer dealer) {
-        return WinDrawLose.calculateWinDrawLose(this, dealer).getProfitRatio() * money;
+        return BlackJackMatch.calculateMatch(this, dealer).getProfitRatio() * money;
     }
 
     @Override

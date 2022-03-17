@@ -88,12 +88,12 @@ class BlackJackGameResultTest {
         player2.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
         player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
 
-        final Map<Player, WinDrawLose> playersResult = blackJackGameResult.calculatePlayersResult();
+        final Map<Player, BlackJackMatch> playersResult = blackJackGameResult.calculatePlayersResult();
 
         assertThat(playersResult).contains(
-                Map.entry(player1, WinDrawLose.LOSE),
-                Map.entry(player2, WinDrawLose.WIN),
-                Map.entry(player3, WinDrawLose.WIN)
+                Map.entry(player1, BlackJackMatch.LOSE),
+                Map.entry(player2, BlackJackMatch.WIN),
+                Map.entry(player3, BlackJackMatch.WIN)
         );
     }
 
