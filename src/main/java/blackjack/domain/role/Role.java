@@ -1,31 +1,26 @@
 package blackjack.domain.role;
 
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 import blackjack.domain.BattingAmount;
+import blackjack.domain.BlackJack;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 
 public abstract class Role {
 
-	private static final int COMPETE_COUNT = 1;
-
 	protected final String name;
 	protected final Hand hand;
 
 	private boolean drawMore;
 	private BattingAmount battingAmount;
-	private final Map<Outcome, Integer> competeResult;
 
 	public Role(final String name, final Hand hand, final BattingAmount battingAmount) {
 		this.name = name;
 		this.hand = hand;
 		this.battingAmount = battingAmount;
 		this.drawMore = true;
-		this.competeResult = new EnumMap<Outcome, Integer>(Outcome.class);
 	}
 
 	public void draw(final Deck deck, final int theNumberOfCars) {
@@ -34,8 +29,34 @@ public abstract class Role {
 		}
 	}
 
-	public void recordCompeteResult(final Outcome outcome) {
-		competeResult.merge(outcome, COMPETE_COUNT, Integer::sum);
+	public void distributeBettingAmount(final Outcome outcome) {
+		if (winWithoutBlackJack(outcome)) {
+			battingAmount.giveTwoTimes();
+		}
+	}
+
+	private boolean winWithoutBlackJack(final Outcome outcome) {
+		return outcome == Outcome.VICTORY && !hand.isBlackJack();
+	}
+
+	public void recordCompeteResult(final Outcome outcome, final Role player) {
+		if (outcome == Outcome.VICTORY) {
+			final int finalIncome = battingAmount.getFinalValue() + player.getCurrentIncome();
+			battingAmount = new BattingAmount(finalIncome, battingAmount.getInitialValue());
+			player.loseAll();
+		}
+	}
+
+	private void loseAll() {
+		battingAmount.loseAll();
+	}
+
+	private int getCurrentIncome() {
+		return battingAmount.getFinalValue();
+	}
+
+	public int getIncome() {
+		return battingAmount.calculateIncome();
 	}
 
 	public int calculateFinalScore() {
@@ -47,6 +68,9 @@ public abstract class Role {
 	public abstract int getDrawStandard();
 
 	public void earnAmountByBlackJack() {
+		if (calculateFinalScore() != BlackJack.OPTIMIZED_WINNING_NUMBER) {
+			return;
+		}
 		battingAmount.giveOneAndHalfTime();
 	}
 
@@ -64,10 +88,6 @@ public abstract class Role {
 
 	public Hand getHand() {
 		return new Hand(hand.getCards());
-	}
-
-	public Map<Outcome, Integer> getCompeteResult() {
-		return competeResult;
 	}
 
 	public List<String> getCardsInformation() {

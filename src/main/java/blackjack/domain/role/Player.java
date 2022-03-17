@@ -13,6 +13,9 @@ public class Player extends Role {
 	@Override
 	public boolean canDraw() {
 		final int score = hand.calculateOptimalScore();
+		if (hand.isBlackJack()) {
+			return false;
+		}
 		return BlackJack.BUST < score && score <= BlackJack.OPTIMIZED_WINNING_NUMBER;
 	}
 

@@ -33,7 +33,7 @@ class PlayerTest {
 			CardMockFactory.of("J클로버"));
 
 		return Stream.of(
-			Arguments.of(hand1, true),
+			Arguments.of(hand1, false),
 			Arguments.of(hand2, false),
 			Arguments.of(hand3, true)
 		);

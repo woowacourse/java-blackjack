@@ -18,7 +18,7 @@ public class OutputView {
 	private static final String DISTRIBUTED_TWO_CARDS = "에게 2장의 카드를 나누었습니다.";
 	private static final String ROLE_NAME_INFORMATION_DISTRIBUTOR = ": ";
 	private static final String RESULT = " - 결과: ";
-	private static final String FINAL_OUTCOME = "## 최종 승패";
+	private static final String FINAL_OUTCOME = "## 최종 수익";
 	private static final String CARD = "카드";
 	private static final String RECEIVED_ONE_MORE_CARD = "이하라 한장의 카드를 더 받았습니다.";
 	private static final String FAIL_TO_RECEIVE_ONE_MORE_CARD = "이상이라 카드를 더 받지 않았습니다.";
@@ -86,18 +86,13 @@ public class OutputView {
 
 	private static void printDealerOutcome(final Role dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		final String dealerOutcome = dealerResult.getCompeteResult()
-			.entrySet()
-			.stream()
-			.map(entry -> EMPTY + entry.getValue() + entry.getKey().getValue())
-			.collect(Collectors.joining(SPACE));
-		System.out.println(dealerOutcome);
+		System.out.println(dealerResult.getIncome());
 	}
 
 	private static void printPlayerOutcome(final List<Role> playersResult) {
 		for (Role playerResult : playersResult) {
 			System.out.print(playerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-			System.out.println(getValue(playerResult.getCompeteResult()));
+			System.out.println(playerResult.getIncome());
 		}
 	}
 

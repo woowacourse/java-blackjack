@@ -75,10 +75,9 @@ public class Roles {
 		if (dealer.calculateFinalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER) {
 			return;
 		}
-		players = players.stream()
-			.filter(player -> player.calculateFinalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER)
-			.peek(Role::earnAmountByBlackJack)
-			.collect(Collectors.toList());
+		for (Role player : players) {
+			player.earnAmountByBlackJack();
+		}
 	}
 
 	public String getCurrentPlayerName() {
@@ -92,7 +91,7 @@ public class Roles {
 	public List<Role> calculatePlayerResult() {
 		for (Role player : players) {
 			final Outcome outcome = judge(player);
-			player.recordCompeteResult(outcome);
+			player.distributeBettingAmount(outcome);
 		}
 		return players;
 	}
@@ -100,7 +99,7 @@ public class Roles {
 	public Role calculateDealerResult() {
 		for (Role player : players) {
 			final Outcome outcome = judge(player);
-			dealer.recordCompeteResult(outcome.getCounterpartRoleOutcome());
+			dealer.recordCompeteResult(outcome.getCounterpartRoleOutcome(), player);
 		}
 		return dealer;
 	}

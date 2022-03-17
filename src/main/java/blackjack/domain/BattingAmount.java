@@ -28,6 +28,10 @@ public class BattingAmount {
 		finalValue = finalValue + finalValue / 2;
 	}
 
+	public void giveTwoTimes() {
+		finalValue *= 2;
+	}
+
 	public void loseAll() {
 		finalValue = 0;
 	}

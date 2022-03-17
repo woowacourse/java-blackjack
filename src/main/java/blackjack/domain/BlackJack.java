@@ -46,12 +46,12 @@ public class BlackJack {
 
 	private void redrawCard() {
 		String currentPlayer = roles.getCurrentPlayerName();
-		do {
+		while (!hasMorePlayer(currentPlayer)) {
 			final String answer = InputView.drawOneMoreCard(currentPlayer);
 			final Role playerStatus = roles.drawPlayer(deck, RedrawChoice.of(answer), currentPlayer);
 			OutputView.printPersonalHand(playerStatus);
 			currentPlayer = roles.getCurrentPlayerName();
-		} while (!hasMorePlayer(currentPlayer));
+		}
 		OutputView.printDealerStatus(roles.drawDealer(deck));
 	}
 

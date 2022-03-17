@@ -9,6 +9,7 @@ import blackjack.domain.BlackJack;
 public class Hand {
 
 	private static final int ACE_AS_ELEVEN = 10;
+	private static final int theNumberOfInitialCard = 2;
 
 	private final List<Card> cards;
 
@@ -70,5 +71,10 @@ public class Hand {
 		return cards.stream()
 			.map(Card::getInformation)
 			.collect(Collectors.toList());
+	}
+
+	public boolean isBlackJack() {
+		return calculateOptimalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER
+			&& cards.size() == theNumberOfInitialCard;
 	}
 }
