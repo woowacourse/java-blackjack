@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Queue;
 
 public class CardDeck {
-    public final Queue<Card> cardDeck = new LinkedList<>();
+    public final Queue<Card> cardDeck;
 
     public CardDeck(CardGenerator cardGenerator) {
-        List<Card> cards = cardGenerator.generate();
-        cardDeck.addAll(cards);
+        cardDeck = new LinkedList<>(cardGenerator.generate());
     }
 
     public Card drawCard() {
