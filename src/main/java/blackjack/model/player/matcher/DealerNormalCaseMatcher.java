@@ -16,10 +16,10 @@ final class DealerNormalCaseMatcher extends Matcher {
         } else if (gamer.isBlackjack()) {
             return Result.blackjack(gamer.bettingMoney());
         }
-        return compare(dealer, gamer);
+        return compareWithScore(dealer, gamer);
     }
 
-    private Result compare(Dealer dealer, Gamer gamer) {
+    private Result compareWithScore(Dealer dealer, Gamer gamer) {
         if (gamer.lessScoreThan(dealer)) {
             return Result.loss(gamer.bettingMoney());
         } else if (gamer.moreScoreThan(dealer)) {
