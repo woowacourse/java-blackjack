@@ -85,7 +85,7 @@ public class Blackjack {
     }
 
     private void announcePlayersProfit(final Players players) {
-        ProfitCalculator.calculateParticipantProfit(players);
+        ProfitCalculator.calculateParticipantsProfit(players);
         int profit = ProfitCalculator.calculateDealerProfit(players.getParticipants());
         OutputView.printGameResult(players.getParticipants(), profit);
     }

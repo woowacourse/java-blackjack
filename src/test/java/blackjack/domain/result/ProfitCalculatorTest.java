@@ -35,7 +35,7 @@ public class ProfitCalculatorTest {
         dealer.addCard(new Card(Type.DIAMOND, Score.KING));
 
         Players players = new Players(List.of(zero, corinne), dealer);
-        ProfitCalculator.calculateParticipantProfit(players);
+        ProfitCalculator.calculateParticipantsProfit(players);
 
         assertThat(ProfitCalculator.calculateDealerProfit(players.getParticipants())).isEqualTo(30000);
     }

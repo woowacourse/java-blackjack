@@ -8,11 +8,17 @@ import java.util.List;
 
 public class ProfitCalculator {
 
-    public static void calculateParticipantProfit(final Players players) {
+    public static void calculateParticipantsProfit(final Players players) {
         for (Player participant : players.getParticipants()) {
             Result participantResult = Result.competeResult(players.getDealer(), participant);
             calculateParticipantProfit(participant, participantResult);
         }
+    }
+
+    private static void calculateParticipantProfit(final Player player, final Result result) {
+        validateParticipant(player);
+        Participant participant = (Participant) player;
+        calculate(participant, result);
     }
 
     public static int calculateDealerProfit(List<Player> participants) {
@@ -21,12 +27,6 @@ public class ProfitCalculator {
             profit += calculateDealerProfit(participant);
         }
         return profit;
-    }
-
-    private static void calculateParticipantProfit(final Player player, final Result result) {
-        validateParticipant(player);
-        Participant participant = (Participant) player;
-        calculate(participant, result);
     }
 
     private static void calculate(final Participant participant, final Result result) {
