@@ -29,7 +29,7 @@ public class Player extends Participant {
     }
 
     public int bettingRevenue(GameResult gameResult) {
-        if (super.getHoldingCard().isBlackJack()) {
+        if (super.getHoldingCard().isBlackJack() && gameResult == GameResult.WIN) {
             return (int) (bettingMoney.money * 1.5);
         }
         return bettingMoney.calculateRevenue(gameResult);
