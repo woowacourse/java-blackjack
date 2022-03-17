@@ -93,4 +93,26 @@ public class PlayerTest {
             Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
         }
     }
+
+    @Nested
+    @DisplayName("getTotalProfit은")
+    class GetTotalProfit {
+
+        @ParameterizedTest
+        @CsvSource(value = {"WIN,10000", "DRAW,0", "LOSE,-10000"})
+        @DisplayName("최종 수익을 반환한다.")
+        void returnTotalProfit(Score score, double expected) {
+            Player player = new Player("player", 10000);
+            Assertions.assertThat(player.getTotalProfit(score)).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("블랙잭으로 승리할 경우 1.5배의 수익을 낸다.")
+        void returnTotalProfitWithBlackjack() {
+            Player player = new Player("player", 10000);
+            player.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.ACE));
+            player.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            Assertions.assertThat(player.getTotalProfit(Score.WIN)).isEqualTo(15000);
+        }
+    }
 }
