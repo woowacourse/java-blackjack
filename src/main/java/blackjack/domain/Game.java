@@ -1,13 +1,16 @@
 package blackjack.domain;
 
 import blackjack.domain.card.RandomDeck;
-import blackjack.domain.player.*;
+import blackjack.domain.player.Command;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
 public class Game {
 
@@ -41,9 +44,22 @@ public class Game {
         return players.isPossibleToPlay();
     }
 
-    public String getCurrentHitablePlayerName() {
-        players.passTurnUntilHitable();
+    public String getCurrentHittablePlayerName() {
+        players.passTurnUntilHittable();
         return players.getCurrentTurn().getName();
+    }
+
+    public boolean isBettablePlayerRemains() {
+        return players.isBettablePlayerRemains();
+    }
+
+    public String getCurrentBettablePlayerName() {
+        players.passTurnUntilBettable();
+        return players.getCurrentTurn().getName();
+    }
+
+    public void doBetting(long bettingMoney) {
+        players.bettingCurrentPlayer(bettingMoney);
     }
 
     public boolean dealerCanDraw() {
@@ -58,16 +74,19 @@ public class Game {
         return dealer;
     }
 
-    public Map<String, String> getPlayerResults() {
-        return players.calculateResult(dealer).entrySet().stream()
-                .collect(toMap(Map.Entry::getKey, e -> e.getValue().getMessage()));
+
+    public Map<String, Long> getPlayerResults() {
+        return players.calculateResult(dealer);
     }
 
-    public List<String> getDealerResult() {
-        return players.calculateResult(dealer).values().stream()
-                .map(Outcome::reverse)
-                .map(Outcome::getMessage)
-                .collect(toList());
+    public long getDealerResult() {
+        long result = 0L;
+        Map<String, Long> playerResults1 = getPlayerResults();
+        Collection<Long> values = playerResults1.values();
+        for (Long value : values) {
+            result -= value;
+        }
+        return result;
     }
 
     public List<Player> getPlayers() {

@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static blackjack.domain.card.Denomination.*;
-import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Symbol.*;
-import static blackjack.domain.card.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {

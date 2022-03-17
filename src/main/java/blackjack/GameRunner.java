@@ -11,11 +11,12 @@ public class GameRunner {
         Game game = generateGame();
         OutputView.printInitialStatus(game.getDealer(), game.getPlayers());
 
+        executeBettingTurn(game);
         executePlayerTurn(game);
         executeDealerTurn(game);
 
         OutputView.printTotalScore(game.getDealer(), game.getPlayers());
-        printResult(game);
+        OutputView.printResult(game.getPlayerResults(), game.getDealerResult());
     }
 
     private Game generateGame() {
@@ -27,9 +28,25 @@ public class GameRunner {
         }
     }
 
+    private void executeBettingTurn(Game game) {
+        while (game.isBettablePlayerRemains()) {
+            String name = game.getCurrentBettablePlayerName();
+            game.doBetting(inputBettingMoneyFor(name));
+        }
+    }
+
+    private long inputBettingMoneyFor(String name) {
+        try {
+            return InputView.inputBettingMoney(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputBettingMoneyFor(name);
+        }
+    }
+
     private void executePlayerTurn(Game game) {
         while (game.isPossibleToPlay()) {
-            String name = game.getCurrentHitablePlayerName();
+            String name = game.getCurrentHittablePlayerName();
             game.playTurn(inputCommand(name));
             OutputView.printCurrentCards(game.getCurrentPlayer());
         }
@@ -49,9 +66,5 @@ public class GameRunner {
             game.doDealerDraw();
             OutputView.printDealerHitMessage();
         }
-    }
-
-    private void printResult(Game game) {
-        OutputView.printResult(game.getPlayerResults(), game.getDealerResult());
     }
 }

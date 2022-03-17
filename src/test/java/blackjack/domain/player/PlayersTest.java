@@ -44,7 +44,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("hit이 가능한 플레이어가 나타날 때까지 turn을 넘긴다")
-    void testPassTurnUntilHitable() {
+    void testPassTurnUntilHittable() {
         // given
         Deck deck = generateDeck(new Card(CLOVER, JACK), new Card(CLOVER, TWO),
                 new Card(DIAMOND, JACK), new Card(DIAMOND, THREE),
@@ -61,7 +61,33 @@ class PlayersTest {
         Player firstTurn = players.getCurrentTurn();
 
         // when
-        players.passTurnUntilHitable();
+        players.passTurnUntilHittable();
+
+        // then
+        assertThat(firstTurn).isEqualTo(first);
+        assertThat(players.getCurrentTurn()).isEqualTo(fourth);
+    }
+
+    @Test
+    @DisplayName("베팅하지 않은 player가 나타날 때까지 턴을 넘긴다")
+    void testPassTurnUntilBettable() {
+        // given
+        Deck deck = generateDeck(new Card(CLOVER, JACK), new Card(CLOVER, TWO),
+                new Card(DIAMOND, JACK), new Card(DIAMOND, THREE),
+                new Card(SPADE, JACK), new Card(SPADE, FOUR),
+                new Card(HEART, JACK), new Card(HEART, FIVE));
+        Player first = new Player("1", deck.initialDraw());
+        Player second = new Player("2", deck.initialDraw());
+        Player third = new Player("3", deck.initialDraw());
+        Player fourth = new Player("4", deck.initialDraw());
+        Players players = new Players(List.of(first, second, third, fourth));
+        first.bet(1000L);
+        second.bet(1000L);
+        third.bet(1000L);
+        Player firstTurn = players.getCurrentTurn();
+
+        // when
+        players.passTurnUntilBettable();
 
         // then
         assertThat(firstTurn).isEqualTo(first);

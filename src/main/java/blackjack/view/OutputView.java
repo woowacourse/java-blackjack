@@ -6,10 +6,7 @@ import blackjack.domain.player.Player;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.groupingBy;
 
 public class OutputView {
 
@@ -32,7 +29,7 @@ public class OutputView {
     }
 
     public static void printDealerHitMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printTotalScore(Dealer dealer, List<Player> players) {
@@ -42,10 +39,10 @@ public class OutputView {
         }
     }
 
-    public static void printResult(Map<String, String> playerResults, List<String> dealerResult) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(makeDealerResultString(dealerResult));
+    public static void printResult(Map<String, Long> playerResults, long dealerResult) {
+        System.out.println("\n## 최종 수익");
 
+        System.out.println("딜러: " + dealerResult);
         playerResults.forEach(
                 (name, result) -> System.out.println(name + ": " + result)
         );
@@ -60,13 +57,6 @@ public class OutputView {
         for (Player player : players) {
             System.out.printf(HAND_CARD_MESSAGE_FORMAT, player.getName(), join(format(player.openCards())));
         }
-    }
-
-    private static String makeDealerResultString(List<String> dealerResult) {
-        Map<String, Long> countMap = dealerResult.stream()
-                .collect(groupingBy(Function.identity(), Collectors.counting()));
-        return "딜러 : " + countMap.getOrDefault("승", 0L) + "승 " +
-                countMap.getOrDefault("패", 0L) + "패";
     }
 
     private static String join(List<String> strings) {

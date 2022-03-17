@@ -16,11 +16,6 @@ public class Player extends Participant{
         super(name, cards);
     }
 
-    public Player(String name, Cards cards, long bettingMoney) {
-        this(name, cards);
-        this.bettingMoney = bettingMoney;
-    }
-
     @Override
     public List<Card> openCards() {
         return getCards().subList(0, OPEN_CARD_SIZE);
@@ -34,24 +29,16 @@ public class Player extends Participant{
         stay = true;
     }
 
-    public Outcome compareScoreWith(Dealer dealer) {
-        if (dealer.isBust()) {
-            return Outcome.WIN;
-        }
-
-        if (!dealer.isBust() && isBust()) {
-            return Outcome.LOSE;
-        }
-
-        if (dealer.getScore() > getScore()) {
-            return Outcome.LOSE;
-        }
-
-        return Outcome.WIN;
-    }
-
     public long calculateDividend(Dealer dealer) {
         return judgeResult(dealer).calculateDividend(bettingMoney);
+    }
+
+    public void bet(long bettingMoney) {
+        this.bettingMoney = bettingMoney;
+    }
+
+    public boolean isbettable() {
+        return bettingMoney == 0;
     }
 
     private Result judgeResult(Dealer dealer) {

@@ -22,12 +22,28 @@ public class Players {
         players.offer(players.poll());
     }
 
-    public void passTurnUntilHitable() {
+    public void passTurnUntilHittable() {
         int count = 0;
-        while (count < 8 && !getCurrentTurn().isAbleToHit()) {
+        while (count <= MAX_PLAYER_SIZE && !getCurrentTurn().isAbleToHit()) {
             passTurnToNext();
             count++;
         }
+    }
+
+    public void passTurnUntilBettable() {
+        int count = 0;
+        while (count <= MAX_PLAYER_SIZE && !getCurrentTurn().isbettable()) {
+            passTurnToNext();
+            count++;
+        }
+    }
+
+    public boolean isBettablePlayerRemains() {
+        boolean isBettablePlayerRemains = false;
+        for (Player player : players) {
+            isBettablePlayerRemains |= player.isbettable();
+        }
+        return isBettablePlayerRemains;
     }
 
     public boolean isPossibleToPlay() {
@@ -36,6 +52,11 @@ public class Players {
             isPossibleToPlay |= player.isAbleToHit();
         }
         return isPossibleToPlay;
+    }
+
+    public void bettingCurrentPlayer(long bettingMoney) {
+        getCurrentTurn().bet(bettingMoney);
+        passTurnToNext();
     }
 
     public List<Player> toList() {
@@ -54,11 +75,10 @@ public class Players {
         }
     }
 
-    public Map<String, Outcome> calculateResult(Dealer dealer) {
-        Map<String, Outcome> result = new HashMap<>();
+    public Map<String, Long> calculateResult(Dealer dealer) {
+        Map<String, Long> result = new HashMap<>();
         for (Player player : players) {
-            Outcome outcome = player.compareScoreWith(dealer);
-            result.put(player.getName(), outcome);
+            result.put(player.getName(), player.calculateDividend(dealer));
         }
         return result;
     }
