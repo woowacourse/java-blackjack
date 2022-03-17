@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.CardPickMachine;
+import blackjack.domain.machine.Blackjack;
+import blackjack.domain.participant.Players;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.machine.Blackjack;
 import blackjack.domain.card.Card;
 import blackjack.domain.machine.Record;
 import blackjack.domain.participant.Dealer;
@@ -24,21 +25,23 @@ public class RecordTest {
     @BeforeEach
     void setUp() {
         List<String> playerNames = List.of("범블비");
-        blackjack = new Blackjack(playerNames);
+        Players players = new Players(playerNames);
+        dealer = new Dealer();
+        blackjack = new Blackjack();
+
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 8));
-        blackjack.dealInitialCards(intendedNumberGenerator);
+        blackjack.dealInitialCards(intendedNumberGenerator, dealer, players);
         cardPickMachine = new CardPickMachine();
 
         //dealer: 12점, player: 12점
-        player = blackjack.getPlayers().get(0);
-        dealer = blackjack.getDealer();
+        player = players.getPlayers().get(0);
     }
 
     @DisplayName("딜러만 버스트일 경우 전적 테스트")
     @Test
     void dealerBurst() {
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(10));
-        Card card =cardPickMachine.pickCard(intendedNumberGenerator);
+        Card card = cardPickMachine.pickCard(intendedNumberGenerator);
         dealer.addCard(card);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.VICTORY);

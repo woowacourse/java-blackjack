@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.machine.Blackjack;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.dto.DealerResultDto;
 import blackjack.domain.dto.PlayerResultDto;
 import blackjack.domain.dto.ResultDto;
-import blackjack.domain.machine.Blackjack;
 import blackjack.domain.machine.Records;
 
 public class RecordsTest {
@@ -22,12 +24,14 @@ public class RecordsTest {
     @BeforeEach
     void setUp() {
         List<String> playerNames = List.of("범블비", "잉");
-        Blackjack blackjack = new Blackjack(playerNames);
+        Players players = new Players(playerNames);
+        Dealer dealer = new Dealer();
+        Blackjack blackjack = new Blackjack();
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 11, 15, 9));
-        blackjack.dealInitialCards(intendedNumberGenerator);
+        blackjack.dealInitialCards(intendedNumberGenerator, dealer ,players);
 
         //dealer: 12점, player: 7점(범블비), 14점(잉)
-        dto = Records.of(blackjack.getDealer(), blackjack.getPlayers());
+        dto = blackjack.result(dealer, players);
     }
 
     @DisplayName("딜러 전적 테스트")
