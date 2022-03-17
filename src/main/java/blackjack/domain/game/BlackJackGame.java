@@ -3,7 +3,7 @@ package blackjack.domain.game;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.DrawStrategy;
+import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
 
@@ -13,9 +13,9 @@ public class BlackJackGame {
 	private static final int DEALER_OPEN_COUNT_FIRST = 1;
 
 	private final Gamers gamers;
-	private final DrawStrategy deck;
+	private final Deck deck;
 
-	public BlackJackGame(List<String> names, BettingInjector betting, DrawStrategy deck) {
+	public BlackJackGame(List<String> names, BettingInjector betting, Deck deck) {
 		this.gamers = new Gamers(names, betting);
 		this.deck = deck;
 	}

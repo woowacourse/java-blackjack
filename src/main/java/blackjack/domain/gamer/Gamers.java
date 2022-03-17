@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.game.BettingInjector;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.DrawStrategy;
 
 public class Gamers {
 
@@ -36,18 +35,18 @@ public class Gamers {
 		}
 	}
 
-	public void giveCardToAllGamers(DrawStrategy deck) {
+	public void giveCardToAllGamers(Deck deck) {
 		dealer.addCard(deck.draw());
 		for (Player player : players) {
 			player.addCard(deck.draw());
 		}
 	}
 
-	public void giveCardToDealer(DrawStrategy deck) {
+	public void giveCardToDealer(Deck deck) {
 		dealer.addCard(deck.draw());
 	}
 
-	public void giveCardToPlayer(String name, DrawStrategy deck) {
+	public void giveCardToPlayer(String name, Deck deck) {
 		Player player = findPlayerByName(name);
 		player.addCard(deck.draw());
 	}
@@ -75,10 +74,6 @@ public class Gamers {
 		return players.stream()
 			.map(Player::getName)
 			.collect(Collectors.toList());
-	}
-
-	public int findDealerHitCount() {
-		return dealer.getCardSize() - Cards.CARD_SIZE_BLACKJACK;
 	}
 
 	public Dealer getDealer() {

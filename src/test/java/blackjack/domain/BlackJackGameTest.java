@@ -50,7 +50,7 @@ class BlackJackGameTest {
     @DisplayName("1000원 배팅일 때 지면 수익 -1000원")
     void createResultLose() {
         BlackJackGame blackJackGame = new BlackJackGame(
-            List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
+            List.of("name"), s -> 1000, new Deck(Card.getCards()));
 
         BlackJackReferee result = blackJackGame.play(answer -> true, (s, c) -> {});
 
