@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 public class BettingRefereeTest {
 
+    private static final int BETTING_AMOUNT = 1000;
+
     private static final Dealer dealerBlackjack = Dealer.of(getCardBundleOfBlackjack());
 
     private static final Player player10 = Player.of("ten", getCardBundleOfTen());
@@ -36,20 +38,30 @@ public class BettingRefereeTest {
         BettingReferee referee = new BettingReferee(
                 dealerBlackjack, generateBettingsOf(List.of(player10, player15, player20)));
 
-        int playerBettings = 0;
-        for (int i = 1; i < 4; i++) {
-            playerBettings += referee.getResults().get(i).getMoneyOutcome();
-        }
-
-        int actual = referee.getResults().get(0).getMoneyOutcome();
-        int expected = playerBettings * -1;
+        int actual = extractDealerBettingResultFrom(referee).getMoneyOutcome();
+        int expected = extractPlayerBettingSum(referee) * -1;
 
         assertThat(actual).isEqualTo(expected);
     }
 
     private List<PlayerBetting> generateBettingsOf(List<Player> players) {
         return players.stream()
-                .map(player -> new PlayerBetting(player, 1000))
+                .map(player -> new PlayerBetting(player, BETTING_AMOUNT))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    private int extractPlayerBettingSum(BettingReferee referee) {
+        return extractPlayerBettingResultFrom(referee).stream()
+                .mapToInt(BettingResult::getMoneyOutcome)
+                .sum();
+    }
+
+    private BettingResult extractDealerBettingResultFrom(BettingReferee referee) {
+        return referee.getResults().get(0);
+    }
+
+    private List<BettingResult> extractPlayerBettingResultFrom(BettingReferee referee) {
+        int size = referee.getResults().size();
+        return referee.getResults().subList(1, size);
     }
 }
