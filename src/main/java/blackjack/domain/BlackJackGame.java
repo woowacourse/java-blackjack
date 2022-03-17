@@ -39,6 +39,21 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
+    public boolean isAnyPlayerNotBetYet() {
+        return players.stream()
+                .anyMatch(Player::isNeedBettingMoney);
+    }
+
+    public Player findPlayerNeedToBetMoney() {
+        return players.stream()
+                .filter(Player::isNeedBettingMoney)
+                .findFirst().get();
+    }
+
+    public void playerSetupBettingMoney(int money) {
+        findPlayerNeedToBetMoney().putBettingMoney(money);
+    }
+
     public List<ParticipantDto> getParticipantsDto() {
         List<ParticipantDto> participantDtos = new ArrayList<>();
         participantDtos.add(ParticipantDto.of(dealer, List.of(dealer.showFirstCard())));

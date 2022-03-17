@@ -31,4 +31,14 @@ public class InputView {
         }
         throw new IllegalArgumentException("답은 y, n으로 입력하세요.");
     }
+
+    public static int askBettingMoney(String name) {
+        System.out.printf("%s의 베팅 금액은?%n", name);
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("금액은 정수로 입력하세요");
+            return askBettingMoney(name);
+        }
+    }
 }

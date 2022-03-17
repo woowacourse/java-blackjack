@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Player extends Participant {
     private boolean finish = false;
 
@@ -9,6 +7,13 @@ public class Player extends Participant {
 
     public Player(String name) {
         super(name);
+    }
+
+    public boolean isNeedBettingMoney() {
+        if (bettingMoney == null) {
+            return true;
+        }
+        return false;
     }
 
     public void putBettingMoney(int money) {
