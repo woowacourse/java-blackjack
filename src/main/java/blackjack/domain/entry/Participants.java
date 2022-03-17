@@ -1,7 +1,5 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +14,6 @@ public class Participants {
         this.players = players;
     }
 
-    public boolean isHitDealer() {
-        return dealer.canHit();
-    }
-
-    public void hitDealer(Card card) {
-        dealer.addCard(card);
-    }
-
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
@@ -34,6 +24,10 @@ public class Participants {
     public Map<Player, Integer> getGameResults() {
         return players.stream()
             .collect(Collectors.toMap(player -> player, player -> player.countBettingMoney(dealer)));
+    }
+
+    public Participant getDealer() {
+        return dealer;
     }
 
     public List<Participant> getPlayers() {

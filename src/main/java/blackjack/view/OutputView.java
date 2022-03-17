@@ -32,15 +32,15 @@ public class OutputView {
     public static void printCardCountingResult(List<CardCountingResult> cardCountingResults) {
         for (CardCountingResult cardCountingResult : cardCountingResults) {
             System.out.println(MessageFormat.format("{0} - 결과: {1}",
-                printPlayerCard(cardCountingResult.getName(), cardCountingResult.getCards()),
-                cardCountingResult.getCount()));
+                printPlayerCard(
+                    cardCountingResult.getName(), cardCountingResult.getCards()), cardCountingResult.getCount()));
         }
         System.out.println();
     }
 
     public static void printGameResult(List<PlayerGameResult> playerGameResults) {
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + countDealerProfit(playerGameResults));
+        System.out.println("딜러: " + sumPlayersProfit(playerGameResults) * -1);
         playerGameResults.forEach(result -> System.out.println(result.getPlayerName() + ": " + result.getProfit()));
     }
 
@@ -55,9 +55,9 @@ public class OutputView {
         return MessageFormat.format("{0}카드: {1}", playerName, String.join(NAME_DELIMITER, cardNames));
     }
 
-    private static int countDealerProfit(List<PlayerGameResult> playerGameResults) {
-        return Math.abs(playerGameResults.stream()
+    private static int sumPlayersProfit(List<PlayerGameResult> playerGameResults) {
+        return playerGameResults.stream()
             .mapToInt(PlayerGameResult::getProfit)
-            .sum());
+            .sum();
     }
 }

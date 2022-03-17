@@ -69,8 +69,9 @@ public class BlackjackGame {
     }
 
     private void hitDealer(BlackjackTable blackjackTable) {
-        while (blackjackTable.needMoreCardByDealer()) {
-            blackjackTable.hitDealer();
+        Participant dealer = blackjackTable.getDealer();
+        while (dealer.canHit()) {
+            blackjackTable.hit(dealer);
             OutputView.printReceivingMoreCardOfDealer();
         }
     }

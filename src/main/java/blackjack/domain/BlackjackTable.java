@@ -26,24 +26,20 @@ public class BlackjackTable {
         participant.addCard(deck.draw());
     }
 
-    public boolean needMoreCardByDealer() {
-        return participants.isHitDealer();
-    }
-
-    public void hitDealer() {
-        participants.hitDealer(deck.draw());
+    public Map<Player, Integer> countGameResult() {
+        return participants.getGameResults();
     }
 
     public List<Participant> getParticipants() {
         return participants.getParticipants();
     }
 
-    public List<Participant> getPlayers() {
-        return participants.getPlayers();
+    public Participant getDealer() {
+        return participants.getDealer();
     }
 
-    public Map<Player, Integer> countGameResult() {
-        return participants.getGameResults();
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
     }
 
     private Dealer createDealer() {
