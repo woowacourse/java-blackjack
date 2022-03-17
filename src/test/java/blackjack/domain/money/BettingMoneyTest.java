@@ -22,7 +22,7 @@ public class BettingMoneyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {999,0,-10000})
+    @ValueSource(ints = {999, 0, -10000})
     @DisplayName("최소 배팅 머니 충족하지 않을 때 예외를 발생시킨다.")
     void validateBettingMoney(final int money) {
         assertThatThrownBy(() ->

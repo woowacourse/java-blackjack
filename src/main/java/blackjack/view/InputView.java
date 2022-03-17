@@ -15,6 +15,8 @@ public class InputView {
     private static final String NO = "n";
     private static final String DRAW_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String ANSWER_EXCEPTION_MESSAGE = "잘못된 입력입니다.";
+    private static final String BETTING_MONEY_QUESTION_MESSAGE = "의 배팅금액은?";
+    private static final String NOT_NUMBER_EXCEPTION = "숫자를 입력해주세요.";
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -50,7 +52,7 @@ public class InputView {
 
     public static int inputBettingMoney(User user) {
         System.out.println();
-        System.out.println(user.getName() + "의 배팅금액은?");
+        System.out.println(user.getName() + BETTING_MONEY_QUESTION_MESSAGE);
         String money = scanner.nextLine();
         return validateNumber(money);
     }
@@ -58,8 +60,8 @@ public class InputView {
     private static int validateNumber(String money) {
         try {
             return Integer.parseInt(money);
-        } catch(NumberFormatException e) {
-            throw new IllegalArgumentException("숫자를 입력해주세요.");
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(NOT_NUMBER_EXCEPTION);
         }
     }
 }
