@@ -25,6 +25,11 @@ public final class Gambler extends Player {
         super(wallet, cards);
     }
 
+    public double getRevenue(Player dealer) {
+        MatchResult matchResult = this.match(dealer);
+        return matchResult.calculateRevenue(wallet.getMoney(), isBlackJack());
+    }
+
     @Override
     public boolean isHittable() {
         return !isBust() && getScore() < MAXIMUM_VALID_SCORE;
