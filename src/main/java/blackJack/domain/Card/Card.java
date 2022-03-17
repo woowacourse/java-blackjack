@@ -1,24 +1,24 @@
 package blackJack.domain.Card;
 
 public class Card {
-    private Shape shape;
-    private Number number;
+    private Suit suit;
+    private Denomination denomination;
 
-    public Card(Shape shape, Number number) {
-        this.shape = shape;
-        this.number = number;
+    public Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
 
     public boolean isAce() {
-        return this.getNumber().equals(Number.ACE);
+        return this.getNumber().equals(Denomination.ACE);
     }
 
-    public Number getNumber() {
-        return number;
+    public Denomination getNumber() {
+        return denomination;
     }
 
     public String getCardInfo() {
-        return number.getDenomination() + shape.getShapeName();
+        return denomination.getDenomination() + suit.getShapeName();
     }
 }

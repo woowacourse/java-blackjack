@@ -7,14 +7,14 @@ public class CardFactory {
     public static final LinkedList<Card> CARD_CACHE = new LinkedList<>();
 
     static {
-        for (Shape shape : Shape.values()) {
-            initCards(CARD_CACHE, shape);
+        for (Suit suit : Suit.values()) {
+            initCards(CARD_CACHE, suit);
         }
     }
 
-    private static void initCards(LinkedList<Card> cards, Shape shape) {
-        for (Number number : Number.values()) {
-            cards.add(new Card(shape, number));
+    private static void initCards(LinkedList<Card> cards, Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(new Card(suit, denomination));
         }
     }
 }

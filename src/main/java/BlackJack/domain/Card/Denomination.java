@@ -1,6 +1,6 @@
 package blackJack.domain.Card;
 
-public enum Number {
+public enum Denomination {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -18,7 +18,7 @@ public enum Number {
     private String denomination;
     private int value;
 
-    Number(String denomination, int value) {
+    Denomination(String denomination, int value) {
         this.denomination = denomination;
         this.value = value;
     }
