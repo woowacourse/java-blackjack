@@ -6,6 +6,7 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int BLACKJACK_CARDS_SIZE = 2;
     protected static final int BLACKJACK_SCORE = 21;
 
     private final Name name;
@@ -24,11 +25,11 @@ public abstract class Participant {
         cards.append(card);
     }
 
-    protected boolean isBlackjack() {
-        return getCards().size() == 2 && cards.calculateTotalScore() == BLACKJACK_SCORE;
+    public boolean isBlackjack() {
+        return getCards().size() == BLACKJACK_CARDS_SIZE && cards.calculateTotalScore() == BLACKJACK_SCORE;
     }
 
-    protected boolean isBust() {
+    public boolean isBust() {
         return cards.calculateTotalScore() > BLACKJACK_SCORE;
     }
 

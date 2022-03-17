@@ -78,7 +78,7 @@ public class PlayerTest {
         dealer.append(new Card(KING, SPADE));
         dealer.append(new Card(JACK, HEART));
 
-        Player player = new Player("sudal", generateBlackjack(), 10000);
+        Player player = new Player("sudal", generateCards(), 10000);
 
         int bettingMoney = player.calculateBettingMoney(dealer);
 
