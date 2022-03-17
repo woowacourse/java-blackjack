@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class TrumpCardDTO {
+public final class TrumpCardDto {
     private static final Map<TrumpNumber, String> TRUMP_NUMBER_NAME_MAP;
     private static final String NAME_ACE = "A";
     private static final String NAME_JACK = "J";
@@ -39,23 +39,23 @@ public final class TrumpCardDTO {
         TRUMP_SYMBOL_NAME_MAP.put(TrumpSymbol.SPADE, NAME_SPADE);
     }
 
-    private TrumpCardDTO(String number, String symbol) {
+    private TrumpCardDto(String number, String symbol) {
         this.number = number;
         this.symbol = symbol;
     }
 
-    public static List<TrumpCardDTO> from(Hand hand) {
+    public static List<TrumpCardDto> from(Hand hand) {
         return hand.getCards().stream()
-                .map(TrumpCardDTO::from)
+                .map(TrumpCardDto::from)
                 .collect(Collectors.toList());
     }
 
-    private static TrumpCardDTO from(TrumpCard trumpCard) {
+    private static TrumpCardDto from(TrumpCard trumpCard) {
         return from(trumpCard.getNumber(), trumpCard.getSymbol());
     }
 
-    private static TrumpCardDTO from(TrumpNumber trumpNumber, TrumpSymbol trumpSymbol) {
-        return new TrumpCardDTO(trumpNumberToString(trumpNumber), trumpSymbolToString(trumpSymbol));
+    private static TrumpCardDto from(TrumpNumber trumpNumber, TrumpSymbol trumpSymbol) {
+        return new TrumpCardDto(trumpNumberToString(trumpNumber), trumpSymbolToString(trumpSymbol));
     }
 
     private static String trumpNumberToString(TrumpNumber trumpNumber) {

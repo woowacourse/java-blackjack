@@ -1,9 +1,9 @@
 package blackjack;
 
-import blackjack.dto.DealerDTO;
-import blackjack.dto.EntryDTO;
-import blackjack.dto.PlayersDTO;
-import blackjack.dto.ProfitsDTO;
+import blackjack.dto.DealerDto;
+import blackjack.dto.EntryDto;
+import blackjack.dto.PlayersDto;
+import blackjack.dto.ProfitsDto;
 import blackjack.model.Game;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -32,13 +32,13 @@ public class Application {
     }
 
     private static Function<Game, Integer> giveMoneyInput(InputView inputView) {
-        return game -> inputView.askBetAmount(EntryDTO.fromCurrentEntryOf(game));
+        return game -> inputView.askBetAmount(EntryDto.fromCurrentEntryOf(game));
     }
 
     private static void start(Game game, ResultView resultView) {
         game.start();
 
-        PlayersDTO playersDTO = PlayersDTO.from(game);
+        PlayersDto playersDTO = PlayersDto.from(game);
         resultView.printHandInitialized(playersDTO);
         resultView.printInitializedHands(playersDTO);
     }
@@ -52,7 +52,7 @@ public class Application {
     }
 
     private static void playTurn(InputView inputView, Game game, ResultView resultView) {
-        EntryDTO entryDTO = EntryDTO.fromCurrentEntryOf(game);
+        EntryDto entryDTO = EntryDto.fromCurrentEntryOf(game);
         if (game.isCurrentEntryBust()) {
             resultView.printBustMessage(entryDTO);
             return;
@@ -66,19 +66,19 @@ public class Application {
 
     private static void hitCurrentEntry(InputView inputView, Game game, ResultView resultView) {
         game.hitCurrentEntry();
-        resultView.printHand(EntryDTO.fromCurrentEntryOf(game));
+        resultView.printHand(EntryDto.fromCurrentEntryOf(game));
         playTurn(inputView, game, resultView);
     }
 
     private static void playDealer(ResultView resultView, Game game) {
         game.hitDealer();
         if (game.countCardsAddedToDealer() > 0) {
-            resultView.printDealerHitCount(DealerDTO.from(game));
+            resultView.printDealerHitCount(DealerDto.from(game));
         }
     }
 
     private static void showResults(ResultView resultView, Game game) {
-        resultView.printScores(PlayersDTO.from(game));
-        resultView.printProfits(ProfitsDTO.from(game.getProfits()));
+        resultView.printScores(PlayersDto.from(game));
+        resultView.printProfits(ProfitsDto.from(game.getProfits()));
     }
 }

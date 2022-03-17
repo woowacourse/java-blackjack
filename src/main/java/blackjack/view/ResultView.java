@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import blackjack.dto.DealerDTO;
-import blackjack.dto.HandDTO;
-import blackjack.dto.EntryDTO;
-import blackjack.dto.PlayerDTO;
-import blackjack.dto.PlayersDTO;
-import blackjack.dto.ProfitsDTO;
-import blackjack.dto.TrumpCardDTO;
+import blackjack.dto.DealerDto;
+import blackjack.dto.HandDto;
+import blackjack.dto.EntryDto;
+import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayersDto;
+import blackjack.dto.ProfitsDto;
+import blackjack.dto.TrumpCardDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,78 +22,78 @@ public class ResultView {
 
     private static final String DELIMITER_JOIN = ", ";
 
-    public void printHandInitialized(PlayersDTO players) {
-        DealerDTO dealer = players.getDealer();
+    public void printHandInitialized(PlayersDto players) {
+        DealerDto dealer = players.getDealer();
         System.out.printf(FORMAT_MESSAGE_HAND_INITIALIZED, dealer.getName(), joinStrings(players.getEntryNames()));
     }
 
-    public void printInitializedHands(PlayersDTO players) {
-        for (PlayerDTO player : players.getPlayers()) {
+    public void printInitializedHands(PlayersDto players) {
+        for (PlayerDto player : players.getPlayers()) {
             printFirstHand(player);
         }
     }
 
-    private void printFirstHand(PlayerDTO player) {
-        if (player instanceof DealerDTO) {
-            printOnlyFirstCard((DealerDTO) player);
+    private void printFirstHand(PlayerDto player) {
+        if (player instanceof DealerDto) {
+            printOnlyFirstCard((DealerDto) player);
             return;
         }
         printHand(player);
     }
 
-    private void printOnlyFirstCard(DealerDTO dealer) {
+    private void printOnlyFirstCard(DealerDto dealer) {
         System.out.printf(FORMAT_HAND_INITIALIZED, dealer.getName(), getFirstCardToString(dealer.getHand()));
     }
 
-    private String getFirstCardToString(HandDTO hand) {
-        TrumpCardDTO firstCard = hand.getCards().get(0);
+    private String getFirstCardToString(HandDto hand) {
+        TrumpCardDto firstCard = hand.getCards().get(0);
         return firstCard.getNumber() + firstCard.getSymbol();
     }
 
-    public void printHand(PlayerDTO player) {
+    public void printHand(PlayerDto player) {
         System.out.printf(FORMAT_HAND_INITIALIZED, player.getName(), joinHand(player.getHand()));
     }
 
-    public void printBustMessage(EntryDTO entry) {
+    public void printBustMessage(EntryDto entry) {
         System.out.printf(FORMAT_MESSAGE_BUST, entry.getName());
     }
 
-    public void printDealerHitCount(DealerDTO dealer) {
+    public void printDealerHitCount(DealerDto dealer) {
         System.out.printf(FORMAT_MESSAGE_DEALER_HIT, dealer.getName(), dealer.getAddedCount());
     }
 
-    public void printScores(PlayersDTO players) {
-        for (PlayerDTO player : players.getPlayers()) {
+    public void printScores(PlayersDto players) {
+        for (PlayerDto player : players.getPlayers()) {
             printScore(player);
         }
     }
 
-    private void printScore(PlayerDTO player) {
+    private void printScore(PlayerDto player) {
         System.out.printf(FORMAT_SCORE, player.getName(), joinHand(player.getHand()), player.getScore());
     }
 
-    public void printProfits(ProfitsDTO profits) {
+    public void printProfits(ProfitsDto profits) {
         System.out.println(TITLE_PROFIT);
         printProfit(profits.getDealer(), profits.getDealerProfit());
         printEntryProfits(profits);
     }
 
-    private void printEntryProfits(ProfitsDTO profits) {
-        Map<EntryDTO, Integer> entryProfits = profits.getEntryProfits();
-        for (EntryDTO entry : entryProfits.keySet()) {
+    private void printEntryProfits(ProfitsDto profits) {
+        Map<EntryDto, Integer> entryProfits = profits.getEntryProfits();
+        for (EntryDto entry : entryProfits.keySet()) {
             printProfit(entry, entryProfits.get(entry));
         }
     }
 
-    private void printProfit(PlayerDTO player, int profit) {
+    private void printProfit(PlayerDto player, int profit) {
         System.out.printf(FORMAT_PROFIT, player.getName(), profit);
     }
 
-    private String joinHand(HandDTO hand) {
+    private String joinHand(HandDto hand) {
         return joinCards(hand.getCards());
     }
 
-    private String joinCards(List<TrumpCardDTO> cards) {
+    private String joinCards(List<TrumpCardDto> cards) {
         return joinStrings(cards.stream()
                 .map(card -> card.getNumber() + card.getSymbol())
                 .collect(Collectors.toList()));

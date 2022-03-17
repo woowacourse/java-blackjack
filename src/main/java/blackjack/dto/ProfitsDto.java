@@ -9,22 +9,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ProfitsDTO {
-    private final Map<EntryDTO, Integer> entryProfits;
-    private final DealerDTO dealer;
+public class ProfitsDto {
+    private final Map<EntryDto, Integer> entryProfits;
+    private final DealerDto dealer;
     private final int dealerProfit;
 
-    private ProfitsDTO(Map<EntryDTO, Integer> entryProfits, DealerDTO dealer, int dealerProfit) {
+    private ProfitsDto(Map<EntryDto, Integer> entryProfits, DealerDto dealer, int dealerProfit) {
         this.entryProfits = entryProfits;
         this.dealer = dealer;
         this.dealerProfit = dealerProfit;
     }
 
-    public static ProfitsDTO from(Profits profits) {
+    public static ProfitsDto from(Profits profits) {
         Map<Player, Amount> profitValues = profits.getValues();
         Dealer dealer = findDealer(profitValues);
-        return new ProfitsDTO(mapEntryProfits(profitValues),
-                DealerDTO.fromNameOf(dealer),
+        return new ProfitsDto(mapEntryProfits(profitValues),
+                DealerDto.fromNameOf(dealer),
                 profitValues.get(dealer).getValue());
     }
 
@@ -35,10 +35,10 @@ public class ProfitsDTO {
                 .get();
     }
 
-    private static Map<EntryDTO, Integer> mapEntryProfits(Map<Player, Amount> profitValues) {
+    private static Map<EntryDto, Integer> mapEntryProfits(Map<Player, Amount> profitValues) {
         return findEntries(profitValues)
                 .collect(Collectors.toMap(
-                        EntryDTO::from,
+                        EntryDto::from,
                         entry -> profitValues.get(entry).getValue(),
                         (a, b) -> b));
     }
@@ -49,11 +49,11 @@ public class ProfitsDTO {
                 .map(player -> (Entry) player);
     }
 
-    public Map<EntryDTO, Integer> getEntryProfits() {
+    public Map<EntryDto, Integer> getEntryProfits() {
         return entryProfits;
     }
 
-    public DealerDTO getDealer() {
+    public DealerDto getDealer() {
         return dealer;
     }
 

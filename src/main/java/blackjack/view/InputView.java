@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.dto.EntryDTO;
+import blackjack.dto.EntryDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -32,7 +32,7 @@ public class InputView {
         return Arrays.asList((rawNames.split(REGEX_NAME)));
     }
 
-    public int askBetAmount(EntryDTO entry) {
+    public int askBetAmount(EntryDto entry) {
         System.out.printf(FORMAT_BETTING_MONEY, entry.getName());
         return readInt();
     }
@@ -45,7 +45,7 @@ public class InputView {
         }
     }
 
-    public boolean askForHit(EntryDTO entry) {
+    public boolean askForHit(EntryDto entry) {
         System.out.printf(FORMAT_HIT, entry.getName(), SIGN_TRUE, SIGN_FALSE);
         String input = scanner.nextLine();
         return isInputTrue(input.trim());
