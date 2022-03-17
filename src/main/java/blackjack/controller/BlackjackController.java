@@ -24,7 +24,7 @@ public class BlackjackController {
         hit(blackjackGame, players);
 
         OutputView.printCardResult(blackjackGame.getCardResult(participants));
-        OutputView.printGameResult(blackjackGame.getGameResult());
+        OutputView.printGameResult(blackjackGame.getBettingResult());
     }
 
     private void betMoney(List<Player> players) {

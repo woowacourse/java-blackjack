@@ -28,11 +28,12 @@ public class InputView {
 
     public static int inputBettingMoney(Player player) {
         System.out.println(player.getName() + "의 베팅 금액은?");
-        return SCANNER.nextInt();
+        int money = SCANNER.nextInt();
+        SCANNER.nextLine();
+        return money;
     }
 
     public static String inputCommand(Player player) {
-        SCANNER.nextLine();
         System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
         return validateCommand(SCANNER.nextLine().trim().toLowerCase());
     }

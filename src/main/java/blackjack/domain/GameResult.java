@@ -1,9 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,7 +15,14 @@ public class GameResult {
         this.result = result;
     }
 
-    public Map<Participant, Double> getBettingResult() {
+    public BettingResult calculateBettingResult(Dealer dealer) {
+        Map<Participant, Integer> bettingResult = getPlayerBettingResult();
+        bettingResult.put(dealer, getDealerTotalMoney());
+
+        return new BettingResult(bettingResult);
+    }
+
+    private Map<Participant, Integer> getPlayerBettingResult() {
         return result.entrySet().stream()
                 .map(entry -> entry.getValue()
                         .stream()
@@ -24,7 +31,7 @@ public class GameResult {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public double getBettingMoney(Player player, PlayerOutcome playerOutcome) {
+    public int getBettingMoney(Player player, PlayerOutcome playerOutcome) {
         if (playerOutcome == PlayerOutcome.WIN) {
             return player.getBettingMoney();
         }
@@ -32,7 +39,7 @@ public class GameResult {
             return -player.getBettingMoney();
         }
         if (playerOutcome == PlayerOutcome.BLACKJACK_WIN) {
-            return player.getBettingMoney() * 1.5;
+            return (int)(player.getBettingMoney() * 1.5);
         }
         return 0;
     }
@@ -41,9 +48,9 @@ public class GameResult {
         return -getBettingMoney(player, outcome);
     }
 
-    public double getDealerTotalMoney() {
-        return -getBettingResult().values().stream()
-                .mapToDouble(money -> money)
+    public int getDealerTotalMoney() {
+        return -getPlayerBettingResult().values().stream()
+                .mapToInt(money -> money)
                 .sum();
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.BettingResult;
 import blackjack.domain.PlayerOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
@@ -39,16 +40,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(Map<PlayerOutcome, List<Player>> gameResult) {
-        System.out.println("## 최종 승패");
+    public static void printGameResult(BettingResult bettingResult) {
+        System.out.println("## 최종 수익");
+        System.out.println("");
 
-        System.out.println("딜러: "
-                + gameResult.getOrDefault(PlayerOutcome.LOSE, Collections.emptyList()).size() + "승 "
-                + gameResult.getOrDefault(PlayerOutcome.WIN, Collections.emptyList()).size() + "패 "
-                + gameResult.getOrDefault(PlayerOutcome.DRAW, Collections.emptyList()).size() + "무");
-
-        gameResult.forEach((outcome, players) ->
-                players.forEach(player -> System.out.println(player.getName() + ": " + outcome.getValue())));
+        bettingResult.getBettingResult().forEach((participant, money) -> {
+            System.out.println(participant.getName() + ": " + money);
+        });
     }
 
     private static String getPlayerCard(Participant participant) {

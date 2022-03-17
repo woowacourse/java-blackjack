@@ -1,5 +1,6 @@
 package blackjack.domain.entry;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.PlayerOutcome;
 
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ public class GameParticipants {
         this.players = players;
     }
 
-    public Map<PlayerOutcome, List<Player>> getGameResult() {
-        return players.match(dealer);
+    public GameResult getGameResult() {
+        return new GameResult(players.match(dealer));
     }
 
     public List<Participant> getParticipant() {
