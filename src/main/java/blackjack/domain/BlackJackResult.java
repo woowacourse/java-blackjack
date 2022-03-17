@@ -11,9 +11,9 @@ public class BlackJackResult {
 
     private static final int DEALER_FLIP_UNIT = -1;
 
-    private final Map<Player, Long> value;
+    private final Map<Player, Double> value;
 
-    public BlackJackResult(final Map<Player, Long> value) {
+    public BlackJackResult(final Map<Player, Double> value) {
         this.value = value;
     }
 
@@ -28,19 +28,19 @@ public class BlackJackResult {
             ));
     }
 
-    private static Long calculateProfit(final Players players, final Player gambler) {
+    private static Double calculateProfit(final Players players, final Player gambler) {
         final GameResult gameResult = players.getDealer().compare(gambler);
         return gameResult.calculateProfit(gambler.getBetMoney());
     }
 
-    public long calculateDealerProfit() {
+    public double calculateDealerProfit() {
         return this.value.values()
             .stream()
-            .mapToLong(Long::valueOf)
+            .mapToDouble(Double::valueOf)
             .sum() * DEALER_FLIP_UNIT;
     }
 
-    public Map<Player, Long> getValue() {
+    public Map<Player, Double> getValue() {
         return value;
     }
 }

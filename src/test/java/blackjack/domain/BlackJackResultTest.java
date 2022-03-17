@@ -49,11 +49,11 @@ public class BlackJackResultTest {
         //when
         final BlackJackResult blackJackResult = BlackJackResult.from(players);
 
-        final long dealerProfit = blackJackResult.calculateDealerProfit();
-        final long gamblerProfit = blackJackResult.getValue()
+        final double dealerProfit = blackJackResult.calculateDealerProfit();
+        final double gamblerProfit = blackJackResult.getValue()
             .values()
             .stream()
-            .mapToLong(Long::valueOf)
+            .mapToDouble(Double::valueOf)
             .sum();
 
         // then
@@ -61,7 +61,7 @@ public class BlackJackResultTest {
     }
 
     @Test
-    @DisplayName("겜블러가 블랙잭시 배팅 금액의 2배를 수익으로 가지는지 확인한다")
+    @DisplayName("겜블러가 블랙잭시 배팅 금액의 1.5배를 수익으로 가지는지 확인한다")
     void gambler_blackjack_result() {
         // given &  when
         this.cardDeck.drawTo(gambler);
@@ -73,14 +73,14 @@ public class BlackJackResultTest {
         //when
         final BlackJackResult blackJackResult = BlackJackResult.from(players);
 
-        final long gamblerProfit = blackJackResult.getValue()
+        final double gamblerProfit = blackJackResult.getValue()
             .values()
             .stream()
-            .mapToLong(Long::valueOf)
+            .mapToDouble(Double::valueOf)
             .sum();
 
 
         // then
-        assertThat(gamblerProfit).isEqualTo(gambler.getBetMoney()* 2L);
+        assertThat(gamblerProfit).isEqualTo(gambler.getBetMoney()* 1.5);
     }
 }

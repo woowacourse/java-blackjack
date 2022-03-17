@@ -84,10 +84,10 @@ public class OutputView {
     public void printResult(final BlackJackResult blackJackResult) {
         System.out.println();
         System.out.println(FINAL_RESULT_INSTRUCTION);
-        final long dealerProfit = blackJackResult.calculateDealerProfit();
-        System.out.println(DEALER_NAME + COLON_DELIMITER + dealerProfit);
-        for (Entry<Player, Long> result : blackJackResult.getValue().entrySet()) {
-            System.out.println(result.getKey().getName() + COLON_DELIMITER + result.getValue());
+        final double dealerProfit = blackJackResult.calculateDealerProfit();
+        System.out.printf(DEALER_NAME + COLON_DELIMITER + "%.0f%n", dealerProfit);
+        for (Entry<Player, Double> result : blackJackResult.getValue().entrySet()) {
+            System.out.printf(result.getKey().getName() + COLON_DELIMITER + "%.0f%n", result.getValue());
         }
     }
 }
