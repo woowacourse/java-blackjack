@@ -75,13 +75,7 @@ public class BlackjackGame {
         }
     }
 
-    //    private ScoreResultDto createFinalScore() {
-//        Map<GameResult, Integer> dealerResult = blackjackBoard.getDealerResult();
-//        Map<String, GameResult> playersResult = blackjackBoard.getPlayersResult();
-//        return ScoreResultDto.from(dealerResult, playersResult);
-//    }
     private BettingResult createFinalScore() {
         return blackjackBoard.getBettingResult();
     }
-
 }
