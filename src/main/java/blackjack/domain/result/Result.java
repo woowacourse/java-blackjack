@@ -7,24 +7,30 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
-    WIN("승", (dealerScore, participantScore) ->
-            (dealerScore < participantScore && participantScore <= Cards.BLACK_JACK_TARGET_SCORE) || (
-                    dealerScore > Cards.BLACK_JACK_TARGET_SCORE && participantScore <= Cards.BLACK_JACK_TARGET_SCORE)),
-    DRAW("무승부", (dealerScore, participantScore) ->
-            Objects.equals(dealerScore, participantScore) && participantScore <= Cards.BLACK_JACK_TARGET_SCORE),
-    LOSE("패", (dealerScore, participantScore) ->
-            (dealerScore > participantScore && dealerScore <= Cards.BLACK_JACK_TARGET_SCORE)
-                    || participantScore > Cards.BLACK_JACK_TARGET_SCORE);
+    WIN("승", (dealer, participant) ->
+            (dealer.getTotal() < participant.getTotal() && !participant.isBust())
+                    || (dealer.isBust() && !participant.isBust())
+                    || !dealer.isBlackJack() && participant.isBlackJack()),
+
+    DRAW("무승부", (dealer, participant) ->
+            (!dealer.isBlackJack() && (dealer.getTotal() == participant.getTotal()) && !participant.isBust())
+                    || (dealer.isBlackJack() && participant.isBlackJack())),
+
+    LOSE("패", (dealer, participant) ->
+            (dealer.getTotal() > participant.getTotal() && !dealer.isBust())
+                    || participant.isBust()
+                    || (dealer.isBust() && !participant.isBlackJack())
+                    || dealer.isBlackJack() && !participant.isBlackJack());
 
     private final String name;
-    private final BiPredicate<Integer, Integer> condition;
+    private final BiPredicate<Score, Score> condition;
 
-    Result(final String name, final BiPredicate<Integer, Integer> condition) {
+    Result(final String name, final BiPredicate<Score, Score> condition) {
         this.name = name;
         this.condition = condition;
     }
 
-    public static Result decide(final int dealerScore, final int participantScore) {
+    public static Result decide(final Score dealerScore, final Score participantScore) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.condition.test(dealerScore, participantScore))
                 .findAny()

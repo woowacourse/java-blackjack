@@ -1,9 +1,10 @@
 package blackjack.domain.player;
 
+import blackjack.domain.result.Score;
+
 public class Dealer extends Player {
 
     private static final String NAME = "딜러";
-    private static final int DEALER_LIMIT_SCORE = 16;
 
     public Dealer() {
         super(NAME);
@@ -11,6 +12,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean canAddCard() {
-        return getTotalScore() <= DEALER_LIMIT_SCORE;
+        Score score = new Score(this);
+        return score.CanAddDealerCard();
     }
 }

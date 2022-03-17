@@ -6,9 +6,6 @@ import java.util.List;
 
 public class Cards implements Iterable<Card> {
 
-    public static final int BLACK_JACK_TARGET_SCORE = 21;
-    private static final int DIFFERENCE_IN_ACE_SCORE = 10;
-
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -16,25 +13,13 @@ public class Cards implements Iterable<Card> {
     }
 
     public int getTotalScore() {
-        int totalScore = cards.stream()
+        return cards.stream()
                 .map(Card::getDenomination)
                 .mapToInt(Denomination::getValue)
                 .sum();
-
-        for (int i = 0; i < countAce(); i++) {
-            totalScore = changeAceScore(totalScore);
-        }
-        return totalScore;
     }
 
-    private int changeAceScore(int totalScore) {
-        if (totalScore > BLACK_JACK_TARGET_SCORE) {
-            totalScore -= DIFFERENCE_IN_ACE_SCORE;
-        }
-        return totalScore;
-    }
-
-    private int countAce() {
+    public int countAce() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
@@ -42,6 +27,10 @@ public class Cards implements Iterable<Card> {
 
     public void addCard(final Card card) {
         cards.add(card);
+    }
+
+    public boolean hasTwoCards() {
+        return cards.size() == 2;
     }
 
     @Override

@@ -7,6 +7,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
 import blackjack.domain.result.ParticipantResult;
+import blackjack.domain.result.Score;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -84,9 +85,11 @@ public class BlackJackController {
     }
 
     private void calculateTotalScores(Dealer dealer, Participants participants) {
-        OutputView.printTotalScore(dealer, dealer.getTotalScore());
+        Score dealerScore = new Score(dealer);
+        OutputView.printTotalScore(dealer, dealerScore.getTotal());
         for (Participant participant : participants) {
-            OutputView.printTotalScore(participant, participant.getTotalScore());
+            Score participantScore = new Score(participant);
+            OutputView.printTotalScore(participant, participantScore.getTotal());
         }
     }
 

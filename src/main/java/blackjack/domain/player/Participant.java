@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.result.Score;
 
 public class Participant extends Player {
 
@@ -10,6 +10,7 @@ public class Participant extends Player {
 
     @Override
     public boolean canAddCard() {
-        return getTotalScore() <= Cards.BLACK_JACK_TARGET_SCORE;
+        Score score = new Score(this);
+        return score.CanAddPlayerCard();
     }
 }

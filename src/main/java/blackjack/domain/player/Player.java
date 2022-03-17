@@ -42,11 +42,19 @@ public abstract class Player {
         return cards.getTotalScore();
     }
 
+    public boolean hasTwoCards() {
+        return cards.hasTwoCards();
+    }
+
     public String getName() {
         return name;
     }
 
     public Cards getCards() {
         return cards;
+    }
+
+    public int countAce() {
+        return cards.countAce();
     }
 }

@@ -30,15 +30,15 @@ public class CardsTest {
                 Arguments.of(List.of(new Card(Denomination.ACE, Suit.CLOVER),
                         new Card(Denomination.EIGHT, Suit.HEART)), 19),
                 Arguments.of(List.of(new Card(Denomination.ACE, Suit.CLOVER),
-                        new Card(Denomination.ACE, Suit.HEART)), 12),
+                        new Card(Denomination.ACE, Suit.HEART)), 22),
                 Arguments.of(List.of(new Card(Denomination.ACE, Suit.CLOVER),
                         new Card(Denomination.ACE, Suit.HEART),
-                        new Card(Denomination.KING, Suit.HEART)), 12),
+                        new Card(Denomination.KING, Suit.HEART)), 32),
                 Arguments.of(List.of(new Card(Denomination.ACE, Suit.CLOVER),
                         new Card(Denomination.JACK, Suit.HEART)), 21),
                 Arguments.of(List.of(new Card(Denomination.ACE, Suit.CLOVER),
                         new Card(Denomination.FIVE, Suit.HEART),
-                        new Card(Denomination.QUEEN, Suit.SPADE)), 16));
+                        new Card(Denomination.QUEEN, Suit.SPADE)), 26));
     }
 
     @Test
