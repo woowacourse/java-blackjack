@@ -32,10 +32,10 @@ public class Betting {
     }
 
     long revenue(Map<Name, PlayRecord> recordMap) {
-        return getMoney(getPlayRecord(recordMap));
+        return calculateMoney(recordMap.get(name));
     }
 
-    private long getMoney(PlayRecord playRecord) {
+    private long calculateMoney(PlayRecord playRecord) {
         if (playRecord == PlayRecord.LOSS) {
             return -money;
         }
@@ -48,10 +48,6 @@ public class Betting {
             return (long)(BLACKJACK_MULTIPLIER * money);
         }
         return 0;
-    }
-
-    private PlayRecord getPlayRecord(Map<Name, PlayRecord> recordMap) {
-        return recordMap.get(name);
     }
 
     @Override
