@@ -8,7 +8,15 @@ public class CardGroup {
     public static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_SPECIAL_SCORE = 10;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
+
+    public CardGroup() {
+        this.cards = new ArrayList<>();
+    }
+
+    public CardGroup(List<Card> cards) {
+        this.cards = cards;
+    }
 
     public void addCard(Card card) {
         cards.add(card);

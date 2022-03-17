@@ -10,12 +10,19 @@ public class Gamer {
     private static final int MINIMUM_NAME_LENGTH = 1;
     private static final int MAXIMUM_NAME_LENGTH = 6;
 
-    private final CardGroup cardGroup = new CardGroup();
+    private final CardGroup cardGroup;
     private final String name;
 
     public Gamer(String name) {
         validateName(name);
         this.name = name;
+        this.cardGroup = new CardGroup();
+    }
+
+    public Gamer(String name, List<Card> cards) {
+        validateName(name);
+        this.name = name;
+        this.cardGroup = new CardGroup(cards);
     }
 
     private void validateName(String name) {

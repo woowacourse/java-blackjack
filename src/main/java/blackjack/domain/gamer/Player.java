@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import static blackjack.domain.card.CardGroup.BLACKJACK_NUMBER;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.result.Match;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,10 @@ public class Player extends Gamer{
 
     public Player(String name) {
         super(name);
+    }
+
+    public Player(String name, List<Card> cards) {
+        super(name, cards);
     }
 
     public static List<Player> of(List<String> playerNames) {

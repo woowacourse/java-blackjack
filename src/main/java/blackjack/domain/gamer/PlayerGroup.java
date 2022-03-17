@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.CardPack;
 import blackjack.domain.result.Match;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -64,6 +65,11 @@ public class PlayerGroup {
     }
 
     public List<Player> getPlayers() {
-        return List.copyOf(players);
+        List<Player> copiedPlayers = new ArrayList<>();
+        for (Player player : players) {
+            Player copiedPlayer = new Player(player.getName(), player.getCards());
+            copiedPlayers.add(copiedPlayer);
+        }
+        return copiedPlayers;
     }
 }
