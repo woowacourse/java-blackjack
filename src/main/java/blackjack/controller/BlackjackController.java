@@ -23,8 +23,7 @@ public class BlackjackController {
     }
 
     public void progressGame(Blackjack blackjack, Players players, Dealer dealer) {
-        List<Player> p = players.getPlayers();
-        for (Player player : p) {
+        for (Player player : players.getPlayers()) {
             askDealCardToPlayer(blackjack, player);
         }
 
