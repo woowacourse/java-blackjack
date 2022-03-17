@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.Score;
+import blackjack.util.BlackjackTestUtil;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -98,11 +99,9 @@ public class CardsTest {
     @DisplayName("카드의 점수 총합을 계산한다. (총 합이 21이 넘는 경우)")
     void calculateCardsSumOver21() {
         // given
-        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = Card.of(Pattern.CLOVER, Denomination.TEN);
-        Card card3 = Card.of(Pattern.HEART, Denomination.TWO);
-        Cards cards = new Cards(List.of(card1, card2));
-        cards.add(card3);
+        Card additionalCard = Card.of(Pattern.HEART, Denomination.TWO);
+        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
+        cards.add(additionalCard);
 
         // when
         Score actual = cards.calculateScore();

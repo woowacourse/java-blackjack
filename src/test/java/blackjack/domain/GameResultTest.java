@@ -1,64 +1,54 @@
 package blackjack.domain;
 
-import static blackjack.domain.card.Denomination.ACE;
-import static blackjack.domain.card.Denomination.EIGHT;
-import static blackjack.domain.card.Denomination.NINE;
-import static blackjack.domain.card.Denomination.TEN;
-import static blackjack.domain.card.Pattern.CLOVER;
-import static blackjack.domain.card.Pattern.DIAMOND;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
+import blackjack.util.BlackjackTestUtil;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class GameResultTest {
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"21,1500", "20,1000", "19,0", "18,-1000"})
     @DisplayName("수익을 Map에 저장한다")
-    void saveIntoMap() {
+    void saveIntoMap(int playerScore, int expected) {
         // given
-        Dealer dealer = createDealer(NINE);
-        Betting betting = new Betting(1000);
+        Dealer dealer = BlackjackTestUtil.createDealer(19);
 
-        Player blackJackPlayer = createPlayer("blackjack", ACE, betting);
-        Player winPlayer = createPlayer("win", TEN, betting);
-        Player drawPlayer = createPlayer("draw", NINE, betting);
-        Player losePlayer = createPlayer("lose", EIGHT, betting);
-        List<Player> players = List.of(blackJackPlayer, winPlayer, drawPlayer, losePlayer);
+        Player player = BlackjackTestUtil.createPlayer(playerScore);
+        List<Player> players = List.of(player);
 
         // when
         GameResult gameResult = GameResult.of(dealer, players);
         Map<String, Integer> profits = gameResult.getProfits();
 
         // then
-        assertAll(
-                () -> assertThat(profits.get(blackJackPlayer.getName())).isEqualTo(1500),
-                () -> assertThat(profits.get(winPlayer.getName())).isEqualTo(1000),
-                () -> assertThat(profits.get(drawPlayer.getName())).isEqualTo(0),
-                () -> assertThat(profits.get(losePlayer.getName())).isEqualTo(-1000),
-                () -> assertThat(gameResult.getDealerProfit()).isEqualTo(-1500)
-        );
+        assertThat(profits.get(player.getName())).isEqualTo(expected);
     }
 
-    private static Dealer createDealer(Denomination denomination2) {
-        Card card1 = Card.of(DIAMOND, TEN);
-        Card card2 = Card.of(CLOVER, denomination2);
-        List<Card> dealerCards = List.of(card1, card2);
-        return new Dealer(dealerCards);
-    }
+    @Test
+    @DisplayName("딜러의 수익은 모든 플레이어 수익의 합의 반대다.")
+    void dealerProfit() {
+        // given
+        Dealer dealer = BlackjackTestUtil.createDealer(19);
 
-    private static Player createPlayer(String name, Denomination denomination2, Betting betting) {
-        Card card1 = Card.of(DIAMOND, TEN);
-        Card card2 = Card.of(CLOVER, denomination2);
-        List<Card> playerCards = List.of(card1, card2);
-        return new Player(new Name(name), playerCards, betting);
+        List<Card> cards = BlackjackTestUtil.createCards(20);
+        Player player1 = new Player(new Name("player1"), cards, new Betting(1000));
+        Player player2 = new Player(new Name("player2"), cards, new Betting(1000));
+        List<Player> players = List.of(player1, player2);
+
+        // when
+        GameResult gameResult = GameResult.of(dealer, players);
+
+        // then
+        assertThat(gameResult.getDealerProfit()).isEqualTo(-2000);
     }
 }

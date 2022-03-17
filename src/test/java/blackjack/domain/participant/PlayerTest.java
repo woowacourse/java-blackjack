@@ -8,6 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Pattern;
+import blackjack.util.BlackjackTestUtil;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,13 +38,8 @@ public class PlayerTest {
     @DisplayName("플레이어가 카드 한 장을 더 받는 경우")
     void addCard() {
         // given
-        Name name = new Name("pobi");
-        Card card1 = Card.of(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = Card.of(Pattern.CLOVER, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2);
-
         CardDeck deck = new CardDeck(List.of(Card.of(Pattern.HEART, Denomination.THREE)));
-        Player player = new Player(name, cards, new Betting(1000));
+        Player player = BlackjackTestUtil.createPlayer(20);
 
         // when
         player.hit(deck);
@@ -56,12 +52,7 @@ public class PlayerTest {
     @DisplayName("플레이어의 카드의 총합이 21보다 작으면 hit이 가능하다.")
     void hittable() {
         // given
-        Name name = new Name("pobi");
-        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = Card.of(Pattern.CLOVER, Denomination.TEN);
-        List<Card> cards = List.of(card1, card2);
-
-        Player player = new Player(name, cards, new Betting(1000));
+        Player player = BlackjackTestUtil.createPlayer(20);
 
         // when
         boolean actual = player.isHittable();
@@ -74,12 +65,7 @@ public class PlayerTest {
     @DisplayName("플레이어의 카드의 총합이 21 이상이면 hit이 불가능하다.")
     void notHittable() {
         // given
-        Name name = new Name("pobi");
-        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = Card.of(Pattern.CLOVER, Denomination.ACE);
-        List<Card> cards = List.of(card1, card2);
-
-        Player player = new Player(name, cards, new Betting(1000));
+        Player player = BlackjackTestUtil.createPlayer(21);
 
         // when
         boolean actual = player.isHittable();
@@ -93,12 +79,7 @@ public class PlayerTest {
     @DisplayName("승패 결과에 따라 수익을 계산한다.")
     void calculateProfit(String outcomeName, int expected) {
         // given
-        Name name = new Name("pobi");
-        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = Card.of(Pattern.CLOVER, Denomination.ACE);
-        List<Card> cards = List.of(card1, card2);
-
-        Player player = new Player(name, cards, new Betting(1000));
+        Player player = BlackjackTestUtil.createPlayer(21);
 
         // when
         int profit = player.calculateProfit(Outcome.valueOf(outcomeName));
