@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
     private static final int DEALER_MIN_TOTAL = 17;
@@ -30,11 +28,11 @@ public class Dealer extends Participant {
         return GameResult.DRAW;
     }
 
-    public void receiveBettingMoney(int money) {
-        bettingMoney.addMoney(money);
+    public void exchangeBettingMoney(int money) {
+        bettingMoney.exchangeMoney(money);
     }
 
-    public int bettingRevenue() {
+    public int getRevenue() {
         return bettingMoney.money;
     }
 
@@ -75,8 +73,8 @@ public class Dealer extends Participant {
             this.money = 0;
         }
 
-        private void addMoney(int money) {
-            this.money += money;
+        private void exchangeMoney(int money) {
+            this.money -= money;
         }
     }
 }

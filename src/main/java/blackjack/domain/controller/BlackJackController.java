@@ -11,18 +11,28 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = initBlackJackGame();
-        while (blackJackGame.isAnyPlayerNotBetYet()) {
-            setupBettingMoney(blackJackGame);
-        }
+        setupAllPlayersBetting(blackJackGame);
         OutputView.printInitialCardStatus(blackJackGame.getParticipantsDto());
 
-        while(blackJackGame.isAnyPlayerTurnRemain()) {
-            playTurn(blackJackGame);
-        }
+        playUntilAllTurnsEnd(blackJackGame);
         OutputView.showDealerResult(blackJackGame.dealerDrawMoreCard());
         OutputView.showFinalCardsAndScore(blackJackGame.getFinalParticipantsDto());
 
-        OutputView.showGameResults(blackJackGame.getGameResultsDtos());
+        blackJackGame.calculateGameResults();
+        OutputView.showDealerRevenue(blackJackGame.getDealer());
+        OutputView.showPlayersResult(blackJackGame.getPlayers());
+    }
+
+    private void setupAllPlayersBetting(BlackJackGame blackJackGame) {
+        while (blackJackGame.isAnyPlayerNotBetYet()) {
+            setupBettingMoney(blackJackGame);
+        }
+    }
+
+    private void playUntilAllTurnsEnd(BlackJackGame blackJackGame) {
+        while(blackJackGame.isAnyPlayerTurnRemain()) {
+            playTurn(blackJackGame);
+        }
     }
 
     private void setupBettingMoney(BlackJackGame blackJackGame) {

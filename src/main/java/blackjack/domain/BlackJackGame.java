@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.dto.GameResultDto;
 import blackjack.domain.dto.ParticipantDto;
 import blackjack.domain.strategy.RandomCardGenerator;
 
@@ -105,16 +104,19 @@ public class BlackJackGame {
         return false;
     }
 
-    public List<GameResultDto> getGameResultsDtos() {
-        List<GameResultDto> gameResultDtos = new ArrayList<>();
-        List<GameResult> dealerResults = new ArrayList<>();
+    public void calculateGameResults() {
         for (Player player : players) {
             GameResult dealerResult = dealer.judgeResult(player);
-            dealerResults.add(dealerResult);
-            gameResultDtos.add(GameResultDto.ofPlayer(player, GameResult.getPairResult(dealerResult)));
+            GameResult playerResult = GameResult.getPairResult(dealerResult);
+            dealer.exchangeBettingMoney(player.moneyToExchange(playerResult));
         }
-        gameResultDtos.add(0, GameResultDto.ofDealer(dealer, dealerResults));
-        return gameResultDtos;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
 }

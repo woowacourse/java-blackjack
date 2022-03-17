@@ -28,28 +28,34 @@ public class Player extends Participant {
         return super.getHoldingCard().isFullScoreOrBust() || finish;
     }
 
-    public int bettingRevenue(GameResult gameResult) {
+    public int moneyToExchange(GameResult gameResult) {
         if (super.getHoldingCard().isBlackJack() && gameResult == GameResult.WIN) {
-            return (int) (bettingMoney.money * 1.5);
+            return bettingMoney.calculateRevenue(1.5);
         }
-        return bettingMoney.calculateRevenue(gameResult);
+        if (gameResult == GameResult.WIN) {
+            return bettingMoney.calculateRevenue(1.0);
+        }
+        if (gameResult == GameResult.LOSE) {
+            return bettingMoney.calculateRevenue(-1.0);
+        }
+        return bettingMoney.revenue;
+    }
+
+    public int getRevenue() {
+        return bettingMoney.revenue;
     }
 
     private static class BettingMoney {
-        private final int money;
+        private final int initial;
+        private int revenue = 0;
 
-        private BettingMoney(int money) {
-            this.money = money;
+        private BettingMoney(int initial) {
+            this.initial = initial;
         }
 
-        private int calculateRevenue(GameResult gameResult) {
-            if (gameResult == GameResult.WIN) {
-                return money;
-            }
-            if (gameResult == GameResult.LOSE) {
-                return money * -1;
-            }
-            return 0;
+        private int calculateRevenue(double rate) {
+            revenue = (int) (initial * rate);
+            return revenue;
         }
     }
 }

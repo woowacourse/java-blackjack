@@ -1,10 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.*;
-import blackjack.domain.dto.GameResultDto;
 import blackjack.domain.dto.ParticipantDto;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -59,34 +57,14 @@ public class OutputView {
 
     }
 
-    public static void showGameResults(List<GameResultDto> gameResultDtos) {
-        System.out.println();
-        for (GameResultDto gameResultDto : gameResultDtos) {
-            showEachResult(gameResultDto);
-        }
+    public static void showDealerRevenue(Dealer dealer) {
+        System.out.printf("%n## 최종 수익%n");
+        System.out.printf(dealer.getName() + ": " + dealer.getRevenue() + "%n");
     }
 
-    private static void showEachResult(GameResultDto gameResultDto) {
-        System.out.printf(gameResultDto.getParticipantName() + " : ");
-        Participant participant = gameResultDto.getParticipant();
-        if (participant.getClass().equals(Player.class)) {
-            showPlayerResult(gameResultDto);
-            return;
+    public static void showPlayersResult(List<Player> players) {
+        for (Player player : players) {
+            System.out.printf(player.getName() + ": " + player.getRevenue() + "%n");
         }
-        showDealerResult(gameResultDto);
-    }
-
-    private static void showPlayerResult(GameResultDto gameResultDto) {
-        for (GameResult gameResult: gameResultDto.getGameResults().keySet()) {
-            System.out.println(gameResult.getResult());
-        }
-    }
-
-    private static void showDealerResult(GameResultDto gameResultDto) {
-        Map<GameResult, Integer> gameResults = gameResultDto.getGameResults();
-        for (GameResult gameResult: gameResults.keySet()) {
-            System.out.printf(gameResults.get(gameResult) + gameResult.getResult() + " ");
-        }
-        System.out.println();
     }
 }

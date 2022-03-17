@@ -26,12 +26,12 @@ public class PlayerTest {
     }
 
     @ParameterizedTest
-    @DisplayName("승무패 여부에 따라 수익률을 계산한다")
+    @DisplayName("승무패 여부에 따라 수익을 계산한다")
     @MethodSource("gameResultsAndRevenues")
     void calculateRightRevenue(int money, GameResult gameResult, int expectedRevenue) {
         Player player = new Player("dog");
         player.putBettingMoney(money);
-        assertThat(player.bettingRevenue(gameResult)).isEqualTo(expectedRevenue);
+        assertThat(player.moneyToExchange(gameResult)).isEqualTo(expectedRevenue);
     }
 
     private static Stream<Arguments> gameResultsAndRevenues() {
@@ -42,14 +42,14 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("블랙잭으로 이기면 수익률이 1.5배이다")
+    @DisplayName("블랙잭으로 이기면 수익은 1.5배이다")
     void winWithBlackJack_getRevenueHalfMore() {
         Player player = new Player("dog");
         player.putBettingMoney(10000);
         player.receiveCards(
                 List.of(new Card(CardNumber.ACE, Symbol.CLOVER),
                         new Card(CardNumber.JACK, Symbol.DIAMOND)));
-        assertThat(player.bettingRevenue(GameResult.WIN)).isEqualTo(15000);
+        assertThat(player.moneyToExchange(GameResult.WIN)).isEqualTo(15000);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class PlayerTest {
         player.receiveCards(
                 List.of(new Card(CardNumber.ACE, Symbol.CLOVER),
                         new Card(CardNumber.JACK, Symbol.DIAMOND)));
-        assertThat(player.bettingRevenue(GameResult.DRAW)).isEqualTo(0);
+        assertThat(player.moneyToExchange(GameResult.DRAW)).isEqualTo(0);
     }
 
 }
