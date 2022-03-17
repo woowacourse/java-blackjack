@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
 public enum WinDrawLose {
@@ -15,7 +14,7 @@ public enum WinDrawLose {
         this.name = name;
     }
 
-    public static WinDrawLose judgeDealerWinDrawLose(Player dealer, Player guest) {
+    public static WinDrawLose judgePlayerWinDrawLose(Player dealer, Player guest) {
         WinDrawLose bust = existBust(guest.isBust(), dealer.isBust());
         if (bust != null) {
             return bust;
@@ -29,10 +28,10 @@ public enum WinDrawLose {
 
     private static WinDrawLose existBust(boolean guest, boolean dealer) {
         if (guest) {
-            return WIN;
+            return LOSE;
         }
         if (dealer) {
-            return LOSE;
+            return WIN;
         }
         return null;
     }
@@ -42,10 +41,10 @@ public enum WinDrawLose {
             return DRAW;
         }
         if (dealer.isBlackjack()) {
-            return WIN;
+            return LOSE;
         }
         if (guest.isBlackjack()) {
-            return LOSE;
+            return WIN;
         }
         return null;
     }
@@ -54,25 +53,15 @@ public enum WinDrawLose {
         int dealerScore = dealer.getCards().calculateScore();
         int guestScore = guest.getCards().calculateScore();
         if (dealerScore > guestScore) {
-            return WIN;
+            return LOSE;
         }
         if (guestScore > dealerScore) {
-            return LOSE;
+            return WIN;
         }
         return DRAW;
     }
 
     public String getName() {
         return name;
-    }
-
-    public WinDrawLose reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
     }
 }

@@ -7,6 +7,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
+import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -31,8 +32,8 @@ public class BlackjackResultTest {
         guest2.hit(new Card(Denomination.FIVE, Suit.CLUBS));
         BlackjackResult result = BlackjackResult.match(dealer, List.of(guest1, guest2));
 
-        Map<String, Map<WinDrawLose, Integer>> resultMap = result.getResultMap();
-        assertThat(resultMap.get("딜러").get(WinDrawLose.WIN)).isEqualTo(1);
-        assertThat(resultMap.get("딜러").get(WinDrawLose.LOSE)).isEqualTo(1);
+        Map<Player, WinDrawLose> resultMap = result.getResultMap();
+        assertThat(resultMap.get(guest1)).isEqualTo(WinDrawLose.WIN);
+        assertThat(resultMap.get(guest2)).isEqualTo(WinDrawLose.LOSE);
     }
 }

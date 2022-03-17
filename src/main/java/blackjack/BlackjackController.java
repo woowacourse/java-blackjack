@@ -28,7 +28,8 @@ public class BlackjackController {
         players.bet(bettingBox, (player) -> new BettingMoney(InputView.inputBettingMoney(player.getName())));
         players.playersHit(deck, OutputView::printPresentStatus);
         OutputView.printCardResults(getCardResults(players));
-        OutputView.printResult(BlackjackResult.match(players.findDealer(), players.getGuests()).getResultMap());
+        BlackjackResult result = BlackjackResult.match(players.findDealer(), players.getGuests());
+        OutputView.printResult(result.getPrizeResult(players.findDealer(), bettingBox));
     }
 
     private Map<String, Cards> getCardStatus(Players players) {

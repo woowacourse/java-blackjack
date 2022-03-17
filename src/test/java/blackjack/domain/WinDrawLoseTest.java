@@ -22,8 +22,8 @@ public class WinDrawLoseTest {
         Guest guest = new Guest("a", (p) -> HitFlag.Y);
         guest.hit(new Card(Denomination.ACE, Suit.CLUBS));
         guest.hit(new Card(Denomination.FIVE, Suit.CLUBS));
-        assertThat(WinDrawLose.judgeDealerWinDrawLose(dealer, guest))
-                .isEqualTo(WinDrawLose.LOSE);
+        assertThat(WinDrawLose.judgePlayerWinDrawLose(dealer, guest))
+                .isEqualTo(WinDrawLose.WIN);
     }
 
     @Test
@@ -36,8 +36,8 @@ public class WinDrawLoseTest {
         guest.hit(new Card(Denomination.TEN, Suit.SPADES));
         guest.hit(new Card(Denomination.JACK, Suit.CLUBS));
         guest.hit(new Card(Denomination.FIVE, Suit.CLUBS));
-        assertThat(WinDrawLose.judgeDealerWinDrawLose(dealer, guest))
-                .isEqualTo(WinDrawLose.WIN);
+        assertThat(WinDrawLose.judgePlayerWinDrawLose(dealer, guest))
+                .isEqualTo(WinDrawLose.LOSE);
     }
 
     @Test
@@ -51,8 +51,8 @@ public class WinDrawLoseTest {
         guest.hit(new Card(Denomination.KING, Suit.CLUBS));
         guest.hit(new Card(Denomination.KING, Suit.HEARTS));
         guest.hit(new Card(Denomination.KING, Suit.SPADES));
-        assertThat(WinDrawLose.judgeDealerWinDrawLose(dealer, guest))
-                .isEqualTo(WinDrawLose.WIN);
+        assertThat(WinDrawLose.judgePlayerWinDrawLose(dealer, guest))
+                .isEqualTo(WinDrawLose.LOSE);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class WinDrawLoseTest {
         Guest guest = new Guest("a", (p) -> HitFlag.Y);
         guest.hit(new Card(Denomination.ACE, Suit.CLUBS));
         guest.hit(new Card(Denomination.KING, Suit.HEARTS));
-        assertThat(WinDrawLose.judgeDealerWinDrawLose(dealer, guest))
+        assertThat(WinDrawLose.judgePlayerWinDrawLose(dealer, guest))
                 .isEqualTo(WinDrawLose.DRAW);
     }
 
@@ -78,8 +78,8 @@ public class WinDrawLoseTest {
         guest.hit(new Card(Denomination.ACE, Suit.CLUBS));
         guest.hit(new Card(Denomination.KING, Suit.HEARTS));
         guest.hit(new Card(Denomination.QUEEN, Suit.HEARTS));
-        assertThat(WinDrawLose.judgeDealerWinDrawLose(dealer, guest))
-                .isEqualTo(WinDrawLose.WIN);
+        assertThat(WinDrawLose.judgePlayerWinDrawLose(dealer, guest))
+                .isEqualTo(WinDrawLose.LOSE);
     }
 
     @Test
@@ -91,8 +91,8 @@ public class WinDrawLoseTest {
         Guest guest = new Guest("a", (p) -> HitFlag.Y);
         guest.hit(new Card(Denomination.NINE, Suit.HEARTS));
         guest.hit(new Card(Denomination.QUEEN, Suit.HEARTS));
-        assertThat(WinDrawLose.judgeDealerWinDrawLose(dealer, guest))
-                .isEqualTo(WinDrawLose.WIN);
+        assertThat(WinDrawLose.judgePlayerWinDrawLose(dealer, guest))
+                .isEqualTo(WinDrawLose.LOSE);
     }
 
     @Test
@@ -104,8 +104,8 @@ public class WinDrawLoseTest {
         Guest guest = new Guest("a", (p) -> HitFlag.Y);
         guest.hit(new Card(Denomination.JACK, Suit.CLUBS));
         guest.hit(new Card(Denomination.QUEEN, Suit.HEARTS));
-        assertThat(WinDrawLose.judgeDealerWinDrawLose(dealer, guest))
-                .isEqualTo(WinDrawLose.LOSE);
+        assertThat(WinDrawLose.judgePlayerWinDrawLose(dealer, guest))
+                .isEqualTo(WinDrawLose.WIN);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class WinDrawLoseTest {
         Guest guest = new Guest("a", (p) -> HitFlag.Y);
         guest.hit(new Card(Denomination.JACK, Suit.CLUBS));
         guest.hit(new Card(Denomination.NINE, Suit.SPADES));
-        assertThat(WinDrawLose.judgeDealerWinDrawLose(dealer, guest))
+        assertThat(WinDrawLose.judgePlayerWinDrawLose(dealer, guest))
                 .isEqualTo(WinDrawLose.DRAW);
     }
 }

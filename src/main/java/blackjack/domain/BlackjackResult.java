@@ -2,48 +2,50 @@ package blackjack.domain;
 
 import blackjack.domain.player.Player;
 import java.util.Collections;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackResult {
 
-    private final Map<String, Map<WinDrawLose, Integer>> resultMap;
+    private final Map<Player, WinDrawLose> resultMap;
 
-    private BlackjackResult(Map<String, Map<WinDrawLose, Integer>> resultMap) {
+    private BlackjackResult(Map<Player, WinDrawLose> resultMap) {
         this.resultMap = resultMap;
     }
 
     public static BlackjackResult match(Player dealer, List<Player> guests) {
-        Map<String, Map<WinDrawLose, Integer>> result = judgeResult(dealer, guests);
+        Map<Player, WinDrawLose> result = judgeResult(dealer, guests);
         return new BlackjackResult(result);
     }
 
-    private static Map<String, Map<WinDrawLose, Integer>> judgeResult(Player dealer, List<Player> guests) {
-        Map<String, Map<WinDrawLose, Integer>> resultMap = new LinkedHashMap<>();
-        Map<WinDrawLose, Integer> dealerResult = new EnumMap<>(WinDrawLose.class);
-        judgeAndPutResult(dealer, guests, resultMap, dealerResult);
-        resultMap.put(dealer.getName(), dealerResult);
+    private static Map<Player, WinDrawLose> judgeResult(Player dealer, List<Player> guests) {
+        Map<Player, WinDrawLose> resultMap = new LinkedHashMap<>();
+        judgeAndPutResult(dealer, guests, resultMap);
         return resultMap;
     }
 
-    private static void judgeAndPutResult(
-            Player dealer, List<Player> guests,
-            Map<String, Map<WinDrawLose, Integer>> resultMap,
-            Map<WinDrawLose, Integer> dealerResult
-    ) {
+    private static void judgeAndPutResult(Player dealer, List<Player> guests, Map<Player, WinDrawLose> resultMap) {
         for (Player guest : guests) {
-            WinDrawLose result = WinDrawLose.judgeDealerWinDrawLose(dealer, guest);
-            dealerResult.merge(result, 1, Integer::sum);
-            EnumMap<WinDrawLose, Integer> guestResult = new EnumMap<>(WinDrawLose.class);
-            guestResult.put(result.reverse(), 1);
-            resultMap.put(guest.getName(), guestResult);
+            WinDrawLose result = WinDrawLose.judgePlayerWinDrawLose(dealer, guest);
+            resultMap.put(guest, result);
         }
     }
 
-    public Map<String, Map<WinDrawLose, Integer>> getResultMap() {
+    public Map<Player, WinDrawLose> getResultMap() {
         return Collections.unmodifiableMap(resultMap);
+    }
+
+    public Map<Player, Double> getPrizeResult(Player dealer, BettingBox bettingBox) {
+        Map<Player, Double> prizeResult = new HashMap<>();
+        double playerRevenue = 0;
+        for (Player guest : resultMap.keySet()) {
+            double prizeMoney = bettingBox.getPrizeMoney(guest, resultMap.get(guest), guest.isBlackjack());
+            prizeResult.put(guest, prizeMoney);
+            playerRevenue += prizeMoney;
+        }
+        prizeResult.put(dealer, playerRevenue * -1);
+        return prizeResult;
     }
 }
