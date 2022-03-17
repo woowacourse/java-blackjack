@@ -13,6 +13,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.BlackJackGame;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.GamerDto;
 

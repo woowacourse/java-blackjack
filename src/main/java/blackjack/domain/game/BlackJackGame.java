@@ -1,10 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
@@ -24,15 +22,15 @@ public class BlackJackGame {
 	private final Gamers gamers;
 	private final DrawStrategy deck;
 
-	public BlackJackGame(List<String> names, Function<String, Integer> betting, DrawStrategy deck) {
+	public BlackJackGame(List<String> names, BettingInjector betting, DrawStrategy deck) {
 		this.gamers = new Gamers(names, betting);
 		this.deck = deck;
 	}
 
-	public GameResultDto play(Function<String, Boolean> answerReceiver, BiConsumer<String, List<Card>> cardChecker) {
+	public GameResultDto play(HitRequester hitOrStay, CardsChecker cardChecker) {
 		giveFirstCards();
 		checkFirstCardsOfGamers(cardChecker);
-		askPlayerHitOrStay(answerReceiver, cardChecker);
+		askPlayerHitOrStay(hitOrStay, cardChecker);
 		askDealerHitOrStay();
 		return createResult();
 	}
@@ -43,10 +41,10 @@ public class BlackJackGame {
 		}
 	}
 
-	private void checkFirstCardsOfGamers(BiConsumer<String, List<Card>> cardChecker) {
+	private void checkFirstCardsOfGamers(CardsChecker cardChecker) {
 		GamerDto dealerDto = getDealerDto();
-		cardChecker.accept(dealerDto.getName(), getDealerFirstCard(dealerDto));
-		getPlayerDtos().forEach(p -> cardChecker.accept(p.getName(), p.getCards()));
+		cardChecker.check(dealerDto.getName(), getDealerFirstCard(dealerDto));
+		getPlayerDtos().forEach(p -> cardChecker.check(p.getName(), p.getCards()));
 	}
 
 	private List<Card> getDealerFirstCard(GamerDto dealerDto) {
@@ -55,19 +53,16 @@ public class BlackJackGame {
 			.collect(Collectors.toList());
 	}
 
-	private void askPlayerHitOrStay(Function<String, Boolean> answerReceiver,
-		BiConsumer<String, List<Card>> cardChecker) {
-		for (GamerDto player : getPlayerDtos()) {
-			hitOrStay(player, answerReceiver, cardChecker);
+	private void askPlayerHitOrStay(HitRequester hitOrStay, CardsChecker cardChecker) {
+		for (String name : gamers.findPlayerNames()) {
+			hitOrStay(name, hitOrStay, cardChecker);
 		}
 	}
 
-	private void hitOrStay(GamerDto player, Function<String, Boolean> answerReceiver,
-		BiConsumer<String, List<Card>> cardChecker) {
-		while (!isBust(player.getName()) && answerReceiver.apply(player.getName())) {
-			String name = player.getName();
+	private void hitOrStay(String name, HitRequester hitOrStay, CardsChecker cardChecker) {
+		while (!isBust(name) && hitOrStay.request(name)) {
 			gamers.giveCardToPlayer(name, deck);
-			cardChecker.accept(name, findPlayerDtoByName(name).getCards());
+			cardChecker.check(name, findPlayerDtoByName(name).getCards());
 		}
 	}
 

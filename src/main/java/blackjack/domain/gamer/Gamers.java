@@ -2,9 +2,9 @@ package blackjack.domain.gamer;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import blackjack.domain.game.BettingInjector;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.DrawStrategy;
 
@@ -18,11 +18,11 @@ public class Gamers {
 	private final Dealer dealer;
 	private final List<Player> players;
 
-	public Gamers(List<String> names, Function<String, Integer> betting) {
+	public Gamers(List<String> names, BettingInjector betting) {
 		validateDuplicationNames(names);
 		this.dealer = new Dealer();
 		this.players = names.stream()
-			.map(name -> new Player(name, betting.apply(name)))
+			.map(name -> new Player(name, betting.inject(name)))
 			.collect(Collectors.toList());
 	}
 
