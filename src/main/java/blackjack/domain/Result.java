@@ -36,18 +36,22 @@ public enum Result {
     public static Map<String, Integer> calculateRevenue(List<Player> players, Dealer dealer) {
         Map<String, Integer> revenue = new LinkedHashMap<>();
 
-        Map<String, Integer> playerRevenue = players.stream()
-                .collect(toMap(
-                        player -> player.getName(), player -> player.getRevenue(findResult(player, dealer).getRate()),
-                        (e1, e2) -> e1,
-                        LinkedHashMap::new)
-                );
+        Map<String, Integer> playerRevenue = calculatePlayerRevenue(players, dealer);
 
         revenue.put(dealer.getName(), calculateDealerRevenue(playerRevenue));
 
         revenue.putAll(playerRevenue);
 
         return revenue;
+    }
+
+    private static LinkedHashMap<String, Integer> calculatePlayerRevenue(List<Player> players, Dealer dealer) {
+        return players.stream()
+                .collect(toMap(
+                        player -> player.getName(), player -> player.getRevenue(findResult(player, dealer).getRate()),
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new)
+                );
     }
 
     private static Result findResult(User player, User dealer) {
