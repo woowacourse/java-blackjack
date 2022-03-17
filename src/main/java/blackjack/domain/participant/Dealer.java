@@ -2,8 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.card.CardHandState;
-import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,20 +9,13 @@ public class Dealer extends Participant {
 
     public static final String UNIQUE_NAME = "딜러";
     private static final int INITIAL_DEALER_OPEN_CARDS_COUNT = 1;
-    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY =
-            (cards) -> CardHandState.of(cards, CardBundle::isDealerFinished);
 
     private Dealer(final CardBundle cardBundle) {
-        super(cardBundle, STATE_UPDATE_STRATEGY);
+        super(cardBundle, CardBundle::isDealerFinished);
     }
 
     public static Dealer of(final CardBundle cardBundle) {
         return new Dealer(cardBundle);
-    }
-
-    @Override
-    protected void receiveCard(final Card card) {
-        cardHand.hit(card, STATE_UPDATE_STRATEGY);
     }
 
     @Override
@@ -34,7 +25,8 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> getInitialOpenCards() {
-        return cardHand.getCards()
+        return cardHand.getCardBundle()
+                .getCards()
                 .stream()
                 .limit(INITIAL_DEALER_OPEN_CARDS_COUNT)
                 .collect(Collectors.toUnmodifiableList());

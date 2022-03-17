@@ -81,8 +81,7 @@ public class PlayerTest {
 
             assertThatExceptionOfType(IllegalArgumentException.class)
                     .isThrownBy(() -> player.hitOrStay(STAY_CHOICE, () -> CLOVER7))
-                    .withMessage("이미 카드 패가 확정된 참여자입니다.");
-
+                    .withMessage("이미 패가 확정된 참여자입니다.");
         }
     }
 

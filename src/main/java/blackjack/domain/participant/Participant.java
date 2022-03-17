@@ -2,9 +2,12 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.card.CardHand;
 import blackjack.domain.game.Score;
-import blackjack.strategy.CardHandStateStrategy;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.CanHit;
+import blackjack.domain.state.CardHand;
+import blackjack.domain.state.Stay;
+import blackjack.strategy.CanHitStrategy;
 import blackjack.strategy.CardSupplier;
 import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayChoiceStrategy;
@@ -14,8 +17,14 @@ public abstract class Participant {
 
     protected CardHand cardHand;
 
-    protected Participant(final CardBundle cardBundle, final CardHandStateStrategy stateStrategy) {
-        this.cardHand = CardHand.of(cardBundle, stateStrategy);
+    protected Participant(final CardBundle cardBundle, final CanHitStrategy stateStrategy) {
+        if (cardBundle.isBlackjack()) {
+            this.cardHand = new Blackjack(cardBundle);
+        } else if (stateStrategy.checkFinished(cardBundle)) {
+            this.cardHand = new Stay(cardBundle);
+        } else {
+            this.cardHand = new CanHit(cardBundle, stateStrategy);
+        }
     }
 
     public boolean canDraw() {
@@ -34,16 +43,14 @@ public abstract class Participant {
     public void hitOrStay(final HitOrStayChoiceStrategy hitOrStay,
                           final CardSupplier supplier) {
         if (hitOrStay.shouldHit()) {
-            receiveCard(supplier.getCard());
+            cardHand = cardHand.hit(supplier.getCard());
             return;
         }
-        cardHand.stay();
+        cardHand = cardHand.stay();
     }
 
-    abstract protected void receiveCard(final Card card);
-
     public Score getScore() {
-        return cardHand.getScore();
+        return getCardBundle().getScore();
     }
 
     public boolean isBlackjack() {
@@ -63,6 +70,10 @@ public abstract class Participant {
     public abstract List<Card> getInitialOpenCards();
 
     public List<Card> getCards() {
-        return cardHand.getCards();
+        return getCardBundle().getCards();
+    }
+
+    private CardBundle getCardBundle() {
+        return cardHand.getCardBundle();
     }
 }

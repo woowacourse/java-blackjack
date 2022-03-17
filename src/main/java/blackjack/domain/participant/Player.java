@@ -2,9 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.card.CardHandState;
 import blackjack.domain.game.DuelResult;
-import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,13 +11,11 @@ public class Player extends Participant {
     private static final int INITIAL_PLAYER_OPEN_CARDS_COUNT = 2;
     private static final String BLACK_NAME_INPUT_EXCEPTION_MESSAGE = "플레이어는 이름을 지녀야 합니다.";
     private static final String INVALID_PLAYER_NAME_EXCEPTION_MESSAGE = "플레이어의 이름은 딜러가 될 수 없습니다.";
-    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY =
-            (cards) -> CardHandState.of(cards, CardBundle::isBlackjackScore);
 
     private final String name;
 
     private Player(final String name, final CardBundle cardBundle) {
-        super(cardBundle, STATE_UPDATE_STRATEGY);
+        super(cardBundle, CardBundle::isBlackjackScore);
         this.name = name;
     }
 
@@ -46,18 +42,14 @@ public class Player extends Participant {
     }
 
     @Override
-    protected void receiveCard(final Card card) {
-        cardHand.hit(card, STATE_UPDATE_STRATEGY);
-    }
-
-    @Override
     public String getName() {
         return name;
     }
 
     @Override
     public List<Card> getInitialOpenCards() {
-        return cardHand.getCards()
+        return cardHand.getCardBundle()
+                .getCards()
                 .stream()
                 .limit(INITIAL_PLAYER_OPEN_CARDS_COUNT)
                 .collect(Collectors.toUnmodifiableList());

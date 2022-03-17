@@ -33,7 +33,6 @@ public class DealerTest {
         dealer = Dealer.of(cardBundle);
     }
 
-
     @DisplayName("hit을 선택하는 경우 카드 한 장을 추가한다.")
     @Test
     void hitOrStay_choosingHitAddsCardToBundle() {
@@ -76,6 +75,7 @@ public class DealerTest {
             dealer.hitOrStay(HIT_CHOICE, () -> CLOVER8);
 
             boolean actual = dealer.canDraw();
+            System.out.println(dealer.cardHand);
 
             assertThat(actual).isFalse();
         }
@@ -110,10 +110,12 @@ public class DealerTest {
         CardBundle cardBundle = generateCardBundleOf(CLOVER7, CLOVER10);
         Dealer dealer = Dealer.of(cardBundle);
 
+        System.out.println(dealer);
+
         assertThat(dealer.canDraw()).isFalse();
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> dealer.hitOrStay(HIT_CHOICE, () -> CLOVER3))
-                .withMessage("이미 카드 패가 확정된 참여자입니다.");
+                .withMessage("이미 패가 확정된 참여자입니다.");
 
         assertThat(dealer.isBlackjack()).isFalse();
         assertThat(dealer.isBust()).isFalse();
