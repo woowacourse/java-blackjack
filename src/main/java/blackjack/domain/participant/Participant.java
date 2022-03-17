@@ -35,9 +35,13 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public abstract boolean isWin(Participant participant);
+    public boolean isWin(Participant dealer) {
+        return getTotalScore() > dealer.getTotalScore();
+    }
 
-    public abstract boolean isSameScore(Participant participant);
+    public boolean isSameScore(Participant participant) {
+        return getTotalScore() == participant.getTotalScore();
+    }
 
     public String getName() {
         return name.getValue();

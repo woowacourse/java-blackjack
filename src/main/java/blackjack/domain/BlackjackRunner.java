@@ -62,13 +62,13 @@ public class BlackjackRunner {
 
     private int getDealerProfit(Dealer dealer, List<Player> players) {
         return players.stream()
-                .mapToInt(player -> player.calculateBettingMoney(dealer) * REVERSE_MONEY)
+                .mapToInt(player -> player.calculateProfit(dealer) * REVERSE_MONEY)
                 .sum();
     }
 
     private List<PlayerResult> createPlayerResults(Dealer dealer, List<Player> players) {
         return players.stream()
-                .map(player -> new PlayerResult(player.getName(), player.calculateBettingMoney(dealer)))
+                .map(player -> new PlayerResult(player.getName(), player.calculateProfit(dealer)))
                 .collect(toList());
     }
 }

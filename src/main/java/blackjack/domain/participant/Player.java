@@ -18,17 +18,7 @@ public class Player extends Participant {
         return getTotalScore() < BLACKJACK_SCORE;
     }
 
-    @Override
-    public boolean isWin(Participant dealer) {
-        return getTotalScore() > dealer.getTotalScore();
-    }
-
-    @Override
-    public boolean isSameScore(Participant dealer) {
-        return getTotalScore() == dealer.getTotalScore();
-    }
-
-    public int calculateBettingMoney(Participant dealer) {
+    public int calculateProfit(Participant dealer) {
         return BettingResult.of(this, dealer).getResult(bettingMoney);
     }
 }

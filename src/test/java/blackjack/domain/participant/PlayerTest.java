@@ -53,7 +53,7 @@ public class PlayerTest {
 
         Player player = new Player("sudal", generateCards(), 10000);
 
-        int bettingMoney = player.calculateBettingMoney(dealer);
+        int bettingMoney = player.calculateProfit(dealer);
 
         assertThat(bettingMoney).isEqualTo(10000);
     }
@@ -69,7 +69,7 @@ public class PlayerTest {
         player.append(new Card(KING, HEART));
         player.append(new Card(JACK, SPADE));
 
-        int bettingMoney = player.calculateBettingMoney(dealer);
+        int bettingMoney = player.calculateProfit(dealer);
 
         assertThat(bettingMoney).isEqualTo(-10000);
     }
@@ -82,7 +82,7 @@ public class PlayerTest {
         player.append(new Card(KING, SPADE));
         player.append(new Card(JACK, SPADE));
 
-        int bettingMoney = player.calculateBettingMoney(dealer);
+        int bettingMoney = player.calculateProfit(dealer);
 
         assertThat(bettingMoney).isEqualTo(-10000);
     }
@@ -93,7 +93,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", generateTotalScoreGraterThan17Cards(), 10000);
 
-        int bettingMoney = player.calculateBettingMoney(dealer);
+        int bettingMoney = player.calculateProfit(dealer);
 
         assertThat(bettingMoney).isEqualTo(10000);
     }
@@ -104,7 +104,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
         Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards(), 10000);
 
-        int bettingMoney = player.calculateBettingMoney(dealer);
+        int bettingMoney = player.calculateProfit(dealer);
 
         assertThat(bettingMoney).isEqualTo(-10000);
     }
@@ -115,7 +115,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateCards());
         Player player = new Player("sudal", generateCards(), 10000);
 
-        int bettingMoney = player.calculateBettingMoney(dealer);
+        int bettingMoney = player.calculateProfit(dealer);
 
         assertThat(bettingMoney).isEqualTo(0);
     }
@@ -126,7 +126,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateCards());
         Player player = new Player("sudal", generateBlackjack(), 10000);
 
-        int bettingMoney = player.calculateBettingMoney(dealer);
+        int bettingMoney = player.calculateProfit(dealer);
 
         assertThat(bettingMoney).isEqualTo(15000);
     }
@@ -137,7 +137,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateBlackjack());
         Player player = new Player("sudal", generateBlackjack(), 10000);
 
-        int bettingMoney = player.calculateBettingMoney(dealer);
+        int bettingMoney = player.calculateProfit(dealer);
 
         assertThat(bettingMoney).isEqualTo(0);
     }
