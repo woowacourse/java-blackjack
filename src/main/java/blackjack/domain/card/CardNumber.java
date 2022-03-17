@@ -31,7 +31,7 @@ public enum CardNumber {
     public static int getOptimizeTotalNumber(List<CardNumber> cardNumbers) {
         int totalNumber = getTotalNumber(cardNumbers);
         boolean containAce = isContainAce(cardNumbers);
-        if (containAce && isBust(totalNumber + SUM_HIDDEN_ACE)) {
+        if (containAce && (totalNumber + SUM_HIDDEN_ACE) <= BLACKJACK_NUMBER) {
             return totalNumber + SUM_HIDDEN_ACE;
         }
         return totalNumber;
@@ -46,10 +46,6 @@ public enum CardNumber {
     private static boolean isContainAce(List<CardNumber> cardNumbers) {
         return cardNumbers.stream()
             .anyMatch(cardNumber -> cardNumber == ACE);
-    }
-
-    private static boolean isBust(int totalNumber) {
-        return totalNumber <= BLACKJACK_NUMBER;
     }
 
     public int getValue() {

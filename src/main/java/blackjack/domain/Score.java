@@ -2,11 +2,14 @@ package blackjack.domain;
 
 import java.util.Arrays;
 
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+
 public enum Score {
     WIN("승", 1.5) {
         @Override
-        public boolean match(int competeNumber) {
-            return competeNumber > 0;
+        public boolean match(Player player, Dealer dealer) {
+            return player.isBlackjack() && !dealer.isBlackjack();
         }
 
         @Override
@@ -16,8 +19,18 @@ public enum Score {
     },
     DRAW("무", 1) {
         @Override
-        public boolean match(int competeNumber) {
-            return competeNumber == 0;
+        public boolean match(Player player, Dealer dealer) {
+            if (player.isBlackjack() && dealer.isBlackjack()) {
+                return true;
+            }
+            if (player.isBust()) {
+                return false;
+            }
+            if (!dealer.isBust()) {
+                return player.getTotalNumber() > dealer.getTotalNumber();
+            }
+            return true;
+
         }
 
         @Override
@@ -27,8 +40,14 @@ public enum Score {
     },
     LOSE("패", -1) {
         @Override
-        public boolean match(int competeNumber) {
-            return competeNumber < 0;
+        public boolean match(Player player, Dealer dealer) {
+            if (player.isBust()) {
+                return true;
+            }
+            if (!player.isBlackjack() && !dealer.isBust()) {
+                return player.getTotalNumber() <= dealer.getTotalNumber();
+            }
+            return false;
         }
 
         @Override
@@ -46,14 +65,12 @@ public enum Score {
         this.dividendRate = dividendRate;
     }
 
-    abstract public boolean match(int competeNumber);
+    abstract public boolean match(Player player, Dealer dealer);
     abstract public Score inverse();
 
-    public static Score compete(int playerTotalNumber, int dealerTotalNumber) {
-        int competeNumber = playerTotalNumber - dealerTotalNumber;
-
+    public static Score compete(Player player, Dealer dealer) {
         return Arrays.stream(values())
-            .filter(score -> score.match(competeNumber))
+            .filter(score -> score.match(player, dealer))
             .findAny().orElse(Score.LOSE);
     }
 

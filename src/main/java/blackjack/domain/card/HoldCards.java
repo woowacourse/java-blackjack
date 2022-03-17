@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class HoldCards {
 
+    private static final int INIT_SIZE = 2;
+
     private final List<Card> cards;
 
     public HoldCards(List<Card> cards) {
@@ -22,8 +24,8 @@ public class HoldCards {
     public int getTotalNumber() {
         return CardNumber.getOptimizeTotalNumber(
             cards.stream()
-            .map(Card::getCardNumber)
-            .collect(Collectors.toList())
+                .map(Card::getCardNumber)
+                .collect(Collectors.toList())
         );
     }
 
@@ -37,5 +39,9 @@ public class HoldCards {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public boolean isInitSize() {
+        return cards.size() == INIT_SIZE;
     }
 }

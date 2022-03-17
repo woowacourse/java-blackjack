@@ -29,21 +29,16 @@ public class Player {
         holdCards.add(drawable.draw());
     }
 
-    public Score compete(Player otherPlayer) {
-        if (!this.isBust() && !otherPlayer.isBust()) {
-            return Score.compete(this.getTotalNumber(), otherPlayer.getTotalNumber());
-        }
-        if (this.isBust() && otherPlayer.isBust()) {
-            return Score.DRAW;
-        }
-        if (otherPlayer.isBust()) {
-            return Score.WIN;
-        }
-        return Score.LOSE;
+    public Score compete(Dealer dealer) {
+        return Score.compete(this, dealer);
     }
 
     public boolean isBust() {
-        return getTotalNumber() > BLACKJACK_NUMBER;
+        return holdCards.getTotalNumber() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isBlackjack() {
+        return holdCards.isInitSize() && holdCards.getTotalNumber() == BLACKJACK_NUMBER;
     }
 
     public int getTotalNumber() {

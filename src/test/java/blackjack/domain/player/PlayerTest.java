@@ -10,7 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.MockDeck;
-import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
@@ -48,39 +47,6 @@ public class PlayerTest {
             player.drawCard(mockDeck);
 
             Assertions.assertThat(player.isBust()).isEqualTo(expected);
-        }
-    }
-
-    @Nested
-    @DisplayName("Compete는")
-    class Compete {
-
-        @ParameterizedTest
-        @CsvSource(value = {"FOUR|LOSE", "FIVE|DRAW", "SIX|WIN"}, delimiter = '|')
-        @DisplayName("딜러와 점수를 비교하여 승부 결과를 반환한다.")
-        void returnFalse(CardNumber cardNumber, Score expected) {
-            Player player = new Player(new Name("player"),
-                HoldCards.drawTwoCards(() -> Card.of(CardPattern.CLOVER, cardNumber)));
-            Dealer dealer = new Dealer(() -> Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
-            Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
-        }
-
-        @ParameterizedTest
-        @CsvSource(value = {"TEN|DRAW", "ACE|WIN"}, delimiter = '|')
-        @DisplayName("딜러가 버스트일 때 승부 결과를 반환한다.")
-        void returnResult(CardNumber cardNumber, Score expected) {
-            MockDeck mockDeck = new MockDeck(List.of(
-                Card.of(CardPattern.DIAMOND, CardNumber.TEN),
-                Card.of(CardPattern.DIAMOND, CardNumber.TEN),
-                Card.of(CardPattern.DIAMOND, CardNumber.TEN),
-                Card.of(CardPattern.DIAMOND, CardNumber.TEN)
-            ));
-            Player player = new Player(new Name("player"), HoldCards.drawTwoCards(mockDeck));
-            Dealer dealer = new Dealer(mockDeck);
-            player.drawCard(() -> Card.of(CardPattern.DIAMOND, cardNumber));
-            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TWO));
-
-            Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
         }
     }
 }
