@@ -16,4 +16,14 @@ public class Dealer extends Participant {
     public boolean canHit() {
         return getTotalScore() <= DRAWABLE_LIMIT_VALUE;
     }
+
+    @Override
+    public boolean isWin(Participant player) {
+        return getTotalScore() > player.getTotalScore();
+    }
+
+    @Override
+    public boolean isSameScore(Participant player) {
+        return getTotalScore() == player.getTotalScore();
+    }
 }

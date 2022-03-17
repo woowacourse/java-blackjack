@@ -5,7 +5,6 @@ import static blackjack.domain.CardsTestDataGenerator.generateCards;
 import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreGraterThan17Cards;
 import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreNotMoreThan16Cards;
 import static blackjack.domain.card.Denomination.ACE;
-import static blackjack.domain.card.Denomination.FIVE;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.KING;
 import static blackjack.domain.card.Suit.HEART;
@@ -13,14 +12,10 @@ import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import blackjack.domain.CardsArgumentsProvider;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 
 public class PlayerTest {
 
@@ -47,28 +42,6 @@ public class PlayerTest {
         player.append(new Card(ACE, SPADE));
 
         assertThat(player.canHit()).isFalse();
-    }
-
-    @DisplayName("카드를 받아서 합칠 수 있다.")
-    @Test
-    void 카드_합침() {
-        String name = "mat";
-        List<Card> cards = generateCards();
-        Player player = new Player(name, cards, 10000);
-        Card card = new Card(FIVE, SPADE);
-
-        player.append(card);
-
-        assertThat(player.getCards().size()).isEqualTo(3);
-    }
-
-    @DisplayName("Cards가 주어지면 점수를 계산하면 반환한다.")
-    @ParameterizedTest
-    @ArgumentsSource(CardsArgumentsProvider.class)
-    void 플레이어_카드_점수_계산(Cards cards, int totalScore) {
-        Dealer dealer = new Dealer(cards.getValue());
-
-        assertThat(dealer.getTotalScore()).isEqualTo(totalScore);
     }
 
     @DisplayName("딜러가 버스트 일 경우 플레이어가 승리한다.")

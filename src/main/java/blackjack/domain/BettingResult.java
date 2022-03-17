@@ -33,16 +33,15 @@ public enum BettingResult {
     }
 
     private static boolean isWin(Participant player, Participant dealer) {
-        return (!player.isBust() && dealer.isBust()) ||
-                (!player.isBust() && player.getTotalScore() > dealer.getTotalScore());
+        return (!player.isBust() && dealer.isBust()) || (!player.isBust() && player.isWin(dealer));
     }
 
     private static boolean isTie(Participant player, Participant dealer) {
-        return !player.isBust() && (player.getTotalScore() == dealer.getTotalScore());
+        return !player.isBust() && player.isSameScore(dealer);
     }
 
     private static boolean isLose(Participant player, Participant dealer) {
-        return player.isBust() || (player.getTotalScore() < dealer.getTotalScore());
+        return player.isBust() || dealer.isWin(player);
     }
 
     public int getResult(BettingMoney bettingMoney) {

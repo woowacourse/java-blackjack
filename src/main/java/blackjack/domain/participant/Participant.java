@@ -35,6 +35,10 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
+    public abstract boolean isWin(Participant participant);
+
+    public abstract boolean isSameScore(Participant participant);
+
     public String getName() {
         return name.getValue();
     }
