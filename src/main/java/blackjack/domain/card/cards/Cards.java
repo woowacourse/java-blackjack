@@ -1,6 +1,7 @@
 package blackjack.domain.card.cards;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.element.Denomination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,9 +35,9 @@ public final class Cards {
                 .sum();
     }
 
-    public int getAceCount() {
+    public int getDenominationCount(Denomination denomination) {
         return (int) cards.stream()
-                .filter(Card::isAce)
+                .filter(card -> card.isSameDenomination(denomination))
                 .count();
     }
 

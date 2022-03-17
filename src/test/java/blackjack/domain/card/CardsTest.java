@@ -42,8 +42,8 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("에이스 개수 리턴 기능 검사")
+    @DisplayName("특정 카드 개수 리턴 기능 검사")
     void getAceCountTest() {
-        assertThat(cards.getAceCount()).isEqualTo(2);
+        assertThat(cards.getDenominationCount(Denomination.ACE)).isEqualTo(2);
     }
 }
