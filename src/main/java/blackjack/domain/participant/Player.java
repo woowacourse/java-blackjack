@@ -12,9 +12,9 @@ public class Player extends Participant {
 
     private final BettingMoney bettingMoney;
 
-    public Player(String name, List<Card> cards, String money) {
+    public Player(String name, List<Card> cards, int bettingMoney) {
         super(name, cards);
-        this.bettingMoney = new BettingMoney(money);
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     @Override

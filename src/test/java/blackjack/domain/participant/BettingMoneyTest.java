@@ -11,24 +11,24 @@ class BettingMoneyTest {
     @DisplayName("문자열 정수가 주어지면 생성된다.")
     @Test
     void 머니_생성() {
-        assertDoesNotThrow(() -> new BettingMoney("20000"));
+        assertDoesNotThrow(() -> new BettingMoney(20000));
     }
 
     @DisplayName("두 Money가 주어지면 더할 수 있다.")
     @Test
     void 머니_더하기() {
-        BettingMoney bettingMoney1 = new BettingMoney("10000");
-        BettingMoney bettingMoney2 = new BettingMoney("20000");
+        BettingMoney bettingMoney1 = new BettingMoney(10000);
+        BettingMoney bettingMoney2 = new BettingMoney(20000);
 
         BettingMoney result = bettingMoney1.add(bettingMoney2);
 
-        assertThat(result).isEqualTo(new BettingMoney("30000"));
+        assertThat(result).isEqualTo(new BettingMoney(30000));
     }
-    
+
     @DisplayName("두 Money를 곱할 수 있다.")
     @Test
     void 머니_곱하기() {
-        BettingMoney bettingMoney = new BettingMoney("10000");
+        BettingMoney bettingMoney = new BettingMoney(10000);
 
         BettingMoney result = bettingMoney.times(1.5);
 
@@ -38,7 +38,7 @@ class BettingMoneyTest {
     @DisplayName("두 Money에 음수를 곱할 수 있다.")
     @Test
     void 머니_음수() {
-        BettingMoney bettingMoney = new BettingMoney("10000");
+        BettingMoney bettingMoney = new BettingMoney(10000);
 
         BettingMoney result = bettingMoney.times(-1);
 

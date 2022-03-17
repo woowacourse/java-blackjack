@@ -14,7 +14,7 @@ public class Players {
 
     private final List<Player> value;
 
-    public Players(Deck deck, Map<String, String> names) {
+    public Players(Deck deck, Map<String, Integer> names) {
         this.value = names.keySet()
                 .stream()
                 .map(name -> new Player(name, deck.getInitCards(), names.get(name)))

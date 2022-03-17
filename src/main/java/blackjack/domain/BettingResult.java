@@ -10,14 +10,12 @@ public enum BettingResult {
     WIN((score, otherScore) -> score > otherScore, bettingMoney -> bettingMoney),
     WIN_BY_BLACKJACK((score, otherScore) -> score == 21 && score > otherScore, bettingMoney -> bettingMoney.times(1.5)),
     TIE((score, otherScore) -> score == otherScore, bettingMoney -> bettingMoney.times(0)),
-    LOSE((score, otherScore) -> score < otherScore, bettingMoney -> bettingMoney.times(-1))
-    ;
+    LOSE((score, otherScore) -> score < otherScore, bettingMoney -> bettingMoney.times(-1));
 
     private final BiPredicate<Integer, Integer> condition;
     private final UnaryOperator<BettingMoney> operator;
 
-    BettingResult(BiPredicate<Integer, Integer> condition,
-                  UnaryOperator<BettingMoney> operator) {
+    BettingResult(BiPredicate<Integer, Integer> condition, UnaryOperator<BettingMoney> operator) {
         this.condition = condition;
         this.operator = operator;
     }

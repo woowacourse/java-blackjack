@@ -27,6 +27,6 @@ public class RentCompany {
     }
 
     private String getCarInfo(Car car) {
-        return car.getName() + " : " + (int)car.getChargeQuantity() + "리터" + "\n";
+        return car.getName() + " : " + (int) car.getChargeQuantity() + "리터" + "\n";
     }
 }

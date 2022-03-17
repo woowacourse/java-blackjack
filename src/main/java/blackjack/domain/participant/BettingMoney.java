@@ -11,8 +11,8 @@ public class BettingMoney {
         this.amount = bigDecimal;
     }
 
-    public BettingMoney(String input) {
-        this(new BigDecimal(Integer.parseInt(input)));
+    public BettingMoney(int amount) {
+        this(BigDecimal.valueOf(amount));
     }
 
     public BettingMoney add(BettingMoney money) {
