@@ -17,9 +17,8 @@ public class RevenueResult {
         calculateDealerEarnings();
     }
 
-    private void calculateDealerEarnings() {
-        int playersEarnings = this.playersEarnings.values().stream().mapToInt(e -> e).sum();
-        dealerEarnings -= playersEarnings;
+    public static RevenueResult of(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
+        return new RevenueResult(scoreBoard, bettingMonies);
     }
 
     private void calculatePlayerEarnings(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
@@ -31,8 +30,9 @@ public class RevenueResult {
         }
     }
 
-    public static RevenueResult of(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
-        return new RevenueResult(scoreBoard, bettingMonies);
+    private void calculateDealerEarnings() {
+        int playersEarnings = this.playersEarnings.values().stream().mapToInt(e -> e).sum();
+        dealerEarnings -= playersEarnings;
     }
 
     public int findPlayerEarning(String playerName) {
