@@ -14,7 +14,7 @@ class CardsTest {
     void addCardTest() {
         Deck deck = new Deck();
         Cards cards = new Cards(new ArrayList<>());
-        Card card = deck.draw();
+        Card card = deck.pick();
         cards.add(card);
         assertThat(cards.getCardValues().get(0) == card)
                 .isTrue();

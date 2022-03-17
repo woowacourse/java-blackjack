@@ -48,15 +48,15 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public void initHit(Deck deck, int initDrawCount) {
+    public void deal(Deck deck, int dealDrawCount) {
         for (Player player : players) {
-            hitCount(deck, initDrawCount, player);
+            dealCount(deck, dealDrawCount, player);
         }
     }
 
-    private void hitCount(Deck deck, int initDrawCount, Player player) {
+    private void dealCount(Deck deck, int initDrawCount, Player player) {
         for (int i = 0; i < initDrawCount; i++) {
-            player.hit(deck.draw());
+            player.hit(deck.pick());
         }
     }
 
@@ -68,7 +68,7 @@ public class Players {
 
     private void hitOrStand(Player player, Deck deck, Consumer<Player> hitCallback) {
         while (player.isHittable()) {
-            player.hit(deck.draw());
+            player.hit(deck.pick());
             hitCallback.accept(player);
         }
     }

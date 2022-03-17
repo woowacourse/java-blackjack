@@ -24,7 +24,7 @@ public class PlayersTest {
     void initHitCountTest() {
         Deck deck = new Deck();
         Players players = Players.fromNamesAndGuestHitStrategy(List.of("a", "b"), (p) -> HitFlag.Y);
-        players.initHit(deck, 2);
+        players.deal(deck, 2);
         for (Player player : players.getPlayers()) {
             assertThat(player.getCards().getCardValues().size())
                     .isEqualTo(2);

@@ -22,8 +22,8 @@ public class GuestTest {
     void showCardsTest() {
         Deck deck = new Deck();
         Guest a = new Guest("a", (p) -> HitFlag.Y);
-        a.hit(deck.draw());
-        a.hit(deck.draw());
+        a.hit(deck.pick());
+        a.hit(deck.pick());
         assertThat(a.getShowCards().getCardValues().size())
                 .isEqualTo(2);
     }

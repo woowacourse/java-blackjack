@@ -35,7 +35,7 @@ public class PlayerTest {
         Deck deck = new Deck();
         Player player = new Guest("testPlayer", (p) -> HitFlag.Y);
         while (player.getCards().calculateScore() <= 21) {
-            player.hit(deck.draw());
+            player.hit(deck.pick());
         }
 
         assertThat(player.isBust()).isTrue();

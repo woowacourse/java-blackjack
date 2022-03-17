@@ -15,7 +15,7 @@ public class DealerTest {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
         while (dealer.checkHitFlag() == HitFlag.Y) {
-            dealer.hit(deck.draw());
+            dealer.hit(deck.pick());
         }
         int dealerScore = dealer.getCards().calculateScore();
         assertThat(dealerScore > 16).isTrue();
@@ -26,8 +26,8 @@ public class DealerTest {
     void showDealerCards() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        dealer.hit(deck.draw());
-        dealer.hit(deck.draw());
+        dealer.hit(deck.pick());
+        dealer.hit(deck.pick());
         assertThat(dealer.getShowCards().getCardValues().size())
                 .isEqualTo(1);
     }

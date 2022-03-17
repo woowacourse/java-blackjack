@@ -21,7 +21,7 @@ public class BlackjackController {
         Deck deck = new Deck();
         Players players = Players.fromNamesAndGuestHitStrategy(inputPlayerNames(), this::inputHitCommand);
         BettingBox bettingBox = players.bet(this::inputBettingMoney);
-        players.initHit(deck, Players.INIT_CARD_SIZE);
+        players.deal(deck, Players.INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
         players.playersHit(deck, OutputView::printPresentStatus);
         outputGameResult(players, bettingBox);

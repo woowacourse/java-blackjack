@@ -29,7 +29,7 @@ public class Deck {
         }
     }
 
-    public Card draw() {
+    public Card pick() {
         try {
             return cards.remove();
         } catch (NoSuchElementException e) {
