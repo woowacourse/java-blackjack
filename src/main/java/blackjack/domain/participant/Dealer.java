@@ -14,7 +14,7 @@ public class Dealer extends Participant {
         return calculateBestScore() < MAX_RECEIVABLE_SCORE;
     }
 
-    public boolean hasHigherScore(Player player) {
+    public boolean isWinner(Player player) {
         return calculateBestScore() > player.calculateBestScore() && !isBusted();
     }
 

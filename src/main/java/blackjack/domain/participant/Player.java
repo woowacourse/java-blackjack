@@ -16,7 +16,7 @@ public class Player extends Participant {
     }
 
     public Result isWinner(Dealer dealer) {
-        if (isBusted() || dealer.hasHigherScore(this) || (!isBlackJack() && dealer.isBlackJack())) {
+        if (isBusted() || dealer.isWinner(this) || (!isBlackJack() && dealer.isBlackJack())) {
             return Result.LOSE;
         }
         if (dealer.hasSameScore(this) && (bothBlackJack(dealer) || bothNotBlackJack(dealer))) {
