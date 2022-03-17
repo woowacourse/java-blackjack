@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Player.BLACKJACK_NUMBER;
+import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 import java.util.List;
 

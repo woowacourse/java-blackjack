@@ -19,20 +19,21 @@ public class CardsTest {
         @DisplayName("가지고 있는 카드의 총합을 반환한다.")
         void returnTotalNumber() {
             Cards cards = new Cards(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
+                    List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK),
+                            Card.of(CardPattern.HEART, CardNumber.EIGHT)));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(18);
         }
 
         @ParameterizedTest
         @CsvSource(value = {"TWO|THREE|FIVE|21", "TEN|FIVE|FIVE|21", "ACE|ACE|EIGHT|21", "TEN|TEN|ACE|22"},
-            delimiter = '|')
+                delimiter = '|')
         @DisplayName("ACE가 포함된 경우 21 넘지 않는 최대한 가까운 총합을 반환한다.")
         void returnTotalNumberWithAce(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3,
-            int expected) {
+                                      int expected) {
             Cards cards = new Cards(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.ACE), Card.of(CardPattern.HEART, cardNumber1),
-                    Card.of(CardPattern.SPADE, cardNumber2), Card.of(CardPattern.DIAMOND, cardNumber3)));
+                    List.of(Card.of(CardPattern.CLOVER, CardNumber.ACE), Card.of(CardPattern.HEART, cardNumber1),
+                            Card.of(CardPattern.SPADE, cardNumber2), Card.of(CardPattern.DIAMOND, cardNumber3)));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(expected);
         }
@@ -46,10 +47,26 @@ public class CardsTest {
         @DisplayName("카드를 추가한다.")
         void addCard() {
             Cards cards = new Cards(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
+                    List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK),
+                            Card.of(CardPattern.HEART, CardNumber.EIGHT)));
             cards.add(Card.of(CardPattern.CLOVER, CardNumber.FOUR));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(22);
+        }
+    }
+
+    @Nested
+    @DisplayName("isBlackjack은")
+    class IsBlackjack {
+
+        @ParameterizedTest
+        @CsvSource(value = {"ACE,true", "TEN,false"})
+        @DisplayName("블랙잭인지 확인한다.")
+        void checkBlackjack(CardNumber cardNumber, boolean expected) {
+            Cards cards = new Cards(
+                    List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.HEART, cardNumber)));
+
+            Assertions.assertThat(cards.isBlackjack()).isEqualTo(expected);
         }
     }
 }
