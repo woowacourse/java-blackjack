@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.machine.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;

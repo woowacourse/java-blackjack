@@ -1,4 +1,4 @@
-package blackjack.domain.machine;
+package blackjack.domain.card;
 
 import java.util.HashSet;
 import java.util.Set;

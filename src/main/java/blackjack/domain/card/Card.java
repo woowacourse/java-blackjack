@@ -1,4 +1,4 @@
-package blackjack.domain.machine;
+package blackjack.domain.card;
 
 import java.util.Arrays;
 

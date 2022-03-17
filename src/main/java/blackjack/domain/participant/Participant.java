@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.domain.machine.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.machine.Score;
 
 public abstract class Participant {

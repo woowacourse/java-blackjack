@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.machine.CardPickMachine;
+import blackjack.domain.card.CardPickMachine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

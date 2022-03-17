@@ -1,5 +1,6 @@
 package blackjack.domain.machine;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Score {

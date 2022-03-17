@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import blackjack.domain.machine.CardPickMachine;
+import blackjack.domain.card.CardPickMachine;
 import blackjack.domain.strategy.NumberGenerator;
 
 import java.util.List;

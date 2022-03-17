@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.machine.CardPickMachine;
+import blackjack.domain.card.CardPickMachine;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.machine.Blackjack;
-import blackjack.domain.machine.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.machine.Record;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;

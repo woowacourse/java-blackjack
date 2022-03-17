@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import blackjack.domain.machine.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.participant.Player;
 
 public class PlayerTest {

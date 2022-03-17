@@ -2,7 +2,7 @@ package blackjack.domain.strategy;
 
 import java.util.Random;
 
-import blackjack.domain.machine.Card;
+import blackjack.domain.card.Card;
 
 public class RandomNumberGenerator implements NumberGenerator {
     private static final NumberGenerator numberGenerator = new RandomNumberGenerator();
