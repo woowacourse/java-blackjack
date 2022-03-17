@@ -105,11 +105,8 @@ public class OutputView {
         return String.join(JOINING_DELIMITER_SPACE, matchEssentialInfo);
     }
 
-    public static void printProfitResult(Dealer dealer, double dealerProfit, Map<Player, BlackjackMatch> playersResult) {
+    public static void printProfitResult(Map<Participant, Double> profitResult) {
         System.out.println(OUTPUT_MESSAGE_PROFIT);
-        System.out.printf(OUTPUT_MESSAGE_PROFIT_RESULT, dealer.getName(), dealerProfit);
-        for (Player player : playersResult.keySet()) {
-            System.out.printf(OUTPUT_MESSAGE_PROFIT_RESULT, player.getName(), player.calculateProfit(dealer));
-        }
+        profitResult.forEach((key, value) -> System.out.printf(OUTPUT_MESSAGE_PROFIT_RESULT, key.getName(), value));
     }
 }

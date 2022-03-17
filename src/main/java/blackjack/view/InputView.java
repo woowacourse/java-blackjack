@@ -13,6 +13,7 @@ public class InputView {
     private static final String INPUT_MESSAGE_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_DELIMITER_PLAYER_NAMES = ",";
     private static final String INPUT_MESSAGE_PLAYER_MONEY = NEWLINE.concat("%s의 배팅 금액은?").concat(NEWLINE);
+    private static final String ERROR_MESSAGE_INPUT_PLAYER_MONEY = "배팅 금액은 자연수여야 합니다.";
     private static final String INPUT_MESSAGE_ONE_MORE_CARD =
             "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".concat(NEWLINE);
 
@@ -27,9 +28,16 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String inputPlayerMoney(String playerName) {
+    public static int inputPlayerMoney(String playerName) {
         System.out.printf(INPUT_MESSAGE_PLAYER_MONEY, playerName);
-        return scanner.nextLine();
+        return toIntPlayerMoney(scanner.nextLine());
+    }
+
+    private static int toIntPlayerMoney(String money) {
+        if (!money.chars().allMatch(Character::isDigit)) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_INPUT_PLAYER_MONEY);
+        }
+        return Integer.parseInt(money);
     }
 
     public static String inputOneMoreCard(String name) {

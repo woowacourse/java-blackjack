@@ -5,13 +5,11 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.BlackjackGameResult;
-import blackjack.domain.result.BlackjackMatch;
-import blackjack.domain.result.YesOrNo;
+import blackjack.domain.result.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,21 +18,22 @@ public class BlackjackController {
 
     public void run() {
         final Participants participants = getParticipants();
+        final Map<Player, BettingMoney> playersInfo = getPlayersBettingMoney(participants.getPlayers());
         final Deck deck = Deck.create();
-        final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
-        blackjackGame.firstCardDispensing();
-        OutputView.printInitCardResult(participants);
 
+        final BlackjackGame blackjackGame = progressGame(participants, deck);
         final List<Player> players = playersTurn(participants, deck);
         final Dealer dealer = dealerTurn(blackjackGame);
-        createBlackJackGameResult(players, dealer);
+        createBlackjackGameResult(players, dealer);
+        createBlackjackProfitResult(dealer, playersInfo);
     }
 
     private Participants getParticipants() {
         try {
             final List<String> playerNames = InputView.inputPlayerNames();
-            checkValidPlayerNames(playerNames);
-            final List<Player> players = getPlayersBetMoney(playerNames);
+            final List<Player> players = playerNames.stream()
+                    .map(Player::new)
+                    .collect(Collectors.toUnmodifiableList());
             return new Participants(new Dealer(), players);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
@@ -42,29 +41,30 @@ public class BlackjackController {
         }
     }
 
-    private Participants checkValidPlayerNames(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
-        return new Participants(new Dealer(), players);
-    }
-
-    private List<Player> getPlayersBetMoney(List<String> playerNames) {
-        final List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(getPlayerBetMoney(playerName));
+    private Map<Player, BettingMoney> getPlayersBettingMoney(List<Player> players) {
+        final Map<Player, BettingMoney> playersInfo = new LinkedHashMap<>();
+        for (Player player : players) {
+            final BettingMoney money = getPlayerBettingMoney(player.getName());
+            playersInfo.put(player, money);
         }
-        return players;
+        return playersInfo;
     }
 
-    private Player getPlayerBetMoney(String playerName) {
+    private BettingMoney getPlayerBettingMoney(String playerName) {
         try {
-            final String playerMoney = InputView.inputPlayerMoney(playerName);
-            return new Player(playerName, playerMoney);
+            final int money = InputView.inputPlayerMoney(playerName);
+            return new BettingMoney(money);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
-            return getPlayerBetMoney(playerName);
+            return getPlayerBettingMoney(playerName);
         }
+    }
+
+    private BlackjackGame progressGame(Participants participants, Deck deck) {
+        final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+        blackjackGame.firstCardDispensing();
+        OutputView.printInitCardResult(participants);
+        return blackjackGame;
     }
 
     private List<Player> playersTurn(Participants participants, Deck deck) {
@@ -98,12 +98,16 @@ public class BlackjackController {
         return dealer;
     }
 
-    private void createBlackJackGameResult(List<Player> players, Dealer dealer) {
+    private void createBlackjackGameResult(List<Player> players, Dealer dealer) {
         final BlackjackGameResult blackjackGameResult = new BlackjackGameResult(dealer, players);
         final Map<String, Integer> dealerResult = blackjackGameResult.calculateDealerResult();
         final Map<Player, BlackjackMatch> playersResult = blackjackGameResult.calculatePlayersResult();
         OutputView.printGameResult(dealer, players);
         OutputView.printMatchResult(dealer, dealerResult, playersResult);
-        OutputView.printProfitResult(dealer, blackjackGameResult.calculateDealerProfit(), playersResult);
+    }
+
+    private void createBlackjackProfitResult(Dealer dealer, Map<Player, BettingMoney> result) {
+        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(dealer, result);
+        OutputView.printProfitResult(blackjackProfitResult.calculateParticipantsProfit());
     }
 }
