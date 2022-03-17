@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.model.trumpcard.Deck;
+import blackjack.model.trumpcard.Hand;
 import blackjack.model.trumpcard.TrumpCard;
 import blackjack.model.trumpcard.TrumpNumber;
 import blackjack.model.trumpcard.TrumpSymbol;
@@ -44,8 +44,8 @@ public final class TrumpCardDTO {
         this.symbol = symbol;
     }
 
-    public static List<TrumpCardDTO> from(Deck deck) {
-        return deck.getCards().stream()
+    public static List<TrumpCardDTO> from(Hand hand) {
+        return hand.getCards().stream()
                 .map(TrumpCardDTO::from)
                 .collect(Collectors.toList());
     }

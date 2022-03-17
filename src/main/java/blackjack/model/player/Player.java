@@ -1,6 +1,6 @@
 package blackjack.model.player;
 
-import blackjack.model.trumpcard.Deck;
+import blackjack.model.trumpcard.Hand;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.function.Supplier;
 
@@ -8,12 +8,12 @@ public abstract class Player {
     private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";
 
     private final String name;
-    private final Deck deck;
+    private final Hand hand;
 
     public Player(String name) {
         checkNull(name);
         this.name = name.trim();
-        this.deck = new Deck();
+        this.hand = new Hand();
     }
 
     private void checkNull(String name) {
@@ -22,39 +22,39 @@ public abstract class Player {
         }
     }
 
-    public void initializeDeck(Supplier<TrumpCard> cardSupplier) {
-        this.deck.initializeDeck(cardSupplier);
+    public void initializeHand(Supplier<TrumpCard> cardSupplier) {
+        this.hand.initialize(cardSupplier);
     }
 
     public void addCard(TrumpCard card) {
-        this.deck.add(card);
+        this.hand.add(card);
     }
 
     public boolean canHit(int criteria) {
-        return this.deck.isScoreLessThan(criteria);
+        return this.hand.isScoreLessThan(criteria);
     }
 
     public int countAddedCards() {
-        return this.deck.countAddedCards();
+        return this.hand.countAddedCards();
     }
 
     public boolean isBust() {
-        return this.deck.isBust();
+        return this.hand.isBust();
     }
 
     public boolean isBlackjack() {
-        return this.deck.isBlackjack();
+        return this.hand.isBlackjack();
     }
 
     public int getScore() {
-        return deck.sumScore();
+        return hand.sumScore();
     }
 
     public String getName() {
         return this.name;
     }
 
-    public Deck getDeck() {
-        return this.deck;
+    public Hand getHand() {
+        return this.hand;
     }
 }

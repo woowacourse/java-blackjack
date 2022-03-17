@@ -39,8 +39,8 @@ public class Application {
         game.start();
 
         PlayersDTO playersDTO = PlayersDTO.from(game);
-        resultView.printDeckInitialized(playersDTO);
-        resultView.printInitializedDecks(playersDTO);
+        resultView.printHandInitialized(playersDTO);
+        resultView.printInitializedHands(playersDTO);
     }
 
     private static void playEntries(InputView inputView, ResultView resultView, Game game) {
@@ -58,7 +58,7 @@ public class Application {
             return;
         }
         if (!inputView.askForHit(entryDTO)) {
-            resultView.printDeck(entryDTO);
+            resultView.printHand(entryDTO);
             return;
         }
         hitCurrentEntry(inputView, game, resultView);
@@ -66,7 +66,7 @@ public class Application {
 
     private static void hitCurrentEntry(InputView inputView, Game game, ResultView resultView) {
         game.hitCurrentEntry();
-        resultView.printDeck(EntryDTO.fromCurrentEntryOf(game));
+        resultView.printHand(EntryDTO.fromCurrentEntryOf(game));
         playTurn(inputView, game, resultView);
     }
 

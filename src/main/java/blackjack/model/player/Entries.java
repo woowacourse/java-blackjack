@@ -44,9 +44,9 @@ public final class Entries {
         getCurrentEntry().bet(bet);
     }
 
-    public void initializeDecks(Supplier<TrumpCard> cardSupplier) {
+    public void initializeHands(Supplier<TrumpCard> cardSupplier) {
         for (Entry entry : values) {
-            entry.initializeDeck(cardSupplier);
+            entry.initializeHand(cardSupplier);
         }
     }
 

@@ -24,7 +24,7 @@ public final class Game {
     }
 
     public void start() {
-        this.players.initializeDecks(supplyCard());
+        this.players.initializeHands(supplyCard());
     }
 
     private Supplier<TrumpCard> supplyCard() {

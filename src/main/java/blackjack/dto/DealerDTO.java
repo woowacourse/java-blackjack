@@ -6,7 +6,7 @@ import blackjack.model.player.Dealer;
 public final class DealerDTO extends PlayerDTO {
     private final int addedCount;
 
-    private DealerDTO(String name, DeckDTO deck, int addedCount, int score) {
+    private DealerDTO(String name, HandDTO deck, int addedCount, int score) {
         super(name, deck, score);
         this.addedCount = addedCount;
     }
@@ -21,7 +21,7 @@ public final class DealerDTO extends PlayerDTO {
 
     private static DealerDTO from(Dealer dealer, int addedCount) {
         return new DealerDTO(
-                dealer.getName(), DeckDTO.from(dealer), addedCount, dealer.getScore());
+                dealer.getName(), HandDTO.from(dealer), addedCount, dealer.getScore());
     }
 
 

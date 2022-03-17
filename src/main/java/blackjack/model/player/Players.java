@@ -23,9 +23,9 @@ public final class Players {
         this.entries.betToCurrent(bet);
     }
 
-    public void initializeDecks(Supplier<TrumpCard> cardSupplier) {
-        this.dealer.initializeDeck(cardSupplier);
-        this.entries.initializeDecks(cardSupplier);
+    public void initializeHands(Supplier<TrumpCard> cardSupplier) {
+        this.dealer.initializeHand(cardSupplier);
+        this.entries.initializeHands(cardSupplier);
     }
 
     public boolean hasNextEntry() {

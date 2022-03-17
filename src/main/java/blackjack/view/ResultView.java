@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.dto.DealerDTO;
-import blackjack.dto.DeckDTO;
+import blackjack.dto.HandDTO;
 import blackjack.dto.EntryDTO;
 import blackjack.dto.PlayerDTO;
 import blackjack.dto.PlayersDTO;
@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultView {
-    private static final String FORMAT_MESSAGE_DECK_INITIALIZED = "%n%s와 %s에게 2장의 카드를 나누었습니다.%n";
-    private static final String FORMAT_DECK_INITIALIZED = "%s : %s%n";
+    private static final String FORMAT_MESSAGE_HAND_INITIALIZED = "%n%s와 %s에게 2장의 카드를 나누었습니다.%n";
+    private static final String FORMAT_HAND_INITIALIZED = "%s : %s%n";
     private static final String FORMAT_MESSAGE_BUST = "%n%s의 점수 합이 21을 넘어, 다음 참가자로 넘어갑니다.%n%n";
     private static final String FORMAT_MESSAGE_DEALER_HIT = "%n%s는 16이하라 %d장의 카드를 더 받았습니다.%n";
     private static final String FORMAT_SCORE = "%s 카드: %s - 결과: %d%n";
@@ -22,36 +22,36 @@ public class ResultView {
 
     private static final String DELIMITER_JOIN = ", ";
 
-    public void printDeckInitialized(PlayersDTO players) {
+    public void printHandInitialized(PlayersDTO players) {
         DealerDTO dealer = players.getDealer();
-        System.out.printf(FORMAT_MESSAGE_DECK_INITIALIZED, dealer.getName(), joinStrings(players.getEntryNames()));
+        System.out.printf(FORMAT_MESSAGE_HAND_INITIALIZED, dealer.getName(), joinStrings(players.getEntryNames()));
     }
 
-    public void printInitializedDecks(PlayersDTO players) {
+    public void printInitializedHands(PlayersDTO players) {
         for (PlayerDTO player : players.getPlayers()) {
-            printFirstDeck(player);
+            printFirstHand(player);
         }
     }
 
-    private void printFirstDeck(PlayerDTO player) {
+    private void printFirstHand(PlayerDTO player) {
         if (player instanceof DealerDTO) {
             printOnlyFirstCard((DealerDTO) player);
             return;
         }
-        printDeck(player);
+        printHand(player);
     }
 
     private void printOnlyFirstCard(DealerDTO dealer) {
-        System.out.printf(FORMAT_DECK_INITIALIZED, dealer.getName(), getFirstCardToString(dealer.getDeck()));
+        System.out.printf(FORMAT_HAND_INITIALIZED, dealer.getName(), getFirstCardToString(dealer.getHand()));
     }
 
-    private String getFirstCardToString(DeckDTO deck) {
-        TrumpCardDTO firstCard = deck.getCards().get(0);
+    private String getFirstCardToString(HandDTO hand) {
+        TrumpCardDTO firstCard = hand.getCards().get(0);
         return firstCard.getNumber() + firstCard.getSymbol();
     }
 
-    public void printDeck(PlayerDTO player) {
-        System.out.printf(FORMAT_DECK_INITIALIZED, player.getName(), joinDeck(player.getDeck()));
+    public void printHand(PlayerDTO player) {
+        System.out.printf(FORMAT_HAND_INITIALIZED, player.getName(), joinHand(player.getHand()));
     }
 
     public void printBustMessage(EntryDTO entry) {
@@ -69,7 +69,7 @@ public class ResultView {
     }
 
     private void printScore(PlayerDTO player) {
-        System.out.printf(FORMAT_SCORE, player.getName(), joinDeck(player.getDeck()), player.getScore());
+        System.out.printf(FORMAT_SCORE, player.getName(), joinHand(player.getHand()), player.getScore());
     }
 
     public void printProfits(ProfitsDTO profits) {
@@ -89,8 +89,8 @@ public class ResultView {
         System.out.printf(FORMAT_PROFIT, player.getName(), profit);
     }
 
-    private String joinDeck(DeckDTO deck) {
-        return joinCards(deck.getCards());
+    private String joinHand(HandDTO hand) {
+        return joinCards(hand.getCards());
     }
 
     private String joinCards(List<TrumpCardDTO> cards) {
