@@ -52,6 +52,25 @@ public class BlackJack {
         users.drawAdditionalCard(consumerPlayer, consumerDealer);
     }
 
+    public void printResult(Consumer<User> consumer) {
+        Dealer dealer = users.getDealer();
+
+        List<Player> players = users.getPlayers();
+
+        consumer.accept(dealer);
+
+        for (User player : players) {
+            consumer.accept(player);
+        }
+    }
+
+    public Map<String, Integer> calculateRevenueAllUser() {
+        List<Player> players = users.getPlayers();
+        Dealer dealer = users.getDealer();
+
+        return Result.calculateRevenue(players, dealer);
+    }
+
     public Users getUsers() {
         return this.users;
     }

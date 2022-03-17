@@ -3,11 +3,9 @@ package blackjack.domain.user;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class Users {
@@ -52,22 +50,6 @@ public class Users {
         }
 
         consumerDealer.accept(getDealer());
-    }
-
-    public void printResult(Consumer<User> consumer) {
-        Dealer dealer = getDealer();
-
-        List<Player> players = getPlayers();
-
-        consumer.accept(dealer);
-
-        for (User player : players) {
-            consumer.accept(player);
-        }
-    }
-
-    public Map<String, Integer> calculateRevenue() {
-        return Result.calculateRevenue(getPlayers(), getDealer());
     }
 
     public List<Player> getPlayers() {
