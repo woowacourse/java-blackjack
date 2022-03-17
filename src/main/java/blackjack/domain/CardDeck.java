@@ -27,10 +27,6 @@ public class CardDeck {
         }
     }
 
-    public int size() {
-        return cardDeck.size();
-    }
-
     public Cards drawInitialCards() {
         List<Card> initialCards = new ArrayList<>(INITIAL_CARD_COUNT);
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {

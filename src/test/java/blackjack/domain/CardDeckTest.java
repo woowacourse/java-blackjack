@@ -1,7 +1,9 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,22 +13,25 @@ public class CardDeckTest {
     @DisplayName("사용한 카드는 제거한다")
     void drawCard() {
         final CardDeck cardDeck = new CardDeck(new CardDeckGenerator());
-        final int expected = cardDeck.size() - 1;
+        final int deckSize = 52;
 
-        cardDeck.draw();
-        final int actual = cardDeck.size();
+        for (int i = 0; i < deckSize; i++) {
+            cardDeck.draw();
+        }
 
-        assertThat(actual).isEqualTo(expected);
+        assertThatThrownBy(cardDeck::draw)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드덱에 남은 카드가 없습니다.");
     }
 
     @Test
     @DisplayName("처음 플레이어에게 draw 하는 카드 수는 2장이다.")
     void drawInitialCards() {
         final CardDeck cardDeck = new CardDeck(new CardDeckGenerator());
-        final int expected = cardDeck.size() - 2;
+        final int expected = 2;
 
-        cardDeck.drawInitialCards();
-        final int actual = cardDeck.size();
+        final Cards cards = cardDeck.drawInitialCards();
+        final int actual = cards.getCards().size();
 
         assertThat(actual).isEqualTo(expected);
     }
