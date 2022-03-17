@@ -15,7 +15,7 @@ public class Betting {
         }
     }
 
-    public int getValue() {
+    public int getBetMoney() {
         return betMoney;
     }
 }

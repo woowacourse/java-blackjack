@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Betting;
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
@@ -10,6 +11,8 @@ import blackjack.domain.card.Pattern;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class PlayerTest {
 
@@ -83,5 +86,24 @@ public class PlayerTest {
 
         // then
         assertThat(actual).isEqualTo(false);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"WIN_BLACKJACK,1500", "WIN,1000", "DRAW,0", "LOSE,-1000"})
+    @DisplayName("승패 결과에 따라 수익을 계산한다.")
+    void calculateProfit(String outcomeName, int expected) {
+        // given
+        Name name = new Name("pobi");
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
+        List<Card> cards = List.of(card1, card2);
+
+        Player player = new Player(name, cards, new Betting(1000));
+
+        // when
+        int profit = player.calculateProfit(Outcome.valueOf(outcomeName));
+
+        // then
+        assertThat(profit).isEqualTo(expected);
     }
 }

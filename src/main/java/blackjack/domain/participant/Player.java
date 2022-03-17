@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Betting;
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Player extends Participant {
         return getScore().isLessThan(HIT_STANDARD);
     }
 
-    public Betting getBetting() {
-        return betting;
+    public int calculateProfit(Outcome outcome) {
+        return (int) (betting.getBetMoney() * outcome.getProfitRate());
     }
 }
