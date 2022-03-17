@@ -3,12 +3,18 @@ package blackjack.domain.betting;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfFifteen;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSeventeen;
+import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSixteen;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTen;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTwenty;
+import static blackjack.fixture.CardRepository.CLOVER2;
+import static blackjack.fixture.CardRepository.CLOVER8;
+import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.strategy.CardsViewStrategy;
+import blackjack.strategy.HitOrStayChoiceStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +22,10 @@ import org.junit.jupiter.api.Test;
 public class BettingRefereeTest {
 
     private static final int BETTING_AMOUNT = 1000;
+    private static final HitOrStayChoiceStrategy HIT_CHOICE = () -> true;
+    private static final HitOrStayChoiceStrategy STAY_CHOICE = () -> false;
+    private static final CardsViewStrategy VIEW_STRATEGY = (p) -> {
+    };
 
     private static final Dealer dealer17 = Dealer.of(getCardBundleOfSeventeen());
     private static final Dealer dealer20 = Dealer.of(getCardBundleOfTwenty());
@@ -94,7 +104,22 @@ public class BettingRefereeTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("딜러와 플레이어 모두 Bust인 경우, 딜러가 승리하므로 플레이어는 베팅금액만큼 잃는다.")
+    @Test
+    void playerBetting_loseOnBothBust() {
+        BettingReferee referee = new BettingReferee(
+                getDealerBust(), generateBettingsOf(List.of(getPlayerBust())));
+
+        int actual = extractOnePlayerBettingResultFrom(referee).getMoneyOutcome();
+        int expected = BETTING_AMOUNT * -1;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     private PlayerBettings generateBettingsOf(List<Player> players) {
+        for (Player player : players) {
+            player.drawAllCards(STAY_CHOICE, VIEW_STRATEGY, () -> CLOVER2);
+        }
         return PlayerBettings.of(players, (name) -> BETTING_AMOUNT);
     }
 
@@ -113,5 +138,17 @@ public class BettingRefereeTest {
 
     private BettingResult extractOnePlayerBettingResultFrom(BettingReferee referee) {
         return referee.getResults().get(1);
+    }
+
+    private Dealer getDealerBust() {
+        Dealer dealerBust = Dealer.of(getCardBundleOfSixteen());
+        dealerBust.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER_KING);
+        return dealerBust;
+    }
+
+    private Player getPlayerBust() {
+        Player playerBust = Player.of("twenty", getCardBundleOfTwenty());
+        playerBust.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER8);
+        return playerBust;
     }
 }

@@ -1,8 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-
 public enum DuelResult {
 
     BLACKJACK_WIN(1.5),
@@ -26,31 +23,6 @@ public enum DuelResult {
             return DuelResult.LOSE;
         }
         return DuelResult.DRAW;
-    }
-
-    public static DuelResult blackjackOrBustDuelOf(final Player player, final Dealer dealer) {
-        if (isOnlyPlayerBlackjackOf(player, dealer)) {
-            return DuelResult.BLACKJACK_WIN;
-        }
-        if (isOnlyDealerBustOf(player, dealer)) {
-            return DuelResult.WIN;
-        }
-        if (isBothBlackjackWith(player, dealer)) {
-            return DuelResult.DRAW;
-        }
-        return DuelResult.LOSE;
-    }
-
-    private static boolean isOnlyPlayerBlackjackOf(final Player player, final Dealer dealer) {
-        return !dealer.isBlackjack() && player.isBlackjack();
-    }
-
-    private static boolean isOnlyDealerBustOf(final Player player, final Dealer dealer) {
-        return dealer.isBust() && !player.isBust();
-    }
-
-    private static boolean isBothBlackjackWith(final Player player, final Dealer dealer) {
-        return dealer.isBlackjack() && player.isBlackjack();
     }
 
     public int getProfitOf(int bettingAmount) {

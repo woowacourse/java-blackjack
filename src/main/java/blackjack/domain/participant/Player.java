@@ -56,10 +56,7 @@ public class Player extends Participant {
     }
 
     public DuelResult getDuelResultWith(Dealer dealer) {
-        if (dealer.isBlackjackOrBust() || this.isBlackjackOrBust()) {
-            return DuelResult.blackjackOrBustDuelOf(this, dealer);
-        }
-        return DuelResult.of(this.getScore(), dealer.getScore());
+        return cardHand.getDuelResultOf(dealer.cardHand);
     }
 
     @Override

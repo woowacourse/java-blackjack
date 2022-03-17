@@ -71,10 +71,6 @@ public abstract class Participant {
         return getCardBundle().getCards();
     }
 
-    protected boolean isBlackjackOrBust() {
-        return cardHand.isBlackjack() || cardHand.isBust();
-    }
-
     private CardBundle getCardBundle() {
         return cardHand.getCardBundle();
     }
