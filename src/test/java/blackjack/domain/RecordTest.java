@@ -27,10 +27,9 @@ public class RecordTest {
         List<String> playerNames = List.of("범블비");
         Players players = new Players(playerNames);
         dealer = new Dealer();
-        blackjack = new Blackjack();
-
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 8));
-        blackjack.dealInitialCards(intendedNumberGenerator, dealer, players);
+
+        blackjack = Blackjack.of(intendedNumberGenerator, dealer, players);
         cardPickMachine = new CardPickMachine();
 
         //dealer: 12점, player: 12점

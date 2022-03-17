@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.strategy.NumberGenerator;
 
@@ -29,10 +28,8 @@ public class BlackjackTest {
         List<String> playerNames = List.of("pobi", "jason");
         players = new Players(playerNames);
         dealer = new Dealer();
-        blackjack = new Blackjack();
         intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6));
-
-        blackjack.dealInitialCards(intendedNumberGenerator, dealer, players);
+        blackjack = Blackjack.of(intendedNumberGenerator, dealer, players);
     }
 
     @DisplayName("플레이어, 딜러 카드 두장 분배 테스트")

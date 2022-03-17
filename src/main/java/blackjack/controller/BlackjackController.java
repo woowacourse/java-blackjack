@@ -24,8 +24,7 @@ public class BlackjackController {
         List<String> playerNames = InputView.getPlayerNames();
         dealer = new Dealer();
         players = new Players(playerNames);
-        blackjack = new Blackjack();
-        blackjack.dealInitialCards(RandomNumberGenerator.getInstance(), dealer, players);
+        blackjack = Blackjack.of(RandomNumberGenerator.getInstance(), dealer, players);
 
         OutputView.printInitStatus(dealer, players.getPlayers());
     }
