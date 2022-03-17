@@ -1,42 +1,32 @@
 package domain;
 
+import static domain.CardFixtures.ACE_SPADES;
+import static domain.CardFixtures.KING_HEARTS;
+import static domain.CardFixtures.TEN_HEARTS;
+import static domain.CardFixtures.THREE_DIAMONDS;
+import static domain.CardFixtures.TWO_SPADES;
 import static domain.MatchResult.LOSE;
 import static domain.MatchResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.card.Denomination;
-import domain.card.PlayingCard;
-import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
 import dto.ResultDto;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackResultTest {
-    private Dealer dealer;
-    private List<Gambler> gamblers;
-
-    @BeforeEach
-    void setup() {
-        Gambler pobi = new Gambler("포비");
-        Gambler dolbum = new Gambler("돌범");
-        Gambler rich = new Gambler("리차드");
-        gamblers = List.of(pobi, dolbum, rich);
-        dealer = new Dealer("딜러");
-    }
-
     @Test
     @DisplayName("딜러와 겜블러를 전달해서 게임 결과를 반환한다")
     void judgeGameResult() {
         // given
-        cardSetup(dealer, gamblers);
-        BlackJackResult blackJackResult = BlackJackResult.of(dealer, new Gamblers(gamblers));
+        Dealer dealer = new Dealer(List.of(KING_HEARTS, THREE_DIAMONDS));
+        Gamblers gamblers = setupGamblers();
+        BlackJackResult blackJackResult = BlackJackResult.of(dealer, gamblers);
 
         // when
         Map<String, ResultDto> blackjackResult = blackJackResult.getBlackjackResult();
@@ -54,17 +44,11 @@ public class BlackJackResultTest {
         );
     }
 
-    private void cardSetup(Dealer dealer, List<Gambler> gamblers) {
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.JACK));
-        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.THREE));
+    private Gamblers setupGamblers() {
+        Gambler pobi = new Gambler("포비", List.of(KING_HEARTS, TWO_SPADES));
+        Gambler dolbum = new Gambler("돌범", List.of(KING_HEARTS, ACE_SPADES));
+        Gambler rich = new Gambler("리차드", List.of(ACE_SPADES, TEN_HEARTS));
 
-        gamblers.get(0).addCard(PlayingCard.of(Suit.SPADES, Denomination.JACK));
-        gamblers.get(0).addCard(PlayingCard.of(Suit.CLUBS, Denomination.TWO));
-
-        gamblers.get(1).addCard(PlayingCard.of(Suit.CLUBS, Denomination.JACK));
-        gamblers.get(1).addCard(PlayingCard.of(Suit.CLUBS, Denomination.ACE));
-
-        gamblers.get(2).addCard(PlayingCard.of(Suit.CLUBS, Denomination.ACE));
-        gamblers.get(2).addCard(PlayingCard.of(Suit.CLUBS, Denomination.TEN));
+        return new Gamblers(List.of(pobi, dolbum, rich));
     }
 }
