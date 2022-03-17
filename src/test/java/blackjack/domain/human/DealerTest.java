@@ -11,19 +11,20 @@ import org.junit.jupiter.api.Test;
 class DealerTest {
 
     @Test
-    @DisplayName("딜러 카드 추가/포인트 획득 기능 검사")
+    @DisplayName("딜러 카드 추가/포인트 획득 기능 테스트")
     public void addCardToPlayerTest() {
         // given
         Dealer dealer = Dealer.newInstance();
-        Card card5 = Card.of(Denomination.stringOf("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.stringOf("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.from("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.from("6"), Suit.SPADE);
 
         // when
         dealer.addCard(card5);
         dealer.addCard(card6);
 
         // then
-        assertThat(dealer.getPoint()).isEqualTo(11);
+        assertThat(dealer.getPoint())
+                .isEqualTo(11);
     }
 
     @Test
@@ -31,14 +32,15 @@ class DealerTest {
     public void isAbleToHitTest() {
         // given
         Dealer dealer = Dealer.newInstance();
-        Card card5 = Card.of(Denomination.stringOf("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.stringOf("6"), Suit.SPADE);
+        Card card5 = Card.of(Denomination.from("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.from("6"), Suit.SPADE);
 
         // when
         dealer.addCard(card5);
         dealer.addCard(card6);
 
         // then
-        assertThat(dealer.isAbleToHit()).isTrue();
+        assertThat(dealer.isAbleToHit())
+                .isTrue();
     }
 }

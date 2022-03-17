@@ -26,12 +26,12 @@ class ResultStatisticTest {
 
     void addCardList(Human human, List<String> cards) {
         for (String card : cards) {
-            human.addCard(Card.of(Denomination.stringOf(card), Suit.CLOVER));
+            human.addCard(Card.of(Denomination.from(card), Suit.CLOVER));
         }
     }
 
     @Nested
-    @DisplayName("딜러_21초과_플레이어승")
+    @DisplayName("딜러 21초과 플레이어승 결과 테스트")
     class DealerOverPlayerUnderTest {
         ResultStatistic resultStatistic;
 
@@ -50,27 +50,28 @@ class ResultStatisticTest {
         }
 
         @Test
+        void dealerResultTest() {
+            // then
+            assertThat(resultStatistic.getDealerResults())
+                    .isEqualTo(Map.of(
+                                    Result.LOSE, 1,
+                                    Result.WIN, 1,
+                                    Result.DRAW, 0
+                            )
+                    );
+        }
+
+        @Test
         void playerResultTest() {
             // then
             assertThat(resultStatistic.getPlayersResult())
                     .containsEntry(player1.getName(), Result.WIN)
                     .containsEntry(player2.getName(), Result.LOSE);
         }
-
-        @Test
-        void dealerResultTest() {
-            // then
-            assertThat(resultStatistic.getDealerResults()).isEqualTo(Map.of(
-                            Result.LOSE, 1,
-                            Result.WIN, 1,
-                            Result.DRAW, 0
-                    )
-            );
-        }
     }
 
     @Nested
-    @DisplayName("딜러_21초과_딜러승")
+    @DisplayName("딜러 21초과 딜러 승리 결과 테스트")
     class DealerOverPlayerOverTest {
         ResultStatistic resultStatistic;
 
@@ -99,17 +100,18 @@ class ResultStatisticTest {
         @Test
         void dealerResultTest() {
             // then
-            assertThat(resultStatistic.getDealerResults()).isEqualTo(Map.of(
-                            Result.LOSE, 0,
-                            Result.WIN, 2,
-                            Result.DRAW, 0
-                    )
-            );
+            assertThat(resultStatistic.getDealerResults())
+                    .isEqualTo(Map.of(
+                                    Result.LOSE, 0,
+                                    Result.WIN, 2,
+                                    Result.DRAW, 0
+                            )
+                    );
         }
     }
 
     @Nested
-    @DisplayName("딜러_21이하_테스트")
+    @DisplayName("딜러 21이하 결과 테스트")
     class DealerUnderTest {
         ResultStatistic resultStatistic;
 
@@ -142,12 +144,13 @@ class ResultStatisticTest {
         @Test
         void dealerResultTest() {
             // then
-            assertThat(resultStatistic.getDealerResults()).isEqualTo(Map.of(
-                            Result.LOSE, 1,
-                            Result.WIN, 2,
-                            Result.DRAW, 1
-                    )
-            );
+            assertThat(resultStatistic.getDealerResults())
+                    .isEqualTo(Map.of(
+                                    Result.LOSE, 1,
+                                    Result.WIN, 2,
+                                    Result.DRAW, 1
+                            )
+                    );
         }
     }
 }

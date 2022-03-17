@@ -44,11 +44,11 @@ public final class ResultStatistic {
 
     private Result calculatePlayerResult(final Player player, final Dealer dealer) {
         if (dealer.isBust()) {
-            return Result.fromIsWin(!player.isBust());
+            return Result.fromBoolean(!player.isBust());
         }
         if (!player.isBust() && player.isDraw(dealer)) {
             return Result.DRAW;
         }
-        return Result.fromIsWin(!player.isBust() && player.isWinner(dealer));
+        return Result.fromBoolean(!player.isBust() && player.isWinner(dealer));
     }
 }

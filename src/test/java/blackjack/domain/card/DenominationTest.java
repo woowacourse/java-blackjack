@@ -11,23 +11,27 @@ class DenominationTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "A,ACE"
-            , "2,TWO"
-            , "3,THREE"
-            , "4,FOUR"
-            , "5,FIVE"
-            , "6,SIX"
-            , "7,SEVEN"
-            , "8,EIGHT"
-            , "9,NINE"
-            , "10,TEN"
-            , "J,JACK"
-            , "Q,QUEEN"
-            , "K,KING"
+            "A,ACE,11"
+            , "2,TWO,2"
+            , "3,THREE,3"
+            , "4,FOUR,4"
+            , "5,FIVE,5"
+            , "6,SIX,6"
+            , "7,SEVEN,7"
+            , "8,EIGHT,8"
+            , "9,NINE,9"
+            , "10,TEN,10"
+            , "J,JACK,10"
+            , "Q,QUEEN,10"
+            , "K,KING,10"
     })
-    @DisplayName("숫자 알맞게 들어가는지 검사")
-    void setExpectedDenominationTest(String numStr, Denomination expectedDenomination) {
-        Denomination denomination = Denomination.stringOf(numStr);
-        assertThat(denomination).isEqualTo(expectedDenomination);
+
+    @DisplayName("숫자 알맞게 들어가는지 테스트")
+    void setExpectedDenominationTest(String numStr, Denomination expectedDenomination, int expectedPoint) {
+        Denomination denomination = Denomination.from(numStr);
+        assertThat(denomination)
+                .isEqualTo(expectedDenomination);
+        assertThat(denomination.getPoint())
+                .isEqualTo(expectedPoint);
     }
 }

@@ -18,7 +18,7 @@ public final class Cards {
     }
 
     public void add(final Card card) {
-        cards.add(Card.copyOf(card));
+        cards.add(card);
     }
 
     public int size() {

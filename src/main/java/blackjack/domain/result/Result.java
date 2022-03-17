@@ -14,7 +14,7 @@ public enum Result {
         this.resultText = resultText;
     }
 
-    public static Result fromIsWin(Boolean isWin) {
+    public static Result fromBoolean(Boolean isWin) {
         if (isWin) {
             return Result.WIN;
         }
@@ -27,8 +27,7 @@ public enum Result {
                 .toArray()[this.ordinal()];
     }
 
-    @Override
-    public String toString() {
+    public String getResultText() {
         return resultText;
     }
 }

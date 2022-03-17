@@ -15,7 +15,7 @@ public final class Name {
 
     private static void validateName(final String input) {
         if (!NAME_PATTERN.matcher(input).matches()) {
-            throw new RuntimeException(NAME_ERROR_MESSAGE);
+            throw new IllegalArgumentException(NAME_ERROR_MESSAGE);
         }
     }
 

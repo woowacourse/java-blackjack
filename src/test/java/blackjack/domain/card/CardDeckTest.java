@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class CardDeckTest {
 
     @Test
-    @DisplayName("카드덱 생성되는지 검사")
+    @DisplayName("카드덱 생성되는지 테스트")
     public void createTest() {
         CardDeck cardDeck = CardDeck.newInstance();
         assertThat(cardDeck)
@@ -21,7 +21,7 @@ class CardDeckTest {
     }
 
     @Test
-    @DisplayName("카드 주기 기능 검사")
+    @DisplayName("카드 주기 기능 테스트")
     void drawTest() {
         // given
         CardDeck cardDeck = CardDeck.newInstance();
@@ -37,7 +37,7 @@ class CardDeckTest {
     }
 
     @Test
-    @DisplayName("카드 주기 예외처리 검사")
+    @DisplayName("카드 주기 예외처리 테스트")
     void drawErrorTest() {
         // given
         CardDeck cardDeck = CardDeck.newInstance();

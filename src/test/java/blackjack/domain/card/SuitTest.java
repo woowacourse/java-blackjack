@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class SuitTest {
+
     @ParameterizedTest
     @CsvSource(value = {
             "SPADE,스페이드",
@@ -16,8 +17,9 @@ class SuitTest {
             "CLOVER,클로버"
     })
 
-    @DisplayName("올바른 문양 들어가는지 검사")
+    @DisplayName("올바른 문양 들어가는지 테스트")
     void setExpectedSuitTest(Suit expectedSuit, String inputSymbolName) {
-        assertThat(expectedSuit.getName()).isEqualTo(inputSymbolName);
+        assertThat(expectedSuit.getName())
+                .isEqualTo(inputSymbolName);
     }
 }

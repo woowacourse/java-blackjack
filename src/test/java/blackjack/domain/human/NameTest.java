@@ -12,17 +12,19 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class NameTest {
 
     @Test
-    @DisplayName("이름 객체 생성 통과여부 검사")
+    @DisplayName("이름 객체 생성 통과여부 테스트")
     public void createTest() {
-        assertThat(Name.valueOf("jack").get()).isEqualTo("jack");
+        assertThat(Name.valueOf("jack").get())
+                .isEqualTo("jack");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"ja ck", "jac.k", ""})
-    @DisplayName("이름 객체 생성 실패여부 검사")
+    @ValueSource(strings = {"ja ck", "jac.k", "", " "})
+
+    @DisplayName("이름 객체 생성 실패여부 테스트")
     public void setNameFailTest(String input) {
         assertThatThrownBy(() -> Name.valueOf(input))
-                .isInstanceOf(Exception.class)
-                .hasMessage("이름 형식에 맞게 입력해야 합니다");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름 형식에 맞게 입력해야 합니다.");
     }
 }

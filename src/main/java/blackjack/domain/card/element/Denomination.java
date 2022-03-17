@@ -25,7 +25,7 @@ public enum Denomination {
         this.point = point;
     }
 
-    public static Denomination stringOf(final String initialInput) {
+    public static Denomination from(final String initialInput) {
         return Arrays.stream(Denomination.values())
                 .filter(value -> value.initial.equals(initialInput))
                 .findAny()

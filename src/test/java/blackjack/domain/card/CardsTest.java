@@ -12,38 +12,39 @@ import org.junit.jupiter.api.Test;
 
 public class CardsTest {
     private Cards cards;
-    private Card card5;
 
     @BeforeEach
     void setup() {
         cards = new Cards();
-        card5 = Card.of(Denomination.stringOf("A"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.stringOf("A"), Suit.SPADE);
-        cards.add(card5);
-        cards.add(card6);
+        cards.add(Card.of(Denomination.from("A"), Suit.SPADE));
+        cards.add(Card.of(Denomination.from("A"), Suit.CLOVER));
     }
 
     @Test
-    @DisplayName("카드모음 생성되는지 검사")
+    @DisplayName("카드모음 생성되는지 테스트")
     public void equalSizeTest() {
-        assertThat(cards.size()).isEqualTo(2);
+        assertThat(cards.size())
+                .isEqualTo(2);
     }
 
     @Test
-    @DisplayName("첫 카드 리턴 기능 검사")
+    @DisplayName("첫 카드 리턴 기능 테스트")
     void getFirstCardTest() {
-        assertThat(cards.getFirstCard()).isEqualTo(card5);
+        assertThat(cards.getFirstCard())
+                .isEqualTo(Card.of(Denomination.from("A"), Suit.SPADE));
     }
 
     @Test
-    @DisplayName("단순 포인트 리턴 기능 검사")
+    @DisplayName("단순 포인트 리턴 기능 테스트")
     void getRawPointTest() {
-        assertThat(cards.getRawPoint()).isEqualTo(22);
+        assertThat(cards.getRawPoint())
+                .isEqualTo(22);
     }
 
     @Test
-    @DisplayName("특정 카드 개수 리턴 기능 검사")
+    @DisplayName("특정 카드 개수 리턴 기능 테스트")
     void getAceCountTest() {
-        assertThat(cards.getDenominationCount(Denomination.ACE)).isEqualTo(2);
+        assertThat(cards.getDenominationCount(Denomination.ACE))
+                .isEqualTo(2);
     }
 }

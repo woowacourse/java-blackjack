@@ -17,10 +17,6 @@ public final class Card {
         return new Card(denomination, suit);
     }
 
-    public static Card copyOf(Card card) {
-        return new Card(card.denomination, card.suit);
-    }
-
     public boolean isSameDenomination(Denomination denomination) {
         return this.denomination.equals(denomination);
     }

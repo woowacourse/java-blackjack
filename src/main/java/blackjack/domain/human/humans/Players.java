@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class Players {
-    private static final String NULL_NAMES_DUPLICATED_ERROR_MESSAGE = "이름은 중복될 수 없습니다.";
+    private static final String NAMES_DUPLICATED_ERROR_MESSAGE = "이름은 중복될 수 없습니다.";
     private final List<Player> players;
 
     private Players(final List<Player> players) {
@@ -25,7 +25,7 @@ public final class Players {
 
     private static void validateNames(final List<String> names) {
         if (new HashSet<>(names).size() != names.size()) {
-            throw new IllegalArgumentException(NULL_NAMES_DUPLICATED_ERROR_MESSAGE);
+            throw new IllegalArgumentException(NAMES_DUPLICATED_ERROR_MESSAGE);
         }
     }
 
