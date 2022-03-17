@@ -3,9 +3,10 @@ package blackjack.domain.human;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.card.cards.CardDeck;
-import blackjack.domain.human.humans.Participant;
-import blackjack.domain.human.humans.Players;
+import blackjack.domain.cards.CardDeck;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Players;
+import blackjack.domain.participant.human.Dealer;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

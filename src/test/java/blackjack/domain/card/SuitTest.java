@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.element.Suit;
+import blackjack.domain.cards.card.denomination.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

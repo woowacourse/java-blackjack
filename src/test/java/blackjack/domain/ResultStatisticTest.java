@@ -2,13 +2,13 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.element.Denomination;
-import blackjack.domain.card.element.Suit;
-import blackjack.domain.human.Human;
-import blackjack.domain.human.Player;
-import blackjack.domain.human.humans.Participant;
-import blackjack.domain.human.humans.Players;
+import blackjack.domain.cards.card.Card;
+import blackjack.domain.cards.card.denomination.Denomination;
+import blackjack.domain.cards.card.denomination.Suit;
+import blackjack.domain.participant.human.Human;
+import blackjack.domain.participant.human.Player;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Players;
 import blackjack.domain.result.Result;
 import blackjack.domain.result.ResultStatistic;
 import java.util.List;

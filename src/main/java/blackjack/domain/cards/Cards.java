@@ -1,7 +1,7 @@
-package blackjack.domain.card.cards;
+package blackjack.domain.cards;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.element.Denomination;
+import blackjack.domain.cards.card.Card;
+import blackjack.domain.cards.card.denomination.Denomination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

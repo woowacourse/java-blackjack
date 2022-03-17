@@ -1,8 +1,8 @@
-package blackjack.domain.human.humans;
+package blackjack.domain.participant;
 
-import blackjack.domain.card.cards.CardDeck;
-import blackjack.domain.human.Dealer;
-import blackjack.domain.human.Player;
+import blackjack.domain.cards.CardDeck;
+import blackjack.domain.participant.human.Dealer;
+import blackjack.domain.participant.human.Player;
 import java.util.List;
 
 public final class Participant {

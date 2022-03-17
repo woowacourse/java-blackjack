@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.cards.Cards;
-import blackjack.domain.card.element.Denomination;
+import blackjack.domain.cards.Cards;
+import blackjack.domain.cards.card.denomination.Denomination;
 
 public final class Point {
     private static final int BLACKJACK_NUMBER = 21;

@@ -1,6 +1,6 @@
-package blackjack.domain.human;
+package blackjack.domain.participant.human;
 
-import blackjack.domain.card.cards.Cards;
+import blackjack.domain.cards.Cards;
 import blackjack.domain.result.Point;
 
 public final class Dealer extends Human {

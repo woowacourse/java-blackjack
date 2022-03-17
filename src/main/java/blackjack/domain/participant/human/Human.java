@@ -1,8 +1,8 @@
-package blackjack.domain.human;
+package blackjack.domain.participant.human;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.cards.Cards;
-import blackjack.domain.human.element.Name;
+import blackjack.domain.cards.card.Card;
+import blackjack.domain.cards.Cards;
+import blackjack.domain.participant.human.name.Name;
 import blackjack.domain.result.Point;
 
 public abstract class Human {
