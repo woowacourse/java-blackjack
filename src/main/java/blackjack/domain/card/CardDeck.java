@@ -1,15 +1,14 @@
 package blackjack.domain.card;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
+import java.util.EmptyStackException;
+import java.util.Stack;
 
 public class CardDeck implements CardStack {
 
-    public static final String EMPTY_CARD_DECK_EXCEPTION_MESSAGE = "카드가 모두 소진되었습니다!";
+    private static final String EMPTY_CARD_DECK_EXCEPTION_MESSAGE = "카드가 모두 소진되었습니다!";
 
-    private final LinkedList<Card> cards = new LinkedList<>();
+    private final Stack<Card> cards = new Stack<>();
 
     public CardDeck() {
         initCards();
@@ -17,20 +16,23 @@ public class CardDeck implements CardStack {
     }
 
     private void initCards() {
-        Arrays.stream(CardRank.values())
-                .forEach(this::initAndAddAllSymbolsOf);
+        for (CardRank rank : CardRank.values()) {
+            initAndAddAllSymbolsOf(rank);
+        }
     }
 
     private void initAndAddAllSymbolsOf(final CardRank rank) {
-        Arrays.stream(CardSymbol.values())
-                .forEach((symbol -> cards.add(Card.of(rank, symbol))));
+        for (CardSymbol symbol : CardSymbol.values()) {
+            Card card = Card.of(rank, symbol);
+            cards.add(card);
+        }
     }
 
     @Override
     public Card pop() {
         try {
             return cards.pop();
-        } catch (NoSuchElementException e) {
+        } catch (EmptyStackException e) {
             throw new IllegalArgumentException(EMPTY_CARD_DECK_EXCEPTION_MESSAGE);
         }
     }
