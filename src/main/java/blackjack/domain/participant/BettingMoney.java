@@ -15,10 +15,6 @@ public class BettingMoney {
         this(BigDecimal.valueOf(amount));
     }
 
-    public BettingMoney add(BettingMoney money) {
-        return new BettingMoney(amount.add(money.amount));
-    }
-
     public BettingMoney times(double percent) {
         return new BettingMoney(amount.multiply(BigDecimal.valueOf(percent)));
     }
