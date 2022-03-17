@@ -11,8 +11,8 @@ public abstract class Human {
     protected final Name name;
     protected final Cards cards;
 
-    protected Human(Cards cards, String name) {
-        this.name = Name.valueOf(name);
+    protected Human(Cards cards, Name name) {
+        this.name = name;
         this.cards = cards;
     }
 

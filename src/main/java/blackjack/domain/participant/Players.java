@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.cards.CardDeck;
 import blackjack.domain.participant.human.Player;
+import blackjack.domain.participant.human.name.Name;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,13 +27,13 @@ public final class Players {
         return new Players(rawValue);
     }
 
-    public static Players fromNames(final List<String> names) {
+    public static Players fromNames(final List<Name> names) {
         return new Players(convertNamesToValue(names));
     }
 
-    private static List<Player> convertNamesToValue(final List<String> names) {
+    private static List<Player> convertNamesToValue(final List<Name> names) {
         return names.stream()
-                .map(Player::from)
+                .map(Player::fromName)
                 .collect(Collectors.toList());
     }
 

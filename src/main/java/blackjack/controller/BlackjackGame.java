@@ -4,9 +4,12 @@ import blackjack.domain.cards.CardDeck;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
+import blackjack.domain.participant.human.name.Name;
 import blackjack.domain.result.ResultStatistic;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class BlackjackGame {
     private static final int INIT_CARD_NUMBER = 2;
@@ -14,19 +17,29 @@ public final class BlackjackGame {
     public void run() {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck.popCards(2));
-        Players players = Players
-                .fromNames(InputView.inputPlayerNames())
-                .initCard(cardDeck);
+        Players players = initPlayers(cardDeck);
         OutputView.printInitCards(players, dealer);
 
         startGame(players, dealer, cardDeck);
         endGame(players, dealer);
     }
 
+    private Players initPlayers(final CardDeck cardDeck) {
+        List<Name> names = InputView.inputPlayerNames();
+        return Players.fromRawValue(names.stream()
+                .map(Player::fromName)
+                .map(this::requestBetting)
+                .collect(Collectors.toList())
+        ).initCard(cardDeck);
+    }
+
+    private Player requestBetting(Player player) {
+        return player.initBetting(InputView.inputPlayerBetting(player.getName()));
+    }
+
     private void startGame(final Players players, final Dealer dealer, final CardDeck cardDeck) {
-        for (Player player : players.get()) {
-            hitOrStayPlayer(player, cardDeck);
-        }
+        players.get()
+                .forEach(player -> hitOrStayPlayer(player, cardDeck));
         hitOrStayDealer(dealer, cardDeck);
     }
 

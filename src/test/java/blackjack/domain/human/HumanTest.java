@@ -17,7 +17,7 @@ class HumanTest {
     @DisplayName("카드 추가 기능 테스트")
     void addCard() {
         // given
-        Human human = Player.from("test");
+        Human human = Player.fromText("test");
         Card card = Card.of(Denomination.fromInitial("10"), Suit.SPADE);
 
         // when
@@ -32,7 +32,7 @@ class HumanTest {
     @DisplayName("버스트 여부 확인 기능 true 테스트")
     public void isBustTest() {
         // given
-        Human human = Player.from("test");
+        Human human = Player.fromText("test");
         Card card = Card.of(Denomination.fromInitial("10"), Suit.SPADE);
         Card card2 = Card.of(Denomination.fromInitial("10"), Suit.SPADE);
 
@@ -50,7 +50,7 @@ class HumanTest {
     @DisplayName("첫 카드 한장 리턴하는 기능 테스트")
     void getInitCardTest() {
         // given
-        Human human = Player.from("test");
+        Human human = Player.fromText("test");
         Card card = Card.of(Denomination.fromInitial("10"), Suit.SPADE);
         Card card2 = Card.of(Denomination.fromInitial("2"), Suit.SPADE);
 
@@ -67,7 +67,7 @@ class HumanTest {
     @DisplayName("버스트 여부 확인 기능 false 테스트")
     public void isBustFalseTest() {
         // given
-        Human human = Player.from("test");
+        Human human = Player.fromText("test");
         Card card = Card.of(Denomination.fromInitial("10"), Suit.SPADE);
         Card card2 = Card.of(Denomination.fromInitial("10"), Suit.SPADE);
 
@@ -84,7 +84,7 @@ class HumanTest {
     @DisplayName("득점한 포인트 리턴 기능 테스트")
     void getPointTest() {
         // given
-        Human human = Player.from("test");
+        Human human = Player.fromText("test");
         Card card = Card.of(Denomination.fromInitial("5"), Suit.SPADE);
         Card card2 = Card.of(Denomination.fromInitial("A"), Suit.SPADE);
 
@@ -100,7 +100,7 @@ class HumanTest {
     @Test
     @DisplayName("이름 리턴 기능 테스트")
     void getName() {
-        Human human = Player.from("test");
+        Human human = Player.fromText("test");
         assertThat(human.getName())
                 .isEqualTo("test");
     }
@@ -110,7 +110,7 @@ class HumanTest {
     void getCards() {
         // given
         Cards cards = new Cards();
-        Human human = Player.from("test");
+        Human human = Player.fromText("test");
         Card card = Card.of(Denomination.fromInitial("5"), Suit.SPADE);
         Card card2 = Card.of(Denomination.fromInitial("A"), Suit.SPADE);
 

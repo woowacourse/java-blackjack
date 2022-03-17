@@ -19,10 +19,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class ResultStatisticTest {
-    private final Player player1 = Player.from("pobi");
-    private final Player player2 = Player.from("jason");
-    private final Player player3 = Player.from("bani");
-    private final Player player4 = Player.from("hunch");
+    private final Player player1 = Player.fromText("pobi");
+    private final Player player2 = Player.fromText("jason");
+    private final Player player3 = Player.fromText("bani");
+    private final Player player4 = Player.fromText("hunch");
 
     void addCardList(Human human, List<String> cards) {
         for (String card : cards) {
