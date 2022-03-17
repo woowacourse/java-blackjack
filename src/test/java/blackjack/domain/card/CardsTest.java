@@ -131,7 +131,7 @@ public class CardsTest {
         int score = cards.calculateScore();
 
         // then
-        Assertions.assertThat(cards.isSameBlackJackNumber()).isTrue();
+        Assertions.assertThat(cards.isSameBlackJackScore()).isTrue();
     }
 
     private Cards createCards(List<Card> initCards) {

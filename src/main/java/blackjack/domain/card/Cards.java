@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int BLACKJACK_NUMBER = 21;
+    private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_POINT_DIFFERENCE = 10;
 
     private final List<Card> cards;
@@ -16,11 +16,11 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_NUMBER;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
-    public boolean isSameBlackJackNumber() {
-        return calculateScore() == BLACKJACK_NUMBER;
+    public boolean isSameBlackJackScore() {
+        return calculateScore() == BLACKJACK_SCORE;
     }
 
     public int calculateScore() {
@@ -39,7 +39,7 @@ public class Cards {
     private int sumWithAce() {
         int sum = getSumPoint();
 
-        if (sum + ACE_POINT_DIFFERENCE <= BLACKJACK_NUMBER) {
+        if (sum + ACE_POINT_DIFFERENCE <= BLACKJACK_SCORE) {
             sum = sum + ACE_POINT_DIFFERENCE;
         }
 

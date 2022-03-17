@@ -33,7 +33,11 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        return ((cards.isDefaultSize()) && cards.isSameBlackJackNumber());
+        return ((cards.isDefaultSize()) && cards.isSameBlackJackScore());
+    }
+
+    public boolean isBlackJackScore() {
+        return cards.isSameBlackJackScore();
     }
 
     public String getName(){

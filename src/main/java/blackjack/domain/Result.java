@@ -17,7 +17,7 @@ public enum Result {
             (player, dealer) -> player.isBlackJack())
     ),
     WIN(1.0, (
-            (player, dealer) -> ((player.getScore() == 21 && dealer.getScore() == 21) || (dealer.isBust())
+            (player, dealer) -> ((player.isBlackJackScore() && dealer.isBlackJackScore()) || (dealer.isBust())
             || (!player.isBust() && !dealer.isBust() && player.getScore() > dealer.getScore())))
     ),
     LOSS(-1.0, (
