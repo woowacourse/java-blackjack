@@ -1,21 +1,22 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class Deck implements Drawable {
 
-    private final Stack<Card> deck;
+    private final Deque<Card> deck;
 
-    public Deck(Stack<Card> deck) {
+    public Deck(Deque<Card> deck) {
         this.deck = deck;
     }
 
     public static Deck create() {
         List<Card> blackjackCards = Card.createDeck();
         Collections.shuffle(blackjackCards);
-        Stack<Card> deck = new Stack<>();
+        Deque<Card> deck = new ArrayDeque<>();
         for (Card card : blackjackCards) {
             deck.push(card);
         }
