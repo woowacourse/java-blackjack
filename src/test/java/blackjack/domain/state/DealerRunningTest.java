@@ -8,6 +8,7 @@ import static blackjack.domain.card.Denomination.THREE;
 import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.SPADES;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -41,5 +42,15 @@ class DealerRunningTest {
         final BlackjackGameState nextState = running.hit(Card.of(SPADES, A));
 
         assertThat(nextState).isInstanceOf(DealerRunning.class);
+    }
+
+    @Test
+    void stay_할_때_예외발생() {
+        final Cards cards = new Cards(List.of(Card.of(SPADES, THREE), Card.of(SPADES, TWO)));
+        final BlackjackGameState running = DealerRunning.createDealerGameState(cards);
+
+        assertThatThrownBy(() -> running.stay())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("딜러의 running 상태는 stay를 할 수 없습니다.");
     }
 }

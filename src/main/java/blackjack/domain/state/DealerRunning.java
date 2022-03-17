@@ -28,4 +28,9 @@ public final class DealerRunning extends Running {
         cards.addCard(card);
         return crerateDealerGameState(cards);
     }
+
+    @Override
+    public final BlackjackGameState stay() {
+        throw new IllegalStateException("딜러의 running 상태는 stay를 할 수 없습니다.");
+    }
 }

@@ -10,11 +10,19 @@ public final class PlayerRunning extends Running {
     }
 
     @Override
-    public BlackjackGameState hit(final Card card) {
+    public final BlackjackGameState hit(final Card card) {
         cards.addCard(card);
         if (cards.isBust()) {
             return new Bust(cards, cards.score());
         }
         return new PlayerRunning(cards);
+    }
+
+    @Override
+    public final BlackjackGameState stay() {
+        if (cards.isBlackjack()) {
+            return new Blackjack(cards);
+        }
+        return new Stand(cards, cards.score());
     }
 }
