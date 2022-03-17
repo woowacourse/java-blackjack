@@ -13,6 +13,14 @@ class PlayerTest {
     private Player player = new Player("test");
 
     @Test
+    @DisplayName("플레이어가 블랙잭인지 확인한다.")
+    void checkPlayerIsBlackJackTest() {
+        player.cards.add(new Card(Shape.HEART, Number.JACK));
+        player.cards.add(new Card(Shape.HEART, Number.ACE));
+        assertThat(player.isBlackJack()).isEqualTo(true);
+    }
+
+    @Test
     @DisplayName("플레이어가 소지한 카드가 21 미만이면 true를 반환한다.")
     void checkScoreWhenUnder16Test() {
         player.cards.add(new Card(Shape.HEART, Number.JACK));

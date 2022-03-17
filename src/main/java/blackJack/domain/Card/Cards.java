@@ -46,4 +46,8 @@ public class Cards {
         }
         return score;
     }
+
+    public boolean isOnlyTwoCards() {
+        return deck.size() == 2;
+    }
 }

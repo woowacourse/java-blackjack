@@ -34,7 +34,7 @@ public class Game {
     }
 
     public boolean checkDealerIsBlackJack() {
-        if (dealer.checkBlackJack()) {
+        if (dealer.isBlackJack()) {
             makeBlackjackResult();
             return true;
         }

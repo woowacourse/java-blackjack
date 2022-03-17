@@ -47,7 +47,7 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        if (cards.calculateScore() == 21) {
+        if (cards.isOnlyTwoCards() && cards.calculateScore() == 21) {
             return true;
         }
         return false;

@@ -35,10 +35,9 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 블랙잭인지 확인한다.")
     void checkBlackJack() {
-        dealer.cards.add(new Card(Shape.HEART, Number.JACK));
         dealer.cards.add(new Card(Shape.HEART, Number.TEN));
         dealer.cards.add(new Card(Shape.HEART, Number.ACE));
-        assertThat(dealer.checkBlackJack()).isEqualTo(true);
+        assertThat(dealer.isBlackJack()).isEqualTo(true);
     }
 
     @Test
