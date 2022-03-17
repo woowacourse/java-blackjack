@@ -33,11 +33,11 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return score().isBustScore();
+        return score().isBust();
     }
 
     public boolean isBlackjack() {
-        return score().isBlackjackScore() && cards.size() == BLACKJACK_CARDS_SIZE;
+        return score().isBlackjack() && cards.size() == BLACKJACK_CARDS_SIZE;
     }
 
     public Score maxScore() {
@@ -45,11 +45,11 @@ public class Cards {
     }
 
     public boolean isMaxScoreBust() {
-        return maxScore().isBustScore();
+        return maxScore().isBust();
     }
 
     public boolean isDealerStandScore() {
-        return maxScore().isDealerStandScore();
+        return maxScore().isDealerStand();
     }
 
     public void addCard(final Card card) {

@@ -21,15 +21,15 @@ public class Score {
         }
     }
 
-    public boolean isBlackjackScore() {
+    public boolean isBlackjack() {
         return score == BLACKJACK_SCORE;
     }
 
-    public boolean isBustScore() {
+    public boolean isBust() {
         return score > BLACKJACK_SCORE;
     }
 
-    public boolean isDealerStandScore() {
+    public boolean isDealerStand() {
         return score >= DEALER_LIMIT_SCORE;
     }
 

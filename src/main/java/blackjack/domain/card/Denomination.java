@@ -64,7 +64,7 @@ public enum Denomination {
     private static Score calculateScore(final List<Denomination> numbers, final int defaultScore, final int startScore) {
         return IntStream.range(0, calculateAceCount(numbers))
                 .mapToObj(aceCount -> decreaseByAceCount(startScore, aceCount))
-                .filter(score -> !score.isBustScore())
+                .filter(score -> !score.isBust())
                 .findFirst()
                 .orElse(new Score(defaultScore));
     }
