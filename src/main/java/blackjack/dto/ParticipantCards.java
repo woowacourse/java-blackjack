@@ -15,7 +15,7 @@ public class ParticipantCards {
         this.cards = cards;
     }
 
-    public static ParticipantCards from(final Dealer dealer) {
+    public static ParticipantCards createDealerFirstCards(final Dealer dealer) {
         return new ParticipantCards(dealer.getName(), List.of(dealer.firstCard()));
     }
 
