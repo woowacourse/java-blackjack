@@ -1,7 +1,10 @@
 package blackjack.view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static java.lang.System.lineSeparator;
 
@@ -21,7 +24,7 @@ public class InputView {
         AGREE("y"),
         DISAGREE("n");
 
-        String name;
+        private String name;
 
         Agreement(String name) {
             this.name = name;
@@ -29,26 +32,34 @@ public class InputView {
 
         public static boolean isAgree(String input) {
             Agreement agreement = Arrays.stream(values())
-                    .filter(name -> name.equals(input))
+                    .filter(item -> item.check(input))
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_Y_OR_N));
 
             return agreement == AGREE;
         }
 
-        public String getName() {
-            return name;
+        public boolean check(String name) {
+            return this.name.equals(name);
         }
     }
 
-    public static String[] inputUsersName() {
+    public static List<String> inputUsersName() {
         System.out.println(INPUT_USERNAME_GUIDE);
-        return scanner.nextLine().split(REGEX);
+        return Arrays.stream(scanner.nextLine().split(REGEX)).collect(Collectors.toList());
     }
 
     public static boolean inputMoreCard(String userName) {
         System.out.printf(INPUT_MORE_CARD_FORMAT, userName);
         return Agreement.isAgree(scanner.nextLine());
+    }
+
+    public static List<Integer> inputUserBettingPrices(List<String> userNames) {
+        List<Integer> bettingPrices = new ArrayList<>();
+        for (String userName : userNames) {
+            bettingPrices.add(getUserBettingPrice(userName));
+        }
+        return bettingPrices;
     }
 
     public static int getUserBettingPrice(String userName) {

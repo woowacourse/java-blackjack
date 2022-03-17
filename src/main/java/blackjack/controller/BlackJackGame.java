@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.result.DistributeResult;
+import blackjack.util.Mapper;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -15,10 +16,11 @@ public class BlackJackGame {
     private BlackJack blackJack;
 
     public void play() {
-        Map<String, Integer> bettingPriceByName = mappingUserNameAndBettingPrice();
+        List<String> userNames = InputView.inputUsersName();
+        Map<String, Integer> bettingPriceByName = mappingUserNameAndBettingPrice(userNames);
         blackJack = new BlackJack(bettingPriceByName);
         initDistribute();
-        playGameEachParticipant(bettingPriceByName.keySet());
+        playGameEachParticipant(userNames);
         printGameScore();
         printFinalProfit();
     }
@@ -27,14 +29,9 @@ public class BlackJackGame {
         OutputView.printProfitResult(blackJack.calculateProfitResult());
     }
 
-    public Map<String, Integer> mappingUserNameAndBettingPrice() {
-        String[] userNames = InputView.inputUsersName();
-        Map<String, Integer> priceByName = new LinkedHashMap<>();
-        for (String userName : userNames) {
-            int price = InputView.getUserBettingPrice(userName);
-            priceByName.put(userName, price);
-        }
-
+    private Map<String, Integer> mappingUserNameAndBettingPrice(List<String> userNames) {
+        List<Integer> userBettingPrices = InputView.inputUserBettingPrices(userNames);
+        Map<String, Integer> priceByName = Mapper.mappingUserNameAndBettingPrice(userNames, userBettingPrices);
         return priceByName;
     }
 
@@ -47,7 +44,7 @@ public class BlackJackGame {
         OutputView.printInitDistribute(distributeResults);
     }
 
-    private void playGameEachParticipant(Set<String> userNames) {
+    private void playGameEachParticipant(List<String> userNames) {
         for (String userName : userNames) {
             playEachUser(userName);
         }
