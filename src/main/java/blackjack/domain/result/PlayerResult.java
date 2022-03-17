@@ -9,20 +9,18 @@ import java.util.function.BiPredicate;
 
 public enum PlayerResult {
 
-    BLACKJACK_WIN("-", 1.5, PlayerResult::isBlackjackWin),
+    BLACKJACK_WIN(1.5, PlayerResult::isBlackjackWin),
 
-    WIN("승", 1, PlayerResult::isWin),
+    WIN(1, PlayerResult::isWin),
 
-    DRAW("무", 0, PlayerResult::isDraw),
+    DRAW(0, PlayerResult::isDraw),
 
-    LOSS("패", -1, PlayerResult::isLoss);
+    LOSS(-1, PlayerResult::isLoss);
 
-    private final String name;
     private final double profitRate;
     private final BiPredicate<Player, Dealer> predicate;
 
-    PlayerResult(final String name, final double profitRate, final BiPredicate<Player, Dealer> predicate) {
-        this.name = name;
+    PlayerResult(final double profitRate, final BiPredicate<Player, Dealer> predicate) {
         this.profitRate = profitRate;
         this.predicate = predicate;
     }
@@ -52,10 +50,6 @@ public enum PlayerResult {
     private static boolean isWin(Player player, Dealer dealer) {
         return (dealer.isBust() && !player.isBust()) ||
                 (player.hasHigherScoreThan(dealer) && !player.isBust());
-    }
-
-    public String getName() {
-        return name;
     }
 
     public double getProfitRate() {
