@@ -5,6 +5,7 @@ import blackjack.domain.Command;
 import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
+import blackjack.domain.entry.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -15,16 +16,24 @@ public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputNames());
         List<Participant> participants = blackjackGame.getParticipant();
+        List<Player> players = blackjackGame.getPlayers();
+        betMoney(players);
+
         OutputView.printPlayersDefaultCard(participants);
 
-        hit(blackjackGame);
+        hit(blackjackGame, players);
 
         OutputView.printCardResult(blackjackGame.getCardResult(participants));
         OutputView.printGameResult(blackjackGame.getGameResult());
     }
 
-    private void hit(BlackjackGame blackjackGame) {
-        List<Player> players = blackjackGame.getPlayers();
+    private void betMoney(List<Player> players) {
+        for (Player player: players) {
+            player.initBettingMoney(InputView.inputBettingMoney(player));
+        }
+    }
+
+    private void hit(BlackjackGame blackjackGame, List<Player> players) {
         for (Player player : players) {
             hitPlayer(blackjackGame, player);
         }
