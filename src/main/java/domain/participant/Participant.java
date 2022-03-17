@@ -3,7 +3,6 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import utils.ExceptionMessages;
@@ -14,7 +13,7 @@ public abstract class Participant {
     protected final Name name;
 
     public Participant(String name) {
-        this.cards = Cards.of(new ArrayList<>());
+        this.cards = Cards.of(Cards.getEmptyList());
         this.name = new Name(name);
     }
 

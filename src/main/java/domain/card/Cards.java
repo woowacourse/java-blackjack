@@ -8,6 +8,7 @@ public final class Cards {
 
     private static final int ACE_ADDITION = 10;
     private static final int MAX_SCORE = 21;
+    private static final List<Card> EMPTY_LIST = Collections.emptyList();
 
     private final List<Card> cards;
 
@@ -17,6 +18,10 @@ public final class Cards {
 
     public static Cards of(List<Card> cards) {
         return new Cards(cards);
+    }
+
+    public static List<Card> getEmptyList() {
+        return EMPTY_LIST;
     }
 
     public int calculateScore() {
