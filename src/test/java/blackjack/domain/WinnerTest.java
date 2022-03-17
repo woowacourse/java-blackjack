@@ -73,23 +73,6 @@ class WinnerTest {
         assertThat(winner.contains(player)).isFalse();
     }
 
-    @DisplayName("딜러의 값과 플레이어의 값이 같을 경우 승자를 확인한다.")
-    @Test
-    void equals_score() {
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
-        Dealer dealer = new Dealer();
-        dealer.dealInit(dealerCards);
-
-        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
-        Player player = new Player("pobi");
-        player.dealInit(playerCards);
-
-        Winner winner = new Winner();
-        winner.decide(dealer, player);
-
-        assertThat(winner.contains(player)).isFalse();
-    }
-
     @DisplayName("플레이어가 21을 초과하지 않았을 때 딜러가 21을 초과할 경우 승자를 확인한다.")
     @Test
     void bust_dealer() {

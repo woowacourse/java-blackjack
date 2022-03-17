@@ -58,7 +58,7 @@ public class DealerTest {
         player.dealInit(playerCards);
         dealer.dealInit(dealerCards);
 
-        final boolean compare = dealer.compare(player);
+        final boolean compare = dealer.isWinner(player);
         assertThat(compare).isTrue();
     }
 
@@ -70,7 +70,7 @@ public class DealerTest {
         player.dealInit(playerCards);
         dealer.dealInit(dealerCards);
 
-        final boolean compare = dealer.compare(player);
+        final boolean compare = dealer.isSameTotal(player.getTotal());
         assertThat(compare).isTrue();
     }
 
@@ -82,7 +82,7 @@ public class DealerTest {
         player.dealInit(playerCards);
         dealer.dealInit(dealerCards);
 
-        final boolean compare = dealer.compare(player);
+        final boolean compare = dealer.isWinner(player);
         assertThat(compare).isFalse();
     }
 

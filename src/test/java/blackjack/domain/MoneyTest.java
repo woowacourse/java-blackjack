@@ -6,7 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class MoneyTest {
 
@@ -36,6 +37,20 @@ public class MoneyTest {
                 .hasMessage("배팅 금액은 양수로 입력해주세요.");
     }
 
+    @DisplayName("10의 단위 이외의 값을 입력 받았을 때 예외 발생을 확인한다.")
+    @Test
+    void money_ten_units_number_exception() {
+        assertThatThrownBy(() -> Money.of("5001"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("배팅 금액은 10원 단위로 입력해주세요.");
+    }
 
+    @DisplayName("수익률을 곱했을 때 올바른 답이 반환되는지 확인한다.")
+    @Test
+    void money_reverse_create() {
+        Money money = Money.of("1000");
+        Money reverseMoney = Money.profits(-1.5, money);
 
+        assertThat(reverseMoney.getMoney()).isEqualTo(-1500);
+    }
 }

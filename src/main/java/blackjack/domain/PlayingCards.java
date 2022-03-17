@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class PlayingCards {
     private static final int BLACKJACK = 21;
+    public static final int BLACKJACK_CARD_COUNTS = 2;
 
     private final List<Card> playingCards = new ArrayList<>();
 
@@ -46,5 +47,9 @@ public class PlayingCards {
 
     public boolean isUnderBlackjack() {
         return calculateTotal() < BLACKJACK;
+    }
+
+    public boolean isBlackjack() {
+        return calculateTotal() == BLACKJACK && playingCards.size() == BLACKJACK_CARD_COUNTS;
     }
 }

@@ -11,7 +11,7 @@ public class Winner {
         if (player.isBust()) {
             return;
         }
-        if (dealer.isBust() || !(dealer.compare(player))) {
+        if (dealer.isBust() || !(dealer.isWinner(player))) {
             winners.add(player);
         }
     }

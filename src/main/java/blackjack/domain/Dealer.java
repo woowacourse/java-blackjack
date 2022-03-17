@@ -11,10 +11,6 @@ public class Dealer extends Human {
         super(DEALER_NAME);
     }
 
-    public boolean compare(final Player player) {
-        return getTotal() >= player.getTotal();
-    }
-
     public List<String> getInitCard() {
         return cards.getFirstCardName();
     }
