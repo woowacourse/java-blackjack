@@ -8,7 +8,7 @@ public enum Judgement {
     BLACKJACK(1.5),
     WIN(1),
     LOSE(-1),
-    DRAW(1);
+    DRAW(0);
 
     private final double profitMultiple;
 

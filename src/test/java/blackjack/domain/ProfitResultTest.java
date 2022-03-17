@@ -50,14 +50,13 @@ public class ProfitResultTest {
     }
 
     @Test
-    @DisplayName("비기는 경우 배팅 금액을 그대로 돌려받는다.")
+    @DisplayName("비기는 경우 수익은 0원이다.")
     void profitPlayerDraw() {
         // given
         Card card1 = new Card(CLOVER, NINE);
         Card card2 = new Card(SPADE, NINE);
         Cards dealerCards = new Cards(List.of(card1, card2));
         Dealer dealer = new Dealer(dealerCards);
-        dealer.hit(new Card(HEART, SIX));
 
         Card card3 = new Card(HEART, TEN);
         Card card4 = new Card(SPADE, EIGHT);
@@ -74,8 +73,8 @@ public class ProfitResultTest {
 
         // then
         assertAll(
-            () -> assertThat(playerResult.getProfit()).isEqualTo(amount),
-            () -> assertThat(dealerResult.getProfit()).isEqualTo(amount * -1)
+            () -> assertThat(playerResult.getProfit()).isEqualTo(0),
+            () -> assertThat(dealerResult.getProfit()).isEqualTo(0)
         );
     }
 
