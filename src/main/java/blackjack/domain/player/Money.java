@@ -1,12 +1,8 @@
 package blackjack.domain.player;
 
-import blackjack.domain.result.Result;
 import java.util.Objects;
 
 public class Money {
-
-    private static final double BLACKJACK_MULTIPLY = 1.5;
-    private static final long DRAW = 0;
 
     private final long value;
 
@@ -14,7 +10,7 @@ public class Money {
         this.value = value;
     }
 
-    public static Money from(final long value) {
+    public static Money valueOf(final long value) {
         return new Money(value);
     }
 
@@ -38,17 +34,8 @@ public class Money {
         }
     }
 
-    public Money calculate(final Result result) {
-        if (result == Result.BLACKJACK) {
-            return Money.from((long) (value * BLACKJACK_MULTIPLY));
-        }
-        if (result == Result.WIN) {
-            return Money.from(value);
-        }
-        if (result == Result.DRAW) {
-            return Money.from(DRAW);
-        }
-        return Money.from(-value);
+    public Money multiply(final double multiplier) {
+        return Money.valueOf((long) (value * multiplier));
     }
 
     public long getValue() {

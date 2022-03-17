@@ -66,8 +66,8 @@ public class GuestTest {
     @DisplayName("참가자가 원하는 금액을 배팅한다.")
     void betMoney(String input, int expected) {
         Guest guest = new Guest("김제니");
-        guest.betMoney(Money.from(input));
+        guest.betMoney(new BetMoney(input).getMoney());
 
-        assertThat(guest.getMoney()).isEqualTo(Money.from(expected));
+        assertThat(guest.getMoney()).isEqualTo(Money.valueOf(expected));
     }
 }

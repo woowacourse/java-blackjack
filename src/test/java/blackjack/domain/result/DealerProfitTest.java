@@ -30,13 +30,13 @@ public class DealerProfitTest {
         for (Guest guest : guests) {
             guest.takeCard(card3);
             guest.takeCard(card4);
-            guest.betMoney(Money.from(10_000));
+            guest.betMoney(Money.valueOf(10_000));
         }
 
         GuestProfit guestProfit = new GuestProfit(dealer, guests);
         DealerProfit dealerProfit = new DealerProfit(guestProfit);
 
-        assertThat(dealerProfit.getProfit()).isEqualTo(Money.from(expected));
+        assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(expected));
     }
 
     static Stream<Arguments> generateCalculateDealerMoneyArguments() {

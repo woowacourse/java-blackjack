@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackMachine;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.player.BetMoney;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
@@ -47,7 +48,8 @@ public class BlackjackController {
 
     private Money getMoney(final String name) {
         try {
-            return Money.from(InputView.getMoney(name));
+            final BetMoney betMoney = new BetMoney(InputView.getMoney(name));
+            return betMoney.getMoney();
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
             return getMoney(name);

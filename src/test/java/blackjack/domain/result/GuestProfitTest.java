@@ -32,14 +32,14 @@ public class GuestProfitTest {
         for (Guest guest : guests) {
             guest.takeCard(card3);
             guest.takeCard(card4);
-            guest.betMoney(Money.from(10_000));
+            guest.betMoney(Money.valueOf(10_000));
         }
 
         GuestProfit guestProfit = new GuestProfit(dealer, guests);
         Map<Guest, Money> profits = guestProfit.getProfits();
 
         for (Guest guest : guests) {
-            assertThat(profits).contains(entry(guest, Money.from(expected)));
+            assertThat(profits).contains(entry(guest, Money.valueOf(expected)));
         }
     }
 

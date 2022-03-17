@@ -20,7 +20,9 @@ public class GuestProfit {
         final Map<Guest, Money> profits = new LinkedHashMap<>();
         for (Guest guest : guests) {
             final Money money = guest.getMoney();
-            profits.put(guest, money.calculate(Result.of(dealer, guest)));
+            final double profitRatio = Result.decide(dealer, guest).getProfitRatio();
+
+            profits.put(guest, money.multiply(profitRatio));
         }
         return profits;
     }
