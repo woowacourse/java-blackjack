@@ -8,6 +8,8 @@ import blackjack.domain.participant.Name;
 
 public class Betting {
 
+    private static final double BLACKJACK_MULTIPLIER = 1.5;
+
     private final Name name;
     private final long money;
 
@@ -43,7 +45,7 @@ public class Betting {
         }
 
         if (playRecord == PlayRecord.BLACKJACK) {
-            return (long)(1.5 * money);
+            return (long)(BLACKJACK_MULTIPLIER * money);
         }
         return 0;
     }
