@@ -12,7 +12,7 @@ public class Card {
     private final Pattern pattern;
     private final Denomination denomination;
 
-    public Card(Pattern pattern, Denomination denomination) {
+    private Card(Pattern pattern, Denomination denomination) {
         this.pattern = pattern;
         this.denomination = denomination;
     }
