@@ -9,7 +9,7 @@ public enum PlayRecord {
     LOSS,
     BLACKJACK;
 
-    public static PlayRecord of(int dealerScore, int score) {
+    public static PlayRecord of(int dealerScore, int score, boolean isBlackjack) {
         if (isPlayerLoss(dealerScore, score)) {
             return LOSS;
         }
@@ -18,7 +18,7 @@ public enum PlayRecord {
             return PUSH;
         }
 
-        if (PlayStatus.isBlackjack(score)) {
+        if (isBlackjack) {
             return BLACKJACK;
         }
 

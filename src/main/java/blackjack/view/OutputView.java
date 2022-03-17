@@ -57,7 +57,7 @@ public class OutputView {
         printEmptyLine();
         System.out.println("## 최종 수익");
         for (Map.Entry<Name, Long> entry : revenues.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+            System.out.println(entry.getKey().getValue() + ": " + entry.getValue());
         }
     }
 

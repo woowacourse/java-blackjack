@@ -29,7 +29,7 @@ class RecordFactoryTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE:LOSS", "TWO:PUSH", "FOUR:BLACKJACK", "FIVE:LOSS"}, delimiter = ':')
+    @CsvSource(value = {"ACE:LOSS", "TWO:PUSH", "FIVE:LOSS"}, delimiter = ':')
     @DisplayName("딜러가 버스트 하지 않은 경우 플레이어의 승패 여부를 반환한다.")
     void getRecord_dealerNotBust(CardNumber cardNumber, PlayRecord expected) {
         // give
@@ -45,7 +45,7 @@ class RecordFactoryTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"THREE:WIN", "FOUR:BLACKJACK", "FIVE:LOSS"}, delimiter = ':')
+    @CsvSource(value = {"THREE:WIN", "FIVE:LOSS"}, delimiter = ':')
     @DisplayName("딜러가 버스트한 경우 플레이어의 승패 여부를 반환한다.")
     void getRecord_dealerBust(CardNumber cardNumber, PlayRecord expected) {
         // give

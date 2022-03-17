@@ -49,8 +49,24 @@ public class ParticipantTest {
         assertThat(actual).isEqualTo(10);
     }
 
+    @Test
+    @DisplayName("블랙잭을 검증한다.")
+    void checkBlackjack() {
+        //given
+        Participant player = new Player(Name.of("pobi"));
+        player.hit(new Card(DIAMOND, JACK));
+        player.hit(new Card(DIAMOND, ACE));
+
+        //when
+        boolean actual = player.isBlackjack();
+
+        //then
+        assertThat(actual).isEqualTo(true);
+
+    }
+
     @ParameterizedTest
-    @CsvSource(value = {"TWO:BUST", "ACE:HIT"}, delimiter = ':')
+    @CsvSource(value = {"TWO:BUST", "ACE:STAY"}, delimiter = ':')
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
     void returnBust(CardNumber cardNumber, PlayStatus expected) {
         // give

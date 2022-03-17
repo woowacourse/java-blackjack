@@ -16,13 +16,13 @@ public class RecordFactory {
         this.dealerScore = dealerScore;
     }
 
-    private PlayRecord getRecord(int score) {
-        return PlayRecord.of(dealerScore, score);
-    }
-
     public Map<Name, PlayRecord> getPlayerRecords(List<Player> players) {
         return players.stream()
             .collect(toUnmodifiableMap(Player::getName,
-                player -> getRecord(player.getScore())));
+                player -> getRecord(player.getScore(), player.isBlackjack())));
+    }
+
+    private PlayRecord getRecord(int score, boolean isBlackjack) {
+        return PlayRecord.of(dealerScore, score, isBlackjack);
     }
 }

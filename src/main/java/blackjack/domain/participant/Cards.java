@@ -26,7 +26,7 @@ class Cards {
     }
 
     PlayStatus getStatus() {
-        return PlayStatus.hitOrBust(sum());
+        return PlayStatus.of(sum());
     }
 
     int sum() {
@@ -60,5 +60,9 @@ class Cards {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
+    }
+
+    public boolean isBlackjack() {
+        return PlayStatus.isBlackjack(sum(), value.size());
     }
 }

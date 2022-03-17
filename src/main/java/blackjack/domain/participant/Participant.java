@@ -21,6 +21,7 @@ public abstract class Participant {
     public void init(CardDeck cardDeck) {
         cards.add(cardDeck.drawCard());
         cards.add(cardDeck.drawCard());
+        playStatus = cards.getStatus();
     }
 
     PlayStatus getStatus() {
@@ -44,5 +45,9 @@ public abstract class Participant {
 
     public Set<Card> getCards() {
         return cards.getValue();
+    }
+
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 }

@@ -9,9 +9,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class PlayStatusTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"21:HIT", "22:BUST"}, delimiter = ':')
-    @DisplayName("카드 목록의 합에 따라 HIT이나 BUST를 반환한다.")
+    @CsvSource(value = {"20:HIT", "21:STAY", "22:BUST"}, delimiter = ':')
+    @DisplayName("카드 목록의 합에 따라 PlayStatus를 반환한다.")
     void hitOrBust(int sum, PlayStatus expected) {
-        assertThat(PlayStatus.hitOrBust(sum)).isEqualTo(expected);
+        assertThat(PlayStatus.of(sum)).isEqualTo(expected);
     }
 }
