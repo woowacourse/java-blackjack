@@ -17,6 +17,7 @@ public class BlackjackGame {
 
     private final Deck deck;
     private final Players blackjackPlayers;
+
     public BlackjackGame(Deck deck, Players players) {
         this.deck = deck;
         this.blackjackPlayers = players;
