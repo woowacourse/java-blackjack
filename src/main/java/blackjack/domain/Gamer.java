@@ -7,14 +7,14 @@ import java.util.List;
 public abstract class Gamer {
 
     private final String name;
-    private final BattingMoney battingMoney;
+    private final BettingMoney bettingMoney;
     private final Cards cards;
 
     public Gamer(String name, int battingMoney, List<Card> cards) {
         this.name = name.trim();
         checkName(this.name);
 
-        this.battingMoney = new BattingMoney(battingMoney);
+        this.bettingMoney = new BettingMoney(battingMoney);
         this.cards = new Cards(cards);
     }
 
@@ -43,7 +43,7 @@ public abstract class Gamer {
     abstract boolean canHit();
 
     public boolean addMoney(int value) {
-        return battingMoney.addMoney(value);
+        return bettingMoney.addMoney(value);
     }
 
     public String getName() {
@@ -54,7 +54,7 @@ public abstract class Gamer {
         return cards;
     }
 
-    public int getBattingMoney() {
-        return battingMoney.getValue();
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
     }
 }

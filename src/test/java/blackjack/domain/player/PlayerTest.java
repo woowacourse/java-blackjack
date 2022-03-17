@@ -185,7 +185,7 @@ public class PlayerTest {
 
         player.calculateBattingMoneyResult(dealer);
 
-        assertThat(player.getBattingMoney()).isEqualTo(1000);
+        assertThat(player.getBettingMoney()).isEqualTo(1000);
     }
 
     @DisplayName("플레이어가 블랙잭이라서 이겼을 때 최종 배팅 머니 계산")
@@ -196,7 +196,7 @@ public class PlayerTest {
 
         player.calculateBattingMoneyResult(dealer);
 
-        assertThat(player.getBattingMoney()).isEqualTo(1500);
+        assertThat(player.getBettingMoney()).isEqualTo(1500);
     }
 
     @DisplayName("플레이어가 졌을 때 최종 배팅 머니 계산")
@@ -207,7 +207,7 @@ public class PlayerTest {
 
         player.calculateBattingMoneyResult(dealer);
 
-        assertThat(player.getBattingMoney()).isEqualTo(-1000);
+        assertThat(player.getBettingMoney()).isEqualTo(-1000);
     }
 
     @DisplayName("플레이어와 딜러 무승부일 때 배팅 머니 계산")
@@ -218,6 +218,6 @@ public class PlayerTest {
 
         player.calculateBattingMoneyResult(dealer);
 
-        assertThat(player.getBattingMoney()).isEqualTo(1000);
+        assertThat(player.getBettingMoney()).isEqualTo(1000);
     }
 }

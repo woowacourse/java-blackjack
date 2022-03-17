@@ -34,11 +34,11 @@ public class Player extends Gamer {
             return true;
         }
 
-        double result = gameResult.getBattingMoneyResult() * getBattingMoney();
+        double result = gameResult.getBattingMoneyResult() * getBettingMoney();
         return addMoney((int) result);
     }
 
     public int reverseBattingMoney() {
-        return getBattingMoney() * CONVERT_POSITIVE_VALUE;
+        return getBettingMoney() * CONVERT_POSITIVE_VALUE;
     }
 }

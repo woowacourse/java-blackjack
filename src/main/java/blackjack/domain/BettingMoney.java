@@ -1,17 +1,17 @@
 package blackjack.domain;
 
-public class BattingMoney {
+public class BettingMoney {
 
     public static final int BATTING_MIN_VALUE = 0;
 
     private int value;
 
-    public BattingMoney(int value) {
+    public BettingMoney(int value) {
         checkNegative(value);
         this.value = value;
     }
 
-    public BattingMoney(String value) {
+    public BettingMoney(String value) {
         this(Integer.parseInt(value));
     }
 

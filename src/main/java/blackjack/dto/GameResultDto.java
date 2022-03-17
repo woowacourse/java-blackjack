@@ -14,7 +14,7 @@ public class GameResultDto {
     }
 
     public static GameResultDto from(Gamer gamer) {
-        return new GameResultDto(gamer.getName(), gamer.getBattingMoney());
+        return new GameResultDto(gamer.getName(), gamer.getBettingMoney());
     }
 
     public String getName() {
