@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.DuelResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,8 +54,8 @@ public class Player extends Participant {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public DuelResult getDuelResultWith(Dealer dealer) {
-        return cardHand.getDuelResultOf(dealer.cardHand);
+    public double getBettingYieldVersus(Dealer dealer) {
+        return cardHand.getBettingYieldVersus(dealer.cardHand);
     }
 
     @Override

@@ -18,8 +18,8 @@ public class BettingReferee {
         this.bettingResults = getUnmodifiableOrderedListOf(dealerBettingResult, playerBettingResults);
     }
 
-    private List<BettingResult> getUnmodifiableOrderedListOf(BettingResult dealerBettingResult,
-                                                             List<BettingResult> playerBettingResults) {
+    private List<BettingResult> getUnmodifiableOrderedListOf(final BettingResult dealerBettingResult,
+                                                             final List<BettingResult> playerBettingResults) {
         List<BettingResult> bettingResults = new ArrayList<>();
 
         bettingResults.add(dealerBettingResult);
@@ -28,7 +28,7 @@ public class BettingReferee {
         return Collections.unmodifiableList(bettingResults);
     }
 
-    private List<BettingResult> getPlayerBettingResultsFrom(PlayerBettings playerBettings, Dealer dealer) {
+    private List<BettingResult> getPlayerBettingResultsFrom(final PlayerBettings playerBettings, final Dealer dealer) {
         return playerBettings.getValue()
                 .stream()
                 .map(playerBetting -> initPlayerBettingResultFrom(playerBetting, dealer))
@@ -36,18 +36,17 @@ public class BettingReferee {
     }
 
     private BettingResult initPlayerBettingResultFrom(final PlayerBetting playerBetting, final Dealer dealer) {
-        Player player = playerBetting.getPlayer();
+        final Player player = playerBetting.getPlayer();
         final int bettingAmount = playerBetting.getBettingAmount();
 
-        final int winAmount = player.getDuelResultWith(dealer)
-                .getProfitOf(bettingAmount);
+        final int profit = (int) player.getBettingYieldVersus(dealer) * bettingAmount;
 
-        return new BettingResult(player, winAmount);
+        return new BettingResult(player, profit);
     }
 
     private BettingResult initDealerResultFrom(final Dealer dealer, final List<BettingResult> playerBettingResults) {
-        int totalPlayerProfit = getTotalProfitOf(playerBettingResults);
-        int dealerProfit = totalPlayerProfit * -1;
+        final int totalPlayerProfit = getTotalProfitOf(playerBettingResults);
+        final int dealerProfit = totalPlayerProfit * -1;
 
         return new BettingResult(dealer, dealerProfit);
     }

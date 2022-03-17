@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.DuelResult;
 
 public class Bust extends FinishedState {
 
@@ -18,8 +17,9 @@ public class Bust extends FinishedState {
         }
     }
 
-    public DuelResult getDuelResultOf(CardHand targetHand){
-        return DuelResult.LOSE;
+    @Override
+    public double getBettingYieldVersus(CardHand targetHand) {
+        return LOSE_BETTING_YIELD;
     }
 
     @Override

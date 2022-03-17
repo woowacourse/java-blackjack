@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.DuelResult;
 import blackjack.domain.game.Score;
 
 public class Stay extends FinishedState {
@@ -27,21 +26,31 @@ public class Stay extends FinishedState {
         }
     }
 
-    public DuelResult getDuelResultOf(CardHand targetHand) {
+    @Override
+    public double getBettingYieldVersus(CardHand targetHand) {
         if (targetHand.isBlackjack()) {
-            return DuelResult.LOSE;
+            return LOSE_BETTING_YIELD;
         }
         if (targetHand.isBust()) {
-            return DuelResult.WIN;
+            return WIN_BETTING_YIELD;
         }
         return getCompareResultOf(targetHand.getCardBundle());
     }
 
-    private DuelResult getCompareResultOf(CardBundle targetCardBundle) {
-        Score score = cardBundle.getScore();
-        Score targetScore = targetCardBundle.getScore();
+    private double getCompareResultOf(CardBundle targetCardBundle) {
+        int compareResult = getScoreOf(cardBundle).compareTo(getScoreOf(targetCardBundle));
 
-        return DuelResult.of(score, targetScore);
+        if (compareResult > 0) {
+            return WIN_BETTING_YIELD;
+        }
+        if (compareResult < 0) {
+            return LOSE_BETTING_YIELD;
+        }
+        return DRAW_BETTING_YIELD;
+    }
+
+    private Score getScoreOf(CardBundle cardBundle) {
+        return cardBundle.getScore();
     }
 
     @Override

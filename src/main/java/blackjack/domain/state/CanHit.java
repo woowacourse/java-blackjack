@@ -4,7 +4,6 @@ import static blackjack.domain.state.FinishedState.ALREADY_FINISHED_EXCEPTION_ME
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.DuelResult;
 import blackjack.strategy.StayStrategy;
 
 public class CanHit implements CardHand {
@@ -41,7 +40,8 @@ public class CanHit implements CardHand {
         return new Stay(cardBundle);
     }
 
-    public DuelResult getDuelResultOf(CardHand targetHand){
+    @Override
+    public double getBettingYieldVersus(CardHand targetHand){
         throw new IllegalArgumentException(NOT_FINISHED_STATE_EXCEPTION_MESSAGE);
     }
 

@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.DuelResult;
 
 public class Blackjack extends FinishedState {
 
@@ -18,11 +17,12 @@ public class Blackjack extends FinishedState {
         }
     }
 
-    public DuelResult getDuelResultOf(CardHand targetHand) {
+    @Override
+    public double getBettingYieldVersus(CardHand targetHand) {
         if (targetHand.isBlackjack()) {
-            return DuelResult.DRAW;
+            return DRAW_BETTING_YIELD;
         }
-        return DuelResult.BLACKJACK_WIN;
+        return BLACKJACK_WIN_BETTING_YIELD;
     }
 
     @Override
