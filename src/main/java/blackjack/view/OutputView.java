@@ -2,7 +2,6 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
@@ -98,14 +97,13 @@ public class OutputView {
             gamer.calculateResult());
     }
 
-    public static void printFinalResultBoard(final Map<Gamer, GameResult> gamerResultBoard,
-        int dealerResult) {
+    public static void printFinalResultBoard(final Map<Gamer, Integer> gamersProfit,
+        int dealerProfit) {
         System.out.println(FINAL_RESULT_MESSAGE);
 
-        System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, dealerResult);
-        gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
-            key.getName(),
-            (int)(key.BetMoney() * value.getMultiplePoint())));
+        System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, dealerProfit);
+        gamersProfit.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
+            key.getName(), value));
     }
 
 

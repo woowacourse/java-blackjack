@@ -29,10 +29,10 @@ public class GameResultTest {
         Gamer gamer = settingGamer();
         get_23_Point(gamer);
         //when
-        Map<Gamer, GameResult> finalResultBoard = GameResult
-            .calculateGamersFinalResultBoard(dealer, List.of(gamer));
+        Map<Gamer, Integer> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
         //then
-        assertThat(finalResultBoard.get(gamer)).isEqualTo(GameResult.LOSE);
+        assertThat(finalResultBoard.get(gamer)).isEqualTo(-10000);
     }
 
     @Test
@@ -45,10 +45,10 @@ public class GameResultTest {
         Gamer gamer = settingGamer();
         get_20_Point(gamer);
         //when
-        Map<Gamer, GameResult> finalResultBoard = GameResult
-            .calculateGamersFinalResultBoard(dealer, List.of(gamer));
+        Map<Gamer, Integer> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
         //then
-        assertThat(finalResultBoard.get(gamer)).isEqualTo(GameResult.LOSE);
+        assertThat(finalResultBoard.get(gamer)).isEqualTo(-10000);
     }
 
     @Test
@@ -61,10 +61,10 @@ public class GameResultTest {
         Gamer gamer = settingGamer();
         get_22_Point(gamer);
         //when
-        Map<Gamer, GameResult> finalResultBoard = GameResult
-            .calculateGamersFinalResultBoard(dealer, List.of(gamer));
+        Map<Gamer, Integer> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
         //then
-        assertThat(finalResultBoard.get(gamer)).isEqualTo(GameResult.LOSE);
+        assertThat(finalResultBoard.get(gamer)).isEqualTo(-10000);
     }
 
     @Test
@@ -77,10 +77,10 @@ public class GameResultTest {
         Gamer gamer = settingGamer();
         get_21_Point(gamer);
         //when
-        Map<Gamer, GameResult> finalResultBoard = GameResult
-            .calculateGamersFinalResultBoard(dealer, List.of(gamer));
+        Map<Gamer, Integer> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
         //then
-        assertThat(finalResultBoard.get(gamer)).isEqualTo(GameResult.DRAW);
+        assertThat(finalResultBoard.get(gamer)).isEqualTo(0);
     }
 
     @Test
@@ -93,10 +93,10 @@ public class GameResultTest {
         Gamer gamer = settingGamer();
         get_20_Point(gamer);
         //when
-        Map<Gamer, GameResult> finalResultBoard = GameResult
-            .calculateGamersFinalResultBoard(dealer, List.of(gamer));
+        Map<Gamer, Integer> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
         //then
-        assertThat(finalResultBoard.get(gamer)).isEqualTo(GameResult.WIN);
+        assertThat(finalResultBoard.get(gamer)).isEqualTo(10000);
     }
 
     @Test
@@ -109,10 +109,10 @@ public class GameResultTest {
         Gamer gamer = settingGamer();
         get_20_Point(gamer);
         //when
-        Map<Gamer, GameResult> finalResultBoard = GameResult
-            .calculateGamersFinalResultBoard(dealer, List.of(gamer));
+        Map<Gamer, Integer> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
         //then
-        assertThat(finalResultBoard.get(gamer)).isEqualTo(GameResult.WIN);
+        assertThat(finalResultBoard.get(gamer)).isEqualTo(10000);
     }
 
     @Test
@@ -125,10 +125,10 @@ public class GameResultTest {
         Gamer gamer = settingGamer();
         get_21_Point(gamer);
         //when
-        Map<Gamer, GameResult> finalResultBoard = GameResult
-            .calculateGamersFinalResultBoard(dealer, List.of(gamer));
+        Map<Gamer, Integer> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
         //then
-        assertThat(finalResultBoard.get(gamer)).isEqualTo(GameResult.BLACKJACK);
+        assertThat(finalResultBoard.get(gamer)).isEqualTo(15000);
     }
 
     @Test
@@ -141,10 +141,10 @@ public class GameResultTest {
         Gamer gamer = settingGamer();
         get_21_Point(gamer);
         //when
-        Map<Gamer, GameResult> finalResultBoard = GameResult
-            .calculateGamersFinalResultBoard(dealer, List.of(gamer));
+        Map<Gamer, Integer> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
         //then
-        assertThat(finalResultBoard.get(gamer)).isEqualTo(GameResult.BLACKJACK);
+        assertThat(finalResultBoard.get(gamer)).isEqualTo(15000);
     }
 
     private Gamer settingGamer() {
