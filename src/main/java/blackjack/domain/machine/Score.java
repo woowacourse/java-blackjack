@@ -4,10 +4,12 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Score {
+    public static final int MAX_SCORE = 21;
     private static final int INIT_A_NUMBER = 1;
     private static final int NEW_A_NUMBER = 11;
     private static final int CONDITION_HIT = 16;
-    public static final int CONDITION_BURST = 21;
+    private static final int FIRST_CARD_INDEX = 0;
+    private static final int SECOND_CARD_INDEX = 1;
 
     private final int sum;
 
@@ -25,7 +27,7 @@ public class Score {
         return new Score(scoreWithA(sum));
     }
 
-    private static int calculate(List<Card> hand) {
+    public static int calculate(List<Card> hand) {
         return hand.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
@@ -40,7 +42,7 @@ public class Score {
     }
 
     private static int scoreWithA(int sum) {
-        if (sum + (NEW_A_NUMBER - INIT_A_NUMBER) <= CONDITION_BURST) {
+        if (sum + (NEW_A_NUMBER - INIT_A_NUMBER) <= MAX_SCORE) {
             return sum + NEW_A_NUMBER - INIT_A_NUMBER;
         }
 
@@ -52,11 +54,12 @@ public class Score {
     }
 
     public boolean isBust() {
-        return sum > CONDITION_BURST;
+        return sum > MAX_SCORE;
     }
 
-    public boolean isBlackjack() {
-        return sum == CONDITION_BURST;
+    public boolean isBlackjack(List<Card> hand) {
+        List<Card> initHand = hand.subList(FIRST_CARD_INDEX, SECOND_CARD_INDEX + 1);
+        return Score.from(initHand).sum == MAX_SCORE;
     }
 
     public int getSum() {
