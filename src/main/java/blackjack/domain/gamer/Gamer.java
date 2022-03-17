@@ -7,10 +7,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.gamer.Gamers.INIT_DISTRIBUTION_COUNT;
-
 public abstract class Gamer {
     public static final int MAX_CARD_VALUE = 21;
+    public static final int INIT_DISTRIBUTION_COUNT = 2;
 
     private final Name name;
     private final List<Card> cards;

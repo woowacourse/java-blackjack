@@ -1,26 +1,28 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
 import java.util.*;
 
+import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
+
 public class Gamers {
-    public static final int INIT_DISTRIBUTION_COUNT = 2;
     private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
-    private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
 
     private final Dealer dealer;
     private final List<Player> players = new ArrayList<>();
 
-    public Gamers(List<String> names) {
-        dealer = new Dealer();
-        createPlayers(names);
+    public Gamers(List<String> names, Deck deck) {
+        dealer = new Dealer(List.of(deck.draw(), deck.draw()));
+        createPlayers(names, deck);
     }
 
-    private void createPlayers(List<String> names) {
+    private void createPlayers(List<String> names, Deck deck) {
         validateDuplicationNames(names);
         for (String name : names) {
-            players.add(new Player(name));
+            List<Card> cards = List.of(deck.draw(), deck.draw());
+            players.add(new Player(name, cards));
         }
     }
 
@@ -28,13 +30,6 @@ public class Gamers {
         Set<String> duplicationCheck = new HashSet<>(names);
         if (duplicationCheck.size() != names.size()) {
             throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
-        }
-    }
-
-    public void distributeFirstCards(Deck deck) {
-        for (int i = 0; i < INIT_DISTRIBUTION_COUNT; i++) {
-            distributeCard(dealer, deck);
-            players.forEach(player -> distributeCard(player, deck));
         }
     }
 
@@ -54,13 +49,6 @@ public class Gamers {
 
     public boolean canDrawToPlayer(Player player) {
         return !player.canDraw();
-    }
-
-    public Player findPlayerByName(String name) {
-        return players.stream()
-                .filter(player -> player.isSameName(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER_ERROR));
     }
 
     public List<Player> getPlayers() {

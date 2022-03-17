@@ -1,11 +1,19 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.Answer;
+import blackjack.domain.card.Card;
 import blackjack.domain.result.BlackJackResult;
+
+import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class Player extends Gamer {
 
-    public Player(String name) {
+    public Player(String name, List<Card> cards) {
         super(name);
+        for (Card card : cards) {
+            addCard(card);
+        }
     }
 
     public BlackJackResult match(Dealer dealer) {
@@ -17,8 +25,12 @@ public class Player extends Gamer {
                 .equals(name);
     }
 
+    public boolean isDrawPossible(UnaryOperator<String> operator) {
+        return canDraw() && Answer.from(operator.apply(getName())).isYes();
+    }
+
     @Override
-    boolean canDraw() {
+    public boolean canDraw() {
         return getCardsNumberSum() <= MAX_CARD_VALUE;
     }
 }
