@@ -5,6 +5,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Names;
 import blackjack.domain.participant.Player;
 import blackjack.dto.HitRequest;
 import blackjack.dto.ParticipantInitialResponse;
@@ -23,20 +24,18 @@ public class BlackjackGame {
         proceed(deck, dealer, players);
     }
 
-    private List<Name> inputPlayerNames() {
+    private Names inputPlayerNames() {
         try {
-            return InputView.inputPlayerNames()
-                    .stream()
-                    .map(Name::new)
-                    .collect(Collectors.toUnmodifiableList());
+            return new Names(InputView.inputPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerNames();
         }
     }
 
-    private List<Player> createPlayers(List<Name> playerNames, CardDeck deck) {
-        return playerNames.stream()
+    private List<Player> createPlayers(Names playerNames, CardDeck deck) {
+        return playerNames.getNames()
+                .stream()
                 .map(name -> new Player(name, deck.drawDouble(), inputBetting(name)))
                 .collect(Collectors.toUnmodifiableList());
     }
