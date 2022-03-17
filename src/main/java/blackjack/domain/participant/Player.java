@@ -81,23 +81,27 @@ public class Player extends Participant {
     }
 
     private ResultType getSpecialDuelResultWith(Dealer dealer) {
-        if (this.isWinConditionVersus(dealer)) {
+        if (this.isOnlyPlayerBlackjackWith(dealer)) {
+            return ResultType.BLACKJACK_WIN;
+        }
+        if (this.isOnlyDealerBustWith(dealer)) {
             return ResultType.WIN;
         }
-        if (this.isAlsoBlackjackWith(dealer)) {
+        if (this.isBothBlackjackWith(dealer)) {
             return ResultType.DRAW;
         }
         return ResultType.LOSE;
     }
 
-    private boolean isWinConditionVersus(Dealer dealer) {
-        boolean isOnlyDealerBust = dealer.isBust() && !this.isBust();
-        boolean isOnlyPlayerBlackjack = !dealer.isBlackjack() && this.isBlackjack();
-
-        return isOnlyDealerBust || isOnlyPlayerBlackjack;
+    private boolean isOnlyPlayerBlackjackWith(Dealer dealer) {
+        return !dealer.isBlackjack() && this.isBlackjack();
     }
 
-    private boolean isAlsoBlackjackWith(Dealer dealer) {
+    private boolean isOnlyDealerBustWith(Dealer dealer) {
+        return dealer.isBust() && !this.isBust();
+    }
+
+    private boolean isBothBlackjackWith(Dealer dealer) {
         return dealer.isBlackjack() && this.isBlackjack();
     }
 
