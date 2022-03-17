@@ -60,6 +60,21 @@ public class ResultTest {
         assertThat(Result.of(dealer, player)).isEqualTo(Result.LOSE);
     }
 
+    @DisplayName("무승부 테스트")
+    @Test
+    void isTie_SameScore_isTie() {
+        Player player = Player.of("Pobi");
+        player.receive(new Cards(List.of(
+                Card.from(Number.NINE, Kind.SPADE),
+                Card.from(Number.NINE, Kind.CLOVER))));
+        Dealer dealer = Dealer.createDefaultNameDealer();
+        dealer.receive(new Cards(List.of(
+                Card.from(Number.NINE, Kind.HEART),
+                Card.from(Number.NINE, Kind.DIAMOND))));
+
+        assertThat(Result.of(dealer, player)).isEqualTo(Result.TIE);
+    }
+
     @DisplayName("딜러만 버스트된 경우 승리 테스트")
     @Test
     void isWinner_DealerBusted_isWin() {
