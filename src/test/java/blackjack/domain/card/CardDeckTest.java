@@ -21,7 +21,7 @@ public class CardDeckTest {
     void create52() {
         CardDeck cardDeck = CardDeck.initShuffled();
 
-        assertThat(cardDeck.leftSize()).isEqualTo(52);
+        assertThat(cardDeck.getCardDeck().size()).isEqualTo(52);
     }
 
     @DisplayName("2장 분배 테스트")

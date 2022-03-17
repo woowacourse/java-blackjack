@@ -5,7 +5,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,16 +58,11 @@ public class OutputView {
     public static void printFinalResult(Dealer dealer, Players players) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        Map<Player, Result> resultCounter = players.judgeResult(dealer);
-        System.out.println(dealer.getName().getValue() + ": " +
-                resultCounter.values().stream()
-                        .filter(result -> result == Result.WIN).count() + Result.WIN.getResult() + " " +
-                resultCounter.values().stream()
-                        .filter(result -> result == Result.DRAW).count() + Result.DRAW.getResult() + " " +
-                resultCounter.values().stream()
-                        .filter(result -> result == Result.LOSE).count() + Result.LOSE.getResult());
+        Map<Player, Integer> resultCounter = players.judgeResult(dealer);
+        System.out.println(dealer.getName().getValue() + ": " + -resultCounter.values().stream()
+                .reduce(0, Integer::sum));
         resultCounter.forEach(
-                (player, result) -> System.out.println(player.getName().getValue() + ": " + result.getResult()));
+                (player, dividend) -> System.out.println(player.getName().getValue() + ": " + dividend));
     }
 
     public static void printEmptyLine() {

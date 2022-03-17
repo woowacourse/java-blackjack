@@ -16,10 +16,6 @@ public class Card {
         return number == Number.ACE;
     }
 
-    public boolean isJQK() {
-        return number == Number.JACK || number == Number.QUEEN || number == Number.KING;
-    }
-
     public Number getNumber() {
         return number;
     }

@@ -26,10 +26,6 @@ public class CardDeck {
         return new CardDeck(cardDeck);
     }
 
-    public int leftSize() {
-        return cardDeck.size();
-    }
-
     public Cards distribute(int count) {
         validateCapacity(count);
         List<Card> distribution = new LinkedList<>();
@@ -43,5 +39,9 @@ public class CardDeck {
         if (cardDeck.size() < count) {
             throw new IllegalArgumentException(OVER_CAPACITY_EXCEPTION_MESSAGE);
         }
+    }
+
+    public LinkedList<Card> getCardDeck() {
+        return cardDeck;
     }
 }
