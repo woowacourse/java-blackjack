@@ -29,6 +29,6 @@ public class Guest extends AbstractPlayer implements Player {
         if (player.isBust() && !this.isBust()) {
             return true;
         }
-        return (player.isLose(playingCards.calculatePoints())) && (!this.isBust());
+        return (player.isLose(this) && (!this.isBust()));
     }
 }

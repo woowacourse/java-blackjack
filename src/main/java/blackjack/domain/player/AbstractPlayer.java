@@ -24,8 +24,8 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public final boolean isLose(int point) {
-        return point > playingCards.calculatePoints();
+    public final boolean isLose(Player player) {
+        return player.getPlayingCards().calculatePoints() > playingCards.calculatePoints();
     }
 
     @Override

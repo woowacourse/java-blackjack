@@ -17,9 +17,9 @@ public interface Player {
 
     boolean isWin(Player player);
 
-    boolean isLose(int point);
+    boolean isLose(Player player);
 
-    boolean isDraw(Player competitor);
+    boolean isDraw(Player player);
 
     String getName();
 
