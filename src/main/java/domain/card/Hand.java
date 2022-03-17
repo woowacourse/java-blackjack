@@ -58,4 +58,5 @@ public class Hand {
 			.mapToInt(Card::getPoint)
 			.sum();
 	}
+
 }

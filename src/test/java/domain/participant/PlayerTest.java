@@ -13,7 +13,7 @@ import domain.card.Card;
 import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.result.WinOrLose;
+import domain.result.EarningRate;
 
 public class PlayerTest {
 	private Player player;
@@ -31,7 +31,7 @@ public class PlayerTest {
 		List<Card> handForDealer = new ArrayList<>(
 			List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(new Hand(handForDealer));
-		assertThat(player.getResult(dealer)).isEqualTo(WinOrLose.LOSE);
+		assertThat(player.getResult(dealer)).isEqualTo(EarningRate.LOSE);
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class PlayerTest {
 		Hand handForDealer = new Hand(
 			List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
-		assertThat(player.getResult(dealer)).isEqualTo(WinOrLose.LOSE);
+		assertThat(player.getResult(dealer)).isEqualTo(EarningRate.LOSE);
 	}
 
 }

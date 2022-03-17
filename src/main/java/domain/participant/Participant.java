@@ -36,10 +36,14 @@ public class Participant {
 	}
 
 	public Name getName() {
-		return Name.copyOf(name);
+		return name;
 	}
 
 	public Hand getHand() {
 		return Hand.copyOf(hand);
+	}
+
+	public Betting getBetting() {
+		return betting;
 	}
 }

@@ -19,10 +19,6 @@ public class Name {
 		}
 	}
 
-	public static Name copyOf(Name name) {
-		return new Name(name.name);
-	}
-
 	public String getName() {
 		return name;
 	}

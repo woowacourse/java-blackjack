@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Hand;
-import domain.result.WinOrLose;
+import domain.result.EarningRate;
 
 public class Player extends Participant {
 
@@ -9,40 +9,47 @@ public class Player extends Participant {
 		super(name, hand, betting);
 	}
 
-	public WinOrLose getResult(Dealer other) {
-		if (other.isBlackJack()) {
+	public EarningRate getResult(Dealer dealer) {
+		if (dealer.isBlackJack() || isBlackJack()) {
+			return getResultAtBlackJackExist(dealer);
+		}
+
+		if (dealer.isBust() || isBust()) {
+			return getResultAtBustExist(dealer);
+		}
+		return judgeVersus(dealer.getBestScore());
+	}
+
+	private EarningRate getResultAtBlackJackExist(Dealer dealer) {
+		if (dealer.isBlackJack()) {
 			return getResultAtDealerBlackJack();
 		}
+		return EarningRate.BLACK_JACK_WIN;
+	}
 
+	private EarningRate getResultAtDealerBlackJack() {
 		if (isBlackJack()) {
-
+			return EarningRate.DRAW;
 		}
+		return EarningRate.LOSE;
+	}
+
+	private EarningRate getResultAtBustExist(Dealer dealer) {
 		if (isBust()) {
-			return WinOrLose.LOSE;
+			return EarningRate.LOSE;
 		}
 
-		if (isBlackJack() || other.isBust()) {
-			return WinOrLose.WIN;
-		}
-
-		return judgeVersus(other.getBestScore());
+		return EarningRate.WIN;
 	}
 
-	private WinOrLose getResultAtDealerBlackJack() {
-		if (isBlackJack()) {
-			return WinOrLose.DRAW;
-		}
-		return WinOrLose.LOSE;
-	}
-
-	private WinOrLose judgeVersus(int otherScore) {
+	private EarningRate judgeVersus(int otherScore) {
 		int myScore = getBestScore();
 		if (myScore > otherScore) {
-			return WinOrLose.WIN;
+			return EarningRate.WIN;
 		}
 		if (myScore < otherScore) {
-			return WinOrLose.LOSE;
+			return EarningRate.LOSE;
 		}
-		return WinOrLose.DRAW;
+		return EarningRate.DRAW;
 	}
 }

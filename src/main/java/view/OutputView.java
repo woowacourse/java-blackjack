@@ -1,10 +1,13 @@
 package view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.participant.Name;
 import domain.participant.ParticipantInfo;
+import domain.result.EarningRate;
+import domain.result.Result;
 
 public class OutputView {
 
@@ -15,7 +18,7 @@ public class OutputView {
 	private static final String INIT_MESSAGE_FORMAT = "\n딜러와 %s에게 2장의 나누었습니다.\n";
 	private static final String MAX_SCORE_MESSAGE = "[ MAX SCORE!!! ]";
 	private static final String RESULT_TITLE_MESSAGE = "\n## 최종 승패";
-	private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d무 %d패\n";
+	private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d\n";
 	private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
 	private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
 	private static final String BLACKJACK_MESSAGE = "[ BlackJack!!! ]";
@@ -78,6 +81,16 @@ public class OutputView {
 
 	public static void printDealerDrawMessage() {
 		System.out.println(DEALER_DRAW_MESSAGE);
+	}
+
+	public static void printResult(Result result) {
+		printMessage(RESULT_TITLE_MESSAGE);
+		System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, result.getDealerMoney());
+
+		Map<ParticipantInfo, EarningRate> playerResults = result.getPlayerResults();
+		playerResults.entrySet().stream()
+			.forEach(entry -> System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, entry.getKey().getName().getName(),
+				entry.getKey().getBetting().getBettingMoney() * entry.getValue().getEarningRate()));
 	}
 
 	private static String joinNameAndCard(ParticipantInfo participantInfo) {

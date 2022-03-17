@@ -4,22 +4,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
-import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.card.deckstrategy.GenerationDeckStrategy;
-import domain.result.WinOrLose;
 
 public class PlayersTest {
 
@@ -72,38 +66,5 @@ public class PlayersTest {
 	void isBlackJackByName() {
 		Name name = new Name("pobi");
 		assertThat(players.checkMaxScoreByName(name)).isTrue();
-	}
-
-	@Test
-	@DisplayName("딜러가 블랙잭일 경우 결과 반환")
-	void getResultAtBlackJack() {
-		Map<Name, WinOrLose> resultMap = players.getResult(dealerBlackJack);
-		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.DRAW);
-		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
-	}
-
-	@Test
-	@DisplayName("최종 게임 결과 반환")
-	void getResultAtFinal() {
-		Map<Name, WinOrLose> resultMap = players.getResult(dealer_17);
-		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.WIN);
-		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
-	}
-
-	@Test
-	@DisplayName("초기 카드에 한명이 블랙잭이고 딜러가 나중에 블랙잭인 경우")
-	void getResultAtFinal_PlayerBlackJack() {
-		class TestGenerationDeckStrategy implements GenerationDeckStrategy {
-
-			@Override
-			public Queue<Card> generateCardsForBlackJack() {
-				return new LinkedList<>(Arrays.asList(new Card(Rank.FOUR, Suit.CLOVER)));
-			}
-		}
-		Deck deck = Deck.from(new TestGenerationDeckStrategy());
-		dealer_17.addCard(deck.draw());
-		Map<Name, WinOrLose> resultMap = players.getResult(dealer_17);
-		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.WIN);
-		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}
 }

@@ -12,15 +12,15 @@ public class InputView {
 
 	private static final String INPUT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
 	private static final String INPUT_ASk_DRAW_MESSAGE_FORMAT = "\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
-	private static final String INPUT_NAMES_SPLIT_DELIMITER = ",";
 	private static final String NAME_DUPLICATE_ERROR_MESSAGE = "[Error] 이름은 중복일 수 없습니다.";
-	public static final String YES = "y";
-	public static final String NO = "n";
-	public static final String INPUT_ASKING_DRAW_ERROR_MESSAGE = "[Error] y나 n만 입력할 수 있습니다.";
+	private static final String INPUT_ASKING_DRAW_ERROR_MESSAGE = "[Error] y나 n만 입력할 수 있습니다.";
+	private static final String CHECKING_NUMBER_ERROR_MESSAGE = "[Error] 금액은 숫자여야 합니다.";
+	private static final String EMPTY_ERROR_MESSAGE = "[Error] 공백은 입력할 수 없습니다.";
+	private static final String ASK_BETTING_MESSAGE = "\n%s의 배팅 금액은?";
 	private static final String MONEY_NUMBER_REGEX = "[1-9]\\d*";
-	public static final String CHECKING_NUMBER_ERROR_MESSAGE = "[Error] 금액은 숫자여야 합니다.";
-	public static final String EMPTY_ERROR_MESSAGE = "[Error] 공백은 입력할 수 없습니다.";
-	public static final String ASK_BETTING_MESSAGE = "%s의 배팅 금액은?";
+	private static final String INPUT_NAMES_SPLIT_DELIMITER = ",";
+	private static final String YES = "y";
+	private static final String NO = "n";
 
 	private static Scanner scanner = new Scanner(System.in);
 

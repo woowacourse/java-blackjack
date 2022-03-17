@@ -30,7 +30,7 @@ public class Controller {
 		}
 
 		printHandAndScore(dealer, players);
-		printResult(players, new Result(players.getResult(dealer)));
+		OutputView.printResult(new Result(players.getResult(dealer)));
 	}
 
 	private List<Name> makeNames() {
@@ -104,17 +104,5 @@ public class Controller {
 		for (int i = 0; i < playersInfo.size(); i++) {
 			OutputView.printHandAndScore(playersInfo.get(i));
 		}
-	}
-
-	public void printResult(Players players, Result result) {
-		OutputView.printDealerResult(
-			result.getDealerWinCount(),
-			result.getDealerDrawCount(),
-			result.getDealerLoseCount()
-		);
-
-		players.getNames().stream()
-			.forEach(
-				name -> OutputView.printPlayerResult(name.getName(), result.getResultOfPlayer(name).getResult()));
 	}
 }

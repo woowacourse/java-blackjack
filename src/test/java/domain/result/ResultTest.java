@@ -54,10 +54,10 @@ public class ResultTest {
 		cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
 		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
 		cards_17 = new ArrayList<>(Arrays.asList(card_A, card_6));
-		pobi = new Player(new Name("pobi"), new Hand(cards_20), new Betting(0));
-		jason = new Player(new Name("jason"), new Hand(cards_15), new Betting(0));
-		woni = new Player(new Name("woni"), new Hand(cards_BURST), new Betting(0));
-		gugu = new Player(new Name("gugu"), new Hand(cards_17), new Betting(0));
+		pobi = new Player(new Name("pobi"), new Hand(cards_20), new Betting(10000));
+		jason = new Player(new Name("jason"), new Hand(cards_15), new Betting(20000));
+		woni = new Player(new Name("woni"), new Hand(cards_BURST), new Betting(30000));
+		gugu = new Player(new Name("gugu"), new Hand(cards_17), new Betting(40000));
 		players = new Players(Arrays.asList(pobi, jason, woni, gugu));
 		dealer_17 = new Dealer(new Hand(List.of(card_A, card_6)));
 		dealer_BURST = new Dealer(new Hand(List.of(card_K, card_Q, card_2)));
@@ -66,46 +66,14 @@ public class ResultTest {
 	}
 
 	@Test
-	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 승")
-	void getVersusOfPlayer_Pobi() {
-		assertThat(result.getResultOfPlayer(new Name("pobi")).getResult()).isEqualTo("승");
+	@DisplayName("딜러의 최종 수익 확인")
+	void getDealerMoney() {
+		assertThat(result.getDealerMoney()).isEqualTo(40000);
 	}
 
 	@Test
-	@DisplayName("딜러도 safe, 플레이어 safe, 무승부")
-	void getVersusOfPlayer_Gugu() {
-		assertThat(result.getResultOfPlayer(new Name("gugu")).getResult()).isEqualTo("무");
-	}
-
-	@Test
-	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 패")
-	void getVersusOfPlayer_Jason() {
-		assertThat(result.getResultOfPlayer(new Name("jason")).getResult()).isEqualTo("패");
-	}
-
-	@Test
-	@DisplayName("딜러도 safe, 플레이어 burst, 플레이어 패")
-	void getVersusOfPlayer_Woni() {
-		assertThat(result.getResultOfPlayer(new Name("woni")).getResult()).isEqualTo("패");
-	}
-
-	@Test
-	@DisplayName("딜러도 burst, 플레이어 safe, 플레이어 승")
-	void getVersusOfPlayer_Pobi2() {
-		assertThat(result_dealer_burst.getResultOfPlayer(new Name("pobi")).getResult()).isEqualTo("승");
-	}
-
-	@Test
-	@DisplayName("딜러도 burst, 플레이어 burst, 플레이어 패")
-	void getVersusOfPlayer_Woni2() {
-		assertThat(result_dealer_burst.getResultOfPlayer(new Name("woni")).getResult()).isEqualTo("패");
-	}
-
-	@Test
-	@DisplayName("딜러 결과 확인")
-	void getDealerResult() {
-		assertThat(Arrays.asList(result.getDealerWinCount(), result.getDealerDrawCount(),
-			result.getDealerLoseCount()))
-			.isEqualTo(Arrays.asList(2, 1, 1));
+	@DisplayName("딜러의 최종 수익 확인")
+	void getDealerMoneyAtDealerBurst() {
+		assertThat(result_dealer_burst.getDealerMoney()).isEqualTo(-40000);
 	}
 }

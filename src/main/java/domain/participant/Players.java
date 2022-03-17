@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
-import domain.result.WinOrLose;
+import domain.result.EarningRate;
 
 public class Players {
 	private final LinkedHashMap<Name, Player> players;
@@ -41,10 +41,10 @@ public class Players {
 		return players.get(name).isMaxScore();
 	}
 
-	public Map<Name, WinOrLose> getResult(Dealer other) {
-		Map<Name, WinOrLose> map = new LinkedHashMap<>();
+	public Map<ParticipantInfo, EarningRate> getResult(Dealer other) {
+		Map<ParticipantInfo, EarningRate> map = new LinkedHashMap<>();
 		players.keySet().stream()
-			.forEach(name -> map.put(name, players.get(name).getResult(other)));
+			.forEach(name -> map.put(new ParticipantInfo(players.get(name)), players.get(name).getResult(other)));
 		return map;
 	}
 
