@@ -12,8 +12,6 @@ public class Dealer extends Player {
     private static final int DEALER_RECEIVE_STANDARD = 16;
     private static final int DEALER_OPEN_CARD_SIZE = 1;
 
-    private final String name = DEALER_NAME;
-
     public Dealer() {
         super(new Cards());
     }
