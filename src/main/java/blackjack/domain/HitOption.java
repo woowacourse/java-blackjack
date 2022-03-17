@@ -7,8 +7,7 @@ import java.util.Arrays;
 public enum HitOption {
 
     YES("y", true),
-    NO("n", false)
-    ;
+    NO("n", false);
 
     private static final String HIT_OPTION_MESSAGE = "y, n 중에서 입력해주세요.";
 
