@@ -21,7 +21,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class CardsTest {
 
     @Test
-    void 생성_시_cards가_null인_경우_예외발생() {
+    void 생성_시_null이_들어오는_경우_예외발생() {
         assertThatThrownBy(() -> new Cards(null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("cards는 null이 들어올 수 없습니다.");
