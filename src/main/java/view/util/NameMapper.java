@@ -45,8 +45,8 @@ public class NameMapper {
     }
 
     public static String getCardName(PlayingCard playingCard) {
-        return SUIT_NAME_MAPPER.get(playingCard.getSuit()) + DENOMINATION_NAME_MAPPER.get(
-                playingCard.getDenomination());
+        return DENOMINATION_NAME_MAPPER.get(playingCard.getDenomination())
+                + SUIT_NAME_MAPPER.get(playingCard.getSuit());
     }
 
     public static String getResultName(MatchResult matchResult) {
