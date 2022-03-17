@@ -12,9 +12,8 @@ import java.util.stream.Collectors;
 
 public final class OutputView {
 
-    public static final String NAMES_DELIMITER = ",";
-    public static final String CARDS_DELIMITER = ", ";
-    private static final String drawChar = "무";
+    private static final String NAMES_DELIMITER = ",";
+    private static final String CARDS_DELIMITER = ", ";
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
             + System.lineSeparator();
     private static final String CARD_STATE_MESSAGE = "%s카드: %s";
@@ -22,7 +21,7 @@ public final class OutputView {
     private static final String DEALER_CARD_ADDED_MESSAGE = System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %s%d패" + System.lineSeparator();
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
-    private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
+    private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 수익";
 
     public static void printInitCards(final Players players, final Dealer dealer) {
         OutputView.printInitCardState(players, dealer);
@@ -75,7 +74,7 @@ public final class OutputView {
 
     public static void printDealerResult(final Map<Result, Integer> result) {
         System.out.println(RESULT_FRONT_MESSAGE);
-        String drawResult = result.get(Result.DRAW) + drawChar + " ";
+        String drawResult = result.get(Result.DRAW) + Result.DRAW.get() + " ";
         if (result.get(Result.DRAW) == 0) {
             drawResult = "";
         }

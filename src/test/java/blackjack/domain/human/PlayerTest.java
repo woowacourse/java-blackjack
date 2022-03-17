@@ -32,7 +32,7 @@ class PlayerTest {
         player.addCard(card6);
 
         // then
-        assertThat(player.getPoint())
+        assertThat(player.getPoint().hashCode())
                 .isEqualTo(11);
     }
 
@@ -66,7 +66,7 @@ class PlayerTest {
         player.addCard(card6);
 
         // then
-        assertThat(player.getPoint())
+        assertThat(player.getPoint().hashCode())
                 .isEqualTo(11);
     }
 }

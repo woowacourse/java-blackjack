@@ -93,7 +93,7 @@ class HumanTest {
         human.addCard(card2);
 
         // then
-        assertThat(human.getPoint())
+        assertThat(human.getPoint().hashCode())
                 .isEqualTo(16);
     }
 

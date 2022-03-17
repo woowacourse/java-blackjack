@@ -29,7 +29,7 @@ class PointTest {
         cards.add(Card.of(d2, Suit.SPADE));
         cards.add(Card.of(d3, Suit.SPADE));
 
-        assertThat(Point.fromCards(cards).get())
+        assertThat(Point.fromCards(cards).hashCode())
                 .isEqualTo(expectedPoint);
     }
 }

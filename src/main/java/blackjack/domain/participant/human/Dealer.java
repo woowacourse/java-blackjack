@@ -6,13 +6,13 @@ import blackjack.domain.result.Point;
 import java.util.List;
 
 public final class Dealer extends Human {
-    private static final int HIT_STANDARD_NUMBER = 16;
+    private static final Point HIT_DEALER_POINT = Point.fromValue(16);
 
     public Dealer(List<Card> rawCards) {
         super(new Cards(rawCards), "딜러");
     }
 
     public boolean isAbleToHit() {
-        return Point.fromCards(cards).get() <= HIT_STANDARD_NUMBER;
+        return Point.fromCards(cards).compareTo(HIT_DEALER_POINT) <= 0;
     }
 }

@@ -21,8 +21,7 @@ class DealerTest {
         Dealer dealer = new Dealer(List.of(card, card2));
 
         // then
-        assertThat(dealer.getPoint())
-                .isEqualTo(11);
+        assertThat(dealer.getPoint().hashCode()).isEqualTo(11);
     }
 
     @Test

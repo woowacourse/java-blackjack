@@ -31,7 +31,7 @@ public final class BlackjackGame {
     }
 
     private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
-        while (!player.isBust() && InputView.inputOneMoreCard(player.getName())) {
+        while (!player.isBust()  && !player.isBlackjack() && InputView.inputOneMoreCard(player.getName())) {
             player.addCard(cardDeck.pop());
             OutputView.printHumanHand(player);
         }

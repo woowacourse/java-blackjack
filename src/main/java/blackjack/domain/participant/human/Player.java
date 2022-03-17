@@ -17,10 +17,10 @@ public final class Player extends Human {
     }
 
     public boolean isWinner(final Dealer dealer) {
-        return dealer.getPoint() < getPoint();
+        return dealer.getPoint().compareTo(getPoint()) < 0;
     }
 
     public boolean isDraw(final Dealer dealer) {
-        return dealer.getPoint() == getPoint();
+        return dealer.getPoint().equals(getPoint());
     }
 }
