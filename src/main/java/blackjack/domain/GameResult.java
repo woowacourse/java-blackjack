@@ -5,39 +5,33 @@ import java.util.Map;
 
 public class GameResult {
 
-    final Map<Player, String> gameResult = new HashMap<>();
+    final Map<Player, Profit> gameResult = new HashMap<>();
 
     public void determine(final Dealer dealer, final Player player) {
         putResult(player, compete(dealer, player));
     }
 
-    public void putResult(final Player player, final String result) {
+    public void putResult(final Player player, final Profit result) {
         gameResult.put(player, result);
     }
 
-    private String compete(final Dealer dealer, final Player player) {
+    private Profit compete(final Dealer dealer, final Player player) {
         if (player.isBlackjack()) {
-            return "블랙잭";
+            return Profit.BLACKJACK_WIN;
         }
         if (dealer.isWinner(player)) {
-            return "패";
+            return Profit.LOSE;
         }
         if (player.isWinner(dealer)) {
-            return "승";
+            return Profit.WIN;
         }
-        return "무";
+        return Profit.DRAW;
     }
 
-    public Money calculateProfit(final Player player, final Money money) {
-        if (gameResult.get(player).equals("승")) {
-            return Money.profits(1, money);
-        }
-        if (gameResult.get(player).equals("패")) {
-            return Money.profits(-1, money);
-        }
-        if (gameResult.get(player).equals("블랙잭")) {
-            return Money.profits(1.5, money);
-        }
-        return Money.profits(0, money);
+    public Money calculateProfit(Player player, Money money) {
+        Profit result = gameResult.get(player);
+        return result.calculateProfit(money);
     }
+
+
 }

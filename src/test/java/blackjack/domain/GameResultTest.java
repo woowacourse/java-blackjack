@@ -19,7 +19,7 @@ public class GameResultTest {
     @DisplayName("플레이어가 블랙잭으로 이겼을 때 수익금이 올바르게 계산되는지 확인한다.")
     @Test
     void win_blackjack_profit() {
-        gameResult.putResult(player, "블랙잭");
+        gameResult.putResult(player, Profit.BLACKJACK_WIN);
         Money money = gameResult.calculateProfit(player, Money.of("5000"));
 
         assertThat(money.getMoney()).isEqualTo(7500);
@@ -28,7 +28,7 @@ public class GameResultTest {
     @DisplayName("플레이어가 이겼을 때 수익금이 올바르게 계산되는지 확인한다.")
     @Test
     void win_profit() {
-        gameResult.putResult(player, "승");
+        gameResult.putResult(player, Profit.WIN);
         Money money = gameResult.calculateProfit(player, Money.of("5000"));
 
         assertThat(money.getMoney()).isEqualTo(5000);
@@ -37,7 +37,7 @@ public class GameResultTest {
     @DisplayName("플레이어가 졌을 때 수익금이 올바르게 계산되는지 확인한다.")
     @Test
     void lose_profit() {
-        gameResult.putResult(player, "패");
+        gameResult.putResult(player, Profit.LOSE);
         Money money = gameResult.calculateProfit(player, Money.of("5000"));
 
         assertThat(money.getMoney()).isEqualTo(-5000);
@@ -46,7 +46,7 @@ public class GameResultTest {
     @DisplayName("플레이어가 비겼을 때 수익금이 올바르게 계산되는지 확인한다.")
     @Test
     void draw_profit() {
-        gameResult.putResult(player, "무");
+        gameResult.putResult(player, Profit.DRAW);
         Money money = gameResult.calculateProfit(player, Money.of("5000"));
 
         assertThat(money.getMoney()).isEqualTo(0);

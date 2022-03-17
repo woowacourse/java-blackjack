@@ -16,7 +16,7 @@ public class BankTest {
         Player player = new Player("pobi");
 
         bank.bet(player, Money.of("5000"));
-        gameResult.putResult(player, "승");
+        gameResult.putResult(player, Profit.WIN);
         Money money = bank.getProfit(gameResult, player);
 
         assertThat(money.getMoney()).isEqualTo(5000);
