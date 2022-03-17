@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,7 +27,8 @@ public class Cards {
 		int score = cards.stream()
 			.mapToInt(Card::getScore)
 			.sum();
-		if (cards.stream().anyMatch(Card::isAce) && score + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD) {
+		boolean hasAce = cards.stream().anyMatch(Card::isAce);
+		if (hasAce && score + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD) {
 			return score + ACE_SCORE_DIFFERENCE;
 		}
 		return score;
