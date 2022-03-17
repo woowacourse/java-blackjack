@@ -9,29 +9,29 @@ public class Card {
 
     private static final List<Card> TOTAL_CARD_CACHE = new ArrayList<>();
 
-    private final CardNumber cardNumber;
+    private final Denomination denomination;
     private final CardShape cardShape;
 
     static {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            insertCardCache(cardNumber);
+        for (Denomination denomination : Denomination.values()) {
+            insertCardCache(denomination);
         }
     }
 
-    private static void insertCardCache(final CardNumber cardNumber) {
+    private static void insertCardCache(final Denomination denomination) {
         for (CardShape cardShape : CardShape.values()) {
-            TOTAL_CARD_CACHE.add(new Card(cardNumber, cardShape));
+            TOTAL_CARD_CACHE.add(new Card(denomination, cardShape));
         }
     }
 
-    private Card(final CardNumber cardNumber, final CardShape cardShape) {
-        this.cardNumber = cardNumber;
+    private Card(final Denomination denomination, final CardShape cardShape) {
+        this.denomination = denomination;
         this.cardShape = cardShape;
     }
 
-    public static Card of(final CardNumber cardNumber, final CardShape cardShape) {
+    public static Card of(final Denomination denomination, final CardShape cardShape) {
         return TOTAL_CARD_CACHE.stream()
-                .filter(card -> card.equals(new Card(cardNumber, cardShape)))
+                .filter(card -> card.equals(new Card(denomination, cardShape)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("적절하지 않은 카드 정보가 존재합니다."));
     }
@@ -40,12 +40,12 @@ public class Card {
         return Collections.unmodifiableList(TOTAL_CARD_CACHE);
     }
 
-    public CardNumber getCardNumber() {
-        return this.cardNumber;
+    public Denomination getCardNumber() {
+        return this.denomination;
     }
 
     public String getName() {
-        return cardNumber.getName() + cardShape.getShape();
+        return denomination.getName() + cardShape.getShape();
     }
 
     @Override
@@ -57,11 +57,11 @@ public class Card {
             return false;
         }
         Card card = (Card) otherCard;
-        return cardNumber == card.cardNumber && cardShape == card.cardShape;
+        return denomination == card.denomination && cardShape == card.cardShape;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardNumber, cardShape);
+        return Objects.hash(denomination, cardShape);
     }
 }

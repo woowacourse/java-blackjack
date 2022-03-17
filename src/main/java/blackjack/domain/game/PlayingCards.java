@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Denomination;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +22,8 @@ public class PlayingCards {
     }
 
     public int calculateTotal() {
-        List<CardNumber> cardNumbers = getCardNumbers();
-        return CardNumber.getTotal(cardNumbers);
+        List<Denomination> denominations = getCardNumbers();
+        return Denomination.getTotal(denominations);
     }
 
     public boolean isOverBlackjack() {
@@ -35,8 +35,8 @@ public class PlayingCards {
     }
 
     public boolean isBlackjack() {
-        List<CardNumber> cardNumbers = getCardNumbers();
-        return CardNumber.isBlackjack(cardNumbers);
+        List<Denomination> denominations = getCardNumbers();
+        return Denomination.isBlackjack(denominations);
     }
 
     public List<Card> getPartOfCard() {
@@ -51,7 +51,7 @@ public class PlayingCards {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<CardNumber> getCardNumbers() {
+    private List<Denomination> getCardNumbers() {
         return playingCards.stream()
                 .map(Card::getCardNumber)
                 .collect(Collectors.toUnmodifiableList());

@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.CardShape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,9 +23,9 @@ public class DealerTest {
     void before() {
         dealer = new Dealer();
         player = new Player("pobi");
-        sixSpade = Card.of(CardNumber.SIX, CardShape.SPADE);
-        sevenSpade = Card.of(CardNumber.SEVEN, CardShape.SPADE);
-        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
+        sixSpade = Card.of(Denomination.SIX, CardShape.SPADE);
+        sevenSpade = Card.of(Denomination.SEVEN, CardShape.SPADE);
+        queenSpade = Card.of(Denomination.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("딜러의 카드 총 합이 16 이하일 경우 True 를 반환하는지 확인한다.")

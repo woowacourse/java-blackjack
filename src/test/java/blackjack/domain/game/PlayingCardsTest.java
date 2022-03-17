@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.CardShape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +18,8 @@ public class PlayingCardsTest {
 
     @BeforeEach
     void before() {
-        aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
-        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
+        aceSpade = Card.of(Denomination.ACE, CardShape.SPADE);
+        queenSpade = Card.of(Denomination.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("카드들의 총합이 올바르게 계산되는지 확인한다.")

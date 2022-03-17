@@ -4,7 +4,7 @@ import blackjack.domain.game.PlayingCards;
 
 import java.util.List;
 
-public enum CardNumber {
+public enum Denomination {
 
     ACE("A", 1),
     TWO("2", 2),
@@ -28,47 +28,47 @@ public enum CardNumber {
     private final String name;
     private final int number;
 
-    CardNumber(final String name, final int number) {
+    Denomination(final String name, final int number) {
         this.name = name;
         this.number = number;
     }
 
-    public static boolean isBlackjack(final List<CardNumber> cardNumbers) {
-        if (cardNumbers.size() != BLACKJACK_CARD_COUNT) {
+    public static boolean isBlackjack(final List<Denomination> denominations) {
+        if (denominations.size() != BLACKJACK_CARD_COUNT) {
             return false;
         }
-        return hasAce(cardNumbers) && hasTen(cardNumbers);
+        return hasAce(denominations) && hasTen(denominations);
     }
 
-    public static int getTotal(final List<CardNumber> cardNumbers) {
-        int total = cardNumbers.stream()
+    public static int getTotal(final List<Denomination> denominations) {
+        int total = denominations.stream()
                 .map(cardNumber -> cardNumber.number)
                 .mapToInt(Integer::intValue)
                 .sum();
-        total = addAceExtraNumber(cardNumbers, total);
+        total = addAceExtraNumber(denominations, total);
         return total;
     }
 
-    private static boolean hasAce(final List<CardNumber> cardNumbers) {
-        return cardNumbers.contains(CardNumber.ACE);
+    private static boolean hasAce(final List<Denomination> denominations) {
+        return denominations.contains(Denomination.ACE);
     }
 
-    private static boolean hasTen(final List<CardNumber> cardNumbers) {
-        return cardNumbers.stream()
+    private static boolean hasTen(final List<Denomination> denominations) {
+        return denominations.stream()
                 .map(cardNumber -> cardNumber.number)
                 .anyMatch(number -> number == NUMBER_TEN);
     }
 
-    private static int addAceExtraNumber(final List<CardNumber> cardNumbers, int total) {
-        int aceCount = getAceCount(cardNumbers);
+    private static int addAceExtraNumber(final List<Denomination> denominations, int total) {
+        int aceCount = getAceCount(denominations);
         while (aceCount-- > 0 && total + ACE_EXTRA_NUMBER <= PlayingCards.BLACKJACK) {
             total += ACE_EXTRA_NUMBER;
         }
         return total;
     }
 
-    private static int getAceCount(final List<CardNumber> cardNumbers) {
-        return (int) cardNumbers.stream()
+    private static int getAceCount(final List<Denomination> denominations) {
+        return (int) denominations.stream()
                 .filter(cardNumber -> cardNumber.name.equals(ACE.name))
                 .count();
     }

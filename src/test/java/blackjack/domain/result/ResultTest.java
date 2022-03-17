@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
@@ -29,10 +29,10 @@ class ResultTest {
         dealer = new Dealer();
         players = new Players("test1, test2");
         result = new Result(players);
-        aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
-        twoSpade = Card.of(CardNumber.TWO, CardShape.SPADE);
-        threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
-        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
+        aceSpade = Card.of(Denomination.ACE, CardShape.SPADE);
+        twoSpade = Card.of(Denomination.TWO, CardShape.SPADE);
+        threeSpade = Card.of(Denomination.THREE, CardShape.SPADE);
+        queenSpade = Card.of(Denomination.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("초기 카드를 받은 후 딜러가 블랙잭이면 게임을 종료하는지 확인한다.")
