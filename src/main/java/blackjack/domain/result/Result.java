@@ -5,28 +5,28 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
-    BLACKJACK_WIN("승", (dealer, participant) ->
+    BLACKJACK_WIN(1.5, (dealer, participant) ->
             participant.isBlackJack() && !dealer.isBlackJack()
     ),
-    WIN("승", (dealer, participant) ->
+    WIN(1, (dealer, participant) ->
             (dealer.getTotal() < participant.getTotal() && !participant.isBust())
                     || (dealer.isBust() && !participant.isBust())),
 
-    DRAW("무승부", (dealer, participant) ->
+    DRAW(0, (dealer, participant) ->
             (!dealer.isBlackJack() && (dealer.getTotal() == participant.getTotal()) && !participant.isBust())
                     || (dealer.isBlackJack() && participant.isBlackJack())),
 
-    LOSE("패", (dealer, participant) ->
+    LOSE(-1, (dealer, participant) ->
             (dealer.getTotal() > participant.getTotal() && !dealer.isBust())
                     || participant.isBust()
                     || (dealer.isBust() && !participant.isBlackJack())
                     || dealer.isBlackJack() && !participant.isBlackJack());
 
-    private final String name;
+    private final double yield;
     private final BiPredicate<Score, Score> condition;
 
-    Result(final String name, final BiPredicate<Score, Score> condition) {
-        this.name = name;
+    Result(final double yield, final BiPredicate<Score, Score> condition) {
+        this.yield = yield;
         this.condition = condition;
     }
 
@@ -37,17 +37,7 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 승패를 가릴 수 없는 경우입니다."));
     }
 
-    public Result getOpposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
-    public String getName() {
-        return this.name;
+    public double getYield() {
+        return yield;
     }
 }

@@ -18,13 +18,21 @@ public class BlackJackController {
         final BlackJackMachine blackJackMachine = new BlackJackMachine(new CardDeck());
         final Dealer dealer = new Dealer();
         final Participants participants = getParticipants();
+        putBet(participants);
 
         giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
         askAndGiveCardsToParticipants(blackJackMachine, participants);
         giveCardsToDealer(blackJackMachine, dealer);
 
         calculateTotalScores(dealer, participants);
-        decideResults(dealer, participants);
+        decideYeilds(dealer, participants);
+    }
+
+    private void putBet(Participants participants) {
+        for (Participant participant : participants) {
+            int bet = InputView.getBet(participant);
+            participants.putBet(participant, bet);
+        }
     }
 
     private Participants getParticipants() {
@@ -93,7 +101,7 @@ public class BlackJackController {
         }
     }
 
-    private void decideResults(final Dealer dealer, final Participants participants) {
+    private void decideYeilds(final Dealer dealer, final Participants participants) {
         final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
         OutputView.printResults(dealer, participantResult);
     }

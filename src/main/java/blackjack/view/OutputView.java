@@ -10,7 +10,6 @@ import blackjack.domain.result.ParticipantResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -63,28 +62,17 @@ public class OutputView {
     }
 
     public static void printResults(final Dealer dealer, final ParticipantResult results) {
-        System.out.println("\n## 최종 승패");
-        printDealerResult(dealer, results.getDealerResult());
-        printParticipantsResult(results);
+        System.out.println("\n## 최종 수익");
+        System.out.println(dealer.getName() + COLON_AND_BLANK + results.getDealerYield());
+        printParticipantsYield(results);
     }
 
-    private static void printDealerResult(final Dealer dealer, final Map<Result, Integer> dealerResult) {
-
-        final String dealerResultString = dealerResult.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(Collectors.joining(RESULT_DELIMITER));
-
-        System.out.println(dealer.getName() + COLON_AND_BLANK + dealerResultString);
-    }
-
-    private static void printParticipantsResult(final ParticipantResult results) {
-        final Map<Participant, Result> participantsResult = results.getParticipantResult();
+    private static void printParticipantsYield(final ParticipantResult results) {
+        final Map<Participant, Integer> participantsResult = results.getParticipantYields();
 
         participantsResult.keySet()
                 .forEach(participant -> System.out.println(
-                        participant.getName() + COLON_AND_BLANK + participantsResult.get(participant).getName()));
+                        participant.getName() + COLON_AND_BLANK + participantsResult.get(participant)));
     }
 
     public static void printNewLine() {

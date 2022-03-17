@@ -7,7 +7,6 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
-import blackjack.domain.result.Result;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -182,6 +181,22 @@ public class ResultTest {
                 Arguments.of(Result.BLACKJACK_WIN, List.of(new Card(Denomination.FOUR, Suit.DIAMOND),
                         new Card(Denomination.FIVE, Suit.DIAMOND),
                         new Card(Denomination.SIX, Suit.DIAMOND)))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("parameters6")
+    @DisplayName("참가자가 블랙잭일 때 승패를 결정한다.")
+    void getResultYield(Result result, double yield) {
+        assertThat(result.getYield()).isEqualTo(yield);
+    }
+
+    static Stream<Arguments> parameters6() {
+        return Stream.of(
+                Arguments.of(Result.BLACKJACK_WIN, 1.5),
+                Arguments.of(Result.WIN, 1),
+                Arguments.of(Result.DRAW, 0),
+                Arguments.of(Result.LOSE, -1)
         );
     }
 }
