@@ -7,6 +7,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
 public class Result {
+	private static final int NEGATE = -1;
 	private final Map<Player, BettingToken> gameResult;
 
 	public Result(Players players, BettingTokens bettingTokens) {
@@ -20,21 +21,21 @@ public class Result {
 
 	public static Result of(Players players, Dealer dealer, BettingTokens bettingTokens) {
 		Result result = new Result(players, bettingTokens);
-		calculateProfitByCondition(result, dealer, Gamer::isWinByBlackJack, BettingToken::getBlackJackWinningMoney);
-		calculateProfitByCondition(result, dealer, Gamer::isWinByNotBlackJack,
+		result.calculateProfitByCondition(dealer, Gamer::isWinByBlackJack, BettingToken::getBlackJackWinningMoney);
+		result.calculateProfitByCondition(dealer, Gamer::isWinByNotBlackJack,
 			BettingToken::getNotBlackJackWinningMoney);
-		calculateProfitByCondition(result, dealer, Gamer::isLose, BettingToken::getLoseMoney);
+		result.calculateProfitByCondition(dealer, Gamer::isLose, BettingToken::getLoseMoney);
 		return result;
 	}
 
-	private static void calculateProfitByCondition(Result result, Dealer dealer, BiPredicate<Player, Dealer> condition,
-												   Consumer<BettingToken> action) {
-		result.gameResult.entrySet().stream().filter(entry -> condition.test(entry.getKey(), dealer))
+	private void calculateProfitByCondition(Dealer dealer, BiPredicate<Player, Dealer> condition,
+											Consumer<BettingToken> action) {
+		this.gameResult.entrySet().stream().filter(entry -> condition.test(entry.getKey(), dealer))
 			.forEach(entry -> action.accept(entry.getValue()));
 	}
 
 	public int getDealerMoney() {
-		return -1 * gameResult.values().stream()
+		return NEGATE * gameResult.values().stream()
 			.mapToInt(BettingToken::getProfit)
 			.sum();
 	}
