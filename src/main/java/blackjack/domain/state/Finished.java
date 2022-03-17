@@ -5,11 +5,11 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
 import java.util.Objects;
 
-public abstract class Finish extends AbstractBlackjackGameState {
+public abstract class Finished extends AbstractBlackjackGameState {
 
     private final Score score;
 
-    Finish(final Cards cards, final Score score) {
+    Finished(final Cards cards, final Score score) {
         super(cards);
         Objects.requireNonNull(score, "score는 null이 들어올 수 없습니다.");
         this.score = score;

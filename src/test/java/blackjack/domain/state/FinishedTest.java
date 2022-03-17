@@ -11,7 +11,7 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class FinishTest {
+class FinishedTest {
 
     @Test
     void 최종_수익_계산() {

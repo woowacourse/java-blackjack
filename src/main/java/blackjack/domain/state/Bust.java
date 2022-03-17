@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
 
-public final class Bust extends Finish {
+public final class Bust extends Finished {
 
     private static final double BUST_LOSE_RATE = -1;
 

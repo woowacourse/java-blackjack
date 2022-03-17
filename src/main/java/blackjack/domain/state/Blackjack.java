@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
-public final class Blackjack extends Finish {
+public final class Blackjack extends Finished {
 
     private static final double BLACKJACK_WIN_RATE = 1.5;
     private static final double BLACKJACK_DRAW_RATE = 0;

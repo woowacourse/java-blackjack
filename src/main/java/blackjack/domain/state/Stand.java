@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
 
-public final class Stand extends Finish {
+public final class Stand extends Finished {
 
     private static final double STAND_WIN_RATE = 1;
     private static final double STAND_DRAW_RATE = 0;
