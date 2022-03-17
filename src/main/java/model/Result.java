@@ -15,14 +15,14 @@ public enum Result {
 
     private final BiPredicate<Status, Status> statusCriteria;
     private final BiPredicate<Integer, Integer> cardsSumCriteria;
-    private final int multipl;
+    private final int playerBettingIncrease;
 
     Result(BiPredicate<Status, Status> statusCriteria,
            BiPredicate<Integer, Integer> cardsSumCriteria,
            int playerBettingIncrease) {
         this.statusCriteria = statusCriteria;
         this.cardsSumCriteria = cardsSumCriteria;
-        this.multipl = playerBettingIncrease;
+        this.playerBettingIncrease = playerBettingIncrease;
     }
 
     public static Result of(Player player, Dealer dealer) {
@@ -59,6 +59,6 @@ public enum Result {
     }
 
     public long getEarnedAmount(long amount) {
-        return this.multipl * amount;
+        return this.playerBettingIncrease * amount;
     }
 }
