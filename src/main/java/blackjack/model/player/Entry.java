@@ -1,7 +1,7 @@
 package blackjack.model.player;
 
 import blackjack.model.Bet;
-import blackjack.model.Money;
+import blackjack.model.Amount;
 import blackjack.model.Result;
 import java.util.regex.Pattern;
 
@@ -64,7 +64,7 @@ public final class Entry extends Player {
         this.bet = bet;
     }
 
-    public Money profitOf(Result result) {
+    public Amount profitOf(Result result) {
         return this.bet.profitOf(result);
     }
 }

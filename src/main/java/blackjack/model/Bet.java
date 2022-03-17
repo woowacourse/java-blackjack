@@ -5,15 +5,15 @@ public final class Bet {
     private static final String ERROR_UNIT = "[ERROR] 배팅 금액은 1000원 단위여야 합니다.";
     private static final int UNIT = 1000;
 
-    private final Money money;
+    private final Amount amount;
 
-    private Bet(Money money) {
-        this.money = money;
+    private Bet(Amount amount) {
+        this.amount = amount;
     }
 
     public static Bet from(int amount) {
         validateAmount(amount);
-        return new Bet(new Money(amount));
+        return new Bet(new Amount(amount));
     }
 
     private static void validateAmount(int amount) {
@@ -33,7 +33,7 @@ public final class Bet {
         }
     }
 
-    public Money profitOf(Result result) {
-        return result.apply(this.money);
+    public Amount profitOf(Result result) {
+        return result.apply(this.amount);
     }
 }

@@ -7,14 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Profits {
-    private final Map<Player, Money> values;
+    private final Map<Player, Amount> values;
 
-    private Profits(Map<Player, Money> values) {
+    private Profits(Map<Player, Amount> values) {
         this.values = Map.copyOf(values);
     }
 
-    public static Profits of(Map<Entry, Money> entryProfits, Dealer dealer) {
-        Map<Player, Money> map = new HashMap<>();
+    public static Profits of(Map<Entry, Amount> entryProfits, Dealer dealer) {
+        Map<Player, Amount> map = new HashMap<>();
         map.put(dealer, getDealerProfit(entryProfits));
         for (Entry entry : entryProfits.keySet()) {
             map.put(entry, entryProfits.get(entry));
@@ -22,15 +22,15 @@ public final class Profits {
         return new Profits(map);
     }
 
-    private static Money getDealerProfit(Map<Entry, Money> entryProfits) {
-        Money totalEntryProfits = null;
-        for (Money money : entryProfits.values()) {
-            totalEntryProfits = money.add(totalEntryProfits);
+    private static Amount getDealerProfit(Map<Entry, Amount> entryProfits) {
+        Amount totalEntryProfits = null;
+        for (Amount amount : entryProfits.values()) {
+            totalEntryProfits = amount.add(totalEntryProfits);
         }
         return totalEntryProfits.reverse();
     }
 
-    public Map<Player, Money> getValues() {
+    public Map<Player, Amount> getValues() {
         return values;
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.model.Money;
+import blackjack.model.Amount;
 import blackjack.model.Profits;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Entry;
@@ -21,29 +21,29 @@ public class ProfitsDTO {
     }
 
     public static ProfitsDTO from(Profits profits) {
-        Map<Player, Money> profitValues = profits.getValues();
+        Map<Player, Amount> profitValues = profits.getValues();
         Dealer dealer = findDealer(profitValues);
         return new ProfitsDTO(mapEntryProfits(profitValues),
                 DealerDTO.fromNameOf(dealer),
-                profitValues.get(dealer).getAmount());
+                profitValues.get(dealer).getValue());
     }
 
-    private static Dealer findDealer(Map<Player, Money> profitValues) {
+    private static Dealer findDealer(Map<Player, Amount> profitValues) {
         return (Dealer) profitValues.keySet().stream()
                 .filter(player -> player instanceof Dealer)
                 .findFirst()
                 .get();
     }
 
-    private static Map<EntryDTO, Integer> mapEntryProfits(Map<Player, Money> profitValues) {
+    private static Map<EntryDTO, Integer> mapEntryProfits(Map<Player, Amount> profitValues) {
         return findEntries(profitValues)
                 .collect(Collectors.toMap(
                         EntryDTO::from,
-                        entry -> profitValues.get(entry).getAmount(),
+                        entry -> profitValues.get(entry).getValue(),
                         (a, b) -> b));
     }
 
-    private static Stream<Entry> findEntries(Map<Player, Money> profitValues) {
+    private static Stream<Entry> findEntries(Map<Player, Amount> profitValues) {
         return profitValues.keySet().stream()
                 .filter(player -> player instanceof Entry)
                 .map(player -> (Entry) player);

@@ -13,7 +13,7 @@ public enum Result {
         this.houseEdge = houseEdge;
     }
 
-    public Money apply(Money money) {
-        return money.multipliedBy(this.houseEdge);
+    public Amount apply(Amount amount) {
+        return amount.multipliedBy(this.houseEdge);
     }
 }
