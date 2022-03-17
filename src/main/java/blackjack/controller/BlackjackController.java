@@ -73,7 +73,7 @@ public class BlackjackController {
     private void turnDealer(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
         while (blackjackGame.isTurnDealer()) {
             blackjackGame.assignCard(blackjackGame.getDealer(), playingCardShuffleMachine);
-            OutputView.announceHit(Dealer.HIT_MAX_POINT);
+            OutputView.announceHit();
         }
     }
 

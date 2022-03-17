@@ -17,7 +17,7 @@ public class OutputView {
     private static final String RESULT_DELIMITER = ", ";
     private static final String DEALER = "딜러";
     private static final String SHARE_TWO_CARDS_GUIDE_MESSAGE = "에게 2장의 카드를 각각 나누었습니다.";
-    private static final String DEALER_MORE_CARD_GUIDE_MESSAGE = "딜러는 %d이하라 카드를 더 받았습니다.";
+    private static final String DEALER_MORE_CARD_GUIDE_MESSAGE = "딜러는 16이하라 카드를 더 받았습니다.";
     private static final String FINAL_WINNER_GUIDE_MESSAGE = "## 최종 승패";
     private static final String FINAL_POINT_GUIDE_MESSAGE = " - 결과";
     private static final char NEW_LINE = '\n';
@@ -71,10 +71,9 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public static void announceHit(int number) {
+    public static void announceHit() {
         System.out.println();
-        System.out.printf(DEALER_MORE_CARD_GUIDE_MESSAGE, number);
-        System.out.println();
+        System.out.println(DEALER_MORE_CARD_GUIDE_MESSAGE);
     }
 
     public static void announceResultCards(List<GameResponse> gameResponses) {

@@ -4,7 +4,7 @@ import blackjack.domain.card.PlayingCards;
 
 public class Dealer extends AbstractPlayer implements Player {
 
-    public static final int HIT_MAX_POINT = 16;
+    private static final int HIT_MAX_POINT = 16;
     private static final String NAME = "딜러";
 
     public Dealer(String name, PlayingCards playingCards) {
