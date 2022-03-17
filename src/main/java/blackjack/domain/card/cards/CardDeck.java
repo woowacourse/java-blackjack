@@ -13,9 +13,7 @@ public final class CardDeck {
 
     private CardDeck() {
         this.value = new Stack<>();
-        for (Denomination value : Denomination.values()) {
-            initFromDenomination(value);
-        }
+        init();
         Collections.shuffle(value);
     }
 
@@ -23,15 +21,21 @@ public final class CardDeck {
         return new CardDeck();
     }
 
-    public Card pop() {
-        validateSize();
-        return value.pop();
+    private void init() {
+        for (Denomination value : Denomination.values()) {
+            initFromDenomination(value);
+        }
     }
 
     private void initFromDenomination(Denomination denomination) {
         for (Suit suit : Suit.values()) {
             this.value.push(Card.of(denomination, suit));
         }
+    }
+
+    public Card pop() {
+        validateSize();
+        return value.pop();
     }
 
     private void validateSize() {
