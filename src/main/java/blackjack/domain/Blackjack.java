@@ -73,6 +73,10 @@ public class Blackjack {
         return false;
     }
 
+    public Card openDealerOneCard() {
+        return dealer.pickOneCardToOpen();
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

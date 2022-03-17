@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -79,5 +80,14 @@ public class BlackjackTest {
     void distributeCardToDealerUntilHitTest2() {
         blackjack.distributeInitialCards(new IntendedNumberGenerator(List.of(1, 2, 0, 4, 5, 9)));
         assertThat(blackjack.additionalCardToDealer(new IntendedNumberGenerator(List.of(7)))).isFalse();
+    }
+
+
+    @DisplayName("딜러가 카드 하나 오픈하게 하는 기능 테스트")
+    @Test
+    void openDealerOneCardTest() {
+        blackjack.distributeInitialCards(new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6)));
+        Dealer dealer = blackjack.getDealer();
+        assertThat(blackjack.openDealerOneCard()).isEqualTo(dealer.pickOneCardToOpen());
     }
 }
