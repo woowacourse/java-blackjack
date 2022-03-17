@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.DrawStrategy;
+import blackjack.domain.gamer.Bet;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
@@ -92,9 +93,10 @@ public class BlackJackGame {
 
 		for (Player player : players) {
 			BlackJackResult result = player.match(dealer);
-			int playerEarning = result.calculateEarning(player.getBet());
+			int playerEarning = player.calculateEarning(result.getProfit());
+
 			playerEarnings.put(player.getName(), playerEarning);
-			dealerEarning += result.getReverseEarning(playerEarning);
+			dealerEarning += Bet.getMinusAmount(playerEarning);
 		}
 		return new GameResultDto(gamers.findDealerHitCount(), dealerEarning, playerEarnings);
 	}

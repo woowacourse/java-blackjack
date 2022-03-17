@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import blackjack.domain.result.BlackJackResult;
 
 class BetTest {
 
@@ -35,5 +39,22 @@ class BetTest {
 		assertThatThrownBy(() -> new Bet(1001))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("금액은 10원 단위여야 합니다.");
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"BLACKJACK_WIN:1500", "WIN:1000", "LOSE:-1000", "DRAW:0"}, delimiter = ':')
+	@DisplayName("수익률에 따른 수익 계산")
+	void calculateEarning(String input, int bet) {
+		BlackJackResult result = BlackJackResult.valueOf(input);
+		int earning = new Bet(1000).multiply(result.getProfit());
+		assertThat(earning).isEqualTo(bet);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"10:-10", "20:-20"}, delimiter = ':')
+	@DisplayName("플러스 금액 마이너스 금액으로 변환")
+	void oppositeAmount(int input, int result) {
+		assertThat(Bet.getMinusAmount(input))
+			.isEqualTo(result);
 	}
 }

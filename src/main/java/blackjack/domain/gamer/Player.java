@@ -23,7 +23,7 @@ public class Player extends Gamer{
         return cards.isBust();
     }
 
-    public int getBet() {
-        return bet.getAmount();
+    public int calculateEarning(double profit) {
+        return bet.multiply(profit);
     }
 }
