@@ -19,7 +19,7 @@ class BlackJackResultTest {
     void of() {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.TEN));
-        Player player = new Player("범고래", playerCards);
+        Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("WIN"));
@@ -30,7 +30,7 @@ class BlackJackResultTest {
     void getReverse() {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.TEN));
-        Player player = new Player("범고래", playerCards);
+        Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
         assertThat(blackJackResult.getReverse()).isEqualTo(BlackJackResult.valueOf("LOSE"));
@@ -41,7 +41,7 @@ class BlackJackResultTest {
     void blackJack() {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.TEN));
-        Player player = new Player("범고래", playerCards);
+        Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("WIN"));

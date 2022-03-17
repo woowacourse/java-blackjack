@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 public class Player extends Gamer {
+    private final BettingMoney bettingMoney;
 
-    public Player(String name, List<Card> cards) {
+    public Player(String name, List<Card> cards, int value) {
         super(name);
         for (Card card : cards) {
             addCard(card);
         }
+        bettingMoney = new BettingMoney(value);
     }
 
     public BlackJackResult match(Dealer dealer) {

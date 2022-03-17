@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 import java.util.List;
 
@@ -12,6 +13,12 @@ public class Dealer extends Gamer {
         super(NAME);
         for (Card card : cards) {
             addCard(card);
+        }
+    }
+
+    public void distribute(Deck deck) {
+        while (canDraw()) {
+            addCard(deck.draw());
         }
     }
 

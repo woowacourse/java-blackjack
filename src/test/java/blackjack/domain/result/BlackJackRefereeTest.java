@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,8 @@ class BlackJackRefereeTest {
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> jasonCards = List.of(new Card(CardShape.CLOVER, CardNumber.SEVEN), new Card(CardShape.CLOVER, CardNumber.KING));
         Dealer dealer = new Dealer(dealerCards);
-        Player pobi = new Player("pobi", pobiCards);
-        Player jason = new Player("jason", jasonCards);
+        Player pobi = new Player("pobi", pobiCards, 1000);
+        Player jason = new Player("jason", jasonCards, 1000);
 
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
         pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
@@ -45,7 +46,7 @@ class BlackJackRefereeTest {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.TEN));
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         Dealer dealer = new Dealer(dealerCards);
-        Player pobi = new Player("pobi", pobiCards);
+        Player pobi = new Player("pobi", pobiCards, 1000);
 
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
         pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
@@ -65,8 +66,8 @@ class BlackJackRefereeTest {
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> jasonCards = List.of(new Card(CardShape.CLOVER, CardNumber.SEVEN), new Card(CardShape.CLOVER, CardNumber.KING));
         Dealer dealer = new Dealer(dealerCards);
-        Player pobi = new Player("pobi", pobiCards);
-        Player jason = new Player("jason", jasonCards);
+        Player pobi = new Player("pobi", pobiCards, 1000);
+        Player jason = new Player("jason", jasonCards, 1000);
 
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
         pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
@@ -88,7 +89,7 @@ class BlackJackRefereeTest {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.ACE));
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         Dealer dealer = new Dealer(dealerCards);
-        Player pobi = new Player("pobi", pobiCards);
+        Player pobi = new Player("pobi", pobiCards, 1000);
 
 
         BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi), dealer);
@@ -108,7 +109,7 @@ class BlackJackRefereeTest {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.NINE));
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         Dealer dealer = new Dealer(dealerCards);
-        Player pobi = new Player("pobi", pobiCards);
+        Player pobi = new Player("pobi", pobiCards, 1000);
 
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
         pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
@@ -130,7 +131,7 @@ class BlackJackRefereeTest {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.ACE));
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.ACE));
         Dealer dealer = new Dealer(dealerCards);
-        Player pobi = new Player("pobi", pobiCards);
+        Player pobi = new Player("pobi", pobiCards, 1000);
 
         BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi), dealer);
 
