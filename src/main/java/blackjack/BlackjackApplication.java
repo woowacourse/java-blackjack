@@ -1,11 +1,12 @@
 package blackjack;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.HitRequest;
 import blackjack.domain.ParticipantProfit;
-import blackjack.domain.ProfitResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
@@ -14,6 +15,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.Referee;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -125,12 +127,19 @@ public class BlackjackApplication {
     }
 
     private static void showProfitResult(Dealer dealer, Players players) {
-        final ProfitResult profitResult = new ProfitResult(players.getPlayers(), dealer);
-        List<ParticipantProfit> playersResult = profitResult.getPlayersResult();
-        ParticipantProfit dealerResult = profitResult.getDealerResult();
+        final Map<Player, Integer> playerResults = Referee.calculatePlayersProfit(players.getPlayers(), dealer);
+        final List<ParticipantProfit> playerProfits = createParticipantProfits(playerResults);
+        final int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerResults.values()));
 
         OutputView.printProfitResultMessage();
-        OutputView.printParticipantProfitResult(dealerResult);
-        playersResult.forEach(OutputView::printParticipantProfitResult);
+        OutputView.printParticipantProfitResult(ParticipantProfit.of(dealer, dealerProfit));
+        playerProfits.forEach(OutputView::printParticipantProfitResult);
+    }
+
+    private static List<ParticipantProfit> createParticipantProfits(Map<Player, Integer> playerResults) {
+        return playerResults.keySet()
+            .stream()
+            .map(player -> ParticipantProfit.of(player, playerResults.get(player)))
+            .collect(Collectors.toList());
     }
 }

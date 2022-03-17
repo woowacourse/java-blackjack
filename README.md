@@ -83,9 +83,8 @@
 - **HitRequest**
     - 카드 추가 여부에 대한 응답 값을 의미하는 enum
 
-- **Judgement**
-    - 승, 무, 패 값을 가진 enum
-    - 플레이어의 승패를 결정한다.
-
-- **ProfitResult**
-    - 플레이어와 딜러의 최종 수익을 관리한다.
+- **Referee**
+    - 승패 결과를 판단하고 플레이어와 딜러의 수익을 계산한다.
+    
+- **ParticipantProfit**
+  - 참가자 이름과 수익을 담는 dto

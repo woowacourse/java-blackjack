@@ -1,27 +1,25 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Pattern.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.participant.BetMoney;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
 
-public class ProfitResultTest {
+public class RefereeTest {
 
     @Test
     @DisplayName("플레이어가 블랙잭인 경우 1.5배의 수익 결과를 얻는다.")
-    void profitPlayerWin() {
+    void profitPlayerBlackjack() {
         // given
         Card cloverTen = new Card(CLOVER, TEN);
         Card spadeTen = new Card(SPADE, TEN);
@@ -38,14 +36,13 @@ public class ProfitResultTest {
         List<Player> players = List.of(player);
 
         // when
-        ProfitResult profitResult = new ProfitResult(players, dealer);
-        ParticipantProfit playerResult = profitResult.getPlayersResult().get(0);
-        ParticipantProfit dealerResult = profitResult.getDealerResult();
+        Map<Player, Integer> playerProfits = Referee.calculatePlayersProfit(players, dealer);
+        int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
 
         // then
         assertAll(
-            () -> assertThat(playerResult.getProfit()).isEqualTo((int)(amount * 1.5)),
-            () -> assertThat(dealerResult.getProfit()).isEqualTo((int)(amount * -1.5))
+            () -> assertThat(playerProfits.get(player)).isEqualTo((int)(amount * 1.5)),
+            () -> assertThat(dealerProfit).isEqualTo((int)(amount * -1.5))
         );
     }
 
@@ -67,14 +64,41 @@ public class ProfitResultTest {
         List<Player> players = List.of(player);
 
         // when
-        ProfitResult profitResult = new ProfitResult(players, dealer);
-        ParticipantProfit playerResult = profitResult.getPlayersResult().get(0);
-        ParticipantProfit dealerResult = profitResult.getDealerResult();
+        Map<Player, Integer> playerProfits = Referee.calculatePlayersProfit(players, dealer);
+        int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
 
         // then
         assertAll(
-            () -> assertThat(playerResult.getProfit()).isEqualTo(0),
-            () -> assertThat(dealerResult.getProfit()).isEqualTo(0)
+            () -> assertThat(playerProfits.get(player)).isEqualTo(0),
+            () -> assertThat(dealerProfit).isEqualTo(0)
+        );
+    }
+
+    @Test
+    @DisplayName("이기는 경우 수익은 1배이다.")
+    void profitPlayerWin() {
+        // given
+        Card card1 = new Card(CLOVER, EIGHT);
+        Card card2 = new Card(SPADE, EIGHT);
+        Cards dealerCards = new Cards(List.of(card1, card2));
+        Dealer dealer = new Dealer(dealerCards);
+
+        Card card3 = new Card(HEART, NINE);
+        Card card4 = new Card(SPADE, NINE);
+        Cards playerCards = new Cards(List.of(card3, card4));
+        int amount = 1000;
+        BetMoney betMoney = new BetMoney(amount);
+        Player player = new Player(new Name("pobi"), playerCards, betMoney);
+        List<Player> players = List.of(player);
+
+        // when
+        Map<Player, Integer> playerProfits = Referee.calculatePlayersProfit(players, dealer);
+        int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
+
+        // then
+        assertAll(
+            () -> assertThat(playerProfits.get(player)).isEqualTo(amount),
+            () -> assertThat(dealerProfit).isEqualTo(amount * -1)
         );
     }
 
@@ -96,14 +120,13 @@ public class ProfitResultTest {
         List<Player> players = List.of(player);
 
         // when
-        ProfitResult profitResult = new ProfitResult(players, dealer);
-        ParticipantProfit playerResult = profitResult.getPlayersResult().get(0);
-        ParticipantProfit dealerResult = profitResult.getDealerResult();
+        Map<Player, Integer> playerProfits = Referee.calculatePlayersProfit(players, dealer);
+        int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
 
         // then
         assertAll(
-            () -> assertThat(playerResult.getProfit()).isEqualTo(amount * -1),
-            () -> assertThat(dealerResult.getProfit()).isEqualTo(amount)
+            () -> assertThat(playerProfits.get(player)).isEqualTo((amount * -1)),
+            () -> assertThat(dealerProfit).isEqualTo((amount))
         );
     }
 }
