@@ -17,7 +17,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public class RecordTest {
-    private Blackjack blackjack;
     private Player player;
     private Dealer dealer;
     private CardPickMachine cardPickMachine;
@@ -29,7 +28,7 @@ public class RecordTest {
         dealer = new Dealer();
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 8));
 
-        blackjack = Blackjack.of(intendedNumberGenerator, dealer, players);
+        Blackjack.of(intendedNumberGenerator, dealer, players);
         cardPickMachine = new CardPickMachine();
 
         //dealer: 12점, player: 12점
@@ -97,12 +96,10 @@ public class RecordTest {
     void ordinaryVictoryTest() {
         IntendedNumberGenerator intendedNumberGenerator1 = new IntendedNumberGenerator(List.of(20));
         Card card1 = cardPickMachine.pickCard(intendedNumberGenerator1);
-        System.out.println(card1.getName());
         player.addCard(card1);
 
         IntendedNumberGenerator intendedNumberGenerator2 = new IntendedNumberGenerator(List.of(18));
         Card card2 = cardPickMachine.pickCard(intendedNumberGenerator2);
-        System.out.println(card2.getName());
         dealer.addCard(card2);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.VICTORY);
