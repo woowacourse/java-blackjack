@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class GameResult {
 
-    Map<Player, String> gameResult = new HashMap<>();
+    final Map<Player, String> gameResult = new HashMap<>();
 
     public void determine(final Dealer dealer, final Player player) {
         putResult(player, compete(dealer, player));
@@ -28,7 +28,7 @@ public class GameResult {
         return "무";
     }
 
-    public Money calculateProfit(Player player, Money money) {
+    public Money calculateProfit(final Player player, final Money money) {
         if (gameResult.get(player).equals("승")) {
             return Money.profits(1, money);
         }

@@ -6,7 +6,7 @@ import blackjack.view.OutputView;
 
 public class BlackjackGame {
 
-    public Players play(Dealer dealer) {
+    public Players play(final Dealer dealer) {
         Players players = createPlayers();
         CardDeck cardDeck = new CardDeck();
 
@@ -29,13 +29,13 @@ public class BlackjackGame {
         }
     }
 
-    private void dealInitCards(CardDeck cardDeck, Dealer dealer, Players players) {
+    private void dealInitCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
         OutputView.printDealCardMessage(dealer.getName(), players.getNames());
         dealer.dealInit(cardDeck.dealInit());
         players.dealInit(cardDeck);
     }
 
-    private void openInitCards(Dealer dealer, Players players) {
+    private void openInitCards(final Dealer dealer, final Players players) {
         OutputView.printCard(dealer.getName(), dealer.getInitCard());
         OutputView.printNewLine();
         for (Player player : players.getPlayers()) {
@@ -60,7 +60,7 @@ public class BlackjackGame {
         OutputView.printNewLine();
     }
 
-    private boolean isDrawing(Player player) {
+    private boolean isDrawing(final Player player) {
         return player.canDraw() && hitOrStay(player);
     }
 

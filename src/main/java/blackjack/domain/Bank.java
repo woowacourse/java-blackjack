@@ -5,13 +5,13 @@ import java.util.Map;
 
 public class Bank {
 
-    Map<Player, Money> bank = new HashMap<>();
+    final Map<Player, Money> bank = new HashMap<>();
 
-    public void bet(Player player, Money money) {
+    public void bet(final Player player, final Money money) {
         bank.put(player, money);
     }
 
-    public Money getProfit(GameResult gameResult, Player player) {
+    public Money getProfit(final GameResult gameResult, final Player player) {
         return gameResult.calculateProfit(player, bank.get(player));
     }
 }

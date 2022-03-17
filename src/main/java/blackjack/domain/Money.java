@@ -15,30 +15,30 @@ public class Money {
         this.money = money;
     }
 
-    public static Money of(String input) {
+    public static Money of(final String input) {
         Validator.validateNullOrEmpty(input);
         validate(input);
         return new Money(Integer.parseInt(input));
     }
 
-    private static void validate(String input) {
+    private static void validate(final String input) {
         validatePositiveNumber(input);
         validateTenUnitsNumber(input);
     }
 
-    private static void validatePositiveNumber(String input) {
+    private static void validatePositiveNumber(final String input) {
         if (!input.matches(POSITIVE_NUMBER_FORMAT)) {
             throw new IllegalArgumentException(POSITIVE_NUMBER_MESSAGE);
         }
     }
 
-    private static void validateTenUnitsNumber(String input) {
+    private static void validateTenUnitsNumber(final String input) {
         if (!input.matches(TEN_UNITS_NUMBER_FORMAT)) {
             throw new IllegalArgumentException(TEN_UNITS_NUMBER_MESSAGE);
         }
     }
 
-    public static Money profits(double rateOfReturn, Money money) {
+    public static Money profits(final double rateOfReturn, final Money money) {
         return new Money((int) (rateOfReturn * money.money));
     }
 

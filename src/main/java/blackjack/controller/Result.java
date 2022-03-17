@@ -27,7 +27,7 @@ public class Result {
     }
 
     public void win(final Dealer dealer, final Players players) {
-        Winner winner = players.win(dealer);
+        final Winner winner = players.win(dealer);
         OutputView.printWinnerTitle();
         winDealer(winner, dealer, players);
         winPlayers(winner, players);

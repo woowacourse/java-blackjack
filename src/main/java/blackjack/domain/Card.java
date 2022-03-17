@@ -12,13 +12,13 @@ public class Card {
     private static final List<Card> CACHE = new ArrayList<>();
 
     static {
-        for (CardNumber cardNumber : CardNumber.values()) {
+        for (final CardNumber cardNumber : CardNumber.values()) {
             selectCardShape(cardNumber);
         }
     }
 
     private static void selectCardShape(final CardNumber cardNumber) {
-        for (CardShape cardShape : CardShape.values()) {
+        for (final CardShape cardShape : CardShape.values()) {
             CACHE.add(new Card(cardNumber, cardShape));
         }
     }

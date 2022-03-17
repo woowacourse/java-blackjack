@@ -19,7 +19,7 @@ public class Player extends Human {
         }
     }
 
-    public boolean isWinner(Dealer dealer) {
+    public boolean isWinner(final Dealer dealer) {
         if (getTotal() == dealer.getTotal()) {
             return isBlackjack();
         }

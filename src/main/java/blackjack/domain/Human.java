@@ -11,7 +11,7 @@ public abstract class Human {
         this.name = name;
     }
 
-    public void dealInit(List<Card> initCards) {
+    public void dealInit(final List<Card> initCards) {
         cards.add(initCards);
     }
 
@@ -34,11 +34,11 @@ public abstract class Human {
         return human.isBust() || human.hasTotalLowerThan(getTotal());
     }
 
-    boolean isSameTotal(int total) {
+    boolean isSameTotal(final int total) {
         return getTotal() == total;
     }
 
-    boolean hasTotalLowerThan(int total) {
+    boolean hasTotalLowerThan(final int total) {
         return getTotal() < total;
     }
 

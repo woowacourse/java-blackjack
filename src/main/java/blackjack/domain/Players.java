@@ -49,13 +49,13 @@ public class Players {
         }
     }
 
-    public void dealInit(CardDeck cardDeck) {
+    public void dealInit(final CardDeck cardDeck) {
         for (Player player : players) {
             player.dealInit(cardDeck.dealInit());
         }
     }
 
-    public Winner win(Dealer dealer) {
+    public Winner win(final Dealer dealer) {
         Winner winner = new Winner();
         for (Player player : players) {
             winner.decide(dealer, player);
