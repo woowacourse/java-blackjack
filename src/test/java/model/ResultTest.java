@@ -1,5 +1,6 @@
 package model;
 
+import static model.Result.WIN;
 import static model.card.CardFace.ACE;
 import static model.card.CardFace.JACK;
 import static model.card.CardFace.KING;
@@ -20,6 +21,8 @@ import model.participator.Dealer;
 import model.participator.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class ResultTest {
     private Player player;
@@ -69,7 +72,7 @@ public class ResultTest {
     @Test
     void blackJackVsStand() {
         initParticipators(playerBlackJack, bigStand);
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.of(player, dealer)).isEqualTo(WIN);
         initParticipators(smallStand, dealerBlackJack);
         assertThat(Result.of(player, dealer)).isEqualTo(Result.LOSE);
     }
@@ -79,7 +82,7 @@ public class ResultTest {
         initParticipators(playerBust, dealerBlackJack);
         assertThat(Result.of(player, dealer)).isEqualTo(Result.LOSE);
         initParticipators(playerBlackJack, dealerBust);
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.of(player, dealer)).isEqualTo(WIN);
     }
 
     @Test
@@ -87,20 +90,26 @@ public class ResultTest {
         initParticipators(playerBust, bigStand);
         assertThat(Result.of(player, dealer)).isEqualTo(Result.LOSE);
         initParticipators(smallStand, dealerBust);
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.of(player, dealer)).isEqualTo(WIN);
     }
 
     @Test
     void bustVsBust() {
         initParticipators(playerBust, dealerBust);
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.of(player, dealer)).isEqualTo(WIN);
     }
 
     @Test
     void standVsStand() {
         initParticipators(bigStand, smallStand);
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.of(player, dealer)).isEqualTo(WIN);
         initParticipators(smallStand, bigStand);
         assertThat(Result.of(player, dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"WIN,1000,1000", "LOSE,1000,-1000", "DRAW,1000,0"})
+    void calculateResultAmount(Result result, long bettingAmount, long earnAmount) {
+        assertThat(result.getEarnedAmount(bettingAmount)).isEqualTo(earnAmount);
     }
 }

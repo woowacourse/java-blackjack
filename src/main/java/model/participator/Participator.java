@@ -27,14 +27,6 @@ public abstract class Participator {
         }
     }
 
-    protected void addProfit(long amount) {
-        this.profit = profit.add(amount);
-    }
-
-    protected void subtractProfit(long amount) {
-        this.profit = profit.subtract(amount);
-    }
-
     protected void setCardsGettableStrategy(CardsGettable strategy) {
         cards.setCardsGettableStrategy(strategy);
     }
@@ -47,6 +39,10 @@ public abstract class Participator {
 
     public boolean isSameName(String otherName) {
         return name.equals(otherName);
+    }
+
+    public void addProfit(long amount) {
+        profit = profit.add(amount);
     }
 
     public Status getStatus() {

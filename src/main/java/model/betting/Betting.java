@@ -1,10 +1,13 @@
 package model.betting;
 
+import model.Status;
+
 public class Betting {
 
     private static final int EXCLUDE_MINIMUM_BETTING = 0;
     public static final String BETTING_AMOUNT_LOWER_BOUND_MESSAGE =
             "베팅 금액는 " + EXCLUDE_MINIMUM_BETTING + "원보다 커야합니다.";
+
     private final long bettingAmount;
 
     public Betting(long bettingAmount) {
@@ -18,7 +21,7 @@ public class Betting {
         }
     }
 
-    public long getBettingAmount(BettingCalculateStrategy calculateStrategy) {
-        return calculateStrategy.calculate(bettingAmount);
+    public long calculateBetting(Status status) {
+        return status.calculateWinMargin(bettingAmount);
     }
 }

@@ -1,33 +1,28 @@
 package model;
 
 import java.util.Arrays;
-import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import model.participator.Dealer;
 import model.participator.Player;
 
 public enum Result {
     WIN((player, dealer) -> player.compareTo(dealer) > 0 || dealer.equals(Status.BUST),
-            (playerSum, dealerSum) -> playerSum > dealerSum,
-            Player::winBet),
+            (playerSum, dealerSum) -> playerSum > dealerSum, 1),
     LOSE((player, dealer) -> player.compareTo(dealer) < 0,
-            (playerSum, dealerSum) -> playerSum < dealerSum,
-            (Player::lostBet)),
+            (playerSum, dealerSum) -> playerSum < dealerSum, -1),
     DRAW((player, dealer) -> !player.equals(Status.BUST) && player.compareTo(dealer) == 0,
-            Integer::equals,
-            ((player, dealer) -> {
-            }));
+            Integer::equals, 0);
 
     private final BiPredicate<Status, Status> statusCriteria;
     private final BiPredicate<Integer, Integer> cardsSumCriteria;
-    private final BiConsumer<Player, Dealer> bettingExecution;
+    private final int multipl;
 
     Result(BiPredicate<Status, Status> statusCriteria,
            BiPredicate<Integer, Integer> cardsSumCriteria,
-           BiConsumer<Player, Dealer> bettingExecution) {
+           int playerBettingIncrease) {
         this.statusCriteria = statusCriteria;
         this.cardsSumCriteria = cardsSumCriteria;
-        this.bettingExecution = bettingExecution;
+        this.multipl = playerBettingIncrease;
     }
 
     public static Result of(Player player, Dealer dealer) {
@@ -53,7 +48,17 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException("승부 결과를 내지 못했습니다."));
     }
 
-    public void executeBetting(Player player, Dealer dealer) {
-        this.bettingExecution.accept(player, dealer);
+    public Result getOpposite() {
+        if (this.equals(WIN)) {
+            return LOSE;
+        }
+        if (this.equals(LOSE)) {
+            return WIN;
+        }
+        return this;
+    }
+
+    public long getEarnedAmount(long amount) {
+        return this.multipl * amount;
     }
 }

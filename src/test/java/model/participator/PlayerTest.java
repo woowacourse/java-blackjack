@@ -1,10 +1,8 @@
-package model;
+package model.participator;
 
 import static model.card.CardFace.ACE;
-import static model.card.CardFace.EIGHT;
 import static model.card.CardFace.KING;
 import static model.card.CardFace.QUEEN;
-import static model.card.CardFace.TEN;
 import static model.card.CardFace.TWO;
 import static model.card.CardSuit.CLOVER;
 import static model.card.CardSuit.DIAMOND;
@@ -14,10 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
+import model.Result;
 import model.card.Card;
 import model.card.CardFace;
-import model.participator.Dealer;
-import model.participator.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -101,37 +98,6 @@ public class PlayerTest {
         player.receiveCard(new Card(DIAMOND, KING));
         player.receiveCard(new Card(SPADE, KING));
         player.receiveCard(new Card(CLOVER, KING));
-        assertThat(player.matchWith(dealer)).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    void initBettingAmount() {
-        assertThat(thousandBettedPlayer.getBettingAmount()).isEqualTo(1000);
-    }
-
-    @Test
-    void lostBet() {
-        thousandBettedPlayer.lostBet(dealer);
-        assertThat(thousandBettedPlayer.getProfit()).isEqualTo(-1000);
-        assertThat(dealer.getProfit()).isEqualTo(1000);
-    }
-
-    @Test
-    void normalWinBet() {
-        thousandBettedPlayer.receiveCard(new Card(SPADE, TEN));
-        thousandBettedPlayer.receiveCard(new Card(HEART, EIGHT));
-        thousandBettedPlayer.receiveCard(new Card(SPADE, TWO));
-        thousandBettedPlayer.winBet(dealer);
-        assertThat(thousandBettedPlayer.getProfit()).isEqualTo(1000);
-        assertThat(dealer.getProfit()).isEqualTo(-1000);
-    }
-
-    @Test
-    void blackJackWinBet() {
-        thousandBettedPlayer.receiveCard(new Card(SPADE, TEN));
-        thousandBettedPlayer.receiveCard(new Card(SPADE, ACE));
-        thousandBettedPlayer.winBet(dealer);
-        assertThat(thousandBettedPlayer.getProfit()).isEqualTo(1500);
-        assertThat(dealer.getProfit()).isEqualTo(-1500);
+        assertThat(player.matchWith(dealer)).isEqualTo(Result.WIN);
     }
 }

@@ -4,20 +4,17 @@ import static model.card.Cards.BLACK_JACK_SCORE;
 import static model.participator.Dealer.DEALER_NAME;
 
 import model.Result;
-import model.Status;
 import model.betting.Betting;
-import model.betting.BettingCalculateStrategy;
-import model.betting.BlackJacCalculateStrategy;
-import model.betting.NormalCalculateStrategy;
 
 public class Player extends Participator {
     private Betting betting;
-    private boolean canMatch = true;
+    private boolean hasMatched;
 
     private Player(String playerName, Betting betting) {
         super(playerName);
         checkNameIsDealer(playerName);
         this.betting = betting;
+        this.hasMatched = false;
     }
 
     public Player(String playerName, long bettingAmount) {
@@ -36,29 +33,15 @@ public class Player extends Participator {
     }
 
     public Result matchWith(Dealer dealer) {
-        canMatch = false;
+        hasMatched = true;
         return Result.of(this, dealer);
     }
 
-    public void lostBet(Dealer dealer) {
-        this.subtractProfit(betting.getBettingAmount(new NormalCalculateStrategy()));
-        dealer.addProfit(betting.getBettingAmount(new NormalCalculateStrategy()));
+    public long calculateBettingAmount() {
+        return betting.calculateBetting(getStatus());
     }
 
-    public void winBet(Dealer dealer) {
-        BettingCalculateStrategy strategy = new NormalCalculateStrategy();
-        if (this.getStatus().equals(Status.BLACKJACK)) {
-            strategy = new BlackJacCalculateStrategy();
-        }
-        dealer.subtractProfit(betting.getBettingAmount(strategy));
-        this.addProfit(betting.getBettingAmount(strategy));
-    }
-
-    public boolean canMatch() {
-        return canMatch;
-    }
-
-    public long getBettingAmount() {
-        return betting.getBettingAmount(new NormalCalculateStrategy());
+    public boolean hasMatched() {
+        return hasMatched;
     }
 }

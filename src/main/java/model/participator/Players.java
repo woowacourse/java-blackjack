@@ -1,4 +1,4 @@
-package model;
+package model.participator;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import model.Result;
+import model.Status;
 import model.card.CardDeck;
-import model.matchplayerselect.MatchPlayerSelectStrategy;
-import model.participator.Dealer;
-import model.participator.Player;
+import model.participator.matchplayerselect.MatchPlayerSelectStrategy;
 
 public class Players {
     public static final String NAMES_AND_BETTING_NOT_MATCH_MESSAGE = "이름과 베팅 입력금의 갯수가 일치하지 않습니다.";
@@ -57,18 +57,27 @@ public class Players {
         return findByName(name).canReceiveCard();
     }
 
-    public Map<Player, Result> matchWith(Dealer dealer, MatchPlayerSelectStrategy strategy) {
-        return players.stream()
+    public void matchWith(Dealer dealer, MatchPlayerSelectStrategy strategy) {
+        Map<Player, Result> results = players.stream()
                 .filter(strategy::canSelect)
                 .collect(toMap(Function.identity(), player -> player.matchWith(dealer)));
+        executeAllBetting(results, dealer);
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    private void executeAllBetting(Map<Player, Result> results, Dealer dealer) {
+        for (Player player : results.keySet()) {
+            Result result = results.get(player);
+            player.addProfit(result.getEarnedAmount(player.calculateBettingAmount()));
+            dealer.addProfit(result.getOpposite().getEarnedAmount(player.calculateBettingAmount()));
+        }
     }
 
     public boolean anyHasBlackJack() {
         return players.stream()
                 .anyMatch(player -> player.getStatus().equals(Status.BLACKJACK));
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

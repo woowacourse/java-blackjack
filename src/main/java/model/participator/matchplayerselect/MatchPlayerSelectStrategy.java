@@ -1,4 +1,4 @@
-package model.matchplayerselect;
+package model.participator.matchplayerselect;
 
 import model.participator.Player;
 

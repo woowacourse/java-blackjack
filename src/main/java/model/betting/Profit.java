@@ -11,10 +11,6 @@ public class Profit {
         return new Profit(profit + amount);
     }
 
-    public Profit subtract(long amount) {
-        return new Profit(profit - amount);
-    }
-
     public long getValue() {
         return profit;
     }

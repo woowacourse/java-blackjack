@@ -1,6 +1,6 @@
-package model;
+package model.participator;
 
-import static model.Players.NAMES_AND_BETTING_NOT_MATCH_MESSAGE;
+import static model.participator.Players.NAMES_AND_BETTING_NOT_MATCH_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
