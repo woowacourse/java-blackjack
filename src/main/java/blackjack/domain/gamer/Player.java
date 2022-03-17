@@ -1,8 +1,6 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Name;
 
 public class Player extends Gamer {
 

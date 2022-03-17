@@ -6,6 +6,7 @@ import java.util.List;
 
 public class BettingTokens {
 	private static final String CANNOT_ADD = "[ERROR] 전체 베팅 금액 수는 플레이어의 수보다 클 수 없습니다.";
+
 	private final List<BettingToken> bettingMonies;
 	private final int capacity;
 

@@ -9,6 +9,7 @@ public class Cards {
 	private static final int BUST_THRESHOLD = 21;
 	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
 	private static final int ACE_SCORE_DIFFERENCE = 10;
+
 	private final List<Card> cards;
 
 	public Cards(List<Card> cards) {

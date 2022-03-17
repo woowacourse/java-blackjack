@@ -6,6 +6,7 @@ import blackjack.domain.gamer.Gamer;
 public class BlackJackGame {
 	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
 	private static final int EACH_TURN_DISTRIBUTE_AMOUNT = 1;
+
 	private final Deck deck;
 
 	public BlackJackGame(Deck deck) {

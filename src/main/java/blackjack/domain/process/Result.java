@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 
 public class Result {
 	private static final int NEGATE = -1;
+
 	private final Map<Player, BettingToken> gameResult;
 
 	public Result(Players players, BettingTokens bettingTokens) {

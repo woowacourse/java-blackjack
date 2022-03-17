@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public class Deck {
 	private static final String EMPTY_MESSAGE = "[ERROR] 덱의 카드가 다 소진되었습니다.";
+
 	private final Stack<Card> cards;
 
 	public Deck() {

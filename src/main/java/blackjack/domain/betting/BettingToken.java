@@ -8,6 +8,7 @@ public class BettingToken {
 	private static final int UNIT_PRICE = 100;
 	private static final double PROFIT_RATIO = 1.5;
 	private static final int DECREASE_RATIO = -1;
+
 	private final int money;
 	private int profit = 0;
 

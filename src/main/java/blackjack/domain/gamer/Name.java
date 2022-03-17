@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Name {
 	private static final String BLANK_NAME = "[ERROR] 이름이 빈 입력이면 안됩니다.";
 	private static final String SPACE_IN_NAME = "[ERROR] 이름에 공백이 있으면 안됩니다.";
+
 	private final String name;
 
 	public Name(String name) {
