@@ -16,8 +16,8 @@ public class PlayerGroup {
     private final List<Player> players;
 
     public PlayerGroup(List<Player> players) {
-        validatePlayers(players);
         this.players = players;
+        validatePlayers(players);
     }
 
     private void validatePlayers(List<Player> players) {
@@ -64,6 +64,6 @@ public class PlayerGroup {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return List.copyOf(players);
     }
 }
