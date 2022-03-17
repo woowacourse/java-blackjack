@@ -8,13 +8,9 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    private Betting betting;
+    private final Betting betting;
 
     private static final int HIT_STANDARD = 21;
-
-    public Player(Name name, List<Card> cards) {
-        super(name, new Cards(cards));
-    }
 
     public Player(Name name, List<Card> cards, Betting betting) {
         super(name, new Cards(cards));

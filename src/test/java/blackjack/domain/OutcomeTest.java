@@ -152,6 +152,6 @@ public class OutcomeTest {
         Card card1 = new Card(DIAMOND, TEN);
         Card card2 = new Card(CLOVER, denomination2);
         List<Card> playerCards = List.of(card1, card2);
-        return new Player(new Name("player"), playerCards);
+        return new Player(new Name("player"), playerCards, new Betting(1000));
     }
 }
