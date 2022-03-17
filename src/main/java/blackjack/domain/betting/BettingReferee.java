@@ -11,7 +11,7 @@ public class BettingReferee {
 
     private final List<BettingResult> bettingResults;
 
-    public BettingReferee(final Dealer dealer, final List<PlayerBetting> playerBettings) {
+    public BettingReferee(final Dealer dealer, final PlayerBettings playerBettings) {
         List<BettingResult> playerBettingResults = getPlayerBettingResultsFrom(dealer, playerBettings);
         BettingResult dealerBettingResult = initDealerResultFrom(
                 dealer, getTotalProfitOf(playerBettingResults));
@@ -30,8 +30,9 @@ public class BettingReferee {
     }
 
     private List<BettingResult> getPlayerBettingResultsFrom(Dealer dealer,
-                                                            List<PlayerBetting> playerBettings) {
-        return playerBettings.stream()
+                                                            PlayerBettings playerBettings) {
+        return playerBettings.getValue()
+                .stream()
                 .map(playerBetting -> initPlayerBettingResultFrom(playerBetting, dealer))
                 .collect(Collectors.toUnmodifiableList());
     }

@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -95,10 +94,8 @@ public class BettingRefereeTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private List<PlayerBetting> generateBettingsOf(List<Player> players) {
-        return players.stream()
-                .map(player -> new PlayerBetting(player, BETTING_AMOUNT))
-                .collect(Collectors.toUnmodifiableList());
+    private PlayerBettings generateBettingsOf(List<Player> players) {
+        return PlayerBettings.of(players, () -> BETTING_AMOUNT);
     }
 
     private int extractPlayerBettingSum(BettingReferee referee) {
