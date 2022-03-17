@@ -1,19 +1,20 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDeckGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardDeckTest {
+class CardDeckGeneratorTest {
 
     @Test
-    @DisplayName("사용한 카드는 제거한다")
-    void drawCard() {
+    @DisplayName("52장의 카드를 포함하고 있는 카드덱을 정상 생성한다.")
+    void createCardDeck() {
         final CardDeck cardDeck = CardDeckGenerator.createCardDeck();
-        final int expected = 51;
+        final int expected = 52;
 
-        cardDeck.selectCard();
         final int actual = cardDeck.size();
         assertThat(actual).isEqualTo(expected);
     }

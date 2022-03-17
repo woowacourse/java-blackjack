@@ -1,6 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,6 +8,7 @@ import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
+import blackjack.domain.result.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;

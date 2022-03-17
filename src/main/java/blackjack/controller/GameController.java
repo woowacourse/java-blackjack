@@ -1,8 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.CardDeckGenerator;
+import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.GameMachine;
-import blackjack.domain.GameResult;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
