@@ -65,11 +65,10 @@ public class GameResult {
     }
 
     public long getDealerProfit() {
-        long allBettingAmount = DEFAULT_BETTING_PRIZE;
-        for (Map.Entry<Player, Long> entry : bettingResult.entrySet()) {
-            allBettingAmount -= entry.getValue();
-        }
-        return allBettingAmount;
+        return bettingResult.values()
+                .stream()
+                .mapToLong(value -> value)
+                .sum();
     }
 
     public Long getBettingResult(Player player) {
