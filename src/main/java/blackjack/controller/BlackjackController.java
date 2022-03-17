@@ -1,10 +1,17 @@
 package blackjack.controller;
 
+import blackjack.model.Betting;
 import blackjack.model.Card;
 import blackjack.model.CardDeck;
+import blackjack.model.GameResult;
 import blackjack.model.Result;
-import blackjack.model.dto.*;
-import blackjack.model.player.*;
+import blackjack.model.dto.CardDTO;
+import blackjack.model.dto.PlayerDTO;
+import blackjack.model.dto.PlayersDTO;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Gamer;
+import blackjack.model.player.Gamers;
+import blackjack.model.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
@@ -17,13 +24,33 @@ public class BlackjackController {
     public void play() {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(List.of(cardDeck.selectCard(), cardDeck.selectCard()));
-        Gamers gamers = new Gamers(InputView.inputNames(), cardDeck);
+        Gamers gamers = new Gamers(createGamerInfo(), cardDeck);
         OutputView.printOpenCard(createPlayerDto(dealer, dealer.openCards()), createPlayersDto(gamers));
-
         takeCards(cardDeck, dealer, gamers);
-        OutputView.printTotalScore(createPlayerDto(dealer, dealer.getCards().getEachCard()), createPlayersDto(gamers));
 
-        matchAndDisplayResult(dealer, gamers);
+        GameResult gameResult = new GameResult();
+        matchAndUpdateResult(dealer, gamers, gameResult);
+        displayResult(dealer, gamers, gameResult);
+    }
+
+    private Map<String, Betting> createGamerInfo() {
+        List<String> GamerNames = InputView.inputNames();
+        Map<String, Betting> gamerInfo = new LinkedHashMap<>();
+        for (String name : GamerNames) {
+            gamerInfo.put(name, getGamerBettingMoney(name));
+        }
+        return gamerInfo;
+    }
+
+    private Betting getGamerBettingMoney(String name) {
+        Betting money;
+        try {
+            money = new Betting(InputView.inputBettingMoney(name));
+        } catch (IllegalStateException exception) {
+            System.out.println("[ERROR] " + exception.getMessage());
+            return getGamerBettingMoney(name);
+        }
+        return money;
     }
 
     private PlayerDTO createPlayerDto(Player player, List<Card> playerCards) {
@@ -65,12 +92,24 @@ public class BlackjackController {
         }
     }
 
-    private void matchAndDisplayResult(Dealer dealer, Gamers gamers) {
-        Map<String, String> gamersResult = new LinkedHashMap<>();
+    private void matchAndUpdateResult(Dealer dealer, Gamers gamers, GameResult gameResult) {
         for (Gamer gamer : gamers.getGamers()) {
             Result result = dealer.match(gamer.getCards());
-            gamersResult.put(gamer.getName(), result.opposite().name());
+            gameResult.updatePlayerBettingResult(gamer, result.opposite());
         }
-        OutputView.printResults(gamersResult);
+        gameResult.calculateDealerResult();
+    }
+
+    private void displayResult(Dealer dealer, Gamers gamers, GameResult gameResult) {
+        OutputView.printTotalScore(createPlayerDto(dealer, dealer.getCards().getEachCard()), createPlayersDto(gamers));
+        OutputView.printResults(gameResult.getDealerResult(), createGamerBettingInfo(gameResult.getPlayersResult()));
+    }
+
+    private Map<String, Integer> createGamerBettingInfo(Map<Gamer, Integer> GamerBettingResult) {
+        Map<String, Integer> playerBettingResult = new LinkedHashMap<>();
+        for (Gamer gamer : GamerBettingResult.keySet()) {
+            playerBettingResult.put(gamer.getName(), GamerBettingResult.get(gamer));
+        }
+        return playerBettingResult;
     }
 }
