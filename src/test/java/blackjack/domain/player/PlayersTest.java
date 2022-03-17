@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.betting.Money;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,7 @@ class PlayersTest {
 
     @ParameterizedTest
     @MethodSource("participantListBySuccess")
-    @DisplayName("참가자는 2~8명 사이이다. (성공)")
+    @DisplayName("참가자는 1~8명 사이이다. (성공)")
     void checkParticipantNumberBySuccess(List<Player> participants) {
         Dealer dealer = new Dealer();
         assertDoesNotThrow(() -> new Players(participants, dealer));
@@ -34,25 +35,25 @@ class PlayersTest {
         AcceptStrategy inputStrategy = new ParticipantAcceptStrategy();
         return Stream.of(
                 List.of(
-                        new Participant("pobi", inputStrategy),
-                        new Participant("corin", inputStrategy)
+                        new Participant("pobi", inputStrategy, new Money(0)),
+                        new Participant("corin", inputStrategy, new Money(0))
                 ),
                 List.of(
-                        new Participant("1", inputStrategy),
-                        new Participant("2", inputStrategy),
-                        new Participant("3", inputStrategy),
-                        new Participant("4", inputStrategy),
-                        new Participant("5", inputStrategy),
-                        new Participant("6", inputStrategy),
-                        new Participant("7", inputStrategy),
-                        new Participant("8", inputStrategy)
+                        new Participant("1", inputStrategy, new Money(0)),
+                        new Participant("2", inputStrategy, new Money(0)),
+                        new Participant("3", inputStrategy, new Money(0)),
+                        new Participant("4", inputStrategy, new Money(0)),
+                        new Participant("5", inputStrategy, new Money(0)),
+                        new Participant("6", inputStrategy, new Money(0)),
+                        new Participant("7", inputStrategy, new Money(0)),
+                        new Participant("8", inputStrategy, new Money(0))
                 )
         );
     }
 
     @ParameterizedTest
     @MethodSource("participantListByFail")
-    @DisplayName("참가자는 2~8명 사이이다. (실패)")
+    @DisplayName("참가자는 1~8명 사이이다. (실패)")
     void checkParticipantNumber(List<Player> participants) {
         Dealer dealer = new Dealer();
 
@@ -66,18 +67,15 @@ class PlayersTest {
         return Stream.of(
                 null,
                 List.of(
-                        new Participant("pobi", inputStrategy)
-                ),
-                List.of(
-                        new Participant("1", inputStrategy),
-                        new Participant("2", inputStrategy),
-                        new Participant("3", inputStrategy),
-                        new Participant("4", inputStrategy),
-                        new Participant("5", inputStrategy),
-                        new Participant("6", inputStrategy),
-                        new Participant("7", inputStrategy),
-                        new Participant("8", inputStrategy),
-                        new Participant("9", inputStrategy)
+                        new Participant("1", inputStrategy, new Money(0)),
+                        new Participant("2", inputStrategy, new Money(0)),
+                        new Participant("3", inputStrategy, new Money(0)),
+                        new Participant("4", inputStrategy, new Money(0)),
+                        new Participant("5", inputStrategy, new Money(0)),
+                        new Participant("6", inputStrategy, new Money(0)),
+                        new Participant("7", inputStrategy, new Money(0)),
+                        new Participant("8", inputStrategy, new Money(0)),
+                        new Participant("9", inputStrategy, new Money(0))
                 )
         );
     }
@@ -87,8 +85,8 @@ class PlayersTest {
     void thrownExceptionWhenNamesDuplicated() {
         Player dealer = new Dealer();
         Assertions.assertThatThrownBy(() -> new Players(List.of(
-                        new Participant("pobi", inputStrategy),
-                        new Participant("pobi", inputStrategy)
+                        new Participant("pobi", inputStrategy, new Money(0)),
+                        new Participant("pobi", inputStrategy, new Money(0))
                 ), dealer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");

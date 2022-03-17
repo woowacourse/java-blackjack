@@ -6,12 +6,12 @@ import blackjack.domain.result.Result;
 public class Participant extends Player {
 
     private final AcceptStrategy acceptStrategy;
-    private final Money betting;
+    private final Money money;
 
-    public Participant(final String name, final AcceptStrategy acceptStrategy) {
+    public Participant(final String name, final AcceptStrategy acceptStrategy, Money money) {
         super(name);
         this.acceptStrategy = acceptStrategy;
-        this.betting = new Money(0);
+        this.money = money;
     }
 
     private boolean isUnderMaxScore() {
@@ -22,20 +22,21 @@ public class Participant extends Player {
         return acceptStrategy.accept(this.name);
     }
 
+
     public void increaseBetting() {
-        betting.win();
+        money.win();
     }
 
     public void increaseBlackjackBetting() {
-        betting.winByBlackjack();
+        money.winByBlackjack();
     }
 
     public void decreaseBetting() {
-        betting.lose();
+        money.lose();
     }
 
     public Money betting() {
-        return betting;
+        return money;
     }
 
     @Override

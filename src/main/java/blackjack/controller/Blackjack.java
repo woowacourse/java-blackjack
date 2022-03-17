@@ -4,8 +4,7 @@ import blackjack.domain.betting.Money;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardGenerator;
 import blackjack.domain.player.*;
-import blackjack.domain.result.Judge;
-import blackjack.domain.result.ParticipantResult;
+import blackjack.domain.result.ProfitCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -36,7 +35,7 @@ public class Blackjack {
 
     private List<Player> createParticipants(final List<String> names) {
         return names.stream()
-                .map(name -> new Participant(name, new ParticipantAcceptStrategy()))
+                .map(name -> new Participant(name, new ParticipantAcceptStrategy(), new Money(0)))
                 .collect(Collectors.toList());
     }
 
@@ -86,8 +85,8 @@ public class Blackjack {
     }
 
     private void announcePlayersProfit(final Players players) {
-        List<ParticipantResult> results = Judge.calculateGameResult(players);
-        Judge.calculateParticipantProfit(results);
-        OutputView.printGameResult(players.getParticipants());
+        ProfitCalculator.calculateParticipantProfit(players);
+        int profit = ProfitCalculator.calculateDealerProfit(players.getParticipants());
+        OutputView.printGameResult(players.getParticipants(), profit);
     }
 }

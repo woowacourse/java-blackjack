@@ -9,12 +9,19 @@ import java.util.List;
 
 public abstract class Player {
 
-    Cards cards;
     String name;
+    Cards cards;
 
     Player(final String name) {
-        this.cards = new Cards();
+        validateEmpty(name);
         this.name = name;
+        this.cards = new Cards();
+    }
+
+    private void validateEmpty(final String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 이름은 비어있을 수 없습니다.");
+        }
     }
 
     public abstract boolean acceptableCard();

@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Type;
@@ -19,7 +20,7 @@ public class PlayerTest {
     @MethodSource("bunchOfCards")
     @DisplayName("가지고 있는 카드합이 블랙잭인지 확인한다.")
     void checkBlackjack(List<Card> cards, boolean result) {
-        Player player = new Participant("corinne", name -> true);
+        Player player = new Participant("corinne", name -> true, new Money(0));
         for (Card card : cards) {
             player.addCard(card);
         }
