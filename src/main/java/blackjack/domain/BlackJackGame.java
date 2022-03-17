@@ -35,14 +35,14 @@ public class BlackJackGame {
         consumer.accept(users);
     }
 
-    public void hitOrStayCardsPlayer(Function<User, Supplier<String>> function, Consumer<User> consumer) {
+    public void hitOrStayCardsPlayer(Function<User, Supplier<Boolean>> function, Consumer<User> consumer) {
         for (Player player : users.getPlayers()) {
             hitOrStayCards(player, new PlayerHitStrategy(function.apply(player)), consumer);
         }
     }
 
     public void hitOrStayCardsDealer(Consumer<User> consumer) {
-        hitOrStayCards(users.getDealer(), new DealerHitStrategy(users.getDealer().getScore()), consumer);
+        hitOrStayCards(users.getDealer(), new DealerHitStrategy(users.getDealer().calculateScore()), consumer);
     }
 
     private void hitOrStayCards(User user, HitStrategy strategy, Consumer<User> consumer) {
