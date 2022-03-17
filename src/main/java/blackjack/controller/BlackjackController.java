@@ -7,20 +7,22 @@ import blackjack.domain.participant.Players;
 import blackjack.domain.strategy.RandomNumberGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
     public void startGame() {
-        List<String> playerNames = InputView.getPlayerNames();
+        Map<String, Long> playerNames = InputView.getPlayerNames();
+        playerNames.keySet().forEach(name -> playerNames.put(name, InputView.getBettingMoney(name)));
+
         Dealer dealer = new Dealer();
         Players players = new Players(playerNames);
         Blackjack blackjack = Blackjack.of(RandomNumberGenerator.getInstance(), dealer, players);
 
         OutputView.printInitStatus(dealer, players.getPlayers());
-
         progressGame(blackjack, players, dealer);
     }
+
 
     public void progressGame(Blackjack blackjack, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
@@ -28,7 +30,6 @@ public class BlackjackController {
         }
 
         askDealCardToDealer(blackjack, dealer);
-
         endGame(blackjack, dealer ,players);
     }
 
