@@ -11,43 +11,43 @@ import blackjack.domain.player.Players;
 public class Results {
 
     private final Map<Player, MatchResult> results;
-    private final Players players;
 
-    public Results(Players players, Map<Player, MatchResult> results) {
-        this.players = players;
+    public Results(Map<Player, MatchResult> results) {
         this.results = results;
     }
 
     public static Results from(Players players) {
-        return new Results(players, new LinkedHashMap<>());
+        return new Results(competeDealerWithPlayers(players));
     }
 
-    public void competeDealerWithPlayers() {
+    private static Map<Player, MatchResult> competeDealerWithPlayers(Players players) {
+        Map<Player, MatchResult> results = new LinkedHashMap<>();
         Player dealer = players.getPlayers()
                 .stream()
                 .filter(Player::isDealer)
                 .findFirst()
                 .orElseThrow();
         for (Player player : players.getPlayers()) {
-            scoreResultIfGuest(dealer, player);
+            scoreResultIfGuest(dealer, player, results);
         }
+        return results;
     }
 
-    private void scoreResultIfGuest(Player dealer, Player guest) {
+    private static void scoreResultIfGuest(Player dealer, Player guest, Map<Player, MatchResult> results) {
         if (guest.isDealer()) {
             return;
         }
-        scorePlay(dealer, guest);
+        scoreEachGuest(dealer, guest, results);
     }
 
-    private void scorePlay(Player dealer, Player guest) {
+    private static void scoreEachGuest(Player dealer, Player guest, Map<Player, MatchResult> results) {
         Match result = Match.findWinner(guest, dealer);
         Match dealerResult = result.getDealerResult();
-        addResult(dealer, dealerResult);
-        addResult(guest, result);
+        addResult(dealer, dealerResult, results);
+        addResult(guest, result, results);
     }
 
-    public void addResult(Player player, Match result) {
+    private static void addResult(Player player, Match result, Map<Player, MatchResult> results) {
         results.put(player, results.getOrDefault(player, new MatchResult()).addMatchResult(result));
     }
 

@@ -73,9 +73,7 @@ public class BlackjackGame {
     }
 
     public Results calculateResult(Players players) {
-        Results results = Results.from(players);
-        results.competeDealerWithPlayers();
-        return results;
+        return Results.from(players);
     }
 
     public List<GameResponse> getPlayersGameResponses() {
