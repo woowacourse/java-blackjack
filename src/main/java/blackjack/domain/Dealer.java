@@ -6,6 +6,7 @@ public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int BUST_CONDITION = 22;
     private static final int LOSE_SCORE = 0;
+    private static final int OPEN_CARD_LOGIC = 0;
 
     private final Deck deck;
 
@@ -26,6 +27,10 @@ public class Dealer extends Player {
         int playerScore = checkScoreIsBust(player);
         int dealerScore = checkScoreIsBust(this);
         return Result.valueOf(Integer.compare(dealerScore, playerScore));
+    }
+
+    public Card pickOneCardToOpen() {
+        return getMyCards().get(OPEN_CARD_LOGIC);
     }
 
     private int checkScoreIsBust(Player player) {
