@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Gamer extends Player {
 
-    public static final int LIMIT_GAMER_TOTAL_POINT = 21;
+    private static final int LIMIT_GAMER_TOTAL_POINT = 21;
     private static final int GAMER_OPEN_CARDS_SIZE = 2;
 
     public Gamer(final String name) {
