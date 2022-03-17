@@ -28,11 +28,11 @@ public class InputView {
         return names;
     }
 
-    public static String requestHit(String name) {
+    public static boolean requestHit(String name) {
         System.out.println(name + ASK_MORE_CARD);
         String answer = SCANNER.nextLine();
         InputValidator.inputBlank(answer);
         InputValidator.isAnswerFormat(answer);
-        return answer;
+        return answer.equals(InputValidator.HIT);
     }
 }

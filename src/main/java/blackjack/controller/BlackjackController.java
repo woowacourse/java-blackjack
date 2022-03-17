@@ -63,8 +63,7 @@ public class BlackjackController {
 
     private boolean receiveHit(String name) {
         try {
-            String answer = InputView.requestHit(name);
-            return answer.equals(InputValidator.HIT);
+            return InputView.requestHit(name);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
