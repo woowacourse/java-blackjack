@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class Profits {
 
-    private static final double BLACK_JACK_BONUS_RATE = 1.5;
-    private static final int DEFAULT_RATE = 1;
+    private static final double BLACK_JACK_BONUS_PROFIT_RATE = 1.5;
+    private static final int DEFAULT_PROFIT_RATE = 1;
 
     private final Map<Name, Double> profits;
 
@@ -42,9 +42,9 @@ public class Profits {
 
     private static double getBlackJackBonusRate(boolean isBlackJack) {
         if (isBlackJack) {
-            return BLACK_JACK_BONUS_RATE;
+            return BLACK_JACK_BONUS_PROFIT_RATE;
         }
-        return DEFAULT_RATE;
+        return DEFAULT_PROFIT_RATE;
     }
 
     public double getProfit(Name name) {

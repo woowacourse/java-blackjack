@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.result.Result;
 import domain.result.Versus;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
     private static final String CANT_FIND_PLAYER_ERROR_MESSAGE = "[Error] 플레이어를 찾을 수 없습니다.";
 
     private final List<Player> players;
@@ -65,22 +63,15 @@ public class Players {
         return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
-    public Result generateResultAtDealerBlackJack(Dealer dealer) {
-        validateDealerIsBlackJack(dealer);
+    public Map<Name, Versus> compareAtDealerBlackJack(Dealer dealer) {
         Map<Name, Versus> playerResult = new LinkedHashMap<>();
         players.forEach(player -> playerResult.put(player.getName(), player.compareAtDealerBlackJack()));
-        return new Result(playerResult);
+        return playerResult;
     }
 
-    private void validateDealerIsBlackJack(Dealer dealer) {
-        if (!dealer.isBlackJack()) {
-            throw new IllegalStateException(NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE);
-        }
-    }
-
-    public Result generateResultAtFinal(Dealer dealer) {
+    public Map<Name, Versus> compareResultAtFinal(Dealer dealer) {
         Map<Name, Versus> playerResult = new LinkedHashMap<>();
         players.forEach(player -> playerResult.put(player.getName(), player.compareAtFinal(dealer)));
-        return new Result(playerResult);
+        return playerResult;
     }
 }

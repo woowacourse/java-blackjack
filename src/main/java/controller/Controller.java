@@ -1,7 +1,7 @@
 package controller;
 
-import domain.betting.BettingReceipt;
 import domain.betting.BettingMoney;
+import domain.betting.BettingReceipt;
 import domain.betting.Profits;
 import domain.card.Cards;
 import domain.card.Deck;
@@ -23,14 +23,14 @@ public class Controller {
     public void run() {
         Deck deck = new Deck(Cards.getInstance().getCards());
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
-        Players players = new Players(createPlayers(deck));
-        BettingReceipt bettingReceipt = new BettingReceipt(createBettingReceipt(players));
+        Players players = createPlayers(deck);
+        BettingReceipt bettingReceipt = createBettingReceipt(players);
 
         OutputView.printInitHands(dealer, players);
 
         if (dealer.isBlackJack()) {
             OutputView.printDealerIsBlackJackMessage();
-            printResultAndProfit(players.generateResultAtDealerBlackJack(dealer), bettingReceipt, players);
+            printResultAndProfit(Result.generateResultAtDealerBlackJack(dealer, players), bettingReceipt, players);
             return;
         }
         OutputView.printPlayerIsBlackJackMessage(players);
@@ -38,23 +38,23 @@ public class Controller {
         drawForPlayers(deck, players);
         drawForDealer(deck, dealer, players);
         OutputView.printStatuses(dealer, players);
-        printResultAndProfit(players.generateResultAtFinal(dealer), bettingReceipt, players);
+        printResultAndProfit(Result.generateResultAtFinal(dealer, players), bettingReceipt, players);
     }
 
-    private List<Player> createPlayers(Deck deck) {
+    private Players createPlayers(Deck deck) {
         List<Player> players = new ArrayList<>();
         for (Name name : InputView.inputNames()) {
             players.add(new Player(name, new InitCards(deck).getInitCards()));
         }
-        return players;
+        return new Players(players);
     }
 
-    private Map<Name, BettingMoney> createBettingReceipt(Players players) {
+    private BettingReceipt createBettingReceipt(Players players) {
         Map<Name, BettingMoney> bettingReceipt = new LinkedHashMap<>();
         for (Name name : players.getNames()) {
             bettingReceipt.put(name, new BettingMoney(InputView.inputMoney(name)));
         }
-        return bettingReceipt;
+        return new BettingReceipt(bettingReceipt);
     }
 
     private void drawForPlayers(Deck deck, Players players) {

@@ -1,11 +1,10 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.InitCards;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import domain.card.Card;
 
 public abstract class Participant {
 
@@ -28,11 +27,13 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public abstract boolean isNeedToDraw();
-
     public String showHand() {
         List<String> cardsOfHand = hand.stream().map(Card::combineRankAndSuit).collect(Collectors.toList());
         return String.join(JOINING_DELIMITER, cardsOfHand);
+    }
+
+    public boolean isBlackJack() {
+        return hand.size() == InitCards.INIT_CARDS_SIZE && isUpperBoundScore();
     }
 
     public boolean isBust() {
@@ -44,8 +45,8 @@ public abstract class Participant {
     }
 
     public int calculateBestScore() {
-        int aceCount = countAceCard();
         int bestScore = calculateMinScoreOfHand();
+        int aceCount = countAceCard();
         while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ADDITIONAL_SCORE_OF_ACE <= BLACK_JACK_NUMBER) {
             bestScore += ADDITIONAL_SCORE_OF_ACE;
             aceCount--;
@@ -53,20 +54,15 @@ public abstract class Participant {
         return bestScore;
     }
 
-    private int countAceCard() {
-        return (int) hand.stream().filter(Card::isAce).count();
-    }
-
     private int calculateMinScoreOfHand() {
         return hand.stream().mapToInt(Card::getPoint).sum();
     }
 
-    public boolean isBlackJack() {
-        if (hand.size() == InitCards.INIT_CARDS_SIZE && isUpperBoundScore()) {
-            return true;
-        }
-        return false;
+    private int countAceCard() {
+        return (int) hand.stream().filter(Card::isAce).count();
     }
+
+    public abstract boolean isNeedToDraw();
 
     public Name getName() {
         return name;
