@@ -1,5 +1,7 @@
 package blackjack.domain.User;
 
+import java.util.Objects;
+
 public class Betting {
     private static final int MIN_MONEY_VALUE = 0;
 
@@ -22,5 +24,22 @@ public class Betting {
 
     public double calculate(double value) {
         return value * amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Betting betting = (Betting) o;
+        return amount == betting.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
     }
 }
