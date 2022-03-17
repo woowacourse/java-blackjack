@@ -135,7 +135,7 @@ public class OutcomeTest {
         Outcome outcome = Outcome.valueOf(inputName);
 
         // when
-        double actual = outcome.getEarningsRate();
+        double actual = outcome.getProfitRate();
 
         // then
         assertThat(actual).isEqualTo(expected);

@@ -10,11 +10,11 @@ public enum Outcome {
     WIN_BLACKJACK("승", 1.5);
 
     private final String name;
-    private final double earningsRate;
+    private final double profitRate;
 
-    Outcome(String name, double earningsRate) {
+    Outcome(String name, double profitRate) {
         this.name = name;
-        this.earningsRate = earningsRate;
+        this.profitRate = profitRate;
     }
 
     public static Outcome judge(Player player, Dealer dealer) {
@@ -47,7 +47,7 @@ public enum Outcome {
         return name;
     }
 
-    public double getEarningsRate() {
-        return earningsRate;
+    public double getProfitRate() {
+        return profitRate;
     }
 }
