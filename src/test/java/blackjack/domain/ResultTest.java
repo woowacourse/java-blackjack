@@ -1,7 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.Result.BLACKJACK;
 import static blackjack.domain.Result.LOSS;
-import static blackjack.domain.Result.WIN;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.FIVE;
 import static blackjack.domain.card.Denomination.KING;
@@ -55,7 +55,7 @@ class ResultTest {
 
         //then
         assertThat(result.get(players.get(0).getName())).isEqualTo((int)(MINIMUM_BETTING_AMOUNT * LOSS.getRate()));
-        assertThat(result.get(players.get(1).getName())).isEqualTo((int)(MINIMUM_BETTING_AMOUNT * WIN.getRate()));
+        assertThat(result.get(players.get(1).getName())).isEqualTo((int)(MINIMUM_BETTING_AMOUNT * BLACKJACK.getRate()));
     }
 
     @DisplayName("둘 다 버스트가 아니고 딜러가 작은 경우")

@@ -13,10 +13,10 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
-    WIN(1.5, (
+    BLACKJACK(1.5, (
             (player, dealer) -> player.isBlackJack())
     ),
-    PRINCIPAL(1.0, (
+    WIN(1.0, (
             (player, dealer) -> ((player.getScore() == 21 && dealer.getScore() == 21) || (dealer.isBust())
             || (!player.isBust() && !dealer.isBust() && player.getScore() > dealer.getScore())))
     ),
