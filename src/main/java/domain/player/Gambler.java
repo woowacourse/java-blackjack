@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import vo.Wallet;
 
-public class Gambler extends Player {
+public final class Gambler extends Player {
     private static final int MAXIMUM_VALID_SCORE = 21;
 
     public Gambler(Wallet wallet) {
@@ -15,6 +15,10 @@ public class Gambler extends Player {
 
     public Gambler(String name) {
         super(name);
+    }
+
+    public Gambler(String name, List<PlayingCard> cards) {
+        super(name, cards);
     }
 
     @Override

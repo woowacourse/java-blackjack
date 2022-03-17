@@ -11,13 +11,21 @@ public abstract class Player {
     private final Wallet wallet;
     protected final PlayingCards playingCards;
 
-    protected Player(Wallet wallet) {
+    protected Player(Wallet wallet, PlayingCards playingCards) {
         this.wallet = wallet;
-        this.playingCards = new PlayingCards();
+        this.playingCards = playingCards;
+    }
+
+    protected Player(Wallet wallet) {
+        this(wallet, new PlayingCards());
     }
 
     protected Player(String name) {
-        this(Wallet.of(name));
+        this(Wallet.of(name), new PlayingCards());
+    }
+
+    protected Player(String name, List<PlayingCard> cards) {
+        this(Wallet.of(name), new PlayingCards(cards));
     }
 
     public abstract boolean isHittable();
