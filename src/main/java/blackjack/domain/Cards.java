@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Cards {
     private static final int MAX_SCORE = 21;
@@ -14,8 +15,16 @@ public class Cards {
         cards = new ArrayList<>();
     }
 
+    private Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
     public static Cards generateCards() {
         return new Cards();
+    }
+
+    public static Cards generateCardsAndFill(List<Card> cards) {
+        return new Cards(cards);
     }
 
     public void addCard(Card card) {
@@ -52,5 +61,22 @@ public class Cards {
             scoreSum -= ADJUST_NUM;
         }
         return scoreSum;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Cards cards1 = (Cards) o;
+        return Objects.equals(cards, cards1.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 }

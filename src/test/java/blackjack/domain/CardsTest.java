@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,5 +46,23 @@ public class CardsTest {
         cards.addCard(Card.generateCard(BlackjackCardType.DIAMOND_10));
         cards.addCard(Card.generateCard(BlackjackCardType.SPADE_10));
         assertThat(cards.isBurst(cards.score())).isTrue();
+    }
+
+    @DisplayName("논리적으로 같으면 equals가 true로 나오는지 테스트")
+    @Test
+    void equalsTest() {
+        Cards cards1 = Cards.generateCardsAndFill(List.of(Card.generateCard(BlackjackCardType.CLOVER_A)));
+        Cards cards2 = Cards.generateCardsAndFill(List.of(Card.generateCard(BlackjackCardType.CLOVER_A)));
+
+        assertThat(cards1.equals(cards2)).isTrue();
+    }
+
+    @DisplayName("논리적으로 같은 객체 hashcode 같은지 확인하는 테스트")
+    @Test
+    void hashCodeTest() {
+        Cards cards1 = Cards.generateCardsAndFill(List.of(Card.generateCard(BlackjackCardType.CLOVER_A)));
+        Cards cards2 = Cards.generateCardsAndFill(List.of(Card.generateCard(BlackjackCardType.CLOVER_A)));
+
+        assertThat(cards1.hashCode()).isEqualTo(cards2.hashCode());
     }
 }
