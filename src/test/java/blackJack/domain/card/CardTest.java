@@ -9,7 +9,7 @@ class CardTest {
 
     @Test
     @DisplayName("특정 카드를 가져올 수 있는지 테스트")
-    void getValidCard() {
+    void getCard() {
         assertThat(Card.from(Symbol.SPADE, Denomination.KING)).isNotNull();
     }
 

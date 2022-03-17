@@ -12,7 +12,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("Dealer 생성 테스트")
-    void createValidDealer() {
+    void createDealer() {
         assertThat(new Dealer()).isNotNull();
     }
 
@@ -27,7 +27,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("딜러의 카드 추가 분배가 불가능한 경우 테스트")
-    void hasFalseDealerNextTurn() {
+    void canHitTrue() {
         Dealer dealer = new Dealer();
         dealer.hit(Card.from(Symbol.SPADE, Denomination.SEVEN));
         dealer.hit(Card.from(Symbol.HEART, Denomination.JACK));
@@ -37,7 +37,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("딜러의 카드 추가 분배가 가능한 경우 테스트")
-    void hasTrueDealerNextTurn() {
+    void canHitFalse() {
         Dealer dealer = new Dealer();
         dealer.hit(Card.from(Symbol.SPADE, Denomination.SIX));
         dealer.hit(Card.from(Symbol.HEART, Denomination.JACK));

@@ -27,7 +27,7 @@ class BlackJackGameTest {
 
     @Test
     @DisplayName("BlackJackGame 생성 테스트")
-    void createValidDealer() {
+    void createBlackJackGame() {
         Participants participants = new Participants(dealer, List.of(player1, player2, player3));
 
         assertThat(new BlackJackGame(participants)).isNotNull();

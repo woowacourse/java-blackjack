@@ -16,7 +16,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("Player 생성 테스트")
-    void createValidPlayer() {
+    void createPlayer() {
         assertThat(new Player("rookie")).isNotNull();
     }
 
@@ -38,7 +38,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
-    void hasFalsePlayerNextTurn() {
+    void canHitFalse() {
         Player player = new Player("kei");
         player.hit(Card.from(Symbol.SPADE, Denomination.JACK));
         player.hit(Card.from(Symbol.HEART, Denomination.JACK));
@@ -49,7 +49,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
-    void hasTruePlayerNextTurn() {
+    void canHitTrue() {
         Player player = new Player("kei");
         player.hit(Card.from(Symbol.SPADE, Denomination.JACK));
         player.hit(Card.from(Symbol.HEART, Denomination.JACK));
