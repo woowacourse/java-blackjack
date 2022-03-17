@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.CardPickMachine;
 import blackjack.domain.strategy.NumberGenerator;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,11 +10,14 @@ public class Players {
     private static final String DUPLICATED_ERROR = "[ERROR] 이름은 중복될 수 없습니다.";
     private static final String NO_PLAYER_ERROR = "[ERROR] 플레이어는 1명 이상이여야 합니다.";
 
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> players;
 
     public Players(List<String> playerNames) {
         validateNames(playerNames);
-        playerNames.forEach(name -> players.add(new Player(name)));
+
+        players = playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
     private void validateNames(List<String> playerNames) {
