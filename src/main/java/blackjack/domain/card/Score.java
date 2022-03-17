@@ -6,7 +6,7 @@ public class Score {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int DEALER_LIMIT_SCORE = 17;
-    private static final int MIN_SCORE = 5;
+    private static final int MIN_SCORE = 4;
 
     private final int score;
 

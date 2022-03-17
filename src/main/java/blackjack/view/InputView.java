@@ -26,7 +26,11 @@ public class InputView {
 
     public static int inputPlayerBetMoney(final String name) {
         System.out.printf(INPUT_PLAYER_BET_MONEY_MESSAGE, name);
-        return Integer.parseInt(Console.readLine());
+        try {
+            return Integer.parseInt(Console.readLine());
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("배팅 금액은 숫자만 입력가능합니다.");
+        }
     }
 
     public static String inputHitCommand(final String currentPlayerName) {
