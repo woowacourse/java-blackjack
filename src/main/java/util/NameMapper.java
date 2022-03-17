@@ -1,4 +1,4 @@
-package view.util;
+package util;
 
 import domain.MatchResult;
 import domain.card.Denomination;

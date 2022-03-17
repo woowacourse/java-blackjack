@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toList;
 import domain.card.PlayingCard;
 import domain.player.Player;
 import java.util.List;
-import view.util.NameMapper;
+import util.NameMapper;
 
 public class CardsDto {
     private final String name;
