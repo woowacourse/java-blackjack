@@ -28,11 +28,15 @@ public class Players {
     public static Players createPlayers(final List<Name> names, final Function<Name, Integer> betMoney,
                                         final CardDeck cardDeck) {
         checkDuplicationNames(names);
-        return new Players(
-                names.stream()
-                        .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
-                        .collect(Collectors.toList())
-        );
+        return new Players(createPlayersByBettingAndDrawCards(names, betMoney, cardDeck));
+    }
+
+    private static List<Player> createPlayersByBettingAndDrawCards(final List<Name> names,
+                                                                   final Function<Name, Integer> betMoney,
+                                                                   final CardDeck cardDeck) {
+        return names.stream()
+                .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
+                .collect(Collectors.toList());
     }
 
     private static void checkDuplicationNames(final List<Name> playerNames) {
