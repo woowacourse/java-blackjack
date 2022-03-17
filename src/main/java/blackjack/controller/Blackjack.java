@@ -88,7 +88,6 @@ public class Blackjack {
     private void announcePlayersProfit(final Players players) {
         List<ParticipantResult> results = Judge.calculateGameResult(players);
         Judge.calculateParticipantProfit(results);
-        Money dealerMoney = Judge.calculateDealerProfit(results);
-        OutputView.printGameResult(players.getParticipants(), dealerMoney);
+        OutputView.printGameResult(players.getParticipants());
     }
 }

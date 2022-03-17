@@ -83,14 +83,9 @@ public class OutputView {
         System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
     }
 
-    public static void printGameResult(final List<Player> participants, final Money dealerMoney) {
+    public static void printGameResult(final List<Player> participants) {
         System.out.println("## 최종 수익");
-        printDealerResult(dealerMoney);
         printParticipantsResult(participants);
-    }
-
-    private static void printDealerResult(final Money money) {
-        System.out.println("딜러" + EXPLAIN_SYMBOL + money.profit());
     }
 
     private static void printParticipantsResult(final List<Player> participants) {

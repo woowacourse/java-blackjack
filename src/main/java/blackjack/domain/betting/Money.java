@@ -4,20 +4,13 @@ import java.util.Objects;
 
 public class Money {
 
-    public static final int MINIMUM = 0;
+    private static final double BLACKJACK_MULTIPLE = 1.5;
 
     private final int betting;
     private int profit;
 
     public Money(int amount) {
-        validateAmount(amount);
         this.betting = amount;
-    }
-
-    private void validateAmount(int amount) {
-        if (amount < MINIMUM) {
-            throw new IllegalArgumentException("[ERROR] 금액은 음수일 수 없습니다.");
-        }
     }
 
     public void win() {
@@ -29,15 +22,11 @@ public class Money {
     }
 
     public void winByBlackjack() {
-        this.profit += this.betting * 1.5;
+        this.profit += this.betting * BLACKJACK_MULTIPLE;
     }
 
     public int profit() {
         return this.profit;
-    }
-
-    public void add(Money money) {
-        this.profit += money.profit;
     }
 
     @Override
@@ -52,5 +41,4 @@ public class Money {
     public int hashCode() {
         return Objects.hash(betting);
     }
-
 }

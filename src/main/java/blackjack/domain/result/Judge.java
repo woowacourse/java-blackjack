@@ -26,12 +26,4 @@ public class Judge {
         }
     }
 
-    public static Money calculateDealerProfit(final List<ParticipantResult> participantResults) {
-        Money money = new Money(0);
-        for (ParticipantResult participantResult : participantResults) {
-            money.add(participantResult.calculateDealer());
-        }
-        return money;
-    }
-
 }
