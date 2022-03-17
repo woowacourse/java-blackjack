@@ -2,14 +2,16 @@ package blackjack.domain.result;
 
 import java.util.Arrays;
 
-import static blackjack.domain.card.HoldingCards.BUST_STANDARD;
-
 public enum Result {
 
-    LOSE("패", (userScore, dealerScore) -> userScore > BUST_STANDARD ||
-            (dealerScore <= BUST_STANDARD && userScore < dealerScore)),
-    WIN("승", (userScore, dealerScore) -> dealerScore > BUST_STANDARD || userScore > dealerScore),
+    LOSE("패", (userScore, dealerScore) -> userScore > Constants.BUST_STANDARD ||
+            (dealerScore <= Constants.BUST_STANDARD && userScore < dealerScore)),
+    WIN("승", (userScore, dealerScore) -> dealerScore > Constants.BUST_STANDARD || userScore > dealerScore),
     DRAW("무", (userScore, dealerScore) -> userScore == dealerScore);
+
+    private static class Constants {
+        private static final int BUST_STANDARD = 21;
+    }
 
     private final String name;
     private final ResultDeterminer determiner;
