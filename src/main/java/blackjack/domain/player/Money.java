@@ -14,26 +14,6 @@ public class Money {
         return new Money(value);
     }
 
-    public static Money from(final String input) {
-        checkNumber(input);
-        checkPositive(input);
-        return new Money(Long.parseLong(input));
-    }
-
-    private static void checkNumber(final String input) {
-        try {
-            Long.parseLong(input);
-        } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 양수여야 합니다.");
-        }
-    }
-
-    private static void checkPositive(final String input) {
-        if (Long.parseLong(input) <= 0) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 양수여야 합니다.");
-        }
-    }
-
     public Money multiply(final double multiplier) {
         return Money.valueOf((long) (value * multiplier));
     }
