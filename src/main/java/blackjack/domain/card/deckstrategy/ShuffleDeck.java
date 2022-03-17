@@ -12,7 +12,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 
-public class RandomDeck implements DeckStrategy {
+public class ShuffleDeck implements DeckStrategy {
 
     @Override
     public Deque<Card> create() {

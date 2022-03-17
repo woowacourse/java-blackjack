@@ -13,7 +13,7 @@ import blackjack.domain.Game;
 import blackjack.domain.PlayRecord;
 import blackjack.domain.PlayStatus;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.deckstrategy.RandomDeck;
+import blackjack.domain.card.deckstrategy.ShuffleDeck;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
@@ -47,7 +47,7 @@ public class GameController {
     }
 
     private Game initPlay(List<Name> names) {
-        Game game = new Game(new CardDeck(new RandomDeck()), names);
+        Game game = new Game(new CardDeck(new ShuffleDeck()), names);
 
         printInitResult(names);
         printDealerFirstCard(game.dealerFirstCard());
