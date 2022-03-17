@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.game.GameResult;
 
 public class Player extends Participant {
     private final BettingAmount bettingAmount;
@@ -21,7 +22,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isFinished() {
-        return cards.sum() >= Cards.BLACKJACK_VALUE;
+        return cards.sum() >= GameResult.BLACKJACK_VALUE;
     }
 
     @Override
