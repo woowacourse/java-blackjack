@@ -25,7 +25,7 @@ public class Players {
         }
     }
 
-    public static Players createPlayers(final List<Name> names, final Function<Name, Integer> betMoney,
+    public static Players createPlayers(final List<Name> names, final Function<String, Integer> betMoney,
                                         final CardDeck cardDeck) {
         checkDuplicationNames(names);
         return new Players(createPlayersByBettingAndDrawCards(names, betMoney, cardDeck));
@@ -45,10 +45,10 @@ public class Players {
     }
 
     private static List<Player> createPlayersByBettingAndDrawCards(final List<Name> names,
-                                                                   final Function<Name, Integer> betMoney,
+                                                                   final Function<String, Integer> betMoney,
                                                                    final CardDeck cardDeck) {
         return names.stream()
-                .map(name -> new Player(name, betMoney.apply(name), cardDeck))
+                .map(name -> new Player(name, betMoney.apply(name.getName()), cardDeck))
                 .collect(Collectors.toList());
     }
 
