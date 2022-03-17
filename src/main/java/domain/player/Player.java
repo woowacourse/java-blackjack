@@ -8,7 +8,7 @@ import java.util.List;
 import vo.Wallet;
 
 public abstract class Player {
-    private final Wallet wallet;
+    protected final Wallet wallet;
     protected final PlayingCards playingCards;
 
     protected Player(Wallet wallet, PlayingCards playingCards) {
@@ -26,10 +26,6 @@ public abstract class Player {
 
     protected Player(String name, List<PlayingCard> cards) {
         this(Wallet.of(name), new PlayingCards(cards));
-    }
-
-    public Player(Wallet wallet, List<PlayingCard> cards) {
-        this(wallet, new PlayingCards(cards));
     }
 
     public abstract boolean isHittable();
@@ -54,10 +50,6 @@ public abstract class Player {
 
     public boolean isBlackJack() {
         return playingCards.isBlackJack();
-    }
-
-    public double getRevenue(MatchResult matchResult) {
-        return matchResult.calculateRevenue(wallet.getMoney(), isBlackJack());
     }
 
     protected MatchResult getMatchResultAfterBustCheck(Player another) {
