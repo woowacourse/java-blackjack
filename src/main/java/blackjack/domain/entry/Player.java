@@ -25,7 +25,7 @@ public class Player extends Participant {
     }
 
     public double getBettingResult(Dealer dealer) {
-        if (getHoldCards().isBlackjack()) {
+        if (isBlackjack()) {
             return this.bettingMoney.countBlackjackPay();
         }
         return match(dealer).betting(bettingMoney);
@@ -45,11 +45,6 @@ public class Player extends Participant {
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public boolean isPlayer() {
-        return true;
     }
 
     private void validateName(String name) {

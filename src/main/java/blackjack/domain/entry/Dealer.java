@@ -29,11 +29,6 @@ public class Dealer extends Participant {
         return NAME;
     }
 
-    @Override
-    public boolean isPlayer() {
-        return false;
-    }
-
     private Card findFirstCard(HoldCards holdCards) {
         return holdCards.getFirstCard()
                 .orElseThrow(() -> new IllegalArgumentException("카드가 존재하지 않습니다."));

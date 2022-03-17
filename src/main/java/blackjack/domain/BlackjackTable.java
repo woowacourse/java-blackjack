@@ -34,12 +34,12 @@ public class BlackjackTable {
         participants.hitDealer(deck.draw());
     }
 
-    public boolean canHit(Participant participant) {
-        return participant.canHit();
-    }
-
     public List<Participant> getParticipants() {
         return participants.getParticipants();
+    }
+
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
     }
 
     public Map<Player, Double> countGameResult() {

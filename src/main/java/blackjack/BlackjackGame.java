@@ -37,35 +37,35 @@ public class BlackjackGame {
     }
 
     private void hit(BlackjackTable blackjackTable) {
-        hitPlayers(blackjackTable);
+        for (Participant participant : blackjackTable.getPlayers()) {
+            hitPlayer(blackjackTable, participant);
+        }
         hitDealer(blackjackTable);
     }
 
-    private void hitPlayers(BlackjackTable blackjackTable) {
-        List<Participant> participants = blackjackTable.getParticipants();
-        for (Participant participant : participants) {
-            hitPlayer(blackjackTable, participant);
-        }
-    }
-
     private void hitPlayer(BlackjackTable blackjackTable, Participant participant) {
-        if (!participant.isPlayer()) {
+        if (participant.isBlackjack()) {
             return;
         }
+        hitOrStay(blackjackTable, participant);
+    }
+
+    private void hitOrStay(BlackjackTable blackjackTable, Participant participant) {
         Command command = Command.find(InputView.inputCommand(participant.getName()));
         if (command.isStay()) {
             OutputView.printPlayerCards(toPlayerCard(participant));
             return;
         }
-        moreHit(blackjackTable, participant, command);
+        moreHit(blackjackTable, participant);
     }
 
-    private void moreHit(BlackjackTable blackjackTable, Participant participant, Command command) {
-        while (command.isHit() && blackjackTable.canHit(participant)) {
-            blackjackTable.hit(participant);
-            OutputView.printPlayerCards(toPlayerCard(participant));
-            command = Command.find(InputView.inputCommand(participant.getName()));
+    private void moreHit(BlackjackTable blackjackTable, Participant participant) {
+        blackjackTable.hit(participant);
+        OutputView.printPlayerCards(toPlayerCard(participant));
+        if (!participant.canHit()) {
+            return;
         }
+        hitOrStay(blackjackTable, participant);
     }
 
     private void hitDealer(BlackjackTable blackjackTable) {
@@ -97,6 +97,5 @@ public class BlackjackGame {
         return countGameResult.keySet().stream()
             .map(player -> new PlayerGameResult(player.getName(), countGameResult.get(player)))
             .collect(Collectors.toList());
-
     }
 }

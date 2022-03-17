@@ -10,9 +10,6 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String NAME_DELIMITER = ", ";
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
-    private static final String DRAW = "무";
 
     public static void printFirstTurnCards(List<PlayerCardResult> firstTurnCards) {
         System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", toCardName(firstTurnCards)));

@@ -19,7 +19,9 @@ public abstract class Participant {
 
     public abstract String getName();
 
-    public abstract boolean isPlayer();
+    public boolean isBlackjack() {
+        return holdCards.isBlackjack();
+    }
 
     public int countCards() {
         return holdCards.countBestNumber();

@@ -35,4 +35,8 @@ public class Participants {
         return players.stream()
             .collect(Collectors.toMap(player -> player, player -> player.getBettingResult(dealer)));
     }
+
+    public List<Participant> getPlayers() {
+        return List.copyOf(players);
+    }
 }
