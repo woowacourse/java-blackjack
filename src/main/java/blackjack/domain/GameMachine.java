@@ -4,7 +4,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
-import blackjack.view.InputView;
 import java.util.List;
 import java.util.stream.Collectors;
 

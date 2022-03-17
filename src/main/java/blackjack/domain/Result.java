@@ -15,13 +15,13 @@ public enum Result {
     }
 
     public static Result findResult(final Player player, final Player otherPlayer) {
-        if (player.isBust() && otherPlayer.isBust()) {
+        if ((player.isBust() && otherPlayer.isBust()) || (player.isBlackJack() && otherPlayer.isBlackJack())) {
             return DRAW;
         }
-        if (player.isBust()) {
+        if (player.isBust() || otherPlayer.isBlackJack()) {
             return LOSE;
         }
-        if (otherPlayer.isBust()) {
+        if (otherPlayer.isBust() || player.isBlackJack()) {
             return WIN;
         }
         return compareScore(player.getTotalScore(), otherPlayer.getTotalScore());

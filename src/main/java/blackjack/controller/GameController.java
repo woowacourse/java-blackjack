@@ -12,24 +12,18 @@ import blackjack.view.ResultView;
 public class GameController {
 
     public void run() {
-        GameMachine gameMachine = new GameMachine(CardDeckGenerator.createCardDeckByCardNumber());
+        GameMachine gameMachine = new GameMachine(CardDeckGenerator.createCardDeck());
 
         Dealer dealer = gameMachine.createDealer();
         Users users = gameMachine.createUsers(InputView.inputUsers());
         ResultView.printPlayersCards(dealer, users);
 
-        playTurn(gameMachine, dealer, users);
+        turnOfUsers(gameMachine, users);
+        turnOfDealer(gameMachine, dealer);
         ResultView.printTotalCardResult(dealer, users);
 
         GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
         ResultView.printGameResult(gameResult);
-    }
-
-    private void playTurn(GameMachine gameMachine, Dealer dealer, Users users) {
-        if (!gameMachine.hasBlackJack(dealer, users)) {
-            turnOfUsers(gameMachine, users);
-            turnOfDealer(gameMachine, dealer);
-        }
     }
 
     private void turnOfUsers(GameMachine gameMachine, Users users) {

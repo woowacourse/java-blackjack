@@ -32,16 +32,16 @@ class ResultTest {
                 Arguments.of(Result.DRAW, makeUser(CardNumber.ACE, CardNumber.KING),
                         makeDealer(CardNumber.ACE, CardNumber.KING)),
                 Arguments.of(Result.DRAW,
-                        makeHavingExceedMaxScorePlayer(makeUser(CardNumber.JACK, CardNumber.KING), CardNumber.THREE),
-                        makeHavingExceedMaxScorePlayer(makeDealer(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN)),
+                        makeBustPlayer(makeUser(CardNumber.JACK, CardNumber.THREE), CardNumber.KING),
+                        makeBustPlayer(makeDealer(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN)),
                 Arguments.of(Result.WIN, makeUser(CardNumber.ACE, CardNumber.KING),
                         makeDealer(CardNumber.KING, CardNumber.JACK)),
                 Arguments.of(Result.WIN, makeUser(CardNumber.ACE, CardNumber.KING),
-                        makeHavingExceedMaxScorePlayer(makeDealer(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN)),
+                        makeBustPlayer(makeDealer(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN)),
                 Arguments.of(Result.LOSE, makeUser(CardNumber.KING, CardNumber.JACK),
                         makeDealer(CardNumber.ACE, CardNumber.KING)),
                 Arguments.of(Result.LOSE,
-                        makeHavingExceedMaxScorePlayer(makeUser(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN),
+                        makeBustPlayer(makeUser(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN),
                         makeDealer(
                                 CardNumber.ACE, CardNumber.KING))
         );
@@ -59,7 +59,7 @@ class ResultTest {
         return new Dealer(cards);
     }
 
-    static Player makeHavingExceedMaxScorePlayer(Player player, CardNumber cardNumber) {
+    static Player makeBustPlayer(Player player, CardNumber cardNumber) {
         player.drawCard(new Card(CardPattern.DIAMOND, cardNumber));
         return player;
     }
