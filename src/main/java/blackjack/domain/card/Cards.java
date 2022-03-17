@@ -23,25 +23,25 @@ public class Cards {
 	}
 
 	public int sum() {
-		int sum = getSumExceptAce();
-		List<Card> aces = getAces();
-		return getSumNotToBust(sum, aces);
+		int sum = sumExceptAce();
+		List<Card> aces = filterAces();
+		return sumNotToBust(sum, aces);
 	}
 
-	private int getSumExceptAce() {
+	private int sumExceptAce() {
 		return values.stream()
 			.filter(card -> !card.isAce())
 			.mapToInt(Card::getValue)
 			.sum();
 	}
 
-	private List<Card> getAces() {
+	private List<Card> filterAces() {
 		return values.stream()
 			.filter(Card::isAce)
 			.collect(Collectors.toList());
 	}
 
-	private int getSumNotToBust(int sum, List<Card> aces) {
+	private int sumNotToBust(int sum, List<Card> aces) {
 		for (Card ace : aces) {
 			sum += selectAceValue(sum, ace);
 		}

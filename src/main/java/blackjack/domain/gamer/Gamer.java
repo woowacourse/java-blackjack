@@ -24,12 +24,8 @@ public class Gamer {
         return Collections.unmodifiableList(cards.getValues());
     }
 
-    public int getCardsNumberSum() {
-       return cards.sum();
-    }
-
     public boolean isOverThan(int number) {
-        return getCardsNumberSum() > number;
+        return sumCardsNumber() > number;
     }
 
     public int sumCardsNumber() {

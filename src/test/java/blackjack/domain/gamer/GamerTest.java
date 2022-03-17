@@ -32,7 +32,7 @@ class GamerTest {
         gamer.addCard(card1);
         gamer.addCard(card2);
 
-        int sum = gamer.getCardsNumberSum();
+        int sum = gamer.sumCardsNumber();
         assertThat(sum).isEqualTo(15);
     }
 
@@ -47,7 +47,7 @@ class GamerTest {
         gamer.addCard(card2);
         gamer.addCard(card3);
 
-        int sum = gamer.getCardsNumberSum();
+        int sum = gamer.sumCardsNumber();
         assertThat(sum).isEqualTo(20);
     }
 
@@ -60,7 +60,7 @@ class GamerTest {
         gamer.addCard(card1);
         gamer.addCard(card2);
 
-        int sum = gamer.getCardsNumberSum();
+        int sum = gamer.sumCardsNumber();
         assertThat(sum).isEqualTo(21);
     }
 
@@ -77,7 +77,7 @@ class GamerTest {
         gamer.addCard(card3);
         gamer.addCard(card4);
 
-        int sum = gamer.getCardsNumberSum();
+        int sum = gamer.sumCardsNumber();
         assertThat(sum).isEqualTo(14);
     }
 }

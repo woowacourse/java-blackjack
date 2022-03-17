@@ -54,7 +54,7 @@ class BetTest {
 	@CsvSource(value = {"10:-10", "20:-20"}, delimiter = ':')
 	@DisplayName("플러스 금액 마이너스 금액으로 변환")
 	void oppositeAmount(int input, int result) {
-		assertThat(Bet.getMinusAmount(input))
+		assertThat(Bet.calculateMinusAmount(input))
 			.isEqualTo(result);
 	}
 }

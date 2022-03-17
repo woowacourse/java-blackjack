@@ -25,7 +25,7 @@ public class Bet {
 		}
 	}
 
-	public static int getMinusAmount(int amount) {
+	public static int calculateMinusAmount(int amount) {
 		return amount * -1;
 	}
 

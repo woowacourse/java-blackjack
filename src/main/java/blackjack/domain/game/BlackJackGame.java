@@ -91,7 +91,7 @@ public class BlackJackGame {
 			int playerEarning = player.calculateEarning(result.getProfit());
 
 			playerEarnings.put(player.getName(), playerEarning);
-			dealerEarning += Bet.getMinusAmount(playerEarning);
+			dealerEarning += Bet.calculateMinusAmount(playerEarning);
 		}
 		return new GameResultDto(gamers.findDealerHitCount(), dealerEarning, playerEarnings);
 	}
