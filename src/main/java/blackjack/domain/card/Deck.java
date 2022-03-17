@@ -25,6 +25,10 @@ public class Deck {
 
     public PlayingCard assignCard(CardShuffleMachine playingCardShuffleMachine) {
         playingCardShuffleMachine.shuffle(playingCards);
+        return pickCard();
+    }
+
+    private PlayingCard pickCard() {
         return playingCards.pop();
     }
 
