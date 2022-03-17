@@ -19,7 +19,10 @@ public class Blackjack {
         OutputView.printDrawMessage(playerNames);
         OutputView.printTotalUserCards(game.getDealer(), game.getPlayers());
 
-        checkDealerIsBlackJack(game);
+        if (game.checkDealerIsBlackJack()){
+            makeBlackJackResult(game);
+            return;
+        }
 
         playGame(game.getDealer(), game.getPlayers());
         OutputView.printTotalResult(makeUserList(game));
@@ -47,14 +50,11 @@ public class Blackjack {
         game.makeDealerResult(game.getPlayerScore());
     }
 
-    private void checkDealerIsBlackJack(Game game) {
-        if (game.checkDealerIsBlackJack()) {
-            OutputView.printFinalResult(
-                    game.getDealer().getName(),
-                    game.getDealerScore(),
-                    game.getPlayerScore()
-            );
-        }
+    private void makeBlackJackResult(Game game) {
+        OutputView.printFinalResult(
+                game.getDealer().getName(),
+                game.getDealerScore(),
+                game.getPlayerScore());
     }
 
     private void playGame(Dealer dealer, Players players) {
