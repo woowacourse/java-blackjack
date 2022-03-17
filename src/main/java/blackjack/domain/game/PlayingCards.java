@@ -22,7 +22,7 @@ public class PlayingCards {
     }
 
     public int calculateTotal() {
-        List<Denomination> denominations = getCardNumbers();
+        List<Denomination> denominations = getDenominations();
         return Denomination.getTotal(denominations);
     }
 
@@ -35,7 +35,7 @@ public class PlayingCards {
     }
 
     public boolean isBlackjack() {
-        List<Denomination> denominations = getCardNumbers();
+        List<Denomination> denominations = getDenominations();
         return Denomination.isBlackjack(denominations);
     }
 
@@ -51,9 +51,9 @@ public class PlayingCards {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Denomination> getCardNumbers() {
+    private List<Denomination> getDenominations() {
         return playingCards.stream()
-                .map(Card::getCardNumber)
+                .map(Card::getDenomination)
                 .collect(Collectors.toUnmodifiableList());
     }
 }

@@ -40,7 +40,7 @@ public class Card {
         return Collections.unmodifiableList(TOTAL_CARD_CACHE);
     }
 
-    public Denomination getCardNumber() {
+    public Denomination getDenomination() {
         return this.denomination;
     }
 

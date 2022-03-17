@@ -42,7 +42,7 @@ public enum Denomination {
 
     public static int getTotal(final List<Denomination> denominations) {
         int total = denominations.stream()
-                .map(cardNumber -> cardNumber.number)
+                .map(denomination -> denomination.number)
                 .mapToInt(Integer::intValue)
                 .sum();
         total = addAceExtraNumber(denominations, total);
@@ -55,7 +55,7 @@ public enum Denomination {
 
     private static boolean hasTen(final List<Denomination> denominations) {
         return denominations.stream()
-                .map(cardNumber -> cardNumber.number)
+                .map(denomination -> denomination.number)
                 .anyMatch(number -> number == NUMBER_TEN);
     }
 
@@ -69,7 +69,7 @@ public enum Denomination {
 
     private static int getAceCount(final List<Denomination> denominations) {
         return (int) denominations.stream()
-                .filter(cardNumber -> cardNumber.name.equals(ACE.name))
+                .filter(denomination -> denomination.name.equals(ACE.name))
                 .count();
     }
 
