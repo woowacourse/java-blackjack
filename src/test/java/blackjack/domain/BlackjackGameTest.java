@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackGameTest {
 
-    private final Player player = new Player("kth990303", "1000");
+    private final Player player = new Player("kth990303");
     private final Dealer dealer = new Dealer();
 
     @Test

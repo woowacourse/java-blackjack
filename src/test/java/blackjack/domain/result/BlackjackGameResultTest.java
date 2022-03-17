@@ -15,9 +15,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackGameResultTest {
 
-    private final Player player1 = new Player("kei", "10000");
-    private final Player player2 = new Player("rookie", "5000");
-    private final Player player3 = new Player("parang", "20000");
+    private final Player player1 = new Player("kei");
+    private final Player player2 = new Player("rookie");
+    private final Player player3 = new Player("parang");
     private final Dealer dealer = new Dealer();
 
     @Test
