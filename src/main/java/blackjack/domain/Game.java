@@ -34,9 +34,7 @@ public class Game {
         Player currentTurn = players.getCurrentTurn();
         if (command.equals(Command.HIT)) {
             currentTurn.addCard(deck.draw());
-            if (!currentTurn.isAbleToHit()) {
-                players.passTurnToNext();
-            }
+            passTurnToNextIfRequired(currentTurn);
         }
         if (command.equals(Command.STAY)) {
             currentTurn.stay();
@@ -98,7 +96,9 @@ public class Game {
         return players.toList();
     }
 
-    public Player getCurrentPlayer() {
-        return players.getCurrentTurn();
+    private void passTurnToNextIfRequired(Player currentTurn) {
+        if (!currentTurn.isAbleToHit()) {
+            players.passTurnToNext();
+        }
     }
 }
