@@ -97,7 +97,7 @@
 
  - [x] Score에 승부 계산 로직 전달
  - [x] Game으로 묶어 필드 변수로 사용하던 것을 정리
- - [ ] Deck에서 사용중인 List를 Queue로 변경
+ - [x] Deck에서 사용중인 List를 Queue로 변경
  - [ ] 이름 중복 시 에러 발생 해결하기
    - [ ] ProfitResult의 key를 String -> Player로 변경
    - [ ] ProfitResultDto도 key를 PlayerDto로 변경
