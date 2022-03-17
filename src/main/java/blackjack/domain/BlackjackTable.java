@@ -42,7 +42,7 @@ public class BlackjackTable {
         return participants.getPlayers();
     }
 
-    public Map<Player, Double> countGameResult() {
+    public Map<Player, Integer> countGameResult() {
         return participants.getGameResults();
     }
 

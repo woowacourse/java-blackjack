@@ -24,7 +24,7 @@ public class Player extends Participant {
         return PlayerOutcome.match(countCards(), dealer.countCards());
     }
 
-    public double getBettingResult(Dealer dealer) {
+    public int getBettingResult(Dealer dealer) {
         if (isBlackjack()) {
             return this.bettingMoney.countBlackjackPay();
         }

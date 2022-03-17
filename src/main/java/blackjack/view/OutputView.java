@@ -55,9 +55,9 @@ public class OutputView {
         return MessageFormat.format("{0}카드: {1}", playerName, String.join(NAME_DELIMITER, cardNames));
     }
 
-    private static double countDealerProfit(List<PlayerGameResult> playerGameResults) {
+    private static int countDealerProfit(List<PlayerGameResult> playerGameResults) {
         return Math.abs(playerGameResults.stream()
-            .mapToDouble(PlayerGameResult::getProfit)
+            .mapToInt(PlayerGameResult::getProfit)
             .sum());
     }
 }

@@ -24,7 +24,7 @@ public enum PlayerOutcome {
             .orElse(LOSE);
     }
 
-    public double betting(BettingMoney bettingMoney) {
+    public int betting(BettingMoney bettingMoney) {
         if (this == LOSE) {
             return bettingMoney.getAmount() * LOSE_RATIO;
         }

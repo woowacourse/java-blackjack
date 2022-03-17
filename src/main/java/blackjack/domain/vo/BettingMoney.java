@@ -22,8 +22,8 @@ public class BettingMoney {
         }
     }
 
-    public double countBlackjackPay() {
-        return this.amount * BLACKJACK_RATIO;
+    public int countBlackjackPay() {
+        return (int) (this.amount * BLACKJACK_RATIO);
     }
 
     public int getAmount() {

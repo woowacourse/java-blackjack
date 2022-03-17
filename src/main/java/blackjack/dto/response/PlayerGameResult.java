@@ -2,9 +2,9 @@ package blackjack.dto.response;
 
 public class PlayerGameResult {
     private final String playerName;
-    private final double profit;
+    private final int profit;
 
-    public PlayerGameResult(String playerName, double profit) {
+    public PlayerGameResult(String playerName, int profit) {
         this.playerName = playerName;
         this.profit = profit;
     }
@@ -13,7 +13,7 @@ public class PlayerGameResult {
         return playerName;
     }
 
-    public double getProfit() {
+    public int getProfit() {
         return profit;
     }
 }

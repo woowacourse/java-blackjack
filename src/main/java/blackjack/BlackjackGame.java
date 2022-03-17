@@ -93,7 +93,7 @@ public class BlackjackGame {
         );
     }
 
-    private List<PlayerGameResult> toGameResults(Map<Player, Double> countGameResult) {
+    private List<PlayerGameResult> toGameResults(Map<Player, Integer> countGameResult) {
         return countGameResult.keySet().stream()
             .map(player -> new PlayerGameResult(player.getName(), countGameResult.get(player)))
             .collect(Collectors.toList());

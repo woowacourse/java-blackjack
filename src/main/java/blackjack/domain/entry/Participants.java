@@ -31,7 +31,7 @@ public class Participants {
         return participants;
     }
 
-    public Map<Player, Double> getGameResults() {
+    public Map<Player, Integer> getGameResults() {
         return players.stream()
             .collect(Collectors.toMap(player -> player, player -> player.getBettingResult(dealer)));
     }
