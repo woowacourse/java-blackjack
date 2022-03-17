@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class ResultTypeTest {
+public class DuelResultTest {
 
     private static final int TYPES_LENGTH = 4;
     private static final int DEFAULT_BETTING_AMOUNT = 1000;

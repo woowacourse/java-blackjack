@@ -75,34 +75,9 @@ public class Player extends Participant {
 
     public DuelResult getDuelResultWith(Dealer dealer) {
         if (dealer.isBlackjackOrBust() || this.isBlackjackOrBust()) {
-            return getSpecialDuelResultWith(dealer);
+            return DuelResult.blackjackOrBustDuelOf(this, dealer);
         }
-        return DuelResult.from(this.getScore(), dealer.getScore());
-    }
-
-    private DuelResult getSpecialDuelResultWith(Dealer dealer) {
-        if (this.isOnlyPlayerBlackjackWith(dealer)) {
-            return DuelResult.BLACKJACK_WIN;
-        }
-        if (this.isOnlyDealerBustWith(dealer)) {
-            return DuelResult.WIN;
-        }
-        if (this.isBothBlackjackWith(dealer)) {
-            return DuelResult.DRAW;
-        }
-        return DuelResult.LOSE;
-    }
-
-    private boolean isOnlyPlayerBlackjackWith(Dealer dealer) {
-        return !dealer.isBlackjack() && this.isBlackjack();
-    }
-
-    private boolean isOnlyDealerBustWith(Dealer dealer) {
-        return dealer.isBust() && !this.isBust();
-    }
-
-    private boolean isBothBlackjackWith(Dealer dealer) {
-        return dealer.isBlackjack() && this.isBlackjack();
+        return DuelResult.of(this.getScore(), dealer.getScore());
     }
 
     @Override
