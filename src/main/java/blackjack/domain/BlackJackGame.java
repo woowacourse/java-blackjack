@@ -24,14 +24,18 @@ public class BlackJackGame {
     }
 
     public static BlackJackGame fromPlayerNames(Map<String, String> inputNameAndMoney) {
-        Users users = Users.from(inputNameAndMoney);
         Deck deck = new Deck();
+        Users users = Users.of(inputNameAndMoney, deck);
         return new BlackJackGame(users, deck);
     }
 
     public void drawInitialCards(Consumer<Users> consumer) {
-        users.drawInitCards(deck);
+        users.drawInitCardsPerUsers(deck);
         consumer.accept(users);
+    }
+
+    public boolean isEnd() {
+        return users.isDealerBlackjack();
     }
 
     public void hitOrStayCardsPlayer(Function<User, Supplier<Boolean>> function, Consumer<User> consumer) {
@@ -45,15 +49,20 @@ public class BlackJackGame {
     }
 
     private void hitOrStayCards(User user, HitStrategy strategy, Consumer<User> consumer) {
-        boolean isHit = user.hitOrStay(deck, strategy);
-        consumer.accept(user);
-        if (isHit) {
-            hitOrStayCards(user, strategy, consumer);
+        while (user.hitOrStay(deck, strategy)) {
+            consumer.accept(user);
         }
     }
 
     public void settleGame(Consumer<Users> usersConsumer, Consumer<Map<Player, MatchRecord>> matchRecordConsumer) {
         usersConsumer.accept(users);
         matchRecordConsumer.accept(users.createPlayerMatchRecords());
+    }
+
+    public void settleGame(Consumer<User> dealerConsumer,
+        Consumer<Users> usersConsumer,
+        Consumer<Map<Player, MatchRecord>> matchRecordConsumer) {
+        dealerConsumer.accept(users.getDealer());
+        settleGame(usersConsumer, matchRecordConsumer);
     }
 }
