@@ -15,12 +15,12 @@ public class OutputView {
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "%s에게 2장의 카드를 나누었습니다." + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s 카드: %s";
     private static final String DEALER_BLACKJACK_MESSAGE = NEW_LINE + "블랙잭! 게임을 종료합니다.";
-    private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
+    private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = "%s 카드: %s - 결과: %d";
     private static final String CAN_NOT_HIT_INFO_DELIMITER_TEXT = " - ";
     private static final String PLAYER_MAX_SCORE_MESSAGE = "패가 확정되었습니다!" + NEW_LINE;
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!" + NEW_LINE;
     private static final String PLAYER_BLACKJACK_MESSAGE = "블랙잭! 패가 확정되었습니다!" + NEW_LINE;
-    private static final String DEALER_EXTRA_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_EXTRA_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
     private static final String BETTING_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 수익" + NEW_LINE;
     private static final String BETTING_RESULT_FORMAT = "%s: %s";
 
@@ -102,7 +102,7 @@ public class OutputView {
         return dtos.stream()
                 .map(BettingResult::getParticipantCardsDto)
                 .map(OutputView::getParticipantCardsAndScore)
-                .collect(Collectors.joining());
+                .collect(Collectors.joining(NEW_LINE));
     }
 
     private static String getParticipantCardsAndScore(final ParticipantCardsDto dto) {
