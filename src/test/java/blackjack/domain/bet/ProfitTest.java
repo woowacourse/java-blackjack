@@ -2,7 +2,7 @@ package blackjack.domain.bet;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Suit;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
@@ -30,8 +30,8 @@ public class ProfitTest {
         dealer = new Dealer();
         result = new Result(players);
         profit = new Profit();
-        aceSpade = Card.of(Denomination.ACE, CardShape.SPADE);
-        queenSpade = Card.of(Denomination.QUEEN, CardShape.SPADE);
+        aceSpade = Card.of(Denomination.ACE, Suit.SPADE);
+        queenSpade = Card.of(Denomination.QUEEN, Suit.SPADE);
     }
 
     @DisplayName("플레이어가 블랙잭이며 딜러는 블랙잭이 아닐 경우 베팅 금액의 1.5배를 받는 것을 확인한다.")

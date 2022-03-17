@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Suit;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,8 +24,8 @@ class GradeTest {
     void init() {
         dealer = new Dealer();
         player = new Player("pobi");
-        aceSpade = Card.of(Denomination.ACE, CardShape.SPADE);
-        tenSpade = Card.of(Denomination.KING, CardShape.SPADE);
+        aceSpade = Card.of(Denomination.ACE, Suit.SPADE);
+        tenSpade = Card.of(Denomination.KING, Suit.SPADE);
     }
 
     @DisplayName("딜러와 플레이어 모두 블랙잭일 경우 무승부임을 확인한다.")

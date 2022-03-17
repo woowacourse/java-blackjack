@@ -2,7 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +21,8 @@ public class PlayerTest {
     @BeforeEach
     void before() {
         player = new Player("woowahan");
-        aceSpade = Card.of(Denomination.ACE, CardShape.SPADE);
-        queenSpade = Card.of(Denomination.QUEEN, CardShape.SPADE);
+        aceSpade = Card.of(Denomination.ACE, Suit.SPADE);
+        queenSpade = Card.of(Denomination.QUEEN, Suit.SPADE);
     }
 
     @DisplayName("딜러 이름과 동일한 이름을 입력할 경우 예외를 발생시킨다.")

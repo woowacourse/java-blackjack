@@ -10,7 +10,7 @@ public class Card {
     private static final List<Card> TOTAL_CARD_CACHE = new ArrayList<>();
 
     private final Denomination denomination;
-    private final CardShape cardShape;
+    private final Suit suit;
 
     static {
         for (Denomination denomination : Denomination.values()) {
@@ -19,19 +19,19 @@ public class Card {
     }
 
     private static void insertCardCache(final Denomination denomination) {
-        for (CardShape cardShape : CardShape.values()) {
-            TOTAL_CARD_CACHE.add(new Card(denomination, cardShape));
+        for (Suit suit : Suit.values()) {
+            TOTAL_CARD_CACHE.add(new Card(denomination, suit));
         }
     }
 
-    private Card(final Denomination denomination, final CardShape cardShape) {
+    private Card(final Denomination denomination, final Suit suit) {
         this.denomination = denomination;
-        this.cardShape = cardShape;
+        this.suit = suit;
     }
 
-    public static Card of(final Denomination denomination, final CardShape cardShape) {
+    public static Card of(final Denomination denomination, final Suit suit) {
         return TOTAL_CARD_CACHE.stream()
-                .filter(card -> card.equals(new Card(denomination, cardShape)))
+                .filter(card -> card.equals(new Card(denomination, suit)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("적절하지 않은 카드 정보가 존재합니다."));
     }
@@ -45,7 +45,7 @@ public class Card {
     }
 
     public String getName() {
-        return denomination.getName() + cardShape.getShape();
+        return denomination.getName() + suit.getSuit();
     }
 
     @Override
@@ -57,11 +57,11 @@ public class Card {
             return false;
         }
         Card card = (Card) otherCard;
-        return denomination == card.denomination && cardShape == card.cardShape;
+        return denomination == card.denomination && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(denomination, cardShape);
+        return Objects.hash(denomination, suit);
     }
 }
