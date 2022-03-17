@@ -73,7 +73,7 @@ public final class Game {
         return this.players.getCurrentEntry();
     }
 
-    public Results getResults() {
-        return this.players.getResults();
+    public Profits getProfits() {
+        return this.players.getProfits();
     }
 }

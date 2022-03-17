@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.dto.DealerDTO;
 import blackjack.dto.EntryDTO;
 import blackjack.dto.PlayersDTO;
+import blackjack.dto.ProfitsDTO;
 import blackjack.model.Game;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -78,7 +79,6 @@ public class Application {
 
     private static void showResults(ResultView resultView, Game game) {
         resultView.printScores(PlayersDTO.from(game));
-        //TODO: 결과 출력
-        game.getResults();
+        resultView.printProfits(ProfitsDTO.from(game.getProfits()));
     }
 }

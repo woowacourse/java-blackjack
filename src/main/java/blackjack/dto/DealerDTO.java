@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.model.player.Dealer;
 import blackjack.model.Game;
+import blackjack.model.player.Dealer;
 
 public final class DealerDTO extends PlayerDTO {
     private final int addedCount;
@@ -15,10 +15,15 @@ public final class DealerDTO extends PlayerDTO {
         return from(game.getDealer(), game.countCardsAddedToDealer());
     }
 
+    public static DealerDTO fromNameOf(Dealer dealer) {
+        return from(dealer, 0);
+    }
+
     private static DealerDTO from(Dealer dealer, int addedCount) {
         return new DealerDTO(
                 dealer.getName(), DeckDTO.from(dealer), addedCount, dealer.getScore());
     }
+
 
     public int getAddedCount() {
         return addedCount;

@@ -15,4 +15,15 @@ public class Money {
         int multipliedAmount = (int) Math.round(this.amount * rate);
         return new Money(multipliedAmount);
     }
+
+    public Money add(Money money) {
+        if (money == null) {
+            return this;
+        }
+        return new Money(this.amount + money.amount);
+    }
+
+    public Money reverse() {
+        return new Money(-this.amount);
+    }
 }

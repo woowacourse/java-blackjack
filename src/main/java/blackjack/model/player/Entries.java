@@ -1,8 +1,8 @@
 package blackjack.model.player;
 
 import blackjack.model.Bet;
+import blackjack.model.Profits;
 import blackjack.model.Result;
-import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
 import java.util.function.Supplier;
@@ -85,12 +85,12 @@ public final class Entries {
         return this.values;
     }
 
-    public Results compareAllWith(Dealer dealer) {
-        return new Results(this.values.stream()
+    public Profits compareAllWith(Dealer dealer) {
+        return Profits.of(this.values.stream()
                 .collect(Collectors.toMap(
                         entry -> entry,
                         entry -> entry.profitOf(compare(dealer, entry)),
-                        (a, b) -> b)));
+                        (a, b) -> b)), dealer);
     }
 
     private Result compare(Dealer dealer, Entry entry) {

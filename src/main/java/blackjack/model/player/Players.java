@@ -1,7 +1,7 @@
 package blackjack.model.player;
 
 import blackjack.model.Bet;
-import blackjack.model.Results;
+import blackjack.model.Profits;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
 import java.util.function.Supplier;
@@ -72,7 +72,7 @@ public final class Players {
         return this.entries.getCurrentEntry();
     }
 
-    public Results getResults() {
+    public Profits getProfits() {
         return this.entries.compareAllWith(dealer);
     }
 }
