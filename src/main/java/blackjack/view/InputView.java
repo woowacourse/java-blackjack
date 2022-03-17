@@ -14,7 +14,7 @@ public class InputView {
 
     private static final String PLAYER_NAME_DELIMITER = ",";
 
-    public InputView() {
+    private InputView() {
         throw new AssertionError();
     }
 

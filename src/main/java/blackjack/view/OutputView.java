@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.paticipant.Name;
 import blackjack.dto.ParticipantCards;
 import blackjack.dto.ParticipantScoreResult;
 import blackjack.dto.PlayerProfit;
@@ -22,13 +23,14 @@ public class OutputView {
     private static final String PLAYER_NAME_DELIMITER = ", ";
     private static final String CARD_DELIMITER = ", ";
 
-    public OutputView() {
+    private OutputView() {
         throw new AssertionError();
     }
 
     public static void printParticipantsFirstCards(final ParticipantCards dealerCards,
                                                    final List<ParticipantCards> playerCards) {
-        System.out.printf(PROVIDE_PARTICIPANTS_FIRST_CARD_MESSAGE, dealerCards.getName(), joinPlayerNames(playerCards));
+        System.out.printf(PROVIDE_PARTICIPANTS_FIRST_CARD_MESSAGE,
+                dealerCards.getName().getName(), joinPlayerNames(playerCards));
         System.out.printf(PROVIDED_CARD_TO_DEALER_CARD_MESSAGE,
                 dealerCards.getName(), joinParticipantCards(dealerCards.getCards()));
         playerCards.forEach(OutputView::printPlayerCards);
@@ -37,6 +39,7 @@ public class OutputView {
     private static String joinPlayerNames(final List<ParticipantCards> playerCards) {
         return playerCards.stream()
                 .map(ParticipantCards::getName)
+                .map(Name::getName)
                 .collect(Collectors.joining(PLAYER_NAME_DELIMITER));
     }
 
@@ -60,7 +63,7 @@ public class OutputView {
     }
 
     public static void printPlayerScoreResult(final ParticipantScoreResult participantScoreResult) {
-        System.out.printf(PARTICIPANT_CARD_RESULT_AND_SCORE_MESSAGE, participantScoreResult.getName(),
+        System.out.printf(PARTICIPANT_CARD_RESULT_AND_SCORE_MESSAGE, participantScoreResult.getName().getName(),
                 joinParticipantCards(participantScoreResult.getCards()), participantScoreResult.getScore());
     }
 
@@ -72,8 +75,8 @@ public class OutputView {
         System.out.println(PARTICIPANT_PROFIT_RESULT_TITLE);
     }
 
-    public static void printParticipantProfit(final String name, final double profit) {
-        System.out.printf(PARTICIPANT_PROFIT_RESULT_MESSAGE, name, profit);
+    public static void printParticipantProfit(final Name name, final double profit) {
+        System.out.printf(PARTICIPANT_PROFIT_RESULT_MESSAGE, name.getName(), profit);
     }
 
     public static void printParticipantProfits(final List<PlayerProfit> playerProfits) {
