@@ -7,38 +7,38 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Cards {
-    private final List<Card> cards;
+    private final List<Card> value;
 
     public Cards() {
-        this.cards = new ArrayList<>();
+        this.value = new ArrayList<>();
     }
 
     public void add(final Card card) {
-        cards.add(card);
+        value.add(card);
     }
 
     public int size() {
-        return cards.size();
+        return value.size();
     }
 
     public Card getFirstCard() {
-        return cards.get(0);
+        return value.get(0);
     }
 
     public int getRawPoint() {
-        return cards.stream()
+        return value.stream()
                 .mapToInt(card -> card.getDenomination().getPoint())
                 .sum();
     }
 
     public int getDenominationCount(Denomination denomination) {
-        return (int) cards.stream()
+        return (int) value.stream()
                 .filter(card -> card.isSameDenomination(denomination))
                 .count();
     }
 
-    public List<Card> get() {
-        return List.copyOf(cards);
+    public List<Card> getCopy() {
+        return List.copyOf(value);
     }
 
     @Override
@@ -50,11 +50,11 @@ public final class Cards {
             return false;
         }
         Cards cards1 = (Cards) o;
-        return Objects.equals(cards, cards1.cards);
+        return Objects.equals(value, cards1.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards);
+        return Objects.hash(value);
     }
 }

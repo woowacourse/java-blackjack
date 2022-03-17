@@ -37,6 +37,6 @@ public abstract class Human {
     }
 
     public List<Card> getRawCards() {
-        return cards.get();
+        return cards.getCopy();
     }
 }

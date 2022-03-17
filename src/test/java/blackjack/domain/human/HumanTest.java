@@ -123,6 +123,6 @@ class HumanTest {
 
         // then
         assertThat(human.getRawCards())
-                .isEqualTo(cards.get());
+                .isEqualTo(cards.getCopy());
     }
 }

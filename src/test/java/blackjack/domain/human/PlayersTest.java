@@ -17,8 +17,8 @@ class PlayersTest {
     @DisplayName("플레이어 모음 생성 기능 테스트")
     public void createTest() {
         Player player = Player.from("test");
-        Players players = Players.from(List.of(player));
-        assertThat(players.size())
+        Players players = Players.fromRawValue(List.of(player));
+        assertThat(players.get().size())
                 .isEqualTo(1);
     }
 
@@ -29,7 +29,7 @@ class PlayersTest {
                 () -> assertThatThrownBy(() -> Players.fromNames(List.of("a", "a")))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("이름은 중복될 수 없습니다."),
-                () -> assertThatThrownBy(() -> Players.from(List.of(
+                () -> assertThatThrownBy(() -> Players.fromRawValue(List.of(
                         Player.from("test"),
                         Player.from("test"))))
                         .isInstanceOf(IllegalArgumentException.class)
@@ -43,7 +43,7 @@ class PlayersTest {
         // given
         Player player1 = Player.from("pobi");
         Player player2 = Player.from("jason");
-        Players players = Players.from(List.of(player1, player2));
+        Players players = Players.fromRawValue(List.of(player1, player2));
         CardDeck cardDeck = CardDeck.newInstance();
 
         // when
@@ -51,7 +51,7 @@ class PlayersTest {
         players.giveCard(cardDeck);
 
         // then
-        assertThat(players.getPlayerNames())
+        assertThat(players.getNames())
                 .contains("pobi", "jason");
     }
 

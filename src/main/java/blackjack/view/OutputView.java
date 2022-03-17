@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.participant.human.Human;
 import blackjack.domain.participant.human.Player;
@@ -46,12 +45,12 @@ public final class OutputView {
 
     private static String getCardsState(List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getDenomination().getInitial() + card.getSuit().getName())
+                .map(card -> card.getDenomination().getInitial() + card.getSuit().getValue())
                 .collect(Collectors.joining(CARDS_DELIMITER));
     }
 
     private static void printInitCardState(final Participant participant) {
-        List<String> playersNames = participant.getPlayers().getPlayerNames();
+        List<String> playersNames = participant.getPlayers().getNames();
         System.out.printf(INIT_CARD_MESSAGE,
                 participant.getDealer().getName(),
                 String.join(NAMES_DELIMITER, playersNames));

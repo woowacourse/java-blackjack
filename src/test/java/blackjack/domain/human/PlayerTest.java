@@ -38,7 +38,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("참여자 객체 카드 2개인지 확인 기능 테스트")
-    public void isTwoCardTest() {
+    public void isThatSize() {
         // given
         Player player = Player.from("test");
         Card card5 = Card.of(Denomination.from("5"), Suit.SPADE);
@@ -49,7 +49,7 @@ class PlayerTest {
         player.addCard(card6);
 
         // then
-        assertThat(player.isTwoCard())
+        assertThat(player.isThatSize(2))
                 .isTrue();
     }
 

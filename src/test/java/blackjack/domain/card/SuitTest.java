@@ -19,7 +19,7 @@ class SuitTest {
 
     @DisplayName("올바른 문양 들어가는지 테스트")
     void setExpectedSuitTest(Suit expectedSuit, String inputSymbolName) {
-        assertThat(expectedSuit.getName())
+        assertThat(expectedSuit.getValue())
                 .isEqualTo(inputSymbolName);
     }
 }

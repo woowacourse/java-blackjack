@@ -40,7 +40,7 @@ class ResultStatisticTest {
             // given
             addCardList(player1, List.of("A", "A", "A", "A", "A"));
             addCardList(player2, List.of("10", "10", "2"));
-            Players players = Players.from(List.of(player1, player2));
+            Players players = Players.fromRawValue(List.of(player1, player2));
 
             Participant participant = Participant.from(players);
             addCardList(participant.getDealer(), List.of("8", "10", "10"));
@@ -80,7 +80,7 @@ class ResultStatisticTest {
             // given
             addCardList(player1, List.of("10", "10", "10"));
             addCardList(player2, List.of("10", "10", "10"));
-            Players players = Players.from(List.of(player1, player2));
+            Players players = Players.fromRawValue(List.of(player1, player2));
 
             Participant participant = Participant.from(players);
             addCardList(participant.getDealer(), List.of("10", "10", "10", "10"));
@@ -122,7 +122,7 @@ class ResultStatisticTest {
             addCardList(player2, List.of("5", "A"));
             addCardList(player3, List.of("10", "10"));
             addCardList(player4, List.of("10", "10", "A"));
-            Players players = Players.from(List.of(player1, player2, player3, player4));
+            Players players = Players.fromRawValue(List.of(player1, player2, player3, player4));
 
             Participant participant = Participant.from(players);
             addCardList(participant.getDealer(), List.of("10", "10"));

@@ -61,7 +61,7 @@ class ParticipantTest {
     @Test
     @DisplayName("getPlayers() 기능 테스트")
     void getPlayers() {
-        assertThat(participant.getPlayers().getPlayerNames())
+        assertThat(participant.getPlayers().getNames())
                 .containsOnly("pobi");
     }
 }

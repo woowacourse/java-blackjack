@@ -10,14 +10,14 @@ public final class ResultStatistic {
     private final Map<String, Result> playersResult = new HashMap<>();
     private final Map<Result, Integer> dealerResults = new HashMap<>();
 
-    private ResultStatistic(Participant participant) {
+    private ResultStatistic(final Participant participant) {
         for (Result value : Result.values()) {
             dealerResults.put(value, 0);
         }
         calculate(participant);
     }
 
-    public static ResultStatistic from(Participant participant) {
+    public static ResultStatistic from(final Participant participant) {
         return new ResultStatistic(participant);
     }
 
@@ -33,7 +33,7 @@ public final class ResultStatistic {
         return result;
     }
 
-    private void calculate(Participant table) {
+    private void calculate(final Participant table) {
         for (Player player : table.getPlayers().get()) {
             Result playerResult = calculatePlayerResult(player, table.getDealer());
             Result dealerResult = playerResult.toReverse();

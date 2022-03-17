@@ -10,6 +10,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public final class BlackjackGame {
+    private static final int INIT_CARD_NUMBER = 2;
 
     public void run() {
         Participant participant = Participant.from(getPlayers());
@@ -40,7 +41,7 @@ public final class BlackjackGame {
             player.addCard(cardDeck.pop());
             OutputView.printHumanHand(player);
         }
-        if (player.isTwoCard()) {
+        if (player.isThatSize(INIT_CARD_NUMBER)) {
             OutputView.printHumanHand(player);
         }
     }

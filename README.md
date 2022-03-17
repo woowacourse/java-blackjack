@@ -94,8 +94,8 @@
     - [x] Exception.class를 IllegalArgumentException 으로 변경
     - [x] 메서드 간의 개행
     - [x] 테스트를 위한 준비 부분과 단언문 사이에 개행
-- [ ] 메서드 이름이 잘못된 것 같아요.
-    - [ ] stringOf()라는 이름은 String 값을 리턴할 것을 기대
+- [x] 메서드 이름이 잘못된 것 같아요.
+    - [x] stringOf()라는 이름은 String 값을 리턴할 것을 기대
 - [ ] Cards -> getter가 연쇄적으로 호출
 - [ ] 단순히 생성자를 호출할 뿐인데, 이런 방식의 구조와 이름을 사용하신 이유
     - [ ] 싱글턴 장단점 학습

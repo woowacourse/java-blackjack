@@ -38,6 +38,6 @@ public class ResultTest {
 
     @DisplayName("결과 글자 리턴 기능 테스트")
     void getResultText(Result result, String text) {
-        assertThat(result.getResultText()).isEqualTo(text);
+        assertThat(result.get()).isEqualTo(text);
     }
 }

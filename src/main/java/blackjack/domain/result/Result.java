@@ -8,13 +8,13 @@ public enum Result {
     DRAW("무"),
     LOSE("패");
 
-    private final String resultText;
+    private final String value;
 
-    Result(final String resultText) {
-        this.resultText = resultText;
+    Result(final String value) {
+        this.value = value;
     }
 
-    public static Result fromBoolean(Boolean isWin) {
+    public static Result fromBoolean(final Boolean isWin) {
         if (isWin) {
             return Result.WIN;
         }
@@ -27,7 +27,7 @@ public enum Result {
                 .toArray()[this.ordinal()];
     }
 
-    public String getResultText() {
-        return resultText;
+    public String get() {
+        return value;
     }
 }

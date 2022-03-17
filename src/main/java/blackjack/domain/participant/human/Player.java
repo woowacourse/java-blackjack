@@ -3,25 +3,24 @@ package blackjack.domain.participant.human;
 import blackjack.domain.cards.Cards;
 
 public final class Player extends Human {
-    private static final int INIT_CARD_NUMBER = 2;
 
-    private Player(String name) {
+    private Player(final String name) {
         super(new Cards(), name);
     }
 
-    public static Player from(String name) {
+    public static Player from(final String name) {
         return new Player(name);
     }
 
-    public boolean isTwoCard() {
-        return cards.size() == INIT_CARD_NUMBER;
+    public boolean isThatSize(final int size) {
+        return cards.size() == size;
     }
 
-    public boolean isWinner(Dealer dealer) {
+    public boolean isWinner(final Dealer dealer) {
         return dealer.getPoint() < getPoint();
     }
 
-    public boolean isDraw(Dealer dealer) {
+    public boolean isDraw(final Dealer dealer) {
         return dealer.getPoint() == getPoint();
     }
 }

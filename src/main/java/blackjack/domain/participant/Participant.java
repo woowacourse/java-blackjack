@@ -11,16 +11,16 @@ public final class Participant {
     private final Dealer dealer;
     private final Players players;
 
-    private Participant(Players players) {
+    private Participant(final Players players) {
         this.dealer = Dealer.newInstance();
         this.players = players;
     }
 
-    public static Participant from(Players players) {
+    public static Participant from(final Players players) {
         return new Participant(players);
     }
 
-    public void initCard(CardDeck cardDeck) {
+    public void initCard(final CardDeck cardDeck) {
         for (int i = 0; i < INIT_CARD_NUMBER; i++) {
             dealer.addCard(cardDeck.pop());
             players.giveCard(cardDeck);

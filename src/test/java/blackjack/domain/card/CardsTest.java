@@ -53,7 +53,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드 리스트 리턴 기능 테스트")
     void get() {
-        assertThat(cards.get())
+        assertThat(cards.getCopy())
                 .isEqualTo(List.of(
                         Card.of(Denomination.from("A"), Suit.SPADE),
                         Card.of(Denomination.from("A"), Suit.CLOVER)));

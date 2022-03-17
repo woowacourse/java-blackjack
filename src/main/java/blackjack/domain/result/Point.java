@@ -10,7 +10,7 @@ public final class Point {
 
     private final int value;
 
-    private Point(Cards cards) {
+    private Point(final Cards cards) {
         this.value = computeWithAce(cards.getRawPoint(), cards.getDenominationCount(Denomination.ACE));
     }
 
@@ -22,7 +22,7 @@ public final class Point {
         return point;
     }
 
-    public static Point fromCards(Cards cards) {
+    public static Point fromCards(final Cards cards) {
         return new Point(cards);
     }
 
