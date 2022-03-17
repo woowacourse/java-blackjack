@@ -1,6 +1,7 @@
 package blackjack;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
@@ -11,10 +12,10 @@ import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Application {
 
@@ -54,14 +55,9 @@ public class Application {
     }
 
     private static Map<Name, BettingMoney> createPlayerInfo(List<Name> playerNames) {
-        Map<Name, BettingMoney> playerInfo = new HashMap<>();
-
-        for (Name playerName : playerNames) {
-            BettingMoney bettingMoney = createBettingMoney(playerName);
-            playerInfo.put(playerName, bettingMoney);
-        }
-
-        return playerInfo;
+        return playerNames
+                .stream()
+                .collect(toMap(Function.identity(),Application::createBettingMoney));
     }
 
     private static BettingMoney createBettingMoney(Name playerName) {
