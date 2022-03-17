@@ -17,7 +17,7 @@ public class Card {
         return cardNumber == CardNumber.ACE;
     }
 
-    public String getCardInfo() {
+    public String cardInfo() {
         return cardNumber.getCardNumberName() + symbol.getSymbolName();
     }
 

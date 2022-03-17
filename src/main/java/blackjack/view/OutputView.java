@@ -26,14 +26,14 @@ public class OutputView {
     private static void printEachParticipantCard(ParticipantDto participantDto) {
         System.out.println(participantDto.getName() + "카드" + ": " +
                 participantDto.getCards().stream()
-                        .map(Card::getCardInfo)
+                        .map(Card::cardInfo)
                         .collect(Collectors.joining(", ")));
     }
 
     public static void showDrawResult(String name, List<Card> cards) {
         System.out.printf(name + "카드: ");
         System.out.println(cards.stream()
-                .map(Card::getCardInfo)
+                .map(Card::cardInfo)
                 .collect(Collectors.joining(", ")));
     }
 
@@ -50,7 +50,7 @@ public class OutputView {
         for (ParticipantDto participantDto : participantDtos) {
             System.out.println(participantDto.getName() + "카드" + ": " +
                     participantDto.getCards().stream()
-                            .map(Card::getCardInfo)
+                            .map(Card::cardInfo)
                             .collect(Collectors.joining(", "))
             + " - 결과: " + participantDto.getScore());
         }
