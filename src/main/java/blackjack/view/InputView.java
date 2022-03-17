@@ -39,12 +39,20 @@ public class InputView {
 
     public static int requestBettingAmountInput(final String playerName) {
         print(String.format(REQUEST_BETTING_AMOUNT_INPUT_MESSAGE, playerName));
-        final String input = scanner.nextLine();
 
-        return getValidParsedInteger(input);
+        final int input = parseInt(scanner.nextLine());
+        validatePositive(input);
+
+        return input;
     }
 
-    private static int getValidParsedInteger(final String input) {
+    private static void validatePositive(final int input) {
+        if (input <= 0) {
+            throw new IllegalArgumentException("베팅금액은 양의 정수만 입력해야 합니다.");
+        }
+    }
+
+    private static int parseInt(final String input) {
         try {
             return Integer.parseInt(input.trim());
         } catch (NumberFormatException e) {
