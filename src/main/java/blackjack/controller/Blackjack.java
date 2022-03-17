@@ -3,8 +3,10 @@ package blackjack.controller;
 import blackjack.domain.bet.Profit;
 import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.Dealer;
+import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import blackjack.domain.result.Result;
+import blackjack.dto.GamerDto;
 import blackjack.view.InputConverter;
 import blackjack.view.OutputView;
 
@@ -44,13 +46,35 @@ public class Blackjack {
         OutputView.printDealCards(dealer.getName(), players.getNames());
         dealer.dealCards(cardDeck.pickInit());
         players.deal(cardDeck);
-        OutputView.printInitCards(dealer, players);
+
+        openDealCard(dealer, players);
+    }
+
+    private void openDealCard(final Dealer dealer, final Players players) {
+        OutputView.printCards(dealer.getName(), GamerDto.getPartOfCards(dealer));
+        for (Player player : players.getPlayers()) {
+            OutputView.printCards(player.getName(), GamerDto.getCards(player));
+        }
+        OutputView.printNewLine();
     }
 
     private void showProfit(final Dealer dealer, final Players players, final Result result, final Profit profit) {
-        OutputView.printTotalScore(dealer, players);
+        showTotalScore(dealer, players);
         result.compete(dealer);
         profit.calculate(result);
-        OutputView.printProfit(dealer, profit, players);
+
+        OutputView.printProfitTitle();
+        OutputView.printProfit(dealer.getName(), profit.dealerProfit());
+        for (Player player : players.getPlayers()) {
+            OutputView.printProfit(player.getName(), profit.getBetting(player));
+        }
+    }
+
+    private void showTotalScore(final Dealer dealer, final Players players) {
+        OutputView.printScore(dealer.getName(), GamerDto.getCards(dealer), dealer.sumOfCards());
+        for (Player player : players.getPlayers()) {
+            OutputView.printScore(player.getName(), GamerDto.getCards(player), player.sumOfCards());
+        }
+        OutputView.printNewLine();
     }
 }

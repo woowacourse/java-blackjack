@@ -1,10 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.bet.Profit;
-import blackjack.domain.game.Dealer;
-import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
-import blackjack.dto.GamerDto;
 
 import java.util.List;
 
@@ -42,14 +38,6 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printInitCards(final Dealer dealer, final Players players) {
-        printCards(dealer.getName(), GamerDto.getPartOfCards(dealer));
-        for (Player player : players.getPlayers()) {
-            printCards(player.getName(), GamerDto.getCards(player));
-        }
-        printNewLine();
-    }
-
     public static void printCards(final String name, final List<String> playingCards) {
         System.out.printf(CARDS_FORMAT, name, CARD, String.join(DELIMITER, playingCards));
         printNewLine();
@@ -65,34 +53,17 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printTotalScore(final Dealer dealer, final Players players) {
-        printScore(dealer.getName(), GamerDto.getCards(dealer), dealer.sumOfCards());
-        for (Player player : players.getPlayers()) {
-            printScore(player.getName(), GamerDto.getCards(player), player.sumOfCards());
-        }
-        printNewLine();
-    }
-
-    public static void printProfit(final Dealer dealer, final Profit profit, final Players players) {
+    public static void printProfitTitle() {
         System.out.println("## 최종 수익");
-        printDealerProfit(dealer, profit);
-        for (Player player : players.getPlayers()) {
-            printPlayerProfit(player, profit);
-        }
     }
 
-    private static void printScore(final String name, final List<String> playingCards, final int total) {
+    public static void printScore(final String name, final List<String> playingCards, final int total) {
         System.out.printf(CARDS_FORMAT + " - 결과: %d", name, CARD, String.join(DELIMITER, playingCards), total);
         printNewLine();
     }
 
-    private static void printDealerProfit(final Dealer dealer, final Profit profit) {
-        System.out.printf("%s: %d", dealer.getName(), profit.dealerProfit());
-        printNewLine();
-    }
-
-    private static void printPlayerProfit(final Player player, final Profit profit) {
-        System.out.printf("%s: %d", player.getName(), profit.getBetting(player));
+    public static void printProfit(final String name, final int profit) {
+        System.out.printf("%s: %d", name, profit);
         printNewLine();
     }
 }
