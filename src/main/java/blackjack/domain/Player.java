@@ -21,20 +21,24 @@ public class Player extends Gamer {
         if (isBust()) {
             return GameResult.LOSE;
         }
-
         if (dealer.isBust()) {
             return GameResult.WIN;
         }
-        return GameResult.of(getTotalScore(), dealer.getTotalScore());
+        return GameResult.of(getTotalScore(), dealer.getTotalScore(), isBlackJack());
     }
 
     public boolean calculateBattingMoneyResult(Gamer dealer) {
         GameResult gameResult = createResult(dealer);
+
+        if (dealer.isBlackJack() && isBlackJack()) {
+            return true;
+        }
+
         double result = gameResult.getBattingMoneyResult() * getBattingMoney();
-        return addMoney((int)result);
+        return addMoney((int) result);
     }
 
-    public int reverseBattingMoney(){
+    public int reverseBattingMoney() {
         return getBattingMoney() * CONVERT_POSITIVE_VALUE;
     }
 }

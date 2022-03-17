@@ -28,6 +28,10 @@ public abstract class Gamer {
         return getTotalScore() > BLACKJACK_SCORE;
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     abstract boolean canHit();
 
     public boolean addMoney(int value) {

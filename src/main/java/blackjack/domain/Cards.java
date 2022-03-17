@@ -23,10 +23,10 @@ public class Cards {
         }
 
         boolean ace = value.stream().anyMatch(Card::isAceCard);
-        return convertCloseBlackJack(ace, totalScore);
+        return convertCloseWin(ace, totalScore);
     }
 
-    private int convertCloseBlackJack(boolean aceCheck, int totalScore) {
+    private int convertCloseWin(boolean aceCheck, int totalScore) {
         if (aceCheck) {
             return calculateAceScore(totalScore);
         }
@@ -42,6 +42,10 @@ public class Cards {
 
     public void add(Card card) {
         value.add(card);
+    }
+
+    public boolean isBlackJack() {
+        return value.size() == 2 && calculateTotalScore() == 21;
     }
 
     public List<Card> getValue() {

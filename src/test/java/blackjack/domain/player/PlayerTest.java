@@ -24,7 +24,7 @@ public class PlayerTest {
     @DisplayName("이름과 카드 리스트가 주어지면 정상적으로 생성된다.")
     @Test
     void 플레이어_생성_정상() {
-        assertDoesNotThrow(() -> new Player("mat", 0, generateCards()));
+        assertDoesNotThrow(() -> new Player("mat", 0, generateBlackJackCards()));
     }
 
     @DisplayName("플레이어의 총 점수가 21점 이하인 경우 hit가 가능하다.")
@@ -51,7 +51,7 @@ public class PlayerTest {
     @Test
     void 카드_합침() {
         String name = "mat";
-        List<Card> cards = generateCards();
+        List<Card> cards = generateBlackJackCards();
         Player player = new Player(name, 0, cards);
         Card card = Card.of(FIVE, SPADE);
 
@@ -149,9 +149,9 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_점수_무() {
         //12점
-        List<Card> tieValueByPlayer = generateCards();
+        List<Card> tieValueByPlayer = generate21Cards();
         //12점
-        List<Card> tieValueByDealer = generateCards();
+        List<Card> tieValueByDealer = generate21Cards();
 
         Dealer dealer = new Dealer(tieValueByDealer, 0);
         Player player = new Player("sudal", 0, tieValueByPlayer);
@@ -159,6 +159,22 @@ public class PlayerTest {
         GameResult gameResult = player.createResult(dealer);
 
         assertThat(gameResult).isEqualTo(GameResult.TIE);
+    }
+
+    @DisplayName("플레이어 최초 카드 2 장 합이 21이면 블랙잭")
+    @Test
+    void 플레이어_블랙잭() {
+        //12점
+        List<Card> tieValueByPlayer = generateBlackJackCards();
+        //12점
+        List<Card> tieValueByDealer = generate21Cards();
+
+        Dealer dealer = new Dealer(tieValueByDealer, 0);
+        Player player = new Player("sudal", 0, tieValueByPlayer);
+
+        GameResult gameResult = player.createResult(dealer);
+
+        assertThat(gameResult).isEqualTo(BLACKJACK);
     }
 
     @DisplayName("플레이어가 이겼을 때 최종 배팅 머니 계산")
@@ -176,7 +192,7 @@ public class PlayerTest {
     @Test
     void 배팅금액_합계_블랙잭_승리() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards(), 0);
-        Player player = new Player("sudal", 1000, generateCards());
+        Player player = new Player("sudal", 1000, generateBlackJackCards());
 
         player.calculateBattingMoneyResult(dealer);
 
@@ -197,8 +213,8 @@ public class PlayerTest {
     @DisplayName("플레이어와 딜러 무승부일 때 배팅 머니 계산")
     @Test
     void 배팅금액_합계_무승부() {
-        Dealer dealer = new Dealer(generateCards(), 0);
-        Player player = new Player("sudal", 1000, generateCards());
+        Dealer dealer = new Dealer(generateBlackJackCards(), 0);
+        Player player = new Player("sudal", 1000, generateBlackJackCards());
 
         player.calculateBattingMoneyResult(dealer);
 
