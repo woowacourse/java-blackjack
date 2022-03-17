@@ -65,7 +65,7 @@ public class GameController {
 
     /**
      * 플레이어 목록을 순회하여 상태가 HIT 인 플레이어가 존재하지 않을 때까지 반복한다.
-     * 카드 합이 21인 경우 자동으로 STAY 상태가 되므로 무시한다.
+     * 카드 합이 21인 경우(블랙잭인 경우 포함) 자동으로 STAY 상태가 되므로 무시한다.
      * 플레이어 목록이 빈 경우 IllegalStateException 을 던진다.
      * @param game initPlay 로 초기화된 game 을 받는다.
      */
