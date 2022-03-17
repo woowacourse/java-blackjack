@@ -1,7 +1,7 @@
 package view;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.participant.Name;
@@ -19,7 +19,7 @@ public class OutputView {
 	private static final String MAX_SCORE_MESSAGE = "[ MAX SCORE!!! ]";
 	private static final String RESULT_TITLE_MESSAGE = "\n## 최종 승패";
 	private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d\n";
-	private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
+	private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %d\n";
 	private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
 	private static final String BLACKJACK_MESSAGE = "[ BlackJack!!! ]";
 	private static final int LIMIT_TO_NOT_BUST_SCORE = 21;
@@ -66,15 +66,6 @@ public class OutputView {
 				String.valueOf(participantInfo.getHand().getScore())));
 	}
 
-	public static void printDealerResult(int winCount, int drawCount, int loseCount) {
-		printMessage(RESULT_TITLE_MESSAGE);
-		System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, winCount, drawCount, loseCount);
-	}
-
-	public static void printPlayerResult(String name, String result) {
-		System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, name, result);
-	}
-
 	public static void printMessage(String message) {
 		System.out.println(message);
 	}
@@ -87,10 +78,10 @@ public class OutputView {
 		printMessage(RESULT_TITLE_MESSAGE);
 		System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, result.getDealerMoney());
 
-		Map<ParticipantInfo, EarningRate> playerResults = result.getPlayerResults();
+		LinkedHashMap<ParticipantInfo, EarningRate> playerResults = result.getPlayerResults();
 		playerResults.entrySet().stream()
 			.forEach(entry -> System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, entry.getKey().getName().getName(),
-				entry.getKey().getBetting().getBettingMoney() * entry.getValue().getEarningRate()));
+				(int)(entry.getKey().getBetting().getBettingMoney() * entry.getValue().getEarningRate())));
 	}
 
 	private static String joinNameAndCard(ParticipantInfo participantInfo) {

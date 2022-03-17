@@ -3,7 +3,6 @@ package domain.participant;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
@@ -41,8 +40,8 @@ public class Players {
 		return players.get(name).isMaxScore();
 	}
 
-	public Map<ParticipantInfo, EarningRate> getResult(Dealer other) {
-		Map<ParticipantInfo, EarningRate> map = new LinkedHashMap<>();
+	public LinkedHashMap<ParticipantInfo, EarningRate> getResult(Dealer other) {
+		LinkedHashMap<ParticipantInfo, EarningRate> map = new LinkedHashMap<>();
 		players.keySet().stream()
 			.forEach(name -> map.put(new ParticipantInfo(players.get(name)), players.get(name).getResult(other)));
 		return map;

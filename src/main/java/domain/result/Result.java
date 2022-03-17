@@ -1,15 +1,15 @@
 package domain.result;
 
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 import domain.participant.ParticipantInfo;
 
 public class Result {
 
-	private final Map<ParticipantInfo, EarningRate> playerResults;
+	private final LinkedHashMap<ParticipantInfo, EarningRate> playerResults;
 
-	public Result(Map<ParticipantInfo, EarningRate> playerResults) {
-		this.playerResults = Map.copyOf(playerResults);
+	public Result(LinkedHashMap<ParticipantInfo, EarningRate> playerResults) {
+		this.playerResults = playerResults;
 	}
 
 	public int getDealerMoney() {
@@ -19,7 +19,7 @@ public class Result {
 			.sum();
 	}
 
-	public Map<ParticipantInfo, EarningRate> getPlayerResults() {
+	public LinkedHashMap<ParticipantInfo, EarningRate> getPlayerResults() {
 		return playerResults;
 	}
 }
