@@ -27,6 +27,10 @@ public class CardBundleGenerator {
         return cardBundle;
     }
 
+    public static CardBundle getThreeCardsOfNine() {
+        return generateCardBundleOf(CLOVER2, CLOVER3, CLOVER4);
+    }
+
     public static CardBundle getCardBundleOfTen() {
         return generateCardBundleOf(CLOVER4, CLOVER6);
     }
@@ -53,5 +57,9 @@ public class CardBundleGenerator {
 
     public static CardBundle getCardBundleOfBlackjack() {
         return generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
+    }
+
+    public static CardBundle getCardBundleOfBust() {
+        return generateCardBundleOf(CLOVER8, CLOVER10, CLOVER_KING);
     }
 }
