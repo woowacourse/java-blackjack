@@ -29,10 +29,6 @@ public class Player {
         holdCards.add(drawable.draw());
     }
 
-    public Score compete(Dealer dealer) {
-        return Score.compete(this, dealer);
-    }
-
     public boolean isBust() {
         return holdCards.getTotalNumber() > BLACKJACK_NUMBER;
     }
@@ -45,19 +41,19 @@ public class Player {
         return holdCards.getTotalNumber();
     }
 
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getHoldCards() {
-        return holdCards.getCards();
+    public double getProfit(Dealer dealer) {
+        return bettingAmount.getDividend(Score.compete(this, dealer));
     }
 
     public Player copy() {
         return new Player(name, holdCards.copy());
     }
 
-    public double getProfit(Dealer dealer) {
-        return bettingAmount.getDividend(Score.compete(this, dealer));
+    public String getName() {
+        return name.getValue();
+    }
+
+    public List<Card> getHoldCards() {
+        return holdCards.getCards();
     }
 }
