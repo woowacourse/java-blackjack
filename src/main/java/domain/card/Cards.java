@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class Cards {
     private static final int MAXIMUM_SUM_VALUE = 21;
-    private static final int DIFFERENCE_MAX_MIN_SUM_VALUE = 10;
+    private static final int DIFFERENCE_MAX_MIN_VALUE = 10;
 
     private final List<Card> cards = new ArrayList<>();
     private final HitThreshold threshold;
@@ -24,7 +24,7 @@ public final class Cards {
     }
 
     public boolean canAddCard() {
-        return threshold.canAdd(calculateSum());
+        return threshold.canHit(calculateSum());
     }
 
     public int calculateSum() {
@@ -40,7 +40,7 @@ public final class Cards {
 
     private int calculateMaximumSum(final int minimumSum) {
         if (hasAce()) {
-            return minimumSum + DIFFERENCE_MAX_MIN_SUM_VALUE;
+            return minimumSum + DIFFERENCE_MAX_MIN_VALUE;
         }
         return minimumSum;
     }
@@ -50,28 +50,12 @@ public final class Cards {
                 .anyMatch(Card::isAceCard);
     }
 
-    public boolean isStand() {
-        return getCardState().isStand();
-    }
-
-    public boolean isBust() {
-        return getCardState().isBust();
-    }
-
-    public boolean isBlackJack() {
-        return getCardState().isBlackJack();
-    }
-
     public CardState getCardState() {
         return CardState.from(this);
     }
 
     public List<Card> getCards() {
         return new ArrayList<>(cards);
-    }
-
-    public int getCardStatePower() {
-        return getCardState().getStatePower();
     }
 
     public int getCardsCount() {
