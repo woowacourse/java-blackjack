@@ -99,26 +99,4 @@ public class OutputView {
             gamer.calculateResult());
     }
 
-    public static void printFinalResultBoard(final Map<Gamer, GameResult> gamerResultBoard,
-        Map<GameResult, Integer> dealerResultBoard) {
-        System.out.println(FINAL_RESULT_MESSAGE);
-
-        System.out.print(dealerPointToString(dealerResultBoard));
-        gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
-            key.getName(),
-            value.getResult()));
-    }
-
-    private static String dealerPointToString(final Map<GameResult, Integer> gamerResultBoard) {
-        return String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
-            gamerResultBoard.entrySet().stream()
-                .map(board -> dealerResultToString(board.getKey(),
-                    board.getValue()))
-                .collect(joining(PRINT_BLANK)));
-    }
-
-    private static String dealerResultToString(final GameResult gameResult, final int value) {
-        return value + gameResult.getResult();
-    }
-
 }

@@ -13,11 +13,9 @@ public class Dealer extends Player {
     private static final int DEALER_OPEN_CARD_SIZE = 1;
 
     private final String name = DEALER_NAME;
-    private final BetMoney betMoney;
 
     public Dealer() {
         super(new Cards());
-        this.betMoney = new BetMoney(0);
     }
 
     @Override
@@ -30,7 +28,4 @@ public class Dealer extends Player {
         return calculateResult() <= DEALER_RECEIVE_STANDARD;
     }
 
-    public int betMoney() {
-        return betMoney.getBetMoney();
-    }
 }

@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Cards {
 
-    private final static int IN_GAME_MAX_POINT = 21;
+    private static final int BLACK_JACK_POINT = 21;
+    private static final int BLACK_JACK_CARDS_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -41,10 +42,14 @@ public class Cards {
     }
 
     private int calculateAceAsSmallerStandard(int point, final Card card) {
-        if (card.isAce() && point > IN_GAME_MAX_POINT) {
+        if (card.isAce() && point > BLACK_JACK_POINT) {
             point -= Denomination.ACE_INTERVAL;
         }
         return point;
+    }
+
+    public boolean isBlackJackSize() {
+        return cards.size() == BLACK_JACK_CARDS_SIZE && calculateTotalPoint() == BLACK_JACK_POINT;
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public abstract class Player {
 
+
     protected final Cards cards;
 
     protected Player(final Cards cards) {
@@ -27,5 +28,9 @@ public abstract class Player {
     }
 
     public abstract boolean isReceivable();
+
+    public boolean isBlackJack() {
+        return cards.isBlackJackSize();
+    }
 
 }
