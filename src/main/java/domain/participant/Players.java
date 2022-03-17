@@ -35,9 +35,9 @@ public final class Players {
             .collect(Collectors.toList());
     }
 
-    public List<Result> checkResults(Dealer dealer) {
+    public List<Integer> calculateIncomes(Dealer dealer) {
         return players.stream()
-            .map(player -> player.judgeResult(dealer))
+            .map(player -> player.calculateIncome(player.judgeResult(dealer)))
             .collect(Collectors.toList());
     }
 

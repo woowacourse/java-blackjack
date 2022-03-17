@@ -19,7 +19,7 @@ class DealerTest {
     private Deck deck;
 
     @BeforeEach
-    void makePlayer(){
+    void makePlayer() {
         dealer = new Dealer();
         deck = Deck.initDeck(Card.values());
     }
@@ -31,7 +31,7 @@ class DealerTest {
             dealer.hit(deck);
         }
 
-        assertThatThrownBy(() ->  dealer.hit(deck))
+        assertThatThrownBy(() -> dealer.hit(deck))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
     }
@@ -55,13 +55,12 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 결과값을 받는다.")
-    void checkResultTest() {
-        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.PUSH);
-        Map<Result, Integer> dealerResult = dealer.checkResult(playerResult);
+    @DisplayName("플레이어의 수익을 종합해 딜러의 수익을 계산한다.")
+    void calculateIncomeTest() {
+        List<Integer> playerIncomes = Arrays.asList(3000, 4000, -2000);
+        int actual = dealer.calculateIncome(playerIncomes);
+        int expected = -5000;
 
-        assertThat(dealerResult.get(Result.WIN)).isEqualTo(1);
-        assertThat(dealerResult.get(Result.PUSH)).isEqualTo(1);
-        assertThat(dealerResult.get(Result.LOSE)).isEqualTo(2);
+        assertThat(actual).isEqualTo(expected);
     }
 }

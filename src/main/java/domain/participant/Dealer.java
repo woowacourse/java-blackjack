@@ -1,12 +1,11 @@
 package domain.participant;
 
 import domain.card.Card;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public final class Dealer extends Participant {
 
+    public static final int CONVERT_POSITIVE = -1;
     private static final int MAX_CARD_SUM = 16;
     private static final String NAME = "딜러";
 
@@ -14,19 +13,11 @@ public final class Dealer extends Participant {
         super(NAME);
     }
 
-    public Map<Result, Integer> checkResult(List<Result> playersResult) {
-        Map<Result, Integer> dealerResult = new EnumMap<Result, Integer>(Result.class);
-        int playerBlackJackCount = (int)playersResult.stream()
-            .filter(result -> result == Result.BLACKJACK)
-            .count();
-        dealerResult.put(Result.LOSE, countTargetResult(playersResult, Result.WIN));
-        return dealerResult;
-    }
-
-    private int countTargetResult(List<Result> playersResult, Result targetResult) {
-        return (int) playersResult.stream()
-            .filter(result -> result == targetResult)
-            .count();
+    public int calculateIncome(List<Integer> playerIncomes) {
+        int playerIncomeSum = playerIncomes.stream()
+            .mapToInt(playerIncome -> playerIncome)
+            .sum();
+        return playerIncomeSum * CONVERT_POSITIVE;
     }
 
     public Card getFirstCard() {
