@@ -2,10 +2,11 @@
 
 ## BlackJackGame
 - [x] 게임을 시작한다 (Dealer ,Player 등록)
+- [ ] 플레이어의 배팅 금액을 입력 받는다.
 - [x] Player에게 최초 카드 2장을 준다.
 - [x] Dealer가 카드를 받을 수 있으면 준다.
 - [x] Gamer에게 카드를 줄지/ 안줄지 묻고 카드를 준다.
-- [x] 승패를 계산한다.
+- [ ] 최종 수익을 계산한다
  
 ## Player <Interface>
 - [x] 카드를 받는다
@@ -43,5 +44,9 @@
 - [x] Enum - Denomination
 - [x] Enum - Suit
 
-## Yes / No
+## Answer
 - [x] [Error] y/ n 중 입력이 없으면 예외를 발생시킨다.
+
+## GameResult
+- [ ] Gamers의 게임 결과를 계산한다.
+- [ ] Dealer의 게임 결괴를 계산한다.
