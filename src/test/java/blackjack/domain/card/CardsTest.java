@@ -3,9 +3,9 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.cards.Cards;
 import blackjack.domain.card.element.Denomination;
 import blackjack.domain.card.element.Suit;
-import blackjack.domain.card.cards.Cards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

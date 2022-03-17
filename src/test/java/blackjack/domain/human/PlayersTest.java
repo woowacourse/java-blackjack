@@ -24,10 +24,10 @@ class PlayersTest {
     @DisplayName("플레이어 모음 생성 기능 예외처리 검사")
     public void createErrorTest() {
         assertAll(
-                () -> assertThatThrownBy( () -> Players.fromNames(List.of("test","test")))
+                () -> assertThatThrownBy(() -> Players.fromNames(List.of("test", "test")))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("이름은 중복될 수 없습니다.") ,
-                () -> assertThatThrownBy( () -> Players.from(List.of(Player.from("test"),Player.from("test"))))
+                        .hasMessage("이름은 중복될 수 없습니다."),
+                () -> assertThatThrownBy(() -> Players.from(List.of(Player.from("test"), Player.from("test"))))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("이름은 중복될 수 없습니다.")
         );

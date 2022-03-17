@@ -29,15 +29,15 @@ public final class Players {
         }
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
     private static List<Player> toPlayerList(final List<String> names) {
         return names.stream()
                 .map(Player::from)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
                 .collect(Collectors.toList());
     }
 

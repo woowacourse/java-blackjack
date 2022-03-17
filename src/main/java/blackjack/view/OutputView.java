@@ -1,13 +1,15 @@
 package blackjack.view;
 
-import blackjack.domain.human.humans.Participant;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
+import blackjack.domain.human.humans.Participant;
 import blackjack.domain.result.Result;
+import java.util.List;
 import java.util.Map;
 
 public final class OutputView {
 
+    public static final String NAMES_DELIMITER = ",";
     private static final String drawChar = "무";
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
             + System.lineSeparator();
@@ -39,10 +41,10 @@ public final class OutputView {
     }
 
     private static void printInitCardState(final Participant participant) {
-        String playersNames = participant.getPlayers().getPlayerNames().toString();
+        List<String> playersNames = participant.getPlayers().getPlayerNames();
         System.out.printf(INIT_CARD_MESSAGE,
                 participant.getDealer().getName(),
-                playersNames.substring(1, playersNames.length() - 1));
+                String.join(NAMES_DELIMITER, playersNames));
     }
 
     public static void printHandAndPoint(final Participant participant) {
