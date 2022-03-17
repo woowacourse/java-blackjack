@@ -11,7 +11,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     private static final String NEWLINE = System.getProperty("line.separator");
-    public static final String INPUT_MESSAGE_BETTING_AMOUNT = NEWLINE.concat("%s의 베팅 금액은?").concat(NEWLINE);
+    private static final String INPUT_MESSAGE_BETTING_AMOUNT = NEWLINE.concat("%s의 베팅 금액은?").concat(NEWLINE);
     private static final String INPUT_MESSAGE_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_DELIMITER_PLAYER_NAMES = ",";
     private static final String INPUT_MESSAGE_ONE_MORE_CARD =
