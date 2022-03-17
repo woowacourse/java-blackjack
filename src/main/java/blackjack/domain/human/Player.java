@@ -1,9 +1,9 @@
 package blackjack.domain.human;
 
 import blackjack.domain.card.group.Cards;
-import blackjack.util.Constants;
 
 public final class Player extends Human {
+    private static final int INIT_CARD_NUMBER = 2;
 
     private Player(String name) {
         super(new Cards(), name);
@@ -14,7 +14,7 @@ public final class Player extends Human {
     }
 
     public boolean isTwoCard() {
-        return cards.size() == Constants.INIT_CARD_NUMBER;
+        return cards.size() == INIT_CARD_NUMBER;
     }
 
     public boolean isWinner(Dealer dealer) {

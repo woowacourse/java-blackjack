@@ -1,13 +1,12 @@
 package blackjack.domain.human;
 
-import static blackjack.util.Constants.BLACKJACK_NUMBER;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.group.Cards;
 import blackjack.domain.human.element.Name;
 import blackjack.domain.result.Point;
 
 public abstract class Human {
+    public static final int BLACKJACK_NUMBER = 21;
     protected final Name name;
     protected final Cards cards;
 

@@ -3,9 +3,9 @@ package blackjack.domain;
 import blackjack.domain.card.group.CardDeck;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.group.Players;
-import blackjack.util.Constants;
 
 public final class BlackjackRepository {
+    private static final int INIT_CARD_NUMBER = 2;
     private static final CardDeck cardDeck = CardDeck.newInstance();
 
     private final Dealer dealer;
@@ -21,7 +21,7 @@ public final class BlackjackRepository {
     }
 
     public void initCard() {
-        for (int i = 0; i < Constants.INIT_CARD_NUMBER; i++) {
+        for (int i = 0; i < INIT_CARD_NUMBER; i++) {
             dealer.addCard(cardDeck.pop());
             players.giveCard(cardDeck);
         }
