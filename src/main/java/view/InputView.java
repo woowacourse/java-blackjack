@@ -1,5 +1,7 @@
 package view;
 
+import domain.participant.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -53,15 +55,15 @@ public class InputView {
         return Arrays.stream(input.split(NAME_OR_CARD_DELIMITER)).map(String::trim).collect(Collectors.toList());
     }
 
-    public static boolean inputTryToHit(final String name) {
-        printPlayerHitIntro(name);
+    public static boolean inputTryToHit(final Player player) {
+        printPlayerHitIntro(player.getName());
 
         String response = readLine();
         if (isYOrN(response)) {
             return response.equalsIgnoreCase(DO_HIT);
         }
         print(INVALID_HIT_MESSAGE);
-        return inputTryToHit(name);
+        return inputTryToHit(player);
     }
 
     private static void printPlayerHitIntro(final String name) {
