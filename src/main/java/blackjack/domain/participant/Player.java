@@ -1,16 +1,14 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.machine.Betting;
 import java.util.Objects;
 
 public class Player extends Participant {
-    public Player(String name) {
-        super(name);
-    }
+    private final Betting betting;
 
-    public static Player copy(Player original) {
-        Player copy = new Player(original.name);
-        copy.myCards = original.getMyCards();
-        return copy;
+    public Player(String name, long bettingMoney) {
+        super(name);
+        betting = new Betting(bettingMoney);
     }
 
     @Override

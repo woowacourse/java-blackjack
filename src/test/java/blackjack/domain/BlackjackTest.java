@@ -7,7 +7,9 @@ import blackjack.domain.machine.Blackjack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +27,11 @@ public class BlackjackTest {
 
     @BeforeEach
     void setUp() {
-        List<String> playerNames = List.of("pobi", "jason");
-        players = new Players(playerNames);
+        Map<String, Long> playersInfo = new LinkedHashMap<>();
+        playersInfo.put("범블비",1000L);
+        playersInfo.put("잉", 2000L);
+
+        players = new Players(playersInfo);
         dealer = new Dealer();
         intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6));
         blackjack = Blackjack.of(intendedNumberGenerator, dealer, players);

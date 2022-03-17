@@ -12,7 +12,7 @@ public class ParticipantTest {
     @DisplayName("참가자의 점수가 블랙잭일 경우 테스트")
     @Test
     void blackjack() {
-        Participant player = new Player("pobi");
+        Participant player = new Player("pobi", 1000);
 
         player.addCard(Card.A_SPADE);
         player.addCard(Card.K_CLOVER);
@@ -22,7 +22,7 @@ public class ParticipantTest {
     @DisplayName("참가자의 점수가 버스트일 경우 테스트")
     @Test
     void burst() {
-        Participant player = new Player("pobi");
+        Participant player = new Player("pobi", 1000);
 
         player.addCard(Card.K_SPADE);
         player.addCard(Card.K_CLOVER);

@@ -3,10 +3,12 @@ package blackjack.domain;
 import blackjack.domain.card.CardPickMachine;
 import blackjack.domain.machine.Blackjack;
 import blackjack.domain.participant.Players;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +25,10 @@ public class RecordTest {
 
     @BeforeEach
     void setUp() {
-        List<String> playerNames = List.of("범블비");
-        Players players = new Players(playerNames);
+        Map<String, Long> playersInfo = new LinkedHashMap<>();
+        playersInfo.put("범블비",1000L);
+
+        Players players = new Players(playersInfo);
         dealer = new Dealer();
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 8));
 

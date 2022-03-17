@@ -3,9 +3,9 @@ package blackjack.domain.machine;
 import java.util.Objects;
 
 public class Betting {
-    private final int money;
+    private final long money;
 
-    public Betting(int money) {
+    public Betting(long money) {
         this.money = money;
     }
 

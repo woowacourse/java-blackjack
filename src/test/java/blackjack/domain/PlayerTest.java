@@ -15,7 +15,7 @@ public class PlayerTest {
     @DisplayName("카드 받는 기능 테스트")
     @Test
     void addCard() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         player.addCard(Card.THREE_DIAMOND);
         int playerCardSize = player.getMyCards().size();
         assertThat(playerCardSize).isEqualTo(1);
@@ -25,6 +25,6 @@ public class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "   "})
     void blankName(String name) {
-        assertThatThrownBy(() -> new Player(name)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Player(name, 1000)).isInstanceOf(IllegalArgumentException.class);
     }
 }

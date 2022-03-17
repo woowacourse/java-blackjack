@@ -22,8 +22,11 @@ public class RecordsTest {
 
     @BeforeEach
     void setUp() {
-        List<String> playerNames = List.of("범블비", "잉");
-        Players players = new Players(playerNames);
+        Map<String, Long> playersInfo = new LinkedHashMap<>();
+        playersInfo.put("범블비",1000L);
+        playersInfo.put("잉", 2000L);
+
+        Players players = new Players(playersInfo);
         Dealer dealer = new Dealer();
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 11, 15, 9));
         Blackjack blackjack = Blackjack.of(intendedNumberGenerator, dealer, players);
