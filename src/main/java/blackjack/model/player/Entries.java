@@ -1,6 +1,7 @@
 package blackjack.model.player;
 
-import blackjack.model.Money;
+import blackjack.model.Bet;
+import blackjack.model.Result;
 import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
@@ -39,8 +40,8 @@ public final class Entries {
                 .count();
     }
 
-    public void betToCurrent(Money money) {
-        getCurrentEntry().bet(money);
+    public void betToCurrent(Bet bet) {
+        getCurrentEntry().bet(bet);
     }
 
     public void initializeDecks(Supplier<TrumpCard> cardSupplier) {
@@ -86,6 +87,13 @@ public final class Entries {
 
     public Results compareAllWith(Dealer dealer) {
         return new Results(this.values.stream()
-                .collect(Collectors.toMap(entry -> entry, dealer::compareWith, (a, b) -> b)));
+                .collect(Collectors.toMap(
+                        entry -> entry,
+                        entry -> entry.profitOf(compare(dealer, entry)),
+                        (a, b) -> b)));
+    }
+
+    private Result compare(Dealer dealer, Entry entry) {
+        return dealer.compareWith(entry);
     }
 }

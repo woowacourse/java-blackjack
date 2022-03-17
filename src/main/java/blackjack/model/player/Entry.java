@@ -1,6 +1,8 @@
 package blackjack.model.player;
 
+import blackjack.model.Bet;
 import blackjack.model.Money;
+import blackjack.model.Result;
 import java.util.regex.Pattern;
 
 public final class Entry extends Player {
@@ -15,7 +17,7 @@ public final class Entry extends Player {
 
     private static final int MAX_LENGTH = 15;
 
-    private Money bet;
+    private Bet bet;
 
     public Entry(String name) {
         super(name);
@@ -53,10 +55,14 @@ public final class Entry extends Player {
         }
     }
 
-    public void bet(Money money) {
+    public void bet(Bet bet) {
         if (this.bet != null) {
             throw new IllegalArgumentException(ERROR_ALREADY_BETTED);
         }
-        this.bet = money;
+        this.bet = bet;
+    }
+
+    public Money profitOf(Result result) {
+        return this.bet.profitOf(result);
     }
 }

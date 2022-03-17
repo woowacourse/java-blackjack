@@ -79,6 +79,6 @@ public class Application {
     private static void showResults(ResultView resultView, Game game) {
         resultView.printScores(PlayersDTO.from(game));
         //TODO: 결과 출력
-        //resultView.printResults(ResultsDTO.from(game.getResults()), DealerDTO.from(game));
+        game.getResults();
     }
 }

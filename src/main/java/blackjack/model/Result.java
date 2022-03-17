@@ -12,4 +12,8 @@ public enum Result {
     Result(double houseEdge) {
         this.houseEdge = houseEdge;
     }
+
+    public Money apply(Money money) {
+        return money.multipliedBy(this.houseEdge);
+    }
 }

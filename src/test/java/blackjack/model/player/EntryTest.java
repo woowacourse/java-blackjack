@@ -2,7 +2,7 @@ package blackjack.model.player;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.model.Money;
+import blackjack.model.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,9 +46,9 @@ public class EntryTest {
     @Test
     void bet_exception_already_betted() {
         Entry entry = new Entry("entry");
-        entry.bet(new Money(10000));
+        entry.bet(Bet.from(10000));
 
-        assertThatThrownBy(() -> entry.bet(new Money(20000)))
+        assertThatThrownBy(() -> entry.bet(Bet.from(20000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이미 배팅하였습니다.");
     }

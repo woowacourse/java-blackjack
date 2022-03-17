@@ -19,7 +19,8 @@ public final class Game {
     }
 
     public void betToCurrentEntry(Function<Game, Integer> betInputFunction) {
-        this.players.betToCurrent(new Money(betInputFunction.apply(this)));
+        int amount = betInputFunction.apply(this);
+        this.players.betToCurrent(Bet.from(amount));
     }
 
     public void start() {

@@ -1,6 +1,6 @@
 package blackjack.model.player;
 
-import blackjack.model.Money;
+import blackjack.model.Bet;
 import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
@@ -19,8 +19,8 @@ public final class Players {
         return new Players(Entries.from(names), new Dealer());
     }
 
-    public void betToCurrent(Money money) {
-        this.entries.betToCurrent(money);
+    public void betToCurrent(Bet bet) {
+        this.entries.betToCurrent(bet);
     }
 
     public void initializeDecks(Supplier<TrumpCard> cardSupplier) {
