@@ -13,8 +13,8 @@ import blackjack.domain.participant.Player;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConsoleGame {
 
@@ -26,19 +26,15 @@ public class ConsoleGame {
 
     public void run() {
         BlackjackGame blackjackGame = createBlackjackGame(randomGenerator);
-
-        Participants participants = blackjackGame.getParticipants();
         blackjackGame.initCardsAllParticipants();
 
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
-
+        Participants participants = blackjackGame.getParticipants();
         OutputView.printInitialCards(participants);
 
-        playPlayersTurn(blackjackGame, players);
-        playDealerTurn(blackjackGame, dealer);
+        playPlayersTurn(blackjackGame, participants);
+        playDealerTurn(blackjackGame, participants);
 
-        showGameResult(blackjackGame, dealer, players);
+        showGameResult(blackjackGame, participants);
     }
 
     private BlackjackGame createBlackjackGame(DeckGenerator deckGenerator) {
@@ -54,11 +50,9 @@ public class ConsoleGame {
     }
 
     private List<BettingAmount> getBettingAmounts(List<Name> names) {
-        List<BettingAmount> bettingAmounts = new ArrayList<>();
-        for (Name name : names) {
-            bettingAmounts.add(inputBettingAmounts(name));
-        }
-        return bettingAmounts;
+        return names.stream()
+                .map(this::inputBettingAmounts)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private BettingAmount inputBettingAmounts(Name name) {
@@ -70,8 +64,8 @@ public class ConsoleGame {
         }
     }
 
-    private void playPlayersTurn(BlackjackGame blackjackGame, List<Player> players) {
-        for (Player player : players) {
+    private void playPlayersTurn(BlackjackGame blackjackGame, Participants participants) {
+        for (Player player : participants.getPlayers()) {
             playPlayerTurn(blackjackGame, player);
         }
     }
@@ -93,16 +87,18 @@ public class ConsoleGame {
         }
     }
 
-    private void playDealerTurn(BlackjackGame blackjackGame, Dealer dealer) {
+    private void playDealerTurn(BlackjackGame blackjackGame, Participants participants) {
+        Dealer dealer = participants.getDealer();
+
         while (!dealer.isFinished()) {
-            OutputView.printDealerDrawInfo();
+            OutputView.printDealerDrawInfo(dealer.getName());
             blackjackGame.drawCard(dealer);
         }
     }
 
-    private void showGameResult(BlackjackGame blackjackGame, Dealer dealer, List<Player> players) {
+    private void showGameResult(BlackjackGame blackjackGame, Participants participants) {
         GameResult gameResult = blackjackGame.createGameResult();
-        OutputView.printCardsResult(dealer, players);
+        OutputView.printCardsResult(participants.getDealer(), participants.getPlayers());
         OutputView.printGameResult(gameResult);
     }
 }
