@@ -54,8 +54,8 @@ public class OutputView {
 
 	public void displayResult(Dealer dealer, Result result) {
 		System.out.println("## 최종 승패");
-		System.out.println(dealer.getName() + ": " + result.getDealerMoney(dealer));
-		Map<String, Integer> playersMoney = result.getPlayersMoney(dealer);
+		System.out.println(dealer.getName() + ": " + result.getDealerMoney());
+		Map<String, Integer> playersMoney = result.getPlayersMoney();
 		for (String playerName : playersMoney.keySet()) {
 			System.out.println(playerName + ": " + playersMoney.get(playerName));
 		}

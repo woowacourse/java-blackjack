@@ -9,6 +9,7 @@ public class BettingToken {
 	private static final double PROFIT_RATIO = 1.5;
 	private static final int DECREASE_RATIO = -1;
 	private final int money;
+	private int profit = 0;
 
 	public BettingToken(int money) {
 		validatePositive(money);
@@ -16,16 +17,20 @@ public class BettingToken {
 		this.money = money;
 	}
 
-	public int getMoney() {
-		return money;
+	public int getProfit() {
+		return profit;
 	}
 
-	public int getBlackJackMoney() {
-		return (int) (this.money * PROFIT_RATIO);
+	public void getBlackJackWinningMoney() {
+		profit = (int) (this.money * PROFIT_RATIO);
 	}
 
-	public int getLoseMoney() {
-		return this.money * DECREASE_RATIO;
+	public void getNotBlackJackWinningMoney() {
+		profit = this.money;
+	}
+
+	public void getLoseMoney() {
+		profit = this.money * DECREASE_RATIO;
 	}
 
 	private void validateDividedByUnitPrice(int money) {

@@ -44,6 +44,7 @@ public class BlackJackGameController {
 	}
 
 	private BettingTokens generateBettingMoneys(Players players) {
+		outputView.displayNewLine();
 		BettingTokens bettingTokens = new BettingTokens(players.getPlayersSize());
 		for (Player player : players.getPlayers()) {
 			bettingTokens.addBettingMoney(inputMoney(player.getName()));
@@ -57,7 +58,7 @@ public class BlackJackGameController {
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player);
 		}
-		Result result = new Result(players, bettingTokens);
+		Result result = Result.of(players, dealer, bettingTokens);
 		outputView.displayNewLine();
 		outputView.displayResult(dealer, result);
 	}
@@ -106,6 +107,7 @@ public class BlackJackGameController {
 	private void initializeCard(Players players, Dealer dealer, Deck deck) {
 		deck.shuffle();
 		dealer.addCards(deck.distributeCards(INIT_DISTRIBUTE_AMOUNT));
+		outputView.displayNewLine();
 		outputView.displayFirstDistribution(players, dealer);
 		outputView.displayDealerOneCard(dealer);
 		for (Player player : players.getPlayers()) {

@@ -3,45 +3,47 @@ package blackjack.domain;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 
 public class Result {
-	private final Map<Player, BettingToken> playerBettingTokenCache;
-	private final Map<String, Integer> playersMoneyResult;
+	private final Map<Player, BettingToken> gameResult;
 
 	public Result(Players players, BettingTokens bettingTokens) {
-		playerBettingTokenCache = new LinkedHashMap<>();
-		playersMoneyResult = new LinkedHashMap<>();
+		gameResult = new LinkedHashMap<>();
 		List<Player> nowPlayers = players.getPlayers();
 		List<BettingToken> nowBettingTokens = bettingTokens.getBettingMonies();
 		for (int i = 0; i < nowPlayers.size(); i++) {
-			playerBettingTokenCache.put(nowPlayers.get(i), nowBettingTokens.get(i));
-			playersMoneyResult.put(nowPlayers.get(i).getName(), nowBettingTokens.get(i).getMoney());
+			gameResult.put(nowPlayers.get(i), nowBettingTokens.get(i));
 		}
 	}
 
-	public int getDealerMoney(Dealer dealer) {
-		int dealerMoney = playerBettingTokenCache.values().stream()
-			.mapToInt(BettingToken::getMoney)
-			.sum();
-		dealerMoney -= playerBettingTokenCache.keySet().stream()
-			.filter(player -> player.isWinByBlackJack(dealer))
-			.mapToInt(player -> playerBettingTokenCache.get(player).getBlackJackMoney()).sum()
-			+ playerBettingTokenCache.keySet().stream()
-			.filter(player -> (player.isWin(dealer) && !player.isWinByBlackJack(dealer)) || player.isDraw(dealer))
-			.mapToInt(player -> playerBettingTokenCache.get(player).getMoney()).sum();
-		return dealerMoney;
+	public static Result of(Players players, Dealer dealer, BettingTokens bettingTokens) {
+		Result result = new Result(players, bettingTokens);
+		calculateProfitByCondition(result, dealer, Gamer::isWinByBlackJack, BettingToken::getBlackJackWinningMoney);
+		calculateProfitByCondition(result, dealer, Gamer::isWinByNotBlackJack,
+			BettingToken::getNotBlackJackWinningMoney);
+		calculateProfitByCondition(result, dealer, Gamer::isLose, BettingToken::getLoseMoney);
+		return result;
 	}
 
-	public Map<String, Integer> getPlayersMoney(Dealer dealer) {
-		playerBettingTokenCache.keySet().stream()
-			.filter(player -> player.isWinByBlackJack(dealer))
-			.forEach(
-				player -> playersMoneyResult.put(player.getName(),
-					playerBettingTokenCache.get(player).getBlackJackMoney()));
-		playerBettingTokenCache.keySet().stream()
-			.filter(player -> player.isLose(dealer))
-			.forEach(
-				player -> playersMoneyResult.put(player.getName(), playerBettingTokenCache.get(player).getLoseMoney()));
-		return playersMoneyResult;
+	private static void calculateProfitByCondition(Result result, Dealer dealer, BiPredicate<Player, Dealer> condition,
+												   Consumer<BettingToken> action) {
+		result.gameResult.entrySet().stream().filter(entry -> condition.test(entry.getKey(), dealer))
+			.forEach(entry -> action.accept(entry.getValue()));
+	}
+
+	public int getDealerMoney() {
+		return -1 * gameResult.values().stream()
+			.mapToInt(BettingToken::getProfit)
+			.sum();
+	}
+
+	public Map<String, Integer> getPlayersMoney() {
+		Map<String, Integer> playersMoney = new LinkedHashMap<>();
+		for (Map.Entry<Player, BettingToken> entry : this.gameResult.entrySet()) {
+			playersMoney.put(entry.getKey().getName(), entry.getValue().getProfit());
+		}
+		return playersMoney;
 	}
 }

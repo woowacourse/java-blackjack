@@ -26,10 +26,6 @@ public class BettingTokens {
 		return bettingMonies;
 	}
 
-	public int getTotalBettingMonies() {
-		return bettingMonies.stream().mapToInt(BettingToken::getMoney).sum();
-	}
-
 	public void addBettingMoney(BettingToken bettingToken) {
 		validateFullSize();
 		this.bettingMonies.add(bettingToken);

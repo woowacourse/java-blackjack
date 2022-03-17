@@ -30,27 +30,27 @@ public class ResultTest {
 		Dealer dealer = new Dealer(new Cards(
 			List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER), new Card(CardDenomination.KING, CardSuit.SPADE),
 				new Card(CardDenomination.TWO, CardSuit.SPADE))));
-		Result result = new Result(players, bettingTokens);
-		assertAll(() -> assertThat(result.getPlayersMoney(dealer).values()).containsSequence(-3000, 1500, 2000),
-			() -> assertThat(result.getDealerMoney(dealer)).isEqualTo(2500));
+		Result result = Result.of(players, dealer, bettingTokens);
+		assertAll(() -> assertThat(result.getPlayersMoney().values()).containsSequence(-3000, 1500, 2000),
+			() -> assertThat(result.getDealerMoney()).isEqualTo(-500));
 	}
 
 	@Test
 	void dealer_blackjack() {
 		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
 			new Card(CardDenomination.ACE, CardSuit.SPADE))));
-		Result result = new Result(players, bettingTokens);
-		assertAll(() -> assertThat(result.getPlayersMoney(dealer).values()).containsSequence(-3000, 1000, -2000),
-			() -> assertThat(result.getDealerMoney(dealer)).isEqualTo(5000));
+		Result result = Result.of(players, dealer, bettingTokens);
+		assertAll(() -> assertThat(result.getPlayersMoney().values()).containsSequence(-3000, 0, -2000),
+			() -> assertThat(result.getDealerMoney()).isEqualTo(5000));
 	}
 
 	@Test
 	void dealer_normal() {
 		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
 			new Card(CardDenomination.NINE, CardSuit.SPADE))));
-		Result result = new Result(players, bettingTokens);
-		assertAll(() -> assertThat(result.getPlayersMoney(dealer).values()).containsSequence(-3000, 1500, -2000),
-			() -> assertThat(result.getDealerMoney(dealer)).isEqualTo(4500));
+		Result result = Result.of(players, dealer, bettingTokens);
+		assertAll(() -> assertThat(result.getPlayersMoney().values()).containsSequence(-3000, 1500, -2000),
+			() -> assertThat(result.getDealerMoney()).isEqualTo(3500));
 	}
 
 	private Player getBustedPlayer() {

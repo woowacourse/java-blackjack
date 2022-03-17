@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Gamer {
 	protected final Cards cards;
-	protected final Name name;
+	private final Name name;
 
 	protected Gamer(Cards cards, Name name) {
 		this.cards = cards;
@@ -22,7 +22,7 @@ public abstract class Gamer {
 	public abstract boolean canHit();
 
 	public boolean isWin(Gamer gamer) {
-		return isWinByBlackJack(gamer) || isWinByBust(gamer) || isWinByNormalCase(gamer);
+		return isWinByBlackJack(gamer) || isWinByNotBlackJack(gamer);
 	}
 
 	public boolean isDraw(Gamer gamer) {
@@ -35,6 +35,10 @@ public abstract class Gamer {
 
 	private boolean isGamersInNormalCase(Gamer gamer) {
 		return !this.isBlackJack() && !this.isBust() && !gamer.isBlackJack() && !gamer.isBust();
+	}
+
+	public boolean isWinByNotBlackJack(Gamer gamer) {
+		return !isWinByBlackJack(gamer) && (isWinByNormalCase(gamer) || isWinByBust(gamer));
 	}
 
 	private boolean isWinByNormalCase(Gamer gamer) {
