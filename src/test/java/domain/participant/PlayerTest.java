@@ -105,6 +105,6 @@ class PlayerTest {
     @Test
     @DisplayName("Player와 딜러 모두 21을 넘지 않고, 점수가 같을 경우 Draw를 반환한다.")
     void isWinTest5() {
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.DRAW);
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.PUSH);
     }
 }

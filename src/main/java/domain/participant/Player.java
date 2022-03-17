@@ -20,7 +20,7 @@ public final class Player extends Participant implements Comparable<Participant>
         if (compareTo(dealer) < COMPARE_CRITERIA) {
             return Result.LOSE;
         }
-        return Result.DRAW;
+        return Result.PUSH;
     }
 
     @Override

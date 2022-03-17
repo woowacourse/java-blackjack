@@ -98,7 +98,7 @@ public final class OutputView {
 
     private void showDealerResult(String dealerName, Map<Result, Integer> dealerResult) {
         String record = String.format(RECORD_FORMAT, dealerResult.get(Result.WIN),
-            dealerResult.get(Result.DRAW), dealerResult.get(Result.LOSE));
+            dealerResult.get(Result.PUSH), dealerResult.get(Result.LOSE));
         System.out.printf(STATUS_FORMAT, dealerName, record);
         System.out.print(System.lineSeparator());
     }

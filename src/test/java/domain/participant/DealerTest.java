@@ -57,11 +57,11 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 결과값을 받는다.")
     void checkResultTest() {
-        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.DRAW);
+        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.PUSH);
         Map<Result, Integer> dealerResult = dealer.checkResult(playerResult);
 
         assertThat(dealerResult.get(Result.WIN)).isEqualTo(1);
-        assertThat(dealerResult.get(Result.DRAW)).isEqualTo(1);
+        assertThat(dealerResult.get(Result.PUSH)).isEqualTo(1);
         assertThat(dealerResult.get(Result.LOSE)).isEqualTo(2);
     }
 }

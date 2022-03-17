@@ -17,7 +17,7 @@ public final class Dealer extends Participant {
     public Map<Result, Integer> checkResult(List<Result> playersResult) {
         Map<Result, Integer> dealerResult = new EnumMap<Result, Integer>(Result.class);
         dealerResult.put(Result.WIN, countTargetResult(playersResult, Result.LOSE));
-        dealerResult.put(Result.DRAW, countTargetResult(playersResult, Result.DRAW));
+        dealerResult.put(Result.PUSH, countTargetResult(playersResult, Result.PUSH));
         dealerResult.put(Result.LOSE, countTargetResult(playersResult, Result.WIN));
         return dealerResult;
     }
