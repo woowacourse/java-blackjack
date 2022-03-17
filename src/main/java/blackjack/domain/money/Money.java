@@ -22,6 +22,14 @@ public class Money {
         return new Money(-money.value);
     }
 
+    public Money add(Money operandMoney) {
+        return new Money(this.value + operandMoney.value);
+    }
+
+    public Money subtract(Money operandMoney) {
+        return new Money(this.value - operandMoney.value);
+    }
+
     public boolean isNegative() {
         return value < 0;
     }

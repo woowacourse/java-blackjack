@@ -81,7 +81,6 @@ class BetAndProfitTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-
     @DisplayName("lose 메소드는 profitMoney 필드를 betMoney 의 음수값을 갖는 Money 로 설정한다.")
     @ParameterizedTest
     @CsvSource(value = {"10000,-10000", "20000,-20000", "0,0"})

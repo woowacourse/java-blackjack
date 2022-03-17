@@ -10,6 +10,7 @@ public class PlayerBetResult {
 
     // TODO: 불변객체로 만들어야함
     private static final String NOT_FOUND_PLAYER_EXCEPTION_MESSAGE = "존재하지 않는 플레이어입니다.";
+
     private final Map<Player, BetAndProfit> playerBetAndProfits;
 
     private PlayerBetResult(Map<Player, BetAndProfit> playerBetAndProfits, Dealer dealer) {

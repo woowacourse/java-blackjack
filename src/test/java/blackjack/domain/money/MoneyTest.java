@@ -34,6 +34,38 @@ public class MoneyTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("add 메소드는 현재 값에서 인자로 전달된 Money 의 값을 더한 새 Money 인스턴스를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"2000,1000,3000", "3000,3000,6000", "0,1000,1000", "0,0,0"})
+    void add_returnsAddedMoney(int original, int operand, int added) {
+        // given
+        Money originalMoney = Money.from(original);
+        Money operandMoney = Money.from(operand);
+
+        // when
+        Money actual = originalMoney.add(operandMoney);
+        Money expected = Money.from(added);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("subtract 메소드는 현재 값에서 인자로 전달된 Money 의 값을 뺀 새 Money 인스턴스를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"2000,1000,1000", "3000,3000,0", "0,1000,-1000", "500,2000,-1500"})
+    void subtract_returnsSubtractedMoney(int original, int operand, int subtracted) {
+        // given
+        Money originalMoney = Money.from(original);
+        Money operandMoney = Money.from(operand);
+
+        // when
+        Money actual = originalMoney.subtract(operandMoney);
+        Money expected = Money.from(subtracted);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("같은 value 를 가지고 있는 Money 끼리는 동등하다.")
     @ParameterizedTest
     @ValueSource(ints = {-1000, 0, 1000})

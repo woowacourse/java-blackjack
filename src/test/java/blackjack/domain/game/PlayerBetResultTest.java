@@ -36,9 +36,9 @@ public class PlayerBetResultTest {
         losePlayer = Player.of("losePlayer", Hand.of(CLOVER2, CLOVER3));
     }
 
-    @DisplayName("of 메소드는 Player 와 BetAndProfit 의 Map 과 Dealer 를 전달받아 BettingMoneyResult 를 생성해 반환한다.")
+    @DisplayName("of 메소드는 Player 와 BetAndProfit 의 Map 과 Dealer 를 전달받아 PlayerBetResult 를 생성해 반환한다.")
     @Test
-    void of_returnsInstanceOfBettingMoneyResult() {
+    void of_returnsInstanceOfPlayerBetResult() {
         // given
         Map<Player, BetAndProfit> playerBetAndProfits = new HashMap<>();
         playerBetAndProfits.put(winPlayer, BetAndProfit.from(Money.from(10000)));
