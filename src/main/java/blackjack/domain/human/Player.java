@@ -1,6 +1,6 @@
 package blackjack.domain.human;
 
-import blackjack.domain.card.group.Cards;
+import blackjack.domain.card.cards.Cards;
 
 public final class Player extends Human {
     private static final int INIT_CARD_NUMBER = 2;

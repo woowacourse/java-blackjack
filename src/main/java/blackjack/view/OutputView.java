@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.human.group.Participant;
+import blackjack.domain.human.humans.Participant;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
 import blackjack.domain.result.Result;

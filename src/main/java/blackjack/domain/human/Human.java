@@ -1,7 +1,7 @@
 package blackjack.domain.human;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.group.Cards;
+import blackjack.domain.card.cards.Cards;
 import blackjack.domain.human.element.Name;
 import blackjack.domain.result.Point;
 

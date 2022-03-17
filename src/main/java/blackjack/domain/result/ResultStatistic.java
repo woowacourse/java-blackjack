@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.human.group.Participant;
+import blackjack.domain.human.humans.Participant;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import java.util.HashMap;
