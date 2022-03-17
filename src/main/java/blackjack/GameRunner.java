@@ -5,11 +5,6 @@ import blackjack.domain.player.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
-
 public class GameRunner {
 
     public void run() {
@@ -25,17 +20,11 @@ public class GameRunner {
 
     private Game generateGame() {
         try {
-            return new Game(inputPlayerNames());
+            return new Game(InputView.inputPlayerNames());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return generateGame();
         }
-    }
-
-    private List<String> inputPlayerNames() {
-        return Arrays.stream(InputView.inputName())
-                .map(String::trim)
-                .collect(toList());
     }
 
     private void executePlayerTurn(Game game) {
