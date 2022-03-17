@@ -4,7 +4,6 @@ import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public enum PlayerOutcome {
     BLACKJACK_WIN("블랙잭 승"),
-    BLACKJACK_DRAW("블랙잭 무"),
     WIN("승"),
     LOSE("패"),
     DRAW("무");
@@ -18,7 +17,7 @@ public enum PlayerOutcome {
     // TODO 더 좋은 방법 찾기
     public static PlayerOutcome match(int dealerTotal, int playerTotal, int dealerCount, int playerCount) {
         if (dealerTotal == BLACKJACK_NUMBER && dealerCount == 2 && playerTotal == BLACKJACK_NUMBER && playerCount == 2) {
-            return BLACKJACK_DRAW;
+            return DRAW;
         }
         if (playerTotal == BLACKJACK_NUMBER && playerCount == 2) {
             return BLACKJACK_WIN;
@@ -47,9 +46,5 @@ public enum PlayerOutcome {
             return LOSE;
         }
         return DRAW;
-    }
-
-    public String getValue() {
-        return this.value;
     }
 }

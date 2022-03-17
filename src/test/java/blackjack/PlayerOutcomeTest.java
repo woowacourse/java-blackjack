@@ -65,10 +65,10 @@ class PlayerOutcomeTest {
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭이고 딜러도 블랙잭인 경우 블랙잭 무승부를 반환한다.")
+    @DisplayName("플레이어가 블랙잭이고 딜러도 블랙잭인 경우 무승부를 반환한다.")
     void playerBlackJackDealerBlackjackTest() {
         PlayerOutcome match = PlayerOutcome.match(21, 21, 2, 2);
-        assertThat(match).isEqualTo(PlayerOutcome.BLACKJACK_DRAW);
+        assertThat(match).isEqualTo(PlayerOutcome.DRAW);
     }
 
     @Test
