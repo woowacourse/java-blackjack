@@ -7,6 +7,7 @@ import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import dto.BlackjackResultDto;
 import dto.CardsAndScoreDto;
 import dto.CardsDto;
 import dto.NameDto;
@@ -24,7 +25,7 @@ public class BlackJackController {
 
         playGame(gamblers, dealer, cardDeck);
         printCardAndScore(dealer, gamblers);
-        OutputView.printResult(BlackJackResult.of(dealer, gamblers));
+        OutputView.printResult(new BlackjackResultDto(BlackJackResult.of(dealer, gamblers)));
     }
 
     public Gamblers setupGamblers() {
@@ -105,7 +106,7 @@ public class BlackJackController {
 
         while (dealer.isHittable()) {
             dealer.addCard(cardDeck.drawCard());
-            OutputView.printDealerAddCard(dealer);
+            OutputView.printDealerAddCard(dealer.getName());
         }
     }
 

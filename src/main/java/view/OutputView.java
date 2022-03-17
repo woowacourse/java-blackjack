@@ -2,16 +2,13 @@ package view;
 
 import static java.util.stream.Collectors.joining;
 
-import domain.BlackJackResult;
-import domain.card.PlayingCard;
-import domain.player.Dealer;
+import dto.BlackjackResultDto;
 import dto.CardsAndScoreDto;
 import dto.CardsDto;
 import dto.NameDto;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
-import view.util.NameMapper;
 import vo.Name;
 import vo.Revenue;
 
@@ -61,10 +58,8 @@ public class OutputView {
                 ));
     }
 
-    private static String getJoinedCardNames(List<PlayingCard> cards) {
-        return cards.stream()
-                .map(NameMapper::getCardName)
-                .collect(joining(CARD_NAME_JOIN_CHARACTER));
+    private static String getJoinedCardNames(List<String> cardNames) {
+        return String.join(CARD_NAME_JOIN_CHARACTER, cardNames);
     }
 
     public static void printLineSeparator() {
@@ -76,8 +71,8 @@ public class OutputView {
                 playerDto.getName() + COLON_FOR_NAME_AND_REVENUE + getJoinedCardNames(playerDto.getCards()));
     }
 
-    public static void printDealerAddCard(Dealer dealer) {
-        System.out.printf(INFO_FOR_DEALER_ADD_CARD, dealer.getName());
+    public static void printDealerAddCard(String dealerName) {
+        System.out.printf(INFO_FOR_DEALER_ADD_CARD, dealerName);
     }
 
     public static void printCardAndScoreDtos(List<CardsAndScoreDto> cardsAndScoreDtos) {
@@ -91,10 +86,10 @@ public class OutputView {
         }
     }
 
-    public static void printResult(BlackJackResult blackJackResult) {
+    public static void printResult(BlackjackResultDto blackjackResultDto) {
         System.out.println(System.lineSeparator() + RESULT_TITLE);
 
-        blackJackResult.getBlackjackResult()
+        blackjackResultDto.getBlackjackResult()
                 .entrySet()
                 .forEach(OutputView::printSingleGamblerResult);
     }
