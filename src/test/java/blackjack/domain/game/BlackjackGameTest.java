@@ -11,9 +11,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
-import blackjack.strategy.DealerViewStrategy;
+import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayChoiceStrategy;
-import blackjack.strategy.PlayerViewStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -29,9 +28,7 @@ public class BlackjackGameTest {
     private static final CardBundleStrategy cardBundleOfBlackjackStrategy = (cardStack) -> getCardBundleOfBlackjack();
 
     private static final HitOrStayChoiceStrategy DRAW_CHOICE = () -> true;
-    private static final PlayerViewStrategy VIEW_STRATEGY = player -> {
-    };
-    private static final DealerViewStrategy DEALER_VIEW_STRATEGY = () -> {
+    private static final CardsViewStrategy CARDS_VIEW_STRATEGY = (dealer) -> {
     };
 
     @DisplayName("생성자 테스트")
@@ -101,7 +98,7 @@ public class BlackjackGameTest {
             BlackjackGame blackjackGame = new BlackjackGame(
                     new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
 
-            blackjackGame.drawAllPlayerCards(DRAW_CHOICE, VIEW_STRATEGY);
+            blackjackGame.drawAllPlayerCards(DRAW_CHOICE, CARDS_VIEW_STRATEGY);
             blackjackGame.getParticipants()
                     .getPlayers()
                     .stream()
@@ -117,7 +114,7 @@ public class BlackjackGameTest {
             BlackjackGame blackjackGame = new BlackjackGame(
                     new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
 
-            blackjackGame.drawDealerCards(DEALER_VIEW_STRATEGY);
+            blackjackGame.drawDealerCards(CARDS_VIEW_STRATEGY);
             Dealer dealer = blackjackGame.getParticipants().getDealer();
 
             boolean actual = dealer.canDraw();

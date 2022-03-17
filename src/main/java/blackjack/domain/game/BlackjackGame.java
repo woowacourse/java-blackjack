@@ -7,9 +7,8 @@ import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
 import blackjack.strategy.CardBundleSupplier;
-import blackjack.strategy.DealerViewStrategy;
+import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayChoiceStrategy;
-import blackjack.strategy.PlayerViewStrategy;
 import java.util.List;
 
 public class BlackjackGame {
@@ -35,7 +34,7 @@ public class BlackjackGame {
     }
 
     public void drawAllPlayerCards(final HitOrStayChoiceStrategy hitOrStayStrategy,
-                                   final PlayerViewStrategy viewStrategy) {
+                                   final CardsViewStrategy viewStrategy) {
 
         List<Player> players = participants.getPlayers();
         for (Player player : players) {
@@ -45,21 +44,15 @@ public class BlackjackGame {
 
     public void drawPlayerCards(final Player player,
                                 final HitOrStayChoiceStrategy hitOrStayStrategy,
-                                final PlayerViewStrategy viewStrategy) {
+                                final CardsViewStrategy playerView) {
 
-        viewStrategy.printOf(player);
-        while (player.canDraw()) {
-            player.hitOrStay(hitOrStayStrategy, this::popCard);
-            viewStrategy.printOf(player);
-        }
+        playerView.print(player);
+        player.drawAllCards(hitOrStayStrategy, playerView, this::popCard);
     }
 
-    public void drawDealerCards(final DealerViewStrategy dealerView) {
+    public void drawDealerCards(final CardsViewStrategy dealerView) {
         Dealer dealer = getDealer();
-        while (dealer.canDraw()) {
-            dealer.hitOrStay(ALWAYS_HIT_STRATEGY, this::popCard);
-            dealerView.print();
-        }
+        dealer.drawAllCards(ALWAYS_HIT_STRATEGY, dealerView, this::popCard);
     }
 
     private Card popCard() {

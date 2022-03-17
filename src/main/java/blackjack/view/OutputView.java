@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.betting.BettingResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
@@ -20,7 +20,7 @@ public class OutputView {
     private static final String PLAYER_MAX_SCORE_MESSAGE = "패가 확정되었습니다!" + NEW_LINE;
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!" + NEW_LINE;
     private static final String PLAYER_BLACKJACK_MESSAGE = "블랙잭! 패가 확정되었습니다!" + NEW_LINE;
-    private static final String DEALER_EXTRA_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
+    private static final String EXTRA_CARD_MESSAGE = "%s는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
     private static final String BETTING_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 수익" + NEW_LINE;
     private static final String BETTING_RESULT_FORMAT = "%s: %s";
 
@@ -58,7 +58,7 @@ public class OutputView {
         return String.format(PLAYER_CARDS_FORMAT, dto.getName(), cards);
     }
 
-    public static void printPlayerCardDistributionInfo(final Player player) {
+    public static void printPlayerCardDistributionInfo(final Participant player) {
         StringBuilder builder = new StringBuilder();
 
         builder.append(getPlayerCardHandInfo(player));
@@ -70,12 +70,12 @@ public class OutputView {
         print(builder.toString());
     }
 
-    private static String getPlayerCardHandInfo(Player player) {
+    private static String getPlayerCardHandInfo(Participant player) {
         final String playerCards = getCardsInfo(player.getCards());
         return String.format(PLAYER_CARDS_FORMAT, player.getName(), playerCards);
     }
 
-    private static String getCanNotHitInfoOf(Player player) {
+    private static String getCanNotHitInfoOf(Participant player) {
         if (player.isBust()) {
             return PLAYER_BUST_MESSAGE;
         }
@@ -85,8 +85,9 @@ public class OutputView {
         return PLAYER_MAX_SCORE_MESSAGE;
     }
 
-    public static void printDealerExtraCardInfo() {
-        print(DEALER_EXTRA_CARD_MESSAGE);
+    public static void printDealerExtraCardInfo(Participant dealer) {
+        String dealerName = dealer.getName();
+        print(String.format(EXTRA_CARD_MESSAGE, dealerName));
     }
 
     public static void printBettingResults(final List<BettingResult> bettingResults) {

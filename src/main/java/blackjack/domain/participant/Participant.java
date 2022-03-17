@@ -6,6 +6,7 @@ import blackjack.domain.card.CardHand;
 import blackjack.domain.game.Score;
 import blackjack.strategy.CardHandStateStrategy;
 import blackjack.strategy.CardSupplier;
+import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayChoiceStrategy;
 import java.util.List;
 
@@ -19,6 +20,15 @@ public abstract class Participant {
 
     public boolean canDraw() {
         return !cardHand.isFinished();
+    }
+
+    public void drawAllCards(final HitOrStayChoiceStrategy hitOrStayStrategy,
+                             final CardsViewStrategy viewStrategy,
+                             final CardSupplier supplier) {
+        while (canDraw()) {
+            hitOrStay(hitOrStayStrategy, supplier);
+            viewStrategy.print(this);
+        }
     }
 
     public void hitOrStay(final HitOrStayChoiceStrategy hitOrStay,
