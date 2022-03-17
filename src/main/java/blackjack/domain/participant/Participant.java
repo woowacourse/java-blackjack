@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.ParticipantCards;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public abstract class Participant {
     private static final int BUST_THRESHOLD_NUMBER = 21;
 
     protected ParticipantCards participantCards;
+    protected BettingMoney bettingMoney;
 
     public void receiveInitCards(List<Card> cards) {
         participantCards = new ParticipantCards(new ArrayList<>(cards));
@@ -20,12 +22,20 @@ public abstract class Participant {
         participantCards.addCard(card);
     }
 
-    public int getScore() {
-        return participantCards.calculateScore();
+    public void createBettingMoney(BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 
     public boolean isBust() {
         return getScore() > BUST_THRESHOLD_NUMBER;
+    }
+
+    public int getScore() {
+        return participantCards.calculateScore();
+    }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 
     public List<Card> getCards() {

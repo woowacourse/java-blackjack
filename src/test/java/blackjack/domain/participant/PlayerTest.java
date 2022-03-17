@@ -3,10 +3,10 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -72,5 +72,16 @@ public class PlayerTest {
         player.receiveCard(new Card(Suit.DIAMOND, Denomination.TWO));
 
         assertThat(player.getCards().size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("플레이어가 배팅머니를 입력한다.")
+    void receiveBettingMoney() {
+        Player player = new Player("Angel Angie");
+
+        player.createBettingMoney(new BettingMoney(1000));
+
+        assertThat(player.getBettingMoney().getBettingMoney()).isEqualTo(1000);
+
     }
 }
