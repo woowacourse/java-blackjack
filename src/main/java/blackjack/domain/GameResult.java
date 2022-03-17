@@ -12,27 +12,27 @@ import java.util.stream.Collectors;
 
 public enum GameResult {
 
-    WIN("승", (dealerResult, gamerResult) -> gamerResult <= Constants.LIMIT_BLACK_JACK_POINT
-        && (dealerResult < gamerResult || dealerResult > Constants.LIMIT_BLACK_JACK_POINT)
+    WIN("승", (dealerResult, gamerResult) -> !isBurst(gamerResult)
+        && (dealerResult < gamerResult || isBurst(dealerResult))
     ),
-    DRAW("무", (dealerResult, gamerResult) -> gamerResult <= Constants.LIMIT_BLACK_JACK_POINT
+    DRAW("무", (dealerResult, gamerResult) -> !isBurst(gamerResult)
         && dealerResult == gamerResult),
-    LOSE("패", (dealerResult, gamerResult) -> gamerResult > Constants.LIMIT_BLACK_JACK_POINT
+    LOSE("패", (dealerResult, gamerResult) -> isBurst(gamerResult)
         || dealerResult > gamerResult
     );
 
+    public static final int LIMIT_BLACK_JACK_POINT = 21;
 
     private final String result;
     private final BiPredicate<Integer, Integer> predicate;
 
-    private static class Constants {
-
-        public static final int LIMIT_BLACK_JACK_POINT = 21;
-    }
-
     GameResult(final String result, final BiPredicate<Integer, Integer> predicate) {
         this.result = result;
         this.predicate = predicate;
+    }
+
+    private static boolean isBurst(int point) {
+        return point > LIMIT_BLACK_JACK_POINT;
     }
 
     public static GameResult findResult(final int dealerResult, final int gamerResult) {

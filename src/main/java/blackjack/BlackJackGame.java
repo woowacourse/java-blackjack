@@ -75,7 +75,7 @@ public class BlackJackGame {
 
     private boolean isAnswerYes(final String name) {
         try {
-            return Answer.isYes(InputView.requestAnswer(name));
+            return Answer.isHit(InputView.requestAnswer(name));
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return isAnswerYes(name);
