@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -61,5 +62,34 @@ class ParticipantTest {
         participant.addCard(new Card(Type.DIAMOND, Score.JACK));
         participant.addCard(new Card(Type.DIAMOND, Score.TWO));
         assertThat(participant.acceptableCard()).isEqualTo(false);
+    }
+
+    @Test
+    @DisplayName("참가자는 금액을 배팅할 수 있다.")
+    void bettingMoney() {
+        Participant participant = new Participant("pobi", name -> true);
+        participant.increaseBetting(10000);
+
+        assertThat(participant.betting()).isEqualTo(new Money(10000));
+    }
+
+    @Test
+    @DisplayName("참가자의 베팅금액은 차감될 수 있다.")
+    void decreaseBetting() {
+        Participant participant = new Participant("pobi", name -> true);
+        participant.increaseBetting(10000);
+        participant.decreaseBetting(5000);
+
+        assertThat(participant.betting()).isEqualTo(new Money(5000));
+    }
+
+    @Test
+    @DisplayName("참가자의 베팅금액은 차증될 수 있다.")
+    void increaseBetting() {
+        Participant participant = new Participant("pobi", name -> true);
+        participant.increaseBetting(10000);
+        participant.increaseBetting(5000);
+
+        assertThat(participant.betting()).isEqualTo(new Money(15000));
     }
 }

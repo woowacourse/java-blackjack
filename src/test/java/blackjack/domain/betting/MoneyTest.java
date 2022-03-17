@@ -19,7 +19,7 @@ public class MoneyTest {
     @DisplayName("돈을 차감할 수 있다.")
     void decreaseMoney() {
         Money money = new Money(10000);
-        money.decrease(10000);
+        money.decrease(new Money(10000));
         assertThat(money).isEqualTo(new Money(0));
     }
 
@@ -27,7 +27,7 @@ public class MoneyTest {
     @DisplayName("돈을 추가할 수 있다.")
     void increaseMoney() {
         Money money = new Money(10000);
-        money.increase(10000);
+        money.increase(new Money(10000));
         assertThat(money).isEqualTo(new Money(20000));
     }
 

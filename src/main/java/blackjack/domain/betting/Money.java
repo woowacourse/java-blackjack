@@ -19,12 +19,12 @@ public class Money {
         }
     }
 
-    public void decrease(int amount) {
-        this.amount -= amount;
+    public void decrease(Money money) {
+        this.amount -= money.amount;
     }
 
-    public void increase(int amount) {
-        this.amount += amount;
+    public void increase(Money money) {
+        this.amount += money.amount;
     }
 
     @Override
