@@ -54,11 +54,11 @@ public class BettingToken {
 			return false;
 		}
 		BettingToken that = (BettingToken) o;
-		return money == that.money;
+		return money == that.money && profit == that.profit;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(money);
+		return Objects.hash(money, profit);
 	}
 }
