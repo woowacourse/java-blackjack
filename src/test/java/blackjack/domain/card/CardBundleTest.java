@@ -194,7 +194,7 @@ public class CardBundleTest {
         void isBlackjackScore_returnTrueOnBlackjack() {
             CardBundle twoCardsOf21 = generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
 
-            boolean actual = twoCardsOf21.isBlackjackScore();
+            boolean actual = twoCardsOf21.getScoreInt() == Score.BLACKJACK;
 
             assertThat(actual).isTrue();
         }
@@ -204,7 +204,7 @@ public class CardBundleTest {
         void isBlackjackScore_returnTrueOn21NonBlackjack() {
             CardBundle twoCardsOf21 = generateCardBundleOf(CLOVER3, CLOVER8, CLOVER_KING);
 
-            boolean actual = twoCardsOf21.isBlackjackScore();
+            boolean actual = twoCardsOf21.getScoreInt() == Score.BLACKJACK;
 
             assertThat(actual).isTrue();
         }
@@ -214,7 +214,7 @@ public class CardBundleTest {
         void isBlackjackScore_returnFalseIfNot21() {
             CardBundle twoCardsOf20 = generateCardBundleOf(CLOVER10, CLOVER_KING);
 
-            boolean actual = twoCardsOf20.isBlackjackScore();
+            boolean actual = twoCardsOf20.getScoreInt() == Score.BLACKJACK;
 
             assertThat(actual).isFalse();
         }

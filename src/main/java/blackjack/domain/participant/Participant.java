@@ -21,14 +21,14 @@ public abstract class Participant {
         cardHand = getInitialCardHand(cardBundle, stateStrategy);
     }
 
-    private CardHand getInitialCardHand(CardBundle cardBundle, StayStrategy stayStrategy) {
+    private CardHand getInitialCardHand(CardBundle cardBundle, StayStrategy strategy) {
         if (cardBundle.isBlackjack()) {
             return new Blackjack(cardBundle);
         }
-        if (stayStrategy.checkFinished(cardBundle)) {
+        if (strategy.shouldStay(cardBundle)) {
             return new Stay(cardBundle);
         }
-        return new CanHit(cardBundle, stayStrategy);
+        return new CanHit(cardBundle, strategy);
     }
 
     public void drawAllCards(final HitOrStayChoiceStrategy hitOrStayStrategy,

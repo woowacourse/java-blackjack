@@ -61,23 +61,20 @@ public class CardBundle {
         return aceCount > 0;
     }
 
-    public boolean isBlackjackScore() {
-        return score.isBlackjackScore();
-    }
-
     public boolean isBlackjack() {
         if (cards.size() != BLACKJACK_CARD_SIZE) {
             return false;
         }
-        return isBlackjackScore();
+        return isBlackJackScore();
+    }
+
+    public boolean isBlackJackScore() {
+        int score = getScoreInt();
+        return score == Score.BLACKJACK;
     }
 
     public boolean isBust() {
         return score.isBustScore();
-    }
-
-    public boolean isDealerFinished() {
-        return score.isDealerFinished();
     }
 
     public List<Card> getCards() {
@@ -86,6 +83,10 @@ public class CardBundle {
 
     public Score getScore() {
         return score;
+    }
+
+    public int getScoreInt() {
+        return score.toInt();
     }
 
     @Override

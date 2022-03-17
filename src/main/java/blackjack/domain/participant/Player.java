@@ -14,8 +14,12 @@ public class Player extends Participant {
     private final String name;
 
     private Player(final String name, final CardBundle cardBundle) {
-        super(cardBundle, CardBundle::isBlackjackScore);
+        super(cardBundle, Player::stayStrategy);
         this.name = name;
+    }
+
+    private static boolean stayStrategy(final CardBundle cardBundle) {
+        return cardBundle.isBlackJackScore();
     }
 
     public static Player of(final String name, final CardBundle cardBundle) {

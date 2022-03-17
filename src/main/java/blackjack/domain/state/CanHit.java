@@ -9,6 +9,7 @@ import blackjack.strategy.StayStrategy;
 public class CanHit implements CardHand {
 
     private static final String NOT_FINISHED_STATE_EXCEPTION_MESSAGE = "아직 패가 확정되지 않았습니다.";
+
     private final CardBundle cardBundle;
     private final StayStrategy stayStrategy;
 
@@ -19,7 +20,7 @@ public class CanHit implements CardHand {
     }
 
     private void validateCanHit(CardBundle cardBundle, StayStrategy stayStrategy) {
-        if (stayStrategy.checkFinished(cardBundle)){
+        if (stayStrategy.shouldStay(cardBundle)){
             throw new IllegalArgumentException(ALREADY_FINISHED_EXCEPTION_MESSAGE);
         }
     }
@@ -30,7 +31,7 @@ public class CanHit implements CardHand {
         if (newCardBundle.isBust()) {
             return new Bust(newCardBundle);
         }
-        if (stayStrategy.checkFinished(newCardBundle)) {
+        if (stayStrategy.shouldStay(newCardBundle)) {
             return new Stay(newCardBundle);
         }
         return new CanHit(newCardBundle, stayStrategy);
