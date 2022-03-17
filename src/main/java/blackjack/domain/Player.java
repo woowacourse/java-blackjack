@@ -4,12 +4,15 @@ public class Player extends Participant {
 
     public static final int BLACKJACK_NUMBER = 21;
 
-    public Player(String name) {
-        super(name);
+    private final BettingAmount bettingAmount;
+
+    public Player(String name, int bettingAmount) {
+        this(new Name(name), new BettingAmount(bettingAmount));
     }
 
-    public Player(Name name) {
+    public Player(Name name, BettingAmount bettingAmount) {
         super(name);
+        this.bettingAmount = bettingAmount;
     }
 
     @Override

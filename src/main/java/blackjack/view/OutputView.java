@@ -15,7 +15,7 @@ public class OutputView {
     }
 
     public static void printInitGameMessage(List<ParticipantDto> participantDtos, ParticipantDto dealerDto) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.", dealerDto.getName(),
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.", dealerDto.getName(),
                 participantDtos.stream().map(ParticipantDto::getName).collect(Collectors.joining(", ")));
         System.out.println();
     }
@@ -31,7 +31,7 @@ public class OutputView {
     }
 
     public static void printPlayersResult(List<ParticipantDto> participantDtos, ParticipantDto dealerDto) {
-        System.out.println();
+        System.out.printf("%n");
         printPlayerResult(dealerDto);
 
         for (ParticipantDto participantDto : participantDtos) {
@@ -58,11 +58,11 @@ public class OutputView {
     }
 
     public static void printDealerDrawMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf("%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
     }
 
     public static void printResult(ScoreResult result) {
-        System.out.println("## 최종 승패");
+        System.out.printf("%n## 최종 승패%n");
         System.out.print("딜러: ");
         for (Score score : Score.values()) {
             int dealerScoreCount = result.getDealerScoreCount(score);

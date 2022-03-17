@@ -24,7 +24,7 @@ public class ParticipantsTest {
         void throwExceptionOverEight() {
             List<Participant> players = new ArrayList<>();
             for (int i = 0; i < 9; i++) {
-                players.add(new Player(Integer.toString(i)));
+                players.add(new Player(Integer.toString(i), 0));
             }
             assertThatThrownBy(() -> new Participants(players))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -39,9 +39,9 @@ public class ParticipantsTest {
         @Test
         @DisplayName("딜러와 승부를 겨루고 결과를 맵으로 반환한다.")
         void returnScoreMap() {
-            Player roma = new Player("roma");
-            Player tonic = new Player("tonic");
-            Player pobi = new Player("pobi");
+            Player roma = new Player("roma", 0);
+            Player tonic = new Player("tonic", 0);
+            Player pobi = new Player("pobi", 0);
 
             Participants players = new Participants(List.of(roma, tonic, pobi));
             MockDeck mockDeck = new MockDeck(List.of(
@@ -72,8 +72,8 @@ public class ParticipantsTest {
         @Test
         @DisplayName("현재 차례의 플레이어를 반환한다.")
         void getCurrentTurnPlayer() {
-            Player roma = new Player("roma");
-            Player tonic = new Player("tonic");
+            Player roma = new Player("roma", 0);
+            Player tonic = new Player("tonic", 0);
             Participants players = new Participants(List.of(roma, tonic));
 
             assertThat(players.getCurrentTurnPlayer()).isEqualTo(roma);
@@ -87,8 +87,8 @@ public class ParticipantsTest {
         @Test
         @DisplayName("다음 차례로 턴을 넘긴다.")
         void proceedTurn() {
-            Player roma = new Player("roma");
-            Player tonic = new Player("tonic");
+            Player roma = new Player("roma", 0);
+            Player tonic = new Player("tonic", 0);
             Participants players = new Participants(List.of(roma, tonic));
             players.proceedTurn();
 
@@ -98,8 +98,8 @@ public class ParticipantsTest {
         @Test
         @DisplayName("현재 턴을 진행할 플레이어가 없을 때 사용하면 예외를 발생시킨다.")
         void throwExceptionByOverAllTurn() {
-            Player roma = new Player("roma");
-            Player tonic = new Player("tonic");
+            Player roma = new Player("roma", 0);
+            Player tonic = new Player("tonic", 0);
             Participants players = new Participants(List.of(roma, tonic));
             players.proceedTurn();
             players.proceedTurn();
@@ -118,8 +118,8 @@ public class ParticipantsTest {
         @CsvSource(value = {"ACE|false", "QUEEN|true"}, delimiter = '|')
         @DisplayName("현재 차례의 플레이어가 버스트되었는지 확인한다.")
         void checkBustCurrentTurnPlayer(CardNumber cardNumber, boolean expected) {
-            Participant roma = new Player("roma");
-            Participant tonic = new Player("tonic");
+            Participant roma = new Player("roma", 0);
+            Participant tonic = new Player("tonic", 0);
             Participants players = new Participants(List.of(roma, tonic));
 
             MockDeck mockDeck = new MockDeck(List.of(

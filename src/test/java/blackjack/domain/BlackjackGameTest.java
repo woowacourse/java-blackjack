@@ -14,8 +14,8 @@ class BlackjackGameTest {
     @Test
     @DisplayName("drawStringCard는 초기 카드를 뽑는다.")
     void drawStartingCard() {
-        Participant roma = new Player("roma");
-        Participant tonic = new Player("tonic");
+        Participant roma = new Player("roma", 0);
+        Participant tonic = new Player("tonic", 0);
         BlackjackGame blackjackGame = new BlackjackGame(new Participants(List.of(roma, tonic)), new Deck());
 
         blackjackGame.drawStartingCard();
