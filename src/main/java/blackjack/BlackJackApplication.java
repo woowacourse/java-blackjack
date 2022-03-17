@@ -7,7 +7,7 @@ import blackjack.view.OutputView;
 
 import java.util.List;
 
-import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
+import static blackjack.domain.gamer.Gamers.INIT_DISTRIBUTION_COUNT;
 
 public class BlackJackApplication {
     public static void main(String[] args) {

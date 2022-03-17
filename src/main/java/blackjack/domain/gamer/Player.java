@@ -18,7 +18,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    boolean isBurst() {
+    boolean canDraw() {
         return getCardsNumberSum() <= MAX_CARD_VALUE;
     }
 }

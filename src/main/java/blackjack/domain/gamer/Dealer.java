@@ -9,7 +9,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    boolean isBurst() {
+    boolean canDraw() {
         return getCardsNumberSum() <= ADDITIONAL_DISTRIBUTE_STANDARD;
     }
 }

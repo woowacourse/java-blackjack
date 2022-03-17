@@ -4,9 +4,8 @@ import blackjack.domain.card.Deck;
 
 import java.util.*;
 
-import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
-
 public class Gamers {
+    public static final int INIT_DISTRIBUTION_COUNT = 2;
     private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
     private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
 
@@ -44,7 +43,7 @@ public class Gamers {
     }
 
     public void distributeAdditionalToDealer(Deck deck) {
-        while (dealer.isBurst()) {
+        while (dealer.canDraw()) {
             distributeCard(dealer, deck);
         }
     }
@@ -54,7 +53,7 @@ public class Gamers {
     }
 
     public boolean canDrawToPlayer(Player player) {
-        return !player.isBurst();
+        return !player.canDraw();
     }
 
     public Player findPlayerByName(String name) {
