@@ -13,12 +13,10 @@ public class BlackJackReferee {
 
     private static final int DEFAULT_EARNING = 0;
 
-    private final int dealerDrawCount;
     private final int dealerEarning;
     private final Map<String, Integer> playerEarnings;
 
-    private BlackJackReferee(int dealerDrawCount, int dealerEarning, Map<String, Integer> playerEarnings) {
-        this.dealerDrawCount = dealerDrawCount;
+    private BlackJackReferee(int dealerEarning, Map<String, Integer> playerEarnings) {
         this.dealerEarning = dealerEarning;
         this.playerEarnings = playerEarnings;
     }
@@ -34,11 +32,7 @@ public class BlackJackReferee {
             playerEarnings.put(player.getName(), playerEarning);
             dealerEarning += Bet.calculateMinusAmount(playerEarning);
         }
-        return new BlackJackReferee(dealer.findHitCount(), dealerEarning, playerEarnings);
-    }
-
-    public int getDealerDrawCount() {
-        return dealerDrawCount;
+        return new BlackJackReferee(dealerEarning, playerEarnings);
     }
 
     public int getDealerEarning() {
