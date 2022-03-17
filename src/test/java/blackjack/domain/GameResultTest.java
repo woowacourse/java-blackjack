@@ -31,7 +31,7 @@ public class GameResultTest {
         Map<PlayerOutcome, List<Player>> result = new HashMap<>();
         Player player = new Player("플레이어", HoldCards.init(List.of(Card.valueOf(Suit.HEART, Denomination.EIGHT), Card.valueOf(Suit.CLUB, Denomination.EIGHT))));
         player.initBettingMoney(10000);
-        result.put(PlayerOutcome.WIN, List.of(player));
+        result.put(PlayerOutcome.LOSE, List.of(player));
 
         GameResult gameResult = new GameResult(result);
 
@@ -44,10 +44,23 @@ public class GameResultTest {
         Map<PlayerOutcome, List<Player>> result = new HashMap<>();
         Player player = new Player("플레이어", HoldCards.init(List.of(Card.valueOf(Suit.HEART, Denomination.EIGHT), Card.valueOf(Suit.CLUB, Denomination.EIGHT))));
         player.initBettingMoney(10000);
-        result.put(PlayerOutcome.WIN, List.of(player));
+        result.put(PlayerOutcome.DRAW, List.of(player));
 
         GameResult gameResult = new GameResult(result);
 
         assertThat(gameResult.getBettingMoney(player, PlayerOutcome.DRAW)).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭으로 이긴 경우 베팅 금액의 1.5배를 받는다.")
+    void blackjackTest() {
+        Map<PlayerOutcome, List<Player>> result = new HashMap<>();
+        Player player = new Player("플레이어", HoldCards.init(List.of(Card.valueOf(Suit.HEART, Denomination.EIGHT), Card.valueOf(Suit.CLUB, Denomination.EIGHT))));
+        player.initBettingMoney(10000);
+        result.put(PlayerOutcome.BLACKJACK_WIN, List.of(player));
+
+        GameResult gameResult = new GameResult(result);
+
+        assertThat(gameResult.getBettingMoney(player, PlayerOutcome.BLACKJACK_WIN)).isEqualTo(15000);
     }
 }

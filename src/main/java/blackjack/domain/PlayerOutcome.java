@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public enum PlayerOutcome {
+    BLACKJACK_WIN("블랙잭"),
     WIN("승"),
     LOSE("패"),
     DRAW("무");

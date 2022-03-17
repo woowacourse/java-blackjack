@@ -23,12 +23,15 @@ public class GameResult {
         return null;
     }
 
-    public int getBettingMoney(Player player, PlayerOutcome playerOutcome) {
+    public double getBettingMoney(Player player, PlayerOutcome playerOutcome) {
         if (playerOutcome == PlayerOutcome.WIN) {
             return player.getBettingMoney();
         }
         if (playerOutcome == PlayerOutcome.LOSE) {
             return -player.getBettingMoney();
+        }
+        if (playerOutcome == PlayerOutcome.BLACKJACK_WIN) {
+            return player.getBettingMoney() * 1.5;
         }
         return 0;
     }
