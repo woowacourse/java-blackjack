@@ -11,14 +11,10 @@ public final class CardDeck {
 
     private final Stack<Card> value;
 
-    private CardDeck() {
+    public CardDeck() {
         this.value = new Stack<>();
         init();
         Collections.shuffle(value);
-    }
-
-    public static CardDeck newInstance() {
-        return new CardDeck();
     }
 
     private void init() {

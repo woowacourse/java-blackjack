@@ -44,7 +44,7 @@ class PlayersTest {
         Player player1 = Player.from("pobi");
         Player player2 = Player.from("jason");
         Players players = Players.fromRawValue(List.of(player1, player2));
-        CardDeck cardDeck = CardDeck.newInstance();
+        CardDeck cardDeck = new CardDeck();
 
         // when
         players.giveCard(cardDeck);
@@ -60,7 +60,7 @@ class PlayersTest {
     public void giveCardTest() {
         // given
         Players players = Players.fromNames(List.of("pobi", "jason"));
-        CardDeck cardDeck = CardDeck.newInstance();
+        CardDeck cardDeck = new CardDeck();
 
         // when
         players.giveCard(cardDeck);

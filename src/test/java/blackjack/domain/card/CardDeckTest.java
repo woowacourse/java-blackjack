@@ -12,7 +12,7 @@ class CardDeckTest {
     @Test
     @DisplayName("카드덱 생성되는지 테스트")
     public void createTest() {
-        CardDeck cardDeck = CardDeck.newInstance();
+        CardDeck cardDeck = new CardDeck();
         assertThat(cardDeck)
                 .extracting("value")
                 .asList()
@@ -24,7 +24,7 @@ class CardDeckTest {
     @DisplayName("카드 주기 기능 테스트")
     void drawTest() {
         // given
-        CardDeck cardDeck = CardDeck.newInstance();
+        CardDeck cardDeck = new CardDeck();
 
         // when
         cardDeck.pop();
@@ -40,7 +40,7 @@ class CardDeckTest {
     @DisplayName("카드 주기 예외처리 테스트")
     void drawErrorTest() {
         // given
-        CardDeck cardDeck = CardDeck.newInstance();
+        CardDeck cardDeck = new CardDeck();
 
         // when
         for (int i = 0; i < 52; i++) {

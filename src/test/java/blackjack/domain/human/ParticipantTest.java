@@ -25,7 +25,7 @@ class ParticipantTest {
     @Test
     @DisplayName("참여자 초기 카드 나눠주기 기능 테스트")
     void initCardTest() {
-        CardDeck cardDeck = CardDeck.newInstance();
+        CardDeck cardDeck = new CardDeck();
         participant.initCard(cardDeck);
         assertAll(
                 () -> assertThat(participant.getPlayers().get().size())

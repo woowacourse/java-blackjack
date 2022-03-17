@@ -14,7 +14,7 @@ public final class BlackjackGame {
 
     public void run() {
         Participant participant = Participant.from(getPlayers());
-        CardDeck cardDeck = CardDeck.newInstance();
+        CardDeck cardDeck = new CardDeck();
         initGame(participant, cardDeck);
         startGame(participant, cardDeck);
         endGame(participant);
