@@ -18,8 +18,13 @@ import java.util.List;
 
 public class ConsoleGame {
 
+    private final RandomGenerator randomGenerator;
+
+    public ConsoleGame(RandomGenerator randomGenerator) {
+        this.randomGenerator = randomGenerator;
+    }
+
     public void run() {
-        RandomGenerator randomGenerator = new RandomGenerator();
         BlackjackGame blackjackGame = createBlackjackGame(randomGenerator);
 
         Participants participants = blackjackGame.getParticipants();
