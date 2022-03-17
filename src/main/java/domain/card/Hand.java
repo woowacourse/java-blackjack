@@ -7,7 +7,7 @@ public class Hand {
 	private static final int LIMIT_TO_NOT_BUST_SCORE = 21;
 	private static final int BLACKJACK_SCORE = 21;
 	private static final int ADDITIONAL_SCORE_ACE = 10;
-	public static final int BLACKJACK_SIZE = 2;
+	private static final int BLACKJACK_SIZE = 2;
 	private static final int ACE_COUNT_LOWER_BOUND = 0;
 
 	private final List<Card> hand;
