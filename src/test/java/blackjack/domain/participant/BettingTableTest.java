@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.participant.Name;
+import blackjack.domain.PlayRecord;
 
 public class BettingTableTest {
 
@@ -20,7 +20,7 @@ public class BettingTableTest {
             new Betting(Name.of("jason"), 20000)));
 
         //when
-        long actual = table.getRevenues(Map.of(Name.of("pobi"), PlayRecord.WIN,
+        long actual = table.getRevenues(Name.of("딜러"), Map.of(Name.of("pobi"), PlayRecord.WIN,
             Name.of("jason"), PlayRecord.LOSS)).get(Name.of("딜러"));
         //then
         assertThat(actual).isEqualTo(10000);

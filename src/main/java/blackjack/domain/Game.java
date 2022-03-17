@@ -1,11 +1,13 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
@@ -17,9 +19,9 @@ public class Game {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Game(CardDeck cardDeck, List<Name> playerNames) {
+    public Game(CardDeck cardDeck, List<Name> playerNames, List<Betting> bettings) {
         this.cardDeck = cardDeck;
-        this.dealer = new Dealer();
+        this.dealer = new Dealer(bettings);
         this.players = List.copyOf(playerNames).stream()
             .map(Player::new)
             .collect(Collectors.toUnmodifiableList());
@@ -63,5 +65,9 @@ public class Game {
 
     public List<Player> getPlayers() {
         return List.copyOf(players);
+    }
+
+    public Map<Name, Long> getRevenues(Map<Name, PlayRecord> recordMap) {
+        return dealer.getRevenues(recordMap);
     }
 }

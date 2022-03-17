@@ -7,13 +7,12 @@ import static java.util.stream.Collectors.*;
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.Betting;
-import blackjack.domain.BettingTable;
 import blackjack.domain.Game;
 import blackjack.domain.PlayRecord;
 import blackjack.domain.PlayStatus;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.ShuffleDeck;
+import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
@@ -24,14 +23,13 @@ public class GameController {
 
     public void play() {
         List<Name> names = getNames();
-        List<Betting> bettings = getBettings(names);
-        Game game = initPlay(names);
+        Game game = initPlay(names, getBettings(names));
 
         drawPlayerCards(game);
         drawDealerCards(game);
 
         finalParticipantsCards(game);
-        finalRevenue(game, bettings);
+        finalRevenue(game);
     }
 
     private List<Name> getNames() {
@@ -46,8 +44,8 @@ public class GameController {
             .collect(toUnmodifiableList());
     }
 
-    private Game initPlay(List<Name> names) {
-        Game game = new Game(new CardDeck(new ShuffleDeck()), names);
+    private Game initPlay(List<Name> names, List<Betting> bettings) {
+        Game game = new Game(new CardDeck(new ShuffleDeck()), names, bettings);
 
         printInitResult(names);
         printDealerFirstCard(game.dealerFirstCard());
@@ -100,10 +98,9 @@ public class GameController {
         }
     }
 
-    private void finalRevenue(Game game, List<Betting> bettings) {
+    private void finalRevenue(Game game) {
         Map<Name, PlayRecord> recordMap = PlayRecord.createPlayRecords(game.getPlayers(), game.getDealerScore());
 
-        BettingTable bettingTable = new BettingTable(bettings);
-        printFinalRevenues(bettingTable.getRevenues(recordMap));
+        printFinalRevenues(game.getRevenues(recordMap));
     }
 }

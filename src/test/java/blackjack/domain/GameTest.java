@@ -24,7 +24,7 @@ public class GameTest {
     @DisplayName("게임을 초기화 한다.")
     void initGame() {
         // give
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi"), Name.of("rick")));
+        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi"), Name.of("rick")), List.of());
 
         // when
         int actual = game.getPlayers().size();
@@ -37,7 +37,7 @@ public class GameTest {
     @DisplayName("모든 참가자에게 카드를 2장씩 분배한다.")
     void initParticipants() {
         // give
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi"), Name.of("rick")));
+        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi"), Name.of("rick")), List.of());
 
         // when
         List<Integer> actual = new ArrayList<>();
@@ -55,7 +55,7 @@ public class GameTest {
     @DisplayName("상태가 HIT인 플레이어를 Optional로 반환한다.")
     void findHitPlayer() {
         // give
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")));
+        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
 
         // when
         Optional<Player> hitPlayer = game.findHitPlayer();
@@ -71,7 +71,7 @@ public class GameTest {
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
     void drawCard_HIT(PlayStatus playStatus, int expected) {
         // give
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")));
+        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
         Player player = game.getPlayers().get(0);
 
         // when
@@ -86,7 +86,7 @@ public class GameTest {
     @DisplayName("딜러의 첫 번째 카드를 반환한다.")
     void dealerFirstCard() {
         // give
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")));
+        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
 
         // when
         Card actual = game.dealerFirstCard();
@@ -99,7 +99,7 @@ public class GameTest {
     @DisplayName("딜러의 턴을 진행한다, 16 초과할 때까지 카드를 뽑는다.")
     void drawDealerCard() {
         // give
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")));
+        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
 
         // when
         game.drawDealerCards();
