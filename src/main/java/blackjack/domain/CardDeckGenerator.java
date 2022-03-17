@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CardDeckGenerator {
 
-    public static CardDeck createCardDeckByCardNumber() {
+    public static CardDeck createCardDeck() {
         List<Card> cards = new LinkedList<>();
         for (final CardPattern cardPattern : CardPattern.values()) {
             addCard(cards, cardPattern);

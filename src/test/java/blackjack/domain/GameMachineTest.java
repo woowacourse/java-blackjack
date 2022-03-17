@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 public class GameMachineTest {
 
-    private GameMachine gameMachine = new GameMachine(CardDeckGenerator.createCardDeckByCardNumber());
+    private GameMachine gameMachine = new GameMachine(CardDeckGenerator.createCardDeck());
 
     @Test
     @DisplayName("유저들을 생성을 확인한다.")
@@ -58,22 +58,6 @@ public class GameMachineTest {
         final boolean expected = false;
 
         final boolean actual = gameMachine.checkPlayerReceiveCard(dealer);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("블랙잭인 플레이어가 있는지 확인한다.")
-    void haveBlackJack() {
-        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
-                new Card(CardPattern.HEART, CardNumber.SEVEN))));
-        final Users users = new Users(Arrays.asList(
-                new User("pobi", new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
-                        new Card(CardPattern.HEART, CardNumber.ACE)))),
-                new User("jun", new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
-                        new Card(CardPattern.HEART, CardNumber.SEVEN))))));
-        final boolean expected = true;
-
-        final boolean actual = gameMachine.hasBlackJack(dealer, users);
         assertThat(actual).isEqualTo(expected);
     }
 }

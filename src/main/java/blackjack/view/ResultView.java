@@ -44,9 +44,9 @@ public class ResultView {
                     .findFirst()
                     .orElseThrow();
         }
-        return String.join(", ", player.getCardsToList().stream()
+        return player.getCardsToList().stream()
                 .map(card -> card.getCardNumberType() + card.getCardPattern())
-                .collect(Collectors.toList()));
+                .collect(Collectors.joining(", "));
     }
 
     public static void printDealerReceiveCard() {
@@ -88,9 +88,9 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printUsersGameResult(final Map<String, Result> userResult) {
-        for (final String userName : userResult.keySet()) {
-            System.out.println(userName + COLON + userResult.get(userName).getResult());
+    private static void printUsersGameResult(final Map<User, Result> userResult) {
+        for (final User user : userResult.keySet()) {
+            System.out.println(user.getName() + COLON + userResult.get(user).getResult());
         }
     }
 

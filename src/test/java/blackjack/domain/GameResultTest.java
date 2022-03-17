@@ -18,12 +18,13 @@ import org.junit.jupiter.api.Test;
 public class GameResultTest {
 
     private GameResult gameResult;
+    private User user1, user2;
 
     @BeforeEach
     void setUpGameResult() {
         final Dealer dealer = new Dealer(createFirstReceivedCard(CardNumber.KING, CardNumber.FIVE));
-        final User user1 = new User("pobi", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK));
-        final User user2 = new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
+        user1 = new User("pobi", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK));
+        user2 = new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
         final Users users = new Users(List.of(user1, user2));
 
         gameResult = GameResult.createPlayerGameResult(dealer, users);
@@ -36,12 +37,12 @@ public class GameResultTest {
     @Test
     @DisplayName("유저 게임결과를 확인한다.")
     void checkUserGameResult() {
-        final Map<String, Result> expected = new HashMap<>(Map.ofEntries(
-                Map.entry("pobi", Result.LOSE),
-                Map.entry("jun", Result.WIN)
+        final Map<User, Result> expected = new HashMap<>(Map.ofEntries(
+                Map.entry(user1, Result.LOSE),
+                Map.entry(user2, Result.WIN)
         ));
 
-        final Map<String, Result> actual = gameResult.getUserResult();
+        final Map<User, Result> actual = gameResult.getUserResult();
         assertThat(actual).isEqualTo(expected);
     }
 

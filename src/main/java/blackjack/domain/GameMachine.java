@@ -47,8 +47,4 @@ public class GameMachine {
     public void drawCardToPlayer(final Player player) {
         player.drawCard(cardDeck.selectCard());
     }
-
-    public boolean hasBlackJack(Dealer dealer, Users users) {
-        return dealer.isBlackJack() || users.hasBlackJack();
-    }
 }
