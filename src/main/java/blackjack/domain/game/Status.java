@@ -1,13 +1,13 @@
-package blackjack.domain.card;
+package blackjack.domain.game;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Status {
-    BLACKJACK((count, sum) -> count == 2 && sum == 21),
-    BUST((count, sum) -> sum > 21),
-    NONE((count, sum) -> sum < 21
-            || (sum == 21 && count != 2));
+    BLACKJACK((count, sum) -> count == GameResult.BLACKJACK_COUNT && sum == GameResult.BLACKJACK_VALUE),
+    BUST((count, sum) -> sum > GameResult.BLACKJACK_VALUE),
+    NONE((count, sum) -> sum < GameResult.BLACKJACK_VALUE
+            || (sum == GameResult.BLACKJACK_VALUE && count != GameResult.BLACKJACK_COUNT));
 
     private final BiPredicate<Integer, Integer> condition;
 
