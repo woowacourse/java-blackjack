@@ -17,11 +17,15 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public boolean drawCard(final Card card, final boolean... request) {
-        return cards.add(card, request);
+    public boolean drawCard(final Card card) {
+        return cards.add(card);
     }
 
-    protected List<Card> getCards() {
+    public boolean canDrawCard() {
+        return cards.canAddCard();
+    }
+
+    public List<Card> getCards() {
         return cards.getCards();
     }
 
