@@ -14,7 +14,7 @@ public final class Stand extends Finish {
     }
 
     @Override
-    double earningRate(final BlackjackGameState blackjackGameState) {
+    final double earningRate(final BlackjackGameState blackjackGameState) {
         if (blackjackGameState.isBust()) {
             return STAND_WIN_RATE;
         }

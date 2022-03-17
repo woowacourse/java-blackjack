@@ -24,7 +24,7 @@ public final class DealerRunning extends Running {
     }
 
     @Override
-    public BlackjackGameState hit(final Card card) {
+    public final BlackjackGameState hit(final Card card) {
         cards.addCard(card);
         return crerateDealerGameState(cards);
     }
