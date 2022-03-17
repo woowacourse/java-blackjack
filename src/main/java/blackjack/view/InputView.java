@@ -14,6 +14,7 @@ public final class InputView {
     private static final String YES_INPUT = "y";
     private static final String NO_INPUT = "n";
     private static final String NAMES_SPLIT_REGEX = ", |,";
+    private static final String NAMES_REGEX = ",";
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
@@ -28,7 +29,7 @@ public final class InputView {
         if (input == null || input.isEmpty()) {
             throw new IllegalArgumentException(NULL_NAMES_ERROR_MESSAGE);
         }
-        if (input.startsWith(NAMES_SPLIT_REGEX) || input.endsWith(NAMES_SPLIT_REGEX)) {
+        if (input.startsWith(NAMES_REGEX) || input.endsWith(NAMES_REGEX)) {
             throw new IllegalArgumentException(NAME_SIZE_MIN_ERROR_MESSAGE);
         }
     }
