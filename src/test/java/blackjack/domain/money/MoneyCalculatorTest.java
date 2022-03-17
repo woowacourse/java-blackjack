@@ -35,7 +35,7 @@ public class MoneyCalculatorTest {
     private static Stream<Arguments> provideUserAndResultAndBettingMoney() {
         return Stream.of(
                 Arguments.of(new User("pobi",createFirstReceivedCard(CardNumber.ACE, CardNumber.JACK)), Result.WIN, BettingMoney.of(10000), 15000),
-                Arguments.of(new User("pobi",createFirstReceivedCard(CardNumber.KING, CardNumber.JACK)), Result.WIN, BettingMoney.of(10000), 10000),
+                Arguments.of(new User("poa",createFirstReceivedCard(CardNumber.KING, CardNumber.JACK)), Result.WIN, BettingMoney.of(10000), 10000),
                 Arguments.of(new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.NINE)), Result.DRAW, BettingMoney.of(10000), 0),
                 Arguments.of(new User("renno", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK)), Result.LOSE, BettingMoney.of(10000), -10000)
         );

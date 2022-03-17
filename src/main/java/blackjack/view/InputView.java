@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.player.Player;
+import blackjack.domain.player.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -33,16 +34,32 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Boolean inputDrawCardAnswer(final Player user) {
+    public static boolean inputDrawCardAnswer(final Player user) {
+        System.out.println();
         System.out.println(user.getName() + DRAW_CARD_MESSAGE);
         String answer = scanner.nextLine();
         return validateDrawCardAnswer(answer);
     }
 
-    private static Boolean validateDrawCardAnswer(final String answer) {
+    private static boolean validateDrawCardAnswer(final String answer) {
         if (!answer.equals(YES) && !answer.equals(NO)) {
             throw new IllegalArgumentException(ANSWER_EXCEPTION_MESSAGE);
         }
         return answer.equals(YES);
+    }
+
+    public static int inputBettingMoney(User user) {
+        System.out.println();
+        System.out.println(user.getName() + "의 배팅금액은?");
+        String money = scanner.nextLine();
+        return validateNumber(money);
+    }
+
+    private static int validateNumber(String money) {
+        try {
+            return Integer.parseInt(money);
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
+        }
     }
 }

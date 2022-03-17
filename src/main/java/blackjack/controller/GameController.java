@@ -1,11 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.GameMachine;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
+import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
@@ -16,6 +16,7 @@ public class GameController {
 
         Dealer dealer = gameMachine.createDealer();
         Users users = gameMachine.createUsers(InputView.inputUsers());
+        inputBettingMoney(gameMachine, users);
         ResultView.printPlayersCards(dealer, users);
 
         turnOfUsers(gameMachine, users);
@@ -24,6 +25,12 @@ public class GameController {
 
         GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
         ResultView.printGameResult(gameResult);
+    }
+
+    private void inputBettingMoney(GameMachine gameMachine, Users users) {
+        for (User user : users.getUsers()) {
+            gameMachine.putBettingMoney(user, InputView.inputBettingMoney(user));
+        }
     }
 
     private void turnOfUsers(GameMachine gameMachine, Users users) {
