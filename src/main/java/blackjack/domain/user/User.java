@@ -24,25 +24,16 @@ public abstract class User {
         cards.add(deck.drawCard());
     }
 
-    private void validateNegative(int score) {
-        if (score < 0) {
-            throw new RuntimeException("점수 계산에 문제가 있습니다.");
-        }
-    }
-
     public boolean isBust() {
         return cards.isBust();
     }
 
     public int getScore() {
-        int score = cards.calculateScore();
-        validateNegative(score);
-
-        return score;
+        return cards.calculateScore();
     }
 
     public boolean isBlackJack() {
-        return ((cards.isDefaultSize()) && cards.isSameBlackJackNumber(getScore()));
+        return ((cards.isDefaultSize()) && cards.isSameBlackJackNumber());
     }
 
     public String getName(){
