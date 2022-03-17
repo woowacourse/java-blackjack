@@ -8,8 +8,6 @@ import java.util.List;
 import vo.Wallet;
 
 public abstract class Player {
-    private static final int EMPTY_MONEY = 0;
-
     private final Wallet wallet;
     protected final PlayingCards playingCards;
 
@@ -19,7 +17,7 @@ public abstract class Player {
     }
 
     protected Player(String name) {
-        this(Wallet.of(name, EMPTY_MONEY));
+        this(Wallet.of(name));
     }
 
     public abstract boolean isHittable();

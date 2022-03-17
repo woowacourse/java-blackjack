@@ -3,6 +3,8 @@ package vo;
 import java.util.Objects;
 
 public class Name {
+    private static final String ERROR_FOR_NULL_OR_BLANK_NAME = "[ERROR] 이름은 빈 값일 수 없습니다";
+
     private final String name;
 
     private Name(String name) {
@@ -12,7 +14,7 @@ public class Name {
 
     private void validateNullAndBlank(String name) {
         if (Objects.isNull(name) || name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 이름은 빈 값일 수 없습니다");
+            throw new IllegalArgumentException(ERROR_FOR_NULL_OR_BLANK_NAME);
         }
     }
 
