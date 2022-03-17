@@ -61,12 +61,6 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
     public List<Card> getPlayerCards(final String playerName) {
         final Player player = findByPlayerName(playerName);
         return player.getCards();

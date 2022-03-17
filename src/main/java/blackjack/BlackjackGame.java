@@ -1,72 +1,74 @@
 package blackjack;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
 import blackjack.domain.result.MatchResult;
 
 public class BlackjackGame {
 
     private final Deck deck;
-    private final Dealer dealer;
-    private Players players;
+    private final Participants participants;
 
     public BlackjackGame(final DeckGenerator deckGenerator) {
         this.deck = Deck.generate(deckGenerator);
-        this.dealer = Dealer.readyToPlay(deck);
+        this.participants = new Participants(deck);
     }
 
     public void registerPlayers(final List<String> playerNames) {
-        this.players = Players.readyToPlay(playerNames, deck);
+        participants.registerPlayers(playerNames, deck);
     }
 
     public void playerBet(final String playerName, final int amount) {
-        players.betAmount(playerName, amount);
+        participants.playerBet(playerName, amount);
     }
 
     public void playerDrawCard(final String playerName) {
-        players.drawCard(playerName, deck);
+        participants.playerDrawCard(playerName, deck);
     }
 
     public boolean isPlayerPossibleToDrawCard(final String playerName) {
-        return players.isPlayerPossibleToDrawCard(playerName);
+        return participants.isPlayerPossibleToDrawCard(playerName);
     }
 
     public boolean isDealerPossibleToDrawCard() {
-        return dealer.isPossibleToDrawCard();
+        return participants.isDealerPossibleToDrawCard();
     }
 
     public void dealerDrawCard() {
-        dealer.drawCard(deck);
+        participants.dealerDrawCard(deck);
     }
 
     public MatchResult calculateMatchResult() {
-        return players.judgeWinners(dealer);
+        return participants.calculateMatchResult();
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return participants.getDealer();
     }
 
     public String getDealerName() {
-        return dealer.getName();
-    }
-
-    public List<String> getPlayerNames() {
-        return players.getPlayerNames();
+        return getDealer().getName();
     }
 
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return participants.getPlayers();
+    }
+
+    public List<String> getPlayerNames() {
+        return getPlayers().stream()
+                .map(Player::getName)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public List<Card> getPlayerCards(final String playerName) {
-        return players.getPlayerCards(playerName);
+        return participants.getPlayerCards(playerName);
     }
 
 }
