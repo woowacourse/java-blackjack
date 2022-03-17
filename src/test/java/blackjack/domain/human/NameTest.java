@@ -10,13 +10,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class NameTest {
-    
+
     @Test
     @DisplayName("이름 객체 생성 통과여부 검사")
     public void createTest() {
         assertThat(Name.valueOf("jack").get()).isEqualTo("jack");
     }
-    
+
     @ParameterizedTest
     @ValueSource(strings = {"ja ck", "jac.k", ""})
     @DisplayName("이름 객체 생성 실패여부 검사")

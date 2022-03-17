@@ -9,22 +9,22 @@ import java.util.Map;
 public final class ResultStatistic {
     private final Map<String, Result> playersResult = new HashMap<>();
     private final Map<Result, Integer> dealerResults = new HashMap<>();
-    
+
     private ResultStatistic(BlackjackRepository blackjackRepository) {
         for (Result value : Result.values()) {
             dealerResults.put(value, 0);
         }
         calculate(blackjackRepository);
     }
-    
+
     public static ResultStatistic from(BlackjackRepository blackjackRepository) {
         return new ResultStatistic(blackjackRepository);
     }
-    
+
     public Map<Result, Integer> getDealerResults() {
         return (dealerResults);
     }
-    
+
     public Map<String, Result> getPlayersResult() {
         HashMap<String, Result> result = new HashMap<>();
         for (String name : playersResult.keySet()) {
@@ -32,7 +32,7 @@ public final class ResultStatistic {
         }
         return result;
     }
-    
+
     private void calculate(BlackjackRepository table) {
         for (Player player : table.getPlayers().get()) {
             Result playerResult = calculatePlayerResult(player, table.getDealer());
@@ -41,7 +41,7 @@ public final class ResultStatistic {
             dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
         }
     }
-    
+
     private Result calculatePlayerResult(final Player player, final Dealer dealer) {
         if (dealer.isBust()) {
             return Result.fromIsWin(!player.isBust());

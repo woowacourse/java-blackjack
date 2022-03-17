@@ -12,28 +12,28 @@ import blackjack.view.OutputView;
 public final class GameController {
     public void run() {
         BlackjackRepository blackjackRepository = BlackjackRepository.from(getPlayers());
-        
+
         initGame(blackjackRepository);
         startGame(blackjackRepository);
         endGame(blackjackRepository);
     }
-    
+
     private Players getPlayers() {
         return Players.fromText(InputView.inputPlayerNames());
     }
-    
+
     private void initGame(final BlackjackRepository blackjackRepository) {
         blackjackRepository.initCard();
         OutputView.printInitCards(blackjackRepository);
     }
-    
+
     private void startGame(final BlackjackRepository blackjackRepository) {
         for (Player player : blackjackRepository.getPlayers().get()) {
             hitOrStayPlayer(player, blackjackRepository.getCardDeck());
         }
         hitOrStayDealer(blackjackRepository);
     }
-    
+
     private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
         while (!player.isBust() && InputView.inputOneMoreCard(player.getName())) {
             player.addCard(cardDeck.pop());
@@ -43,7 +43,7 @@ public final class GameController {
             OutputView.printHumanHand(player);
         }
     }
-    
+
     private void hitOrStayDealer(final BlackjackRepository blackjackRepository) {
         Dealer dealer = blackjackRepository.getDealer();
         if (dealer.isAbleToHit()) {
@@ -51,12 +51,12 @@ public final class GameController {
             OutputView.printDealerHit();
         }
     }
-    
+
     private void endGame(final BlackjackRepository blackjackRepository) {
         OutputView.printHandAndPoint(blackjackRepository);
-        
+
         ResultStatistic resultStatistic = ResultStatistic.from(blackjackRepository);
-        
+
         OutputView.printDealerResult(resultStatistic.getDealerResults());
         OutputView.printPlayerResult(resultStatistic.getPlayersResult());
     }

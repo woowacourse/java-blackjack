@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 class BlackjackRepositoryTest {
     private final Players players = Players.fromText("pobi");
     private BlackjackRepository blackjackRepository;
-    
+
     @BeforeEach
     void setup() {
         blackjackRepository = BlackjackRepository.from(players);
     }
-    
+
     @Test
     @DisplayName("테이블 초기 카드 나눠주기 기능 검사")
     void initCardTest() {
@@ -28,7 +28,7 @@ class BlackjackRepositoryTest {
                 () -> assertThat(blackjackRepository.getDealer().getCards().size()).isEqualTo(2)
         );
     }
-    
+
     @Test
     @DisplayName("테이블 getPlayers() 기능 검사")
     void etPlayersTest() {

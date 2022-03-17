@@ -9,7 +9,7 @@ import rentalcompany.car.Sonata;
 
 public class RentalCompanyTest {
     private static final String NEWLINE = System.getProperty("line.separator");
-    
+
     @Test
     public void report() {
         RentalCompany company = RentalCompany.create(); // factory method를 사용해 생성
@@ -18,7 +18,7 @@ public class RentalCompanyTest {
         company.addCar(new Sonata(120));
         company.addCar(new Avante(300));
         company.addCar(new K5(390));
-        
+
         String report = company.generateReport();
         assertThat(report).isEqualTo(
                 "Sonata : 15리터" + NEWLINE +

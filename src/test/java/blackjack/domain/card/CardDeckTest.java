@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
-    
+
     @Test
     @DisplayName("카드덱 생성되는지 검사")
     public void createTest() {
@@ -19,34 +19,34 @@ class CardDeckTest {
                 .size()
                 .isEqualTo(52);
     }
-    
+
     @Test
     @DisplayName("카드 주기 기능 검사")
     void drawTest() {
         // given
         CardDeck cardDeck = CardDeck.newInstance();
-        
+
         // when
         cardDeck.pop();
-        
+
         // then
         assertThat(cardDeck)
                 .extracting("value")
                 .asList()
                 .size().isEqualTo(51);
     }
-    
+
     @Test
     @DisplayName("카드 주기 예외처리 검사")
     void drawErrorTest() {
         // given
         CardDeck cardDeck = CardDeck.newInstance();
-        
+
         // when
         for (int i = 0; i < 52; i++) {
             cardDeck.pop();
         }
-        
+
         // then
         assertThatThrownBy(cardDeck::pop)
                 .isInstanceOf(Exception.class)

@@ -22,32 +22,32 @@ class ResultStatisticTest {
     private final Player player2 = Player.from("jason");
     private final Player player3 = Player.from("bani");
     private final Player player4 = Player.from("hunch");
-    
+
     void addCardList(Human human, List<String> cards) {
         for (String card : cards) {
             human.addCard(Card.of(Denomination.stringOf(card), Suit.CLOVER));
         }
     }
-    
+
     @Nested
     @DisplayName("딜러_21초과_플레이어승")
     class DealerOverPlayerUnderTest {
         ResultStatistic resultStatistic;
-        
+
         @BeforeEach
         void setup() {
             // given
             addCardList(player1, List.of("A", "A", "A", "A", "A"));
             addCardList(player2, List.of("10", "10", "2"));
             Players players = Players.from(List.of(player1, player2));
-            
+
             BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
             addCardList(blackjackRepository.getDealer(), List.of("8", "10", "10"));
-            
+
             // when
             resultStatistic = ResultStatistic.from(blackjackRepository);
         }
-        
+
         @Test
         void playerResultTest() {
             // then
@@ -55,7 +55,7 @@ class ResultStatisticTest {
                     .containsEntry(player1.getName(), Result.WIN)
                     .containsEntry(player2.getName(), Result.LOSE);
         }
-        
+
         @Test
         void dealerResultTest() {
             // then
@@ -67,26 +67,26 @@ class ResultStatisticTest {
             );
         }
     }
-    
+
     @Nested
     @DisplayName("딜러_21초과_딜러승")
     class DealerOverPlayerOverTest {
         ResultStatistic resultStatistic;
-        
+
         @BeforeEach
         void setup() {
             // given
             addCardList(player1, List.of("10", "10", "10"));
             addCardList(player2, List.of("10", "10", "10"));
             Players players = Players.from(List.of(player1, player2));
-            
+
             BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
             addCardList(blackjackRepository.getDealer(), List.of("10", "10", "10", "10"));
-            
+
             //when
             resultStatistic = ResultStatistic.from(blackjackRepository);
         }
-        
+
         @Test
         void playerResultTest() {
             // then
@@ -94,7 +94,7 @@ class ResultStatisticTest {
                     .containsEntry(player1.getName(), Result.LOSE)
                     .containsEntry(player2.getName(), Result.LOSE);
         }
-        
+
         @Test
         void dealerResultTest() {
             // then
@@ -106,12 +106,12 @@ class ResultStatisticTest {
             );
         }
     }
-    
+
     @Nested
     @DisplayName("딜러_21이하_테스트")
     class DealerUnderTest {
         ResultStatistic resultStatistic;
-        
+
         @BeforeEach
         void setup() {
             // given
@@ -120,14 +120,14 @@ class ResultStatisticTest {
             addCardList(player3, List.of("10", "10"));
             addCardList(player4, List.of("10", "10", "A"));
             Players players = Players.from(List.of(player1, player2, player3, player4));
-            
+
             BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
             addCardList(blackjackRepository.getDealer(), List.of("10", "10"));
-            
+
             // when
             resultStatistic = ResultStatistic.from(blackjackRepository);
         }
-        
+
         @Test
         void playerResultTest() {
             // then
@@ -137,7 +137,7 @@ class ResultStatisticTest {
                     .containsEntry(player3.getName(), Result.DRAW)
                     .containsEntry(player4.getName(), Result.WIN);
         }
-        
+
         @Test
         void dealerResultTest() {
             // then

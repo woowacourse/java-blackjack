@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class DenominationTest {
-    
+
     @ParameterizedTest
     @CsvSource(value = {
             "A,ACE"

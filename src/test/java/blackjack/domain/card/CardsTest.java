@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class CardsTest {
     private Cards cards;
     private Card card5;
-    
+
     @BeforeEach
     void setup() {
         cards = new Cards();
@@ -22,25 +22,25 @@ public class CardsTest {
         cards.add(card5);
         cards.add(card6);
     }
-    
+
     @Test
     @DisplayName("카드모음 생성되는지 검사")
     public void equalSizeTest() {
         assertThat(cards.size()).isEqualTo(2);
     }
-    
+
     @Test
     @DisplayName("첫 카드 리턴 기능 검사")
     void getFirstCardTest() {
         assertThat(cards.getFirstCard()).isEqualTo(card5);
     }
-    
+
     @Test
     @DisplayName("단순 포인트 리턴 기능 검사")
     void getRawPointTest() {
         assertThat(cards.getRawPoint()).isEqualTo(22);
     }
-    
+
     @Test
     @DisplayName("에이스 개수 리턴 기능 검사")
     void getAceCountTest() {
