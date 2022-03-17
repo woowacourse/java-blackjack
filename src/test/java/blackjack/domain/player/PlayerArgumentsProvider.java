@@ -14,9 +14,9 @@ public class PlayerArgumentsProvider implements ArgumentsProvider {
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
-                arguments(List.of(new Player("stitch",0, CardsTestDataGenerator.generateBlackJackCards()))),
-                arguments(List.of(new Player("stitch",0, CardsTestDataGenerator.generateBlackJackCards()),
-                        new Player("sudal",0, CardsTestDataGenerator.generateBlackJackCards())))
+                arguments(List.of(new Player("stitch",1000, CardsTestDataGenerator.generateBlackJackCards()))),
+                arguments(List.of(new Player("stitch",2500, CardsTestDataGenerator.generateBlackJackCards()),
+                        new Player("sudal",1500, CardsTestDataGenerator.generateBlackJackCards())))
         );
     }
 }

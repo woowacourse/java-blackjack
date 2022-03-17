@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.GameResultDto;
+import blackjack.dto.GameResultsDto;
 import blackjack.dto.GamerDto;
 import blackjack.dto.PlayersDto;
 import java.util.List;
@@ -69,7 +70,7 @@ public class OutputView {
     }
 
 
-    public static void printGameResult(List<GameResultDto> playerResults, GameResultDto dealerResult) {
+    public static void printGameResult(GameResultsDto playerResults, GameResultDto dealerResult) {
         printDealerGameResult(dealerResult);
         printPlayerGameResult(playerResults);
     }
@@ -78,8 +79,9 @@ public class OutputView {
         System.out.printf("\n## 최종 수익\n" + result.getName() + ": %s\n", result.getBattingMoney());
     }
 
-    private static void printPlayerGameResult(List<GameResultDto> results) {
+    private static void printPlayerGameResult(GameResultsDto results) {
         String resultInfo = results
+                .getValue()
                 .stream()
                 .map(player -> player.getName() + ": " + player.getBattingMoney())
                 .collect(joining("\n"));

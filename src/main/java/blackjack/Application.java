@@ -8,6 +8,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.dto.GameResultDto;
+import blackjack.dto.GameResultsDto;
 import blackjack.dto.GamerDto;
 import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
@@ -25,10 +26,10 @@ public class Application {
         Players players = createPlayers(deck);
         OutputView.printStartInfo(GamerDto.from(dealer), PlayersDto.from(players));
 
-        PlayersDto playersDto = playPlayers(deck, players);
+        players.playPlayers(deck);
         GamerDto dealerDto = playDealer(deck, dealer);
 
-        OutputView.printResultInfo(dealerDto, playersDto);
+        OutputView.printResultInfo(dealerDto, PlayersDto.from(players));
         printResult(dealer, players);
     }
 
@@ -47,12 +48,7 @@ public class Application {
         return InputView.insertBattingMoney(playerName);
     }
 
-    private static PlayersDto playPlayers(Deck deck, Players players) {
-        players.getValue().forEach(player -> playing(deck, player));
-        return PlayersDto.from(players);
-    }
-
-    private static void playing(Deck deck, Player player) {
+    public static void playing(Deck deck, Player player) {
         PlayCommand playCommand = PlayCommand.YES;
         while (player.canHit() && playCommand.isContinue()) {
             playCommand = InputView.getPlayCommand(player);
@@ -80,18 +76,8 @@ public class Application {
     }
 
     private static void printResult(Dealer dealer, Players players) {
-        OutputView.printGameResult(createPlayerResult(players, dealer), createDealerResult(players, dealer));
-    }
-
-    private static List<GameResultDto> createPlayerResult(Players players, Dealer dealer) {
-        return players.getValue().stream()
-                .filter(player -> player.calculateBattingMoneyResult(dealer))
-                .map(player -> GameResultDto.from(player))
-                .collect(toList());
-    }
-
-    private static GameResultDto createDealerResult(Players players, Dealer dealer) {
-        players.getValue().forEach(player -> dealer.calculateBattingMoneyResult(player));
-        return GameResultDto.from(dealer);
+        players.createPlayerResult(dealer);
+        players.createDealerResult(dealer);
+        OutputView.printGameResult(GameResultsDto.from(players), GameResultDto.from(dealer));
     }
 }
