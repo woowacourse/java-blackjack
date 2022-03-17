@@ -13,6 +13,7 @@ import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.utils.ParticipantsCreationUtils.createDealerWithDenominations;
 import static blackjack.utils.ParticipantsCreationUtils.createPlayerWithDenominations;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.BettingMoney;
 import blackjack.domain.ScoreBoard;
@@ -25,6 +26,25 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class RevenueResultTest {
+    
+    @Test
+    @DisplayName("RevenueResult 는 불변 객체다")
+    void revenueResult_is_immutable() {
+        // given
+        Player player = createPlayerWithDenominations("user a", ACE, JACK);
+        Dealer dealer = createDealerWithDenominations(TEN, QUEEN);
+
+        List<BettingMoney> bettingMonies = new ArrayList<>();
+        bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+
+        // when
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
+        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+
+        // then
+        assertThatThrownBy(() -> revenueResult.getPlayersEarnings().remove(player.getName()))
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
 
     @Test
     @DisplayName("플레이어가 블랙잭이고 딜러는 아닐 때 플레이어의 수익률은 1.5 배이다")

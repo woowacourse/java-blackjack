@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.constant.MatchResult;
 import blackjack.domain.BettingMoney;
 import blackjack.domain.ScoreBoard;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class RevenueResult {
     }
 
     public Map<String, Integer> getPlayersEarnings() {
-        return playersEarnings;
+        return Collections.unmodifiableMap(playersEarnings);
     }
 
     public int getDealerEarnings() {
