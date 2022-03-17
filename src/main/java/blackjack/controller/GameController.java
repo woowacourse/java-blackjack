@@ -78,7 +78,7 @@ public class GameController {
 
     public void progressDealerTurn() {
         int count = 0;
-        while (dealer.canDrawCard()) {
+        while (dealer.isDrawable()) {
             dealer.hit(deck);
             count++;
         }

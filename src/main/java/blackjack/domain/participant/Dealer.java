@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 public class Dealer extends Participant {
 
@@ -11,8 +12,14 @@ public class Dealer extends Participant {
         super();
     }
 
-    public boolean canDrawCard() {
+    @Override
+    public boolean isDrawable() {
         return getScore() < SCORE_LOWER_BOUND;
+    }
+
+    @Override
+    public void hit(final Deck deck) {
+        cards.add(deck.drawCard());
     }
 
     public Card openFirstCard() {

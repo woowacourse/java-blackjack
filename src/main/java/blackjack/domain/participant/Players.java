@@ -50,7 +50,7 @@ public class Players {
 
     public Optional<Player> findDrawablePlayer() {
         return value.stream()
-                .filter(Player::isHit)
+                .filter(Player::isDrawable)
                 .findFirst();
     }
 

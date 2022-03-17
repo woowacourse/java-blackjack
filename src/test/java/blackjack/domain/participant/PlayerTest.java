@@ -39,7 +39,7 @@ class PlayerTest {
                 .forEach(player::hit);
 
         // when
-        final boolean actual = player.isHit();
+        final boolean actual = player.isDrawable();
 
         // then
         assertThat(actual).isEqualTo(expected);
