@@ -59,13 +59,13 @@ public class OutputView {
         System.out.println(PROVIDE_CARD_TO_DEALER_MESSAGE);
     }
 
-    public static void printParticipantScoreResults(final List<ParticipantScoreResult> participantScoreResults) {
-        participantScoreResults.forEach(OutputView::printPlayerScoreResult);
-    }
-
-    private static void printPlayerScoreResult(final ParticipantScoreResult participantScoreResult) {
+    public static void printPlayerScoreResult(final ParticipantScoreResult participantScoreResult) {
         System.out.printf(PARTICIPANT_CARD_RESULT_AND_SCORE_MESSAGE, participantScoreResult.getName(),
                 joinParticipantCards(participantScoreResult.getCards()), participantScoreResult.getScore());
+    }
+
+    public static void printParticipantScoreResults(final List<ParticipantScoreResult> participantScoreResults) {
+        participantScoreResults.forEach(OutputView::printPlayerScoreResult);
     }
 
     public static void printProfitTitle() {
