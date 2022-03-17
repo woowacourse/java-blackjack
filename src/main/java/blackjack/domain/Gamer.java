@@ -6,22 +6,30 @@ import java.util.List;
 
 public abstract class Gamer {
 
-    private final Name name;
+    private final String name;
     private final BattingMoney battingMoney;
     private final Cards cards;
 
     public Gamer(String name, int battingMoney, List<Card> cards) {
-        this.name = new Name(name);
+        this.name = name.trim();
+        checkName(this.name);
+
         this.battingMoney = new BattingMoney(battingMoney);
         this.cards = new Cards(cards);
     }
 
-    public int getTotalScore() {
-        return cards.calculateTotalScore();
+    private void checkName(String value) {
+        if (value.isBlank()) {
+            throw new IllegalArgumentException("이름은 공백이 아니어야합니다.");
+        }
     }
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public int getTotalScore() {
+        return cards.calculateTotalScore();
     }
 
     public boolean isBust() {
@@ -39,7 +47,7 @@ public abstract class Gamer {
     }
 
     public String getName() {
-        return name.getValue();
+        return name;
     }
 
     public Cards getCards() {
