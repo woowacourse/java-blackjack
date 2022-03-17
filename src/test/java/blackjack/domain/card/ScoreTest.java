@@ -14,7 +14,7 @@ class ScoreTest {
     void 불가능한_점수가_들어올_경우_예외처리(final int score) {
         assertThatThrownBy(() -> new Score(score))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("4이하의 점수는 존재하지 않습니다.");
+                .hasMessage("5미만의 점수는 존재하지 않습니다.");
     }
 
     @ParameterizedTest

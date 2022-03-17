@@ -17,7 +17,7 @@ public class Score {
 
     private void checkMinScore(final int score) {
         if (score < MIN_SCORE) {
-            throw new IllegalArgumentException("4이하의 점수는 존재하지 않습니다.");
+            throw new IllegalArgumentException(String.format("%d미만의 점수는 존재하지 않습니다.", MIN_SCORE));
         }
     }
 
