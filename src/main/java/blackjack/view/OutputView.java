@@ -1,12 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.betting.BettingResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.game.ResultType;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.GameResultDto;
-import blackjack.dto.ResultStatsDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +21,8 @@ public class OutputView {
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!" + NEW_LINE;
     private static final String PLAYER_BLACKJACK_MESSAGE = "블랙잭! 패가 확정되었습니다!" + NEW_LINE;
     private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 승패" + NEW_LINE;
-    private static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
+    private static final String BETTING_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 수익" + NEW_LINE;
+    private static final String BETTING_RESULT_FORMAT = "%s: %s";
 
     private OutputView() {
     }
@@ -91,74 +89,46 @@ public class OutputView {
         print(DEALER_EXTRA_CARD_MESSAGE);
     }
 
-    public static void printGameResult(final GameResultDto dto) {
-        final String message = getJoinedCardsAndScores(dto.getResults())
+    public static void printBettingResults(final List<BettingResult> bettingResults) {
+        final String message = getJoinedCardsAndScores(bettingResults)
                 + NEW_LINE
                 + NEW_LINE
-                + getAllGameResults(dto);
+                + getBettingResults(bettingResults);
 
         print(message);
     }
 
-    private static String getJoinedCardsAndScores(final List<ResultStatsDto> dtos) {
+    private static String getJoinedCardsAndScores(final List<BettingResult> dtos) {
         return dtos.stream()
+                .map(BettingResult::getParticipantCardsDto)
                 .map(OutputView::getParticipantCardsAndScore)
                 .collect(Collectors.joining());
     }
 
-    private static String getParticipantCardsAndScore(final ResultStatsDto dto) {
-        final String participantName = dto.getParticipantName();
+    private static String getParticipantCardsAndScore(final ParticipantCardsDto dto) {
+        final String participantName = dto.getName();
         final String cards = getCardsInfo(dto.getCards());
-        final int score = dto.getScore().toInt();
+        final int score = dto.getScoreValue();
 
         return String.format(PARTICIPANT_CARDS_AND_SCORE_FORMAT, participantName, cards, score);
     }
 
-    private static String getAllGameResults(final GameResultDto dto) {
-        return FINAL_RESULT_ANNOUNCEMENT_MESSAGE
-                + getAllParticipantsGameResults(dto.getResults());
+    private static String getBettingResults(final List<BettingResult> dto) {
+        return BETTING_RESULT_ANNOUNCEMENT_MESSAGE
+                + getAllParticipantsBettingResults(dto);
     }
 
-    private static String getAllParticipantsGameResults(final List<ResultStatsDto> dtos) {
+    private static String getAllParticipantsBettingResults(final List<BettingResult> dtos) {
         return dtos.stream()
                 .map(OutputView::getParticipantGameResult)
                 .collect(Collectors.joining(NEW_LINE));
     }
 
-    private static String getParticipantGameResult(final ResultStatsDto dto) {
-        final String name = dto.getParticipantName();
+    private static String getParticipantGameResult(final BettingResult dto) {
+        final String participantName = dto.getParticipantName();
+        final int money = dto.getMoneyOutcome();
 
-        if (dto.hasSingleResultType()) {
-            return getSingleResultTypeFormat(dto, name);
-        }
-        return getMultipleResultTypeFormat(dto, name);
-    }
-
-    private static String getSingleResultTypeFormat(final ResultStatsDto dto,
-                                                    final String name) {
-        final ResultType resultType = dto.getResultStatsTypes().get(0);
-
-        if (dto.hasMultipleCountOf(resultType)) {
-            return String.format(PARTICIPANT_RESULT_FORMAT, name, getMultipleCountResultTextOf(dto, resultType));
-        }
-        return String.format(PARTICIPANT_RESULT_FORMAT, name, resultType.getDisplayName());
-    }
-
-    private static String getMultipleResultTypeFormat(final ResultStatsDto dto,
-                                                      final String name) {
-        final String multipleResultTypesInfo = dto.getResultStatsTypes().stream()
-                .map(resultType -> getMultipleCountResultTextOf(dto, resultType))
-                .collect(Collectors.joining(" "));
-
-        return String.format(PARTICIPANT_RESULT_FORMAT, name, multipleResultTypesInfo);
-    }
-
-    private static String getMultipleCountResultTextOf(final ResultStatsDto dto,
-                                                       final ResultType resultType) {
-        final int count = dto.getCountValueOf(resultType);
-        final String resultDisplayName = resultType.getDisplayName();
-
-        return count + resultDisplayName;
+        return String.format(BETTING_RESULT_FORMAT, participantName, money);
     }
 
     private static String getCardsInfo(final List<Card> cards) {

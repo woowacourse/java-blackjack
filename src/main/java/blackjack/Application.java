@@ -13,6 +13,6 @@ public class Application {
         final PlayerBettings bettings = controller.initializeBettings(game);
 
         controller.playGame(game);
-        controller.showGameResult(game);
+        controller.showBettingResults(game, bettings);
     }
 }

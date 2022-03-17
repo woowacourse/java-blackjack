@@ -8,26 +8,26 @@ import java.util.List;
 public class CardsDto {
 
     private final List<Card> cards;
-    private final Score score;
+    private final int scoreValue;
 
     public CardsDto(final List<Card> cards, final Score score) {
         this.cards = Collections.unmodifiableList(cards);
-        this.score = score;
+        this.scoreValue = score.toInt();
     }
 
     public List<Card> getCards() {
         return cards;
     }
 
-    public Score getScore() {
-        return score;
+    public int getScoreValue() {
+        return scoreValue;
     }
 
     @Override
     public String toString() {
         return "CardBundleDto{" +
                 "cards=" + cards +
-                ", score=" + score +
+                ", scoreValue=" + scoreValue +
                 '}';
     }
 }

@@ -1,20 +1,19 @@
 package blackjack.controller;
 
 import static blackjack.view.InputView.requestPlayerNamesInput;
+import static blackjack.view.OutputView.printBettingResults;
 import static blackjack.view.OutputView.printDealerBlackjackInfo;
-import static blackjack.view.OutputView.printGameResult;
 import static blackjack.view.OutputView.printInitialParticipantsCards;
 
+import blackjack.domain.betting.BettingReferee;
 import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.ResultReferee;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
-import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.strategy.CardBundleStrategy;
 import blackjack.view.InputView;
@@ -56,14 +55,11 @@ public class BlackjackController {
                 OutputView::printDealerExtraCardInfo);
     }
 
-    public void showGameResult(final BlackjackGame game) {
-        GameParticipants participants = game.getParticipants();
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
+    public void showBettingResults(final BlackjackGame game, final PlayerBettings bettings) {
+        final GameParticipants participants = game.getParticipants();
+        final Dealer dealer = participants.getDealer();
 
-        final ResultReferee referee = new ResultReferee(dealer, players);
-        final GameResultDto dto = new GameResultDto(referee.getResults());
-
-        printGameResult(dto);
+        final BettingReferee referee = new BettingReferee(dealer, bettings);
+        printBettingResults(referee.getResults());
     }
 }

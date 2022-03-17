@@ -54,8 +54,4 @@ public class CardBundleGenerator {
     public static CardBundle getCardBundleOfBlackjack() {
         return generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
     }
-
-    public static CardBundle getCardBundleOfBust() {
-        return generateCardBundleOf(CLOVER2, CLOVER10, CLOVER_KING);
-    }
 }

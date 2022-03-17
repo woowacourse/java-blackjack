@@ -1,19 +1,24 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.participant.Participant;
+import blackjack.dto.ParticipantCardsDto;
 
 public class BettingResult {
 
-    private final Participant participant;
+    private final ParticipantCardsDto participantCards;
     private final int moneyOutcome;
 
     public BettingResult(Participant participant, int moneyOutcome) {
-        this.participant = participant;
+        this.participantCards = ParticipantCardsDto.of(participant);
         this.moneyOutcome = moneyOutcome;
     }
 
-    public Participant getParticipant() {
-        return participant;
+    public String getParticipantName() {
+        return participantCards.getName();
+    }
+
+    public ParticipantCardsDto getParticipantCardsDto() {
+        return participantCards;
     }
 
     public int getMoneyOutcome() {
@@ -23,7 +28,7 @@ public class BettingResult {
     @Override
     public String toString() {
         return "BettingResult{" +
-                "participant=" + participant +
+                "participantCards=" + participantCards +
                 ", moneyOutcome=" + moneyOutcome +
                 '}';
     }

@@ -95,7 +95,7 @@ public class BettingRefereeTest {
     }
 
     private PlayerBettings generateBettingsOf(List<Player> players) {
-        return PlayerBettings.of(players, () -> BETTING_AMOUNT);
+        return PlayerBettings.of(players, (name) -> BETTING_AMOUNT);
     }
 
     private int extractPlayerBettingSum(BettingReferee referee) {

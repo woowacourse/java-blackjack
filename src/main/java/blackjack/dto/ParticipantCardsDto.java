@@ -39,8 +39,8 @@ public class ParticipantCardsDto {
         return cardsDto.getCards();
     }
 
-    public Score getScore() {
-        return cardsDto.getScore();
+    public int getScoreValue() {
+        return cardsDto.getScoreValue();
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class Score implements Comparable<Score> {
 
-    private static final int ACE_VALUE_DIFF = 11 - 1;
+    private static final int ACE_VALUE_DIFF = 10;
     private static final int DEALER_EXTRA_CARD_LIMIT = 16;
     private static final int BLACKJACK = 21;
     private static final String NEGATIVE_SCORE_NOT_ALLOWED_EXCEPTION = "점수는 음수가 될 수 없습니다!";

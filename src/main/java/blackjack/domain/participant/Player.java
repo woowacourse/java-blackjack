@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardHandState;
-import blackjack.domain.game.ResultType;
+import blackjack.domain.game.DuelResult;
 import blackjack.strategy.CardHandStateStrategy;
 import blackjack.strategy.CardSupplier;
 import blackjack.strategy.HitOrStayChoiceStrategy;
@@ -73,24 +73,24 @@ public class Player extends Participant {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public ResultType getDuelResultWith(Dealer dealer) {
+    public DuelResult getDuelResultWith(Dealer dealer) {
         if (dealer.isBlackjackOrBust() || this.isBlackjackOrBust()) {
             return getSpecialDuelResultWith(dealer);
         }
-        return ResultType.from(this.getScore(), dealer.getScore());
+        return DuelResult.from(this.getScore(), dealer.getScore());
     }
 
-    private ResultType getSpecialDuelResultWith(Dealer dealer) {
+    private DuelResult getSpecialDuelResultWith(Dealer dealer) {
         if (this.isOnlyPlayerBlackjackWith(dealer)) {
-            return ResultType.BLACKJACK_WIN;
+            return DuelResult.BLACKJACK_WIN;
         }
         if (this.isOnlyDealerBustWith(dealer)) {
-            return ResultType.WIN;
+            return DuelResult.WIN;
         }
         if (this.isBothBlackjackWith(dealer)) {
-            return ResultType.DRAW;
+            return DuelResult.DRAW;
         }
-        return ResultType.LOSE;
+        return DuelResult.LOSE;
     }
 
     private boolean isOnlyPlayerBlackjackWith(Dealer dealer) {
