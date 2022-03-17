@@ -17,7 +17,7 @@ public class Participants {
     public Participants(List<Participant> players) {
         this.players = new ArrayList<>(players);
         this.currentTurnIndex = 0;
-        validateCapacity(players);
+        validateCapacity(this.players);
     }
 
     private void validateCapacity(List<Participant> players) {
