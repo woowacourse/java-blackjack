@@ -48,6 +48,10 @@ public class BlackJack {
         users.drawCards(deck);
     }
 
+    public void drawCardFromUser(User user) {
+        user.drawCard(deck);
+    }
+
     public void drawAdditionalCard(Consumer<User> consumerPlayer, Consumer<User> consumerDealer) {
         users.drawAdditionalCard(consumerPlayer, consumerDealer);
     }
@@ -73,9 +77,5 @@ public class BlackJack {
 
     public Users getUsers() {
         return this.users;
-    }
-
-    public Deck getDeck() {
-        return this.deck;
     }
 }

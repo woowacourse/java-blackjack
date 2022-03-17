@@ -3,7 +3,6 @@ package blackjack;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.User;
@@ -37,7 +36,7 @@ public class Application {
     private static Map<Name, BettingMoney> getPlayerInfo() {
         List<Name> playerNames = getPlayerNames();
 
-        return getBettingMoney(playerNames);
+        return createPlayerInfo(playerNames);
     }
 
     private static List<Name> getPlayerNames() {
@@ -54,13 +53,11 @@ public class Application {
         }
     }
 
-    private static Map<Name, BettingMoney> getBettingMoney(List<Name> playerNames) {
+    private static Map<Name, BettingMoney> createPlayerInfo(List<Name> playerNames) {
         Map<Name, BettingMoney> playerInfo = new HashMap<>();
 
         for (Name playerName : playerNames) {
-
             BettingMoney bettingMoney = createBettingMoney(playerName);
-
             playerInfo.put(playerName, bettingMoney);
         }
 
@@ -85,36 +82,34 @@ public class Application {
     }
 
     private static void drawAdditionalCard(BlackJack blackJack) {
-        Deck deck = blackJack.getDeck();
+        Consumer<User> consumerPlayer = user -> drawCardPerPlayer(blackJack, user);
 
-        Consumer<User> consumerPlayer = user -> drawCardPerPlayer(user, deck);
-
-        Consumer<User> consumerDealer = user -> drawDealerCard(user, deck);
+        Consumer<User> consumerDealer = user -> drawDealerCard(blackJack, user);
 
         blackJack.drawAdditionalCard(consumerPlayer, consumerDealer);
     }
 
-    private static void drawCardPerPlayer(User player, Deck deck) {
+    private static void drawCardPerPlayer(BlackJack blackJack, User player) {
         try {
-            drawPlayerCardByYes(player, deck);
+            drawPlayerCardByYes(blackJack, player);
         } catch(IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
-            drawCardPerPlayer(player, deck);
+            drawCardPerPlayer(blackJack, player);
         }
     }
 
-    private static void drawPlayerCardByYes(User player, Deck deck) {
+    private static void drawPlayerCardByYes(BlackJack blackJack, User player) {
         while (player.isDrawable() && inputView.inputWhetherToDrawCard(UserDto.from(player))) {
-            player.drawCard(deck);
-            outputView.printCards(UserDto.from(player));
+            blackJack.drawCardFromUser(player);
+            outputView.printCardsInfoWithName(UserDto.from(player));
         }
     }
 
-    private static void drawDealerCard(User dealer, Deck deck) {
+    private static void drawDealerCard(BlackJack blackJack, User dealer) {
         if (dealer.isDrawable()) {
-            dealer.drawCard(deck);
-            outputView.printDealer();
+            blackJack.drawCardFromUser(dealer);
+            outputView.printDealerMessage();
         }
     }
 
