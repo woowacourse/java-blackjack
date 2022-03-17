@@ -30,14 +30,19 @@ public class Game {
                 .collect(toList()));
     }
 
-    public void playTurn(Command command) {
+    public Player playTurn(Command command) {
         Player currentTurn = players.getCurrentTurn();
         if (command.equals(Command.HIT)) {
             currentTurn.addCard(deck.draw());
+            if (!currentTurn.isAbleToHit()) {
+                players.passTurnToNext();
+            }
         }
         if (command.equals(Command.STAY)) {
             currentTurn.stay();
+            players.passTurnToNext();
         }
+        return currentTurn;
     }
 
     public boolean isPossibleToPlay() {

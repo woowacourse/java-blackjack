@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.Game;
 import blackjack.domain.player.Command;
+import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -47,8 +48,8 @@ public class GameRunner {
     private void executePlayerTurn(Game game) {
         while (game.isPossibleToPlay()) {
             String name = game.getCurrentHittablePlayerName();
-            game.playTurn(inputCommand(name));
-            OutputView.printCurrentCards(game.getCurrentPlayer());
+            Player currentTurn = game.playTurn(inputCommand(name));
+            OutputView.printCurrentCards(currentTurn);
         }
     }
 
