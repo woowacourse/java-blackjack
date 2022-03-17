@@ -30,7 +30,8 @@ public class Result {
 
 	private void calculateProfitByCondition(Dealer dealer, BiPredicate<Player, Dealer> condition,
 											Consumer<BettingToken> action) {
-		this.gameResult.entrySet().stream().filter(entry -> condition.test(entry.getKey(), dealer))
+		this.gameResult.entrySet().stream()
+			.filter(entry -> condition.test(entry.getKey(), dealer))
 			.forEach(entry -> action.accept(entry.getValue()));
 	}
 
