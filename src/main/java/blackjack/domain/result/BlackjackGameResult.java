@@ -43,13 +43,4 @@ public class BlackjackGameResult {
         }
         return gameResult;
     }
-
-    public double calculateDealerProfit() {
-        final Map<Player, BlackjackMatch> playersResult = calculatePlayersResult();
-        double dealerProfit = 0;
-        for (Player player : playersResult.keySet()) {
-            dealerProfit -= player.calculateProfit(dealer);
-        }
-        return dealerProfit;
-    }
 }

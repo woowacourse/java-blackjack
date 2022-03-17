@@ -96,19 +96,4 @@ class BlackjackGameResultTest {
                 Map.entry(player3, BlackjackMatch.WIN)
         );
     }
-
-    @Test
-    @DisplayName("딜러 수익 테스트")
-    void calculateDealerProfit() {
-        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(dealer, List.of(player1, player2, player3));
-        dealer.receiveCard(Card.from(Suit.SPADE, Denomination.NINE));
-        player1.receiveCard(Card.from(Suit.SPADE, Denomination.EIGHT));
-        player2.receiveCard(Card.from(Suit.DIAMOND, Denomination.ACE));
-        player2.receiveCard(Card.from(Suit.DIAMOND, Denomination.KING));
-        player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
-
-        final double dealerProfit = blackjackGameResult.calculateDealerProfit();
-
-        assertThat(dealerProfit).isEqualTo(-17500);
-    }
 }
