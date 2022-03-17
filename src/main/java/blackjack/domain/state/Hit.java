@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.user.Money;
 
 public class Hit implements State {
 	private final Cards cards;
@@ -23,5 +24,10 @@ public class Hit implements State {
 	@Override
 	public State stay() {
 		return new Stay(this.cards);
+	}
+
+	@Override
+	public Money calculateProfit(Money money) {
+		return null;
 	}
 }

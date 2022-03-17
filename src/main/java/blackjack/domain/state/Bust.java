@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.user.Money;
 
 public class Bust implements State{
 	private final Cards cards;
@@ -18,5 +19,14 @@ public class Bust implements State{
 	@Override
 	public State stay() {
 		throw new IllegalStateException();
+	}
+
+	@Override
+	public Money calculateProfit(Money money) {
+		return money.multiply(profitRate());
+	}
+
+	public double profitRate() {
+		return -1;
 	}
 }
