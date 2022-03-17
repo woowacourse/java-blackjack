@@ -31,14 +31,6 @@ public class Players {
         return new Players(createPlayersByBettingAndDrawCards(names, betMoney, cardDeck));
     }
 
-    private static List<Player> createPlayersByBettingAndDrawCards(final List<Name> names,
-                                                                   final Function<Name, Integer> betMoney,
-                                                                   final CardDeck cardDeck) {
-        return names.stream()
-                .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
-                .collect(Collectors.toList());
-    }
-
     private static void checkDuplicationNames(final List<Name> playerNames) {
         if (calculateDistinctCount(playerNames) != playerNames.size()) {
             throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
@@ -50,6 +42,14 @@ public class Players {
                 .map(Name::getName)
                 .distinct()
                 .count();
+    }
+
+    private static List<Player> createPlayersByBettingAndDrawCards(final List<Name> names,
+                                                                   final Function<Name, Integer> betMoney,
+                                                                   final CardDeck cardDeck) {
+        return names.stream()
+                .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
+                .collect(Collectors.toList());
     }
 
     public Player hitCurrentTurnPlayer(final Card card) {
