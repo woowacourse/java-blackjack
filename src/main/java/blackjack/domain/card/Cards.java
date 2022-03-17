@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Cards {
 
-    private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final int BLACKJACK_CARDS_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -17,7 +17,7 @@ public class Cards {
     }
 
     private void checkCardsSize(final List<Card> cards) {
-        if (cardsDistinctCount(cards) < BLACKJACK_CARD_SIZE) {
+        if (cardsDistinctCount(cards) < BLACKJACK_CARDS_SIZE) {
             throw new IllegalArgumentException("cards는 2장이상이 들어와야 합니다.");
         }
     }
@@ -37,7 +37,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return score().isBlackjackScore() && cards.size() == BLACKJACK_CARD_SIZE;
+        return score().isBlackjackScore() && cards.size() == BLACKJACK_CARDS_SIZE;
     }
 
     public Score maxScore() {
