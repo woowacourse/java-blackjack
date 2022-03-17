@@ -7,6 +7,7 @@ public final class Dealer extends Participant {
 
     public static final int CONVERT_POSITIVE = -1;
     private static final int MAX_CARD_SUM = 16;
+    public static final int FIRST_CARD_INDEX = 0;
     private static final String NAME = "딜러";
 
     public Dealer() {
@@ -21,7 +22,7 @@ public final class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        return cards.getCardByIndex(0);
+        return cards.getCardByIndex(FIRST_CARD_INDEX);
     }
 
     @Override
