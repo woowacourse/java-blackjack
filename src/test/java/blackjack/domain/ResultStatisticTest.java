@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
 import blackjack.domain.cards.card.denomination.Suit;
+import blackjack.domain.participant.Players;
+import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Human;
 import blackjack.domain.participant.human.Player;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Players;
 import blackjack.domain.result.Result;
 import blackjack.domain.result.ResultStatistic;
 import java.util.List;
@@ -42,11 +42,14 @@ class ResultStatisticTest {
             addCardList(player2, List.of("10", "10", "2"));
             Players players = Players.fromRawValue(List.of(player1, player2));
 
-            Participant participant = Participant.from(players);
-            addCardList(participant.getDealer(), List.of("8", "10", "10"));
+            Dealer dealer = new Dealer(List.of(
+                    Card.of(Denomination.EIGHT, Suit.CLOVER),
+                    Card.of(Denomination.TEN, Suit.CLOVER),
+                    Card.of(Denomination.TEN, Suit.SPADE)
+            ));
 
             // when
-            resultStatistic = ResultStatistic.from(participant);
+            resultStatistic = new ResultStatistic(players, dealer);
         }
 
         @Test
@@ -82,11 +85,14 @@ class ResultStatisticTest {
             addCardList(player2, List.of("10", "10", "10"));
             Players players = Players.fromRawValue(List.of(player1, player2));
 
-            Participant participant = Participant.from(players);
-            addCardList(participant.getDealer(), List.of("10", "10", "10", "10"));
+            Dealer dealer = new Dealer(List.of(
+                    Card.of(Denomination.TEN, Suit.DIAMOND),
+                    Card.of(Denomination.TEN, Suit.CLOVER),
+                    Card.of(Denomination.TEN, Suit.SPADE)
+            ));
 
-            //when
-            resultStatistic = ResultStatistic.from(participant);
+            // when
+            resultStatistic = new ResultStatistic(players, dealer);
         }
 
         @Test
@@ -124,11 +130,13 @@ class ResultStatisticTest {
             addCardList(player4, List.of("10", "10", "A"));
             Players players = Players.fromRawValue(List.of(player1, player2, player3, player4));
 
-            Participant participant = Participant.from(players);
-            addCardList(participant.getDealer(), List.of("10", "10"));
+            Dealer dealer = new Dealer(List.of(
+                    Card.of(Denomination.TEN, Suit.CLOVER),
+                    Card.of(Denomination.TEN, Suit.DIAMOND)
+            ));
 
             // when
-            resultStatistic = ResultStatistic.from(participant);
+            resultStatistic = new ResultStatistic(players, dealer);
         }
 
         @Test

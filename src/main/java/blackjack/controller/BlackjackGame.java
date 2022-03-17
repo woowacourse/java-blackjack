@@ -1,10 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.cards.CardDeck;
+import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Players;
 import blackjack.domain.result.ResultStatistic;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -13,27 +12,22 @@ public final class BlackjackGame {
     private static final int INIT_CARD_NUMBER = 2;
 
     public void run() {
-        Participant participant = Participant.from(getPlayers());
         CardDeck cardDeck = new CardDeck();
-        initGame(participant, cardDeck);
-        startGame(participant, cardDeck);
-        endGame(participant);
+        Dealer dealer = new Dealer(cardDeck.popCards(2));
+        Players players = Players
+                .fromNames(InputView.inputPlayerNames())
+                .initCard(cardDeck);
+        OutputView.printInitCards(players, dealer);
+
+        startGame(players, dealer, cardDeck);
+        endGame(players, dealer);
     }
 
-    private Players getPlayers() {
-        return Players.fromNames(InputView.inputPlayerNames());
-    }
-
-    private void initGame(final Participant participant, final CardDeck cardDeck) {
-        participant.initCard(cardDeck);
-        OutputView.printInitCards(participant);
-    }
-
-    private void startGame(final Participant participant, final CardDeck cardDeck) {
-        for (Player player : participant.getRawPlayers()) {
+    private void startGame(final Players players, final Dealer dealer, final CardDeck cardDeck) {
+        for (Player player : players.get()) {
             hitOrStayPlayer(player, cardDeck);
         }
-        hitOrStayDealer(participant.getDealer(), cardDeck);
+        hitOrStayDealer(dealer, cardDeck);
     }
 
     private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
@@ -53,9 +47,9 @@ public final class BlackjackGame {
         }
     }
 
-    private void endGame(final Participant participant) {
-        OutputView.printHandAndPoint(participant);
-        ResultStatistic resultStatistic = ResultStatistic.from(participant);
+    private void endGame(final Players players, final Dealer dealer) {
+        OutputView.printHandAndPoint(players, dealer);
+        ResultStatistic resultStatistic = new ResultStatistic(players, dealer);
         OutputView.printDealerResult(resultStatistic.getDealerResults());
         OutputView.printPlayerResult(resultStatistic.getPlayersResult());
     }

@@ -1,9 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.cards.card.Card;
+import blackjack.domain.participant.Players;
+import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Human;
 import blackjack.domain.participant.human.Player;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.result.Result;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +25,10 @@ public final class OutputView {
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
     private static final String PLAYER_NAME_EXPLANATION = "카드";
 
-    public static void printInitCards(final Participant participant) {
-        OutputView.printInitCardState(participant);
-        OutputView.printHumanHand(participant.getDealer());
-        for (Player player : participant.getRawPlayers()) {
+    public static void printInitCards(final Players players, final Dealer dealer) {
+        OutputView.printInitCardState(players, dealer);
+        OutputView.printHumanHand(dealer);
+        for (Player player : players.get()) {
             OutputView.printHumanHand(player);
         }
         System.out.println();
@@ -49,17 +50,17 @@ public final class OutputView {
                 .collect(Collectors.joining(CARDS_DELIMITER));
     }
 
-    private static void printInitCardState(final Participant participant) {
-        List<String> playersNames = participant.getPlayers().getNames();
+    private static void printInitCardState(final Players players, final Dealer dealer) {
+        List<String> playersNames = players.getNames();
         System.out.printf(INIT_CARD_MESSAGE,
-                participant.getDealer().getName(),
+                dealer.getName(),
                 String.join(NAMES_DELIMITER, playersNames));
     }
 
-    public static void printHandAndPoint(final Participant participant) {
+    public static void printHandAndPoint(final Players players, final Dealer dealer) {
         System.out.println();
-        OutputView.printHumanCardPointState(participant.getDealer());
-        for (Player player : participant.getRawPlayers()) {
+        OutputView.printHumanCardPointState(dealer);
+        for (Player player : players.get()) {
             OutputView.printHumanCardPointState(player);
         }
     }

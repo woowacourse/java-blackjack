@@ -1,17 +1,15 @@
 package blackjack.domain.participant.human;
 
 import blackjack.domain.cards.Cards;
+import blackjack.domain.cards.card.Card;
 import blackjack.domain.result.Point;
+import java.util.List;
 
 public final class Dealer extends Human {
     private static final int HIT_STANDARD_NUMBER = 16;
 
-    private Dealer() {
-        super(new Cards(), "딜러");
-    }
-
-    public static Dealer newInstance() {
-        return new Dealer();
+    public Dealer(List<Card> rawCards) {
+        super(new Cards(rawCards), "딜러");
     }
 
     public boolean isAbleToHit() {

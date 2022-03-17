@@ -52,4 +52,20 @@ class CardDeckTest {
                 .isInstanceOf(Exception.class)
                 .hasMessage("덱에 남은 카드가 없습니다");
     }
+
+    @Test
+    @DisplayName("카드 두개 주기 기능 테스트")
+    void popCardsTest() {
+        // given
+        CardDeck cardDeck = new CardDeck();
+
+        // when
+        cardDeck.popCards(2);
+
+        // then
+        assertThat(cardDeck)
+                .extracting("value")
+                .asList()
+                .size().isEqualTo(50);
+    }
 }

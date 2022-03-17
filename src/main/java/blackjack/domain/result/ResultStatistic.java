@@ -1,8 +1,8 @@
 package blackjack.domain.result;
 
+import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
-import blackjack.domain.participant.Participant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,15 +10,15 @@ public final class ResultStatistic {
     private final Map<String, Result> playersResult = new HashMap<>();
     private final Map<Result, Integer> dealerResults = new HashMap<>();
 
-    private ResultStatistic(final Participant participant) {
+    public ResultStatistic(final Players players, Dealer dealer) {
         for (Result value : Result.values()) {
             dealerResults.put(value, 0);
         }
-        calculate(participant);
+        calculate(players, dealer);
     }
 
-    public static ResultStatistic from(final Participant participant) {
-        return new ResultStatistic(participant);
+    public static ResultStatistic of(final Players players, Dealer dealer) {
+        return new ResultStatistic(players, dealer);
     }
 
     public Map<Result, Integer> getDealerResults() {
@@ -33,9 +33,9 @@ public final class ResultStatistic {
         return result;
     }
 
-    private void calculate(final Participant participant) {
-        for (Player player : participant.getRawPlayers()) {
-            Result playerResult = calculatePlayerResult(player, participant.getDealer());
+    private void calculate(final Players players, Dealer dealer) {
+        for (Player player : players.get()) {
+            Result playerResult = calculatePlayerResult(player, dealer);
             Result dealerResult = playerResult.toReverse();
             playersResult.put(player.getName(), playerResult);
             dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
