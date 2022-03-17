@@ -1,8 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.result.Result;
-
 public class Player extends Participant {
 
     private static final int BEST_SCORE = 21;
@@ -15,28 +12,7 @@ public class Player extends Participant {
         return new Player(new Name(name));
     }
 
-    public Result judgeResult(int score) {
-        if (calculateBestScore() == score) {
-            return Result.TIE;
-        }
-        if (isBusted(calculateBestScore()) || (!isBusted(score) && !isCloserToBestScore(score))) {
-            return Result.LOSE;
-        }
-        if (isBlackjack()) {
-            return Result.Blackjack;
-        }
-        return Result.WIN;
-    }
-
-    private boolean isBlackjack() {
-        return cards.getSize() == CardDeck.INITIAL_CARD_COUNT && calculateBestScore() == BEST_SCORE;
-    }
-
-    private boolean isBusted(int score) {
-        return score > BEST_SCORE;
-    }
-
-    private boolean isCloserToBestScore(int score) {
+    public boolean isCloserToBestScore(int score) {
         return calculateBestScore() <= BEST_SCORE && calculateBestScore() > score;
     }
 

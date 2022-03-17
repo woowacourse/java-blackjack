@@ -1,5 +1,8 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.Card.BEST_SCORE;
+
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 
@@ -17,6 +20,14 @@ public abstract class Participant {
 
     public int calculateBestScore() {
         return cards.getBestScore();
+    }
+
+    public boolean isBlackjack() {
+        return cards.getSize() == CardDeck.INITIAL_CARD_COUNT && calculateBestScore() == BEST_SCORE;
+    }
+
+    public boolean isBusted() {
+        return calculateBestScore() > BEST_SCORE;
     }
 
     public void receive(Cards cards) {

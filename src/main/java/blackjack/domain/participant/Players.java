@@ -1,11 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.Result;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -20,14 +16,6 @@ public class Players {
         return new Players(playerNames.stream()
                         .map(Player::of)
                         .collect(Collectors.toList()));
-    }
-
-    public Map<Player, Result> judgeResult(int score) {
-        Map<Player, Result> result = new LinkedHashMap<>();
-        for (Player player : players) {
-            result.put(player, player.judgeResult(score));
-        }
-        return result;
     }
 
     public List<Player> getPlayers() {

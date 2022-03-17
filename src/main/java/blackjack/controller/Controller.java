@@ -27,7 +27,7 @@ public class Controller {
 
         playBlackJack(cardDeck, dealer, players);
         OutputView.printFinalStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
-        OutputView.printFinalResult(playersBet.calculateHitProfit(Result.judgeResult(dealer, players), dealer));
+        OutputView.printFinalResult(playersBet.calculateHitProfit(Result.createJudgeTable(dealer, players), dealer));
     }
 
     private PlayersBet askPlayersBetMoney(Players players) {
