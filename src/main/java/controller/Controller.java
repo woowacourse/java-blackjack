@@ -46,7 +46,7 @@ public class Controller {
 
 	private List<Player> makePlayers(List<Name> names, Deck deck) {
 		List<Player> players = names.stream()
-			.map(name -> new Player(name, new Hand(deck.generateInitCards())))
+			.map(name -> new Player(name, new Hand(deck.generateInitCards()), InputView.inputBetting(name)))
 			.collect(Collectors.toList());
 		return players;
 	}

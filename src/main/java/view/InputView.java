@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import domain.participant.Name;
+
 public class InputView {
 
 	private static final String INPUT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -15,6 +17,10 @@ public class InputView {
 	public static final String YES = "y";
 	public static final String NO = "n";
 	public static final String INPUT_ASKING_DRAW_ERROR_MESSAGE = "[Error] y나 n만 입력할 수 있습니다.";
+	private static final String MONEY_NUMBER_REGEX = "[1-9]\\d*";
+	public static final String CHECKING_NUMBER_AND_POSITIVE_ERROR_MESSAGE = "[Error] 금액은 숫자여야 하고 양수여야 합니다.";
+	public static final String EMPTY_ERROR_MESSAGE = "[Error] 공백은 입력할 수 없습니다.";
+	public static final String ASK_BETTING_MESSAGE = "%s의 배팅 금액은?";
 
 	private static Scanner scanner = new Scanner(System.in);
 
@@ -64,4 +70,25 @@ public class InputView {
 		return false;
 	}
 
+	public static int inputBetting(Name name) {
+		try {
+			System.out.println(String.format(ASK_BETTING_MESSAGE, name.getName()));
+			String money = scanner.nextLine();
+			validateMoney(money);
+			return Integer.parseInt(money);
+		} catch (IllegalArgumentException e) {
+			OutputView.printMessage(e.getMessage());
+			return inputBetting(name);
+		}
+	}
+
+	private static void validateMoney(String money) {
+		if (money.isBlank() || money.equals(null)) {
+			throw new IllegalArgumentException(EMPTY_ERROR_MESSAGE);
+		}
+
+		if (!money.matches(MONEY_NUMBER_REGEX)) {
+			throw new IllegalArgumentException(CHECKING_NUMBER_AND_POSITIVE_ERROR_MESSAGE);
+		}
+	}
 }

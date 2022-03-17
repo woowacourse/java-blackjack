@@ -22,7 +22,7 @@ public class PlayerTest {
 	void setUp() {
 		Hand handForPlayer = new Hand(
 			List.of(new Card(Rank.EIGHT, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER)));
-		player = new Player(new Name("pobi"), handForPlayer);
+		player = new Player(new Name("pobi"), handForPlayer, 0);
 	}
 
 	@Test

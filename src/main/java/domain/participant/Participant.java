@@ -7,10 +7,12 @@ public class Participant {
 
 	protected final Name name;
 	protected final Hand hand;
+	protected int betting;
 
-	public Participant(Name name, Hand hand) {
+	public Participant(Name name, Hand hand, int betting) {
 		this.name = name;
 		this.hand = hand;
+		this.betting = betting;
 	}
 
 	public void addCard(Card card) {

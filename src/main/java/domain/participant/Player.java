@@ -5,15 +5,18 @@ import domain.result.WinOrLose;
 
 public class Player extends Participant {
 
-	public Player(Name name, Hand hand) {
-		super(name, hand);
+	public Player(Name name, Hand hand, int betting) {
+		super(name, hand, betting);
 	}
 
-	public WinOrLose getResult(Participant other) {
+	public WinOrLose getResult(Dealer other) {
 		if (other.isBlackJack()) {
-			return getResultAtBlackJack();
+			return getResultAtDealerBlackJack();
 		}
 
+		if (isBlackJack()) {
+
+		}
 		if (isBust()) {
 			return WinOrLose.LOSE;
 		}
@@ -25,7 +28,7 @@ public class Player extends Participant {
 		return judgeVersus(other.getBestScore());
 	}
 
-	private WinOrLose getResultAtBlackJack() {
+	private WinOrLose getResultAtDealerBlackJack() {
 		if (isBlackJack()) {
 			return WinOrLose.DRAW;
 		}

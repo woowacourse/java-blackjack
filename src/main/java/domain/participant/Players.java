@@ -41,7 +41,7 @@ public class Players {
 		return players.get(name).isMaxScore();
 	}
 
-	public Map<Name, WinOrLose> getResult(Participant other) {
+	public Map<Name, WinOrLose> getResult(Dealer other) {
 		Map<Name, WinOrLose> map = new LinkedHashMap<>();
 		players.keySet().stream()
 			.forEach(name -> map.put(name, players.get(name).getResult(other)));
