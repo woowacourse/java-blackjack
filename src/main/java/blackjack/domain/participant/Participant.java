@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
+import java.util.List;
 
 public abstract class Participant {
 
@@ -34,6 +35,13 @@ public abstract class Participant {
     // TODO: 구현체의 canReceive 메소드와 상당히 겹침. 해결 필요.
     public boolean isBusted() {
         return Score.calculateSumFrom(hand).isBusted();
+    }
+
+    public boolean isBlackjack() {
+        List<Card> initialCards = hand.getInitialCards();
+        Score initialScore = Score.calculateSumFrom(initialCards);
+
+        return initialScore.equals(Score.valueOf(Score.MAXIMUM_SCORE));
     }
 
     public ResultType compareWith(Participant other) {

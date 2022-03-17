@@ -3,9 +3,11 @@ package blackjack.domain.card;
 import static blackjack.domain.fixture.CardRepository.CLOVER4;
 import static blackjack.domain.fixture.CardRepository.CLOVER5;
 import static blackjack.domain.fixture.CardRepository.CLOVER6;
+import static blackjack.domain.fixture.CardRepository.CLOVER7;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,5 +40,20 @@ public class HandTest {
         assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> hand.add(CLOVER5))
                 .withMessage("중복된 카드는 존재할 수 없습니다.");
+    }
+
+    @DisplayName("getInitialCards 메서드는 게임 시작 시 받은 2장의 카드를 리스트로 반환한다.")
+    @Test
+    void getInitialCards_returnsInitialTwoCards() {
+        // given
+        Hand hand = Hand.of(CLOVER4, CLOVER5);
+        hand.add(CLOVER6);
+        hand.add(CLOVER7);
+
+        // when
+        List<Card> actual = hand.getInitialCards();
+
+        // then
+        assertThat(actual).containsExactly(CLOVER4, CLOVER5);
     }
 }

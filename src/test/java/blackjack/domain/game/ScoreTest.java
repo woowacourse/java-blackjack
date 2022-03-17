@@ -10,7 +10,9 @@ import static blackjack.domain.fixture.CardRepository.CLOVER_QUEEN;
 import static blackjack.domain.fixture.CardRepository.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,12 +47,23 @@ public class ScoreTest {
         assertThat(newScore.getValue()).isEqualTo(25);
     }
 
-    @DisplayName("calculateSumFrom 는 각 카드가 지닌 값들의 합을 합산하여 반환한다.")
+    @DisplayName("calculateSumFrom 에 카드패를 전달하면 각 카드가 지닌 값들의 합을 합산하여 반환한다.")
     @Test
-    void calculateSumFrom() {
+    void calculateSumFrom_withHand() {
         Hand hand = Hand.of(CLOVER4, CLOVER5);
 
         Score actual = Score.calculateSumFrom(hand);
+        Score expected = Score.valueOf(9);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateSumFrom 에 카드 리스트를 전달하면 각 카드가 지닌 값들의 합을 합산하여 반환한다.")
+    @Test
+    void calculateSumFrom_withCardList() {
+        List<Card> cards = List.of(CLOVER4, CLOVER5);
+
+        Score actual = Score.calculateSumFrom(cards);
         Score expected = Score.valueOf(9);
 
         assertThat(actual).isEqualTo(expected);

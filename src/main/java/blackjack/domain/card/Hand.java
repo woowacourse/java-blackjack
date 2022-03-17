@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Hand {
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
+    private static final int INITIAL_CARDS_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -15,6 +16,10 @@ public class Hand {
     public static Hand of(Card card1, Card card2) {
         List<Card> initialCards = new ArrayList<>(List.of(card1, card2));
         return new Hand(initialCards);
+    }
+
+    public List<Card> getInitialCards() {
+        return cards.subList(0, INITIAL_CARDS_COUNT);
     }
 
     public void add(Card card) {

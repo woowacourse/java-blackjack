@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class Score implements Comparable<Score> {
     public static final int DEALER_HIT_THRESHOLD = 16;
-    public static final int BLACKJACK = 21;
+    public static final int MAXIMUM_SCORE = 21;
 
     private static final int VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL = 10;
 
@@ -26,7 +26,14 @@ public class Score implements Comparable<Score> {
 
     public static Score calculateSumFrom(Hand hand) {
         List<Card> cards = hand.getCards();
+        return calculateCardsSum(cards);
+    }
 
+    public static Score calculateSumFrom(List<Card> cards) {
+        return calculateCardsSum(cards);
+    }
+
+    private static Score calculateCardsSum(List<Card> cards) {
         int maximumScore = cards.stream()
                 .mapToInt(card -> card.getRankValue().getValue())
                 .sum();
@@ -42,7 +49,7 @@ public class Score implements Comparable<Score> {
         int adjustedScore = maximumScore;
 
         for (int i = 0; i < aceCount; i++) {
-            if (adjustedScore <= Score.BLACKJACK) {
+            if (adjustedScore <= Score.MAXIMUM_SCORE) {
                 break; // TODO: 2 depth 수정하기
             }
             adjustedScore -= VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL;
@@ -57,7 +64,7 @@ public class Score implements Comparable<Score> {
     }
 
     public boolean isBusted() {
-        return this.value > BLACKJACK;
+        return this.value > MAXIMUM_SCORE;
     }
 
     public boolean isOverDealerHitThreshold() {

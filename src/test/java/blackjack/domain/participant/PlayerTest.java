@@ -6,6 +6,7 @@ import static blackjack.domain.fixture.CardRepository.CLOVER3;
 import static blackjack.domain.fixture.CardRepository.CLOVER4;
 import static blackjack.domain.fixture.CardRepository.CLOVER5;
 import static blackjack.domain.fixture.CardRepository.CLOVER6;
+import static blackjack.domain.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -125,5 +126,32 @@ public class PlayerTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("isBlackjack 은 플레이어가 받은 첫 두장의 카드의 합이 21일 경우 true 를 반환한다.")
+    @Test
+    void isBlackjack_returnsTrueOnBlackjack() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER10));
+
+        // when
+        boolean actual = player.isBlackjack();
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("isBlackjack 은 플레이어가 점수가 21이더라도 받은 첫 두장의 카드의 합이 21이 아닐 경우 false 를 반환한다.")
+    @Test
+    void isBlackjack_returnsFalseIfTotalScoreIs21ButNotBlackjack() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER4));
+        player.receiveCard(CLOVER6);
+
+        // when
+        boolean actual = player.isBlackjack();
+
+        // then
+        assertThat(actual).isFalse();
     }
 }
