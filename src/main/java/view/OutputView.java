@@ -20,11 +20,10 @@ import java.util.Map;
 import view.util.NameMapper;
 
 public class OutputView {
-    private static final String NEW_LINE = System.lineSeparator();
-    private static final String INFO_FOR_INITIAL_SPREAD = "%s와 %s에게 2장을 나누었습니다." + NEW_LINE;
-    private static final String INFO_FOR_DEALER_ADD_CARD = "%s는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
-    private static final String INFO_PLAYER_CARD_AND_SCORE = "%s카드: %s - 결과: %d" + NEW_LINE;
-    private static final String INFO_CARD_STATUS_AFTER_INITIAL_SPREAD = "%s: %s" + NEW_LINE;
+    private static final String INFO_FOR_INITIAL_SPREAD = "%s와 %s에게 2장을 나누었습니다.%n";
+    private static final String INFO_FOR_DEALER_ADD_CARD = "%s는 16이하라 한장의 카드를 더 받았습니다.%n";
+    private static final String INFO_PLAYER_CARD_AND_SCORE = "%s카드: %s - 결과: %d%n";
+    private static final String INFO_CARD_STATUS_AFTER_INITIAL_SPREAD = "%s: %s%n";
     private static final String COLON_FOR_JOINING_NAME_AND_CARD = ": ";
     private static final String RESULT_TITLE = "## 최종 승패";
     private static final String CARD_NAME_JOIN_CHARACTER = ", ";
