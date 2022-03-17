@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class GameResult {
 
-    private final Map<String, Integer> earnings;
+    private final Map<String, Integer> profits;
 
-    public GameResult(Map<String, Integer> earnings) {
-        this.earnings = Collections.unmodifiableMap(new LinkedHashMap<>(earnings));
+    public GameResult(Map<String, Integer> profits) {
+        this.profits = Collections.unmodifiableMap(new LinkedHashMap<>(profits));
     }
 
     public static GameResult of(Dealer dealer, List<Player> players) {
@@ -20,20 +20,20 @@ public class GameResult {
 
         for (Player player : players) {
             Outcome outcome = Outcome.judge(player, dealer);
-            int playerEarnings = player.calculateProfit(outcome);
-            int dealerEarnings = getDealerEarnings(playerEarnings);
-            playersEarnings.merge(dealer.getName(), dealerEarnings, Integer::sum);
-            playersEarnings.put(player.getName(), playerEarnings);
+            playersEarnings.put(player.getName(), player.calculateProfit(outcome));
         }
 
         return new GameResult(playersEarnings);
     }
 
-    private static int getDealerEarnings(int playerEarnings) {
-        return playerEarnings * (-1);
+    public int getDealerProfit() {
+        return profits.values()
+                .stream()
+                .mapToInt(profit -> profit * (-1))
+                .sum();
     }
 
-    public Map<String, Integer> getEarnings() {
-        return earnings;
+    public Map<String, Integer> getProfits() {
+        return profits;
     }
 }

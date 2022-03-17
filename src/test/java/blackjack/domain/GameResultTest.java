@@ -36,15 +36,15 @@ public class GameResultTest {
 
         // when
         GameResult gameResult = GameResult.of(dealer, players);
-        Map<String, Integer> earnings = gameResult.getEarnings();
+        Map<String, Integer> profits = gameResult.getProfits();
 
         // then
         assertAll(
-                () -> assertThat(earnings.get("딜러")).isEqualTo(-1500),
-                () -> assertThat(earnings.get(blackJackPlayer.getName())).isEqualTo(1500),
-                () -> assertThat(earnings.get(winPlayer.getName())).isEqualTo(1000),
-                () -> assertThat(earnings.get(drawPlayer.getName())).isEqualTo(0),
-                () -> assertThat(earnings.get(losePlayer.getName())).isEqualTo(-1000)
+                () -> assertThat(profits.get(blackJackPlayer.getName())).isEqualTo(1500),
+                () -> assertThat(profits.get(winPlayer.getName())).isEqualTo(1000),
+                () -> assertThat(profits.get(drawPlayer.getName())).isEqualTo(0),
+                () -> assertThat(profits.get(losePlayer.getName())).isEqualTo(-1000),
+                () -> assertThat(gameResult.getDealerProfit()).isEqualTo(-1500)
         );
     }
 

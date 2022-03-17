@@ -61,10 +61,15 @@ public class OutputView {
 
     public static void printGameResult(GameResult gameResult) {
         System.out.printf("%n## 최종 수익%n");
-        printEarnings(gameResult.getEarnings());
+        printDealerProfit(gameResult);
+        printPlayersProfit(gameResult.getProfits());
     }
 
-    private static void printEarnings(Map<String, Integer> earnings) {
-        earnings.forEach((key, value) -> System.out.printf("%s: %d%n", key, value));
+    private static void printDealerProfit(GameResult gameResult) {
+        System.out.printf("딜러: %d%n", gameResult.getDealerProfit());
+    }
+
+    private static void printPlayersProfit(Map<String, Integer> playersProfits) {
+        playersProfits.forEach((key, value) -> System.out.printf("%s: %d%n", key, value));
     }
 }
