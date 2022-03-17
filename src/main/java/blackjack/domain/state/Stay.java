@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
 
 public class Stay implements State {
@@ -22,7 +23,7 @@ public class Stay implements State {
 	}
 
 	@Override
-	public Money calculateProfit(Money money) {
+	public Money calculateProfit(Money money, Dealer dealer) {
 		return null;
 	}
 }

@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
 
 public class BlackJack implements State{
@@ -22,7 +23,14 @@ public class BlackJack implements State{
 	}
 
 	@Override
-	public Money calculateProfit(Money money) {
-		return null;
+	public Money calculateProfit(Money money, Dealer dealer) {
+		return money.multiply(profitRate(dealer));
+	}
+
+	public double profitRate(Dealer dealer) {
+		if (dealer.isBlackJack()) {
+			return 0;
+		}
+		return 1.5;
 	}
 }
