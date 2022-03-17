@@ -3,6 +3,7 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
 import domain.card.Deck;
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +36,7 @@ class PlayersTest {
     @DisplayName("첫 턴에서 모든 참가자가 카드를 두개씩 뽑는지 확인")
     void initialTurnTest() {
         Players players = Players.of(Arrays.asList("runa", "kun"));
-        Deck deck = Deck.initDeck();
+        Deck deck = Deck.initDeck(Card.values());
 
         players.runInitialTurn(deck);
         int actual = (int) players.getPlayers().stream()

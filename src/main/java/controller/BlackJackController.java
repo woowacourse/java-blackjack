@@ -1,5 +1,6 @@
 package controller;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -15,7 +16,7 @@ public final class BlackJackController {
     private final OutputView outputView = OutputView.getInstance();
 
     public void run() {
-        Deck deck = Deck.initDeck();
+        Deck deck = Deck.initDeck(Card.values());
         Players players = createPlayers();
         Dealer dealer = new Dealer();
         handOverTwoCards(players, dealer, deck);

@@ -13,7 +13,7 @@ public class DeckTest {
 
     @BeforeEach
     void setUp() {
-        deck = Deck.initDeck();
+        deck = Deck.initDeck(Card.values());
     }
 
     @Test

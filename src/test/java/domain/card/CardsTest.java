@@ -3,7 +3,6 @@ package domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -25,16 +24,16 @@ class CardsTest {
 
     private static Stream<Arguments> provideCardAndScore() {
         return Stream.of(
-            Arguments.of(List.of(new Card(Symbol.SPADE, Denomination.EIGHT),
-                new Card(Symbol.SPADE, Denomination.NINE),
-                new Card(Symbol.SPADE, Denomination.QUEEN)), 27),
-            Arguments.of(List.of(new Card(Symbol.SPADE, Denomination.ACE),
-                new Card(Symbol.CLOVER, Denomination.ACE),
-                new Card(Symbol.DIAMOND, Denomination.ACE)), 13),
-            Arguments.of(List.of(new Card(Symbol.SPADE, Denomination.FIVE),
-                new Card(Symbol.CLOVER, Denomination.ACE),
-                new Card(Symbol.DIAMOND, Denomination.ACE),
-                new Card(Symbol.HEART, Denomination.ACE)), 18)
+            Arguments.of(List.of(Card.valueOf(Symbol.SPADE, Denomination.EIGHT),
+                Card.valueOf(Symbol.SPADE, Denomination.NINE),
+                Card.valueOf(Symbol.SPADE, Denomination.QUEEN)), 27),
+            Arguments.of(List.of(Card.valueOf(Symbol.SPADE, Denomination.ACE),
+                Card.valueOf(Symbol.CLOVER, Denomination.ACE),
+                Card.valueOf(Symbol.DIAMOND, Denomination.ACE)), 13),
+            Arguments.of(List.of(Card.valueOf(Symbol.SPADE, Denomination.FIVE),
+                Card.valueOf(Symbol.CLOVER, Denomination.ACE),
+                Card.valueOf(Symbol.DIAMOND, Denomination.ACE),
+                Card.valueOf(Symbol.HEART, Denomination.ACE)), 18)
         );
     }
 
@@ -42,7 +41,7 @@ class CardsTest {
     @DisplayName("Cards에 카드가 잘 추가되는지 확인한다.")
     public void addTest() {
         Cards cards = Cards.of(new ArrayList<>());
-        Card card = new Card(Symbol.SPADE, Denomination.NINE);
+        Card card = Card.valueOf(Symbol.SPADE, Denomination.NINE);
         Cards addedCards = cards.addCard(card);
 
         assertThat(addedCards.getCardByIndex(0)).isEqualTo(card);

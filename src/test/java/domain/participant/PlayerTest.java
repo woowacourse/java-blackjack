@@ -3,6 +3,7 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
 import domain.card.Deck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,7 @@ class PlayerTest {
     void init() {
         player = new Player("test");
         dealer = new Dealer();
-        deck = Deck.initDeck();
+        deck = Deck.initDeck(Card.values());
     }
 
 

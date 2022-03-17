@@ -3,6 +3,7 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
 import domain.card.Deck;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +21,7 @@ class DealerTest {
     @BeforeEach
     void makePlayer(){
         dealer = new Dealer();
-        deck = Deck.initDeck();
+        deck = Deck.initDeck(Card.values());
     }
 
     @Test

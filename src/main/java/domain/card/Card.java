@@ -1,13 +1,25 @@
 package domain.card;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public final class Card {
+
+    private final static String NOT_FOUND_CARD = "해당하는 카드가 존재하지 않습니다.";
+    private final static List<Card> CACHE = new ArrayList<>();
 
     private final Symbol symbol;
     private final Denomination denomination;
 
-    public Card(Symbol symbol, Denomination denomination) {
+    static {
+        Arrays.stream(Symbol.values())
+            .forEach(symbol -> Arrays.stream(Denomination.values())
+                .forEach(denomination -> CACHE.add(new Card(symbol, denomination))));
+    }
+
+    private Card(Symbol symbol, Denomination denomination) {
         this.symbol = symbol;
         this.denomination = denomination;
     }
@@ -28,16 +40,14 @@ public final class Card {
         return symbol.getLetter();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return symbol == card.symbol && denomination == card.denomination;
+    public static List<Card> values() {
+        return Collections.unmodifiableList(CACHE);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(symbol, denomination);
+    public static Card valueOf(Symbol symbol, Denomination denomination) {
+        return CACHE.stream()
+            .filter(card -> card.symbol == symbol && card.denomination == denomination)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_CARD));
     }
 }
