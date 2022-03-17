@@ -33,7 +33,7 @@ class PlayersTest {
                 .map(Name::new)
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> Players.createPlayer(names, text -> 1000, cardDeck))
+        assertThatThrownBy(() -> Players.createPlayers(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름 간에 중복이 있으면 안됩니다.");
     }
@@ -43,7 +43,7 @@ class PlayersTest {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
         final List<Name> names = new ArrayList<>();
 
-        assertThatThrownBy(() -> Players.createPlayer(names, text -> 1000, cardDeck))
+        assertThatThrownBy(() -> Players.createPlayers(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 0명이 될 수 없습니다.");
     }

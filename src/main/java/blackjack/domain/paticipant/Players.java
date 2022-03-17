@@ -25,8 +25,8 @@ public class Players {
         }
     }
 
-    public static Players createPlayer(final List<Name> names, final Function<Name, Integer> betMoney,
-                                       final CardDeck cardDeck) {
+    public static Players createPlayers(final List<Name> names, final Function<Name, Integer> betMoney,
+                                        final CardDeck cardDeck) {
         checkDuplicationNames(names);
         return new Players(
                 names.stream()

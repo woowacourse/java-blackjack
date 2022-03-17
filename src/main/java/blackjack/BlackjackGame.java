@@ -25,7 +25,7 @@ public class BlackjackGame {
         this.cardDeck = CardDeck.createNewShuffledCardDeck();
         this.dealer = new Dealer(cardDeck);
         this.players = Players
-                .createPlayer(toNames(InputView.inputPlayerNames()), InputView::inputPlayerBetMoney, cardDeck);
+                .createPlayers(toNames(InputView.inputPlayerNames()), InputView::inputPlayerBetMoney, cardDeck);
     }
 
     private List<Name> toNames(final List<String> names) {
