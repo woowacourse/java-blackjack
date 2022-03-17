@@ -85,6 +85,10 @@ public class Cards {
         return calculateScore() > score;
     }
 
+    public boolean isLessScoreThan(int score) {
+        return calculateScore() < score;
+    }
+
     public boolean isSameScore(int score) {
         return calculateScore() == score;
     }

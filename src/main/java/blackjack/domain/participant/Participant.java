@@ -12,7 +12,7 @@ public abstract class Participant {
     private static final int BLACKJACK_SCORE = 21;
 
     private final Name name;
-    private final Cards cards;
+    protected final Cards cards;
 
     protected Participant(Name name, Cards cards) {
         validateName(name);

@@ -12,6 +12,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isHittable() {
-        return calculateScore() < HIT_STANDARD;
+        return cards.isLessScoreThan(HIT_STANDARD);
     }
 }
