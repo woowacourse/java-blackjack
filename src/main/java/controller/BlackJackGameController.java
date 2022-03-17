@@ -18,42 +18,34 @@ import java.util.Map;
 public final class BlackJackGameController {
     private static final int INIT_CARD_COUNT = 2;
 
-    private Players players;
-    private Dealer dealer;
-
     public void run() {
-        initParticipants();
-        hit();
-        showCardsTotal();
-        showGameResult();
+        final var dealer = new Dealer();
+        final var players = new Players(InputView.inputPlayerName());
+        initCards(dealer, players);
+        OutputView.printInitCardsResult(getNameWithCardsAllParticipant(dealer, players));
+        hit(players, dealer);
+        showCardsTotal(dealer, players);
+        showGameResult(dealer, players);
     }
 
-    private void initParticipants() {
-        final List<String> names = InputView.inputPlayerName();
-        dealer = new Dealer();
-        players = new Players(names);
-        initCards();
-        OutputView.printInitCardsResult(getNameWithCardsAllParticipant());
-    }
-
-    private void initCards() {
+    private void initCards(final Dealer dealer, final Players players) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             dealer.drawCard(CardDeck.draw());
             players.drawCard();
         }
     }
 
-    private Map<String, List<Card>> getNameWithCardsAllParticipant() {
+    private Map<String, List<Card>> getNameWithCardsAllParticipant(final Dealer dealer, final Players players) {
         final Map<String, List<Card>> nameWithCardsAllParticipant = new LinkedHashMap<>(dealer.getNameWithCards());
         nameWithCardsAllParticipant.putAll(players.getCardsWithName());
         return nameWithCardsAllParticipant;
     }
 
-    private void hit() {
+    private void hit(final Players players, final Dealer dealer) {
         for (final Player player : players.getPlayers()) {
             catchHitPlayerException(player);
         }
-        hitDealer();
+        hitDealer(dealer);
     }
 
     private void catchHitPlayerException(final Player player) {
@@ -79,16 +71,16 @@ public final class BlackJackGameController {
         return InputView.inputTryToHit(player.getName());
     }
 
-    private void hitDealer() {
+    private void hitDealer(final Dealer dealer) {
         OutputView.printDealerHit(dealer.drawCard(CardDeck.draw()));
     }
 
-    private void showCardsTotal() {
+    private void showCardsTotal(final Dealer dealer, final Players players) {
         dealer.stopRunning();
         OutputView.printCardsWithTotalScore(CardsWithTotalScoreDto.generateDtos(dealer, players));
     }
 
-    private void showGameResult() {
+    private void showGameResult(final Dealer dealer, final Players players) {
         OutputView.printGameResultWithName(new DealerResultDto(dealer, players), PlayerResultDto.generateDtos(dealer, players));
     }
 }
