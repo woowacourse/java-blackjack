@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Player extends User {
 
-    private static final int DRAW_THRESHOLD = 21;
     private static final int INIT_COUNT = 2;
 
     private final BettingMoney money;
@@ -36,8 +35,6 @@ public class Player extends User {
 
     @Override
     public boolean isDrawable() {
-        int sumPoint = cards.getSumPoint();
-
-        return sumPoint < DRAW_THRESHOLD;
+        return cards.isLessThanBlackJackScore();
     }
 }

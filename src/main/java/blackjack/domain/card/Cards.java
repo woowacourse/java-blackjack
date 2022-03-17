@@ -48,6 +48,10 @@ public class Cards {
         return sum;
     }
 
+    public boolean isLessThanBlackJackScore() {
+        return getSumPoint() < BLACKJACK_SCORE;
+    }
+
     public int getSumPoint() {
         int sum = cards.stream()
                 .mapToInt(Card::getPoint)
