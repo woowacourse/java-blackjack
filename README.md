@@ -6,13 +6,13 @@
 
 ---
 
-![Generic badge](https://img.shields.io/badge/Level2-blackjack-green.svg)
-![Generic badge](https://img.shields.io/badge/test-32_passed-blue.svg)
+![Generic badge](https://img.shields.io/badge/Level1-blackjack-green.svg)
+![Generic badge](https://img.shields.io/badge/test-40_passed-blue.svg)
 ![Generic badge](https://img.shields.io/badge/version-2.0.0-brightgreen.svg)
 
 > 우아한테크코스 웹 백엔드 4기, 블랙잭 - 상속, 인터페이스 저장소입니다.
 
-<img src="./blackjack-step1-operation.gif" alt="java-blackjack-operation" width="400px">
+<img src="./blackjack-step2-operation.gif" alt="java-blackjack-operation" width="400px">
 
 <br><br>
 
@@ -22,13 +22,12 @@
 
 ### 플레이어
 
-- [x] 이름을 입력 받아 플레이어를 생성한다
+- [x] 이름과 배팅금액을 입력 받아 플레이어를 생성한다
 - [x] 딜러를 생성한다
-- [x] 플레이어에게 카드를 지급한다
-- [x] 딜러는 16 이하일 시 카드를 계속해서 더 받는다
-- [x] 메시지를 받아 버스트 여부를 반환한다
-- [x] 메시지를 받아 현재 점수를 반환한다
-- [x] 메시지를 받아 카드 보유 상태와 결과를 반환한다
+- [x] 플레이어가 버스트나 21점이 아닌 경우, 의사를 물어 카드를 추가 지급한다.
+- [x] 딜러는 16 이하일 시 카드를 계속해서 추가한다.
+- [x] 플레이어와 딜러는 각각 상대방을 전달받아 승무패 판정을 할 수 있다.
+- [x] 플레이어는 승무패를 받아 손익액을 반환한다.
 
 ### 카드
 
