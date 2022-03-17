@@ -10,7 +10,7 @@ import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
-import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;

@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.Score;
+import blackjack.domain.card.Score;
 
 public class Stay extends FinishedState {
 

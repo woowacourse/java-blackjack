@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain;
 
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSixteen;

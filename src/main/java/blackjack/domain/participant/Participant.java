@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.Score;
+import blackjack.domain.card.Score;
 import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.CanHit;
 import blackjack.domain.state.CardHand;

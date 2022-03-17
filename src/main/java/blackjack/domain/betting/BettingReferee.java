@@ -39,7 +39,7 @@ public class BettingReferee {
         final Player player = playerBetting.getPlayer();
         final int bettingAmount = playerBetting.getBettingAmount();
 
-        final int profit = (int) player.getBettingYieldVersus(dealer) * bettingAmount;
+        final int profit = (int) (player.getBettingYieldVersus(dealer) * bettingAmount);
 
         return new BettingResult(player, profit);
     }

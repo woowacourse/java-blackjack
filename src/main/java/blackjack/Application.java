@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.controller.BlackjackController;
 import blackjack.domain.betting.PlayerBettings;
-import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.BlackjackGame;
 
 public class Application {
 
