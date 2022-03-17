@@ -23,11 +23,11 @@ public enum Denomination {
 
     private static final int ACE_BONUS_VALUE = 10;
 
-    private final int defaultValue;
+    private final int value;
     private final String printValue;
 
-    Denomination(final int defaultValue, final String printValue) {
-        this.defaultValue = defaultValue;
+    Denomination(final int value, final String printValue) {
+        this.value = value;
         this.printValue = printValue;
     }
 
@@ -57,7 +57,7 @@ public enum Denomination {
 
     private static int sumDefaultScore(final List<Denomination> numbers) {
         return numbers.stream()
-                .mapToInt(number -> number.defaultValue)
+                .mapToInt(number -> number.value)
                 .sum();
     }
 
@@ -86,7 +86,7 @@ public enum Denomination {
 
     private static int calculateDefaultScore(final List<Denomination> denominations) {
         return denominations.stream()
-                .mapToInt(denomination -> denomination.defaultValue)
+                .mapToInt(denomination -> denomination.value)
                 .sum();
     }
 
