@@ -36,6 +36,7 @@ public class ProfitCalculator {
         }
         if (result.isWin()) {
             participant.increaseBetting();
+            return;
         }
         if (result.isLose()) {
             participant.decreaseBetting();
