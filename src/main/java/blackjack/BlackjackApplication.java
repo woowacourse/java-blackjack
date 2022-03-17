@@ -74,7 +74,7 @@ public class BlackjackApplication {
     }
 
     private static void alertStart(Dealer dealer, Players players) {
-        OutputView.printStartMessage(dealer, players.getPlayers());
+        OutputView.printStartMessage(dealer.getName(), players.getPlayerNames());
         OutputView.printParticipantFirstCards(dealer.getName(), dealer.showFirstCards());
         players.getPlayers()
             .forEach(player -> OutputView.printParticipantFirstCards(player.getName(), player.showFirstCards()));

@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -42,5 +43,11 @@ public class Players {
 
     public List<Player> getPlayers() {
         return List.copyOf(players);
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+            .map(Player::getName)
+            .collect(Collectors.toList());
     }
 }

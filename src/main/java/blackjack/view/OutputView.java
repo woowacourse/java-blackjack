@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantProfit;
 
 public class OutputView {
@@ -15,11 +13,8 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printStartMessage(Dealer dealer, List<Player> players) {
-        List<String> playerNames = players.stream()
-            .map(Player::getName)
-            .collect(Collectors.toUnmodifiableList());
-        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), String.join(", ", playerNames));
+    public static void printStartMessage(String dealerName, List<String> playerNames) {
+        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", dealerName, String.join(", ", playerNames));
     }
 
     public static void printParticipantFirstCards(String participantName, List<Card> cards) {
