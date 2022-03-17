@@ -7,14 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GameResultConvertor {
-    private static final String BLANK = " ";
-
     public static String convertToString(final GameResult gameResult) {
         return GameResultMapper.mapToString(gameResult);
     }
 
-    public static String convertToString(final List<GameResult> results) {
-        return String.join(BLANK, GameResultMapper.convertToCountWithString(results));
+    public static List<String> convertToCountWithString(final List<GameResult> results) {
+        return GameResultMapper.convertToCountWithString(results);
     }
 
     private GameResultConvertor() {

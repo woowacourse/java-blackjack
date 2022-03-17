@@ -24,16 +24,16 @@ public class GameResultConvertorTest {
     @ParameterizedTest
     @DisplayName("게임결과를 갯수 + 문자열로 변환 기능 테스트")
     @MethodSource("provideResultWithExpectedString")
-    void convertTest(final String expected, final List<GameResult> results) {
-        assertThat(GameResultConvertor.convertToString(results)).isEqualTo(expected);
+    void convertTest(final List<String> expected, final List<GameResult> results) {
+        assertThat(GameResultConvertor.convertToCountWithString(results)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideResultWithExpectedString() {
         return Stream.of(
-                Arguments.of("3승", List.of(GameResult.WIN, GameResult.WIN, GameResult.WIN)),
-                Arguments.of("1승 1패", List.of(GameResult.WIN, GameResult.LOSE)),
-                Arguments.of("2패 1무", List.of(GameResult.DRAW, GameResult.LOSE, GameResult.LOSE)),
-                Arguments.of("1승 2패 1무", List.of(GameResult.WIN, GameResult.DRAW, GameResult.LOSE, GameResult.LOSE))
+                Arguments.of(List.of("3승"), List.of(GameResult.WIN, GameResult.WIN, GameResult.WIN)),
+                Arguments.of(List.of("1승", "1패"), List.of(GameResult.WIN, GameResult.LOSE)),
+                Arguments.of(List.of("2패", "1무"), List.of(GameResult.DRAW, GameResult.LOSE, GameResult.LOSE)),
+                Arguments.of(List.of("1승", "2패", "1무"), List.of(GameResult.WIN, GameResult.DRAW, GameResult.LOSE, GameResult.LOSE))
         );
     }
 }
