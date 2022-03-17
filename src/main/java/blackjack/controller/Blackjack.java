@@ -27,7 +27,7 @@ public class Blackjack {
 
     private Players initPlayers(final Deck deck) {
         final List<Player> participants = createParticipants(InputView.responseNames());
-        final Player dealer = createDealer();
+        final Player dealer = new Dealer();
         makeParticipantsInitCards(participants, deck);
         makePlayerInitCards(dealer, deck);
         return new Players(participants, dealer);
@@ -41,10 +41,6 @@ public class Blackjack {
 
     private Participant createParticipant(final String name) {
         return new Participant(name, new ParticipantAcceptStrategy(), new Money(InputView.responseBetting(name)));
-    }
-
-    private Dealer createDealer() {
-        return new Dealer();
     }
 
     private void makeParticipantsInitCards(final List<Player> participants, final Deck deck) {
