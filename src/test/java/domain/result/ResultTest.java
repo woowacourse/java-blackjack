@@ -11,8 +11,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.Denomination;
 import domain.card.Hand;
-import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Betting;
 import domain.participant.Dealer;
@@ -44,12 +44,12 @@ public class ResultTest {
 
 	@BeforeEach
 	void setUp() {
-		card_A = new Card(Rank.ACE, Suit.CLOVER);
-		card_2 = new Card(Rank.TWO, Suit.CLOVER);
-		card_Q = new Card(Rank.QUEEN, Suit.CLOVER);
-		card_K = new Card(Rank.KNIGHT, Suit.CLOVER);
-		card_6 = new Card(Rank.SIX, Suit.CLOVER);
-		card_9 = new Card(Rank.NINE, Suit.CLOVER);
+		card_A = new Card(Denomination.ACE, Suit.CLOVER);
+		card_2 = new Card(Denomination.TWO, Suit.CLOVER);
+		card_Q = new Card(Denomination.QUEEN, Suit.CLOVER);
+		card_K = new Card(Denomination.KNIGHT, Suit.CLOVER);
+		card_6 = new Card(Denomination.SIX, Suit.CLOVER);
+		card_9 = new Card(Denomination.NINE, Suit.CLOVER);
 		cards_20 = new ArrayList<>(Arrays.asList(card_A, card_9));
 		cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
 		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));

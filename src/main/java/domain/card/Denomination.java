@@ -1,6 +1,6 @@
 package domain.card;
 
-public enum Rank {
+public enum Denomination {
 
 	ACE("A", 1),
 	TWO("2", 2),
@@ -16,16 +16,16 @@ public enum Rank {
 	QUEEN("Q", 10),
 	KNIGHT("K", 10);
 
-	private final String rank;
+	private final String denomination;
 	private final int point;
 
-	Rank(String rank, int point) {
-		this.rank = rank;
+	Denomination(String denomination, int point) {
+		this.denomination = denomination;
 		this.point = point;
 	}
 
-	public String getRank() {
-		return rank;
+	public String getDenomination() {
+		return denomination;
 	}
 
 	public int getPoint() {

@@ -10,8 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.Denomination;
 import domain.card.Hand;
-import domain.card.Rank;
 import domain.card.Suit;
 import domain.result.EarningRate;
 
@@ -21,7 +21,7 @@ public class PlayerTest {
 	@BeforeEach
 	void setUp() {
 		Hand handForPlayer = new Hand(
-			List.of(new Card(Rank.EIGHT, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER)));
+			List.of(new Card(Denomination.EIGHT, Suit.CLOVER), new Card(Denomination.ACE, Suit.CLOVER)));
 		player = new Player(new Name("pobi"), handForPlayer, new Betting(0));
 	}
 
@@ -29,7 +29,7 @@ public class PlayerTest {
 	@DisplayName("블랙잭 발생 시 승패 판단")
 	void compareAtBlackJack() {
 		List<Card> handForDealer = new ArrayList<>(
-			List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER)));
+			List.of(new Card(Denomination.JACK, Suit.CLOVER), new Card(Denomination.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(new Hand(handForDealer));
 		assertThat(player.getResult(dealer)).isEqualTo(EarningRate.LOSE);
 	}
@@ -38,7 +38,7 @@ public class PlayerTest {
 	@DisplayName("최종 결과를 위한 승패 판단")
 	void compareAtFinal() {
 		Hand handForDealer = new Hand(
-			List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER)));
+			List.of(new Card(Denomination.JACK, Suit.CLOVER), new Card(Denomination.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
 		assertThat(player.getResult(dealer)).isEqualTo(EarningRate.LOSE);
 	}

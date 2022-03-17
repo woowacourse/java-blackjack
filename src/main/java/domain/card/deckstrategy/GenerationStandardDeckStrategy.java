@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 import domain.card.Card;
-import domain.card.Rank;
+import domain.card.Denomination;
 import domain.card.Suit;
 
 public class GenerationStandardDeckStrategy implements GenerationDeckStrategy {
@@ -16,7 +16,7 @@ public class GenerationStandardDeckStrategy implements GenerationDeckStrategy {
 	@Override
 	public Queue<Card> generateCardsForBlackJack() {
 		List<Card> cards = new ArrayList<>();
-		Arrays.stream(Rank.values()).forEach(rank -> {
+		Arrays.stream(Denomination.values()).forEach(rank -> {
 			Arrays.stream(Suit.values()).map(suit -> new Card(rank, suit)).forEach(cards::add);
 		});
 		Collections.shuffle(cards);

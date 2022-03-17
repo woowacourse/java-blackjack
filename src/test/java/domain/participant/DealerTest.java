@@ -9,8 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.Denomination;
 import domain.card.Hand;
-import domain.card.Rank;
 import domain.card.Suit;
 
 public class DealerTest {
@@ -20,14 +20,14 @@ public class DealerTest {
 
 	@BeforeEach
 	void setup() {
-		card1 = new Card(Rank.JACK, Suit.SPADE);
-		card2 = new Card(Rank.ACE, Suit.CLOVER);
+		card1 = new Card(Denomination.JACK, Suit.SPADE);
+		card2 = new Card(Denomination.ACE, Suit.CLOVER);
 	}
 
 	@Test
 	@DisplayName("딜러가 손패를 더 받아야 하는 경우")
 	void isEnoughCard_False() {
-		Card card = new Card(Rank.FIVE, Suit.HEART);
+		Card card = new Card(Denomination.FIVE, Suit.HEART);
 		Dealer dealer = new Dealer(new Hand(List.of(card, card1, card2)));
 		assertThat(dealer.isEnoughCard()).isFalse();
 	}
@@ -35,7 +35,7 @@ public class DealerTest {
 	@Test
 	@DisplayName("딜러가 손패를 더 안 받아야 하는 경우")
 	void isEnoughCard_True() {
-		Card card = new Card(Rank.SIX, Suit.HEART);
+		Card card = new Card(Denomination.SIX, Suit.HEART);
 		Dealer dealer = new Dealer(new Hand(List.of(card, card1, card2)));
 		assertThat(dealer.isEnoughCard()).isTrue();
 	}

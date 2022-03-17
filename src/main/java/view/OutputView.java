@@ -93,7 +93,7 @@ public class OutputView {
 
 	private static List<String> getCardInfo(ParticipantInfo participantInfo) {
 		List<String> cardInfo = participantInfo.getHand().getCards().stream()
-			.map(card -> String.join("", List.of(card.getRank().getRank(), card.getSuit().getSuit())))
+			.map(card -> String.join("", List.of(card.getDenomination().getDenomination(), card.getSuit().getSuit())))
 			.collect(Collectors.toList());
 		return cardInfo;
 	}
