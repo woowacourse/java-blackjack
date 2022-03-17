@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.CardBundle;
-import blackjack.strategy.CanHitStrategy;
+import blackjack.strategy.StayStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -31,8 +31,8 @@ public class CanHitTest {
     private final CardBundle threeCards21 = getCardBundleOfNonBlackjackTwentyOne();
     private final CardBundle blackjackCards = getCardBundleOfBlackjack();
 
-    private final CanHitStrategy prodPlayerStrategy = CardBundle::isBlackjackScore;
-    private final CanHitStrategy prodDealerStrategy = CardBundle::isDealerFinished;
+    private final StayStrategy prodPlayerStrategy = CardBundle::isBlackjackScore;
+    private final StayStrategy prodDealerStrategy = CardBundle::isDealerFinished;
 
     @DisplayName("CanHit 생성자 테스트")
     @Nested

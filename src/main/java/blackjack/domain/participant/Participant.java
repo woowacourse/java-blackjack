@@ -7,7 +7,7 @@ import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.CanHit;
 import blackjack.domain.state.CardHand;
 import blackjack.domain.state.Stay;
-import blackjack.strategy.CanHitStrategy;
+import blackjack.strategy.StayStrategy;
 import blackjack.strategy.CardSupplier;
 import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayChoiceStrategy;
@@ -17,40 +17,42 @@ public abstract class Participant {
 
     protected CardHand cardHand;
 
-    protected Participant(final CardBundle cardBundle, final CanHitStrategy stateStrategy) {
-        if (cardBundle.isBlackjack()) {
-            this.cardHand = new Blackjack(cardBundle);
-        } else if (stateStrategy.checkFinished(cardBundle)) {
-            this.cardHand = new Stay(cardBundle);
-        } else {
-            this.cardHand = new CanHit(cardBundle, stateStrategy);
-        }
+    protected Participant(final CardBundle cardBundle, final StayStrategy stateStrategy) {
+        cardHand = getInitialCardHand(cardBundle, stateStrategy);
     }
 
-    public boolean canDraw() {
-        return !cardHand.isFinished();
+    private CardHand getInitialCardHand(CardBundle cardBundle, StayStrategy stayStrategy) {
+        if (cardBundle.isBlackjack()) {
+            return new Blackjack(cardBundle);
+        }
+        if (stayStrategy.checkFinished(cardBundle)) {
+            return new Stay(cardBundle);
+        }
+        return new CanHit(cardBundle, stayStrategy);
     }
 
     public void drawAllCards(final HitOrStayChoiceStrategy hitOrStayStrategy,
                              final CardsViewStrategy viewStrategy,
                              final CardSupplier supplier) {
         while (canDraw()) {
-            hitOrStay(hitOrStayStrategy, supplier);
+            cardHand = hitOrStay(hitOrStayStrategy, supplier);
             viewStrategy.print(this);
         }
     }
 
-    public void hitOrStay(final HitOrStayChoiceStrategy hitOrStay,
-                          final CardSupplier supplier) {
+    private CardHand hitOrStay(HitOrStayChoiceStrategy hitOrStay, CardSupplier supplier) {
         if (hitOrStay.shouldHit()) {
-            cardHand = cardHand.hit(supplier.getCard());
-            return;
+            return cardHand.hit(supplier.getCard());
         }
-        cardHand = cardHand.stay();
+        return cardHand.stay();
     }
 
     public Score getScore() {
         return getCardBundle().getScore();
+    }
+
+    public boolean canDraw() {
+        return !cardHand.isFinished();
     }
 
     public boolean isBlackjack() {
@@ -61,16 +63,16 @@ public abstract class Participant {
         return cardHand.isBust();
     }
 
-    protected boolean isBlackjackOrBust() {
-        return cardHand.isBlackjack() || cardHand.isBust();
-    }
-
     public abstract String getName();
 
     public abstract List<Card> getInitialOpenCards();
 
     public List<Card> getCards() {
         return getCardBundle().getCards();
+    }
+
+    protected boolean isBlackjackOrBust() {
+        return cardHand.isBlackjack() || cardHand.isBust();
     }
 
     private CardBundle getCardBundle() {

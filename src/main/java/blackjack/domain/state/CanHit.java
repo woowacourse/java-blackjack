@@ -4,23 +4,21 @@ import static blackjack.domain.state.FinishedState.ALREADY_FINISHED_EXCEPTION_ME
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.strategy.CanHitStrategy;
+import blackjack.strategy.StayStrategy;
 
 public class CanHit implements CardHand {
 
     private final CardBundle cardBundle;
-    private final CanHitStrategy stateStrategy;
+    private final StayStrategy stayStrategy;
 
-    public CanHit(final CardBundle cardBundle,
-                  final CanHitStrategy stateStrategy) {
-
-        validateCanHit(cardBundle, stateStrategy);
+    public CanHit(final CardBundle cardBundle, final StayStrategy stayStrategy) {
+        validateCanHit(cardBundle, stayStrategy);
         this.cardBundle = cardBundle;
-        this.stateStrategy = stateStrategy;
+        this.stayStrategy = stayStrategy;
     }
 
-    private void validateCanHit(CardBundle cardBundle, CanHitStrategy stateStrategy) {
-        if (stateStrategy.checkFinished(cardBundle)){
+    private void validateCanHit(CardBundle cardBundle, StayStrategy stayStrategy) {
+        if (stayStrategy.checkFinished(cardBundle)){
             throw new IllegalArgumentException(ALREADY_FINISHED_EXCEPTION_MESSAGE);
         }
     }
@@ -31,10 +29,10 @@ public class CanHit implements CardHand {
         if (newCardBundle.isBust()) {
             return new Bust(newCardBundle);
         }
-        if (stateStrategy.checkFinished(newCardBundle)) {
+        if (stayStrategy.checkFinished(newCardBundle)) {
             return new Stay(newCardBundle);
         }
-        return new CanHit(newCardBundle, stateStrategy);
+        return new CanHit(newCardBundle, stayStrategy);
     }
 
     public CardHand stay() {
