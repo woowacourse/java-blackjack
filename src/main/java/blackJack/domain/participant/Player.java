@@ -22,7 +22,6 @@ public class Player extends Participant {
         return !MatchResult.isBurstScore(this.getScore());
     }
 
-    @Override
     public MatchResult getMatchResult(Participant dealer) {
         if (this.isBurst()) {
             return MatchResult.LOSE;

@@ -1,14 +1,11 @@
 package blackJack.view;
 
-import blackJack.domain.BlackJackGame;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.MatchResult;
 import blackJack.domain.result.ResultOfProfit;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -16,7 +13,6 @@ public class OutputView {
     private static final String NEWLINE = System.getProperty("line.separator");
 
     private static final String JOINING_DELIMITER_COMMA = ", ";
-    private static final String JOINING_DELIMITER_SPACE = " ";
     private static final int DEFAULT_DEALER_CARD_SIZE = 2;
 
     private static final String OUTPUT_MESSAGE_INIT_CARD_RESULT =
@@ -27,8 +23,6 @@ public class OutputView {
             NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
             "%s 카드: %s - 결과: %d".concat(NEWLINE);
-    private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT = NEWLINE.concat("## 최종 승패");
-    private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO = "%s: %s".concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_RESULT_OF_PROFIT_TITLE = NEWLINE.concat("## 최종 수익");
     private static final String OUTPUT_MESSAGE_RESULT_OF_PROFIT = "%s: %d".concat(NEWLINE);
 
@@ -86,25 +80,6 @@ public class OutputView {
         String playerCardsInfo = String.join(JOINING_DELIMITER_COMMA, participant.getCardsInfo());
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), playerCardsInfo,
                 participant.getScore());
-    }
-
-    public static void printFinalMatchResult(BlackJackGame blackJackGame) {
-        Map<MatchResult, Integer> dealerGameResult = blackJackGame.getDealerGameResult();
-        String dealerGameResultToString = getDealerGameResultToString(dealerGameResult);
-
-        System.out.println(OUTPUT_MESSAGE_FINAL_MATCH_RESULT);
-        System.out.printf(OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO,
-                blackJackGame.getDealer().getName(), dealerGameResultToString);
-        blackJackGame.getPlayersGameResult().forEach((key, value) -> System.out.printf(
-                OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, key.getName(), value.getResult()));
-    }
-
-    private static String getDealerGameResultToString(Map<MatchResult, Integer> matchResultIntegerMap) {
-        List<String> matchResult = matchResultIntegerMap.entrySet().stream()
-                .filter(resultCount -> resultCount.getValue() > 0)
-                .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
-                .collect(Collectors.toUnmodifiableList());
-        return String.join(JOINING_DELIMITER_SPACE, matchResult);
     }
 
     public static void printResultOfProfit(ResultOfProfit resultOfProfit, Dealer dealer) {

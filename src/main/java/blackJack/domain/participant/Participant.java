@@ -32,8 +32,6 @@ public abstract class Participant {
 
     abstract boolean canHit();
 
-    abstract MatchResult getMatchResult(Participant participant);
-
     public void hit(Card card) {
         cards.add(card);
     }

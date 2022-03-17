@@ -1,18 +1,16 @@
 package blackJack.domain.result;
 
 public enum MatchResult {
-    BLACK_JACK_WIN("블랙잭", 1.5),
-    WIN("승", 1),
-    DRAW("무", 0),
-    LOSE("패", -1);
+    BLACK_JACK_WIN(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
     private static final int BLACK_JACK = 21;
 
-    private final String result;
     private final double profitCoefficient;
 
-    MatchResult(String result, double profitCoefficient) {
-        this.result = result;
+    MatchResult(double profitCoefficient) {
         this.profitCoefficient = profitCoefficient;
     }
 
@@ -26,9 +24,5 @@ public enum MatchResult {
 
     public int calculateProfit(int bettingAmount) {
         return (int) (bettingAmount * profitCoefficient);
-    }
-
-    public String getResult() {
-        return result;
     }
 }
