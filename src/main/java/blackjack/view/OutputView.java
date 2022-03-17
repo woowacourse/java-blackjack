@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.*;
 import blackjack.domain.result.*;
@@ -82,28 +83,25 @@ public class OutputView {
         System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
     }
 
-    public static void printGameResult(final GameResult gameResult) {
-        System.out.println("## 최종 승패");
-        printDealerResult(gameResult.getDealerResult());
-        printParticipantsResult(gameResult.getParticipantResults());
+    public static void printGameResult(final List<Player> participants, final Money dealerMoney) {
+        System.out.println("## 최종 수익");
+        printDealerResult(dealerMoney);
+        printParticipantsResult(participants);
     }
 
-    private static void printDealerResult(final DealerResult dealerResult) {
-        System.out.println("딜러" + EXPLAIN_SYMBOL + makeResultToText(dealerResult));
+    private static void printDealerResult(final Money money) {
+        System.out.println("딜러" + EXPLAIN_SYMBOL + money.profit());
     }
 
-    private static String makeResultToText(final DealerResult dealerResult) {
-        ResultCount win = dealerResult.getWin();
-        ResultCount lose = dealerResult.getLose();
-        return String.format("%d%s %d%s", win.getCount(), win.getResult().getValue(), lose.getCount(), lose.getResult().getValue());
+    private static void printParticipantsResult(final List<Player> participants) {
+        participants.forEach(OutputView::printParticipantResult);
     }
 
-    private static void printParticipantsResult(final List<ParticipantResult> participantResults) {
-        participantResults.forEach(OutputView::printParticipantResult);
-    }
-
-    private static void printParticipantResult(final ParticipantResult participantResult) {
-        System.out.print(participantResult.getName() + EXPLAIN_SYMBOL);
-        System.out.println(participantResult.getResult().getValue());
+    private static void printParticipantResult(final Player player) {
+        if (player.isParticipant()) {
+            Participant participant = (Participant) player;
+            System.out.print(participant.getName() + EXPLAIN_SYMBOL);
+            System.out.println(participant.betting().profit());
+        }
     }
 }

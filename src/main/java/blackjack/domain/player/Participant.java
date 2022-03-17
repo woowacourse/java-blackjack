@@ -1,9 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.betting.Money;
-import blackjack.domain.result.Judge;
-
-import java.util.Objects;
+import blackjack.domain.result.Result;
 
 public class Participant extends Player {
 
@@ -17,19 +15,23 @@ public class Participant extends Player {
     }
 
     private boolean isUnderMaxScore() {
-        return cards.calculateDefaultScore() <= Judge.MAX_SCORE;
+        return cards.calculateDefaultScore() <= Result.MAX_SCORE;
     }
 
     private boolean acceptCard() {
         return acceptStrategy.accept(this.name);
     }
 
-    public void increaseBetting(int amount) {
-        betting.increase(new Money(amount));
+    public void increaseBetting() {
+        betting.win();
     }
 
-    public void decreaseBetting(int amount) {
-        betting.decrease(new Money(amount));
+    public void increaseBlackjackBetting() {
+        betting.winByBlackjack();
+    }
+
+    public void decreaseBetting() {
+        betting.lose();
     }
 
     public Money betting() {
@@ -39,5 +41,10 @@ public class Participant extends Player {
     @Override
     public boolean acceptableCard() {
         return isUnderMaxScore() && acceptCard();
+    }
+
+    @Override
+    public boolean isParticipant() {
+        return true;
     }
 }

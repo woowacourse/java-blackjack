@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MoneyTest {
 
@@ -16,19 +15,27 @@ public class MoneyTest {
     }
 
     @Test
-    @DisplayName("돈을 차감할 수 있다.")
+    @DisplayName("수익금을 차감할 수 있다.")
     void decreaseMoney() {
         Money money = new Money(10000);
-        money.decrease(new Money(10000));
-        assertThat(money).isEqualTo(new Money(0));
+        money.lose();
+        assertThat(money.profit()).isEqualTo(-10000);
+    }
+
+    @Test
+    @DisplayName("블랙잭인 경우 수익금은 배팅금의 1.5배가 된다.")
+    void increaseWhenBlackjack() {
+        Money money = new Money(10000);
+        money.winByBlackjack();
+        assertThat(money.profit()).isEqualTo(15000);
     }
 
     @Test
     @DisplayName("돈을 추가할 수 있다.")
     void increaseMoney() {
         Money money = new Money(10000);
-        money.increase(new Money(10000));
-        assertThat(money).isEqualTo(new Money(20000));
+        money.win();
+        assertThat(money.profit()).isEqualTo(10000);
     }
 
     @Test

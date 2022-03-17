@@ -13,20 +13,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ParticipantTest {
 
-    private Deck deck;
-    private AcceptStrategy inputStrategy;
-
-    @BeforeEach
-    void setup() {
-        deck = new Deck(new RandomCardGenerator());
-        inputStrategy = new ParticipantAcceptStrategy();
-    }
-
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("참여자 이름은 비어있을 수 없다")
     void checkNameNullOrEmpty(String name) {
-        assertThatThrownBy(() -> new Participant(name, inputStrategy))
+        AcceptStrategy inputStrategy = new ParticipantAcceptStrategy();
+        assertThatThrownBy(() -> new Participant("pobi", inputStrategy))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 비어있을 수 없습니다.");
     }
@@ -34,6 +26,7 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
     void addParticipantCard() {
+        Deck deck = new Deck(new RandomCardGenerator());
         Participant participant = new Participant("pobi", name -> true);
         participant.addCard(deck.draw());
         participant.addCard(deck.draw());
@@ -64,32 +57,4 @@ class ParticipantTest {
         assertThat(participant.acceptableCard()).isEqualTo(false);
     }
 
-    @Test
-    @DisplayName("참가자는 금액을 배팅할 수 있다.")
-    void bettingMoney() {
-        Participant participant = new Participant("pobi", name -> true);
-        participant.increaseBetting(10000);
-
-        assertThat(participant.betting()).isEqualTo(new Money(10000));
-    }
-
-    @Test
-    @DisplayName("참가자의 베팅금액은 차감될 수 있다.")
-    void decreaseBetting() {
-        Participant participant = new Participant("pobi", name -> true);
-        participant.increaseBetting(10000);
-        participant.decreaseBetting(5000);
-
-        assertThat(participant.betting()).isEqualTo(new Money(5000));
-    }
-
-    @Test
-    @DisplayName("참가자의 베팅금액은 차증될 수 있다.")
-    void increaseBetting() {
-        Participant participant = new Participant("pobi", name -> true);
-        participant.increaseBetting(10000);
-        participant.increaseBetting(5000);
-
-        assertThat(participant.betting()).isEqualTo(new Money(15000));
-    }
 }

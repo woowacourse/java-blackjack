@@ -1,7 +1,9 @@
 package blackjack.domain.player;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.Result;
 
 import java.util.List;
 
@@ -10,19 +12,14 @@ public abstract class Player {
     Cards cards;
     String name;
 
-    Player(String name) {
-        validateEmpty(name);
-        this.name = name;
+    Player(final String name) {
         this.cards = new Cards();
-    }
-
-    private void validateEmpty(final String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 이름은 비어있을 수 없습니다.");
-        }
+        this.name = name;
     }
 
     public abstract boolean acceptableCard();
+
+    public abstract boolean isParticipant();
 
     public int calculateFinalScore() {
         return cards.calculateEndScore();
@@ -41,6 +38,6 @@ public abstract class Player {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 }

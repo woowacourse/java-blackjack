@@ -6,11 +6,12 @@ public class Money {
 
     public static final int MINIMUM = 0;
 
-    private int amount;
+    private final int betting;
+    private int profit;
 
     public Money(int amount) {
         validateAmount(amount);
-        this.amount = amount;
+        this.betting = amount;
     }
 
     private void validateAmount(int amount) {
@@ -19,12 +20,24 @@ public class Money {
         }
     }
 
-    public void decrease(Money money) {
-        this.amount -= money.amount;
+    public void win() {
+        this.profit += this.betting;
     }
 
-    public void increase(Money money) {
-        this.amount += money.amount;
+    public void lose() {
+        this.profit -= this.betting;
+    }
+
+    public void winByBlackjack() {
+        this.profit += this.betting * 1.5;
+    }
+
+    public int profit() {
+        return this.profit;
+    }
+
+    public void add(Money money) {
+        this.profit += money.profit;
     }
 
     @Override
@@ -32,11 +45,12 @@ public class Money {
         if (this == o) return true;
         if (!(o instanceof Money)) return false;
         Money money = (Money) o;
-        return amount == money.amount;
+        return betting == money.betting;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(amount);
+        return Objects.hash(betting);
     }
+
 }

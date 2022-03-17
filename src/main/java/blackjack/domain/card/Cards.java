@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.domain.result.Judge;
+import blackjack.domain.result.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Cards {
 
     public int calculateEndScore() {
         final int score = calculateExpandScore();
-        if (score <= Judge.MAX_SCORE) {
+        if (score <= Result.MAX_SCORE) {
             return score;
         }
         return calculateDefaultScore();
@@ -54,7 +55,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_SIZE && calculateEndScore() == Judge.MAX_SCORE;
+        return cards.size() == BLACKJACK_SIZE && calculateEndScore() == Result.MAX_SCORE;
     }
 
     public List<Card> getCards() {

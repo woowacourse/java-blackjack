@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Type;
@@ -28,14 +29,9 @@ public class JudgeTest {
         dealer.addCard(new Card(Type.DIAMOND, Score.KING));
 
         Players players = new Players(List.of(zero), dealer);
-        GameResult result = Judge.calculateGameResult(players);
+        List<ParticipantResult> results = Judge.calculateGameResult(players);
 
-        assertAll(
-                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0),
-                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
-                () -> assertThat(result.getDealerResult().getDraw().getCount()).isEqualTo(1),
-                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.DRAW)
-        );
+        assertThat(results.get(0)).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -49,14 +45,9 @@ public class JudgeTest {
         dealer.addCard(new Card(Type.DIAMOND, Score.EIGHT));
 
         Players players = new Players(List.of(zero), dealer);
-        GameResult result = Judge.calculateGameResult(players);
+        List<ParticipantResult> results = Judge.calculateGameResult(players);
 
-        assertAll(
-                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0),
-                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
-                () -> assertThat(result.getDealerResult().getDraw().getCount()).isEqualTo(1),
-                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.DRAW)
-        );
+        assertThat(results.get(0).getResult()).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -71,14 +62,9 @@ public class JudgeTest {
         dealer.addCard(new Card(Type.CLOVER, Score.FIVE));
 
         Players players = new Players(List.of(zero), dealer);
-        GameResult result = Judge.calculateGameResult(players);
+        List<ParticipantResult> results = Judge.calculateGameResult(players);
 
-        assertAll(
-                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0),
-                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(1),
-                () -> assertThat(result.getDealerResult().getDraw().getCount()).isEqualTo(0),
-                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.WIN)
-        );
+        assertThat(results.get(0).getResult()).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -98,13 +84,11 @@ public class JudgeTest {
         dealer.addCard(new Card(Type.DIAMOND, Score.KING));
 
         Players players = new Players(List.of(zero, corinne), dealer);
-        GameResult result = Judge.calculateGameResult(players);
+        List<ParticipantResult> results = Judge.calculateGameResult(players);
 
         assertAll(
-                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2),
-                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
-                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.LOSE),
-                () -> assertThat(result.getParticipantResults().get(1).getResult()).isEqualTo(Result.LOSE)
+                () -> assertThat(results.get(0).getResult()).isEqualTo(Result.LOSE),
+                () -> assertThat(results.get(1).getResult()).isEqualTo(Result.LOSE)
         );
     }
 
@@ -127,13 +111,11 @@ public class JudgeTest {
         dealer.addCard(new Card(Type.CLOVER, Score.ACE));
 
         Players players = new Players(List.of(zero, corinne), dealer);
-        GameResult result = Judge.calculateGameResult(players);
+        List<ParticipantResult> results = Judge.calculateGameResult(players);
 
         assertAll(
-                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2),
-                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0),
-                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.LOSE),
-                () -> assertThat(result.getParticipantResults().get(1).getResult()).isEqualTo(Result.LOSE)
+                () -> assertThat(results.get(0).getResult()).isEqualTo(Result.LOSE),
+                () -> assertThat(results.get(1).getResult()).isEqualTo(Result.LOSE)
         );
     }
 
@@ -153,13 +135,11 @@ public class JudgeTest {
         dealer.addCard(new Card(Type.DIAMOND, Score.FIVE));
 
         Players players = new Players(List.of(zero, corinne), dealer);
-        GameResult result = Judge.calculateGameResult(players);
+        List<ParticipantResult> results = Judge.calculateGameResult(players);
 
         assertAll(
-                () -> assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0),
-                () -> assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(2),
-                () -> assertThat(result.getParticipantResults().get(0).getResult()).isEqualTo(Result.WIN),
-                () -> assertThat(result.getParticipantResults().get(1).getResult()).isEqualTo(Result.WIN)
+                () -> assertThat(results.get(0).getResult()).isEqualTo(Result.WIN),
+                () -> assertThat(results.get(1).getResult()).isEqualTo(Result.WIN)
         );
     }
 }

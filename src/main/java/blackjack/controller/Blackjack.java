@@ -1,9 +1,11 @@
 package blackjack.controller;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardGenerator;
 import blackjack.domain.player.*;
 import blackjack.domain.result.Judge;
+import blackjack.domain.result.ParticipantResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -21,7 +23,7 @@ public class Blackjack {
         OutputView.printPlayersInitCardInfo(players);
         decideGetMoreCard(players, deck);
         announcePlayersFinishInfo(players);
-        OutputView.printGameResult(Judge.calculateGameResult(players));
+        announcePlayersProfit(players);
     }
 
     private Players initPlayers(final Deck deck) {
@@ -81,5 +83,12 @@ public class Blackjack {
     private void announcePlayersFinishInfo(final Players players) {
         OutputView.printPlayerFinalInfo(players.getDealer());
         OutputView.printFinishParticipantInfo(players.getParticipants());
+    }
+
+    private void announcePlayersProfit(final Players players) {
+        List<ParticipantResult> results = Judge.calculateGameResult(players);
+        Judge.calculateParticipantProfit(results);
+        Money dealerMoney = Judge.calculateDealerProfit(results);
+        OutputView.printGameResult(players.getParticipants(), dealerMoney);
     }
 }
