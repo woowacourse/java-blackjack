@@ -3,8 +3,6 @@ package blackjack.model.player;
 import static blackjack.model.card.Suit.CLOVER;
 import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
-import static blackjack.model.player.matcher.ResultStatus.BLACKJACK;
-import static blackjack.model.player.matcher.ResultStatus.LOSS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
@@ -41,7 +39,7 @@ public class GamersTest {
         List<Record> records = gamers.match(dealer);
 
         assertThat(records).hasSize(2);
-        assertThat(records).contains(new Record(pobi, new Result(LOSS, MONEY)), new Record(crong, new Result(BLACKJACK, MONEY)));
+        assertThat(records).contains(new Record(pobi, Result.loss(MONEY)), new Record(crong, Result.blackjack(MONEY)));
     }
 
     @Test
@@ -59,6 +57,6 @@ public class GamersTest {
         List<Record> records = gamers.match(dealer);
 
         assertThat(records).hasSize(2);
-        assertThat(records).contains(new Record(pobi1, new Result(LOSS, MONEY)), new Record(pobi2, new Result(BLACKJACK, MONEY)));
+        assertThat(records).contains(new Record(pobi1, Result.loss(MONEY)), new Record(pobi2, Result.blackjack(MONEY)));
     }
 }

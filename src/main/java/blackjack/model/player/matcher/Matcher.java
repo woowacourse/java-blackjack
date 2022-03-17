@@ -12,12 +12,10 @@ public abstract class Matcher {
     }
 
     public final Record match(Gamer gamer) {
-        ResultStatus status = playerResultStatus(dealer, gamer);
-        Result result = new Result(status, gamer.bettingMoney());
-        return new Record(gamer.name(), result);
+        return new Record(gamer.name(), playerResult(dealer, gamer));
     }
 
-    protected abstract ResultStatus playerResultStatus(Dealer dealer, Gamer gamer);
+    protected abstract Result playerResult(Dealer dealer, Gamer gamer);
 
     public static Matcher of(Dealer dealer) {
         if (dealer.isBlackjack()) {

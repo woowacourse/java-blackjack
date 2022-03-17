@@ -1,10 +1,5 @@
 package blackjack.model.player.matcher;
 
-import static blackjack.model.player.matcher.ResultStatus.BLACKJACK;
-import static blackjack.model.player.matcher.ResultStatus.DRAW;
-import static blackjack.model.player.matcher.ResultStatus.LOSS;
-import static blackjack.model.player.matcher.ResultStatus.WIN;
-
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamer;
 
@@ -15,21 +10,21 @@ final class DealerNormalCaseMatcher extends Matcher {
     }
 
     @Override
-    protected ResultStatus playerResultStatus(Dealer dealer, Gamer gamer) {
+    protected Result playerResult(Dealer dealer, Gamer gamer) {
         if (gamer.isBust()) {
-            return LOSS;
+            return Result.loss(gamer.bettingMoney());
         } else if (gamer.isBlackjack()) {
-            return BLACKJACK;
+            return Result.blackjack(gamer.bettingMoney());
         }
         return compare(dealer, gamer);
     }
 
-    private ResultStatus compare(Dealer dealer, Gamer gamer) {
+    private Result compare(Dealer dealer, Gamer gamer) {
         if (gamer.lessScoreThan(dealer)) {
-            return LOSS;
+            return Result.loss(gamer.bettingMoney());
         } else if (gamer.moreScoreThan(dealer)) {
-            return WIN;
+            return Result.win(gamer.bettingMoney());
         }
-        return DRAW;
+        return Result.draw(gamer.bettingMoney());
     }
 }
