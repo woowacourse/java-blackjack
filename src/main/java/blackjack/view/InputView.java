@@ -25,7 +25,7 @@ public class InputView {
 
     public static int requestBettingAmount(Name name) {
         try {
-            System.out.println(name.getValue() + "의 배팅금액은?");
+            System.out.println(System.lineSeparator() + name.getValue() + "의 배팅금액은?");
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException exception) {
             System.out.println("입력값은 숫자여야 합니다.");

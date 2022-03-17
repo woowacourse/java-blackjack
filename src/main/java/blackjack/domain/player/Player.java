@@ -56,4 +56,8 @@ public class Player {
     public Player copy() {
         return new Player(name, holdCards.copy());
     }
+
+    public double getProfit(Dealer dealer) {
+        return bettingAmount.getDividend(Score.compete(this, dealer));
+    }
 }
