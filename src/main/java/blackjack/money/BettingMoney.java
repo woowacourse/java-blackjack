@@ -2,6 +2,9 @@ package blackjack.money;
 
 public class BettingMoney {
 
+    private static final String MINIMUM_BETTING_MONEY_EXCEPTION_MESSAGE = "배팅 최소 금액은 1000원입니다.";
+    private static final int MINIMUM_BETTING_MONEY = 1000;
+
     private final int value;
 
     private BettingMoney(final int value) {
@@ -14,8 +17,8 @@ public class BettingMoney {
     }
 
     private static void validateBettingMoney(final int value) {
-        if (value <= 1000) {
-            throw new IllegalArgumentException("배팅 금액은 1000보다 커야합니다.");
+        if (value < MINIMUM_BETTING_MONEY) {
+            throw new IllegalArgumentException(MINIMUM_BETTING_MONEY_EXCEPTION_MESSAGE);
         }
     }
 

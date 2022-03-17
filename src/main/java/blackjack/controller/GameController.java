@@ -56,7 +56,7 @@ public class GameController {
     }
 
     private void processForFinalRevenue(GameMachine gameMachine, GameResult gameResult) {
-        Map<User, Integer> userRevenue = gameResult.getUserRevenue(gameMachine.getUserBettingMoney());
+        Map<String, Integer> userRevenue = gameResult.getUserRevenue(gameMachine.getUserBettingMoney());
         ResultView.printDealerRevenue(gameResult.getDealerRevenue(userRevenue));
         ResultView.printFinalRevenue(userRevenue);
     }

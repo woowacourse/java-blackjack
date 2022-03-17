@@ -10,19 +10,22 @@ import java.util.Map;
 
 public class GameResult {
 
-    private final Map<User, Result> userResult;
+    private static final int MINUS = -1;
+    private static final double BLACKJACK_RATE = 1.5;
+
+    private final Map<String, Result> userResult;
     private final Map<Result, Integer> dealerResult;
 
-    private GameResult(final Map<User, Result> userResult, final Map<Result, Integer> dealerResult) {
+    private GameResult(final Map<String, Result> userResult, final Map<Result, Integer> dealerResult) {
         this.userResult = userResult;
         this.dealerResult = dealerResult;
     }
 
     public static GameResult createPlayerGameResult(final Dealer dealer, final Users users) {
-        Map<User, Result> userResult = new HashMap<>();
+        Map<String, Result> userResult = new HashMap<>();
         Map<Result, Integer> dealerResult = initializeDealerResultCount();
         for (final User user : users.getUsers()) {
-            userResult.put(user, user.findResult(dealer));
+            userResult.put(user.getName(), user.findResult(dealer));
             dealerResult.compute(dealer.findResult(user), (result, count) -> count + 1);
         }
         return new GameResult(userResult, dealerResult);
@@ -36,7 +39,7 @@ public class GameResult {
         ));
     }
 
-    public Map<User, Result> getUserResult() {
+    public Map<String, Result> getUserResult() {
         return Collections.unmodifiableMap(userResult);
     }
 
@@ -44,32 +47,33 @@ public class GameResult {
         return Collections.unmodifiableMap(dealerResult);
     }
 
-    public Map<User, Integer> getUserRevenue(final Map<User, BettingMoney> userBettingMoney) {
-        Map<User, Integer> userRevenue = new HashMap<>();
-        for (User user : userResult.keySet()) {
-            userRevenue.put(user, calculateRevenue(user, userResult.get(user), userBettingMoney.get(user)));
+    public Map<String, Integer> getUserRevenue(final Map<User, BettingMoney> userBettingMoney) {
+        Map<String, Integer> userRevenue = new HashMap<>();
+        for (User user : userBettingMoney.keySet()) {
+            int revenue = (int) calculateRevenue(user, userResult.get(user.getName()), userBettingMoney.get(user));
+            userRevenue.put(user.getName(), revenue);
         }
         return userRevenue;
     }
 
-    private int calculateRevenue(User user, Result result, BettingMoney bettingMoney) {
+    private double calculateRevenue(User user, Result result, BettingMoney bettingMoney) {
         if (result == Result.WIN && user.isBlackJack()) {
-            return bettingMoney.getValue() * 3 / 2;
+            return bettingMoney.getValue() * BLACKJACK_RATE;
         }
         if (result == Result.WIN) {
             return bettingMoney.getValue();
         }
         if (result == Result.LOSE) {
-            return bettingMoney.getValue() * -1;
+            return bettingMoney.getValue() * MINUS;
         }
         return 0;
     }
 
-    public int getDealerRevenue(Map<User, Integer> userRevenue) {
+    public int getDealerRevenue(Map<String, Integer> userRevenue) {
         int sum = 0;
-        for (User user : userRevenue.keySet()) {
-            sum += userRevenue.get(user);
+        for (String userName : userRevenue.keySet()) {
+            sum += userRevenue.get(userName);
         }
-        return sum * -1;
+        return sum * MINUS;
     }
 }

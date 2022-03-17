@@ -6,6 +6,8 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,7 @@ public class ResultView {
     private static final String DEALER_MARK_MESSAGE = "딜러: ";
     private static final String DEALER_RECEIVE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String COLON = ": ";
+    private static final String FINAL_REVENUE_MESSAGE = "##최종 수익";
 
     public static void printPlayersCards(final Dealer dealer, final Users users) {
         printPlayerCards(dealer);
@@ -88,9 +91,9 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printUsersGameResult(final Map<User, Result> userResult) {
-        for (final User user : userResult.keySet()) {
-            System.out.println(user.getName() + COLON + userResult.get(user).getResult());
+    private static void printUsersGameResult(final Map<String, Result> userResult) {
+        for (final String userName : userResult.keySet()) {
+            System.out.println(userName + COLON + userResult.get(userName).getResult());
         }
     }
 
@@ -100,13 +103,13 @@ public class ResultView {
 
     public static void printDealerRevenue(final int dealerRevenue) {
         System.out.println();
-        System.out.println("##최종 수익");
-        System.out.println("딜러: " + dealerRevenue);
+        System.out.println(FINAL_REVENUE_MESSAGE);
+        System.out.println(DEALER_MARK_MESSAGE + dealerRevenue);
     }
 
-    public static void printFinalRevenue(final Map<User, Integer> userMoney) {
-        for (User user : userMoney.keySet()) {
-            System.out.println(user.getName() + ": " + userMoney.get(user));
+    public static void printFinalRevenue(final Map<String, Integer> userMoney) {
+        for (String userName : userMoney.keySet()) {
+            System.out.println(userName + COLON + userMoney.get(userName));
         }
     }
 }

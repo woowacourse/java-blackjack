@@ -38,12 +38,12 @@ public class GameResultTest {
     @Test
     @DisplayName("유저 게임결과를 확인한다.")
     void checkUserGameResult() {
-        final Map<User, Result> expected = new HashMap<>(Map.ofEntries(
-                Map.entry(user1, Result.LOSE),
-                Map.entry(user2, Result.WIN)
+        final Map<String, Result> expected = new HashMap<>(Map.ofEntries(
+                Map.entry("pobi", Result.LOSE),
+                Map.entry("jun", Result.WIN)
         ));
 
-        final Map<User, Result> actual = gameResult.getUserResult();
+        final Map<String, Result> actual = gameResult.getUserResult();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -69,12 +69,12 @@ public class GameResultTest {
                 Map.entry(user2, BettingMoney.of(10000))
         ));
 
-        final Map<User, Integer> expected = new HashMap<>(Map.ofEntries(
-                Map.entry(user1, -10000),
-                Map.entry(user2, 10000)
+        final Map<String, Integer> expected = new HashMap<>(Map.ofEntries(
+                Map.entry("pobi", -10000),
+                Map.entry("jun", 10000)
         ));
 
-        final Map<User, Integer> actual = gameResult.getUserRevenue(userBettingMoney);
+        final Map<String, Integer> actual = gameResult.getUserRevenue(userBettingMoney);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -87,7 +87,7 @@ public class GameResultTest {
         ));
         final int expected = 0;
 
-        final Map<User, Integer> userRevenue = gameResult.getUserRevenue(userBettingMoney);
+        final Map<String, Integer> userRevenue = gameResult.getUserRevenue(userBettingMoney);
         final int actual = gameResult.getDealerRevenue(userRevenue);
         assertThat(actual).isEqualTo(expected);
     }
