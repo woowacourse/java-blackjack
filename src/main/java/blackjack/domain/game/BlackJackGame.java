@@ -18,6 +18,7 @@ public class BlackJackGame {
 
 	public static final int INIT_DISTRIBUTION_COUNT = 2;
 	private static final int DEFAULT_EARNING = 0;
+	public static final int DEALER_OPEN_COUNT_FIRST = 1;
 
 	private final Gamers gamers;
 	private final DrawStrategy deck;
@@ -48,9 +49,8 @@ public class BlackJackGame {
 	}
 
 	private List<Card> getDealerFirstCard(GamerDto dealerDto) {
-		return dealerDto.getCards().stream()
-			.limit(1)
-			.collect(Collectors.toList());
+		return dealerDto.getCards()
+			.subList(0, DEALER_OPEN_COUNT_FIRST);
 	}
 
 	private void askPlayerHitOrStay(HitRequester hitOrStay, CardsChecker cardChecker) {
