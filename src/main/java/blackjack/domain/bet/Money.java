@@ -3,7 +3,6 @@ package blackjack.domain.bet;
 import java.util.Objects;
 
 public class Money {
-    public static final String POSITIVE_MONEY_MESSAGE = "";
     private final int money;
 
     public Money(int money) {
