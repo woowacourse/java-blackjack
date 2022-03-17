@@ -34,7 +34,7 @@ public class BlackjackController {
     }
 
     private void askDealCardToDealer(Dealer dealer) {
-        if(blackjack.isBlackjack(dealer)) {
+        if (blackjack.isBlackjack(dealer)) {
             OutputView.printBlackjack(dealer);
             return;
         }
@@ -45,7 +45,7 @@ public class BlackjackController {
     }
 
     private void askDealCardToPlayer(Player player) {
-        if(blackjack.isBlackjack(player)) {
+        if (blackjack.isBlackjack(player)) {
             OutputView.printBlackjack(player);
             return;
         }
