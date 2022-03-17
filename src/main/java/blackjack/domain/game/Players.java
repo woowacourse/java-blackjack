@@ -28,10 +28,10 @@ public class Players {
     }
 
     public void bet(final Profit profit,
-                    final Consumer<String> consumer, final Supplier<Betting> supplier) {
+                    final Consumer<String> inputBetting, final Supplier<Betting> betting) {
         for (Player player : players) {
-            player.bet(consumer);
-            profit.bet(player, supplier);
+            player.bet(inputBetting);
+            profit.bet(player, betting);
         }
     }
 
@@ -42,9 +42,9 @@ public class Players {
     }
 
     public void draw(final CardDeck cardDeck,
-                     final Predicate<Player> predicate, final BiConsumer<String, List<String>> biConsumer) {
+                     final Predicate<Player> drawing, final BiConsumer<String, List<String>> biConsumer) {
         for (Player player : players) {
-            player.draw(cardDeck, predicate, biConsumer);
+            player.draw(cardDeck, drawing, biConsumer);
         }
     }
 

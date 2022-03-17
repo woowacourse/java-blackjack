@@ -13,8 +13,8 @@ public class Profit {
 
     private final Map<Player, Betting> bettings = new HashMap<>();
 
-    public void bet(final Player player, final Supplier<Betting> supplier) {
-        bettings.put(player, createBetting(supplier));
+    public void bet(final Player player, final Supplier<Betting> betting) {
+        bettings.put(player, createBetting(betting));
     }
 
     public void calculate(final Result result) {
@@ -28,8 +28,8 @@ public class Profit {
         return -totalProfit();
     }
 
-    private Betting createBetting(final Supplier<Betting> supplier) {
-        return supplier.get();
+    private Betting createBetting(final Supplier<Betting> betting) {
+        return betting.get();
     }
 
     private int totalProfit() {

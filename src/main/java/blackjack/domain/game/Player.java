@@ -14,13 +14,13 @@ public class Player extends Gamer {
         validateEqualsDealerName(name);
     }
 
-    public void bet(final Consumer<String> consumer) {
-        consumer.accept(name);
+    public void bet(final Consumer<String> inputBetting) {
+        inputBetting.accept(name);
     }
 
     public void draw(final CardDeck cardDeck,
-                     final Predicate<Player> predicate, final BiConsumer<String, List<String>> biConsumer) {
-        while (isDrawable() && isDrawing(predicate)) {
+                     final Predicate<Player> drawing, final BiConsumer<String, List<String>> biConsumer) {
+        while (isDrawable() && isDrawing(drawing)) {
             drawCard(cardDeck.pick());
             openCards(biConsumer);
         }
@@ -32,8 +32,8 @@ public class Player extends Gamer {
         }
     }
 
-    private boolean isDrawing(final Predicate<Player> predicate) {
-        return predicate.test(this);
+    private boolean isDrawing(final Predicate<Player> drawing) {
+        return drawing.test(this);
     }
 
     private void openCards(final BiConsumer<String, List<String>> biConsumer) {

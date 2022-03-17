@@ -14,10 +14,10 @@ public class Dealer extends Gamer {
         super(NAME);
     }
 
-    public void draw(final CardDeck cardDeck, final BiConsumer<String, Integer> biConsumer) {
+    public void draw(final CardDeck cardDeck, final BiConsumer<String, Integer> drawing) {
         while (isDrawable()) {
             drawCard(cardDeck.pick());
-            noticeDrawing(biConsumer);
+            noticeDrawing(drawing);
         }
     }
 
@@ -29,8 +29,8 @@ public class Dealer extends Gamer {
         return sumOfCards() > player.sumOfCards();
     }
 
-    private void noticeDrawing(final BiConsumer<String, Integer> biConsumer) {
-        biConsumer.accept(name, DRAWING_MAXIMUM);
+    private void noticeDrawing(final BiConsumer<String, Integer> drawing) {
+        drawing.accept(name, DRAWING_MAXIMUM);
     }
 
     public List<Card> openPartOfCards() {
