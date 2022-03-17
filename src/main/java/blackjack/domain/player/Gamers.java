@@ -14,7 +14,8 @@ public class Gamers {
         this.gamers = gamers;
     }
 
-    public static Gamers createGamers(final List<String> names, final Function<String, Integer> betMoney) {
+    public static Gamers createGamers(final List<String> names,
+        final Function<String, Integer> betMoney) {
         checkDuplicateName(names);
         List<Gamer> gamers = names.stream()
             .map(name -> new Gamer(name, betMoney.apply(name)))

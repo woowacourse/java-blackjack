@@ -34,7 +34,8 @@ public class BlackJackGame {
 
     private Gamers setGamers() {
         try {
-            return Gamers.createGamers(InputView.requestPlayerName(),InputView::requestBettingMoney);
+            return Gamers
+                .createGamers(InputView.requestPlayerName(), InputView::requestBettingMoney);
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return setGamers();

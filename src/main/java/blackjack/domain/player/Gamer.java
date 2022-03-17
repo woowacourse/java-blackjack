@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BetMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
@@ -11,13 +12,13 @@ public class Gamer extends Player {
     private static final int GAMER_OPEN_CARDS_SIZE = 2;
 
     private final String name;
-    private final int betMoney;
+    private final BetMoney betMoney;
 
     public Gamer(final String name, final int betMoney) {
         super(new Cards());
         checkName(name);
         this.name = name;
-        this.betMoney = betMoney;
+        this.betMoney = new BetMoney(betMoney);
     }
 
     private void checkName(final String name) {
@@ -58,8 +59,8 @@ public class Gamer extends Player {
         return name;
     }
 
-    public int getBetMoney() {
-        return betMoney;
+    public int BetMoney() {
+        return betMoney.getBetMoney();
     }
 
 }

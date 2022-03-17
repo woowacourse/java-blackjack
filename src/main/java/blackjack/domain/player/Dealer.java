@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BetMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
@@ -12,11 +13,11 @@ public class Dealer extends Player {
     private static final int DEALER_OPEN_CARD_SIZE = 1;
 
     private final String name = DEALER_NAME;
-    private final int PossessionMoney;
+    private final BetMoney betMoney;
 
     public Dealer() {
         super(new Cards());
-        this.PossessionMoney = 0;
+        this.betMoney = new BetMoney(0);
     }
 
     @Override
@@ -29,4 +30,7 @@ public class Dealer extends Player {
         return calculateResult() <= DEALER_RECEIVE_STANDARD;
     }
 
+    public int betMoney() {
+        return betMoney.getBetMoney();
+    }
 }
