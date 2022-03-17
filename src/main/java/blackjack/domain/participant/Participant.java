@@ -47,6 +47,8 @@ public abstract class Participant {
 
     public abstract boolean isHittable();
 
+    public abstract List<Card> showFirstCards();
+
     public List<Card> getCards() {
         return cards.getValues();
     }

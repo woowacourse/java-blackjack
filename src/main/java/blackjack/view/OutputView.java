@@ -22,18 +22,19 @@ public class OutputView {
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), String.join(", ", playerNames));
     }
 
-    public static void printDealerFirstCard(Dealer dealer) {
-        Card firstCard = dealer.getCards().get(0);
-        System.out.printf("%s: %s%n", dealer.getName(), createCardInfoString(firstCard));
+    public static void printParticipantFirstCards(String participantName, List<Card> cards) {
+        System.out.printf("%s: %s%n", participantName, createCardsInfoString(cards));
     }
 
     public static void printParticipantCards(Participant participant, int score) {
-        String cardsInfo = participant.getCards()
-            .stream()
+        String cardsInfo = createCardsInfoString(participant.getCards());
+        System.out.printf("%s카드: %s - 합계: %d%n", participant.getName(), cardsInfo, score);
+    }
+
+    private static String createCardsInfoString(List<Card> cards) {
+        return cards.stream()
             .map(OutputView::createCardInfoString)
             .collect(Collectors.joining(", "));
-
-        System.out.printf("%s카드: %s - 합계: %d%n", participant.getName(), cardsInfo, score);
     }
 
     private static String createCardInfoString(Card card) {

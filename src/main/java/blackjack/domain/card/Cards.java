@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Cards {
@@ -49,6 +50,13 @@ public class Cards {
         if (cards.contains(card)) {
             throw new IllegalArgumentException("[ERROR] 카드는 중복될 수 없습니다.");
         }
+    }
+
+    public List<Card> getFrontCards(int cardSize) {
+        return IntStream.range(0, cardSize)
+            .boxed()
+            .map(cards::get)
+            .collect(Collectors.toList());
     }
 
     public int calculateScore() {
