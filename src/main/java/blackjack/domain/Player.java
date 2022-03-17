@@ -14,16 +14,17 @@ public class Player extends Participant {
     }
 
     @Override
-    public Score compete(Participant player) {
-        if (player.isBust()) {
+    public Score compete(Participant dealer) {
+        if (dealer.isBust()) {
             return getScoreWithBust();
         }
-
         if (this.isBust()) {
             return Score.LOSE;
         }
-
-        return Score.compare(this.getTotalNumber(), player.getTotalNumber());
+        if (this.isBlackjack()) {
+            return getScoreWithBlackjack(dealer);
+        }
+        return Score.compare(this.getTotalNumber(), dealer.getTotalNumber());
     }
 
     private Score getScoreWithBust() {
@@ -33,6 +34,11 @@ public class Player extends Participant {
         return Score.WIN;
     }
 
+    @Override
+    public boolean isDrawable() {
+        return !isBust();
+    }
+
     public double getTotalProfit(Score myScore) {
         if (myScore == Score.LOSE) {
             return (double) bettingAmount.getAmount() * -1;
@@ -40,15 +46,9 @@ public class Player extends Participant {
         if (myScore == Score.DRAW) {
             return 0;
         }
-
         if (cards.isBlackjack()) {
             return bettingAmount.getAmount() * 1.5;
         }
         return bettingAmount.getAmount();
-    }
-
-    @Override
-    public boolean isDrawable() {
-        return !isBust();
     }
 }

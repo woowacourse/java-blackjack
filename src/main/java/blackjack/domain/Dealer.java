@@ -14,11 +14,12 @@ public class Dealer extends Participant {
         if (player.isBust()) {
             return Score.WIN;
         }
-
         if (this.isBust()) {
             return Score.LOSE;
         }
-
+        if (this.isBlackjack()) {
+            return getScoreWithBlackjack(player);
+        }
         return Score.compare(this.getTotalNumber(), player.getTotalNumber());
     }
 

@@ -27,6 +27,17 @@ public abstract class Participant {
         cards.add(card);
     }
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
+    protected Score getScoreWithBlackjack(Participant player) {
+        if (player.isBlackjack()) {
+            return Score.DRAW;
+        }
+        return Score.WIN;
+    }
+
     public boolean isBust() {
         return getTotalNumber() > BLACKJACK_NUMBER;
     }
