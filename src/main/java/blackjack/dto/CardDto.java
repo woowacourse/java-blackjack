@@ -17,7 +17,7 @@ public class CardDto {
     public static CardDto toDto(final Card card) {
         final CardNumber cardNumber = card.getCardNumber();
         final CardPattern cardPattern = card.getCardPattern();
-        return new CardDto(cardNumber.getInitial(), cardPattern.getName());
+        return new CardDto(cardNumber.getInitial(), cardPattern.getPattern());
     }
 
     public String getCardName() {

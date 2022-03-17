@@ -7,14 +7,14 @@ public enum CardPattern {
     CLOVER("클로버"),
     DIAMOND("다이아몬드");
 
-    private final String name;
+    private final String pattern;
 
-    CardPattern(final String name) {
-        this.name = name;
+    CardPattern(final String pattern) {
+        this.pattern = pattern;
     }
 
-    public String getName() {
-        return name;
+    public String getPattern() {
+        return pattern;
     }
 
 }

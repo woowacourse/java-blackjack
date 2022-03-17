@@ -34,13 +34,6 @@ public abstract class Participant {
         cards.addCard(deck.drawCard());
     }
 
-    public void drawCards(final Deck deck, final CardDrawCallback callback) {
-        while (isPossibleToDrawCard() && callback.isContinuable(getParticipantName())) {
-            drawCard(deck);
-            callback.onUpdate(name, cards.getCards());
-        }
-    }
-
     public abstract boolean isPossibleToDrawCard();
 
     public boolean isBlackjack() {
@@ -51,7 +44,7 @@ public abstract class Participant {
         return cards.isBust();
     }
 
-    public String getParticipantName() {
+    public String getName() {
         return name;
     }
 
@@ -61,6 +54,10 @@ public abstract class Participant {
 
     public int getScore() {
         return cards.calculateScore();
+    }
+
+    public boolean equalsName(final String name) {
+        return name.equals(this.name);
     }
 
 }

@@ -20,13 +20,13 @@ public class InitiallyDrewCardDto {
     }
 
     public static InitiallyDrewCardDto toDto(final Player player) {
-        final String playerName = player.getParticipantName();
+        final String playerName = player.getName();
         final List<Card> playerCards = player.getCards();
         return new InitiallyDrewCardDto(playerName, playerCards);
     }
 
     public static InitiallyDrewCardDto toDto(final Dealer dealer) {
-        final String dealerName = dealer.getParticipantName();
+        final String dealerName = dealer.getName();
         final List<Card> dealerCards = List.of(dealer.getFirstCard());
         return new InitiallyDrewCardDto(dealerName, dealerCards);
     }

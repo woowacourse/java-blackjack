@@ -21,7 +21,7 @@ public class ParticipantDto {
     }
 
     public static ParticipantDto toDto(final Participant participant) {
-        return new ParticipantDto(participant.getParticipantName(), participant.getCards(), participant.getScore());
+        return new ParticipantDto(participant.getName(), participant.getCards(), participant.getScore());
     }
 
     public String getName() {

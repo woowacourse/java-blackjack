@@ -51,7 +51,7 @@ public class Card {
     public String toString() {
         return "Card{" +
                 cardNumber.getInitial() +
-                cardPattern.getName() +
+                cardPattern.getPattern() +
                 '}';
     }
 

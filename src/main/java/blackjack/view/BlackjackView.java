@@ -21,23 +21,15 @@ public class BlackjackView {
         this.outputView = outputView;
     }
 
-    public Map<String, Integer> requestPlayerBettingAmounts(final List<String> playerNames) {
-        final Map<String, Integer> playerBettingAmounts = new HashMap<>();
-        for (final String playerName : playerNames) {
-            playerBettingAmounts.put(playerName, requestPlayerBettingAmount(playerName));
-        }
-        return playerBettingAmounts;
+    public int requestPlayerBettingAmount(final String playerName) {
+        outputView.printEmptyLine();
+        outputView.printMessage(playerName + "의 베팅 금액은?");
+        return inputView.requestBettingAmount();
     }
 
     public List<String> requestPlayerNames() {
         outputView.printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return inputView.requestPlayerNames();
-    }
-
-    private int requestPlayerBettingAmount(final String playerName) {
-        outputView.printEmptyLine();
-        outputView.printMessage(playerName + "의 베팅 금액은?");
-        return inputView.requestBettingAmount();
     }
 
     public void printInitiallyDistributedCards(final InitiallyDrewCardDto dealerInitiallyDrewCardDto,

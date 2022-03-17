@@ -31,6 +31,10 @@ public class Player extends Participant {
         return !isBust();
     }
 
+    public boolean isbetted() {
+        return bettingAmount != null;
+    }
+
     public int getBettingAmount() {
         return bettingAmount.getAmount();
     }

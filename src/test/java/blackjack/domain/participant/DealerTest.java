@@ -18,31 +18,6 @@ class DealerTest {
 
     private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
 
-    @DisplayName("딜러의 카드 합이 17 미만일 때만 추가로 드로우한다.")
-    @ParameterizedTest
-    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForStartWithDrawCardTest")
-    void dealerUnderMinimumTotal(final List<Card> initializedCards, final List<Card> expectedCards) {
-        final Deck deck = this.generateDeck(initializedCards);
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        dealer.drawCards(deck, this.generateCardDrawCallback());
-
-        final List<Card> actualCards = dealer.getCards();
-        assertThat(actualCards).isEqualTo(expectedCards);
-    }
-
-    private CardDrawCallback generateCardDrawCallback() {
-        return new CardDrawCallback() {
-            @Override
-            public boolean isContinuable(String participantName) {
-                return true;
-            }
-
-            @Override
-            public void onUpdate(String dealerName, List<Card> cards) {
-            }
-        };
-    }
-
     @DisplayName("플레이어의 카드 합계가 버스트일 경우, 플레이어는 패배한다.")
     @ParameterizedTest()
     @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForPlayerLoseByBust")
