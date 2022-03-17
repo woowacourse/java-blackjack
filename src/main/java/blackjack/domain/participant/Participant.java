@@ -18,10 +18,15 @@ public abstract class Participant {
         this.playStatus = HIT;
     }
 
+    /**
+     * CardDeck 으로부터 2장의 카드를 뽑아 Cards 에 저장한다.
+     * 2장의 카드에 관한 PlayStatus 를 업데이트 한다.
+     * 두 장의 합이 21인 경우 PlayStatus 가 STAY 가 되어 더이상 외부에서 카드를 뽑지 않는다.
+     * @param cardDeck 카드가 생성된 CardDeck 을 받는다.
+     */
     public void init(CardDeck cardDeck) {
-        cards.add(cardDeck.drawCard());
-        cards.add(cardDeck.drawCard());
-        playStatus = cards.getStatus();
+        hit(cardDeck.drawCard());
+        hit(cardDeck.drawCard());
     }
 
     PlayStatus getStatus() {
