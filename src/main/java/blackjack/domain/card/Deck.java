@@ -1,15 +1,12 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Deck {
 
-    private static final List<PlayingCard> PLAYING_CARDS = new ArrayList<>();
-    private static final int POP = 0;
+    private static final Stack<PlayingCard> PLAYING_CARDS = new Stack<>();
 
-    private final List<PlayingCard> playingCards;
+    private final Stack<PlayingCard> playingCards;
 
     static {
         for (Suit suit : Suit.values()) {
@@ -18,8 +15,8 @@ public class Deck {
         }
      }
 
-    public Deck(List<PlayingCard> playingCards) {
-        this.playingCards = new ArrayList<>(playingCards);
+    public Deck(Stack<PlayingCard> playingCards) {
+        this.playingCards = playingCards;
     }
 
     public static Deck create() {
@@ -28,7 +25,7 @@ public class Deck {
 
     public PlayingCard assignCard(CardShuffleMachine playingCardShuffleMachine) {
         playingCardShuffleMachine.shuffle(playingCards);
-        return playingCards.remove(POP);
+        return playingCards.pop();
     }
 
     @Override

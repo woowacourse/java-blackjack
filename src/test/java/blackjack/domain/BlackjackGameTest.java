@@ -78,11 +78,7 @@ class BlackjackGameTest {
         blackjackGame.assignCard(guest, playingCardFixMachine);
         blackjackGame.assignCard(guest, playingCardFixMachine);
 
-        Set<PlayingCard> cards = new LinkedHashSet<>();
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.TWO));
-
-        assertThat(guest.getPlayingCards().getCards()).isEqualTo(cards);
+        assertThat(guest.getPlayingCards().getCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -131,6 +127,6 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
         blackjackGame.initGames(playingCardFixMachine);
 
-        assertThat(blackjackGame.isTurnDealer()).isTrue();
+        assertThat(blackjackGame.isTurnDealer()).isFalse();
     }
 }

@@ -19,7 +19,7 @@ class DeckTest {
     @DisplayName("카드 뽑는 기능 확인")
     public void checkPickCard() {
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
-        PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.ACE);
+        PlayingCard playingCard = new PlayingCard(Suit.CLUB, Denomination.KING);
 
         assertThat(deck.assignCard(playingCardFixMachine)).isEqualTo(playingCard);
     }
