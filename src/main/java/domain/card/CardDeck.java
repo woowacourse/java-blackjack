@@ -15,7 +15,7 @@ public class CardDeck {
     private static final String CAN_NOT_SHUFFLE_USED_DECK = "사용중인 카드는 다시 섞을 수 없습니다.";
     private static final List<PlayingCard> ORIGINAL_PLAYING_CARDS;
 
-    private final Deque<PlayingCard> playingPlayingCards;
+    private final Deque<PlayingCard> playingCards;
 
     static {
         ORIGINAL_PLAYING_CARDS = List.copyOf(
@@ -30,8 +30,8 @@ public class CardDeck {
                 .map(denomination -> PlayingCard.of(suit, denomination));
     }
 
-    private CardDeck(List<PlayingCard> playingPlayingCards) {
-        this.playingPlayingCards = new ArrayDeque<>(playingPlayingCards);
+    private CardDeck(List<PlayingCard> cards) {
+        this.playingCards = new ArrayDeque<>(cards);
     }
 
     private CardDeck() {
@@ -43,11 +43,11 @@ public class CardDeck {
     }
 
     public PlayingCard drawCard() {
-        return playingPlayingCards.pop();
+        return playingCards.pop();
     }
 
     public CardDeck shuffle() {
-        if (playingPlayingCards.size() != INITIAL_SIZE) {
+        if (playingCards.size() != INITIAL_SIZE) {
             throw new IllegalStateException(CAN_NOT_SHUFFLE_USED_DECK);
         }
 

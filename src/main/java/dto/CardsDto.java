@@ -6,11 +6,11 @@ import java.util.List;
 
 public class CardsDto {
     private final String name;
-    private final List<PlayingCard> playingPlayingCards;
+    private final List<PlayingCard> playingCards;
 
-    private CardsDto(String name, List<PlayingCard> playingPlayingCards) {
+    private CardsDto(String name, List<PlayingCard> playingCards) {
         this.name = name;
-        this.playingPlayingCards = List.copyOf(playingPlayingCards);
+        this.playingCards = List.copyOf(playingCards);
     }
 
     public static CardsDto from(Player player) {
@@ -26,6 +26,6 @@ public class CardsDto {
     }
 
     public List<PlayingCard> getCards() {
-        return playingPlayingCards;
+        return playingCards;
     }
 }

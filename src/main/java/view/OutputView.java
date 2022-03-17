@@ -65,8 +65,8 @@ public class OutputView {
                 ));
     }
 
-    private static String getJoinedCardNames(List<PlayingCard> playingPlayingCards) {
-        return playingPlayingCards.stream()
+    private static String getJoinedCardNames(List<PlayingCard> cards) {
+        return cards.stream()
                 .map(NameMapper::getCardName)
                 .collect(joining(CARD_NAME_JOIN_CHARACTER));
     }
