@@ -21,7 +21,7 @@ public abstract class Running extends AbstractBlackjackGameState {
     }
 
     @Override
-    public final double profit(final int betMoney, final BlackjackGameState blackjackGameState) {
+    public final double profit(final int betMoney, final BlackjackGameState dealerGameState) {
         throw new IllegalStateException("Running상태는 수익을 계산할 수 없습니다.");
     }
 
