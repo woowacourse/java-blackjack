@@ -1,5 +1,9 @@
 package blackjack.model.card;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -58,13 +62,16 @@ public final class Card {
     }
 
     public static List<Card> createPool() {
-        return Stream.of(Suit.values())
-            .flatMap(Card::createEachSuitCards)
-            .collect(Collectors.toList());
+        List<Card> pool = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            pool.addAll(createCardsEach(suit));
+        }
+        return pool;
     }
 
-    private static Stream<Card> createEachSuitCards(Suit suit) {
+    private static Collection<Card> createCardsEach(Suit suit) {
         return Stream.of(Rank.values())
-            .map(rank -> new Card(rank, suit));
+            .map(rank -> new Card(rank, suit))
+            .collect(toUnmodifiableList());
     }
 }
