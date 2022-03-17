@@ -32,7 +32,7 @@ public class Application {
     }
 
     private static Function<Game, Integer> giveMoneyInput(InputView inputView) {
-        return game -> inputView.askBetAmount(EntryDTO.fromCurrent(game));
+        return game -> inputView.askBetAmount(EntryDTO.fromCurrentEntryOf(game));
     }
 
     private static void start(Game game, ResultView resultView) {
@@ -52,7 +52,7 @@ public class Application {
     }
 
     private static void playTurn(InputView inputView, Game game, ResultView resultView) {
-        EntryDTO entryDTO = EntryDTO.fromCurrent(game);
+        EntryDTO entryDTO = EntryDTO.fromCurrentEntryOf(game);
         if (game.isCurrentEntryBust()) {
             resultView.printBustMessage(entryDTO);
             return;
@@ -66,7 +66,7 @@ public class Application {
 
     private static void hitCurrentEntry(InputView inputView, Game game, ResultView resultView) {
         game.hitCurrentEntry();
-        resultView.printDeck(EntryDTO.fromCurrent(game));
+        resultView.printDeck(EntryDTO.fromCurrentEntryOf(game));
         playTurn(inputView, game, resultView);
     }
 

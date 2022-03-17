@@ -16,7 +16,7 @@ public final class EntryDTO extends PlayerDTO {
                 .collect(Collectors.toList());
     }
 
-    public static EntryDTO fromCurrent(Game game) {
+    public static EntryDTO fromCurrentEntryOf(Game game) {
         return from(game.getCurrentEntry());
     }
 
