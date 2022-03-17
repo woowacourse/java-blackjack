@@ -11,7 +11,7 @@ public class Card {
 
 
     public boolean isAce() {
-        return this.getNumber().getDenomination().equals("A");
+        return this.getNumber().equals(Number.ACE);
     }
 
     public Number getNumber() {
