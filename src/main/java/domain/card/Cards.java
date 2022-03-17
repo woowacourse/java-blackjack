@@ -8,6 +8,7 @@ public final class Cards {
 
     private static final int ACE_ADDITION = 10;
     private static final int MAX_SCORE = 21;
+    private static final int CARD_COUNT_FOR_BLACKJACK = 2;
     private static final List<Card> EMPTY_LIST = Collections.emptyList();
 
     private final List<Card> cards;
@@ -66,6 +67,10 @@ public final class Cards {
 
     public boolean isBust() {
         return calculateScore() > MAX_SCORE;
+    }
+
+    public boolean isBlackJack(){
+        return cards.size() == CARD_COUNT_FOR_BLACKJACK && calculateScore() == MAX_SCORE;
     }
 
     public Cards addCard(Card card) {

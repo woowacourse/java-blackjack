@@ -3,6 +3,7 @@ package domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -47,4 +48,14 @@ class CardsTest {
         assertThat(addedCards.getCardByIndex(0)).isEqualTo(card);
     }
 
+    @Test
+    @DisplayName("Cards가 BlackJack인 경우에 true를 반환한다.")
+    public void isBlackJackTest() {
+        Cards cards = Cards.of(Cards.getEmptyList());
+        Cards addedCards = cards.addCards(
+            Arrays.asList(Card.valueOf(Symbol.HEART, Denomination.ACE), Card.valueOf(Symbol.SPADE,
+                Denomination.QUEEN)));
+
+        assertThat(addedCards.isBlackJack()).isTrue();
+    }
 }

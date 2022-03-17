@@ -25,7 +25,7 @@ public final class Player extends Participant implements Comparable<Participant>
 
     @Override
     public boolean canHit() {
-        return cards.calculateSum() < MAX_SCORE;
+        return !isBlackJack() && cards.calculateSum() < MAX_SCORE;
     }
 
     public void betMoney(int money) {
