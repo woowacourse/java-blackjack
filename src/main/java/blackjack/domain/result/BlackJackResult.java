@@ -12,15 +12,15 @@ import static blackjack.domain.gamer.Gamers.INIT_DISTRIBUTION_COUNT;
 
 public enum BlackJackResult {
     WIN("승", (player, dealer) ->
-            ((isBlackJack(player) && !isBlackJack(dealer))
+            ((player.isBlackJack() && !dealer.isBlackJack())
                     || (player.getCardsNumberSum() <= MAX_CARD_VALUE
                     && (player.getCardsNumberSum() > dealer.getCardsNumberSum() || dealer.getCardsNumberSum() > MAX_CARD_VALUE)))),
     LOSE("패", (player, dealer) ->
-            ((!isBlackJack(player) && isBlackJack(dealer))
+            ((!player.isBlackJack() && dealer.isBlackJack())
                     || (player.getCardsNumberSum() > MAX_CARD_VALUE) || (dealer.getCardsNumberSum() <= MAX_CARD_VALUE
                     && player.getCardsNumberSum() < dealer.getCardsNumberSum()))),
     DRAW("무", (player, dealer) ->
-            ((isBlackJack(player) && isBlackJack(dealer))
+            ((player.isBlackJack() && dealer.isBlackJack())
                     || (player.getCardsNumberSum() <= MAX_CARD_VALUE
                     && dealer.getCardsNumberSum() <= MAX_CARD_VALUE && player.getCardsNumberSum() == dealer.getCardsNumberSum())));
 
@@ -39,10 +39,6 @@ public enum BlackJackResult {
                 .filter(result -> result.predicate.test(point, otherPoint))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
-    }
-
-    private static boolean isBlackJack(Gamer gamer) {
-        return gamer.getCardsNumberSum() == MAX_CARD_VALUE && gamer.getCardsSize() == INIT_DISTRIBUTION_COUNT;
     }
 
     public BlackJackResult getReverse() {

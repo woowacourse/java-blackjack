@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.gamer.Gamers.INIT_DISTRIBUTION_COUNT;
+
 public abstract class Gamer {
     public static final int MAX_CARD_VALUE = 21;
 
@@ -58,6 +60,10 @@ public abstract class Gamer {
 
     public int getCardsSize() {
         return cards.size();
+    }
+
+    public boolean isBlackJack() {
+        return getCardsNumberSum() == MAX_CARD_VALUE && getCardsSize() == INIT_DISTRIBUTION_COUNT;
     }
 
     abstract boolean canDraw();
