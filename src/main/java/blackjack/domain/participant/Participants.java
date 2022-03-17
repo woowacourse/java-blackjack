@@ -24,16 +24,13 @@ public class Participants {
     }
 
     public void drawCard(Participant participant, Card card) {
-        if (participant.getClass() == Player.class) {
-            findPlayer((Player) participant).drawCard(card);
+        int index = players.indexOf(participant);
+
+        if (index == -1) {
+            dealer.drawCard(card);
             return;
         }
-        dealer.drawCard(card);
-    }
-
-    public Player findPlayer(Player player) {
-        int index = players.indexOf(player);
-        return players.get(index);
+        players.get(index).drawCard(card);
     }
 
     public List<Player> getPlayers() {
