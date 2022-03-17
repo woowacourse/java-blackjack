@@ -20,7 +20,7 @@ public class DealerTest {
     @DisplayName("턴 강제 종료 여부")
     void Dealer(String comment, Cards cards, boolean expect) {
         // given
-        Dealer dealer = new Dealer(new Name("딜러"), cards);
+        Dealer dealer = new Dealer(cards);
 
         // then
         assertThat(dealer.isFinished()).isEqualTo(expect);
@@ -39,7 +39,7 @@ public class DealerTest {
     @DisplayName("딜러 draw 확인")
     void drawCard() {
         // given
-        Dealer dealer = new Dealer(new Name("딜러"), getCards(Number.QUEEN));
+        Dealer dealer = new Dealer(getCards(Number.QUEEN));
         Card newCard = new Card(Number.ACE, Suit.CLOVER);
 
         // when

@@ -20,7 +20,7 @@ class ParticipantsTest {
         names = Arrays.asList(new Name("pobi"), new Name("jason"));
 
         participants = new Participants(toPlayerList(names),
-                new Dealer(new Name("딜러"), getCards(Number.SEVEN, Number.QUEEN)));
+                new Dealer(getCards(Number.SEVEN, Number.QUEEN)));
     }
 
     @Test

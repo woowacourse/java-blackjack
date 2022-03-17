@@ -10,7 +10,6 @@ import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -36,74 +35,73 @@ class GameResultTest {
 
     private static Stream<Arguments> provideParameters() {
         Name playerName = new Name("yeonLog1");
-        Name dealerName = new Name("딜러");
         BettingAmount bettingAmount = new BettingAmount(1000L);
 
         return Stream.of(
                 Arguments.arguments(
                         "사용자 bust, 딜러 blackjack",
                         new Player(playerName, getCards(Number.QUEEN, Number.NINE, Number.JACK), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.QUEEN, Number.ACE)),
+                        new Dealer(getCards(Number.QUEEN, Number.ACE)),
                         -1000L
                 ),
                 Arguments.arguments(
                         "사용자 bust, 딜러 bust",
                         new Player(playerName, getCards(Number.ACE, Number.NINE, Number.JACK), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.TEN, Number.NINE, Number.JACK)),
+                        new Dealer(getCards(Number.TEN, Number.NINE, Number.JACK)),
                         1000L
                 ),
                 Arguments.arguments(
                         "사용자 bust, 딜러 17",
                         new Player(playerName, getCards(Number.QUEEN, Number.TEN, Number.JACK), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.EIGHT, Number.NINE)),
+                        new Dealer(getCards(Number.EIGHT, Number.NINE)),
                         -1000L
                 ),
                 Arguments.arguments(
                         "사용자 blackjack, 딜러 bust",
                         new Player(playerName, getCards(Number.ACE, Number.TEN), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.TEN, Number.NINE, Number.JACK)),
+                        new Dealer(getCards(Number.TEN, Number.NINE, Number.JACK)),
                         1500L
                 ),
                 Arguments.arguments(
                         "사용자 blackjack, 딜러 blackjack",
                         new Player(playerName, getCards(Number.ACE, Number.TEN), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.ACE, Number.TEN)),
+                        new Dealer(getCards(Number.ACE, Number.TEN)),
                         0L
                 ),
                 Arguments.arguments(
                         "사용자 blackjack, 딜러 17",
                         new Player(playerName, getCards(Number.ACE, Number.TEN), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.EIGHT, Number.NINE)),
+                        new Dealer(getCards(Number.EIGHT, Number.NINE)),
                         1500L
                 ),
                 Arguments.arguments(
                         "사용자 19, 딜러 blackjack",
                         new Player(playerName, getCards(Number.TEN, Number.NINE), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.TEN, Number.ACE)),
+                        new Dealer(getCards(Number.TEN, Number.ACE)),
                         -1000L
                 ),
                 Arguments.arguments(
                         "사용자 19, 딜러 bust",
                         new Player(playerName, getCards(Number.TEN, Number.NINE), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.TEN, Number.NINE, Number.JACK)),
+                        new Dealer(getCards(Number.TEN, Number.NINE, Number.JACK)),
                         1000L
                 ),
                 Arguments.arguments(
                         "사용자 19, 딜러 19",
                         new Player(playerName, getCards(Number.TEN, Number.NINE), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.TEN, Number.NINE)),
+                        new Dealer(getCards(Number.TEN, Number.NINE)),
                         0L
                 ),
                 Arguments.arguments(
                         "사용자 19, 딜러 20",
                         new Player(playerName, getCards(Number.TEN, Number.NINE), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.JACK, Number.TEN)),
+                        new Dealer(getCards(Number.JACK, Number.TEN)),
                         -1000L
                 ),
                 Arguments.arguments(
                         "사용자 19, 딜러 17",
                         new Player(playerName, getCards(Number.TEN, Number.NINE), bettingAmount),
-                        new Dealer(dealerName, getCards(Number.EIGHT, Number.NINE)),
+                        new Dealer(getCards(Number.EIGHT, Number.NINE)),
                         1000L
                 )
         );
@@ -120,7 +118,7 @@ class GameResultTest {
         players.add(new Player(new Name("b"), getCards(Number.QUEEN, Number.JACK), bettingAmount)); // PUSH
         players.add(new Player(new Name("c"), getCards(Number.QUEEN, Number.ACE), bettingAmount));  // WIN
 
-        Dealer dealer = new Dealer(new Name("딜러"), getCards(Number.QUEEN, Number.TEN));
+        Dealer dealer = new Dealer(getCards(Number.QUEEN, Number.TEN));
 
         Participants participants = new Participants(players, dealer);
         GameResult gameResult = new GameResult(participants);

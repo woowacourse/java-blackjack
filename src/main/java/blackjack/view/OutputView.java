@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -53,8 +52,8 @@ public class OutputView {
         System.out.printf("%s카드: %s%n", player.getName(), getCardNames(player.getCards()));
     }
 
-    public static void printDealerDrawInfo() {
-        System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DRAW_STANDARD);
+    public static void printDealerDrawInfo(String name) {
+        System.out.printf("%n%s는 %d이하라 한장의 카드를 더 받았습니다.%n", name, Dealer.DRAW_STANDARD);
     }
 
     public static void printCardsResult(Dealer dealer, List<Player> players) {
@@ -71,13 +70,14 @@ public class OutputView {
     }
 
     public static void printGameResult(GameResult gameResult) {
+        String stringFormat = "%s: %d%n";
         Map<Player, Long> map = gameResult.getBettingResult();
 
         System.out.printf("%n## 최종 수익%n");
-        System.out.printf("%s: %d%n", BlackjackGame.DEALER_NAME, gameResult.getDealerProfit());
+        System.out.printf(stringFormat, Dealer.DEALER_NAME, gameResult.getDealerProfit());
 
         for (Player player : map.keySet()) {
-            System.out.printf("%s: %d%n", player.getName(), gameResult.getBettingResult(player));
+            System.out.printf(stringFormat, player.getName(), gameResult.getBettingResult(player));
         }
     }
 
