@@ -8,11 +8,17 @@ import java.util.List;
 public class Player extends Participant{
 
     private static final int OPEN_CARD_SIZE = 2;
-    private boolean stay = false;
 
+    private boolean stay = false;
+    private long bettingMoney = 0;
 
     public Player(String name, Cards cards) {
         super(name, cards);
+    }
+
+    public Player(String name, Cards cards, long bettingMoney) {
+        this(name, cards);
+        this.bettingMoney = bettingMoney;
     }
 
     @Override
@@ -44,7 +50,11 @@ public class Player extends Participant{
         return Outcome.WIN;
     }
 
-    public Result judgeResult(Dealer dealer) {
+    public long calculateDividend(Dealer dealer) {
+        return judgeResult(dealer).calculateDividend(bettingMoney);
+    }
+
+    private Result judgeResult(Dealer dealer) {
         return Result.calculateResult(this, dealer);
     }
 }

@@ -1,9 +1,16 @@
 package blackjack.domain.player;
 
 public enum Result {
-    BLACKJACK,
-    WIN,
-    LOSE;
+    BLACKJACK(1.5),
+    WIN(1.0),
+    LOSE(-1.0);
+
+
+    private final double dividendRate;
+
+    Result(double dividendRate) {
+        this.dividendRate = dividendRate;
+    }
 
     public static Result calculateResult(Player player, Dealer dealer) {
         if (isBlackjack(player, dealer)) {
@@ -19,6 +26,10 @@ public enum Result {
         }
 
         throw new IllegalArgumentException("예상하지 못한 조건 발생");
+    }
+
+    public long calculateDividend(long bettingMoney) {
+        return (long) (this.dividendRate * bettingMoney);
     }
 
     private static boolean isBlackjack(Player player, Dealer dealer) {
