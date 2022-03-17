@@ -5,8 +5,6 @@ import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardHandState;
 import blackjack.domain.game.DuelResult;
 import blackjack.strategy.CardHandStateStrategy;
-import blackjack.strategy.CardSupplier;
-import blackjack.strategy.HitOrStayChoiceStrategy;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,16 +45,8 @@ public class Player extends Participant {
         }
     }
 
-    public void hitOrStay(final HitOrStayChoiceStrategy hitOrStay,
-                          final CardSupplier supplier) {
-        if (hitOrStay.shouldHit()) {
-            receiveCard(supplier.getCard());
-            return;
-        }
-        cardHand.stay();
-    }
-
-    private void receiveCard(final Card card) {
+    @Override
+    protected void receiveCard(final Card card) {
         cardHand.hit(card, STATE_UPDATE_STRATEGY);
     }
 

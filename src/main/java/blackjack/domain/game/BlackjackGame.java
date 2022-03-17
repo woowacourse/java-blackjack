@@ -14,6 +14,8 @@ import java.util.List;
 
 public class BlackjackGame {
 
+    private static final HitOrStayChoiceStrategy ALWAYS_HIT_STRATEGY = () -> true;
+
     private final CardStack cardDeck;
     private final GameParticipants participants;
 
@@ -53,9 +55,9 @@ public class BlackjackGame {
     }
 
     public void drawDealerCards(final DealerViewStrategy dealerView) {
-        Dealer dealer = participants.getDealer();
+        Dealer dealer = getDealer();
         while (dealer.canDraw()) {
-            dealer.receiveCard(popCard());
+            dealer.hitOrStay(ALWAYS_HIT_STRATEGY, this::popCard);
             dealerView.print();
         }
     }
@@ -65,11 +67,15 @@ public class BlackjackGame {
     }
 
     public boolean isBlackjackDealer() {
-        return participants.getDealer().isBlackjack();
+        return getDealer().isBlackjack();
     }
 
     public GameParticipants getParticipants() {
         return participants;
+    }
+
+    private Dealer getDealer() {
+        return participants.getDealer();
     }
 
     @Override

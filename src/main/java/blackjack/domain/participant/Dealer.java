@@ -22,7 +22,8 @@ public class Dealer extends Participant {
         return new Dealer(cardBundle);
     }
 
-    public void receiveCard(final Card card) {
+    @Override
+    protected void receiveCard(final Card card) {
         cardHand.hit(card, STATE_UPDATE_STRATEGY);
     }
 

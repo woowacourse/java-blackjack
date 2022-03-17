@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.strategy.HitOrStayChoiceStrategy;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
+    private static final HitOrStayChoiceStrategy HIT_CHOICE = () -> true;
     private Dealer dealer;
 
     @BeforeEach
@@ -31,14 +33,17 @@ public class DealerTest {
         dealer = Dealer.of(cardBundle);
     }
 
-    @DisplayName("카드를 전달받아 cardBundle에 추가할 수 있다.")
+
+    @DisplayName("hit을 선택하는 경우 카드 한 장을 추가한다.")
     @Test
-    void receiveCard() {
-        dealer.receiveCard(CLOVER6);
+    void hitOrStay_choosingHitAddsCardToBundle() {
+        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+        Dealer dealer = Dealer.of(cardBundle);
 
-        List<Card> actual = dealer.getCards();
+        dealer.hitOrStay(HIT_CHOICE, () -> CLOVER6);
 
-        assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
+        assertThat(dealer.getCards()).containsExactly(CLOVER4, CLOVER5, CLOVER6);
+        assertThat(dealer.canDraw()).isTrue();
     }
 
     @DisplayName("canDraw 메서드 테스트")
@@ -48,7 +53,8 @@ public class DealerTest {
         @DisplayName("점수가 16을 넘지 않으면 true를 반환한다.")
         @Test
         void canDraw_returnTrueOnLessThan16() {
-            dealer.receiveCard(CLOVER6);
+            dealer.hitOrStay(HIT_CHOICE, () -> CLOVER6);
+
             boolean actual = dealer.canDraw();
 
             assertThat(actual).isTrue();
@@ -57,7 +63,7 @@ public class DealerTest {
         @DisplayName("점수가 16이면 true를 반환한다.")
         @Test
         void canDraw_returnTrueOn16() {
-            dealer.receiveCard(CLOVER7);
+            dealer.hitOrStay(HIT_CHOICE, () -> CLOVER7);
 
             boolean actual = dealer.canDraw();
 
@@ -67,7 +73,7 @@ public class DealerTest {
         @DisplayName("점수가 17 이상이면 false를 반환한다.")
         @Test
         void canDraw_returnFalseOnGreaterThan16() {
-            dealer.receiveCard(CLOVER8);
+            dealer.hitOrStay(HIT_CHOICE, () -> CLOVER8);
 
             boolean actual = dealer.canDraw();
 
@@ -80,7 +86,7 @@ public class DealerTest {
     void isBust_implementationTest() {
         CardBundle cardBundle = generateCardBundleOf(CLOVER6, CLOVER10);
         dealer = Dealer.of(cardBundle);
-        dealer.receiveCard(CLOVER_KING);
+        dealer.hitOrStay(HIT_CHOICE, () -> CLOVER_KING);
 
         boolean actual = dealer.isBust();
 
@@ -106,7 +112,7 @@ public class DealerTest {
 
         assertThat(dealer.canDraw()).isFalse();
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> dealer.receiveCard(CLOVER3))
+                .isThrownBy(() -> dealer.hitOrStay(HIT_CHOICE, () -> CLOVER3))
                 .withMessage("이미 카드 패가 확정된 참여자입니다.");
 
         assertThat(dealer.isBlackjack()).isFalse();
