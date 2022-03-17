@@ -6,8 +6,10 @@ public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
     private static final int DEALER_MIN_TOTAL = 17;
 
-    public Dealer(List<Card> cards) {
-        super(DEALER_NAME,new HoldingCards(cards));
+    private BettingMoney bettingMoney = new BettingMoney();
+
+    public Dealer() {
+        super(DEALER_NAME);
     }
 
     public Card showFirstCard() {
@@ -26,6 +28,14 @@ public class Dealer extends Participant {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
+    }
+
+    public void receiveBettingMoney(int money) {
+        bettingMoney.addMoney(money);
+    }
+
+    public int bettingRevenue() {
+        return bettingMoney.money;
     }
 
     private boolean playerBust(Player player) {
@@ -56,5 +66,17 @@ public class Dealer extends Participant {
 
     private boolean onlyDealerBlackJack(Player player) {
         return super.getHoldingCard().isBlackJack() && !player.getHoldingCard().isBlackJack();
+    }
+
+    private static class BettingMoney {
+        private int money;
+
+        private BettingMoney() {
+            this.money = 0;
+        }
+
+        private void addMoney(int money) {
+            this.money += money;
+        }
     }
 }

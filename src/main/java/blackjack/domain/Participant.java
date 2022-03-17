@@ -5,11 +5,16 @@ import java.util.Objects;
 
 public abstract class Participant {
     private Name name;
-    private HoldingCards holdingCards;
+    private HoldingCards holdingCards = new HoldingCards();
 
-    public Participant(String name, HoldingCards holdingCards) {
+    public Participant(String name) {
         this.name = new Name(name);
-        this.holdingCards = holdingCards;
+    }
+
+    void receiveCards(List<Card> cards) {
+        for (Card card : cards) {
+            holdingCards.add(card);
+        }
     }
 
     void receiveCard(Card card){
@@ -40,4 +45,5 @@ public abstract class Participant {
             this.name = name;
         }
     }
+
 }

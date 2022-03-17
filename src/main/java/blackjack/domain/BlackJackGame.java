@@ -14,9 +14,17 @@ public class BlackJackGame {
 
     public BlackJackGame(List<String> playersNames) {
         this.cardDeck = new CardDeck(RandomCardGenerator.getInstance());
-        this.dealer = new Dealer(cardDeck.drawTwoCards());
+        this.dealer = new Dealer();
         validateEmptyNames(playersNames);
         this.players = createPlayers(playersNames);
+        giveTwoCardsToAll();
+    }
+
+    private void giveTwoCardsToAll() {
+        dealer.receiveCards(cardDeck.drawTwoCards());
+        for (Player player : players) {
+            player.receiveCards(cardDeck.drawTwoCards());
+        }
     }
 
     private void validateEmptyNames(List<String> playerNames) {
@@ -27,7 +35,7 @@ public class BlackJackGame {
 
     private List<Player> createPlayers(List<String> playersNames) {
         return playersNames.stream()
-                .map(playerName -> new Player(playerName.trim(), cardDeck.drawTwoCards()))
+                .map(playerName -> new Player(playerName.trim()))
                 .collect(Collectors.toList());
     }
 

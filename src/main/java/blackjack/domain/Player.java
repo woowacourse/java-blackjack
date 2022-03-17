@@ -5,8 +5,14 @@ import java.util.List;
 public class Player extends Participant {
     private boolean finish = false;
 
-    public Player(String name, List<Card> cards) {
-        super(name, new HoldingCards(cards));
+    private BettingMoney bettingMoney;
+
+    public Player(String name) {
+        super(name);
+    }
+
+    public void putBettingMoney(int money) {
+        bettingMoney = new BettingMoney(money);
     }
 
     public void closeTurn() {
@@ -17,4 +23,28 @@ public class Player extends Participant {
         return super.getHoldingCard().isFullScoreOrBust() || finish;
     }
 
+    public int bettingRevenue(GameResult gameResult) {
+        if (super.getHoldingCard().isBlackJack()) {
+            return (int) (bettingMoney.money * 1.5);
+        }
+        return bettingMoney.calculateRevenue(gameResult);
+    }
+
+    private static class BettingMoney {
+        private final int money;
+
+        private BettingMoney(int money) {
+            this.money = money;
+        }
+
+        private int calculateRevenue(GameResult gameResult) {
+            if (gameResult == GameResult.WIN) {
+                return money;
+            }
+            if (gameResult == GameResult.LOSE) {
+                return money * -1;
+            }
+            return 0;
+        }
+    }
 }

@@ -11,9 +11,13 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어가 버스트 상태인지 알려준다")
     void isPlayerBust() {
-        Player player = new Player("pobi",
-                List.of(new Card(CardNumber.JACK, Symbol.SPADE), new Card(CardNumber.QUEEN, Symbol.SPADE),
+        Player player = new Player("pobi");
+        player.receiveCards(
+                List.of(new Card(CardNumber.JACK, Symbol.SPADE),
+                        new Card(CardNumber.QUEEN, Symbol.SPADE),
                         new Card(CardNumber.KING, Symbol.SPADE)));
+
         Assertions.assertThat(player.isFinished()).isTrue();
     }
+
 }
