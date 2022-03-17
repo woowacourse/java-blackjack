@@ -27,8 +27,8 @@ public class Referee {
     private Referee() {
     }
 
-    public static int calculateDealerProfit(List<Integer> playersProfits) {
-        int playersProfitSum = playersProfits.stream()
+    public static int calculateDealerProfit(List<Integer> playersProfit) {
+        int playersProfitSum = playersProfit.stream()
             .reduce(0, Integer::sum);
         return playersProfitSum * -1;
     }
