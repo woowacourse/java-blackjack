@@ -10,10 +10,15 @@ import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public class Player extends Participant {
     private final String name;
+    private int bettingMoney;
 
     public Player(String name, HoldCards holdCards) {
         super(holdCards);
         this.name = name;
+    }
+
+    public void initBettingMoney(int money) {
+        this.bettingMoney = money;
     }
 
     public PlayerOutcome match(Dealer dealer) {
@@ -34,5 +39,9 @@ public class Player extends Participant {
     @Override
     public boolean canHit() {
         return countCards() < BLACKJACK_NUMBER;
+    }
+
+    public int getBettingMoney() {
+        return this.bettingMoney;
     }
 }
