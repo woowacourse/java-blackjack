@@ -8,7 +8,7 @@ import java.util.Set;
 public class PlayingCards {
 
     private static final int BLACKJACK_POINT = 21;
-    private static final int ACE_ELEVEN_POSSIBLE = 10;
+    private static final int ACE_BONUS = 10;
     private static final int BLACKJACK_SIZE = 2;
 
     private final Set<PlayingCard> cards;
@@ -36,8 +36,8 @@ public class PlayingCards {
     }
 
     private int calculateAcePoint(int points) {
-        if (points + ACE_ELEVEN_POSSIBLE <= BLACKJACK_POINT) {
-            return points + ACE_ELEVEN_POSSIBLE;
+        if (points + ACE_BONUS <= BLACKJACK_POINT) {
+            return points + ACE_BONUS;
         }
         return points;
     }
