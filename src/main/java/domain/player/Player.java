@@ -20,6 +20,10 @@ public abstract class Player {
         this(wallet, new PlayingCards());
     }
 
+    protected Player(Wallet wallet, List<PlayingCard> cards) {
+        this(wallet, new PlayingCards(cards));
+    }
+
     protected Player(String name) {
         this(Wallet.of(name), new PlayingCards());
     }
