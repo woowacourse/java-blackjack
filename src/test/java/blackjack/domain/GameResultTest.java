@@ -49,15 +49,15 @@ public class GameResultTest {
     }
 
     private static Dealer createDealer(Denomination denomination2) {
-        Card card1 = new Card(DIAMOND, TEN);
-        Card card2 = new Card(CLOVER, denomination2);
+        Card card1 = Card.of(DIAMOND, TEN);
+        Card card2 = Card.of(CLOVER, denomination2);
         List<Card> dealerCards = List.of(card1, card2);
         return new Dealer(dealerCards);
     }
 
     private static Player createPlayer(String name, Denomination denomination2, Betting betting) {
-        Card card1 = new Card(DIAMOND, TEN);
-        Card card2 = new Card(CLOVER, denomination2);
+        Card card1 = Card.of(DIAMOND, TEN);
+        Card card2 = Card.of(CLOVER, denomination2);
         List<Card> playerCards = List.of(card1, card2);
         return new Player(new Name(name), playerCards, betting);
     }

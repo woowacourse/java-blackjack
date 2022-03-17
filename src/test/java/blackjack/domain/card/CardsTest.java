@@ -23,8 +23,8 @@ public class CardsTest {
     @DisplayName("시작 시 카드를 두 장 가지고 있어야 한다.")
     void validCardsSize() {
         // given
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);
 
         // when
@@ -38,9 +38,9 @@ public class CardsTest {
     @DisplayName("시작 시 카드가 두 장이 아니면 예외가 발생한다.")
     void invalidCardsSize() {
         // given
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        Card card3 = new Card(Pattern.HEART, Denomination.THREE);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.THREE);
+        Card card3 = Card.of(Pattern.HEART, Denomination.THREE);
         List<Card> cards = List.of(card1, card2, card3);
 
         // then
@@ -53,7 +53,7 @@ public class CardsTest {
     @DisplayName("카드가 중복되면 예외가 발생한다.")
     void duplicatedCards() {
         // given
-        Card card = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card = Card.of(Pattern.DIAMOND, Denomination.THREE);
         List<Card> cards = List.of(card, card);
 
         // then
@@ -66,8 +66,8 @@ public class CardsTest {
     @DisplayName("카드의 점수 총합을 계산한다. (에이스가 없는 경우)")
     void calculateCardsSum() {
         // given
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.THREE);
         Cards cards = new Cards(List.of(card1, card2));
 
         // when
@@ -82,8 +82,8 @@ public class CardsTest {
     @DisplayName("카드의 점수 총합을 계산한다. (에이스가 있는 경우)")
     void calculateCardsSumWithACE() {
         // given
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.ACE);
         Cards cards = new Cards(List.of(card1, card2));
 
         // when
@@ -98,9 +98,9 @@ public class CardsTest {
     @DisplayName("카드의 점수 총합을 계산한다. (총 합이 21이 넘는 경우)")
     void calculateCardsSumOver21() {
         // given
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
-        Card card3 = new Card(Pattern.HEART, Denomination.TWO);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.TEN);
+        Card card3 = Card.of(Pattern.HEART, Denomination.TWO);
         Cards cards = new Cards(List.of(card1, card2));
         cards.add(card3);
 

@@ -75,8 +75,8 @@ public class OutcomeTest {
 
     private static Stream<Arguments> provideForPlayerBust() {
         return Stream.of(
-                Arguments.of(new CardDeck(List.of(new Card(HEART, SIX), new Card(HEART, TWO)))),
-                Arguments.of(new CardDeck(List.of(new Card(HEART, FIVE), new Card(HEART, TWO))))
+                Arguments.of(new CardDeck(List.of(Card.of(HEART, SIX), Card.of(HEART, TWO)))),
+                Arguments.of(new CardDeck(List.of(Card.of(HEART, FIVE), Card.of(HEART, TWO))))
         );
     }
 
@@ -85,7 +85,7 @@ public class OutcomeTest {
     void dealerBust() {
         // given
         Dealer dealer = createDealer(SIX);
-        dealer.hit(new CardDeck(List.of(new Card(HEART, SIX))));
+        dealer.hit(new CardDeck(List.of(Card.of(HEART, SIX))));
 
         Player player = createPlayer(TEN);
 
@@ -103,7 +103,7 @@ public class OutcomeTest {
         Dealer dealer = createDealer(SIX);
 
         Player player = createPlayer(ACE);
-        dealer.hit(new CardDeck(List.of(new Card(HEART, SIX))));
+        dealer.hit(new CardDeck(List.of(Card.of(HEART, SIX))));
 
         // when
         Outcome actual = Outcome.judge(player, dealer);
@@ -142,15 +142,15 @@ public class OutcomeTest {
     }
 
     private static Dealer createDealer(Denomination denomination2) {
-        Card card1 = new Card(DIAMOND, TEN);
-        Card card2 = new Card(CLOVER, denomination2);
+        Card card1 = Card.of(DIAMOND, TEN);
+        Card card2 = Card.of(CLOVER, denomination2);
         List<Card> dealerCards = List.of(card1, card2);
         return new Dealer(dealerCards);
     }
 
     private static Player createPlayer(Denomination denomination2) {
-        Card card1 = new Card(DIAMOND, TEN);
-        Card card2 = new Card(CLOVER, denomination2);
+        Card card1 = Card.of(DIAMOND, TEN);
+        Card card2 = Card.of(CLOVER, denomination2);
         List<Card> playerCards = List.of(card1, card2);
         return new Player(new Name("player"), playerCards, new Betting(1000));
     }

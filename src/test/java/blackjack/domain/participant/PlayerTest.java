@@ -20,8 +20,8 @@ public class PlayerTest {
     @DisplayName("플레이어는 처음에 모든 카드를 보여준다.")
     void showEveryCard() {
         // given
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);
 
         Player player = new Player(new Name("Player"), cards, new Betting(1000));
@@ -38,11 +38,11 @@ public class PlayerTest {
     void addCard() {
         // given
         Name name = new Name("pobi");
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);
 
-        CardDeck deck = new CardDeck(List.of(new Card(Pattern.HEART, Denomination.THREE)));
+        CardDeck deck = new CardDeck(List.of(Card.of(Pattern.HEART, Denomination.THREE)));
         Player player = new Player(name, cards, new Betting(1000));
 
         // when
@@ -57,8 +57,8 @@ public class PlayerTest {
     void hittable() {
         // given
         Name name = new Name("pobi");
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.TEN);
         List<Card> cards = List.of(card1, card2);
 
         Player player = new Player(name, cards, new Betting(1000));
@@ -75,8 +75,8 @@ public class PlayerTest {
     void notHittable() {
         // given
         Name name = new Name("pobi");
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.ACE);
         List<Card> cards = List.of(card1, card2);
 
         Player player = new Player(name, cards, new Betting(1000));
@@ -94,8 +94,8 @@ public class PlayerTest {
     void calculateProfit(String outcomeName, int expected) {
         // given
         Name name = new Name("pobi");
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
+        Card card1 = Card.of(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = Card.of(Pattern.CLOVER, Denomination.ACE);
         List<Card> cards = List.of(card1, card2);
 
         Player player = new Player(name, cards, new Betting(1000));

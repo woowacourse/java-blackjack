@@ -11,7 +11,7 @@ public class CardTest {
     @DisplayName("카드를 생성한다.")
     void createCard() {
         // when
-        Card card = new Card(Pattern.DIAMOND, Denomination.ACE);
+        Card card = Card.of(Pattern.DIAMOND, Denomination.ACE);
 
         // then
         assertThat(card).isNotNull();
