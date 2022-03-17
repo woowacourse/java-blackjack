@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class Players {
-    private static final String NAMES_DUPLICATED_ERROR_MESSAGE = "이름은 중복될 수 없습니다.";
     public static final int INIT_CARD_COUNT = 2;
+    private static final String NAMES_DUPLICATED_ERROR_MESSAGE = "이름은 중복될 수 없습니다.";
     private final List<Player> value;
 
     private Players(final List<Player> rawValue) {

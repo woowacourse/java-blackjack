@@ -17,37 +17,20 @@ public final class OutputView {
     private static final String drawChar = "무";
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
             + System.lineSeparator();
-    private static final String CARD_STATE_MESSAGE = "%s%s: %s";
+    private static final String CARD_STATE_MESSAGE = "%s카드: %s";
     private static final String HUMAN_POINT_STATE = " - 결과 : %s";
     private static final String DEALER_CARD_ADDED_MESSAGE = System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %s%d패" + System.lineSeparator();
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
-    private static final String PLAYER_NAME_EXPLANATION = "카드";
 
     public static void printInitCards(final Players players, final Dealer dealer) {
         OutputView.printInitCardState(players, dealer);
-        OutputView.printHumanHand(dealer);
+        OutputView.printInitDealerHand(dealer);
         for (Player player : players.get()) {
             OutputView.printHumanHand(player);
         }
         System.out.println();
-    }
-
-    public static void printHumanHand(final Human human) {
-        if (human.getClass().equals(Player.class)) {
-            System.out.printf(CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), PLAYER_NAME_EXPLANATION,
-                    getCardsState(human.getRawCards()));
-            return;
-        }
-        System.out.printf(CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), "",
-                human.getInitCard());
-    }
-
-    private static String getCardsState(List<Card> cards) {
-        return cards.stream()
-                .map(card -> card.getDenomination().getInitial() + card.getSuit().getValue())
-                .collect(Collectors.joining(CARDS_DELIMITER));
     }
 
     private static void printInitCardState(final Players players, final Dealer dealer) {
@@ -55,6 +38,22 @@ public final class OutputView {
         System.out.printf(INIT_CARD_MESSAGE,
                 dealer.getName(),
                 String.join(NAMES_DELIMITER, playersNames));
+    }
+
+    public static void printInitDealerHand(final Dealer dealer) {
+        System.out.printf(CARD_STATE_MESSAGE, dealer.getName(), getCardsState(List.of(dealer.getInitCard())));
+        System.out.println();
+    }
+
+    public static void printHumanHand(final Human human) {
+        System.out.printf(CARD_STATE_MESSAGE, human.getName(), getCardsState(human.getRawCards()));
+        System.out.println();
+    }
+
+    private static String getCardsState(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getDenomination().getInitial() + card.getSuit().getValue())
+                .collect(Collectors.joining(CARDS_DELIMITER));
     }
 
     public static void printHandAndPoint(final Players players, final Dealer dealer) {
@@ -66,12 +65,8 @@ public final class OutputView {
     }
 
     public static void printHumanCardPointState(final Human human) {
-        String nameExplanation = " 카드";
-        if (human.getClass().equals(Player.class)) {
-            nameExplanation = "카드";
-        }
         System.out.printf(CARD_STATE_MESSAGE + HUMAN_POINT_STATE + System.lineSeparator(),
-                human.getName(), nameExplanation, getCardsState(human.getRawCards()), human.getPoint());
+                human.getName(), getCardsState(human.getRawCards()), human.getPoint());
     }
 
     public static void printDealerHit() {
@@ -90,7 +85,7 @@ public final class OutputView {
 
     public static void printPlayerResult(final Map<String, Result> result) {
         for (String name : result.keySet()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, name, result.get(name));
+            System.out.printf(PLAYER_RESULT_MESSAGE, name, result.get(name).get());
         }
     }
 }

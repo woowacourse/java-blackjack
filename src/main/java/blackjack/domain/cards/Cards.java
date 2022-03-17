@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public final class Cards {
     private final List<Card> value;
+
     public Cards() {
         this.value = new ArrayList<>();
     }
