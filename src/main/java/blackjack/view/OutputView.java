@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.joining;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.ScoreBoardResponse;
+import blackjack.dto.RevenueResultResponse;
 import java.util.List;
 
 public class OutputView {
@@ -77,13 +77,13 @@ public class OutputView {
         return card.getDenomination() + card.getSuit();
     }
 
-    public static void printMatchResult(ScoreBoardResponse scoreBoardResponse) {
-        String dealerMatchResultMessage = scoreBoardResponse.getDealerMatchResultMessage();
-        out.println(BLACKJACK_GAME_RESULT_MESSAGE);
-        out.println(dealerMatchResultMessage);
-        List<String> playerMatchResultMessages = scoreBoardResponse.getPlayerMatchResultMessages();
-        for (String playerMatchResultMessage : playerMatchResultMessages) {
-            out.println(playerMatchResultMessage);
+    public static void printRevenueResultResponse(RevenueResultResponse revenueResultResponse) {
+        String dealerRevenueMessage = revenueResultResponse.getDealerRevenueMessage();
+        List<String> playersRevenueMessage = revenueResultResponse.getPlayersRevenueMessage();
+        out.println("## 최종 수익");
+        out.println(dealerRevenueMessage);
+        for (String playerRevenueMessage : playersRevenueMessage) {
+            out.println(playerRevenueMessage);
         }
     }
 }

@@ -34,9 +34,6 @@ public class BlackJackApplication {
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, players);
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
         RevenueResultResponse revenueResultResponse = RevenueResultResponse.from(revenueResult);
-
-//        ScoreBoardResponse scoreBoardResponse = ScoreBoardResponse.from(scoreBoard);
-//        OutputView.printMatchResult(scoreBoardResponse);
-//        RevenueResultResponse.of(revenueResult)
+        OutputView.printRevenueResultResponse(revenueResultResponse);
     }
 }

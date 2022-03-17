@@ -31,6 +31,7 @@ public class InputView {
             out.printf("%s의 배팅 금액은?" + NEW_LINE, player.getName());
             String input = SCANNER.nextLine();
             BettingMoney bettingMoney = new BettingMoney(player.getName(), input);
+            bettingMonies.add(bettingMoney);
         }
         return bettingMonies;
     }
