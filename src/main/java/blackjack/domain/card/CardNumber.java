@@ -19,6 +19,7 @@ public enum CardNumber {
 
     private static final int SUM_HIDDEN_ACE = -1 + 11;
     private static final int BLACK_JACK_NUMBER = 21;
+    private static final int BLACKJACK_CARDS_SIZE = 2;
 
     private final int value;
     private final String name;
@@ -29,7 +30,7 @@ public enum CardNumber {
     }
 
     public static boolean isBlackjack(List<CardNumber> cardNumbers) {
-        return cardNumbers.size() == 2 && sum(cardNumbers) == BLACK_JACK_NUMBER;
+        return cardNumbers.size() == BLACKJACK_CARDS_SIZE && sum(cardNumbers) == BLACK_JACK_NUMBER;
     }
 
     public static int sum(List<CardNumber> cardNumbers) {
