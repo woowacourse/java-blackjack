@@ -48,10 +48,10 @@ public final class Dealer extends Player {
     }
 
     private Result compareScoreWith(Entry entry) {
-        if (entry.getScore() > this.getScore()) {
+        if (this.isScoreLessThen(entry)) {
             return Result.WIN;
         }
-        if (entry.getScore() < this.getScore()) {
+        if (entry.isScoreLessThen(this)) {
             return Result.LOSE;
         }
         return Result.TIE;

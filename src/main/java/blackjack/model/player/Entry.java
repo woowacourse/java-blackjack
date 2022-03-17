@@ -13,7 +13,9 @@ public final class Entry extends Player {
     private static final String ERROR_ALREADY_BETTED = "[ERROR] 이미 배팅하였습니다.";
 
     private static final String REGEX_NAME_CONTAINS_NUMBER = "^\\D*[0-9]+\\D*$";
+    private static final Pattern PATTERN_NAME_CONTAINS_NUMBER = Pattern.compile(REGEX_NAME_CONTAINS_NUMBER);
     private static final String REGEX_NAME_CONTAINS_SIGN = "^\\D*[!\"#$%&'()*+,./:;<=>?@\\\\^_`{|}~-]+\\D*$";
+    private static final Pattern PATTERN_NAME_CONTAINS_SIGN = Pattern.compile(REGEX_NAME_CONTAINS_SIGN);
 
     private static final int MAX_LENGTH = 15;
 
@@ -44,13 +46,13 @@ public final class Entry extends Player {
     }
 
     private void checkNumberIn(String name) {
-        if (Pattern.matches(REGEX_NAME_CONTAINS_NUMBER, name)) {
+        if (PATTERN_NAME_CONTAINS_NUMBER.matcher(name).matches()) {
             throw new IllegalArgumentException(ERROR_CONTAINS_NUMBER);
         }
     }
 
     private void checkSignIn(String name) {
-        if (Pattern.matches(REGEX_NAME_CONTAINS_SIGN, name)) {
+        if (PATTERN_NAME_CONTAINS_SIGN.matcher(name).matches()) {
             throw new IllegalArgumentException(ERROR_CONTAINS_SIGN);
         }
     }

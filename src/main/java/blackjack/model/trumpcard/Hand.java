@@ -93,6 +93,10 @@ public final class Hand {
         return 0;
     }
 
+    public boolean isScoreLessThan(Hand hand) {
+        return this.isScoreLessThan(hand.sumScore());
+    }
+
     public boolean isScoreLessThan(int otherScore) {
         return sumScore() < otherScore;
     }

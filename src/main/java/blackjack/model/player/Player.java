@@ -46,6 +46,10 @@ public abstract class Player {
         return this.hand.isBlackjack();
     }
 
+    public boolean isScoreLessThen(Player player) {
+        return this.hand.isScoreLessThan(player.hand);
+    }
+
     public int getScore() {
         return hand.sumScore();
     }
