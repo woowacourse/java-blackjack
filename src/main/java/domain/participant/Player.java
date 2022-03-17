@@ -4,7 +4,6 @@ import domain.GameResult;
 import domain.HitThreshold;
 
 public final class Player extends Participant {
-
     public Player(final String name) {
         super(HitThreshold.PLAYER_THRESHOLD, name);
     }

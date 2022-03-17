@@ -1,8 +1,9 @@
 package domain.card;
 
-import java.util.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Objects;
 
 public final class Card {
     private final Suit suit;
@@ -19,6 +20,14 @@ public final class Card {
 
     public int getScore() {
         return face.getScore();
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Face getFace() {
+        return face;
     }
 
     @Override
@@ -41,13 +50,5 @@ public final class Card {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
-
-    public Face getFace() {
-        return face;
-    }
-
-    public Suit getSuit() {
-        return suit;
     }
 }
