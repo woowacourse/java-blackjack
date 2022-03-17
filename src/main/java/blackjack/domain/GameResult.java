@@ -32,6 +32,4 @@ public class GameResult {
         Profit result = gameResult.get(player);
         return result.calculateProfit(money);
     }
-
-
 }

@@ -15,6 +15,6 @@ public enum Profit {
     }
 
     public Money calculateProfit(final Money money) {
-        return Money.profits(this.profit, money);
+        return money.profits(this.profit);
     }
 }

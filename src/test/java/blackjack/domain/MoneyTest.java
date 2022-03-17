@@ -45,11 +45,11 @@ public class MoneyTest {
                 .hasMessage("배팅 금액은 10원 단위로 입력해주세요.");
     }
 
-    @DisplayName("수익률을 곱했을 때 올바른 답이 반환되는지 확인한다.")
+    @DisplayName("수익률을 따라 올바른 수익금이 반환되는지 확인한다.")
     @Test
     void money_reverse_create() {
         Money money = Money.of("1000");
-        Money reverseMoney = Money.profits(-1.5, money);
+        Money reverseMoney = money.profits(-1.5);
 
         assertThat(reverseMoney.getMoney()).isEqualTo(-1500);
     }

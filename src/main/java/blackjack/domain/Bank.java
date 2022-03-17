@@ -11,6 +11,14 @@ public class Bank {
         bank.put(player, money);
     }
 
+    public Money getDealerProfit(final GameResult gameResult) {
+        Money money = Money.init();
+        for (Player player : bank.keySet()) {
+            money = money.sumDealerProfit(getProfit(gameResult, player));
+        }
+        return money;
+    }
+
     public Money getProfit(final GameResult gameResult, final Player player) {
         return gameResult.calculateProfit(player, bank.get(player));
     }

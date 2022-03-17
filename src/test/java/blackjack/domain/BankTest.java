@@ -21,5 +21,19 @@ public class BankTest {
 
         assertThat(money.getMoney()).isEqualTo(5000);
     }
+
+    @DisplayName("딜러의 수익금이 올바르게 반환되는지 확인한다.")
+    @Test
+    void dealer_profit() {
+        Bank bank = new Bank();
+        GameResult gameResult = new GameResult();
+        Player player = new Player("pobi");
+
+        bank.bet(player, Money.of("5000"));
+        gameResult.putResult(player, Profit.WIN);
+        Money money = bank.getDealerProfit(gameResult);
+
+        assertThat(money.getMoney()).isEqualTo(-5000);
+    }
 }
 
