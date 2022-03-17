@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int BONUS_ACE_ADD_SCORE = 10;
+    private static final int BONUS_ACE_ADD_SCORE = -10;
 
     private final List<Card> value;
 
@@ -34,10 +34,10 @@ public class Cards {
     }
 
     private int calculateAceScore(int score) {
-        if ((score + BONUS_ACE_ADD_SCORE) > BLACKJACK_SCORE) {
-            return score;
+        if (score > BLACKJACK_SCORE) {
+            return score + BONUS_ACE_ADD_SCORE;
         }
-        return score + BONUS_ACE_ADD_SCORE;
+        return score;
     }
 
     public void add(Card card) {
