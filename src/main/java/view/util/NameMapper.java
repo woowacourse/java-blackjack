@@ -1,9 +1,5 @@
 package view.util;
 
-import static domain.MatchResult.DRAW;
-import static domain.MatchResult.LOSE;
-import static domain.MatchResult.WIN;
-
 import domain.MatchResult;
 import domain.card.Denomination;
 import domain.card.PlayingCard;
@@ -38,18 +34,10 @@ public class NameMapper {
         SUIT_NAME_MAPPER.put(Suit.DIAMONDS, "다이아몬드");
         SUIT_NAME_MAPPER.put(Suit.HEARTS, "하트");
         SUIT_NAME_MAPPER.put(Suit.SPADES, "스페이드");
-
-        MATCH_RESULT_MAPPER.put(WIN, "승");
-        MATCH_RESULT_MAPPER.put(DRAW, "무");
-        MATCH_RESULT_MAPPER.put(LOSE, "패");
     }
 
     public static String getCardName(PlayingCard playingCard) {
         return DENOMINATION_NAME_MAPPER.get(playingCard.getDenomination())
                 + SUIT_NAME_MAPPER.get(playingCard.getSuit());
-    }
-
-    public static String getResultName(MatchResult matchResult) {
-        return MATCH_RESULT_MAPPER.get(matchResult);
     }
 }

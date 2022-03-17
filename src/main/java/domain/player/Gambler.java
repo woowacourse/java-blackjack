@@ -21,10 +21,6 @@ public final class Gambler extends Player {
         super(name, cards);
     }
 
-    public Gambler(Wallet wallet, List<PlayingCard> cards) {
-        super(wallet, cards);
-    }
-
     public double getRevenue(Player dealer) {
         MatchResult matchResult = this.match(dealer);
         return matchResult.calculateRevenue(wallet.getMoney(), isBlackJack());
