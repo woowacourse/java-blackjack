@@ -5,13 +5,14 @@ import domain.card.PlayingCard;
 import domain.card.PlayingCards;
 import java.util.ArrayList;
 import java.util.List;
+import vo.Wallet;
 
 public abstract class Player {
-    private final String name;
+    private final Wallet wallet;
     protected final PlayingCards playingCards;
 
-    protected Player(String name) {
-        this.name = name;
+    protected Player(Wallet wallet) {
+        this.wallet = wallet;
         this.playingCards = new PlayingCards();
     }
 
@@ -60,7 +61,7 @@ public abstract class Player {
     }
 
     public String getName() {
-        return this.name;
+        return wallet.getName();
     }
 
     public List<PlayingCard> getHoldingCards() {
@@ -69,10 +70,9 @@ public abstract class Player {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Player{");
-        sb.append("name='").append(name).append('\'');
-        sb.append(", playingCards=").append(playingCards);
-        sb.append('}');
-        return sb.toString();
+        return "Player{" +
+                "wallet=" + wallet +
+                ", playingCards=" + playingCards +
+                '}';
     }
 }
