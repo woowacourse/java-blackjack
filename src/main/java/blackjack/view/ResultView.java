@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.BlackJack;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -50,7 +51,7 @@ public class ResultView {
 
 	public static void showEachPlayerStatus(Player player) {
 		System.out.println(getStatus(player));
-		if (player.bust()) {
+		if (player.isBust()) {
 			System.out.println(MESSAGE_SCORE_OVER_21);
 		}
 	}
@@ -80,14 +81,14 @@ public class ResultView {
 
 	public static void showResult(BlackJack blackJack) {
 		System.out.println(MESSAGE_FINAL_RESULT);
-		Map<Player, Boolean> result = blackJack.calculateResult();
+		Map<Player, Result> result = blackJack.calculateResult();
 		showDealerResult(blackJack, result);
 		showPlayerResults(result);
 	}
 
-	private static void showDealerResult(BlackJack blackJack, Map<Player, Boolean> result) {
+	private static void showDealerResult(BlackJack blackJack, Map<Player, Result> result) {
 		int loseCount = (int)result.values().stream()
-			.filter(value -> value)
+			.filter(value -> value.equals(Result.WIN))
 			.count();
 		int winCount = result.size() - loseCount;
 
@@ -95,16 +96,9 @@ public class ResultView {
 		System.out.println(dealer.getName() + DELIMITER_COLON + winCount + MESSAGE_WIN + loseCount + MESSAGE_LOSE);
 	}
 
-	private static void showPlayerResults(Map<Player, Boolean> result) {
+	private static void showPlayerResults(Map<Player, Result> result) {
 		result.keySet().stream()
-			.map(player -> player.getName() + DELIMITER_COLON + decodeResult(result.get(player)))
+			.map(player -> player.getName() + DELIMITER_COLON + result.get(player).getValue())
 			.forEach(System.out::println);
-	}
-
-	private static String decodeResult(Boolean isWin) {
-		if (isWin) {
-			return MESSAGE_WIN;
-		}
-		return MESSAGE_LOSE;
 	}
 }

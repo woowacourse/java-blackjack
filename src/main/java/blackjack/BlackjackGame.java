@@ -41,15 +41,14 @@ public class BlackjackGame {
 			blackJack.handOutCardTo(player);
 			ResultView.showEachPlayerStatus(player);
 		}
-		if (!player.bust()) {
+		if (!player.isBust()) {
 			ResultView.showEachPlayerStatus(player);
 		}
 	}
 
 	private boolean shouldHit(Player player) {
 		String name = player.getName();
-		String choice = InputView.askHit(name);
-		return !(player.bust()) && player.shouldHit(choice);
+		return !(player.isBust()) && player.shouldHit(InputView.askHit(name));
 	}
 
 	private void decideDealerHitOrNot(BlackJack blackJack) {

@@ -59,8 +59,8 @@ public class BlackJack {
 		participant.receiveCard(this.cardDeck.pick());
 	}
 
-	public Map<Player, Boolean> calculateResult() {
-		Map<Player, Boolean> result = new HashMap<>();
+	public Map<Player, Result> calculateResult() {
+		Map<Player, Result> result = new HashMap<>();
 		for (Player player : players) {
 			result.put(player, isWin(player));
 		}
@@ -68,14 +68,8 @@ public class BlackJack {
 		return result;
 	}
 
-	private boolean isWin(Player player) {
-		if (player.bust()) {
-			return false;
-		}
-		if (dealer.bust()) {
-			return true;
-		}
-		return dealer.getScore() < player.getScore();
+	private Result isWin(Player player) {
+		return Result.of(dealer, player);
 	}
 
 	public Dealer getDealer() {

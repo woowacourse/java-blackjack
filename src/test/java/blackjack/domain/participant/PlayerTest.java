@@ -5,7 +5,10 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSymbol;
 
 public class PlayerTest {
 
@@ -34,5 +37,14 @@ public class PlayerTest {
 		Player player = new Player(Name.from("yaho"));
 		player.receiveCard(cardDeck.pick());
 		assertThat(player.getCards().getCards().size()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("카드가 2장이고 점수가 21점이면 블랙잭이다")
+	void isBlackjack() {
+		Player player = new Player(Name.from("yaho"));
+		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
+		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.KING));
+		assertThat(player.isBlackjack()).isTrue();
 	}
 }

@@ -20,8 +20,12 @@ public abstract class Participant {
 		cards.addCard(card);
 	}
 
-	public Boolean bust() {
+	public Boolean isBust() {
 		return getScore() > MAX_SCORE;
+	}
+
+	public Boolean isBlackjack() {
+		return cards.size() == 2 && getScore() == 21;
 	}
 
 	abstract public int getScore();
