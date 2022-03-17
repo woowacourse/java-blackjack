@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.betting;
 
+import blackjack.domain.betting.BettingToken;
 import java.util.ArrayList;
 import java.util.List;
 

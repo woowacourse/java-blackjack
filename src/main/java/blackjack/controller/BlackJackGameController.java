@@ -1,20 +1,19 @@
 package blackjack.controller;
 
-import blackjack.domain.BettingToken;
-import blackjack.domain.BettingTokens;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Name;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.Result;
+import blackjack.domain.betting.BettingToken;
+import blackjack.domain.betting.BettingTokens;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.card.Deck;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
+import blackjack.domain.process.BlackJackGame;
+import blackjack.domain.process.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.stream.Collectors;
 
 public class BlackJackGameController {
-	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
-	private static final int EACH_TURN_DISTRIBUTE_AMOUNT = 1;
 	private final InputView inputView;
 	private final OutputView outputView;
 
@@ -26,11 +25,11 @@ public class BlackJackGameController {
 	public void gameStart() {
 		Players players = generatePlayers();
 		Dealer dealer = new Dealer();
-		Deck deck = new Deck();
+		BlackJackGame blackJackGame = new BlackJackGame(new Deck());
 		BettingTokens bettingTokens = generateBettingMoneys(players);
-		initializeCard(players, dealer, deck);
-		progressPlayerTurn(players, deck);
-		progressDealerTurn(players, dealer, deck);
+		initializeCard(players, dealer, blackJackGame);
+		progressPlayerTurn(players, blackJackGame);
+		progressDealerTurn(players, dealer, blackJackGame);
 		makeResult(players, dealer, bettingTokens);
 	}
 
@@ -63,27 +62,23 @@ public class BlackJackGameController {
 		outputView.displayResult(dealer, result);
 	}
 
-	private void progressDealerTurn(Players players, Dealer dealer, Deck deck) {
+	private void progressDealerTurn(Players players, Dealer dealer, BlackJackGame blackJackGame) {
 		outputView.displayNewLine();
 		while (dealer.canHit() && !players.isAllPlayersBlackJackOrBust()) {
 			outputView.displayDealerUnderSevenTeen();
-			dealer.addCards(deck.distributeCards(EACH_TURN_DISTRIBUTE_AMOUNT));
+			blackJackGame.drawTo(dealer);
 		}
 	}
 
-	private void progressPlayerTurn(Players players, Deck deck) {
-		players.getPlayers().forEach(player -> progressOnePlayer(player, deck));
+	private void progressPlayerTurn(Players players, BlackJackGame blackJackGame) {
+		players.getPlayers().forEach(player -> progressOnePlayer(player, blackJackGame));
 	}
 
-	private void progressOnePlayer(Player player, Deck deck) {
-		while (player.canHit() && decideHitOrStay(player)) {
-			player.addCards(deck.distributeCards(EACH_TURN_DISTRIBUTE_AMOUNT));
+	private void progressOnePlayer(Player player, BlackJackGame blackJackGame) {
+		while (player.canHit() && inputDecision(player)) {
+			blackJackGame.drawTo(player);
 			outputView.displayAllCard(player);
 		}
-	}
-
-	private boolean decideHitOrStay(Player player) {
-		return inputDecision(player);
 	}
 
 	private boolean inputDecision(Player player) {
@@ -104,14 +99,14 @@ public class BlackJackGameController {
 		}
 	}
 
-	private void initializeCard(Players players, Dealer dealer, Deck deck) {
-		deck.shuffle();
-		dealer.addCards(deck.distributeCards(INIT_DISTRIBUTE_AMOUNT));
+	private void initializeCard(Players players, Dealer dealer, BlackJackGame blackJackGame) {
+		blackJackGame.shuffleDeck();
+		blackJackGame.initDrawTo(dealer);
 		outputView.displayNewLine();
 		outputView.displayFirstDistribution(players, dealer);
 		outputView.displayDealerOneCard(dealer);
 		for (Player player : players.getPlayers()) {
-			player.addCards(deck.distributeCards(INIT_DISTRIBUTE_AMOUNT));
+			blackJackGame.initDrawTo(player);
 			outputView.displayAllCard(player);
 		}
 		outputView.displayNewLine();

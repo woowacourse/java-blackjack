@@ -1,15 +1,15 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Gamer;
-import blackjack.domain.Players;
-import blackjack.domain.Result;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Players;
+import blackjack.domain.process.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Card;
-import blackjack.domain.Player;
+import blackjack.domain.card.Card;
+import blackjack.domain.gamer.Player;
 
 public class OutputView {
 	private static final String DELIMITER = ", ";

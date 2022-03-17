@@ -2,6 +2,8 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.betting.BettingToken;
+import blackjack.domain.betting.BettingTokens;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
