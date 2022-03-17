@@ -28,6 +28,10 @@ public abstract class Player {
         this(Wallet.of(name), new PlayingCards(cards));
     }
 
+    public Player(Wallet wallet, List<PlayingCard> cards) {
+        this(wallet, new PlayingCards(cards));
+    }
+
     public abstract boolean isHittable();
 
     public abstract List<PlayingCard> getOpenCards();

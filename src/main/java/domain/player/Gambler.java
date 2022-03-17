@@ -21,6 +21,10 @@ public final class Gambler extends Player {
         super(name, cards);
     }
 
+    public Gambler(Wallet wallet, List<PlayingCard> cards) {
+        super(wallet, cards);
+    }
+
     @Override
     public boolean isHittable() {
         return !isBust() && getScore() < MAXIMUM_VALID_SCORE;
