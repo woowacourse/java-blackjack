@@ -22,6 +22,7 @@ public class BlackjackController {
     public void play() {
         Dealer dealer = new Dealer();
         Players players = participatePlayers();
+        inputBettingAmount(players);
         blackjackGame.initStartingCards(dealer, players);
         OutputView.printInitCard(dealer, players);
 
@@ -38,6 +39,19 @@ public class BlackjackController {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return participatePlayers();
+        }
+    }
+
+    private void inputBettingAmount(Players players) {
+        players.getPlayers().forEach(this::betAmount);
+    }
+
+    private void betAmount(Player player) {
+        try {
+            player.betAmount(InputView.inputBettingAmount(player));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            betAmount(player);
         }
     }
 
