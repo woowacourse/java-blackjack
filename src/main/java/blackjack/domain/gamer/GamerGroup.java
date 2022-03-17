@@ -75,6 +75,10 @@ public class GamerGroup {
         return (int) matches.stream().filter(value -> value == type.getOpposite()).count();
     }
 
+    public Player findPlayerByName(String name) {
+        return playerGroup.findPlayerByName(name);
+    }
+
     public List<Gamer> getGamers() {
         List<Gamer> gamers = new ArrayList<>();
         gamers.add(dealer);

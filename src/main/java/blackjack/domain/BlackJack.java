@@ -8,6 +8,7 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJack {
     private final GamerGroup gamerGroup;
@@ -24,6 +25,10 @@ public class BlackJack {
 
     public void addCardTo(Player player) {
         player.addCard(cardPack.pickOne());
+    }
+
+    public Player findPlayerByName(String name) {
+        return gamerGroup.findPlayerByName(name);
     }
 
     public int addCardToDealer() {
@@ -46,7 +51,10 @@ public class BlackJack {
         return gamerGroup.getDealer();
     }
 
-    public List<Player> getPlayers() {
-        return gamerGroup.getPlayers();
+    public List<String> getPlayerNames() {
+        return gamerGroup.getPlayers()
+                .stream()
+                .map(Player::getName)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
