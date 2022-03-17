@@ -1,15 +1,19 @@
 package blackjack.view;
 
+import blackjack.domain.cards.Cards;
+import blackjack.domain.cards.card.Card;
 import blackjack.domain.participant.human.Human;
 import blackjack.domain.participant.human.Player;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.result.Result;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class OutputView {
 
     public static final String NAMES_DELIMITER = ",";
+    public static final String CARDS_DELIMITER = ", ";
     private static final String drawChar = "무";
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
             + System.lineSeparator();
@@ -33,11 +37,17 @@ public final class OutputView {
     public static void printHumanHand(final Human human) {
         if (human.getClass().equals(Player.class)) {
             System.out.printf(CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), PLAYER_NAME_EXPLANATION,
-                    human.getCards());
+                    getCardsState(human.getRawCards()));
             return;
         }
         System.out.printf(CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), "",
                 human.getInitCard());
+    }
+
+    private static String getCardsState(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getDenomination().getInitial() + card.getSuit().getName())
+                .collect(Collectors.joining(CARDS_DELIMITER));
     }
 
     private static void printInitCardState(final Participant participant) {
@@ -61,7 +71,7 @@ public final class OutputView {
             nameExplanation = "카드";
         }
         System.out.printf(CARD_STATE_MESSAGE + HUMAN_POINT_STATE + System.lineSeparator(),
-                human.getName(), nameExplanation, human.getCards(), human.getPoint());
+                human.getName(), nameExplanation, getCardsState(human.getRawCards()), human.getPoint());
     }
 
     public static void printDealerHit() {

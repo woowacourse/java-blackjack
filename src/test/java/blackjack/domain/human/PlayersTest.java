@@ -26,7 +26,7 @@ class PlayersTest {
     @DisplayName("플레이어 모음 생성 기능 예외처리 테스트")
     public void createErrorTest() {
         assertAll(
-                () -> assertThatThrownBy(() -> Players.fromNames(List.of("test", "test")))
+                () -> assertThatThrownBy(() -> Players.fromNames(List.of("a", "a")))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("이름은 중복될 수 없습니다."),
                 () -> assertThatThrownBy(() -> Players.from(List.of(
@@ -71,9 +71,9 @@ class PlayersTest {
                 () -> assertThat(players.get())
                         .extracting("name")
                         .contains("pobi", "jason"),
-                () -> assertThat(players.get().get(0).getCards().size())
+                () -> assertThat(players.get().get(0).getRawCards().size())
                         .isEqualTo(2),
-                () -> assertThat(players.get().get(1).getCards().size())
+                () -> assertThat(players.get().get(1).getRawCards().size())
                         .isEqualTo(2)
         );
     }

@@ -25,6 +25,10 @@ public final class Card {
         return denomination;
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -40,10 +44,5 @@ public final class Card {
     @Override
     public int hashCode() {
         return Objects.hash(denomination, suit);
-    }
-
-    @Override
-    public String toString() {
-        return denomination.getInitial() + suit.getName();
     }
 }

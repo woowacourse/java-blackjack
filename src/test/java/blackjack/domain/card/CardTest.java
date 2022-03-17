@@ -39,6 +39,13 @@ class CardTest {
     }
 
     @Test
+    @DisplayName("문양확인 기능 테스트")
+    void getSuit() {
+        assertThat(card.getSuit())
+                .isEqualTo(Suit.SPADE);
+    }
+
+    @Test
     @DisplayName("동일 카드인지 확인 기능 테스트")
     void testEquals() {
         assertThat(Card.of(Denomination.TEN, Suit.SPADE))

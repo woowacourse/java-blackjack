@@ -24,7 +24,7 @@ class HumanTest {
         human.addCard(card);
 
         // then
-        assertThat(human.getCards().size())
+        assertThat(human.getRawCards().size())
                 .isEqualTo(1);
     }
 
@@ -122,7 +122,7 @@ class HumanTest {
         cards.add(card2);
 
         // then
-        assertThat(human.getCards())
-                .isEqualTo(cards);
+        assertThat(human.getRawCards())
+                .isEqualTo(cards.get());
     }
 }

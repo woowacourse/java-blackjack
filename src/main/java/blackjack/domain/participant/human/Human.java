@@ -4,6 +4,7 @@ import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.Cards;
 import blackjack.domain.participant.human.name.Name;
 import blackjack.domain.result.Point;
+import java.util.List;
 
 public abstract class Human {
     public static final int BLACKJACK_NUMBER = 21;
@@ -35,15 +36,7 @@ public abstract class Human {
         return name.get();
     }
 
-    public Cards getCards() {
-        return new Cards(cards);
-    }
-
-    @Override
-    public String toString() {
-        return "Human{" +
-                "name=" + name +
-                ", cards=" + cards +
-                '}';
+    public List<Card> getRawCards() {
+        return cards.get();
     }
 }

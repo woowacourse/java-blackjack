@@ -13,10 +13,6 @@ public final class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public Cards(Cards copiedCards) {
-        this.cards = List.copyOf(copiedCards.cards);
-    }
-
     public void add(final Card card) {
         cards.add(card);
     }
@@ -41,6 +37,10 @@ public final class Cards {
                 .count();
     }
 
+    public List<Card> get() {
+        return List.copyOf(cards);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -56,10 +56,5 @@ public final class Cards {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
-    }
-
-    @Override
-    public String toString() {
-        return cards.toString().substring(1, cards.toString().length() - 1);
     }
 }

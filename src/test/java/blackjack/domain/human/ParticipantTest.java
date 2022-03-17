@@ -30,9 +30,9 @@ class ParticipantTest {
         assertAll(
                 () -> assertThat(participant.getPlayers().get().size())
                         .isEqualTo(1),
-                () -> assertThat(participant.getPlayers().get().get(0).getCards().size())
+                () -> assertThat(participant.getPlayers().get().get(0).getRawCards().size())
                         .isEqualTo(2),
-                () -> assertThat(participant.getDealer().getCards().size())
+                () -> assertThat(participant.getDealer().getRawCards().size())
                         .isEqualTo(2)
         );
     }

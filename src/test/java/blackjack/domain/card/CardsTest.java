@@ -7,6 +7,7 @@ import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
 import blackjack.domain.cards.card.denomination.Suit;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,5 +48,14 @@ public class CardsTest {
     void getAceCountTest() {
         assertThat(cards.getDenominationCount(Denomination.ACE))
                 .isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("카드 리스트 리턴 기능 테스트")
+    void get() {
+        assertThat(cards.get())
+                .isEqualTo(List.of(
+                        Card.of(Denomination.from("A"), Suit.SPADE),
+                        Card.of(Denomination.from("A"), Suit.CLOVER)));
     }
 }
