@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import blackjack.domain.participant.Guest;
+import blackjack.domain.machine.Score;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -15,41 +15,11 @@ public class Deck {
     }
 
     public int sumPoints() {
-        int sumWithoutAce = cards.stream()
-                .filter(this::excludeAce)
-                .mapToInt(this::getCardPoint)
-                .sum();
-
-        int aceCount = countAces();
-        if (aceCount == 0) {
-            return sumWithoutAce;
-        }
-        return calculateAcePoint(sumWithoutAce, aceCount);
+        return new Score(cards).getScore();
     }
 
     public Set<Card> getCards() {
         return cards;
-    }
-
-    private int countAces() {
-        return (int) cards.stream()
-                .filter(card -> !excludeAce(card))
-                .count();
-    }
-
-    private int calculateAcePoint(int sumWithoutAce, int aceCount) {
-        if (sumWithoutAce + aceCount + BONUS_ACE_POINT <= Guest.LIMIT_POINT) {
-            return sumWithoutAce + aceCount + BONUS_ACE_POINT;
-        }
-        return sumWithoutAce + aceCount;
-    }
-
-    private boolean excludeAce(Card card) {
-        return !card.getRank().equals(Rank.ACE);
-    }
-
-    private int getCardPoint(Card card) {
-        return card.getRank().getPoint();
     }
 
     @Override
