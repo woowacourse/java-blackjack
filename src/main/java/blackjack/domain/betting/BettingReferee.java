@@ -13,14 +13,13 @@ public class BettingReferee {
 
     public BettingReferee(final Dealer dealer, final PlayerBettings playerBettings) {
         List<BettingResult> playerBettingResults = getPlayerBettingResultsFrom(playerBettings, dealer);
-        BettingResult dealerBettingResult = initDealerResultFrom(
-                dealer, getTotalProfitOf(playerBettingResults));
+        BettingResult dealerBettingResult = initDealerResultFrom(dealer, playerBettingResults);
 
-        this.bettingResults = initOrderedBettingResultsOf(dealerBettingResult, playerBettingResults);
+        this.bettingResults = getUnmodifiableOrderedListOf(dealerBettingResult, playerBettingResults);
     }
 
-    private List<BettingResult> initOrderedBettingResultsOf(BettingResult dealerBettingResult,
-                                                            List<BettingResult> playerBettingResults) {
+    private List<BettingResult> getUnmodifiableOrderedListOf(BettingResult dealerBettingResult,
+                                                             List<BettingResult> playerBettingResults) {
         List<BettingResult> bettingResults = new ArrayList<>();
 
         bettingResults.add(dealerBettingResult);
@@ -29,16 +28,14 @@ public class BettingReferee {
         return Collections.unmodifiableList(bettingResults);
     }
 
-    private List<BettingResult> getPlayerBettingResultsFrom(PlayerBettings playerBettings,
-                                                            Dealer dealer) {
+    private List<BettingResult> getPlayerBettingResultsFrom(PlayerBettings playerBettings, Dealer dealer) {
         return playerBettings.getValue()
                 .stream()
                 .map(playerBetting -> initPlayerBettingResultFrom(playerBetting, dealer))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private BettingResult initPlayerBettingResultFrom(final PlayerBetting playerBetting,
-                                                      final Dealer dealer) {
+    private BettingResult initPlayerBettingResultFrom(final PlayerBetting playerBetting, final Dealer dealer) {
         Player player = playerBetting.getPlayer();
         final int bettingAmount = playerBetting.getBettingAmount();
 
@@ -48,7 +45,8 @@ public class BettingReferee {
         return new BettingResult(player, winAmount);
     }
 
-    private BettingResult initDealerResultFrom(final Dealer dealer, final int totalPlayerProfit) {
+    private BettingResult initDealerResultFrom(final Dealer dealer, final List<BettingResult> playerBettingResults) {
+        int totalPlayerProfit = getTotalProfitOf(playerBettingResults);
         int dealerProfit = totalPlayerProfit * -1;
 
         return new BettingResult(dealer, dealerProfit);
@@ -66,8 +64,6 @@ public class BettingReferee {
 
     @Override
     public String toString() {
-        return "BettingReferee{" +
-                "bettingResults=" + bettingResults +
-                '}';
+        return "BettingReferee{" + "bettingResults=" + bettingResults + '}';
     }
 }

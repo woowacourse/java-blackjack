@@ -22,8 +22,7 @@ public class PlayerBettings {
         return new PlayerBettings(playerBettings);
     }
 
-    private static PlayerBetting initPlayerBetting(BettingAmountStrategy strategy,
-                                                   Player player) {
+    private static PlayerBetting initPlayerBetting(BettingAmountStrategy strategy, Player player) {
         String playerName = player.getName();
         int bettingAmount = strategy.getBettingAmount(playerName);
 

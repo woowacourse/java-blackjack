@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Function;
 
 public class CardBundle {
 
@@ -38,7 +37,7 @@ public class CardBundle {
     }
 
     private Score getBestScore() {
-        Score defaultScore = calculateScoreBy(Card::getRankValue);
+        Score defaultScore = getDefaultScoreSum();
         if (!containsAce()) {
             return defaultScore;
         }
@@ -49,9 +48,9 @@ public class CardBundle {
         return defaultScore;
     }
 
-    private Score calculateScoreBy(Function<Card, Score> function) {
+    private Score getDefaultScoreSum() {
         return cards.stream()
-                .map(function)
+                .map(Card::getRankValue)
                 .reduce(Score.valueOf(0), Score::add);
     }
 
