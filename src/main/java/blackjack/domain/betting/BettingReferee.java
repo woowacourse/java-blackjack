@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain.betting;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -7,11 +7,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResultRefereeGreen {
+public class BettingReferee {
 
     private final List<BettingResult> bettingResults;
 
-    public ResultRefereeGreen(final Dealer dealer, final List<PlayerBetting> playerBettings) {
+    public BettingReferee(final Dealer dealer, final List<PlayerBetting> playerBettings) {
         List<BettingResult> playerBettingResults = getPlayerBettingResultsFrom(dealer, playerBettings);
         BettingResult dealerBettingResult = initDealerResultFrom(
                 dealer, getTotalProfitOf(playerBettingResults));
@@ -65,7 +65,7 @@ public class ResultRefereeGreen {
 
     @Override
     public String toString() {
-        return "ResultRefereeGreen{" +
+        return "BettingReferee{" +
                 "bettingResults=" + bettingResults +
                 '}';
     }

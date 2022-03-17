@@ -17,7 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class ResultRefereeBlueTest {
+public class ResultRefereeTest {
 
     private static final Dealer dealer20 = Dealer.of(getCardBundleOfTwenty());
     private static final Dealer dealer21 = Dealer.of(getCardBundleOfNonBlackjackTwentyOne());
@@ -38,7 +38,7 @@ public class ResultRefereeBlueTest {
     @DisplayName("딜러가 블랙잭인 경우, 블랙잭인 플레이어는 무승부, 그 외에는 전부 패배한다.")
     @Test
     void dealerBlackjack() {
-        List<ResultStatistics> results = new ResultRefereeBlue(
+        List<ResultStatistics> results = new ResultReferee(
                 dealerBlackjack, List.of(playerBlackjack, player20, player21, playerBust))
                 .getResults(); // 실제로는 해당 시점에 플레이어가 버스트 혹은 3장의 카드를 지닐 수 없다.
 
@@ -57,7 +57,7 @@ public class ResultRefereeBlueTest {
         @DisplayName("플레이어와 딜러 모두 버스트인 경우, 딜러가 나중에 버스트가 되었으므로 승리한다.")
         @Test
         void playerLoseOnDealerBust() {
-            List<ResultStatistics> results = new ResultRefereeBlue(dealerBust, List.of(playerBust))
+            List<ResultStatistics> results = new ResultReferee(dealerBust, List.of(playerBust))
                     .getResults();
 
             ResultStatistics dealerResult = results.get(0);
@@ -68,7 +68,7 @@ public class ResultRefereeBlueTest {
         @DisplayName("플레이어가 버스트인 경우, 딜러가 최종적으로 생존해있으므로 승리한다.")
         @Test
         void playerLoseOnDealerNotBust() {
-            List<ResultStatistics> results = new ResultRefereeBlue(dealer20, List.of(playerBust))
+            List<ResultStatistics> results = new ResultReferee(dealer20, List.of(playerBust))
                     .getResults();
 
             ResultStatistics dealerResult = results.get(0);
@@ -80,7 +80,7 @@ public class ResultRefereeBlueTest {
     @DisplayName("딜러가 버스트인 경우, 버스트가 아닌 플레이어는 전부 승리한다.")
     @Test
     void dealerBust() {
-        List<ResultStatistics> results = new ResultRefereeBlue(dealerBust,
+        List<ResultStatistics> results = new ResultReferee(dealerBust,
                 List.of(player10, player15, player20, playerBust))
                 .getResults();
 
@@ -99,7 +99,7 @@ public class ResultRefereeBlueTest {
         @DisplayName("딜러도 블랙잭이면 서로 무승부가 된다.")
         @Test
         void playerDrawOnDealerBlackjack() {
-            List<ResultStatistics> results = new ResultRefereeBlue(
+            List<ResultStatistics> results = new ResultReferee(
                     dealerBlackjack, List.of(playerBlackjack))
                     .getResults();
 
@@ -111,7 +111,7 @@ public class ResultRefereeBlueTest {
         @DisplayName("딜러의 패가 3장 이상으로 구성된 21이어도 블랙잭이 아니므로 플레이어가 승리한다.")
         @Test
         void playerDrawOnDealerNonBlackjack21() {
-            List<ResultStatistics> results = new ResultRefereeBlue(dealer21, List.of(playerBlackjack))
+            List<ResultStatistics> results = new ResultReferee(dealer21, List.of(playerBlackjack))
                     .getResults();
 
             ResultStatistics dealerResult = results.get(0);
@@ -127,7 +127,7 @@ public class ResultRefereeBlueTest {
         @DisplayName("딜러가 20 이하인 경우")
         @Test
         void simpleComparison() {
-            List<ResultStatistics> results = new ResultRefereeBlue(dealer20,
+            List<ResultStatistics> results = new ResultReferee(dealer20,
                     List.of(player21, player20, player10, player15, playerBust))
                     .getResults();
 
@@ -143,7 +143,7 @@ public class ResultRefereeBlueTest {
         @DisplayName("딜러의 패가 블랙잭이 아닌 21인 경우")
         @Test
         void simpleComparisonDealerNonBlackjack21() {
-            List<ResultStatistics> results = new ResultRefereeBlue(dealer21,
+            List<ResultStatistics> results = new ResultReferee(dealer21,
                     List.of(playerBlackjack, player21, player20, player10, player15, playerBust))
                     .getResults();
 

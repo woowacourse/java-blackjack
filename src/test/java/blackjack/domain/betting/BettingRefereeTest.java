@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain.betting;
 
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfFifteen;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ResultRefereeGreenTest {
+public class BettingRefereeTest {
 
     private static final Dealer dealerBlackjack = Dealer.of(getCardBundleOfBlackjack());
 
@@ -24,7 +24,7 @@ public class ResultRefereeGreenTest {
     @DisplayName("ResultReferee 인스턴스는 생성될 때 딜러와 플레이어별 정보를 지니게 된다.")
     @Test
     void init() {
-        ResultRefereeGreen referee = new ResultRefereeGreen(
+        BettingReferee referee = new BettingReferee(
                 dealerBlackjack, generateBettingsOf(List.of(player10, player15)));
 
         assertThat(referee.getResults()).hasSize(3);
@@ -33,7 +33,7 @@ public class ResultRefereeGreenTest {
     @DisplayName("딜러가 획득한 돈은 모든 플레이어들이 잃은 돈의 합과 같다.")
     @Test
     void dealerBetting_sumIsEqualToOppositeOfPlayerSum() {
-        ResultRefereeGreen referee = new ResultRefereeGreen(
+        BettingReferee referee = new BettingReferee(
                 dealerBlackjack, generateBettingsOf(List.of(player10, player15, player20)));
 
         int playerBettings = 0;

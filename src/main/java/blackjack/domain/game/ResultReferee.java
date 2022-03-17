@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // TODO: should be deleted
-public class ResultRefereeBlue {
+public class ResultReferee {
 
     private final ResultStatistics dealerResultStat;
     private final List<ResultStatistics> playerResultStats;
 
-    public ResultRefereeBlue(final Dealer dealer, final List<Player> players) {
+    public ResultReferee(final Dealer dealer, final List<Player> players) {
         this.dealerResultStat = ResultStatistics.of(dealer);
         this.playerResultStats = players.stream()
                 .map(player -> initPlayerResultStatFrom(player, dealer))
