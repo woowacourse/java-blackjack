@@ -20,9 +20,8 @@ public final class Player extends AbstractParticipant {
         this(name, betMoney, new PlayerRunning(cards));
     }
 
-    public static Player createPlayer(final Name name, final int betMoney, final CardDeck cardDeck) {
-        final Cards cards = new Cards(List.of(cardDeck.provideCard(), cardDeck.provideCard()));
-        return new Player(name, betMoney, cards);
+    public Player(final Name name, final int betMoney, final CardDeck cardDeck) {
+        this(name, betMoney, new Cards(List.of(cardDeck.provideCard(), cardDeck.provideCard())));
     }
 
     private void checkNotPositiveBetMoney(final int betMoney) {

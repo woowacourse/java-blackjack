@@ -41,7 +41,7 @@ class PlayerTest {
 
     @Test
     void 게임상태가_null인_경우_예외발생() {
-        assertThatThrownBy(() -> new Player(new Name("name"), 1000, null))
+        assertThatThrownBy(() -> new Player(new Name("name"), 1000, (Cards) null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("cards는 null이 들어올 수 없습니다.");
     }

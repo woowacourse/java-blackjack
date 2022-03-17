@@ -48,7 +48,7 @@ public class Players {
                                                                    final Function<Name, Integer> betMoney,
                                                                    final CardDeck cardDeck) {
         return names.stream()
-                .map(name -> Player.createPlayer(name, betMoney.apply(name), cardDeck))
+                .map(name -> new Player(name, betMoney.apply(name), cardDeck))
                 .collect(Collectors.toList());
     }
 
