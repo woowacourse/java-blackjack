@@ -1,6 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -12,6 +11,7 @@ import java.util.Map;
 public class GameResult {
 
     public static final int BLACKJACK_VALUE = 21;
+    protected static final int BLACKJACK_COUNT = 2;
     private static final int DIVISION_NUMBER_FOR_WINNER = 2;
     private static final int MULTIPLE_NUMBER_FOR_WINNER = 3;
     private static final long DEFAULT_BETTING_PRIZE = 0L;
@@ -66,7 +66,7 @@ public class GameResult {
     public long getDealerProfit() {
         return bettingResult.values()
                 .stream()
-                .mapToLong(value -> value)
+                .mapToLong(value -> -value)
                 .sum();
     }
 
