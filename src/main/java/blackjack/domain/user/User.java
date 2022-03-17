@@ -42,7 +42,11 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        return ((cards.getCards().size() == 2) && cards.isSameBlackJackNumber(getScore()));
+        return ((cards.isDefaultSize()) && cards.isSameBlackJackNumber(getScore()));
+    }
+
+    public String getName(){
+        return name.getName();
     }
 
     public abstract boolean isDealer();
@@ -50,8 +54,4 @@ public abstract class User {
     public abstract List<Card> showInitCards();
 
     public abstract boolean isDrawable();
-
-    public String getName(){
-        return name.getName();
-    }
 }

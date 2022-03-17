@@ -16,17 +16,17 @@ public class Player extends User {
         this.money = money;
     }
 
-    @Override
-    public boolean isDealer() {
-        return false;
-    }
-
     public static Player from(Name name, BettingMoney money) {
         return new Player(name, money);
     }
 
     public int getRevenue(double earningRate) {
         return money.calculateRevenue(earningRate);
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
     }
 
     @Override

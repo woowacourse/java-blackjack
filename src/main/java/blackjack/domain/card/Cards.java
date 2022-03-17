@@ -52,6 +52,10 @@ public class Cards {
                 .sum();
     }
 
+    public boolean isDefaultSize() {
+        return cards.size() == 2;
+    }
+
     public void add(Card card) {
         cards.add(card);
     }
