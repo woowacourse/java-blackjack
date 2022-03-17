@@ -2,9 +2,9 @@ package blackjack;
 
 import blackjack.domain.HitCommand;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.paticipant.Dealer;
-import blackjack.domain.paticipant.Player;
-import blackjack.domain.paticipant.Players;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.dto.ParticipantCards;
 import blackjack.dto.ParticipantScoreResult;
 import blackjack.dto.PlayerProfit;

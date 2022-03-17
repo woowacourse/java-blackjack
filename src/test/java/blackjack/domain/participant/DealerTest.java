@@ -1,4 +1,4 @@
-package blackjack.domain.paticipant;
+package blackjack.domain.participant;
 
 import static blackjack.domain.card.Denomination.THREE;
 import static blackjack.domain.card.Denomination.TWO;

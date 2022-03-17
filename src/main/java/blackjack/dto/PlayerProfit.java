@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.paticipant.Dealer;
-import blackjack.domain.paticipant.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public class PlayerProfit {
 
