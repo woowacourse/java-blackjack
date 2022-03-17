@@ -2,7 +2,6 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.ParticipantGameInfo;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.Collections;

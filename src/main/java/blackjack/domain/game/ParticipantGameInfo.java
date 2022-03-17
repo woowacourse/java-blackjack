@@ -1,8 +1,7 @@
-package blackjack.domain.participant;
+package blackjack.domain.game;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Status;
-import blackjack.domain.game.GameResult;
 
 public class ParticipantGameInfo {
 
@@ -19,14 +18,14 @@ public class ParticipantGameInfo {
     private int getScore(Cards cards) {
         int sum = cards.sum();
 
-        if (canAddAddtionalValue(cards, sum)) {
+        if (canAddAdditionalValue(cards, sum)) {
             sum += ACE_ADDITIONAL_VALUE;
         }
 
         return sum;
     }
 
-    private boolean canAddAddtionalValue(Cards cards, int sum) {
+    private boolean canAddAdditionalValue(Cards cards, int sum) {
         return cards.hasAce() && !exceedBust(sum);
     }
 
