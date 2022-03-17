@@ -6,18 +6,18 @@ import static blackjack.view.OutputView.printInitGameMessage;
 import static blackjack.view.OutputView.printOpenCard;
 import static blackjack.view.OutputView.printPlayerCards;
 import static blackjack.view.OutputView.printPlayersResult;
-import static blackjack.view.OutputView.printResult;
+import static blackjack.view.OutputView.printProfitResult;
 
 import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.Deck;
 import blackjack.domain.Name;
 import blackjack.domain.Participant;
-import blackjack.domain.Player;
 import blackjack.domain.Participants;
-import blackjack.domain.ScoreResult;
+import blackjack.domain.Player;
 import blackjack.domain.Selection;
 import blackjack.dto.ParticipantDto;
+import blackjack.dto.ProfitResultDto;
 import blackjack.view.InputView;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +33,22 @@ public class BlackjackApplication {
         endGame(blackjackGame);
     }
 
+    private static Participants requestPlayers() {
+        List<Name> names = requestNames();
+        List<Participant> players = new ArrayList<>();
+
+        for (Name name : names) {
+            BettingAmount bettingAmount = requestBettingAmount(name.getValue());
+            players.add(new Player(name, bettingAmount));
+        }
+        return new Participants(players);
+    }
+
     private static void startSetting(BlackjackGame blackjackGame) {
         blackjackGame.drawStartingCard();
 
         List<ParticipantDto> participantDtos = toDto(blackjackGame.getPlayers());
-        ParticipantDto dealerDto = toDto(blackjackGame.getDealer());
+        ParticipantDto dealerDto = ParticipantDto.from(blackjackGame.getDealer());
         printInitGameMessage(participantDtos, dealerDto);
         printOpenCard(participantDtos, dealerDto);
     }
@@ -56,21 +67,15 @@ public class BlackjackApplication {
 
     private static void takeTurn(BlackjackGame blackjackGame, Selection selection) {
         if (selection == Selection.NO) {
-            printPlayerCards(toDto(blackjackGame.getNowTurnPlayer()));
+            printPlayerCards(ParticipantDto.from(blackjackGame.getNowTurnPlayer()));
             blackjackGame.proceedTurn();
             return;
         }
         blackjackGame.drawPlayerCard();
-        printPlayerCards(toDto(blackjackGame.getNowTurnPlayer()));
+        printPlayerCards(ParticipantDto.from(blackjackGame.getNowTurnPlayer()));
         if (blackjackGame.isBustCurrentTurn()) {
             blackjackGame.proceedTurn();
         }
-    }
-
-    private static void endGame(BlackjackGame blackjackGame) {
-        printPlayersResult(toDto(blackjackGame.getPlayers()), toDto(blackjackGame.getDealer()));
-        ScoreResult result = blackjackGame.makeResults();
-        printResult(result);
     }
 
     private static void takeTurnDealer(BlackjackGame blackjackGame) {
@@ -80,8 +85,9 @@ public class BlackjackApplication {
         }
     }
 
-    private static ParticipantDto toDto(Participant player) {
-        return ParticipantDto.from(player);
+    private static void endGame(BlackjackGame blackjackGame) {
+        printPlayersResult(toDto(blackjackGame.getPlayers()), ParticipantDto.from(blackjackGame.getDealer()));
+        printProfitResult(ProfitResultDto.from(blackjackGame.calculateProfitResult()));
     }
 
     private static List<ParticipantDto> toDto(Participants participants) {
@@ -89,28 +95,6 @@ public class BlackjackApplication {
                 .stream()
                 .map(ParticipantDto::from)
                 .collect(Collectors.toList());
-    }
-
-    private static Participants requestPlayers() {
-        List<Name> names = requestNames();
-        List<Participant> players = new ArrayList<>();
-
-        for (Name name : names) {
-            BettingAmount bettingAmount = requestBettingAmount(name.getValue());
-            players.add(new Player(name, bettingAmount));
-        }
-        return new Participants(players);
-    }
-
-    private static BettingAmount requestBettingAmount(String name) {
-        try {
-            return new BettingAmount(InputView.requestBattingAmount(name));
-        } catch (NumberFormatException numberFormatException) {
-            System.out.println("숫자를 입력해주세요.");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            System.out.println(illegalArgumentException.getMessage());
-        }
-        return requestBettingAmount(name);
     }
 
     private static List<Name> requestNames() {
@@ -125,5 +109,16 @@ public class BlackjackApplication {
             System.out.println(e.getMessage());
             return requestNames();
         }
+    }
+
+    private static BettingAmount requestBettingAmount(String name) {
+        try {
+            return new BettingAmount(InputView.requestBattingAmount(name));
+        } catch (NumberFormatException numberFormatException) {
+            System.out.println("숫자를 입력해주세요.");
+        } catch (IllegalArgumentException illegalArgumentException) {
+            System.out.println(illegalArgumentException.getMessage());
+        }
+        return requestBettingAmount(name);
     }
 }

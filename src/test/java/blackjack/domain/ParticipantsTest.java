@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.MockDeck;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -37,11 +38,11 @@ public class ParticipantsTest {
     class Compete {
 
         @Test
-        @DisplayName("딜러와 승부를 겨루고 결과를 맵으로 반환한다.")
+        @DisplayName("딜러와 승부를 겨루고 수익 결과를 맵으로 반환한다.")
         void returnScoreMap() {
-            Player roma = new Player("roma", 0);
-            Player tonic = new Player("tonic", 0);
-            Player pobi = new Player("pobi", 0);
+            Player roma = new Player("roma", 10000);
+            Player tonic = new Player("tonic", 10000);
+            Player pobi = new Player("pobi", 10000);
 
             Participants players = new Participants(List.of(roma, tonic, pobi));
             MockDeck mockDeck = new MockDeck(List.of(
@@ -52,16 +53,17 @@ public class ParticipantsTest {
             players.drawAll(mockDeck);
             Dealer dealer = new Dealer();
             dealer.drawCard(Card.of(CardPattern.SPADE, CardNumber.TEN));
-            ScoreResult result = players.compete(dealer);
+
+            ProfitResult result = players.compete(dealer);
+            Map<String, Double> playersProfit = result.getPlayersProfit();
 
             assertAll(
-                    () -> assertThat(result.getPlayerScore(roma)).isEqualTo(Score.LOSE),
-                    () -> assertThat(result.getPlayerScore(tonic)).isEqualTo(Score.DRAW),
-                    () -> assertThat(result.getPlayerScore(pobi)).isEqualTo(Score.WIN),
-                    () -> assertThat(result.getDealerScoreCount(Score.LOSE)).isEqualTo(1),
-                    () -> assertThat(result.getDealerScoreCount(Score.DRAW)).isEqualTo(1),
-                    () -> assertThat(result.getDealerScoreCount(Score.WIN)).isEqualTo(1)
+                    () -> assertThat(playersProfit).containsEntry(roma.getName(), (double) -10000),
+                    () -> assertThat(playersProfit).containsEntry(tonic.getName(), (double) 0),
+                    () -> assertThat(playersProfit).containsEntry(pobi.getName(), (double) 10000),
+                    () -> assertThat(result.getDealerProfit()).isZero()
             );
+
         }
     }
 

@@ -1,13 +1,11 @@
 package blackjack.view;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import blackjack.domain.Score;
-import blackjack.domain.ScoreResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantDto;
+import blackjack.dto.ProfitResultDto;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -61,22 +59,11 @@ public class OutputView {
         System.out.printf("%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
     }
 
-    public static void printResult(ScoreResult result) {
-        System.out.printf("%n## 최종 승패%n");
-        System.out.print("딜러: ");
-        for (Score score : Score.values()) {
-            int dealerScoreCount = result.getDealerScoreCount(score);
-            printResultByScore(score, dealerScoreCount);
-        }
-        System.out.println();
-        for (Map.Entry<String, String> entry : result.getPlayerResult().entrySet()) {
-            System.out.printf("%s: %s%n", entry.getKey(), entry.getValue());
-        }
-    }
-
-    private static void printResultByScore(Score score, int dealerScoreCount) {
-        if (dealerScoreCount > 0) {
-            System.out.printf("%d%s ", dealerScoreCount, score.getValue());
+    public static void printProfitResult(ProfitResultDto profitResultDto) {
+        System.out.printf("%n## 최종 수익%n");
+        System.out.printf("딜러: %d%n", Math.round(profitResultDto.getDealerProfit()));
+        for (Entry<String, Double> entry : profitResultDto.getPlayersProfit().entrySet()) {
+            System.out.printf("%s: %d%n", entry.getKey(), Math.round(entry.getValue()));
         }
     }
 

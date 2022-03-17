@@ -30,7 +30,7 @@ public class BlackjackGame {
         dealer.drawCard(drawable.draw());
     }
 
-    public ScoreResult makeResults() {
+    public ProfitResult calculateProfitResult() {
         return participants.compete(dealer);
     }
 
