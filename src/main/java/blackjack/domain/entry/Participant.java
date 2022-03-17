@@ -7,6 +7,7 @@ import blackjack.domain.card.HoldCards;
 import java.util.List;
 
 public abstract class Participant {
+
     private final HoldCards holdCards;
 
     protected Participant(HoldCards holdCards) {
@@ -15,11 +16,13 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public abstract List<Card> openCard();
+    public List<Card> openCard() {
+        return List.copyOf(holdCards.getCards());
+    }
 
     public abstract String getName();
 
-    public boolean isBlackjack() {
+    public boolean hasBlackjack() {
         return holdCards.isBlackjack();
     }
 

@@ -33,7 +33,7 @@ public class Participants {
 
     public Map<Player, Integer> getGameResults() {
         return players.stream()
-            .collect(Collectors.toMap(player -> player, player -> player.getBettingResult(dealer)));
+            .collect(Collectors.toMap(player -> player, player -> player.countBettingMoney(dealer)));
     }
 
     public List<Participant> getPlayers() {

@@ -1,11 +1,7 @@
 package blackjack.domain.entry;
 
 import blackjack.domain.PlayerOutcome;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
-
-import blackjack.domain.vo.BettingMoney;
-import java.util.List;
 
 public class Player extends Participant {
     private static final int BLACKJACK_NUMBER = 21;
@@ -24,22 +20,16 @@ public class Player extends Participant {
         return PlayerOutcome.match(countCards(), dealer.countCards());
     }
 
-    public int getBettingResult(Dealer dealer) {
-        if (isBlackjack()) {
-            return this.bettingMoney.countBlackjackPay();
+    public int countBettingMoney(Dealer dealer) {
+        if (hasBlackjack()) {
+            return bettingMoney.countBlackjackPay();
         }
-        return match(dealer).betting(bettingMoney);
+        return bettingMoney.bet(match(dealer));
     }
 
     @Override
     public boolean canHit() {
         return countCards() <= BLACKJACK_NUMBER;
-    }
-
-    @Override
-    public List<Card> openCard() {
-        HoldCards holdCards = getHoldCards();
-        return List.copyOf(holdCards.getCards());
     }
 
     @Override

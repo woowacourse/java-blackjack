@@ -1,4 +1,6 @@
-package blackjack.domain.vo;
+package blackjack.domain.entry;
+
+import blackjack.domain.PlayerOutcome;
 
 public class BettingMoney {
     private static final double BLACKJACK_RATIO = 1.5;
@@ -13,6 +15,14 @@ public class BettingMoney {
         this.amount = amount;
     }
 
+    public int countBlackjackPay() {
+        return (int) (this.amount * BLACKJACK_RATIO);
+    }
+
+    public int bet(PlayerOutcome playerOutcome) {
+        return playerOutcome.betting(this);
+    }
+
     private void validateRange(int amount) {
         if (Math.floorMod(amount, MINIMUM_AMOUNT_UNIT) != 0) {
             throw new IllegalArgumentException("배팅 금액은 1000단위어야 합니다.");
@@ -20,10 +30,6 @@ public class BettingMoney {
         if (amount > MAXIMUM_AMOUNT) {
             throw new IllegalArgumentException("배팅 금액은 500만을 넘을 수 없습니다.");
         }
-    }
-
-    public int countBlackjackPay() {
-        return (int) (this.amount * BLACKJACK_RATIO);
     }
 
     public int getAmount() {

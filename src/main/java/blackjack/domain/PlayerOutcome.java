@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.vo.BettingMoney;
+import blackjack.domain.entry.BettingMoney;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 

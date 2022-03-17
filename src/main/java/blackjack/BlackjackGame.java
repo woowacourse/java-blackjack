@@ -44,7 +44,7 @@ public class BlackjackGame {
     }
 
     private void hitPlayer(BlackjackTable blackjackTable, Participant participant) {
-        if (participant.isBlackjack()) {
+        if (participant.hasBlackjack()) {
             return;
         }
         hitOrStay(blackjackTable, participant);

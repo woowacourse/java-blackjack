@@ -7,7 +7,7 @@ import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
 import blackjack.domain.entry.Participants;
-import blackjack.domain.vo.BettingMoney;
+import blackjack.domain.entry.BettingMoney;
 import blackjack.dto.request.PlayerRequest;
 import java.util.List;
 import java.util.Map;

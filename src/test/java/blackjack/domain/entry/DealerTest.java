@@ -9,6 +9,7 @@ import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,4 +38,21 @@ class DealerTest {
 
         assertThat(dealer.canHit()).isFalse();
     }
+
+    @Test
+    @DisplayName("딜러는 한장의 카드를 오픈한다.")
+    void openCardByDealer() {
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, NINE), Card.valueOf(HEART, EIGHT)));
+
+        assertThat(dealer.openCard()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("딜러의 이름은 딜러이다.")
+    void getDealerName() {
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, NINE), Card.valueOf(HEART, EIGHT)));
+
+        assertThat(dealer.getName()).isEqualTo("딜러");
+    }
+
 }

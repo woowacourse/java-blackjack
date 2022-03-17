@@ -2,7 +2,7 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.PlayerOutcome;
-import blackjack.domain.vo.BettingMoney;
+import blackjack.domain.entry.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

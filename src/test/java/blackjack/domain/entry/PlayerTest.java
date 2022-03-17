@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import blackjack.domain.PlayerOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.vo.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,6 +39,15 @@ public class PlayerTest {
         player.addCard(Card.valueOf(HEART, ACE));
 
         assertThat(player.countCards()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("플레이어가 보유한 카드를 반환한다.")
+    void getCardsByPlayer() {
+        Player player = new Player(NAME, BETTING_MONEY,
+            HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)));
+
+        assertThat(player.openCard()).containsExactly(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE));
     }
 
     @Test
@@ -101,7 +109,7 @@ public class PlayerTest {
             HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)));
 
         assertThat(player
-            .getBettingResult(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
+            .countBettingMoney(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
             .isEqualTo(15000);
     }
 
@@ -113,7 +121,7 @@ public class PlayerTest {
         player.addCard(Card.valueOf(SPADE, TWO));
 
         assertThat(player
-            .getBettingResult(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
+            .countBettingMoney(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
             .isEqualTo(-10000);
     }
 
@@ -125,7 +133,7 @@ public class PlayerTest {
         player.addCard(Card.valueOf(SPADE, TWO));
 
         assertThat(player
-            .getBettingResult(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
+            .countBettingMoney(new Dealer(HoldCards.initTwoCards(Card.valueOf(SPADE, KING), Card.valueOf(SPADE, ACE)))))
             .isEqualTo(10000);
     }
 }
