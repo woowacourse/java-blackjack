@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.constant.MatchResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,8 +11,8 @@ import java.util.Map;
 
 public class ScoreBoard {
 
-    private EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap(MatchResult.class);
-    private Map<String, MatchResult> playersMatchResult = new LinkedHashMap<>();
+    private final EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap(MatchResult.class);
+    private final Map<String, MatchResult> playersMatchResult = new LinkedHashMap<>();
 
     private ScoreBoard(Dealer dealer, List<Player> players) {
         initDealerMatchResult();
@@ -45,12 +46,12 @@ public class ScoreBoard {
         dealerMatchResult.put(matchResult, dealerMatchResult.get(matchResult) + 1);
     }
 
-    public EnumMap<MatchResult, Integer> getDealerMatchResults() {
-        return dealerMatchResult;
+    public Map<MatchResult, Integer> getDealerMatchResults() {
+        return Collections.unmodifiableMap(dealerMatchResult);
     }
 
     public Map<String, MatchResult> getPlayersMatchResult() {
-        return playersMatchResult;
+        return Collections.unmodifiableMap(playersMatchResult);
     }
 
     public int findDealerMatchScore(MatchResult matchResult) {

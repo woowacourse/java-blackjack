@@ -20,18 +20,39 @@ import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.utils.ParticipantsCreationUtils.createDealerWithDenominations;
 import static blackjack.utils.ParticipantsCreationUtils.createPlayerWithDenominations;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.constant.MatchResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ScoreBoardTest {
+
+    @Test
+    @DisplayName("ScoreBoard 는 불변 객체다")
+    void scoreBoard_is_immutable() {
+        // given
+        Dealer dealer = createDealerWithDenominations(QUEEN, TEN); // 20
+        Player player = createPlayerWithDenominations("user A", JACK, NINE); // 19
+
+        // when
+        ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
+
+        // then
+        Assertions.assertAll(
+                () -> assertThatThrownBy(() -> scoreBoard.getDealerMatchResults().remove(WIN))
+                        .isInstanceOf(UnsupportedOperationException.class),
+                () -> assertThatThrownBy(() -> scoreBoard.getPlayersMatchResult().remove(player.getName()))
+                        .isInstanceOf(UnsupportedOperationException.class)
+        );
+    }
+
 
     @Test
     @DisplayName("딜러의 점수가 플레이어보다 높을 때 딜러의 승이다")
@@ -151,7 +172,7 @@ public class ScoreBoardTest {
 
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(playerA, playerB, playerC));
-        EnumMap<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
+        Map<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
         Map<String, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
 
         // then
@@ -175,7 +196,7 @@ public class ScoreBoardTest {
 
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(playerA, playerB, playerC));
-        EnumMap<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
+        Map<MatchResult, Integer> dealerMatchResults = scoreBoard.getDealerMatchResults();
         Map<String, MatchResult> playersMatchResult = scoreBoard.getPlayersMatchResult();
 
         // then
