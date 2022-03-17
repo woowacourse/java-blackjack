@@ -13,7 +13,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
-    private PlayerGroup playerGroup;
     private BlackJack blackJack;
 
     public void run() {
@@ -23,8 +22,7 @@ public class BlackJackController {
     }
 
     private void initialize() {
-        playerGroup = initializePlayerGroup();
-        blackJack = new BlackJack(playerGroup);
+        blackJack = new BlackJack(initializePlayerGroup());
         blackJack.divideCards();
         OutputView.printGamersCards(GamerCardsDto.of(blackJack.getGamers()));
     }
@@ -39,7 +37,7 @@ public class BlackJackController {
     }
 
     private void play() {
-        List<Player> players = playerGroup.getPlayers();
+        List<Player> players = blackJack.getPlayers();
         for (Player player : players) {
             requestHitOrStand(player);
         }

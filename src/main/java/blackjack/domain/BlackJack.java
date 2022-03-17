@@ -45,4 +45,8 @@ public class BlackJack {
     public Dealer getDealer() {
         return gamerGroup.getDealer();
     }
+
+    public List<Player> getPlayers() {
+        return gamerGroup.getPlayers();
+    }
 }

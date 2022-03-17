@@ -85,4 +85,8 @@ public class GamerGroup {
     public Dealer getDealer() {
         return dealer;
     }
+
+    public List<Player> getPlayers() {
+        return playerGroup.getPlayers();
+    }
 }
