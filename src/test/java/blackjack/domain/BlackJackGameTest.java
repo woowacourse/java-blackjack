@@ -14,8 +14,9 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.Player;
 import blackjack.dto.GameResultDto;
-import blackjack.dto.GamerDto;
 
 class BlackJackGameTest {
     @Test
@@ -25,9 +26,10 @@ class BlackJackGameTest {
             Arrays.asList("a", "b"), s -> 10, new Deck(Card.getCards()));
         blackJackGame.play(answer -> false, (s, c) -> {});
 
-        List<GamerDto> playerDtos = blackJackGame.getPlayerDtos();
+        Gamers gamers = blackJackGame.getGamers();
+        List<Player> players = gamers.getPlayers();
 
-        assertThat(playerDtos)
+        assertThat(players)
                 .map(dto -> dto.getCards().size())
                 .containsExactly(2, 2);
     }
@@ -38,8 +40,8 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("name"), s -> 10, new Deck(Card.getCards()));
         blackJackGame.play(answer -> false, (s, c) -> {});
 
-        GamerDto dealer = blackJackGame.getDealerDto();
-        int cardNumberSum = dealer.getCardNumberSum();
+        Gamers gamers = blackJackGame.getGamers();
+        int cardNumberSum = gamers.getDealer().sumCardsNumber();
 
         assertThat(cardNumberSum).isGreaterThan(16);
     }

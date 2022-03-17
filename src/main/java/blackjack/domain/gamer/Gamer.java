@@ -32,6 +32,10 @@ public class Gamer {
         return getCardsNumberSum() > number;
     }
 
+    public int sumCardsNumber() {
+        return cards.sum();
+    }
+
     public String getName() {
         return name.getValue();
     }

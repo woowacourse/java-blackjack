@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.game.BettingInjector;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.DrawStrategy;
@@ -53,6 +54,10 @@ public class Gamers {
 
 	public boolean checkDealerDrawPossible() {
 		return !dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD);
+	}
+
+	public List<Card> findCardsOfPlayer(String name) {
+		return findPlayerByName(name).getCards();
 	}
 
 	public Player findPlayerByName(String name) {

@@ -3,7 +3,6 @@ package blackjack.domain.game;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.DrawStrategy;
@@ -13,13 +12,12 @@ import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackResult;
 import blackjack.dto.GameResultDto;
-import blackjack.dto.GamerDto;
 
 public class BlackJackGame {
 
 	public static final int INIT_DISTRIBUTION_COUNT = 2;
 	private static final int DEFAULT_EARNING = 0;
-	public static final int DEALER_OPEN_COUNT_FIRST = 1;
+	private static final int DEALER_OPEN_COUNT_FIRST = 1;
 
 	private final Gamers gamers;
 	private final DrawStrategy deck;
@@ -44,13 +42,14 @@ public class BlackJackGame {
 	}
 
 	private void checkFirstCardsOfGamers(CardsChecker cardChecker) {
-		GamerDto dealerDto = getDealerDto();
-		cardChecker.check(dealerDto.getName(), getDealerFirstCard(dealerDto));
-		getPlayerDtos().forEach(p -> cardChecker.check(p.getName(), p.getCards()));
+		Dealer dealer = gamers.getDealer();
+		cardChecker.check(dealer.getName(), bringDealerFirstCard(dealer));
+		gamers.getPlayers()
+			.forEach(player -> cardChecker.check(player.getName(), player.getCards()));
 	}
 
-	private List<Card> getDealerFirstCard(GamerDto dealerDto) {
-		return dealerDto.getCards()
+	private List<Card> bringDealerFirstCard(Dealer dealer) {
+		return dealer.getCards()
 			.subList(0, DEALER_OPEN_COUNT_FIRST);
 	}
 
@@ -63,16 +62,12 @@ public class BlackJackGame {
 	private void hitOrStay(String name, HitRequester hitOrStay, CardsChecker cardChecker) {
 		while (!isBust(name) && hitOrStay.request(name)) {
 			gamers.giveCardToPlayer(name, deck);
-			cardChecker.check(name, findPlayerDtoByName(name).getCards());
+			cardChecker.check(name, gamers.findCardsOfPlayer(name));
 		}
 	}
 
 	private boolean isBust(String name) {
 		return gamers.checkPlayerDrawPossible(name);
-	}
-
-	private GamerDto findPlayerDtoByName(String name) {
-		return new GamerDto(gamers.findPlayerByName(name));
 	}
 
 	private void askDealerHitOrStay() {
@@ -101,13 +96,7 @@ public class BlackJackGame {
 		return new GameResultDto(gamers.findDealerHitCount(), dealerEarning, playerEarnings);
 	}
 
-	public GamerDto getDealerDto() {
-		return new GamerDto(gamers.getDealer());
-	}
-
-	public List<GamerDto> getPlayerDtos() {
-		return gamers.getPlayers().stream()
-			.map(GamerDto::new)
-			.collect(Collectors.toList());
+	public Gamers getGamers() {
+		return gamers;
 	}
 }
