@@ -26,6 +26,9 @@ public class OutputView {
     private static final String FINAL_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 승패" + NEW_LINE;
     private static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
 
+    private OutputView() {
+    }
+
     public static void printInitialParticipantsCards(final InitialDistributionDto dto) {
         final String message = getParticipantsCardCountInfo(dto.getAllParticipantNames())
                 + getAllParticipantCardInfos(dto.getParticipantsInfo())

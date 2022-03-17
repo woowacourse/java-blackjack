@@ -21,6 +21,9 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    private InputView() {
+    }
+
     public static List<String> requestPlayerNamesInput() {
         print(REQUEST_PLAYER_NAMES_INPUT_MESSAGE);
         final String input = scanner.nextLine();
@@ -44,7 +47,7 @@ public class InputView {
     private static int getValidParsedInteger(final String input) {
         try {
             return Integer.parseInt(input.trim());
-        } catch (NumberFormatException  e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException(INVALID_BETTING_INPUT_EXCEPTION_MESSAGE);
         }
     }
