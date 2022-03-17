@@ -52,11 +52,11 @@ public enum GameResult {
                 (e1, e2) -> e1, LinkedHashMap::new));
     }
 
-    public static int calculateDealerFinalResultBoard(Map<Gamer, GameResult> gamerResult) {
+    public static int calculateDealerFinalResult(Map<Gamer, GameResult> gamerResult) {
         int dealerProfit = 0;
         for (Entry<Gamer, GameResult> gameResultEntry : gamerResult.entrySet()) {
             dealerProfit +=
-                gameResultEntry.getKey().BetMoney() * gameResultEntry.getValue().getMultiplePoint();
+                gameResultEntry.getKey().BetMoney() * - gameResultEntry.getValue().getMultiplePoint();
         }
         return dealerProfit;
     }

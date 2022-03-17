@@ -20,7 +20,6 @@ public class OutputView {
     private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.\n";
     private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
-    private static final String PRINT_BLANK = " ";
     private static final String FINAL_RESULT_MESSAGE = "\n## 최종 승패";
 
     public static void printErrorMessage(final String message) {
@@ -98,5 +97,16 @@ public class OutputView {
             joinCards(gamer.showCards()),
             gamer.calculateResult());
     }
+
+    public static void printFinalResultBoard(final Map<Gamer, GameResult> gamerResultBoard,
+        int dealerResult) {
+        System.out.println(FINAL_RESULT_MESSAGE);
+
+        System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, dealerResult);
+        gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
+            key.getName(),
+            (int)(key.BetMoney() * value.getMultiplePoint())));
+    }
+
 
 }

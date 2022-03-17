@@ -95,6 +95,8 @@ public class BlackJackGame {
         OutputView.printFinalResult(dealer, gamers.getGamers());
         Map<Gamer, GameResult> gamerResultBoard =
             GameResult.calculateGamersFinalResultBoard(dealer, gamers.getGamers());
+        OutputView.printFinalResultBoard(gamerResultBoard,
+            GameResult.calculateDealerFinalResult(gamerResultBoard));
     }
 
 }
