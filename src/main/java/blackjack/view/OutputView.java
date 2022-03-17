@@ -21,6 +21,7 @@ public class OutputView {
 
     public static void printPlayerCards(PlayerCardResult playerCardResult) {
         System.out.println(printPlayerCard(playerCardResult.getPlayerName(), playerCardResult.getCards()));
+        System.out.println();
     }
 
     public static void printReceivingMoreCardOfDealer() {

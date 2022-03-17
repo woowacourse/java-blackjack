@@ -1,9 +1,10 @@
 package blackjack.view;
 
-import blackjack.dto.request.PlayerRequest;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -19,9 +20,14 @@ public class InputView {
         return toNames(SCANNER.nextLine().trim());
     }
 
-    public static PlayerRequest inputBettingMoney(String name) {
-        System.out.println(MessageFormat.format("{0}의 배팅 금액은?", name));
-        return new PlayerRequest(name, validateNaturalNumber(isNumeric(SCANNER.nextLine())));
+    public static Map<String, Integer> inputBettingMoney(List<String> playerNames) {
+        Map<String, Integer> players = new HashMap<>();
+        for (String playerName : playerNames) {
+            System.out.println(MessageFormat.format("{0}의 배팅 금액은?", playerName));
+            int bettingMoney = validateNaturalNumber(isNumeric(SCANNER.nextLine()));
+            players.put(playerName, bettingMoney);
+        }
+        return players;
     }
 
     public static String inputCommand(String name) {

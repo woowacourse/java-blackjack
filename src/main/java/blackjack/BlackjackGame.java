@@ -4,7 +4,6 @@ import blackjack.domain.BlackjackTable;
 import blackjack.domain.Command;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
-import blackjack.dto.request.PlayerRequest;
 import blackjack.dto.response.CardCountingResult;
 import blackjack.dto.response.PlayerCardResult;
 import blackjack.dto.response.PlayerGameResult;
@@ -17,17 +16,14 @@ import java.util.stream.Collectors;
 public class BlackjackGame {
 
     public void start() {
-        BlackjackTable blackjackTable = new BlackjackTable(toPlayerRequest(InputView.inputNames()));
+        List<String> names = InputView.inputNames();
+        Map<String, Integer> bettingPlayers = InputView.inputBettingMoney(names);
+        BlackjackTable blackjackTable = new BlackjackTable(bettingPlayers);
+
         OutputView.printFirstTurnCards(toFirstTurnCards(blackjackTable.getParticipants()));
         hit(blackjackTable);
         OutputView.printCardCountingResult(toCardCountingResult(blackjackTable.getParticipants()));
         OutputView.printGameResult(toGameResults(blackjackTable.countGameResult()));
-    }
-
-    private List<PlayerRequest> toPlayerRequest(List<String> names) {
-        return names.stream()
-            .map(InputView::inputBettingMoney)
-            .collect(Collectors.toList());
     }
 
     private List<PlayerCardResult> toFirstTurnCards(List<Participant> participants) {
