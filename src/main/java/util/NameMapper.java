@@ -1,6 +1,5 @@
 package util;
 
-import domain.MatchResult;
 import domain.card.Denomination;
 import domain.card.PlayingCard;
 import domain.card.Suit;
@@ -10,7 +9,6 @@ import java.util.Map;
 public class NameMapper {
     private static final Map<Suit, String> SUIT_NAME_MAPPER = new EnumMap<>(Suit.class);
     private static final Map<Denomination, String> DENOMINATION_NAME_MAPPER = new EnumMap<>(Denomination.class);
-    private static final Map<MatchResult, String> MATCH_RESULT_MAPPER = new EnumMap<>(MatchResult.class);
 
     private NameMapper() {
     }
