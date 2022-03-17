@@ -76,7 +76,7 @@ class DealerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"KING,FIVE,LOSS", "KING,ACE,WIN"})
+    @CsvSource(value = {"KING,FIVE,LOSS", "KING,ACE,BLACKJACK_WIN"})
     @DisplayName("딜러는 승패를 결정한다.")
     void dealerCalculateWinningResultTest(final CardNumber cardNumber1,
                                           final CardNumber cardNumber2,

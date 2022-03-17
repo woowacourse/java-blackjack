@@ -60,7 +60,7 @@ class PlayerResultTest {
         dealer.drawCard(dealerDeck);
 
         final PlayerResult actual = PlayerResult.of(player, dealer);
-        final PlayerResult expected = PlayerResult.WIN;
+        final PlayerResult expected = PlayerResult.BLACKJACK_WIN;
 
         assertThat(actual).isEqualTo(expected);
     }
