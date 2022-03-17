@@ -87,7 +87,7 @@ public class BlackjackApplication {
     }
 
     private static void proceedPlayer(Player player, CardDeck deck) {
-        while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
+        while (player.isHittable() && inputHitRequest(player).isGoingOn()) {
             player.hit(deck.draw());
             OutputView.printParticipantCards(player, player.calculateScore());
         }
