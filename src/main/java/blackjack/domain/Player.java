@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Player extends Participant {
 
+    public static final double BLACKJACK_WINNING_PROFIT_RATE = 1.5;
+
     private final BettingAmount bettingAmount;
 
     public Player(String name, int bettingAmount) {
@@ -40,15 +42,9 @@ public class Player extends Participant {
     }
 
     public double getTotalProfit(Score myScore) {
-        if (myScore == Score.LOSE) {
-            return (double) bettingAmount.getAmount() * -1;
+        if (myScore == Score.WIN && isBlackjack()) {
+            return bettingAmount.getAmount() * BLACKJACK_WINNING_PROFIT_RATE;
         }
-        if (myScore == Score.DRAW) {
-            return 0;
-        }
-        if (cards.isBlackjack()) {
-            return bettingAmount.getAmount() * 1.5;
-        }
-        return bettingAmount.getAmount();
+        return (double) bettingAmount.getAmount() * myScore.getProfitRate();
     }
 }
