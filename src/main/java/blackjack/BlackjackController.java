@@ -12,7 +12,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 public class BlackjackController {
 
@@ -33,9 +33,11 @@ public class BlackjackController {
     }
 
     private Map<String, Cards> getCardStatus(Players players) {
-        return players.getPlayers()
-                .stream()
-                .collect(Collectors.toMap(Player::getName, Player::getShowCards));
+        Map<String, Cards> result = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            result.put(player.getName(), player.getShowCards());
+        }
+        return result;
     }
 
     private Map<String, Cards> getCardResults(Players players) {

@@ -30,9 +30,9 @@ public class OutputView {
         System.out.println(messageBuilder);
     }
 
-    public static void printCardResults(Map<String, Cards> hitResults) {
+    public static void printCardResults(Map<String, Cards> cardResults) {
         System.out.println();
-        hitResults.forEach((playerName, cards) -> System.out.printf(HIT_RESULT_MESSAGE + "\n", playerName,
+        cardResults.forEach((playerName, cards) -> System.out.printf(HIT_RESULT_MESSAGE + "\n", playerName,
                 joinCardString(cards), cards.calculateScore()));
     }
 
@@ -43,7 +43,7 @@ public class OutputView {
                 .collect(Collectors.joining(CARD_JOINING_DELIMITER));
     }
 
-    public static void printResult(Map<Player, Double> revenueResult) {
+    public static void printResult(Map<Player, Integer> revenueResult) {
         System.out.println();
         System.out.println(TOTAL_RESULT_MESSAGE);
         revenueResult.forEach((player, revenue) -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE + "\n",

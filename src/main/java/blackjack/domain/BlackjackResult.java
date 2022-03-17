@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.player.Player;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +36,11 @@ public class BlackjackResult {
         return Collections.unmodifiableMap(resultMap);
     }
 
-    public Map<Player, Double> getPrizeResult(Player dealer, BettingBox bettingBox) {
-        Map<Player, Double> prizeResult = new HashMap<>();
-        double playerRevenue = 0;
+    public Map<Player, Integer> getPrizeResult(Player dealer, BettingBox bettingBox) {
+        Map<Player, Integer> prizeResult = new LinkedHashMap<>();
+        int playerRevenue = 0;
         for (Player guest : resultMap.keySet()) {
-            double prizeMoney = bettingBox.getPrizeMoney(guest, resultMap.get(guest), guest.isBlackjack());
+            int prizeMoney = bettingBox.getPrizeMoney(guest, resultMap.get(guest), guest.isBlackjack());
             prizeResult.put(guest, prizeMoney);
             playerRevenue += prizeMoney;
         }
