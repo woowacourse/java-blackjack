@@ -17,7 +17,7 @@ public class Dealer extends AbstractPlayer implements Player {
 
     @Override
     public boolean isCanHit() {
-        return playingCards.sumPoints() < HIT_MAX_POINT;
+        return playingCards.calculatePoints() < HIT_MAX_POINT;
     }
 
     @Override
@@ -36,6 +36,6 @@ public class Dealer extends AbstractPlayer implements Player {
         if (player.isBust() && !this.isBust()) {
             return true;
         }
-        return (player.isLose(playingCards.sumPoints())) && (!this.isBust());
+        return (player.isLose(playingCards.calculatePoints())) && (!this.isBust());
     }
 }

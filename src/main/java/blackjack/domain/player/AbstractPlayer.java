@@ -25,7 +25,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public final boolean isLose(int point) {
-        return point > playingCards.sumPoints();
+        return point > playingCards.calculatePoints();
     }
 
     @Override
@@ -35,7 +35,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public final boolean isDraw(Player player) {
-        return playingCards.sumPoints() == player.getPlayingCards().sumPoints();
+        return playingCards.calculatePoints() == player.getPlayingCards().calculatePoints();
     }
 
     @Override

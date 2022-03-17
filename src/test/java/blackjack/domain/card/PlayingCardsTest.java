@@ -37,7 +37,7 @@ class PlayingCardsTest {
     void checkSumDeckCardsPoint() {
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.TWO));
-        int sumPoint = playingCards.sumPoints();
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(10);
     }
@@ -48,7 +48,7 @@ class PlayingCardsTest {
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.TWO));
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        int sumPoint = playingCards.sumPoints();
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(20);
     }
@@ -60,7 +60,7 @@ class PlayingCardsTest {
         playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.HEART, Denomination.ACE));
-        int sumPoint = playingCards.sumPoints();
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(14);
     }
@@ -72,7 +72,7 @@ class PlayingCardsTest {
         playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.TWO));
-        int sumPoint = playingCards.sumPoints();
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(15);
     }
@@ -83,7 +83,7 @@ class PlayingCardsTest {
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.NINE));
-        int sumPoint = playingCards.sumPoints();
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(21);
     }
@@ -94,7 +94,7 @@ class PlayingCardsTest {
         playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
         playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.JACK));
-        int sumPoint = playingCards.sumPoints();
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(12);
     }

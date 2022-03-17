@@ -83,7 +83,7 @@ public class OutputView {
             StringBuilder sb = new StringBuilder();
             accumulateCardResults(gameResponse, sb);
             sb.append(FINAL_POINT_GUIDE_MESSAGE + RESULT_START_DELIMITER)
-                    .append(gameResponse.getDeck().sumPoints());
+                    .append(gameResponse.getDeck().calculatePoints());
             System.out.println(sb);
         }
     }

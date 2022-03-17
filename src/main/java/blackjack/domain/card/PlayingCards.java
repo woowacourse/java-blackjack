@@ -25,8 +25,8 @@ public class PlayingCards {
         cards.add(playingCard);
     }
 
-    public int sumPoints() {
-        int points = sumCardPointWithAceIsOne();
+    public int calculatePoints() {
+        int points = sumCardPoint();
         boolean aceExist = cards.stream()
                 .anyMatch(PlayingCard::isAce);
         if (!aceExist) {
@@ -42,22 +42,22 @@ public class PlayingCards {
         return points;
     }
 
-    private int sumCardPointWithAceIsOne() {
+    private int sumCardPoint() {
         return cards.stream()
                 .mapToInt(PlayingCard::getPoint)
                 .sum();
     }
 
     public boolean isBust() {
-        return sumPoints() > BLACKJACK_POINT;
+        return calculatePoints() > BLACKJACK_POINT;
     }
 
     public boolean isHit() {
-        return sumPoints() < BLACKJACK_POINT;
+        return calculatePoints() < BLACKJACK_POINT;
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_SIZE && sumPoints() == BLACKJACK_POINT;
+        return cards.size() == BLACKJACK_SIZE && calculatePoints() == BLACKJACK_POINT;
     }
 
     public Set<PlayingCard> getCards() {
