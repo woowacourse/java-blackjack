@@ -33,7 +33,7 @@ public class Cards {
             .orElse(calculateSum());
     }
 
-    public int calculateSum() {
+    private int calculateSum() {
         return cards.stream()
             .mapToInt(Card::getScore)
             .sum();

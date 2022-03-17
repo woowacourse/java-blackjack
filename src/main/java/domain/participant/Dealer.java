@@ -19,6 +19,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canDrawCard() {
-        return cards.calculateSum() <= MAX_CARD_SUM;
+        return cards.calculateScore() <= MAX_CARD_SUM;
     }
 }

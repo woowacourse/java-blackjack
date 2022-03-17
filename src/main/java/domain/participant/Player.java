@@ -11,7 +11,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canDrawCard() {
-        return cards.calculateSum() < MAX_SCORE;
+        return cards.calculateScore() < MAX_SCORE;
     }
 
     public int getMoney() {
