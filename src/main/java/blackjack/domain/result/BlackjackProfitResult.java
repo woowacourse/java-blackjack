@@ -10,19 +10,19 @@ import java.util.Map;
 public class BlackjackProfitResult {
 
     private final Dealer dealer;
-    private final Map<Player, BettingMoney> players;
+    private final Map<Player, BettingMoney> playersInfo;
 
-    public BlackjackProfitResult(Dealer dealer, Map<Player, BettingMoney> players) {
+    public BlackjackProfitResult(Dealer dealer, Map<Player, BettingMoney> playersInfo) {
         this.dealer = dealer;
-        this.players = players;
+        this.playersInfo = playersInfo;
     }
 
     public Map<Participant, Double> calculateParticipantsProfit() {
         final Map<Participant, Double> profitResult = new LinkedHashMap<>();
         profitResult.put(dealer, calculateDealerProfit());
-        for (Player player : players.keySet()) {
+        for (Player player : playersInfo.keySet()) {
             final BlackjackMatch match = BlackjackMatch.calculateMatch(player, dealer);
-            final double playerProfit = players.get(player).calculateProfit(match.getProfitRatio());
+            final double playerProfit = playersInfo.get(player).calculateProfit(match.getProfitRatio());
             profitResult.put(player, playerProfit);
         }
         return profitResult;
@@ -38,7 +38,7 @@ public class BlackjackProfitResult {
 
     private Map<Player, Double> calculatePlayersProfit() {
         final Map<Player, Double> playersProfitResult = new LinkedHashMap<>();
-        for (Map.Entry<Player, BettingMoney> playerInfo : players.entrySet()) {
+        for (Map.Entry<Player, BettingMoney> playerInfo : playersInfo.entrySet()) {
             final BlackjackMatch match = BlackjackMatch.calculateMatch(playerInfo.getKey(), dealer);
             final double profit = playerInfo.getValue().calculateProfit(match.getProfitRatio());
             playersProfitResult.put(playerInfo.getKey(), profit);
