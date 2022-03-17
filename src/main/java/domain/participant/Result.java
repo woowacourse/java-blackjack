@@ -9,11 +9,11 @@ public enum Result {
     PUSH(0, (playerScore, dealerScore) -> playerScore == dealerScore),
     BLACKJACK(1.5);
 
-    private final double multipleValue;
+    private final double dividendRate;
     private BiPredicate<Integer, Integer> condition;
 
     Result(double multipleValue) {
-        this.multipleValue = multipleValue;
+        this.dividendRate = multipleValue;
     }
 
     Result(double multipleValue, BiPredicate<Integer, Integer> condition) {
@@ -26,5 +26,9 @@ public enum Result {
             .filter(result -> result.condition.test(playerScore, dealerScore))
             .findFirst()
             .orElseThrow();
+    }
+
+    public double getDividendRate() {
+        return dividendRate;
     }
 }

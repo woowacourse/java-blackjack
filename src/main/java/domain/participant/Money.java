@@ -17,4 +17,8 @@ public class Money {
             throw new IllegalArgumentException(ExceptionMessages.NOT_POSITIVE_MONEY_ERROR);
         }
     }
+
+    public int multiplyDividendRate(double dividendRate){
+        return (int)(money * dividendRate);
+    }
 }

@@ -107,4 +107,22 @@ class PlayerTest {
     void isWinTest5() {
         assertThat(player.judgeResult(dealer)).isEqualTo(Result.PUSH);
     }
+
+    @Test
+    @DisplayName("Player가 BlackJack인 경우, 자신의 베팅 금액의 1.5배를 반환한다")
+    void caclulateIncomeWhenBlackJack() {
+        player.betMoney(3000);
+        int actual = player.calculateIncome(Result.BLACKJACK);
+        int expected = 4500;
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("Player가 Lose인 경우, 자신의 베팅 금액의 -1배를 반환한다.")
+    void calculateIncomeWhenLose() {
+        player.betMoney(3000);
+        int actual = player.calculateIncome(Result.LOSE);
+        int expected = -3000;
+        assertThat(actual).isEqualTo(expected);
+    }
 }
