@@ -10,7 +10,7 @@ public enum HitThreshold {
         this.thresholdValue = thresholdValue;
     }
 
-    public boolean canAdd(int other) {
+    public boolean canHit(int other) {
         return thresholdValue >= other;
     }
 }
