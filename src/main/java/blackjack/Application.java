@@ -9,11 +9,11 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.GamerDto;
+import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Application {
 
@@ -23,12 +23,12 @@ public class Application {
         Deck deck = new Deck(Card.VALUES);
         Dealer dealer = new Dealer(getInitCards(deck), BATTING_MONEY_INIT_VALUE);
         Players players = createPlayers(deck);
-        OutputView.printStartInfo(GamerDto.from(dealer), toPlayersDto(players));
+        OutputView.printStartInfo(GamerDto.from(dealer), PlayersDto.from(players));
 
-        List<GamerDto> playerDtos = playPlayers(deck, players);
+        PlayersDto playersDto = playPlayers(deck, players);
         GamerDto dealerDto = playDealer(deck, dealer);
 
-        OutputView.printResultInfo(dealerDto, playerDtos);
+        OutputView.printResultInfo(dealerDto, playersDto);
         printResult(dealer, players);
     }
 
@@ -47,15 +47,9 @@ public class Application {
         return InputView.insertBattingMoney(playerName);
     }
 
-    private static List<GamerDto> toPlayersDto(Players players) {
-        return players.getValue().stream()
-                .map(GamerDto::from)
-                .collect(Collectors.toList());
-    }
-
-    private static List<GamerDto> playPlayers(Deck deck, Players players) {
+    private static PlayersDto playPlayers(Deck deck, Players players) {
         players.getValue().forEach(player -> playing(deck, player));
-        return toPlayersDto(players);
+        return PlayersDto.from(players);
     }
 
     private static void playing(Deck deck, Player player) {

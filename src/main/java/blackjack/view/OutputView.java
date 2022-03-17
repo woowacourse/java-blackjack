@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.joining;
 import blackjack.dto.CardDto;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.GamerDto;
+import blackjack.dto.PlayersDto;
 import java.util.List;
 
 public class OutputView {
@@ -18,14 +19,14 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printStartInfo(GamerDto dealer, List<GamerDto> players) {
-        String names = players.stream()
+    public static void printStartInfo(GamerDto dealer, PlayersDto players) {
+        String names = players.getValue().stream()
                 .map(GamerDto::getName)
                 .collect(joining(DELIMITER_JOINING));
         System.out.println("\n" + dealer.getName() + "와 " + names + "에게 2장씩 나누었습니다.");
 
         System.out.println(dealer.getName() + ": " + dealer.getCards().getValue().get(0).getValue());
-        for (GamerDto player : players) {
+        for (GamerDto player : players.getValue()) {
             printPlayerCardInfo(player);
         }
         System.out.println();
@@ -43,10 +44,10 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResultInfo(GamerDto dealer, List<GamerDto> players) {
+    public static void printResultInfo(GamerDto dealer, PlayersDto players) {
         System.out.println();
         createDealerResultInfo(dealer);
-        for (GamerDto player : players) {
+        for (GamerDto player : players.getValue()) {
             createPlayerResultInfo(player);
         }
     }
