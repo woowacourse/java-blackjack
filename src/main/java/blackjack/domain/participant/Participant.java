@@ -45,7 +45,7 @@ public abstract class Participant {
         return cards.isSameSize(BLACKJACK_COUNT) && cards.isSameScore(BLACKJACK_SCORE);
     }
 
-    abstract public boolean isHittable();
+    public abstract boolean isHittable();
 
     public List<Card> getCards() {
         return cards.getValues();
