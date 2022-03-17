@@ -22,11 +22,11 @@ public class Player extends Gamer{
 
     public Match compareCardsSumTo(int anotherCardsSum) {
         if (isBust()) {
-            return Match.WIN;
+            return Match.LOSE;
         }
 
         if (isBust(anotherCardsSum)) {
-            return Match.LOSE;
+            return Match.WIN;
         }
 
         return Match.of(Integer.compare(getScore(), anotherCardsSum));
