@@ -23,4 +23,11 @@ class ScoreTest {
         final Score score = new Score(inputScore);
         assertThat(score.isBlackjackScore()).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"22,true", "20,false", "21,false"})
+    void 버스트_점수인지_확인(final int inputScore, final boolean expected) {
+        final Score score = new Score(inputScore);
+        assertThat(score.isBustScore()).isEqualTo(expected);
+    }
 }

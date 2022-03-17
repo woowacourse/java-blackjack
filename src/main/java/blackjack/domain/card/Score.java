@@ -21,4 +21,8 @@ public class Score {
     public boolean isBlackjackScore() {
         return score == BLACKJACK_SCORE;
     }
+
+    public boolean isBustScore() {
+        return score > BLACKJACK_SCORE;
+    }
 }
