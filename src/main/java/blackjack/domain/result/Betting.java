@@ -1,5 +1,8 @@
 package blackjack.domain.result;
 
+import blackjack.domain.participant.human.Dealer;
+import blackjack.domain.participant.human.Player;
+
 public final class Betting implements Comparable<Betting> {
     private static final String BETTING_MIN_ERROR_MESSAGE = "1 이상의 정수를 입력해주세요.";
 

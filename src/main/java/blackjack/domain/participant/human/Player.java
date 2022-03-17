@@ -3,9 +3,10 @@ package blackjack.domain.participant.human;
 import blackjack.domain.cards.Cards;
 import blackjack.domain.participant.human.name.Name;
 import blackjack.domain.result.Betting;
+import blackjack.domain.result.Result;
 
 public final class Player extends Human {
-    private Betting betting = new Betting(1);
+    private Betting betting;
 
     private Player(final Name name) {
         super(new Cards(), name);
@@ -23,7 +24,7 @@ public final class Player extends Human {
         return cards.size() == size;
     }
 
-    public boolean isWinner(final Dealer dealer) {
+    public boolean hasMorePoint(final Dealer dealer) {
         return dealer.getPoint().compareTo(getPoint()) < 0;
     }
 
@@ -38,5 +39,15 @@ public final class Player extends Human {
 
     public Betting getBetting() {
         return betting;
+    }
+
+    public Result calculateResult(Dealer dealer) {
+        if (dealer.isBust()) {
+            return Result.fromBoolean(!isBust());
+        }
+        if (!isBust() && isDraw(dealer)) {
+            return Result.DRAW;
+        }
+        return Result.fromBoolean(!isBust() && hasMorePoint(dealer));
     }
 }

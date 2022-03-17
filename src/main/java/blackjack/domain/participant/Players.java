@@ -1,8 +1,10 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.cards.CardDeck;
+import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
 import blackjack.domain.participant.human.name.Name;
+import blackjack.domain.result.Result;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +48,11 @@ public final class Players {
         value.forEach(player -> player.addCard(cardDeck.pop()));
     }
 
+    public void calculateBettingMoney(Dealer dealer) {
+        for (Player player : value) {
+            Result result = player.calculateResult(dealer);
+        }
+    }
     public List<String> getNames() {
         return value.stream()
                 .map(Player::getName)

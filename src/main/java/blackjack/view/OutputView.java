@@ -5,7 +5,6 @@ import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Human;
 import blackjack.domain.participant.human.Player;
-import blackjack.domain.result.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,8 +18,7 @@ public final class OutputView {
     private static final String CARD_STATE_MESSAGE = "%s카드: %s";
     private static final String HUMAN_POINT_STATE = " - 결과 : %s";
     private static final String DEALER_CARD_ADDED_MESSAGE = System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %s%d패" + System.lineSeparator();
-    private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
+    private static final String PLAYER_RESULT_MESSAGE = "%s: %d" + System.lineSeparator();
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 수익";
 
     public static void printInitCards(final Players players, final Dealer dealer) {
@@ -65,26 +63,19 @@ public final class OutputView {
 
     public static void printHumanCardPointState(final Human human) {
         System.out.printf(CARD_STATE_MESSAGE + HUMAN_POINT_STATE + System.lineSeparator(),
-                human.getName(), getCardsState(human.getRawCards()), human.getPoint());
+                human.getName(), getCardsState(human.getRawCards()), human.getPoint().hashCode());
     }
 
     public static void printDealerHit() {
         System.out.println(DEALER_CARD_ADDED_MESSAGE);
     }
 
-    public static void printDealerResult(final Map<Result, Integer> result) {
+    public static void printResult(final Dealer dealer, final Integer money) {
         System.out.println(RESULT_FRONT_MESSAGE);
-        String drawResult = result.get(Result.DRAW) + Result.DRAW.get() + " ";
-        if (result.get(Result.DRAW) == 0) {
-            drawResult = "";
-        }
-        System.out.printf(DEALER_RESULT_MESSAGE, result.get(Result.WIN), drawResult,
-                result.get(Result.LOSE));
+        printHumanResult(dealer, money);
     }
 
-    public static void printPlayerResult(final Map<String, Result> result) {
-        for (String name : result.keySet()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, name, result.get(name).get());
-        }
+    public static void printHumanResult(final Human human, final int money) {
+        System.out.printf(PLAYER_RESULT_MESSAGE, human.getName(), money);
     }
 }

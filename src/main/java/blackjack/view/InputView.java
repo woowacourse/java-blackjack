@@ -11,7 +11,7 @@ public final class InputView {
     private static final String NAME_SIZE_MIN_ERROR_MESSAGE = "이름은 한자 이상 입력되어야 합니다.";
     private static final String NULL_ANSWER_YN_ERROR_MESSAGE = "y,n 이외의 입력이 들어왔습니다.";
     private static final String NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private static final String BETTING_INPUT_MESSAGE = "%s의 배팅 금액은?" + System.lineSeparator();
+    private static final String BETTING_INPUT_MESSAGE = System.lineSeparator() + "%s의 배팅 금액은?" + System.lineSeparator();
     private static final String MORE_CARD_INPUT_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator();
 
     private static final String YES_INPUT = "y";

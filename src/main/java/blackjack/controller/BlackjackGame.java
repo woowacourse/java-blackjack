@@ -5,11 +5,14 @@ import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
 import blackjack.domain.participant.human.name.Name;
-import blackjack.domain.result.ResultStatistic;
+import blackjack.domain.result.PrideCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class BlackjackGame {
     private static final int INIT_CARD_NUMBER = 2;
@@ -62,8 +65,17 @@ public final class BlackjackGame {
 
     private void endGame(final Players players, final Dealer dealer) {
         OutputView.printHandAndPoint(players, dealer);
-        ResultStatistic resultStatistic = new ResultStatistic(players, dealer);
-        OutputView.printDealerResult(resultStatistic.getDealerResults());
-        OutputView.printPlayerResult(resultStatistic.getPlayersResult());
+
+        int dealerMoney = 0;
+        Map<Player, Integer> prides = new HashMap<>();
+        for (Player player : players.get()) {
+            prides.put(player, new PrideCalculator(player, dealer).get());
+            dealerMoney -= prides.get(player);
+        }
+
+        OutputView.printResult(dealer, dealerMoney);
+        for (Player player : players.get()) {
+            OutputView.printHumanResult(player, prides.get(player));
+        }
     }
 }
