@@ -28,16 +28,4 @@ public enum PlayRecord {
     private static boolean isPlayerLoss(int dealerScore, int score) {
         return isBust(score) || (!isBust(dealerScore) && score < dealerScore);
     }
-
-    public PlayRecord getOpposite() {
-        if (this == LOSS) {
-            return WIN;
-        }
-
-        if (this == WIN) {
-            return LOSS;
-        }
-
-        return PUSH;
-    }
 }
