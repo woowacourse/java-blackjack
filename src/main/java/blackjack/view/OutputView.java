@@ -63,11 +63,11 @@ public class OutputView {
     public static void printCardsAndResult(Dealer dealer, List<Player> players) {
         System.out.println();
         System.out.println(makeStatusFormat(dealer.getName(), dealer.getMyCards()) +
-                printScoreResult(dealer.score()));
+                printScoreResult(dealer.score().getSum()));
 
         for (Player player : players) {
             System.out.println(makeStatusFormat(player.getName(), player.getMyCards())
-                    + printScoreResult(player.score()));
+                    + printScoreResult(player.score().getSum()));
         }
     }
 

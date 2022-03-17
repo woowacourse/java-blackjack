@@ -39,7 +39,7 @@ public enum Record {
     }
 
     private static int compare(Participant participant1, Participant participant2) {
-        return Integer.compare(participant1.score(), participant2.score());
+        return Integer.compare(participant1.score().getSum(), participant2.score().getSum());
     }
 
     private static boolean isBust(Player player, Dealer dealer) {

@@ -28,17 +28,16 @@ public abstract class Participant {
         myCards.add(card);
     }
 
-    public int score() {
-        return Score.from(myCards)
-                .getSum();
+    public Score score() {
+        return Score.from(myCards);
     }
 
     public boolean isBust() {
-        return score() > Score.CONDITION_BURST;
+        return score().isBust();
     }
 
     public boolean isBlackjack() {
-        return score() == Score.CONDITION_BURST;
+        return score().isBlackjack();
     }
 
     public List<Card> getMyCards() {

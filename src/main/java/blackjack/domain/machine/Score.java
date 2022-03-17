@@ -5,6 +5,7 @@ import java.util.List;
 public class Score {
     private static final int INIT_A_NUMBER = 1;
     private static final int NEW_A_NUMBER = 11;
+    private static final int CONDITION_HIT = 16;
     public static final int CONDITION_BURST = 21;
 
     private final int sum;
@@ -43,6 +44,18 @@ public class Score {
         }
 
         return sum;
+    }
+
+    public boolean isHit() {
+        return sum <= CONDITION_HIT;
+    }
+
+    public boolean isBust() {
+        return sum > CONDITION_BURST;
+    }
+
+    public boolean isBlackjack() {
+        return sum == CONDITION_BURST;
     }
 
     public int getSum() {
