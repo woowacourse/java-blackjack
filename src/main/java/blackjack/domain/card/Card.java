@@ -41,6 +41,7 @@ public class Card {
         private static final Set<Card> cache;
 
         static {
+            // TODO: 2 Depth 인가?...
             cache = Stream.of(CardSymbol.values())
                     .flatMap(symbol -> Stream.of(CardRank.values())
                             .map(rank -> new Card(rank, symbol)))
