@@ -14,6 +14,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.Profit;
 import blackjack.domain.participant.Referee;
 import blackjack.dto.ParticipantProfit;
 import blackjack.view.InputView;
@@ -127,16 +128,16 @@ public class BlackjackApplication {
     }
 
     private static void showProfitResult(Dealer dealer, Players players) {
-        final Map<Player, Integer> playerResults = Referee.calculatePlayersProfit(players.getPlayers(), dealer);
+        final Map<Player, Profit> playerResults = Referee.calculatePlayersProfit(players.getPlayers(), dealer);
         final List<ParticipantProfit> playersProfit = createParticipantsProfit(playerResults);
-        final int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerResults.values()));
+        final Profit dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerResults.values()));
 
         OutputView.printProfitResultMessage();
         OutputView.printParticipantProfitResult(ParticipantProfit.of(dealer, dealerProfit));
         playersProfit.forEach(OutputView::printParticipantProfitResult);
     }
 
-    private static List<ParticipantProfit> createParticipantsProfit(Map<Player, Integer> playerResults) {
+    private static List<ParticipantProfit> createParticipantsProfit(Map<Player, Profit> playerResults) {
         return playerResults.keySet()
             .stream()
             .map(player -> ParticipantProfit.of(player, playerResults.get(player)))

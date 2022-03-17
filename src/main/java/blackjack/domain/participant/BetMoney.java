@@ -23,8 +23,8 @@ public class BetMoney {
         }
     }
 
-    public int calculateProfit(double multiple) {
-        return (int)(amount * multiple);
+    public Profit calculateProfit(double multiple) {
+        return new Profit((int)(amount * multiple));
     }
 
     public int getAmount() {

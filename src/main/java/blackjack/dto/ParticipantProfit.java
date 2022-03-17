@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Profit;
 
 public class ParticipantProfit {
 
@@ -12,8 +13,8 @@ public class ParticipantProfit {
         this.profit = profit;
     }
 
-    public static ParticipantProfit of(Participant participant, int profit) {
-        return new ParticipantProfit(participant.getName(), profit);
+    public static ParticipantProfit of(Participant participant, Profit profit) {
+        return new ParticipantProfit(participant.getName(), profit.getAmount());
     }
 
     public String getParticipantName() {

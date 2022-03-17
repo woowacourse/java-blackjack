@@ -27,13 +27,14 @@ public class Referee {
     private Referee() {
     }
 
-    public static int calculateDealerProfit(List<Integer> playersProfit) {
+    public static Profit calculateDealerProfit(List<Profit> playersProfit) {
         int playersProfitSum = playersProfit.stream()
+            .mapToInt(Profit::getAmount)
             .reduce(0, Integer::sum);
-        return playersProfitSum * -1;
+        return new Profit(playersProfitSum * -1);
     }
 
-    public static Map<Player, Integer> calculatePlayersProfit(List<Player> players, Dealer dealer) {
+    public static Map<Player, Profit> calculatePlayersProfit(List<Player> players, Dealer dealer) {
         return players.stream()
             .collect(Collectors.toMap(player -> player,
                 player -> calculateParticipantProfit(player, dealer),
@@ -41,7 +42,7 @@ public class Referee {
                 LinkedHashMap::new));
     }
 
-    private static int calculateParticipantProfit(Player player, Dealer dealer) {
+    private static Profit calculateParticipantProfit(Player player, Dealer dealer) {
         Judgement judgement = judgePlayer(player, dealer);
         BetMoney betMoney = player.getBetMoney();
         return betMoney.calculateProfit(judgement.getProfitMultiple());

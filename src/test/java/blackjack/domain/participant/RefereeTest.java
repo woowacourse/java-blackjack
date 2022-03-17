@@ -36,13 +36,13 @@ public class RefereeTest {
         List<Player> players = List.of(player);
 
         // when
-        Map<Player, Integer> playerProfits = Referee.calculatePlayersProfit(players, dealer);
-        int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
+        Map<Player, Profit> playerProfits = Referee.calculatePlayersProfit(players, dealer);
+        Profit dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
 
         // then
         assertAll(
-            () -> assertThat(playerProfits.get(player)).isEqualTo((int)(amount * 1.5)),
-            () -> assertThat(dealerProfit).isEqualTo((int)(amount * -1.5))
+            () -> assertThat(playerProfits.get(player).getAmount()).isEqualTo((int)(amount * 1.5)),
+            () -> assertThat(dealerProfit.getAmount()).isEqualTo((int)(amount * -1.5))
         );
     }
 
@@ -64,13 +64,13 @@ public class RefereeTest {
         List<Player> players = List.of(player);
 
         // when
-        Map<Player, Integer> playerProfits = Referee.calculatePlayersProfit(players, dealer);
-        int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
+        Map<Player, Profit> playerProfits = Referee.calculatePlayersProfit(players, dealer);
+        Profit dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
 
         // then
         assertAll(
-            () -> assertThat(playerProfits.get(player)).isEqualTo(0),
-            () -> assertThat(dealerProfit).isEqualTo(0)
+            () -> assertThat(playerProfits.get(player).getAmount()).isEqualTo(0),
+            () -> assertThat(dealerProfit.getAmount()).isEqualTo(0)
         );
     }
 
@@ -92,13 +92,13 @@ public class RefereeTest {
         List<Player> players = List.of(player);
 
         // when
-        Map<Player, Integer> playerProfits = Referee.calculatePlayersProfit(players, dealer);
-        int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
+        Map<Player, Profit> playerProfits = Referee.calculatePlayersProfit(players, dealer);
+        Profit dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
 
         // then
         assertAll(
-            () -> assertThat(playerProfits.get(player)).isEqualTo(amount),
-            () -> assertThat(dealerProfit).isEqualTo(amount * -1)
+            () -> assertThat(playerProfits.get(player).getAmount()).isEqualTo(amount),
+            () -> assertThat(dealerProfit.getAmount()).isEqualTo(amount * -1)
         );
     }
 
@@ -120,13 +120,13 @@ public class RefereeTest {
         List<Player> players = List.of(player);
 
         // when
-        Map<Player, Integer> playerProfits = Referee.calculatePlayersProfit(players, dealer);
-        int dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
+        Map<Player, Profit> playerProfits = Referee.calculatePlayersProfit(players, dealer);
+        Profit dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerProfits.values()));
 
         // then
         assertAll(
-            () -> assertThat(playerProfits.get(player)).isEqualTo((amount * -1)),
-            () -> assertThat(dealerProfit).isEqualTo((amount))
+            () -> assertThat(playerProfits.get(player).getAmount()).isEqualTo((amount * -1)),
+            () -> assertThat(dealerProfit.getAmount()).isEqualTo((amount))
         );
     }
 }
