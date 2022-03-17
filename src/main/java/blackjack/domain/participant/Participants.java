@@ -23,8 +23,8 @@ public class Participants {
         players.betAmount(playerName, amount);
     }
 
-    public void playerDrawCard(final String playerName, final Deck deck) {
-        players.drawCard(playerName, deck);
+    public void playerDrawCard(final String playerName, final Deck deck, final boolean needToDrawCard) {
+        players.drawCard(playerName, deck, needToDrawCard);
     }
 
     public boolean isPlayerPossibleToDrawCard(final String playerName) {
@@ -40,7 +40,7 @@ public class Participants {
     }
 
     public MatchResult calculateMatchResult() {
-        return players.judgeWinners(dealer);
+        return players.judgeMatch(dealer);
     }
 
     public Dealer getDealer() {

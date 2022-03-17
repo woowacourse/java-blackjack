@@ -27,6 +27,30 @@ public class PlayersTestProvider {
         );
     }
 
+    public static Stream<Arguments> provideForPlayerNameNotExistExceptionTest() {
+        return Stream.of(
+                Arguments.of(List.of("poby", "if", "sun"), "hello"),
+                Arguments.of(List.of("hihi", "hibi"), "hi")
+        );
+    }
+
+    public static Stream<Arguments> provideForGetPlayerCardsTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.KING, CardPattern.DIAMOND),
+                                new Card(CardNumber.TEN, CardPattern.DIAMOND)
+                        ), "sun"
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND),
+                                new Card(CardNumber.NINE, CardPattern.DIAMOND)
+                        ), "if"
+                )
+        );
+    }
+
     public static Stream<Arguments> provideForJudgeWinnersTest() {
         return Stream.of(
                 Arguments.of(

@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.BlackjackRule.BLACKJACK_SCORE;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,10 +10,17 @@ import java.util.stream.Collectors;
 
 public class CardHands {
 
-    private static final int BLACKJACK = 21;
     private static final int DEFAULT_SCORE = 0;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
+
+    public CardHands() {
+        this.cards = new ArrayList<>();
+    }
+
+    public CardHands(final List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
 
     public void addCard(final Card card) {
         cards.add(card);
@@ -24,7 +33,7 @@ public class CardHands {
         }
 
         final int lowestTotalSum = sortedTotalSums.get(0);
-        if (lowestTotalSum >= BLACKJACK) {
+        if (BLACKJACK_SCORE.isNotOverThan(lowestTotalSum)) {
             return lowestTotalSum;
         }
 
@@ -60,17 +69,9 @@ public class CardHands {
         final List<Integer> revereSortedTotalSums = new ArrayList<>(sortedTotalSums);
         Collections.reverse(revereSortedTotalSums);
         return revereSortedTotalSums.stream()
-                .filter(number -> number <= BLACKJACK)
+                .filter(score -> BLACKJACK_SCORE.isNotUnderThan(score))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("21 이하의 점수가 존재하지 않습니다."));
-    }
-
-    public boolean isBlackjack() {
-        return calculateScore() == BLACKJACK;
-    }
-
-    public boolean isBust() {
-        return calculateScore() > BLACKJACK;
     }
 
     public List<Card> getCards() {

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,11 +14,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.ManualDeckGenerator;
-import blackjack.domain.result.MatchStatus;
+import blackjack.domain.card.generator.RandomDeckGenerator;
 
 public class PlayersTest {
 
-    private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
+    private final ManualDeckGenerator manualDeckGenerator = new ManualDeckGenerator();
+
+    private Deck generateDeck(final List<Card> initializedCards) {
+        manualDeckGenerator.initCards(initializedCards);
+        return Deck.generate(manualDeckGenerator);
+    }
 
     @DisplayName("플레이어 이름은 서로 중복될 수 없다.")
     @ParameterizedTest(name = "{index} {0}")
@@ -40,23 +45,27 @@ public class PlayersTest {
                 .hasMessageContaining("플레이어는 8명 이하여야 합니다.");
     }
 
-    @DisplayName("각 플레이어는 딜러와의 승패를 계산할 수 있어야 한다.")
-    @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForJudgeWinnersTest")
+    @DisplayName("플레이어 이름으로 플레이어를 찾을 수 있어야 한다.")
     @ParameterizedTest
-    void judgeWinnersTest(final List<String> names,
-                          final List<Card> initializedCards,
-                          final Map<String, MatchStatus> expectedResultOfPlayers) {
-        final Deck deck = generateDeck(initializedCards);
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        final Players players = Players.readyToPlay(names, deck);
+    @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForPlayerNameNotExistExceptionTest")
+    void playerNameNotExistExceptionTest(final List<String> playerNames, final String notExistedPlayerName) {
+        final Deck deck = Deck.generate(new RandomDeckGenerator());
+        final Players players = Players.readyToPlay(playerNames, deck);
 
-        final Map<String, MatchStatus> actualResultOfPlayers = players.judgeWinners(dealer).getResultOfPlayers();
-        assertThat(actualResultOfPlayers).isEqualTo(expectedResultOfPlayers);
+        assertThatThrownBy(() -> players.getPlayerCards(notExistedPlayerName))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessageContaining("플레이어를 찾을 수 없습니다.");
     }
 
-    private Deck generateDeck(final List<Card> initializedCards) {
-        manualCardStrategy.initCards(initializedCards);
-        return Deck.generate(manualCardStrategy);
+    @DisplayName("플레이어 이름으로 해당 플레이어가 보유한 카드 패를 확인할 수 있어야 한다.")
+    @ParameterizedTest
+    @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForGetPlayerCardsTest")
+    void getPlayerCardsTest(final List<Card> expectedCards, final String playerName) {
+        final Deck deck = generateDeck(expectedCards);
+        final Players players = Players.readyToPlay(List.of(playerName), deck);
+
+        final List<Card> actualCards = players.getPlayerCards(playerName);
+        assertThat(actualCards).isEqualTo(expectedCards);
     }
 
 }

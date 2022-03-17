@@ -11,7 +11,8 @@ public enum PlayerCount {
         this.count = count;
     }
 
-    public static boolean isCountInRange(final int count) {
-        return (ALLOWED_MINIMUM_COUNT.count <= count) && (count <= ALLOWED_MAXIMUM_COUNT.count);
+    public static boolean isCountOutOfRange(final int count) {
+        return (count < ALLOWED_MINIMUM_COUNT.count) || (ALLOWED_MAXIMUM_COUNT.count < count);
     }
+
 }

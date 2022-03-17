@@ -1,13 +1,22 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.state.PlayState;
+import blackjack.domain.participant.state.finished.StandState;
+import blackjack.domain.participant.validation.PlayerNameValidator;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
-    private BettingAmount bettingAmount;
+    private final String name;
 
     private Player(final String name, final Deck deck) {
-        super(name, deck);
+        super(deck);
+        validatePlayerName(name);
+        this.name = name;
+    }
+
+    private void validatePlayerName(final String name) {
+        PlayerNameValidator.validateNameNotBlank(name);
     }
 
     public static Player readyToPlay(final String name, final Deck deck) {
@@ -15,28 +24,30 @@ public class Player extends Participant {
     }
 
     public void betAmount(final int amount) {
-        this.bettingAmount = new BettingAmount(amount);
+        this.state = state.betAmount(amount);
     }
 
-    @Override
-    public boolean isPossibleToDrawCard() {
-        return isNotBlackjack() && isNotBust();
+    public void drawCard(final Deck deck, final boolean needToDrawCard) {
+        this.state = considerState(deck, needToDrawCard);
     }
 
-    private boolean isNotBlackjack() {
-        return !isBlackjack();
+    private PlayState considerState(final Deck deck, final boolean needToDrawCard) {
+        if (needToDrawCard) {
+            return state.drawCard(deck);
+        }
+        return new StandState(state);
     }
 
-    private boolean isNotBust() {
-        return !isBust();
+    public boolean equalsName(final String name) {
+        return name.equals(this.name);
     }
 
-    public boolean isbetted() {
-        return bettingAmount != null;
+    public String getName() {
+        return name;
     }
 
     public int getBettingAmount() {
-        return bettingAmount.getAmount();
+        return state.getBettingAmount();
     }
 
 }

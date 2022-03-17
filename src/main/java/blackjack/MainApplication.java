@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.card.generator.RandomDeckGenerator;
 import blackjack.view.BlackjackView;

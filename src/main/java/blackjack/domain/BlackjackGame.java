@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,20 +29,20 @@ public class BlackjackGame {
         participants.playerBet(playerName, amount);
     }
 
-    public void playerDrawCard(final String playerName) {
-        participants.playerDrawCard(playerName, deck);
+    public void playerDrawCard(final String playerName, final boolean needToDrawCard) {
+        participants.playerDrawCard(playerName, deck, needToDrawCard);
     }
 
     public boolean isPlayerPossibleToDrawCard(final String playerName) {
         return participants.isPlayerPossibleToDrawCard(playerName);
     }
 
-    public boolean isDealerPossibleToDrawCard() {
-        return participants.isDealerPossibleToDrawCard();
-    }
-
     public void dealerDrawCard() {
         participants.dealerDrawCard(deck);
+    }
+
+    public boolean isDealerPossibleToDrawCard() {
+        return participants.isDealerPossibleToDrawCard();
     }
 
     public MatchResult calculateMatchResult() {
@@ -53,8 +53,8 @@ public class BlackjackGame {
         return participants.getDealer();
     }
 
-    public String getDealerName() {
-        return getDealer().getName();
+    public Card getDealerFirstCard() {
+        return getDealer().getFirstCard();
     }
 
     public List<Player> getPlayers() {

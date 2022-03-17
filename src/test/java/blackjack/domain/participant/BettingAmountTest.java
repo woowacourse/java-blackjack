@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class BettingAmountTest {
 
     @DisplayName("베팅 금액은 양수여야 합니다.")
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 금액 : {0}")
     @ValueSource(ints = {-10, -1, 0})
     void betAmountNotPositiveExceptionTest(final int amount) {
         assertThatThrownBy(() -> new BettingAmount(amount))
@@ -19,7 +19,7 @@ class BettingAmountTest {
     }
 
     @DisplayName("베팅 금액은 생성 당시의 값을 지니고 있어야 합니다.")
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 금액 : {0}")
     @ValueSource(ints = {1, 10, 100, 10000})
     void createBetAmountTest(final int expectedAmount) {
         final BettingAmount bettingAmount = new BettingAmount(expectedAmount);

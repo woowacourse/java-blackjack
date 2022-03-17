@@ -14,20 +14,25 @@ import blackjack.domain.card.generator.ManualDeckGenerator;
 
 class DeckTest {
 
-    private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
+    private final ManualDeckGenerator manualDeckGenerator = new ManualDeckGenerator();
+
+    private Deck generateDeck(final List<Card> initializedCards) {
+        manualDeckGenerator.initCards(initializedCards);
+        return Deck.generate(manualDeckGenerator);
+    }
 
     @DisplayName("카드 생성 시, 중복된 카드는 존재할 수 없다.")
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 카드 : {0}")
     @MethodSource("blackjack.domain.card.provider.DeckTestProvider#provideForCardDuplicatedExceptionTest")
     void cardDuplicatedExceptionTest(final List<Card> cards) {
-        manualCardStrategy.initCards(cards);
-        assertThatThrownBy(() -> Deck.generate(manualCardStrategy))
+        manualDeckGenerator.initCards(cards);
+        assertThatThrownBy(() -> Deck.generate(manualDeckGenerator))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("중복된 카드는 존재할 수 없습니다.");
     }
 
     @DisplayName("한번에 한장씩 카드를 뽑을 수 있어야 한다.")
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 카드 : {0}")
     @MethodSource("blackjack.domain.card.provider.DeckTestProvider#provideForDrawCardTest")
     void drawCardTest(final List<Card> expectedCards) {
         final Deck deck = this.generateDeck(expectedCards);
@@ -41,7 +46,7 @@ class DeckTest {
     }
 
     @DisplayName("뽑을 수 있는 카드가 없으면 예외가 발생한다.")
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 카드 : {0}")
     @MethodSource("blackjack.domain.card.provider.DeckTestProvider#provideForDrawableCardNotExistExceptionTest")
     void drawableCardNotExistExceptionTest(final List<Card> cards) {
         final Deck deck = this.generateDeck(cards);
@@ -51,11 +56,6 @@ class DeckTest {
         assertThatThrownBy(deck::drawCard)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("더 이상 뽑을 수 있는 카드가 없습니다.");
-    }
-
-    private Deck generateDeck(final List<Card> initializedCards) {
-        manualCardStrategy.initCards(initializedCards);
-        return Deck.generate(manualCardStrategy);
     }
 
 }

@@ -6,26 +6,35 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.result.MatchStatus;
 import blackjack.dto.CardDto;
-import blackjack.dto.InitiallyDrewCardDto;
 import blackjack.dto.MatchResultDto;
-import blackjack.dto.ParticipantDto;
+import blackjack.dto.dealer.DealerDto;
+import blackjack.dto.dealer.DealerInitialCardDto;
+import blackjack.dto.player.PlayerDto;
+import blackjack.dto.player.PlayerInitialCardsDto;
 import blackjack.view.utils.Delimiter;
 
 public class OutputView {
 
-    public void printMessageOfInitiallyDistributeCards(final InitiallyDrewCardDto dealerInitiallyDrewCardDto,
-                                                       final List<InitiallyDrewCardDto> playerInitiallyDrewCardDtos) {
-        final String dealerName = dealerInitiallyDrewCardDto.getParticipantName();
+    public void printMessageOfInitiallyDistributeCards(final List<PlayerInitialCardsDto> playerInitiallyDrewCardDtos) {
         final List<String> playerNames = playerInitiallyDrewCardDtos.stream()
-                .map(InitiallyDrewCardDto::getParticipantName)
+                .map(PlayerInitialCardsDto::getPlayerName)
                 .collect(Collectors.toUnmodifiableList());
         final String combinedPlayerNames = Delimiter.COMMA.joinWith(playerNames);
-        printMessage(String.format("%s와 %s에게 2장의 카드를 나누었습니다.", dealerName, combinedPlayerNames));
+        printMessage(String.format("딜러와 %s에게 2장의 카드를 나누었습니다.", combinedPlayerNames));
     }
 
-    public void printDistributedCardsOfParticipant(final InitiallyDrewCardDto initiallyDrewCardDto) {
-        final String participantName = initiallyDrewCardDto.getParticipantName();
-        final String distributedCards = Delimiter.COMMA.joinWith(initiallyDrewCardDto.getCardNames());
+    public void printDistributedCardsOfDealer(final DealerInitialCardDto initiallyDrewCardDto) {
+        final String dealerCard = initiallyDrewCardDto.getCardName();
+        printMessageOfDistributedCards("딜러", dealerCard);
+    }
+
+    public void printDistributedCardsOfPlayer(final PlayerInitialCardsDto initiallyDrewCardDto) {
+        final String playerName = initiallyDrewCardDto.getPlayerName();
+        final String playerCards = Delimiter.COMMA.joinWith(initiallyDrewCardDto.getCardNames());
+        printMessageOfDistributedCards(playerName, playerCards);
+    }
+
+    private void printMessageOfDistributedCards(final String participantName, final String distributedCards) {
         printMessage(Delimiter.COLON.joinWith(participantName, distributedCards));
     }
 
@@ -37,19 +46,31 @@ public class OutputView {
         final List<String> cardNames = cardDtos.stream()
                 .map(CardDto::getCardName)
                 .collect(Collectors.toUnmodifiableList());
-        final String distributedCards = Delimiter.COMMA.joinWith(cardNames);
-        printMessage(Delimiter.COLON.joinWith(playerName, distributedCards));
+        final String playerCards = Delimiter.COMMA.joinWith(cardNames);
+        printMessage(Delimiter.COLON.joinWith(playerName, playerCards));
     }
 
-    public void printFinalScoreOfParticipants(final List<ParticipantDto> participantDtos) {
-        participantDtos.forEach(this::printFinalScoreOfParticipant);
+    public void printFinalScoreOfDealer(final DealerDto dealerDto) {
+        final String dealerCards = Delimiter.COMMA.joinWith(dealerDto.getCardNames());
+        final int score = dealerDto.getScore();
+        printMessageOfFinalScore("딜러", dealerCards, score);
     }
 
-    public void printFinalScoreOfParticipant(final ParticipantDto participantDto) {
+    public void printFinalScoreOfPlayers(final List<PlayerDto> participantDtos) {
+        participantDtos.forEach(this::printFinalScoreOfPlayer);
+    }
+
+    public void printFinalScoreOfPlayer(final PlayerDto participantDto) {
         final String playerName = participantDto.getName();
-        final String distributedCards = Delimiter.COMMA.joinWith(participantDto.getCardNames());
+        final String playerCards = Delimiter.COMMA.joinWith(participantDto.getCardNames());
         final int score = participantDto.getScore();
-        printMessage(String.format("%s: %s - 결과: %d", playerName, distributedCards, score));
+        printMessageOfFinalScore(playerName, playerCards, score);
+    }
+
+    private void printMessageOfFinalScore(final String participantName,
+                                          final String distributedCards,
+                                          final int score) {
+        printMessage(String.format("%s: %s - 결과: %d", participantName, distributedCards, score));
     }
 
     public void printMatchResult(final MatchResultDto resultDto) {

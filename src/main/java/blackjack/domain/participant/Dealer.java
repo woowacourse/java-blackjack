@@ -2,44 +2,47 @@ package blackjack.domain.participant;
 
 import java.util.List;
 
+import blackjack.domain.BlackjackRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.MatchStatus;
+import blackjack.domain.participant.state.PlayState;
+import blackjack.domain.participant.state.finished.StandState;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
-    private static final String DEALER_NAME = "딜러";
-    private static final int DRAWABLE_SCORE_LIMIT = 16;
+    private static final int DEALER_DEFAULT_BETTING_AMOUNT = 1;
 
     private Dealer(final Deck deck) {
-        super(DEALER_NAME, deck);
+        super(deck);
+        readyToHitStateWithinBet();
+    }
+
+    private void readyToHitStateWithinBet() {
+        this.state = state.betAmount(DEALER_DEFAULT_BETTING_AMOUNT);
     }
 
     public static Dealer readyToPlay(final Deck deck) {
         return new Dealer(deck);
     }
 
-    @Override
-    public boolean isPossibleToDrawCard() {
-        return this.getScore() <= DRAWABLE_SCORE_LIMIT;
+    public void drawCard(final Deck deck) {
+        this.state = considerState(deck);
     }
 
-    public MatchStatus judgeWinner(final Player player) {
-        if (player.isBust()) {
-            return MatchStatus.LOSS;
+    private PlayState considerState(final Deck deck) {
+        if (isDealerCannotDrawCardAnymore()) {
+            return new StandState(state);
         }
-        if (this.isBust()) {
-            return MatchStatus.WIN;
-        }
-        return MatchStatus.from(this.isLowerThan(player));
+        return state.drawCard(deck);
     }
 
-    private boolean isLowerThan(final Player player) {
-        return this.getScore() < player.getScore();
+    private boolean isDealerCannotDrawCardAnymore() {
+        return state.isPossibleToDrawCard() &&
+                (BlackjackRule.DEALER_ENABLE_MINIMUM_SCORE.isNotOverThan(state.getScore()));
     }
 
     public Card getFirstCard() {
-        final List<Card> cards = this.getCards();
+        final List<Card> cards = state.getCards();
         validateCardNotEmpty(cards);
         return cards.get(0);
     }
@@ -49,4 +52,5 @@ public class Dealer extends Participant {
             throw new IllegalStateException("카드가 존재하지 않습니다.");
         }
     }
+
 }

@@ -25,8 +25,8 @@ public class Deck {
                 .anyMatch(card -> Collections.frequency(cards, card) > 1);
     }
 
-    public static Deck generate(final DeckGenerator strategy) {
-        return new Deck(strategy.generate());
+    public static Deck generate(final DeckGenerator deckGenerator) {
+        return new Deck(deckGenerator.generate());
     }
 
     public Card drawCard() {

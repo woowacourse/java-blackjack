@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,64 +11,40 @@ import org.junit.jupiter.params.provider.MethodSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.ManualDeckGenerator;
-import blackjack.domain.result.MatchStatus;
+import blackjack.domain.participant.state.PlayState;
+import blackjack.domain.participant.state.finished.StandState;
 
 class DealerTest {
 
-    private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
-
-    @DisplayName("플레이어의 카드 합계가 버스트일 경우, 플레이어는 패배한다.")
-    @ParameterizedTest()
-    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForPlayerLoseByBust")
-    void playerLoseByBust(final List<Card> initializedCards,
-                          final List<Card> drewCards,
-                          final MatchStatus expectedPlayerMatchResult) {
-        final Deck deck = this.generateDeck(initializedCards, drewCards);
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        final Player player = Player.readyToPlay("playerName", deck);
-        player.drawCard(deck);
-
-        final MatchStatus actualPlayerMatchStatus = dealer.judgeWinner(player);
-        assertThat(actualPlayerMatchStatus).isEqualTo(expectedPlayerMatchResult);
-    }
-
-    @DisplayName("딜러의 카드 합계가 버스트일 경우, 플레이어가 승리한다.")
-    @ParameterizedTest()
-    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForDealerLoseByBust")
-    void dealerLoseByBust(final List<Card> initializedCards,
-                          final List<Card> drewCards,
-                          final MatchStatus expectedPlayerMatchResult) {
-        final Deck deck = this.generateDeck(initializedCards, drewCards);
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        final Player player = Player.readyToPlay("playerName", deck);
-        dealer.drawCard(deck);
-
-        final MatchStatus actualPlayerMatchStatus = dealer.judgeWinner(player);
-        assertThat(actualPlayerMatchStatus).isEqualTo(expectedPlayerMatchResult);
-    }
-
-    @DisplayName("딜러의 카드 합계가 플레이어보다 크거나 같으면 플레이어가 패배한다.")
-    @ParameterizedTest
-    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForDealerCalculateWinningResultTest")
-    void dealerJudgeWinnerTest(final List<Card> initializedCards, final MatchStatus expectedPlayerMatchResult) {
-        final Deck deck = this.generateDeck(initializedCards);
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        final Player player = Player.readyToPlay("playerName", deck);
-
-        final MatchStatus actualPlayerMatchStatus = dealer.judgeWinner(player);
-        assertThat(actualPlayerMatchStatus).isEqualTo(expectedPlayerMatchResult);
-    }
-
-    private Deck generateDeck(final List<Card> initializedCards1, final List<Card> initializedCards2) {
-        final List<Card> initializedCards = new ArrayList<>();
-        initializedCards.addAll(initializedCards1);
-        initializedCards.addAll(initializedCards2);
-        return generateDeck(initializedCards);
-    }
+    private final ManualDeckGenerator manualDeckGenerator = new ManualDeckGenerator();
 
     private Deck generateDeck(final List<Card> initializedCards) {
-        manualCardStrategy.initCards(initializedCards);
-        return Deck.generate(manualCardStrategy);
+        manualDeckGenerator.initCards(initializedCards);
+        return Deck.generate(manualDeckGenerator);
+    }
+
+    @DisplayName("딜러는 버스트되지 않은 상태에서 카드 합계가 17 이상이면 스탠드 상태여야 한다.")
+    @ParameterizedTest(name = "[{index}] 카드 : {0}")
+    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForDealerCannotDrawCardAnymoreTest")
+    void dealerCannotDrawCardAnymoreTest(final List<Card> initializedCard) {
+        final Deck deck = generateDeck(initializedCard);
+        final Dealer dealer = Dealer.readyToPlay(deck);
+        dealer.drawCard(deck);
+
+        final PlayState actualState = dealer.getState();
+        assertThat(actualState).isInstanceOf(StandState.class);
+    }
+
+    @DisplayName("첫번째 카드 한장을 반환할 수 있어야 한다.")
+    @ParameterizedTest(name = "[{index}] 카드 : {0}")
+    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForGetFirstCardTest")
+    void getFirstCardTest(final List<Card> initializedCard) {
+        final Deck deck = generateDeck(initializedCard);
+        final Dealer dealer = Dealer.readyToPlay(deck);
+
+        final Card actualCard = dealer.getFirstCard();
+        final Card expectedCard = initializedCard.get(0);
+        assertThat(actualCard).isEqualTo(expectedCard);
     }
 
 }
