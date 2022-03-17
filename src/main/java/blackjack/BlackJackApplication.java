@@ -72,14 +72,14 @@ public class BlackJackApplication {
     }
 
     private static void alertStart(Dealer dealer, Players players) {
-        OutputView.printStartMessage(dealer, players.getValues());
+        OutputView.printStartMessage(dealer, players.getPlayers());
         OutputView.printDealerFirstCard(dealer);
-        players.getValues()
+        players.getPlayers()
             .forEach(player -> OutputView.printParticipantCards(player, player.calculateScore()));
     }
 
     private static void proceedPlayersTurn(Players players, CardDeck deck) {
-        players.getValues()
+        players.getPlayers()
             .forEach(player -> proceedPlayer(player, deck));
     }
 
@@ -120,12 +120,12 @@ public class BlackJackApplication {
     private static void showFinalScore(Dealer dealer, Players players) {
         OutputView.printCardResultMessage();
         OutputView.printParticipantCards(dealer, dealer.calculateScore());
-        players.getValues()
+        players.getPlayers()
             .forEach(player -> OutputView.printParticipantCards(player, player.calculateScore()));
     }
 
     private static void showProfitResult(Dealer dealer, Players players) {
-        final ProfitResult profitResult = new ProfitResult(players.getValues(), dealer);
+        final ProfitResult profitResult = new ProfitResult(players.getPlayers(), dealer);
         List<ParticipantProfit> playersResult = profitResult.getPlayersResult();
         ParticipantProfit dealerResult = profitResult.getDealerResult();
 

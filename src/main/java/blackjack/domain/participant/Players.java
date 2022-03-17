@@ -40,7 +40,7 @@ public class Players {
         }
     }
 
-    public List<Player> getValues() {
+    public List<Player> getPlayers() {
         return List.copyOf(players);
     }
 }
