@@ -27,10 +27,6 @@ public class BlackjackGame {
         return new BlackjackGame(deck, initPlayers(playerNames));
     }
 
-    public void initGames(CardShuffleMachine playingCardShuffleMachine) {
-        initCards(playingCardShuffleMachine);
-    }
-
     private static Players initPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
@@ -38,6 +34,10 @@ public class BlackjackGame {
             players.add(new Guest(playerName, new PlayingCards()));
         }
         return new Players(players);
+    }
+
+    public void initGames(CardShuffleMachine playingCardShuffleMachine) {
+        initCards(playingCardShuffleMachine);
     }
 
     private void initCards(CardShuffleMachine playingCardShuffleMachine) {
