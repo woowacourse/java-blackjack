@@ -16,13 +16,13 @@ public class BlackjackController {
         List<String> playerNames = InputView.getPlayerNames();
         Blackjack blackjack = new Blackjack(playerNames);
 
-        blackjack.distributeInitialCards(new RandomNumberGenerator());
+        blackjack.distributeInitialCards(randomNumberGenerator);
         OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
 
         while (!blackjack.cycleIsOver()) {
             Player turnPlayer = blackjack.turnPlayer();
             blackjack.addtionalCardToPlayer(
-                    new RandomNumberGenerator(), turnPlayer, InputView.askAdditionalCard(turnPlayer.getName()));
+                    randomNumberGenerator, turnPlayer, InputView.askAdditionalCard(turnPlayer.getName()));
             OutputView.printCards(turnPlayer, true);
         }
 
