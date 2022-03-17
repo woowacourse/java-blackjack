@@ -11,6 +11,7 @@ public final class InputView {
     private static final String GET_MORE_CARD_OR_NOT_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String GET_CARD_OR_NOT_REGEX = "^[y,n]$";
     private static final String YES = "y";
+    private static final String BETTING_MONEY_INPUT_MESSAGE = "%s의 베팅 금액은?";
 
     private static final String EMPTY_INPUT_ERROR_MESSAGE = "[ERROR] 빈 값을 입력할 수 없습니다.";
     private static final String INPUT_ONLY_Y_OR_N_ERROR = "[ERROR] y나 n만 입력할 수 있습니다.";
@@ -73,5 +74,12 @@ public final class InputView {
 
     private boolean matchYesOrNo(String input) {
         return input.equals(YES);
+    }
+
+    public String inputBettingMoney(String playerName){
+        System.out.print(System.lineSeparator());
+        System.out.printf(BETTING_MONEY_INPUT_MESSAGE, playerName);
+        System.out.print(System.lineSeparator());
+        return input();
     }
 }
