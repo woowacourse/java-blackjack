@@ -12,7 +12,6 @@ import blackjack.domain.BettingTable;
 import blackjack.domain.Game;
 import blackjack.domain.PlayRecord;
 import blackjack.domain.PlayStatus;
-import blackjack.domain.RecordFactory;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.RandomDeck;
 import blackjack.domain.participant.DrawCount;
@@ -102,8 +101,7 @@ public class GameController {
     }
 
     private void finalRevenue(Game game, List<Betting> bettings) {
-        RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
-        Map<Name, PlayRecord> recordMap = recordFactory.getPlayerRecords(game.getPlayers());
+        Map<Name, PlayRecord> recordMap = PlayRecord.createPlayRecords(game.getPlayers(), game.getDealerScore());
 
         BettingTable bettingTable = new BettingTable(bettings);
         printFinalRevenues(bettingTable.getRevenues(recordMap));
