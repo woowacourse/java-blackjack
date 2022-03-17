@@ -13,6 +13,10 @@ public class CardConvertor {
     private CardConvertor() {
     }
 
+    public static String convertToString(final Card card) {
+        return FaceMapper.get(card.getFace()) + SuitMapper.get(card.getSuit());
+    }
+
     public static List<String> convertToString(final List<Card> cards) {
         final List<String> result = new ArrayList<>();
         for (final Card card : cards) {
@@ -29,7 +33,7 @@ public class CardConvertor {
             FACE_MAPPER.put(Face.JACK, "10");
             FACE_MAPPER.put(Face.KING, "10");
             FACE_MAPPER.put(Face.QUEEN, "10");
-            for (Face value : Face.values()) {
+            for (final Face value : Face.values()) {
                 FACE_MAPPER.putIfAbsent(value, String.valueOf(value.getScore()));
             }
         }
