@@ -14,19 +14,7 @@ public class Score {
     }
 
     public boolean CanAddPlayerCard() {
-        return player.getTotalScore() <= BLACK_JACK_TARGET_SCORE;
-    }
-
-    public boolean CanAddDealerCard() {
-        return player.getTotalScore() <= DEALER_ADD_CARD_LIMIT_SCORE;
-    }
-
-    public boolean isBlackJack() {
-        return player.getTotalScore() == BLACK_JACK_TARGET_SCORE && player.hasTwoCards();
-    }
-
-    public boolean isBust() {
-        return player.getTotalScore() > BLACK_JACK_TARGET_SCORE;
+        return getTotal() <= BLACK_JACK_TARGET_SCORE;
     }
 
     public int getTotal() {
@@ -44,5 +32,17 @@ public class Score {
             totalScore -= DIFFERENCE_IN_ACE_SCORE;
         }
         return totalScore;
+    }
+
+    public boolean CanAddDealerCard() {
+        return getTotal() <= DEALER_ADD_CARD_LIMIT_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return getTotal() == BLACK_JACK_TARGET_SCORE && player.hasTwoCards();
+    }
+
+    public boolean isBust() {
+        return getTotal() > BLACK_JACK_TARGET_SCORE;
     }
 }
