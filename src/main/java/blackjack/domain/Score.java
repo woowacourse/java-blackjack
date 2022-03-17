@@ -36,6 +36,7 @@ public enum Score {
     public String getValue() {
         return value;
     }
+
     public int getProfitRate() {
         return profitRate;
     }
