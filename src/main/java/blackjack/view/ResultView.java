@@ -1,7 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.Participant;
+import blackjack.domain.Result;
 import blackjack.domain.dto.BlackJackDto;
+import blackjack.domain.participant.Participant;
 
 public class ResultView {
 
@@ -18,14 +19,14 @@ public class ResultView {
         System.out.printf(MESSAGE_HAND_OUT_CARD, String.join(NAME_DELIMITER, getPlayerNames(blackJackDto)));
         System.out.println(blackJackDto.getDealerOpenCard());
 
-        for (Participant player : blackJackDto.getPlayers()) {
+        for (Participant player : blackJackDto.getParticipants().getPlayers()) {
             showEachPlayerCurrentStatus(blackJackDto, player);
         }
         System.out.println();
     }
 
     private String[] getPlayerNames(BlackJackDto blackJackDto) {
-        return blackJackDto.getPlayers().stream()
+        return blackJackDto.getParticipants().getPlayers().stream()
             .map(Participant::getName)
             .toArray(String[]::new);
     }
@@ -52,16 +53,16 @@ public class ResultView {
 
     public void showFinalStatus(BlackJackDto blackJackDto) {
         System.out.println();
-        Participant dealer = blackJackDto.getDealer();
+        Participant dealer = blackJackDto.getParticipants().getDealer();
         System.out.println(getEachPlayerStatus(blackJackDto, dealer) + RESULT_DELIMITER + dealer.getScore());
-        for (Participant player : blackJackDto.getPlayers()) {
+        for (Participant player : blackJackDto.getParticipants().getPlayers()) {
             System.out.println(getEachPlayerStatus(blackJackDto, player) + RESULT_DELIMITER + player.getScore());
         }
     }
 
-    public void showResult(BlackJackDto blackJackDto) {
+    public void showResult(BlackJackDto blackJackDto, Result result) {
         System.out.println(MESSAGE_FINAL_REVENUE);
-        System.out.println(blackJackDto.getDealerRevenue());
-        blackJackDto.getPlayersRevenue().forEach(System.out::println);
+        System.out.println(blackJackDto.getDealerRevenue(result));
+        blackJackDto.getPlayersRevenue(result).forEach(System.out::println);
     }
 }
