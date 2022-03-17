@@ -53,6 +53,10 @@ public class BlackJack {
         return new DistributeResult(participant);
     }
 
+    public boolean checkDealerDrawMoreCard() {
+        return checkDealerUnderSumStandard() && checkDealerLimit();
+    }
+
     public boolean checkLimit(String playerName) {
         Participant participant = participants.getUserByName(playerName);
         return participant.getCardSum() < SCORE_LIMIT;
@@ -66,6 +70,14 @@ public class BlackJack {
 
     public List<DistributeResult> getCardResults() {
         return participants.getDistributeResult();
+    }
+
+    public void playGameWithDealer() {
+        playGameOnePlayer(DEALER_NAME);
+    }
+
+    public boolean checkDealerLimit() {
+        return checkLimit(DEALER_NAME);
     }
 }
 

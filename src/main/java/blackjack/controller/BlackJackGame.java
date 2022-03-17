@@ -10,13 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class BlackJackController {
+public class BlackJackGame {
 
-    private static final String DEALER_NAME = "딜러";
     private BlackJack blackJack;
 
     public void play() {
-        Map<String, Integer> bettingPriceByName = getUserNameAndBettingPrice();
+        Map<String, Integer> bettingPriceByName = mappingUserNameAndBettingPrice();
         blackJack = new BlackJack(bettingPriceByName);
         initDistribute();
         playGameEachParticipant(bettingPriceByName.keySet());
@@ -28,7 +27,7 @@ public class BlackJackController {
         OutputView.printProfitResult(blackJack.calculateProfitResult());
     }
 
-    public Map<String, Integer> getUserNameAndBettingPrice() {
+    public Map<String, Integer> mappingUserNameAndBettingPrice() {
         String[] userNames = InputView.inputUsersName();
         Map<String, Integer> priceByName = new LinkedHashMap<>();
         for (String userName : userNames) {
@@ -56,14 +55,10 @@ public class BlackJackController {
     }
 
     private void playDealer() {
-        while (checkDealerDrawMoreCard()) {
+        while (blackJack.checkDealerDrawMoreCard()) {
             OutputView.printDealerDraw();
-            blackJack.playGameOnePlayer(DEALER_NAME);
+            blackJack.playGameWithDealer();
         }
-    }
-
-    private boolean checkDealerDrawMoreCard() {
-        return blackJack.checkDealerUnderSumStandard() && blackJack.checkLimit(DEALER_NAME);
     }
 
     private void playEachUser(String userName) {
