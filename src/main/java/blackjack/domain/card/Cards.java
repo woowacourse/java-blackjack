@@ -20,10 +20,6 @@ public class Cards {
         this.value.add(card);
     }
 
-    public Status getStatus() {
-        return Status.findStatus(getCount(), sum());
-    }
-
     public int getCount() {
         return value.size();
     }

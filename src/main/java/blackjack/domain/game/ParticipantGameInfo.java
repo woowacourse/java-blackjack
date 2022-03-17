@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Status;
 
 public class ParticipantGameInfo {
 
