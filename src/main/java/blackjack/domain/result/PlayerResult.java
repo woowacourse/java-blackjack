@@ -9,17 +9,21 @@ import java.util.function.BiPredicate;
 
 public enum PlayerResult {
 
-    WIN("승", PlayerResult::isWin),
+    BLACKJACK_WIN("-", 1.5, PlayerResult::isBlackjackWin),
 
-    DRAW("무", PlayerResult::isDraw),
+    WIN("승", 1, PlayerResult::isWin),
 
-    LOSS("패", PlayerResult::isLoss);
+    DRAW("무", 0, PlayerResult::isDraw),
+
+    LOSS("패", -1, PlayerResult::isLoss);
 
     private final String name;
+    private final double profitRate;
     private final BiPredicate<Player, Dealer> predicate;
 
-    PlayerResult(final String name, final BiPredicate<Player, Dealer> predicate) {
+    PlayerResult(final String name, final double profitRate, final BiPredicate<Player, Dealer> predicate) {
         this.name = name;
+        this.profitRate = profitRate;
         this.predicate = predicate;
     }
 
@@ -28,6 +32,10 @@ public enum PlayerResult {
                 .filter(result -> result.predicate.test(player, dealer))
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않는 결과입니다."));
+    }
+
+    private static boolean isBlackjackWin(Player player, Dealer dealer) {
+        return player.isBlackjack() && !dealer.isBlackjack();
     }
 
     private static boolean isLoss(Player player, Dealer dealer) {
@@ -43,11 +51,14 @@ public enum PlayerResult {
 
     private static boolean isWin(Player player, Dealer dealer) {
         return (dealer.isBust() && !player.isBust()) ||
-                (player.isBlackjack() && !dealer.isBlackjack()) ||
                 (player.hasHigherScoreThan(dealer) && !player.isBust());
     }
 
     public String getName() {
         return name;
+    }
+
+    public double getProfitRate() {
+        return profitRate;
     }
 }

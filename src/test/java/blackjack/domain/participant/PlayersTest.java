@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -89,19 +88,19 @@ public class PlayersTest {
                         final List<Integer> bets,
                         final List<Card> dealerCards,
                         final List<Card> playersCards,
-                        final Map<String, PlayerResult> expectedWinningResults) {
+                        final Map<String, Double> expected) {
         final Dealer dealer = Dealer.startWithTwoCards(new Deck(dealerCards));
         final Players players = Players.startWithTwoCards(names, bets, new Deck(playersCards));
+        final Map<String, Double> actual = players.compareScore(dealer).getPlayerResult();
 
-        final Map<String, PlayerResult> actualWinningResults = players.judgeWinners(dealer).getPlayerResult();
-        assertThat(actualWinningResults).isEqualTo(expectedWinningResults);
+        assertThat(actual).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideForCompareCardTotalTest() {
         return Stream.of(
                 Arguments.of(
                         List.of("sun"),
-                        List.of(1000),
+                        List.of(5000),
                         List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.KING),
                                 new Card(CardPattern.DIAMOND, CardNumber.TEN)
@@ -110,11 +109,11 @@ public class PlayersTest {
                                 new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
                                 new Card(CardPattern.DIAMOND, CardNumber.NINE)
                         ),
-                        Map.of("sun", PlayerResult.LOSS)
+                        Map.of("sun", (double) -5000)
                 ),
                 Arguments.of(
                         List.of("sun", "if"),
-                        List.of(1000, 1000),
+                        List.of(3000, 4000),
                         List.of(
                                 new Card(CardPattern.SPADE, CardNumber.NINE),
                                 new Card(CardPattern.HEART, CardNumber.EIGHT)
@@ -126,8 +125,8 @@ public class PlayersTest {
                                 new Card(CardPattern.SPADE, CardNumber.TWO)
                         ),
                         Map.of(
-                                "sun", PlayerResult.WIN,
-                                "if", PlayerResult.LOSS
+                                "sun", (double) 3000,
+                                "if", (double) -4000
                         )
                 )
         );

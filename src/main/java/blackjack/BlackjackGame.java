@@ -7,8 +7,8 @@ import blackjack.domain.card.strategy.CardStrategy;
 import blackjack.domain.card.strategy.RandomCardStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.MatchResult;
-import blackjack.dto.MatchResultDto;
+import blackjack.domain.result.BettingResult;
+import blackjack.dto.BettingResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -73,7 +73,7 @@ public class BlackjackGame {
 
             @Override
             public void onUpdate(final String dealerName, final List<Card> cards) {
-                outputView.printCards(dealerName, cards);
+                outputView.printMessageOfDealerDrawCard();
             }
         });
     }
@@ -87,7 +87,7 @@ public class BlackjackGame {
 
             @Override
             public void onUpdate(final String playerName, final List<Card> cards) {
-                outputView.printCards(playerName, cards);
+                outputView.printDistributedCards(playerName, cards);
             }
         });
     }
@@ -103,10 +103,9 @@ public class BlackjackGame {
         participantDtos.addAll(players.getStatuses().stream()
                 .map(ParticipantDto::toOpenAllCards)
                 .collect(Collectors.toList()));
-
-        MatchResult result = players.judgeWinners(dealer);
+        BettingResult result = players.compareScore(dealer);
 
         outputView.printScores(participantDtos);
-        outputView.printMatchResult(MatchResultDto.toDto(result));
+        outputView.printBettingResult(BettingResultDto.toDto(result));
     }
 }

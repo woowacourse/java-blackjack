@@ -22,6 +22,10 @@ public class Player extends AbstractParticipant {
         }
     }
 
+    public double getBettingAmount() {
+        return bet.getAmount();
+    }
+
     @Override
     public List<Card> showFirstCards() {
         return Collections.unmodifiableList(getCards());

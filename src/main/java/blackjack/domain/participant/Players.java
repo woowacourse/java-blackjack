@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.DrawCallback;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.MatchResult;
+import blackjack.domain.result.BettingResult;
 import blackjack.domain.result.PlayerResult;
 
 import java.util.*;
@@ -29,14 +29,15 @@ public class Players {
         }
     }
 
-    public MatchResult judgeWinners(Dealer dealer) {
-        final Map<String, PlayerResult> winningResults = new HashMap<>();
+    public BettingResult compareScore(Dealer dealer) {
+        final Map<Player, PlayerResult> result = new HashMap<>();
+
         for (final Player player : players) {
-            final String playerName = player.getName();
             final PlayerResult playerResult = dealer.judgeWinner(player);
-            winningResults.put(playerName, playerResult);
+            result.put(player, playerResult);
         }
-        return new MatchResult(winningResults);
+
+        return BettingResult.of(result);
     }
 
     private void distributeCards(Deck deck) {
