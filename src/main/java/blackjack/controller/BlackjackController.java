@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.machine.Blackjack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
