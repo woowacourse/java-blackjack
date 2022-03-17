@@ -38,9 +38,9 @@ public class Application {
     private static void start(Game game, ResultView resultView) {
         game.start();
 
-        PlayersDto playersDTO = PlayersDto.from(game);
-        resultView.printHandInitialized(playersDTO);
-        resultView.printInitializedHands(playersDTO);
+        PlayersDto playersDto = PlayersDto.from(game);
+        resultView.printHandInitialized(playersDto);
+        resultView.printInitializedHands(playersDto);
     }
 
     private static void playEntries(InputView inputView, ResultView resultView, Game game) {
@@ -52,13 +52,13 @@ public class Application {
     }
 
     private static void playTurn(InputView inputView, Game game, ResultView resultView) {
-        EntryDto entryDTO = EntryDto.fromCurrentEntryOf(game);
+        EntryDto entryDto = EntryDto.fromCurrentEntryOf(game);
         if (game.isCurrentEntryBust()) {
-            resultView.printBustMessage(entryDTO);
+            resultView.printBustMessage(entryDto);
             return;
         }
-        if (!inputView.askForHit(entryDTO)) {
-            resultView.printHand(entryDTO);
+        if (!inputView.askForHit(entryDto)) {
+            resultView.printHand(entryDto);
             return;
         }
         hitCurrentEntry(inputView, game, resultView);
