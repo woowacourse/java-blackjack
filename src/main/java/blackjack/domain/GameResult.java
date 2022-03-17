@@ -7,7 +7,7 @@ import java.util.function.BiPredicate;
 
 public enum GameResult {
     BLACKJACK_WIN(1.5, (dealer, player) -> !dealer.isBlackjack() && player.isBlackjack()),
-    WIN(1, ((dealer, player) -> !player.isBust() &&player.calculateScore() > dealer.calculateScore())),
+    WIN(1, (dealer, player) -> !player.isBust() && player.calculateScore() > dealer.calculateScore()),
     DRAW(0, (dealer, player) -> !player.isBust() && player.calculateScore() == dealer.calculateScore()),
     LOSE(-1, (dealer, player) -> player.isBust() || player.calculateScore() < dealer.calculateScore());
 
