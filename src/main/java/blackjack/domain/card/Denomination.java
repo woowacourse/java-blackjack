@@ -25,15 +25,15 @@ public enum Denomination {
         this.score = score;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public String getName() {
         return name;
     }
 
     public int getScore() {
         return score;
-    }
-
-    public boolean isAce() {
-        return this == ACE;
     }
 }

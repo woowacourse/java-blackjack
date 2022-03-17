@@ -20,6 +20,9 @@ public class OutputView {
     private static final String DRAW_RESULT_MESSAGE = "%s - 결과: %d";
     private static final String RESULT_STATUS_MESSAGE = "%s: %s";
 
+    private OutputView() {
+    }
+
     public static void printInitCard(Dealer dealer, Players players) {
         System.out.printf(DRAW_CARD_MESSAGE, dealer.getName(), printNames(players));
         System.out.println();
