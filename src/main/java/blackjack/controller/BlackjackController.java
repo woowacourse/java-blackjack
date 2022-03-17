@@ -10,35 +10,30 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
-    private Blackjack blackjack;
-    private Players players;
-    private Dealer dealer;
-
-    public void run() {
-        startGame();
-        progressGame();
-        endGame();
-    }
 
     public void startGame() {
         List<String> playerNames = InputView.getPlayerNames();
-        dealer = new Dealer();
-        players = new Players(playerNames);
-        blackjack = Blackjack.of(RandomNumberGenerator.getInstance(), dealer, players);
+        Dealer dealer = new Dealer();
+        Players players = new Players(playerNames);
+        Blackjack blackjack = Blackjack.of(RandomNumberGenerator.getInstance(), dealer, players);
 
         OutputView.printInitStatus(dealer, players.getPlayers());
+
+        progressGame(blackjack, players, dealer);
     }
 
-    public void progressGame() {
+    public void progressGame(Blackjack blackjack, Players players, Dealer dealer) {
         List<Player> p = players.getPlayers();
         for (Player player : p) {
-            askDealCardToPlayer(player);
+            askDealCardToPlayer(blackjack, player);
         }
 
-        askDealCardToDealer();
+        askDealCardToDealer(blackjack, dealer);
+
+        endGame(blackjack, dealer ,players);
     }
 
-    private void askDealCardToPlayer(Player player) {
+    private void askDealCardToPlayer(Blackjack blackjack, Player player) {
         if (player.isBlackjack()) {
             OutputView.printBlackjack(player);
             return;
@@ -50,7 +45,7 @@ public class BlackjackController {
         }
     }
 
-    private void askDealCardToDealer() {
+    private void askDealCardToDealer(Blackjack blackjack, Dealer dealer) {
         if (dealer.isBlackjack()) {
             OutputView.printBlackjack(dealer);
             return;
@@ -62,7 +57,7 @@ public class BlackjackController {
         }
     }
 
-    private void endGame() {
+    private void endGame(Blackjack blackjack, Dealer dealer, Players players) {
         OutputView.printCardsAndResult(dealer, players.getPlayers());
         OutputView.printResult(blackjack.result(dealer, players));
     }
