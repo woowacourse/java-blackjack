@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,5 +33,17 @@ public class PlayerTest {
         Player player = new Player("pobi");
         player.addCard(Card.generateCard(BlackjackCardType.DIAMOND_10));
         assertThat(player.isBurst()).isFalse();
+    }
+
+    @DisplayName("오픈할 카드 고르는 기능 테스트")
+    @Test
+    void pickOneCardToOpenTest() {
+        Player player = new Player("pobi");
+        Card card1 = Card.generateCard(BlackjackCardType.DIAMOND_10);
+        Card card2 = Card.generateCard(BlackjackCardType.DIAMOND_9);
+        player.addCard(card1);
+        player.addCard(card2);
+        assertThat(player.pickOpenCardsInInitCards())
+                .isEqualTo(Cards.generateCardsAndFill(List.of(card1, card2)));
     }
 }

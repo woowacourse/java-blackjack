@@ -1,6 +1,8 @@
 package blackjack.domain;
 
-public class Dealer extends Player {
+import java.util.List;
+
+public class Dealer extends Participant {
 
     private static final int CONDITION_HIT = 16;
     private static final String NAME = "딜러";
@@ -29,14 +31,15 @@ public class Dealer extends Player {
         return Result.valueOf(Integer.compare(dealerScore, playerScore));
     }
 
-    public Card pickOneCardToOpen() {
-        return getMyCards().get(OPEN_CARD_LOGIC);
-    }
-
-    private int checkScoreIsBust(Player player) {
+    private int checkScoreIsBust(Participant player) {
         if (player.score() >= BUST_CONDITION) {
             return LOSE_SCORE;
         }
         return player.score();
+    }
+
+    @Override
+    public Cards pickOpenCardsInInitCards() {
+        return Cards.generateCardsAndFill(List.of(getMyCards().get(OPEN_CARD_LOGIC)));
     }
 }

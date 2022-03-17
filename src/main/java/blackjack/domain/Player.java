@@ -1,36 +1,13 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class Player {
-    private final String name;
-    private final Cards myCards;
+public class Player extends Participant {
 
     public Player(String name) {
-        this.name = name;
-        this.myCards = Cards.generateCards();
+        super(name);
     }
 
-    public void addCard(Card card) {
-        myCards.addCard(card);
-    }
-
-    public List<Card> getMyCards() {
-        return Collections.unmodifiableList(myCards.getCards());
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int score() {
-        return myCards.score();
-    }
-    
-    public boolean isBurst() {
-        return myCards.isBurst(score());
+    @Override
+    public Cards pickOpenCardsInInitCards() {
+        return Cards.generateCardsAndFill(getMyCards());
     }
 }

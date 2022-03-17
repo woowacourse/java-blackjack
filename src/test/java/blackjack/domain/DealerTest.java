@@ -18,7 +18,7 @@ public class DealerTest {
         assertThat(card.type()).isEqualTo(BlackjackCardType.DIAMOND_3);
     }
 
-    @DisplayName("오픈할 한장의 카드 고르는 기능 테스트")
+    @DisplayName("오픈할 카드 고르는 기능 테스트")
     @Test
     void pickOneCardToOpenTest() {
         Dealer dealer = new Dealer();
@@ -26,6 +26,6 @@ public class DealerTest {
         dealer.addCard(dealer.handOutCard(numberGenerator));
         dealer.addCard(dealer.handOutCard(numberGenerator));
 
-        assertThat(dealer.pickOneCardToOpen()).isEqualTo(Card.generateCard(BlackjackCardType.DIAMOND_2));
+        assertThat(dealer.pickOpenCardsInInitCards()).isEqualTo(Card.generateCard(BlackjackCardType.DIAMOND_2));
     }
 }
