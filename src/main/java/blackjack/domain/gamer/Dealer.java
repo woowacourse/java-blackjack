@@ -12,7 +12,7 @@ public class Dealer extends Gamer {
 	}
 
 	public Dealer() {
-		super(new Cards(), new Name("딜러"));
+		super(new Cards(), new Name(DEALER_NAME));
 	}
 
 	@Override

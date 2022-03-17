@@ -13,10 +13,6 @@ public abstract class Gamer {
 		this.name = name;
 	}
 
-	protected Gamer() {
-		this(new Cards(), new Name());
-	}
-
 	public void addCards(List<Card> cards) {
 		cards.forEach(this.cards::addCard);
 	}

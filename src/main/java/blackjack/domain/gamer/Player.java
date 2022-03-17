@@ -12,10 +12,6 @@ public class Player extends Gamer {
 		super(new Cards(), name);
 	}
 
-	public Player() {
-		super(new Cards(), new Name());
-	}
-
 	@Override
 	public boolean isWin(Gamer gamer) {
 		if (!this.isBlackJack() && !gamer.isBlackJack() && !this.isBust() && !gamer.isBust()){
