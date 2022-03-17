@@ -9,6 +9,7 @@ import blackjack.domain.paticipant.Player;
 import blackjack.domain.paticipant.Players;
 import blackjack.dto.ParticipantCards;
 import blackjack.dto.ParticipantScoreResult;
+import blackjack.dto.PlayerProfit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -96,7 +97,10 @@ public class BlackjackGame {
     private void printAllProfits() {
         OutputView.printProfitTitle();
         OutputView.printParticipantProfit(dealer.getName(), players.dealerProfit(dealer));
-        players.players()
-                .forEach(player -> OutputView.printParticipantProfit(player.getName(), player.profit(dealer)));
+        final List<PlayerProfit> playerProfits = players.players()
+                .stream()
+                .map(player -> PlayerProfit.of(player, dealer))
+                .collect(Collectors.toList());
+        OutputView.printParticipantProfits(playerProfits);
     }
 }

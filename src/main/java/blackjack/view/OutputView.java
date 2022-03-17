@@ -5,6 +5,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.dto.ParticipantCards;
 import blackjack.dto.ParticipantScoreResult;
+import blackjack.dto.PlayerProfit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,5 +74,9 @@ public class OutputView {
 
     public static void printParticipantProfit(final String name, final double profit) {
         System.out.printf(PARTICIPANT_PROFIT_RESULT_MESSAGE, name, profit);
+    }
+
+    public static void printParticipantProfits(final List<PlayerProfit> playerProfits) {
+        playerProfits.forEach(playerProfit -> printParticipantProfit(playerProfit.getName(), playerProfit.getProfit()));
     }
 }
