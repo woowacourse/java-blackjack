@@ -61,9 +61,13 @@ public class Cards {
     }
 
     public Score createBlackjackScore() {
-        if (!isBlackjack()) {
-            throw new IllegalStateException("블랙잭 아니면 생성 불가능");
-        }
+        checkIsBlackjack();
         return score();
+    }
+
+    private void checkIsBlackjack() {
+        if (!isBlackjack()) {
+            throw new IllegalStateException("블랙잭이 아니면 생성 불가능합니다.");
+        }
     }
 }
