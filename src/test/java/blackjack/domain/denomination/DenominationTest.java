@@ -17,7 +17,7 @@ public class DenominationTest {
     void 가중치_조회() {
         int score = ACE.getScore();
 
-        assertThat(score).isEqualTo(11);
+        assertThat(score).isEqualTo(1);
     }
 
     @DisplayName("끗수 갯수는 13개 이어야한다.")
