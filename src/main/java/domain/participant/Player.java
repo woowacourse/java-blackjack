@@ -1,8 +1,6 @@
 package domain.participant;
 
-import static java.lang.Integer.compare;
-
-public final class Player extends Participant implements Comparable<Participant> {
+public final class Player extends Participant {
 
     private static final int MAX_SCORE = 21;
     private static final int COMPARE_CRITERIA = 0;
@@ -14,13 +12,15 @@ public final class Player extends Participant implements Comparable<Participant>
     }
 
     public Result judgeResult(Dealer dealer) {
-        if (compareTo(dealer) > COMPARE_CRITERIA) {
-            return Result.WIN;
+        if (isBlackJack() && !dealer.isBlackJack()) {
+            return Result.BLACKJACK;
         }
-        if (compareTo(dealer) < COMPARE_CRITERIA) {
+        if (isBust()) {
             return Result.LOSE;
         }
-        return Result.PUSH;
+
+        return Result.judgeResult(calculateScore(), dealer.calculateScore());
+
     }
 
     @Override
@@ -32,16 +32,4 @@ public final class Player extends Participant implements Comparable<Participant>
         this.money = new Money(money);
     }
 
-    @Override
-    public int compareTo(Participant participant) {
-        if (isBust()) {
-            return -1;
-        }
-
-        if(participant.isBust()){
-            return 1;
-        }
-
-        return compare(calculateScore(), participant.calculateScore());
-    }
 }
