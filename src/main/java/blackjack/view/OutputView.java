@@ -6,7 +6,6 @@ import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Human;
 import blackjack.domain.participant.human.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class OutputView {

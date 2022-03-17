@@ -53,6 +53,7 @@ public final class Players {
             Result result = player.calculateResult(dealer);
         }
     }
+
     public List<String> getNames() {
         return value.stream()
                 .map(Player::getName)

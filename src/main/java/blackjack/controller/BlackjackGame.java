@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public final class BlackjackGame {
     private static final int INIT_CARD_NUMBER = 2;
@@ -47,7 +46,7 @@ public final class BlackjackGame {
     }
 
     private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
-        while (!player.isBust()  && !player.isBlackjack() && InputView.inputOneMoreCard(player.getName())) {
+        while (!player.isBust() && !player.isBlackjack() && InputView.inputOneMoreCard(player.getName())) {
             player.addCard(cardDeck.pop());
             OutputView.printHumanHand(player);
         }
@@ -69,7 +68,7 @@ public final class BlackjackGame {
         int dealerMoney = 0;
         Map<Player, Integer> prides = new HashMap<>();
         for (Player player : players.get()) {
-            prides.put(player, new PrideCalculator(player, dealer).get());
+            prides.put(player, PrideCalculator.compute(player, dealer));
             dealerMoney -= prides.get(player);
         }
 

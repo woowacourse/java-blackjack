@@ -34,20 +34,18 @@ class PrideCalculatorTest {
             // given
             addCardList(player, List.of("A", "10"));
 
+        }
+
+        @Test
+        void resultTest() {
             Dealer dealer = new Dealer(List.of(
                     Card.of(Denomination.EIGHT, Suit.CLOVER),
                     Card.of(Denomination.TEN, Suit.CLOVER),
                     Card.of(Denomination.TEN, Suit.SPADE)
             ));
 
-            // when
-            prideCalculator = new PrideCalculator(player, dealer);
-        }
-
-        @Test
-        void resultTest() {
             // then
-            assertThat(prideCalculator.get())
+            assertThat(PrideCalculator.compute(player,dealer))
                     .isEqualTo(15000);
         }
     }
@@ -61,20 +59,17 @@ class PrideCalculatorTest {
         void setup() {
             // given
             addCardList(player, List.of("A", "10"));
+        }
 
+        @Test
+        void resultTest() {
             Dealer dealer = new Dealer(List.of(
                     Card.of(Denomination.ACE, Suit.CLOVER),
                     Card.of(Denomination.TEN, Suit.CLOVER)
             ));
 
-            // when
-            prideCalculator = new PrideCalculator(player, dealer);
-        }
-
-        @Test
-        void resultTest() {
             // then
-            assertThat(prideCalculator.get())
+            assertThat(PrideCalculator.compute(player,dealer))
                     .isEqualTo(0);
         }
     }
@@ -88,21 +83,18 @@ class PrideCalculatorTest {
         void setup() {
             // given
             addCardList(player, List.of("5", "10"));
+        }
 
+        @Test
+        void resultTest() {
             Dealer dealer = new Dealer(List.of(
                     Card.of(Denomination.FIVE, Suit.CLOVER),
                     Card.of(Denomination.TEN, Suit.CLOVER),
                     Card.of(Denomination.NINE, Suit.CLOVER)
             ));
 
-            // when
-            prideCalculator = new PrideCalculator(player, dealer);
-        }
-
-        @Test
-        void resultTest() {
             // then
-            assertThat(prideCalculator.get())
+            assertThat(PrideCalculator.compute(player,dealer))
                     .isEqualTo(10000);
         }
     }
@@ -116,21 +108,18 @@ class PrideCalculatorTest {
         void setup() {
             // given
             addCardList(player, List.of("5", "10"));
+        }
 
+        @Test
+        void resultTest() {
             Dealer dealer = new Dealer(List.of(
                     Card.of(Denomination.NINE, Suit.CLOVER),
                     Card.of(Denomination.TEN, Suit.CLOVER),
                     Card.of(Denomination.ACE, Suit.CLOVER)
             ));
 
-            // when
-            prideCalculator = new PrideCalculator(player, dealer);
-        }
-
-        @Test
-        void resultTest() {
             // then
-            assertThat(prideCalculator.get())
+            assertThat(PrideCalculator.compute(player,dealer))
                     .isEqualTo(-10000);
         }
     }
@@ -144,20 +133,17 @@ class PrideCalculatorTest {
         void setup() {
             // given
             addCardList(player, List.of("5", "10"));
+        }
 
+        @Test
+        void resultTest() {
             Dealer dealer = new Dealer(List.of(
                     Card.of(Denomination.TWO, Suit.CLOVER),
                     Card.of(Denomination.TEN, Suit.CLOVER)
             ));
 
-            // when
-            prideCalculator = new PrideCalculator(player, dealer);
-        }
-
-        @Test
-        void resultTest() {
             // then
-            assertThat(prideCalculator.get())
+            assertThat(PrideCalculator.compute(player,dealer))
                     .isEqualTo(10000);
         }
     }
@@ -171,20 +157,17 @@ class PrideCalculatorTest {
         void setup() {
             // given
             addCardList(player, List.of("5", "10"));
+        }
 
+        @Test
+        void resultTest() {
             Dealer dealer = new Dealer(List.of(
                     Card.of(Denomination.SEVEN, Suit.CLOVER),
                     Card.of(Denomination.EIGHT, Suit.CLOVER)
             ));
 
-            // when
-            prideCalculator = new PrideCalculator(player, dealer);
-        }
-
-        @Test
-        void resultTest() {
             // then
-            assertThat(prideCalculator.get())
+            assertThat(PrideCalculator.compute(player,dealer))
                     .isEqualTo(0);
         }
     }
@@ -198,20 +181,17 @@ class PrideCalculatorTest {
         void setup() {
             // given
             addCardList(player, List.of("5", "10", "9"));
+        }
 
+        @Test
+        void resultTest() {
             Dealer dealer = new Dealer(List.of(
                     Card.of(Denomination.SEVEN, Suit.CLOVER),
                     Card.of(Denomination.EIGHT, Suit.CLOVER)
             ));
 
-            // when
-            prideCalculator = new PrideCalculator(player, dealer);
-        }
-
-        @Test
-        void resultTest() {
             // then
-            assertThat(prideCalculator.get())
+            assertThat(PrideCalculator.compute(player, dealer))
                     .isEqualTo(-10000);
         }
     }

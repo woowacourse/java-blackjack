@@ -10,7 +10,7 @@ public final class PrideCalculator {
         this.playerMoney = compute(player, dealer);
     }
 
-    private int compute(Player player, Dealer dealer) {
+    public static int compute(Player player, Dealer dealer) {
         if (player.isCardsThatSize(2) && player.isBlackjack() && !dealer.isBlackjack()) {
             return player.getBetting()
                     .getMultiple(1.5)
