@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.Arrays;
 
 public enum Score {
-    WIN("승") {
+    WIN("승", 1.5) {
         @Override
         public boolean match(int competeNumber) {
             return competeNumber > 0;
@@ -14,7 +14,7 @@ public enum Score {
             return LOSE;
         }
     },
-    DRAW("무") {
+    DRAW("무", 1) {
         @Override
         public boolean match(int competeNumber) {
             return competeNumber == 0;
@@ -25,7 +25,7 @@ public enum Score {
             return DRAW;
         }
     },
-    LOSE("패") {
+    LOSE("패", -1) {
         @Override
         public boolean match(int competeNumber) {
             return competeNumber < 0;
@@ -38,9 +38,12 @@ public enum Score {
     };
 
     private final String value;
+    private final double dividendRate;
 
-    Score(String value) {
+
+    Score(String value, double dividendRate) {
         this.value = value;
+        this.dividendRate = dividendRate;
     }
 
     abstract public boolean match(int competeNumber);
@@ -56,5 +59,9 @@ public enum Score {
 
     public String getValue(){
         return value;
+    }
+
+    public double getDividendRate() {
+        return dividendRate;
     }
 }

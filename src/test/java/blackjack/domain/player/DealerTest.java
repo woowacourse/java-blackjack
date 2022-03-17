@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import blackjack.MockDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
-import blackjack.domain.player.Dealer;
 
 public class DealerTest {
 
