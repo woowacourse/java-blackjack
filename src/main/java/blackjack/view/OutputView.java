@@ -1,24 +1,22 @@
 package blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
+import blackjack.domain.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.Results;
 
 public class OutputView {
 
     private static final String DRAW_CARD_MESSAGE = "%s와 %s에게 2장을 나누었습니다.";
     private static final String CARD_INFORMATION_MESSAGE = "%s카드: %s";
-    private static final String TOTAL_RESULT_MESSAGE = "## 최종 승패";
+    private static final String TOTAL_RESULT_MESSAGE = "%n## 최종 수익%n";
     private static final String DRAW_RESULT_MESSAGE = "%s - 결과: %d";
-    private static final String RESULT_STATUS_MESSAGE = "%s: %s";
+    private static final String RESULT_STATUS_MESSAGE = "%s: %d%n";
 
     private OutputView() {
     }
@@ -86,30 +84,11 @@ public class OutputView {
         return String.format(DRAW_RESULT_MESSAGE, printCard(gamer), gamer.calculateScore());
     }
 
-    public static void printTotalResult(Map<Gamer, Results> gamerResult) {
-        System.out.println("\n" + TOTAL_RESULT_MESSAGE);
-        gamerResult.forEach(((gamer, results) -> {
-            System.out.printf(RESULT_STATUS_MESSAGE, gamer.getName(), resultsToString(gamer, results));
-            System.out.println();
-        }));
-    }
-
-    private static String resultsToString(Gamer gamer, Results results) {
-        if (gamer.isDealer()) {
-            return dealerResultToString(results);
-        }
-        return playerResultToString(results);
-    }
-
-    private static String dealerResultToString(Results results) {
-        Map<String, Long> result = results.getResults().stream()
-            .collect(Collectors.groupingBy(Result::getValue, Collectors.counting()));
-        return result.entrySet().stream()
-            .map(entry -> entry.getValue().toString() + entry.getKey())
-            .collect(Collectors.joining(" "));
-    }
-
-    private static String playerResultToString(Results results) {
-        return results.getResults().get(0).getValue();
+    public static void printTotalResult(final Dealer dealer, final BettingResult bettingResult) {
+        System.out.printf(TOTAL_RESULT_MESSAGE);
+        System.out.printf(RESULT_STATUS_MESSAGE, dealer.getName(), bettingResult.getDealerRevenue());
+        bettingResult.getPlayerRevenue().forEach((player, revenue) ->
+            System.out.printf(RESULT_STATUS_MESSAGE, player.getName(), revenue));
+        System.out.println();
     }
 }

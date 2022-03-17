@@ -2,8 +2,6 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +10,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 
 class ResultTest {
@@ -29,14 +26,14 @@ class ResultTest {
     }
 
     @Test
-    @DisplayName("딜러가 이긴 경우")
+    @DisplayName("플레이어가 진 경우")
     void dealerWinTest() {
         player.drawCard(new Card(Denomination.TWO, Suit.CLUBS));
         player.drawCard(new Card(Denomination.THREE, Suit.DIAMONDS));
 
-        Map<Gamer, Result> map = Result.judge(dealer, player);
+        Result result = Result.judge(dealer, player);
 
-        assertThat(map.get(dealer).getValue()).isEqualTo("승");
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -45,9 +42,9 @@ class ResultTest {
         player.drawCard(new Card(Denomination.TWO, Suit.DIAMONDS));
         player.drawCard(new Card(Denomination.TEN, Suit.DIAMONDS));
 
-        Map<Gamer, Result> map = Result.judge(dealer, player);
+        Result result = Result.judge(dealer, player);
 
-        assertThat(map.get(player).getValue()).isEqualTo("승");
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -56,8 +53,15 @@ class ResultTest {
         player.drawCard(new Card(Denomination.TWO, Suit.CLUBS));
         player.drawCard(new Card(Denomination.EIGHT, Suit.CLUBS));
 
-        Map<Gamer, Result> map = Result.judge(dealer, player);
+        Result result = Result.judge(dealer, player);
 
-        assertThat(map.get(dealer).getValue()).isEqualTo("무");
+        assertThat(result).isEqualTo(Result.DRAW);
+    }
+
+    @Test
+    @DisplayName("승무패 결과에 따른 수익 계산이 잘되는지 확인")
+    void calculateRevenueTest() {
+        assertThat(Result.BLACKJACK.calculateRevenue(1000))
+            .isEqualTo(1500);
     }
 }

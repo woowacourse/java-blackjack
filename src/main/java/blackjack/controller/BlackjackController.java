@@ -1,11 +1,13 @@
 package blackjack.controller;
 
+import blackjack.domain.BettingResult;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.answer.Answer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -30,7 +32,9 @@ public class BlackjackController {
         hitOrStandDealer(dealer);
         OutputView.printDrawResult(dealer, players);
 
-        OutputView.printTotalResult(dealer.judgeResult(players));
+        GameResult gameResult = dealer.judgeResult(players);
+        BettingResult bettingResult = gameResult.calculateRevenue();
+        OutputView.printTotalResult(dealer, bettingResult);
     }
 
     private Players participatePlayers() {

@@ -37,12 +37,12 @@ public abstract class Gamer {
         return cards.calculateScore();
     }
 
-    public boolean isBust() {
-        return cards.calculateScore() > DRAWABLE_NUMBER;
+    public boolean isBlackjack() {
+        return cards.calculateScore() == DRAWABLE_NUMBER;
     }
 
-    public boolean isDealer() {
-        return this instanceof Dealer;
+    public boolean isBust() {
+        return cards.calculateScore() > DRAWABLE_NUMBER;
     }
 
     public List<Card> getCards() {

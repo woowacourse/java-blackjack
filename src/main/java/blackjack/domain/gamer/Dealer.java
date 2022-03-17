@@ -1,12 +1,11 @@
 package blackjack.domain.gamer;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Result;
-import blackjack.domain.result.Results;
 
 public class Dealer extends Gamer {
 
@@ -21,24 +20,15 @@ public class Dealer extends Gamer {
         return calculateScore() <= DRAWABLE_NUMBER;
     }
 
-    public Map<Gamer, Results> judgeResult(final Players players) {
-        Map<Gamer, Results> gameResult = new LinkedHashMap<>();
-        initGameResult(gameResult, players);
-        judgePlayers(gameResult, players);
-        return gameResult;
+    public GameResult judgeResult(final Players players) {
+        Map<Player, Result> result = new LinkedHashMap<>();
+        judgePlayersResult(result, players);
+        return new GameResult(result);
     }
 
-    private void initGameResult(Map<Gamer, Results> gameResult, Players players) {
-        gameResult.put(this, new Results(new ArrayList<>()));
-        players.initGameResult(gameResult);
-    }
-
-    private void judgePlayers(Map<Gamer, Results> gameResult, Players players) {
-        players.getPlayers().forEach(player -> {
-            Map<Gamer, Result> judgeResult = Result.judge(this, player);
-            gameResult.get(this).add(judgeResult.get(this));
-            gameResult.get(player).add(judgeResult.get(player));
-        });
+    private void judgePlayersResult(final Map<Player, Result> gameResult, Players players) {
+        players.getPlayers()
+            .forEach(player -> gameResult.put(player, Result.judge(this, player)));
     }
 
     public Card getFirstCard() {
