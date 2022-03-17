@@ -19,7 +19,7 @@ public class BlackjackController {
         Participants participants = createParticipants();
         BlackjackGame blackjackGame = new BlackjackGame(participants);
 
-        dealInitialCards(blackjackGame);
+        printInitialCards(blackjackGame);
         dealMoreCards(blackjackGame);
         printResult(blackjackGame.getParticipants());
     }
@@ -39,8 +39,7 @@ public class BlackjackController {
             .collect(Collectors.toList());
     }
 
-    private void dealInitialCards(BlackjackGame blackjackGame) {
-        blackjackGame.dealInitialCards();
+    private void printInitialCards(BlackjackGame blackjackGame) {
         OutputView.printInitialCardInformation(ParticipantsDto.from(blackjackGame.getParticipants()));
     }
 

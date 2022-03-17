@@ -15,7 +15,8 @@ public class ParticipantCardsTest {
         List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.ACE)
             , new Card(Suit.DIAMOND, Denomination.JACK));
 
-        ParticipantCards participantCards = new ParticipantCards(cards);
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.addInitialCards(cards);
 
         assertThat(participantCards.getCards().containsAll(cards)).isTrue();
     }
@@ -26,7 +27,8 @@ public class ParticipantCardsTest {
         List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.ACE)
             , new Card(Suit.DIAMOND, Denomination.JACK));
 
-        ParticipantCards participantCards = new ParticipantCards(cards);
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.addInitialCards(cards);
         participantCards.addCard(new Card(Suit.CLOVER, Denomination.TEN));
 
         assertThat(participantCards.getCards().size()).isEqualTo(3);
@@ -37,7 +39,9 @@ public class ParticipantCardsTest {
     void calculateScoreNotContainAce() {
         List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.FIVE)
             , new Card(Suit.DIAMOND, Denomination.JACK));
-        ParticipantCards participantCards = new ParticipantCards(cards);
+
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.addInitialCards(cards);
 
         assertThat(participantCards.getScore()).isEqualTo(15);
     }
@@ -48,7 +52,8 @@ public class ParticipantCardsTest {
         List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.ACE)
             , new Card(Suit.DIAMOND, Denomination.JACK));
 
-        ParticipantCards participantCards = new ParticipantCards(cards);
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.addInitialCards(cards);
 
         assertThat(participantCards.getScore()).isEqualTo(21);
     }
@@ -59,7 +64,8 @@ public class ParticipantCardsTest {
         List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.ACE)
             , new Card(Suit.CLOVER, Denomination.ACE));
 
-        ParticipantCards participantCards = new ParticipantCards(cards);
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.addInitialCards(cards);
 
         assertThat(participantCards.getScore()).isEqualTo(12);
     }
@@ -71,7 +77,8 @@ public class ParticipantCardsTest {
             , new Card(Suit.CLOVER, Denomination.ACE)
             , new Card(Suit.HEART, Denomination.ACE));
 
-        ParticipantCards participantCards = new ParticipantCards(cards);
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.addInitialCards(cards);
 
         assertThat(participantCards.getScore()).isEqualTo(13);
     }
@@ -83,7 +90,8 @@ public class ParticipantCardsTest {
             , new Card(Suit.CLOVER, Denomination.ACE)
             , new Card(Suit.HEART, Denomination.ACE));
 
-        ParticipantCards participantCards = new ParticipantCards(cards);
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.addInitialCards(cards);
 
         assertThat(participantCards.getScore()).isEqualTo(17);
     }
@@ -95,8 +103,19 @@ public class ParticipantCardsTest {
             , new Card(Suit.CLOVER, Denomination.TEN)
             , new Card(Suit.HEART, Denomination.ACE));
 
-        ParticipantCards participantCards = new ParticipantCards(cards);
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.addInitialCards(cards);
 
         assertThat(participantCards.getScore()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("소지 카드가 없을 때 오류 반환")
+    void getFirstCardEmpty() {
+        ParticipantCards participantCards = new ParticipantCards();
+
+        assertThatThrownBy(() ->
+            participantCards.getFirstCard()
+        ).isInstanceOf(IndexOutOfBoundsException.class);
     }
 }

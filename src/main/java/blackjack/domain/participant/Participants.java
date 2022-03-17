@@ -11,7 +11,7 @@ public class Participants {
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 8;
     private static final String PLAYER_NUMBER_ERROR_MESSAGE = "플레이어 수는 1~8명 사이여야 합니다.";
-    public static final String PLAYER_TURN_ACCESS_ERROR_MESSAGE = "플레이어 턴이 모두 종료되어 접근 할 수 없습니다.";
+    private static final String PLAYER_TURN_ACCESS_ERROR_MESSAGE = "플레이어 턴이 모두 종료되어 접근 할 수 없습니다.";
 
     private final Dealer dealer = new Dealer();
     private final List<Player> players;
@@ -28,9 +28,9 @@ public class Participants {
     }
 
     public void dealInitialCards(Deck deck) {
-        deck.dealInitialCards(dealer);
+        dealer.initCards(deck.pickInitialCards());
         for (Player player : players) {
-            deck.dealInitialCards(player);
+            player.initCards(deck.pickInitialCards());
         }
     }
 
@@ -48,7 +48,7 @@ public class Participants {
     }
 
     public void dealToPlayer(Deck deck) {
-        deck.dealCard(getCurrentPlayer());
+        getCurrentPlayer().addCard(deck.pickCard());
     }
 
     public void stayCurrentPlayer() {
@@ -60,7 +60,7 @@ public class Participants {
     }
 
     public void dealToDealer(Deck deck) {
-        deck.dealCard(dealer);
+        dealer.addCard(deck.pickCard());
     }
 
     public Player getCurrentPlayer() {

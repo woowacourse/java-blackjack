@@ -21,7 +21,7 @@ public enum DenominationView {
     QUEEN(Denomination.QUEEN, "Q"),
     KING(Denomination.KING, "K");
 
-    public static final String NO_SUCH_DENOMINATION = "일치하는 denomination이 없습니다.";
+    private static final String NO_SUCH_DENOMINATION = "일치하는 denomination이 없습니다.";
 
     private final Denomination denomination;
     private final String name;

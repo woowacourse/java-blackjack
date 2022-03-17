@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,17 +8,16 @@ import blackjack.domain.card.ParticipantCards;
 
 public abstract class Participant {
 
-    private static final String UNINITIALIZED_CARDS_ERROR_MESSAGE = "초기 카드를 받지 않았습니다.";
-
     private final ParticipantName name;
     protected ParticipantCards cards;
 
     public Participant(String name) {
         this.name = new ParticipantName(name);
+        this.cards = new ParticipantCards();
     }
 
     public void initCards(List<Card> cards) {
-        this.cards = new ParticipantCards(new ArrayList<>(cards));
+        this.cards.addInitialCards(cards);
     }
 
     public boolean isBlackjack() {
@@ -43,13 +41,6 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        validateInitialCards();
         return Collections.unmodifiableList(cards.getCards());
-    }
-
-    private void validateInitialCards() {
-        if (cards == null) {
-            throw new NullPointerException(UNINITIALIZED_CARDS_ERROR_MESSAGE);
-        }
     }
 }

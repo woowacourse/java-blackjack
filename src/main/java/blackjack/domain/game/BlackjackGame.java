@@ -11,9 +11,6 @@ public class BlackjackGame {
 
     public BlackjackGame(Participants participants) {
         this.participants = participants;
-    }
-
-    public void dealInitialCards() {
         participants.dealInitialCards(deck);
     }
 

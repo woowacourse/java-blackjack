@@ -12,7 +12,7 @@ public enum SuitView {
     SPADE(Suit.SPADE, "스페이드"),
     HEART(Suit.HEART, "하트");
 
-    public static final String NO_SUCH_SUIT = "일치하는 suit가 없습니다.";
+    private static final String NO_SUCH_SUIT = "일치하는 suit가 없습니다.";
 
     private final Suit suit;
     private final String name;
