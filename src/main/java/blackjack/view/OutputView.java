@@ -1,14 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.BettingResult;
-import blackjack.domain.PlayerOutcome;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Participant;
-import blackjack.domain.entry.Player;
 
 import java.text.MessageFormat;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,9 +15,7 @@ public class OutputView {
     public static void printPlayersDefaultCard(List<Participant> participants) {
         System.out.println(MessageFormat.format("{0}에게 2장의 카드를 나누었습니다.", concatPlayerName(participants)));
         for (Participant participant : participants) {
-            System.out.println(MessageFormat.format("{0}카드: {1}", participant.getName(), participant.openCard().stream()
-                    .map(OutputView::toCardName)
-                    .collect(Collectors.joining(NAME_DELIMITER))));
+            System.out.println(MessageFormat.format("{0}카드: {1}", participant.getName(), concatCardName(participant.openCard())));
         }
         System.out.println();
     }
@@ -42,15 +36,14 @@ public class OutputView {
 
     public static void printGameResult(BettingResult bettingResult) {
         System.out.println("## 최종 수익");
-        System.out.println("");
 
         bettingResult.getBettingResult().forEach((participant, money) -> {
-            System.out.println(participant.getName() + ": " + money);
+            System.out.println(MessageFormat.format("{0}: {1}", participant.getName(), money));
         });
     }
 
     private static String getPlayerCard(Participant participant) {
-        return MessageFormat.format("{0}카드: {1}", participant.getName(), concatCardName(participant.getHoldCards()));
+        return MessageFormat.format("{0}카드: {1}", participant.getName(), concatCardName(participant.getHoldCards().getCards()));
     }
 
     private static String concatPlayerName(List<Participant> players) {
@@ -59,8 +52,8 @@ public class OutputView {
                 .collect(Collectors.joining(NAME_DELIMITER));
     }
 
-    private static String concatCardName(HoldCards holdCards) {
-        return holdCards.getCards()
+    private static String concatCardName(List<Card> cards) {
+        return cards
                 .stream()
                 .map(OutputView::toCardName)
                 .collect(Collectors.joining(NAME_DELIMITER));

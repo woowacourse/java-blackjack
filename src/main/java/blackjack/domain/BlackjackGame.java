@@ -29,10 +29,6 @@ public class BlackjackGame {
                 .collect(Collectors.toMap(participant -> participant, Participant::calculateCardsSum));
     }
 
-    public GameResult getGameResult() {
-        return gameParticipants.getGameResult();
-    }
-
     public BettingResult getBettingResult() {
         GameResult gameResult = gameParticipants.getGameResult();
         return gameResult.calculateBettingResult(getDealer());
