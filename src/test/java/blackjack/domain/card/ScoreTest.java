@@ -43,4 +43,12 @@ class ScoreTest {
 
         assertThat(score).isEqualTo(new Score(22));
     }
+
+    @Test
+    void 카드의_점수계산으로_생성() {
+        final Cards cards = new Cards(List.of(Card.of(SPADES, A), Card.of(HEARTS, A)));
+        final Score score = Score.createScore(cards);
+
+        assertThat(score).isEqualTo(new Score(12));
+    }
 }

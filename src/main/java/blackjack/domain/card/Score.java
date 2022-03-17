@@ -24,6 +24,10 @@ public class Score {
         return new Score(cards.maxScore());
     }
 
+    public static Score createScore(final Cards cards) {
+        return new Score(cards.score());
+    }
+
     public boolean isBlackjackScore() {
         return score == BLACKJACK_SCORE;
     }
