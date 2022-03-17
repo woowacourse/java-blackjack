@@ -1,11 +1,9 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.GameResult;
-import blackjack.domain.PlayerOutcome;
+import blackjack.domain.result.GameResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameParticipants {
     private final Dealer dealer;

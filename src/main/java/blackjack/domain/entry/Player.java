@@ -1,6 +1,6 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.PlayerOutcome;
+import blackjack.domain.result.PlayerOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 
@@ -16,10 +16,6 @@ public class Player extends Participant {
         super(holdCards);
         this.bettingMoney = bettingMoney;
         this.name = name;
-    }
-
-    public void initBettingMoney(int money) {
-        this.bettingMoney = money;
     }
 
     public PlayerOutcome match(Dealer dealer) {

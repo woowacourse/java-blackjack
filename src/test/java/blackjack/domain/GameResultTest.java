@@ -1,7 +1,10 @@
 package blackjack.domain;
 
 import blackjack.domain.card.*;
+import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.PlayerOutcome;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -65,6 +68,8 @@ public class GameResultTest {
         result.put(PlayerOutcome.WIN, List.of(player));
 
         GameResult gameResult = new GameResult(result);
+        Map<Participant, Integer> playerMoney = new HashMap<>();
+        playerMoney.put(player, 10000);
 
         assertThat(gameResult.getDealerMoney(player, PlayerOutcome.WIN)).isEqualTo(-10000);
     }
