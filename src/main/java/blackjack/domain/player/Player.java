@@ -7,10 +7,10 @@ import java.util.List;
 
 public abstract class Player {
 
-    protected Cards cards;
-    protected String name;
+    Cards cards;
+    String name;
 
-    public Player(String name) {
+    Player(String name) {
         validateEmpty(name);
         this.name = name;
         this.cards = new Cards();
