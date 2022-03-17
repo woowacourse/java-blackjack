@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public class Score implements Comparable<Score> {
+public class Score {
 
     private final int value;
 
@@ -16,9 +16,12 @@ public class Score implements Comparable<Score> {
         return this.value < value;
     }
 
-    @Override
-    public int compareTo(Score target) {
-        return Integer.compare(value, target.value);
+    public boolean isGreaterThan(int value) {
+        return this.value > value;
+    }
+
+    public boolean isGreaterThan(Score target) {
+        return this.value > target.getValue();
     }
 
     @Override

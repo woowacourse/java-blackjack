@@ -21,16 +21,28 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("Score는 value 값을 기준으로 비교가 가능하다.")
-    void compare() {
+    @DisplayName("인자로 들어온 값보다 크면 isGreaterThan은 true를 반환한다.")
+    void isGreaterThan() {
         //given
-        Score greater = new Score(1);
-        Score less = new Score(0);
+        Score score = new Score(1);
 
         //when
-        int actual = greater.compareTo(less);
+        boolean actual = score.isGreaterThan(0);
 
         //then
-        assertThat(actual).isEqualTo(1);
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("isGreaterThan은 Score와도 비교가 가능하다.")
+    void isLessThanScore() {
+        //given
+        Score score = new Score(1);
+
+        //when
+        boolean actual = score.isGreaterThan(new Score(0));
+
+        //then
+        assertThat(actual).isTrue();
     }
 }

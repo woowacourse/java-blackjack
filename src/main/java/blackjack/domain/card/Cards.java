@@ -8,7 +8,8 @@ import java.util.Objects;
 public class Cards {
 
     private static final int BUST_STANDARD = 21;
-
+    private static final Score BLACKJACK_SCORE = new Score(21);
+    private static final int BLACKJACK_SIZE = 2;
     private static final int INITIAL_CARDS_SIZE = 2;
 
     private final List<Card> cards;
@@ -58,6 +59,14 @@ public class Cards {
     private boolean containsAce(List<Card> cards) {
         return cards.stream()
                 .anyMatch(card -> card.isSameValueWith(Denomination.ACE));
+    }
+
+    public boolean isBust() {
+        return calculateScore().isGreaterThan(BUST_STANDARD);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_SIZE && calculateScore().equals(BLACKJACK_SCORE);
     }
 
     public List<Card> getCards() {

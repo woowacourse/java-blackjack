@@ -34,7 +34,7 @@ public enum Outcome {
     }
 
     private static Outcome judgeByScore(Score score, Score target) {
-        if (score.compareTo(target) > 0) {
+        if (score.isGreaterThan(target)) {
             return Outcome.WIN;
         }
         if (score.equals(target)) {
