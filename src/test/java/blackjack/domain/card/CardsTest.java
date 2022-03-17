@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static blackjack.domain.card.Denomination.*;
@@ -8,6 +9,7 @@ import static blackjack.domain.card.Symbol.*;
 import static blackjack.domain.fixture.FixedSequenceDeck.generateDeck;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("Cards 클래스")
 class CardsTest {
 
     @Test
@@ -65,5 +67,38 @@ class CardsTest {
         // then
         assertThat(expectedFalse).isFalse();
         assertThat(expectedTrue).isTrue();
+    }
+
+    @Nested
+    @DisplayName("isBlackjack 메서드는")
+    class Describe_isBlackjack {
+
+        @Test
+        @DisplayName("첫 드로우에 21점을 달성하면 참을 반환한다")
+        void returnTrueWhenBlackjack() {
+            Deck deck = generateDeck(new Card(SPADE, JACK), new Card(SPADE, ACE));
+            Cards cards = deck.initialDraw();
+
+            assertThat(cards.isBlackjack()).isTrue();
+        }
+
+        @Test
+        @DisplayName("21점이지만 첫 드로우에 달성한 점수가 아닌 경우 거짓을 반환한다")
+        void returnFalseWhenNotBlackjack1() {
+            Deck deck = generateDeck(new Card(SPADE, JACK), new Card(HEART, QUEEN), new Card(SPADE, ACE));
+            Cards cards = deck.initialDraw();
+            cards.add(deck.draw());
+
+            assertThat(cards.isBlackjack()).isFalse();
+        }
+
+        @Test
+        @DisplayName("21미만인 경우 거짓을 반환한다")
+        void returnFalseWhenNotBlackjack2() {
+            Deck deck = generateDeck(new Card(SPADE, JACK), new Card(HEART, QUEEN));
+            Cards cards = deck.initialDraw();
+
+            assertThat(cards.isBlackjack()).isFalse();
+        }
     }
 }

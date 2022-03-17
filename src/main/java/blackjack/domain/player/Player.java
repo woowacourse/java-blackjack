@@ -16,20 +16,12 @@ public class Player extends Participant{
     }
 
     @Override
-    public void addCard(Card card) {
-        super.addCard(card);
-        if (super.isBust() || super.isBlackjack()) {
-            stay = true;
-        }
-    }
-
-    @Override
     public List<Card> openCards() {
         return getCards().subList(0, OPEN_CARD_SIZE);
     }
 
     public boolean isAbleToHit() {
-        return !super.isBust() && !super.isBlackjack() && !stay;
+        return !stay && !super.isBlackjack() && !super.isMaxScore() && !super.isBust();
     }
 
     public void stay() {

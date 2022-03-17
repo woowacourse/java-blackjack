@@ -30,12 +30,16 @@ public abstract class Participant {
 
     public abstract List<Card> openCards();
 
-    public void addCard(Card card) {
+    public final void addCard(Card card) {
         cards.add(card);
     }
 
     public final List<Card> getCards() {
         return cards.toList();
+    }
+
+    public final int getScore() {
+        return cards.calculateScore();
     }
 
     protected final boolean isBust() {
@@ -46,8 +50,8 @@ public abstract class Participant {
         return cards.isBlackjack();
     }
 
-    public final int getScore() {
-        return cards.calculateScore();
+    protected final boolean isMaxScore() {
+        return cards.isMaxScore();
     }
 
     public final String getName() {
