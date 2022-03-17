@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import java.util.Map;
+
 import blackjack.domain.BlackJackGame;
 import blackjack.dto.MatchRecordDto;
 import blackjack.dto.UserDto;
@@ -18,7 +20,9 @@ public class BlackJackController {
     }
 
     public void run() {
-        BlackJackGame game = BlackJackGame.fromPlayerNames(inputView.inputPlayerNames());
+        Map<String, String> inputNameAndMoney = inputView.inputPlayersAndMoney();
+        BlackJackGame game = BlackJackGame.fromPlayerNames(inputNameAndMoney);
+
         game.drawInitialCards(users -> outputView.printInitCards(UsersDto.fromInit(users)));
         game.hitOrStayCardsPlayer(
             user -> () -> inputView.inputWhetherToDrawCard(UserDto.fromEvery(user)),

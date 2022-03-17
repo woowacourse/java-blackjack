@@ -24,9 +24,9 @@ public class Users {
         this(players, new Dealer());
     }
 
-    public static Users from(List<String> inputNames) {
-        List<Player> players = inputNames.stream()
-            .map(Player::new)
+    public static Users from(Map<String, String> inputNameAndMoney) {
+        List<Player> players = inputNameAndMoney.entrySet().stream()
+            .map(nameMoneyEntry -> Player.fromNameAndMoney(nameMoneyEntry.getKey(), nameMoneyEntry.getValue()))
             .collect(toList());
         return new Users(players);
     }

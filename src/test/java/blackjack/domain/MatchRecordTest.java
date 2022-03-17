@@ -19,7 +19,7 @@ class MatchRecordTest {
         // given
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        Player player = new Player("player");
+        Player player = new Player("player", 1000);
         
         player.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
         

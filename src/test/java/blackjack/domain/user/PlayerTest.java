@@ -2,15 +2,16 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.strategy.hit.PlayerHitStrategy;
-
-import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
@@ -23,7 +24,7 @@ public class PlayerTest {
         String name = "pobi";
 
         //when
-        Player player = new Player(name);
+        Player player = new Player(name, 1000);
 
         //then
         assertThat(player).isNotNull();
@@ -33,7 +34,7 @@ public class PlayerTest {
     @Test
     public void testDrawCard() {
         //given
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
 
         //when
         player.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
@@ -48,7 +49,7 @@ public class PlayerTest {
     public void testCardDrawable() {
         //given
         Deck deck = new Deck();
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
 
         //when
         for (int i = 0; i < MAX_DRAWABLE_COUNT; i++) {
@@ -62,8 +63,7 @@ public class PlayerTest {
     @Test
     public void testShowInitCards() {
         //given
-        Deck deck = new Deck();
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
 
         player.receiveCard(new Card(Suit.CLOVER, Denomination.SEVEN));
         player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
@@ -76,25 +76,25 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 y를 입력받으면 카드를 한장 더 받을 수 있다.")
+    @DisplayName("플레이어는 참을 입력받으면 카드를 한장 더 받을 수 있다.")
     public void testPlayerHitWithInputY() {
         // given
         Deck deck = new Deck();
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         // when
-        boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> "y"));
+        boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> true));
         // then
         assertThat(isHit).isTrue();
     }
 
     @Test
-    @DisplayName("플레이어는 n을 입력받으면 카드를 한장 더 받을 수 없다다.")
+    @DisplayName("플레이어는 거짓을 입력받으면 카드를 한장 더 받을 수 없다다.")
     public void testPlayerHitWithInputN() {
         // given
         Deck deck = new Deck();
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         // when
-        boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> "n"));
+        boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> false));
         // then
         assertThat(isHit).isFalse();
     }
