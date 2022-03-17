@@ -6,8 +6,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
+import blackjack.domain.player.Guest;
+import blackjack.domain.player.Guests;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -25,14 +25,14 @@ public class ResultTest {
         dealer.takeCard(card1);
         dealer.takeCard(card2);
 
-        Participants participants = new Participants(List.of("엘리", "배카라"));
-        for (Participant participant : participants) {
-            participant.takeCard(card3);
-            participant.takeCard(card4);
+        Guests guests = new Guests(List.of("엘리", "배카라"));
+        for (Guest guest : guests) {
+            guest.takeCard(card3);
+            guest.takeCard(card4);
         }
 
-        for (Participant participant : participants) {
-            assertThat(Result.of(dealer, participant)).isEqualTo(expected);
+        for (Guest guest : guests) {
+            assertThat(Result.of(dealer, guest)).isEqualTo(expected);
         }
     }
 
@@ -87,27 +87,27 @@ public class ResultTest {
     }
 
     @ParameterizedTest(name = "[{index}] 딜러 : {0}, {1}, 참가자 : {2}, {3}, {4} -> {5}")
-    @MethodSource("generateDecideWhenDealerIsAliveAndParticipantBustArguments")
+    @MethodSource("generateDecideWhenDealerIsAliveAndGuestBustArguments")
     @DisplayName("딜러의 점수가 21점 이하이고 참가자가 버스트가 있는 경우, 참가자의 승패를 테스트한다.")
-    void decideWhenDealerIsAliveAndParticipantBust(Card card1, Card card2, Card card3, Card card4,
+    void decideWhenDealerIsAliveAndguestBust(Card card1, Card card2, Card card3, Card card4,
                                                    Card card5, Result expected) {
         Dealer dealer = new Dealer();
         dealer.takeCard(card1);
         dealer.takeCard(card2);
 
-        Participants participants = new Participants(List.of("엘리", "배카라"));
-        for (Participant participant : participants) {
-            participant.takeCard(card3);
-            participant.takeCard(card4);
-            participant.takeCard(card5);
+        Guests guests = new Guests(List.of("엘리", "배카라"));
+        for (Guest guest : guests) {
+            guest.takeCard(card3);
+            guest.takeCard(card4);
+            guest.takeCard(card5);
         }
 
-        for (Participant participant : participants) {
-            assertThat(Result.of(dealer, participant)).isEqualTo(expected);
+        for (Guest guest : guests) {
+            assertThat(Result.of(dealer, guest)).isEqualTo(expected);
         }
     }
 
-    static Stream<Arguments> generateDecideWhenDealerIsAliveAndParticipantBustArguments() {
+    static Stream<Arguments> generateDecideWhenDealerIsAliveAndGuestBustArguments() {
         return Stream.of(
                 Arguments.of(
                         new Card(Denomination.NINE, Suit.CLOVER), new Card(Denomination.EIGHT, Suit.HEART),
@@ -135,15 +135,15 @@ public class ResultTest {
         dealer.takeCard(card2);
         dealer.takeCard(card3);
 
-        Participants participants = new Participants(List.of("엘리", "배카라"));
-        for (Participant participant : participants) {
-            participant.takeCard(card4);
-            participant.takeCard(card5);
-            participant.takeCard(card6);
+        Guests guests = new Guests(List.of("엘리", "배카라"));
+        for (Guest guest : guests) {
+            guest.takeCard(card4);
+            guest.takeCard(card5);
+            guest.takeCard(card6);
         }
 
-        for (Participant participant : participants) {
-            assertThat(Result.of(dealer, participant)).isEqualTo(expected);
+        for (Guest guest : guests) {
+            assertThat(Result.of(dealer, guest)).isEqualTo(expected);
         }
     }
 

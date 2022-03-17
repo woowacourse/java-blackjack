@@ -10,14 +10,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ParticipantsTest {
+public class GuestsTest {
 
     @Test
     @DisplayName("참가자의 이름이 중복될 경우 예외를 발생시킨다.")
     void throwExceptionWhenDuplicate() {
         List<String> names = List.of("엘리", "배카라", "배카라");
 
-        assertThatThrownBy(() -> new Participants(names))
+        assertThatThrownBy(() -> new Guests(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자의 이름은 중복될 수 없습니다.");
     }
@@ -26,7 +26,7 @@ public class ParticipantsTest {
     @MethodSource("generateThrowExceptionWhenOutOfBoundsArguments")
     @DisplayName("참가자의 인원이 2명~8명 사이가 아닐 경우 예외를 발생시킨다.")
     void throwExceptionWhenOutOfBounds(List<String> names) {
-        assertThatThrownBy(() -> new Participants(names))
+        assertThatThrownBy(() -> new Guests(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참자가 인원은 2명~8명 사이여야합니다.");
     }

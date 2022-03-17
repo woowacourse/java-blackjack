@@ -5,8 +5,8 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Money;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
+import blackjack.domain.player.Guest;
+import blackjack.domain.player.Guests;
 import blackjack.domain.result.MoneyResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,29 +17,29 @@ public class BlackjackController {
     public void run() {
         final BlackjackMachine blackJackMachine = new BlackjackMachine(new CardDeck());
         final Dealer dealer = new Dealer();
-        final Participants participants = generateParticipants();
+        final Guests guests = createGuests();
 
-        betParticipantsMoney(participants);
-        giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
-        askAndGiveCardsToParticipants(blackJackMachine, participants);
+        betGuestsMoney(guests);
+        giveInitialCardsToPlayer(blackJackMachine, dealer, guests);
+        askAndGiveCardsToGuests(blackJackMachine, guests);
         giveCardsToDealer(blackJackMachine, dealer);
 
-        calculateTotalScore(dealer, participants);
-        calculateTotalMoney(dealer, participants);
+        calculateTotalScore(dealer, guests);
+        calculateTotalMoney(dealer, guests);
     }
 
-    private Participants generateParticipants() {
+    private Guests createGuests() {
         try {
-            final List<String> names = InputView.getParticipantNames();
-            return new Participants(names);
+            final List<String> names = InputView.getGuestNames();
+            return new Guests(names);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            return generateParticipants();
+            return createGuests();
         }
     }
 
-    private void betParticipantsMoney(final Participants participants) {
-        for (Participant participant : participants) {
+    private void betGuestsMoney(final Guests participants) {
+        for (Guest participant : participants) {
             participant.betMoney(getMoney(participant.getName()));
         }
     }
@@ -55,35 +55,35 @@ public class BlackjackController {
 
     private void giveInitialCardsToPlayer(final BlackjackMachine blackJackMachine,
                                           final Dealer dealer,
-                                          final Participants participants) {
-        blackJackMachine.giveInitialCards(dealer, participants);
-        OutputView.printInitialCards(dealer, participants);
+                                          final Guests guests) {
+        blackJackMachine.giveInitialCards(dealer, guests);
+        OutputView.printInitialCards(dealer, guests);
     }
 
-    private void askAndGiveCardsToParticipants(final BlackjackMachine blackJackMachine,
-                                               final Participants participants) {
-        for (Participant participant : participants) {
-            askAndGiveCardToParticipant(blackJackMachine, participant);
+    private void askAndGiveCardsToGuests(final BlackjackMachine blackJackMachine,
+                                         final Guests guests) {
+        for (Guest guest : guests) {
+            askAndGiveCardToGuest(blackJackMachine, guest);
         }
         OutputView.printNewLine();
     }
 
-    private void askAndGiveCardToParticipant(final BlackjackMachine blackJackMachine,
-                                             final Participant participant) {
+    private void askAndGiveCardToGuest(final BlackjackMachine blackJackMachine,
+                                       final Guest guest) {
         Choice choice;
         do {
-            choice = getChoice(participant);
-            blackJackMachine.giveCardToParticipant(participant, choice);
-            OutputView.printPlayerCards(participant);
-        } while (choice.isHit() && participant.canTakeCard());
+            choice = getChoice(guest);
+            blackJackMachine.giveCardToGuest(guest, choice);
+            OutputView.printPlayerCards(guest);
+        } while (choice.isHit() && guest.canTakeCard());
     }
 
-    private Choice getChoice(final Participant participant) {
+    private Choice getChoice(final Guest guest) {
         try {
-            return InputView.getChoice(participant);
+            return InputView.getChoice(guest);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            return getChoice(participant);
+            return getChoice(guest);
         }
     }
 
@@ -97,16 +97,16 @@ public class BlackjackController {
     }
 
     private void calculateTotalScore(final Dealer dealer,
-                                     final Participants participants) {
+                                     final Guests guests) {
         OutputView.printTotalScore(dealer, dealer.getTotalScore());
-        for (Participant participant : participants) {
-            OutputView.printTotalScore(participant, participant.getTotalScore());
+        for (Guest guest : guests) {
+            OutputView.printTotalScore(guest, guest.getTotalScore());
         }
     }
 
-    private void calculateTotalMoney(final Dealer dealer, final Participants participants) {
+    private void calculateTotalMoney(final Dealer dealer, final Guests guests) {
         final MoneyResult moneyResult = new MoneyResult();
-        moneyResult.calculateParticipantMoney(dealer, participants);
+        moneyResult.calculateGuestMoney(dealer, guests);
         OutputView.printTotalMoney(moneyResult.getMoneys(),
                 dealer.getName(), moneyResult.calculateDealerMoney());
     }

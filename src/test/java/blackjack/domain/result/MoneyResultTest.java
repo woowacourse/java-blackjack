@@ -8,8 +8,8 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Money;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
+import blackjack.domain.player.Guest;
+import blackjack.domain.player.Guests;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -28,19 +28,19 @@ public class MoneyResultTest {
         dealer.takeCard(card1);
         dealer.takeCard(card2);
 
-        Participants participants = new Participants(List.of("김제니", "박채영"));
-        for (Participant participant : participants) {
-            participant.takeCard(card3);
-            participant.takeCard(card4);
-            participant.betMoney(Money.from(10_000));
+        Guests guests = new Guests(List.of("김제니", "박채영"));
+        for (Guest guest : guests) {
+            guest.takeCard(card3);
+            guest.takeCard(card4);
+            guest.betMoney(Money.from(10_000));
         }
 
         MoneyResult moneyResult = new MoneyResult();
-        moneyResult.calculateParticipantMoney(dealer, participants);
-        Map<Participant, Money> moneys = moneyResult.getMoneys();
+        moneyResult.calculateGuestMoney(dealer, guests);
+        Map<Guest, Money> moneys = moneyResult.getMoneys();
 
-        for (Participant participant : participants) {
-            assertThat(moneys).contains(entry(participant, Money.from(expected)));
+        for (Guest guest : guests) {
+            assertThat(moneys).contains(entry(guest, Money.from(expected)));
         }
     }
 
@@ -77,15 +77,15 @@ public class MoneyResultTest {
         dealer.takeCard(card1);
         dealer.takeCard(card2);
 
-        Participants participants = new Participants(List.of("김제니", "박채영"));
-        for (Participant participant : participants) {
-            participant.takeCard(card3);
-            participant.takeCard(card4);
-            participant.betMoney(Money.from(10_000));
+        Guests guests = new Guests(List.of("김제니", "박채영"));
+        for (Guest guest : guests) {
+            guest.takeCard(card3);
+            guest.takeCard(card4);
+            guest.betMoney(Money.from(10_000));
         }
 
         MoneyResult moneyResult = new MoneyResult();
-        moneyResult.calculateParticipantMoney(dealer, participants);
+        moneyResult.calculateGuestMoney(dealer, guests);
 
         assertThat(moneyResult.calculateDealerMoney()).isEqualTo(Money.from(expected));
     }

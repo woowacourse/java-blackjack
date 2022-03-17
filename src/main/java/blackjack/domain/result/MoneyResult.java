@@ -2,23 +2,23 @@ package blackjack.domain.result;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Money;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
+import blackjack.domain.player.Guest;
+import blackjack.domain.player.Guests;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MoneyResult {
 
-    private final Map<Participant, Money> moneys;
+    private final Map<Guest, Money> moneys;
 
     public MoneyResult() {
         this.moneys = new LinkedHashMap<>();
     }
 
-    public void calculateParticipantMoney(final Dealer dealer, final Participants participants) {
-        for (Participant participant : participants) {
-            final Money money = participant.getMoney();
-            moneys.put(participant, money.calculate(Result.of(dealer, participant)));
+    public void calculateGuestMoney(final Dealer dealer, final Guests guests) {
+        for (Guest guest : guests) {
+            final Money profit = guest.getMoney();
+            moneys.put(guest, profit.calculate(Result.of(dealer, guest)));
         }
     }
 
@@ -30,7 +30,7 @@ public class MoneyResult {
         return Money.from(-money);
     }
 
-    public Map<Participant, Money> getMoneys() {
+    public Map<Guest, Money> getMoneys() {
         return new LinkedHashMap<>(moneys);
     }
 }

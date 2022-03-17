@@ -8,7 +8,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
+import blackjack.domain.player.Guest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,30 +18,30 @@ public class BlackjackMachineTest {
 
     @Test
     @DisplayName("참가자가 카드를 더 뽑는다고 하면 카드를 준다.")
-    void giveCardToParticipantYes() {
-        Participant participant = new Participant("배카라");
-        participant.takeCard(new Card(Denomination.THREE, Suit.SPADE));
-        participant.takeCard(new Card(Denomination.TWO, Suit.HEART));
+    void giveCardToGuestYes() {
+        Guest guest = new Guest("배카라");
+        guest.takeCard(new Card(Denomination.THREE, Suit.SPADE));
+        guest.takeCard(new Card(Denomination.TWO, Suit.HEART));
 
-        int totalScore = participant.getTotalScore();
+        int totalScore = guest.getTotalScore();
 
-        blackJackMachine.giveCardToParticipant(participant, Choice.HIT);
+        blackJackMachine.giveCardToGuest(guest, Choice.HIT);
 
-        assertThat(participant.getTotalScore()).isGreaterThan(totalScore);
+        assertThat(guest.getTotalScore()).isGreaterThan(totalScore);
     }
 
     @Test
     @DisplayName("참가자가 카드를 더 뽑지 않는다고 하면 카드를 주지 않는다.")
-    void giveCardToParticipantNo() {
-        Participant participant = new Participant("배카라");
-        participant.takeCard(new Card(Denomination.THREE, Suit.SPADE));
-        participant.takeCard(new Card(Denomination.ACE, Suit.HEART));
+    void giveCardToGuestNo() {
+        Guest guest = new Guest("배카라");
+        guest.takeCard(new Card(Denomination.THREE, Suit.SPADE));
+        guest.takeCard(new Card(Denomination.ACE, Suit.HEART));
 
-        int totalScore = participant.getTotalScore();
+        int totalScore = guest.getTotalScore();
 
-        blackJackMachine.giveCardToParticipant(participant, Choice.STAY);
+        blackJackMachine.giveCardToGuest(guest, Choice.STAY);
 
-        assertThat(participant.getTotalScore()).isEqualTo(totalScore);
+        assertThat(guest.getTotalScore()).isEqualTo(totalScore);
     }
 
     @Test

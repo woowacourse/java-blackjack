@@ -4,25 +4,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participants implements Iterable<Participant> {
+public class Guests implements Iterable<Guest> {
 
-    private static final int MIN_PARTICIPANTS_SIZE = 2;
-    private static final int  MAX_PARTICIPANTS_SIZE = 8;
+    private static final int MIN_GUESTS_SIZE = 2;
+    private static final int MAX_GUESTS_SIZE = 8;
 
-    private final List<Participant> participants;
+    private final List<Guest> guests;
 
-    public Participants(final List<String> names) {
+    public Guests(final List<String> names) {
         checkSize(names);
         checkDuplicatedNames(names);
 
-        participants = names.stream()
-                .map(Participant::new)
+        guests = names.stream()
+                .map(Guest::new)
                 .collect(Collectors.toList());
     }
 
     private void checkSize(final List<String> names) {
         final int size = names.size();
-        if (size < MIN_PARTICIPANTS_SIZE || size > MAX_PARTICIPANTS_SIZE) {
+        if (size < MIN_GUESTS_SIZE || size > MAX_GUESTS_SIZE) {
             throw new IllegalArgumentException("[ERROR] 참자가 인원은 2명~8명 사이여야합니다.");
         }
     }
@@ -38,7 +38,7 @@ public class Participants implements Iterable<Participant> {
     }
 
     @Override
-    public Iterator<Participant> iterator() {
-        return participants.iterator();
+    public Iterator<Guest> iterator() {
+        return guests.iterator();
     }
 }

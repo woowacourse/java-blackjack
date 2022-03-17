@@ -5,8 +5,8 @@ import static blackjack.domain.Rule.DEALER_HIT_STANDARD_SCORE;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Money;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
+import blackjack.domain.player.Guest;
+import blackjack.domain.player.Guests;
 import blackjack.domain.player.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +17,17 @@ public class OutputView {
     private static final String CARD_DELIMITER = ", ";
     private static final String COLON_AND_BLANK = ": ";
 
-    public static void printInitialCards(final Dealer dealer, final Participants participants) {
-        printDealMessage(dealer, participants);
+    public static void printInitialCards(final Dealer dealer, final Guests guests) {
+        printDealMessage(dealer, guests);
         printDealerCard(dealer);
-        printParticipantsCards(participants);
+        printGuestsCards(guests);
         printNewLine();
     }
 
-    private static void printDealMessage(final Dealer dealer, final Participants participants) {
+    private static void printDealMessage(final Dealer dealer, final Guests guests) {
         final List<String> names = new ArrayList<>();
-        for (Participant participant : participants) {
-            names.add(participant.getName());
+        for (Guest guest : guests) {
+            names.add(guest.getName());
         }
         System.out.println("\n" + dealer.getName() + "와 " + String.join(CARD_DELIMITER, names) + "에게 2장을 나누었습니다.");
     }
@@ -38,9 +38,9 @@ public class OutputView {
                 dealer.getName() + COLON_AND_BLANK + firstCard.getDenominationName() + firstCard.getSuitName());
     }
 
-    private static void printParticipantsCards(final Participants participants) {
-        for (Participant participant : participants) {
-            printPlayerCards(participant);
+    private static void printGuestsCards(final Guests guests) {
+        for (Guest guest : guests) {
+            printPlayerCards(guest);
         }
     }
 
@@ -64,12 +64,12 @@ public class OutputView {
         System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards) + " - 결과: " + totalScore);
     }
 
-    public static void printTotalMoney(final Map<Participant, Money> moneys,
+    public static void printTotalMoney(final Map<Guest, Money> moneys,
                                        final String dealerName, final Money dealerMoney) {
         System.out.printf("%n## 최종 수익%n");
         printPlayerMoney(dealerName, dealerMoney.getValue());
-        for (Participant participant : moneys.keySet()) {
-            printPlayerMoney(participant.getName(), moneys.get(participant).getValue());
+        for (Guest guest : moneys.keySet()) {
+            printPlayerMoney(guest.getName(), moneys.get(guest).getValue());
         }
     }
 

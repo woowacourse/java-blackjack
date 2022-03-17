@@ -13,16 +13,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ParticipantTest {
+public class GuestTest {
 
     @ParameterizedTest(name = "[{index}] cards {0}, canAddCard {1}")
     @MethodSource("generateCanTakeCardArguments")
     @DisplayName("카드를 추가할 수 있는 지 확인한다.")
     void canTakeCard(List<Card> cards) {
-        Participant participant = new Participant("배카라");
-        cards.forEach(participant::takeCard);
+        Guest guest = new Guest("배카라");
+        cards.forEach(guest::takeCard);
 
-        assertThat(participant.canTakeCard()).isTrue();
+        assertThat(guest.canTakeCard()).isTrue();
     }
 
     static Stream<Arguments> generateCanTakeCardArguments() {
@@ -40,11 +40,11 @@ public class ParticipantTest {
     @MethodSource("generateCantTakeCardArguments")
     @DisplayName("21점을 초과할 경우 카드를 추가하지 못한다.")
     void cantTakeCard(List<Card> cards, Card card) {
-        Participant participant = new Participant("배카라");
-        cards.forEach(participant::takeCard);
-        participant.takeCard(card);
+        Guest guest = new Guest("배카라");
+        cards.forEach(guest::takeCard);
+        guest.takeCard(card);
 
-        assertThat(participant.canTakeCard()).isFalse();
+        assertThat(guest.canTakeCard()).isFalse();
     }
 
     static Stream<Arguments> generateCantTakeCardArguments() {
@@ -65,9 +65,9 @@ public class ParticipantTest {
     @CsvSource({"10000, 10_000", "40000, 40_000", "100000, 100_000"})
     @DisplayName("참가자가 원하는 금액을 배팅한다.")
     void betMoney(String input, int expected) {
-        Participant participant = new Participant("김제니");
-        participant.betMoney(Money.from(input));
+        Guest guest = new Guest("김제니");
+        guest.betMoney(Money.from(input));
 
-        assertThat(participant.getMoney()).isEqualTo(Money.from(expected));
+        assertThat(guest.getMoney()).isEqualTo(Money.from(expected));
     }
 }

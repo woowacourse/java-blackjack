@@ -2,11 +2,11 @@ package blackjack.domain.player;
 
 import static blackjack.domain.Rule.WINNING_SCORE;
 
-public class Participant extends Player {
+public class Guest extends Player {
 
     private Money money;
 
-    public Participant(final String name) {
+    public Guest(final String name) {
         super(name);
     }
 
