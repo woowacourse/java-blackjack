@@ -41,24 +41,24 @@ public class BlackJackController {
     private void play() {
         List<Player> players = playerGroup.getPlayers();
         for (Player player : players) {
-            requestCardAddition(player);
+            requestHitOrStand(player);
         }
         OutputView.printDealerCardMessage(blackJack.addCardToDealer());
     }
 
-    private void requestCardAddition(Player player) {
-        if (InputView.requestCardAddition(player.getName())) {
+    private void requestHitOrStand(Player player) {
+        if (InputView.requestHit(player.getName())) {
             blackJack.addCardTo(player);
             OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCards()));
-            requestCardAdditionToPlayer(player);
+            requestStatus(player);
             return;
         }
         OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCards()));
     }
 
-    private void requestCardAdditionToPlayer(Player player) {
+    private void requestStatus(Player player) {
         if (player.isNotBust()) {
-            requestCardAddition(player);
+            requestHitOrStand(player);
         }
     }
 
