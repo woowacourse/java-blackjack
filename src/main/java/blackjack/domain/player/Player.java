@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Player extends Participant{
 
-    private boolean stay = false;
     private static final int OPEN_CARD_SIZE = 2;
+    private boolean stay = false;
 
 
     public Player(String name, Cards cards) {
@@ -42,5 +42,9 @@ public class Player extends Participant{
         }
 
         return Outcome.WIN;
+    }
+
+    public Result judgeResult(Dealer dealer) {
+        return Result.calculateResult(this, dealer);
     }
 }

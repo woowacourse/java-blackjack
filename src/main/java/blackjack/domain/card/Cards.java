@@ -38,6 +38,11 @@ public class Cards {
                 .count();
 
         score = handleAce(score, aceCount);
+
+        if (score > MAX_SCORE) {
+            score = 0;
+        }
+
         return score;
     }
 
@@ -50,7 +55,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculateScore() > MAX_SCORE;
+        return calculateScore() == 0;
     }
 
     private int handleAce(int score, int aceCount) {
