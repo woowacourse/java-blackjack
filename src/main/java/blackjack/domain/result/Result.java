@@ -1,25 +1,15 @@
 package blackjack.domain.result;
 
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 
 public enum Result {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무"),
+    WIN,
+    LOSE,
+    DRAW,
     ;
 
     public static final int MAX_SCORE = 21;
-    private final String value;
-
-    Result(final String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return this.value;
-    }
 
     public static Result competeResult(Player dealer, Player participant) {
         if (checkDraw(dealer, participant)) {
@@ -40,7 +30,7 @@ public enum Result {
     }
 
     private static boolean bothNotBust(Player dealer, Player participant) {
-        return !dealer.isBust() && !participant.isBust();
+        return dealer.isBust() && participant.isBust();
     }
 
     private static boolean bothNotBlackjack(Player dealer, Player participant) {

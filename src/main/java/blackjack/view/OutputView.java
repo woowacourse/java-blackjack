@@ -1,9 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.*;
-import blackjack.domain.result.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +17,7 @@ public class OutputView {
         final List<Player> participants = players.getParticipants();
         final Player dealer = players.getDealer();
 
-        final String basicDistribute = "%s와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
+        final String basicDistribute = "%s와 %s에게 " + INIT_DISTRIBUTE_SIZE + "장을 나누어주었습니다.";
         System.out.println();
         System.out.printf((basicDistribute) + "%n", dealer.getName(), String.join(DELIMITER, extractNames(participants)));
         printInitDealerInfo(dealer);
@@ -56,10 +54,6 @@ public class OutputView {
         return cards.stream()
                 .map(card -> card.getScore().getSymbol() + card.getType().getName())
                 .collect(Collectors.toList());
-    }
-
-    public static void printParticipantOverMaxScore(final String name) {
-        System.out.println(name + "은 최고점수를 초과하여 카드를 더 이상 받을 수 없습니다.");
     }
 
     public static void printDealerAcceptCard() {
