@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
+import vo.Wallet;
 
 public class BlackJackController {
     public void start() {
@@ -27,7 +28,9 @@ public class BlackJackController {
     }
 
     public Gamblers setupGamblers() {
-        return new Gamblers(InputView.scanPlayerNames()
+        List<Wallet> gamblerInfos = InputView.scanGamblerInfos();
+
+        return new Gamblers(gamblerInfos
                 .stream()
                 .map(Gambler::new)
                 .collect(toList()));
