@@ -5,6 +5,7 @@ import static blackjack.view.OutputView.printDealerBlackjackInfo;
 import static blackjack.view.OutputView.printGameResult;
 import static blackjack.view.OutputView.printInitialParticipantsCards;
 
+import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
@@ -28,6 +29,12 @@ public class BlackjackController {
         final CardBundleStrategy strategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
 
         return new BlackjackGame(cardDeck, playerNames, strategy);
+    }
+
+    public PlayerBettings initializeBettings(final BlackjackGame game) {
+        List<Player> players = game.getParticipants().getPlayers();
+
+        return PlayerBettings.of(players, InputView::requestBettingAmountInput);
     }
 
     public void playGame(final BlackjackGame game) {
