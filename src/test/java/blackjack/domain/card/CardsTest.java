@@ -97,6 +97,16 @@ class CardsTest {
         assertThat(cards.isBusted()).isTrue();
     }
 
+    @DisplayName("Ace 와 10 만 갖고 있을 경우 BlackJack")
+    @Test
+    void isBlackJack_ContainingAceAndTen_ReturnsFalse() {
+        Cards cards = new Cards(List.of(
+                new Card(Number.ACE, Kind.SPADE),
+                new Card(Number.TEN, Kind.SPADE)));
+
+        assertThat(cards.isBlackJack()).isTrue();
+    }
+
     @DisplayName("Ace 와 Jack 만 갖고 있을 경우 BlackJack")
     @Test
     void isBlackJack_ContainingAceAndJack_ReturnsTrue() {
@@ -125,16 +135,6 @@ class CardsTest {
                 new Card(Number.KING, Kind.SPADE)));
 
         assertThat(cards.isBlackJack()).isTrue();
-    }
-
-    @DisplayName("Ace 와 10 만 갖고 있을 경우 BlackJack 이 아님")
-    @Test
-    void isBlackJack_ContainingAceAndTen_ReturnsFalse() {
-        Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Kind.SPADE),
-                new Card(Number.TEN, Kind.SPADE)));
-
-        assertThat(cards.isBlackJack()).isFalse();
     }
 
     @DisplayName("Ace 와 JQK 만 갖고 있지만 2장 이상일 경우 BlackJack 이 아님")

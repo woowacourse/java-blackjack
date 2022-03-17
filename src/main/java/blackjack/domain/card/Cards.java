@@ -59,15 +59,11 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && containsAce() && containsJQK();
+        return cards.size() == 2 && containsAce();
     }
 
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
-    }
-
-    private boolean containsJQK() {
-        return cards.stream().anyMatch(Card::isJQK);
     }
 
     public List<Card> getCards() {
