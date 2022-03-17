@@ -12,6 +12,7 @@ public class CardFixtures {
     public static final PlayingCard FIVE_SPADES = PlayingCard.of(Suit.SPADES, Denomination.FIVE);
     public static final PlayingCard SIX_HEARTS = PlayingCard.of(Suit.HEARTS, Denomination.SIX);
     public static final PlayingCard SEVEN_CLUBS = PlayingCard.of(Suit.CLUBS, Denomination.SEVEN);
+    public static final PlayingCard EIGHT_DIAMONDS = PlayingCard.of(Suit.DIAMONDS, Denomination.EIGHT);
     public static final PlayingCard TEN_HEARTS = PlayingCard.of(Suit.HEARTS, Denomination.TEN);
     public static final PlayingCard KING_HEARTS = PlayingCard.of(Suit.HEARTS, Denomination.KING);
 }

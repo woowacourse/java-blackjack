@@ -56,6 +56,10 @@ public abstract class Player {
         return playingCards.isBlackJack();
     }
 
+    public double getRevenue(MatchResult matchResult) {
+        return matchResult.calculateRevenue(wallet.getMoney(), isBlackJack());
+    }
+
     protected MatchResult getMatchResultAfterBustCheck(Player another) {
         if (hasHigherScoreIgnoreBust(another) || winByBlackJack(another)) {
             return MatchResult.WIN;
