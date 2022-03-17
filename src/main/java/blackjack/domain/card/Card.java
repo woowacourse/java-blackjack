@@ -6,10 +6,19 @@ import blackjack.domain.card.property.CardShape;
 
 public class Card {
     private final CardProperty cardProperty;
-    private boolean isOpen = true;
+    private boolean isOpen;
 
-    public Card(CardShape shape, CardNumber number) {
-        this.cardProperty = new CardProperty(shape, number);
+    private Card(CardShape cardShape, CardNumber cardNumber, boolean isOpen) {
+        this.cardProperty = new CardProperty(cardShape, cardNumber);
+        this.isOpen = isOpen;
+    }
+
+    public static Card of(CardShape shape, CardNumber number) {
+        return new Card(shape, number, true);
+    }
+
+    public static Card of(CardShape shape, CardNumber number, boolean isOpen) {
+        return new Card(shape, number, isOpen);
     }
 
     public void open() {
