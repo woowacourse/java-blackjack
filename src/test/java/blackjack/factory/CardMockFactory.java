@@ -10,15 +10,18 @@ import java.util.stream.Collectors;
 
 public class CardMockFactory {
 
-	private static final Map<String, Card> cards;
+	private static final Map<Denomination, Card> cards;
 
 	static {
 		cards = Arrays.stream(Denomination.values())
-				.map(denomination -> new Card(Suit.CLOVER, denomination))
-				.collect(Collectors.toMap(Card::getDenominationAndSuit, Function.identity()));
+				.collect(Collectors.toMap(Function.identity(), CardMockFactory::createCard));
 	}
 
-	public static Card of(final String information) {
-		return cards.get(information);
+	public static Card of(final Denomination denomination) {
+		return cards.get(denomination);
+	}
+
+	private static Card createCard(Denomination denomination) {
+		return new Card(Suit.CLOVER, denomination);
 	}
 }

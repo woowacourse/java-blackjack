@@ -1,8 +1,17 @@
 package blackjack.domain.role;
 
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.FOUR;
+import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.NINE;
+import static blackjack.domain.card.Denomination.TEN;
+import static blackjack.domain.card.Denomination.THREE;
+import static blackjack.domain.card.Denomination.TWO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
 import blackjack.factory.CardMockFactory;
 import blackjack.util.CreateHand;
 import java.util.List;
@@ -21,7 +30,7 @@ class HandTest {
 	@DisplayName("드로우한 카드가 제대로 추가되는지 확인")
 	void addCard() {
 		final Hand hand = new Hand();
-		final Card card = CardMockFactory.of("A클로버");
+		final Card card = CardMockFactory.of(ACE);
 
 		hand.addCard(card);
 		final List<Card> expectedHand = List.of(card);
@@ -32,8 +41,8 @@ class HandTest {
 
 	@DisplayName("패에 Ace 카드가 있는지 확인")
 	@ParameterizedTest(name = "{index} {displayName} card={0} expectedHasAce={1}")
-	@CsvSource(value = {"A클로버, true", "K클로버, false"})
-	void check_Has_Ace(String cardInfo, boolean expectedHasAce) {
+	@CsvSource(value = {"ACE, true", "KING, false"})
+	void check_Has_Ace(Denomination cardInfo, boolean expectedHasAce) {
 		final Hand hand = new Hand();
 		final Card card = CardMockFactory.of(cardInfo);
 
@@ -58,14 +67,14 @@ class HandTest {
 	}
 
 	private static Stream<Arguments> getHandAndBlackJack() {
-		final Hand hand1 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
-		final Hand hand2 = CreateHand.create(CardMockFactory.of("K클로버"), CardMockFactory.of("J클로버"));
-		final Hand hand3 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("9클로버"),
-				CardMockFactory.of("2클로버"));
-		final Hand hand4 = CreateHand.create(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"),
-				CardMockFactory.of("J클로버"));
-		final Hand hand5 = CreateHand.create(CardMockFactory.of("2클로버"), CardMockFactory.of("3클로버"),
-				CardMockFactory.of("4클로버"));
+		final Hand hand1 = CreateHand.create(CardMockFactory.of(ACE), CardMockFactory.of(KING));
+		final Hand hand2 = CreateHand.create(CardMockFactory.of(KING), CardMockFactory.of(JACK));
+		final Hand hand3 = CreateHand.create(CardMockFactory.of(ACE), CardMockFactory.of(NINE),
+				CardMockFactory.of(TWO));
+		final Hand hand4 = CreateHand.create(CardMockFactory.of(TEN), CardMockFactory.of(KING),
+				CardMockFactory.of(JACK));
+		final Hand hand5 = CreateHand.create(CardMockFactory.of(TWO), CardMockFactory.of(THREE),
+				CardMockFactory.of(FOUR));
 
 		return Stream.of(
 				Arguments.of(hand1, true),
@@ -84,12 +93,12 @@ class HandTest {
 	}
 
 	private static Stream<Arguments> getHandAndScore() {
-		final Hand hand1 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
-		final Hand hand2 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"),
-				CardMockFactory.of("J클로버"));
-		final Hand hand3 = CreateHand.create(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"),
-				CardMockFactory.of("J클로버"));
-		final Hand hand4 = CreateHand.create(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"));
+		final Hand hand1 = CreateHand.create(CardMockFactory.of(ACE), CardMockFactory.of(KING));
+		final Hand hand2 = CreateHand.create(CardMockFactory.of(ACE), CardMockFactory.of(KING),
+				CardMockFactory.of(JACK));
+		final Hand hand3 = CreateHand.create(CardMockFactory.of(TEN), CardMockFactory.of(KING),
+				CardMockFactory.of(JACK));
+		final Hand hand4 = CreateHand.create(CardMockFactory.of(TEN), CardMockFactory.of(KING));
 
 		return Stream.of(
 				Arguments.of(hand1, 21),

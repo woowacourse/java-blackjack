@@ -11,7 +11,7 @@ class SuitTest {
 
 	@DisplayName("카드 심볼 이름이 제대로 반환되는지 확인")
 	@ParameterizedTest(name = "{index} {displayName} symbol={0} symbolName={1}")
-	@CsvSource(value = {"HEART, 하트", "CLOVER, 클로버", "SPADE, 스페이드", "DIAMOND, 다이아몬드"})
+	@CsvSource(value = {"HEART, ♥️", "CLOVER, ♣️", "SPADE, ♠️", "DIAMOND, ♦️"})
 	void check_Symbol_Name(final Suit symbol, final String expectedName) {
 		final String actualName = symbol.getName();
 

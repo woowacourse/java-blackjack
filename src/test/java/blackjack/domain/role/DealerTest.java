@@ -1,9 +1,16 @@
 package blackjack.domain.role;
 
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.EIGHT;
+import static blackjack.domain.card.Denomination.FIVE;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.SEVEN;
+import static blackjack.domain.card.Denomination.SIX;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.factory.CardMockFactory;
+import blackjack.factory.HandMockFactory;
 import blackjack.util.CreateHand;
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,11 +32,15 @@ class DealerTest {
 	}
 
 	private static Stream<Arguments> createHand() {
-		final Hand matchOptimalCase = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
-		final Hand randomDrawWithAce = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("8클로버"));
-		final Hand drawWithAce = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("5클로버"));
-		final Hand notDrawWithoutAce = CreateHand.create(CardMockFactory.of("7클로버"), CardMockFactory.of("K클로버"));
-		final Hand drawWithoutAce = CreateHand.create(CardMockFactory.of("6클로버"), CardMockFactory.of("K클로버"));
+		final Hand matchOptimalCase = HandMockFactory.getBlackJackHand();
+		final Hand randomDrawWithAce = CreateHand.create(CardMockFactory.of(ACE),
+				CardMockFactory.of(EIGHT));
+		final Hand drawWithAce = CreateHand.create(CardMockFactory.of(ACE),
+				CardMockFactory.of(FIVE));
+		final Hand notDrawWithoutAce = CreateHand.create(CardMockFactory.of(SEVEN),
+				CardMockFactory.of(KING));
+		final Hand drawWithoutAce = CreateHand.create(CardMockFactory.of(SIX),
+				CardMockFactory.of(KING));
 
 		return Stream.of(
 				Arguments.of(matchOptimalCase, false, true),
@@ -44,9 +55,9 @@ class DealerTest {
 	@Test
 	@DisplayName("딜러의 패 오픈 전략 확인")
 	void check_Open_Hand() {
-		final Hand hand = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
+		final Hand hand = CreateHand.create(CardMockFactory.of(ACE), CardMockFactory.of(KING));
 		Role dealer = new Dealer(hand, DealerDrawChoice::chooseDraw);
-		List<Card> expectedOpenCards = List.of(CardMockFactory.of("A클로버"));
+		List<Card> expectedOpenCards = List.of(CardMockFactory.of(ACE));
 		assertThat(dealer.openHand()).isEqualTo(expectedOpenCards);
 	}
 }

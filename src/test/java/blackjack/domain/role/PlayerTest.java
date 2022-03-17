@@ -1,5 +1,7 @@
 package blackjack.domain.role;
 
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.KING;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.card.Card;
@@ -36,9 +38,9 @@ class PlayerTest {
 	@Test
 	@DisplayName("플레이어의 패 오픈 전략 확인")
 	void check_Open_Hand() {
-		final Hand hand = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
+		final Hand hand = CreateHand.create(CardMockFactory.of(ACE), CardMockFactory.of(KING));
 		Role player = new Player("player", hand);
-		List<Card> expectedOpenCards = List.of(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
+		List<Card> expectedOpenCards = List.of(CardMockFactory.of(ACE), CardMockFactory.of(KING));
 		assertThat(player.openHand()).isEqualTo(expectedOpenCards);
 	}
 }
