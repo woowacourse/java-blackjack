@@ -11,16 +11,6 @@ import org.junit.jupiter.api.Test;
 class CardsTest {
 
     @Test
-    @DisplayName("게임 시작할 때 두 장의 카드를 갖고 있지 않은 경우 예외 처리 확인")
-    void initSizeTest() {
-        List<Card> cardList = List.of(new Card(Denomination.TEN, Suit.CLUBS));
-
-        assertThatThrownBy(() -> new Cards(cardList))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("게임을 시작하려면 두 장의 카드");
-    }
-
-    @Test
     @DisplayName("중복된 카드가 들어오는 경우")
     void duplicateTest() {
         List<Card> cardList = List.of(new Card(Denomination.TEN, Suit.CLUBS), new Card(Denomination.TEN, Suit.CLUBS));

@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -14,13 +15,13 @@ public abstract class Gamer {
     protected final String name;
     protected final Cards cards;
 
-    public Gamer(final String name, final Cards cards) {
+    public Gamer(final String name) {
         validateName(name);
         this.name = name;
-        this.cards = cards;
+        this.cards = new Cards(new LinkedList<>());
     }
 
-    private void validateName(String name) {
+    private void validateName(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(NAME_INPUT_ERROR_MESSAGE);
         }

@@ -1,8 +1,6 @@
 package blackjack.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.answer.Answer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
@@ -13,11 +11,18 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
 
-    private final Deck deck = Deck.create();
+    private final Deck deck;
+    private final BlackjackGame blackjackGame;
+
+    public BlackjackController() {
+        deck = Deck.create();
+        blackjackGame = new BlackjackGame(deck);
+    }
 
     public void play() {
-        Dealer dealer = new Dealer(deck.drawStartingCards());
+        Dealer dealer = new Dealer();
         Players players = participatePlayers();
+        blackjackGame.initStartingCards(dealer, players);
         OutputView.printInitCard(dealer, players);
 
         hitOrStandPlayers(players);
@@ -29,17 +34,11 @@ public class BlackjackController {
 
     private Players participatePlayers() {
         try {
-            return new Players(toPlayer(InputView.inputPlayers()));
+            return new Players(InputView.inputPlayers());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return participatePlayers();
         }
-    }
-
-    private List<Player> toPlayer(List<String> names) {
-        return names.stream()
-            .map(name -> new Player(name, deck.drawStartingCards()))
-            .collect(Collectors.toList());
     }
 
     private void hitOrStandPlayers(Players players) {

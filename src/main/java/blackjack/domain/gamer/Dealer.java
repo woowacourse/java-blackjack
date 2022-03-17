@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.result.Result;
 import blackjack.domain.result.Results;
 
@@ -13,8 +12,8 @@ public class Dealer extends Gamer {
 
     private static final int DRAWABLE_NUMBER = 16;
 
-    public Dealer(final Cards cards) {
-        super("딜러", cards);
+    public Dealer() {
+        super("딜러");
     }
 
     @Override
@@ -22,7 +21,7 @@ public class Dealer extends Gamer {
         return calculateScore() <= DRAWABLE_NUMBER;
     }
 
-    public Map<Gamer, Results> judgeResult(Players players) {
+    public Map<Gamer, Results> judgeResult(final Players players) {
         Map<Gamer, Results> gameResult = new LinkedHashMap<>();
         initGameResult(gameResult, players);
         judgePlayers(gameResult, players);

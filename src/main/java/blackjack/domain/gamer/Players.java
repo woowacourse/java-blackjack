@@ -19,33 +19,36 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<Player> players) {
-        validate(players);
-        this.players = new ArrayList<>(players);
+    public Players(final List<String> names) {
+        validate(names);
+        this.players = toPlayer(names);
     }
 
-    private void validate(List<Player> players) {
-        validateNumberOfPlayers(players);
-        validateDuplicate(players);
+    private void validate(final List<String> names) {
+        validateNumberOfPlayers(names);
+        validateDuplicate(names);
     }
 
-    private void validateNumberOfPlayers(List<Player> players) {
-        int number = players.size();
+    private void validateNumberOfPlayers(final List<String> names) {
+        int number = names.size();
 
         if (number < MINIMUM_NUMBER || number > MAXIMUM_NUMBER) {
             throw new IllegalArgumentException(NUMBER_OF_PLAYERS_ERROR_MESSAGE);
         }
     }
 
-    private void validateDuplicate(final List<Player> players) {
-        List<String> names = players.stream()
-            .map(Player::getName)
-            .collect(Collectors.toList());
+    private void validateDuplicate(final List<String> names) {
         Set<String> duplicateNames = new HashSet<>(names);
 
         if (names.size() != duplicateNames.size()) {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
+    }
+
+    private List<Player> toPlayer(final List<String> names) {
+        return names.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 
     public void initGameResult(Map<Gamer, Results> gameResult) {
