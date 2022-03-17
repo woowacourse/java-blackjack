@@ -13,10 +13,6 @@ public final class DealerRunning extends Running {
     }
 
     public static BlackjackGameState createDealerGameState(final Cards cards) {
-        return crerateDealerGameState(cards);
-    }
-
-    private static BlackjackGameState crerateDealerGameState(final Cards cards) {
         if (cards.isMaxScoreBust()) {
             return new Bust(cards, cards.maxScore());
         }
@@ -27,13 +23,13 @@ public final class DealerRunning extends Running {
     }
 
     @Override
-    public final BlackjackGameState hit(final Card card) {
+    public BlackjackGameState hit(final Card card) {
         cards.addCard(card);
-        return crerateDealerGameState(cards);
+        return createDealerGameState(cards);
     }
 
     @Override
-    public final BlackjackGameState stay() {
+    public BlackjackGameState stay() {
         throw new IllegalStateException("딜러의 running 상태는 stay를 할 수 없습니다.");
     }
 }

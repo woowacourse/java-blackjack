@@ -14,7 +14,7 @@ public final class PlayerRunning extends Running {
     }
 
     @Override
-    public final BlackjackGameState hit(final Card card) {
+    public BlackjackGameState hit(final Card card) {
         cards.addCard(card);
         if (cards.isBust()) {
             return new Bust(cards, cards.score());
@@ -23,7 +23,7 @@ public final class PlayerRunning extends Running {
     }
 
     @Override
-    public final BlackjackGameState stay() {
+    public BlackjackGameState stay() {
         if (cards.isBlackjack()) {
             return new Blackjack(cards);
         }

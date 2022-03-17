@@ -13,7 +13,7 @@ public final class Bust extends Finished {
     }
 
     @Override
-    final double earningRate(final BlackjackGameState blackjackGameState) {
+    double earningRate(final BlackjackGameState blackjackGameState) {
         return BUST_LOSE_RATE;
     }
 }
