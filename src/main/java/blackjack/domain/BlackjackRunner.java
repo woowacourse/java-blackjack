@@ -16,6 +16,8 @@ import java.util.List;
 
 public class BlackjackRunner {
 
+    private static final int REVERSE_MONEY = -1;
+
     public void run() {
         Deck deck = new Deck(new RandomCardsGenerator());
         Dealer dealer = new Dealer(deck.getInitCards());
@@ -34,7 +36,7 @@ public class BlackjackRunner {
     private void playing(Deck deck, Player player, PlayCommand playCommand) {
         if (isPlaying(player, playCommand)) {
             playCommand = InputView.getPlayCommand(player);
-            drawCard(deck, player);
+            drawCard(deck, player, playCommand);
             playing(deck, player, playCommand);
         }
     }
@@ -43,9 +45,11 @@ public class BlackjackRunner {
         return player.canHit() && playCommand.isYes();
     }
 
-    private void drawCard(Deck deck, Player player) {
-        player.append(deck.draw());
-        OutputView.printPlayerCard(player);
+    private void drawCard(Deck deck, Player player, PlayCommand playCommand) {
+        if (playCommand.isYes()) {
+            player.append(deck.draw());
+            OutputView.printPlayerCard(player);
+        }
     }
 
     private void drawDealer(Deck deck, Dealer dealer) {
@@ -58,7 +62,7 @@ public class BlackjackRunner {
 
     private int getDealerProfit(Dealer dealer, List<Player> players) {
         return players.stream()
-                .mapToInt(player -> -player.calculateBettingMoney(dealer))
+                .mapToInt(player -> player.calculateBettingMoney(dealer) * REVERSE_MONEY)
                 .sum();
     }
 
