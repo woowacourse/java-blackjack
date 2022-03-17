@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.element.Denomination;
 import blackjack.domain.card.element.Suit;
 import blackjack.domain.human.Human;
+import blackjack.domain.human.group.Participant;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.group.Players;
 import blackjack.domain.result.Result;
@@ -41,11 +42,11 @@ class ResultStatisticTest {
             addCardList(player2, List.of("10", "10", "2"));
             Players players = Players.from(List.of(player1, player2));
 
-            BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
-            addCardList(blackjackRepository.getDealer(), List.of("8", "10", "10"));
+            Participant participant = Participant.from(players);
+            addCardList(participant.getDealer(), List.of("8", "10", "10"));
 
             // when
-            resultStatistic = ResultStatistic.from(blackjackRepository);
+            resultStatistic = ResultStatistic.from(participant);
         }
 
         @Test
@@ -80,11 +81,11 @@ class ResultStatisticTest {
             addCardList(player2, List.of("10", "10", "10"));
             Players players = Players.from(List.of(player1, player2));
 
-            BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
-            addCardList(blackjackRepository.getDealer(), List.of("10", "10", "10", "10"));
+            Participant participant = Participant.from(players);
+            addCardList(participant.getDealer(), List.of("10", "10", "10", "10"));
 
             //when
-            resultStatistic = ResultStatistic.from(blackjackRepository);
+            resultStatistic = ResultStatistic.from(participant);
         }
 
         @Test
@@ -121,11 +122,11 @@ class ResultStatisticTest {
             addCardList(player4, List.of("10", "10", "A"));
             Players players = Players.from(List.of(player1, player2, player3, player4));
 
-            BlackjackRepository blackjackRepository = BlackjackRepository.from(players);
-            addCardList(blackjackRepository.getDealer(), List.of("10", "10"));
+            Participant participant = Participant.from(players);
+            addCardList(participant.getDealer(), List.of("10", "10"));
 
             // when
-            resultStatistic = ResultStatistic.from(blackjackRepository);
+            resultStatistic = ResultStatistic.from(participant);
         }
 
         @Test

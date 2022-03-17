@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.BlackjackRepository;
+import blackjack.domain.human.group.Participant;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import java.util.HashMap;
@@ -10,15 +10,15 @@ public final class ResultStatistic {
     private final Map<String, Result> playersResult = new HashMap<>();
     private final Map<Result, Integer> dealerResults = new HashMap<>();
 
-    private ResultStatistic(BlackjackRepository blackjackRepository) {
+    private ResultStatistic(Participant participant) {
         for (Result value : Result.values()) {
             dealerResults.put(value, 0);
         }
-        calculate(blackjackRepository);
+        calculate(participant);
     }
 
-    public static ResultStatistic from(BlackjackRepository blackjackRepository) {
-        return new ResultStatistic(blackjackRepository);
+    public static ResultStatistic from(Participant participant) {
+        return new ResultStatistic(participant);
     }
 
     public Map<Result, Integer> getDealerResults() {
@@ -33,7 +33,7 @@ public final class ResultStatistic {
         return result;
     }
 
-    private void calculate(BlackjackRepository table) {
+    private void calculate(Participant table) {
         for (Player player : table.getPlayers().get()) {
             Result playerResult = calculatePlayerResult(player, table.getDealer());
             Result dealerResult = playerResult.toReverse();

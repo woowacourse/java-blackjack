@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.BlackjackRepository;
+import blackjack.domain.human.group.Participant;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
 import blackjack.domain.result.Result;
@@ -19,10 +19,10 @@ public final class OutputView {
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
     private static final String PLAYER_NAME_EXPLANATION = "카드";
 
-    public static void printInitCards(final BlackjackRepository blackjackRepository) {
-        OutputView.printInitCardState(blackjackRepository);
-        OutputView.printHumanHand(blackjackRepository.getDealer());
-        for (Player player : blackjackRepository.getPlayers().get()) {
+    public static void printInitCards(final Participant participant) {
+        OutputView.printInitCardState(participant);
+        OutputView.printHumanHand(participant.getDealer());
+        for (Player player : participant.getPlayers().get()) {
             OutputView.printHumanHand(player);
         }
         System.out.println();
@@ -38,17 +38,17 @@ public final class OutputView {
                 human.getInitCard());
     }
 
-    private static void printInitCardState(final BlackjackRepository blackjackRepository) {
-        String playersNames = blackjackRepository.getPlayers().getPlayerNames().toString();
+    private static void printInitCardState(final Participant participant) {
+        String playersNames = participant.getPlayers().getPlayerNames().toString();
         System.out.printf(INIT_CARD_MESSAGE,
-                blackjackRepository.getDealer().getName(),
+                participant.getDealer().getName(),
                 playersNames.substring(1, playersNames.length() - 1));
     }
 
-    public static void printHandAndPoint(final BlackjackRepository blackjackRepository) {
+    public static void printHandAndPoint(final Participant participant) {
         System.out.println();
-        OutputView.printHumanCardPointState(blackjackRepository.getDealer());
-        for (Player player : blackjackRepository.getPlayers().get()) {
+        OutputView.printHumanCardPointState(participant.getDealer());
+        for (Player player : participant.getPlayers().get()) {
             OutputView.printHumanCardPointState(player);
         }
     }
