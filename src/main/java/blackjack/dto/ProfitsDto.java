@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.model.Amount;
-import blackjack.model.Profits;
+import blackjack.model.bet.Amount;
+import blackjack.model.bet.Profits;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Entry;
 import blackjack.model.player.Player;

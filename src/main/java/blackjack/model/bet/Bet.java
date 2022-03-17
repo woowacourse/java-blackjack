@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.bet;
 
 public final class Bet {
     private static final String ERROR_NEGATIVE = "[ERROR] 배팅 금액은 음수일 수 없습니다.";

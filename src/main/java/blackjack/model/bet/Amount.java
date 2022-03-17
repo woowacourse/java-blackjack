@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.bet;
 
 public class Amount {
     private final int value;

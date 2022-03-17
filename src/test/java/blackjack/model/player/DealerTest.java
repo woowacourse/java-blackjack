@@ -2,7 +2,7 @@ package blackjack.model.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.Result;
+import blackjack.model.bet.Result;
 import blackjack.model.trumpcard.TrumpCard;
 import blackjack.model.trumpcard.TrumpNumber;
 import blackjack.model.trumpcard.TrumpSymbol;

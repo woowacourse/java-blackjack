@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.dto.DealerDto;
-import blackjack.dto.HandDto;
 import blackjack.dto.EntryDto;
+import blackjack.dto.HandDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
 import blackjack.dto.ProfitsDto;

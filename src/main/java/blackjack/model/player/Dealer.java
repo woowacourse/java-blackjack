@@ -1,6 +1,6 @@
 package blackjack.model.player;
 
-import blackjack.model.Result;
+import blackjack.model.bet.Result;
 import blackjack.model.trumpcard.TrumpCard;
 
 public final class Dealer extends Player {

@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.bet;
 
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Entry;

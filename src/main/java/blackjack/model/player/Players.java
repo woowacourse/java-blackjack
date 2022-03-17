@@ -1,7 +1,7 @@
 package blackjack.model.player;
 
-import blackjack.model.Bet;
-import blackjack.model.Profits;
+import blackjack.model.bet.Bet;
+import blackjack.model.bet.Profits;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
 import java.util.function.Supplier;

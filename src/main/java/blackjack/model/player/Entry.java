@@ -1,8 +1,8 @@
 package blackjack.model.player;
 
-import blackjack.model.Bet;
-import blackjack.model.Amount;
-import blackjack.model.Result;
+import blackjack.model.bet.Amount;
+import blackjack.model.bet.Bet;
+import blackjack.model.bet.Result;
 import java.util.regex.Pattern;
 
 public final class Entry extends Player {

@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.bet;
 
 public enum Result {
     WIN(1),
