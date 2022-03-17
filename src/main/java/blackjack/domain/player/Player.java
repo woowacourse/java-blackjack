@@ -38,7 +38,7 @@ public abstract class Player {
         return cards.isBlackjack();
     }
 
-    public boolean isBust() {
+    public boolean isNotBust() {
         return !cards.isBust();
     }
 

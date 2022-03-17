@@ -22,7 +22,6 @@ public class Participant extends Player {
         return acceptStrategy.accept(this.name);
     }
 
-
     public void increaseBetting() {
         money.win();
     }

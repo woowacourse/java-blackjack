@@ -30,7 +30,7 @@ public enum Result {
     }
 
     private static boolean bothNotBust(Player dealer, Player participant) {
-        return dealer.isBust() && participant.isBust();
+        return dealer.isNotBust() && participant.isNotBust();
     }
 
     private static boolean bothNotBlackjack(Player dealer, Player participant) {
