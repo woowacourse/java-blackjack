@@ -2,6 +2,8 @@ package blackjack;
 
 import static blackjack.controller.BlackJackController.createPlayers;
 import static blackjack.controller.BlackJackController.initiateParticipantsHand;
+import static blackjack.controller.BlackJackController.printParticipantsHand;
+import static blackjack.controller.BlackJackController.printRevenueResultResponse;
 import static blackjack.controller.BlackJackController.receiveBettingMoney;
 import static blackjack.controller.BlackJackController.takeMoreCard;
 
@@ -12,7 +14,6 @@ import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.RevenueResultResponse;
-import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackApplication {
@@ -28,12 +29,12 @@ public class BlackJackApplication {
         List<Player> players = createPlayers();
         List<BettingMoney> bettingMonies = receiveBettingMoney(players);
         initiateParticipantsHand(dealer, players, deck);
+        printParticipantsHand(dealer, players);
         takeMoreCard(players, dealer, deck);
-        OutputView.printParticipantScore(dealer, players);
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, players);
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
         RevenueResultResponse revenueResultResponse = RevenueResultResponse.from(revenueResult);
-        OutputView.printRevenueResultResponse(revenueResultResponse);
+        printRevenueResultResponse(revenueResultResponse);
     }
 }

@@ -19,7 +19,7 @@ public class OutputView {
     private static final String GIVE_CARDS_TO_DEALER_MESSAGE = "%s: %s" + NEW_LINE;
     private static final String PLAYER_CARD_MESSAGE = "%s카드: %s" + NEW_LINE;
     private static final String COMMA_DELIMITER = ", ";
-    private static final String BLACKJACK_GAME_RESULT_MESSAGE = "## 최종 승패";
+    public static final String BLACKJACK_GAME_RESULT_MESSAGE = "## 최종 수익";
 
     public static void printInitialParticipantsHand(Dealer dealer, List<Player> players) {
         out.printf(GIVE_CARDS_TO_PLAYERS_MESSAGE, getPlayerNames(players));
@@ -47,7 +47,7 @@ public class OutputView {
         out.println(DEALER_ONE_MORE_CARD_MESSAGE);
     }
 
-    public static void printParticipantScore(Dealer dealer, List<Player> players) {
+    public static void printParticipantCardsAndScore(Dealer dealer, List<Player> players) {
         printDealerScore(dealer);
         printPlayersScore(players);
         out.println();
@@ -80,7 +80,7 @@ public class OutputView {
     public static void printRevenueResultResponse(RevenueResultResponse revenueResultResponse) {
         String dealerRevenueMessage = revenueResultResponse.getDealerRevenueMessage();
         List<String> playersRevenueMessage = revenueResultResponse.getPlayersRevenueMessage();
-        out.println("## 최종 수익");
+        out.println(OutputView.BLACKJACK_GAME_RESULT_MESSAGE);
         out.println(dealerRevenueMessage);
         for (String playerRevenueMessage : playersRevenueMessage) {
             out.println(playerRevenueMessage);

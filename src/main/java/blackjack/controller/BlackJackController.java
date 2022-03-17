@@ -6,6 +6,7 @@ import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.RevenueResultResponse;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -38,12 +39,16 @@ public class BlackJackController {
             player.receiveCard(deck.draw());
             player.receiveCard(deck.draw());
         }
+    }
+
+    public static void printParticipantsHand(Dealer dealer, List<Player> players) {
         OutputView.printInitialParticipantsHand(dealer, players);
     }
 
     public static void takeMoreCard(List<Player> players, Dealer dealer, Deck deck) {
         takeMoreCardPlayerTurnForAllPlayers(players, deck);
         takeOneMoreCardDuringDealerTurn(dealer, deck);
+        OutputView.printParticipantCardsAndScore(dealer, players);
     }
 
     public static void takeMoreCardPlayerTurnForAllPlayers(List<Player> players, Deck deck) {
@@ -64,5 +69,9 @@ public class BlackJackController {
             OutputView.printDealerOneMoreCard();
             dealer.receiveCard(deck.draw());
         }
+    }
+
+    public static void printRevenueResultResponse(RevenueResultResponse revenueResultResponse) {
+        OutputView.printRevenueResultResponse(revenueResultResponse);
     }
 }
