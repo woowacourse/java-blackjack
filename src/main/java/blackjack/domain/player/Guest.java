@@ -2,6 +2,8 @@ package blackjack.domain.player;
 
 import static blackjack.domain.Rule.WINNING_SCORE;
 
+import blackjack.domain.money.Money;
+
 public class Guest extends Player {
 
     private Money money;
