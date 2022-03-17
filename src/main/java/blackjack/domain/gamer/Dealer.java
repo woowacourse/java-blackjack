@@ -16,8 +16,11 @@ public class Dealer extends Gamer {
 	}
 
 	@Override
-	protected boolean isWinByBust(Gamer gamer) {
-		return gamer.isBust();
+	public boolean isWin(Gamer gamer) {
+		if (!this.isBlackJack() && !gamer.isBlackJack() && !this.isBust() && !gamer.isBust()){
+			return this.getScore() > gamer.getScore();
+		}
+		return (this.isBlackJack() && !gamer.isBlackJack()) || gamer.isBust();
 	}
 
 	public Card getRandomOneCard() {

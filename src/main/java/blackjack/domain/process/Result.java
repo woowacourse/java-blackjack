@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Result {
 	private static final int NEGATE = -1;
@@ -28,17 +29,17 @@ public class Result {
 
 	public static Result of(Players players, Dealer dealer, BettingTokens bettingTokens) {
 		Result result = new Result(players, bettingTokens);
-		result.calculateProfitByCondition(dealer, Gamer::isWinByBlackJack, BettingToken::getBlackJackWinningMoney);
-		result.calculateProfitByCondition(dealer, Gamer::isWinByNotBlackJack,
+		result.calculateProfitByCondition(((player) -> player.isWin(dealer) && player.isBlackJack()),
+			BettingToken::getBlackJackWinningMoney);
+		result.calculateProfitByCondition(((player) -> player.isWin(dealer) && !player.isBlackJack()),
 			BettingToken::getNotBlackJackWinningMoney);
-		result.calculateProfitByCondition(dealer, Gamer::isLose, BettingToken::getLoseMoney);
+		result.calculateProfitByCondition(((player) -> player.isLose(dealer)), BettingToken::getLoseMoney);
 		return result;
 	}
 
-	private void calculateProfitByCondition(Dealer dealer, BiPredicate<Player, Dealer> condition,
-											Consumer<BettingToken> action) {
+	private void calculateProfitByCondition(Predicate<Gamer> condition, Consumer<BettingToken> action) {
 		this.gameResult.entrySet().stream()
-			.filter(entry -> condition.test(entry.getKey(), dealer))
+			.filter(entry -> condition.test(entry.getKey()))
 			.forEach(entry -> action.accept(entry.getValue()));
 	}
 

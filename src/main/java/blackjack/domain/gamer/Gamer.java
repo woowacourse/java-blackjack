@@ -23,12 +23,11 @@ public abstract class Gamer {
 
 	public abstract boolean canHit();
 
-	public boolean isWin(Gamer gamer) {
-		return isWinByBlackJack(gamer) || isWinByNotBlackJack(gamer);
-	}
+	public abstract boolean isWin(Gamer gamer);
 
 	public boolean isDraw(Gamer gamer) {
-		return isDrawByNormalCase(gamer) || isDrawBySpecialCase(gamer);
+		return (isGamersInNormalCase(gamer)
+			&& this.getScore() == gamer.getScore()) || this.isBlackJack() && gamer.isBlackJack();
 	}
 
 	public boolean isLose(Gamer gamer) {
@@ -37,29 +36,6 @@ public abstract class Gamer {
 
 	private boolean isGamersInNormalCase(Gamer gamer) {
 		return !this.isBlackJack() && !this.isBust() && !gamer.isBlackJack() && !gamer.isBust();
-	}
-
-	public boolean isWinByNotBlackJack(Gamer gamer) {
-		return !isWinByBlackJack(gamer) && (isWinByNormalCase(gamer) || isWinByBust(gamer));
-	}
-
-	private boolean isWinByNormalCase(Gamer gamer) {
-		return isGamersInNormalCase(gamer) && this.getScore() > gamer.getScore();
-	}
-
-	public boolean isWinByBlackJack(Gamer gamer) {
-		return this.isBlackJack() && !gamer.isBlackJack();
-	}
-
-	protected abstract boolean isWinByBust(Gamer gamer);
-
-	private boolean isDrawBySpecialCase(Gamer gamer) {
-		return this.isBlackJack() && gamer.isBlackJack();
-	}
-
-	private boolean isDrawByNormalCase(Gamer gamer) {
-		return isGamersInNormalCase(gamer)
-			&& this.getScore() == gamer.getScore();
 	}
 
 	public List<Card> getCards() {
