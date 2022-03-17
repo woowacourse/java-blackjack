@@ -10,9 +10,12 @@ public class Gamer extends Player {
     private static final int LIMIT_GAMER_TOTAL_POINT = 21;
     private static final int GAMER_OPEN_CARDS_SIZE = 2;
 
+    private final String name;
+
     public Gamer(final String name) {
-        super(name, new Cards());
+        super(new Cards());
         checkName(name);
+        this.name = name;
     }
 
     private void checkName(final String name) {
@@ -47,6 +50,10 @@ public class Gamer extends Player {
     @Override
     public boolean isReceivable() {
         return calculateResult() < LIMIT_GAMER_TOTAL_POINT;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

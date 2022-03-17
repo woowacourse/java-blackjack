@@ -6,11 +6,9 @@ import java.util.List;
 
 public abstract class Player {
 
-    private final String name;
     protected final Cards cards;
 
-    protected Player(final String name, final Cards cards) {
-        this.name = name;
+    protected Player(final Cards cards) {
         this.cards = cards;
     }
 
@@ -30,7 +28,4 @@ public abstract class Player {
 
     public abstract boolean isReceivable();
 
-    public String getName() {
-        return name;
-    }
 }

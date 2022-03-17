@@ -27,7 +27,6 @@ public class BlackJackGame {
         Gamers gamers = setGamers();
 
         startAllPlayer(dealer, gamers.getGamers());
-        OutputView.printOpenCards(gamers.getGamers(), dealer);
         drawAdditionalCards(dealer, gamers);
 
         printFinalMessage(dealer, gamers);
@@ -47,6 +46,7 @@ public class BlackJackGame {
         for (Gamer gamer : gamers) {
             setInitialCards(gamer);
         }
+        OutputView.printOpenCards(gamers, dealer);
     }
 
     private void setInitialCards(final Player player) {
