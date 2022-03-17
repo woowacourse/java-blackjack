@@ -8,7 +8,7 @@ public final class Blackjack extends Finished {
     private static final double BLACKJACK_DRAW_RATE = 0;
 
     Blackjack(final Cards cards) {
-        super(cards, cards.createBlackjackScore());
+        super(cards, cards.score());
     }
 
     @Override

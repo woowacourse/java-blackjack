@@ -59,15 +59,4 @@ public class Cards {
     public List<Card> cards() {
         return List.copyOf(cards);
     }
-
-    public Score createBlackjackScore() {
-        checkIsBlackjack();
-        return score();
-    }
-
-    private void checkIsBlackjack() {
-        if (!isBlackjack()) {
-            throw new IllegalStateException("블랙잭이 아니면 생성 불가능합니다.");
-        }
-    }
 }
