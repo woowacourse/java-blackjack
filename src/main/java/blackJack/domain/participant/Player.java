@@ -26,6 +26,9 @@ public class Player extends Participant {
         if (this.isBurst()) {
             return MatchResult.LOSE;
         }
+        if (this.isBlackJack() && !dealer.isBlackJack()) {
+            return MatchResult.BLACK_JACK_WIN;
+        }
         if (this.getScore() == dealer.getScore()) {
             return getResultAtSameScore(dealer);
         }
@@ -33,9 +36,6 @@ public class Player extends Participant {
     }
 
     private MatchResult getResultAtSameScore(Participant dealer) {
-        if (this.isBlackJack() && !dealer.isBlackJack()) {
-            return MatchResult.WIN;
-        }
         if (!this.isBlackJack() && dealer.isBlackJack()) {
             return MatchResult.LOSE;
         }

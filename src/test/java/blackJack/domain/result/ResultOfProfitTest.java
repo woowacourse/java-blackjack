@@ -40,13 +40,13 @@ class ResultOfProfitTest {
 
     @Test
     void getDealerProfit() {
-        assertThat(resultOfProfit.getDealerProfit(dealer)).isEqualTo(10000);
+        assertThat(resultOfProfit.getDealerProfit(dealer)).isEqualTo(5000);
     }
 
     @Test
     void getPlayersProfit() {
         assertThat(resultOfProfit.getPlayersProfit(dealer)).contains(
-                Map.entry(player1, 10000),
+                Map.entry(player1, 15000),
                 Map.entry(player2, -20000)
         );
     }

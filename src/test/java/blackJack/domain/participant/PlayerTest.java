@@ -127,7 +127,7 @@ class PlayerTest {
         dealer.hit(Card.from(Symbol.DIAMOND, Denomination.NINE));
         dealer.hit(Card.from(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.WIN);
+        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.BLACK_JACK_WIN);
     }
 
     @Test
