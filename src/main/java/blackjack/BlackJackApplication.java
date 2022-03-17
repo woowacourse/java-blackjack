@@ -11,7 +11,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.ScoreBoardResponse;
+import blackjack.dto.RevenueResultResponse;
 import blackjack.view.OutputView;
 import java.util.List;
 
@@ -32,8 +32,11 @@ public class BlackJackApplication {
         OutputView.printParticipantScore(dealer, players);
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, players);
-        RevenueResult revenueResult= RevenueResult.of(scoreBoard, bettingMonies);
-        ScoreBoardResponse scoreBoardResponse = ScoreBoardResponse.from(scoreBoard);
-        OutputView.printMatchResult(scoreBoardResponse);
+        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        RevenueResultResponse revenueResultResponse = RevenueResultResponse.from(revenueResult);
+
+//        ScoreBoardResponse scoreBoardResponse = ScoreBoardResponse.from(scoreBoard);
+//        OutputView.printMatchResult(scoreBoardResponse);
+//        RevenueResultResponse.of(revenueResult)
     }
 }

@@ -122,21 +122,21 @@ public class ScoreBoardTest {
     }
 
     @Test
-    @DisplayName("플레이어와 딜러 둘 다 버스트라일 때 무승부이다")
+    @DisplayName("플레이어와 딜러 둘 다 버스트일 때 무승부이다")
     void player_and_dealer_all_bust() {
         // given
-        Dealer dealer = createDealerWithDenominations(FIVE, SEVEN, NINE, TWO);
-        Player player = createPlayerWithDenominations("user a", JACK, TWO, QUEEN);
+        Dealer dealer = createDealerWithDenominations(FIVE, SEVEN, NINE, TWO); // 23
+        Player player = createPlayerWithDenominations("user a", JACK, TWO, QUEEN); // 22
 
         // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-        int dealerMatchScore = scoreBoard.findDealerMatchScore(DRAW);
+        int dealerMatchScore = scoreBoard.findDealerMatchScore(WIN);
         MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(player.getName());
 
         // then
         assertAll(
                 () -> assertThat(dealerMatchScore).isEqualTo(1),
-                () -> assertThat(playerMatchResult).isEqualTo(DRAW)
+                () -> assertThat(playerMatchResult).isEqualTo(LOSE)
         );
     }
 
