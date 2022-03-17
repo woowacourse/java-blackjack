@@ -25,8 +25,8 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    private static final HitOrStayChoiceStrategy HIT_CHOICE = (s) -> true;
-    private static final HitOrStayChoiceStrategy STAY_CHOICE = (s) -> false;
+    private static final HitOrStayChoiceStrategy HIT_CHOICE = () -> true;
+    private static final HitOrStayChoiceStrategy STAY_CHOICE = () -> false;
     private static final CardSupplier CARD_NOT_GIVEN = () -> CLOVER_ACE;
 
     private Player player;

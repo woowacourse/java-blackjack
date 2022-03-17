@@ -49,7 +49,7 @@ public class Player extends Participant {
 
     public void hitOrStay(final HitOrStayChoiceStrategy hitOrStay,
                           final CardSupplier supplier) {
-        if (hitOrStay.shouldHit(name)) {
+        if (hitOrStay.shouldHit()) {
             receiveCard(supplier.getCard());
             return;
         }

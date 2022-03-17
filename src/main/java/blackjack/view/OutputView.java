@@ -20,7 +20,7 @@ public class OutputView {
     private static final String PLAYER_MAX_SCORE_MESSAGE = "패가 확정되었습니다!" + NEW_LINE;
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!" + NEW_LINE;
     private static final String PLAYER_BLACKJACK_MESSAGE = "블랙잭! 패가 확정되었습니다!" + NEW_LINE;
-    private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_EXTRA_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String BETTING_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 수익" + NEW_LINE;
     private static final String BETTING_RESULT_FORMAT = "%s: %s";
 

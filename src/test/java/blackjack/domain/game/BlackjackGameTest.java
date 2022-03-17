@@ -28,7 +28,7 @@ public class BlackjackGameTest {
     private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> getCardBundleOfSixteen();
     private static final CardBundleStrategy cardBundleOfBlackjackStrategy = (cardStack) -> getCardBundleOfBlackjack();
 
-    private static final HitOrStayChoiceStrategy DRAW_CHOICE = (s) -> true;
+    private static final HitOrStayChoiceStrategy DRAW_CHOICE = () -> true;
     private static final PlayerViewStrategy VIEW_STRATEGY = player -> {
     };
     private static final DealerViewStrategy DEALER_VIEW_STRATEGY = () -> {

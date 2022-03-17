@@ -15,7 +15,7 @@ public class InputView {
     private static final String REQUEST_PLAYER_NAMES_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)";
     private static final String REQUEST_BETTING_AMOUNT_INPUT_MESSAGE = NEW_LINE + "%s의 배팅 금액은?";
     private static final String REQUEST_MORE_CARD_INPUT_FORMAT =
-            "%s는 한장의 카드를 더 받겠습니까? (예는 " + YES + ", 아니오는 " + NO + ")";
+            "한장의 카드를 더 받겠습니까? (예는 " + YES + ", 아니오는 " + NO + ")";
     private static final String INVALID_MORE_PLAYER_CARD_INPUT_EXCEPTION_MESSAGE = YES + "혹은 " + NO + "만 입력해야 합니다.";
     private static final String INVALID_BETTING_INPUT_EXCEPTION_MESSAGE = "숫자를 입력해야 합니다.";
 
@@ -60,8 +60,8 @@ public class InputView {
         }
     }
 
-    public static boolean requestMoreCardInput(final String playerName) {
-        print(String.format(REQUEST_MORE_CARD_INPUT_FORMAT, playerName));
+    public static boolean requestMoreCardInput() {
+        print(REQUEST_MORE_CARD_INPUT_FORMAT);
         final String input = scanner.nextLine();
 
         validateInvalidMoreCardInput(input);
