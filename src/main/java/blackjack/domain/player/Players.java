@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Players {
 
@@ -22,36 +23,20 @@ public class Players {
         players.offer(players.poll());
     }
 
-    public void passTurnUntilHittable() {
+    public void passTurnUntil(Predicate<Player> condition) {
         int count = 0;
-        while (count <= MAX_PLAYER_SIZE && !getCurrentTurn().isAbleToHit()) {
+        while (count <= MAX_PLAYER_SIZE && !condition.test(getCurrentTurn())) {
             passTurnToNext();
             count++;
         }
     }
 
-    public void passTurnUntilBettable() {
-        int count = 0;
-        while (count <= MAX_PLAYER_SIZE && !getCurrentTurn().isbettable()) {
-            passTurnToNext();
-            count++;
-        }
-    }
-
-    public boolean isBettablePlayerRemains() {
-        boolean isBettablePlayerRemains = false;
+    public boolean isAllPlayerSatisfy(Predicate<Player> condition) {
+        boolean isAllFlagTrue = false;
         for (Player player : players) {
-            isBettablePlayerRemains |= player.isbettable();
+            isAllFlagTrue |= condition.test(player);
         }
-        return isBettablePlayerRemains;
-    }
-
-    public boolean isPossibleToPlay() {
-        boolean isPossibleToPlay = false;
-        for (Player player : players) {
-            isPossibleToPlay |= player.isAbleToHit();
-        }
-        return isPossibleToPlay;
+        return isAllFlagTrue;
     }
 
     public void bettingCurrentPlayer(long bettingMoney) {

@@ -37,7 +37,7 @@ public class Player extends Participant{
         this.bettingMoney = bettingMoney;
     }
 
-    public boolean isbettable() {
+    public boolean isAbleToBet() {
         return bettingMoney == 0;
     }
 

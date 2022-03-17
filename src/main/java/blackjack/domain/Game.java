@@ -43,22 +43,22 @@ public class Game {
         return currentTurn;
     }
 
-    public boolean isPossibleToPlay() {
-        return players.isPossibleToPlay();
-    }
-
     public String getCurrentHittablePlayerName() {
-        players.passTurnUntilHittable();
+        players.passTurnUntil(Player::isAbleToHit);
         return players.getCurrentTurn().getName();
-    }
-
-    public boolean isBettablePlayerRemains() {
-        return players.isBettablePlayerRemains();
     }
 
     public String getCurrentBettablePlayerName() {
-        players.passTurnUntilBettable();
+        players.passTurnUntil(Player::isAbleToBet);
         return players.getCurrentTurn().getName();
+    }
+
+    public boolean isPossibleToPlay() {
+        return players.isAllPlayerSatisfy(Player::isAbleToHit);
+    }
+
+    public boolean isBettablePlayerRemains() {
+        return players.isAllPlayerSatisfy(Player::isAbleToBet);
     }
 
     public void doBetting(long bettingMoney) {

@@ -61,7 +61,7 @@ class PlayersTest {
         Player firstTurn = players.getCurrentTurn();
 
         // when
-        players.passTurnUntilHittable();
+        players.passTurnUntil(Player::isAbleToHit);
 
         // then
         assertThat(firstTurn).isEqualTo(first);
@@ -87,7 +87,7 @@ class PlayersTest {
         Player firstTurn = players.getCurrentTurn();
 
         // when
-        players.passTurnUntilBettable();
+        players.passTurnUntil(Player::isAbleToBet);
 
         // then
         assertThat(firstTurn).isEqualTo(first);
@@ -161,7 +161,7 @@ class PlayersTest {
             @DisplayName("참을 반환한다")
             void it_returns_true() {
                 Players players = new Players(List.of(playablePlayer, bustPlayer));
-                assertThat(players.isPossibleToPlay()).isTrue();
+                assertThat(players.isAllPlayerSatisfy(Player::isAbleToHit)).isTrue();
             }
         }
 
@@ -173,7 +173,7 @@ class PlayersTest {
             @DisplayName("거짓을 반환한다")
             void it_returns_false() {
                 Players players = new Players(List.of(stayPlayer, bustPlayer));
-                assertThat(players.isPossibleToPlay()).isFalse();
+                assertThat(players.isAllPlayerSatisfy(Player::isAbleToHit)).isFalse();
             }
         }
     }
