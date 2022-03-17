@@ -4,9 +4,9 @@ import static blackjack.domain.Rule.DEALER_HIT_STANDARD_SCORE;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Money;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Guests;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,16 +64,16 @@ public class OutputView {
         System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards) + " - 결과: " + totalScore);
     }
 
-    public static void printTotalMoney(final Map<Guest, Money> moneys,
-                                       final String dealerName, final Money dealerMoney) {
+    public static void printTotalProfit(final Map<Guest, Money> guestProfit,
+                                        final String dealerName, final Money dealerProfit) {
         System.out.printf("%n## 최종 수익%n");
-        printPlayerMoney(dealerName, dealerMoney.getValue());
-        for (Guest guest : moneys.keySet()) {
-            printPlayerMoney(guest.getName(), moneys.get(guest).getValue());
+        printPlayerProfit(dealerName, dealerProfit.getValue());
+        for (Guest guest : guestProfit.keySet()) {
+            printPlayerProfit(guest.getName(), guestProfit.get(guest).getValue());
         }
     }
 
-    private static void printPlayerMoney(final String name, final long money) {
+    private static void printPlayerProfit(final String name, final long money) {
         System.out.printf("%s: %d%n", name, money);
     }
 

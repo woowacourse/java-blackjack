@@ -4,10 +4,11 @@ import blackjack.domain.BlackjackMachine;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Money;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Guests;
-import blackjack.domain.result.MoneyResult;
+import blackjack.domain.player.Money;
+import blackjack.domain.result.DealerProfit;
+import blackjack.domain.result.GuestProfit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -25,7 +26,7 @@ public class BlackjackController {
         giveCardsToDealer(blackJackMachine, dealer);
 
         calculateTotalScore(dealer, guests);
-        calculateTotalMoney(dealer, guests);
+        calculateTotalProfit(dealer, guests);
     }
 
     private Guests createGuests() {
@@ -54,22 +55,19 @@ public class BlackjackController {
     }
 
     private void giveInitialCardsToPlayer(final BlackjackMachine blackJackMachine,
-                                          final Dealer dealer,
-                                          final Guests guests) {
+                                          final Dealer dealer, final Guests guests) {
         blackJackMachine.giveInitialCards(dealer, guests);
         OutputView.printInitialCards(dealer, guests);
     }
 
-    private void askAndGiveCardsToGuests(final BlackjackMachine blackJackMachine,
-                                         final Guests guests) {
+    private void askAndGiveCardsToGuests(final BlackjackMachine blackJackMachine, final Guests guests) {
         for (Guest guest : guests) {
             askAndGiveCardToGuest(blackJackMachine, guest);
         }
         OutputView.printNewLine();
     }
 
-    private void askAndGiveCardToGuest(final BlackjackMachine blackJackMachine,
-                                       final Guest guest) {
+    private void askAndGiveCardToGuest(final BlackjackMachine blackJackMachine, final Guest guest) {
         Choice choice;
         do {
             choice = getChoice(guest);
@@ -87,8 +85,7 @@ public class BlackjackController {
         }
     }
 
-    private void giveCardsToDealer(final BlackjackMachine blackJackMachine,
-                                   final Dealer dealer) {
+    private void giveCardsToDealer(final BlackjackMachine blackJackMachine, final Dealer dealer) {
         while (dealer.canTakeCard()) {
             blackJackMachine.giveCardToDealer(dealer);
             OutputView.printDealerGetCardMessage(dealer);
@@ -96,18 +93,16 @@ public class BlackjackController {
         OutputView.printNewLine();
     }
 
-    private void calculateTotalScore(final Dealer dealer,
-                                     final Guests guests) {
+    private void calculateTotalScore(final Dealer dealer, final Guests guests) {
         OutputView.printTotalScore(dealer, dealer.getTotalScore());
         for (Guest guest : guests) {
             OutputView.printTotalScore(guest, guest.getTotalScore());
         }
     }
 
-    private void calculateTotalMoney(final Dealer dealer, final Guests guests) {
-        final MoneyResult moneyResult = new MoneyResult();
-        moneyResult.calculateGuestMoney(dealer, guests);
-        OutputView.printTotalMoney(moneyResult.getMoneys(),
-                dealer.getName(), moneyResult.calculateDealerMoney());
+    private void calculateTotalProfit(final Dealer dealer, final Guests guests) {
+        final GuestProfit guestProfit = new GuestProfit(dealer, guests);
+        final DealerProfit dealerProfit = new DealerProfit(guestProfit);
+        OutputView.printTotalProfit(guestProfit.getProfits(), dealer.getName(), dealerProfit.getProfit());
     }
 }
