@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Blackjack;
+import blackjack.domain.NumberGenerator;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.RandomNumberGenerator;
@@ -16,8 +17,7 @@ public class BlackjackController {
         List<String> playerNames = InputView.getPlayerNames();
         Blackjack blackjack = new Blackjack(playerNames);
 
-        blackjack.distributeInitialCards(randomNumberGenerator);
-        OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
+        interactViewForInitDistribution(blackjack, randomNumberGenerator);
 
         while (!blackjack.cycleIsOver()) {
             Player turnPlayer = blackjack.turnPlayer();
@@ -32,5 +32,15 @@ public class BlackjackController {
 
         OutputView.printCardsWithScore(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
         OutputView.printResults(blackjack.results(blackjack.getPlayers().getPlayers()));
+    }
+
+    private void interactViewForInitDistribution(Blackjack blackjack, NumberGenerator numberGenerator) {
+        blackjack.distributeInitialCards(numberGenerator);
+        OutputView.printInitDistributionMessage(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
+        OutputView.printPlayerOpenCards(blackjack.getDealer(), List.of(blackjack.openDealerOneCard()));
+        List<Player> players = blackjack.getPlayers().getPlayers();
+        for (Player player : players) {
+            OutputView.printPlayerOpenCards(player, player.getMyCards());
+        }
     }
 }

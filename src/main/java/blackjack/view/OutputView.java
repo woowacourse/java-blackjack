@@ -27,18 +27,16 @@ public class OutputView {
     private static final int MAX_SCORE = 21;
     private static final int INIT_CARD_NUM = 2;
 
-
-    public static void printInitStatus(Dealer dealer, List<Player> players) {
+    public static void printInitDistributionMessage(Dealer dealer, List<Player> players) {
         List<String> playerNames = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
         String prefixString = dealer.getName() + String.join(NAME_DELIMITER, playerNames);
         System.out.printf(INIT_CARD_DISTRIBUTION_MESSAGE, prefixString, INIT_CARD_NUM);
+    }
 
-        printCards(dealer, true);
-        for (Player player : players) {
-            printCards(player, true);
-        }
+    public static void printPlayerOpenCards(Player player, List<Card> openCards) {
+        System.out.println(makeStatusFormat(player.getName(), openCards));
     }
 
     private static String makeStatusFormat(String name, List<Card> cards) {
