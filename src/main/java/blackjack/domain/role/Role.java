@@ -47,31 +47,27 @@ public abstract class Role {
 		}
 	}
 
-	private void loseAll() {
-		battingAmount.loseAll();
-	}
-
 	private int getCurrentIncome() {
 		return battingAmount.getFinalValue();
+	}
+
+	private void loseAll() {
+		battingAmount.loseAll();
 	}
 
 	public int getIncome() {
 		return battingAmount.calculateIncome();
 	}
 
-	public int calculateFinalScore() {
-		return hand.calculateOptimalScore();
-	}
-
-	public abstract boolean canDraw();
-
-	public abstract int getDrawStandard();
-
 	public void earnAmountByBlackJack() {
 		if (calculateFinalScore() != BlackJack.OPTIMIZED_WINNING_NUMBER) {
 			return;
 		}
 		battingAmount.giveOneAndHalfTime();
+	}
+
+	public int calculateFinalScore() {
+		return hand.calculateOptimalScore();
 	}
 
 	public int calculateBettingResult() {
@@ -101,4 +97,8 @@ public abstract class Role {
 	public String calculateFinalResult() {
 		return hand.getFinalScore();
 	}
+
+	public abstract boolean canDraw();
+
+	public abstract int getDrawStandard();
 }

@@ -134,7 +134,7 @@ class RolesTest {
 
 		return Stream.of(
 			Arguments.of(deck1, 0),
-			Arguments.of(deck2, 2000)
+			Arguments.of(deck2, 500)
 		);
 	}
 

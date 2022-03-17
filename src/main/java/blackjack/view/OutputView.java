@@ -14,7 +14,6 @@ public class OutputView {
 	private static final String WITH = "와 ";
 	private static final String IS = "는";
 	private static final String SPACE = " ";
-	private static final String EMPTY = "";
 	private static final String DISTRIBUTED_TWO_CARDS = "에게 2장의 카드를 나누었습니다.";
 	private static final String ROLE_NAME_INFORMATION_DISTRIBUTOR = ": ";
 	private static final String RESULT = " - 결과: ";
