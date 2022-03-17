@@ -16,17 +16,30 @@ public enum Judgement {
         this.profitMultiple = profitMultiple;
     }
 
+
     public static Judgement judgePlayer(Player player, Dealer dealer) {
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
+        if (isPlayerBlackJack(player, dealer)) {
             return BLACKJACK;
         }
-        if (player.isBust() || (player.calculateScore() < dealer.calculateScore() && !dealer.isBust())) {
+        if (isPlayerLose(player, dealer)) {
             return LOSE;
         }
-        if (dealer.isBust() || player.calculateScore() > dealer.calculateScore()) {
+        if (isPlayerWin(player, dealer)) {
             return WIN;
         }
         return DRAW;
+    }
+
+    private static boolean isPlayerBlackJack(Player player, Dealer dealer) {
+        return player.isBlackJack() && !dealer.isBlackJack();
+    }
+
+    private static boolean isPlayerLose(Player player, Dealer dealer) {
+        return player.isBust() || (player.calculateScore() < dealer.calculateScore() && !dealer.isBust());
+    }
+
+    private static boolean isPlayerWin(Player player, Dealer dealer) {
+        return dealer.isBust() || player.calculateScore() > dealer.calculateScore();
     }
 
     public double getProfitMultiple() {
