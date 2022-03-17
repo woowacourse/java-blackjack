@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,6 +21,12 @@ public class Betting {
         if (money <= 0) {
             throw new IllegalArgumentException("배팅 금액은 양수여야 합니다.");
         }
+    }
+
+    Map<Name, Long> addRecord(Map<Name, Long> revenueMap, Map<Name, PlayRecord> recordMap) {
+        Map<Name, Long> result = new LinkedHashMap<>(revenueMap);
+        result.put(name, revenue(Map.copyOf(recordMap)));
+        return result;
     }
 
     long revenue(Map<Name, PlayRecord> recordMap) {
@@ -43,10 +50,6 @@ public class Betting {
 
     private PlayRecord getPlayRecord(Map<Name, PlayRecord> recordMap) {
         return recordMap.get(name);
-    }
-
-    Name getName() {
-        return name;
     }
 
     @Override
