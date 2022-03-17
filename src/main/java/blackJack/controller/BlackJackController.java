@@ -31,7 +31,7 @@ public class BlackJackController {
 
     private Participants getParticipants() {
         try {
-            return Participants.newInstanceByPlayerNames(InputView.inputPlayerNames());
+            return new Participants(InputView.inputPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getParticipants();
@@ -48,7 +48,7 @@ public class BlackJackController {
 
     private BettingAmount getBettingAmount(Player player) {
         try {
-            return BettingAmount.newInstanceByString(InputView.inputBettingAmount(player));
+            return new BettingAmount(InputView.inputBettingAmount(player));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getBettingAmount(player);

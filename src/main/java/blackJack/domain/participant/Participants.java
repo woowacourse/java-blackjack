@@ -34,11 +34,11 @@ public class Participants {
         }
     }
 
-    public static Participants newInstanceByPlayerNames(List<String> playerNames) {
-        return new Participants(new Dealer(), getPlayers(playerNames));
+    public Participants(List<String> playerNames) {
+        this(new Dealer(), convertToPlayers(playerNames));
     }
 
-    private static List<Player> getPlayers(List<String> playerNames) {
+    private static List<Player> convertToPlayers(List<String> playerNames) {
         return playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toUnmodifiableList());

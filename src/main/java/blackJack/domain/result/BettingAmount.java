@@ -9,8 +9,8 @@ public class BettingAmount {
         this.bettingAmount = bettingAmount;
     }
 
-    public static BettingAmount newInstanceByString(String input) {
-        return new BettingAmount(toInt(input));
+    public BettingAmount(String bettingAmount) {
+        this(toInt(bettingAmount));
     }
 
     private static int toInt(String bettingAmount) {

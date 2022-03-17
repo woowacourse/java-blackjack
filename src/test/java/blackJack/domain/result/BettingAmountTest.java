@@ -19,7 +19,7 @@ class BettingAmountTest {
     @ParameterizedTest(name = "베팅 금액이 정수가 아닌 경우 예외 발생")
     @ValueSource(strings = {"", " ", "a", "1.5"})
     void checkNotInteger(String value) {
-        assertThatThrownBy(() -> BettingAmount.newInstanceByString(value))
+        assertThatThrownBy(() -> new BettingAmount(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 정수여야 합니다.");
     }
@@ -27,7 +27,7 @@ class BettingAmountTest {
     @ParameterizedTest(name = "베팅 금액이 양수가 아닌 경우 예외 발생")
     @ValueSource(strings = {"0", "-1"})
     void checkNotPositiveNumbeer(String value) {
-        assertThatThrownBy(() -> BettingAmount.newInstanceByString(value))
+        assertThatThrownBy(() -> new BettingAmount(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 양수여야 합니다.");
     }
