@@ -27,6 +27,9 @@ public class GameResult {
         if (playerOutcome == PlayerOutcome.WIN) {
             return player.getBettingMoney();
         }
+        if (playerOutcome == PlayerOutcome.LOSE) {
+            return -player.getBettingMoney();
+        }
         return 0;
     }
 }
