@@ -6,13 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.card.cards.CardDeck;
 import blackjack.domain.human.humans.Participant;
 import blackjack.domain.human.humans.Players;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
 class ParticipantTest {
-    private final Players players = Players.fromText("pobi");
+    private final Players players = Players.fromNames(List.of("pobi"));
     private Participant participant;
 
     @BeforeEach

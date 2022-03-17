@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import blackjack.domain.card.cards.Cards;
+import blackjack.domain.card.element.Denomination;
 
 public final class Point {
     private static final int BLACKJACK_NUMBER = 21;
@@ -10,11 +11,7 @@ public final class Point {
     private final int value;
 
     private Point(Cards cards) {
-        this.value = computeWithAce(cards.getRawPoint(), cards.getAceCount());
-    }
-
-    public static Point fromCards(Cards cards) {
-        return new Point(cards);
+        this.value = computeWithAce(cards.getRawPoint(), cards.getDenominationCount(Denomination.ACE));
     }
 
     private static int computeWithAce(int point, int aceCount) {
@@ -23,6 +20,10 @@ public final class Point {
             return computeWithAce(point, --aceCount);
         }
         return point;
+    }
+
+    public static Point fromCards(Cards cards) {
+        return new Point(cards);
     }
 
     public int get() {

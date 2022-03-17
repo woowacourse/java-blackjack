@@ -23,12 +23,12 @@ public abstract class Human {
         return cards.getFirstCard();
     }
 
-    public int getPoint() {
-        return Point.fromCards(cards).get();
-    }
-
     public boolean isBust() {
         return getPoint() > BLACKJACK_NUMBER;
+    }
+
+    public int getPoint() {
+        return Point.fromCards(cards).get();
     }
 
     public String getName() {

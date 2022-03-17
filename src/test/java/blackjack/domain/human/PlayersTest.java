@@ -1,6 +1,8 @@
 package blackjack.domain.human;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.cards.CardDeck;
 import blackjack.domain.human.humans.Players;
@@ -16,6 +18,19 @@ class PlayersTest {
         Player player = Player.from("test");
         Players players = Players.from(List.of(player));
         assertThat(players.size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("플레이어 모음 생성 기능 예외처리 검사")
+    public void createErrorTest() {
+        assertAll(
+                () -> assertThatThrownBy( () -> Players.fromNames(List.of("test","test")))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("이름은 중복될 수 없습니다.") ,
+                () -> assertThatThrownBy( () -> Players.from(List.of(Player.from("test"),Player.from("test"))))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("이름은 중복될 수 없습니다.")
+        );
     }
 
     @Test

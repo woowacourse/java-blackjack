@@ -20,7 +20,7 @@ public final class BlackjackGame {
     }
 
     private Players getPlayers() {
-        return Players.fromText(InputView.inputPlayerNames());
+        return Players.fromNames(InputView.inputPlayerNames());
     }
 
     private void initGame(final Participant participant, final CardDeck cardDeck) {
