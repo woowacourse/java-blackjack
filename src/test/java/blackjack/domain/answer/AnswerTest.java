@@ -1,4 +1,4 @@
-package blackjack.domain.gamer;
+package blackjack.domain.answer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

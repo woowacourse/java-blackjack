@@ -3,8 +3,8 @@ package blackjack.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.answer.Answer;
 import blackjack.domain.card.Deck;
-import blackjack.domain.gamer.Answer;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
