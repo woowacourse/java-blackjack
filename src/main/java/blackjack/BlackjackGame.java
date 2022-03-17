@@ -47,7 +47,7 @@ public class BlackjackGame {
 	}
 
 	private boolean shouldHit(Player player) {
-		String name = ParticipantDto.from(player).getName();
+		String name = player.getName();
 		return !(player.bust()) && InputView.askHit(name);
 	}
 

@@ -33,6 +33,6 @@ public class PlayerTest {
 		CardDeck cardDeck = CardDeck.create();
 		Player player = new Player(Name.from("yaho"));
 		player.receiveCard(cardDeck.pick());
-		assertThat(player.getCards().size()).isEqualTo(1);
+		assertThat(player.getCards().getCards().size()).isEqualTo(1);
 	}
 }

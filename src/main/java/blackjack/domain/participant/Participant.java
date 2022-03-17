@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -30,11 +31,17 @@ public abstract class Participant {
 		return cards.sum();
 	}
 
+	public List<String> getCardNames() {
+		return cards.getCards().stream()
+			.map(Card::getName)
+			.collect(Collectors.toList());
+	}
+
 	public String getName() {
 		return name.getName();
 	}
 
-	public List<Card> getCards() {
-		return this.cards.getCards();
+	public Cards getCards() {
+		return this.cards;
 	}
 }

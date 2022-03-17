@@ -43,14 +43,14 @@ public class Cards {
 
 	public Card pickRandomCard() {
 		shuffle();
-		return pickCard();
+		return pickFirstCard();
 	}
 
 	private void shuffle() {
 		Collections.shuffle(this.cards);
 	}
 
-	private Card pickCard() {
+	public Card pickFirstCard() {
 		return this.cards.get(0);
 	}
 
