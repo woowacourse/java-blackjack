@@ -15,7 +15,7 @@ public class BlackjackGame {
     private final Deck deck;
     private final GameParticipants gameParticipants;
 
-    public BlackjackGame(List<String> names) {
+    public BlackjackGame(Map<String, Integer> names) {
         this.deck = Deck.of(Card.createDeck());
         this.gameParticipants = new GameParticipants(createDealer(), toPlayers(names));
     }
@@ -50,9 +50,9 @@ public class BlackjackGame {
         return new Dealer(HoldCards.init(List.of(deck.draw(), deck.draw())));
     }
 
-    private Players toPlayers(List<String> names) {
-        return new Players(names.stream()
-                .map(name -> new Player(name, HoldCards.init(List.of(deck.draw(), deck.draw()))))
+    private Players toPlayers(Map<String, Integer> names) {
+        return new Players(names.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue(), HoldCards.init(List.of(deck.draw(), deck.draw()))))
                 .collect(Collectors.toList()));
     }
 }

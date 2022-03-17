@@ -12,8 +12,9 @@ public class Player extends Participant {
     private final String name;
     private int bettingMoney;
 
-    public Player(String name, HoldCards holdCards) {
+    public Player(String name, int bettingMoney, HoldCards holdCards) {
         super(holdCards);
+        this.bettingMoney = bettingMoney;
         this.name = name;
     }
 

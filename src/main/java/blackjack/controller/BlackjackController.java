@@ -5,35 +5,34 @@ import blackjack.domain.Command;
 import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
-import blackjack.domain.entry.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
 
     public void run() {
-        BlackjackGame blackjackGame = new BlackjackGame(InputView.inputNames());
+        List<String> playerNames = InputView.inputNames();
+        BlackjackGame blackjackGame = new BlackjackGame(betMoney(playerNames));
         List<Participant> participants = blackjackGame.getParticipant();
-        List<Player> players = blackjackGame.getPlayers();
-        betMoney(players);
-
         OutputView.printPlayersDefaultCard(participants);
 
-        hit(blackjackGame, players);
+        hit(blackjackGame);
 
         OutputView.printCardResult(blackjackGame.getCardResult(participants));
         OutputView.printGameResult(blackjackGame.getBettingResult());
     }
 
-    private void betMoney(List<Player> players) {
-        for (Player player: players) {
-            player.initBettingMoney(InputView.inputBettingMoney(player));
-        }
+    private Map<String, Integer> betMoney(List<String> playerNames) {
+        return playerNames.stream()
+                .collect(Collectors.toMap(name -> name, InputView::inputBettingMoney));
     }
 
-    private void hit(BlackjackGame blackjackGame, List<Player> players) {
+    private void hit(BlackjackGame blackjackGame) {
+        List<Player> players = blackjackGame.getPlayers();
         for (Player player : players) {
             hitPlayer(blackjackGame, player);
         }

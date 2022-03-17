@@ -5,6 +5,7 @@ import blackjack.domain.entry.Player;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -26,8 +27,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static int inputBettingMoney(Player player) {
-        System.out.println(MessageFormat.format("{0}의 베팅 금액은?", player.getName()));
+    public static int inputBettingMoney(String name) {
+        System.out.println(MessageFormat.format("{0}의 베팅 금액은?", name));
         int money = SCANNER.nextInt();
         SCANNER.nextLine();
         return money;
