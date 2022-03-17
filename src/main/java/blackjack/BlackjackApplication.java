@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.HitRequest;
-import blackjack.domain.ParticipantProfit;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
@@ -16,6 +15,7 @@ import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Referee;
+import blackjack.dto.ParticipantProfit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
