@@ -8,6 +8,7 @@ import java.util.List;
 public class Cards {
 
     private static final int BONUS_ACE_ADD_SCORE = -10;
+    public static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> value;
 
@@ -45,7 +46,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return value.size() == 2 && calculateTotalScore() == 21;
+        return value.size() == BLACKJACK_CARD_SIZE && calculateTotalScore() == BLACKJACK_SCORE;
     }
 
     public List<Card> getValue() {
