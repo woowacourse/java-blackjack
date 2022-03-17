@@ -69,7 +69,7 @@ public final class Hand {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.isNumber(TrumpNumber.ACE));
+                .anyMatch(TrumpCard::isAce);
     }
 
     private int sumAceAdvantageTo(int score) {
@@ -82,7 +82,7 @@ public final class Hand {
 
     private int countAce() {
         return (int) cards.stream()
-                .filter(card -> card.isNumber(TrumpNumber.ACE))
+                .filter(TrumpCard::isAce)
                 .count();
     }
 

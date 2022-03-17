@@ -15,8 +15,8 @@ public final class TrumpCard {
         return number.sumTo(value);
     }
 
-    public boolean isNumber(TrumpNumber trumpNumber) {
-        return this.number == trumpNumber;
+    public boolean isAce() {
+        return this.number == TrumpNumber.ACE;
     }
 
     public TrumpNumber getNumber() {
