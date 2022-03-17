@@ -49,10 +49,10 @@ public class BlackjackController {
     }
 
     private void distributeAllCards(final BlackjackGame game) {
-        game.distributeAllCards(
+        game.drawAllPlayerCards(
                 InputView::requestMoreCardInput,
-                OutputView::printPlayerCardDistributionInfo,
-                OutputView::printDealerExtraCardInfo);
+                OutputView::printPlayerCardDistributionInfo);
+        game.drawDealerCards(OutputView::printDealerExtraCardInfo);
     }
 
     public void showBettingResults(final BlackjackGame game, final PlayerBettings bettings) {

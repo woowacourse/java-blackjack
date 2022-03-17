@@ -94,19 +94,34 @@ public class BlackjackGameTest {
         }
     }
 
-    @DisplayName("distributeAllPlayerCards 메서드 호출 후 모든 플레이어는 더 이상 드로우를 할 수 없게 된다.")
+    @DisplayName("drawAllPlayerCards 메서드 호출 후 모든 플레이어는 더 이상 드로우를 할 수 없게 된다.")
     @Test
-    void distributeAllCards() {
+    void drawAllPlayerCards() {
         for (int i = 0; i < 1000; i++) {
             BlackjackGame blackjackGame = new BlackjackGame(
                     new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
 
-            blackjackGame.distributeAllCards(DRAW_CHOICE, VIEW_STRATEGY, DEALER_VIEW_STRATEGY);
+            blackjackGame.drawAllPlayerCards(DRAW_CHOICE, VIEW_STRATEGY);
             blackjackGame.getParticipants()
                     .getPlayers()
                     .stream()
                     .map(Participant::canDraw)
                     .forEach(playerCanDraw -> assertThat(playerCanDraw).isFalse());
+        }
+    }
+
+    @DisplayName("drawDealerCards 메서드 호출 후 딜러는 더 이상 드로우를 할 수 없게 된다.")
+    @Test
+    void drawDealerCards() {
+        for (int i = 0; i < 1000; i++) {
+            BlackjackGame blackjackGame = new BlackjackGame(
+                    new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
+
+            blackjackGame.drawDealerCards(DEALER_VIEW_STRATEGY);
+            Dealer dealer = blackjackGame.getParticipants().getDealer();
+
+            boolean actual = dealer.canDraw();
+            assertThat(actual).isFalse();
         }
     }
 }
