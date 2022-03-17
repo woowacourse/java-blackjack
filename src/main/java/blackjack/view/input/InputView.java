@@ -22,7 +22,7 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public int requestBetAmount() {
+    public int requestBettingAmount() {
         final String inputLine = reader.readLine();
         return parseNumber(inputLine);
     }

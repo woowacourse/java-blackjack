@@ -1,6 +1,7 @@
 package blackjack;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
@@ -30,11 +31,24 @@ public class BlackjackApplication {
         final Deck deck = Deck.generate(deckGenerator);
         final Dealer dealer = Dealer.readyToPlay(deck);
         final Players players = Players.readyToPlay(blackjackView.requestPlayerNames(), deck);
+        playGame(deck, dealer, players);
+    }
+
+    private void playGame(final Deck deck, final Dealer dealer, final Players players) {
+        proceedBettingTurn(players);
+
         announceInitiallyDistributedCards(dealer, players);
 
-        playGame(deck, players, dealer);
+        proceedPlayersTurn(deck, players);
+        proceedDealerTurn(deck, dealer);
+
         announceFinalScoresOfParticipants(dealer, players);
         announceMatchResult(dealer, players);
+    }
+
+    private void proceedBettingTurn(final Players players) {
+        final Map<String, Integer> bettingAmounts = blackjackView.requestPlayerBettingAmounts(players.getPlayerNames());
+        players.betAmounts(bettingAmounts);
     }
 
     private void announceInitiallyDistributedCards(final Dealer dealer, final Players players) {
@@ -46,10 +60,6 @@ public class BlackjackApplication {
         blackjackView.printInitiallyDistributedCards(dealerInitiallyDrewCardDto, playerInitiallyDrewCardDtos);
     }
 
-    private void playGame(final Deck deck, final Players players, final Dealer dealer) {
-        proceedPlayersTurn(deck, players);
-        proceedDealerTurn(deck, dealer);
-    }
 
     private void proceedPlayersTurn(final Deck deck, final Players players) {
         players.drawCardsPerPlayer(deck, new CardDrawCallback() {

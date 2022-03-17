@@ -47,7 +47,7 @@ public class InputViewTest {
     void requestBetAmountTest(final String inputLine) {
         customReader.initTest(inputLine);
 
-        final int actualBetAmount = inputView.requestBetAmount();
+        final int actualBetAmount = inputView.requestBettingAmount();
         final int expectedBetAmount = Integer.parseInt(inputLine);
         assertThat(actualBetAmount).isEqualTo(expectedBetAmount);
     }
@@ -58,7 +58,7 @@ public class InputViewTest {
     void betAmountNotNumericTest(final String inputLine) {
         customReader.initTest(inputLine);
 
-        assertThatThrownBy(inputView::requestBetAmount)
+        assertThatThrownBy(inputView::requestBettingAmount)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("베팅 금액은 숫자여야 합니다.");
     }

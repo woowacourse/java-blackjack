@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +21,12 @@ public class BlackjackView {
         this.outputView = outputView;
     }
 
-    public Map<String, Integer> requestPlayerNamesAndBetAmounts() {
-        final Map<String, Integer> playerBetAmounts = new LinkedHashMap<>();
-        for (final String playerName : requestPlayerNames()) {
-            playerBetAmounts.put(playerName, requestPlayerBetAmount(playerName));
+    public Map<String, Integer> requestPlayerBettingAmounts(final List<String> playerNames) {
+        final Map<String, Integer> playerBettingAmounts = new HashMap<>();
+        for (final String playerName : playerNames) {
+            playerBettingAmounts.put(playerName, requestPlayerBettingAmount(playerName));
         }
-        return playerBetAmounts;
+        return playerBettingAmounts;
     }
 
     public List<String> requestPlayerNames() {
@@ -34,9 +34,10 @@ public class BlackjackView {
         return inputView.requestPlayerNames();
     }
 
-    private int requestPlayerBetAmount(final String playerName) {
+    private int requestPlayerBettingAmount(final String playerName) {
+        outputView.printEmptyLine();
         outputView.printMessage(playerName + "의 베팅 금액은?");
-        return inputView.requestBetAmount();
+        return inputView.requestBettingAmount();
     }
 
     public void printInitiallyDistributedCards(final InitiallyDrewCardDto dealerInitiallyDrewCardDto,

@@ -48,6 +48,14 @@ public class Players {
         return new Players(names, deck);
     }
 
+    public void betAmounts(final Map<String, Integer> bettingAmounts) {
+        for (final Player player : players) {
+            final String playerName = player.getParticipantName();
+            final int bettingAmount = bettingAmounts.get(playerName);
+            player.betAmount(bettingAmount);
+        }
+    }
+
     public void drawCardsPerPlayer(final Deck deck, final CardDrawCallback callback) {
         for (final Player player : players) {
             player.drawCards(deck, callback);
@@ -72,6 +80,12 @@ public class Players {
 
     public List<Player> getPlayers() {
         return List.copyOf(players);
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getParticipantName)
+                .collect(Collectors.toUnmodifiableList());
     }
 
 }

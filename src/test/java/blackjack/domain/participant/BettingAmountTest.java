@@ -7,13 +7,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class BetAmountTest {
+class BettingAmountTest {
 
     @DisplayName("베팅 금액은 양수여야 합니다.")
     @ParameterizedTest
     @ValueSource(ints = {-10, -1, 0})
     void betAmountNotPositiveExceptionTest(final int amount) {
-        assertThatThrownBy(() -> new BetAmount(amount))
+        assertThatThrownBy(() -> new BettingAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("베팅 금액은 양수여야 합니다.");
     }
@@ -22,9 +22,9 @@ class BetAmountTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 10, 100, 10000})
     void createBetAmountTest(final int expectedAmount) {
-        final BetAmount betAmount = new BetAmount(expectedAmount);
+        final BettingAmount bettingAmount = new BettingAmount(expectedAmount);
 
-        final int actualAmount = betAmount.getAmount();
+        final int actualAmount = bettingAmount.getAmount();
         assertThat(actualAmount).isEqualTo(expectedAmount);
     }
 
