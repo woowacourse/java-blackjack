@@ -5,15 +5,14 @@ import static blackjack.view.OutputView.printBettingResults;
 import static blackjack.view.OutputView.printDealerBlackjackInfo;
 import static blackjack.view.OutputView.printInitialParticipantsCards;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.betting.BettingReferee;
 import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
-import blackjack.domain.BlackjackGame;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.strategy.CardBundleStrategy;
 import blackjack.view.InputView;
@@ -31,7 +30,7 @@ public class BlackjackController {
     }
 
     public PlayerBettings initializeBettings(final BlackjackGame game) {
-        List<Player> players = game.getParticipants().getPlayers();
+        List<Participant> players = game.getParticipants().getPlayers();
 
         return PlayerBettings.of(players, InputView::requestBettingAmountInput);
     }
@@ -57,7 +56,7 @@ public class BlackjackController {
 
     public void showBettingResults(final BlackjackGame game, final PlayerBettings bettings) {
         final GameParticipants participants = game.getParticipants();
-        final Dealer dealer = participants.getDealer();
+        final Participant dealer = participants.getDealer();
 
         final BettingReferee referee = new BettingReferee(dealer, bettings);
         printBettingResults(referee.getResults());

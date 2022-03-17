@@ -12,6 +12,7 @@ import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayChoiceStrategy;
@@ -116,8 +117,8 @@ public class BettingRefereeTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private PlayerBettings generateBettingsOf(List<Player> players) {
-        for (Player player : players) {
+    private PlayerBettings generateBettingsOf(List<Participant> players) {
+        for (Participant player : players) {
             player.drawAllCards(STAY_CHOICE, VIEW_STRATEGY, () -> CLOVER2);
         }
         return PlayerBettings.of(players, (name) -> BETTING_AMOUNT);

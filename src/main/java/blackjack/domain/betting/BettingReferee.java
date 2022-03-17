@@ -1,7 +1,7 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.state.CardHand;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +11,7 @@ public class BettingReferee {
 
     private final List<BettingResult> bettingResults;
 
-    public BettingReferee(final Dealer dealer, final PlayerBettings playerBettings) {
+    public BettingReferee(final Participant dealer, final PlayerBettings playerBettings) {
         List<BettingResult> playerBettingResults = getPlayerBettingResultsFrom(playerBettings, dealer);
         BettingResult dealerBettingResult = initDealerResultFrom(dealer, playerBettingResults);
 
@@ -28,23 +28,33 @@ public class BettingReferee {
         return Collections.unmodifiableList(bettingResults);
     }
 
-    private List<BettingResult> getPlayerBettingResultsFrom(final PlayerBettings playerBettings, final Dealer dealer) {
+    private List<BettingResult> getPlayerBettingResultsFrom(final PlayerBettings playerBettings,
+                                                            final Participant dealer) {
         return playerBettings.getValue()
                 .stream()
                 .map(playerBetting -> initPlayerBettingResultFrom(playerBetting, dealer))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private BettingResult initPlayerBettingResultFrom(final PlayerBetting playerBetting, final Dealer dealer) {
-        final Player player = playerBetting.getPlayer();
+    private BettingResult initPlayerBettingResultFrom(final PlayerBetting playerBetting, final Participant dealer) {
+        final Participant player = playerBetting.getPlayer();
         final int bettingAmount = playerBetting.getBettingAmount();
+        final double bettingYield = getBettingYield(player, dealer);
 
-        final int profit = (int) (player.getBettingYieldVersus(dealer) * bettingAmount);
+        final int profit = (int) (bettingYield * bettingAmount);
 
         return new BettingResult(player, profit);
     }
 
-    private BettingResult initDealerResultFrom(final Dealer dealer, final List<BettingResult> playerBettingResults) {
+    private double getBettingYield(Participant player, Participant dealer) {
+        final CardHand playerHand = player.getCardHand();
+        final CardHand dealerHand = dealer.getCardHand();
+
+        return playerHand.getBettingYieldVersus(dealerHand);
+    }
+
+    private BettingResult initDealerResultFrom(final Participant dealer,
+                                               final List<BettingResult> playerBettingResults) {
         final int totalPlayerProfit = getTotalProfitOf(playerBettingResults);
         final int dealerProfit = totalPlayerProfit * -1;
 

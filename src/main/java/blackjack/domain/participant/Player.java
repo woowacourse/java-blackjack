@@ -58,10 +58,6 @@ public class Player extends Participant {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public double getBettingYieldVersus(Dealer dealer) {
-        return cardHand.getBettingYieldVersus(dealer.cardHand);
-    }
-
     @Override
     public String toString() {
         return "Player{" +

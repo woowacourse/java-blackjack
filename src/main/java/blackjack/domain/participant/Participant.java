@@ -67,6 +67,10 @@ public abstract class Participant {
 
     public abstract List<Card> getInitialOpenCards();
 
+    public CardHand getCardHand() {
+        return cardHand;
+    }
+
     public List<Card> getCards() {
         return getCardBundle().getCards();
     }

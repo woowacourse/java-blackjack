@@ -2,9 +2,8 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardStack;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
 import blackjack.strategy.CardBundleStrategy;
 import blackjack.strategy.CardBundleSupplier;
 import blackjack.strategy.CardsViewStrategy;
@@ -36,13 +35,13 @@ public class BlackjackGame {
     public void drawAllPlayerCards(final HitOrStayChoiceStrategy hitOrStayStrategy,
                                    final CardsViewStrategy viewStrategy) {
 
-        List<Player> players = participants.getPlayers();
-        for (Player player : players) {
+        List<Participant> players = participants.getPlayers();
+        for (Participant player : players) {
             drawPlayerCards(player, hitOrStayStrategy, viewStrategy);
         }
     }
 
-    public void drawPlayerCards(final Player player,
+    public void drawPlayerCards(final Participant player,
                                 final HitOrStayChoiceStrategy hitOrStayStrategy,
                                 final CardsViewStrategy playerView) {
 
@@ -51,7 +50,7 @@ public class BlackjackGame {
     }
 
     public void drawDealerCards(final CardsViewStrategy dealerView) {
-        Dealer dealer = getDealer();
+        Participant dealer = getDealer();
         dealer.drawAllCards(ALWAYS_HIT_STRATEGY, dealerView, this::popCard);
     }
 
@@ -67,7 +66,7 @@ public class BlackjackGame {
         return participants;
     }
 
-    private Dealer getDealer() {
+    private Participant getDealer() {
         return participants.getDealer();
     }
 

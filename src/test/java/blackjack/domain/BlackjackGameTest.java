@@ -41,7 +41,7 @@ public class BlackjackGameTest {
             BlackjackGame blackjackGame = new BlackjackGame(
                     new CardDeck(), List.of("hudi", "jeong"), prodStrategy);
 
-            List<Player> participants = blackjackGame.getParticipants().getPlayers();
+            List<Participant> participants = blackjackGame.getParticipants().getPlayers();
 
             assertThat(participants.size()).isEqualTo(2);
             assertThat(participants.get(0).getName()).isEqualTo("hudi");
@@ -115,7 +115,7 @@ public class BlackjackGameTest {
                     new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
 
             blackjackGame.drawDealerCards(CARDS_VIEW_STRATEGY);
-            Dealer dealer = blackjackGame.getParticipants().getDealer();
+            Participant dealer = blackjackGame.getParticipants().getDealer();
 
             boolean actual = dealer.canDraw();
             assertThat(actual).isFalse();

@@ -1,18 +1,18 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
 
 public class PlayerBetting {
 
-    private final Player player;
+    private final Participant player;
     private final int bettingAmount;
 
-    public PlayerBetting(Player player, int bettingAmount) {
+    public PlayerBetting(Participant player, int bettingAmount) {
         this.player = player;
         this.bettingAmount = bettingAmount;
     }
 
-    public Player getPlayer() {
+    public Participant getPlayer() {
         return player;
     }
 
