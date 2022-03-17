@@ -2,13 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.Card.Deck;
 import blackjack.domain.PlayerResult;
-import blackjack.domain.Settlement;
+import blackjack.service.batchService;
 import blackjack.domain.User.Betting;
 import blackjack.domain.User.Dealer;
 import blackjack.domain.User.Player;
 import blackjack.domain.User.Players;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.PlayerResultsDto;
 import blackjack.dto.UserDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -33,8 +31,7 @@ public class BlackjackController {
         OutputView.printTotalResult(playGame(dealer, players, deck));
 
         Map<Player, PlayerResult> statistics = players.getStatistics(dealer);
-        Map<String, Double> calculate = Settlement.calculate(statistics);
-        OutputView.printFinalResult(calculate);
+        OutputView.printFinalResult(batchService.calculate(statistics));
     }
 
     private List<Betting> startBettings(List<String> inputPlayerNames) {
@@ -51,9 +48,7 @@ public class BlackjackController {
                 .forEach(player -> askOneMoreCard(player, deck));
         dealer.hit(deck);
         OutputView.printAddDealerCard();
-
         return convertToUserDtos(dealer, players);
-
     }
 
     private void askOneMoreCard(Player player, Deck deck) {
