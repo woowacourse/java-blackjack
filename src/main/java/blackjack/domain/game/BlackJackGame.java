@@ -1,22 +1,15 @@
 package blackjack.domain.game;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.DrawStrategy;
-import blackjack.domain.gamer.Bet;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.result.BlackJackResult;
-import blackjack.dto.GameResultDto;
 
 public class BlackJackGame {
 
 	public static final int INIT_DISTRIBUTION_COUNT = 2;
-	private static final int DEFAULT_EARNING = 0;
 	private static final int DEALER_OPEN_COUNT_FIRST = 1;
 
 	private final Gamers gamers;
@@ -27,7 +20,7 @@ public class BlackJackGame {
 		this.deck = deck;
 	}
 
-	public GameResultDto play(HitRequester hitOrStay, CardsChecker cardChecker) {
+	public BlackJackReferee play(HitRequester hitOrStay, CardsChecker cardChecker) {
 		giveFirstCards();
 		checkFirstCardsOfGamers(cardChecker);
 		askPlayerHitOrStay(hitOrStay, cardChecker);
@@ -76,24 +69,8 @@ public class BlackJackGame {
 		}
 	}
 
-	private GameResultDto createResult() {
-		Dealer dealer = gamers.getDealer();
-		List<Player> players = gamers.getPlayers();
-		return makeResult(dealer, players);
-	}
-
-	private GameResultDto makeResult(Dealer dealer, List<Player> players) {
-		int dealerEarning = DEFAULT_EARNING;
-		Map<String, Integer> playerEarnings = new LinkedHashMap<>();
-
-		for (Player player : players) {
-			BlackJackResult result = player.match(dealer);
-			int playerEarning = player.calculateEarning(result.getProfit());
-
-			playerEarnings.put(player.getName(), playerEarning);
-			dealerEarning += Bet.calculateMinusAmount(playerEarning);
-		}
-		return new GameResultDto(gamers.findDealerHitCount(), dealerEarning, playerEarnings);
+	private BlackJackReferee createResult() {
+		return BlackJackReferee.create(gamers.getDealer(), gamers.getPlayers());
 	}
 
 	public Gamers getGamers() {

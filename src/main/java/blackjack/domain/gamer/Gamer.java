@@ -20,16 +20,16 @@ public class Gamer {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getValues());
-    }
-
     public boolean isOverThan(int number) {
         return sumCardsNumber() > number;
     }
 
     public int sumCardsNumber() {
         return cards.sum();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards.getValues());
     }
 
     public String getName() {

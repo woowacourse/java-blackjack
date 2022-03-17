@@ -16,7 +16,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
-import blackjack.dto.GameResultDto;
+import blackjack.domain.game.BlackJackReferee;
 
 class BlackJackGameTest {
     @Test
@@ -52,7 +52,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(
             List.of("name"), s -> 1000, () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
-        GameResultDto result = blackJackGame.play(answer -> true, (s, c) -> {});
+        BlackJackReferee result = blackJackGame.play(answer -> true, (s, c) -> {});
 
         int dealerEarning = result.getDealerEarning();
         Map<String, Integer> playerEarnings = result.getPlayerEarnings();
