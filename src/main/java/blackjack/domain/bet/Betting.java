@@ -30,7 +30,7 @@ public class Betting {
 
     private void validateMoneyUnit(final int betting) {
         if (betting % MONEY_UNIT != 0) {
-            throw new IllegalArgumentException("베팅 금액은 10원 단위로 입력해주세요.");
+            throw new IllegalArgumentException("베팅 금액은 " + MONEY_UNIT + "원 단위로 입력해주세요.");
         }
     }
 
