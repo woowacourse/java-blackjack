@@ -20,9 +20,9 @@ public class BlackjackController {
         final Participants participants = getParticipants();
         final Map<Player, BettingMoney> playersInfo = getPlayersBettingMoney(participants.getPlayers());
         final Deck deck = Deck.create();
-
         final BlackjackGame blackjackGame = progressGame(participants, deck);
-        final List<Player> players = playersTurn(participants, deck);
+        
+        final List<Player> players = playersTurn(blackjackGame, participants);
         final Dealer dealer = dealerTurn(blackjackGame);
         createBlackjackGameResult(players, dealer);
         createBlackjackProfitResult(dealer, playersInfo);
@@ -67,18 +67,18 @@ public class BlackjackController {
         return blackjackGame;
     }
 
-    private List<Player> playersTurn(Participants participants, Deck deck) {
+    private List<Player> playersTurn(BlackjackGame blackjackGame, Participants participants) {
         final List<Player> players = participants.getPlayers();
         for (Player player : players) {
-            doEachPlayerTurn(player, deck);
+            doEachPlayerTurn(blackjackGame, player);
         }
         return players;
     }
 
-    private void doEachPlayerTurn(Player player, Deck deck) {
+    private void doEachPlayerTurn(BlackjackGame blackjackGame, Player player) {
         while (player.hasNextTurn() && getOneMoreCard(player)) {
-            player.receiveCard(deck.distributeCard());
-            OutputView.printNowHoldCardInfo(player);
+            Player playerAfterGame = blackjackGame.doPlayerGame(player);
+            OutputView.printNowHoldCardInfo(playerAfterGame);
         }
     }
 

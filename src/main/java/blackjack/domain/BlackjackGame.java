@@ -31,6 +31,11 @@ public class BlackjackGame {
         }
     }
 
+    public Player doPlayerGame(Player player) {
+        player.receiveCard(deck.distributeCard());
+        return player;
+    }
+
     public Dealer doDealerGame() {
         final Dealer dealer = participants.getDealer();
         while (dealer.hasNextTurn()) {
