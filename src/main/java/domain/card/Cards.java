@@ -9,7 +9,7 @@ public final class Cards {
     private static final int ACE_ADDITION = 10;
     private static final int MAX_SCORE = 21;
 
-    public final List<Card> cards;
+    private final List<Card> cards;
 
     private Cards(List<Card> initialCards) {
         cards = new ArrayList<>(initialCards);
