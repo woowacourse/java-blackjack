@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
 	private static final int CRITERIA_SELECT_ACE_VALUE = 11;
@@ -56,6 +57,12 @@ public class Cards {
 
 	public void remove(Card card) {
 		this.cards.remove(card);
+	}
+
+	public List<String> getCardNames() {
+		return this.cards.stream()
+			.map(Card::getName)
+			.collect(Collectors.toList());
 	}
 
 	public List<Card> getCards() {
