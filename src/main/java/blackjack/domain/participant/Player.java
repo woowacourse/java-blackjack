@@ -19,4 +19,8 @@ public class Player extends Participant {
 	public int getScore() {
 		return super.getCards().sum();
 	}
+
+	public int getBetAmount() {
+		return betAmount.getAmount();
+	}
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -20,9 +19,7 @@ public class ResultView {
 	private static final String MESSAGE_DEALER_RECEIVE = "딜러는 16이하라 한장의 카드를 더 받았습니다";
 	private static final String MESSAGE_DEALER_NOT_RECEIVE = "딜러는 17이상이라 카드를 더 받지 않았습니다.";
 	private static final String RESULT_DELIMITER = " - 결과: ";
-	private static final String MESSAGE_FINAL_RESULT = "\n## 최종 승패";
-	private static final String MESSAGE_WIN = "승 ";
-	private static final String MESSAGE_LOSE = "패 ";
+	private static final String MESSAGE_FINAL_RESULT = "\n## 최종 수익";
 
 	public static void showStartingStatus(BlackJack blackJack) {
 		System.out.printf(MESSAGE_HAND_OUT_CARD, String.join(DELIMITER_COMMA, getPlayerNames(blackJack)));
@@ -81,24 +78,23 @@ public class ResultView {
 
 	public static void showResult(BlackJack blackJack) {
 		System.out.println(MESSAGE_FINAL_RESULT);
-		Map<Player, Result> result = blackJack.calculateResult();
+		Map<Player, Integer> result = blackJack.calculateResult();
 		showDealerResult(blackJack, result);
 		showPlayerResults(result);
 	}
 
-	private static void showDealerResult(BlackJack blackJack, Map<Player, Result> result) {
-		int loseCount = (int)result.values().stream()
-			.filter(value -> value.equals(Result.WIN))
-			.count();
-		int winCount = result.size() - loseCount;
+	private static void showDealerResult(BlackJack blackJack, Map<Player, Integer> result) {
+		int dealerEarning = - result.values().stream()
+			.mapToInt(amount -> amount)
+			.sum();
 
 		Dealer dealer = blackJack.getDealer();
-		System.out.println(dealer.getName() + DELIMITER_COLON + winCount + MESSAGE_WIN + loseCount + MESSAGE_LOSE);
+		System.out.println(dealer.getName() + DELIMITER_COLON + dealerEarning);
 	}
 
-	private static void showPlayerResults(Map<Player, Result> result) {
+	private static void showPlayerResults(Map<Player, Integer> result) {
 		result.keySet().stream()
-			.map(player -> player.getName() + DELIMITER_COLON + result.get(player).getValue())
+			.map(player -> player.getName() + DELIMITER_COLON + result.get(player))
 			.forEach(System.out::println);
 	}
 }
