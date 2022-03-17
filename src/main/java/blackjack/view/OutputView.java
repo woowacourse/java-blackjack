@@ -19,7 +19,7 @@ public class OutputView {
     }
 
     private static void printOpenCard(List<Player> players, Player dealer) {
-        Card dealerOpenCard = dealer.getCards().get(0);
+        Card dealerOpenCard = dealer.getHoldCards().get(0);
         System.out.printf("%s: %s%s%n", dealer.getName(), dealerOpenCard.getCardNumber().getName(),
             dealerOpenCard.getPatternName());
         for (Player player : players) {
@@ -30,7 +30,7 @@ public class OutputView {
     private static void printPlayerResult(Player player) {
         System.out.printf("%s: %s - 결과: %d%n",
             player.getName(),
-            player.getCards()
+            player.getHoldCards()
                 .stream()
                 .map(card -> card.getCardNumber().getName() + card.getPatternName())
                 .collect(Collectors.joining(", ")),
@@ -48,7 +48,7 @@ public class OutputView {
 
     public static void printPlayerCards(Player player) {
         System.out.printf("%s: %s%n", player.getName(),
-            player.getCards()
+            player.getHoldCards()
                 .stream()
                 .map(card -> card.getCardNumber().getName() + card.getPatternName())
                 .collect(Collectors.joining(", ")));

@@ -11,22 +11,22 @@ public class Player {
 
     public static final int BLACKJACK_NUMBER = 21;
 
-    private final HoldCards cards;
+    private final HoldCards holdCards;
     private final Name name;
+    private final BettingAmount bettingAmount;
 
-    public Player(Name name, HoldCards holdCards) {
-        this.cards = holdCards;
+    public Player(Name name, HoldCards holdCards, BettingAmount bettingAmount) {
         this.name = name;
+        this.holdCards = holdCards;
+        this.bettingAmount = bettingAmount;
     }
 
-    public static Player withTwoCards(String text, Drawable deck) {
-        Name name = new Name(text);
-        HoldCards holdCards = HoldCards.drawTwoCards(deck);
-        return new Player(name, holdCards);
+    public Player(Name name, HoldCards holdCards) {
+        this(name, holdCards, null);
     }
 
     public void drawCard(Drawable drawable) {
-        cards.add(drawable.draw());
+        holdCards.add(drawable.draw());
     }
 
     public Score compete(Player otherPlayer) {
@@ -47,18 +47,18 @@ public class Player {
     }
 
     public int getTotalNumber() {
-        return cards.getTotalNumber();
+        return holdCards.getTotalNumber();
     }
 
     public String getName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public List<Card> getHoldCards() {
+        return holdCards.getCards();
     }
 
     public Player copy() {
-        return new Player(name, cards.copy());
+        return new Player(name, holdCards.copy());
     }
 }

@@ -14,6 +14,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.HoldCards;
 
 public class PlayersTest {
 
@@ -26,9 +27,15 @@ public class PlayersTest {
         void throwExceptionOverEight() {
             Deck deck = Deck.create();
             Assertions.assertThatThrownBy(() -> new Players(List.of(
-                Player.withTwoCards("a", deck), Player.withTwoCards("b", deck), Player.withTwoCards("c", deck), Player.withTwoCards("d", deck),
-                Player.withTwoCards("e", deck), Player.withTwoCards("f", deck), Player.withTwoCards("g", deck), Player.withTwoCards("h", deck),
-                Player.withTwoCards("q", deck)
+                new Player(new Name("a"), HoldCards.drawTwoCards(deck)),
+                new Player(new Name("b"), HoldCards.drawTwoCards(deck)),
+                new Player(new Name("c"), HoldCards.drawTwoCards(deck)),
+                new Player(new Name("d"), HoldCards.drawTwoCards(deck)),
+                new Player(new Name("e"), HoldCards.drawTwoCards(deck)),
+                new Player(new Name("f"), HoldCards.drawTwoCards(deck)),
+                new Player(new Name("g"), HoldCards.drawTwoCards(deck)),
+                new Player(new Name("h"), HoldCards.drawTwoCards(deck)),
+                new Player(new Name("q"), HoldCards.drawTwoCards(deck))
             ))).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("인원수는 8명을 넘을 수 없습니다.");
         }
@@ -46,9 +53,12 @@ public class PlayersTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.ACE),
                 Card.of(CardPattern.SPADE, CardNumber.TEN)));
 
-            Player roma = Player.withTwoCards("roma", () -> Card.of(CardPattern.DIAMOND, CardNumber.NINE));
-            Player tonic =Player.withTwoCards("tonic", () -> Card.of(CardPattern.DIAMOND, CardNumber.EIGHT));
-            Player pobi = Player.withTwoCards("pobi", () -> Card.of(CardPattern.DIAMOND, CardNumber.SEVEN));
+            Player roma = new Player(new Name("roma"),
+                HoldCards.drawTwoCards(() -> Card.of(CardPattern.DIAMOND, CardNumber.NINE)));
+            Player tonic =new Player(new Name("tonic"),
+                HoldCards.drawTwoCards(() -> Card.of(CardPattern.DIAMOND, CardNumber.EIGHT)));
+            Player pobi = new Player(new Name("pobi"),
+                HoldCards.drawTwoCards(() -> Card.of(CardPattern.DIAMOND, CardNumber.SEVEN)));
 
             Players players = new Players(List.of(roma, tonic, pobi));
 

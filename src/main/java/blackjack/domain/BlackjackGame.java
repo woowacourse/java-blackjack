@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.HoldCards;
+import blackjack.domain.player.BettingAmount;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
@@ -25,7 +28,7 @@ public class BlackjackGame {
 
     public static BlackjackGame init() {
         Deck deck = Deck.create();
-        Players players = requestPlayers(deck);
+        Players players = requestPlayersBettingAmount(requestNames(), deck);
         Dealer dealer = new Dealer(deck);
         return new BlackjackGame(deck, players, dealer);
     }
@@ -40,18 +43,28 @@ public class BlackjackGame {
         printScoreResult(players.compete(dealer));
     }
 
-    private static Players requestPlayers(Deck deck) {
-        List<String> inputNames = InputView.requestNames();
-
+    private static Players requestPlayersBettingAmount(List<Name> names, Deck deck) {
         try {
-            List<Player> players = inputNames.stream()
-                .map(String::trim)
-                .map(input -> Player.withTwoCards(input, deck))
+            List<Player> players = names.stream()
+                .map(name -> new Player(name, HoldCards.drawTwoCards(deck),
+                    new BettingAmount(InputView.requestBettingAmount(name))))
                 .collect(Collectors.toList());
             return new Players(players);
         } catch (IllegalArgumentException exception) {
             printException(exception);
-            return requestPlayers(deck);
+            return requestPlayersBettingAmount(names, deck);
+        }
+    }
+
+    private static List<Name> requestNames() {
+        try {
+            return InputView.requestNames()
+                .stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
+        } catch (IllegalArgumentException exception) {
+            printException(exception);
+            return requestNames();
         }
     }
 
