@@ -13,7 +13,6 @@ import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
@@ -28,10 +27,7 @@ class PlayersTest {
     @Test
     void 생성_시_중복이름_예외발생() {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
-        final List<Name> names = Arrays.asList("name", "name")
-                .stream()
-                .map(Name::new)
-                .collect(Collectors.toList());
+        final List<String> names = Arrays.asList("name", "name");
 
         assertThatThrownBy(() -> Players.createPlayers(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -41,7 +37,7 @@ class PlayersTest {
     @Test
     void 생성_시_유저가_없는_경우_예외발생() {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
-        final List<Name> names = new ArrayList<>();
+        final List<String> names = new ArrayList<>();
 
         assertThatThrownBy(() -> Players.createPlayers(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)

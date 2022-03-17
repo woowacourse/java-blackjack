@@ -3,7 +3,6 @@ package blackjack;
 import blackjack.domain.HitCommand;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.paticipant.Dealer;
-import blackjack.domain.paticipant.Name;
 import blackjack.domain.paticipant.Player;
 import blackjack.domain.paticipant.Players;
 import blackjack.dto.ParticipantCards;
@@ -24,13 +23,7 @@ public class BlackjackGame {
         this.cardDeck = CardDeck.createNewShuffledCardDeck();
         this.dealer = new Dealer(cardDeck);
         this.players = Players
-                .createPlayers(toNames(InputView.inputPlayerNames()), InputView::inputPlayerBetMoney, cardDeck);
-    }
-
-    private List<Name> toNames(final List<String> names) {
-        return names.stream()
-                .map(Name::new)
-                .collect(Collectors.toList());
+                .createPlayers(InputView.inputPlayerNames(), InputView::inputPlayerBetMoney, cardDeck);
     }
 
     public void run() {

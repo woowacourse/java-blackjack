@@ -25,21 +25,26 @@ public class Players {
         }
     }
 
-    public static Players createPlayers(final List<Name> names, final Function<String, Integer> betMoney,
+    public static Players createPlayers(final List<String> names, final Function<String, Integer> betMoney,
                                         final CardDeck cardDeck) {
         checkDuplicationNames(names);
-        return new Players(createPlayersByBettingAndDrawCards(names, betMoney, cardDeck));
+        return new Players(createPlayersByBettingAndDrawCards(toNames(names), betMoney, cardDeck));
     }
 
-    private static void checkDuplicationNames(final List<Name> playerNames) {
+    private static List<Name> toNames(final List<String> names) {
+        return names.stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
+    }
+
+    private static void checkDuplicationNames(final List<String> playerNames) {
         if (calculateDistinctCount(playerNames) != playerNames.size()) {
             throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
         }
     }
 
-    private static int calculateDistinctCount(final List<Name> playerNames) {
+    private static int calculateDistinctCount(final List<String> playerNames) {
         return (int) playerNames.stream()
-                .map(Name::getName)
                 .distinct()
                 .count();
     }
