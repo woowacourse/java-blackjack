@@ -46,4 +46,14 @@ public class InputView {
     private static boolean isNotYorN(String input) {
         return !input.equals(YES_MESSAGE) && !input.equals(NO_MESSAGE);
     }
+
+    public static int requestInputMoney(String playerName) {
+        System.out.println(playerName + "의 베팅 금액은?");
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException exception) {
+            System.out.println("숫자를 입력해주세요.");
+            return requestInputMoney(playerName);
+        }
+    }
 }
