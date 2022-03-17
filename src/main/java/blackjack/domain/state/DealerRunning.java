@@ -5,8 +5,6 @@ import blackjack.domain.card.Cards;
 
 public final class DealerRunning extends Running {
 
-
-
     private DealerRunning(final Cards cards) {
         super(cards);
     }
