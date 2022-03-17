@@ -1,9 +1,12 @@
 package blackjack.domain.role;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import blackjack.domain.BattingAmount;
+import blackjack.domain.BlackJack;
 import blackjack.domain.DealerDrawChoice;
 import blackjack.domain.Outcome;
 import blackjack.domain.RedrawChoice;
@@ -44,9 +47,10 @@ public class Roles {
 		return dealer;
 	}
 
-	public void joinPlayers(final List<String> names) {
-		players = names.stream()
-			.map(name -> new Player(name, new Hand()))
+	public void joinPlayers(final Map<String, Integer> playersInformation) {
+		players = playersInformation.entrySet()
+			.stream()
+			.map(player -> new Player(player.getKey(), new Hand(), new BattingAmount(player.getValue())))
 			.collect(Collectors.toList());
 	}
 
@@ -65,6 +69,16 @@ public class Roles {
 			.filter(player -> player.getName().equals(name))
 			.findFirst()
 			.orElseThrow(NoSuchElementException::new);
+	}
+
+	public void judgeBlackJack() {
+		if (dealer.calculateFinalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER) {
+			return;
+		}
+		players = players.stream()
+			.filter(player -> player.calculateFinalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER)
+			.peek(Role::earnAmountByBlackJack)
+			.collect(Collectors.toList());
 	}
 
 	public String getCurrentPlayerName() {

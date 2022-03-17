@@ -12,7 +12,7 @@ class BattingAmountTest {
 	@DisplayName("배팅 금액이 제대로 초기화 되는지 확인")
 	void init_Batting_Amount() {
 		BattingAmount battingAmount = new BattingAmount(1000);
-		assertThat(battingAmount.getValue()).isEqualTo(1000);
+		assertThat(battingAmount.getFinalValue()).isEqualTo(1000);
 	}
 
 	@Test
@@ -29,7 +29,7 @@ class BattingAmountTest {
 	void receive_One_And_Half_Time() {
 		BattingAmount battingAmount = new BattingAmount(1000);
 		battingAmount.giveOneAndHalfTime();
-		assertThat(battingAmount.getValue()).isEqualTo(1500);
+		assertThat(battingAmount.getFinalValue()).isEqualTo(1500);
 	}
 
 	@Test
@@ -37,7 +37,14 @@ class BattingAmountTest {
 	void lose_All_Batting_Amount() {
 		BattingAmount battingAmount = new BattingAmount(1000);
 		battingAmount.loseAll();
-		assertThat(battingAmount.getValue()).isEqualTo(0);
+		assertThat(battingAmount.getFinalValue()).isEqualTo(0);
+	}
+
+	@Test
+	@DisplayName("최종 수익이 제대로 집계 되는지 확인")
+	void calculate_Income() {
+		BattingAmount battingAmount = new BattingAmount(1000);
+		assertThat(battingAmount.calculateIncome()).isEqualTo(0);
 	}
 
 }

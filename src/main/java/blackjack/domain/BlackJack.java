@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.role.Role;
@@ -19,8 +20,10 @@ public class BlackJack {
 
 	public void startGame() {
 		initBlackJack();
-		joinPlayers(InputView.requestPlayerName());
+		final List<String> playersName = InputView.requestPlayerName();
+		joinPlayers(InputView.betMoney(playersName));
 		distributeCard();
+		roles.judgeBlackJack();
 		redrawCard();
 		calculateFinalResult();
 	}
@@ -31,8 +34,8 @@ public class BlackJack {
 		roles.initDealer();
 	}
 
-	private void joinPlayers(final List<String> names) {
-		roles.joinPlayers(names);
+	private void joinPlayers(final Map<String, Integer> playersInformation) {
+		roles.joinPlayers(playersInformation);
 	}
 
 	private void distributeCard() {

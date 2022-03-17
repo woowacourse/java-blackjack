@@ -4,6 +4,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import blackjack.domain.BattingAmount;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
@@ -16,11 +17,13 @@ public abstract class Role {
 	protected final Hand hand;
 
 	private boolean drawMore;
+	private BattingAmount battingAmount;
 	private final Map<Outcome, Integer> competeResult;
 
-	public Role(final String name, final Hand hand) {
+	public Role(final String name, final Hand hand, final BattingAmount battingAmount) {
 		this.name = name;
 		this.hand = hand;
+		this.battingAmount = battingAmount;
 		this.drawMore = true;
 		this.competeResult = new EnumMap<Outcome, Integer>(Outcome.class);
 	}
@@ -42,6 +45,14 @@ public abstract class Role {
 	public abstract boolean canDraw();
 
 	public abstract int getDrawStandard();
+
+	public void earnAmountByBlackJack() {
+		battingAmount.giveOneAndHalfTime();
+	}
+
+	public int calculateBettingResult() {
+		return battingAmount.calculateIncome();
+	}
 
 	public void stopDraw() {
 		drawMore = false;
