@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import java.util.Objects;
+
 public class Score {
 
     private static final int BLACKJACK_SCORE = 21;
@@ -18,11 +20,32 @@ public class Score {
         }
     }
 
+    public static Score createMaxScore(final Cards cards) {
+        return new Score(cards.maxScore());
+    }
+
     public boolean isBlackjackScore() {
         return score == BLACKJACK_SCORE;
     }
 
     public boolean isBustScore() {
         return score > BLACKJACK_SCORE;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }
