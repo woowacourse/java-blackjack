@@ -110,9 +110,9 @@ public class Application {
     }
 
     private static void printFinalResult(BlackJack blackJack) {
-        Consumer<User> consumer = user -> outputView.printWithScore(UserDto.from(user), user.getScore());
+        Map<UserDto, Integer> result = blackJack.getResultCardInfo();
 
-        blackJack.printResult(consumer);
+        outputView.printWithScore(result);
 
         Map<String, Integer> revenue = blackJack.calculateRevenueAllUser();
 

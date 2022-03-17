@@ -56,12 +56,15 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printWithScore(UserDto userDto, int score) {
-        List<CardDto> cards = userDto.getCards();
-
-        List<String> cardInfo = getCardInfo(cards);
-
-        System.out.printf("\n%s카드: %s - 결과: %d", userDto.getUserName(), String.join(", ", cardInfo), score);
+    public void printWithScore(Map<UserDto, Integer> result) {
+        result.entrySet()
+                .stream()
+                .forEach(
+                        entry -> System.out.printf("\n%s카드: %s - 결과: %d",
+                                getCardInfo(entry.getKey().getCards()),
+                                String.join(", "),
+                                entry.getValue())
+                );
     }
 
     public void printRevenue(Map<String, Integer> revenue) {

@@ -10,6 +10,8 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.domain.vo.Name;
+import blackjack.dto.UserDto;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -56,16 +58,17 @@ public class BlackJack {
         users.drawAdditionalCard(consumerPlayer, consumerDealer);
     }
 
-    public void printResult(Consumer<User> consumer) {
-        Dealer dealer = users.getDealer();
+    public Map<UserDto, Integer> getResultCardInfo() {
+        Map<UserDto, Integer> result = new LinkedHashMap<>();
 
-        List<Player> players = users.getPlayers();
+        User dealer = users.getDealer();
+        result.put(UserDto.from(dealer), dealer.getScore());
 
-        consumer.accept(dealer);
+        users.getPlayers()
+                .stream()
+                .forEach(player -> result.put(UserDto.from(player), player.getScore()));
 
-        for (User player : players) {
-            consumer.accept(player);
-        }
+        return result;
     }
 
     public Map<String, Integer> calculateRevenueAllUser() {
