@@ -20,7 +20,7 @@ public class BlackjackController {
     public void run() {
         Deck deck = new Deck();
         Players players = Players.fromNamesAndGuestHitStrategy(inputPlayerNames(), this::inputHitCommand);
-        BettingBox bettingBox = bet(players);
+        BettingBox bettingBox = players.bet(this::inputBettingMoney);
         players.initHit(deck, Players.INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
         players.playersHit(deck, OutputView::printPresentStatus);
@@ -51,12 +51,6 @@ public class BlackjackController {
             result.put(player.getName(), player.getShowCards());
         }
         return result;
-    }
-
-    private BettingBox bet(Players players) {
-        BettingBox bettingBox = new BettingBox();
-        players.bet(bettingBox, this::inputBettingMoney);
-        return bettingBox;
     }
 
     private BettingMoney inputBettingMoney(Player player) {

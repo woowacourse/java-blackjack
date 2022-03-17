@@ -73,11 +73,13 @@ public class Players {
         }
     }
 
-    public void bet(BettingBox bettingBox, BetInputStrategy betInputStrategy) {
+    public BettingBox bet(BetInputStrategy betInputStrategy) {
+        BettingBox bettingBox = new BettingBox();
         List<Player> guests = getGuests();
         for (Player guest : guests) {
             bettingBox.betGuest(guest, betInputStrategy.inputBettingMoney(guest));
         }
+        return bettingBox;
     }
 
     public Player findDealer() {
