@@ -16,6 +16,7 @@ public class OutputView {
     public void printErrorMessage(String errorMessage) {
         System.out.println(ERROR + errorMessage);
     }
+
     public void printInitCards(UsersDto usersDto) {
         List<String> playerNames = usersDto.getPlayerNames();
 
@@ -37,7 +38,7 @@ public class OutputView {
         System.out.printf("%s카드: %s\n", userDto.getUserName(), String.join(", ", cardInfo));
     }
 
-    public void printCards(UserDto userDto) {
+    public void printCardsInfoWithName(UserDto userDto) {
         List<CardDto> cards = userDto.getCards();
 
         List<String> cardInfo = getCardInfo(cards);
@@ -51,7 +52,7 @@ public class OutputView {
                 .collect(toList());
     }
 
-    public void printDealer() {
+    public void printDealerMessage() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
