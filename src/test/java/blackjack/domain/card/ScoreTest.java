@@ -1,8 +1,10 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ScoreTest {
@@ -13,5 +15,12 @@ class ScoreTest {
         assertThatThrownBy(() -> new Score(score))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("4이하의 점수는 존재하지 않습니다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"21,true", "20,false", "22,false"})
+    void 블랙잭_점수인지_확인(final int inputScore, final boolean expected) {
+        final Score score = new Score(inputScore);
+        assertThat(score.isBlackjackScore()).isEqualTo(expected);
     }
 }
