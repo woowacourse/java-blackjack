@@ -8,14 +8,13 @@ import vo.Wallet;
 
 public class Gambler extends Player {
     private static final int MAXIMUM_VALID_SCORE = 21;
-    private static final int EMPTY_MONEY = 0;
 
     public Gambler(Wallet wallet) {
         super(wallet);
     }
 
     public Gambler(String name) {
-        this(Wallet.of(name, EMPTY_MONEY));
+        super(name);
     }
 
     @Override

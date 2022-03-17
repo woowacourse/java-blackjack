@@ -8,12 +8,18 @@ import java.util.List;
 import vo.Wallet;
 
 public abstract class Player {
+    private static final int EMPTY_MONEY = 0;
+
     private final Wallet wallet;
     protected final PlayingCards playingCards;
 
     protected Player(Wallet wallet) {
         this.wallet = wallet;
         this.playingCards = new PlayingCards();
+    }
+
+    protected Player(String name) {
+        this(Wallet.of(name, EMPTY_MONEY));
     }
 
     public abstract boolean isHittable();
