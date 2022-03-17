@@ -1,6 +1,5 @@
 package blackjack;
 
-import static blackjack.dto.UserDto.from;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.BlackJack;
@@ -9,6 +8,7 @@ import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.User;
 import blackjack.domain.vo.Name;
+import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -105,9 +105,9 @@ public class Application {
     }
 
     private static void drawPlayerCardByYes(User player, Deck deck) {
-        while (player.isDrawable() && inputView.inputWhetherToDrawCard(from(player))) {
+        while (player.isDrawable() && inputView.inputWhetherToDrawCard(UserDto.from(player))) {
             player.drawCard(deck);
-            outputView.printCards(from(player));
+            outputView.printCards(UserDto.from(player));
         }
     }
 
@@ -119,7 +119,7 @@ public class Application {
     }
 
     private static void printFinalResult(BlackJack blackJack) {
-        Consumer<User> consumer = user -> outputView.printWithScore(from(user), user.getScore());
+        Consumer<User> consumer = user -> outputView.printWithScore(UserDto.from(user), user.getScore());
 
         blackJack.printResult(consumer);
 
