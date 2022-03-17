@@ -14,18 +14,16 @@ public class OutputView {
     private static final String SCORE_FORMAT = " - 결과: %d";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 수익";
     private static final String REVENUE_FORMAT = "%s: %.0f\n";
+    private static final int START_PLAYERS_INDEX = 1;
 
     public static void printDrawMessage(List<String> userNames) {
         System.out.printf(DRAW_MESSAGE, String.join(DELIMITER, userNames));
     }
 
     public static void printTotalUserCards(List<UserDto> users) {
-        for (UserDto userDto : users) {
-            if (userDto.getName().equals(DEALER)) {
-                System.out.printf((CARD_FORMAT) + "%n", userDto.getName(), userDto.getCards().get(0));
-                continue;
-            }
-            printPlayerCard(userDto);
+        System.out.printf((CARD_FORMAT) + "%n", DEALER, users.get(0).getCards().get(0));
+        for (int i = START_PLAYERS_INDEX; i < users.size(); i++) {
+            printPlayerCard(users.get(i));
         }
     }
 
