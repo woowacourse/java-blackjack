@@ -26,7 +26,7 @@ public class CardGroup {
     public int calculateScore() {
         int score = calculateSumWithMaximumAce();
         int aCount = countAce();
-        while (isReducingAceNumberBeneficial(score, aCount)) {
+        while (isBustByAce(score, aCount)) {
             score -= ACE_SPECIAL_SCORE;
             aCount--;
         }
@@ -41,7 +41,7 @@ public class CardGroup {
         return sum + countAce() * ACE_SPECIAL_SCORE;
     }
 
-    private boolean isReducingAceNumberBeneficial(int score, int aCount) {
+    private boolean isBustByAce(int score, int aCount) {
         return score > BLACKJACK_NUMBER && aCount > 0;
     }
 
