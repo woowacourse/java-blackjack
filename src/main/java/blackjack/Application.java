@@ -39,7 +39,6 @@ public class Application {
         game.start();
 
         PlayersDto playersDto = PlayersDto.from(game);
-        resultView.printThatHandInitialized(playersDto);
         resultView.printFirstHands(playersDto);
     }
 
@@ -78,7 +77,6 @@ public class Application {
     }
 
     private static void showResults(ResultView resultView, Game game) {
-        resultView.printScores(PlayersDto.from(game));
-        resultView.printProfits(ProfitsDto.from(game.getProfits()));
+        resultView.printResult(PlayersDto.from(game), ProfitsDto.from(game.getProfits()));
     }
 }

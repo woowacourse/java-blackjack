@@ -22,17 +22,18 @@ public class ResultView {
 
     private static final String DELIMITER_JOIN = ", ";
 
-    public void printThatHandInitialized(PlayersDto players) {
+    public void printFirstHands(PlayersDto players) {
+        printThatHandInitialized(players);
+        for (PlayerDto player : players.getPlayers()) {
+            printFirstHand(player);
+        }
+    }
+
+    private void printThatHandInitialized(PlayersDto players) {
         DealerDto dealer = players.getDealer();
         System.out.printf(
                 FORMAT_MESSAGE_HAND_INITIALIZED,
                 dealer.getName(), joinStrings(players.getEntryNames()));
-    }
-
-    public void printFirstHands(PlayersDto players) {
-        for (PlayerDto player : players.getPlayers()) {
-            printFirstHand(player);
-        }
     }
 
     private void printFirstHand(PlayerDto player) {
@@ -67,7 +68,13 @@ public class ResultView {
                 dealer.getName(), dealer.getAddedCount());
     }
 
-    public void printScores(PlayersDto players) {
+
+    public void printResult(PlayersDto players, ProfitsDto profits) {
+        printScores(players);
+        printProfits(profits);
+    }
+
+    private void printScores(PlayersDto players) {
         for (PlayerDto player : players.getPlayers()) {
             printScore(player);
         }
@@ -78,7 +85,7 @@ public class ResultView {
                 joinHand(player.getHand()), player.getScore());
     }
 
-    public void printProfits(ProfitsDto profits) {
+    private void printProfits(ProfitsDto profits) {
         System.out.println(TITLE_PROFIT);
         printProfit(profits.getDealer(), profits.getDealerProfit());
         printEntryProfits(profits);
