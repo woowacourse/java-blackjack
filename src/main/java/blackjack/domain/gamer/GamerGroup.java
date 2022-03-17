@@ -83,7 +83,12 @@ public class GamerGroup {
     }
 
     public Dealer getDealer() {
-        return dealer;
+        Dealer copiedDealer = new Dealer();
+        List<Card> cards = dealer.getCards();
+        for (Card card : cards) {
+            copiedDealer.addCard(card);
+        }
+        return copiedDealer;
     }
 
     public List<Player> getPlayers() {
