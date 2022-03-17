@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -33,7 +34,7 @@ public abstract class Participant {
     }
 
     public List<Card> getMyCards() {
-        return myCards;
+        return Collections.unmodifiableList(myCards);
     }
 
     public String getName() {
