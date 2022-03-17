@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-	private static final int CRITERIA_SELECT_ACE_VALUE = 11;
+	private static final int BUST_VALUE = 21;
 	private static final int ADDITIONAL_ACE_VALUE = 10;
 
 	private final List<Card> cards;
@@ -20,13 +20,17 @@ public class Cards {
 	}
 
 	public int sum() {
-		int sum = cards.stream()
-			.mapToInt(Card::getNumber)
-			.sum();
+		int sum = sumWithoutCheckAce();
 		if (hasAce()) {
 			return selectAceValue(sum);
 		}
 		return sum;
+	}
+
+	public int sumWithoutCheckAce() {
+		return cards.stream()
+			.mapToInt(Card::getNumber)
+			.sum();
 	}
 
 	private boolean hasAce() {
@@ -36,8 +40,8 @@ public class Cards {
 	}
 
 	private int selectAceValue(int sum) {
-		if (sum <= CRITERIA_SELECT_ACE_VALUE) {
-			sum += ADDITIONAL_ACE_VALUE;
+		if (sum > BUST_VALUE) {
+			sum -= ADDITIONAL_ACE_VALUE;
 		}
 		return sum;
 	}

@@ -18,6 +18,6 @@ public class CardTest {
 	@Test
 	void cardName_Spade_King() {
 		Card card = new Card(CardSymbol.SPADE, CardNumber.KING);
-		assertThat(card.getName()).isEqualTo("K스페이드");
+		assertThat(card.getName()).isEqualTo("K♠️");
 	}
 }

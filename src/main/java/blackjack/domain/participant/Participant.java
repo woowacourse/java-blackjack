@@ -24,11 +24,7 @@ public abstract class Participant {
 		return getScore() > MAX_SCORE;
 	}
 
-	abstract public boolean shouldHit();
-
-	public int getScore() {
-		return cards.sum();
-	}
+	abstract public int getScore();
 
 	public List<String> getCardNames() {
 		return cards.getCardNames();

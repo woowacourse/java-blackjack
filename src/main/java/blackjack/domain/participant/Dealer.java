@@ -14,8 +14,12 @@ public class Dealer extends Participant {
 		return super.getCards().pickFirstCard();
 	}
 
-	@Override
 	public boolean shouldHit() {
 		return getScore() > DEALER_HIT_CARD_STANDARD;
+	}
+
+	@Override
+	public int getScore() {
+		return super.getCards().sumWithoutCheckAce();
 	}
 }

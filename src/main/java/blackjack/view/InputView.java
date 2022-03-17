@@ -20,12 +20,12 @@ public class InputView {
 		return Arrays.asList(input.split(NAME_DELIMITER));
 	}
 
-	public static Boolean askHit(String name) {
+	public static String askHit(String name) {
 		System.out.printf(MESSAGE_ASK_HIT_CHOICE, name);
 		try {
 			String input = scanner.nextLine().toLowerCase(Locale.ROOT);
 			checkValidChoice(input);
-			return input.equals(CHOICE_YES);
+			return input;
 		} catch (IllegalArgumentException e) {
 			return askHit(name);
 		}

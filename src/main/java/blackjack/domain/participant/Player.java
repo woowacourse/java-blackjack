@@ -6,8 +6,12 @@ public class Player extends Participant {
 		super(name);
 	}
 
+	public boolean shouldHit(String input) {
+		return input.equals("y");
+	}
+
 	@Override
-	public boolean shouldHit() {
-		return false;
+	public int getScore() {
+		return super.getCards().sum();
 	}
 }

@@ -17,7 +17,7 @@ public class CardsTest {
 	}
 
 	@Test
-	@DisplayName("총 합이 11 이하이면, ACE 를 11 로 계산한다")
+	@DisplayName("버스트가 나지 않는 한, ACE 를 11 로 계산한다")
 	void useAceAs_11() {
 		Cards cards = new Cards();
 		cards.addCard(new Card(CardSymbol.CLOVER, CardNumber.ACE));
@@ -27,12 +27,22 @@ public class CardsTest {
 	}
 
 	@Test
-	@DisplayName("총 합이 12 이상이면, ACE 를 1 로 계산한다")
+	@DisplayName("버스트가 날 수 있으면, ACE 를 1 로 계산한다")
 	void useAceAs_1() {
 		Cards cards = new Cards();
 		cards.addCard(new Card(CardSymbol.CLOVER, CardNumber.ACE));
 		cards.addCard(new Card(CardSymbol.HEART, CardNumber.EIGHT));
 		cards.addCard(new Card(CardSymbol.SPADE, CardNumber.SEVEN));
 		assertThat(cards.sum()).isEqualTo(16);
+	}
+
+	@Test
+	@DisplayName("기본적으로는 ACE 를 11 로 계산한다")
+	void sumWithoutCheckAce() {
+		Cards cards = new Cards();
+		cards.addCard(new Card(CardSymbol.CLOVER, CardNumber.ACE));
+		cards.addCard(new Card(CardSymbol.HEART, CardNumber.EIGHT));
+		cards.addCard(new Card(CardSymbol.SPADE, CardNumber.SEVEN));
+		assertThat(cards.sumWithoutCheckAce()).isEqualTo(26);
 	}
 }
