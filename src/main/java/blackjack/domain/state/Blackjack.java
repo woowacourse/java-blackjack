@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.game.DuelResult;
 
 public class Blackjack extends FinishedState {
 
@@ -15,6 +16,13 @@ public class Blackjack extends FinishedState {
         if (!cardBundle.isBlackjack()) {
             throw new IllegalArgumentException(INVALID_CARD_HAND_EXCEPTION_MESSAGE);
         }
+    }
+
+    public DuelResult getDuelResultOf(CardHand targetHand) {
+        if (targetHand.isBlackjack()) {
+            return DuelResult.DRAW;
+        }
+        return DuelResult.BLACKJACK_WIN;
     }
 
     @Override

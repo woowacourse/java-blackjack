@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.game.DuelResult;
 
 public class Bust extends FinishedState {
 
@@ -15,6 +16,10 @@ public class Bust extends FinishedState {
         if (!cardBundle.isBust()) {
             throw new IllegalArgumentException(INVALID_SCORE_EXCEPTION_MESSAGE);
         }
+    }
+
+    public DuelResult getDuelResultOf(CardHand targetHand){
+        return DuelResult.LOSE;
     }
 
     @Override

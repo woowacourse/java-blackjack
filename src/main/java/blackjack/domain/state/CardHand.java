@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.game.DuelResult;
 
 public interface CardHand {
 
@@ -10,6 +11,8 @@ public interface CardHand {
     CardHand stay();
 
     CardBundle getCardBundle();
+
+    DuelResult getDuelResultOf(CardHand targetState);
 
     boolean isFinished();
 

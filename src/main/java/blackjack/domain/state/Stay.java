@@ -1,6 +1,8 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.game.DuelResult;
+import blackjack.domain.game.Score;
 
 public class Stay extends FinishedState {
 
@@ -23,6 +25,23 @@ public class Stay extends FinishedState {
         if (cardBundle.isBust()) {
             throw new IllegalArgumentException(OVER_21_EXCEPTION_MESSAGE);
         }
+    }
+
+    public DuelResult getDuelResultOf(CardHand targetHand) {
+        if (targetHand.isBlackjack()) {
+            return DuelResult.LOSE;
+        }
+        if (targetHand.isBust()) {
+            return DuelResult.WIN;
+        }
+        return getCompareResultOf(targetHand.getCardBundle());
+    }
+
+    private DuelResult getCompareResultOf(CardBundle targetCardBundle) {
+        Score score = cardBundle.getScore();
+        Score targetScore = targetCardBundle.getScore();
+
+        return DuelResult.of(score, targetScore);
     }
 
     @Override

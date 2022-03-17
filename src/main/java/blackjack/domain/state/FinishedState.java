@@ -19,7 +19,7 @@ public abstract class FinishedState implements CardHand {
     }
 
     @Override
-   public CardHand stay(){
+    public CardHand stay() {
         throw new IllegalArgumentException(ALREADY_FINISHED_EXCEPTION_MESSAGE);
     }
 
