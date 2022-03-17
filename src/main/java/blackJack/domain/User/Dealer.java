@@ -14,4 +14,8 @@ public class Dealer extends User {
     public boolean isPossibleToAdd() {
         return this.getScore() < DEALER_ADD_CARD_LIMIT;
     }
+
+    public Object getFirstCard() {
+        return cards.getFirst();
+    }
 }

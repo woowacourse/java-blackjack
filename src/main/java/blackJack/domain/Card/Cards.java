@@ -50,4 +50,8 @@ public class Cards {
     public boolean isOnlyTwoCards() {
         return deck.size() == 2;
     }
+
+    public Object getFirst() {
+        return deck.get(0).getCardInfo();
+    }
 }

@@ -31,7 +31,7 @@ public class OutputView {
 
     public static void printTotalUserCards(Dealer dealer, Players players) {
         System.out.printf(NEW_LINE);
-        System.out.println(String.format(CARD_FORMAT, dealer.getName(), dealer.getCards().get(0).getCardInfo()));
+        System.out.println(String.format(CARD_FORMAT, dealer.getName(), dealer.getFirstCard()));
         for (Player player : players.getPlayers()) {
             printPlayerCard(player);
         }
