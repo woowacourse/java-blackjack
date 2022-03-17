@@ -55,13 +55,13 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public boolean hasHigherScoreThan(final AbstractParticipant abstractParticipant) {
-        return this.calculateScore().isOver(abstractParticipant.calculateScore());
+    public boolean hasHigherScoreThan(final Participant participant) {
+        return this.calculateScore().isOver(participant.calculateScore());
     }
 
     @Override
-    public boolean hasSameScoreWith(final AbstractParticipant abstractParticipant) {
-        return this.calculateScore().equals(abstractParticipant.calculateScore());
+    public boolean hasSameScoreWith(final Participant participant) {
+        return this.calculateScore().equals(participant.calculateScore());
     }
 
     @Override

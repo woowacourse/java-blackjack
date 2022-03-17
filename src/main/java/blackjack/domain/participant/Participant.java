@@ -13,9 +13,9 @@ public interface Participant {
 
     boolean isBlackjack();
 
-    boolean hasHigherScoreThan(AbstractParticipant abstractParticipant);
+    boolean hasHigherScoreThan(Participant participant);
 
-    boolean hasSameScoreWith(AbstractParticipant abstractParticipant);
+    boolean hasSameScoreWith(Participant participant);
 
     void drawCard(final Deck deck);
 
