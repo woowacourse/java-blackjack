@@ -18,7 +18,7 @@ public class InputView {
 	public static final String NO = "n";
 	public static final String INPUT_ASKING_DRAW_ERROR_MESSAGE = "[Error] y나 n만 입력할 수 있습니다.";
 	private static final String MONEY_NUMBER_REGEX = "[1-9]\\d*";
-	public static final String CHECKING_NUMBER_AND_POSITIVE_ERROR_MESSAGE = "[Error] 금액은 숫자여야 하고 양수여야 합니다.";
+	public static final String CHECKING_NUMBER_ERROR_MESSAGE = "[Error] 금액은 숫자여야 합니다.";
 	public static final String EMPTY_ERROR_MESSAGE = "[Error] 공백은 입력할 수 없습니다.";
 	public static final String ASK_BETTING_MESSAGE = "%s의 배팅 금액은?";
 
@@ -88,7 +88,7 @@ public class InputView {
 		}
 
 		if (!money.matches(MONEY_NUMBER_REGEX)) {
-			throw new IllegalArgumentException(CHECKING_NUMBER_AND_POSITIVE_ERROR_MESSAGE);
+			throw new IllegalArgumentException(CHECKING_NUMBER_ERROR_MESSAGE);
 		}
 	}
 }

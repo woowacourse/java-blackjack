@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.deckstrategy.GenerationStandardDeckStrategy;
+import domain.participant.Betting;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.ParticipantInfo;
@@ -46,7 +47,8 @@ public class Controller {
 
 	private List<Player> makePlayers(List<Name> names, Deck deck) {
 		List<Player> players = names.stream()
-			.map(name -> new Player(name, new Hand(deck.generateInitCards()), InputView.inputBetting(name)))
+			.map(
+				name -> new Player(name, new Hand(deck.generateInitCards()), new Betting(InputView.inputBetting(name))))
 			.collect(Collectors.toList());
 		return players;
 	}

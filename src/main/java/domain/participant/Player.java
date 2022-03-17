@@ -5,7 +5,7 @@ import domain.result.WinOrLose;
 
 public class Player extends Participant {
 
-	public Player(Name name, Hand hand, int betting) {
+	public Player(Name name, Hand hand, Betting betting) {
 		super(name, hand, betting);
 	}
 

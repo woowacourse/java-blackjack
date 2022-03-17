@@ -7,9 +7,9 @@ public class Participant {
 
 	protected final Name name;
 	protected final Hand hand;
-	protected int betting;
+	protected final Betting betting;
 
-	public Participant(Name name, Hand hand, int betting) {
+	public Participant(Name name, Hand hand, Betting betting) {
 		this.name = name;
 		this.hand = hand;
 		this.betting = betting;

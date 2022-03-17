@@ -22,7 +22,8 @@ public class ParticipantTest {
 	void isBurst(Rank rank) {
 		Card card = new Card(rank, Suit.HEART);
 		Card card1 = new Card(Rank.KNIGHT, Suit.HEART);
-		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card, card1, card1)), 0);
+		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card, card1, card1)),
+			new Betting(0));
 		assertThat(participant.isBust()).isTrue();
 	}
 
@@ -32,7 +33,8 @@ public class ParticipantTest {
 		Card card1 = new Card(Rank.valueOf(input1), Suit.HEART);
 		Card card2 = new Card(Rank.valueOf(input2), Suit.SPADE);
 		Card card3 = new Card(Rank.valueOf(input3), Suit.CLOVER);
-		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card1, card2, card3)), 0);
+		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card1, card2, card3)),
+			new Betting(0));
 		assertThat(participant.isMaxScore()).isTrue();
 	}
 
@@ -44,7 +46,7 @@ public class ParticipantTest {
 		Card card3 = new Card(Rank.ACE, Suit.CLOVER);
 		Card card4 = new Card(Rank.EIGHT, Suit.CLOVER);
 		Participant participant = new Participant(new Name("pobi"),
-			new Hand(List.of(card1, card2, card3, card4)), 0);
+			new Hand(List.of(card1, card2, card3, card4)), new Betting(0));
 		assertThat(participant.getBestScore()).isEqualTo(20);
 	}
 }

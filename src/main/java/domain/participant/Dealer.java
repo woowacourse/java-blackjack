@@ -9,7 +9,7 @@ public class Dealer extends Participant {
 	public static final int NO_BETTING = 0;
 
 	public Dealer(Hand hand) {
-		super(new Name(DEALER_NAME), hand, NO_BETTING);
+		super(new Name(DEALER_NAME), hand, new Betting(NO_BETTING));
 	}
 
 	public boolean isEnoughCard() {
