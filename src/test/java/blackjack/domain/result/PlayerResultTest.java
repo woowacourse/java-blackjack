@@ -28,7 +28,7 @@ class PlayerResultTest {
                 new Card(DIAMOND, TEN),
                 new Card(DIAMOND, JACK)));
 
-        final Player player = Players.startWithTwoCards(List.of("sun"), playerDeck)
+        final Player player = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck)
                 .getStatuses()
                 .get(0);
         final Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
@@ -53,7 +53,7 @@ class PlayerResultTest {
                 new Card(DIAMOND, QUEEN)
         ));
 
-        final Player player = Players.startWithTwoCards(List.of("sun"), playerDeck)
+        final Player player = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck)
                 .getStatuses()
                 .get(0);
         final Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
@@ -78,7 +78,7 @@ class PlayerResultTest {
                 new Card(DIAMOND, FOUR)
         ));
 
-        final Player player = Players.startWithTwoCards(List.of("sun"), playerDeck)
+        final Player player = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck)
                 .getStatuses()
                 .get(0);
         final Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
@@ -103,7 +103,7 @@ class PlayerResultTest {
                 new Card(DIAMOND, JACK)
         ));
 
-        Player player = Players.startWithTwoCards(List.of("sun"), playerDeck)
+        Player player = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck)
                 .getStatuses()
                 .get(0);
         Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
@@ -128,7 +128,7 @@ class PlayerResultTest {
                 new Card(DIAMOND, JACK)
         ));
 
-        Player player = Players.startWithTwoCards(List.of("sun"), playerDeck)
+        Player player = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck)
                 .getStatuses()
                 .get(0);
         Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
@@ -153,7 +153,7 @@ class PlayerResultTest {
                 new Card(DIAMOND, JACK)
         ));
 
-        Player player = Players.startWithTwoCards(List.of("sun"), playerDeck)
+        Player player = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck)
                 .getStatuses()
                 .get(0);
         Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
@@ -177,7 +177,7 @@ class PlayerResultTest {
                 new Card(SPADE, JACK)
         ));
 
-        Player player = Players.startWithTwoCards(List.of("sun"), playerDeck)
+        Player player = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck)
                 .getStatuses()
                 .get(0);
         Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
@@ -200,7 +200,7 @@ class PlayerResultTest {
                 new Card(SPADE, JACK)
         ));
 
-        Player player = Players.startWithTwoCards(List.of("sun"), playerDeck)
+        Player player = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck)
                 .getStatuses()
                 .get(0);
         Dealer dealer = Dealer.startWithTwoCards(dealerDeck);

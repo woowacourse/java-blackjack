@@ -98,4 +98,8 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
         printMessage(playerName + ": " + cardNames);
     }
+
+    public void printMessageOfInputBetAmount(String name) {
+        printMessage(name + "의 배팅 금액은?");
+    }
 }

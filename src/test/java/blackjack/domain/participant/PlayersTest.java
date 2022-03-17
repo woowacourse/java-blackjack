@@ -23,18 +23,20 @@ public class PlayersTest {
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideForPlayerNamesDuplicatedExceptionTest")
     @DisplayName("플레이어명 중복 시 예외 발생")
-    void playerNamesDuplicatedExceptionTest(final List<String> playerNames, final List<Card> initializedCards) {
+    void playerNamesDuplicatedExceptionTest(final List<String> playerNames,
+                                            final List<Integer> playerBets,
+                                            final List<Card> initializedCards) {
         final Deck deck = new Deck(initializedCards);
 
-        assertThatThrownBy(() -> Players.startWithTwoCards(playerNames, deck))
+        assertThatThrownBy(() -> Players.startWithTwoCards(playerNames, playerBets, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
     }
 
     private static Stream<Arguments> provideForPlayerNamesDuplicatedExceptionTest() {
         return Stream.of(
-                Arguments.of(List.of("pobi", "pobi"), Collections.emptyList()),
-                Arguments.of(List.of("pobi", "sun", "pobi"), Collections.emptyList())
+                Arguments.of(List.of("pobi", "pobi"), List.of(1000, 1000), Collections.emptyList()),
+                Arguments.of(List.of("pobi", "sun", "pobi"), List.of(1000, 1000, 1000), Collections.emptyList())
         );
     }
 
@@ -46,7 +48,7 @@ public class PlayersTest {
         List<String> names = Arrays.stream(playerNames.split(","))
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> Players.startWithTwoCards(names, deck))
+        assertThatThrownBy(() -> Players.startWithTwoCards(names, List.of(1000), deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
     }
@@ -56,7 +58,7 @@ public class PlayersTest {
     @DisplayName("각 플레이어는 카드 2장을 지닌채 게임을 시작한다.")
     void startWithDrawCardTest(final List<String> playerNames, final List<Card> initializedCards) {
         final Deck deck = new Deck(initializedCards);
-        final Players players = Players.startWithTwoCards(playerNames, deck);
+        final Players players = Players.startWithTwoCards(playerNames, List.of(1000, 1000), deck);
         final List<Player> actualPlayers = players.getStatuses();
 
         final List<Card> actualCards = new ArrayList<>();
@@ -84,11 +86,12 @@ public class PlayersTest {
     @MethodSource("provideForCompareCardTotalTest")
     @DisplayName("각 플레이어는 딜러와의 승패를 계산한다.")
     void compareCardSum(final List<String> names,
+                        final List<Integer> bets,
                         final List<Card> dealerCards,
                         final List<Card> playersCards,
                         final Map<String, PlayerResult> expectedWinningResults) {
         final Dealer dealer = Dealer.startWithTwoCards(new Deck(dealerCards));
-        final Players players = Players.startWithTwoCards(names, new Deck(playersCards));
+        final Players players = Players.startWithTwoCards(names, bets, new Deck(playersCards));
 
         final Map<String, PlayerResult> actualWinningResults = players.judgeWinners(dealer).getPlayerResult();
         assertThat(actualWinningResults).isEqualTo(expectedWinningResults);
@@ -98,6 +101,7 @@ public class PlayersTest {
         return Stream.of(
                 Arguments.of(
                         List.of("sun"),
+                        List.of(1000),
                         List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.KING),
                                 new Card(CardPattern.DIAMOND, CardNumber.TEN)
@@ -110,6 +114,7 @@ public class PlayersTest {
                 ),
                 Arguments.of(
                         List.of("sun", "if"),
+                        List.of(1000, 1000),
                         List.of(
                                 new Card(CardPattern.SPADE, CardNumber.NINE),
                                 new Card(CardPattern.HEART, CardNumber.EIGHT)

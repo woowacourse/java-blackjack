@@ -23,7 +23,7 @@ class PlayerTest {
     @DisplayName("플레이어명에 공백이 존재하면 예외 발생")
     void blankPlayerNameExceptionTest(final String name) {
 
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, new Bet(100)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 공백이 될 수 없습니다.");
     }
@@ -33,7 +33,7 @@ class PlayerTest {
     @DisplayName("참여자는 카드를 뽑을 수 있어야 한다.")
     void drawCardTest(final List<Card> expectedCards) {
         final Deck deck = new Deck(expectedCards);
-        final AbstractParticipant abstractParticipant = new Player("sun");
+        final AbstractParticipant abstractParticipant = new Player("sun", new Bet(100));
 
         for (int i = 0; i < expectedCards.size(); i++) {
             abstractParticipant.drawCard(deck);
@@ -67,7 +67,7 @@ class PlayerTest {
     @DisplayName("카드의 합계가 21 초과인지 확인할 수 있어야 한다.")
     void cannotContinueDrawTest(final List<Card> expectedCards) {
         final Deck deck = new Deck(expectedCards);
-        final AbstractParticipant abstractParticipant = new Player("sun");
+        final AbstractParticipant abstractParticipant = new Player("sun", new Bet(100));
 
         for (int i = 0; i < expectedCards.size(); i++) {
             abstractParticipant.drawCard(deck);
@@ -102,7 +102,7 @@ class PlayerTest {
     @DisplayName("카드의 합계가 21 이하인지 확인할 수 있어야 한다.")
     void canContinueDrawTest(final List<Card> expectedCards) {
         final Deck deck = new Deck(expectedCards);
-        final AbstractParticipant abstractParticipant = new Player("sun");
+        final AbstractParticipant abstractParticipant = new Player("sun", new Bet(100));
 
         for (int i = 0; i < expectedCards.size(); i++) {
             abstractParticipant.drawCard(deck);

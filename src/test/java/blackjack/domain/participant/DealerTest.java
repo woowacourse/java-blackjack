@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -73,7 +72,7 @@ class DealerTest {
         dealer.drawCard(deck);
 
 
-        assertThat(dealer.judgeWinner(new Player("sun"))).isEqualTo(PlayerResult.WIN);
+        assertThat(dealer.judgeWinner(new Player("sun", new Bet(1000)))).isEqualTo(PlayerResult.WIN);
     }
 
     @ParameterizedTest
@@ -92,7 +91,7 @@ class DealerTest {
         ));
 
         final Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
-        Players players = Players.startWithTwoCards(Collections.singletonList("sun"), playerDeck);
+        Players players = Players.startWithTwoCards(List.of("sun"), List.of(1000), playerDeck);
 
         final PlayerResult actualPlayerResult = dealer.judgeWinner(players.getStatuses().get(0));
         assertThat(actualPlayerResult).isEqualTo(result);

@@ -41,7 +41,18 @@ public class BlackjackGame {
     private Players initPlayers(final Deck deck) {
         outputView.printMessageOfRequestPlayerNames();
         final List<String> playerNames = inputView.requestPlayerNames();
-        return Players.startWithTwoCards(playerNames, deck);
+        final List<Integer> playerBets = initPlayersBetAmount(playerNames);
+        return Players.startWithTwoCards(playerNames,  playerBets, deck);
+    }
+
+    private List<Integer> initPlayersBetAmount(List<String> names) {
+        List<Integer> bets = new ArrayList<>();
+        for (String name : names) {
+            outputView.printMessageOfInputBetAmount(name);
+            final int amount = inputView.requestBetAmount();
+            bets.add(amount);
+        }
+        return bets;
     }
 
     private void printParticipantsStatuses(final Dealer dealer, final Players players) {

@@ -8,8 +8,11 @@ import java.util.List;
 
 public class Player extends AbstractParticipant {
 
-    public Player(final String name) {
+    private final Bet bet;
+
+    public Player(final String name, Bet bet) {
         super(name, new ArrayList<>());
+        this.bet = bet;
         validatePlayerName(name);
     }
 
