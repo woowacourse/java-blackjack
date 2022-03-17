@@ -12,6 +12,8 @@ import blackjack.domain.card.Deck;
 
 public class Users {
 
+    private static final int INIT_CARDS_COUNT = 2;
+
     private final List<Player> players;
     private final Dealer dealer;
 
@@ -31,13 +33,17 @@ public class Users {
         return new Users(players);
     }
 
-    public void drawInitCards(Deck deck) {
+    public void drawInitCardsPerUsers(Deck deck) {
         for (Player player : players) {
-            player.receiveCard(deck.drawCard());
-            player.receiveCard(deck.drawCard());
+            drawInitCardsPerUsers(deck, player);
         }
-        dealer.receiveCard(deck.drawCard());
-        dealer.receiveCard(deck.drawCard());
+        drawInitCardsPerUsers(deck, dealer);
+    }
+
+    private void drawInitCardsPerUsers(Deck deck, User user) {
+        for (int i = 0; i < INIT_CARDS_COUNT; i++) {
+            user.receiveCard(deck.drawCard());
+        }
     }
 
     public Map<Player, MatchRecord> createPlayerMatchRecords() {
