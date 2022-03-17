@@ -94,7 +94,19 @@ public class ResultView {
         }
     }
 
-    public static void printErrorMessage(Exception e) {
+    public static void printErrorMessage(final Exception e) {
         System.out.println(e.getMessage());
+    }
+
+    public static void printDealerRevenue(final int dealerRevenue) {
+        System.out.println();
+        System.out.println("##최종 수익");
+        System.out.println("딜러: " + dealerRevenue);
+    }
+
+    public static void printFinalRevenue(final Map<User, Integer> userMoney) {
+        for (User user : userMoney.keySet()) {
+            System.out.println(user.getName() + ": " + userMoney.get(user));
+        }
     }
 }

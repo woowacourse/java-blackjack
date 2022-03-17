@@ -8,8 +8,7 @@ import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Result;
+import blackjack.money.BettingMoney;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +57,38 @@ public class GameResultTest {
         ));
 
         final Map<Result, Integer> actual = gameResult.getDealerResult();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+
+    @Test
+    @DisplayName("승무패에 따른 유저 수익을 계산한다.")
+    void calculateRevenueTest() {
+        final Map<User, BettingMoney> userBettingMoney = new HashMap<>(Map.ofEntries(
+                Map.entry(user1, BettingMoney.of(10000)),
+                Map.entry(user2, BettingMoney.of(10000))
+        ));
+
+        final Map<User, Integer> expected = new HashMap<>(Map.ofEntries(
+                Map.entry(user1, -10000),
+                Map.entry(user2, 10000)
+        ));
+
+        final Map<User, Integer> actual = gameResult.getUserRevenue(userBettingMoney);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러 수익을 계산한다.")
+    void getDealerRevenueTest() {
+        final Map<User, BettingMoney> userBettingMoney = new HashMap<>(Map.ofEntries(
+                Map.entry(user1, BettingMoney.of(10000)),
+                Map.entry(user2, BettingMoney.of(10000))
+        ));
+        final int expected = 0;
+
+        final Map<User, Integer> userRevenue = gameResult.getUserRevenue(userBettingMoney);
+        final int actual = gameResult.getDealerRevenue(userRevenue);
         assertThat(actual).isEqualTo(expected);
     }
 }

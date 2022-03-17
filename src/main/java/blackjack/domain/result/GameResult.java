@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
+import blackjack.money.BettingMoney;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,5 +42,34 @@ public class GameResult {
 
     public Map<Result, Integer> getDealerResult() {
         return Collections.unmodifiableMap(dealerResult);
+    }
+
+    public Map<User, Integer> getUserRevenue(final Map<User, BettingMoney> userBettingMoney) {
+        Map<User, Integer> userRevenue = new HashMap<>();
+        for (User user : userResult.keySet()) {
+            userRevenue.put(user, calculateRevenue(user, userResult.get(user), userBettingMoney.get(user)));
+        }
+        return userRevenue;
+    }
+
+    private int calculateRevenue(User user, Result result, BettingMoney bettingMoney) {
+        if (result == Result.WIN && user.isBlackJack()) {
+            return bettingMoney.getValue() * 3 / 2;
+        }
+        if (result == Result.WIN) {
+            return bettingMoney.getValue();
+        }
+        if (result == Result.LOSE) {
+            return bettingMoney.getValue() * -1;
+        }
+        return 0;
+    }
+
+    public int getDealerRevenue(Map<User, Integer> userRevenue) {
+        int sum = 0;
+        for (User user : userRevenue.keySet()) {
+            sum += userRevenue.get(user);
+        }
+        return sum * -1;
     }
 }

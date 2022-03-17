@@ -6,6 +6,7 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
 import blackjack.money.BettingMoney;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,5 +62,9 @@ public class GameMachine {
 
     public void drawCardToPlayer(final Player player) {
         player.drawCard(cardDeck.selectCard());
+    }
+
+    public Map<User, BettingMoney> getUserBettingMoney() {
+        return Collections.unmodifiableMap(userBettingMoney);
     }
 }

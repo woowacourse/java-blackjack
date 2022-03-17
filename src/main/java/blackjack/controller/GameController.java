@@ -8,6 +8,7 @@ import blackjack.domain.player.Users;
 import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
+import java.util.Map;
 
 public class GameController {
 
@@ -25,6 +26,8 @@ public class GameController {
 
         GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
         ResultView.printGameResult(gameResult);
+
+        processForFinalRevenue(gameMachine, gameResult);
     }
 
     private void inputBettingMoney(GameMachine gameMachine, Users users) {
@@ -50,5 +53,11 @@ public class GameController {
         if (gameMachine.checkPlayerReceiveCard(dealer)) {
             ResultView.printDealerReceiveCard();
         }
+    }
+
+    private void processForFinalRevenue(GameMachine gameMachine, GameResult gameResult) {
+        Map<User, Integer> userRevenue = gameResult.getUserRevenue(gameMachine.getUserBettingMoney());
+        ResultView.printDealerRevenue(gameResult.getDealerRevenue(userRevenue));
+        ResultView.printFinalRevenue(userRevenue);
     }
 }
