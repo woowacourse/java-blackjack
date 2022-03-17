@@ -16,6 +16,9 @@ public enum Result {
     }
 
     public static Result judge(Dealer dealer, Player player) {
+        if(player.isBlackJack()){
+            return Result.WIN;
+        }
         if (dealer.getScore() > WIN_SCORE || dealer.getScore() < player.getScore() && player.getScore() <= WIN_SCORE) {
             return Result.WIN;
         }

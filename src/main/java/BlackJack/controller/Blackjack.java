@@ -1,6 +1,7 @@
 package blackJack.controller;
 
 import blackJack.domain.Game;
+import blackJack.domain.Result;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
 import blackJack.domain.User.Players;
@@ -20,14 +21,14 @@ public class Blackjack {
         OutputView.printTotalUserCards(game.getDealer(), game.getPlayers());
 
         if (game.checkDealerIsBlackJack()){
-            makeBlackJackResult(game);
+            printBlackJackResult(game);
             return;
         }
 
         playGame(game.getDealer(), game.getPlayers());
         OutputView.printTotalResult(makeUserList(game));
 
-        makeResults(game);
+        game.makeFinalResult();
 
         OutputView.printFinalResult(
                 game.getDealer().getName(),
@@ -45,12 +46,7 @@ public class Blackjack {
         return users;
     }
 
-    private void makeResults(Game game) {
-        game.makePlayerResult();
-        game.makeDealerResult(game.getPlayerScore());
-    }
-
-    private void makeBlackJackResult(Game game) {
+    private void printBlackJackResult(Game game) {
         OutputView.printFinalResult(
                 game.getDealer().getName(),
                 game.getDealerScore(),
@@ -73,5 +69,4 @@ public class Blackjack {
             OutputView.printPlayerCard(player);
         }
     }
-
 }

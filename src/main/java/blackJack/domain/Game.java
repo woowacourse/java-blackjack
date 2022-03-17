@@ -6,6 +6,7 @@ import blackJack.domain.User.Player;
 import blackJack.domain.User.Players;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static blackJack.domain.Card.CardFactory.CARD_CACHE;
@@ -29,47 +30,22 @@ public class Game {
     private void handOutInitCard() {
         for (int i = 0; i < HAND_OUT_COUNT; i++) {
             dealer.dealCard(CARD_CACHE.poll());
-            players.recieveCard();
+            players.dealCardToPlayers();
         }
+    }
+
+    public void makeFinalResult(){
+        playerScore.makePlayerResult(dealer,players);
+        dealerScore.makeDealerResult(playerScore);
     }
 
     public boolean checkDealerIsBlackJack() {
         if (dealer.isBlackJack()) {
-            makeBlackjackResult();
+            dealerScore.makeBlackjackResult(players);
+            playerScore.makeBlackjackResult(players);
             return true;
         }
         return false;
-    }
-
-    private void makeBlackjackResult() {
-        dealerScore.addResult(Result.WIN, players.getPlayers().size());
-        for (Player player : players.getPlayers()) {
-            distinctBlackjackPlayerResult(player);
-        }
-    }
-
-    private void distinctBlackjackPlayerResult(Player player) {
-        if (player.isBlackJack()) {
-            playerScore.addResult(player, Result.DRAW);
-        }
-        playerScore.addResult(player, Result.LOSE);
-    }
-
-    public void makePlayerResult() {
-        for (Player player : players.getPlayers()) {
-            playerScore.addResult(player, Result.judge(dealer, player));
-        }
-    }
-
-    public void makeDealerResult(PlayerScore playerScore) {
-        List<Result> results = playerScore.getPlayersResult().values().stream().collect(Collectors.toUnmodifiableList());
-        for (Result value : Result.values()) {
-            dealerScore.addResult(value, getDealerResultCount(Result.reverse(value), results));
-        }
-    }
-
-    private int getDealerResultCount(Result result, List<Result> results) {
-        return (int) results.stream().filter((r) -> r.equals(result)).count();
     }
 
     public Dealer getDealer() {

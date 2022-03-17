@@ -14,7 +14,7 @@ public class Players {
         }
     }
 
-    public void recieveCard() {
+    public void dealCardToPlayers() {
         for (Player player : players) {
             player.dealCard(CARD_CACHE.poll());
         }
@@ -22,5 +22,11 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void distinctBlackjackPlayer() {
+        for (Player player : players) { 
+            player.judgeByBlackjack();
+        }
     }
 }

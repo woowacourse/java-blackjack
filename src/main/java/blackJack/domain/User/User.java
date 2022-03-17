@@ -52,4 +52,5 @@ public abstract class User {
         }
         return false;
     }
+
 }
