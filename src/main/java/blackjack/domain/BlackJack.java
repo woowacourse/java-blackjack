@@ -3,11 +3,9 @@ package blackjack.domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
@@ -26,17 +24,12 @@ public class BlackJack {
 		this.cardDeck = CardDeck.create();
 	}
 
-	public static BlackJack from(List<String> playerNames) {
-		validatePlayerNumber(playerNames);
-		List<Player> players = playerNames.stream()
-			.map(Name::from)
-			.map(Player::new)
-			.collect(Collectors.toList());
-
+	public static BlackJack from(List<Player> players) {
+		validatePlayerNumber(players);
 		return new BlackJack(new Dealer(), players);
 	}
 
-	private static void validatePlayerNumber(List<String> players) {
+	private static void validatePlayerNumber(List<Player> players) {
 		if (players.size() > MAX_PLAYER_NUMBER) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_PLAYER_NUMBER_EXCEED);
 		}

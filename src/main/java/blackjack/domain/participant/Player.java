@@ -1,9 +1,14 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Money;
+
 public class Player extends Participant {
 
-	public Player(Name name) {
+	private final Money betAmount;
+
+	public Player(Name name, Money money) {
 		super(name);
+		this.betAmount = money;
 	}
 
 	public boolean shouldHit(String input) {

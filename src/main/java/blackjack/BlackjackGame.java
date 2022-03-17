@@ -1,6 +1,12 @@
 package blackjack;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import blackjack.domain.BlackJack;
+import blackjack.domain.Money;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -16,11 +22,35 @@ public class BlackjackGame {
 	}
 
 	private BlackJack generateGame() {
+		List<Name> playerNames = askPlayerName();
+		List<Player> players = new ArrayList<>();
+		for (Name playerName : playerNames) {
+			Money money = askBetAmount(playerName);
+			players.add(new Player(playerName, money));
+		}
+
+		return BlackJack.from(players);
+	}
+
+	private Money askBetAmount(Name playerName) {
+		String name = playerName.getName();
 		try {
-			return BlackJack.from(InputView.askPlayerName());
+			return Money.from(InputView.askBetAmount(name));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return generateGame();
+			return askBetAmount(playerName);
+		}
+	}
+
+	private List<Name> askPlayerName() {
+		List<String> inputs = InputView.askPlayerName();
+		try {
+			return inputs.stream()
+				.map(Name::from)
+				.collect(Collectors.toList());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			return askPlayerName();
 		}
 	}
 
@@ -47,8 +77,7 @@ public class BlackjackGame {
 	}
 
 	private boolean shouldHit(Player player) {
-		String name = player.getName();
-		return !(player.isBust()) && player.shouldHit(InputView.askHit(name));
+		return !(player.isBust()) && player.shouldHit(InputView.askHit(player.getName()));
 	}
 
 	private void decideDealerHitOrNot(BlackJack blackJack) {

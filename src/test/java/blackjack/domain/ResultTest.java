@@ -18,7 +18,7 @@ public class ResultTest {
 	@Test
 	void dealerBlackjack_playerBlackjack() {
 		Dealer dealer = new Dealer();
-		Player player = new Player(Name.from("yaho"));
+		Player player = new Player(Name.from("yaho"), Money.from("10"));
 		dealer.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
 		dealer.receiveCard(new Card(CardSymbol.HEART, CardNumber.KING));
 		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
@@ -33,7 +33,7 @@ public class ResultTest {
 	@Test
 	void dealerBlackjack_playerNotBlackjack() {
 		Dealer dealer = new Dealer();
-		Player player = new Player(Name.from("yaho"));
+		Player player = new Player(Name.from("yaho"), Money.from("10"));
 		dealer.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
 		dealer.receiveCard(new Card(CardSymbol.HEART, CardNumber.KING));
 		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
@@ -48,7 +48,7 @@ public class ResultTest {
 	@Test
 	void onlyPlayerBlackjack() {
 		Dealer dealer = new Dealer();
-		Player player = new Player(Name.from("yaho"));
+		Player player = new Player(Name.from("yaho"), Money.from("10"));
 		dealer.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
 		dealer.receiveCard(new Card(CardSymbol.HEART, CardNumber.TWO));
 		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
@@ -63,7 +63,7 @@ public class ResultTest {
 	@Test
 	void playerBust() {
 		Dealer dealer = new Dealer();
-		Player player = new Player(Name.from("yaho"));
+		Player player = new Player(Name.from("yaho"), Money.from("10"));
 		dealer.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
 		dealer.receiveCard(new Card(CardSymbol.HEART, CardNumber.TWO));
 		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.KING));
@@ -79,7 +79,7 @@ public class ResultTest {
 	@Test
 	void dealerBust_playerBust() {
 		Dealer dealer = new Dealer();
-		Player player = new Player(Name.from("yaho"));
+		Player player = new Player(Name.from("yaho"), Money.from("10"));
 		dealer.receiveCard(new Card(CardSymbol.SPADE, CardNumber.KING));
 		dealer.receiveCard(new Card(CardSymbol.HEART, CardNumber.KING));
 		dealer.receiveCard(new Card(CardSymbol.DIAMOND, CardNumber.KING));
@@ -96,7 +96,7 @@ public class ResultTest {
 	@Test
 	void playerScoreWin() {
 		Dealer dealer = new Dealer();
-		Player player = new Player(Name.from("yaho"));
+		Player player = new Player(Name.from("yaho"), Money.from("10"));
 		dealer.receiveCard(new Card(CardSymbol.SPADE, CardNumber.TWO));
 		dealer.receiveCard(new Card(CardSymbol.HEART, CardNumber.TWO));
 		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
@@ -112,7 +112,7 @@ public class ResultTest {
 	@Test
 	void playerScoreDraw() {
 		Dealer dealer = new Dealer();
-		Player player = new Player(Name.from("yaho"));
+		Player player = new Player(Name.from("yaho"), Money.from("10"));
 		dealer.receiveCard(new Card(CardSymbol.SPADE, CardNumber.TWO));
 		dealer.receiveCard(new Card(CardSymbol.HEART, CardNumber.TWO));
 		player.receiveCard(new Card(CardSymbol.HEART, CardNumber.TWO));
@@ -127,7 +127,7 @@ public class ResultTest {
 	@Test
 	void playerScoreLose() {
 		Dealer dealer = new Dealer();
-		Player player = new Player(Name.from("yaho"));
+		Player player = new Player(Name.from("yaho"), Money.from("10"));
 		dealer.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
 		dealer.receiveCard(new Card(CardSymbol.HEART, CardNumber.TWO));
 		player.receiveCard(new Card(CardSymbol.HEART, CardNumber.TWO));

@@ -23,7 +23,7 @@ public class MoneyTest {
 
 	}
 
-	@DisplayName("배팅 금액이 양수가 아니면 예외를 반환한다")
+	@DisplayName("배팅 금액이 음수면 예외를 반환한다")
 	@Test
 	void exception_positive() {
 		assertThatThrownBy(() -> Money.from("-100")).isInstanceOf(IllegalArgumentException.class)
