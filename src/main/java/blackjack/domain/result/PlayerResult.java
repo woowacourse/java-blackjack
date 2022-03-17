@@ -10,11 +10,8 @@ import java.util.function.BiPredicate;
 public enum PlayerResult {
 
     BLACKJACK_WIN(1.5, PlayerResult::isBlackjackWin),
-
     WIN(1, PlayerResult::isWin),
-
     DRAW(0, PlayerResult::isDraw),
-
     LOSS(-1, PlayerResult::isLoss);
 
     private final double profitRate;
@@ -44,7 +41,7 @@ public enum PlayerResult {
 
     private static boolean isDraw(Player player, Dealer dealer) {
         return (dealer.isBlackjack() && player.isBlackjack()) ||
-                (dealer.hasSameScoreWith(player)) && !player.isBust() && !dealer.isBlackjack() && !player.isBlackjack();
+                (player.hasSameScoreWith(dealer) && !player.isBust());
     }
 
     private static boolean isWin(Player player, Dealer dealer) {
