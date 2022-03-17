@@ -12,7 +12,7 @@ public class ParticipantsTest {
     @Test
     @DisplayName("플레이어의 이름이 중복된 경우 테스트")
     void checkDuplicatePlayerName() {
-        List<Player> players = List.of(new Player("rookie", "1000"), new Player("rookie", "1000"));
+        List<Player> players = List.of(new Player("rookie"), new Player("rookie"));
 
         assertThatThrownBy(() -> new Participants(new Dealer(), players))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -23,10 +23,10 @@ public class ParticipantsTest {
     @DisplayName("플레이어의 수가 1-7명이 아닌 경우 테스트")
     void checkPlayerCount() {
         List<Player> players = List.of(
-                new Player("k1", "10"), new Player("k2", "10"),
-                new Player("k3", "10"), new Player("k4", "10"),
-                new Player("k5", "10"), new Player("k6", "10"),
-                new Player("k7", "10"), new Player("k8", "10"));
+                new Player("k1"), new Player("k2"),
+                new Player("k3"), new Player("k4"),
+                new Player("k5"), new Player("k6"),
+                new Player("k7"), new Player("k8"));
 
         assertThatThrownBy(() -> new Participants(new Dealer(), players))
                 .isInstanceOf(IllegalArgumentException.class)
