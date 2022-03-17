@@ -71,15 +71,15 @@ public class BlackJackGame {
     }
 
     private boolean isReceivableCard(final Gamer gamer) {
-        return gamer.isReceivable() && isAnswerYes(gamer.getName());
+        return gamer.isReceivable() && isHit(gamer.getName());
     }
 
-    private boolean isAnswerYes(final String name) {
+    private boolean isHit(final String name) {
         try {
             return Answer.isHit(InputView.requestAnswer(name));
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
-            return isAnswerYes(name);
+            return isHit(name);
         }
     }
 
