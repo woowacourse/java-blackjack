@@ -2,7 +2,7 @@ package blackjack;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import blackjack.model.card.CardDispenser;
+import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamer;
 import blackjack.model.player.Gamers;
@@ -24,22 +24,22 @@ public class Application {
     }
 
     private static void run() {
-        CardDispenser cardDispenser = new CardDispenser();
-        Dealer dealer = new Dealer(cardDispenser.issue(), cardDispenser.issue());
-        Gamers gamers = new Gamers(createGamers(cardDispenser));
-        playBlackjack(cardDispenser, dealer, gamers);
+        CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer(cardDeck.next(), cardDeck.next());
+        Gamers gamers = new Gamers(createGamers(cardDeck));
+        playBlackjack(cardDeck, dealer, gamers);
     }
 
-    private static List<Gamer> createGamers(CardDispenser cardDispenser) {
+    private static List<Gamer> createGamers(CardDeck cardDeck) {
         List<String> names = InputView.inputNames();
         List<Money> moneys = moneys(names);
         return IntStream.range(0, names.size())
-            .mapToObj(i -> createGamer(names.get(i), moneys.get(i), cardDispenser))
+            .mapToObj(i -> createGamer(names.get(i), moneys.get(i), cardDeck))
             .collect(toUnmodifiableList());
     }
 
-    private static Gamer createGamer(String name, Money money, CardDispenser cardDispenser) {
-        return new Gamer(name, money, cardDispenser.issue(), cardDispenser.issue());
+    private static Gamer createGamer(String name, Money money, CardDeck cardDeck) {
+        return new Gamer(name, money, cardDeck.next(), cardDeck.next());
     }
 
     private static List<Money> moneys(List<String> names) {
@@ -49,9 +49,9 @@ public class Application {
             .collect(toUnmodifiableList());
     }
 
-    private static void playBlackjack(CardDispenser cardDispenser, Dealer dealer, Gamers gamers) {
+    private static void playBlackjack(CardDeck cardDeck, Dealer dealer, Gamers gamers) {
         printOpenCard(dealer, gamers);
-        takeCards(cardDispenser, dealer, gamers);
+        takeCards(cardDeck, dealer, gamers);
         printResults(dealer, gamers);
     }
 
@@ -67,16 +67,16 @@ public class Application {
         return gamers.values().stream().map(Gamer::name).collect(toUnmodifiableList());
     }
 
-    private static void takeCards(CardDispenser cardDispenser, Dealer dealer, Gamers gamers) {
+    private static void takeCards(CardDeck cardDeck, Dealer dealer, Gamers gamers) {
         for (Gamer gamer : gamers.values()) {
-            takePlayerCard(gamer, cardDispenser);
+            takePlayerCard(gamer, cardDeck);
         }
-        takeDealerCard(dealer, cardDispenser);
+        takeDealerCard(dealer, cardDeck);
     }
 
-    private static void takePlayerCard(Gamer gamer, CardDispenser cardDispenser) {
+    private static void takePlayerCard(Gamer gamer, CardDeck cardDeck) {
         while (gamer.isHittable() && isKeepTakeCard(gamer.name())) {
-            gamer.take(cardDispenser.issue());
+            gamer.take(cardDeck.next());
             OutputView.printCards(gamer.name(), gamer.cards());
         }
     }
@@ -86,9 +86,9 @@ public class Application {
         return answer.isKeepGoing();
     }
 
-    private static void takeDealerCard(Dealer dealer, CardDispenser cardDispenser) {
+    private static void takeDealerCard(Dealer dealer, CardDeck cardDeck) {
         while (dealer.isHittable()) {
-            dealer.take(cardDispenser.issue());
+            dealer.take(cardDeck.next());
             OutputView.printDealerTakeCardMessage();
         }
     }

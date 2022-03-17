@@ -4,21 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.CardDispenser;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-public class CardDispenserTest {
+public class CardDeckTest {
 
     @Test
     void cardGenerate() {
-        CardDispenser cardDispenser = new CardDispenser();
+        CardDeck cardDeck = new CardDeck();
         Set<Card> set = new HashSet<>();
 
         for (int i = 0; i < 52; i++) {
-            Card card = cardDispenser.issue();
+            Card card = cardDeck.next();
             if (set.contains(card)) {
                 fail();
             }
@@ -26,6 +24,6 @@ public class CardDispenserTest {
         }
 
         assertThat(set).hasSize(52);
-        assertThatThrownBy(cardDispenser::issue).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(cardDeck::next).isInstanceOf(IllegalStateException.class);
     }
 }

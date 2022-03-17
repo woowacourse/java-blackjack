@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class Card {
@@ -61,7 +60,7 @@ public final class Card {
         return rank.hard() + "-" + suit;
     }
 
-    public static List<Card> createPool() {
+    static List<Card> createPool() {
         List<Card> pool = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             pool.addAll(createCardsEach(suit));

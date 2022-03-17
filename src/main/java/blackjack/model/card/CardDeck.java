@@ -5,11 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public final class CardDispenser {
+public final class CardDeck {
 
     private final Queue<Card> deck;
 
-    public CardDispenser() {
+    public CardDeck() {
         this.deck = new LinkedList<>(shuffledCards());
     }
 
@@ -19,7 +19,7 @@ public final class CardDispenser {
         return cardPool;
     }
 
-    public Card issue() {
+    public Card next() {
         if (deck.isEmpty()) {
             throw new IllegalStateException("남아있는 카드가 없습니다.");
         }
