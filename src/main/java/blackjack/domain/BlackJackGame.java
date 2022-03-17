@@ -46,7 +46,8 @@ public class BlackJackGame {
     public Player findPlayerNeedToBetMoney() {
         return players.stream()
                 .filter(Player::isNeedBettingMoney)
-                .findFirst().get();
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 이미 모든 플레이어의 배팅 금액이 입력되었습니다."));
     }
 
     public void playerSetupBettingMoney(int money) {
@@ -93,7 +94,8 @@ public class BlackJackGame {
     private Player findPlayerOnTurn() {
         return players.stream()
                 .filter(participant -> !participant.isFinished())
-                .findFirst().get();
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 모든 플레이어의 턴이 끝났습니다."));
     }
 
     public boolean dealerDrawMoreCard() {
