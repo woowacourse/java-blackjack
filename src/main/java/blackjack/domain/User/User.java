@@ -1,7 +1,7 @@
 package blackjack.domain.User;
 
+import blackjack.domain.Card.Card;
 import blackjack.domain.Card.Cards;
-import blackjack.domain.Card.Deck;
 
 public abstract class User {
 
@@ -25,7 +25,11 @@ public abstract class User {
         return cards.getScore();
     }
 
-    public boolean isBust() {
+    public void addCard(Card card){
+        cards.add(card);
+    }
+
+    public boolean isBust(){
         return cards.isBust();
     }
 
@@ -41,5 +45,5 @@ public abstract class User {
         return cards.isBlackJack();
     }
 
-    abstract public void hit(Deck cardFactory);
+    abstract public boolean isHit();
 }

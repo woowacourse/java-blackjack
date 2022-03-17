@@ -33,8 +33,6 @@ class PlayerResultTest {
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK)));
         Player player = new Player("test", Betting.from(1000), over21Cards);
         Dealer dealer = new Dealer(cards);
-        dealer.hit(cardFactory);
-        dealer.hit(cardFactory);
 
         PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.LOSE;
@@ -65,8 +63,6 @@ class PlayerResultTest {
                 new Card(Shape.CLOVER, Number.TEN)));
         Player player = new Player("test", Betting.from(1000), playerCards);
         Dealer dealer = new Dealer(dealerCards);
-        dealer.hit(cardFactory);
-        dealer.hit(cardFactory);
         PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.WIN;
         assertThat(actual).isEqualTo(expected);

@@ -21,15 +21,16 @@ public class BlackjackController {
         Deck deck = new Deck();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
         List<Betting> bettings = startBettings(inputPlayerNames);
-
         Dealer dealer = new Dealer(deck.drawInitCards());
         Players players = Players.create(inputPlayerNames, bettings, deck);
-
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToUserDtos(dealer, players));
+        List<UserDto> userDtos = playGame(dealer, players, deck);
+        finishGame(dealer, players, userDtos);
+    }
 
-        OutputView.printTotalResult(playGame(dealer, players, deck));
-
+    private void finishGame(Dealer dealer, Players players, List<UserDto> userDtos) {
+        OutputView.printTotalResult(userDtos);
         Map<Player, PlayerResult> statistics = players.getStatistics(dealer);
         OutputView.printFinalResult(batchService.calculate(statistics));
     }
@@ -43,17 +44,19 @@ public class BlackjackController {
     }
 
     private List<UserDto> playGame(Dealer dealer, Players players, Deck deck) {
-
-        players.getPlayers()
-                .forEach(player -> askOneMoreCard(player, deck));
-        dealer.hit(deck);
-        OutputView.printAddDealerCard();
+        for (Player player : players.getPlayers()) {
+            askOneMoreCard(player, deck);
+        }
+        while (dealer.isHit()) {
+            OutputView.printAddDealerCard();
+            dealer.addCard(deck.drawOneCard());
+        }
         return convertToUserDtos(dealer, players);
     }
 
     private void askOneMoreCard(Player player, Deck deck) {
-        while (!player.isBust() && InputView.askOneMoreCard(player.getName())) {
-            player.hit(deck);
+        while (player.isHit() && InputView.askOneMoreCard(player.getName())) {
+            player.addCard(deck.drawOneCard());
             OutputView.printPlayerCard(UserDto.from(player));
         }
     }
@@ -61,9 +64,10 @@ public class BlackjackController {
     private List<UserDto> convertToUserDtos(Dealer dealer, Players players) {
         List<UserDto> userDtos = new ArrayList<>();
         userDtos.add(UserDto.from(dealer));
-        players.getPlayers().stream()
-                .map(UserDto::from)
-                .forEach(userDtos::add);
+        for (Player player : players.getPlayers()) {
+            UserDto from = UserDto.from(player);
+            userDtos.add(from);
+        }
         return userDtos;
     }
 }

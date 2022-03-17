@@ -25,7 +25,7 @@ class DealerTest {
     void checkScoreWhenUnder16Test() {
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.FOUR)));
         Dealer dealer = new Dealer(cards);
-        assertThat(dealer.canOneMoreCard()).isEqualTo(true);
+        assertThat(dealer.isHit()).isEqualTo(true);
     }
 
     @Test
@@ -33,8 +33,7 @@ class DealerTest {
     void checkScoreWhenOver16Test() {
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK)));
         Dealer dealer = new Dealer(cards);
-        dealer.hit(cardFactory);
-        assertThat(dealer.canOneMoreCard()).isEqualTo(false);
+        assertThat(dealer.isHit()).isEqualTo(false);
     }
 
 }

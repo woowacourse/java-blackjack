@@ -1,7 +1,6 @@
 package blackjack.domain.User;
 
 import blackjack.domain.Card.Cards;
-import blackjack.domain.Card.Deck;
 
 public class Dealer extends User {
 
@@ -11,15 +10,9 @@ public class Dealer extends User {
         super("딜러", cards);
     }
 
-    public boolean canOneMoreCard() {
-        return cards.getScore() <= DEALER_ADD_CARD_LIMIT;
-    }
-
     @Override
-    public void hit(Deck deck) {
-        while (canOneMoreCard()) {
-            cards.add(deck.drawOneCard());
-        }
+    public boolean isHit() {
+        return cards.getScore() <= DEALER_ADD_CARD_LIMIT;
     }
 
 }

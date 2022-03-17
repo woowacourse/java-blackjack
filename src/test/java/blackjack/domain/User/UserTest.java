@@ -57,4 +57,14 @@ class UserTest {
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isBlackJack()).isFalse();
     }
+
+    @Test
+    @DisplayName("유저가 카드를 받아 유저가 소지한 카드가 증가한다.")
+    void addCardTest() {
+        Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN)));
+        Dealer dealer = new Dealer(cards);
+        dealer.addCard(new Card(Shape.CLOVER, Number.ACE));
+
+        assertThat(dealer.getCards().size()).isEqualTo(2);
+    }
 }
