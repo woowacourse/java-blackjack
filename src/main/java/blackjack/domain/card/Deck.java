@@ -1,18 +1,21 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class Deck implements DrawStrategy {
 
 	private static final String EMPTY_CARD_ERROR = "남은 카드가 존재하지 않습니다.";
 
-	private final Stack<Card> deck = new Stack<>();
+	private final Deque<Card> deck = new ArrayDeque<>();
 
 	public Deck(List<Card> deck) {
-		this.deck.addAll(deck);
-		Collections.shuffle(this.deck);
+		List<Card> cards = new ArrayList<>(deck);
+		Collections.shuffle(cards);
+		this.deck.addAll(cards);
 	}
 
 	@Override
