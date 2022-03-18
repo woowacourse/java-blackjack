@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Dealer extends Participant {
@@ -14,7 +15,7 @@ public class Dealer extends Participant {
     }
 
     public Dealer() {
-        super(DEALER_NAME);
+        this(new HashSet<>());
     }
 
     @Override
