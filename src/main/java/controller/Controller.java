@@ -11,7 +11,6 @@ import domain.participant.Players;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
 import domain.participant.info.Name;
-import domain.participant.info.ParticipantInfo;
 import domain.result.Result;
 import view.InputView;
 import view.OutputView;
@@ -48,18 +47,19 @@ public class Controller {
 	private List<Player> makePlayers(List<Name> names, Deck deck) {
 		List<Player> players = names.stream()
 			.map(
-				name -> new Player(name, new Hand(deck.generateInitCards()), new Betting(InputView.inputBetting(name))))
+				name -> new Player(name, new Hand(deck.generateInitCards()),
+					new Betting(InputView.inputBetting(name.getName()))))
 			.collect(Collectors.toList());
 		return players;
 	}
 
 	public void printInitHands(Dealer dealer, Players players) {
-		OutputView.printInitMessage(players.getNames());
-		OutputView.printOneHandForDealer(new ParticipantInfo(dealer));
+		OutputView.printInitMessage(players.getNames().stream().map(Name::getName).collect(Collectors.toList()));
+		OutputView.printOneHandForDealer(dealer.showName(), dealer.showHand());
 
-		List<ParticipantInfo> playersInfo = players.getPlayerInfo();
-		for (int i = 0; i < playersInfo.size(); i++) {
-			OutputView.printHand(playersInfo.get(i));
+		List<Player> playersInfo = players.getPlayerInfo();
+		for (Player player : playersInfo) {
+			OutputView.printHand(player.showName(), player.showHand());
 		}
 	}
 
@@ -73,7 +73,8 @@ public class Controller {
 
 		while (isKeepDraw && InputView.askDraw(name.getName())) {
 			players.addCardByName(name, deck.draw());
-			OutputView.printHand(players.getPlayerInfoByName(name));
+			OutputView.printHand(players.getPlayerInfoByName(name).showName(),
+				players.getPlayerInfoByName(name).showHand());
 			isKeepDraw = checkMaxScoreOrBust(players, name);
 		}
 	}
@@ -97,12 +98,12 @@ public class Controller {
 	}
 
 	public void printHandAndScore(Dealer dealer, Players players) {
-		OutputView.printHandAndScore(new ParticipantInfo(dealer));
+		OutputView.printHandAndScore(dealer.showName(), dealer.showHand(), dealer.getScore());
 
-		List<ParticipantInfo> playersInfo = players.getPlayerInfo();
+		List<Player> playersInfo = players.getPlayerInfo();
 
-		for (int i = 0; i < playersInfo.size(); i++) {
-			OutputView.printHandAndScore(playersInfo.get(i));
+		for (Player playerInfo : playersInfo) {
+			OutputView.printHandAndScore(playerInfo.showName(), playerInfo.showHand(), playerInfo.getScore());
 		}
 	}
 }

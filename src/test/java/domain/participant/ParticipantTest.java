@@ -49,6 +49,6 @@ public class ParticipantTest {
 		Card card4 = new Card(Denomination.EIGHT, Suit.CLOVER);
 		Participant participant = new Participant(new Name("pobi"),
 			new Hand(List.of(card1, card2, card3, card4)), new Betting(0));
-		assertThat(participant.getBestScore()).isEqualTo(20);
+		assertThat(participant.getScore()).isEqualTo(20);
 	}
 }

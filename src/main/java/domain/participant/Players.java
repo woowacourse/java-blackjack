@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import domain.card.Card;
 import domain.participant.info.Name;
-import domain.participant.info.ParticipantInfo;
 import domain.result.EarningRate;
 
 public class Players {
@@ -42,20 +41,18 @@ public class Players {
 		return players.get(name).isMaxScore();
 	}
 
-	public LinkedHashMap<ParticipantInfo, EarningRate> getResult(Dealer other) {
-		LinkedHashMap<ParticipantInfo, EarningRate> map = new LinkedHashMap<>();
+	public LinkedHashMap<Participant, EarningRate> getResult(Dealer other) {
+		LinkedHashMap<Participant, EarningRate> map = new LinkedHashMap<>();
 		players.keySet().stream()
-			.forEach(name -> map.put(new ParticipantInfo(players.get(name)), players.get(name).getResult(other)));
+			.forEach(name -> map.put(players.get(name), players.get(name).getResult(other)));
 		return map;
 	}
 
-	public ParticipantInfo getPlayerInfoByName(Name name) {
-		return new ParticipantInfo(players.get(name));
+	public Participant getPlayerInfoByName(Name name) {
+		return players.get(name);
 	}
 
-	public List<ParticipantInfo> getPlayerInfo() {
-		return players.keySet().stream()
-			.map(name -> new ParticipantInfo(players.get(name)))
-			.collect(Collectors.toList());
+	public List<Player> getPlayerInfo() {
+		return players.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
 	}
 }

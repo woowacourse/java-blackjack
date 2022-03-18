@@ -1,5 +1,7 @@
 package domain.participant;
 
+import java.util.List;
+
 import domain.card.Card;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
@@ -29,7 +31,7 @@ public class Participant {
 		return hand.isMaxScore();
 	}
 
-	public int getBestScore() {
+	public int getScore() {
 		return hand.getScore();
 	}
 
@@ -37,15 +39,19 @@ public class Participant {
 		return hand.isBlackJack();
 	}
 
+	public String showName() {
+		return name.getName();
+	}
+
+	public List<String> showHand() {
+		return hand.show();
+	}
+
+	public int showBetting() {
+		return betting.getBettingMoney();
+	}
+
 	public Name getName() {
 		return name;
-	}
-
-	public Hand getHand() {
-		return Hand.copyOf(hand);
-	}
-
-	public Betting getBetting() {
-		return betting;
 	}
 }

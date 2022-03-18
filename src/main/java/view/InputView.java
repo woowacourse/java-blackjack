@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import domain.participant.info.Name;
-
 public class InputView {
 
 	private static final String INPUT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -70,9 +68,9 @@ public class InputView {
 		return false;
 	}
 
-	public static int inputBetting(Name name) {
+	public static int inputBetting(String name) {
 		try {
-			System.out.println(String.format(ASK_BETTING_MESSAGE, name.getName()));
+			System.out.println(String.format(ASK_BETTING_MESSAGE, name));
 			String money = scanner.nextLine();
 			validateMoney(money);
 			return Integer.parseInt(money);

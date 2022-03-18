@@ -17,9 +17,9 @@ public class Player extends Participant {
 		}
 
 		if (dealer.isBust() || isBust()) {
-			return getResultAtBustExist(dealer);
+			return getResultAtBustExist();
 		}
-		return judgeVersus(dealer.getBestScore());
+		return judgeVersus(dealer.getScore());
 	}
 
 	private EarningRate getResultAtBlackJackExist(Dealer dealer) {
@@ -36,7 +36,7 @@ public class Player extends Participant {
 		return EarningRate.LOSE;
 	}
 
-	private EarningRate getResultAtBustExist(Dealer dealer) {
+	private EarningRate getResultAtBustExist() {
 		if (isBust()) {
 			return EarningRate.LOSE;
 		}
@@ -45,7 +45,7 @@ public class Player extends Participant {
 	}
 
 	private EarningRate judgeVersus(int otherScore) {
-		int myScore = getBestScore();
+		int myScore = getScore();
 		if (myScore > otherScore) {
 			return EarningRate.WIN;
 		}

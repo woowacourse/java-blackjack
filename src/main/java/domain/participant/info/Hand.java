@@ -1,7 +1,7 @@
 package domain.participant.info;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import domain.card.Card;
 
@@ -15,10 +15,6 @@ public class Hand {
 
 	public Hand(List<Card> hand) {
 		this.hand = hand;
-	}
-
-	public static Hand copyOf(Hand hand) {
-		return new Hand(new ArrayList<>(hand.hand));
 	}
 
 	public boolean isBlackJack() {
@@ -56,14 +52,15 @@ public class Hand {
 		hand.add(card);
 	}
 
-	public List<Card> getCards() {
-		return hand;
-	}
-
 	private int sumPoint() {
 		return hand.stream()
 			.mapToInt(Card::getPoint)
 			.sum();
 	}
 
+	public List<String> show() {
+		return hand.stream()
+			.map(Card::getInfo)
+			.collect(Collectors.toList());
+	}
 }
