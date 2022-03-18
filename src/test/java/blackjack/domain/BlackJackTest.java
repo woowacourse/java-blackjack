@@ -54,7 +54,8 @@ class BlackJackTest {
     @Test
     @DisplayName("딜러의 게임 결과가 1승 1패 0무가 나와야 한다.")
     void getDealerResult() {
-        GameResult gameResult = initializeGameResult();
+        BlackJack blackJack = initializeBlackJack();
+        GameResult gameResult = blackJack.getGameResult();
         DealerResult dealerResult = gameResult.getDealerResult();
         Map<Match, Integer> dealerResults = dealerResult.getMatchResult();
 
@@ -65,7 +66,8 @@ class BlackJackTest {
     @Test
     @DisplayName("페퍼는 승리, 애쉬는 패배해야 한다.")
     void getPlayerResult() {
-        GameResult gameResult = initializeGameResult();
+        BlackJack blackJack = initializeBlackJack();
+        GameResult gameResult = blackJack.getGameResult();
         PlayerResult playerResult = gameResult.getPlayerResult();
         Map<String, Match> playerResults = playerResult.get();
         assertThat(playerResults)
@@ -82,17 +84,39 @@ class BlackJackTest {
                 .containsExactly(entry("페퍼", Match.LOSE), entry("애쉬", Match.LOSE));
     }
 
-    private GameResult initializeGameResult() {
+    @Test
+    @DisplayName("딜러는 10000, 페퍼는 10000, 애쉬 -20000 의 수익을 얻어야한다.")
+    void finalProfitTest() {
+        BlackJack blackJack = initializeBlackJack();
+
+        Dealer dealer = blackJack.getDealer();
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(new Card(CardShape.CLUB, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        ProfitResult profitResult = blackJack.getProfitResult();
+        Map<String, Integer> profitResults = profitResult.get();
+        List<Integer> results = List.of(profitResults.get(dealer.getName()),
+            profitResults.get("페퍼"),
+            profitResults.get("애쉬"));
+
+        assertThat(results)
+            .containsExactly(10000, 10000, -20000);
+    }
+
+    private BlackJack initializeBlackJack() {
         Player pepper = new Player("페퍼");
         pepper.addCard(new Card(CardShape.HEART, CardNumber.THREE));
         pepper.addCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
         pepper.addCard(new Card(CardShape.CLUB, CardNumber.Q));
+        pepper.addMoney(10000);
 
         Player ash = new Player("애쉬");
         ash.addCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
         ash.addCard(new Card(CardShape.SPADE, CardNumber.K));
+        ash.addMoney(20000);
 
-        PlayerGroup playerGroup = new PlayerGroup(Arrays.asList(pepper, ash));
+        PlayerGroup playerGroup = new PlayerGroup(List.of(pepper, ash));
         BlackJack blackJack = new BlackJack(playerGroup);
 
         Dealer dealer = blackJack.getDealer();
@@ -100,7 +124,7 @@ class BlackJackTest {
         dealer.addCard(new Card(CardShape.CLUB, CardNumber.NINE));
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
 
-        return blackJack.getGameResult();
+        return blackJack;
     }
 
     private GameResult initializeBustGameResult() {
@@ -113,7 +137,7 @@ class BlackJackTest {
         ash.addCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
         ash.addCard(new Card(CardShape.SPADE, CardNumber.K));
 
-        PlayerGroup playerGroup = new PlayerGroup(Arrays.asList(pepper, ash));
+        PlayerGroup playerGroup = new PlayerGroup(List.of(pepper, ash));
         BlackJack blackJack = new BlackJack(playerGroup);
 
         Dealer dealer = blackJack.getDealer();

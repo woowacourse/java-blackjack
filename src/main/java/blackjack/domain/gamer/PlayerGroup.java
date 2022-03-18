@@ -60,11 +60,11 @@ public class PlayerGroup {
         gamers.addAll(players);
     }
 
-    public Map<String, Match> getPlayerResult(int sum) {
-        Map<String, Match> result = new LinkedHashMap<>();
+    public Map<Player, Match> getPlayerResult(int sum) {
+        Map<Player, Match> result = new LinkedHashMap<>();
         for (Player player : players) {
             Optional<Match> matchResult = Match.of(player.compareCardsSumTo(sum));
-            matchResult.ifPresent(match -> result.put(player.getName(), match));
+            matchResult.ifPresent(match -> result.put(player, match));
         }
         return Collections.unmodifiableMap(result);
     }
