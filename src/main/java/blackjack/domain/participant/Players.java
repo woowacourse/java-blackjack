@@ -61,18 +61,6 @@ public class Players {
                 .orElseThrow();
     }
 
-    public void calculatePlayersPrize(final boolean isDealerBlackjack, final int dealerScore) {
-        value.forEach(player -> player.calculatePrize(isDealerBlackjack, dealerScore));
-    }
-
-    public int calculateDealerPrize() {
-        final int sum = value.stream()
-                .mapToInt(Player::getPrize)
-                .sum();
-
-        return sum * -1;
-    }
-
     public List<String> getNames() {
         return value.stream()
                 .map(Player::getName)

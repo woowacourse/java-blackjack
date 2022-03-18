@@ -4,7 +4,6 @@ public class Money {
 
     private static final int VALUE_LOWER_BOUND = 100;
     private static final int VALUE_UPPER_BOUND = 1_000_000_000;
-    private static final double BONUS_MULTIPLIER = 1.5;
 
     private int value;
 
@@ -36,17 +35,5 @@ public class Money {
 
     public int getValue() {
         return value;
-    }
-
-    public void multiply() {
-        value *= BONUS_MULTIPLIER;
-    }
-
-    public void toZero() {
-        value = 0;
-    }
-
-    public void toNegative() {
-        value *= -1;
     }
 }

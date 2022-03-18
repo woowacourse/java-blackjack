@@ -92,21 +92,4 @@ class PlayersTest {
         // then
         assertThat(actual).isEqualTo(List.of("rick", "pobi", "jason"));
     }
-
-    @Test
-    @DisplayName("딜러의 상금을 계산한다.")
-    void calculateDealerPrize() {
-        // give
-        final Players players = new Players(List.of("a", "b", "c"));
-
-        players.getValue().get(0).initMoney(10000);
-        players.getValue().get(1).initMoney(2000);
-        players.getValue().get(2).initMoney(300);
-
-        // when
-        final int actual = players.calculateDealerPrize();
-
-        // then
-        assertThat(actual).isEqualTo(-12300);
-    }
 }

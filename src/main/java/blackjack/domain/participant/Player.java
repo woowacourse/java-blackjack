@@ -47,7 +47,7 @@ public class Player extends Participant {
         return playerStatus;
     }
 
-    public int getPrize() {
+    public int getBettingAmount() {
         return money.getValue();
     }
 

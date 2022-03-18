@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.PrizeCalculator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
@@ -87,10 +88,9 @@ public class GameController {
     }
 
     public void endGame() {
-        players.calculatePlayersPrize(dealer.isBlackjack(), dealer.getScore());
-
         printAllCards();
-        printAllPrize();
+        printDealerPrize();
+        printPlayersPrize();
     }
 
     private void printAllCards() {
@@ -100,10 +100,22 @@ public class GameController {
         players.getValue().forEach(OutputView::printCardsAndScore);
     }
 
-    private void printAllPrize() {
-        final int dealerPrize = players.calculateDealerPrize();
-
+    private void printDealerPrize() {
+        int dealerPrize = 0;
+        for (Player player : players.getValue()) {
+            final PrizeCalculator prizeCalculator = PrizeCalculator.from(player.getPlayerStatus());
+            dealerPrize += prizeCalculator.calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
+                    player.getBettingAmount()) * -1;
+        }
         OutputView.printDealerPrize(dealerPrize);
-        players.getValue().forEach(player -> OutputView.printPrize(player.getName(), player.getPrize()));
+    }
+
+    private void printPlayersPrize() {
+        for (Player player : players.getValue()) {
+            final PrizeCalculator prizeCalculator = PrizeCalculator.from(player.getPlayerStatus());
+            OutputView.printPrize(player.getName(),
+                    (int) prizeCalculator.calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
+                            player.getBettingAmount()));
+        }
     }
 }
