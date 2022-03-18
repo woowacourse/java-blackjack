@@ -11,6 +11,7 @@ public enum Match {
     WIN("승", Match::isWin),
     LOSE_BLACKJACK("블랙잭_패", Match::isBlackjackLose),
     LOSE("패", Match::isLose),
+    DRAW("무", Match::isDraw)
     ;
 
     private final String result;
@@ -42,6 +43,10 @@ public enum Match {
 
     private static boolean isLose(Player player, Player competitor) {
         return competitor.isWin(player);
+    }
+
+    private static Boolean isDraw(Player player, Player competitor) {
+        return player.isDraw(competitor);
     }
 
     public boolean isMatchBlackjackLose() {

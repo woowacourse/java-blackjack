@@ -34,6 +34,11 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
+    public final boolean isDraw(Player player) {
+        return playingCards.calculatePoints() == player.getPlayingCards().calculatePoints();
+    }
+
+    @Override
     public String getName() {
         return name;
     }

@@ -19,6 +19,8 @@ public interface Player {
 
     boolean isLose(Player player);
 
+    boolean isDraw(Player player);
+
     String getName();
 
     PlayingCards getPlayingCards();
