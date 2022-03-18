@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected Cards cards;
+    protected final Cards cards;
     protected final Name name;
 
     public Participant(String name) {
@@ -20,7 +20,7 @@ public abstract class Participant {
     public abstract void hit(Deck deck);
 
     public void receiveInitialTwoCards(Deck deck) {
-        this.cards = cards.addCards(deck.handOutInitialTwoCards());
+        cards.addCards(deck.handOutInitialTwoCards());
     }
 
     public int calculateScore() {

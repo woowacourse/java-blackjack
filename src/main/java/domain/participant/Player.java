@@ -41,7 +41,7 @@ public final class Player extends Participant {
         if (!canHit()) {
             throw new IllegalStateException(ExceptionMessages.PLAYER_CAN_NOT_HIT_ERROR);
         }
-        this.cards = cards.addCard(deck.handOut());
+        cards.addCard(deck.handOut());
     }
 
     @Override

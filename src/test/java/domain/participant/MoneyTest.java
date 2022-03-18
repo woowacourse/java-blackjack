@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import utils.ExceptionMessages;
 
-public class BettingMoneyTest {
+public class MoneyTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, -100})

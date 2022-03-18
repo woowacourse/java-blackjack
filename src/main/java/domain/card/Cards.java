@@ -73,14 +73,12 @@ public final class Cards {
         return cards.size() == CARD_COUNT_FOR_BLACKJACK && calculateScore() == MAX_SCORE;
     }
 
-    public Cards addCard(Card card) {
+    public void addCard(Card card) {
         cards.add(card);
-        return new Cards(cards);
     }
 
-    public Cards addCards(List<Card> cards) {
+    public void addCards(List<Card> cards) {
         this.cards.addAll(cards);
-        return new Cards(this.cards);
     }
 
     public Card getCardByIndex(int index) {

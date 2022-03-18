@@ -32,7 +32,7 @@ public final class Dealer extends Participant {
         if (!canHit()) {
             throw new IllegalStateException(ExceptionMessages.DEALER_CAN_NOT_HIT_ERROR);
         }
-        this.cards = cards.addCard(deck.handOut());
+        cards.addCard(deck.handOut());
     }
 
     @Override

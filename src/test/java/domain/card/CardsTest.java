@@ -14,11 +14,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardsTest {
 
-    private Cards emptyCards;
+    private Cards handCards;
 
     @BeforeEach
     void setUp() {
-        emptyCards = Cards.of(Cards.getEmptyList());
+        handCards = Cards.of(Cards.getEmptyList());
     }
 
     @ParameterizedTest
@@ -50,29 +50,29 @@ class CardsTest {
     void addTest() {
         Card card = Card.valueOf(Symbol.SPADE, Denomination.NINE);
 
-        Cards addedCards = emptyCards.addCard(card);
+        handCards.addCard(card);
 
-        assertThat(addedCards.getCardByIndex(0)).isEqualTo(card);
+        assertThat(handCards.getCardByIndex(0)).isEqualTo(card);
     }
 
     @Test
     @DisplayName("Cards가 BlackJack인 경우에 true를 반환한다.")
     void isBlackJackTest() {
-        Cards addedCards = emptyCards.addCards(
+        handCards.addCards(
             Arrays.asList(Card.valueOf(Symbol.HEART, Denomination.ACE), Card.valueOf(Symbol.SPADE,
                 Denomination.QUEEN)));
 
-        assertThat(addedCards.isBlackJack()).isTrue();
+        assertThat(handCards.isBlackJack()).isTrue();
     }
 
     @Test
     @DisplayName("Cards의 점수가 21점이 넘을 경우, Bust 확인 여부에서 True를 반환한다.")
     void isBustTest() {
-        Cards addedCards = emptyCards.addCards(
+        handCards.addCards(
             Arrays.asList(Card.valueOf(Symbol.HEART, Denomination.QUEEN),
                 Card.valueOf(Symbol.CLOVER, Denomination.JACK),
                 Card.valueOf(Symbol.DIAMOND, Denomination.THREE)));
 
-        assertThat(addedCards.isBust()).isTrue();
+        assertThat(handCards.isBust()).isTrue();
     }
 }
