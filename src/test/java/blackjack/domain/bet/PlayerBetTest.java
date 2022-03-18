@@ -83,7 +83,7 @@ public class PlayerBetTest {
         Map<Player, Result> judgeResult = new HashMap<>();
         Participant dealer = Dealer.createDefaultNameDealer();
         Player player1 = Player.of("player1");
-        judgeResult.put(player1, Result.Blackjack);
+        judgeResult.put(player1, Result.BLACKJACK);
 
         PlayersBet playersBet = new PlayersBet();
         playersBet.add(player1, new Money(10000));

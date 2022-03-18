@@ -36,7 +36,7 @@ public class PlayersBet {
 
     private void giveProfit(Map<Player, Result> judgeResult, Map<Participant, Money> profitTable) {
         for (Player player : judgeResult.keySet()) {
-            if (judgeResult.get(player) == Result.Blackjack) {
+            if (judgeResult.get(player) == Result.BLACKJACK) {
                 profitTable.put(player, participantBetTable.get(player).multiply(BLACKJACK_PROFIT_RATE));
             }
             if (judgeResult.get(player) == Result.WIN) {

@@ -15,7 +15,7 @@ public enum Result {
     TIE("무승부", ((dealer, player) -> (dealer.calculateBestScore() == player.calculateBestScore()) && (!dealer.isBusted() && !player
             .isBusted()))),
     LOSE("패배", ((dealer, player) -> player.isBusted() || (!dealer.isBusted() && !player.isCloserToBestScore(dealer.calculateBestScore())))),
-    Blackjack("블랙잭", ((dealer, player) -> !dealer.isBlackjack() && player.isBlackjack()))
+    BLACKJACK("블랙잭", ((dealer, player) -> !dealer.isBlackjack() && player.isBlackjack()))
     ;
 
     public static final String NO_CASE_EXCEPTION = "판단할 수 없는 상황입니다.";
