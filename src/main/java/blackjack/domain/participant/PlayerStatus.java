@@ -5,7 +5,7 @@ public enum PlayerStatus {
     HIT(true),
     BUST(false),
     STAY(false),
-    BLACKJACK(true),
+    BLACKJACK(false),
     ;
 
     private final boolean isRunning;
