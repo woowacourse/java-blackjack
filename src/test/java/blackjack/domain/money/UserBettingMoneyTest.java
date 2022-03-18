@@ -4,6 +4,7 @@ package blackjack.domain.money;
 import static blackjack.domain.Fixtures.JACK_DIAMOND;
 import static blackjack.domain.Fixtures.KING_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.player.User;
 import blackjack.domain.result.Result;
@@ -19,10 +20,10 @@ import org.junit.jupiter.api.Test;
 
 public class UserBettingMoneyTest {
 
-    private final User user1 = new User("pobi", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
-    private final User user2 = new User("jun", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
-    private final User user3 = new User("jason", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
-    private final Map<User, Result> userResult = new HashMap<>(Map.ofEntries(
+    private User user1 = new User("pobi", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
+    private User user2 = new User("jun", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
+    private User user3 = new User("jason", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
+    private Map<User, Result> userResult = new HashMap<>(Map.ofEntries(
             Map.entry(user1, Result.WIN),
             Map.entry(user2, Result.DRAW),
             Map.entry(user3, Result.LOSE)
@@ -31,18 +32,9 @@ public class UserBettingMoneyTest {
     @Test
     @DisplayName("유저들의 베팅머니를 생성한다.")
     void createUserBettingMoney() {
-        final Map<User, BettingMoney> expected = new HashMap<>(Map.ofEntries(
-                Map.entry(user1, BettingMoney.of(10000)),
-                Map.entry(user2, BettingMoney.of(20000)),
-                Map.entry(user3, BettingMoney.of(30000))
-        ));
-        UserBettingMoney userBettingMoney = new UserBettingMoney(List.of(user1, user2, user3));
-        userBettingMoney.putBettingMoney(user1, 10000);
-        userBettingMoney.putBettingMoney(user2, 20000);
-        userBettingMoney.putBettingMoney(user3, 30000);
-
-        final Map<User, BettingMoney> actual = userBettingMoney.getUserBettingMoney();
-        assertThat(actual).isEqualTo(expected);
+        assertThatCode(() -> {
+            new UserBettingMoney(List.of(user1, user2, user3));
+        }).doesNotThrowAnyException();
     }
 
     @Test

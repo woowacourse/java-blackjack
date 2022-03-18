@@ -2,7 +2,6 @@ package blackjack.money;
 
 import blackjack.domain.player.User;
 import blackjack.domain.result.Result;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +41,5 @@ public class UserBettingMoney {
             sum += userRevenue.get(user);
         }
         return sum * -1;
-    }
-
-    public Map<User, BettingMoney> getUserBettingMoney() {
-        return Collections.unmodifiableMap(userBettingMoney);
     }
 }
