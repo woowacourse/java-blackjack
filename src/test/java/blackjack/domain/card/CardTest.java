@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.fixtures.CardFixtures.SPADE_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import java.util.List;
@@ -14,9 +15,7 @@ public class CardTest {
     @Test
     @DisplayName("스페이드 에이스를 생성한다.")
     void createSpadeAce() {
-        Card card = Card.valueOf(SPADE, ACE);
-
-        assertThat(card).isNotNull();
+        assertThat(SPADE_ACE).isNotNull();
     }
 
     @Test
@@ -38,17 +37,13 @@ public class CardTest {
     @Test
     @DisplayName("같은 모양과 숫자의 카드는 동일하다.")
     void equalsCardsHashcode() {
-        Card card = Card.valueOf(SPADE, ACE);
-
-        assertThat(card.hashCode() == Card.valueOf(SPADE, ACE).hashCode()).isTrue();
+        assertThat(SPADE_ACE.hashCode() == SPADE_ACE.hashCode()).isTrue();
     }
 
     @Test
     @DisplayName("같은 모양과 숫자의 카드는 동등하다.")
     void equalsCard() {
-        Card card = Card.valueOf(SPADE, ACE);
-
-        assertThat(card.equals(Card.valueOf(SPADE, ACE))).isTrue();
+        assertThat(SPADE_ACE).isSameAs(SPADE_ACE);
     }
 
     @Test
