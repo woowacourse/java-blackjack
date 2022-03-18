@@ -24,8 +24,7 @@ public final class Started implements State {
 
     @Override
     public State hit(Card card) {
-        cards.add(card);
-        return new Hit(cards);
+        return new Hit(cards.add(card));
     }
 
     @Override

@@ -36,21 +36,6 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("시작 시 카드가 두 장이 아니면 예외가 발생한다.")
-    void invalidCardsSize() {
-        // given
-        Card card1 = Card.of(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = Card.of(Pattern.CLOVER, Denomination.THREE);
-        Card card3 = Card.of(Pattern.HEART, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2, card3);
-
-        // then
-        assertThatThrownBy(() -> new Cards(cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 카드를 두 장 받고 시작해야 합니다.");
-    }
-
-    @Test
     @DisplayName("카드가 중복되면 예외가 발생한다.")
     void duplicatedCards() {
         // given

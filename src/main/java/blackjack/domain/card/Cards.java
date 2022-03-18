@@ -10,26 +10,14 @@ public class Cards {
     private static final int BUST_STANDARD = 21;
     private static final Score BLACKJACK_SCORE = new Score(21);
     private static final int BLACKJACK_SIZE = 2;
-    private static final int INITIAL_CARDS_SIZE = 2;
 
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
         Objects.requireNonNull(cards, "[ERROR] 카드는 null일 수 없습니다.");
         cards = new ArrayList<>(cards);
-        validate(cards);
-        this.cards = cards;
-    }
-
-    private void validate(List<Card> cards) {
-        validateSize(cards);
         validateDistinct(cards);
-    }
-
-    private void validateSize(List<Card> cards) {
-        if (cards.size() != INITIAL_CARDS_SIZE) {
-            throw new IllegalArgumentException("[ERROR] 카드를 두 장 받고 시작해야 합니다.");
-        }
+        this.cards = cards;
     }
 
     private void validateDistinct(List<Card> cards) {
@@ -38,8 +26,9 @@ public class Cards {
         }
     }
 
-    public void add(Card card) {
+    public Cards add(Card card) {
         cards.add(card);
+        return new Cards(cards);
     }
 
     public Score calculateScore() {
