@@ -1,8 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.List;
-
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Dealer extends Participant {
@@ -16,12 +13,12 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isHittable() {
-        return cards.isLessScoreThan(HIT_STANDARD);
+    protected int getHitStandard() {
+        return HIT_STANDARD;
     }
 
     @Override
-    public List<Card> showFirstCards() {
-        return cards.getFrontCards(FIRST_OPEN_CARD_SIZE);
+    protected int getFirstOpenCardSize() {
+        return FIRST_OPEN_CARD_SIZE;
     }
 }

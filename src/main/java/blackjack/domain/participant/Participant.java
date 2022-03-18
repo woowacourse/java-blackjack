@@ -46,9 +46,17 @@ public abstract class Participant {
         return cards.isSameSize(BLACKJACK_CARD_SIZE) && cards.isSameScore(BLACKJACK_SCORE);
     }
 
-    public abstract boolean isHittable();
+    public boolean isHittable() {
+        return cards.isLessScoreThan(getHitStandard());
+    }
 
-    public abstract List<Card> showFirstCards();
+    public List<Card> showFirstCards() {
+        return cards.getFrontCards(getFirstOpenCardSize());
+    }
+
+    protected abstract int getHitStandard();
+
+    protected abstract int getFirstOpenCardSize();
 
     public List<Card> getCards() {
         return cards.getValues();
