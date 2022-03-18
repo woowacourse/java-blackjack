@@ -6,6 +6,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.BlackjackMatch;
+import blackjack.domain.result.BlackjackProfit;
 
 import java.util.List;
 import java.util.Map;
@@ -105,8 +106,9 @@ public class OutputView {
         return String.join(JOINING_DELIMITER_SPACE, matchEssentialInfo);
     }
 
-    public static void printProfitResult(Map<Participant, Double> profitResult) {
+    public static void printProfitResult(Map<Participant, BlackjackProfit> profitResult) {
         System.out.println(OUTPUT_MESSAGE_PROFIT);
-        profitResult.forEach((key, value) -> System.out.printf(OUTPUT_MESSAGE_PROFIT_RESULT, key.getName(), value));
+        profitResult.forEach((key, value) -> System.out.printf(OUTPUT_MESSAGE_PROFIT_RESULT,
+                key.getName(), value.getProfit()));
     }
 }
