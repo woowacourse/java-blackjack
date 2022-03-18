@@ -58,7 +58,7 @@ public class Score {
     public boolean isMax() {
         return sum == MAX_SCORE;
     }
-
+  
     public int getSum() {
         return sum;
     }

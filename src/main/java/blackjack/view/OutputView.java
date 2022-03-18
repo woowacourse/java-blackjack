@@ -77,7 +77,7 @@ public class OutputView {
     private static String printScoreResult(int score) {
         return (SCORE_MESSAGE + score);
     }
-
+  
     public static void printRecord(RecordsDto recordsDto) {
         System.out.println();
         System.out.println(RECORD_MESSAGE);

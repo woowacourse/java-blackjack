@@ -42,5 +42,6 @@ public class Blackjack {
 
     public Profits profit(Dealer dealer, Players players) {
         return Profits.of(dealer, players);
+
     }
 }

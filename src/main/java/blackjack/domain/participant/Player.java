@@ -1,16 +1,32 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.machine.Betting;
+import java.util.Objects;
 
 public class Player extends Participant {
-    private final Betting betting;
-
-    public Player(String name, long bettingMoney) {
+    public Player(String name) {
         super(name);
-        betting = new Betting(bettingMoney);
     }
 
-    public Betting getBetting() {
-        return betting;
+    public static Player copy(Player original) {
+        Player copy = new Player(original.name);
+        copy.myCards = original.getMyCards();
+        return copy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return name.equals(player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

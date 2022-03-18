@@ -15,7 +15,6 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import blackjack.domain.participant.Player;
 import blackjack.domain.strategy.NumberGenerator;
 
@@ -43,7 +42,7 @@ public class BlackjackTest {
         Set<Integer> checker = new HashSet<>();
         int dealerCardSize = dealer.getMyCards().size();
         checker.add(dealerCardSize);
-
+      
         List<Player> getPlayers = players.getPlayers();
         getPlayers.forEach(player -> checker.add(player.getMyCards().size()));
 
