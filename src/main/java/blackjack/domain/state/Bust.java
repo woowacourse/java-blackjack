@@ -4,17 +4,20 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Bust implements State {
-    public Bust(Cards cards) {
 
+    private final Cards cards;
+
+    public Bust(Cards cards) {
+        this.cards = cards;
     }
 
     @Override
     public State hit(Card card) {
-        return null;
+        throw new UnsupportedOperationException("[ERROR] 게임을 진행할 수 없습니다.");
     }
 
     @Override
     public State stand() {
-        return null;
+        throw new UnsupportedOperationException("[ERROR] 게임을 진행할 수 없습니다.");
     }
 }
