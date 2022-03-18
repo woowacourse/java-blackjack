@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.BattingMoney;
+import blackjack.domain.game.BettingMoney;
 import blackjack.domain.participant.vo.ParticipantName;
 import blackjack.domain.state.State;
 import java.util.List;
@@ -17,8 +17,8 @@ public abstract class Participant {
         this.state = state;
     }
 
-    Participant(final ParticipantName name, final BattingMoney battingMoney, final List<Card> cards) {
-        this(name, State.create(new Cards(cards), battingMoney));
+    Participant(final ParticipantName name, final BettingMoney bettingMoney, final List<Card> cards) {
+        this(name, State.create(new Cards(cards), bettingMoney));
     }
 
     public String getName() {

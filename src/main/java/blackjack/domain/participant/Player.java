@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.BattingMoney;
+import blackjack.domain.game.BettingMoney;
 import blackjack.domain.participant.vo.ParticipantName;
 import blackjack.domain.state.State;
 import java.util.List;
@@ -13,7 +13,7 @@ public class Player extends Participant {
     }
 
     public Player(final String name, final String battingMoney, final List<Card> card) {
-        super(new ParticipantName(name), new BattingMoney(battingMoney), card);
+        super(new ParticipantName(name), new BettingMoney(battingMoney), card);
     }
 
     public Player stay() {

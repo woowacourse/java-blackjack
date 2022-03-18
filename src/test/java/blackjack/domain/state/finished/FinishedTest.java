@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.BattingMoney;
+import blackjack.domain.game.BettingMoney;
 import blackjack.domain.state.State;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 class FinishedTest {
 
     private final Cards cards = new Cards(new ArrayList<>());
-    private final BattingMoney battingMoney = new BattingMoney("2000");
-    private final State state = new Stay(cards, battingMoney);
+    private final BettingMoney bettingMoney = new BettingMoney("2000");
+    private final State state = new Stay(cards, bettingMoney);
 
     @Test
     @DisplayName("자신과 다른 State 비교해 수익를 반환한다.")

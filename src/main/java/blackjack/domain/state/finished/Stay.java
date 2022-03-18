@@ -4,14 +4,14 @@ import static blackjack.domain.game.GameOutcome.LOSE;
 import static blackjack.domain.game.GameOutcome.WIN;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.BattingMoney;
+import blackjack.domain.game.BettingMoney;
 import blackjack.domain.game.GameOutcome;
 import blackjack.domain.state.State;
 
 public class Stay extends Finished {
 
-    public Stay(final Cards cards, final BattingMoney battingMoney) {
-        super(cards, battingMoney);
+    public Stay(final Cards cards, final BettingMoney bettingMoney) {
+        super(cards, bettingMoney);
     }
 
     @Override

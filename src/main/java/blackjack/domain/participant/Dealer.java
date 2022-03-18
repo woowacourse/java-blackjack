@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import static blackjack.domain.card.Cards.BLACK_JACK_NUMBER;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.BattingMoney;
+import blackjack.domain.game.BettingMoney;
 import blackjack.domain.participant.vo.ParticipantName;
 import blackjack.domain.state.State;
 import java.util.List;
@@ -18,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     public Dealer(final List<Card> cards) {
-        super(DEALER_NAME, BattingMoney.getDealerBattingMoney(), cards);
+        super(DEALER_NAME, BettingMoney.getDealerBattingMoney(), cards);
     }
 
     @Override

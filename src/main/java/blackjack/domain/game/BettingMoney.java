@@ -3,20 +3,20 @@ package blackjack.domain.game;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class BattingMoney {
+public class BettingMoney {
 
-    private static final BattingMoney dealerBattingMoney = new BattingMoney(0);
+    private static final BettingMoney DEALER_BETTING_MONEY = new BettingMoney(0);
 
     private static final Pattern NATURAL_NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]*$");
     private static final int BATTING_MONEY_UNIT = 10;
 
     private final int value;
 
-    private BattingMoney(final int value) {
+    private BettingMoney(final int value) {
         this.value = value;
     }
 
-    public BattingMoney(final String value) {
+    public BettingMoney(final String value) {
         Objects.requireNonNull(value, "배팅 금액에는 null이 들어올 수 없습니다.");
         validateBlank(value);
         validateNaturalNumber(value);
@@ -47,7 +47,7 @@ public class BattingMoney {
         return (int) (value * profitRate);
     }
 
-    public static BattingMoney getDealerBattingMoney() {
-        return dealerBattingMoney;
+    public static BettingMoney getDealerBattingMoney() {
+        return DEALER_BETTING_MONEY;
     }
 }

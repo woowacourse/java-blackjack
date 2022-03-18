@@ -2,15 +2,15 @@ package blackjack.domain.state.finished;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.BattingMoney;
+import blackjack.domain.game.BettingMoney;
 import blackjack.domain.game.GameOutcome;
 import blackjack.domain.state.Created;
 import blackjack.domain.state.State;
 
 public abstract class Finished extends Created {
 
-    Finished(final Cards cards, final BattingMoney battingMoney) {
-        super(cards, battingMoney);
+    Finished(final Cards cards, final BettingMoney bettingMoney) {
+        super(cards, bettingMoney);
     }
 
     @Override
@@ -33,6 +33,6 @@ public abstract class Finished extends Created {
     @Override
     public int getProfit(final State another) {
         final GameOutcome gameOutcome = compare(another);
-        return battingMoney.getProfit(gameOutcome.getProfitRate());
+        return bettingMoney.getProfit(gameOutcome.getProfitRate());
     }
 }
