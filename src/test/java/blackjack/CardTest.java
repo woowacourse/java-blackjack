@@ -11,4 +11,22 @@ public class CardTest {
         assertThat(Card.generate(Suit.DIAMOND, Denomination.ACE))
                 .isEqualTo(Card.generate(Suit.DIAMOND, Denomination.ACE));
     }
+
+    @Test
+    void isAceTest_True() {
+        assertThat(Card.generate(Suit.DIAMOND, Denomination.ACE).isAce())
+                .isTrue();
+    }
+
+    @Test
+    void isAceTest_False() {
+        assertThat(Card.generate(Suit.DIAMOND, Denomination.TWO).isAce())
+                .isFalse();
+    }
+
+    @Test
+    void scoreTest() {
+        assertThat(Card.generate(Suit.DIAMOND, Denomination.TWO).score())
+                .isEqualTo(2);
+    }
 }

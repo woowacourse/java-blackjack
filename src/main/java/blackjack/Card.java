@@ -28,6 +28,14 @@ public class Card {
         return CACHE.get(suit).get(denomination);
     }
 
+    public int score() {
+        return denomination.score();
+    }
+
+    public boolean isAce() {
+        return denomination.equals(Denomination.ACE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
