@@ -24,4 +24,8 @@ public enum PlayCommand {
     private static boolean isEqualsValue(String inputCommand, PlayCommand playCommand) {
         return playCommand.value.equals(inputCommand);
     }
+
+    public boolean isYes() {
+        return this == YES;
+    }
 }
