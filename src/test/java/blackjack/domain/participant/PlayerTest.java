@@ -48,32 +48,6 @@ public class PlayerTest {
         assertThat(player.getCards().size()).isEqualTo(3);
     }
 
-    @Test
-    @DisplayName("플레이어의 카드의 총합이 21보다 작으면 hit이 가능하다.")
-    void hittable() {
-        // given
-        Player player = BlackjackTestUtil.createPlayer(20);
-
-        // when
-        boolean actual = player.isHittable();
-
-        // then
-        assertThat(actual).isEqualTo(true);
-    }
-
-    @Test
-    @DisplayName("플레이어의 카드의 총합이 21 이상이면 hit이 불가능하다.")
-    void notHittable() {
-        // given
-        Player player = BlackjackTestUtil.createPlayer(21);
-
-        // when
-        boolean actual = player.isHittable();
-
-        // then
-        assertThat(actual).isEqualTo(false);
-    }
-
     @ParameterizedTest
     @CsvSource(value = {"WIN_BLACKJACK,1500", "WIN,1000", "DRAW,0", "LOSE,-1000"})
     @DisplayName("승패 결과에 따라 수익을 계산한다.")

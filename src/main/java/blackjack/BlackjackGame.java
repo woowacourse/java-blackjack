@@ -70,11 +70,20 @@ public class BlackjackGame {
     }
 
     private void proceedPlayer(Player player, CardDeck deck) {
-        while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
-            player.hit(deck);
-            OutputView.printPlayerCards(new ParticipantResponse(player));
+        while (!player.isFinished()) {
+            proceedOnce(player, deck);
         }
         showStopReason(player);
+    }
+
+    private void proceedOnce(Player player, CardDeck deck) {
+        if (inputHitRequest(player) == HitRequest.YES) {
+            player.hit(deck);
+            OutputView.printPlayerCards(new ParticipantResponse(player));
+            return;
+        }
+        player.stand();
+        OutputView.printPlayerCards(new ParticipantResponse(player));
     }
 
     private HitRequest inputHitRequest(Player player) {

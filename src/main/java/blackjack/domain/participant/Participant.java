@@ -25,8 +25,16 @@ public abstract class Participant {
         state = state.hit(deck.draw());
     }
 
+    public void stand() {
+        state = state.stand();
+    }
+
     public boolean isBust() {
         return state.isBust();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     public boolean isBlackjack() {

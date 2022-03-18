@@ -9,8 +9,6 @@ public class Player extends Participant {
 
     private final Betting betting;
 
-    private static final int HIT_STANDARD = 21;
-
     public Player(Name name, List<Card> cards, Betting betting) {
         super(name, cards);
         this.betting = betting;
@@ -19,10 +17,6 @@ public class Player extends Participant {
     @Override
     public List<Card> showInitialCards() {
         return List.copyOf(getCards());
-    }
-
-    public boolean isHittable() {
-        return getScore().isLessThan(HIT_STANDARD);
     }
 
     public int calculateProfit(Outcome outcome) {
