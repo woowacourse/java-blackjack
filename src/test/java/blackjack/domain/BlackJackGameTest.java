@@ -13,7 +13,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.BlackJackReferee;
-import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 
 class BlackJackGameTest {
@@ -26,8 +25,7 @@ class BlackJackGameTest {
 
         blackJackGame.play(hitRequest -> false, (name, cards) -> {});
 
-        Gamers gamers = blackJackGame.getGamers();
-        List<Player> players = gamers.getPlayers();
+        List<Player> players = blackJackGame.getPlayers();
 
         assertThat(players)
                 .map(dto -> dto.getCards().size())
@@ -42,8 +40,7 @@ class BlackJackGameTest {
 
         blackJackGame.play(hitRequest -> false, (name, cards) -> {});
 
-        Gamers gamers = blackJackGame.getGamers();
-        int cardNumberSum = gamers.getDealer().sumCardsNumber();
+        int cardNumberSum = blackJackGame.getDealer().sumCardsNumber();
 
         assertThat(cardNumberSum).isGreaterThan(16);
     }

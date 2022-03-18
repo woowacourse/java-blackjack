@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.Player;
 
 public class BlackJackGame {
 
@@ -73,7 +74,11 @@ public class BlackJackGame {
 		return BlackJackReferee.create(gamers.getDealer(), gamers.getPlayers());
 	}
 
-	public Gamers getGamers() {
-		return gamers;
+	public Dealer getDealer() {
+		return gamers.getDealer();
+	}
+
+	public List<Player> getPlayers() {
+		return gamers.getPlayers();
 	}
 }
