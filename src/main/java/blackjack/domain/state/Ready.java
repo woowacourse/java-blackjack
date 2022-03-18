@@ -9,19 +9,20 @@ public class Ready implements State {
     private final PlayingCards playingCards = new PlayingCards();
     private Betting betting;
 
-    public void bet(final Betting betting) {
-        this.betting = betting;
-    }
-
-    private void validateBetting() {
-        if (betting == null) {
-            throw new IllegalStateException("베팅 금액을 입력 해야 합니다.");
+    private void validateNumber(final String string) {
+        if (!string.matches("-?[0-9]+")) {
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
         }
     }
 
     @Override
+    public void bet(final String betting) {
+        validateNumber(betting);
+        this.betting = new Betting(betting);
+    }
+
+    @Override
     public State draw(final Card card) {
-        validateBetting();
         playingCards.add(card);
 
         if (playingCards.isMoreDeal()) {
@@ -35,12 +36,37 @@ public class Ready implements State {
 
     @Override
     public State stay() {
-        validateBetting();
         return new Stay(playingCards, betting);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public double profit() {
+        throw new IllegalStateException("Ready 상태일 때는 수익을 계산할 수 없습니다.");
     }
 
     @Override
     public PlayingCards playingCards() {
         return playingCards;
+    }
+
+    @Override
+    public PlayingCards partOfPlayingCards() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(this.playingCards.getPartOfCard());
+
+        return playingCards;
+    }
+
+    @Override
+    public int cardTotal() {
+        if (playingCards.isEmpty()) {
+            return 0;
+        }
+        return playingCards.total();
     }
 }

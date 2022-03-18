@@ -27,6 +27,7 @@ class ResultTest {
     @BeforeEach
     void init() {
         dealer = new Dealer();
+        dealer.bet(1000);
         players = new Players("test1, test2");
         result = new Result(players);
         aceSpade = Card.of(Denomination.ACE, Suit.SPADE);
@@ -38,9 +39,10 @@ class ResultTest {
     @DisplayName("초기 카드를 받은 후 딜러가 블랙잭이면 게임을 종료하는지 확인한다.")
     @Test
     void is_keep_playing_dealer_blackjack() {
-        dealer.dealCards(List.of(queenSpade, aceSpade));
+        dealer.deal(List.of(queenSpade, aceSpade));
         for (Player player : players.getPlayers()) {
-            player.dealCards(List.of(twoSpade, threeSpade));
+            player.bet(1000);
+            player.deal(List.of(twoSpade, threeSpade));
         }
 
         assertThat(result.isKeepPlaying(dealer)).isFalse();
@@ -49,9 +51,10 @@ class ResultTest {
     @DisplayName("초기 카드를 받은 후 딜러가 블랙잭 아닌데 모든 플레이어 블랙잭이면 게임을 종료하는지 확인한다.")
     @Test
     void is_keep_playing_all_player_blackjack() {
-        dealer.dealCards(List.of(twoSpade, threeSpade));
+        dealer.deal(List.of(twoSpade, threeSpade));
         for (Player player : players.getPlayers()) {
-            player.dealCards(List.of(queenSpade, aceSpade));
+            player.bet(1000);
+            player.deal(List.of(queenSpade, aceSpade));
         }
 
         assertThat(result.isKeepPlaying(dealer)).isFalse();
@@ -60,9 +63,10 @@ class ResultTest {
     @DisplayName("초기 카드를 받은 후 딜러가 블랙잭 아닌데 블랙잭이 아닌 플레이어가 있으면 게임을 진행하는 것을 확인한다.")
     @Test
     void is_keep_playing_any_player_blackjack() {
-        dealer.dealCards(List.of(twoSpade, threeSpade));
+        dealer.deal(List.of(twoSpade, threeSpade));
         for (Player player : players.getPlayers()) {
-            player.dealCards(List.of(twoSpade, threeSpade));
+            player.bet(1000);
+            player.deal(List.of(twoSpade, threeSpade));
         }
 
         assertThat(result.isKeepPlaying(dealer)).isTrue();
@@ -71,9 +75,10 @@ class ResultTest {
     @DisplayName("플레이어가 버스트일 경우 패배임을 확인한다.")
     @Test
     void compete_player_bust() {
-        dealer.dealCards(List.of(queenSpade, queenSpade));
+        dealer.deal(List.of(queenSpade, queenSpade));
         for (Player player : players.getPlayers()) {
-            player.dealCards(List.of(queenSpade, queenSpade, queenSpade));
+            player.bet(1000);
+            player.deal(List.of(queenSpade, queenSpade, queenSpade));
         }
 
         result.compete(dealer);
@@ -86,9 +91,10 @@ class ResultTest {
     @DisplayName("딜러가 버스트일 경우 승리임을 확인한다.")
     @Test
     void compete_dealer_bust() {
-        dealer.dealCards(List.of(queenSpade, queenSpade, queenSpade));
+        dealer.deal(List.of(queenSpade, queenSpade, queenSpade));
         for (Player player : players.getPlayers()) {
-            player.dealCards(List.of(queenSpade, queenSpade));
+            player.bet(1000);
+            player.deal(List.of(queenSpade, queenSpade));
         }
 
         result.compete(dealer);
@@ -101,9 +107,10 @@ class ResultTest {
     @DisplayName("딜러와 플레이어가 버스트가 아니며 점수가 동일할 경우 무승부임을 확인한다.")
     @Test
     void compete_tie() {
-        dealer.dealCards(List.of(queenSpade, queenSpade));
+        dealer.deal(List.of(queenSpade, queenSpade));
         for (Player player : players.getPlayers()) {
-            player.dealCards(List.of(queenSpade, queenSpade));
+            player.bet(1000);
+            player.deal(List.of(queenSpade, queenSpade));
         }
 
         result.compete(dealer);
@@ -116,9 +123,10 @@ class ResultTest {
     @DisplayName("딜러와 플레이어가 버스트가 아니며 딜러의 점수가 클 경우 패배임을 확인한다.")
     @Test
     void compete_lose() {
-        dealer.dealCards(List.of(queenSpade, queenSpade));
+        dealer.deal(List.of(queenSpade, queenSpade));
         for (Player player : players.getPlayers()) {
-            player.dealCards(List.of(queenSpade));
+            player.bet(1000);
+            player.deal(List.of(queenSpade));
         }
 
         result.compete(dealer);
@@ -131,9 +139,10 @@ class ResultTest {
     @DisplayName("딜러와 플레이어가 버스트가 아니며 플레이어의 점수가 클 경우 승리임을 확인한다.")
     @Test
     void compete_win() {
-        dealer.dealCards(List.of(queenSpade));
+        dealer.deal(List.of(queenSpade));
         for (Player player : players.getPlayers()) {
-            player.dealCards(List.of(queenSpade, queenSpade));
+            player.bet(1000);
+            player.deal(List.of(queenSpade, queenSpade));
         }
 
         result.compete(dealer);

@@ -17,6 +17,11 @@ public class Bust extends Finished {
     }
 
     @Override
+    public void bet(final String betting) {
+        throw new IllegalStateException("Bust 상태일 때는 bet 을 실행할 수 없습니다.");
+    }
+
+    @Override
     public State draw(final Card card) {
         throw new IllegalStateException("Bust 상태일 때는 draw 를 실행할 수 없습니다.");
     }
@@ -27,6 +32,11 @@ public class Bust extends Finished {
     }
 
     @Override
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
     public double profit() {
         return betting.profit(PROFIT_RATE);
     }
@@ -34,5 +44,18 @@ public class Bust extends Finished {
     @Override
     public PlayingCards playingCards() {
         return playingCards;
+    }
+
+    @Override
+    public PlayingCards partOfPlayingCards() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(this.playingCards.getPartOfCard());
+
+        return playingCards;
+    }
+
+    @Override
+    public int cardTotal() {
+        return playingCards.total();
     }
 }

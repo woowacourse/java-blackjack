@@ -22,7 +22,9 @@ public class DealerTest {
     @BeforeEach
     void before() {
         dealer = new Dealer();
+        dealer.bet(1000);
         player = new Player("pobi");
+        player.bet(1000);
         sixSpade = Card.of(Denomination.SIX, Suit.SPADE);
         sevenSpade = Card.of(Denomination.SEVEN, Suit.SPADE);
         queenSpade = Card.of(Denomination.QUEEN, Suit.SPADE);
@@ -31,7 +33,7 @@ public class DealerTest {
     @DisplayName("딜러의 카드 총 합이 16 이하일 경우 True 를 반환하는지 확인한다.")
     @Test
     void is_received_true() {
-        dealer.dealCards(List.of(sixSpade, queenSpade));
+        dealer.deal(List.of(sixSpade, queenSpade));
 
         assertThat(dealer.isDrawable()).isTrue();
     }
@@ -39,7 +41,7 @@ public class DealerTest {
     @DisplayName("딜러의 카드 총 합이 16 초과일 경우 False 를 반환하는지 확인한다.")
     @Test
     void is_received_false() {
-        dealer.dealCards(List.of(sevenSpade, queenSpade));
+        dealer.deal(List.of(sevenSpade, queenSpade));
 
         assertThat(dealer.isDrawable()).isFalse();
     }
@@ -47,8 +49,8 @@ public class DealerTest {
     @DisplayName("딜러의 카드 총 합이 플레이어보다 큰 경우를 확인한다.")
     @Test
     void is_lower_score_true() {
-        player.dealCards(List.of(sixSpade, sixSpade));
-        dealer.dealCards(List.of(sevenSpade, sevenSpade));
+        player.deal(List.of(sixSpade, sixSpade));
+        dealer.deal(List.of(sevenSpade, sevenSpade));
 
         assertThat(dealer.isLowerScore(player)).isFalse();
     }
@@ -56,8 +58,8 @@ public class DealerTest {
     @DisplayName("딜러의 카드 총 합이 플레이어보다 같은 경우를 확인한다.")
     @Test
     void is_lower_score_same() {
-        player.dealCards(List.of(sixSpade, sevenSpade));
-        dealer.dealCards(List.of(sixSpade, sevenSpade));
+        player.deal(List.of(sixSpade, sevenSpade));
+        dealer.deal(List.of(sixSpade, sevenSpade));
 
         assertThat(dealer.isLowerScore(player)).isFalse();
     }
@@ -65,8 +67,8 @@ public class DealerTest {
     @DisplayName("딜러의 카드 총 합이 플레이어보다 작은 경우를 확인한다.")
     @Test
     void is_lower_score_false() {
-        player.dealCards(List.of(sevenSpade, sevenSpade));
-        dealer.dealCards(List.of(sixSpade, sixSpade));
+        player.deal(List.of(sevenSpade, sevenSpade));
+        dealer.deal(List.of(sixSpade, sixSpade));
 
         assertThat(dealer.isLowerScore(player)).isTrue();
     }
@@ -74,8 +76,8 @@ public class DealerTest {
     @DisplayName("딜러의 카드 총 합이 플레이어보다 큰 경우를 확인한다.")
     @Test
     void is_higher_score_true() {
-        player.dealCards(List.of(sixSpade, sixSpade));
-        dealer.dealCards(List.of(sevenSpade, sevenSpade));
+        player.deal(List.of(sixSpade, sixSpade));
+        dealer.deal(List.of(sevenSpade, sevenSpade));
 
         assertThat(dealer.isHigherScore(player)).isTrue();
     }
@@ -83,8 +85,8 @@ public class DealerTest {
     @DisplayName("딜러의 카드 총 합이 플레이어보다 같은 경우를 확인한다.")
     @Test
     void is_higher_score_same() {
-        player.dealCards(List.of(sixSpade, sevenSpade));
-        dealer.dealCards(List.of(sixSpade, sevenSpade));
+        player.deal(List.of(sixSpade, sevenSpade));
+        dealer.deal(List.of(sixSpade, sevenSpade));
 
         assertThat(dealer.isHigherScore(player)).isFalse();
     }
@@ -92,8 +94,8 @@ public class DealerTest {
     @DisplayName("딜러의 카드 총 합이 플레이어보다 작은 경우를 확인한다.")
     @Test
     void is_higher_score_false() {
-        player.dealCards(List.of(sevenSpade, sevenSpade));
-        dealer.dealCards(List.of(sixSpade, sixSpade));
+        player.deal(List.of(sevenSpade, sevenSpade));
+        dealer.deal(List.of(sixSpade, sixSpade));
 
         assertThat(dealer.isHigherScore(player)).isFalse();
     }

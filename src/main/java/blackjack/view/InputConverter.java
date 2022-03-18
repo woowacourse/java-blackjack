@@ -21,24 +21,23 @@ public class InputConverter {
         }
     }
 
-    public static Betting createBetting() {
+    public static String createBetting() {
         try {
-            String input = InputView.inputBetting(enterable);
-            return new Betting(Integer.parseInt(input));
+            return InputView.inputBetting(enterable);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
             return createBetting();
         }
     }
 
-    public static boolean isDrawing(final Player player) {
+    public static boolean isDrawing(final String name) {
         try {
-            OutputView.printDrawInstruction(player.getName());
+            OutputView.printDrawInstruction(name);
             String input = InputView.inputDrawingAnswer(enterable);
             return Answer.isDraw(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
-            return isDrawing(player);
+            return isDrawing(name);
         }
     }
 }

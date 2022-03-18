@@ -1,8 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.bet.Betting;
-import blackjack.domain.bet.Profit;
-
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -27,25 +24,31 @@ public class Players {
         }
     }
 
-    public void bet(final Profit profit,
-                    final Consumer<String> inputBetting, final Supplier<Betting> betting) {
+    public void bet(final Consumer<String> inputBetting, final Supplier<String> betting) {
         for (Player player : players) {
-            player.bet(inputBetting);
-            profit.bet(player, betting);
+            player.bet(inputBetting, betting);
         }
     }
 
     public void deal(final Deck deck) {
         for (Player player : players) {
-            player.dealCards(deck.pickInit());
+            player.deal(deck.pickInit());
         }
     }
 
     public void draw(final Deck deck,
-                     final Predicate<Player> drawing, final BiConsumer<String, List<String>> biConsumer) {
+                     final Predicate<String> drawing, final BiConsumer<String, List<String>> biConsumer) {
         for (Player player : players) {
-            player.draw(deck, drawing, biConsumer);
+            player.draw(deck.pick(), drawing, biConsumer);
         }
+    }
+
+    public double totalProfit() {
+        double totalProfit = 0;
+        for (Player player : players) {
+            totalProfit += player.profit();
+        }
+        return totalProfit;
     }
 
     private List<String> trimNames(final String input) {

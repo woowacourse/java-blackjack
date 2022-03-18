@@ -11,15 +11,28 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HitTest {
 
-    private static final PlayingCards playingCards = new PlayingCards();
     private static final Betting betting = new Betting(1000);
+
+    @DisplayName("bet 을 실행하여 예외가 발생하는 것을 확인한다.")
+    @Test
+    void bet() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(Card.of(Denomination.ACE, Suit.SPADE), Card.of(Denomination.ACE, Suit.SPADE)));
+        Hit hit = new Hit(playingCards, betting);
+
+        assertThatThrownBy(() -> hit.bet("1000"))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Hit 상태일 때는 bet 을 실행할 수 없습니다.");
+    }
 
     @DisplayName("draw 를 실행하여 Hit 상태가 되는 것을 확인한다.")
     @Test
     void draw_hit() {
+        PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.ACE, Suit.SPADE), Card.of(Denomination.ACE, Suit.SPADE)));
         Hit hit = new Hit(playingCards, betting);
 
@@ -31,6 +44,7 @@ class HitTest {
     @DisplayName("draw 를 실행하여 Bust 상태가 되는 것을 확인한다.")
     @Test
     void draw_bust() {
+        PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
         Hit hit = new Hit(playingCards, betting);
 
@@ -42,11 +56,46 @@ class HitTest {
     @DisplayName("stay 를 실행하여 Stay 상태가 되는 것을 확인한다.")
     @Test
     void stay() {
+        PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
         Hit hit = new Hit(playingCards, betting);
 
         State state = hit.stay();
 
         assertThat(state).isInstanceOf(Stay.class);
+    }
+
+    @DisplayName("종료된 상태인지 확인한다.")
+    @Test
+    void is_finished() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards, betting);
+
+        assertThat(hit.isFinished()).isFalse();
+    }
+
+    @DisplayName("수익률 계산 시 예외가 발생하는 것을 확인한다.")
+    @Test
+    void profit_exception() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards, betting);
+
+        assertThatThrownBy(hit::profit)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Hit 상태일 때는 수익을 계산할 수 없습니다.");
+    }
+
+    @DisplayName("카드 총합을 확인한다.")
+    @Test
+    void card_total() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(
+                Card.of(Denomination.KING, Suit.SPADE),
+                Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards, betting);
+
+        assertThat(hit.cardTotal()).isEqualTo(20);
     }
 }

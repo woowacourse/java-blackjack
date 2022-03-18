@@ -23,7 +23,9 @@ class GradeTest {
     @BeforeEach
     void init() {
         dealer = new Dealer();
+        dealer.bet(1000);
         player = new Player("pobi");
+        player.bet(1000);
         aceSpade = Card.of(Denomination.ACE, Suit.SPADE);
         tenSpade = Card.of(Denomination.KING, Suit.SPADE);
     }
@@ -31,8 +33,8 @@ class GradeTest {
     @DisplayName("딜러와 플레이어 모두 블랙잭일 경우 무승부임을 확인한다.")
     @Test
     void grade_to_init_cards_tie() {
-        dealer.dealCards(List.of(aceSpade, tenSpade));
-        player.dealCards(List.of(aceSpade, tenSpade));
+        dealer.deal(List.of(aceSpade, tenSpade));
+        player.deal(List.of(aceSpade, tenSpade));
 
         assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.TIE);
     }
@@ -40,8 +42,8 @@ class GradeTest {
     @DisplayName("딜러는 블랙잭이나 플레이어는 블랙잭이 아닐 경우 패배임을 확인한다.")
     @Test
     void grade_to_init_cards_lose() {
-        dealer.dealCards(List.of(aceSpade, tenSpade));
-        player.dealCards(List.of(tenSpade, tenSpade));
+        dealer.deal(List.of(aceSpade, tenSpade));
+        player.deal(List.of(tenSpade, tenSpade));
 
         assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.LOSE);
     }
@@ -49,8 +51,8 @@ class GradeTest {
     @DisplayName("딜러는 블랙잭이 아니나 플레이어가 블랙잭일 경우 승리임을 확인한다.")
     @Test
     void grade_to_init_cards_win() {
-        dealer.dealCards(List.of(tenSpade, tenSpade));
-        player.dealCards(List.of(aceSpade, tenSpade));
+        dealer.deal(List.of(tenSpade, tenSpade));
+        player.deal(List.of(aceSpade, tenSpade));
 
         assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.BLACKJACK_WIN);
     }
@@ -58,8 +60,8 @@ class GradeTest {
     @DisplayName("딜러와 플레이어 모두 블랙잭이 없을 경우 게임을 진행하는 것을 확인한다.")
     @Test
     void grade_to_init_cards_proceed() {
-        dealer.dealCards(List.of(tenSpade, tenSpade));
-        player.dealCards(List.of(tenSpade, tenSpade));
+        dealer.deal(List.of(tenSpade, tenSpade));
+        player.deal(List.of(tenSpade, tenSpade));
 
         assertThat(Grade.gradeToInitCards(dealer, player)).isEqualTo(Grade.PROCEED);
     }
@@ -67,8 +69,8 @@ class GradeTest {
     @DisplayName("플레이어가 버스트일 경우 패배임을 확인한다.")
     @Test
     void grade_player_bust() {
-        dealer.dealCards(List.of(tenSpade, tenSpade));
-        player.dealCards(List.of(tenSpade, tenSpade, tenSpade));
+        dealer.deal(List.of(tenSpade, tenSpade));
+        player.deal(List.of(tenSpade, tenSpade, tenSpade));
 
         assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.LOSE);
     }
@@ -76,8 +78,8 @@ class GradeTest {
     @DisplayName("딜러가 버스트일 경우 승리임을 확인한다.")
     @Test
     void grade_dealer_bust() {
-        dealer.dealCards(List.of(tenSpade, tenSpade, tenSpade));
-        player.dealCards(List.of(tenSpade, tenSpade));
+        dealer.deal(List.of(tenSpade, tenSpade, tenSpade));
+        player.deal(List.of(tenSpade, tenSpade));
 
         assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.WIN);
     }
@@ -85,8 +87,8 @@ class GradeTest {
     @DisplayName("모두 버스트가 아니며 동점일 경우 무승부임을 확인한다.")
     @Test
     void grade_tie() {
-        dealer.dealCards(List.of(tenSpade, tenSpade));
-        player.dealCards(List.of(tenSpade, tenSpade));
+        dealer.deal(List.of(tenSpade, tenSpade));
+        player.deal(List.of(tenSpade, tenSpade));
 
         assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.TIE);
     }
@@ -94,8 +96,8 @@ class GradeTest {
     @DisplayName("모두 버스트가 아니며 플레이어의 점수가 더 높을 경우 승리임을 확인한다.")
     @Test
     void grade_win() {
-        dealer.dealCards(List.of(tenSpade));
-        player.dealCards(List.of(tenSpade, tenSpade));
+        dealer.deal(List.of(tenSpade));
+        player.deal(List.of(tenSpade, tenSpade));
 
         assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.WIN);
     }
@@ -103,8 +105,8 @@ class GradeTest {
     @DisplayName("모두 버스트가 아니며 플레이어의 점수가 더 낮을 경우 패배임을 확인한다.")
     @Test
     void grade_lose() {
-        dealer.dealCards(List.of(tenSpade, tenSpade));
-        player.dealCards(List.of(tenSpade));
+        dealer.deal(List.of(tenSpade, tenSpade));
+        player.deal(List.of(tenSpade));
 
         assertThat(Grade.grade(dealer, player)).isEqualTo(Grade.LOSE);
     }

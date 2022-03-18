@@ -18,6 +18,16 @@ class BustTest {
     private static final PlayingCards playingCards = new PlayingCards();
     private static final Betting betting = new Betting(1000);
 
+    @DisplayName("bet 을 실행하여 예외가 발생하는 것을 확인한다.")
+    @Test
+    void bet() {
+        Bust bust = new Bust(playingCards, betting);
+
+        assertThatThrownBy(() -> bust.bet("1000"))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Bust 상태일 때는 bet 을 실행할 수 없습니다.");
+    }
+
     @DisplayName("draw 를 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
     void draw() {
@@ -38,11 +48,31 @@ class BustTest {
                 .hasMessage("Bust 상태일 때는 stay 를 실행할 수 없습니다.");
     }
 
+    @DisplayName("종료된 상태인지 확인한다.")
+    @Test
+    void is_finished() {
+        Bust bust = new Bust(playingCards, betting);
+
+        assertThat(bust.isFinished()).isTrue();
+    }
+
     @DisplayName("버스트일 경우 베팅 금액만큼 잃는 것을 확인한다.")
     @Test
     void profit() {
         Bust bust = new Bust(playingCards, betting);
 
         assertThat(bust.profit()).isEqualTo(-1000.0);
+    }
+
+    @DisplayName("카드 총합을 확인한다.")
+    @Test
+    void card_total() {
+        playingCards.add(List.of(
+                Card.of(Denomination.KING, Suit.SPADE),
+                Card.of(Denomination.KING, Suit.SPADE),
+                Card.of(Denomination.KING, Suit.SPADE)));
+        Bust bust = new Bust(playingCards, betting);
+
+        assertThat(bust.cardTotal()).isEqualTo(30);
     }
 }

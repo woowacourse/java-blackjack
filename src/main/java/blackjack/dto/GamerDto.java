@@ -12,14 +12,16 @@ public class GamerDto {
     private GamerDto() {
     }
 
+    // TODO: 방식 수정
     public static List<String> getPartOfCards(final Dealer dealer) {
-        return dealer.openPartOfCards().stream()
+        return dealer.openPartOfCards().getAllCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());
     }
 
+    // TODO: 방식 수정
     public static List<String> getCards(final Gamer gamer) {
-        return gamer.openCards().stream()
+        return gamer.openCards().getAllCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());
     }

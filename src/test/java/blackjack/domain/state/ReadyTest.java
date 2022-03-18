@@ -1,6 +1,5 @@
 package blackjack.domain.state;
 
-import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
@@ -9,17 +8,24 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReadyTest {
 
-    private static final Betting betting = new Betting(1000);
+    @DisplayName("베팅 금액에 숫자가 아닌 값을 입력했을 경우 예외가 발생하는 것을 확인한다.")
+    @Test
+    void betting_not_number() {
+        Ready ready = new Ready();
+
+        assertThatThrownBy(() -> ready.bet("asdf"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("숫자를 입력해주세요.");
+    }
 
     @DisplayName("draw 를 한 번 실행하여 Ready 상태가 되는 것을 확인한다.")
     @Test
     void draw_ready() {
         Ready ready = new Ready();
-        ready.bet(betting);
+        ready.bet("1000");
 
         assertThat(ready.draw(Card.of(Denomination.KING, Suit.SPADE)))
                 .isInstanceOf(Ready.class);
@@ -29,7 +35,7 @@ class ReadyTest {
     @Test
     void draw_hit() {
         Ready ready = new Ready();
-        ready.bet(betting);
+        ready.bet("1000");
 
         assertThat(ready.draw(Card.of(Denomination.KING, Suit.SPADE))
                 .draw(Card.of(Denomination.KING, Suit.SPADE)))
@@ -40,41 +46,57 @@ class ReadyTest {
     @Test
     void draw_blackjack() {
         Ready ready = new Ready();
-        ready.bet(betting);
+        ready.bet("1000");
 
         assertThat(ready.draw(Card.of(Denomination.ACE, Suit.SPADE))
                 .draw(Card.of(Denomination.KING, Suit.SPADE)))
                 .isInstanceOf(Blackjack.class);
     }
 
-    @DisplayName("draw 시 베팅 금액을 입력하지 않았을 경우 예외가 발생하는 것을 확인한다.")
-    @Test
-    void draw_exception() {
-        Ready ready = new Ready();
-
-        assertThatThrownBy(() -> ready.draw(Card.of(Denomination.KING, Suit.SPADE)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("베팅 금액을 입력 해야 합니다.");
-    }
-
     @DisplayName("stay 를 실행하여 Stay 상태가 되는 것을 확인한다.")
     @Test
     void stay() {
         Ready ready = new Ready();
-        ready.bet(betting);
+        ready.bet("1000");
 
         State state = ready.stay();
 
         assertThat(state).isInstanceOf(Stay.class);
     }
 
-    @DisplayName("stay 시 베팅 금액을 입력하지 않았을 경우 예외가 발생하는 것을 확인한다.")
+    @DisplayName("종료된 상태인지 확인한다.")
     @Test
-    void stay_exception() {
+    void is_finished() {
         Ready ready = new Ready();
 
-        assertThatThrownBy(ready::stay)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("베팅 금액을 입력 해야 합니다.");
+        assertThat(ready.isFinished()).isFalse();
+    }
+
+    @DisplayName("수익률 계산 시 예외가 발생하는 것을 확인한다.")
+    @Test
+    void profit_exception() {
+        Ready ready = new Ready();
+
+        assertThat(ready.isFinished()).isFalse();
+    }
+
+    @DisplayName("카드를 추가하지 않은 상태에서 카드 총합을 확인한다.")
+    @Test
+    void card_total_zero() {
+        Ready ready = new Ready();
+
+        assertThat(ready.cardTotal()).isEqualTo(0);
+    }
+
+    @DisplayName("카드 총합을 확인한다.")
+    @Test
+    void card_total() {
+        Ready ready = new Ready();
+        ready.bet("1000");
+
+        ready.draw(Card.of(Denomination.KING, Suit.SPADE));
+        ready.draw(Card.of(Denomination.KING, Suit.SPADE));
+
+        assertThat(ready.cardTotal()).isEqualTo(20);
     }
 }

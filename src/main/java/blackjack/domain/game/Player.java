@@ -1,11 +1,15 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.Ready;
 import blackjack.dto.GamerDto;
 
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class Player extends Gamer {
 
@@ -14,16 +18,29 @@ public class Player extends Gamer {
         validateEqualsDealerName(name);
     }
 
-    public void bet(final Consumer<String> inputBetting) {
+    public void bet(final Consumer<String> inputBetting, final Supplier<String> betting) {
         inputBetting.accept(name);
+        state.bet(betting.get());
     }
 
-    public void draw(final Deck deck,
-                     final Predicate<Player> drawing, final BiConsumer<String, List<String>> biConsumer) {
-        while (isDrawable() && isDrawing(drawing)) {
-            drawCard(deck.pick());
-            openCards(biConsumer);
+    public void draw(final Card card,
+                     final Predicate<String> drawing, final BiConsumer<String, List<String>> openCards) {
+        while (isDrawable()) {
+            hitOrStay(card, drawing);
+            openCards(openCards);
         }
+    }
+
+    private void hitOrStay(final Card card, final Predicate<String> drawing) {
+        if (isDrawing(drawing)) {
+            draw(card);
+            return;
+        }
+        stay();
+    }
+
+    public double profit() {
+        return state.profit();
     }
 
     private void validateEqualsDealerName(final String name) {
@@ -32,16 +49,17 @@ public class Player extends Gamer {
         }
     }
 
-    private boolean isDrawing(final Predicate<Player> drawing) {
-        return drawing.test(this);
+    private boolean isDrawing(final Predicate<String> drawing) {
+        return drawing.test(name);
     }
 
-    private void openCards(final BiConsumer<String, List<String>> biConsumer) {
-        biConsumer.accept(this.name, GamerDto.getCards(this));
+    private void openCards(final BiConsumer<String, List<String>> openCards) {
+        openCards.accept(name, GamerDto.getCards(this));
     }
 
     @Override
     public boolean isDrawable() {
-        return playingCards.isUnderBlackjack();
+        // TODO: 방식 수정
+        return state instanceof Ready  || state instanceof Hit;
     }
 }

@@ -1,8 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Card;
-
-import java.util.List;
 import java.util.function.BiConsumer;
 
 public class Dealer extends Gamer {
@@ -16,9 +13,13 @@ public class Dealer extends Gamer {
 
     public void draw(final Deck deck, final BiConsumer<String, Integer> drawing) {
         while (isDrawable()) {
-            drawCard(deck.pick());
+            draw(deck.pick());
             noticeDrawing(drawing);
         }
+    }
+
+    public double profit(final double playersTotalProfit) {
+        return -playersTotalProfit;
     }
 
     public boolean isLowerScore(final Player player) {
@@ -33,12 +34,12 @@ public class Dealer extends Gamer {
         drawing.accept(name, DRAWING_MAXIMUM);
     }
 
-    public List<Card> openPartOfCards() {
-        return playingCards.getPartOfCard();
+    public PlayingCards openPartOfCards() {
+        return state.partOfPlayingCards();
     }
 
     @Override
     public boolean isDrawable() {
-        return playingCards.total() <= DRAWING_MAXIMUM;
+        return state.cardTotal() <= DRAWING_MAXIMUM;
     }
 }

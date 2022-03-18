@@ -21,6 +21,10 @@ public class PlayingCards {
         playingCards.add(card);
     }
 
+    public boolean isEmpty() {
+        return playingCards.isEmpty();
+    }
+
     public int total() {
         List<Denomination> denominations = getDenominations();
         return Denomination.getTotal(denominations);

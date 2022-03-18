@@ -15,13 +15,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class PlayerTest {
 
     private Player player;
-    private Card aceSpade;
     private Card queenSpade;
 
     @BeforeEach
     void before() {
         player = new Player("woowahan");
-        aceSpade = Card.of(Denomination.ACE, Suit.SPADE);
+        player.bet(1000);
         queenSpade = Card.of(Denomination.QUEEN, Suit.SPADE);
     }
 
@@ -33,19 +32,22 @@ public class PlayerTest {
                 .hasMessage("딜러와 동일한 이름은 사용할 수 없습니다.");
     }
 
+    @DisplayName("게임이 종료되지 않은 상태에서 수익을 구할 경우 예외가 발생하는 것을 확인한다.")
+    @Test
+    void profit_exception() {
+        player = new Player("yukong");
+        player.bet(1000);
+
+        assertThatThrownBy(() -> player.profit())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Ready 상태일 때는 수익을 계산할 수 없습니다.");
+    }
+
     @DisplayName("플레이어의 카드 합이 21 미만일 경우 카드를 받는 것을 확인한다.")
     @Test
     void is_drawable_true() {
-        player.dealCards(List.of(queenSpade, queenSpade));
+        player.deal(List.of(queenSpade, queenSpade));
 
         assertThat(player.isDrawable()).isTrue();
-    }
-
-    @DisplayName("플레이어의 카드 합이 21 이상일 경우 카드를 받지 못하는 것을 확인한다.")
-    @Test
-    void is_drawable_false() {
-        player.dealCards(List.of(aceSpade, queenSpade, queenSpade));
-
-        assertThat(player.isDrawable()).isFalse();
     }
 }

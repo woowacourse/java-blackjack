@@ -15,6 +15,11 @@ public class Hit implements State {
     }
 
     @Override
+    public void bet(final String betting) {
+        throw new IllegalStateException("Hit 상태일 때는 bet 을 실행할 수 없습니다.");
+    }
+
+    @Override
     public State draw(final Card card) {
         playingCards.add(card);
 
@@ -30,7 +35,30 @@ public class Hit implements State {
     }
 
     @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public double profit() {
+        throw new IllegalStateException("Hit 상태일 때는 수익을 계산할 수 없습니다.");
+    }
+
+    @Override
     public PlayingCards playingCards() {
         return playingCards;
+    }
+
+    @Override
+    public PlayingCards partOfPlayingCards() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(this.playingCards.getPartOfCard());
+
+        return playingCards;
+    }
+
+    @Override
+    public int cardTotal() {
+        return playingCards.total();
     }
 }

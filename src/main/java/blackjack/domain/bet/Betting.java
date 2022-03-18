@@ -8,6 +8,10 @@ public class Betting {
 
     private int betting;
 
+    public Betting(final String betting) {
+        this(Integer.parseInt(betting));
+    }
+
     public Betting(final int betting) {
         validateBetting(betting);
         this.betting = betting;

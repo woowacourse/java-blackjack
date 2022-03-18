@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.bet.Profit;
 import blackjack.domain.game.Deck;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
@@ -19,15 +18,14 @@ public class BlackjackGame {
         Players players = InputConverter.createPlayers();
         Result result = new Result(players);
 
-        Profit profit = new Profit();
-        bet(players, profit);
+        bet(players);
 
         drawCards(dealer, players, result);
-        showProfit(dealer, players, result, profit);
+        showProfit(dealer, players, result);
     }
 
-    private void bet(final Players players, final Profit profit) {
-        players.bet(profit, OutputView::printBetting, InputConverter::createBetting);
+    private void bet(final Players players) {
+        players.bet(OutputView::printBetting, InputConverter::createBetting);
     }
 
     private void drawCards(final Dealer dealer, final Players players, final Result result) {
@@ -44,7 +42,7 @@ public class BlackjackGame {
 
     private void dealCard(final Dealer dealer, final Players players, final Deck deck) {
         OutputView.printDealCards(dealer.getName(), players.getNames());
-        dealer.dealCards(deck.pickInit());
+        dealer.deal(deck.pickInit());
         players.deal(deck);
 
         openDealCard(dealer, players);
@@ -58,15 +56,14 @@ public class BlackjackGame {
         OutputView.printNewLine();
     }
 
-    private void showProfit(final Dealer dealer, final Players players, final Result result, final Profit profit) {
+    private void showProfit(final Dealer dealer, final Players players, final Result result) {
         showTotalScore(dealer, players);
         result.compete(dealer);
-        profit.calculate(result);
 
         OutputView.printProfitTitle();
-        OutputView.printProfit(dealer.getName(), profit.dealerProfit());
+        OutputView.printProfit(dealer.getName(), (int) dealer.profit(players.totalProfit()));
         for (Player player : players.getPlayers()) {
-            OutputView.printProfit(player.getName(), profit.getBetting(player));
+            OutputView.printProfit(player.getName(), (int) player.profit());
         }
     }
 
