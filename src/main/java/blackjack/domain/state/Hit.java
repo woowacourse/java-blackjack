@@ -1,14 +1,17 @@
 package blackjack.domain.state;
 
+import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayingCards;
 
 public class Hit implements State {
 
     private final PlayingCards playingCards;
+    private final Betting betting;
 
-    public Hit(final PlayingCards playingCards) {
+    public Hit(final PlayingCards playingCards, final Betting betting) {
         this.playingCards = playingCards;
+        this.betting = betting;
     }
 
     @Override
@@ -16,7 +19,7 @@ public class Hit implements State {
         playingCards.add(card);
 
         if (playingCards.isBust()) {
-            return new Bust(playingCards);
+            return new Bust(playingCards, betting);
         }
         return this;
     }

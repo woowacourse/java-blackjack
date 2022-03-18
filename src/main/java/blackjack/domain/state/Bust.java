@@ -1,18 +1,28 @@
 package blackjack.domain.state;
 
+import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayingCards;
 
-public class Bust implements State {
+public class Bust extends Finished {
+
+    private static final int PROFIT_RATE = -1;
 
     private final PlayingCards playingCards;
+    private final Betting betting;
 
-    public Bust(final PlayingCards playingCards) {
+    public Bust(final PlayingCards playingCards, final Betting betting) {
         this.playingCards = playingCards;
+        this.betting = betting;
     }
 
     @Override
     public State draw(final Card card) {
         throw new IllegalStateException("Bust 상태일 때는 draw 를 실행할 수 없습니다.");
+    }
+
+    @Override
+    public double profit() {
+        return betting.profit(PROFIT_RATE);
     }
 }

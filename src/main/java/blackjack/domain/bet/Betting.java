@@ -17,6 +17,10 @@ public class Betting {
         betting = Grade.rate(grade, betting);
     }
 
+    public double profit(final double rate) {
+        return betting * rate;
+    }
+
     private void validateBetting(final int betting) {
         validateNegative(betting);
         validateMoneyUnit(betting);
