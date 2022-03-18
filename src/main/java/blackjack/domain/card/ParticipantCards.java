@@ -31,6 +31,10 @@ public class ParticipantCards {
         cards.add(card);
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == 21;
+    }
+
     public Card getFirstCard() {
         return cards.get(FIRST_CARD_INDEX);
     }

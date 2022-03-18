@@ -87,4 +87,24 @@ public class ParticipantCardsTest {
 
         assertThat(participantCards.calculateScore()).isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("블랙잭인지 확인")
+    void isBlackjack() {
+        ParticipantCards participantCards = new ParticipantCards(
+            List.of(new Card(Suit.DIAMOND, Denomination.TEN), new Card(Suit.CLOVER, Denomination.ACE)));
+
+        assertThat(participantCards.isBlackjack()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("블랙잭이 아닌지 확인")
+    void isBlackjackFail() {
+        ParticipantCards participantCards = new ParticipantCards(
+            List.of(new Card(Suit.DIAMOND, Denomination.TEN),
+                new Card(Suit.CLOVER, Denomination.TWO),
+                new Card(Suit.CLOVER, Denomination.THREE)));
+
+        assertThat(participantCards.isBlackjack()).isEqualTo(false);
+    }
 }
