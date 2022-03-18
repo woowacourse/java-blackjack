@@ -40,27 +40,27 @@ public enum BlackjackMatch {
     }
 
     private static BlackjackMatch getWinDrawByBlackjack(Player player, Dealer dealer) {
-        if (getWinByBlackjack(player, dealer)) {
+        if (isWinBlackjack(player, dealer)) {
             return WIN_BLACKJACK;
         }
-        if (getDrawByBlackjack(player, dealer)) {
+        if (isDrawBlackjack(player, dealer)) {
             return DRAW;
         }
-        if (getLoseByBlackjack(player, dealer)) {
+        if (isLoseBlackjack(player, dealer)) {
             return LOSE_BLACK_JACK;
         }
         return null;
     }
 
-    private static boolean getWinByBlackjack(Player player, Dealer dealer) {
+    private static boolean isWinBlackjack(Player player, Dealer dealer) {
         return player.isBlackjack() && !dealer.isBlackjack();
     }
 
-    private static boolean getDrawByBlackjack(Player player, Dealer dealer) {
+    private static boolean isDrawBlackjack(Player player, Dealer dealer) {
         return player.isBlackjack() && dealer.isBlackjack();
     }
 
-    private static boolean getLoseByBlackjack(Player player, Dealer dealer) {
+    private static boolean isLoseBlackjack(Player player, Dealer dealer) {
         return !player.isBlackjack() && dealer.isBlackjack();
     }
 
