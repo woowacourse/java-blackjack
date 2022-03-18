@@ -12,7 +12,7 @@ public class BetMoneyTest {
 
     @ParameterizedTest(name = "[{index}] {1}원")
     @CsvSource({"10000, 10_000", "20000, 20_000", "50000, 50_000"})
-    @DisplayName("입력값을 받아 배팅 금액을 생성한다.")
+    @DisplayName("입력값을 받아 베팅 금액을 생성한다.")
     void createBetMoney(String input, long value) {
         BetMoney betMoney = new BetMoney(input);
 
@@ -25,6 +25,6 @@ public class BetMoneyTest {
     void throwExceptionWhenNotPositiveNumber(String input) {
         assertThatThrownBy(() -> new BetMoney(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 배팅 금액은 양수여야 합니다.");
+                .hasMessage("[ERROR] 베팅 금액은 양수여야 합니다.");
     }
 }
