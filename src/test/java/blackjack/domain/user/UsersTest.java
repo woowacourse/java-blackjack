@@ -27,7 +27,7 @@ class UsersTest {
         //given
         List<String> names = List.of("pobi", "jason");
 
-        List<User> players = names.stream()
+        List<Player> players = names.stream()
                 .map(name -> createPlayerByName(name))
                 .collect(toList());
 
@@ -47,7 +47,7 @@ class UsersTest {
         //given
         List<String> names = List.of("pobi", "jason");
 
-        List<User> players = names.stream()
+        List<Player> players = names.stream()
                 .map(name -> createPlayerByName(name))
                 .collect(toList());
 
@@ -56,8 +56,8 @@ class UsersTest {
         Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
 
         //when
-        users.drawAdditionalCard(user -> user.drawCard(deck),
-                dealer -> dealer.drawCard(deck));
+        users.drawPlayerAdditionalCard(user -> user.drawCard(deck));
+        users.drawDealerAdditionalCard(dealer -> dealer.drawCard(deck));
 
         //then
         List<Integer> count = users.getPlayers()

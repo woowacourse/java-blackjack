@@ -55,7 +55,8 @@ public class BlackJack {
     }
 
     public void drawAdditionalCard(Consumer<User> consumerPlayer, Consumer<User> consumerDealer) {
-        users.drawAdditionalCard(consumerPlayer, consumerDealer);
+        users.drawPlayerAdditionalCard(consumerPlayer);
+        users.drawDealerAdditionalCard(consumerDealer);
     }
 
     public Map<UserDto, Integer> getResultCardInfo() {

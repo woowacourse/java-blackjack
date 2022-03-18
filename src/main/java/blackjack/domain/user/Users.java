@@ -42,6 +42,18 @@ public class Users {
         dealer.drawCard(deck);
     }
 
+    public void drawPlayerAdditionalCard(Consumer<User> consumerPlayer) {
+        List<Player> players = getPlayers();
+
+        for (Player player : players) {
+            consumerPlayer.accept(player);
+        }
+    }
+
+    public void drawDealerAdditionalCard(Consumer<User> consumerDealer) {
+        consumerDealer.accept(getDealer());
+    }
+
     public void drawAdditionalCard(Consumer<User> consumerPlayer, Consumer<User> consumerDealer) {
         List<Player> players = getPlayers();
 
