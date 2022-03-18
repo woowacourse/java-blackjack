@@ -25,7 +25,7 @@ public class BlackjackGame {
         getPlayers().forEach(this::distributeCard);
     }
 
-    public void distributeCard(Participant participant) {
+    private void distributeCard(Participant participant) {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             participant.receiveCard(deck.distributeCard());
         }
