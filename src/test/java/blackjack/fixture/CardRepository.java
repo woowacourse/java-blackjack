@@ -18,5 +18,6 @@ public class CardRepository {
     public static final Card CLOVER7 = Card.of(CardRank.SEVEN, CardSymbol.CLOVER);
     public static final Card CLOVER8 = Card.of(CardRank.EIGHT, CardSymbol.CLOVER);
     public static final Card CLOVER10 = Card.of(CardRank.TEN, CardSymbol.CLOVER);
+    public static final Card CLOVER_JACK = Card.of(CardRank.JACK, CardSymbol.CLOVER);
     public static final Card CLOVER_KING = Card.of(CardRank.KING, CardSymbol.CLOVER);
 }

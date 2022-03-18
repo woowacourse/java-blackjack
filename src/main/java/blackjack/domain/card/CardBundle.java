@@ -19,6 +19,10 @@ public class CardBundle {
         this.score = getBestScore();
     }
 
+    public static CardBundle of(final Card card1) {
+        return new CardBundle(List.of(card1));
+    }
+
     public static CardBundle of(final Card card1, final Card card2) {
         return new CardBundle(List.of(card1, card2));
     }
