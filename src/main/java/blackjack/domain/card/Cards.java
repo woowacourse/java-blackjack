@@ -8,8 +8,12 @@ public class Cards {
 
     private final List<Card> value;
 
+    public Cards(List<Card> cards) {
+        this.value = cards;
+    }
+
     public Cards() {
-        this.value = new ArrayList<>();
+        this(new ArrayList<>());
     }
 
     public boolean isBlackjack() {

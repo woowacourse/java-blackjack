@@ -25,7 +25,7 @@ public class DeckTest {
     void 카드_뽑기_예외() {
         Deck deck = new Deck(() -> Collections.emptyList());
 
-        assertThatThrownBy(() -> deck.draw())
+        assertThatThrownBy(() -> deck.pick())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("카드가 모두 소진되었습니다.");
     }
@@ -36,8 +36,8 @@ public class DeckTest {
         Card card = new Card(ACE, DIAMOND);
         Deck deck = new Deck(() -> List.of(card));
 
-        Card drawCard = deck.draw();
+        Card pickCard = deck.pick();
 
-        assertThat(card).isEqualTo(drawCard);
+        assertThat(card).isEqualTo(pickCard);
     }
 }

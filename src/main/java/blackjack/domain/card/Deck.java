@@ -12,7 +12,7 @@ public class Deck {
         this.values = new LinkedList<>(cardsGenerator.generate());
     }
 
-    public Card draw() {
+    public Card pick() {
         if (values.isEmpty()) {
             throw new IllegalArgumentException("카드가 모두 소진되었습니다.");
         }
