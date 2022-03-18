@@ -27,10 +27,6 @@ public enum GameResult {
                 .orElseThrow(() -> new IllegalArgumentException("결과가 정상적으로 나오지 않았습니다."));
     }
 
-    public static boolean isTie(GameResult gameResult) {
-        return gameResult == TIE;
-    }
-
     public String getValue() {
         return value;
     }
