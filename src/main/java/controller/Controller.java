@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import domain.card.Deck;
-import domain.card.deckstrategy.GenerationStandardDeckStrategy;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -19,7 +18,7 @@ import view.OutputView;
 public class Controller {
 
 	public void run() {
-		Deck deck = Deck.from(new GenerationStandardDeckStrategy());
+		Deck deck = Deck.generateDeck();
 		Dealer dealer = new Dealer(new Hand(deck.generateInitCards()));
 		Players players = new Players(makePlayers(makeNames(), deck));
 		printInitHands(dealer, players);

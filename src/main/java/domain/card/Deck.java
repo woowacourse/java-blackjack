@@ -1,11 +1,13 @@
 package domain.card;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import domain.card.deckstrategy.GenerationDeckStrategy;
 
 public class Deck {
 
@@ -18,9 +20,13 @@ public class Deck {
 		this.cards = cards;
 	}
 
-	public static Deck from(GenerationDeckStrategy strategy) {
-		Queue<Card> cards = strategy.generateCardsForBlackJack();
-		return new Deck(cards);
+	public static Deck generateDeck() {
+		List<Card> cards = new ArrayList<>();
+		Arrays.stream(Denomination.values()).forEach(rank -> {
+			Arrays.stream(Suit.values()).map(suit -> new Card(rank, suit)).forEach(cards::add);
+		});
+		Collections.shuffle(cards);
+		return new Deck(new LinkedList<>(cards));
 	}
 
 	public List<Card> generateInitCards() {
