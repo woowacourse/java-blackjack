@@ -18,6 +18,7 @@ public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private static final String PARTICIPANT_POINT_RESULT = " - 결과: %d";
     private static final String PARTICIPANT_WINNING_RESULT_MESSAGE = "\n## 최종 승패";
+    private static final String PARTICIPANT_PROFIT_RESULT_MESSAGE = "\n## 최종 수익";
     private static final String DEALER_DIRECTION = "딜러:";
     private static final String RESULT_DELIMITER = ": ";
     private static final String PLAYER_HIT_IMPOSSIBLE_MESSAGE = "%s는 가진 카드의 합이 21을 초과하여 카드를 더 받을 수 없습니다.\n";
@@ -82,6 +83,15 @@ public class OutputView {
             printCards(participant);
             printPoint(participant);
         }
+    }
+
+    public static void printProfitResult(Map<Player, Integer> playerProfitResult) {
+        System.out.println();
+        System.out.println(PARTICIPANT_PROFIT_RESULT_MESSAGE);
+
+        playerProfitResult.forEach(
+            (key, value) -> System.out.println(
+                key.getName() + RESULT_DELIMITER + value));
     }
 
     private static void printPoint(Participant participant) {

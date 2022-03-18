@@ -36,7 +36,7 @@ public class WinningResultTest {
     }
 
     @Test
-    @DisplayName("플레이어와 딜러 둘다 버스트일 시 점수에 상관없이 무승부")
+    @DisplayName("플레이어와 딜러 둘다 버스트일 시 플레이어 패배")
     void getDrawResult2() {
         List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.CLOVER, Denomination.NINE),
@@ -53,7 +53,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.DRAW);
+        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.LOSE);
     }
 
     @Test

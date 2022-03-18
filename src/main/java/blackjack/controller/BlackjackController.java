@@ -1,10 +1,12 @@
 package blackjack.controller;
 
-import blackjack.domain.result.BlackjackGameResult;
-import blackjack.domain.participant.Dealer;
+import blackjack.domain.betting.BettingMoney;
+import blackjack.domain.betting.ProfitCalculator;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.BlackjackGameResult;
 import blackjack.domain.result.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,11 +19,35 @@ public class BlackjackController {
         Deck deck = new Deck();
         Participants participants = createParticipants();
 
+        askBettingMoney(participants);
+
         handOutAndPrintInitialCards(participants, deck);
 
         handOutMoreCards(participants, deck);
 
         printResult(participants);
+        printProfitResult(participants);
+    }
+
+    private void printProfitResult(Participants participants) {
+        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(participants);
+        blackjackGameResult.calculatePlayerResult();
+
+        //Map<WinningResult, Integer> dealerResult = blackjackGameResult.getDealerResult();
+        Map<Player, WinningResult> playerResult = blackjackGameResult.getPlayerResult();
+
+        ProfitCalculator profitCalculator = new ProfitCalculator(playerResult);
+        profitCalculator.calculate();
+        Map<Player, Integer> playerProfitResult = profitCalculator.getPlayerProfit();
+        //Map<Dealer, Integer> dealerProfitResult = profitCalculator.getDealerProfit();
+        OutputView.printProfitResult(playerProfitResult);
+    }
+
+    private void askBettingMoney(Participants participants) {
+        for (Player player : participants.getPlayers()) {
+            BettingMoney bettingMoney = new BettingMoney(InputView.inputPlayerBettingMoney(player.getName()));
+            player.createBettingMoney(bettingMoney);
+        }
     }
 
     private Participants createParticipants() {
