@@ -33,7 +33,7 @@ public class Players {
 
     public List<CurrentCardsDto> generateCurrentCardsDTO() {
         return players.stream()
-                .map(CurrentCardsDto::of)
+                .map(CurrentCardsDto::from)
                 .collect(Collectors.toList());
     }
 

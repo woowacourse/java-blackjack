@@ -51,7 +51,7 @@ public class BlackjackController {
             players.addForAllPlayers(deck);
             dealer.addCard(deck.draw());
         }
-        printFirstDistribute(CurrentCardsDto.of(dealer), players.generateCurrentCardsDTO());
+        printFirstDistribute(CurrentCardsDto.from(dealer), players.generateCurrentCardsDTO());
     }
 
     private void hitOrStayForAllPlayers() {
@@ -61,7 +61,7 @@ public class BlackjackController {
     private void hitOrStay(Player player) {
         while (player.isHittable() && isRequestHit(player.getName())) {
             player.addCard(deck.draw());
-            printCurrentStatus(CurrentCardsDto.of(player));
+            printCurrentStatus(CurrentCardsDto.from(player));
         }
     }
 

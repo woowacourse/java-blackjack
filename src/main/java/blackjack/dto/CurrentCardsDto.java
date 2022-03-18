@@ -16,11 +16,11 @@ public class CurrentCardsDto {
         this.cards = cards;
     }
 
-    public static CurrentCardsDto of(Player player) {
+    public static CurrentCardsDto from(Player player) {
         return new CurrentCardsDto(player.getName(), player.getCards());
     }
 
-    public static CurrentCardsDto of(Dealer dealer) {
+    public static CurrentCardsDto from(Dealer dealer) {
         return new CurrentCardsDto(dealer.getName(), dealer.getCards().subList(0, 1));
     }
 
