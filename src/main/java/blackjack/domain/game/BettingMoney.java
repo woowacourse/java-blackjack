@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class BettingMoney {
 
-    private static final BettingMoney DEALER_BETTING_MONEY = new BettingMoney(0);
+    private static final BettingMoney zeroBettingMoney = new BettingMoney(0);
 
     private static final Pattern NATURAL_NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]*$");
     private static final int BATTING_MONEY_UNIT = 10;
@@ -48,7 +48,7 @@ public class BettingMoney {
     }
 
     public static BettingMoney getDealerBattingMoney() {
-        return DEALER_BETTING_MONEY;
+        return zeroBettingMoney;
     }
 
     @Override
