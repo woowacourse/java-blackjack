@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.GameMachine;
 import blackjack.domain.card.CardDeckGenerator;
+import blackjack.domain.card.ShuffleDeckGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
@@ -12,8 +13,14 @@ import java.util.Map;
 
 public class GameController {
 
+    private final CardDeckGenerator cardDeckGenerator;
+
+    public GameController(CardDeckGenerator cardDeckGenerator) {
+        this.cardDeckGenerator = cardDeckGenerator;
+    }
+
     public void run() {
-        GameMachine gameMachine = new GameMachine(CardDeckGenerator.createCardDeck());
+        GameMachine gameMachine = new GameMachine(cardDeckGenerator.createCardDeck());
 
         Dealer dealer = gameMachine.createDealer();
         Users users = gameMachine.createUsers(InputView.inputUsers());

@@ -23,8 +23,4 @@ public class CardDeck {
     public Card drawCard() {
         return cardDeck.poll();
     }
-
-    public int size() {
-        return cardDeck.size();
-    }
 }

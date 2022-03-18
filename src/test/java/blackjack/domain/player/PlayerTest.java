@@ -30,7 +30,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("유저의 카드 총합이 21이하이면, true를 반환한다.")
-    void isPossibleToPickCardForUser() {
+    void canDrawCarddForUser() {
         final User user = new User("pobi", initializeCardsForUser());
         final boolean expected = true;
 
@@ -40,7 +40,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("유저의 카드 총합이 21을 초과하면, false를 반환한다.")
-    void isImpossibleToPickCardForUser() {
+    void cannotDrawCardForUser() {
         final User user = new User("pobi", initializeCardsForUser());
         user.drawCard(Fixtures.TWO_DIAMOND);
         final boolean expected = false;
@@ -55,7 +55,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("딜러의 카드 총합이 16이하이면, true를 반환한다.")
-    void isPossibleToPickCardForDealer() {
+    void canDrawCardForDealer() {
         List<Card> cards = Arrays.asList(JACK_DIAMOND, SIX_DIAMOND);
         final Dealer dealer = new Dealer(cards);
         final boolean expected = true;
@@ -66,7 +66,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("딜러의 카드 총합이 16을 초과하면, false를 반환한다.")
-    void isImpossibleToPickCardForDealer() {
+    void cannotDrawCardForDealer() {
         List<Card> cards = Arrays.asList(JACK_DIAMOND, SEVEN_DIAMOND);
         final Dealer dealer = new Dealer(cards);
         final boolean expected = false;
@@ -77,7 +77,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("유저가 처음 받은 카드가 2장이 아니라면, 예외를 발생한다.")
-    void checkFirstReceivedCardsSizeForUser() {
+    void checkInitialCardSizeForUser() {
         assertThatThrownBy(() ->
                 new User("pobi", Arrays.asList(JACK_DIAMOND, KING_DIAMOND, ACE_DIAMOND)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -86,21 +86,10 @@ public class PlayerTest {
 
     @Test
     @DisplayName("딜러가 처음 받은 카드가 2장이 아니라면, 예외를 발생한다.")
-    void checkFirstReceivedCardsSizeForDealer() {
+    void checkInitialCardsSizeForDealer() {
         assertThatThrownBy(() ->
                 new Dealer(Arrays.asList(JACK_DIAMOND, KING_DIAMOND, ACE_DIAMOND)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("처음 제공받는 카드는 2장이어야 합니다.");
-    }
-
-    @Test
-    @DisplayName("딜러가 블랙잭인 경우를 확인한다.")
-    void isBlackJack() {
-        List<Card> cards = Arrays.asList(ACE_DIAMOND, KING_DIAMOND);
-        Dealer dealer = new Dealer(cards);
-        final boolean expected = true;
-
-        final boolean actual = dealer.isBlackJack();
-        assertThat(actual).isEqualTo(expected);
     }
 }

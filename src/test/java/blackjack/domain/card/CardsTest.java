@@ -27,6 +27,23 @@ class CardsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @ParameterizedTest(name = "카드의 처음 받은 카드인지 여부는 {1}이다.")
+    @MethodSource("provideCardsAndExpectedForInitialCards")
+    @DisplayName("처음받은 카드인지(2장인지) 확인한다.")
+    void isInitialCards(final Cards cards, final boolean expected) {
+        final boolean actual = cards.isInitialCards();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCardsAndExpectedForInitialCards() {
+        return Stream.of(
+                Arguments.of(new Cards(ACE_DIAMOND, JACK_DIAMOND), true),
+                Arguments.of(new Cards(ACE_DIAMOND, ACE_HEART), true),
+                Arguments.of(new Cards(ACE_DIAMOND, KING_DIAMOND, TWO_DIAMOND), false),
+                Arguments.of(new Cards(ACE_DIAMOND, KING_DIAMOND, JACK_DIAMOND, TWO_DIAMOND), false)
+        );
+    }
+
     @ParameterizedTest(name = "카드의 블랙잭 여부는 {1}이다.")
     @MethodSource("provideCardsAndExpectedForBlackJack")
     @DisplayName("블랙잭인지 확인한다.")
@@ -39,23 +56,6 @@ class CardsTest {
         return Stream.of(
                 Arguments.of(new Cards(ACE_DIAMOND, JACK_DIAMOND), true),
                 Arguments.of(new Cards(ACE_DIAMOND, ACE_HEART), false),
-                Arguments.of(new Cards(ACE_DIAMOND, KING_DIAMOND, TWO_DIAMOND), false),
-                Arguments.of(new Cards(ACE_DIAMOND, KING_DIAMOND, JACK_DIAMOND, TWO_DIAMOND), false)
-        );
-    }
-
-    @ParameterizedTest(name = "카드의 처음 받은 카드인지 여부는 {1}이다.")
-    @MethodSource("provideCardsAndExpectedForFirstReceivedCards")
-    @DisplayName("처음받은 카드인지(2장인지) 확인한다.")
-    void isFirstReceivedCards(final Cards cards, final boolean expected) {
-        final boolean actual = cards.isInitialCards();
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> provideCardsAndExpectedForFirstReceivedCards() {
-        return Stream.of(
-                Arguments.of(new Cards(ACE_DIAMOND, JACK_DIAMOND), true),
-                Arguments.of(new Cards(ACE_DIAMOND, ACE_HEART), true),
                 Arguments.of(new Cards(ACE_DIAMOND, KING_DIAMOND, TWO_DIAMOND), false),
                 Arguments.of(new Cards(ACE_DIAMOND, KING_DIAMOND, JACK_DIAMOND, TWO_DIAMOND), false)
         );
