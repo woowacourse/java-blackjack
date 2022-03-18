@@ -29,6 +29,10 @@ public class Dealer {
         }
     }
 
+    public int getTotalScore() {
+        return cards.totalScore();
+    }
+
     public String getName() {
         return name.getValue();
     }

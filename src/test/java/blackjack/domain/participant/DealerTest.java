@@ -56,7 +56,7 @@ class DealerTest {
 
     @DisplayName("플레이어는 현재 상태를 판단하여 게임의 종료 여부를 반환한다.")
     @Test
-    void 플레이어_종료_여부() {
+    void 딜러_종료_여부() {
         Dealer dealer = new Dealer();
         dealer.hit(KING_SPACE);
         dealer.hit(JACK_SPACE);
@@ -64,5 +64,17 @@ class DealerTest {
         boolean result = dealer.isFinished();
 
         assertThat(result).isTrue();
+    }
+
+    @DisplayName("보유한 카드의 총점을 반환한다.")
+    @Test
+    void 딜러_총점() {
+        Dealer dealer = new Dealer();
+        dealer.hit(KING_SPACE);
+        dealer.hit(JACK_SPACE);
+
+        int result = dealer.getTotalScore();
+
+        assertThat(result).isEqualTo(20);
     }
 }

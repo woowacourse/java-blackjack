@@ -38,6 +38,11 @@ public class Player {
         state = state.stay();
     }
 
+    public int getTotalScore() {
+        Cards cards = state.cards();
+        return cards.totalScore();
+    }
+
     public String getName() {
         return name.getValue();
     }

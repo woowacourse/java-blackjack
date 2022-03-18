@@ -79,4 +79,16 @@ class PlayerTest {
 
         assertThat(result).isTrue();
     }
+
+    @DisplayName("보유한 카드의 총점을 반환한다.")
+    @Test
+    void 플레이어_총점() {
+        Player player = new Player("mat", 10000);
+        player.hit(KING_SPACE);
+        player.hit(JACK_SPACE);
+
+        int result = player.getTotalScore();
+
+        assertThat(result).isEqualTo(20);
+    }
 }
