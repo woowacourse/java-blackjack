@@ -14,4 +14,10 @@ public class DeckTest {
 		assertThat(deck.draw() instanceof Card).isTrue();
 	}
 
+	@Test
+	@DisplayName("덱이 게임 시작시에 2장의 카드를 나눠주는지 테스트")
+	void generateInitCards() {
+		Deck deck = Deck.generateDeck();
+		assertThat(deck.generateInitCards().size()).isEqualTo(2);
+	}
 }
