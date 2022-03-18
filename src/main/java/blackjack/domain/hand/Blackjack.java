@@ -17,4 +17,9 @@ public final class Blackjack extends Finished {
     public boolean isBust() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Blackjack{" + "cardBundle=" + cardBundle + '}';
+    }
 }

@@ -22,4 +22,9 @@ public final class OneCard extends Running {
     public CardHand stay() {
         throw new IllegalStateException();
     }
+
+    @Override
+    public String toString() {
+        return "OneCard{" + "cardBundle=" + cardBundle + '}';
+    }
 }

@@ -9,17 +9,17 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return false;
     }
 
     @Override
-    public boolean isBlackjack() {
+    public final boolean isBlackjack() {
         return false;
     }
 
     @Override
-    public boolean isBust() {
+    public final boolean isBust() {
         return false;
     }
 }

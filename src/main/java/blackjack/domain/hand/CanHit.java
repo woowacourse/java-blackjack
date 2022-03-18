@@ -22,4 +22,9 @@ public final class CanHit extends Running {
     public CardHand stay() {
         return new Stay(cardBundle);
     }
+
+    @Override
+    public String toString() {
+        return "CanHit{" + "cardBundle=" + cardBundle + '}';
+    }
 }

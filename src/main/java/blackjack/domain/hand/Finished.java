@@ -10,17 +10,17 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public CardHand hit(Card card) {
+    public final CardHand hit(Card card) {
         throw new IllegalStateException();
     }
 
     @Override
-    public CardHand stay() {
+    public final CardHand stay() {
         throw new IllegalStateException();
     }
 
     @Override
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return true;
     }
 }

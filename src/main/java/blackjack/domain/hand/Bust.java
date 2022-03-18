@@ -17,4 +17,9 @@ public final class Bust extends Finished {
     public boolean isBust() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Bust{" + "cardBundle=" + cardBundle + '}';
+    }
 }

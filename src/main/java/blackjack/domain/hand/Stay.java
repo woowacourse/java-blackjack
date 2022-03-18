@@ -17,4 +17,9 @@ public final class Stay extends Finished {
     public boolean isBust() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Stay{" + "cardBundle=" + cardBundle + '}';
+    }
 }
