@@ -7,8 +7,8 @@ import java.util.List;
 
 public abstract class Player {
 
-    String name;
-    Cards cards;
+    final String name;
+    final Cards cards;
 
     Player(final String name) {
         validateEmpty(name);
