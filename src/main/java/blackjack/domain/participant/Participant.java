@@ -41,6 +41,10 @@ public abstract class Participant {
     public BettingMoney getBettingMoney() {
         return bettingMoney;
     }
+//
+//    public void changeBettingMoney(double earningRate) {
+//        (int) bettingMoney * earningRate;
+//    }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(participantCards.getCards());
