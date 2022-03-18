@@ -22,19 +22,19 @@ public class Participant extends Player {
         return acceptStrategy.accept(this.name);
     }
 
-    public void increaseBetting() {
+    public void increaseMoney() {
         money.win();
     }
 
-    public void increaseBlackjackBetting() {
+    public void increaseBlackjackMoney() {
         money.winByBlackjack();
     }
 
-    public void decreaseBetting() {
+    public void decreaseMoney() {
         money.lose();
     }
 
-    public Money betting() {
+    public Money money() {
         return money;
     }
 

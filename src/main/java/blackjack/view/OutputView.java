@@ -95,7 +95,7 @@ public class OutputView {
         if (player.isParticipant()) {
             Participant participant = (Participant) player;
             System.out.print(participant.getName() + EXPLAIN_SYMBOL);
-            System.out.println(participant.betting().profit());
+            System.out.println(participant.money().profit());
         }
     }
 }

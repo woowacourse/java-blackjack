@@ -31,22 +31,22 @@ public class ProfitCalculator {
 
     private static void calculate(final Participant participant, final Result result) {
         if (result.isWin() && participant.isBlackjack()) {
-            participant.increaseBlackjackBetting();
+            participant.increaseBlackjackMoney();
             return;
         }
         if (result.isWin()) {
-            participant.increaseBetting();
+            participant.increaseMoney();
             return;
         }
         if (result.isLose()) {
-            participant.decreaseBetting();
+            participant.decreaseMoney();
         }
     }
 
     public static int calculateDealerProfit(final Player player) {
         validateParticipant(player);
         Participant participant = (Participant) player;
-        return -participant.betting().profit();
+        return -participant.money().profit();
     }
 
     private static void validateParticipant(final Player player) {
