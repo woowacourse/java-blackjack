@@ -24,7 +24,7 @@ public enum Record {
 
     public static Record getRecord(Player player, Dealer dealer) {
         if (player.score().isBust() || dealer.score().isBust()) {
-            return getRecordForBurst(player, dealer);
+            return getRecordForBust(player, dealer);
         }
 
         return getOrdinaryRecord(player, dealer);
@@ -42,7 +42,7 @@ public enum Record {
         return Integer.compare(participant1.score().getSum(), participant2.score().getSum());
     }
 
-    private static Record getRecordForBurst(Player player, Dealer dealer) {
+    private static Record getRecordForBust(Player player, Dealer dealer) {
         if (player.score().isBust()) {
             return DEFEAT;
         }
