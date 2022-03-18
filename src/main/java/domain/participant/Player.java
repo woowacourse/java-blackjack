@@ -7,11 +7,11 @@ public final class Player extends Participant {
 
     private static final int MAX_SCORE = 21;
 
-    private final Money money;
+    private final BettingMoney money;
 
     private Player(String name, int money) {
         super(name);
-        this.money = Money.from(money);
+        this.money = BettingMoney.from(money);
     }
 
     public static Player of(String name, int money) {
