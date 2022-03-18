@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.CardsTestDataGenerator.*;
-import static blackjack.domain.card.Denomination.*;
-import static blackjack.domain.card.Suit.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Suit.DIAMOND;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import blackjack.domain.card.generator.RandomCardsGenerator;
 import java.util.Collections;
@@ -39,15 +39,5 @@ public class DeckTest {
         Card drawCard = deck.draw();
 
         assertThat(card).isEqualTo(drawCard);
-    }
-
-    @DisplayName("최초에 카드 두장을 뽑는다.")
-    @Test
-    void 카드_두장_뽑기() {
-        Deck deck = new Deck(() -> generateCards());
-
-        List<Card> cards = deck.getInitCards();
-
-        assertThat(cards.size()).isEqualTo(2);
     }
 }

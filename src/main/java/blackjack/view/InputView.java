@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.participant.Player;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -27,11 +26,6 @@ public class InputView {
         }
 
         return names;
-    }
-
-    public static PlayCommand getPlayCommand(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return PlayCommand.of(SCANNER.nextLine());
     }
 
     private static Integer parseInt() {

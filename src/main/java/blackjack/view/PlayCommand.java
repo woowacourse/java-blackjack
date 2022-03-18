@@ -16,12 +16,12 @@ public enum PlayCommand {
 
     public static PlayCommand of(String inputCommand) {
         return Arrays.stream(values())
-                .filter(playCommand -> playCommand.value.equals(inputCommand))
+                .filter(playCommand -> isEqualsValue(inputCommand, playCommand))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어 입니다."));
     }
 
-    public boolean isYes() {
-        return this == YES;
+    private static boolean isEqualsValue(String inputCommand, PlayCommand playCommand) {
+        return playCommand.value.equals(inputCommand);
     }
 }
