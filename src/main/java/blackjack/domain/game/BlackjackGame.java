@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackJackGame {
+public class BlackjackGame {
 
     private final CardDeck cardDeck;
     private Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(final Map<String, Integer> moneysByName) {
+    public BlackjackGame(final Map<String, Integer> moneysByName) {
         this.cardDeck = CardDeck.generate();
         this.dealer = new Dealer(cardDeck.provideInitCards());
         this.players = new Players(initPlayers(moneysByName, cardDeck));

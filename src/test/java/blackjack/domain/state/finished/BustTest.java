@@ -38,7 +38,7 @@ class BustTest {
                 new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
 
         return Stream.of(
-                Arguments.of(new BlackJack(blackJackCards, new BettingMoney(2000)), -2000),
+                Arguments.of(new Blackjack(blackJackCards, new BettingMoney(2000)), -2000),
                 Arguments.of(new Stay(stayCards, new BettingMoney(2000)), -2000),
                 Arguments.of(new Bust(bustCards, new BettingMoney(2000)), 0)
         );

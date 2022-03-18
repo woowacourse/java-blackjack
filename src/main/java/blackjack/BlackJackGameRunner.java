@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participant.Participant;
 import blackjack.view.input.DrawCommand;
 import blackjack.view.input.InputView;
@@ -14,7 +14,7 @@ public class BlackJackGameRunner {
     public void run() {
         final List<String> playerNames = InputView.inputPlayerNames();
         final Map<String, Integer> bettingMoneysByName = inputBettingMoney(playerNames);
-        final BlackJackGame blackJackGame = new BlackJackGame(bettingMoneysByName);
+        final BlackjackGame blackJackGame = new BlackjackGame(bettingMoneysByName);
         OutputView.showGameInitInfo(blackJackGame.getParticipants());
 
         runPlayerTurn(blackJackGame);
@@ -29,28 +29,28 @@ public class BlackJackGameRunner {
                 .collect(Collectors.toMap(name -> name, InputView::inputBettingMoney));
     }
 
-    private void runDealerTurn(final BlackJackGame BlackJackGame) {
-        while (!BlackJackGame.isDealerTurnEnd()) {
-            BlackJackGame.drawDealer();
+    private void runDealerTurn(final BlackjackGame blackjackGame) {
+        while (!blackjackGame.isDealerTurnEnd()) {
+            blackjackGame.drawDealer();
             OutputView.printDealerDraw();
         }
-        BlackJackGame.stayDealer();
+        blackjackGame.stayDealer();
     }
 
-    private void runPlayerTurn(final BlackJackGame BlackJackGame) {
-        while (!BlackJackGame.isAllPlayersEnd()) {
-            final String command = InputView.inputDrawCommand(BlackJackGame.getCurrentTurnPlayer());
+    private void runPlayerTurn(final BlackjackGame blackjackGame) {
+        while (!blackjackGame.isAllPlayersEnd()) {
+            final String command = InputView.inputDrawCommand(blackjackGame.getCurrentTurnPlayer());
             final DrawCommand drawCommand = DrawCommand.from(command);
-            final Participant currentTurnParticipant = checkCurrentPlayerDrawNew(BlackJackGame, drawCommand);
+            final Participant currentTurnParticipant = checkCurrentPlayerDrawNew(blackjackGame, drawCommand);
             OutputView.printPlayerCardInfo(currentTurnParticipant);
         }
     }
 
     private Participant checkCurrentPlayerDrawNew(
-            final BlackJackGame BlackJackGame, final DrawCommand command) {
+            final BlackjackGame blackjackGame, final DrawCommand command) {
         if (command.isNo()) {
-            return BlackJackGame.drawNextPlayer();
+            return blackjackGame.drawNextPlayer();
         }
-        return BlackJackGame.drawCurrentPlayer();
+        return blackjackGame.drawCurrentPlayer();
     }
 }

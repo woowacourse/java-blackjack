@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.game.BettingMoney;
-import blackjack.domain.state.finished.BlackJack;
+import blackjack.domain.state.finished.Blackjack;
 
 public interface State {
 
@@ -21,7 +21,7 @@ public interface State {
 
     static State create(final Cards cards, final BettingMoney bettingMoney) {
         if (cards.isBlackJack()) {
-            return new BlackJack(cards, bettingMoney);
+            return new Blackjack(cards, bettingMoney);
         }
         return new Hit(cards, bettingMoney);
     }

@@ -16,7 +16,7 @@ public class Stay extends Finished {
 
     @Override
     GameOutcome compare(final State another) {
-        if (another.isSameStateWith(BlackJack.class)) {
+        if (another.isSameStateWith(Blackjack.class)) {
             return LOSE;
         }
         if (another.isSameStateWith(Bust.class)) {

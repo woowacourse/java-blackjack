@@ -8,15 +8,15 @@ import blackjack.domain.game.BettingMoney;
 import blackjack.domain.game.GameOutcome;
 import blackjack.domain.state.State;
 
-public class BlackJack extends Finished {
+public class Blackjack extends Finished {
 
-    public BlackJack(final Cards cards, final BettingMoney bettingMoney) {
+    public Blackjack(final Cards cards, final BettingMoney bettingMoney) {
         super(cards, bettingMoney);
     }
 
     @Override
     GameOutcome compare(final State another) {
-        if (another.isSameStateWith(BlackJack.class)) {
+        if (another.isSameStateWith(Blackjack.class)) {
             return DRAW;
         }
         return BLACKJACK_WIN;
