@@ -1,12 +1,10 @@
 package blackjack.dto;
 
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjack.domain.result.MatchResult;
-import blackjack.domain.result.MatchStatus;
 
 public class MatchResultDto {
 

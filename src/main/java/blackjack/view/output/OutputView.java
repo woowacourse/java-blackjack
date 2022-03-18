@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.result.MatchStatus;
 import blackjack.dto.CardDto;
 import blackjack.dto.MatchResultDto;
 import blackjack.dto.dealer.DealerDto;
