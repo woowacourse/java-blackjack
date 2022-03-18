@@ -36,11 +36,17 @@ public abstract class Gamer {
         return getTotalScore() > BLACKJACK_SCORE;
     }
 
+    public boolean isTie(Gamer gamer) {
+        return this.getTotalScore() == gamer.getTotalScore();
+    }
+
     public boolean isBlackJack() {
         return cards.isBlackJack();
     }
 
     abstract boolean canHit();
+
+    abstract boolean calculateBattingMoneyResult(Gamer player);
 
     public boolean addMoney(int value) {
         return bettingMoney.addMoney(value);

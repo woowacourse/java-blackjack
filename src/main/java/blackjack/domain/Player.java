@@ -27,6 +27,7 @@ public class Player extends Gamer {
         return GameResult.of(getTotalScore(), dealer.getTotalScore(), isBlackJack());
     }
 
+    @Override
     public boolean calculateBattingMoneyResult(Gamer dealer) {
         GameResult gameResult = createResult(dealer);
 
