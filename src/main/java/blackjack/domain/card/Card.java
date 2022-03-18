@@ -16,6 +16,10 @@ public class Card implements Comparable<Card> {
         return denomination.addScore(score);
     }
 
+    public boolean isAce() {
+        return denomination.isAce();
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }

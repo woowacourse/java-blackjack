@@ -16,10 +16,34 @@ public class Cards {
         validateSize();
     }
 
+    public Cards() {
+        this.value = new ArrayList<>();
+    }
+
     private void validateSize() {
         if (value.size() != INIT_CARDS_SIZE) {
             throw new IllegalArgumentException("카드의 개수는 " + INIT_CARDS_SIZE + "장이어야 합니다.");
         }
+    }
+
+    public boolean isBlackjack() {
+        return isReady() && hasAce() && totalScore() == 11;
+    }
+
+    public boolean isReady() {
+        return value.size() == 2;
+    }
+
+    private boolean hasAce() {
+        return value.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    public int totalScore() {
+        return value.stream()
+                .map(Card::getDenomination)
+                .mapToInt(Denomination::getScore)
+                .sum();
     }
 
     public int calculateTotalScore() {

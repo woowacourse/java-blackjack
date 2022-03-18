@@ -44,6 +44,10 @@ public enum Denomination {
         return score + BONUS_ACE_SCORE;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getScore() {
         return score;
     }
