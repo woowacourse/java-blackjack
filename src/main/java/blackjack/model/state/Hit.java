@@ -13,6 +13,14 @@ public class Hit implements State {
 
     @Override
     public State add(Card card) {
-        return null;
+        Cards cards = this.cards.add(card);
+
+        if (cards.isMaxScore()) {
+            return new Stay(cards);
+        }
+        if (cards.isBust()) {
+            return new Bust(cards);
+        }
+        return new Hit(cards);
     }
 }

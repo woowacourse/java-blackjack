@@ -21,7 +21,7 @@ public final class Ready implements State {
         if (cards.isBlackjack()){
             return new Blackjack(cards);
         }
-        if (cards.hasOnlyStartCount()) {
+        if (cards.canHit()) {
             return new Hit(cards);
         }
         return new Ready(cards);

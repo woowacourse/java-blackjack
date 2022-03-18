@@ -14,7 +14,7 @@ public class Cards {
         this.values = new ArrayList<>();
     }
 
-    private Cards(final List<Card> cardGroup) {
+    public Cards(final List<Card> cardGroup) {
         this.values = new ArrayList<>(cardGroup);
     }
 
@@ -24,11 +24,15 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return hasOnlyStartCount() && sumScore() == MAX_SCORE;
+        return canHit() && isMaxScore();
     }
 
-    public boolean hasOnlyStartCount() {
+    public boolean canHit() {
         return values.size() == START_CARD_COUNT;
+    }
+
+    public boolean isMaxScore() {
+        return sumScore() == MAX_SCORE;
     }
 
     private int sumScore() {
@@ -36,5 +40,9 @@ public class Cards {
                 .map(Card::getNumber)
                 .collect(Collectors.toUnmodifiableList());
         return CardNumber.calculateScore(cardNumbers);
+    }
+
+    public boolean isBust() {
+        return sumScore() > MAX_SCORE;
     }
 }
