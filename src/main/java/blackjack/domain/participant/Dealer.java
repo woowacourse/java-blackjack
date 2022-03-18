@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.dto.ProfitDTO;
+import blackjack.dto.ProfitDto;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ public class Dealer extends Participant {
         return score <= BOUND_FOR_ADDITIONAL_CARD;
     }
 
-    public ProfitDTO computeProfit(List<ProfitDTO> profitOfPlayers) {
-        double totalProfitOfPlayers = profitOfPlayers.stream().mapToDouble(ProfitDTO::getProfit).sum();
-        return new ProfitDTO(this, totalProfitOfPlayers * (-1));
+    public ProfitDto computeProfit(List<ProfitDto> profitOfPlayers) {
+        double totalProfitOfPlayers = profitOfPlayers.stream().mapToDouble(ProfitDto::getProfit).sum();
+        return new ProfitDto(this, totalProfitOfPlayers * (-1));
     }
 
     public int getBound() {

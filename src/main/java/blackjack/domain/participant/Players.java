@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import blackjack.dto.CurrentCardsDto;
-import blackjack.dto.ProfitDTO;
+import blackjack.dto.ProfitDto;
 import blackjack.dto.TotalScoreDto;
 
 import java.util.*;
@@ -43,9 +43,9 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<ProfitDTO> computeTotalProfit(Dealer dealer) {
+    public List<ProfitDto> computeTotalProfit(Dealer dealer) {
         return players.stream()
-                .map(player -> new ProfitDTO(player, Profit.of(player, dealer)))
+                .map(player -> new ProfitDto(player, Profit.of(player, dealer)))
                 .collect(Collectors.toList());
     }
 

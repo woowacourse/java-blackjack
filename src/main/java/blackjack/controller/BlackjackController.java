@@ -5,8 +5,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.dto.CurrentCardsDto;
-import blackjack.dto.ProfitDTO;
-import blackjack.dto.TotalProfitDTO;
+import blackjack.dto.ProfitDto;
+import blackjack.dto.TotalProfitDto;
 import blackjack.dto.TotalScoreDto;
 
 import java.util.ArrayList;
@@ -79,10 +79,10 @@ public class BlackjackController {
         return totalScore;
     }
 
-    private TotalProfitDTO computeTotalProfit() {
-        List<ProfitDTO> profitOfPlayers = players.computeTotalProfit(dealer);
-        ProfitDTO profitOrDealer = dealer.computeProfit(profitOfPlayers);
-        return new TotalProfitDTO(profitOrDealer, profitOfPlayers);
+    private TotalProfitDto computeTotalProfit() {
+        List<ProfitDto> profitOfPlayers = players.computeTotalProfit(dealer);
+        ProfitDto profitOrDealer = dealer.computeProfit(profitOfPlayers);
+        return new TotalProfitDto(profitOrDealer, profitOfPlayers);
     }
 
 }

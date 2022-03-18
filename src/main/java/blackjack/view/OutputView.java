@@ -2,8 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.dto.CurrentCardsDto;
-import blackjack.dto.ProfitDTO;
-import blackjack.dto.TotalProfitDTO;
+import blackjack.dto.ProfitDto;
+import blackjack.dto.TotalProfitDto;
 import blackjack.dto.TotalScoreDto;
 
 import java.util.List;
@@ -48,10 +48,10 @@ public class OutputView {
         }
     }
 
-    public static void printTotalProfit(TotalProfitDTO totalProfit) {
+    public static void printTotalProfit(TotalProfitDto totalProfit) {
         System.out.println("\n## 최종 수익");
         printProfit(totalProfit.getProfitOfDealer());
-        for (ProfitDTO profit : totalProfit.getProfitOfPlayers()) {
+        for (ProfitDto profit : totalProfit.getProfitOfPlayers()) {
             printProfit(profit);
         }
     }
@@ -79,7 +79,7 @@ public class OutputView {
         return result.toString();
     }
 
-    private static void printProfit(ProfitDTO profit) {
+    private static void printProfit(ProfitDto profit) {
         System.out.println(profit.getName() + ": " + profit.getProfit());
     }
 
