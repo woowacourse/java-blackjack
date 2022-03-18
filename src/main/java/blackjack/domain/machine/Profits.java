@@ -4,8 +4,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Profits {
     private static final double BLACKJACK_RATE = 1.5;
@@ -17,12 +17,13 @@ public class Profits {
     }
 
     public static Profits of(Dealer dealer, Players players) {
-        Map<Participant, Profit> result = players.getPlayers()
-                .stream()
-                .collect(Collectors.toMap(player -> player, player -> getProfit(dealer, player)));
-        result.put(dealer, getDealerProfit(result));
+        Map<Participant, Profit> result1 = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            result1.put(player, getProfit(dealer, player));
+        }
 
-        return new Profits(result);
+        result1.put(dealer, getDealerProfit(result1));
+        return new Profits(result1);
     }
 
     private static Profit getProfit(Dealer dealer, Player player) {
@@ -56,11 +57,11 @@ public class Profits {
     }
 
     private static Profit getDealerProfit(Map<Participant, Profit> playersProfit) {
-       long sum =  playersProfit.values().stream()
+        long sum = playersProfit.values().stream()
                 .mapToLong(Profit::getMoney)
                 .sum();
 
-       return new Profit(-sum);
+        return new Profit(-sum);
     }
 
     public Map<Participant, Profit> getResult() {

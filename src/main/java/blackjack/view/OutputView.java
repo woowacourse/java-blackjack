@@ -22,6 +22,7 @@ public class OutputView {
     private static final String SCORE_MESSAGE = " - 결과: ";
     private static final String RECORD_MESSAGE = "## 최종 승패";
     private static final String PROFIT_MESSAGE = "## 최종 수익";
+    private static final String DEALER_NAME = "딜러";
     private static final String COLON = ": ";
     private static final String BLANK = " ";
 
@@ -110,6 +111,9 @@ public class OutputView {
         System.out.println();
         System.out.println(PROFIT_MESSAGE);
         Map<Participant, Profit> profits = profitResult.getResult();
+
+        System.out.println(DEALER_NAME + COLON + profits.get(new Dealer()).getMoney());
+        profits.remove(new Dealer());
         profits.forEach((key, value)
                 -> System.out.println(key.getName() + COLON + value.getMoney()));
     }
