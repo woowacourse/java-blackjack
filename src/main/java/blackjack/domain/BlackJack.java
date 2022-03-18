@@ -35,7 +35,7 @@ public class BlackJack {
     }
 
     private static Users createUser(Map<Name, BettingMoney> playerInfo) {
-        List<User> players = playerInfo.entrySet()
+        List<Player> players = playerInfo.entrySet()
                 .stream()
                 .map(entry -> Player.from(entry.getKey(), entry.getValue()))
                 .collect(toList());
