@@ -29,8 +29,8 @@ public abstract class Ready implements State {
     }
 
     @Override
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.get());
+    public PlayerCards getCards() {
+        return cards;
     }
 
     public abstract State draw(Card card);

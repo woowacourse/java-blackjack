@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import java.util.List;
+import blackjack.domain.card.PlayerCards;
 
 public interface State {
 
@@ -9,7 +9,7 @@ public interface State {
 
     State stay();
 
-    List<Card> getCards();
+    PlayerCards getCards();
 
     boolean isFinished();
 }

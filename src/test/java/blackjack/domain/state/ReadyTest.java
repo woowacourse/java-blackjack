@@ -5,6 +5,8 @@ import static blackjack.domain.CardFixture.SPADE_NINE;
 import static blackjack.domain.CardFixture.SPADE_TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +33,9 @@ public class ReadyTest {
     void ready_get_cards() {
         State state = Ready.dealToParticipant(SPADE_ACE, SPADE_NINE);
 
-        assertThat(state.getCards()).hasSize(2);
-        assertThat(state.getCards().get(0)).isEqualTo(SPADE_ACE);
-        assertThat(state.getCards().get(1)).isEqualTo(SPADE_NINE);
+        List<Card> actual = state.getCards().get();
+        assertThat(actual).hasSize(2);
+        assertThat(actual.get(0)).isEqualTo(SPADE_ACE);
+        assertThat(actual.get(1)).isEqualTo(SPADE_NINE);
     }
 }
