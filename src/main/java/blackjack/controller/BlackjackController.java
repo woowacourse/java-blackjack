@@ -94,7 +94,7 @@ public class BlackjackController {
 
     private void matchAndUpdateResult(Dealer dealer, Gamers gamers, GameResult gameResult) {
         for (Gamer gamer : gamers.getGamers()) {
-            Result result = dealer.match(gamer.getCards());
+            Result result = dealer.match(gamer);
             gameResult.updatePlayerBettingResult(gamer, result.opposite());
         }
         gameResult.calculateDealerResult();

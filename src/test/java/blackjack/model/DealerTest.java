@@ -1,11 +1,13 @@
 package blackjack.model;
 
 import static blackjack.model.Rank.*;
+import static blackjack.model.Result.*;
 import static blackjack.model.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.player.Dealer;
+import blackjack.model.player.Gamer;
 import blackjack.model.player.Player;
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,8 +22,9 @@ public class DealerTest {
     @ParameterizedTest(name = "[{index}] 딜러가 이기는 경우")
     @MethodSource("provideDealerWinningCaseCards")
     @DisplayName("딜러가 이기는 경우 판별 테스트")
-    void dealerIsWinner(Dealer dealer, Cards playerCards) {
-        assertThat(dealer.match(playerCards)).isEqualTo(Result.WIN);
+    void dealerIsWinner(Dealer dealer, Cards cards) {
+        assertThat(dealer.match(new Gamer("player", cards.getEachCard(), new Betting(1000))))
+                .isEqualTo(WIN);
     }
 
     private static Stream<Arguments> provideDealerWinningCaseCards() {
@@ -44,8 +47,9 @@ public class DealerTest {
     @ParameterizedTest(name = "[{index}] 딜러가 지는 경우")
     @MethodSource("provideDealerLosingCaseCards")
     @DisplayName("딜러가 지는 경우 판별 테스트")
-    void dealerIsLoser(Dealer dealer, Cards playerCards) {
-        assertThat(dealer.match(playerCards)).isEqualTo(Result.LOSE);
+    void dealerIsLoser(Dealer dealer, Cards cards) {
+        assertThat(dealer.match(new Gamer("player", cards.getEachCard(), new Betting(1000))))
+                .isEqualTo(LOSE);
     }
 
     private static Stream<Arguments> provideDealerLosingCaseCards() {
@@ -79,8 +83,10 @@ public class DealerTest {
     @DisplayName("딜러 판정 결과 비기는 경우 판별 테스트")
     void dealerIsDraw() {
         Dealer dealer = new Dealer(List.of(new Card(JACK, DIAMOND), new Card(FOUR, HEART)));
-        assertThat(dealer.match(new Cards(List.of(new Card(EIGHT, CLOVER), new Card(SIX, HEART)))))
-                .isEqualTo(Result.DRAW);
+        assertThat(dealer.match(new Gamer("player",
+                List.of(new Card(EIGHT, CLOVER), new Card(SIX, HEART)),
+                new Betting(1000)))
+        ).isEqualTo(DRAW);
     }
 
     @Test
@@ -88,9 +94,29 @@ public class DealerTest {
     void bothBust() {
         Dealer dealer = new Dealer(
                 List.of(new Card(JACK, DIAMOND), new Card(KING, HEART), new Card(SEVEN, CLOVER)));
-        assertThat(dealer.match(new Cards(
-                List.of(new Card(EIGHT, CLOVER), new Card(SIX, HEART), new Card(KING, HEART)))))
-                .isEqualTo(Result.WIN);
+        assertThat(dealer.match(new Gamer("player",
+                List.of(new Card(EIGHT, CLOVER), new Card(SIX, HEART), new Card(KING, HEART)),
+                new Betting(1000)))
+        ).isEqualTo(WIN);
+    }
+
+    @ParameterizedTest(name = "[{index}] 21 vs 블랙잭")
+    @MethodSource("provideBlackjackVersus21CaseCards")
+    @DisplayName("21 vs 블랙잭인 경우 테스트")
+    void blackVersus21(Dealer dealer, Cards cards, Result expect) {
+        assertThat(dealer.match(new Gamer("player", cards.getEachCard(), new Betting(1000))))
+                .isEqualTo(expect);
+    }
+
+    private static Stream<Arguments> provideBlackjackVersus21CaseCards() {
+        return Stream.of(
+                Arguments.of(
+                        new Dealer(List.of(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART), new Card(SIX, HEART))),
+                        new Cards(List.of(new Card(QUEEN, CLOVER), new Card(ACE, HEART))), LOSE),
+                Arguments.of(
+                        new Dealer(List.of(new Card(ACE, HEART), new Card(QUEEN, HEART))),
+                        new Cards(List.of(new Card(QUEEN, CLOVER), new Card(JACK, HEART), new Card(ACE, SPADE))), WIN)
+        );
     }
 
     @Test

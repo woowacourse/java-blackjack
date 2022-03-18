@@ -27,17 +27,7 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("블랙잭인데 비기는 경우 테스트")
-    void blackjackDrawTest() {
-        GameResult gameResult = new GameResult();
-        gameResult.updatePlayerBettingResult(
-                new Gamer("player", List.of(new Card(ACE, SPADE), new Card(JACK, HEART)),
-                        new Betting(1000)), DRAW);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(1000);
-    }
-
-    @Test
-    @DisplayName("블랙잭이 아닌데 비기는 경우 테스트")
+    @DisplayName("비기는 경우 테스트")
     void playerDrawBettingTest() {
         GameResult gameResult = new GameResult();
         gameResult.updatePlayerBettingResult(
@@ -46,7 +36,7 @@ class GameResultTest {
         assertThat(gameResult.getPlayersResult().values()).containsExactly(0);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 베팅 금액 1배 테스트")
     @MethodSource("provideWinPlayer")
     @DisplayName("플레이어가 이긴 경우 베팅 금액 1배 획득 테스트")
     void playerWinBettingTest(Gamer gamer, int money) {
@@ -69,7 +59,7 @@ class GameResultTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 베팅 금액 -1배 테스트")
     @MethodSource("provideLosePlayer")
     @DisplayName("플레이어가 진 경우 테스트")
     void playerLoseBettingTest(Gamer gamer, int money) {

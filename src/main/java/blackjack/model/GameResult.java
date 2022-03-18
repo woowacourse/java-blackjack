@@ -22,14 +22,11 @@ public class GameResult {
         if (isPossibleToGetAdditionalMoney(gamer, result)) {
             return (int) (gamer.getBetting().getAmount() * 1.5);
         }
-        if (gamer.isBlackjack() && result == Result.DRAW) {
-            return gamer.getBetting().getAmount();
-        }
         return calculateBettingResult(gamer.getBetting(), result);
     }
 
     private boolean isPossibleToGetAdditionalMoney(Gamer gamer, Result result) {
-        return result == Result.WIN && gamer.isBlackjack() && gamer.getCardSize() == 2;
+        return result == Result.WIN && gamer.isBlackjack();
     }
 
     private Integer calculateBettingResult(Betting bettingMoney, Result result) {

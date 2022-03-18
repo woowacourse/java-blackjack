@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class Player {
 
     public static final int BLACKJACK_NUMBER = 21;
+    public static final int INITIAL_CARD_COUNT = 2;
 
     protected final Cards cards;
     private final String name;
@@ -41,7 +42,7 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        return score().getValue() == BLACKJACK_NUMBER;
+        return score().getValue() == BLACKJACK_NUMBER && getCardSize() == INITIAL_CARD_COUNT;
     }
 
     public abstract List<Card> openCards();
