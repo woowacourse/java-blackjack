@@ -1,21 +1,18 @@
 package view;
 
-import domain.GameResult;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import utils.CardConvertor;
-import utils.GameResultConvertor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String GAME_RESULT_INTRO_MESSAGE = "## 최종 승패";
+    private static final String GAME_RESULT_INTRO_MESSAGE = "## 최종 수익";
     private static final String CARD_OR_NAME_DELIMITER = ", ";
     private static final String INIT_CARD_SUFFIX_MESSAGE = "에게 2장을 나누었습니다 *^^*";
-    public static final String BLANK = " ";
 
     private OutputView() {
     }
@@ -37,8 +34,7 @@ public class OutputView {
     public static void printCardsWithName(final Dealer dealer, final List<Player> players) {
         System.out.printf("%s카드: %s%n", dealer.getName(), CardConvertor.convertToString(dealer.getCard()));
         for (final Player player : players) {
-            final String cards = String.join(CARD_OR_NAME_DELIMITER, convertToCardsString(player.getCards()));
-            System.out.printf("%s카드: %s%n", player.getName(), cards);
+            printPlayerCards(player);
         }
     }
 
@@ -73,17 +69,15 @@ public class OutputView {
         print(GAME_RESULT_INTRO_MESSAGE);
         printDealerGameResult(dealer, players);
         for (final Player player : players) {
-            final String playerResult = GameResultConvertor.convertToString(player.getGameResult(dealer));
-            System.out.printf("%s: %s%n", player.getName(), playerResult);
+            System.out.printf("%s: %d%n", player.getName(), player.getGameProfit(dealer));
         }
     }
 
     private static void printDealerGameResult(final Dealer dealer, final List<Player> players) {
-        final List<GameResult> dealerResults = new ArrayList<>();
+        int totalProfit = 0;
         for (final Player player : players) {
-            dealerResults.add(dealer.getGameResult(player));
+            totalProfit += dealer.getGameProfit(player);
         }
-        final var dealerResult = GameResultConvertor.convertToCountWithString(dealerResults);
-        System.out.printf("%s: %s%n", dealer.getName(), String.join(BLANK, dealerResult));
+        System.out.printf("%s: %d%n", dealer.getName(), totalProfit);
     }
 }
