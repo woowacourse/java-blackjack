@@ -52,10 +52,14 @@ public class BettingMoneyTest {
 
     static Stream<Arguments> provideUserAndResultAndBettingMoney() {
         return Stream.of(
-                Arguments.of(new User("pobi", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND))), Result.WIN, 10000),
-                Arguments.of(new User("jun", new ArrayList<>(Arrays.asList(ACE_DIAMOND, KING_DIAMOND))), Result.WIN, 15000),
-                Arguments.of(new User("jason", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND))), Result.DRAW, 0),
-                Arguments.of(new User("renno", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND))), Result.LOSE, -10000)
+                Arguments.of(new User("pobi", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND))), Result.WIN,
+                        10000),
+                Arguments.of(new User("jun", new ArrayList<>(Arrays.asList(ACE_DIAMOND, KING_DIAMOND))), Result.WIN,
+                        15000),
+                Arguments.of(new User("jason", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND))), Result.DRAW,
+                        0),
+                Arguments.of(new User("renno", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND))), Result.LOSE,
+                        -10000)
         );
     }
 }

@@ -1,15 +1,9 @@
 package blackjack.domain;
 
-import static blackjack.domain.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeckGenerator;
-import blackjack.domain.card.Suit;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.player.Dealer;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -37,25 +31,5 @@ public class GameMachineTest {
                 gameMachine.createUsers(users))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임에 참여할 수 있는 유저는 최대 7명입니다.");
-    }
-
-    @Test
-    @DisplayName("딜러의 점수가 16이하일 때 딜러가 카드를 받는지 확인한다.")
-    void checkDealerReceiveCard() {
-        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(KING_DIAMOND, SIX_DIAMOND)));
-        final boolean expected = true;
-
-        final boolean actual = gameMachine.checkPlayerReceiveCard(dealer);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("딜러의 점수가 16 초과일 때 카드를 받지 않는지 확인한다.")
-    void checkDealerNotReceiveCard() {
-        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(KING_DIAMOND, SEVEN_DIAMOND)));
-        final boolean expected = false;
-
-        final boolean actual = gameMachine.checkPlayerReceiveCard(dealer);
-        assertThat(actual).isEqualTo(expected);
     }
 }

@@ -3,14 +3,13 @@ package blackjack.domain.player;
 import static blackjack.domain.Fixtures.ACE_DIAMOND;
 import static blackjack.domain.Fixtures.JACK_DIAMOND;
 import static blackjack.domain.Fixtures.KING_DIAMOND;
+import static blackjack.domain.Fixtures.SEVEN_DIAMOND;
 import static blackjack.domain.Fixtures.SIX_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.Fixtures;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Suit;
-import blackjack.domain.card.Denomination;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,7 +67,7 @@ public class PlayerTest {
     @Test
     @DisplayName("딜러의 카드 총합이 16을 초과하면, false를 반환한다.")
     void isImpossibleToPickCardForDealer() {
-        List<Card> cards = Arrays.asList(JACK_DIAMOND, KING_DIAMOND);
+        List<Card> cards = Arrays.asList(JACK_DIAMOND, SEVEN_DIAMOND);
         final Dealer dealer = new Dealer(cards);
         final boolean expected = false;
 
@@ -80,8 +79,7 @@ public class PlayerTest {
     @DisplayName("유저가 처음 받은 카드가 2장이 아니라면, 예외를 발생한다.")
     void checkFirstReceivedCardsSizeForUser() {
         assertThatThrownBy(() ->
-                new User("pobi", Arrays.asList(JACK_DIAMOND, KING_DIAMOND, ACE_DIAMOND)
-        ))
+                new User("pobi", Arrays.asList(JACK_DIAMOND, KING_DIAMOND, ACE_DIAMOND)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("처음 제공받는 카드는 2장이어야 합니다.");
     }
@@ -90,8 +88,7 @@ public class PlayerTest {
     @DisplayName("딜러가 처음 받은 카드가 2장이 아니라면, 예외를 발생한다.")
     void checkFirstReceivedCardsSizeForDealer() {
         assertThatThrownBy(() ->
-                new Dealer(Arrays.asList(JACK_DIAMOND, KING_DIAMOND, ACE_DIAMOND)
-        ))
+                new Dealer(Arrays.asList(JACK_DIAMOND, KING_DIAMOND, ACE_DIAMOND)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("처음 제공받는 카드는 2장이어야 합니다.");
     }

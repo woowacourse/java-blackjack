@@ -6,6 +6,7 @@ import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Result;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -89,10 +90,14 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printUsersGameResult(final Map<String, Result> userResult) {
-        for (final String userName : userResult.keySet()) {
-            System.out.println(userName + COLON + userResult.get(userName).getResult());
-        }
+    private static void printUsersGameResult(final Map<User, Result> userResult) {
+        userResult.keySet()
+                .stream()
+                .sorted(Comparator.comparing(User::getName))
+                .forEach(user -> {
+                    final Result result = userResult.get(user);
+                    System.out.println(user.getName() + COLON + result.getResult());
+                });
     }
 
     public static void printErrorMessage(final Exception e) {
@@ -105,9 +110,12 @@ public class ResultView {
         System.out.println(DEALER_MARK_MESSAGE + dealerRevenue);
     }
 
-    public static void printFinalRevenue(final Map<String, Integer> userMoney) {
-        for (String userName : userMoney.keySet()) {
-            System.out.println(userName + COLON + userMoney.get(userName));
-        }
+    public static void printFinalRevenue(final Map<User, Integer> userMoney) {
+        userMoney.keySet()
+                .stream()
+                .sorted(Comparator.comparing(User::getName))
+                .forEach(user -> {
+                    System.out.println(user.getName() + COLON + userMoney.get(user));
+                });
     }
 }

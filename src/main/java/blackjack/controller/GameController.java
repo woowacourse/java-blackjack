@@ -20,13 +20,10 @@ public class GameController {
         inputBettingMoney(gameMachine, users);
         ResultView.printPlayersCards(dealer, users);
 
-        turnOfUsers(gameMachine, users);
-        turnOfDealer(gameMachine, dealer);
+        playTurn(gameMachine, dealer, users);
         ResultView.printTotalCardResult(dealer, users);
 
-        GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
-        ResultView.printGameResult(gameResult);
-
+        GameResult gameResult = createGameResult(dealer, users);
         processForFinalRevenue(gameMachine, gameResult);
     }
 
@@ -34,6 +31,11 @@ public class GameController {
         for (User user : users.getUsers()) {
             gameMachine.putBettingMoney(user, InputView.inputBettingMoney(user));
         }
+    }
+
+    private void playTurn(GameMachine gameMachine, Dealer dealer, Users users) {
+        turnOfUsers(gameMachine, users);
+        turnOfDealer(gameMachine, dealer);
     }
 
     private void turnOfUsers(GameMachine gameMachine, Users users) {
@@ -50,13 +52,20 @@ public class GameController {
     }
 
     private void turnOfDealer(GameMachine gameMachine, Dealer dealer) {
-        if (gameMachine.checkPlayerReceiveCard(dealer)) {
+        if (dealer.canDrawCard()) {
+            gameMachine.drawCardToPlayer(dealer);
             ResultView.printDealerReceiveCard();
         }
     }
 
+    private GameResult createGameResult(Dealer dealer, Users users) {
+        GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
+        ResultView.printGameResult(gameResult);
+        return gameResult;
+    }
+
     private void processForFinalRevenue(GameMachine gameMachine, GameResult gameResult) {
-        Map<String, Integer> userRevenue = gameMachine.getUserRevenue(gameResult.getUserResult());
+        Map<User, Integer> userRevenue = gameMachine.getUserRevenue(gameResult.getUserResult());
         ResultView.printDealerRevenue(gameMachine.getDealerRevenue());
         ResultView.printFinalRevenue(userRevenue);
     }

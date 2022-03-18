@@ -6,13 +6,9 @@ import static blackjack.domain.Fixtures.SIX_DIAMOND;
 import static blackjack.domain.Fixtures.TWO_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Suit;
-import blackjack.domain.card.Denomination;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
-import blackjack.money.BettingMoney;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,12 +36,12 @@ public class GameResultTest {
     @Test
     @DisplayName("유저 게임결과를 확인한다.")
     void checkUserGameResult() {
-        final Map<String, Result> expected = new HashMap<>(Map.ofEntries(
-                Map.entry("pobi", Result.LOSE),
-                Map.entry("jun", Result.WIN)
+        final Map<User, Result> expected = new HashMap<>(Map.ofEntries(
+                Map.entry(user1, Result.LOSE),
+                Map.entry(user2, Result.WIN)
         ));
 
-        final Map<String, Result> actual = gameResult.getUserResult();
+        final Map<User, Result> actual = gameResult.getUserResult();
         assertThat(actual).isEqualTo(expected);
     }
 

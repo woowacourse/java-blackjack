@@ -42,14 +42,6 @@ public class GameMachine {
         }
     }
 
-    public boolean checkPlayerReceiveCard(final Player player) {
-        if (player.canDrawCard()) {
-            drawCardToPlayer(player);
-            return true;
-        }
-        return false;
-    }
-
     public void drawCardToPlayer(final Player player) {
         player.drawCard(cardDeck.drawCard());
     }
@@ -58,7 +50,7 @@ public class GameMachine {
         userBettingMoney.putBettingMoney(user, money);
     }
 
-    public Map<String, Integer> getUserRevenue(final Map<String, Result> userResult) {
+    public Map<User, Integer> getUserRevenue(final Map<User, Result> userResult) {
         return userBettingMoney.getUserRevenue(userResult);
     }
 

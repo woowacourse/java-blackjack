@@ -22,10 +22,10 @@ public class UserBettingMoneyTest {
     private final User user1 = new User("pobi", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
     private final User user2 = new User("jun", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
     private final User user3 = new User("jason", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
-    private final Map<String, Result> userResult = new HashMap<>(Map.ofEntries(
-            Map.entry(user1.getName(), Result.WIN),
-            Map.entry(user2.getName(), Result.DRAW),
-            Map.entry(user3.getName(), Result.LOSE)
+    private final Map<User, Result> userResult = new HashMap<>(Map.ofEntries(
+            Map.entry(user1, Result.WIN),
+            Map.entry(user2, Result.DRAW),
+            Map.entry(user3, Result.LOSE)
     ));
 
     @Test
@@ -48,17 +48,17 @@ public class UserBettingMoneyTest {
     @Test
     @DisplayName("유저들의 수익을 계산한다.")
     void getUserRevenue() {
-        final Map<String, Integer> expected = new HashMap<>(Map.ofEntries(
-                Map.entry(user1.getName(), 10000),
-                Map.entry(user2.getName(), 0),
-                Map.entry(user3.getName(), -30000)
+        final Map<User, Integer> expected = new HashMap<>(Map.ofEntries(
+                Map.entry(user1, 10000),
+                Map.entry(user2, 0),
+                Map.entry(user3, -30000)
         ));
         UserBettingMoney userBettingMoney = new UserBettingMoney(List.of(user1, user2, user3));
         userBettingMoney.putBettingMoney(user1, 10000);
         userBettingMoney.putBettingMoney(user2, 20000);
         userBettingMoney.putBettingMoney(user3, 30000);
 
-        final Map<String, Integer> userRevenue = userBettingMoney.getUserRevenue(userResult);
+        final Map<User, Integer> userRevenue = userBettingMoney.getUserRevenue(userResult);
         assertThat(userRevenue).isEqualTo(expected);
     }
 

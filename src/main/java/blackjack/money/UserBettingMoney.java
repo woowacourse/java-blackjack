@@ -10,7 +10,7 @@ import java.util.Map;
 public class UserBettingMoney {
 
     private Map<User, BettingMoney> userBettingMoney;
-    private Map<String, Integer> userRevenue;
+    private Map<User, Integer> userRevenue;
 
     public UserBettingMoney(final List<User> users) {
         initUserBettingMoney(users);
@@ -25,19 +25,21 @@ public class UserBettingMoney {
         userBettingMoney.put(user, BettingMoney.of(money));
     }
 
-    public Map<String, Integer> getUserRevenue(final Map<String, Result> userResult) {
-        Map<String, Integer> userRevenue = new HashMap<>();
+    public Map<User, Integer> getUserRevenue(final Map<User, Result> userResult) {
+        Map<User, Integer> userRevenue = new HashMap<>();
         for (User user : userBettingMoney.keySet()) {
-            int revenue = (int) userBettingMoney.get(user).calculateRevenue(user, userResult.get(user.getName()));
-            userRevenue.put(user.getName(), revenue);
+            BettingMoney bettingMoney = userBettingMoney.get(user);
+            Result result = userResult.get(user);
+            int revenue = (int) bettingMoney.calculateRevenue(user, result);
+            userRevenue.put(user, revenue);
         }
         return this.userRevenue = userRevenue;
     }
 
     public int getDealerRevenue() {
         int sum = 0;
-        for (String userName : userRevenue.keySet()) {
-            sum += userRevenue.get(userName);
+        for (User user : userRevenue.keySet()) {
+            sum += userRevenue.get(user);
         }
         return sum * -1;
     }

@@ -9,19 +9,19 @@ import java.util.Map;
 
 public class GameResult {
 
-    private final Map<String, Result> userResult;
+    private final Map<User, Result> userResult;
     private final Map<Result, Integer> dealerResult;
 
-    private GameResult(final Map<String, Result> userResult, final Map<Result, Integer> dealerResult) {
+    private GameResult(final Map<User, Result> userResult, final Map<Result, Integer> dealerResult) {
         this.userResult = userResult;
         this.dealerResult = dealerResult;
     }
 
     public static GameResult createPlayerGameResult(final Dealer dealer, final Users users) {
-        Map<String, Result> userResult = new HashMap<>();
+        Map<User, Result> userResult = new HashMap<>();
         Map<Result, Integer> dealerResult = initializeDealerResultCount();
         for (final User user : users.getUsers()) {
-            userResult.put(user.getName(), user.findResult(dealer));
+            userResult.put(user, user.findResult(dealer));
             dealerResult.compute(dealer.findResult(user), (result, count) -> count + 1);
         }
         return new GameResult(userResult, dealerResult);
@@ -35,7 +35,7 @@ public class GameResult {
         ));
     }
 
-    public Map<String, Result> getUserResult() {
+    public Map<User, Result> getUserResult() {
         return Collections.unmodifiableMap(userResult);
     }
 
