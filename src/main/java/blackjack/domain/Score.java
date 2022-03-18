@@ -21,7 +21,7 @@ public class Score {
     }
 
     public boolean isGreaterThan(Score target) {
-        return this.value > target.getValue();
+        return target.isLessThan(value);
     }
 
     @Override
