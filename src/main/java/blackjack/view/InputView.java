@@ -23,7 +23,7 @@ public class InputView {
     }
 
     public static int getBettingMoney(String name) {
-        System.out.printf("%s의 배팅 금액은?", name);
+        System.out.printf("%s의 배팅 금액은?\n", name);
         return Integer.parseInt(SCANNER.nextLine());
     }
 }

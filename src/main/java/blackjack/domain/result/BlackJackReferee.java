@@ -9,10 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackReferee {
-    private static final int DEFAULT_COUNT = 0;
-    private static final int INCREASE_COUNT = 1;
-
-    private final Map<String, BlackJackResult> playerResults = new HashMap<>();
+    private final Map<String, Integer> playerResults = new HashMap<>();
 
     public BlackJackReferee(List<Player> players, Dealer dealer) {
         addResults(players, dealer);
@@ -21,27 +18,19 @@ public class BlackJackReferee {
     private void addResults(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             BlackJackResult result = player.match(dealer);
-            playerResults.put(player.getName(), result);
+            playerResults.put(player.getName(), (int) (player.getBettingMoney() * result.getValue()));
         }
     }
 
-    public Map<String, BlackJackResult> getPlayerResult() {
+    public Map<String, Integer> getPlayerResult() {
         return Collections.unmodifiableMap(playerResults);
     }
 
-    public Map<BlackJackResult, Integer> getDealerResult() {
-        Map<BlackJackResult, Integer> dealerResult = new HashMap<>();
-        initDealerResults(dealerResult);
+    public int getDealerResult() {
+        int result = 0;
         for (String playerName : playerResults.keySet()) {
-            BlackJackResult result = playerResults.get(playerName);
-            dealerResult.merge(result.getReverse(), INCREASE_COUNT, Integer::sum);
+            result += BlackJackResult.getReverse(playerResults.get(playerName));
         }
-        return Collections.unmodifiableMap(dealerResult);
-    }
-
-    private void initDealerResults(Map<BlackJackResult, Integer> dealerResult) {
-        for (BlackJackResult blackJackResult : BlackJackResult.values()) {
-            dealerResult.put(blackJackResult, DEFAULT_COUNT);
-        }
+        return result;
     }
 }

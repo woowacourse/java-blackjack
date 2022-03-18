@@ -5,14 +5,12 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackReferee;
-import blackjack.domain.result.BlackJackResult;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
     public static void printFirstCards(Dealer dealer, List<Player> players) {
         printGamers(dealer, players);
         printDealerFirstCard(dealer);
@@ -77,28 +75,18 @@ public class OutputView {
     }
 
     public static void printFinalResult(BlackJackReferee blackJackReferee) {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         printFinalDealerResult(blackJackReferee.getDealerResult());
         printFinalPlayerResult(blackJackReferee.getPlayerResult());
     }
 
-    private static void printFinalDealerResult(Map<BlackJackResult, Integer> dealerResult) {
-        System.out.print("딜러: ");
-        for (BlackJackResult dealer : dealerResult.keySet()) {
-            getDealerSingleResult(dealerResult, dealer);
-        }
-        System.out.println();
+    private static void printFinalDealerResult(int dealerResult) {
+        System.out.printf("딜러: %d\n", dealerResult);
     }
 
-    private static void getDealerSingleResult(Map<BlackJackResult, Integer> dealerResult, BlackJackResult dealer) {
-        if (dealerResult.get(dealer) > 0) {
-            System.out.print(dealerResult.get(dealer) + dealer.getValue() + " ");
-        }
-    }
-
-    private static void printFinalPlayerResult(Map<String, BlackJackResult> playerResult) {
+    private static void printFinalPlayerResult(Map<String, Integer> playerResult) {
         for (String name : playerResult.keySet()) {
-            System.out.printf("%s: %s\n", name, playerResult.get(name).getValue());
+            System.out.printf("%s: %s\n", name, playerResult.get(name));
         }
     }
 }

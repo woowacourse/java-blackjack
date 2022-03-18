@@ -9,25 +9,27 @@ import java.util.function.BiPredicate;
 import static blackjack.domain.gamer.Gamer.MAX_CARD_VALUE;
 
 public enum BlackJackResult {
-    WIN("승", (player, dealer) ->
+    BLACK_JACK_WIN(1.5, ((player, dealer) -> player.isBlackJack() && !dealer.isBlackJack())),
+    WIN(1, (player, dealer) ->
             ((player.isBlackJack() && !dealer.isBlackJack())
                     || (player.getCardsNumberSum() <= MAX_CARD_VALUE
                     && (player.getCardsNumberSum() > dealer.getCardsNumberSum() || dealer.getCardsNumberSum() > MAX_CARD_VALUE)))),
-    LOSE("패", (player, dealer) ->
+    LOSE(-1, (player, dealer) ->
             ((!player.isBlackJack() && dealer.isBlackJack())
                     || (player.getCardsNumberSum() > MAX_CARD_VALUE) || (dealer.getCardsNumberSum() <= MAX_CARD_VALUE
                     && player.getCardsNumberSum() < dealer.getCardsNumberSum()))),
-    DRAW("무", (player, dealer) ->
+    DRAW(0, (player, dealer) ->
             ((player.isBlackJack() && dealer.isBlackJack())
                     || (player.getCardsNumberSum() <= MAX_CARD_VALUE
                     && dealer.getCardsNumberSum() <= MAX_CARD_VALUE && player.getCardsNumberSum() == dealer.getCardsNumberSum())));
 
     private static final String NOT_EXIST_ERROR = "옯바른 결과를 찾을 수 없습니다.";
+    private static final int REVERSE_VALUE = -1;
 
-    private final String value;
+    private final double value;
     private final BiPredicate<Player, Dealer> predicate;
 
-    BlackJackResult(String value, BiPredicate<Player, Dealer> predicate) {
+    BlackJackResult(double value, BiPredicate<Player, Dealer> predicate) {
         this.value = value;
         this.predicate = predicate;
     }
@@ -39,17 +41,11 @@ public enum BlackJackResult {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
     }
 
-    public BlackJackResult getReverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
+    public static int getReverse(int value) {
+        return value * REVERSE_VALUE;
     }
 
-    public String getValue() {
+    public double getValue() {
         return value;
     }
 }

@@ -18,7 +18,6 @@ class PlayerTest {
     void match() {
         List<Card> cards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.NINE));
         Dealer dealer = new Dealer(cards);
-
         Player pobi = new Player("pobi", cards, 1000);
         assertThat(pobi.match(dealer)).isEqualTo(BlackJackResult.DRAW);
     }
@@ -28,7 +27,6 @@ class PlayerTest {
     void isSameName() {
         List<Card> cards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.NINE));
         Player player1 = new Player("더즈", cards, 1000);
-
         assertThat(player1.isSameName("더즈")).isTrue();
     }
 }

@@ -31,6 +31,10 @@ public class Player extends Gamer {
         return canDraw() && Answer.from(operator.apply(getName())).isYes();
     }
 
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
+    }
+
     @Override
     public boolean canDraw() {
         return getCardsNumberSum() <= MAX_CARD_VALUE;
