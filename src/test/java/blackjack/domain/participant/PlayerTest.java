@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
+import static blackjack.fixture.CardBundleFixture.cardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER3;
@@ -36,7 +36,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+        cardBundle = cardBundleOf(CLOVER4, CLOVER5);
         player = Player.of("hudi", cardBundle);
     }
 
@@ -63,7 +63,7 @@ public class PlayerTest {
         @DisplayName("계속 드로우하도록 하면 21이상이 될 때까지 카드를 추가한다.")
         @Test
         void drawAllCards_keepDrawingUntilBust() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER5, CLOVER6);
+            CardBundle cardBundle = cardBundleOf(CLOVER5, CLOVER6);
             CardSupplier cardSupplier = new CardDeckStub(List.of(CLOVER2, CLOVER10, CLOVER3));
 
             Dealer dealer = Dealer.of(cardBundle);
@@ -77,7 +77,7 @@ public class PlayerTest {
         @DisplayName("계속 드로우하도록 해도 21이 되었을 때 카드 뽑기를 중단한다.")
         @Test
         void drawAllCards_keepDrawingUntil21() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER5, CLOVER6);
+            CardBundle cardBundle = cardBundleOf(CLOVER5, CLOVER6);
             CardSupplier cardSupplier = new CardDeckStub(List.of(CLOVER10, CLOVER3));
 
             Dealer dealer = Dealer.of(cardBundle);
@@ -91,7 +91,7 @@ public class PlayerTest {
         @DisplayName("stay를 선택하는 경우 21이 아니어도 카드를 뽑지 않는다.")
         @Test
         void drawAllCards_immediatelyStops() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER5, CLOVER6);
+            CardBundle cardBundle = cardBundleOf(CLOVER5, CLOVER6);
 
             Dealer dealer = Dealer.of(cardBundle);
             dealer.drawAllCards(STAY_CHOICE, VIEW_STRATEGY, () -> CLOVER10);
@@ -104,7 +104,7 @@ public class PlayerTest {
     @DisplayName("Player 인스턴스에는 CardBundle의 isBust 메서드가 구현되어있다.")
     @Test
     void isBust_implementationTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER6, CLOVER10);
+        CardBundle cardBundle = cardBundleOf(CLOVER6, CLOVER10);
         Player player = Player.of("jeong", cardBundle);
         player.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER_KING);
 
@@ -116,7 +116,7 @@ public class PlayerTest {
     @DisplayName("Player 인스턴스에는 Participant의 isBlackjack 메서드가 구현되어있다.")
     @Test
     void isBlackjack_implementationTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER10, CLOVER_ACE);
+        CardBundle cardBundle = cardBundleOf(CLOVER10, CLOVER_ACE);
         Player player = Player.of("hudi", cardBundle);
 
         boolean actual = player.isBlackjack();

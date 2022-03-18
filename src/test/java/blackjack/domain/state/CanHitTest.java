@@ -1,12 +1,12 @@
 package blackjack.domain.state;
 
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfNonBlackjackTwentyOne;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSeventeen;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSixteen;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTen;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTwenty;
-import static blackjack.fixture.CardBundleGenerator.getThreeCardsOfNine;
+import static blackjack.fixture.CardBundleFixture.BLACKJACK_CARD_BUNDLE;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_21;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_17;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_16;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_10;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_20;
+import static blackjack.fixture.CardBundleFixture.THREE_CARDS_9;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER7;
@@ -24,13 +24,13 @@ import org.junit.jupiter.api.Test;
 
 public class CanHitTest {
 
-    private final CardBundle threeCards9 = getThreeCardsOfNine();
-    private final CardBundle cards10 = getCardBundleOfTen();
-    private final CardBundle cards16 = getCardBundleOfSixteen();
-    private final CardBundle cards17 = getCardBundleOfSeventeen();
-    private final CardBundle cards20 = getCardBundleOfTwenty();
-    private final CardBundle threeCards21 = getCardBundleOfNonBlackjackTwentyOne();
-    private final CardBundle blackjackCards = getCardBundleOfBlackjack();
+    private final CardBundle threeCards9 = THREE_CARDS_9();
+    private final CardBundle cards10 = CARD_BUNDLE_10();
+    private final CardBundle cards16 = CARD_BUNDLE_16();
+    private final CardBundle cards17 = CARD_BUNDLE_17();
+    private final CardBundle cards20 = CARD_BUNDLE_20();
+    private final CardBundle threeCards21 = CARD_BUNDLE_21();
+    private final CardBundle blackjackCards = BLACKJACK_CARD_BUNDLE();
 
     // TODO: 간략하게만 테스트하고, 플레이어와 딜러에서 직접 경우별 테스트
     private final StayStrategy prodPlayerStrategy = (cardBundle) -> cardBundle.getScoreInt() == Score.BLACKJACK;

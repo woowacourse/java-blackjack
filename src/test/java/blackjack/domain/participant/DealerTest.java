@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
+import static blackjack.fixture.CardBundleFixture.cardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
@@ -28,7 +28,7 @@ public class DealerTest {
     @DisplayName("딜러가 drawAllCards 메서드 실행시, 17 이상의 카드 패를 지닐 때까지 카드 한 장을 추가한다.")
     @Test
     void drawAllCards() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+        CardBundle cardBundle = cardBundleOf(CLOVER4, CLOVER5);
         Dealer dealer = Dealer.of(cardBundle);
 
         dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER8);
@@ -40,7 +40,7 @@ public class DealerTest {
     @DisplayName("Dealer 인스턴스에는 CardBundle의 isBust 메서드가 구현되어있다.")
     @Test
     void isBust_implementationTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER6, CLOVER10);
+        CardBundle cardBundle = cardBundleOf(CLOVER6, CLOVER10);
         Dealer dealer = Dealer.of(cardBundle);
         dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER_KING);
 
@@ -52,7 +52,7 @@ public class DealerTest {
     @DisplayName("Dealer 인스턴스에는 Participant의 isBlackjack 메서드가 구현되어있다.")
     @Test
     void isBlackjack_implementationTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER10, CLOVER_ACE);
+        CardBundle cardBundle = cardBundleOf(CLOVER10, CLOVER_ACE);
         Dealer dealer = Dealer.of(cardBundle);
 
         boolean actual = dealer.isBlackjack();
@@ -63,7 +63,7 @@ public class DealerTest {
     @DisplayName("딜러의 패가 17이상 21이하인 경우 버스트도, 블랙잭도 아니지만, 더 이상 드로우를 하지 않는다.")
     @Test
     void dealerStayTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER7, CLOVER10);
+        CardBundle cardBundle = cardBundleOf(CLOVER7, CLOVER10);
         Dealer dealer = Dealer.of(cardBundle);
 
         assertThat(dealer.canDraw()).isFalse();
@@ -77,7 +77,7 @@ public class DealerTest {
     @DisplayName("딜러의 getInitialOpenCards 메서드는 초기에 받은 카드 중 한 장이 담긴 컬렉션을 반환한다.")
     @Test
     void getInitialOpenCards() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+        CardBundle cardBundle = cardBundleOf(CLOVER4, CLOVER5);
         Dealer dealer = Dealer.of(cardBundle);
 
         List<Card> actual = dealer.getInitialOpenCards();

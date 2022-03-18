@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBust;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfNonBlackjackTwentyOne;
+import static blackjack.fixture.CardBundleFixture.BUST_CARD_BUNDLE;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_21;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 public class BustTest {
 
-    private final CardBundle threeCards21 = getCardBundleOfNonBlackjackTwentyOne();
-    private final CardBundle bustCards = getCardBundleOfBust();
+    private final CardBundle threeCards21 = CARD_BUNDLE_21();
+    private final CardBundle bustCards = BUST_CARD_BUNDLE();
 
     @DisplayName("21점을 초과하는 카드 패로 Bust 인스턴스를 생성할 수 있다.")
     @Test

@@ -1,8 +1,8 @@
 package blackjack.domain.hand;
 
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfNonBlackjackTwentyOne;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTen;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTwenty;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_21;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_10;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_20;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
@@ -13,9 +13,9 @@ import org.junit.jupiter.api.Test;
 
 public class CanHitTest {
 
-    private static final CardBundle CARD_BUNDLE_10 = getCardBundleOfTen();
-    private static final CardBundle CARD_BUNDLE_20 = getCardBundleOfTwenty();
-    private static final CardBundle CARD_BUNDLE_21 = getCardBundleOfNonBlackjackTwentyOne();
+    private static final CardBundle CARD_BUNDLE_10 = CARD_BUNDLE_10();
+    private static final CardBundle CARD_BUNDLE_20 = CARD_BUNDLE_20();
+    private static final CardBundle CARD_BUNDLE_21 = CARD_BUNDLE_21();
 
     @DisplayName("21짜리 패로 구성된 CanHit 인스턴스도 존재할 수 있다. (즉시 stay 호출 필요)")
     @Test

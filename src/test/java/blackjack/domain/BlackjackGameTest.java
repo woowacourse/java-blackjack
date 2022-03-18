@@ -1,7 +1,7 @@
 package blackjack.domain;
 
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSixteen;
+import static blackjack.fixture.CardBundleFixture.BLACKJACK_CARD_BUNDLE;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_16;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -24,8 +24,8 @@ public class BlackjackGameTest {
 
     private static final CardBundleStrategy prodStrategy =
             (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
-    private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> getCardBundleOfSixteen();
-    private static final CardBundleStrategy cardBundleOfBlackjackStrategy = (cardStack) -> getCardBundleOfBlackjack();
+    private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> CARD_BUNDLE_16();
+    private static final CardBundleStrategy cardBundleOfBlackjackStrategy = (cardStack) -> BLACKJACK_CARD_BUNDLE();
 
     private static final HitOrStayChoiceStrategy DRAW_CHOICE = () -> true;
     private static final CardsViewStrategy CARDS_VIEW_STRATEGY = (dealer) -> {

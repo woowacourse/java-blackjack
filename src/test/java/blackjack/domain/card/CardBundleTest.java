@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
+import static blackjack.fixture.CardBundleFixture.cardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER3;
@@ -52,7 +52,7 @@ public class CardBundleTest {
         @DisplayName("addAndGenerate 메서드는 기존 카드 패를 변화시키지 않고 새로운 카드 패를 반환한다.")
         @Test
         void addAndGenerate_immutableCardBundle() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+            CardBundle cardBundle = cardBundleOf(CLOVER4, CLOVER5);
             CardBundle addedCardBundle = cardBundle.addAndGenerate(CLOVER6);
 
             assertThat(cardBundle.getCards()).containsExactly(CLOVER4, CLOVER5);
@@ -65,7 +65,7 @@ public class CardBundleTest {
         @DisplayName("addAndGenerate 메서드에 기존 카드 패에 존재하는 카드를 입력하는 경우 예외가 발생한다.")
         @Test
         void addAndGenerate_duplicateCardsThrowsException() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+            CardBundle cardBundle = cardBundleOf(CLOVER4, CLOVER5);
             assertThatExceptionOfType(IllegalArgumentException.class)
                     .isThrownBy(() -> cardBundle.addAndGenerate(CLOVER4))
                     .withMessage("중복된 카드는 존재할 수 없습니다.");
@@ -75,7 +75,7 @@ public class CardBundleTest {
     @DisplayName("getScore 메서드는 에이스가 없을 때 각 카드가 지닌 값들을 그대로 합산하여 반환한다.")
     @Test
     void getScore_noAce() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+        CardBundle cardBundle = cardBundleOf(CLOVER4, CLOVER5);
 
         Score actual = cardBundle.getScore();
         Score expected = Score.valueOf(9);
@@ -90,7 +90,7 @@ public class CardBundleTest {
         @DisplayName("에이스를 11로 계산해도 21을 넘기지 않는다면 11로 계산한다.")
         @Test
         void getScore_aceIs11IfSumIsNotOver21() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER_ACE, CLOVER4, CLOVER5);
+            CardBundle cardBundle = cardBundleOf(CLOVER_ACE, CLOVER4, CLOVER5);
 
             Score actual = cardBundle.getScore();
             Score expected = Score.valueOf(20);
@@ -101,7 +101,7 @@ public class CardBundleTest {
         @DisplayName("에이스를 11로 계산했을 때 21인 경우 11로 계산한다.")
         @Test
         void getScore_aceIs11IfSumIs21() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER_ACE, CLOVER3, CLOVER7);
+            CardBundle cardBundle = cardBundleOf(CLOVER_ACE, CLOVER3, CLOVER7);
 
             Score actual = cardBundle.getScore();
             Score expected = Score.valueOf(21);
@@ -112,7 +112,7 @@ public class CardBundleTest {
         @DisplayName("에이스를 11로 계산했을 때 21을 넘는 경우 1로 계산한다.")
         @Test
         void getScore_aceIs1IfSumIsOver21() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER_ACE, CLOVER4, CLOVER7);
+            CardBundle cardBundle = cardBundleOf(CLOVER_ACE, CLOVER4, CLOVER7);
 
             Score actual = cardBundle.getScore();
             Score expected = Score.valueOf(12);
@@ -129,7 +129,7 @@ public class CardBundleTest {
         @Test
         void getScore_allAceIs1IfSumCouldGoOver21() {
             CardBundle cardBundle =
-                    generateCardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER8, CLOVER10);
+                    cardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER8, CLOVER10);
 
             Score actual = cardBundle.getScore();
             Score expected = Score.valueOf(21);
@@ -141,7 +141,7 @@ public class CardBundleTest {
         @Test
         void getScore_onlyOneAceIs11IfSumIsNotOver21() {
             CardBundle cardBundle =
-                    generateCardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER2, CLOVER3);
+                    cardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER2, CLOVER3);
 
             Score actual = cardBundle.getScore();
             Score expected = Score.valueOf(18);
@@ -157,7 +157,7 @@ public class CardBundleTest {
         @DisplayName("점수가 21이면서 두 장의 카드로 구성된 경우 true를 반환한다.")
         @Test
         void isBlackjack_returnTrueOn21WithTwoCards() {
-            CardBundle twoCardsOf21 = generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
+            CardBundle twoCardsOf21 = cardBundleOf(CLOVER_ACE, CLOVER_KING);
 
             boolean actual = twoCardsOf21.isBlackjack();
 
@@ -167,7 +167,7 @@ public class CardBundleTest {
         @DisplayName("점수가 21이지만 3장 이상으로 구성된 경우 false를 반환한다.")
         @Test
         void isBlackjack_returnFalseOn21WithMoreThanTwoCards() {
-            CardBundle twoCardsOf21 = generateCardBundleOf(CLOVER3, CLOVER8, CLOVER_KING);
+            CardBundle twoCardsOf21 = cardBundleOf(CLOVER3, CLOVER8, CLOVER_KING);
 
             boolean actual = twoCardsOf21.isBlackjack();
 
@@ -177,7 +177,7 @@ public class CardBundleTest {
         @DisplayName("점수가 21이 아니면 false를 반환한다.")
         @Test
         void isBlackjack_returnFalseIfNot21() {
-            CardBundle twoCardsOf20 = generateCardBundleOf(CLOVER10, CLOVER_KING);
+            CardBundle twoCardsOf20 = cardBundleOf(CLOVER10, CLOVER_KING);
 
             boolean actual = twoCardsOf20.isBlackjack();
 
@@ -192,7 +192,7 @@ public class CardBundleTest {
         @DisplayName("점수가 21이면서 두 장의 카드로 구성된 경우 true를 반환한다.")
         @Test
         void isBlackjackScore_returnTrueOnBlackjack() {
-            CardBundle twoCardsOf21 = generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
+            CardBundle twoCardsOf21 = cardBundleOf(CLOVER_ACE, CLOVER_KING);
 
             boolean actual = twoCardsOf21.getScoreInt() == Score.BLACKJACK;
 
@@ -202,7 +202,7 @@ public class CardBundleTest {
         @DisplayName("점수가 21이지만 3장 이상으로 구성된 경우에도 true를 반환한다.")
         @Test
         void isBlackjackScore_returnTrueOn21NonBlackjack() {
-            CardBundle twoCardsOf21 = generateCardBundleOf(CLOVER3, CLOVER8, CLOVER_KING);
+            CardBundle twoCardsOf21 = cardBundleOf(CLOVER3, CLOVER8, CLOVER_KING);
 
             boolean actual = twoCardsOf21.getScoreInt() == Score.BLACKJACK;
 
@@ -212,7 +212,7 @@ public class CardBundleTest {
         @DisplayName("점수가 21이 아니면 false를 반환한다.")
         @Test
         void isBlackjackScore_returnFalseIfNot21() {
-            CardBundle twoCardsOf20 = generateCardBundleOf(CLOVER10, CLOVER_KING);
+            CardBundle twoCardsOf20 = cardBundleOf(CLOVER10, CLOVER_KING);
 
             boolean actual = twoCardsOf20.getScoreInt() == Score.BLACKJACK;
 
@@ -227,7 +227,7 @@ public class CardBundleTest {
         @DisplayName("점수가 21을 넘지 않으면 false를 반환한다.")
         @Test
         void isBust_returnFalseOn21OrLess() {
-            CardBundle cardBundleOf21 = generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
+            CardBundle cardBundleOf21 = cardBundleOf(CLOVER_ACE, CLOVER_KING);
 
             boolean actual = cardBundleOf21.isBust();
 
@@ -237,7 +237,7 @@ public class CardBundleTest {
         @DisplayName("점수가 21을 넘으면 true를 반환한다.")
         @Test
         void isBust_returnTrueOnOver21() {
-            CardBundle cardBundleOver21 = generateCardBundleOf(CLOVER8, CLOVER10, CLOVER_KING);
+            CardBundle cardBundleOver21 = cardBundleOf(CLOVER8, CLOVER10, CLOVER_KING);
 
             boolean actual = cardBundleOver21.isBust();
 

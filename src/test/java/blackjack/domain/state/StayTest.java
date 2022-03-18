@@ -1,9 +1,9 @@
 package blackjack.domain.state;
 
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBust;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfNonBlackjackTwentyOne;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTwenty;
+import static blackjack.fixture.CardBundleFixture.BLACKJACK_CARD_BUNDLE;
+import static blackjack.fixture.CardBundleFixture.BUST_CARD_BUNDLE;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_21;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_20;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -15,10 +15,10 @@ import org.junit.jupiter.api.Test;
 
 public class StayTest {
 
-    private final CardBundle cards20 = getCardBundleOfTwenty();
-    private final CardBundle threeCards21 = getCardBundleOfNonBlackjackTwentyOne();
-    private final CardBundle blackjackCards = getCardBundleOfBlackjack();
-    private final CardBundle bustCards = getCardBundleOfBust();
+    private final CardBundle cards20 = CARD_BUNDLE_20();
+    private final CardBundle threeCards21 = CARD_BUNDLE_21();
+    private final CardBundle blackjackCards = BLACKJACK_CARD_BUNDLE();
+    private final CardBundle bustCards = BUST_CARD_BUNDLE();
 
     @DisplayName("Stay 생성자 테스트")
     @Nested

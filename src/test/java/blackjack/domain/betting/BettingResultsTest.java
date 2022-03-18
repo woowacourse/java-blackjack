@@ -1,11 +1,11 @@
 package blackjack.domain.betting;
 
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfFifteen;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSeventeen;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSixteen;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTen;
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTwenty;
+import static blackjack.fixture.CardBundleFixture.BLACKJACK_CARD_BUNDLE;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_15;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_17;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_16;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_10;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_20;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER8;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
@@ -28,14 +28,14 @@ public class BettingResultsTest {
     private static final CardsViewStrategy VIEW_STRATEGY = (p) -> {
     };
 
-    private static final Dealer dealer17 = Dealer.of(getCardBundleOfSeventeen());
-    private static final Dealer dealer20 = Dealer.of(getCardBundleOfTwenty());
-    private static final Dealer dealerBlackjack = Dealer.of(getCardBundleOfBlackjack());
+    private static final Dealer dealer17 = Dealer.of(CARD_BUNDLE_17());
+    private static final Dealer dealer20 = Dealer.of(CARD_BUNDLE_20());
+    private static final Dealer dealerBlackjack = Dealer.of(BLACKJACK_CARD_BUNDLE());
 
-    private static final Player player10 = Player.of("ten", getCardBundleOfTen());
-    private static final Player player15 = Player.of("fifteen", getCardBundleOfFifteen());
-    private static final Player player20 = Player.of("twenty", getCardBundleOfTwenty());
-    private static final Player playerBlackjack = Player.of("blackjack", getCardBundleOfBlackjack());
+    private static final Player player10 = Player.of("ten", CARD_BUNDLE_10());
+    private static final Player player15 = Player.of("fifteen", CARD_BUNDLE_15());
+    private static final Player player20 = Player.of("twenty", CARD_BUNDLE_20());
+    private static final Player playerBlackjack = Player.of("blackjack", BLACKJACK_CARD_BUNDLE());
 
     @DisplayName("ResultReferee 인스턴스는 생성될 때 딜러와 플레이어별 정보를 지니게 된다.")
     @Test
@@ -142,13 +142,13 @@ public class BettingResultsTest {
     }
 
     private Dealer getDealerBust() {
-        Dealer dealerBust = Dealer.of(getCardBundleOfSixteen());
+        Dealer dealerBust = Dealer.of(CARD_BUNDLE_16());
         dealerBust.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER_KING);
         return dealerBust;
     }
 
     private Player getPlayerBust() {
-        Player playerBust = Player.of("twenty", getCardBundleOfTwenty());
+        Player playerBust = Player.of("twenty", CARD_BUNDLE_20());
         playerBust.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER8);
         return playerBust;
     }

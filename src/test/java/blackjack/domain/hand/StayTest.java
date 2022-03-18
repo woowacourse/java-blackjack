@@ -1,6 +1,6 @@
 package blackjack.domain.hand;
 
-import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTen;
+import static blackjack.fixture.CardBundleFixture.CARD_BUNDLE_10;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -15,7 +15,7 @@ public class StayTest {
 
     @BeforeEach
     void setUp() {
-        cardHand = new Stay(getCardBundleOfTen());
+        cardHand = new Stay(CARD_BUNDLE_10());
     }
 
     @DisplayName("hit 메서드 실행시, 예외가 발생한다.")
