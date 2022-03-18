@@ -34,7 +34,7 @@ public abstract class Gamer {
     }
 
     public boolean isBust() {
-        return playingCards.isOverBlackjack();
+        return playingCards.isBust();
     }
 
     public String getName() {

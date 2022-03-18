@@ -37,7 +37,7 @@ public class PlayingCardsTest {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(queenSpade, queenSpade, queenSpade));
 
-        assertThat(playingCards.isOverBlackjack()).isTrue();
+        assertThat(playingCards.isBust()).isTrue();
     }
 
     @DisplayName("카드들의 총합이 21미만인지 확인한다.")

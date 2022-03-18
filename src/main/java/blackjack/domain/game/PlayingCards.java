@@ -26,7 +26,11 @@ public class PlayingCards {
         return Denomination.getTotal(denominations);
     }
 
-    public boolean isOverBlackjack() {
+    public boolean isMoreDeal() {
+        return playingCards.size() < Deck.INIT_CARD_COUNT;
+    }
+
+    public boolean isBust() {
         return calculateTotal() > BLACKJACK;
     }
 

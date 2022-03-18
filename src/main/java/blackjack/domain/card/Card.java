@@ -20,7 +20,7 @@ public class Card {
 
     private static void insertCardCache(final Denomination denomination) {
         for (Suit suit : Suit.values()) {
-            TOTAL_CARD_CACHE.add(Card.of(denomination, suit));
+            TOTAL_CARD_CACHE.add(new Card(denomination, suit));
         }
     }
 
