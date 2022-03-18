@@ -2,6 +2,8 @@ package blackJack.domain.result;
 
 import blackJack.domain.card.Cards;
 import blackJack.domain.money.Bet;
+import blackJack.domain.participant.Dealer;
+import blackJack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
@@ -32,9 +34,9 @@ public enum OutCome {
         this.predicate = predicate;
     }
 
-    public static OutCome of(Cards cards, Cards otherCards) {
+    public static OutCome of(Dealer dealer, Player player) {
         return Arrays.stream(values())
-                .filter(result -> result.predicate.test(cards, otherCards))
+                .filter(result -> result.predicate.test(dealer.getCardsInfo(), player.getCardsInfo()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
     }

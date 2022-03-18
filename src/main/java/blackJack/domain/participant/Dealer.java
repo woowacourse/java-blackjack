@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     }
 
     public OutCome calculateOutCome(Player player) {
-        return OutCome.of(this.getCardsInfo(), player.getCardsInfo());
+        return OutCome.of(this, player);
     }
 
     @Override
