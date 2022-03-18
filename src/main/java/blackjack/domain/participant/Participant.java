@@ -34,7 +34,7 @@ public abstract class Participant {
     }
 
     public Score getScore() {
-        return state.getCards().calculateScore();
+        return state.calculateScore();
     }
 
     public abstract List<Card> showInitialCards();

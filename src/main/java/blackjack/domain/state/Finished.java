@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.Objects;
@@ -31,5 +32,10 @@ public abstract class Finished implements State {
     @Override
     public Cards getCards() {
         return cards;
+    }
+
+    @Override
+    public Score calculateScore() {
+        return cards.calculateScore();
     }
 }
