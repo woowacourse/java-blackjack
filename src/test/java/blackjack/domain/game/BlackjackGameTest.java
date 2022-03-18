@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static utils.TestUtil.BETTING_1000;
 
 import blackjack.domain.card.RandomGenerator;
 import blackjack.domain.participant.BettingAmount;
@@ -18,7 +19,7 @@ public class BlackjackGameTest {
     void failed() {
         // given
         List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
-        List<BettingAmount> bettingAmounts = List.of(new BettingAmount(1000L));
+        List<BettingAmount> bettingAmounts = List.of(BETTING_1000);
         RandomGenerator randomGenerator = new RandomGenerator();
 
         // then
@@ -31,7 +32,7 @@ public class BlackjackGameTest {
     void create() {
         // given
         List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
-        List<BettingAmount> bettingAmounts = Arrays.asList(new BettingAmount(1000L), new BettingAmount(1000L));
+        List<BettingAmount> bettingAmounts = Arrays.asList(BETTING_1000, BETTING_1000);
         RandomGenerator randomGenerator = new RandomGenerator();
 
         BlackjackGame blackjackGame = new BlackjackGame(names, bettingAmounts, randomGenerator);

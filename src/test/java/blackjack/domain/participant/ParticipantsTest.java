@@ -1,9 +1,11 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.TestUtil.BETTING_1000;
+import static utils.TestUtil.CLOVER_QUEEN;
+import static utils.TestUtil.CLOVER_SEVEN;
 import static utils.TestUtil.getCards;
 
-import blackjack.domain.card.Number;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +22,7 @@ class ParticipantsTest {
         names = Arrays.asList(new Name("pobi"), new Name("jason"));
 
         participants = new Participants(toPlayerList(names),
-                new Dealer(getCards(Number.SEVEN, Number.QUEEN)));
+                new Dealer(getCards(CLOVER_SEVEN, CLOVER_QUEEN)));
     }
 
     @Test
@@ -38,9 +40,8 @@ class ParticipantsTest {
 
     private List<Player> toPlayerList(List<Name> names) {
         List<Player> playerList = new ArrayList<>();
-        BettingAmount bettingAmount = new BettingAmount(1000L);
         for (Name name : names) {
-            playerList.add(new Player(name, getCards(Number.SEVEN, Number.QUEEN), bettingAmount));
+            playerList.add(new Player(name, getCards(CLOVER_SEVEN, CLOVER_QUEEN), BETTING_1000));
         }
         return playerList;
     }

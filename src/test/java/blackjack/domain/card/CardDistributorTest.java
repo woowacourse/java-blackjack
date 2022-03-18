@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static utils.TestUtil.CLOVER_ACE;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ public class CardDistributorTest {
     @DisplayName("카드가 다 소요되면 에러가 발생한다.")
     void failed() {
         // given
-        TestGenerator testGenerator = new TestGenerator(new Card(Number.ACE, Suit.CLOVER));
+        TestGenerator testGenerator = new TestGenerator(CLOVER_ACE);
         CardDistributor cardDistributor = new CardDistributor(testGenerator);
 
         // when
@@ -39,7 +40,7 @@ public class CardDistributorTest {
     @DisplayName("카드 꺼내기")
     void draw() {
         // given
-        Card card = new Card(Number.ACE, Suit.CLOVER);
+        Card card = CLOVER_ACE;
         TestGenerator testGenerator = new TestGenerator(card);
         CardDistributor cardDistributor = new CardDistributor(testGenerator);
 
