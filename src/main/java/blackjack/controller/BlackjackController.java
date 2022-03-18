@@ -41,7 +41,7 @@ public class BlackjackController {
     }
 
     private void askDealCardToDealer(Blackjack blackjack, Dealer dealer) {
-        if (dealer.score().isHit()) {
+        while (dealer.score().isHit()) {
             blackjack.dealAdditionalCardToDealer(RandomNumberGenerator.getInstance(), dealer);
             OutputView.printDealerAdditionalCard();
         }
