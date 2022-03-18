@@ -8,8 +8,6 @@ public class Score {
     private static final int INIT_A_NUMBER = 1;
     private static final int NEW_A_NUMBER = 11;
     private static final int CONDITION_HIT = 16;
-    private static final int FIRST_CARD_INDEX = 0;
-    private static final int SECOND_CARD_INDEX = 1;
 
     private final int sum;
 
@@ -57,9 +55,8 @@ public class Score {
         return sum > MAX_SCORE;
     }
 
-    public boolean isBlackjack(List<Card> hand) {
-        List<Card> initHand = hand.subList(FIRST_CARD_INDEX, SECOND_CARD_INDEX + 1);
-        return Score.from(initHand).sum == MAX_SCORE;
+    public boolean isBlackjack() {
+        return sum == MAX_SCORE;
     }
 
     public int getSum() {

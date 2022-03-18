@@ -81,4 +81,10 @@ public class BlackjackTest {
     void result() {
         assertDoesNotThrow(() -> blackjack.result(dealer, players));
     }
+
+    @DisplayName("최종 수익 기능 테스트")
+    @Test
+    void profitResult() {
+        assertDoesNotThrow(() -> blackjack.profitResult(dealer, players));
+    }
 }

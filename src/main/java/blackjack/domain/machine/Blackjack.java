@@ -1,5 +1,6 @@
 package blackjack.domain.machine;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPickMachine;
 import blackjack.domain.dto.ResultDto;
 import blackjack.domain.participant.Dealer;
@@ -38,5 +39,9 @@ public class Blackjack {
 
     public ResultDto result(Dealer dealer, Players players) {
         return Records.of(dealer, players.getPlayers());
+    }
+
+    public ProfitResult profitResult(Dealer dealer, Players players) {
+        return ProfitResult.of(dealer, players);
     }
 }

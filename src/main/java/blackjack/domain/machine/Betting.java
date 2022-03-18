@@ -25,4 +25,8 @@ public class Betting {
     public int hashCode() {
         return Objects.hash(money);
     }
+
+    public long getMoney() {
+        return money;
+    }
 }
