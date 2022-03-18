@@ -9,9 +9,11 @@ public abstract class Participant {
     private static final int INITIAL_CARD_COUNT = 2;
 
     protected final Cards cards;
+    protected PlayerStatus playerStatus;
 
     public Participant() {
         this.cards = new Cards();
+        this.playerStatus = PlayerStatus.HIT;
     }
 
     public void initCards(Deck deck) {
@@ -29,6 +31,10 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
+        return playerStatus == PlayerStatus.BLACKJACK;
+    }
+
+    protected boolean checkBlackjack() {
         return cards.isBlackjack(INITIAL_CARD_COUNT);
     }
 

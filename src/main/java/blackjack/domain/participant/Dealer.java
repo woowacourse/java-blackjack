@@ -22,6 +22,18 @@ public class Dealer extends Participant {
         cards.add(deck.drawCard());
     }
 
+    public void updateStatus() {
+        if (checkBlackjack()) {
+            playerStatus = PlayerStatus.BLACKJACK;
+            return;
+        }
+        if (cards.isBust()) {
+            playerStatus = PlayerStatus.BUST;
+            return;
+        }
+        playerStatus = PlayerStatus.STAY;
+    }
+
     public Card openFirstCard() {
         return getCards().findFirst();
     }

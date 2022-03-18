@@ -1,5 +1,7 @@
 package blackjack.domain.prizecalculator;
 
+import static blackjack.domain.card.Cards.MAX_SCORE;
+
 public class StayCalculator implements PrizeCalculator {
 
     private static final StayCalculator INSTANCE = new StayCalculator();
@@ -17,11 +19,11 @@ public class StayCalculator implements PrizeCalculator {
     @Override
     public double calculate(final int playerScore, final int dealerScore, final boolean dealerBlackjack,
                             final double bettingAmount) {
-        if (dealerScore > 21) {
+        if (dealerScore > MAX_SCORE) {
             return bettingAmount * WIN_EARNING_RATE;
         }
         if (playerScore > dealerScore) {
-            return bettingAmount * WIN_EARNING_RATE ;
+            return bettingAmount * WIN_EARNING_RATE;
         }
         if (playerScore < dealerScore) {
             return bettingAmount * LOSS_EARNING_RATE;

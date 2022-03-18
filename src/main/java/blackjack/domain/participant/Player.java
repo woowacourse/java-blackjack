@@ -9,13 +9,11 @@ public class Player extends Participant {
 
     private final Money money;
     private final Name name;
-    private PlayerStatus playerStatus;
 
     public Player(final String name) {
         super();
         this.money = new Money();
         this.name = new Name(name);
-        this.playerStatus = PlayerStatus.HIT;
     }
 
     public void initMoney(final int bettingAmount) {
@@ -37,7 +35,7 @@ public class Player extends Participant {
     }
 
     public void stay() {
-        if (isBlackjack()) {
+        if (checkBlackjack()) {
             playerStatus = PlayerStatus.BLACKJACK;
             return;
         }
@@ -48,7 +46,7 @@ public class Player extends Participant {
         return playerStatus.findCalculator();
     }
 
-    public PlayerStatus getPlayerStatus() {
+    PlayerStatus getPlayerStatus() {
         return playerStatus;
     }
 

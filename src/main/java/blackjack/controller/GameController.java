@@ -83,6 +83,7 @@ public class GameController {
             count++;
         }
 
+        dealer.updateStatus();
         OutputView.printDealerTurnResult(count);
     }
 
