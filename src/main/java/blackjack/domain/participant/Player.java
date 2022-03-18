@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.machine.Betting;
-import java.util.Objects;
 
 public class Player extends Participant {
     private final Betting betting;

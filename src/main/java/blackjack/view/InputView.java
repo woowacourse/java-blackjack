@@ -41,7 +41,7 @@ public class InputView {
         try {
             return Long.parseLong(inputMoney);
 
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException(BETTING_ERROR);
         }
     }
