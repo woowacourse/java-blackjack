@@ -1,11 +1,9 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.Answer;
 import blackjack.domain.card.Card;
 import blackjack.domain.result.BlackJackResult;
 
 import java.util.List;
-import java.util.function.UnaryOperator;
 
 public class Player extends Gamer {
     private final BettingMoney bettingMoney;

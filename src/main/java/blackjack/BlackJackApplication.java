@@ -30,8 +30,7 @@ public class BlackJackApplication {
 
     private static List<Player> createPlayers(Deck deck) {
         List<Player> players = new ArrayList<>();
-        List<String> names = InputView.getNames();
-        for (String name : names) {
+        for (String name : InputView.getNames()) {
             players.add(createPlayer(deck, name));
         }
         return players;
