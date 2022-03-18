@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import domain.card.Deck;
 import domain.card.deckstrategy.GenerationStandardDeckStrategy;
@@ -54,32 +55,30 @@ public class Controller {
 	}
 
 	public void printInitHands(Dealer dealer, Players players) {
-		OutputView.printInitMessage(players.getNames().stream().map(Name::getName).collect(Collectors.toList()));
+		OutputView.printInitMessage(players.showNames());
 		OutputView.printOneHandForDealer(dealer.showName(), dealer.showHand());
 
-		List<Player> playersInfo = players.getPlayerInfo();
-		for (Player player : playersInfo) {
-			OutputView.printHand(player.showName(), player.showHand());
-		}
+		IntStream.range(0, players.getSize())
+			.forEach(idx -> OutputView.printHand(players.showName(idx), players.showHand(idx)));
 	}
 
 	private void drawForPlayers(Deck deck, Players players) {
-		players.getNames().forEach(name -> askAndDrawForPlayer(deck, players, name));
+		IntStream.range(0, players.getSize())
+			.forEach(idx -> askAndDrawForPlayer(deck, players, idx));
 	}
 
-	private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
-		boolean isKeepDraw = !(players.checkMaxScoreByName(name));
+	private void askAndDrawForPlayer(Deck deck, Players players, int idx) {
+		boolean isKeepDraw = !(players.checkMaxScore(idx));
 
-		while (isKeepDraw && InputView.askDraw(name.getName())) {
-			players.addCardByName(name, deck.draw());
-			OutputView.printHand(players.getPlayerInfoByName(name).showName(),
-				players.getPlayerInfoByName(name).showHand());
-			isKeepDraw = checkMaxScoreOrBust(players, name);
+		while (isKeepDraw && InputView.askDraw(players.showName(idx))) {
+			players.addCard(idx, deck.draw());
+			OutputView.printHand(players.showName(idx), players.showHand(idx));
+			isKeepDraw = checkMaxScoreOrBust(players, idx);
 		}
 	}
 
-	private boolean checkMaxScoreOrBust(Players players, Name name) {
-		if (players.checkMaxScoreByName(name) || players.checkBustByName(name)) {
+	private boolean checkMaxScoreOrBust(Players players, int idx) {
+		if (players.checkMaxScore(idx) || players.checkBust(idx)) {
 			return false;
 		}
 		return true;
@@ -99,10 +98,8 @@ public class Controller {
 	public void printHandAndScore(Dealer dealer, Players players) {
 		OutputView.printHandAndScore(dealer.showName(), dealer.showHand(), dealer.getScore());
 
-		List<Player> playersInfo = players.getPlayerInfo();
-
-		for (Player playerInfo : playersInfo) {
-			OutputView.printHandAndScore(playerInfo.showName(), playerInfo.showHand(), playerInfo.getScore());
-		}
+		IntStream.range(0, players.getSize())
+			.forEach(idx -> OutputView.printHandAndScore(players.showName(idx), players.showHand(idx),
+				players.showScore(idx)));
 	}
 }

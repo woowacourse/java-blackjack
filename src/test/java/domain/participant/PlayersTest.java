@@ -1,5 +1,6 @@
 package domain.participant;
 
+import static domain.card.Cards.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.ArrayList;
@@ -11,62 +12,53 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Suit;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
 import domain.participant.info.Name;
 
 public class PlayersTest {
-
-	private Card card_A;
-	private Card card_2;
-	private Card card_Q;
-	private Card card_K;
-	private Card card_6;
 	private List<Card> cards_21;
 	private List<Card> cards_BURST;
-	private Dealer dealerBlackJack;
-	private Dealer dealer_17;
 	private Player pobi;
 	private Player jason;
-	private Players players;
 
 	@BeforeEach
 	void setUp() {
-		card_A = new Card(Denomination.ACE, Suit.CLOVER);
-		card_2 = new Card(Denomination.TWO, Suit.CLOVER);
-		card_Q = new Card(Denomination.QUEEN, Suit.CLOVER);
-		card_K = new Card(Denomination.KING, Suit.CLOVER);
-		card_6 = new Card(Denomination.SIX, Suit.CLOVER);
-		cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
-		cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
-		dealerBlackJack = new Dealer(new Hand(cards_21));
+		cards_21 = new ArrayList<>(Arrays.asList(ACE_CLOVER, QUEEN_CLOVER));
+		cards_BURST = new ArrayList<>(Arrays.asList(KING_CLOVER, QUEEN_CLOVER, TWO_CLOVER));
 		pobi = new Player(new Name("pobi"), new Hand(cards_21), new Betting(0));
 		jason = new Player(new Name("jason"), new Hand(cards_BURST), new Betting(0));
-		players = new Players(
-			Arrays.asList(pobi, jason));
-		List<Card> cards = new ArrayList<>(List.of(card_A, card_6));
-		dealer_17 = new Dealer(new Hand(cards));
 	}
 
 	@Test
-	@DisplayName("이름으로 플레이어가 Bust 인지 판별")
-	void isBustByName() {
-		Name name = new Name("jason");
-		assertThat(players.checkBustByName(name)).isTrue();
+	@DisplayName("플레이어가 Bust 인지 판별")
+	void checkBust() {
+		Players players = new Players(Arrays.asList(pobi, jason));
+		int jasonIdx = 1;
+		assertThat(players.checkBust(jasonIdx)).isTrue();
 	}
 
 	@Test
 	@DisplayName("모든 플레이어가 Bust 인지 판별")
-	void isBustAllBust() {
+	void checkAllBust() {
+		Players players = new Players(Arrays.asList(pobi, jason));
 		assertThat(players.checkAllBust()).isFalse();
 	}
 
 	@Test
-	@DisplayName("이름으로 플레이어가 블랙잭 인지 판별")
-	void isBlackJackByName() {
-		Name name = new Name("pobi");
-		assertThat(players.checkMaxScoreByName(name)).isTrue();
+	@DisplayName("이름으로 플레이어가 21인지 판별")
+	void checkMaxScore() {
+		Players players = new Players(Arrays.asList(pobi, jason));
+		int pobiIdx = 0;
+		assertThat(players.checkMaxScore(pobiIdx)).isTrue();
+	}
+
+	@Test
+	@DisplayName("플레이어 draw 확인")
+	void addCard() {
+		Players players = new Players(Arrays.asList(pobi, jason));
+		int pobiIdx = 0;
+		players.addCard(0, SIX_CLOVER);
+		assertThat(pobi.showHand()).isEqualTo(List.of("A클로버", "Q클로버", "6클로버"));
 	}
 }
