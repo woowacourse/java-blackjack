@@ -16,4 +16,9 @@ public abstract class Finished extends Ready {
     public State stay() {
         throw new IllegalStateException();
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

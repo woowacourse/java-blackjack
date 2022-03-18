@@ -10,4 +10,6 @@ public interface State {
     State stay();
 
     List<Card> getCards();
+
+    boolean isFinished();
 }

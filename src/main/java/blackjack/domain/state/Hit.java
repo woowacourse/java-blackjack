@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.PlayerCards;
 
-public class Hit extends Ready {
+public class Hit extends Running {
 
     Hit(PlayerCards cards) {
         this.cards = cards;
