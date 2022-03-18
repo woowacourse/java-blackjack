@@ -41,4 +41,9 @@ public abstract class Running implements State {
     public boolean isBust() {
         return false;
     }
+
+    @Override
+    public Cards getCards() {
+        return cards;
+    }
 }

@@ -27,4 +27,9 @@ public abstract class Finished implements State {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public Cards getCards() {
+        return cards;
+    }
 }

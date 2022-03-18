@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public interface State {
 
@@ -13,4 +14,6 @@ public interface State {
     boolean isBlackjack();
 
     boolean isBust();
+
+    Cards getCards();
 }
