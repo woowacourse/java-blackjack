@@ -1,13 +1,16 @@
 package blackjack.domain.status;
 
+import static blackjack.domain.card.CardNumber.*;
+import static blackjack.domain.card.CardSymbol.*;
 import static org.assertj.core.api.Assertions.*;
+
+import java.util.Set;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
+import blackjack.domain.participant.Cards;
 
 public class ReadyTest {
 
@@ -18,7 +21,7 @@ public class ReadyTest {
         Status status = new Ready();
 
         //when
-        Status newStatus = status.draw(new Card(CardSymbol.HEART, CardNumber.JACK));
+        Status newStatus = status.draw(new Card(HEART, JACK));
 
         //then
         assertThat(newStatus).isInstanceOf(Ready.class);
@@ -31,8 +34,8 @@ public class ReadyTest {
         Status status = new Ready();
 
         //when
-        Status newStatus = status.draw(new Card(CardSymbol.HEART, CardNumber.JACK));
-        Status hitStatus = newStatus.draw(new Card(CardSymbol.CLUB, CardNumber.JACK));
+        Status newStatus = status.draw(new Card(HEART, JACK));
+        Status hitStatus = newStatus.draw(new Card(CLUB, JACK));
 
         //then
         assertThat(hitStatus).isInstanceOf(Hit.class);
@@ -45,10 +48,23 @@ public class ReadyTest {
         Status status = new Ready();
 
         //when
-        Status newStatus = status.draw(new Card(CardSymbol.HEART, CardNumber.JACK));
-        Status blackjackStatus = newStatus.draw(new Card(CardSymbol.HEART, CardNumber.ACE));
+        Status newStatus = status.draw(new Card(HEART, JACK));
+        Status blackjackStatus = newStatus.draw(new Card(HEART, ACE));
 
         //then
         assertThat(blackjackStatus).isInstanceOf(Blackjack.class);
+    }
+
+    @Test
+    @DisplayName("Hit 상태에서 draw 로 21이 초과하면 Bust 상태로 바뀐다.")
+    void toBust() {
+        //given
+        Status hitStatus = new Hit(new Cards(Set.of(new Card(HEART, JACK), new Card(CLUB, JACK))));
+
+        //when
+        Status bustStatus = hitStatus.draw(new Card(HEART, TWO));
+
+        //then
+        assertThat(bustStatus).isInstanceOf(Bust.class);
     }
 }

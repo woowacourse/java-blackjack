@@ -31,7 +31,7 @@ public class Cards {
         return PlayStatus.of(sum());
     }
 
-    int sum() {
+    public int sum() {
         return sumWithAce(value.stream()
             .mapToInt(Card::getNumberValue)
             .sum());
