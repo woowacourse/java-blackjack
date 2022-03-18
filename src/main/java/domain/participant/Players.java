@@ -14,12 +14,11 @@ public final class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players of(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-            .map(String::trim)
-            .map(Player::new)
-            .collect(Collectors.toList());
-
+    public static Players of(List<String> playerNames, List<String> bettingMoneys) {
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < playerNames.size(); i++) {
+            players.add(Player.of(playerNames.get(i).trim(), bettingMoneys.get(i)));
+        }
         return new Players(players);
     }
 

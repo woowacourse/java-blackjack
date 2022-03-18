@@ -18,7 +18,6 @@ public final class BlackJackController {
         Deck deck = Deck.initDeck(Card.values());
         Players players = createPlayers();
         Dealer dealer = new Dealer();
-        betting(players);
         handOverTwoCards(players, dealer, deck);
         hitOrStayByPlayers(players, deck);
         hitOrStayByDealer(dealer, deck);
@@ -28,17 +27,11 @@ public final class BlackJackController {
 
     private Players createPlayers() {
         try {
-            return Players.of(inputView.inputPlayerName());
+            List<String> playerNames = inputView.inputPlayerName();
+            return Players.of(playerNames, inputView.inputBettings(playerNames));
         } catch (IllegalArgumentException exception) {
             outputView.printError(exception.getMessage());
             return createPlayers();
-        }
-    }
-
-    private void betting(Players players) {
-        for (Player player : players.getPlayers()) {
-            String moneyValue = inputView.inputBettingMoney(player.getName());
-            player.betMoney(Integer.parseInt(moneyValue));
         }
     }
 

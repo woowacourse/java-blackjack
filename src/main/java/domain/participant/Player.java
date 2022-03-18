@@ -7,10 +7,19 @@ public final class Player extends Participant {
 
     private static final int MAX_SCORE = 21;
 
-    private Money money;
+    private final Money money;
 
-    public Player(String name) {
+    private Player(String name, int money) {
         super(name);
+        this.money = Money.from(money);
+    }
+
+    public static Player of(String name, int money) {
+        return new Player(name, money);
+    }
+
+    public static Player of(String name, String money){
+        return of(name, Integer.parseInt(money));
     }
 
     public Result receiveResult(Dealer dealer) {
@@ -25,7 +34,6 @@ public final class Player extends Participant {
         }
 
         return Result.judgeResult(calculateScore(), dealer.calculateScore());
-
     }
 
     @Override
@@ -39,10 +47,6 @@ public final class Player extends Participant {
     @Override
     public boolean canHit() {
         return !isBlackJack() && cards.calculateSum() < MAX_SCORE;
-    }
-
-    public void betMoney(int money) {
-        this.money = new Money(money);
     }
 
     public int calculateIncome(Result result) {

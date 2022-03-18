@@ -26,7 +26,7 @@ class PlayerTest {
 
     @BeforeEach
     void init() {
-        player = new Player("test");
+        player = Player.of("test", 3000);
         dealer = new Dealer();
         deck = Deck.initDeck(Card.values());
     }
@@ -37,7 +37,7 @@ class PlayerTest {
     void playerEmptyNameTest() {
         String name = "";
 
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> Player.of(name, 2000 ))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }
@@ -109,7 +109,6 @@ class PlayerTest {
     @Test
     @DisplayName("Player가 BlackJack인 경우, 자신의 베팅 금액의 1.5배를 반환한다")
     void caclulateIncomeWhenBlackJack() {
-        player.betMoney(3000);
         int actual = player.calculateIncome(Result.BLACKJACK);
         int expected = 4500;
         assertThat(actual).isEqualTo(expected);
@@ -118,7 +117,6 @@ class PlayerTest {
     @Test
     @DisplayName("Player가 Lose인 경우, 자신의 베팅 금액의 -1배를 반환한다.")
     void calculateIncomeWhenLose() {
-        player.betMoney(3000);
         int actual = player.calculateIncome(Result.LOSE);
         int expected = -3000;
         assertThat(actual).isEqualTo(expected);
