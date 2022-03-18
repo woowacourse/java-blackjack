@@ -12,4 +12,8 @@ public interface State {
     PlayerCards getCards();
 
     boolean isFinished();
+
+    boolean isBust();
+
+    boolean isBlackjack();
 }

@@ -1,13 +1,13 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.PlayerCards;
-import java.util.ArrayList;
+import blackjack.domain.card.Deck;
+import blackjack.domain.state.Ready;
 
 public class Participant extends AbstractPlayer implements Player {
 
-    public Participant(Name name) {
+    public Participant(Name name, Deck deck) {
         this.name = name;
-        this.playerCards = new PlayerCards(new ArrayList<>());
+        this.state = Ready.dealToParticipant(deck.pick(), deck.pick());
     }
 
     @Override
@@ -16,15 +16,10 @@ public class Participant extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean canHit() {
-        return !isBust();
-    }
-
-    @Override
     public String toString() {
         return "Participant{" +
                 "name=" + name +
-                ", playerCards=" + playerCards +
+                ", playerCards=" + state.getCards() +
                 '}';
     }
 }

@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.JustBlackjackDeck;
+import blackjack.domain.card.JustTwoSpadeDeck;
+import blackjack.domain.card.RandomDeck;
 import blackjack.domain.card.Type;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
@@ -17,13 +21,12 @@ public class OutComeTest {
     @Test
     @DisplayName("Outcome의 matchAboutDealer 메서드는 딜러와 플레이어가 모두 Bust라면 딜러가 승리했다고 판단한다.")
     void compare_all_bust() {
-        Player dealer = new Dealer();
-        dealer.hit(Card.of(CardNumber.SEVEN, Type.CLOVER));
+        Deck deck = new JustTwoSpadeDeck();
+        Player dealer = new Dealer(deck);
         dealer.hit(Card.of(CardNumber.TEN, Type.SPADE));
         dealer.hit(Card.of(CardNumber.TEN, Type.HEART));
 
-        Player player = new Participant(new Name("aki"));
-        player.hit(Card.of(CardNumber.TEN, Type.CLOVER));
+        Player player = new Participant(new Name("aki"), deck);
         player.hit(Card.of(CardNumber.TEN, Type.SPADE));
         player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
 
@@ -33,12 +36,11 @@ public class OutComeTest {
     @Test
     @DisplayName("Outcome의 matchAboutDealer 메서드는 플레이어가 Bust라면 무조건 딜러가 승리했다고 판단한다.")
     void compare_player_bust() {
-        Player dealer = new Dealer();
+        Deck deck = new JustTwoSpadeDeck();
+        Player dealer = new Dealer(deck);
         dealer.hit(Card.of(CardNumber.SEVEN, Type.CLOVER));
-        dealer.hit(Card.of(CardNumber.TEN, Type.SPADE));
 
-        Player player = new Participant(new Name("aki"));
-        player.hit(Card.of(CardNumber.TEN, Type.CLOVER));
+        Player player = new Participant(new Name("aki"), deck);
         player.hit(Card.of(CardNumber.TEN, Type.SPADE));
         player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
 
@@ -48,14 +50,12 @@ public class OutComeTest {
     @Test
     @DisplayName("Outcome의 matchAboutDealer 메서드는 딜러만 Bust라면 무조건 딜러가 패배했다고 판단한다.")
     void compare_dealer_bust() {
-        Player dealer = new Dealer();
-        dealer.hit(Card.of(CardNumber.SEVEN, Type.CLOVER));
-        dealer.hit(Card.of(CardNumber.FIVE, Type.SPADE));
+        Deck deck = new JustTwoSpadeDeck();
+        Player dealer = new Dealer(deck);
+        dealer.hit(Card.of(CardNumber.TEN, Type.CLOVER));
         dealer.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
 
-        Player player = new Participant(new Name("aki"));
-        player.hit(Card.of(CardNumber.TEN, Type.CLOVER));
-        player.hit(Card.of(CardNumber.TEN, Type.SPADE));
+        Player player = new Participant(new Name("aki"), deck);
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.LOSE);
     }
@@ -63,13 +63,11 @@ public class OutComeTest {
     @Test
     @DisplayName("Outcome의 matchAboutDealer 메서드는 딜러가 블랙잭이고 플레이어가 블랙잭이 아니라면 딜러가 승리했다고 판단한다.")
     void compare_dealer_blackjack() {
-        Player dealer = new Dealer();
-        dealer.hit(Card.of(CardNumber.ACE, Type.CLOVER));
-        dealer.hit(Card.of(CardNumber.KING, Type.SPADE));
+        Deck blackjackDeck = new JustBlackjackDeck();
+        Deck justTwoDeck = new JustTwoSpadeDeck();
+        Player dealer = new Dealer(blackjackDeck);
 
-        Player player = new Participant(new Name("aki"));
-        player.hit(Card.of(CardNumber.ACE, Type.CLOVER));
-        player.hit(Card.of(CardNumber.NINE, Type.DIAMOND));
+        Player player = new Participant(new Name("aki"), justTwoDeck);
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.WIN);
     }
@@ -77,13 +75,12 @@ public class OutComeTest {
     @Test
     @DisplayName("Outcome의 matchAboutDealer 메서드는 플레이어가 블랙잭이고 딜러가 블랙잭이 아니라면 딜러가 패배했다고 판단한다.")
     void compare_player_blackjack() {
-        Player dealer = new Dealer();
-        dealer.hit(Card.of(CardNumber.ACE, Type.CLOVER));
-        dealer.hit(Card.of(CardNumber.NINE, Type.SPADE));
+        Deck blackjackDeck = new JustBlackjackDeck();
+        Deck justTwoDeck = new JustTwoSpadeDeck();
 
-        Player player = new Participant(new Name("aki"));
-        player.hit(Card.of(CardNumber.ACE, Type.CLOVER));
-        player.hit(Card.of(CardNumber.JACK, Type.DIAMOND));
+        Player dealer = new Dealer(justTwoDeck);
+
+        Player player = new Participant(new Name("aki"), blackjackDeck);
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.LOSE);
     }
@@ -91,13 +88,10 @@ public class OutComeTest {
     @Test
     @DisplayName("Outcome의 matchAboutDealer 메서드는 딜러와 플레이어 모두 블랙잭이라면 무승부라고 판단한다.")
     void compare_player_and_dealer_blackjack() {
-        Player dealer = new Dealer();
-        dealer.hit(Card.of(CardNumber.ACE, Type.CLOVER));
-        dealer.hit(Card.of(CardNumber.KING, Type.SPADE));
+        Deck blackjackDeck = new JustBlackjackDeck();
+        Player dealer = new Dealer(blackjackDeck);
 
-        Player player = new Participant(new Name("aki"));
-        player.hit(Card.of(CardNumber.ACE, Type.CLOVER));
-        player.hit(Card.of(CardNumber.JACK, Type.DIAMOND));
+        Player player = new Participant(new Name("aki"), blackjackDeck);
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.DRAW);
     }
@@ -105,14 +99,11 @@ public class OutComeTest {
     @Test
     @DisplayName("Outcome의 matchAboutDealer 메서드는 딜러와 플레이어의 점수를 비교하여 승무패를 판단한다.")
     void compare_player_and_dealer() {
-        Player dealer = new Dealer();
+        Deck deck = new JustTwoSpadeDeck();
+        Player dealer = new Dealer(deck);
         dealer.hit(Card.of(CardNumber.FIVE, Type.CLOVER));
-        dealer.hit(Card.of(CardNumber.TEN, Type.SPADE));
-        dealer.hit(Card.of(CardNumber.THREE, Type.DIAMOND));
 
-        Player player = new Participant(new Name("aki"));
-        player.hit(Card.of(CardNumber.SEVEN, Type.CLOVER));
-        player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
+        Player player = new Participant(new Name("aki"), deck);
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.WIN);
     }

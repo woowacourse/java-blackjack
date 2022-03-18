@@ -10,6 +10,16 @@ public class DealerHit extends Hit {
     DealerHit(PlayerCards cards) {
         this.cards = cards;
     }
+    
+    public static State from(PlayerCards cards) {
+        if (cards.isBust()) {
+            return new Bust(cards);
+        }
+        if (cards.getTotalScore() > MAX_SCORE) {
+            return new Stay(cards);
+        }
+        return new DealerHit(cards);
+    }
 
     @Override
     public State draw(Card card) {

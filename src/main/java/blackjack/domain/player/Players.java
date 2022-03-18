@@ -17,8 +17,8 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> participants) {
-        Dealer dealer = new Dealer();
+    public Players(List<Player> participants, Deck deck) {
+        Dealer dealer = new Dealer(deck);
         validateNull(participants);
         validateHasDealerName(dealer, participants);
         validateSize(participants);
@@ -61,7 +61,7 @@ public class Players {
         }
     }
 
-    public void dealCards(Deck deck) {
+    private void dealCards(Deck deck) {
         for (Player player : players) {
             player.hit(deck.pick());
             player.hit(deck.pick());

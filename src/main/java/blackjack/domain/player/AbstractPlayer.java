@@ -1,38 +1,28 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.PlayerCards;
+import blackjack.domain.state.State;
 import java.util.Objects;
 
 public abstract class AbstractPlayer implements Player {
 
-    private static final int BLACKJACK_CARD_COUNT = 2;
-
-    private static final int MAX_SCORE = 21;
-
     protected Name name;
-    protected PlayerCards playerCards;
+    protected State state;
 
     @Override
     public void hit(Card card) {
-        playerCards.add(card);
+        state = state.draw(card);
     }
 
     @Override
     public boolean isBust() {
-        return getScore() > MAX_SCORE;
+        return state.isBust();
     }
 
     @Override
     public boolean isBlackjack() {
-        if (!playerCards.containsCardNumber(CardNumber.ACE)) {
-            return false;
-        }
-        if (playerCards.get().size() != BLACKJACK_CARD_COUNT) {
-            return false;
-        }
-        return playerCards.getTotalScore() == MAX_SCORE;
+        return state.isBlackjack();
     }
 
     @Override
@@ -42,17 +32,22 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public PlayerCards getPlayerCards() {
-        return playerCards;
+        return state.getCards();
     }
 
     @Override
     public int getScore() {
-        return playerCards.getTotalScore();
+        return state
+                .getCards()
+                .getTotalScore();
+    }
+
+    @Override
+    public boolean canHit() {
+        return !state.isFinished();
     }
 
     public abstract boolean isDealer();
-
-    public abstract boolean canHit();
 
     @Override
     public boolean equals(Object o) {
@@ -63,11 +58,11 @@ public abstract class AbstractPlayer implements Player {
             return false;
         }
         AbstractPlayer that = (AbstractPlayer) o;
-        return Objects.equals(name, that.name) && Objects.equals(playerCards, that.playerCards);
+        return Objects.equals(name, that.name) && Objects.equals(state, that.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, playerCards);
+        return Objects.hash(name, state);
     }
 }

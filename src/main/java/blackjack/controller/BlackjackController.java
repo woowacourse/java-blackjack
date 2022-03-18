@@ -35,20 +35,18 @@ public class BlackjackController {
 
     private Players createPlayers(Deck deck) {
         try {
-            List<Player> participants = toPlayers(InputView.requestNames());
-            Players players = new Players(participants);
-            players.dealCards(deck);
-            return players;
+            List<Player> participants = toPlayers(InputView.requestNames(), deck);
+            return new Players(participants, deck);
         } catch (IllegalArgumentException e) {
             ResultView.printErrorNames(e.getMessage());
             return createPlayers(deck);
         }
     }
 
-    private List<Player> toPlayers(List<String> names) {
+    private List<Player> toPlayers(List<String> names, Deck deck) {
         return names.stream()
                 .map(Name::new)
-                .map(Participant::new)
+                .map(name -> new Participant(name, deck))
                 .collect(Collectors.toList());
     }
 

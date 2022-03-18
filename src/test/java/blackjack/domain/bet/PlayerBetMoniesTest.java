@@ -2,6 +2,8 @@ package blackjack.domain.bet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomDeck;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
@@ -17,7 +19,8 @@ public class PlayerBetMoniesTest {
     void create_bet_money() {
         int money = 10000;
         BetMoney betMoney = new BetMoney(money);
-        Player player = new Participant(new Name("alien"));
+        Deck deck = new RandomDeck();
+        Player player = new Participant(new Name("alien"), deck);
 
         Map<Player, BetMoney> betMonies = new LinkedHashMap<>();
         betMonies.put(player, betMoney);

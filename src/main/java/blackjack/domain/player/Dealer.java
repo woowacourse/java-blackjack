@@ -1,16 +1,15 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.PlayerCards;
-import java.util.ArrayList;
+import blackjack.domain.card.Deck;
+import blackjack.domain.state.Ready;
 
 public class Dealer extends AbstractPlayer implements Player {
 
-    private static final Name DEALER_NAME = new Name("딜러");
-    private static final int MAX_SCORE = 16;
+    private static final String DEALER_NAME = "딜러";
 
-    public Dealer() {
-        this.name = DEALER_NAME;
-        this.playerCards = new PlayerCards(new ArrayList<>());
+    public Dealer(Deck deck) {
+        this.name = new Name(DEALER_NAME);
+        this.state = Ready.dealToDealer(deck.pick(), deck.pick());
     }
 
     @Override
@@ -19,15 +18,10 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean canHit() {
-        return getScore() <= MAX_SCORE;
-    }
-
-    @Override
     public String toString() {
         return "Dealer{" +
                 "name=" + name +
-                ", playerCards=" + playerCards +
+                ", playerCards=" + state.getCards() +
                 '}';
     }
 }

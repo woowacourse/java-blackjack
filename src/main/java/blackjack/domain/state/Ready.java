@@ -3,7 +3,6 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.PlayerCards;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Ready implements State {
@@ -25,7 +24,7 @@ public abstract class Ready implements State {
         if (playerCards.isBlackjack()) {
             return new Blackjack(playerCards);
         }
-        return new DealerHit(playerCards);
+        return DealerHit.from(playerCards);
     }
 
     @Override
