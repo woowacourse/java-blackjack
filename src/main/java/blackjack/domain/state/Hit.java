@@ -24,7 +24,13 @@ public class Hit implements State {
         return this;
     }
 
+    @Override
     public State stay() {
         return new Stay(playingCards, betting);
+    }
+
+    @Override
+    public PlayingCards playingCards() {
+        return playingCards;
     }
 }

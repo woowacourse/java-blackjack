@@ -21,7 +21,7 @@ public class PlayingCards {
         playingCards.add(card);
     }
 
-    public int calculateTotal() {
+    public int total() {
         List<Denomination> denominations = getDenominations();
         return Denomination.getTotal(denominations);
     }
@@ -31,11 +31,11 @@ public class PlayingCards {
     }
 
     public boolean isBust() {
-        return calculateTotal() > BLACKJACK;
+        return total() > BLACKJACK;
     }
 
     public boolean isUnderBlackjack() {
-        return calculateTotal() < BLACKJACK;
+        return total() < BLACKJACK;
     }
 
     public boolean isBlackjack() {

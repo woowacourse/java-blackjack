@@ -18,7 +18,7 @@ public abstract class Gamer {
     }
 
     public int sumOfCards() {
-        return playingCards.calculateTotal();
+        return playingCards.total();
     }
 
     public void dealCards(final List<Card> cards) {

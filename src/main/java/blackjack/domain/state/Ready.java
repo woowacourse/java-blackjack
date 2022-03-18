@@ -30,4 +30,9 @@ public class Ready implements State {
     public State stay() {
         return new Stay(playingCards, betting);
     }
+
+    @Override
+    public PlayingCards playingCards() {
+        return playingCards;
+    }
 }

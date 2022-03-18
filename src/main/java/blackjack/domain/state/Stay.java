@@ -31,4 +31,9 @@ public class Stay extends Finished {
     double profit() {
         return betting.profit(PROFIT_RATE);
     }
+
+    @Override
+    public PlayingCards playingCards() {
+        return playingCards;
+    }
 }

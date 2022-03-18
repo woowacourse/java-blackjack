@@ -28,7 +28,7 @@ public class PlayingCardsTest {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(queenSpade, queenSpade));
 
-        assertThat(playingCards.calculateTotal()).isEqualTo(20);
+        assertThat(playingCards.total()).isEqualTo(20);
     }
 
     @DisplayName("카드들의 총합이 21을 초과하는지 확인한다.")

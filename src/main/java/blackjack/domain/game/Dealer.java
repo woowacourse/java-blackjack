@@ -39,6 +39,6 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean isDrawable() {
-        return playingCards.calculateTotal() <= DRAWING_MAXIMUM;
+        return playingCards.total() <= DRAWING_MAXIMUM;
     }
 }
