@@ -37,4 +37,18 @@ public class ReadyTest {
         //then
         assertThat(hitStatus).isInstanceOf(Hit.class);
     }
+
+    @Test
+    @DisplayName("처음 2장의 카드의 합이 21이면 Blackjack 상태로 바뀐다.")
+    void toBlackjack() {
+        //given
+        Status status = new Ready();
+
+        //when
+        Status newStatus = status.draw(new Card(CardSymbol.HEART, CardNumber.JACK));
+        Status blackjackStatus = newStatus.draw(new Card(CardSymbol.HEART, CardNumber.ACE));
+
+        //then
+        assertThat(blackjackStatus).isInstanceOf(Blackjack.class);
+    }
 }

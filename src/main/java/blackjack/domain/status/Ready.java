@@ -21,6 +21,10 @@ public class Ready implements Status {
     public Status draw(Card card) {
         Cards newCards = cards.add(card);
 
+        if (newCards.isBlackjack()) {
+            return new Blackjack(newCards);
+        }
+
         if (newCards.size() == 2) {
             return new Hit(newCards);
         }
