@@ -50,7 +50,7 @@ public enum Denomination {
     }
 
     private static boolean hasAce(final List<Denomination> denominations) {
-        return denominations.contains(Denomination.ACE);
+        return denominations.contains(ACE);
     }
 
     private static boolean hasTen(final List<Denomination> denominations) {

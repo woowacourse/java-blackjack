@@ -14,9 +14,9 @@ public class Dealer extends Gamer {
         super(NAME);
     }
 
-    public void draw(final CardDeck cardDeck, final BiConsumer<String, Integer> drawing) {
+    public void draw(final Deck deck, final BiConsumer<String, Integer> drawing) {
         while (isDrawable()) {
-            drawCard(cardDeck.pick());
+            drawCard(deck.pick());
             noticeDrawing(drawing);
         }
     }

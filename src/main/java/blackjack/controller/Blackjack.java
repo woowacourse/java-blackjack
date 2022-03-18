@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.bet.Profit;
-import blackjack.domain.game.CardDeck;
+import blackjack.domain.game.Deck;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
@@ -31,21 +31,21 @@ public class Blackjack {
     }
 
     private void drawCards(final Dealer dealer, final Players players, final Result result) {
-        CardDeck cardDeck = new CardDeck();
-        dealCard(dealer, players, cardDeck);
+        Deck deck = new Deck();
+        dealCard(dealer, players, deck);
 
         if (result.isKeepPlaying(dealer)) {
-            players.draw(cardDeck, InputConverter::isDrawing, OutputView::printCards);
+            players.draw(deck, InputConverter::isDrawing, OutputView::printCards);
             OutputView.printNewLine();
-            dealer.draw(cardDeck, OutputView::printDrawDealer);
+            dealer.draw(deck, OutputView::printDrawDealer);
             OutputView.printNewLine();
         }
     }
 
-    private void dealCard(final Dealer dealer, final Players players, final CardDeck cardDeck) {
+    private void dealCard(final Dealer dealer, final Players players, final Deck deck) {
         OutputView.printDealCards(dealer.getName(), players.getNames());
-        dealer.dealCards(cardDeck.pickInit());
-        players.deal(cardDeck);
+        dealer.dealCards(deck.pickInit());
+        players.deal(deck);
 
         openDealCard(dealer, players);
     }

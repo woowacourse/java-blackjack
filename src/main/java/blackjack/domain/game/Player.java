@@ -18,10 +18,10 @@ public class Player extends Gamer {
         inputBetting.accept(name);
     }
 
-    public void draw(final CardDeck cardDeck,
+    public void draw(final Deck deck,
                      final Predicate<Player> drawing, final BiConsumer<String, List<String>> biConsumer) {
         while (isDrawable() && isDrawing(drawing)) {
-            drawCard(cardDeck.pick());
+            drawCard(deck.pick());
             openCards(biConsumer);
         }
     }

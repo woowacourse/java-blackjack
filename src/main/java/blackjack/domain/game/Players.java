@@ -35,16 +35,16 @@ public class Players {
         }
     }
 
-    public void deal(final CardDeck cardDeck) {
+    public void deal(final Deck deck) {
         for (Player player : players) {
-            player.dealCards(cardDeck.pickInit());
+            player.dealCards(deck.pickInit());
         }
     }
 
-    public void draw(final CardDeck cardDeck,
+    public void draw(final Deck deck,
                      final Predicate<Player> drawing, final BiConsumer<String, List<String>> biConsumer) {
         for (Player player : players) {
-            player.draw(cardDeck, drawing, biConsumer);
+            player.draw(deck, drawing, biConsumer);
         }
     }
 

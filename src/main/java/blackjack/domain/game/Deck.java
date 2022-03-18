@@ -7,18 +7,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
-public class CardDeck {
+public class Deck {
 
     public static final int INIT_CARD_COUNT = 2;
 
-    private final Deque<Card> cardDeck = new ArrayDeque<>();
+    private final Deque<Card> deck = new ArrayDeque<>();
 
-    public CardDeck() {
+    public Deck() {
         List<Card> totalCards = new ArrayList<>(Card.getTotalCard());
         Collections.shuffle(totalCards);
-        cardDeck.addAll(totalCards);
+        deck.addAll(totalCards);
     }
 
     public List<Card> pickInit() {
@@ -30,6 +29,6 @@ public class CardDeck {
     }
 
     public Card pick() {
-        return cardDeck.pop();
+        return deck.pop();
     }
 }
