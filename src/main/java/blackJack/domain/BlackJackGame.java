@@ -1,8 +1,9 @@
 package blackJack.domain;
 
-import blackJack.domain.result.BlackJackGameBoard;
 import blackJack.domain.result.BlackJackGameResult;
+import blackJack.domain.result.OutCome;
 import blackJack.domain.result.YesOrNo;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import blackJack.domain.card.Deck;
@@ -10,6 +11,7 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -34,7 +36,7 @@ public class BlackJackGame {
     }
 
     public boolean isApproveDrawCard(YesOrNo value) {
-        return YesOrNo.hasYes(value);
+        return value == YesOrNo.YES;
     }
 
     public BlackJackGameBoard calculateResult() {
