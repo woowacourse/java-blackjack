@@ -1,6 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.machine.Profit;
+import blackjack.domain.machine.ProfitResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -18,7 +20,8 @@ public class OutputView {
     private static final String INIT_CARD_MESSAGE = "에게 2장의 카드를 나누었습니다.";
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String SCORE_MESSAGE = " - 결과: ";
-    private static final String RESULT_MESSAGE = "## 최종 승패";
+    private static final String RECORD_MESSAGE = "## 최종 승패";
+    private static final String PROFIT_MESSAGE = "## 최종 수익";
     private static final String COLON = ": ";
     private static final String BLANK = " ";
 
@@ -76,7 +79,7 @@ public class OutputView {
 
     public static void printRecord(ResultDto resultDto) {
         System.out.println();
-        System.out.println(RESULT_MESSAGE);
+        System.out.println(RECORD_MESSAGE);
         printDealerRecord(resultDto.getDealerResultDto());
         printPlayerRecord(resultDto.getPlayerResultDto());
     }
@@ -101,5 +104,13 @@ public class OutputView {
         Map<String, String> outcome = playerResultDto.getOutcome();
         outcome.keySet()
                 .forEach(player -> System.out.println(player + COLON + outcome.get(player)));
+    }
+
+    public static void printProfit(ProfitResult profitResult) {
+        System.out.println();
+        System.out.println(PROFIT_MESSAGE);
+        Map<Participant, Profit> profits = profitResult.getResult();
+        profits.forEach((key, value)
+                -> System.out.println(key.getName() + COLON + value.getMoney()));
     }
 }
