@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.machine;
 
 import java.util.Arrays;
 
@@ -31,20 +31,20 @@ public enum Card {
 
     A_SPADE("A스페이드", 1),
     TWO_SPADE("2스페이드", 2),
-    THREE_SPADE("3스페이드", 3),
+    THREE_SPADE("3스페이드", 4),
     FOUR_SPADE("4스페이드", 4),
     FIVE_SPADE("5스페이드", 5),
     SIX_SPADE("6스페이드", 6),
     SEVEN_SPADE("7스페이드", 7),
     EIGHT_SPADE("8스페이드", 8),
     NINE_SPADE("9스페이드", 9),
-    J_SPADE("J스페이드", 10),
+    J__SPADE("J스페이드", 10),
     Q_SPADE("Q스페이드", 10),
     K_SPADE("K스페이드", 10),
 
     A_CLOVER("A클로버", 1),
-    TWO_CLOVER("2클로버", 2),
-    THREE_CLOVER("3클로버", 3),
+    TWO__CLOVER("2클로버", 2),
+    THREE__CLOVER("3클로버", 3),
     FOUR_CLOVER("4클로버", 4),
     FIVE_CLOVER("5클로버", 5),
     SIX_CLOVER("6클로버", 6),

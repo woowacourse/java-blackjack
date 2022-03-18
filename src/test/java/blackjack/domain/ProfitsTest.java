@@ -3,7 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.machine.Blackjack;
 import blackjack.domain.machine.Profit;
 import blackjack.domain.machine.Profits;
 import blackjack.domain.participant.Dealer;
@@ -11,7 +10,6 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +18,6 @@ import org.junit.jupiter.api.Test;
 public class ProfitsTest {
     private Dealer dealer;
     private Players players;
-    private Profits profits;
 
     @BeforeEach
     void setUp() {
@@ -29,30 +26,42 @@ public class ProfitsTest {
 
         players = new Players(playersInfo);
         dealer = new Dealer();
-
-        //dealer: 12점, player: 13점
-        IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 10));
-        Blackjack.of(intendedNumberGenerator, dealer, players);
-
-        profits = Profits.of(dealer, players);
     }
 
     @DisplayName("플레이어의 수익률 결과를 테스트")
     @Test
     void playerProfit() {
+        Player player = players.getPlayers().get(0);
+        player.addCard(Card.J_CLOVER);
+        player.addCard(Card.TWO_CLOVER);
+
+        Dealer dealer = new Dealer();
+        dealer.addCard(Card.EIGHT_CLOVER);
+        dealer.addCard(Card.THREE_SPADE);
+
+        Profits profits = Profits.of(dealer, players);
         Map<Participant, Profit> result = profits.getResult();
 
-        assertThat(result.get(new Player("범블비", 0L)))
-                .isEqualTo(new Profit(10000L));
+        assertThat(result.get(player).getMoney())
+                .isEqualTo(new Profit(10000L).getMoney());
     }
 
     @DisplayName("플레이어의 수익률 결과를 테스트")
     @Test
     void dealerProfit() {
+        Player player = players.getPlayers().get(0);
+        player.addCard(Card.FIVE_CLOVER);
+        player.addCard(Card.TWO_HEART);
+
+        Dealer dealer = new Dealer();
+        dealer.addCard(Card.EIGHT_CLOVER);
+        dealer.addCard(Card.TWO_DIAMOND);
+
+        Profits profits = Profits.of(dealer, players);
         Map<Participant, Profit> result = profits.getResult();
 
-        assertThat(result.get(new Dealer()))
-                .isEqualTo(new Profit(-10000L));
+        assertThat(result.get(new Dealer()).getMoney())
+                .isEqualTo(new Profit(10000L).getMoney());
     }
 
     @DisplayName("플레이어가 블랙잭인 경우 수익률 테스트")
@@ -68,8 +77,8 @@ public class ProfitsTest {
 
         Profits profits = Profits.of(dealer, players);
 
-        assertThat(profits.getResult().get(player))
-                .isEqualTo(new Profit(15000L));
+        assertThat(profits.getResult().get(player).getMoney())
+                .isEqualTo(new Profit(15000L).getMoney());
     }
 
     @DisplayName("플레이어와 딜러가 모두 블랙잭인 경우 수익률 테스트")
@@ -85,7 +94,7 @@ public class ProfitsTest {
 
         Profits profits = Profits.of(dealer, players);
 
-        assertThat(profits.getResult().get(player))
-                .isEqualTo(new Profit(10000L));
+        assertThat(profits.getResult().get(player).getMoney())
+                .isEqualTo(new Profit(10000L).getMoney());
     }
 }

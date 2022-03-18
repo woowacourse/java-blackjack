@@ -31,5 +31,3 @@ public class CardPickMachineTest {
 				.isInstanceOf(IndexOutOfBoundsException.class);
 	}
 }
-
-
