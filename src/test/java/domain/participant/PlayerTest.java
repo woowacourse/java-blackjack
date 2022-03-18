@@ -43,6 +43,16 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("Player가 hit를 정상적으로 하는지 확인한다.")
+    void hitTest() {
+        Card card = Card.valueOf(Symbol.CLOVER, Denomination.SIX);
+        Deck testDeck = Deck.initDeck(Arrays.asList(card));
+        player.hit(testDeck);
+
+        assertThat(player.getCards()).contains(card);
+    }
+
+    @Test
     @DisplayName("21이 넘은 상태에서 카드를 뽑을 경우 에러를 발생시킨다.")
     void hitCardOverLimitError() {
         Deck testDeck = Deck.initDeck(Arrays.asList(Card.valueOf(Symbol.CLOVER, Denomination.SIX),
