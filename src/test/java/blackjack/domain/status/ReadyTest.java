@@ -12,7 +12,7 @@ import blackjack.domain.card.CardSymbol;
 public class ReadyTest {
 
     @Test
-    @DisplayName("draw으로 카드 한 장을 뽑아 저장한다.")
+    @DisplayName("draw으로 카드 한 장을 뽑은 경우 Ready 상태이다.")
     void draw() {
         //given
         Status status = new Ready();
@@ -21,7 +21,7 @@ public class ReadyTest {
         Status newStatus = status.draw(new Card(CardSymbol.HEART, CardNumber.JACK));
 
         //then
-        assertThat(newStatus.getCards().size()).isEqualTo(1);
+        assertThat(newStatus).isInstanceOf(Ready.class);
     }
 
     @Test
