@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class BlackjackController {
+public class BlackjackGame {
 
     public void run() {
         Deck deck = new Deck();
