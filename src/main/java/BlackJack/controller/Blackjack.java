@@ -33,34 +33,25 @@ public class Blackjack {
         OutputView.printTotalUserCards(dealer, players);
 
         if (checkDealerIsBlackJack(dealer)) {
-            Map<String, Integer> playersProfits = makeBlackjackResult(players);
-            int dealerProfit = Result.makeDealerResult(playersProfits);
-            printFinalResult(dealer, playersProfits, dealerProfit);
+            Map<String, Integer> playersResult = Result.makeBlackjackResult(players);
+            int dealerResult = Result.calculateDealerProfit(playersResult);
+            printProfit(dealer, playersResult, dealerResult);
             return;
         }
 
         playGame(dealer, players);
-        OutputView.printTotalResult(makeUserList(dealer, players));
 
-        Map<String, Integer> playerProfit = Result.makePlayerResult(dealer, players);
-        int dealerProfit = Result.makeDealerResult(playerProfit);
+        Map<String, Integer> playerResult = Result.makePlayerResult(dealer, players);
+        int dealerResult = Result.calculateDealerProfit(playerResult);
 
-        printFinalResult(dealer, playerProfit, dealerProfit);
+        printProfit(dealer, playerResult, dealerResult);
     }
 
-    public Map<String, Integer> makeBlackjackResult(Players players) {
-        Map<Player, Result> results = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            results.put(player, player.judgeByBlackjack());
-        }
-        return Result.calculateProfit(results);
-    }
-
-    private void printFinalResult(Dealer dealer, Map<String, Integer> playerResults, int dealerScore) {
+    private void printProfit(Dealer dealer, Map<String, Integer> playerResults, int dealerResult) {
         OutputView.printFinalResult(
                 dealer.getName(),
                 playerResults,
-                dealerScore
+                dealerResult
         );
     }
 
@@ -89,6 +80,7 @@ public class Blackjack {
             OutputView.printAddDealerCard();
             dealer.requestCard(CARD_CACHE.poll());
         }
+        OutputView.printTotalResult(makeUserList(dealer, players));
     }
 
     private void addCardPerPlayer(Player player) {
@@ -104,7 +96,7 @@ public class Blackjack {
             players.dealCardToPlayers();
         }
     }
-    public boolean checkDealerIsBlackJack(Dealer dealer) {
+    private boolean checkDealerIsBlackJack(Dealer dealer) {
         if (dealer.isBlackJack()) {
             return true;
         }
