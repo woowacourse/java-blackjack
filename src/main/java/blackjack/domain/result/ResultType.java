@@ -33,6 +33,28 @@ public enum ResultType {
 		return WIN;
 	}
 
+	public static double getMatchedResultType2(final Player player, final Dealer dealer) {
+		if (player.isBust()) {
+			return -1;
+		}
+		if (dealer.isBlackJack() && player.isBlackJack()){
+			return 0;
+		}
+		if (dealer.isBlackJack()) {
+			return -1;
+		}
+		if (player.isBlackJack()) {
+			return 1.5;
+		}
+		if (dealer.compare(player) == 0) {
+			return 0;
+		}
+		if (dealer.compare(player) > 0) {
+			return -1;
+		}
+		return 1;
+	}
+
 	public String getValue() {
 		return value;
 	}

@@ -24,6 +24,16 @@ public class Stay implements State {
 
 	@Override
 	public Money calculateProfit(Money money, Dealer dealer) {
-		return null;
+		return money.multiply(profitRate(dealer));
+	}
+
+	public double profitRate(Dealer dealer) {
+		if (dealer.compare2(this.cards) > 0) {
+			return -1;
+		}
+		if (dealer.compare2(this.cards) < 0) {
+			return 1;
+		}
+		return 0;
 	}
 }
