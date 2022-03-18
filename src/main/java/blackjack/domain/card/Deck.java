@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class Deck {
+public class Deck implements DeckStrategy{
 	public static final String EMPTY_DECK_EXCEPTION = "덱의 카드가 다 소진되었습니다.";
 
 	private final Deque<Card> deck;
@@ -16,6 +16,7 @@ public class Deck {
 		deck = new ArrayDeque<>(cards);
 	}
 
+	@Override
 	public Card distributeCard() {
 		if (deck.isEmpty()) {
 			throw new IllegalStateException(EMPTY_DECK_EXCEPTION);

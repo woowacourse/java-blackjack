@@ -2,10 +2,25 @@ package blackjack.domain.user;
 
 import java.util.Objects;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.DeckStrategy;
+
 public class Player extends Gamer {
 
-	public Player(final String name) {
-		super(name);
+	private final Money money;
+
+	public Player(final String name, final int money, final DeckStrategy deck) {
+		super(name, deck);
+		this.money = new Money(money);
+	}
+
+	@Override
+	public void addCard(Card card) {
+		changeState(this.state.draw(card));
+	}
+
+	public double getMoney() {
+		return money.getMoney();
 	}
 
 	@Override

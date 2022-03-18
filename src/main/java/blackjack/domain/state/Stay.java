@@ -32,11 +32,16 @@ public class Stay implements State {
 		return false;
 	}
 
+	@Override
+	public Cards getCards() {
+		return this.cards;
+	}
+
 	public double profitRate(Dealer dealer) {
-		if (dealer.compare2(this.cards) > 0) {
+		if (dealer.compare(this.cards) > 0) {
 			return -1;
 		}
-		if (dealer.compare2(this.cards) < 0) {
+		if (dealer.compare(this.cards) < 0) {
 			return 1;
 		}
 		return 0;

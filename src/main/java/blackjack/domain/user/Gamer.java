@@ -5,43 +5,54 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckStrategy;
+import blackjack.domain.state.InitialTurn;
+import blackjack.domain.state.State;
 
 public abstract class Gamer {
-	protected final Cards cards;
 	protected final Name name;
 
-	public Gamer(final String name) {
-		this.cards = new Cards();
+	protected State state;
+
+	public Gamer(final String name, final DeckStrategy deck) {
 		this.name = new Name(name);
+		addTwoCards(deck);
 	}
 
-	public void addCard(final Card card) {
-		this.cards.addCard(card);
-	}
+	public abstract void addCard(final Card card);
 
-	public void addTwoCards(final Deck deck) {
-		addCard(deck.distributeCard());
-		addCard(deck.distributeCard());
+	public void addTwoCards(final DeckStrategy deck) {
+		Cards cards = new Cards();
+		cards.addCard(deck.distributeCard());
+		cards.addCard(deck.distributeCard());
+		state = InitialTurn.createState(cards);
 	}
 
 	public boolean isBlackJack() {
-		return this.cards.isBlackJack();
+		return this.state.getCards().isBlackJack();
+	}
+
+	public void changeState(State changedState) {
+		this.state = changedState;
 	}
 
 	public List<Card> getCards() {
-		return Collections.unmodifiableList(this.cards.getCards());
+		return Collections.unmodifiableList(this.state.getCards().getCards());
 	}
 
 	public int getScore() {
-		return this.cards.getScore();
-	}
-
-	public boolean isBust() {
-		return this.cards.isBust();
+		return this.state.getCards().getScore();
 	}
 
 	public String getName() {
 		return this.name.getName();
+	}
+
+	public boolean isRunning() {
+		return this.state.isRunning();
+	}
+
+	public void stay() {
+		changeState(state.stay());
 	}
 }

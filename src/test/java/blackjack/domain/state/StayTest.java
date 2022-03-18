@@ -2,11 +2,14 @@ package blackjack.domain.state;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.MockDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
@@ -29,9 +32,10 @@ public class StayTest {
 
 	@BeforeEach
 	void init_dealer() {
-		dealer = new Dealer();
-		dealer.addCard(Card.of(Denomination.NINE, Suit.DIAMOND));
-		dealer.addCard(Card.of(Denomination.ACE, Suit.DIAMOND));
+		dealer = new Dealer(new MockDeck(List.of(Card.of(Denomination.NINE, Suit.DIAMOND),
+			Card.of(Denomination.ACE, Suit.DIAMOND))));
+		// dealer.addCard(Card.of(Denomination.NINE, Suit.DIAMOND));
+		// dealer.addCard(Card.of(Denomination.ACE, Suit.DIAMOND));
 	}
 
 	@Test

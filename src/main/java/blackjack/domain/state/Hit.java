@@ -36,4 +36,9 @@ public class Hit implements State {
 	public boolean isRunning() {
 		return true;
 	}
+
+	@Override
+	public Cards getCards() {
+		return this.cards;
+	}
 }

@@ -1,23 +1,29 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.DeckStrategy;
 
 public class Dealer extends Gamer {
 	private static final String DEALER_NAME = "딜러";
 
-	public Dealer() {
-		super(DEALER_NAME);
+	public Dealer(final DeckStrategy deck) {
+		super(DEALER_NAME, deck);
 	}
 
-	public int compare(final Gamer gamer) {
-		return this.cards.compare(gamer.cards);
+	@Override
+	public void addCard(Card card) {
+		changeState(this.state.draw(card));
+		if (isHit()) {
+			changeState(this.state.stay());
+		}
 	}
 
-	public int compare2(final Cards otherCards) {
-		return this.cards.compare(otherCards);
+	public int compare(final Cards otherCards) {
+		return this.state.getCards().compare(otherCards);
 	}
 
 	public boolean isHit() {
-		return this.cards.isHit();
+		return this.state.getCards().isHit();
 	}
 }

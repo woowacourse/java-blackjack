@@ -32,6 +32,11 @@ public class Bust implements State{
 		return false;
 	}
 
+	@Override
+	public Cards getCards() {
+		return this.cards;
+	}
+
 	public double profitRate() {
 		return -1;
 	}

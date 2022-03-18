@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.user.Dealer;
@@ -30,7 +31,7 @@ public class HitTest {
 		//given
 		Money money = new Money(10000);
 		State state = InitialTurn.createState(cards);
-		Dealer dealer = new Dealer();
+		Dealer dealer = new Dealer(new Deck());
 		//when
 		//then
 		assertThatThrownBy(() -> state.calculateProfit(money, dealer))

@@ -32,6 +32,11 @@ public class BlackJack implements State{
 		return false;
 	}
 
+	@Override
+	public Cards getCards() {
+		return this.cards;
+	}
+
 	public double profitRate(Dealer dealer) {
 		if (dealer.isBlackJack()) {
 			return 0;

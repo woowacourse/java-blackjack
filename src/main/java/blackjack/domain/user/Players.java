@@ -6,18 +6,19 @@ import java.util.HashSet;
 import java.util.List;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckStrategy;
 
 public class Players {
 	public static final String EMPTY_PLAYER_EXCEPTION = "플레이어를 한명 이상 입력해야 합니다.";
 	public static final String DUPLICATE_PLAYER_EXCEPTION = "이름에 중복이 있으면 안됩니다.";
 	private final List<Player> players;
 
-	public Players(final List<String> playerNames) {
+	public Players(final List<String> playerNames, final DeckStrategy deck) {
 		validateNoPlayer(playerNames);
 		validateDuplicateName(playerNames);
 		players = new ArrayList<>();
 		for (String playerName : playerNames) {
-			players.add(new Player(playerName));
+			players.add(new Player(playerName, 0, deck));
 		}
 	}
 
