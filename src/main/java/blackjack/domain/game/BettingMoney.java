@@ -6,7 +6,7 @@ public class BettingMoney {
 
     private static final BettingMoney zeroBettingMoney = new BettingMoney("0");
 
-    private static final int BATTING_MONEY_UNIT = 10;
+    private static final int BETTING_MONEY_UNIT = 10;
 
     private final int value;
 
@@ -27,7 +27,7 @@ public class BettingMoney {
     }
 
     private void validateUnit(final int value) {
-        if (value % BATTING_MONEY_UNIT != 0) {
+        if (value % BETTING_MONEY_UNIT != 0) {
             throw new IllegalArgumentException("배팅 금액의 단위는 10입니다.");
         }
     }

@@ -12,8 +12,8 @@ public class Player extends Participant {
         super(name, state);
     }
 
-    public Player(final String name, final int battingMoney, final List<Card> card) {
-        super(new ParticipantName(name), new BettingMoney(battingMoney), card);
+    public Player(final String name, final int bettingMoney, final List<Card> card) {
+        super(new ParticipantName(name), new BettingMoney(bettingMoney), card);
     }
 
     public Player stay() {
