@@ -1,4 +1,4 @@
-package blackjack.domain.fuel_injection;
+package fuel_injection;
 
 import fuel_injection.Avante;
 import fuel_injection.K5;

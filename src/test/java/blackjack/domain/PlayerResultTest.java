@@ -1,12 +1,12 @@
 package blackjack.domain;
 
+import blackjack.domain.Card.Card;
+import blackjack.domain.Card.Cards;
 import blackjack.domain.Card.Number;
-import blackjack.domain.Card.*;
+import blackjack.domain.Card.Shape;
 import blackjack.domain.User.Betting;
 import blackjack.domain.User.Dealer;
 import blackjack.domain.User.Player;
-import blackjack.domain.utils.FixedCardFactory;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,12 +16,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerResultTest {
-    private Deck cardFactory;
-
-    @BeforeEach
-    public void setUp() {
-        cardFactory = new FixedCardFactory();
-    }
 
     @Test
     @DisplayName("플레이어의 카드 합이 21이 넘으면 플레이어가 패배한다.")

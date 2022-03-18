@@ -1,9 +1,9 @@
 package blackjack.domain.User;
 
+import blackjack.domain.Card.Card;
+import blackjack.domain.Card.Cards;
 import blackjack.domain.Card.Number;
-import blackjack.domain.Card.*;
-import blackjack.domain.utils.FixedCardFactory;
-import org.junit.jupiter.api.BeforeEach;
+import blackjack.domain.Card.Shape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +12,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
-
-    private Deck cardFactory;
-
-    @BeforeEach
-    public void setUp() {
-        cardFactory = new FixedCardFactory();
-    }
 
     @Test
     @DisplayName("딜러가 소지한 카드가 16 이하면 true를 반환한다.")
