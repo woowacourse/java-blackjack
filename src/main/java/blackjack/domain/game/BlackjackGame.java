@@ -5,50 +5,24 @@ import blackjack.domain.card.CardStack;
 import blackjack.domain.card.Hand;
 import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.ParticipantGroup;
 import blackjack.domain.participant.Player;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import blackjack.domain.participant.Players;
 
+// TODO: 플레이어가 등록되지 않을 경우 동작하지 않아야함
 public class BlackjackGame {
 
-    private static final String NO_PLAYER_EXCEPTION_MESSAGE = "플레이어가 없는 게임은 존재할 수 없습니다.";
-
-    // TODO: 필드 3개를 2개로 줄여야함. ParticipantGroup 도메인을 만들어 해결할 예정.
     private final CardStack cardDeck;
-    private final Dealer dealer;
-    private final List<Player> players = new ArrayList<>();
+    private final ParticipantGroup participantGroup;
 
-    public BlackjackGame(CardStack cardDeck, List<String> playerNames) {
-        validatePlayerNamesNotEmpty(playerNames);
-        validatePlayerNamesNotDuplicate(playerNames);
-
+    public BlackjackGame(CardStack cardDeck) {
         this.cardDeck = cardDeck;
-        this.dealer = Dealer.of(generateInitialHand());
-        players.addAll(generatePlayers(playerNames));
+        this.participantGroup = ParticipantGroup.of(Dealer.of(generateInitialHand()));
     }
 
-    private List<Player> generatePlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(name -> Player.of(name, generateInitialHand(), Money.from(10000)))
-                .collect(Collectors.toList());
-    }
-
-    private void validatePlayerNamesNotDuplicate(List<String> playerNames) {
-        int originalSize = playerNames.size();
-        int distinctSize = (int) playerNames.stream()
-                .distinct()
-                .count();
-
-        if (originalSize != distinctSize) {
-            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
-        }
-    }
-
-    private void validatePlayerNamesNotEmpty(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException(NO_PLAYER_EXCEPTION_MESSAGE);
-        }
+    public void addPlayer(String playerName, int money) {
+        Player player = Player.of(playerName, generateInitialHand(), Money.from(money));
+        participantGroup.addPlayer(player);
     }
 
     private Hand generateInitialHand() {
@@ -61,6 +35,8 @@ public class BlackjackGame {
     }
 
     public int giveExtraCardsToDealer() {
+        Dealer dealer = participantGroup.getDealer();
+
         int extraCardCount = 0;
         while (dealer.canReceive()) {
             dealer.receiveCard(cardDeck.pop());
@@ -75,19 +51,22 @@ public class BlackjackGame {
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return participantGroup.getDealer();
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
+    public Players getPlayers() {
+        return participantGroup.getPlayers();
+    }
+
+    public ParticipantGroup getParticipantGroup() {
+        return participantGroup;
     }
 
     @Override
     public String toString() {
         return "BlackjackGame{" +
                 "cardDeck=" + cardDeck +
-                ", dealer=" + dealer +
-                ", players=" + players +
+                ", participantGroup=" + participantGroup +
                 '}';
     }
 }

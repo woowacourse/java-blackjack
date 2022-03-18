@@ -56,4 +56,18 @@ public class HandTest {
         // then
         assertThat(actual).containsExactly(CLOVER4, CLOVER5);
     }
+
+    @DisplayName("generateCardNames 는 현재 패에 있는 카드들의 이름을 리스트로 반환한다.")
+    @Test
+    void generateCardNames_returnsListOfCardName() {
+        // given
+        Hand hand = Hand.of(CLOVER4, CLOVER5);
+
+        // when
+        List<String> actual = hand.generateCardNames();
+        List<String> expected = List.of("4클로버", "5클로버");
+
+        // then
+        assertThat(actual).containsAll(expected);
+    }
 }

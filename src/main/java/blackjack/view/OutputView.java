@@ -1,9 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.game.ProfitResult;
 import blackjack.domain.money.Money;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.ParticipantGroup;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.dto.DealerDto;
 import blackjack.dto.ParticipantDto;
+import blackjack.dto.PlayerDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +27,7 @@ public class OutputView {
     private static final String PARTICIPANT_HAND_AND_SCORE_FORMAT = "%s 카드: %s - 결과: %d" + NEW_LINE;
     private static final String EXCEPTION_MESSAGE_FORMAT = "[ERROR] %s" + NEW_LINE;
 
-    public static void printInitialDistributionInfo(List<ParticipantDto> playerDtos) {
+    public static void printInitialDistributionInfo(List<PlayerDto> playerDtos) {
         String names = playerDtos.stream()
                 .map(ParticipantDto::getName)
                 .collect(Collectors.joining(JOIN_DELIMITER));
@@ -31,16 +35,16 @@ public class OutputView {
         System.out.printf(INITIAL_CARD_DISTRIBUTION_MESSAGE, names);
     }
 
-    public static void printInitialDealerHand(ParticipantDto dealerDto) {
+    public static void printInitialDealerHand(DealerDto dealerDto) {
         System.out.printf(NAME_AND_HAND_FORMAT, dealerDto.getName(), dealerDto.getFirstCard());
     }
 
-    public static void printInitialPlayersHand(List<ParticipantDto> playerDtos) {
-        playerDtos.forEach(OutputView::printParticipantHand);
+    public static void printInitialPlayersHand(List<PlayerDto> playerDtos) {
+        playerDtos.forEach(OutputView::printHandOfPlayer);
         printNewLine();
     }
 
-    public static void printParticipantHand(ParticipantDto dto) {
+    public static void printHandOfPlayer(PlayerDto dto) {
         String name = dto.getName();
         String cards = String.join(JOIN_DELIMITER, dto.getCards());
 
@@ -59,10 +63,10 @@ public class OutputView {
         participantDtos.forEach(OutputView::printSingleHandAndScore);
     }
 
-    private static void printSingleHandAndScore(ParticipantDto dto) {
-        String name = dto.getName();
-        String cards = String.join(JOIN_DELIMITER, dto.getCards());
-        int score = dto.getScore();
+    private static void printSingleHandAndScore(ParticipantDto participantDto) {
+        String name = participantDto.getName();
+        String cards = String.join(JOIN_DELIMITER, participantDto.getCards());
+        int score = participantDto.getScore();
 
         System.out.printf(PARTICIPANT_HAND_AND_SCORE_FORMAT, name, cards, score);
     }
@@ -71,16 +75,19 @@ public class OutputView {
         System.out.println(PROFIT_RESULT_INFO_MESSAGE);
     }
 
-    public static void printDealerProfitResult(Money money) {
-        System.out.printf(DEALER_PROFIT_MESSAGE_FORMAT, money.getValue());
+    public static void printProfitOfParticipantGroup(ParticipantGroup participantGroup) {
+        printProfitOfDealer(participantGroup.calculateDealerProfit());
+        printProfitOfPlayers(participantGroup.getPlayers(), participantGroup.getDealer());
     }
 
-    public static void printPlayerProfitResult(ProfitResult profitResult) {
-        for (Player player : profitResult.getPlayers()) {
-            String playerName = player.getName();
-            int playerProfit = profitResult.findBetAndProfitBy(player).getProfitMoney().getValue();
+    public static void printProfitOfDealer(Money dealerProfit) {
+        System.out.printf(DEALER_PROFIT_MESSAGE_FORMAT, dealerProfit.getValue());
+    }
 
-            System.out.printf(PLAYER_PROFIT_MESSAGE_FORMAT, playerName, playerProfit);
+    private static void printProfitOfPlayers(Players players, Dealer dealer) {
+        for (Player player : players.getValue()) {
+            System.out.printf(PLAYER_PROFIT_MESSAGE_FORMAT, player.getName(),
+                    player.calculateProfit(dealer).getValue());
         }
     }
 

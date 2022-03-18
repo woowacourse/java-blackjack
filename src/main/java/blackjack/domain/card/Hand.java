@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hand {
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
@@ -33,6 +34,12 @@ public class Hand {
         }
     }
 
+    public List<String> generateCardNames() {
+        return cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
@@ -42,5 +49,24 @@ public class Hand {
         return "Hand{" +
                 "cards=" + cards +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Hand hand = (Hand) o;
+
+        return cards.equals(hand.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return cards.hashCode();
     }
 }

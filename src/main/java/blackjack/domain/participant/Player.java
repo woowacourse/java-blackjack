@@ -45,8 +45,9 @@ public class Player extends Participant {
     @Override
     public String toString() {
         return "Player{" +
-                "name='" + getName() + '\'' +
-                ", hand=" + getHand() +
+                "name=" + super.getName() +
+                ", hand=" + super.getHand() +
+                ", betMoney=" + betMoney +
                 '}';
     }
 }

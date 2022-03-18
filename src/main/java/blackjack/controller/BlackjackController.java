@@ -3,82 +3,65 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.ProfitResult;
-import blackjack.domain.money.BetAndProfit;
-import blackjack.domain.money.Money;
 import blackjack.domain.participant.Player;
+import blackjack.dto.DealerDto;
 import blackjack.dto.ParticipantDto;
+import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-// TODO: run 제외하고 접근제어자를 private 으로 변경
 public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = initializeGame();
-
-        Map<Player, BetAndProfit> playerBets = requestBetToAllPlayer(blackjackGame);
         printInitialHand(blackjackGame);
         giveExtraCardsToAllPlayer(blackjackGame);
         giveExtraCardsToDealer(blackjackGame);
         printFinalHandAndScore(blackjackGame);
-        printBetResult(blackjackGame, playerBets);
+        printBetResult(blackjackGame);
     }
 
-    public BlackjackGame initializeGame() {
+    private BlackjackGame initializeGame() {
         try {
-            List<String> playerNames = InputView.inputPlayerNames();
-            return new BlackjackGame(new CardDeck(), playerNames);
+            BlackjackGame blackjackGame = new BlackjackGame(new CardDeck());
+
+            requestPlayerNames(blackjackGame);
+
+            return blackjackGame;
         } catch (IllegalArgumentException exception) {
             OutputView.printException(exception);
             return initializeGame();
         }
     }
 
-    public Map<Player, BetAndProfit> requestBetToAllPlayer(BlackjackGame game) {
-        List<Player> players = game.getPlayers();
-        Map<Player, BetAndProfit> playerBets = new LinkedHashMap<>();
-        for (Player player : players) {
-            Money betMoney = requestBetToSinglePlayer(player);
-            playerBets.put(player, BetAndProfit.from(betMoney));
-        }
-
-        return playerBets;
-    }
-
-    private Money requestBetToSinglePlayer(Player player) {
-        try {
-            return Money.from(InputView.inputBetMoney(player.getName()));
-        } catch (IllegalArgumentException exception) {
-            OutputView.printException(exception);
-            return requestBetToSinglePlayer(player);
+    private void requestPlayerNames(BlackjackGame blackjackGame) {
+        List<String> playerNames = InputView.inputPlayerNames();
+        for (String playerName : playerNames) {
+            addPlayerIntoBlackjackGameByBetMoneyInput(blackjackGame, playerName);
         }
     }
 
-    // TODO: 추후 participants 에 dealer 가 포함되는 구조로 개선되면 수정 필요
-    public void printInitialHand(BlackjackGame game) {
-        ParticipantDto dealerDto = ParticipantDto.from(game.getDealer());
-        List<ParticipantDto> playerDtos = game.getPlayers()
-                .stream()
-                .map(ParticipantDto::from)
-                .collect(Collectors.toList());
+    private void addPlayerIntoBlackjackGameByBetMoneyInput(BlackjackGame blackjackGame, String playerName) {
+        int rawBetMoney = InputView.inputBetMoney(playerName);
+        blackjackGame.addPlayer(playerName, rawBetMoney);
+    }
+
+    private void printInitialHand(BlackjackGame game) {
+        DealerDto dealerDto = DealerDto.from(game.getDealer());
+        List<PlayerDto> playerDtos = PlayerDto.from(game.getPlayers());
 
         printInitialInfo(playerDtos, dealerDto);
     }
 
-    private void printInitialInfo(List<ParticipantDto> playerDtos, ParticipantDto dealerDto) {
+    private void printInitialInfo(List<PlayerDto> playerDtos, DealerDto dealerDto) {
         OutputView.printInitialDistributionInfo(playerDtos);
         OutputView.printInitialDealerHand(dealerDto);
         OutputView.printInitialPlayersHand(playerDtos);
     }
 
-    public void giveExtraCardsToAllPlayer(BlackjackGame game) {
-        List<Player> players = game.getPlayers();
-        for (Player player : players) {
+    private void giveExtraCardsToAllPlayer(BlackjackGame game) {
+        for (Player player : game.getPlayers().getValue()) {
             giveCardsToPlayer(player, game);
         }
     }
@@ -100,7 +83,7 @@ public class BlackjackController {
 
     private void giveSingleCardToPlayer(Player player, BlackjackGame game) {
         if (game.giveExtraCardToPlayer(player)) {
-            OutputView.printParticipantHand(ParticipantDto.from(player));
+            OutputView.printHandOfPlayer(PlayerDto.from(player));
             giveCardsToPlayer(player, game);
             return;
         }
@@ -109,11 +92,11 @@ public class BlackjackController {
     }
 
     private void printHandAndBustMessage(Player player) {
-        OutputView.printParticipantHand(ParticipantDto.from(player));
+        OutputView.printHandOfPlayer(PlayerDto.from(player));
         OutputView.printPlayerBustInfo();
     }
 
-    public void giveExtraCardsToDealer(BlackjackGame game) {
+    private void giveExtraCardsToDealer(BlackjackGame game) {
         int extraCardCount = game.giveExtraCardsToDealer();
 
         if (extraCardCount > 0) {
@@ -121,23 +104,16 @@ public class BlackjackController {
         }
     }
 
-    // TODO: 추후 participants 에 dealer 가 포함되는 구조로 개선되면 수정 필요
-    public void printFinalHandAndScore(BlackjackGame game) {
-        List<ParticipantDto> participants = new ArrayList<>(List.of(ParticipantDto.from(game.getDealer())));
-        participants.addAll(game.getPlayers()
-                .stream()
-                .map(ParticipantDto::from)
-                .collect(Collectors.toList()));
+    private void printFinalHandAndScore(BlackjackGame game) {
+        List<ParticipantDto> participantDtos = new ArrayList<>();
+        participantDtos.add(DealerDto.from(game.getDealer()));
+        participantDtos.addAll(PlayerDto.from(game.getParticipantGroup().getPlayers()));
 
-        OutputView.printHandAndScore(participants);
+        OutputView.printHandAndScore(participantDtos);
     }
 
-    public void printBetResult(BlackjackGame game, Map<Player, BetAndProfit> playerBets) {
-        ProfitResult profitResult = ProfitResult.of(playerBets, game.getDealer());
-
+    private void printBetResult(BlackjackGame game) {
         OutputView.printProfitResultInfo();
-        OutputView.printDealerProfitResult(profitResult.getDealerProfit());
-        OutputView.printPlayerProfitResult(profitResult);
+        OutputView.printProfitOfParticipantGroup(game.getParticipantGroup());
     }
-
 }
