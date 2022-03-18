@@ -19,7 +19,7 @@ public class Blackjack {
         this.turnPlayer = players.firstPlayer();
     }
 
-    private void updateTurnPlayer() {
+    public void updateTurnPlayer() {
         turnPlayer = players.nextPlayer(turnPlayer);
     }
 
@@ -73,11 +73,11 @@ public class Blackjack {
         return false;
     }
 
-    public Map<Dealer, Cards> openDealerOneCard() {
+    public Map<Participant, Cards> openDealerOneCard() {
         return Map.of(dealer, dealer.pickOpenCardsInInitCards());
     }
 
-    public Map<Player, Cards> openTurnPlayerInitCards() {
+    public Map<Participant, Cards> openTurnPlayerInitCards() {
         return Map.of(turnPlayer, turnPlayer.pickOpenCardsInInitCards());
     }
 

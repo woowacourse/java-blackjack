@@ -2,7 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.BlackjackCardType;
 import blackjack.domain.Card;
+import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Result;
 import java.util.ArrayList;
@@ -35,8 +37,11 @@ public class OutputView {
         System.out.printf(INIT_CARD_DISTRIBUTION_MESSAGE, prefixString, INIT_CARD_NUM);
     }
 
-    public static void printPlayerOpenCards(Player player, List<Card> openCards) {
-        System.out.println(makeStatusFormat(player.getName(), openCards));
+    public static void printOpenCards(Map<Participant, Cards> participantAndCards) {
+        for (Participant participant : participantAndCards.keySet()) {
+            System.out.println(makeStatusFormat(
+                    participant.getName(), participantAndCards.get(participant).getCards()));
+        }
     }
 
     private static String makeStatusFormat(String name, List<Card> cards) {
@@ -47,7 +52,7 @@ public class OutputView {
         return name + NAME_CARD_DELIMITER + String.join(NAME_DELIMITER, cardNames);
     }
 
-    public static void printCards(Player person, boolean newLine) {
+    public static void printCards(Participant person, boolean newLine) {
         System.out.print(makeStatusFormat(person.getName(), person.getMyCards()));
         if (newLine) {
             System.out.println();
@@ -74,7 +79,7 @@ public class OutputView {
         return Integer.toString(score);
     }
 
-    private static void printScore(Player player) {
+    private static void printScore(Participant player) {
         System.out.printf(SCORE_MESSAGE, convertToProperString(player.score()));
         System.out.println();
     }

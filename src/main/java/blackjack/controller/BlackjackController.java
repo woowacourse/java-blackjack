@@ -3,12 +3,10 @@ package blackjack.controller;
 import blackjack.domain.Blackjack;
 import blackjack.domain.NumberGenerator;
 import blackjack.domain.Player;
-import blackjack.domain.Players;
 import blackjack.domain.RandomNumberGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -37,10 +35,10 @@ public class BlackjackController {
     private void interactViewForInitDistribution(Blackjack blackjack, NumberGenerator numberGenerator) {
         blackjack.distributeInitialCards(numberGenerator);
         OutputView.printInitDistributionMessage(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
-        OutputView.printPlayerOpenCards(blackjack.getDealer(), List.of(blackjack.openDealerOneCard()));
-        List<Player> players = blackjack.getPlayers().getPlayers();
-        for (Player player : players) {
-            OutputView.printPlayerOpenCards(player, player.getMyCards());
+        OutputView.printOpenCards(blackjack.openDealerOneCard());
+        while (!blackjack.cycleIsOver()) {
+            OutputView.printOpenCards(blackjack.openTurnPlayerInitCards());
+            blackjack.updateTurnPlayer();
         }
     }
 }
