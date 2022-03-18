@@ -20,10 +20,10 @@ public class PlayersBetMoney {
     }
 
     public static PlayersBetMoney of(Players players, HashMap<String, Integer> playersBetMoney) {
-        return new PlayersBetMoney(init(players, playersBetMoney));
+        return new PlayersBetMoney(initMoney(players, playersBetMoney));
     }
 
-    private static LinkedHashMap<Player, BetMoney> init(Players players, HashMap<String, Integer> playersBetMoney) {
+    private static LinkedHashMap<Player, BetMoney> initMoney(Players players, HashMap<String, Integer> playersBetMoney) {
         LinkedHashMap<Player, BetMoney> playersMoney = new LinkedHashMap<>();
         Player dealer = players.getDealer();
 
@@ -72,7 +72,6 @@ public class PlayersBetMoney {
         playersMoney.get(findPlayer(players, guest))
                 .minusBlackjackMoney();
     }
-
 
     public Map<Player, BetMoney> getPlayersMoney() {
         return playersMoney;
