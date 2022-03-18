@@ -11,6 +11,7 @@ import static blackJack.domain.Card.CardFactory.CARD_CACHE;
 
 public abstract class User {
 
+    public static final int WINNING_LIMIT = 21;
     protected String name;
     protected Cards cards;
 
@@ -42,10 +43,15 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        if (cards.isOnlyTwoCards() && cards.calculateScore() == 21) {
+        if (cards.isOnlyTwoCards() && cards.calculateScore() == WINNING_LIMIT) {
             return true;
         }
         return false;
     }
+
+    public boolean isBurst(){
+        return this.getScore() > WINNING_LIMIT;
+    }
+
 
 }

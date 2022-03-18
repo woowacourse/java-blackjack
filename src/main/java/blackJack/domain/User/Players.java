@@ -23,10 +23,4 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
-
-    public void distinctBlackjackPlayer() {
-        for (Player player : players) { 
-            player.judgeByBlackjack();
-        }
-    }
 }

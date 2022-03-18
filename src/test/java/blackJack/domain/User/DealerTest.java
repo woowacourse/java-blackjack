@@ -31,9 +31,7 @@ class DealerTest {
     void checkScoreWhenOver16Test() {
         dealer.cards.add(new Card(Suit.HEART, Denomination.JACK));
         dealer.cards.add(new Card(Suit.HEART, Denomination.TEN));
-        assertThatThrownBy(() -> dealer.isPossibleToAdd())
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExeptionMessage.CANNOT_ADD_CARD);
+        assertThat(dealer.isPossibleToAdd()).isEqualTo(false);
     }
 
     @Test

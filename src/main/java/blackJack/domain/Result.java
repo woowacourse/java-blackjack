@@ -2,34 +2,34 @@ package blackJack.domain;
 
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
+import blackJack.domain.User.User;
+
+import java.util.Arrays;
+import java.util.function.BiPredicate;
 
 public enum Result {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BlackJack("승", (dealer, player) -> !dealer.isBlackJack() && player.isBlackJack()),
+    LOSE("패", (dealer, player) -> player.isBurst() || !dealer.isBurst() && dealer.getScore() > player.getScore()),
+    WIN("승", (dealer, player) -> dealer.isBurst() && !player.isBurst() || !player.isBurst() && dealer.getScore() < player.getScore()),
+    DRAW("무",(dealer, player) -> !player.isBurst() && dealer.getScore() == player.getScore());
 
-    public static final int WIN_SCORE = 21;
     private final String printFormat;
+    private final BiPredicate<Dealer, Player> predicate;
 
-    Result(String value) {
+    Result(String value, BiPredicate<Dealer, Player> predicate) {
         this.printFormat = value;
+        this.predicate = predicate;
     }
 
     public static Result judge(Dealer dealer, Player player) {
-        if(player.isBlackJack()){
-            return Result.WIN;
-        }
-        if (dealer.getScore() > WIN_SCORE || dealer.getScore() < player.getScore() && player.getScore() <= WIN_SCORE) {
-            return Result.WIN;
-        }
-        if (player.getScore() > WIN_SCORE || (dealer.getScore() > player.getScore() && dealer.getScore() <= WIN_SCORE)) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
+        return Arrays.stream(values())
+                .filter(result -> result.predicate.test(dealer,player))
+                .findFirst()
+                .get();
     }
 
     public static Result reverse(Result result) {
-        if (result.equals(Result.WIN)) {
+        if (result.equals(Result.WIN) || result.equals(Result.BlackJack)) {
             return Result.LOSE;
         }
         if (result.equals(Result.LOSE)) {

@@ -36,9 +36,7 @@ class PlayerTest {
         player.cards.add(new Card(Suit.HEART, Denomination.JACK));
         player.cards.add(new Card(Suit.HEART, Denomination.TEN));
         player.cards.add(new Card(Suit.HEART, Denomination.TEN));
-        assertThatThrownBy(() -> player.isPossibleToAdd())
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExeptionMessage.CANNOT_ADD_CARD);
+        assertThat(player.isPossibleToAdd()).isEqualTo(false);
     }
 
 }

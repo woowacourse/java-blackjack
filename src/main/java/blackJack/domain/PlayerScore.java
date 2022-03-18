@@ -22,7 +22,7 @@ public class PlayerScore {
 
     public void makePlayerResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-           this.addResult(player, Result.judge(dealer, player));
+           this.addResult(player, Result.judge(dealer,player));
         }
     }
 
