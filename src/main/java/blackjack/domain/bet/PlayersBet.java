@@ -49,8 +49,8 @@ public class PlayersBet {
 
     private void calculateDealerMoney(Map<Participant, Money> profitTable,
                                       Participant dealer) {
-        Money dealerMoney = new Money(-profitTable.values().stream()
-                .map(Money::getValue)
+        Money dealerMoney = new Money(profitTable.values().stream()
+                .map(Money::reverse)
                 .reduce(0, Integer::sum));
         profitTable.put(dealer, dealerMoney);
     }

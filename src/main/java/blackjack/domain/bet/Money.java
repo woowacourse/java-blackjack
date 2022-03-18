@@ -17,6 +17,10 @@ public class Money {
         return money;
     }
 
+    public int reverse() {
+        return -money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
