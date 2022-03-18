@@ -13,7 +13,7 @@ class ParticipantsTest {
     void construct_player_count() {
         List<String> names = List.of("리버", "포키", "크리스", "알렉스", "해리", "유니", "gamer", "duly", "ee");
 
-        assertThatThrownBy(() -> new Participants(names))
+        assertThatThrownBy(() -> new Participants(names, (name) -> 3000))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자는 최대 8명 까지 참여 가능합니다.");
     }
@@ -23,7 +23,7 @@ class ParticipantsTest {
     void construct_duplicate_name() {
         List<String> names = List.of("리버", "포키", "크리스", "리버");
 
-        assertThatThrownBy(() -> new Participants(names))
+        assertThatThrownBy(() -> new Participants(names, (name) -> 3000))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자 이름 중 중복되는 이름이 있습니다.");
     }

@@ -25,7 +25,7 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static int inputMoney(final String name) {
+    public static int inputBet(final String name) {
         System.out.printf(INPUT_PLAYER_BETTING, name);
         final String money = SCANNER.nextLine();
         return parseToInt(money);

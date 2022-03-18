@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.view.MoneyBetter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,11 +10,11 @@ public class Participants {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Participants(final List<String> names) {
+    public Participants(final List<String> names, final MoneyBetter moneyBetter) {
         checkPlayersCount(names);
         checkDuplicateIn(names);
         this.players = names.stream()
-                .map(Player::new)
+                .map(name -> new Player(name, moneyBetter.orderToBet(name)))
                 .collect(Collectors.toUnmodifiableList());
         this.dealer = new Dealer();
     }
@@ -31,6 +32,8 @@ public class Participants {
     }
 
     private int countDuplicateRemove(final List<String> names) {
-        return (int) names.stream().distinct().count();
+        return (int) names.stream()
+                .distinct()
+                .count();
     }
 }
