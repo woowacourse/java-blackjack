@@ -15,7 +15,7 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(Dealer dealer, List<Player> players) {
+    private Participants(Dealer dealer, List<Player> players) {
         validateDuplicatePlayerName(players);
         validatePlayerCount(players);
         this.dealer = dealer;
