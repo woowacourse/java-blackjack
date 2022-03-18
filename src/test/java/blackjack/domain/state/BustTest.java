@@ -64,12 +64,31 @@ class BustTest {
         assertThat(bust.isFinished()).isTrue();
     }
 
-    @DisplayName("버스트일 경우 베팅 금액만큼 잃는 것을 확인한다.")
+    @DisplayName("패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
     @Test
-    void profit() {
+    void profit_lose() {
         Bust bust = new Bust(playingCards, betting);
+        bust.decideRate(-1);
 
         assertThat(bust.profit()).isEqualTo(-1000.0);
+    }
+
+    @DisplayName("무승부일 경우 수익이 없는 것을 확인한다.")
+    @Test
+    void profit_tie() {
+        Bust bust = new Bust(playingCards, betting);
+        bust.decideRate(0);
+
+        assertThat(bust.profit()).isEqualTo(0.0);
+    }
+
+    @DisplayName("승리일 경우 베팅 금액만큼 얻는 것을 확인한다.")
+    @Test
+    void profit_win() {
+        Bust bust = new Bust(playingCards, betting);
+        bust.decideRate(1);
+
+        assertThat(bust.profit()).isEqualTo(1000.0);
     }
 
     @DisplayName("카드 총합을 확인한다.")

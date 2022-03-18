@@ -65,14 +65,29 @@ class BlackjackTest {
         assertThat(blackjack.isFinished()).isTrue();
     }
 
-    @DisplayName("블랙잭일 경우 베팅 금액의 1.5 배를 얻는 것을 확인한다.")
+    @DisplayName("딜러가 블랙잭이어서 패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
+    @Test
+    void profit_lose() {
+        Blackjack blackjack = new Blackjack(playingCards, betting);
+        blackjack.decideRate(-1);
+
+        assertThat(blackjack.profit()).isEqualTo(-1000.0);
+    }
+
+    @DisplayName("딜러와 플레이어 모두 블랙잭이어서 무승부일 경우 수익이 없는 것을 확인한다.")
+    @Test
+    void profit_tie() {
+        Blackjack blackjack = new Blackjack(playingCards, betting);
+        blackjack.decideRate(0);
+
+        assertThat(blackjack.profit()).isEqualTo(0.0);
+    }
+
+    @DisplayName("플레이어가 블랙잭이어서 우승할 경우 베팅 금액의 1.5 배를 얻는 것을 확인한다.")
     @Test
     void profit() {
-        State blackjack = new Ready();
-        blackjack.bet("1000");
-
-        blackjack = blackjack.draw(Card.of(Denomination.KING, Suit.SPADE));
-        blackjack = blackjack.draw(Card.of(Denomination.ACE, Suit.SPADE));
+        Blackjack blackjack = new Blackjack(playingCards, betting);
+        blackjack.decideRate(1.5);
 
         assertThat(blackjack.profit()).isEqualTo(1500.0);
     }

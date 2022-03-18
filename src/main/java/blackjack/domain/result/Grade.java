@@ -11,7 +11,6 @@ public enum Grade {
     WIN(1),
     TIE(0),
     LOSE(-1),
-    PROCEED(0)
     ;
 
     private final double rate;
@@ -20,37 +19,26 @@ public enum Grade {
         this.rate = rate;
     }
 
-    public static Grade gradeToInitCards(final Dealer dealer, final Player player) {
-        if (dealer.isBlackjack() && player.isBlackjack()) {
-            return TIE;
-        }
+    public static double rateBlackjack(final Dealer dealer, final Player player) {
         if (dealer.isBlackjack() && !player.isBlackjack()) {
-            return LOSE;
+            return LOSE.rate;
         }
         if (!dealer.isBlackjack() && player.isBlackjack()) {
-            return BLACKJACK_WIN;
+            return BLACKJACK_WIN.rate;
         }
-        return PROCEED;
+        return TIE.rate;
     }
 
-    public static Grade grade(final Dealer dealer, final Player player) {
+    public static double rateStay(final Dealer dealer, final Player player) {
         if (player.isBust()) {
-            return LOSE;
+            return LOSE.rate;
         }
         if (dealer.isBust() || dealer.isLowerScore(player)) {
-            return WIN;
+            return WIN.rate;
         }
         if (dealer.isHigherScore(player)) {
-            return LOSE;
+            return LOSE.rate;
         }
-        return TIE;
-    }
-
-    public static int rate(final Grade grade, final int betting) {
-        return Arrays.stream(Grade.values())
-                .filter(nowGrade -> nowGrade.equals(grade))
-                .map(nowGrade -> (int) (betting * nowGrade.rate))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Grade 입니다."));
+        return TIE.rate;
     }
 }

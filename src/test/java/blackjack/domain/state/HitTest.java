@@ -85,7 +85,19 @@ class HitTest {
         assertThat(hit.isFinished()).isFalse();
     }
 
-    @DisplayName("수익률 계산 시 예외가 발생하는 것을 확인한다.")
+    @DisplayName("수익률을 변경할 경우 예외가 발생하는 것을 확인한다.")
+    @Test
+    void decide_rate() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards, betting);
+
+        assertThatThrownBy(() -> hit.decideRate(1))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("현재 상태는 수익률을 변경할 수 없습니다.");
+    }
+
+    @DisplayName("수익 계산 시 예외가 발생하는 것을 확인한다.")
     @Test
     void profit_exception() {
         PlayingCards playingCards = new PlayingCards();

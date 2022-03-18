@@ -15,6 +15,8 @@ public interface State {
 
     boolean isFinished();
 
+    void decideRate(final double rate);
+
     double profit();
 
     PlayingCards playingCards();

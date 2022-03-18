@@ -1,8 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.state.Hit;
-import blackjack.domain.state.Ready;
+import blackjack.domain.result.Grade;
 import blackjack.dto.GamerDto;
 
 import java.util.List;
@@ -39,6 +38,10 @@ public class Player extends Gamer {
         stay();
     }
 
+    public void compareCards(final Dealer dealer) {
+        state.decideRate(findRate(dealer));
+    }
+
     public double profit() {
         return state.profit();
     }
@@ -51,6 +54,13 @@ public class Player extends Gamer {
 
     private boolean isDrawing(final Predicate<String> drawing) {
         return drawing.test(name);
+    }
+
+    private double findRate(final Dealer dealer) {
+        if (dealer.isBlackjack() || isBlackjack()) {
+            return Grade.rateBlackjack(dealer, this);
+        }
+        return Grade.rateStay(dealer, this);
     }
 
     private void openCards(final BiConsumer<String, List<String>> openCards) {

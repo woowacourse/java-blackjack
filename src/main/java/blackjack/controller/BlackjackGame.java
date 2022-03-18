@@ -58,6 +58,7 @@ public class BlackjackGame {
         showTotalScore(dealer, players);
 
         OutputView.printProfitTitle();
+        players.compareCards(dealer);
         OutputView.printProfit(dealer.getName(), (int) dealer.profit(players.totalProfit()));
         for (Player player : players.getPlayers()) {
             OutputView.printProfit(player.getName(), (int) player.profit());

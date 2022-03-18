@@ -1,12 +1,10 @@
 package blackjack.domain.bet;
 
-import blackjack.domain.result.Grade;
-
 public class Betting {
 
     private static final int MONEY_UNIT = 10;
 
-    private int betting;
+    private final int betting;
 
     public Betting(final String betting) {
         this(Integer.parseInt(betting));
@@ -15,10 +13,6 @@ public class Betting {
     public Betting(final int betting) {
         validateBetting(betting);
         this.betting = betting;
-    }
-
-    public void calculateProfit(final Grade grade) {
-        betting = Grade.rate(grade, betting);
     }
 
     public double profit(final double rate) {

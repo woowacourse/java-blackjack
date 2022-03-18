@@ -3,8 +3,11 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.game.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -78,6 +81,16 @@ class ReadyTest {
         Ready ready = new Ready();
 
         assertThat(ready.isFinished()).isFalse();
+    }
+
+    @DisplayName("수익률을 변경할 경우 예외가 발생하는 것을 확인한다.")
+    @Test
+    void decide_rate() {
+        Ready ready = new Ready();
+
+        assertThatThrownBy(() -> ready.decideRate(1))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("현재 상태는 수익률을 변경할 수 없습니다.");
     }
 
     @DisplayName("수익률 계산 시 예외가 발생하는 것을 확인한다.")

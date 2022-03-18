@@ -55,12 +55,10 @@ public class Players {
         return false;
     }
 
-    public double totalProfit() {
-        double totalProfit = 0;
+    public void compareCards(final Dealer dealer) {
         for (Player player : players) {
-            totalProfit += player.profit();
+            player.compareCards(dealer);
         }
-        return totalProfit;
     }
 
     private List<String> trimNames(final String input) {
@@ -95,5 +93,13 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public double totalProfit() {
+        double totalProfit = 0;
+        for (Player player : players) {
+            totalProfit += player.profit();
+        }
+        return totalProfit;
     }
 }
