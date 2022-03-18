@@ -6,11 +6,11 @@ public enum HitThreshold {
 
     private final int thresholdValue;
 
-    HitThreshold(int thresholdValue) {
+    HitThreshold(final int thresholdValue) {
         this.thresholdValue = thresholdValue;
     }
 
-    public boolean canHit(int other) {
+    public boolean canHit(final int other) {
         return thresholdValue >= other;
     }
 }
