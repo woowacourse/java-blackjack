@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -34,6 +35,21 @@ public final class InputView {
 
     private List<String> splitByComma(String names) {
         return Arrays.asList(names.split(COMMA));
+    }
+
+    public List<String> inputBettings(List<String> playerNames) {
+        List<String> bettingMoneys = new ArrayList<>();
+        for (String playerName : playerNames) {
+            bettingMoneys.add(inputBettingMoney(playerName));
+        }
+        return bettingMoneys;
+    }
+
+    private String inputBettingMoney(String playerName){
+        System.out.print(System.lineSeparator());
+        System.out.printf(BETTING_MONEY_INPUT_MESSAGE, playerName);
+        System.out.print(System.lineSeparator());
+        return input();
     }
 
     private String input() {
@@ -74,12 +90,5 @@ public final class InputView {
 
     private boolean matchYesOrNo(String input) {
         return input.equals(YES);
-    }
-
-    public String inputBettingMoney(String playerName){
-        System.out.print(System.lineSeparator());
-        System.out.printf(BETTING_MONEY_INPUT_MESSAGE, playerName);
-        System.out.print(System.lineSeparator());
-        return input();
     }
 }
