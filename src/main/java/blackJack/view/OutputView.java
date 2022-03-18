@@ -3,7 +3,6 @@ package blackJack.view;
 import blackJack.domain.Card.Card;
 import blackJack.domain.DealerScore;
 import blackJack.domain.PlayerScore;
-import blackJack.domain.Result;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
 import blackJack.domain.User.Players;
@@ -19,10 +18,9 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String ADD_DEALER_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String SCORE_FORMAT = " - 결과: %d";
-    private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
+    private static final String FINAL_RESULT_MESSAGE = "## 최종 수익";
     private static final String NAME_FORMAT = "%s:";
-    private static final String DEALER_RESULT_FORMAT = "%d승 %d패 %d무";
-    private static final String PLAYER_RESULT_FORMAT = "%s";
+    private static final String USER_RESULT_FORMAT = "%s: %d";
     public static final String NEW_LINE = System.getProperty("line.separator");
 
     public static void printDrawMessage(List<String> userNames) {
@@ -62,13 +60,11 @@ public class OutputView {
         System.out.printf(NEW_LINE);
         System.out.println(FINAL_RESULT_MESSAGE);
 
-        Integer lose = dealerScore.getDealerScore().get(Result.LOSE);
-        Integer draw = dealerScore.getDealerScore().get(Result.DRAW);
-        Integer win = dealerScore.getDealerScore().get(Result.WIN);
-        System.out.println(String.format(NAME_FORMAT + DEALER_RESULT_FORMAT, dealerName, win, lose, draw));
-        for (Map.Entry<String, Result> playerResult : playerScore.getPlayersScore().entrySet()) {
-            System.out.println(String.format(NAME_FORMAT + PLAYER_RESULT_FORMAT, playerResult.getKey(), playerResult.getValue().getPrintFormat()));
+        System.out.println(String.format(USER_RESULT_FORMAT, dealerName, dealerScore.getDealerProfits()));
+        for (Map.Entry<String, Integer> entry : playerScore.getPlayersProfit().entrySet()) {
+            System.out.println(String.format(USER_RESULT_FORMAT, entry.getKey(), entry.getValue()));
         }
     }
 }
+
 
