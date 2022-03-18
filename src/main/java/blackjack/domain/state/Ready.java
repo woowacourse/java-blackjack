@@ -10,13 +10,22 @@ public abstract class Ready implements State {
 
     protected PlayerCards cards;
 
-    public static State deal(Card card1, Card card2) {
+    public static State dealToParticipant(Card card1, Card card2) {
         List<Card> cards = new ArrayList<>(List.of(card1, card2));
         PlayerCards playerCards = new PlayerCards(cards);
         if (playerCards.isBlackjack()) {
             return new Blackjack(playerCards);
         }
-        return new Hit(playerCards);
+        return new ParticipantHit(playerCards);
+    }
+
+    public static State dealToDealer(Card card1, Card card2) {
+        List<Card> cards = new ArrayList<>(List.of(card1, card2));
+        PlayerCards playerCards = new PlayerCards(cards);
+        if (playerCards.isBlackjack()) {
+            return new Blackjack(playerCards);
+        }
+        return new DealerHit(playerCards);
     }
 
     @Override

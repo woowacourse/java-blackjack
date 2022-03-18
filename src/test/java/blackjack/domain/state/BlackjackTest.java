@@ -15,7 +15,7 @@ public class BlackjackTest {
 
     @BeforeEach
     void setUp() {
-        blackjack = Ready.deal(SPADE_ACE, SPADE_TEN);
+        blackjack = Ready.dealToParticipant(SPADE_ACE, SPADE_TEN);
 
     }
     @Test

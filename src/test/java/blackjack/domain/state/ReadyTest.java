@@ -13,7 +13,7 @@ public class ReadyTest {
     @Test
     @DisplayName("ready에서 카드 두 장을 deal하고 카드 합이 21이 아니면 hit가 된다.")
     void ready_hit() {
-        State state = Ready.deal(SPADE_ACE, SPADE_NINE);
+        State state = Ready.dealToParticipant(SPADE_ACE, SPADE_NINE);
 
         assertThat(state).isInstanceOf(Hit.class);
     }
@@ -21,7 +21,7 @@ public class ReadyTest {
     @Test
     @DisplayName("ready에서 카드 두 장을 deal하고 카드 합이 21이면 blackjack이 된다.")
     void ready_blackjack() {
-        State state = Ready.deal(SPADE_ACE, SPADE_TEN);
+        State state = Ready.dealToParticipant(SPADE_ACE, SPADE_TEN);
 
         assertThat(state).isInstanceOf(Blackjack.class);
     }
@@ -29,7 +29,7 @@ public class ReadyTest {
     @Test
     @DisplayName("카드 두 장을 deal하면 두장의 카드를 가지고 있다.")
     void ready_get_cards() {
-        State state = Ready.deal(SPADE_ACE, SPADE_NINE);
+        State state = Ready.dealToParticipant(SPADE_ACE, SPADE_NINE);
 
         assertThat(state.getCards()).hasSize(2);
         assertThat(state.getCards().get(0)).isEqualTo(SPADE_ACE);

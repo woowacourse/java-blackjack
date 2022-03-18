@@ -15,7 +15,7 @@ public class BustTest {
 
     @BeforeEach
     void setUp() {
-        bust = Ready.deal(SPADE_THREE, SPADE_NINE)
+        bust = Ready.dealToParticipant(SPADE_THREE, SPADE_NINE)
                 .draw(SPADE_TEN);
     }
 

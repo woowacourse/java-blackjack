@@ -68,6 +68,19 @@
         - [ ] 참여자 패 : 배팅금액을 잃는다.
     - [ ] 딜러와 참여자의 최종 수익 출력
 
+## State(상태) 관계 정리
+
+- State
+    - Ready
+        - Running
+            - Hit
+                - DealerHit
+                - ParticipantHit
+        - Finished
+            - Bust
+            - Blackjack
+            - Stay
+
 ---
 
 # 1단계 리뷰 & 수정사항 정리

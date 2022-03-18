@@ -1,25 +1,16 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.PlayerCards;
 
-public class Hit extends Running {
+public abstract class Hit extends Running {
 
-    Hit(PlayerCards cards) {
-        this.cards = cards;
-    }
-
-    @Override
-    public State draw(Card card) {
-        cards.add(card);
-        if (cards.isBust()) {
-            return new Bust(cards);
-        }
-        return this;
+    Hit() {
     }
 
     @Override
     public State stay() {
         return new Stay(cards);
     }
+
+    public abstract State draw(Card card);
 }
