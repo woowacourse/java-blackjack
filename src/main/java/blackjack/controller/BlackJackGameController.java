@@ -1,5 +1,8 @@
 package blackjack.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import blackjack.domain.card.DeckStrategy;
 import blackjack.domain.result.BettingBox;
 import blackjack.domain.user.Dealer;
@@ -32,9 +35,14 @@ public class BlackJackGameController {
 	}
 
 	private Players generatePlayers() {
+		List<Player> players = new ArrayList<>();
 		try {
-			Players players = new Players(inputView.inputPlayerNames(), deck);
-			return players;
+			List<String> playerNames = inputView.inputPlayerNames();
+			for (String playerName : playerNames) {
+				double money = inputView.inputMoney(playerName);
+				players.add(new Player(playerName, money, deck));
+			}
+			return new Players(players);
 		} catch (IllegalArgumentException exception) {
 			outputView.printException(exception.getMessage());
 			return generatePlayers();
@@ -58,6 +66,7 @@ public class BlackJackGameController {
 	private void progressOnePlayer(DeckStrategy deck, Player player) {
 		while (player.isRunning() && decidePlayerHit(player)) {
 			player.addCard(deck.distributeCard());
+			outputView.displayAllCard(player.getName(), player.state().getCards().getCards());
 		}
 	}
 
@@ -70,21 +79,20 @@ public class BlackJackGameController {
 	}
 
 	private void progressDealerTurn(Dealer dealer, DeckStrategy deck) {
-		while(dealer.isRunning()) {
+		while(dealer.isRunning() && isDealerHit(dealer)) {
 			dealer.addCard(deck.distributeCard());
 			outputView.displayDealerUnderSevenTeen();
 		}
 	}
 
-	private void makeResult2(Players players, Dealer dealer) {
-		// outputView.displayAllCardAndScore(dealer.getName(), dealer.getScore(), dealer.getCards());
-		// for (Player player : players.getPlayers()) {
-		// 	outputView.displayAllCardAndScore(player.getName(), player.getScore(), player.getCards());
-		// }
-		// Result result = new Result();
-		// Map<Player, ResultType> gameResult = result.getResult(players.getPlayers(), dealer);
-		// outputView.displayResult(gameResult);
+	private boolean isDealerHit(Dealer dealer) {
+		if (!dealer.isHit()) {
+			dealer.stay();
+			return false;
+		}
+		return true;
 	}
+
 
 	private void makeResult(Players players, Dealer dealer) {
 		outputView.displayAllCardAndScore(dealer.getName(), dealer.getScore(), dealer.getCards());

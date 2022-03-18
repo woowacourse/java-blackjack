@@ -54,29 +54,15 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	// public void displayResult(final Map<Player, ResultType> result) {
-	// 	final int winCount = (int) result.values().stream()
-	// 		.filter(resultType -> resultType == ResultType.LOSE)
-	// 		.count();
-	// 	final int loseCount = (int)result.values().stream()
-	// 		.filter(resultType -> resultType == ResultType.WIN)
-	// 		.count();
-	// 	final int drawCount = result.size() - (winCount + loseCount);
-	// 	System.out.println("## 최종 승패");
-	// 	System.out.println("딜러: " + winCount + "승 " + loseCount + "패 " + drawCount + "무");
-	// 	for (Player player : result.keySet()) {
-	// 		System.out.println(player.getName() + ": " + result.get(player).getValue());
-	// 	}
-	// }
-
 	public void printException(final String message) {
 		System.out.println("[ERROR] " + message);
 	}
 
 	public void displayProfitResult(Map<Player, Money> playerProfit, double dealerProfit) {
-		System.out.printf("딜러: %d\n", dealerProfit);
+		System.out.println("\n## 최종 수익");
+		System.out.printf("딜러: %d\n", (int) dealerProfit);
 		for (Player player : playerProfit.keySet()) {
-			System.out.printf("%s: %d", player.getName(), player.getMoney().getMoney());
+			System.out.printf("%s: %d\n", player.getName(), (int) playerProfit.get(player).getMoney());
 		}
 	}
 }

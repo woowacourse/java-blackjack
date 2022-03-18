@@ -28,19 +28,6 @@ class GamerTest {
 		int changedSize = gamer.getCards().size();
 		assertThat(changedSize).isEqualTo(originalSize + 1);
 	}
-	//
-	// @Test
-	// @DisplayName("버스트인지 확인하는 기능이 정상 작동하는지 확인")
-	// void isBurst() {
-	// 	//given
-	// 	Gamer gamer = new Dealer();
-	// 	//when
-	// 	gamer.addCard(Card.of(Denomination.TEN, Suit.CLOVER));
-	// 	gamer.addCard(Card.of(Denomination.TEN, Suit.HEART));
-	// 	gamer.addCard(Card.of(Denomination.TWO, Suit.SPADE));
-	// 	//then
-	// 	assertThat(gamer.isBust()).isTrue();
-	// }
 
 	@Test
 	@DisplayName("에이스가 포함된 패일 경우 최적의 스코어가 반환되는지 확인")
