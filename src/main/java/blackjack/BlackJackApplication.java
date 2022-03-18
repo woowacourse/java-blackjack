@@ -37,8 +37,14 @@ public class BlackJackApplication {
     }
 
     private static void printAdditionalDrawDealer(Deck deck, Dealer dealer) {
-        dealer.distribute(deck);
+        distributeToDealer(dealer, deck);
         OutputView.printAdditionalDrawDealer(dealer.getCardsSize() - INIT_DISTRIBUTION_COUNT);
+    }
+
+    private static void distributeToDealer(Dealer dealer, Deck deck) {
+        while (dealer.canDraw()) {
+            dealer.addCard(deck.draw());
+        }
     }
 
     private static void drawAdditionalCard(Deck deck, Players players) {

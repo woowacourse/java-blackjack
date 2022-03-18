@@ -17,7 +17,7 @@ class BlackJackRefereeTest {
 
     @Test
     @DisplayName("아무도 버스트가 아닐 때 플레이어 게임 결과 확인")
-    void playerResultCreateNotBurst2() {
+    void playerResultCreateNotBust2() {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.NINE));
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> jasonCards = List.of(new Card(CardShape.CLOVER, CardNumber.SEVEN), new Card(CardShape.CLOVER, CardNumber.KING));
@@ -36,7 +36,7 @@ class BlackJackRefereeTest {
 
     @Test
     @DisplayName("딜러가 버스트일 때, 플레이어 게임 결과 확인")
-    void playerResultCreateBurst() {
+    void playerResultCreateBust() {
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.TEN));
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         Dealer dealer = new Dealer(dealerCards);

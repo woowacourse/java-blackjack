@@ -26,8 +26,8 @@ public enum BlackJackResult {
     private static final String NOT_EXIST_ERROR = "옯바른 결과를 찾을 수 없습니다.";
     private static final int REVERSE_VALUE = -1;
 
-    private final double value;
-    private final BiPredicate<Player, Dealer> predicate;
+    private final double value; // 변수의 이름 다시 생각해보자.
+    private final BiPredicate<Player, Dealer> predicate; // 변수 이름 다시 생각해보자.
 
     BlackJackResult(double value, BiPredicate<Player, Dealer> predicate) {
         this.value = value;

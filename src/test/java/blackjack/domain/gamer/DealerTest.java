@@ -12,7 +12,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
-
     @Test
     @DisplayName("보유 카드 번호 합이 16을 초과하는지 확인한다.")
     void checkCardsNumberSum() {
@@ -20,14 +19,5 @@ class DealerTest {
         Card card2 = new Card(CardShape.SPADE, CardNumber.FIVE);
         Dealer dealer = new Dealer(List.of(card1, card2));
         assertThat(dealer.canDraw()).isEqualTo(true);
-    }
-
-    @Test
-    @DisplayName("보유 카드 번호의 합이 16을 초과할 때 까지 카드를 뽑는다.")
-    void distribute() {
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer(List.of(deck.draw(), deck.draw()));
-        dealer.distribute(deck);
-        assertThat(dealer.getCardsNumberSum()).isGreaterThan(16);
     }
 }

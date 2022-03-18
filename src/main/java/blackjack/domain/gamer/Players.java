@@ -8,16 +8,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// 외부에서 만들어서 넣어주자. 이것의 장점과 단점에 대해서 생각해보자.
 public class Players {
     private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
 
     private final List<Player> players = new ArrayList<>();
 
-    public Players(List<String> names, List<Integer> values, Deck deck) {
+    public Players(List<String> names, List<Integer> bettingMoneys, Deck deck) {
         validateDuplicationNames(names);
         for (int i = 0; i < names.size(); i++) {
             List<Card> cards = List.of(deck.draw(), deck.draw());
-            players.add(new Player(names.get(i), cards, values.get(i)));
+            players.add(new Player(names.get(i), cards, bettingMoneys.get(i)));
         }
     }
 

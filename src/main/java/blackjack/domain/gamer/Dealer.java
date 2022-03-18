@@ -16,14 +16,8 @@ public class Dealer extends Gamer {
         }
     }
 
-    public void distribute(Deck deck) {
-        while (canDraw()) {
-            addCard(deck.draw());
-        }
-    }
-
     @Override
-    boolean canDraw() {
+    public boolean canDraw() {
         return getCardsNumberSum() <= ADDITIONAL_DISTRIBUTE_STANDARD;
     }
 }

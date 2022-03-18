@@ -9,7 +9,7 @@ class DeckTest {
 
     @Test
     @DisplayName("카드 1장 반환 확인")
-    void pickCard() {
+    void draw() {
         Deck deck = new Deck();
         deck.draw();
         assertThat(deck.getSize()).isEqualTo(51);
