@@ -30,7 +30,7 @@ public class BlackjackGame {
 
     private void initCards(Participant participant) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            drawCard(participant);
+            participants.drawCard(participant, cardDistributor.distribute());
         }
     }
 
