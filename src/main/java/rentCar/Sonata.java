@@ -1,4 +1,4 @@
-package RentCar;
+package rentCar;
 
 public class Sonata extends Car {
 

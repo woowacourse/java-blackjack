@@ -1,4 +1,4 @@
-package RentCar;
+package rentCar;
 
 import static org.assertj.core.api.Assertions.*;
 
