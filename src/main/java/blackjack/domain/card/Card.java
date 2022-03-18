@@ -39,4 +39,12 @@ public class Card {
     public Symbol getSymbol() {
         return symbol;
     }
+
+    public int point() {
+        return denomination.getPoint();
+    }
+
+    public boolean isAce() {
+        return denomination.equals(Denomination.ACE);
+    }
 }

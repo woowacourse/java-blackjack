@@ -2,11 +2,12 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.List;
 
 public abstract class Player {
 
     private final Name name;
-    private final Cards cards;
+    private Cards cards;
 
     public Player(Name name) {
         this.name = name;
@@ -16,7 +17,7 @@ public abstract class Player {
     public abstract boolean isHit();
 
     public void addCard(Card card) {
-        cards.add(card);
+        this.cards = cards.add(card);
     }
 
     public Cards getCards() {
@@ -24,7 +25,8 @@ public abstract class Player {
     }
 
     public int getPoint() {
-        return getCards().getPoint();
+        System.out.println(getCards().sum());
+        return getCards().sum();
     }
 
     public boolean isBust() {

@@ -24,6 +24,7 @@ class GamblerTest {
 
         Card card5 = Card.of(Denomination.of("5"), Symbol.of("스페이드"));
         Card card6 = Card.of(Denomination.of("6"), Symbol.of("하트"));
+
         gambler.addCard(card5);
         gambler.addCard(card6);
 

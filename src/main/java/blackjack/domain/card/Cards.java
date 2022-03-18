@@ -11,16 +11,45 @@ public class Cards {
 
     private final List<Card> cards;
 
-    private Cards() {
+    public Cards() {
         this.cards = new ArrayList<>();
+    }
+
+    public Cards(List<Card> value) {
+        this.cards = value;
+    }
+
+    public int sum() {
+        return cards.stream()
+            .mapToInt(Card::point)
+            .sum();
+    }
+
+    public boolean hasAce() {
+        return cards.stream()
+            .anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackJack() {
+        return 11 == sum() && hasAce();
+    }
+
+    public boolean isReady() {
+        return cards.size() < 2;
     }
 
     public static Cards create() {
         return new Cards();
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public Cards add(Card card) {
+        final List<Card> newValue = new ArrayList<>(cards);
+        newValue.add(card);
+        return new Cards(newValue);
+    }
+
+    public boolean isBust2() {
+        return sum() > 21;
     }
 
     public int size() {
