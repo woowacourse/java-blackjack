@@ -5,9 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Denomination;
+import domain.card.Symbol;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("16이 넘은 상태에서 카드를 뽑을 경우 에러를 발생시킨다.")
+    @DisplayName("블랙잭이거나 16이 넘은 상태에서 카드를 뽑을 경우 에러를 발생시킨다.")
     void hitCardOverLimitError() {
         while (dealer.canHit()) {
             dealer.hit(deck);
@@ -33,7 +34,7 @@ class DealerTest {
 
         assertThatThrownBy(() -> dealer.hit(deck))
             .isInstanceOf(IllegalStateException.class)
-            .hasMessage(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
+            .hasMessage(ExceptionMessages.DEALER_CAN_NOT_HIT_ERROR);
     }
 
     @Test
@@ -62,5 +63,16 @@ class DealerTest {
         int expected = -5000;
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러가 카드를 뽑을 때 잘 뽑는지 확인한다.")
+    void hitTest() {
+        Card card = Card.valueOf(Symbol.CLOVER, Denomination.THREE);
+        Deck testDeck = Deck.initDeck(List.of(card));
+
+        dealer.hit(testDeck);
+
+        assertThat(dealer.getFirstCard()).isSameAs(card);
     }
 }
