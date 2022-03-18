@@ -8,6 +8,8 @@ public enum Match {
     DRAW(0, "무")
     ;
 
+    public static final String NO_MATCH_RESULT_ERROR_MESSAGE = "결과가 존재하지 않습니다.";
+
     private final int number;
     private final String result;
 
@@ -20,7 +22,7 @@ public enum Match {
         return Arrays.stream(values())
                 .filter(value -> value.number == number)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("결과가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_RESULT_ERROR_MESSAGE));
     }
 
     public String getResult() {
