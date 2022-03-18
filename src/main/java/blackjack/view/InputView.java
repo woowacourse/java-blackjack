@@ -27,7 +27,7 @@ public class InputView {
 
     public static long inputBettingMoney(String name) {
         try {
-            System.out.println(name + "의 베팅 금액은?");
+            System.out.println("\n" + name + "의 베팅 금액은?");
             long bettingMoney = Long.parseLong(scanner.nextLine());
             checkPositive(bettingMoney);
             return bettingMoney;

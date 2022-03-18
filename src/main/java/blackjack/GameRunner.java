@@ -10,9 +10,9 @@ public class GameRunner {
 
     public void run() {
         Game game = generateGame();
-        OutputView.printInitialStatus(game.getDealer(), game.getPlayers());
-
         executeBettingTurn(game);
+
+        OutputView.printInitialStatus(game.getDealer(), game.getPlayers());
         executePlayerTurn(game);
         executeDealerTurn(game);
 
