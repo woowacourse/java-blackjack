@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,27 +9,25 @@ import blackjack.domain.*;
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.PlayingCardShuffleMachine;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.Results;
-import blackjack.utils.InputValidator;
+import blackjack.domain.result.Profits;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
 
     public void playGame() {
-        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), receivePlayerNames());
+        List<String> playerNames = receivePlayerNames();
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), playerNames);
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
         blackjackGame.initGames(playingCardShuffleMachine);
 
         Players players = blackjackGame.getPlayers();
         announceStartGame(blackjackGame, players);
-
         turnPlayers(blackjackGame, playingCardShuffleMachine);
         turnDealer(blackjackGame, playingCardShuffleMachine);
-        announceResult(blackjackGame, players);
+        announceResult(blackjackGame, players, receivePlayersBetMoney(playerNames));
     }
 
     private List<String> receivePlayerNames() {
@@ -36,6 +36,23 @@ public class BlackjackController {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return receivePlayerNames();
+        }
+    }
+
+    private HashMap<String, Integer> receivePlayersBetMoney(List<String> playerNames) {
+        HashMap<String, Integer> playersBetMoney = new LinkedHashMap<>();
+        for (String name : playerNames) {
+            playersBetMoney.put(name, receivePlayerBetMoney(name));
+        }
+        return playersBetMoney;
+    }
+
+    private int receivePlayerBetMoney(String name) {
+        try {
+            return InputView.inputBetMoney(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return receivePlayerBetMoney(name);
         }
     }
 
@@ -81,9 +98,9 @@ public class BlackjackController {
         OutputView.announcePresentCards(blackjackGame.getTurnPlayerGameResponse());
     }
 
-    private void announceResult(BlackjackGame blackjackGame, Players players) {
+    private void announceResult(BlackjackGame blackjackGame, Players players, HashMap<String, Integer> playersBetMoney) {
         OutputView.announceResultCards(blackjackGame.getPlayersGameResponses());
-        Results results = blackjackGame.calculateResult(players);
-        OutputView.announceResultWinner(results);
+        Profits profits = blackjackGame.calculateResult(players, playersBetMoney);
+        OutputView.announceResultProfit(profits);
     }
 }

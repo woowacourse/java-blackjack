@@ -35,4 +35,12 @@ public class InputView {
         InputValidator.isAnswerFormat(answer);
         return answer.equals(InputValidator.HIT);
     }
+
+    public static int inputBetMoney(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String number = SCANNER.nextLine();
+        InputValidator.inputBlank(number);
+        InputValidator.isDigit(number);
+        return InputValidator.toInteger(number);
+    }
 }
