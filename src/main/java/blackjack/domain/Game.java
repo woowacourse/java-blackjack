@@ -2,10 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.CardGenerator;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.User;
-import blackjack.domain.participant.Users;
+import blackjack.domain.participant.*;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ProfitDto;
 
@@ -14,59 +11,56 @@ import java.util.List;
 
 public class Game {
 
+    public static final String DEALER_NAME = "딜러";
     private static final int INIT_DISTRIBUTE_NUM = 2;
-    public static final int PROFIT_REVERSE = -1;
 
-    private final Dealer dealer;
-    private final Users users;
     private final Deck deck;
+    private final Participants participants;
 
     public Game(List<String> userNames) {
-        this.users = new Users(userNames);
+        this.participants = new Participants(new Users(userNames), new Dealer(DEALER_NAME));
         this.deck = new Deck(new CardGenerator());
-        this.dealer = new Dealer();
     }
 
     public void initBettingMoney(String userName, int money) {
-        users.getUserByName(userName).betting(money);
+        participants.betting(userName, money);
     }
 
     public List<String> getUserNames() {
-        return users.getUserNames();
+        return participants.getUserNames();
     }
 
     public List<ParticipantDto> initDistributed() {
         List<ParticipantDto> participantDtos = new ArrayList<>();
-        cardDistribute(dealer);
-        participantDtos.add(ParticipantDto.of(dealer.getName(), dealer.getHoldingCardsWithoutHidden()));
+        cardDistribute(DEALER_NAME);
+        participantDtos.add(participants.createDealerCardInfoDto());
 
-        for (User user : users.getUsers()) {
-            cardDistribute(user);
-            participantDtos.add(ParticipantDto.of(user.getName(), user.getHoldingCards()));
+        for (String userName : participants.getUserNames()) {
+            cardDistribute(userName);
+            participantDtos.add(participants.createUserCardInfoDto(userName));
         }
 
         return participantDtos;
     }
 
-    private void cardDistribute(Participant participant) {
+    private void cardDistribute(String name) {
         for (int i = 0; i < INIT_DISTRIBUTE_NUM; i++) {
-            participant.receiveCard(deck);
+            participants.receiveCard(name, deck);
         }
     }
 
     public ParticipantDto playEachUser(String userName) {
-        User user = users.getUserByName(userName);
-        user.receiveCard(deck);
-        return ParticipantDto.of(user.getName(), user.getHoldingCards());
+        participants.receiveCard(userName, deck);
+        return participants.createUserCardInfoDto(userName);
     }
 
     public boolean checkUserBust(String userName) {
-        return users.getUserByName(userName).isBust();
+        return participants.checkUserBust(userName);
     }
 
     public boolean playDealer() {
-        if (dealer.checkUnderScoreStandard()) {
-            dealer.receiveCard(deck);
+        if (participants.checkDealerScoreStandard()) {
+            participants.receiveCard(DEALER_NAME, deck);
             return true;
         }
         return false;
@@ -74,10 +68,10 @@ public class Game {
 
     public List<ParticipantDto> getDealerAndPlayerCard() {
         List<ParticipantDto> participantDtos = new ArrayList<>();
-        participantDtos.add(ParticipantDto.of(dealer.getName(), dealer.getHoldingCardsWithoutHidden(), dealer.getScore()));
+        participantDtos.add(participants.createDealerCardAndScoreDto());
 
-        for (User user : users.getUsers()) {
-            participantDtos.add(ParticipantDto.of(user.getName(), user.getHoldingCards(), user.getScore()));
+        for (String userName : participants.getUserNames()) {
+            participantDtos.add(participants.createUserCardAndScoreDto(userName));
         }
 
         return participantDtos;
@@ -85,9 +79,9 @@ public class Game {
 
     public List<ProfitDto> getParticipantProfits() {
         List<ProfitDto> profitDtos = new ArrayList<>();
-        profitDtos.add(new ProfitDto(dealer.getName(), PROFIT_REVERSE * users.getTotalProfit(dealer.getScore())));
-        for (User user : users.getUsers()) {
-            profitDtos.add(new ProfitDto(user.getName(), user.calculateProfit(dealer.getScore())));
+        profitDtos.add(participants.createDealerProfitDto());
+        for (String userName : participants.getUserNames()) {
+            profitDtos.add(participants.createUserProfitDto(userName));
         }
         return profitDtos;
     }

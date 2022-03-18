@@ -21,7 +21,7 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    public User getUserByName(String name) {
+    public User findUserByName(String name) {
         return users.stream()
                 .filter(user -> user.getName().equals(name))
                 .findAny()

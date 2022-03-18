@@ -6,11 +6,10 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private static final String DEALER_NAME = "딜러";
     private static final int MIN_SCORE_STANDARD = 16;
 
-    public Dealer() {
-        super(DEALER_NAME);
+    public Dealer(String name) {
+        super(name);
     }
 
     public boolean checkUnderScoreStandard() {
@@ -19,5 +18,9 @@ public class Dealer extends Participant {
 
     public List<Card> getHoldingCardsWithoutHidden() {
         return holdingCards.getCardsWithOutHiddenCard();
+    }
+
+    public List<Card> getHoldingCards() {
+        return holdingCards.getAllCards();
     }
 }

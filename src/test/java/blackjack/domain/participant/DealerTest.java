@@ -22,7 +22,7 @@ class DealerTest {
                         new Card(CardNumber.QUEEN, CardType.CLOVER)));
         Deck deck = new Deck(cardGenerator);
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer("딜러");
         dealer.receiveCard(deck);
         dealer.receiveCard(deck);
 
@@ -37,7 +37,7 @@ class DealerTest {
                         new Card(CardNumber.QUEEN, CardType.CLOVER)));
         Deck deck = new Deck(cardGenerator);
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer("딜러");
         dealer.receiveCard(deck);
         dealer.receiveCard(deck);
 
