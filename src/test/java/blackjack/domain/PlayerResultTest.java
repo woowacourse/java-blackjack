@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
-import blackjack.domain.user.Betting;
+import blackjack.domain.user.Bet;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.TEN),
                 new Card(Shape.CLOVER, Number.TWO)));
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK)));
-        Player player = new Player("test", Betting.from(1000), over21Cards);
+        Player player = new Player("test", Bet.from(1000), over21Cards);
         Dealer dealer = new Dealer(cards);
 
         PlayerResult actual = PlayerResult.valueOf(dealer, player);
@@ -40,7 +40,7 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.JACK),
                 new Card(Shape.HEART, Number.TEN)));
         Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.TWO)));
-        Player player = new Player("test", Betting.from(1000), playerCards);
+        Player player = new Player("test", Bet.from(1000), playerCards);
         Dealer dealer = new Dealer(cards);
         PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.WIN;
@@ -55,7 +55,7 @@ class PlayerResultTest {
                 new Card(Shape.HEART, Number.TEN)));
         Cards dealerCards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK),
                 new Card(Shape.CLOVER, Number.TEN)));
-        Player player = new Player("test", Betting.from(1000), playerCards);
+        Player player = new Player("test", Bet.from(1000), playerCards);
         Dealer dealer = new Dealer(dealerCards);
         PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.WIN;

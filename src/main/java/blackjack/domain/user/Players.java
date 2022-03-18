@@ -15,10 +15,10 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players create(List<String> playerNames, List<Betting> bettings, Deck deck) {
+    public static Players create(List<String> playerNames, List<Bet> bets, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < playerNames.size(); i++) {
-            players.add(new Player(playerNames.get(i), bettings.get(i), deck.drawInitCards()));
+            players.add(new Player(playerNames.get(i), bets.get(i), deck.drawInitCards()));
         }
         return new Players(players);
     }

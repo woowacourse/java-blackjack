@@ -4,15 +4,15 @@ import blackjack.domain.card.Cards;
 
 public class Player extends User {
 
-    private final Betting betting;
+    private final Bet bet;
 
-    public Player(String name, Betting betting, Cards cards) {
+    public Player(String name, Bet bet, Cards cards) {
         super(name, cards);
-        this.betting = betting;
+        this.bet = bet;
     }
 
-    public Betting getBetting() {
-        return betting;
+    public Bet getBet() {
+        return bet;
     }
 
     @Override

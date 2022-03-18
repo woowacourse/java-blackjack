@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.PlayerResult;
-import blackjack.domain.user.Betting;
+import blackjack.domain.user.Bet;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -20,11 +20,13 @@ public class BlackjackController {
     public void run() {
         Deck deck = new Deck();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        List<Betting> bettings = startBettings(inputPlayerNames);
+        List<Bet> bets = startBettings(inputPlayerNames);
         Dealer dealer = new Dealer(deck.drawInitCards());
-        Players players = Players.create(inputPlayerNames, bettings, deck);
+        Players players = Players.create(inputPlayerNames, bets, deck);
+
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToUserDtos(dealer, players));
+
         List<UserDto> userDtos = playGame(dealer, players, deck);
         finishGame(dealer, players, userDtos);
     }
@@ -35,12 +37,12 @@ public class BlackjackController {
         OutputView.printFinalResult(batchService.calculate(statistics));
     }
 
-    private List<Betting> startBettings(List<String> inputPlayerNames) {
-        List<Betting> bettings = new ArrayList<>();
+    private List<Bet> startBettings(List<String> inputPlayerNames) {
+        List<Bet> bets = new ArrayList<>();
         for (String inputPlayerName : inputPlayerNames) {
-            bettings.add(Betting.from(InputView.askBetAmount(inputPlayerName)));
+            bets.add(Bet.from(InputView.askBetAmount(inputPlayerName)));
         }
-        return bettings;
+        return bets;
     }
 
     private List<UserDto> playGame(Dealer dealer, Players players, Deck deck) {

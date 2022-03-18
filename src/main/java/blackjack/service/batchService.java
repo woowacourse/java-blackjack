@@ -1,7 +1,7 @@
 package blackjack.service;
 
 import blackjack.domain.PlayerResult;
-import blackjack.domain.user.Betting;
+import blackjack.domain.user.Bet;
 import blackjack.domain.user.Player;
 
 import java.util.LinkedHashMap;
@@ -13,9 +13,9 @@ public class batchService {
         Map<String, Double> info = new LinkedHashMap<>();
         for (Map.Entry<Player, PlayerResult> entry : statistics.entrySet()) {
             Player player = entry.getKey();
-            Betting betting = player.getBetting();
+            Bet bet = player.getBet();
             PlayerResult result = entry.getValue();
-            info.put(player.getName(), betting.calculate(result.getProfit()));
+            info.put(player.getName(), bet.calculate(result.getProfit()));
         }
         return info;
     }
