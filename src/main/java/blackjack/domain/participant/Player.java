@@ -38,8 +38,8 @@ public class Player {
         state = state.stay();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getValue();
     }
 
     public List<Card> getCards() {
