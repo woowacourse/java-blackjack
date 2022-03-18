@@ -30,6 +30,10 @@ public abstract class Participant {
         return getScore() > BUST_THRESHOLD_NUMBER;
     }
 
+    public boolean isBlackjack() {
+        return participantCards.isBlackjack();
+    }
+
     public int getScore() {
         return participantCards.calculateScore();
     }

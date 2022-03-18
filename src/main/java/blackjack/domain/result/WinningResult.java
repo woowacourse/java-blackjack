@@ -5,6 +5,7 @@ import blackjack.domain.participant.Player;
 
 public enum WinningResult {
 
+    BLACKJACK("블랙잭"),
     WIN("승"),
     LOSE("패"),
     DRAW("무");
@@ -18,6 +19,9 @@ public enum WinningResult {
     public static WinningResult of(Player player, Dealer dealer) {
         if (dealer.isBust() && player.isBust() || player.isDraw(dealer)) {
             return DRAW;
+        }
+        if(player.isBlackjack()) {
+            return BLACKJACK;
         }
         if (dealer.isBust() && !player.isBust() ||
             !dealer.isBust() && !player.isBust() && player.isWin(dealer)) {
@@ -34,10 +38,10 @@ public enum WinningResult {
         if (this == DRAW) {
             return this;
         }
-        if (this == WIN) {
-            return LOSE;
+        if (this == LOSE) {
+            return WIN;
         }
-        return WIN;
+        return LOSE;
     }
 
 }
