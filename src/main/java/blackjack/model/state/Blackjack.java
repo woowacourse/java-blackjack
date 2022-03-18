@@ -15,4 +15,9 @@ public class Blackjack implements State{
     public State add(Card card) {
         throw new IllegalArgumentException("[ERROR] 카드 숫자 합이 Blackjack이므로 카드를 추가 할 수 없습니다.");
     }
+
+    @Override
+    public boolean isReady() {
+        return false;
+    }
 }

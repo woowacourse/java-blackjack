@@ -23,4 +23,9 @@ public class Hit implements State {
         }
         return new Hit(cards);
     }
+
+    @Override
+    public boolean isReady() {
+        return false;
+    }
 }

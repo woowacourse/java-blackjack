@@ -26,4 +26,9 @@ public final class Ready implements State {
         }
         return new Ready(cards);
     }
+
+    @Override
+    public boolean isReady() {
+        return true;
+    }
 }

@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.model.card.CardDeck;
 import blackjack.view.MoneyBetter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,5 +36,12 @@ public class Participants {
         return (int) names.stream()
                 .distinct()
                 .count();
+    }
+
+    public void drawFrom(final CardDeck cardDeck) {
+        for (Player player : players) {
+            player.drawFrom(cardDeck);
+        }
+        dealer.drawFrom(cardDeck);
     }
 }

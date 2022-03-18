@@ -6,7 +6,7 @@ import blackjack.model.state.State;
 
 public abstract class Participant {
     private final String name;
-    private final State state;
+    private State state;
 
     protected Participant(final String name) {
         checkEmpty(name);
@@ -20,7 +20,9 @@ public abstract class Participant {
         }
     }
 
-    public void draw(CardDeck cardDeck) {
-        state.add(cardDeck.draw());
+    public void drawFrom(final CardDeck cardDeck) {
+        while (this.state.isReady()) {
+            this.state = this.state.add(cardDeck.draw());
+        }
     }
 }

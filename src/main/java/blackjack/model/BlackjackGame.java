@@ -13,4 +13,8 @@ public class BlackjackGame {
         this.participants = new Participants(names, moneyBetter);
         this.cardDeck = new CardDeck();
     }
+
+    public void start() {
+        participants.drawFrom(cardDeck);
+    }
 }
