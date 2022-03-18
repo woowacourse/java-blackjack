@@ -29,7 +29,7 @@ public class Cards {
 
     public int calculateEndScore() {
         final int score = calculateExpandScore();
-        if (score <= Result.MAX_SCORE) {
+        if (score <= Result.BLACKJACK_SCORE) {
             return score;
         }
         return calculateDefaultScore();
@@ -54,11 +54,11 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_SIZE && calculateEndScore() == Result.MAX_SCORE;
+        return cards.size() == BLACKJACK_SIZE && calculateEndScore() == Result.BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
-        return calculateEndScore() > Result.MAX_SCORE;
+        return calculateEndScore() > Result.BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {

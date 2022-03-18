@@ -9,7 +9,7 @@ public enum Result {
     DRAW,
     ;
 
-    public static final int MAX_SCORE = 21;
+    public static final int BLACKJACK_SCORE = 21;
 
     public static Result competeResult(Player dealer, Player participant) {
         if (checkDraw(dealer, participant)) {
@@ -50,7 +50,7 @@ public enum Result {
     }
 
     private static boolean isParticipantWin(int dealerScore, int participantScore) {
-        return participantScore <= MAX_SCORE && participantScore > dealerScore;
+        return participantScore <= BLACKJACK_SCORE && participantScore > dealerScore;
     }
 
     public boolean isWin() {
