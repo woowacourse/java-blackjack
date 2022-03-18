@@ -1,8 +1,9 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,10 +16,10 @@ public class DeckTest {
     void drawCard() {
         Deck deck = new Deck(new CardGenerator(){
             @Override
-            public Stack<Card> generate() {
+            public Deque<Card> generate() {
                 List<Card> cards = new ArrayList<>();
                 cards.add(new Card(Type.HEART, Score.ACE));
-                Stack<Card> deck = new Stack<>();
+                Deque<Card> deck = new ArrayDeque<>();
                 deck.addAll(cards);
                 return deck;
             }

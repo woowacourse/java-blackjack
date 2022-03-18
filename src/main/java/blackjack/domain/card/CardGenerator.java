@@ -1,9 +1,9 @@
 package blackjack.domain.card;
 
-import java.util.Stack;
+import java.util.Deque;
 
 @FunctionalInterface
 public interface CardGenerator {
 
-    Stack<Card> generate();
+    Deque<Card> generate();
 }

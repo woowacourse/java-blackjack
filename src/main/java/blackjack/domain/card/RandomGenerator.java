@@ -1,15 +1,16 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public final class RandomGenerator implements CardGenerator {
 
     @Override
-    public Stack<Card> generate() {
-        Stack<Card> deck = new Stack<>();
+    public Deque<Card> generate() {
+        Deque<Card> deck = new ArrayDeque<>();
         List<Card> cards = makeCards();
         Collections.shuffle(cards);
         deck.addAll(cards);

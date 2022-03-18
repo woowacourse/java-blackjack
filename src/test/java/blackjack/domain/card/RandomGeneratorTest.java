@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Stack;
+import java.util.Deque;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +14,7 @@ class RandomGeneratorTest {
     @MethodSource("getCombinationOfCard")
     @DisplayName("덱에 카드가 포함되어 있는지 확인한다.")
     void checkContainsCard(Card card) {
-        Stack<Card> deck = new RandomGenerator().generate();
+        Deque<Card> deck = new RandomGenerator().generate();
 
         assertThat(deck.contains(card)).isTrue();
     }

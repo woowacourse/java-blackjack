@@ -4,7 +4,7 @@ import java.util.*;
 
 public final class Deck {
 
-    private final Stack<Card> deck;
+    private final Deque<Card> deck;
 
     public Deck(final CardGenerator cardGenerator) {
         deck = cardGenerator.generate();
