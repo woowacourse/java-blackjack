@@ -9,7 +9,7 @@ public interface State {
 
     State stay();
 
-    boolean isReady();
+    boolean isRunning();
 
     boolean isFinished();
 

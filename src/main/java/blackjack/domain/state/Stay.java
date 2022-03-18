@@ -22,7 +22,7 @@ public class Stay implements State {
     }
 
     @Override
-    public boolean isReady() {
+    public boolean isRunning() {
         return false;
     }
 

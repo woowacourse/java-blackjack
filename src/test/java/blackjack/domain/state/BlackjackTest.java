@@ -43,12 +43,12 @@ class BlackjackTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @DisplayName("블랙잭 상태의 준비 상태 유무는 false이다.")
+    @DisplayName("블랙잭 상태는 실행 불가능 상태이므로 실행 가능 유무는 false이다.")
     @Test
     void 블랙잭_준비상태() {
         State blackjack = new Blackjack(BLACKJACK);
 
-        boolean result = blackjack.isReady();
+        boolean result = blackjack.isRunning();
 
         assertThat(result).isFalse();
     }
