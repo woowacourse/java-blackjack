@@ -50,4 +50,21 @@ public class BettingMoney {
     public static BettingMoney getDealerBattingMoney() {
         return DEALER_BETTING_MONEY;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final BettingMoney that = (BettingMoney) o;
+        return value == that.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
 }
