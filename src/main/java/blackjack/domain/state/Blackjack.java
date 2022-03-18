@@ -9,21 +9,28 @@ public class Blackjack implements State {
 
     protected Blackjack(Cards cards) {
         this.cards = cards;
+        validate();
+    }
+
+    private void validate() {
+        if (!cards.isBlackjack()) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
     public State draw(Card card) {
-        return null;
+        throw new IllegalStateException();
     }
 
     @Override
     public State stay() {
-        return null;
+        throw new IllegalStateException();
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
