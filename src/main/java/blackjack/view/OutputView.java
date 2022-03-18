@@ -21,7 +21,6 @@ public class OutputView {
     private static final String RESULT_MESSAGE = "## 최종 승패";
     private static final String COLON = ": ";
     private static final String BLANK = " ";
-    private static final String BLACKJACK_MESSAGE = "는 블랙잭입니다!";
 
     public static void printInitStatus(Dealer dealer, List<Player> players) {
         System.out.println();
@@ -75,14 +74,14 @@ public class OutputView {
         return (SCORE_MESSAGE + score);
     }
 
-    public static void printResult(ResultDto resultDto) {
+    public static void printRecord(ResultDto resultDto) {
         System.out.println();
         System.out.println(RESULT_MESSAGE);
-        printDealerResult(resultDto.getDealerResultDto());
-        printPlayerResult(resultDto.getPlayerResultDto());
+        printDealerRecord(resultDto.getDealerResultDto());
+        printPlayerRecord(resultDto.getPlayerResultDto());
     }
 
-    private static void printDealerResult(DealerResultDto dealerResultDto) {
+    private static void printDealerRecord(DealerResultDto dealerResultDto) {
         System.out.print(dealerResultDto.getName() + COLON);
 
         Map<String, Integer> outcome = dealerResultDto.getOutcome();
@@ -98,13 +97,9 @@ public class OutputView {
         }
     }
 
-    private static void printPlayerResult(PlayerResultDto playerResultDto) {
+    private static void printPlayerRecord(PlayerResultDto playerResultDto) {
         Map<String, String> outcome = playerResultDto.getOutcome();
         outcome.keySet()
                 .forEach(player -> System.out.println(player + COLON + outcome.get(player)));
-    }
-
-    public static void printBlackjack(Participant participant) {
-        System.out.println(participant.getName() + BLACKJACK_MESSAGE);
     }
 }
