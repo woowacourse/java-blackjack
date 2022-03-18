@@ -11,18 +11,20 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 
-class Cards {
+public class Cards {
 
     private static final int ACE_BIG = 11;
 
     private final Set<Card> value;
 
-    Cards(Set<Card> value) {
+    public Cards(Set<Card> value) {
         this.value = new LinkedHashSet<>(value);
     }
 
-    void add(Card card) {
-        value.add(card);
+    public Cards add(Card card) {
+        Set<Card> newCards = new LinkedHashSet<>(value);
+        newCards.add(card);
+        return new Cards(newCards);
     }
 
     PlayStatus getStatus() {
@@ -64,5 +66,9 @@ class Cards {
 
     public boolean isBlackjack() {
         return PlayStatus.isBlackjack(sum(), value.size());
+    }
+
+    public int size() {
+        return value.size();
     }
 }

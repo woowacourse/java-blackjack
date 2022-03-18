@@ -17,7 +17,6 @@ public class ShuffleDeck implements DeckStrategy {
     @Override
     public Deque<Card> create() {
         List<Card> list = getCards();
-        // Collections.shuffle(list);
 
         return new ArrayDeque<>(shuffle(list));
     }
