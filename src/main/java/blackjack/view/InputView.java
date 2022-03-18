@@ -1,12 +1,13 @@
 package blackjack.view;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class InputView {
 
     private static final String DELIMITER = ",";
-    private static final String NAME_REGEX = "^[a-zA-Z]+$";
-    private static final String BETTING_MONEY_REGEX = "^[0-9]+$";
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z]+$");
+    private static final Pattern BETTING_MONEY_PATTERN = Pattern.compile("^[0-9]+$");
     private static final String HIT = "y";
     private static final String STAY = "n";
     private static final String MUST_NOT_EMPTY = "입력은 빈 입력일 수 없습니다.";
@@ -55,13 +56,13 @@ public class InputView {
     }
 
     private static void validateInputNameForm(String name) {
-        if (!name.matches(NAME_REGEX)) {
+        if (!NAME_PATTERN.matcher(name).find()) {
             throw new IllegalArgumentException(WRONG_FORM);
         }
     }
 
     public static void validatePositiveInteger(String input) {
-        if (!input.matches(BETTING_MONEY_REGEX)) {
+        if (!BETTING_MONEY_PATTERN.matcher(input).find()) {
             throw new IllegalArgumentException(BETTING_MONEY_MUST_BE_POSITIVE_INTEGER);
         }
     }
