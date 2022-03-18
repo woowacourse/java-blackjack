@@ -66,10 +66,10 @@ public class GameController {
     }
 
     private Player progressPlayerTurn(Player player, final PlayerAnswer playerAnswer) {
-        if (playerAnswer.isDraw()) {
+        if (playerAnswer.isHit()) {
             player.hit(deck);
         }
-        if (!playerAnswer.isDraw()) {
+        if (playerAnswer.isStay()) {
             player.stay();
         }
 
