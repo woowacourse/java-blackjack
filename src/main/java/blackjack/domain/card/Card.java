@@ -12,10 +12,6 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public boolean isAce() {
-        return cardNumber == CardNumber.ACE;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
