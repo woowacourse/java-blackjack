@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 
 public class InputView {
@@ -23,9 +22,9 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
-    public static int requestBettingAmount(Name name) {
+    public static int requestBettingAmount(String name) {
         try {
-            System.out.println(System.lineSeparator() + name.getValue() + "의 배팅금액은?");
+            System.out.println(System.lineSeparator() + name + "의 배팅금액은?");
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException exception) {
             System.out.println("입력값은 숫자여야 합니다.");

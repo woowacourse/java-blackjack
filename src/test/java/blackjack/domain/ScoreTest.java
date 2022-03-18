@@ -14,7 +14,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.player.BettingAmount;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
@@ -32,8 +31,7 @@ public class ScoreTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.ACE), Card.of(CardPattern.DIAMOND, CardNumber.TEN)
             ));
             Player player = new Player(new Name("tonic"),
-                HoldCards.drawTwoCards(blackjackDeck),
-                new BettingAmount(1000));
+                HoldCards.drawTwoCards(blackjackDeck));
             Dealer dealer = new Dealer(() -> Card.of(CardPattern.DIAMOND, CardNumber.NINE));
 
             Assertions.assertThat(Score.compete(player, dealer)).isEqualTo(Score.WIN);
@@ -46,8 +44,7 @@ public class ScoreTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.ACE), Card.of(CardPattern.DIAMOND, CardNumber.TEN)
             ));
             Player player = new Player(new Name("tonic"),
-                HoldCards.drawTwoCards(blackjackDeck),
-                new BettingAmount(1000));
+                HoldCards.drawTwoCards(blackjackDeck));
             MockDeck blackjackDeck2 = new MockDeck(List.of(
                 Card.of(CardPattern.DIAMOND, CardNumber.ACE), Card.of(CardPattern.DIAMOND, CardNumber.TEN)
             ));
@@ -63,8 +60,7 @@ public class ScoreTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN), Card.of(CardPattern.DIAMOND, CardNumber.TEN)
             ));
             Player player = new Player(new Name("tonic"),
-                HoldCards.drawTwoCards(blackjackDeck),
-                new BettingAmount(1000));
+                HoldCards.drawTwoCards(blackjackDeck));
             MockDeck blackjackDeck2 = new MockDeck(List.of(
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN),
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN),
@@ -83,8 +79,7 @@ public class ScoreTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN), Card.of(CardPattern.DIAMOND, CardNumber.TEN)
             ));
             Player player = new Player(new Name("tonic"),
-                HoldCards.drawTwoCards(blackjackDeck),
-                new BettingAmount(1000));
+                HoldCards.drawTwoCards(blackjackDeck));
             MockDeck blackjackDeck2 = new MockDeck(List.of(
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN),
                 Card.of(CardPattern.DIAMOND, CardNumber.NINE)
@@ -101,8 +96,7 @@ public class ScoreTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.NINE), Card.of(CardPattern.DIAMOND, CardNumber.TEN)
             ));
             Player player = new Player(new Name("tonic"),
-                HoldCards.drawTwoCards(blackjackDeck),
-                new BettingAmount(1000));
+                HoldCards.drawTwoCards(blackjackDeck));
             MockDeck blackjackDeck2 = new MockDeck(List.of(
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN),
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN)
@@ -121,8 +115,7 @@ public class ScoreTest {
                 Card.of(CardPattern.DIAMOND, CardNumber.TEN)
             ));
             Player player = new Player(new Name("tonic"),
-                HoldCards.drawTwoCards(blackjackDeck),
-                new BettingAmount(1000));
+                HoldCards.drawTwoCards(blackjackDeck));
             player.drawCard(blackjackDeck);
 
             MockDeck blackjackDeck2 = new MockDeck(List.of(

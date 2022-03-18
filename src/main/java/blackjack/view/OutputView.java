@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.ScoreResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -56,10 +56,9 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printScoreResult(ScoreResult result) {
+    public static void printScoreResult(Map<String, Integer> result) {
         System.out.println(System.lineSeparator() + "## 최종 수익");
-        result.getPlayersResult()
-            .forEach((name, profit) -> System.out.printf("%s: %d%n", name, profit));
+        result.forEach((name, profit) -> System.out.printf("%s : %d%n", name, profit));
     }
 
     public static void printException(Exception exception) {

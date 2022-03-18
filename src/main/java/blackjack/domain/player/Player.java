@@ -2,10 +2,9 @@ package blackjack.domain.player;
 
 import java.util.List;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.Score;
-import blackjack.domain.card.Card;
 
 public class Player {
 
@@ -13,16 +12,10 @@ public class Player {
 
     private final HoldCards holdCards;
     private final Name name;
-    private final BettingAmount bettingAmount;
-
-    public Player(Name name, HoldCards holdCards, BettingAmount bettingAmount) {
-        this.name = name;
-        this.holdCards = holdCards;
-        this.bettingAmount = bettingAmount;
-    }
 
     public Player(Name name, HoldCards holdCards) {
-        this(name, holdCards, null);
+        this.name = name;
+        this.holdCards = holdCards;
     }
 
     public void drawCard(Drawable drawable) {
@@ -39,10 +32,6 @@ public class Player {
 
     public int getTotalNumber() {
         return holdCards.getTotalNumber();
-    }
-
-    public double getProfit(Dealer dealer) {
-        return bettingAmount.getDividend(Score.compete(this, dealer));
     }
 
     public Player copy() {

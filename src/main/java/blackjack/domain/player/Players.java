@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.ScoreResult;
-
 public class Players {
 
     private static final int CAPACITY = 8;
@@ -31,9 +29,5 @@ public class Players {
         return new Players(List.copyOf(players.stream()
             .map(Player::copy)
             .collect(Collectors.toList())));
-    }
-
-    public ScoreResult compete(Dealer dealer) {
-        return ScoreResult.from(List.copyOf(players), dealer);
     }
 }

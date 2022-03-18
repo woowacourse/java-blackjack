@@ -2,7 +2,9 @@ package blackjack.domain;
 
 import static blackjack.view.OutputView.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Deck;
@@ -13,6 +15,7 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackjackGame {
 
@@ -28,32 +31,20 @@ public class BlackjackGame {
 
     public static BlackjackGame init() {
         Deck deck = Deck.create();
-        Players players = requestPlayersBettingAmount(requestNames(), deck);
+        Players players = requestPlayers(requestNames(), deck);
         Dealer dealer = new Dealer(deck);
         return new BlackjackGame(deck, players, dealer);
     }
 
     public void run() {
+        PlayersBettingAmount playersBettingAmount = requestBettingAmount(players);
         printPlayersCard(players.copy(), dealer.copy());
 
         takeTurnsPlayers();
         takeTurnDealer();
 
         printPlayersResult(players.copy(), dealer.copy());
-        printScoreResult(players.compete(dealer));
-    }
-
-    private static Players requestPlayersBettingAmount(List<Name> names, Deck deck) {
-        try {
-            List<Player> players = names.stream()
-                .map(name -> new Player(name, HoldCards.drawTwoCards(deck),
-                    new BettingAmount(InputView.requestBettingAmount(name))))
-                .collect(Collectors.toList());
-            return new Players(players);
-        } catch (IllegalArgumentException exception) {
-            printException(exception);
-            return requestPlayersBettingAmount(names, deck);
-        }
+        printScoreResult(playersBettingAmount.getResult(dealer));
     }
 
     private static List<Name> requestNames() {
@@ -65,6 +56,35 @@ public class BlackjackGame {
         } catch (IllegalArgumentException exception) {
             printException(exception);
             return requestNames();
+        }
+    }
+
+    private static Players requestPlayers(List<Name> names, Deck deck) {
+        try {
+            List<Player> players = names.stream()
+                .map(name -> new Player(name, HoldCards.drawTwoCards(deck)))
+                .collect(Collectors.toList());
+            return new Players(players);
+        } catch (IllegalArgumentException exception) {
+            printException(exception);
+            return requestPlayers(names, deck);
+        }
+    }
+
+    private static PlayersBettingAmount requestBettingAmount(Players players) {
+        Map<Player, BettingAmount> profitResult = new HashMap<>();
+        for (Player player : players.getValue()) {
+            profitResult.put(player, requestBettingAmount(player));
+        }
+        return new PlayersBettingAmount(profitResult);
+    }
+
+    private static BettingAmount requestBettingAmount(Player player) {
+        try {
+            return new BettingAmount(InputView.requestBettingAmount(player.getName()));
+        } catch (IllegalArgumentException exception) {
+            OutputView.printException(exception);
+            return requestBettingAmount(player);
         }
     }
 
