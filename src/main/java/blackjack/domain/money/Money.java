@@ -34,6 +34,10 @@ public class Money {
         return value < 0;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return "Money{" +

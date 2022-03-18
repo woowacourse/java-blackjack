@@ -1,13 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.game.DealerMatchResult;
-import blackjack.domain.game.PlayerMatchResult;
-import blackjack.domain.game.ResultCount;
-import blackjack.domain.game.ResultType;
+import blackjack.domain.game.DealerProfitResult;
+import blackjack.domain.game.PlayerBetResult;
+import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -15,15 +12,14 @@ public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
 
     private static final String JOIN_DELIMITER = ", ";
-    private static final String COLON_SEPARATOR = ": ";
-    private static final String WHITE_SPACE = " ";
 
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
     private static final String NAME_AND_HAND_FORMAT = "%s 카드: %s" + NEW_LINE;
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!";
     private static final String DEALER_EXTRA_CARD_FORMAT = NEW_LINE + "딜러는 16이하라 %d장의 카드를 더 받았습니다." + NEW_LINE;
-    private static final String FINAL_RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
-    private static final String PLAYER_MATCH_RESULT_FORMAT = "%s: %s" + NEW_LINE;
+    private static final String PROFIT_RESULT_INFO_MESSAGE = NEW_LINE + "## 최종 수익";
+    private static final String DEALER_PROFIT_MESSAGE_FORMAT = "딜러: %s" + NEW_LINE;
+    private static final String PLAYER_PROFIT_MESSAGE_FORMAT = "%s: %s" + NEW_LINE;
     private static final String PARTICIPANT_HAND_AND_SCORE_FORMAT = "%s 카드: %s - 결과: %d" + NEW_LINE;
     private static final String EXCEPTION_MESSAGE_FORMAT = "[ERROR] %s" + NEW_LINE;
 
@@ -71,39 +67,25 @@ public class OutputView {
         System.out.printf(PARTICIPANT_HAND_AND_SCORE_FORMAT, name, cards, score);
     }
 
-    public static void printDealerMatchResult(DealerMatchResult dealerMatchResult) {
-        System.out.println(FINAL_RESULT_MESSAGE);
-        System.out.print(dealerMatchResult.getName() + COLON_SEPARATOR);
-
-        dealerMatchResult.getMatchResult()
-                .entrySet()
-                .forEach(OutputView::printSingleDealerMatchResult);
-
-        printNewLine();
+    public static void printProfitResultInfo() {
+        System.out.println(PROFIT_RESULT_INFO_MESSAGE);
     }
 
-    private static void printSingleDealerMatchResult(Entry<ResultType, ResultCount> entrySet) {
-        int resultCount = entrySet.getValue().getValue();
-        String resultTypeName = entrySet.getKey().getDisplayName();
+    public static void printDealerProfitResult(DealerProfitResult dealerProfitResult) {
+        System.out.printf(DEALER_PROFIT_MESSAGE_FORMAT, dealerProfitResult.getProfit().getValue());
+    }
 
-        if (resultCount > 0) {
-            System.out.print(resultCount + resultTypeName + WHITE_SPACE);
+    public static void printPlayerBetResult(PlayerBetResult playerBetResult) {
+        for (Player player : playerBetResult.getPlayers()) {
+            String playerName = player.getName();
+            int playerProfit = playerBetResult.findBetAndProfitBy(player).getProfitMoney().getValue();
+
+            System.out.printf(PLAYER_PROFIT_MESSAGE_FORMAT, playerName, playerProfit);
         }
-    }
-
-    public static void printPlayerMatchResults(Collection<PlayerMatchResult> playerMatchResults) {
-        playerMatchResults.forEach(OutputView::printSinglePlayerMatchResult);
     }
 
     public static void printException(RuntimeException exception) {
         System.out.printf(EXCEPTION_MESSAGE_FORMAT, exception.getMessage());
-    }
-
-    private static void printSinglePlayerMatchResult(PlayerMatchResult playerMatchResult) {
-        String name = playerMatchResult.getName();
-        String matchResult = playerMatchResult.getMatchResult().getDisplayName();
-
-        System.out.printf(PLAYER_MATCH_RESULT_FORMAT, name, matchResult);
     }
 
     private static void printNewLine() {

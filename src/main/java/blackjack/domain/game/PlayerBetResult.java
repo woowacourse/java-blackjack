@@ -5,6 +5,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class PlayerBetResult {
 
@@ -59,6 +60,10 @@ public class PlayerBetResult {
     public BetAndProfit findBetAndProfitBy(Player player) {
         BetAndProfit found = playerBetAndProfits.get(player);
         return Objects.requireNonNull(found, NOT_FOUND_PLAYER_EXCEPTION_MESSAGE);
+    }
+
+    public Set<Player> getPlayers() {
+        return playerBetAndProfits.keySet();
     }
 
     @Override

@@ -3,36 +3,59 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.DealerMatchResult;
-import blackjack.domain.game.PlayerMatchResult;
-import blackjack.domain.participant.Dealer;
+import blackjack.domain.game.DealerProfitResult;
+import blackjack.domain.game.PlayerBetResult;
+import blackjack.domain.money.BetAndProfit;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = initializeGame();
 
+        Map<Player, BetAndProfit> playerBets = requestBetToAllPlayer(blackjackGame);
         printInitialHand(blackjackGame);
         giveExtraCardsToAllPlayer(blackjackGame);
         giveExtraCardsToDealer(blackjackGame);
         printFinalHandAndScore(blackjackGame);
-        printDealerMatchResult(blackjackGame);
-        printPlayersMatchResult(blackjackGame);
+        printBetResult(blackjackGame, playerBets);
     }
 
     public BlackjackGame initializeGame() {
         try {
-            List<String> playerNames = InputView.requestPlayerNamesInput();
+            List<String> playerNames = InputView.inputPlayerNames();
             return new BlackjackGame(new CardDeck(), playerNames);
         } catch (IllegalArgumentException exception) {
             OutputView.printException(exception);
             return initializeGame();
+        }
+    }
+
+    public Map<Player, BetAndProfit> requestBetToAllPlayer(BlackjackGame game) {
+        List<Player> players = game.getPlayers();
+        Map<Player, BetAndProfit> playerBetResults = new LinkedHashMap<>();
+        for (Player player : players) {
+            Money betMoney = requestBetToSinglePlayer(player);
+            playerBetResults.put(player, BetAndProfit.from(betMoney));
+        }
+
+        return playerBetResults;
+    }
+
+    private Money requestBetToSinglePlayer(Player player) {
+        try {
+            return Money.from(InputView.inputBetMoney(player.getName()));
+        } catch (IllegalArgumentException exception) {
+            OutputView.printException(exception);
+            return requestBetToSinglePlayer(player);
         }
     }
 
@@ -70,7 +93,7 @@ public class BlackjackController {
     }
 
     private void giveSingleCardToPlayerOnMoreCardInput(Player player, BlackjackGame game) {
-        if (InputView.requestMorePlayerCardInput(player.getName())) {
+        if (InputView.inputMorePlayerCard(player.getName())) {
             giveSingleCardToPlayer(player, game);
         }
     }
@@ -109,20 +132,13 @@ public class BlackjackController {
         OutputView.printHandAndScore(participants);
     }
 
-    public void printDealerMatchResult(BlackjackGame game) {
-        DealerMatchResult dealerMatchResult = DealerMatchResult.of(game.getDealer(), game.getPlayers());
-        OutputView.printDealerMatchResult(dealerMatchResult);
+    public void printBetResult(BlackjackGame game, Map<Player, BetAndProfit> playerBets) {
+        DealerProfitResult dealerProfitResult = DealerProfitResult.of(game.getDealer(), playerBets);
+        PlayerBetResult playerBetResult = PlayerBetResult.of(playerBets, game.getDealer());
+
+        OutputView.printProfitResultInfo();
+        OutputView.printDealerProfitResult(dealerProfitResult);
+        OutputView.printPlayerBetResult(playerBetResult);
     }
 
-    public void printPlayersMatchResult(BlackjackGame game) {
-        Dealer dealer = game.getDealer();
-
-        List<PlayerMatchResult> playerMatchResults = game.getPlayers()
-                .stream()
-                .map(player -> PlayerMatchResult.of(player, dealer))
-                .collect(Collectors.toList());
-
-        OutputView.printPlayerMatchResults(playerMatchResults);
-    }
 }
-
