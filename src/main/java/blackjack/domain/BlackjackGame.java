@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
@@ -11,7 +12,8 @@ import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.GameResponse;
-import blackjack.domain.result.Results;
+import blackjack.domain.result.Profits;
+import blackjack.domain.result.PlayersBetMoney;
 
 public class BlackjackGame {
 
@@ -72,8 +74,10 @@ public class BlackjackGame {
         player.addCard(deck.assignCard(playingCardShuffleMachine));
     }
 
-    public Results calculateResult(Players players) {
-        return Results.from(players);
+    public Profits calculateResult(Players players, HashMap<String, Integer> playersBetMoney) {
+        Profits profits = new Profits(PlayersBetMoney.of(players, playersBetMoney));
+        profits.competeDealerWithPlayers(players);
+        return profits;
     }
 
     public List<GameResponse> getPlayersGameResponses() {

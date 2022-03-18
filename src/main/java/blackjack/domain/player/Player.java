@@ -7,7 +7,7 @@ public interface Player {
 
     void addCard(PlayingCard playingCard);
 
-    boolean isBlackJack();
+    boolean isBlackJack(Player player);
 
     boolean isCanHit();
 
@@ -18,8 +18,6 @@ public interface Player {
     boolean isWin(Player player);
 
     boolean isLose(Player player);
-
-    boolean isDraw(Player player);
 
     String getName();
 

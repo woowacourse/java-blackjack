@@ -2,13 +2,15 @@ package blackjack.view;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import blackjack.domain.card.PlayingCard;
+import blackjack.domain.player.BetMoney;
+import blackjack.domain.player.Player;
 import blackjack.domain.result.GameResponse;
 import blackjack.domain.result.Match;
-import blackjack.domain.result.MatchResult;
-import blackjack.domain.player.Player;
-import blackjack.domain.result.Results;
+import blackjack.domain.result.PlayersBetMoney;
+import blackjack.domain.result.Profits;
 
 public class OutputView {
 
@@ -18,7 +20,7 @@ public class OutputView {
     private static final String DEALER = "딜러";
     private static final String SHARE_TWO_CARDS_GUIDE_MESSAGE = "에게 2장의 카드를 각각 나누었습니다.";
     private static final String DEALER_MORE_CARD_GUIDE_MESSAGE = "딜러는 16이하라 카드를 더 받았습니다.";
-    private static final String FINAL_WINNER_GUIDE_MESSAGE = "## 최종 승패";
+    private static final String FINAL_WINNER_PROFIT_GUIDE_MESSAGE = "## 최종 수익";
     private static final String FINAL_POINT_GUIDE_MESSAGE = " - 결과";
     private static final char NEW_LINE = '\n';
     private static final char FINAL_MATCH_DELIMITER = ' ';
@@ -99,12 +101,13 @@ public class OutputView {
         sb.deleteCharAt(sb.length() - DELETE_FINAL_DELIMITER);
     }
 
-    public static void announceResultWinner(Results results) {
-        System.out.println(NEW_LINE + FINAL_WINNER_GUIDE_MESSAGE);
-        for (Player player : results.getPlayers()) {
-            MatchResult result = results.getResult(player);
-            String matchResult = accumulateMatchResult(result.getMatch());
-            System.out.println(player.getName() + RESULT_START_DELIMITER + matchResult);
+    public static void announceResultProfit(Profits profits) {
+        System.out.println(NEW_LINE + FINAL_WINNER_PROFIT_GUIDE_MESSAGE);
+        PlayersBetMoney playersMoney = profits.getPlayersBetMoney();
+        Map<Player, BetMoney> profit = playersMoney.getPlayersMoney();
+        Set<Player> profitKeys = profit.keySet();
+        for (Player player : profitKeys) {
+            System.out.println(player.getName() + RESULT_START_DELIMITER + profit.get(player).getMoney());
         }
     }
 

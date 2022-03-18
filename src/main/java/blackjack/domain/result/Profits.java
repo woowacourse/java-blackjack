@@ -6,84 +6,75 @@ import blackjack.domain.player.BetMoney;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
-public class Calc {
+public class Profits {
 
-    private static final double INIT_MONEY = 0.0;
+    private final PlayersBetMoney playersBetMoney;
 
-    private final Map<Player, Double> profits;
-
-    public Calc(Players players) {
-        this.profits = init(players);
+    public Profits(PlayersBetMoney playersBetMoney) {
+        this.playersBetMoney = playersBetMoney;
     }
 
-    private LinkedHashMap<Player, Double> init(Players players) {
-        LinkedHashMap<Player, Double> map = new LinkedHashMap<>();
-        players.getPlayers().forEach(player -> map.put(player, INIT_MONEY));
-        return map;
-    }
-
-    public void competeDealerWithPlayers(Players players, PlayersBetMoney playersBetMoney) {
+    public void competeDealerWithPlayers(Players players) {
         Map<Player, BetMoney> playersMoney = playersBetMoney.getPlayersMoney();
-        Set<Player> playersMoneyKey = playersMoney.keySet();
-        for (Player player : playersMoneyKey) {
-            scoreResultIfGuest(playersMoney, players, player);
+        for (Player player : playersMoney.keySet()) {
+            scoreResultIfGuest(players, player);
         }
+        scoreDealer(players);
     }
 
-    private void scoreResultIfGuest(Map<Player, BetMoney> playerMoney, Players players, Player guest) {
+    private void scoreResultIfGuest(Players players, Player guest) {
         if (guest.isDealer()) {
             return;
         }
-        scoreEachGuest(playerMoney, players, guest);
+        scoreEachGuest(players, guest);
     }
 
-    private void scoreEachGuest(Map<Player, BetMoney> playerMoney, Players players, Player guest) {
+    private void scoreEachGuest(Players players, Player guest) {
         Player dealer = players.getDealer();
-        BetMoney betMoney = playerMoney.get(guest);
         Match match = Match.findWinner(guest, dealer);
-        scoreWin(guest, dealer, betMoney, match);
-        scoreLose(guest, dealer, betMoney, match);
+        scoreWinOrBlackjackWin(players, guest, match);
+        scoreLoseOrBlackjackLose(players, guest, match);
     }
 
-    private void scoreWin(Player guest, Player dealer, BetMoney betMoney, Match match) {
+    private void scoreWinOrBlackjackWin(Players players, Player guest, Match match) {
         if (match.isMatchBlackjackWin()) {
-            scoreBlackjackWin(guest, dealer, betMoney);
+            scoreBlackjackWin(players, guest);
         }
         if (match.isMatchWin()) {
-            scoreWin(guest, dealer, betMoney);
+            scoreWin(players, guest);
         }
     }
 
-    private void scoreWin(Player guest, Player dealer, BetMoney betMoney) {
-        profits.put(guest, profits.get(guest) + ProfitCalculator.plus(betMoney));
-        profits.put(dealer, profits.get(dealer) - ProfitCalculator.plus(betMoney));
+    private void scoreBlackjackWin(Players players, Player guest) {
+        playersBetMoney.calcPlusBlackjackMoney(players, guest);
     }
 
-    private void scoreBlackjackWin(Player guest, Player dealer, BetMoney betMoney) {
-        profits.put(guest, profits.get(guest) + ProfitCalculator.plusBlackjack(betMoney));
-        profits.put(dealer, profits.get(dealer) - ProfitCalculator.plusBlackjack(betMoney));
+    private void scoreWin(Players players, Player guest) {
+        playersBetMoney.calcPlusMoney(players, guest);
     }
 
-    private void scoreLose(Player guest, Player dealer, BetMoney betMoney, Match match) {
+    private void scoreLoseOrBlackjackLose(Players players, Player guest, Match match) {
         if (match.isMatchLose()) {
-            scoreLose(guest, dealer, betMoney);
+            scoreLose(players, guest);
         }
         if (match.isMatchBlackjackLose()) {
-            scoreBlackjackLose(guest, dealer, betMoney);
+            scoreBlackjackLose(players, guest);
         }
     }
 
-    private void scoreBlackjackLose(Player guest, Player dealer, BetMoney betMoney) {
-        profits.put(guest, profits.get(guest) - ProfitCalculator.plusBlackjack(betMoney));
-        profits.put(dealer, profits.get(dealer) + ProfitCalculator.plusBlackjack(betMoney));
+    private void scoreLose(Players players, Player guest) {
+        playersBetMoney.calcMinusMoney(players, guest);
     }
 
-    private void scoreLose(Player guest, Player dealer, BetMoney betMoney) {
-        profits.put(guest, profits.get(guest) - ProfitCalculator.plus(betMoney));
-        profits.put(dealer, profits.get(dealer) + ProfitCalculator.plus(betMoney));
+    private void scoreBlackjackLose(Players players, Player guest) {
+        playersBetMoney.calcMinusBlackjackMoney(players, guest);
     }
 
-    public Map<Player, Double> getProfits() {
-        return profits;
+    private void scoreDealer(Players players) {
+        playersBetMoney.calcDealerMoney(players);
+    }
+
+    public PlayersBetMoney getPlayersBetMoney() {
+        return playersBetMoney;
     }
 }

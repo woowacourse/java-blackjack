@@ -77,21 +77,6 @@ class GuestTest {
         assertThat(guest.isWin(dealer)).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"SPADE:JACK:JACK", "SPADE:ACE:ACE"}, delimiter = ':')
-    @DisplayName("플레이어와 딜러 무승부 확인")
-    void checkPlayerDraw(Suit suit, Denomination denomination, Denomination secondDenomination) {
-        Set<PlayingCard> guestCards = new HashSet<>();
-        guestCards.add(new PlayingCard(suit, denomination));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
-
-        Set<PlayingCard> dealerCards = new HashSet<>();
-        dealerCards.add(new PlayingCard(suit, secondDenomination));
-        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
-
-        assertThat(dealer.isDraw(guest)).isTrue();
-    }
-
     @Test
     @DisplayName("게스트 Hit 확인: 넘치지 않은 경우")
     void checkGuestCanHit() {

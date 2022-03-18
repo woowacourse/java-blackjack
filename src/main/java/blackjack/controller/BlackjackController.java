@@ -19,15 +19,14 @@ public class BlackjackController {
 
     public void playGame() {
         List<String> playerNames = receivePlayerNames();
+        HashMap<String, Integer> playersBetMoney = receivePlayersBetMoney(playerNames);
         BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), playerNames);
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
         blackjackGame.initGames(playingCardShuffleMachine);
 
         Players players = blackjackGame.getPlayers();
-        announceStartGame(blackjackGame, players);
-        turnPlayers(blackjackGame, playingCardShuffleMachine);
-        turnDealer(blackjackGame, playingCardShuffleMachine);
-        announceResult(blackjackGame, players, receivePlayersBetMoney(playerNames));
+        startPlayTurn(blackjackGame, playingCardShuffleMachine, players);
+        announceResult(blackjackGame, players, playersBetMoney);
     }
 
     private List<String> receivePlayerNames() {
@@ -54,6 +53,12 @@ public class BlackjackController {
             System.out.println(e.getMessage());
             return receivePlayerBetMoney(name);
         }
+    }
+
+    private void startPlayTurn(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine, Players players) {
+        announceStartGame(blackjackGame, players);
+        turnPlayers(blackjackGame, playingCardShuffleMachine);
+        turnDealer(blackjackGame, playingCardShuffleMachine);
     }
 
     private void announceStartGame(BlackjackGame blackjackGame, Players players) {

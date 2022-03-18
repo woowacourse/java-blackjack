@@ -30,9 +30,6 @@ public class Dealer extends AbstractPlayer implements Player {
         if (player.isDealer()) {
             return player.isWin(this);
         }
-        if (player.isBlackJack() && !isBlackJack()) {
-            return false;
-        }
         if (player.isBust() && !this.isBust()) {
             return true;
         }
