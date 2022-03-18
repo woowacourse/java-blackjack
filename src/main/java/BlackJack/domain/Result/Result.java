@@ -33,10 +33,6 @@ public enum Result {
                 .get();
     }
 
-    public int calculateProfit(Player player) {
-        return (int) (player.getBettingMoney() * profit);
-    }
-
     public static Map<String, Integer> makePlayerResult(Dealer dealer, Players players) {
         Map<Player, Result> results = new HashMap<>();
         for (Player player : players.getPlayers()) {
@@ -55,7 +51,7 @@ public enum Result {
 
     public static Map<String, Integer> calculatePlayersProfit(Map<Player, Result> results) {
         Map<String, Integer> profits = new HashMap<>();
-        for (Map.Entry<Player, Result> entry :  results.entrySet()) {
+        for (Map.Entry<Player, Result> entry : results.entrySet()) {
             profits.put(entry.getKey().getName(), entry.getValue().calculateProfit(entry.getKey()));
         }
         return profits;
@@ -67,5 +63,9 @@ public enum Result {
                 .collect(Collectors.toUnmodifiableList());
 
         return (int) (results.stream().mapToDouble(Integer::intValue).sum() * REVERSE_PROFIT);
+    }
+
+    public int calculateProfit(Player player) {
+        return (int) (player.getBettingMoney() * profit);
     }
 }

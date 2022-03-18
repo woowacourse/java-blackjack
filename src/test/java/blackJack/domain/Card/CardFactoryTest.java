@@ -1,7 +1,5 @@
 package blackJack.domain.Card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class CardFactoryTest {
 
 //    @Test

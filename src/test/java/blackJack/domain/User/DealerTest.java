@@ -14,8 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
-    private Dealer dealer = new Dealer();
     Player player = new Player("test", 10000);
+    private Dealer dealer = new Dealer();
 
     @Test
     @DisplayName("딜러가 소지한 카드가 16 이하면 true를 반환한다.")

@@ -96,6 +96,7 @@ public class Blackjack {
             players.dealCardToPlayers();
         }
     }
+
     private boolean checkDealerIsBlackJack(Dealer dealer) {
         if (dealer.isBlackJack()) {
             return true;
