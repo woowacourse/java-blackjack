@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.state.Started;
+import blackjack.domain.state.Running;
 import blackjack.domain.state.State;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +18,7 @@ public abstract class Participant {
         Objects.requireNonNull(cards, "[ERROR] 카드들은 null일 수 없습니다.");
 
         this.name = name;
-        this.state = Started.start(cards);
+        this.state = Running.start(cards);
     }
 
     public void hit(CardDeck deck) {

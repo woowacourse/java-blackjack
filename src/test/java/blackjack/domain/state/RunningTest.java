@@ -7,17 +7,44 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Pattern;
 import blackjack.util.BlackjackTestUtil;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class HitTest {
+class RunningTest {
+
+    @Test
+    @DisplayName("처음 카드를 받아서 생성하면 Running 상태")
+    void started() {
+        // given
+        List<Card> cards = BlackjackTestUtil.createCards(20);
+
+        // when
+        State actual = Running.start(cards);
+
+        // then
+        assertThat(actual).isInstanceOf(Running.class);
+    }
+
+    @Test
+    @DisplayName("점수 합이 21인 카드를 받으면 Blackjack")
+    void blackjack() {
+        // given
+        List<Card> cards = BlackjackTestUtil.createCards(21);
+
+        // when
+        State actual = Running.start(cards);
+
+        // then
+        assertThat(actual).isInstanceOf(Blackjack.class);
+    }
 
     @Test
     @DisplayName("hit하고 나서 카드 합이 21을 넘으면 Bust 상태가 된다.")
     void bust() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Hit(cards);
+        State hit = new Running(cards);
 
         // when
         State actual = hit.hit(Card.of(Pattern.DIAMOND, Denomination.TWO));
@@ -27,17 +54,17 @@ class HitTest {
     }
 
     @Test
-    @DisplayName("hit하고 나서 카드 합이 21 이하면 다시 Hit 상태가 된다.")
+    @DisplayName("hit하고 나서 카드 합이 21 이하면 다시 Running 상태가 된다.")
     void hit() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Hit(cards);
+        State hit = new Running(cards);
 
         // when
         State actual = hit.hit(Card.of(Pattern.DIAMOND, Denomination.ACE));
 
         // then
-        assertThat(actual).isInstanceOf(Hit.class);
+        assertThat(actual).isInstanceOf(Running.class);
     }
 
     @Test
@@ -45,7 +72,7 @@ class HitTest {
     void stand() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Hit(cards);
+        State hit = new Running(cards);
 
         // when
         State actual = hit.stand();
@@ -59,7 +86,7 @@ class HitTest {
     void finishedFalse() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Hit(cards);
+        State hit = new Running(cards);
 
         // when
         boolean actual = hit.isFinished();
@@ -73,7 +100,7 @@ class HitTest {
     void blackjackFalse() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Hit(cards);
+        State hit = new Running(cards);
 
         // when
         boolean actual = hit.isBlackjack();
@@ -87,7 +114,7 @@ class HitTest {
     void bustFalse() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Hit(cards);
+        State hit = new Running(cards);
 
         // when
         boolean actual = hit.isBust();
