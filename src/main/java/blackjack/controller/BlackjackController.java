@@ -9,6 +9,9 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -27,11 +30,21 @@ public class BlackjackController {
     }
 
     private BlackjackGame setUpBlackjackGame() {
-        final BlackjackGame blackjackGame = BlackjackGame.create(inputView.requestPlayerNamesToPlayGame(),
+        final BlackjackGame blackjackGame = BlackjackGame.create(setUpPlayers(),
                 new CardDeck(new CardDeckGenerator()));
 
         outputView.printParticipantInitialCards(blackjackGame.getPlayers(), blackjackGame.getDealer());
         return blackjackGame;
+    }
+
+    private Map<String, Integer> setUpPlayers() {
+        List<String> playerNames = inputView.requestPlayerNamesToPlayGame();
+        return playerNames.stream()
+                .collect(Collectors.toMap(playerName -> playerName, this::betMoney));
+    }
+
+    private int betMoney(String playerName) {
+        return inputView.requestPlayerBettingMoney(playerName);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {

@@ -6,6 +6,7 @@ import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
 
@@ -19,12 +20,12 @@ public class BlackjackGame {
         this.dealer = dealer;
     }
 
-    public static BlackjackGame create(final List<String> playerNames, CardDeck cardDeck) {
-        return new BlackjackGame(cardDeck, setUpPlayers(playerNames, cardDeck), setUpDealer(cardDeck));
+    public static BlackjackGame create(final Map<String, Integer> players, CardDeck cardDeck) {
+        return new BlackjackGame(cardDeck, setUpPlayers(players, cardDeck), setUpDealer(cardDeck));
     }
 
-    private static Players setUpPlayers(final List<String> playerNames, final CardDeck cardDeck) {
-        return Players.of(playerNames, cardDeck);
+    private static Players setUpPlayers(final Map<String, Integer> players, final CardDeck cardDeck) {
+        return Players.createByNameAndBettingMoney(players, cardDeck);
     }
 
     private static Dealer setUpDealer(final CardDeck cardDeck) {
