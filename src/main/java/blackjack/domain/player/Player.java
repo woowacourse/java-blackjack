@@ -15,10 +15,10 @@ public abstract class Player {
     public Player(final String name, final List<Card> cards) {
         this.name = name;
         this.cards = new Cards(cards);
-        validateReceivedCardsSize(this.cards);
+        validateInitialCardsSize(this.cards);
     }
 
-    private void validateReceivedCardsSize(final Cards cards) {
+    private void validateInitialCardsSize(final Cards cards) {
         if (!cards.isInitialCards()) {
             throw new IllegalArgumentException(FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE);
         }
