@@ -4,11 +4,6 @@ import java.util.List;
 
 public final class Bet {
 
-    private static final double WIN = 1.0;
-    private static final double LOSE = -1.0;
-    private static final double BLACKJACK = 1.5;
-    private static final double BOTH_BLACKJACK = 0.0;
-
     private final int betAmount;
     private int profit;
 
@@ -18,19 +13,19 @@ public final class Bet {
     }
 
     public void win() {
-        this.profit = (int) (betAmount * WIN);
+        this.profit = (int) (betAmount * BetPoint.WIN.getRatio());
     }
 
     public void lose() {
-        this.profit = (int) (betAmount * LOSE);
+        this.profit = (int) (betAmount * BetPoint.LOSE.getRatio());
     }
 
     public void bothBlackjack() {
-        this.profit = (int) (betAmount * BOTH_BLACKJACK);
+        this.profit = (int) (betAmount * BetPoint.BOTH_BLACKJACK.getRatio());
     }
 
     public void blackjack() {
-        this.profit = (int) (betAmount * BLACKJACK);
+        this.profit = (int) (betAmount * BetPoint.BLACKJACK.getRatio());
     }
 
     public void calculateFinalProfit(final List<Integer> profits) {
