@@ -32,13 +32,22 @@ public class Player extends Participant {
     public void hit(final Deck deck) {
         cards.add(deck.drawCard());
 
-        if (cards.isBust()) {
-            playerStatus = PlayerStatus.BUST;
-        }
+        updateStatus();
     }
 
     public void stay() {
         playerStatus = PlayerStatus.STAY;
+        updateStatus();
+    }
+
+    private void updateStatus() {
+        if (cards.isBust()) {
+            playerStatus = PlayerStatus.BUST;
+            return;
+        }
+        if (cards.isBlackjack(2)) {
+            playerStatus = PlayerStatus.BLACKJACK;
+        }
     }
 
     public void calculatePrize(final boolean isDealerBlackjack, final int dealerScore) {

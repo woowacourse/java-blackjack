@@ -2,20 +2,19 @@ package blackjack.domain.participant;
 
 public enum PlayerStatus {
 
-    HIT(false, false),
-    BUST(true, true),
-    STAY(true, false),
+    HIT(true),
+    BUST(false),
+    STAY(false),
+    BLACKJACK(true),
     ;
 
-    private final boolean isFinish;
-    private final boolean isBust;
+    private final boolean isRunning;
 
-    PlayerStatus(final boolean isFinish, final boolean isBust) {
-        this.isFinish = isFinish;
-        this.isBust = isBust;
+    PlayerStatus(final boolean isRunning) {
+        this.isRunning = isRunning;
     }
 
     public boolean isRunning() {
-        return !isFinish;
+        return isRunning;
     }
 }
