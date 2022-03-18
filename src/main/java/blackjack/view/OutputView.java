@@ -1,12 +1,15 @@
 package blackjack.view;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
 import blackjack.dto.GamerCardsResultDto;
 import blackjack.dto.PlayerResultDto;
-import java.util.List;
-import java.util.stream.Collectors;
+import blackjack.dto.ProfitResultDto;
+import blackjack.dto.ProfitResultsDto;
 
 public class OutputView {
     public static void printErrorMessage(String message) {
@@ -120,5 +123,18 @@ public class OutputView {
                 .append(": ")
                 .append(playerResult.getResult())
                 .append(System.lineSeparator());
+    }
+
+    public static void printProfitResult(ProfitResultsDto profitResultsDto) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("## 최종 수익")
+            .append(System.lineSeparator());
+        for (ProfitResultDto profitResultDto : profitResultsDto.getProfitResultsDto()) {
+            stringBuilder.append(profitResultDto.getName())
+                .append(": ")
+                .append(profitResultDto.getProfit())
+                .append(System.lineSeparator());
+        }
+        System.out.println(stringBuilder);
     }
 }

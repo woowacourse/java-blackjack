@@ -6,6 +6,7 @@ import java.util.List;
 import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
+import blackjack.domain.result.Match;
 
 public class Player{
     private static final String NAME_LENGTH_ERROR_MESSAGE = "이름은 최소 1글자, 최대 6글자로 입력해야 합니다.";
@@ -101,5 +102,22 @@ public class Player{
 
     public void addMoney(int amount) {
         betMoney.add(amount);
+    }
+
+    public int getProfitMoney(Match match) {
+        return (int) (betMoney.getAmount() * profitRatio(match));
+    }
+
+    private double profitRatio(Match match) {
+        if (match.equals(Match.WIN) && cardGroup.isBlackJack()) {
+            return 1.5;
+        }
+        if (match.equals(Match.WIN)) {
+            return 1;
+        }
+        if (match.equals(Match.LOSE)) {
+            return -1;
+        }
+        return 0;
     }
 }

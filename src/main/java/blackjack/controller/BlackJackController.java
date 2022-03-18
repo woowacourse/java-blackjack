@@ -3,6 +3,7 @@ package blackjack.controller;
 import java.util.List;
 
 import blackjack.domain.BlackJack;
+import blackjack.domain.ProfitResult;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
@@ -10,6 +11,7 @@ import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
 import blackjack.dto.GamerCardsResultDto;
 import blackjack.dto.PlayerResultDto;
+import blackjack.dto.ProfitResultsDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -87,6 +89,7 @@ public class BlackJackController {
     private void finish() {
         printCards();
         printResult();
+        printProfit();
     }
 
     private void printCards() {
@@ -98,5 +101,10 @@ public class BlackJackController {
         GameResult gameResult = blackJack.getGameResult();
         OutputView.printGameResult(DealerResultDto.of(gameResult.getDealerResult()),
                 PlayerResultDto.of(gameResult.getPlayerResult()));
+    }
+
+    private void printProfit() {
+        ProfitResult profitResult = blackJack.getProfitResult();
+        OutputView.printProfitResult(ProfitResultsDto.of(profitResult.get()));
     }
 }
