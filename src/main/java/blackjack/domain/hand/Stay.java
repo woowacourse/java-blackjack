@@ -31,7 +31,7 @@ public final class Stay extends Finished {
     }
 
     private double getCompareResultOf(CardBundle targetCardBundle) {
-        int compareResult = getScoreOf(cardBundle).compareTo(getScoreOf(targetCardBundle));
+        int compareResult = toScore(cardBundle).compareTo(toScore(targetCardBundle));
 
         if (compareResult > 0) {
             return WIN_BETTING_YIELD;
@@ -42,7 +42,7 @@ public final class Stay extends Finished {
         return DRAW_BETTING_YIELD;
     }
 
-    private Score getScoreOf(CardBundle cardBundle) {
+    private Score toScore(CardBundle cardBundle) {
         return cardBundle.getScore();
     }
 

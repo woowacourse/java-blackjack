@@ -19,22 +19,19 @@ public class CardBundle {
         this.score = calculateBestScore();
     }
 
-    public static CardBundle of(final Card card1) {
-        return new CardBundle(List.of(card1));
+    public CardBundle(final Card card) {
+        this(List.of(card));
     }
 
-    public static CardBundle of(final Card card1, final Card card2) {
-        return new CardBundle(List.of(card1, card2));
-    }
-
-    public CardBundle addAndGenerate(final Card card) {
+    public CardBundle add(final Card card) {
         List<Card> addedCards = new ArrayList<>(cards);
         addedCards.add(card);
         return new CardBundle(addedCards);
     }
 
     private void validateNoDuplicate(final List<Card> cards) {
-        if (cards.size() != new HashSet<>(cards).size()) {
+        int uniqueCardsCount = new HashSet<>(cards).size();
+        if (cards.size() != uniqueCardsCount) {
             throw new IllegalArgumentException(NO_DUPLICATE_CARD_EXCEPTION_MESSAGE);
         }
     }

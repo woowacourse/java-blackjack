@@ -11,7 +11,7 @@ public final class CanHit extends Running {
 
     @Override
     public CardHand hit(Card card) {
-        CardBundle newCardBundle = cardBundle.addAndGenerate(card);
+        CardBundle newCardBundle = cardBundle.add(card);
         if (newCardBundle.isBust()) {
             return new Bust(newCardBundle);
         }

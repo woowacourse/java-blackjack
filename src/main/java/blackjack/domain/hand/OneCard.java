@@ -6,12 +6,12 @@ import blackjack.domain.card.CardBundle;
 public final class OneCard extends Running {
 
     public OneCard(Card card) {
-        super(CardBundle.of(card));
+        super(new CardBundle(card));
     }
 
     @Override
     public CardHand hit(Card card) {
-        CardBundle newCardBundle = cardBundle.addAndGenerate(card);
+        CardBundle newCardBundle = cardBundle.add(card);
         if (newCardBundle.isBlackjack()) {
             return new Blackjack(newCardBundle);
         }
