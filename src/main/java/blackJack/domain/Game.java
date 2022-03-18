@@ -1,6 +1,8 @@
 package blackJack.domain;
 
 import blackJack.domain.Card.Cards;
+import blackJack.domain.Result.DealerScore;
+import blackJack.domain.Result.PlayerScore;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Players;
 

@@ -1,4 +1,4 @@
-package blackJack.domain;
+package blackJack.domain.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +11,7 @@ public class DealerScore {
         List<Integer> results = playerScore.getPlayersProfit().entrySet().stream()
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toUnmodifiableList());
+
         dealerProfits = results.stream().mapToDouble(Integer::intValue).sum() * -1;
     }
 

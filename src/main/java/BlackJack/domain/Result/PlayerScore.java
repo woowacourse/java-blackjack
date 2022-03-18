@@ -1,4 +1,4 @@
-package blackJack.domain;
+package blackJack.domain.Result;
 
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;

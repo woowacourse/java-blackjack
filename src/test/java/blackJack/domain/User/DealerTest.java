@@ -4,7 +4,7 @@ import blackJack.domain.Card.Card;
 import blackJack.domain.Card.Cards;
 import blackJack.domain.Card.Denomination;
 import blackJack.domain.Card.Suit;
-import blackJack.domain.Result;
+import blackJack.domain.Result.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

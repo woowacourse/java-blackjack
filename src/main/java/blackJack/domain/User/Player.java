@@ -1,6 +1,6 @@
 package blackJack.domain.User;
 
-import blackJack.domain.Result;
+import blackJack.domain.Result.Result;
 
 public class Player extends User {
 
