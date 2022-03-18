@@ -45,18 +45,18 @@ public enum Match {
     }
 
     public boolean isMatchBlackjackLose() {
-        return this.result.equals(LOSE_BLACKJACK.result);
+        return this.result == LOSE_BLACKJACK.result;
     }
 
     public boolean isMatchLose() {
-        return this.result.equals(LOSE.result);
+        return this.result == LOSE.result;
     }
 
     public boolean isMatchBlackjackWin() {
-        return this.result.equals(WIN_BLACKJACK.result);
+        return this.result == WIN_BLACKJACK.result;
     }
 
     public boolean isMatchWin() {
-        return this.result.equals(WIN.result);
+        return this.result == WIN.result;
     }
 }
