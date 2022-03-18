@@ -33,7 +33,7 @@ public class BlackjackController {
     private Guests createGuests() {
         try {
             final List<String> names = InputView.getGuestNames();
-            return new Guests(names);
+            return Guests.namesOf(names);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
             return createGuests();

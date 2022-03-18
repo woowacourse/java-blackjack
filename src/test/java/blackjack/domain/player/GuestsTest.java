@@ -17,7 +17,7 @@ public class GuestsTest {
     void throwExceptionWhenDuplicate() {
         List<String> names = List.of("엘리", "배카라", "배카라");
 
-        assertThatThrownBy(() -> new Guests(names))
+        assertThatThrownBy(() -> Guests.namesOf(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자의 이름은 중복될 수 없습니다.");
     }
@@ -26,7 +26,7 @@ public class GuestsTest {
     @MethodSource("generateThrowExceptionWhenOutOfBoundsArguments")
     @DisplayName("참가자의 인원이 2명~8명 사이가 아닐 경우 예외를 발생시킨다.")
     void throwExceptionWhenOutOfBounds(List<String> names) {
-        assertThatThrownBy(() -> new Guests(names))
+        assertThatThrownBy(() -> Guests.namesOf(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참자가 인원은 2명~8명 사이여야합니다.");
     }

@@ -14,8 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
-import blackjack.domain.player.Guests;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -81,7 +79,7 @@ public class ResultTest {
             @Test
             @DisplayName("참가자의 점수가 21보다 크면 -1")
             void bust() {
-                runGuestMoreCardTest(NINE_CLOVER, KING_CLOVER, ACE_HEART, FIVE_HEART, KING_HEART, -1);
+                runGuestMoreCardTest(FIVE_CLOVER, KING_CLOVER, TEN_HEART, FIVE_HEART, KING_HEART, -1);
             }
         }
 
@@ -109,15 +107,11 @@ public class ResultTest {
             dealer.takeCard(card1);
             dealer.takeCard(card2);
 
-            Guests guests = new Guests(List.of("엘리", "배카라"));
-            for (Guest guest : guests) {
-                guest.takeCard(card3);
-                guest.takeCard(card4);
-            }
+            Guest guest = new Guest("엘리");
+            guest.takeCard(card3);
+            guest.takeCard(card4);
 
-            for (Guest guest : guests) {
-                assertThat(Result.decide(dealer, guest).getProfitRatio()).isEqualTo(expected);
-            }
+            assertThat(Result.decide(dealer, guest).getProfitRatio()).isEqualTo(expected);
         }
 
         private void runGuestMoreCardTest(Card card1, Card card2, Card card3, Card card4,
@@ -126,16 +120,12 @@ public class ResultTest {
             dealer.takeCard(card1);
             dealer.takeCard(card2);
 
-            Guests guests = new Guests(List.of("엘리", "배카라"));
-            for (Guest guest : guests) {
-                guest.takeCard(card3);
-                guest.takeCard(card4);
-                guest.takeCard(card5);
-            }
+            Guest guest = new Guest("엘리");
+            guest.takeCard(card3);
+            guest.takeCard(card4);
+            guest.takeCard(card5);
 
-            for (Guest guest : guests) {
-                assertThat(Result.decide(dealer, guest).getProfitRatio()).isEqualTo(expected);
-            }
+            assertThat(Result.decide(dealer, guest).getProfitRatio()).isEqualTo(expected);
         }
 
         private void runDealerAndGuestMoreCardTest(Card card1, Card card2, Card card3,
@@ -146,16 +136,12 @@ public class ResultTest {
             dealer.takeCard(card2);
             dealer.takeCard(card3);
 
-            Guests guests = new Guests(List.of("엘리", "배카라"));
-            for (Guest guest : guests) {
-                guest.takeCard(card4);
-                guest.takeCard(card5);
-                guest.takeCard(card6);
-            }
+            Guest guest = new Guest("엘리");
+            guest.takeCard(card4);
+            guest.takeCard(card5);
+            guest.takeCard(card6);
 
-            for (Guest guest : guests) {
-                assertThat(Result.decide(dealer, guest).getProfitRatio()).isEqualTo(expected);
-            }
+            assertThat(Result.decide(dealer, guest).getProfitRatio()).isEqualTo(expected);
         }
     }
 }

@@ -27,13 +27,13 @@ public class DealerProfitTest {
         @Test
         @DisplayName("참가자가 블랙잭 승리인 경우 수익은 -1.5배한 금액이다.")
         void blackjack() {
-            runTest(ACE_CLOVER, FIVE_CLOVER, ACE_HEART, KING_CLOVER, -30_000);
+            runTest(ACE_CLOVER, FIVE_CLOVER, ACE_HEART, KING_CLOVER, -15_000);
         }
 
         @Test
         @DisplayName("참가자가 일반 승리인 경우 수익은 -1배한 금액이다.")
         void win() {
-            runTest(ACE_CLOVER, FIVE_CLOVER, NINE_CLOVER, ACE_HEART, -20_000);
+            runTest(ACE_CLOVER, FIVE_CLOVER, NINE_CLOVER, ACE_HEART, -10_000);
         }
 
         @Test
@@ -45,7 +45,7 @@ public class DealerProfitTest {
         @Test
         @DisplayName("참가자가 패한 경우 수익은 1배한 금액이다.")
         void lose() {
-            runTest(ACE_CLOVER, FIVE_CLOVER, KING_CLOVER, FIVE_HEART, 20_000);
+            runTest(ACE_CLOVER, FIVE_CLOVER, KING_CLOVER, FIVE_HEART, 10_000);
         }
 
         private void runTest(Card card1, Card card2, Card card3, Card card4, long expected) {
@@ -53,14 +53,12 @@ public class DealerProfitTest {
             dealer.takeCard(card1);
             dealer.takeCard(card2);
 
-            Guests guests = new Guests(List.of("제니", "채영"));
-            for (Guest guest : guests) {
-                guest.takeCard(card3);
-                guest.takeCard(card4);
-                guest.betMoney(Money.valueOf(10_000));
-            }
+            Guest guest = new Guest("리사");
+            guest.takeCard(card3);
+            guest.takeCard(card4);
+            guest.betMoney(Money.valueOf(10_000));
 
-            GuestProfit guestProfit = new GuestProfit(dealer, guests);
+            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(guest)));
             DealerProfit dealerProfit = new DealerProfit(guestProfit);
 
             assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(expected));
