@@ -2,6 +2,7 @@ package blackjack.util;
 
 import static blackjack.domain.card.Pattern.CLOVER;
 import static blackjack.domain.card.Pattern.DIAMOND;
+import static blackjack.domain.card.Pattern.HEART;
 
 import blackjack.domain.Betting;
 import blackjack.domain.card.Card;
@@ -42,9 +43,9 @@ public class BlackjackTestUtil {
 
     public static CardDeck createDeck(int expectedScore, int... expectedScores) {
         List<Card> cards = new ArrayList<>();
-        cards.add(createCard(DIAMOND, expectedScore));
+        cards.add(createCard(HEART, expectedScore));
         cards.addAll(Arrays.stream(expectedScores)
-                .mapToObj(score -> createCard(DIAMOND, score))
+                .mapToObj(score -> createCard(HEART, score))
                 .collect(Collectors.toList()));
         return new CardDeck(cards);
     }
