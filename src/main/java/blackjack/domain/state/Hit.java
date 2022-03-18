@@ -1,9 +1,9 @@
-package blackjack.domain.status;
+package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
 
-public class Hit implements Status {
+public class Hit implements State {
 
     private final Cards cards;
 
@@ -12,7 +12,7 @@ public class Hit implements Status {
     }
 
     @Override
-    public Status draw(Card card) {
+    public State draw(Card card) {
         Cards newCards = cards.add(card);
 
         if (newCards.sum() > 21) {

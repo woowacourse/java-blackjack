@@ -1,11 +1,11 @@
-package blackjack.domain.status;
+package blackjack.domain.state;
 
 import java.util.Set;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
 
-public class Ready implements Status {
+public class Ready implements State {
 
     private final Cards cards;
 
@@ -18,7 +18,7 @@ public class Ready implements Status {
     }
 
     @Override
-    public Status draw(Card card) {
+    public State draw(Card card) {
         Cards newCards = cards.add(card);
 
         if (newCards.isBlackjack()) {

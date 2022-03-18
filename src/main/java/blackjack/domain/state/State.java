@@ -1,11 +1,11 @@
-package blackjack.domain.status;
+package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
 
-public interface Status {
+public interface State {
 
-    Status draw(Card card);
+    State draw(Card card);
 
     Cards getCards();
 }
