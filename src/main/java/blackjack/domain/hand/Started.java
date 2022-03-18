@@ -9,4 +9,9 @@ public abstract class Started implements CardHand {
     Started(CardBundle cardBundle) {
         this.cardBundle = cardBundle;
     }
+
+    @Override
+    public final CardBundle getCardBundle() {
+        return cardBundle;
+    }
 }

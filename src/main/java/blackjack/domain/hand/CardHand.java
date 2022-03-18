@@ -1,6 +1,7 @@
 package blackjack.domain.hand;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardBundle;
 
 public interface CardHand {
 
@@ -13,4 +14,6 @@ public interface CardHand {
     boolean isBlackjack();
 
     boolean isBust();
+
+    CardBundle getCardBundle();
 }
