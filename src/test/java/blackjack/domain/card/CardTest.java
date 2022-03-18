@@ -8,6 +8,6 @@ public class CardTest {
     @Test
     void create() {
         // then
-        assertThatNoException().isThrownBy(() -> new Card(Number.ACE, Suit.CLOVER));
+        assertThatNoException().isThrownBy(() -> Card.of(Number.ACE, Suit.CLOVER));
     }
 }
