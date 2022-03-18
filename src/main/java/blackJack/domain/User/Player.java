@@ -1,6 +1,7 @@
 package blackJack.domain.User;
 
 import blackJack.domain.Result;
+import blackJack.utils.ExeptionMessage;
 
 public class Player extends User {
 
@@ -11,7 +12,10 @@ public class Player extends User {
     }
 
     public boolean isPossibleToAdd() {
-        return this.getScore() < PLAYER_ADD_CARD_LIMIT;
+        if(this.getScore() < PLAYER_ADD_CARD_LIMIT){
+            return true;
+        }
+        return false;
     }
 
     public Result judgeByBlackjack() {

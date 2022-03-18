@@ -5,12 +5,14 @@ import blackJack.domain.Card.Cards;
 import blackJack.domain.Card.Denomination;
 import blackJack.domain.Card.Suit;
 import blackJack.domain.Result;
+import blackJack.utils.ExeptionMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DealerTest {
 
@@ -29,7 +31,9 @@ class DealerTest {
     void checkScoreWhenOver16Test() {
         dealer.cards.add(new Card(Suit.HEART, Denomination.JACK));
         dealer.cards.add(new Card(Suit.HEART, Denomination.TEN));
-        assertThat(dealer.isPossibleToAdd()).isEqualTo(false);
+        assertThatThrownBy(() -> dealer.isPossibleToAdd())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ExeptionMessage.CANNOT_ADD_CARD);
     }
 
     @Test
@@ -69,12 +73,29 @@ class DealerTest {
     void PlayerIsWinTest_WhenUnder21AndDealerOverThan21() {
         player.cards.add(new Card(Suit.HEART, Denomination.JACK));
         player.cards.add(new Card(Suit.HEART, Denomination.TEN));
+
         dealer.cards.add(new Card(Suit.HEART, Denomination.JACK));
         dealer.cards.add(new Card(Suit.HEART, Denomination.EIGHT));
         dealer.cards.add(new Card(Suit.CLOVER, Denomination.EIGHT));
 
         Result actual = Result.judge(dealer,player);
         Result expected = Result.WIN;
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러의 카드가 21을 넘으면 21이 안넘은 플레이어는 승리한다.")
+    void PlayerIsLoseTest_WhenOver21AndDealerOverThan21() {
+        player.cards.add(new Card(Suit.HEART, Denomination.JACK));
+        player.cards.add(new Card(Suit.HEART, Denomination.TEN));
+        player.cards.add(new Card(Suit.HEART, Denomination.TWO));
+
+        dealer.cards.add(new Card(Suit.HEART, Denomination.JACK));
+        dealer.cards.add(new Card(Suit.HEART, Denomination.EIGHT));
+        dealer.cards.add(new Card(Suit.CLOVER, Denomination.EIGHT));
+
+        Result actual = Result.judge(dealer,player);
+        Result expected = Result.LOSE;
         assertThat(actual).isEqualTo(expected);
     }
 

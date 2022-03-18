@@ -1,5 +1,7 @@
 package blackJack.domain.User;
 
+import blackJack.utils.ExeptionMessage;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +14,10 @@ public class Dealer extends User {
     }
 
     public boolean isPossibleToAdd() {
-        return this.getScore() < DEALER_ADD_CARD_LIMIT;
+        if(this.getScore() < DEALER_ADD_CARD_LIMIT){
+            return true;
+        }
+        return false;
     }
 
     public Object getFirstCard() {

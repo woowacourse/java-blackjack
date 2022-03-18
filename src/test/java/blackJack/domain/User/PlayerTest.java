@@ -3,10 +3,13 @@ package blackJack.domain.User;
 import blackJack.domain.Card.Card;
 import blackJack.domain.Card.Denomination;
 import blackJack.domain.Card.Suit;
+import blackJack.utils.ExeptionMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static blackJack.domain.Card.CardFactory.CARD_CACHE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
@@ -33,7 +36,9 @@ class PlayerTest {
         player.cards.add(new Card(Suit.HEART, Denomination.JACK));
         player.cards.add(new Card(Suit.HEART, Denomination.TEN));
         player.cards.add(new Card(Suit.HEART, Denomination.TEN));
-        assertThat(player.isPossibleToAdd()).isEqualTo(false);
+        assertThatThrownBy(() -> player.isPossibleToAdd())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ExeptionMessage.CANNOT_ADD_CARD);
     }
 
 }
