@@ -27,7 +27,7 @@ public class Profit {
         return value;
     }
 
-    private static double multiply(Player player, double num) {
-        return player.getBettingMoney() * num;
+    private static double multiply(Player player, double rate) {
+        return player.getBettingMoney() * rate;
     }
 }
