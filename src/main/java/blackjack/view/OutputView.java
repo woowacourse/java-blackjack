@@ -1,9 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.betting.Profit;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.process.Result;
+import blackjack.domain.process.BettingResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,12 +53,11 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public void displayResult(Dealer dealer, Result result) {
+	public void displayResult(BettingResult bettingResult) {
 		System.out.println("## 최종 승패");
-		System.out.println(dealer.getName() + ": " + result.getDealerMoney());
-		Map<String, Integer> playersMoney = result.getPlayersMoney();
-		for (String playerName : playersMoney.keySet()) {
-			System.out.println(playerName + ": " + playersMoney.get(playerName));
+		Map<Gamer, Profit> gamersMoney = bettingResult.getGamersBettingResult();
+		for (Gamer gamer : gamersMoney.keySet()) {
+			System.out.println(gamer.getName() + ": " + gamersMoney.get(gamer).getPrizeValue());
 		}
 	}
 

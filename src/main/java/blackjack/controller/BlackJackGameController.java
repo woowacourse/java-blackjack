@@ -8,7 +8,7 @@ import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.process.BlackJackGame;
-import blackjack.domain.process.Result;
+import blackjack.domain.process.BettingResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.stream.Collectors;
@@ -57,9 +57,9 @@ public class BlackJackGameController {
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player);
 		}
-		Result result = Result.of(players, dealer, bettingTokens);
+		BettingResult bettingResult = BettingResult.of(players, dealer, bettingTokens);
 		outputView.displayNewLine();
-		outputView.displayResult(dealer, result);
+		outputView.displayResult(bettingResult);
 	}
 
 	private void progressDealerTurn(Players players, Dealer dealer, BlackJackGame blackJackGame) {
