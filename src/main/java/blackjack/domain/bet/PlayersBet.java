@@ -10,6 +10,7 @@ public class PlayersBet {
 
     private static final double BLACKJACK_PROFIT_RATE = 0.5;
     private static final int WIN_PROFIT_RATE = 1;
+    private static final int TIE_PROFIT_RATE = 0;
     private static final int LOSE_PROFIT_RATE = -1;
 
     private final Map<Player, Money> participantBetTable;
@@ -43,6 +44,9 @@ public class PlayersBet {
             }
             if (judgeResult.get(player) == Result.LOSE) {
                 profitTable.put(player, participantBetTable.get(player).multiply(LOSE_PROFIT_RATE));
+            }
+            if (judgeResult.get(player) == Result.TIE) {
+                profitTable.put(player, participantBetTable.get(player).multiply(TIE_PROFIT_RATE));
             }
         }
     }
