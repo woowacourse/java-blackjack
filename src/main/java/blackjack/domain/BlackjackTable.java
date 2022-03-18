@@ -17,7 +17,7 @@ public class BlackjackTable {
     private final Participants participants;
 
     public BlackjackTable(Map<String, Integer> players) {
-        this.deck = Deck.of(Card.createDeck());
+        this.deck = new Deck();
         this.participants = new Participants(createDealer(), toPlayers(players));
     }
 
