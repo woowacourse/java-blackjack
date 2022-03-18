@@ -15,7 +15,7 @@ public class Hit implements State {
 
     @Override
     public State hit(Card card) {
-        cards.add(card);
+        Cards cards = this.cards.add(card);
         if (cards.isBust()) {
             return new Bust(cards);
         }
