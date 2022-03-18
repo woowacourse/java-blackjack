@@ -2,14 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.result.DistributeResult;
-import blackjack.util.Mapper;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class BlackJackGame {
 
@@ -17,7 +14,7 @@ public class BlackJackGame {
 
     public void play() {
         List<String> userNames = InputView.inputUsersName();
-        Map<String, Integer> bettingPriceByName = mappingUserNameAndBettingPrice(userNames);
+        Map<String, Integer> bettingPriceByName = InputView.inputUserNameAndBettingPrice(userNames);
         blackJack = new BlackJack(bettingPriceByName);
         initDistribute();
         playGameEachParticipant(userNames);
@@ -27,12 +24,6 @@ public class BlackJackGame {
 
     private void printFinalProfit() {
         OutputView.printProfitResult(blackJack.calculateProfitResult());
-    }
-
-    private Map<String, Integer> mappingUserNameAndBettingPrice(List<String> userNames) {
-        List<Integer> userBettingPrices = InputView.inputUserBettingPrices(userNames);
-        Map<String, Integer> priceByName = Mapper.mappingUserNameAndBettingPrice(userNames, userBettingPrices);
-        return priceByName;
     }
 
     private void printGameScore() {

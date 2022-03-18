@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.System.lineSeparator;
@@ -42,8 +39,8 @@ public class InputView {
         public boolean check(String name) {
             return this.name.equals(name);
         }
-    }
 
+    }
     public static List<String> inputUsersName() {
         System.out.println(INPUT_USERNAME_GUIDE);
         return Arrays.stream(scanner.nextLine().split(REGEX)).collect(Collectors.toList());
@@ -54,12 +51,12 @@ public class InputView {
         return Agreement.isAgree(scanner.nextLine());
     }
 
-    public static List<Integer> inputUserBettingPrices(List<String> userNames) {
-        List<Integer> bettingPrices = new ArrayList<>();
+    public static Map<String, Integer> inputUserNameAndBettingPrice(List<String> userNames) {
+        Map<String, Integer> bettingPriceByUserName = new HashMap<>();
         for (String userName : userNames) {
-            bettingPrices.add(getUserBettingPrice(userName));
+            bettingPriceByUserName.put(userName, getUserBettingPrice(userName));
         }
-        return bettingPrices;
+        return bettingPriceByUserName;
     }
 
     public static int getUserBettingPrice(String userName) {
