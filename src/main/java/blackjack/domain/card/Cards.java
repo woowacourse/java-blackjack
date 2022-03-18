@@ -47,7 +47,7 @@ public class Cards {
 
     public int sum() {
         return cards.stream()
-                .mapToInt(Card::getSuit)
+                .mapToInt(Card::getDenomination)
                 .sum();
     }
 

@@ -1,34 +1,18 @@
 package blackjack.domain.card;
 
 public enum Suit {
+    DIAMOND("다이아몬드"),
+    CLOVER("클로버"),
+    HEART("하트"),
+    SPADE("스페이드");
 
-    TWO("2", 2),
-    THREE("3", 3),
-    FOUR("4", 4),
-    FIVE("5", 5),
-    SIX("6", 6),
-    SEVEN("7", 7),
-    EIGHT("8", 8),
-    NINE("9", 9),
-    TEN("10", 10),
-    JACK("J", 10),
-    KING("K", 10),
-    QUEEN("Q", 10),
-    ACE("A", 11);
+    private final String value;
 
-    private final String type;
-    private final int value;
-
-    Suit(final String type, final int value) {
-        this.type = type;
-        this.value = value;
+    Suit(final String pattern) {
+        this.value = pattern;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 }

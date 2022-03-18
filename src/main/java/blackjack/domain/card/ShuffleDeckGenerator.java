@@ -9,16 +9,16 @@ public class ShuffleDeckGenerator implements CardDeckGenerator{
     @Override
     public CardDeck createCardDeck() {
         List<Card> cards = new LinkedList<>();
-        for (final Denomination cardPattern : Denomination.values()) {
-            addCard(cards, cardPattern);
+        for (final Suit suit : Suit.values()) {
+            addCard(cards, suit);
         }
         Collections.shuffle(cards);
         return new CardDeck(cards);
     }
 
-    private void addCard(List<Card> cards, Denomination cardPattern) {
-        for (final Suit cardNumber : Suit.values()) {
-            cards.add(new Card(cardPattern, cardNumber));
+    private void addCard(List<Card> cards, Suit cardPattern) {
+        for (final Denomination denomination : Denomination.values()) {
+            cards.add(new Card(cardPattern, denomination));
         }
     }
 }

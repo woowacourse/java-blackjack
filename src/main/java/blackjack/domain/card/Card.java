@@ -4,28 +4,28 @@ import java.util.Objects;
 
 public class Card {
 
-    private final Denomination denomination;
     private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(final Denomination denomination, final Suit suit) {
-        this.denomination = denomination;
+    public Card(final Suit suit, final Denomination denomination) {
         this.suit = suit;
+        this.denomination = denomination;
     }
 
     public boolean isAceCard() {
-        return suit == Suit.ACE;
+        return denomination == Denomination.ACE;
     }
 
-    public String getDenomination() {
-        return denomination.getValue();
-    }
-
-    public String getSuitType() {
-        return suit.getType();
-    }
-
-    public int getSuit() {
+    public String getSuit() {
         return suit.getValue();
+    }
+
+    public String getDenominationType() {
+        return denomination.getType();
+    }
+
+    public int getDenomination() {
+        return denomination.getValue();
     }
 
     @Override

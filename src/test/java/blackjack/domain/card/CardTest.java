@@ -14,12 +14,12 @@ public class CardTest {
     @Test
     @DisplayName("하트 타입의 숫자 2카드 생성을 확인한다")
     void createHeartNumberCard() {
-        final Card card = new Card(Denomination.HEART, Suit.TWO);
+        final Card card = new Card(Suit.HEART, Denomination.TWO);
         final String expectedPattern = "하트";
         final int expectedNumber = 2;
 
-        final String actualPattern = card.getDenomination();
-        final int actualNumber = card.getSuit();
+        final String actualPattern = card.getSuit();
+        final int actualNumber = card.getDenomination();
         assertThat(actualPattern).isEqualTo(expectedPattern);
         assertThat(actualNumber).isEqualTo(expectedNumber);
     }
@@ -27,12 +27,12 @@ public class CardTest {
     @Test
     @DisplayName("클로버 타입의 숫자 2카드 생성을 확인한다")
     void createCloverNumberCard() {
-        final Card card = new Card(Denomination.CLOVER, Suit.THREE);
+        final Card card = new Card(Suit.CLOVER, Denomination.THREE);
         final String expectedPattern = "클로버";
         final int expectedNumber = 3;
 
-        final String actualPattern = card.getDenomination();
-        final int actualNumber = card.getSuit();
+        final String actualPattern = card.getSuit();
+        final int actualNumber = card.getDenomination();
         assertThat(actualPattern).isEqualTo(expectedPattern);
         assertThat(actualNumber).isEqualTo(expectedNumber);
     }
@@ -40,12 +40,12 @@ public class CardTest {
     @Test
     @DisplayName("스페이드 타입의 King 카드 생성을 확인한다.")
     void createSpecialTenCard() {
-        final Card card = new Card(Denomination.SPADE, Suit.KING);
+        final Card card = new Card(Suit.SPADE, Denomination.KING);
         final String expectedPattern = "스페이드";
         final int expectedNumber = 10;
 
-        final String actualPattern = card.getDenomination();
-        final int actualNumber = card.getSuit();
+        final String actualPattern = card.getSuit();
+        final int actualNumber = card.getDenomination();
         assertThat(actualPattern).isEqualTo(expectedPattern);
         assertThat(actualNumber).isEqualTo(expectedNumber);
     }
@@ -53,12 +53,12 @@ public class CardTest {
     @Test
     @DisplayName("다이아몬드 타입의 Ace 카드 생성을 확인한다.")
     void createSpecialQueenCard() {
-        final Card card = new Card(Denomination.DIAMOND, Suit.ACE);
+        final Card card = new Card(Suit.DIAMOND, Denomination.ACE);
         final String expectedPattern = "다이아몬드";
         final int expectedNumber = 11;
 
-        final String actualPattern = card.getDenomination();
-        final int actualNumber = card.getSuit();
+        final String actualPattern = card.getSuit();
+        final int actualNumber = card.getDenomination();
         assertThat(actualPattern).isEqualTo(expectedPattern);
         assertThat(actualNumber).isEqualTo(expectedNumber);
     }
@@ -73,10 +73,10 @@ public class CardTest {
 
     private static Stream<Arguments> provideCardAndExpected() {
         return Stream.of(
-                Arguments.of(new Card(Denomination.SPADE, Suit.ACE), true),
-                Arguments.of(new Card(Denomination.HEART, Suit.ACE), true),
-                Arguments.of(new Card(Denomination.DIAMOND, Suit.TWO), false),
-                Arguments.of(new Card(Denomination.CLOVER, Suit.TEN), false)
+                Arguments.of(new Card(Suit.SPADE, Denomination.ACE), true),
+                Arguments.of(new Card(Suit.HEART, Denomination.ACE), true),
+                Arguments.of(new Card(Suit.DIAMOND, Denomination.TWO), false),
+                Arguments.of(new Card(Suit.CLOVER, Denomination.TEN), false)
         );
     }
 }
