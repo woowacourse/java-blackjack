@@ -11,11 +11,6 @@ public enum Score {
         public boolean match(Player player, Dealer dealer) {
             return player.isBlackjack() && !dealer.isBlackjack();
         }
-
-        @Override
-        public Score inverse() {
-            return LOSE;
-        }
     },
     DRAW("무", 1) {
         @Override
@@ -32,11 +27,6 @@ public enum Score {
             return true;
 
         }
-
-        @Override
-        public Score inverse() {
-            return DRAW;
-        }
     },
     LOSE("패", -1) {
         @Override
@@ -48,11 +38,6 @@ public enum Score {
                 return player.getTotalNumber() <= dealer.getTotalNumber();
             }
             return false;
-        }
-
-        @Override
-        public Score inverse() {
-            return WIN;
         }
     };
 
@@ -66,7 +51,6 @@ public enum Score {
     }
 
     abstract public boolean match(Player player, Dealer dealer);
-    abstract public Score inverse();
 
     public static Score compete(Player player, Dealer dealer) {
         return Arrays.stream(values())
