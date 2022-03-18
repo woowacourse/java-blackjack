@@ -13,10 +13,10 @@ public class MatchCalculator {
     public static MatchStatus judgeMatchStatusOfPlayer(final Player player, final Dealer dealer) {
         validatePlayerStateFinished(player);
         validateDealerStateFinished(dealer);
-        return judgeMatchStatus(player, dealer);
+        return judgeMatchStatusWithValidatedStates(player, dealer);
     }
 
-    private static MatchStatus judgeMatchStatus(final Player player, final Dealer dealer) {
+    private static MatchStatus judgeMatchStatusWithValidatedStates(final Player player, final Dealer dealer) {
         final FinishedState playerState = (FinishedState) player.getState();
         final FinishedState dealerState = (FinishedState) dealer.getState();
         return playerState.judgeMatchStatus(dealerState);

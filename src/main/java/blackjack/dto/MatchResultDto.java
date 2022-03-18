@@ -10,25 +10,25 @@ import blackjack.domain.result.MatchStatus;
 
 public class MatchResultDto {
 
-    private final Map<MatchStatus, Integer> resultOfDealer;
-    private final Map<String, MatchStatus> resultOfPlayers;
+    private final Map<String, Integer> playerOutcomes;
+    private final int dealerOutcome;
 
-    private MatchResultDto(final Map<MatchStatus, Integer> resultOfDealer,
-                           final Map<String, MatchStatus> resultOfPlayers) {
-        this.resultOfDealer = new EnumMap<>(resultOfDealer);
-        this.resultOfPlayers = new LinkedHashMap<>(resultOfPlayers);
+    private MatchResultDto(final Map<String, Integer> playerOutcomes,
+                           final int dealerOutcome) {
+        this.playerOutcomes = new LinkedHashMap<>(playerOutcomes);
+        this.dealerOutcome = dealerOutcome;
     }
 
     public static MatchResultDto toDto(final MatchResult matchResult) {
-        return new MatchResultDto(matchResult.getResultOfDealer(), matchResult.getResultOfPlayers());
+        return new MatchResultDto(matchResult.getPlayerOutcomes(), matchResult.getDealerOutcome());
     }
 
-    public Map<MatchStatus, Integer> getResultOfDealer() {
-        return Collections.unmodifiableMap(new EnumMap<>(resultOfDealer));
+    public Map<String, Integer> getPlayerOutcomes() {
+        return Collections.unmodifiableMap(new LinkedHashMap<>(playerOutcomes));
     }
 
-    public Map<String, MatchStatus> getResultOfPlayers() {
-        return Collections.unmodifiableMap(new LinkedHashMap<>(resultOfPlayers));
+    public int getDealerOutcome() {
+        return dealerOutcome;
     }
 
 }

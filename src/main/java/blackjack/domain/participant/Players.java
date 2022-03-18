@@ -55,20 +55,13 @@ public class Players {
         return player.isPossibleToDrawCard();
     }
 
-    public MatchResult judgeMatch(final Dealer dealer) {
-        final Map<String, MatchStatus> matchStatuses = new LinkedHashMap<>();
+    public MatchResult judgeMatchStatusOfPlayers(final Dealer dealer) {
+        final Map<Player, MatchStatus> matchStatuses = new LinkedHashMap<>();
         for (final Player player : players) {
-            appendMatchStatus(matchStatuses, player, dealer);
+            final MatchStatus matchStatus = MatchCalculator.judgeMatchStatusOfPlayer(player, dealer);
+            matchStatuses.put(player, matchStatus);
         }
         return new MatchResult(matchStatuses);
-    }
-
-    private void appendMatchStatus(final Map<String, MatchStatus> matchStatuses,
-                                   final Player player,
-                                   final Dealer dealer) {
-        final String playerName = player.getName();
-        final MatchStatus matchStatus = MatchCalculator.judgeMatchStatusOfPlayer(player, dealer);
-        matchStatuses.put(playerName, matchStatus);
     }
 
     public List<Player> getPlayers() {

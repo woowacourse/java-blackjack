@@ -63,7 +63,7 @@ public class BlackjackView {
 
     public void printMatchResult(final MatchResultDto matchResultDto) {
         outputView.printEmptyLine();
-        outputView.printMessage("## 최종 승패");
+        outputView.printMessage("## 최종 수익");
         outputView.printMatchResult(matchResultDto);
     }
 

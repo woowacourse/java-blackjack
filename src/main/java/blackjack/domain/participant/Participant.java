@@ -31,4 +31,8 @@ public abstract class Participant {
         return state;
     }
 
+    public int getBettingAmount() {
+        return state.getBettingAmount();
+    }
+
 }

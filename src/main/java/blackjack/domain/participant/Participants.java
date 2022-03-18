@@ -1,10 +1,12 @@
 package blackjack.domain.participant;
 
 import java.util.List;
+import java.util.Map;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.MatchResult;
+import blackjack.domain.result.MatchStatus;
 
 public class Participants {
 
@@ -40,7 +42,7 @@ public class Participants {
     }
 
     public MatchResult calculateMatchResult() {
-        return players.judgeMatch(dealer);
+        return players.judgeMatchStatusOfPlayers(dealer);
     }
 
     public Dealer getDealer() {

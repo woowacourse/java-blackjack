@@ -74,24 +74,24 @@ public class OutputView {
     }
 
     public void printMatchResult(final MatchResultDto resultDto) {
-        printMatchResultOfDealer(resultDto.getResultOfDealer());
-        printMatchResultOfPlayers(resultDto.getResultOfPlayers());
+        printMatchResultOfDealer(resultDto.getDealerOutcome());
+        printMatchResultOfPlayers(resultDto.getPlayerOutcomes());
     }
 
-    private void printMatchResultOfDealer(final Map<MatchStatus, Integer> resultOfDealer) {
-        final List<String> dealerMatchCounts = resultOfDealer.entrySet().stream()
-                .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(Collectors.toUnmodifiableList());
-        final String matchResultOfDealer = Delimiter.SPACE.joinWith(dealerMatchCounts);
-        printMessage(Delimiter.COLON.joinWith("딜러", matchResultOfDealer));
+    private void printMatchResultOfDealer(final int dealerOutcome) {
+        printMatchResultOfParticipant("딜러", dealerOutcome);
     }
 
-    private void printMatchResultOfPlayers(final Map<String, MatchStatus> resultOfPlayers) {
-        for (final Map.Entry<String, MatchStatus> entry : resultOfPlayers.entrySet()) {
+    private void printMatchResultOfPlayers(final Map<String, Integer> playerOutcomes) {
+        for (final Map.Entry<String, Integer> entry : playerOutcomes.entrySet()) {
             final String playerName = entry.getKey();
-            final String matchStatusName = entry.getValue().getName();
-            printMessage(Delimiter.COLON.joinWith(playerName, matchStatusName));
+            final int outcome = entry.getValue();
+            printMatchResultOfParticipant(playerName, outcome);
         }
+    }
+
+    private void printMatchResultOfParticipant(final String participantName, final int outcome) {
+        printMessage(Delimiter.COLON.joinWith(participantName, String.valueOf(outcome)));
     }
 
     public void printMessage(final String message) {

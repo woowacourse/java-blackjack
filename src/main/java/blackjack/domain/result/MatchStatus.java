@@ -4,27 +4,25 @@ import java.util.Map;
 
 public enum MatchStatus {
 
-    BLACKJACK("블랙잭", 1.5),
-    WIN("승", 1),
-    DRAW("무", 0),
-    LOSS("패", -1);
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSS(-1);
 
-    private final String name;
     private final double rate;
 
-    MatchStatus(final String name, final double rate) {
-        this.name = name;
+    MatchStatus(final double rate) {
         this.rate = rate;
+    }
+
+    public int multiplyRate(final int number) {
+        return (int) Math.floor(this.rate * number);
     }
 
     public Long countMatchStatus(final Map<String, MatchStatus> matchStatuses) {
         return matchStatuses.values().stream()
                 .filter(this::equals)
                 .count();
-    }
-
-    public String getName() {
-        return name;
     }
 
 }
