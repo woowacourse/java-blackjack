@@ -7,6 +7,7 @@ public abstract class Car {
     private double distance;
     private String name;
 
+
     public Car(double distance, String name) {
         this.distance = distance;
         this.name = name;
