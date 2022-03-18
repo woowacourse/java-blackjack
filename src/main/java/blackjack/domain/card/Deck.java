@@ -3,14 +3,12 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class Deck {
 
-    private final Queue<Card> deck;
+    private final LinkedList<Card> deck;
 
     private Deck(LinkedList<Card> deck) {
-        Collections.shuffle(deck);
         this.deck = deck;
     }
 
@@ -19,7 +17,16 @@ public class Deck {
         return new Deck(new LinkedList<>(cards));
     }
 
+    public static Deck of(LinkedList<Card> deck) {
+        Collections.shuffle(deck);
+        return new Deck(deck);
+    }
+
     public Card distributeCard() {
         return deck.poll();
+    }
+
+    public LinkedList<Card> getDeck() {
+        return deck;
     }
 }
