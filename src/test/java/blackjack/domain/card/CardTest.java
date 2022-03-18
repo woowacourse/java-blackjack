@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.Fixtures.SPADE_ACE;
+import static blackjack.Fixtures.SPADE_EIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -10,12 +12,8 @@ public class CardTest {
     @DisplayName("카드 객체 생성을 테스트한다.")
     @Test
     public void testCreateCard() {
-        //given
-        Suit spade = Suit.SPADE;
-        Denomination ace = Denomination.ACE;
-
-        //when
-        Card card = new Card(spade, ace);
+        //given & when
+        Card card = SPADE_ACE;
 
         //then
         assertThat(card).isNotNull();
@@ -24,12 +22,8 @@ public class CardTest {
     @DisplayName("카드의 심볼을 얻을 수 있다.")
     @Test
     public void testGetCardName() {
-        //given
-        Suit suit = Suit.SPADE;
-        Denomination denomination = Denomination.EIGHT;
-
-        //when
-        Card card = new Card(suit, denomination);
+        //given & when
+        Card card = SPADE_EIGHT;
 
         //then
         assertThat(card.getSymbol()).isEqualTo("8");
@@ -38,12 +32,8 @@ public class CardTest {
     @DisplayName("카드의 번호를 얻을 수 있다.")
     @Test
     public void testGetCardWithSymbol() {
-        //given
-        Suit suit = Suit.SPADE;
-        Denomination denomination = Denomination.ACE;
-
-        //when
-        Card card = new Card(suit, denomination);
+        //given & when
+        Card card = SPADE_EIGHT;
 
         //then
         assertThat(card.getSuitName()).isEqualTo("스페이드");

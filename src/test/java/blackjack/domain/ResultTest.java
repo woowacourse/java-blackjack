@@ -1,21 +1,18 @@
 package blackjack.domain;
 
+import static blackjack.Fixtures.CLOVER_ACE;
+import static blackjack.Fixtures.DIAMOND_FIVE;
+import static blackjack.Fixtures.DIAMOND_SIX;
+import static blackjack.Fixtures.SPADE_ACE;
+import static blackjack.Fixtures.SPADE_KING;
+import static blackjack.Fixtures.SPADE_QUEEN;
+import static blackjack.Fixtures.SPADE_SEVEN;
+import static blackjack.Fixtures.SPADE_TWO;
+import static blackjack.TestUtils.createPlayerByName;
 import static blackjack.domain.Result.BLACKJACK;
 import static blackjack.domain.Result.LOSS;
-import static blackjack.TestUtils.createPlayerByName;
-import static blackjack.domain.card.Denomination.ACE;
-import static blackjack.domain.card.Denomination.FIVE;
-import static blackjack.domain.card.Denomination.KING;
-import static blackjack.domain.card.Denomination.QUEEN;
-import static blackjack.domain.card.Denomination.SEVEN;
-import static blackjack.domain.card.Denomination.SIX;
-import static blackjack.domain.card.Denomination.TWO;
-import static blackjack.domain.card.Suit.CLOVER;
-import static blackjack.domain.card.Suit.DIAMOND;
-import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -62,10 +59,10 @@ class ResultTest {
     public void testWinPlayerWithNotBust() {
         //given
         Deck deck = new Deck(() -> new ArrayDeque<>(List.of(
-                new Card(SPADE,ACE),
-                new Card(SPADE,SEVEN),
-                new Card(SPADE, TWO),
-                new Card(SPADE, QUEEN)
+                SPADE_ACE,
+                SPADE_SEVEN,
+                SPADE_TWO,
+                SPADE_QUEEN
         )));
 
         List<Player> players = List.of(createPlayerByName("pobi"));
@@ -88,12 +85,12 @@ class ResultTest {
 
     private Deck initDeck() {
         return new Deck(() -> new ArrayDeque<>(List.of(
-                new Card(CLOVER, ACE),
-                new Card(DIAMOND, FIVE),    //16
-                new Card(SPADE, KING),
-                new Card(SPADE, ACE),   //21
-                new Card(DIAMOND, SIX),
-                new Card(SPADE, ACE)    //17
+                CLOVER_ACE,
+                DIAMOND_FIVE,   //16
+                SPADE_KING,
+                SPADE_ACE,  //21
+                DIAMOND_SIX,
+                SPADE_ACE   //17
         )));
     }
 }

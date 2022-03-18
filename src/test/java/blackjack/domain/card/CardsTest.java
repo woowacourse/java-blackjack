@@ -1,15 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Denomination.ACE;
-import static blackjack.domain.card.Denomination.EIGHT;
-import static blackjack.domain.card.Denomination.FIVE;
-import static blackjack.domain.card.Denomination.KING;
-import static blackjack.domain.card.Denomination.NINE;
-import static blackjack.domain.card.Denomination.TEN;
-import static blackjack.domain.card.Suit.CLOVER;
-import static blackjack.domain.card.Suit.DIAMOND;
-import static blackjack.domain.card.Suit.HEART;
-import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.Fixtures.*;
 
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -22,10 +13,7 @@ public class CardsTest {
     @Test
     public void testCalculateDefaultCondition() {
         //given
-        List<Card> initCards = List.of(
-                new Card(CLOVER, FIVE),
-                new Card(HEART, KING)
-        );
+        List<Card> initCards = List.of(CLOVER_FIVE, HEART_KING);
 
         Cards cards = createCards(initCards);
 
@@ -40,10 +28,7 @@ public class CardsTest {
     @Test
     public void testSumPointWithAce() {
         //given
-        List<Card> initCards = List.of(
-                new Card(CLOVER, FIVE),
-                new Card(DIAMOND, ACE)
-        );
+        List<Card> initCards = List.of(CLOVER_FIVE, DIAMOND_ACE);
 
         Cards cards = createCards(initCards);
 
@@ -58,13 +43,7 @@ public class CardsTest {
     @Test
     public void testSumPointWithMultipleAce() {
         //given
-        List<Card> initCards = List.of(
-                new Card(HEART, ACE),
-                new Card(CLOVER, ACE),
-                new Card(SPADE, ACE),
-                new Card(DIAMOND, ACE),
-                new Card(CLOVER, KING)
-        );
+        List<Card> initCards = List.of(HEART_ACE, CLOVER_ACE, SPADE_ACE, DIAMOND_ACE, CLOVER_KING);
 
         Cards cards = createCards(initCards);
 
@@ -79,11 +58,7 @@ public class CardsTest {
     @Test
     public void testSumPointWithMultipleAce2() {
         //given
-        List<Card> initCards = List.of(
-                new Card(SPADE, ACE),
-                new Card(DIAMOND, ACE),
-                new Card(CLOVER, NINE)
-        );
+        List<Card> initCards = List.of(SPADE_ACE, DIAMOND_ACE, CLOVER_NINE);
 
         Cards cards = createCards(initCards);
 
@@ -98,14 +73,7 @@ public class CardsTest {
     @Test
     public void testSumPointWithMultipleAce3() {
         //given
-        List<Card> initCards = List.of(
-                new Card(SPADE, FIVE),
-                new Card(DIAMOND, FIVE),
-                new Card(CLOVER, EIGHT),
-                new Card(SPADE, ACE),
-                new Card(DIAMOND, ACE),
-                new Card(CLOVER, ACE)
-        );
+        List<Card> initCards = List.of(SPADE_FIVE, DIAMOND_FIVE, CLOVER_EIGHT, SPADE_ACE, DIAMOND_ACE, CLOVER_ACE);
 
         Cards cards = createCards(initCards);
 
@@ -120,10 +88,7 @@ public class CardsTest {
     @Test
     public void testIsSameBlackJackNumber() {
         //given
-        List<Card> initCards = List.of(
-                new Card(SPADE, ACE),
-                new Card(DIAMOND, TEN)
-        );
+        List<Card> initCards = List.of(SPADE_ACE, DIAMOND_TEN);
 
         //when
         Cards cards = createCards(initCards);
