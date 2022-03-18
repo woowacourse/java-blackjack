@@ -58,7 +58,11 @@ public class Players {
 
     private Player currentTurnPlayer() {
         validateAllTurnEnd();
-        return values.get(currentTurnIndex);
+        Player currentPlayer = values.get(currentTurnIndex);
+        if (currentPlayer.canDraw()) {
+            return currentPlayer;
+        }
+        return values.get(++currentTurnIndex);
     }
 
     private void checkCanTurnNext(final Player currentPlayer) {
