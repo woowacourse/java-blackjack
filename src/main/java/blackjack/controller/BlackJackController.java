@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJack;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
@@ -22,7 +23,7 @@ public class BlackJackController {
     }
 
     private void initialize() {
-        blackJack = new BlackJack(initializePlayerGroup());
+        blackJack = new BlackJack(initializePlayerGroup(), new Dealer());
         blackJack.divideCards();
         OutputView.printGamersCards(GamerCardsDto.of(blackJack.getGamers()));
     }

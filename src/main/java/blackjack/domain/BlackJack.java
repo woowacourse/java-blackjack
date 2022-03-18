@@ -14,8 +14,8 @@ public class BlackJack {
     private final GamerGroup gamerGroup;
     private final CardPack cardPack;
 
-    public BlackJack(PlayerGroup playerGroup) {
-        this.gamerGroup = new GamerGroup(new Dealer(), playerGroup);
+    public BlackJack(PlayerGroup playerGroup, Dealer dealer) {
+        this.gamerGroup = new GamerGroup(dealer, playerGroup);
         this.cardPack = new CardPack();
     }
 
