@@ -1,7 +1,6 @@
 package blackJack.controller;
 
 import blackJack.domain.Game;
-import blackJack.domain.Result;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
 import blackJack.domain.User.Players;
@@ -12,6 +11,8 @@ import blackJack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static blackJack.domain.Card.CardFactory.CARD_CACHE;
+
 public class Blackjack {
 
     public void run() {
@@ -20,7 +21,7 @@ public class Blackjack {
         OutputView.printDrawMessage(playerNames);
         OutputView.printTotalUserCards(game.getDealer(), game.getPlayers());
 
-        if (game.checkDealerIsBlackJack()){
+        if (game.checkDealerIsBlackJack()) {
             printBlackJackResult(game);
             return;
         }
@@ -59,13 +60,13 @@ public class Blackjack {
         }
         while (dealer.isPossibleToAdd()) {
             OutputView.printAddDealerCard();
-            dealer.requestCard();
+            dealer.requestCard(CARD_CACHE.poll());
         }
     }
 
     private void addCardPerPlayer(Player player) {
-        while (InputView.askOneMoreCard(player)) {
-            player.requestCard();
+        while (player.isPossibleToAdd() && InputView.askOneMoreCard(player)) {
+            player.requestCard(CARD_CACHE.poll());
             OutputView.printPlayerCard(player);
         }
     }

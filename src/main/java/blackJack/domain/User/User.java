@@ -19,13 +19,8 @@ public abstract class User {
         this.cards = new Cards(new ArrayList<>());
     }
 
-    public void requestCard() {
-        if (isPossibleToAdd()) {
-            Card card = CARD_CACHE.poll();
-            this.cards.add(card);
-            return;
-        }
-        throw new IllegalArgumentException(ExeptionMessage.CANNOT_ADD_CARD);
+    public void requestCard(Card card) {
+        this.cards.add(card);
     }
 
     public void dealCard(Card card) {
