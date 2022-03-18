@@ -15,13 +15,14 @@ public class PlayersBettingAmount {
         this.profitResult = profitResult;
     }
 
-    public Map<String, Integer> getResult(Dealer dealer) {
-        Map<String, Integer> result = new LinkedHashMap<>();
-        result.put(dealer.getName(), 0);
+    public Map<Player, Integer> getResult(Dealer dealer) {
+        Map<Player, Integer> result = new LinkedHashMap<>();
+        Player copyDealer = dealer.copy();
+        result.put(copyDealer, 0);
         for (Player player : profitResult.keySet()) {
             int profit = getProfit(player, dealer);
-            result.put(player.getName(), profit);
-            result.merge(dealer.getName(), -profit, Integer::sum);
+            result.put(player.copy(), profit);
+            result.merge(copyDealer, -profit, Integer::sum);
         }
         return result;
     }
