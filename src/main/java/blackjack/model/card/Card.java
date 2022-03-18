@@ -1,11 +1,15 @@
 package blackjack.model.card;
 
 public class Card {
-    private final Number number;
+    private final CardNumber cardNumber;
     private final Symbol symbol;
 
-    public Card(Number number, Symbol symbol) {
-        this.number = number;
+    public Card(CardNumber cardNumber, Symbol symbol) {
+        this.cardNumber = cardNumber;
         this.symbol = symbol;
+    }
+
+    public CardNumber getNumber() {
+        return cardNumber;
     }
 }
