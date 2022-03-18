@@ -37,7 +37,7 @@ public final class Players {
 
     public List<Integer> calculateIncomes(Dealer dealer) {
         return players.stream()
-            .map(player -> player.calculateIncome(player.judgeResult(dealer)))
+            .map(player -> player.calculateIncome(player.receiveResult(dealer)))
             .collect(Collectors.toList());
     }
 

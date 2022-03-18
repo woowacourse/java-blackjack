@@ -5,9 +5,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Denomination;
+import domain.card.Symbol;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import utils.ExceptionMessages;
 
 class PlayerTest {
@@ -37,8 +45,14 @@ class PlayerTest {
     @Test
     @DisplayName("21이 넘은 상태에서 카드를 뽑을 경우 에러를 발생시킨다.")
     void hitCardOverLimitError() {
-        while (player.canHit()) {
-            player.hit(deck);
+        Deck testDeck = Deck.initDeck(Arrays.asList(Card.valueOf(Symbol.CLOVER, Denomination.SIX),
+            Card.valueOf(Symbol.HEART, Denomination.SIX),
+            Card.valueOf(Symbol.DIAMOND, Denomination.SIX),
+            Card.valueOf(Symbol.SPADE, Denomination.SIX),
+            Card.valueOf(Symbol.HEART, Denomination.FOUR)));
+
+        for (int i = 0; i < 4; i++) {
+            player.hit(testDeck);
         }
 
         assertThatThrownBy(() -> player.hit(deck))
@@ -47,7 +61,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("숫자가 21이 넘는 경우 False를 반환한다.")
+    @DisplayName("블랙잭이거나 숫자가 21이 넘는 경우 False를 반환한다.")
     void canDrawCardFalseTest() {
         while (player.canHit()) {
             player.hit(deck);
@@ -64,49 +78,33 @@ class PlayerTest {
         assertThat(player.canHit()).isTrue();
     }
 
-    @Test
-    @DisplayName("Player가 21이 넘고, 딜러가 21이 넘지 않을 경우 Lose를 반환한다.")
-    void isWinTest() {
-        while (player.canHit()) {
-            player.hit(deck);
-        }
+    @ParameterizedTest
+    @MethodSource("provideDeckAndResult")
+    @DisplayName("Player만 블랙잭인 경우 BlackJack을 반환하고, 딜러만 블랙잭인 경우 Lose를 반환한다")
+    void judgeResultWhenBlackJack(List<Card> playerCardPack, List<Card> dealerCardPack,
+        Result result) {
+        Deck deck1 = Deck.initDeck(playerCardPack);
+        Deck deck2 = Deck.initDeck(dealerCardPack);
 
-        dealer.hit(deck);
+        player.receiveInitialTwoCards(deck1);
+        dealer.receiveInitialTwoCards(deck2);
 
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
+        assertThat(player.receiveResult(dealer)).isEqualTo(result);
     }
 
-    @Test
-    @DisplayName("Player가 21을 경우, Dealer와 상관 없이 Lose를 반환한다.")
-    void isWinTest2() {
-        while (player.canHit()) {
-            player.hit(deck);
-        }
-
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
+    private static Stream<Arguments> provideDeckAndResult() {
+        return Stream.of(
+            Arguments.of(List.of(Card.valueOf(Symbol.CLOVER, Denomination.ACE),
+                    Card.valueOf(Symbol.HEART, Denomination.QUEEN)),
+                List.of(Card.valueOf(Symbol.CLOVER, Denomination.QUEEN),
+                    Card.valueOf(Symbol.HEART, Denomination.THREE)), Result.BLACKJACK),
+            Arguments.of(List.of(Card.valueOf(Symbol.CLOVER, Denomination.QUEEN),
+                    Card.valueOf(Symbol.HEART, Denomination.THREE)),
+                List.of(Card.valueOf(Symbol.CLOVER, Denomination.ACE),
+                    Card.valueOf(Symbol.HEART, Denomination.QUEEN)), Result.LOSE)
+        );
     }
 
-    @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Player가 총 점수가 클 경우 Win을 반환한다.")
-    void isWinTest3() {
-        player.hit(deck);
-
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
-    }
-
-    @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Dealer가 총 점수가 클 경우 Lose를 반환한다.")
-    void isWinTest4() {
-        dealer.hit(deck);
-
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, 점수가 같을 경우 Draw를 반환한다.")
-    void isWinTest5() {
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.PUSH);
-    }
 
     @Test
     @DisplayName("Player가 BlackJack인 경우, 자신의 베팅 금액의 1.5배를 반환한다")
