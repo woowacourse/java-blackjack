@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -35,13 +34,13 @@ class PlayersTest {
     }
 
     @Test
-    void 생성_시_유저가_없는_경우_예외발생() {
+    void 생성_시_유저가_2명미만인_경우_예외발생() {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
-        final List<String> names = new ArrayList<>();
+        final List<String> names = List.of("name");
 
         assertThatThrownBy(() -> Players.createPlayers(names, text -> 1000, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어는 0명이 될 수 없습니다.");
+                .hasMessage("플레이어는 2명 이상 8명 이하만 들어올 수 있습니다.");
     }
 
     @Test

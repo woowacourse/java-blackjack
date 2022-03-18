@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 public class Players {
 
+    private static final int MIN_PLAYERS_SIZE = 2;
+    private static final int MAX_PLAYERS_SIZE = 8;
+
     private final List<Player> players;
     private int currentPlayerTurnIndex;
 
@@ -28,7 +31,20 @@ public class Players {
     public static Players createPlayers(final List<String> names, final Function<String, Integer> betMoney,
                                         final CardDeck cardDeck) {
         checkDuplicationNames(names);
+        checkPlayerNamesSize(names);
         return new Players(createPlayersByBettingAndDrawCards(toNames(names), betMoney, cardDeck));
+    }
+
+    private static void checkDuplicationNames(final List<String> names) {
+        if (calculateDistinctCount(names) != names.size()) {
+            throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
+        }
+    }
+
+    private static int calculateDistinctCount(final List<String> names) {
+        return (int) names.stream()
+                .distinct()
+                .count();
     }
 
     private static List<Name> toNames(final List<String> names) {
@@ -37,16 +53,11 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    private static void checkDuplicationNames(final List<String> playerNames) {
-        if (calculateDistinctCount(playerNames) != playerNames.size()) {
-            throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
+    private static void checkPlayerNamesSize(final List<String> names) {
+        if (names.size() < MIN_PLAYERS_SIZE || names.size() > MAX_PLAYERS_SIZE) {
+            throw new IllegalArgumentException(String.format("플레이어는 %s명 이상 %s명 이하만 들어올 수 있습니다.",
+                    MIN_PLAYERS_SIZE, MAX_PLAYERS_SIZE));
         }
-    }
-
-    private static int calculateDistinctCount(final List<String> playerNames) {
-        return (int) playerNames.stream()
-                .distinct()
-                .count();
     }
 
     private static List<Player> createPlayersByBettingAndDrawCards(final List<Name> names,
