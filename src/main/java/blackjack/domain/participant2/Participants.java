@@ -56,6 +56,14 @@ public class Participants {
         return Collections.unmodifiableList(participants);
     }
 
+    public Participant getDealer() {
+        return dealer;
+    }
+
+    public List<Participant> getPlayers() {
+        return players;
+    }
+
     @Override
     public String toString() {
         return "Participants{" +
