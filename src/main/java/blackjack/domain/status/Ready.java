@@ -19,7 +19,13 @@ public class Ready implements Status {
 
     @Override
     public Status draw(Card card) {
-        return new Ready(cards.add(card));
+        Cards newCards = cards.add(card);
+
+        if (newCards.size() == 2) {
+            return new Hit(newCards);
+        }
+
+        return new Ready(newCards);
     }
 
     @Override

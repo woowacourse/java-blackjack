@@ -13,7 +13,7 @@ public class ReadyTest {
 
     @Test
     @DisplayName("draw으로 카드 한 장을 뽑아 저장한다.")
-    void hit() {
+    void draw() {
         //given
         Status status = new Ready();
 
@@ -22,5 +22,19 @@ public class ReadyTest {
 
         //then
         assertThat(newStatus.getCards().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("2 장을 뽑으면 Hit 상태로 바뀐다.")
+    void toHit() {
+        //given
+        Status status = new Ready();
+
+        //when
+        Status newStatus = status.draw(new Card(CardSymbol.HEART, CardNumber.JACK));
+        Status hitStatus = newStatus.draw(new Card(CardSymbol.CLUB, CardNumber.JACK));
+
+        //then
+        assertThat(hitStatus).isInstanceOf(Hit.class);
     }
 }
