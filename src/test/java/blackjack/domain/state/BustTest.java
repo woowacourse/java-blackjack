@@ -35,7 +35,7 @@ class BustTest {
 
         assertThatThrownBy(() -> bust.draw(Card.of(Denomination.KING, Suit.SPADE)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Bust 상태일 때는 draw 를 실행할 수 없습니다.");
+                .hasMessage("현재 상태는 draw 를 실행할 수 없습니다.");
     }
 
     @DisplayName("stay 를 실행하여 예외가 발생하는 것을 확인한다.")
@@ -45,7 +45,7 @@ class BustTest {
 
         assertThatThrownBy(bust::stay)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Bust 상태일 때는 stay 를 실행할 수 없습니다.");
+                .hasMessage("현재 상태는 stay 를 실행할 수 없습니다.");
     }
 
     @DisplayName("종료된 상태인지 확인한다.")

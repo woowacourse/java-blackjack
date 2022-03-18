@@ -36,7 +36,7 @@ class BlackjackTest {
 
         assertThatThrownBy(() -> blackjack.draw(Card.of(Denomination.KING, Suit.SPADE)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Blackjack 상태일 때는 draw 를 실행할 수 없습니다.");
+                .hasMessage("현재 상태는 draw 를 실행할 수 없습니다.");
     }
 
     @DisplayName("stay 를 실행하여 예외가 발생하는 것을 확인한다.")
@@ -46,7 +46,7 @@ class BlackjackTest {
 
         assertThatThrownBy(blackjack::stay)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Blackjack 상태일 때는 stay 를 실행할 수 없습니다.");
+                .hasMessage("현재 상태는 stay 를 실행할 수 없습니다.");
     }
 
     @DisplayName("종료된 상태인지 확인한다.")
@@ -60,7 +60,11 @@ class BlackjackTest {
     @DisplayName("블랙잭일 경우 베팅 금액의 1.5 배를 얻는 것을 확인한다.")
     @Test
     void profit() {
-        Blackjack blackjack = new Blackjack(playingCards, betting);
+        State blackjack = new Ready();
+        blackjack.bet("1000");
+
+        blackjack = blackjack.draw(Card.of(Denomination.KING, Suit.SPADE));
+        blackjack = blackjack.draw(Card.of(Denomination.ACE, Suit.SPADE));
 
         assertThat(blackjack.profit()).isEqualTo(1500.0);
     }

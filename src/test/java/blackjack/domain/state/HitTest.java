@@ -84,7 +84,7 @@ class HitTest {
 
         assertThatThrownBy(hit::profit)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Hit 상태일 때는 수익을 계산할 수 없습니다.");
+                .hasMessage("현재 상태는 수익을 계산할 수 없습니다.");
     }
 
     @DisplayName("카드 총합을 확인한다.")

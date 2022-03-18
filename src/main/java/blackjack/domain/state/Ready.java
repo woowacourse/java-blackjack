@@ -4,10 +4,15 @@ import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayingCards;
 
-public class Ready implements State {
+public class Ready extends Running {
 
-    private final PlayingCards playingCards = new PlayingCards();
-    private Betting betting;
+    Ready(final PlayingCards playingCards) {
+        super(playingCards);
+    }
+
+    public Ready() {
+        this(new PlayingCards());
+    }
 
     private void validateNumber(final String string) {
         if (!string.matches("-?[0-9]+")) {
@@ -32,41 +37,5 @@ public class Ready implements State {
             return new Blackjack(playingCards, betting);
         }
         return new Hit(playingCards, betting);
-    }
-
-    @Override
-    public State stay() {
-        return new Stay(playingCards, betting);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public double profit() {
-        throw new IllegalStateException("Ready 상태일 때는 수익을 계산할 수 없습니다.");
-    }
-
-    @Override
-    public PlayingCards playingCards() {
-        return playingCards;
-    }
-
-    @Override
-    public PlayingCards partOfPlayingCards() {
-        PlayingCards playingCards = new PlayingCards();
-        playingCards.add(this.playingCards.getPartOfCard());
-
-        return playingCards;
-    }
-
-    @Override
-    public int cardTotal() {
-        if (playingCards.isEmpty()) {
-            return 0;
-        }
-        return playingCards.total();
     }
 }

@@ -40,7 +40,7 @@ public class PlayerTest {
 
         assertThatThrownBy(() -> player.profit())
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Ready 상태일 때는 수익을 계산할 수 없습니다.");
+                .hasMessage("현재 상태는 수익을 계산할 수 없습니다.");
     }
 
     @DisplayName("플레이어의 카드 합이 21 미만일 경우 카드를 받는 것을 확인한다.")
