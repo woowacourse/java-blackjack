@@ -49,8 +49,7 @@ class CardsTest {
         Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE)));
 
         // when
-        cards.add(new Card(DIAMOND, TEN));
-        int actual = cards.sum();
+        int actual = cards.add(new Card(DIAMOND, TEN)).sum();
 
         // then
         assertThat(actual).isEqualTo(21);

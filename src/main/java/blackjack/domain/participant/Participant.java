@@ -10,7 +10,7 @@ import blackjack.domain.card.CardDeck;
 
 public abstract class Participant {
 
-    protected final Cards cards;
+    protected Cards cards;
     protected PlayStatus playStatus;
 
     Participant() {
@@ -42,7 +42,7 @@ public abstract class Participant {
     }
 
     public void hit(Card card) {
-        cards.add(card);
+        this.cards = cards.add(card);
         playStatus = cards.getStatus();
     }
 
