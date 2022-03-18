@@ -2,7 +2,6 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public final class Card {
@@ -28,6 +27,17 @@ public final class Card {
         return denomination == Denomination.ACE;
     }
 
+    public static List<Card> values() {
+        return List.copyOf(CACHE);
+    }
+
+    public static Card valueOf(Symbol symbol, Denomination denomination) {
+        return CACHE.stream()
+            .filter(card -> card.symbol == symbol && card.denomination == denomination)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_CARD));
+    }
+
     public int getScore(){
         return denomination.getScore();
     }
@@ -38,16 +48,5 @@ public final class Card {
 
     public String getSymbol() {
         return symbol.getLetter();
-    }
-
-    public static List<Card> values() {
-        return Collections.unmodifiableList(CACHE);
-    }
-
-    public static Card valueOf(Symbol symbol, Denomination denomination) {
-        return CACHE.stream()
-            .filter(card -> card.symbol == symbol && card.denomination == denomination)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_CARD));
     }
 }
