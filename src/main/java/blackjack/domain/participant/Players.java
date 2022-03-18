@@ -35,16 +35,21 @@ public class Players {
         players.offer(players.poll());
     }
 
+    public Player findPresentPlayer() {
+        return players.peek();
+    }
+
+    public boolean isAllBlackJack() {
+        return players.stream()
+                .allMatch(Player::isBlackJack);
+    }
+
     public Map<Player, MatchResult> match(Dealer dealer) {
         Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
         for (Player player : players) {
-            gameResult.put(player, player.match(dealer));
+            gameResult.put(player, MatchResult.judge(player, dealer));
         }
         return gameResult;
-    }
-
-    public Player findPresentPlayer() {
-        return players.peek();
     }
 
     public List<Player> getPlayers() {
