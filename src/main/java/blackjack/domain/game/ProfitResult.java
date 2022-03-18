@@ -1,26 +1,27 @@
 package blackjack.domain.game;
 
 import blackjack.domain.money.BetAndProfit;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class PlayerBetResult {
+public class ProfitResult {
 
     // TODO: 불변객체로 만들어야함
     private static final String NOT_FOUND_PLAYER_EXCEPTION_MESSAGE = "존재하지 않는 플레이어입니다.";
 
     private final Map<Player, BetAndProfit> playerBetAndProfits;
 
-    private PlayerBetResult(Map<Player, BetAndProfit> playerBetAndProfits, Dealer dealer) {
+    private ProfitResult(Map<Player, BetAndProfit> playerBetAndProfits, Dealer dealer) {
         calculateBetAndProfitOfPlayers(playerBetAndProfits, dealer);
         this.playerBetAndProfits = playerBetAndProfits;
     }
 
-    public static PlayerBetResult of(Map<Player, BetAndProfit> playerBetAndProfits, Dealer dealer) {
-        return new PlayerBetResult(playerBetAndProfits, dealer);
+    public static ProfitResult of(Map<Player, BetAndProfit> playerBetAndProfits, Dealer dealer) {
+        return new ProfitResult(playerBetAndProfits, dealer);
     }
 
     private void calculateBetAndProfitOfPlayers(Map<Player, BetAndProfit> playerBetAndProfits, Dealer dealer) {
@@ -62,13 +63,21 @@ public class PlayerBetResult {
         return Objects.requireNonNull(found, NOT_FOUND_PLAYER_EXCEPTION_MESSAGE);
     }
 
+    public Money getDealerProfit() {
+        int playerProfitTotal = playerBetAndProfits.values()
+                .stream().mapToInt(betAndProfit -> betAndProfit.getProfitMoney().getValue())
+                .sum();
+
+        return Money.from(-playerProfitTotal);
+    }
+
     public Set<Player> getPlayers() {
         return playerBetAndProfits.keySet();
     }
 
     @Override
     public String toString() {
-        return "PlayerBetResult{" +
+        return "ProfitResult{" +
                 "playerBetAndProfits=" + playerBetAndProfits +
                 '}';
     }

@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.game.DealerProfitResult;
-import blackjack.domain.game.PlayerBetResult;
+import blackjack.domain.game.ProfitResult;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
 import java.util.List;
@@ -71,14 +71,14 @@ public class OutputView {
         System.out.println(PROFIT_RESULT_INFO_MESSAGE);
     }
 
-    public static void printDealerProfitResult(DealerProfitResult dealerProfitResult) {
-        System.out.printf(DEALER_PROFIT_MESSAGE_FORMAT, dealerProfitResult.getProfit().getValue());
+    public static void printDealerProfitResult(Money money) {
+        System.out.printf(DEALER_PROFIT_MESSAGE_FORMAT, money.getValue());
     }
 
-    public static void printPlayerBetResult(PlayerBetResult playerBetResult) {
-        for (Player player : playerBetResult.getPlayers()) {
+    public static void printPlayerProfitResult(ProfitResult profitResult) {
+        for (Player player : profitResult.getPlayers()) {
             String playerName = player.getName();
-            int playerProfit = playerBetResult.findBetAndProfitBy(player).getProfitMoney().getValue();
+            int playerProfit = profitResult.findBetAndProfitBy(player).getProfitMoney().getValue();
 
             System.out.printf(PLAYER_PROFIT_MESSAGE_FORMAT, playerName, playerProfit);
         }

@@ -22,7 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerBetResultTest {
+public class ProfitResultTest {
     private Dealer dealer;
     private Player winPlayer;
     private Player blackjackWinPlayer;
@@ -36,19 +36,19 @@ public class PlayerBetResultTest {
         losePlayer = Player.of("losePlayer", Hand.of(CLOVER2, CLOVER3));
     }
 
-    @DisplayName("of 메소드는 Player 와 BetAndProfit 의 Map 과 Dealer 를 전달받아 PlayerBetResult 를 생성해 반환한다.")
+    @DisplayName("of 메소드는 Player 와 BetAndProfit 의 Map 과 Dealer 를 전달받아 ProfitResult 를 생성해 반환한다.")
     @Test
-    void of_returnsInstanceOfPlayerBetResult() {
+    void of_returnsInstanceOfProfitResult() {
         // given
         Map<Player, BetAndProfit> playerBetAndProfits = new HashMap<>();
         playerBetAndProfits.put(winPlayer, BetAndProfit.from(Money.from(10000)));
         playerBetAndProfits.put(losePlayer, BetAndProfit.from(Money.from(10000)));
 
         // when
-        PlayerBetResult playerBetResult = PlayerBetResult.of(playerBetAndProfits, dealer);
+        ProfitResult profitResult = ProfitResult.of(playerBetAndProfits, dealer);
 
         // then
-        assertThat(playerBetResult).isNotNull();
+        assertThat(profitResult).isNotNull();
     }
 
     @DisplayName("findBetAndProfitBy 메소드에 Player 를 전달하면 해당 Player 의 BetAndProfit 을 반환한다.")
@@ -62,8 +62,8 @@ public class PlayerBetResultTest {
         System.out.println(playerBetAndProfits);
 
         // when
-        PlayerBetResult playerBetResult = PlayerBetResult.of(playerBetAndProfits, dealer);
-        Money actual = playerBetResult.findBetAndProfitBy(winPlayer).getBetMoney();
+        ProfitResult profitResult = ProfitResult.of(playerBetAndProfits, dealer);
+        Money actual = profitResult.findBetAndProfitBy(winPlayer).getBetMoney();
         Money expected = Money.from(15000);
 
         // then
@@ -78,10 +78,10 @@ public class PlayerBetResultTest {
         playerBetAndProfits.put(winPlayer, BetAndProfit.from(Money.from(15000)));
 
         // when
-        PlayerBetResult playerBetResult = PlayerBetResult.of(playerBetAndProfits, dealer);
+        ProfitResult profitResult = ProfitResult.of(playerBetAndProfits, dealer);
 
         // then
-        assertThatThrownBy(() -> playerBetResult.findBetAndProfitBy(losePlayer))
+        assertThatThrownBy(() -> profitResult.findBetAndProfitBy(losePlayer))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("존재하지 않는 플레이어입니다.");
     }
@@ -92,10 +92,10 @@ public class PlayerBetResultTest {
         // given
         Map<Player, BetAndProfit> playerBetAndProfits = new HashMap<>();
         playerBetAndProfits.put(winPlayer, BetAndProfit.from(Money.from(15000)));
-        PlayerBetResult playerBetResult = PlayerBetResult.of(playerBetAndProfits, dealer);
+        ProfitResult profitResult = ProfitResult.of(playerBetAndProfits, dealer);
 
         // when
-        BetAndProfit betAndProfit = playerBetResult.findBetAndProfitBy(winPlayer);
+        BetAndProfit betAndProfit = profitResult.findBetAndProfitBy(winPlayer);
         Money actual = betAndProfit.getProfitMoney();
         Money expected = Money.from(15000);
 
@@ -109,10 +109,10 @@ public class PlayerBetResultTest {
         // given
         Map<Player, BetAndProfit> playerBetAndProfits = new HashMap<>();
         playerBetAndProfits.put(blackjackWinPlayer, BetAndProfit.from(Money.from(10000)));
-        PlayerBetResult playerBetResult = PlayerBetResult.of(playerBetAndProfits, dealer);
+        ProfitResult profitResult = ProfitResult.of(playerBetAndProfits, dealer);
 
         // when
-        BetAndProfit betAndProfit = playerBetResult.findBetAndProfitBy(blackjackWinPlayer);
+        BetAndProfit betAndProfit = profitResult.findBetAndProfitBy(blackjackWinPlayer);
         Money actual = betAndProfit.getProfitMoney();
         Money expected = Money.from(15000);
 
@@ -126,10 +126,10 @@ public class PlayerBetResultTest {
         // given
         Map<Player, BetAndProfit> playerBetAndProfits = new HashMap<>();
         playerBetAndProfits.put(losePlayer, BetAndProfit.from(Money.from(15000)));
-        PlayerBetResult playerBetResult = PlayerBetResult.of(playerBetAndProfits, dealer);
+        ProfitResult profitResult = ProfitResult.of(playerBetAndProfits, dealer);
 
         // when
-        BetAndProfit betAndProfit = playerBetResult.findBetAndProfitBy(losePlayer);
+        BetAndProfit betAndProfit = profitResult.findBetAndProfitBy(losePlayer);
         Money actual = betAndProfit.getProfitMoney();
         Money expected = Money.from(-15000);
 

@@ -3,8 +3,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.DealerProfitResult;
-import blackjack.domain.game.PlayerBetResult;
+import blackjack.domain.game.ProfitResult;
 import blackjack.domain.money.BetAndProfit;
 import blackjack.domain.money.Money;
 import blackjack.domain.participant.Player;
@@ -41,13 +40,13 @@ public class BlackjackController {
 
     public Map<Player, BetAndProfit> requestBetToAllPlayer(BlackjackGame game) {
         List<Player> players = game.getPlayers();
-        Map<Player, BetAndProfit> playerBetResults = new LinkedHashMap<>();
+        Map<Player, BetAndProfit> playerBets = new LinkedHashMap<>();
         for (Player player : players) {
             Money betMoney = requestBetToSinglePlayer(player);
-            playerBetResults.put(player, BetAndProfit.from(betMoney));
+            playerBets.put(player, BetAndProfit.from(betMoney));
         }
 
-        return playerBetResults;
+        return playerBets;
     }
 
     private Money requestBetToSinglePlayer(Player player) {
@@ -133,12 +132,11 @@ public class BlackjackController {
     }
 
     public void printBetResult(BlackjackGame game, Map<Player, BetAndProfit> playerBets) {
-        DealerProfitResult dealerProfitResult = DealerProfitResult.of(game.getDealer(), playerBets);
-        PlayerBetResult playerBetResult = PlayerBetResult.of(playerBets, game.getDealer());
+        ProfitResult profitResult = ProfitResult.of(playerBets, game.getDealer());
 
         OutputView.printProfitResultInfo();
-        OutputView.printDealerProfitResult(dealerProfitResult);
-        OutputView.printPlayerBetResult(playerBetResult);
+        OutputView.printDealerProfitResult(profitResult.getDealerProfit());
+        OutputView.printPlayerProfitResult(profitResult);
     }
 
 }
