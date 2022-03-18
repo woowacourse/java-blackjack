@@ -21,7 +21,7 @@ public class BlackjackGameResult {
         final Map<String, Integer> gameResult = initializeDealerResult();
         for (Player player : players) {
             final BlackjackMatch playerBlackjackMatch = BlackjackMatch.calculateMatch(player, dealer);
-            final String matchResult = BlackjackMatch.swapResult(playerBlackjackMatch).getResult();
+            final String matchResult = playerBlackjackMatch.swapResult().getResult();
             gameResult.computeIfPresent(matchResult, (k, v) -> v + 1);
         }
         return gameResult;

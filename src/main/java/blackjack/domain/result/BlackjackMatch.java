@@ -20,23 +20,20 @@ public enum BlackjackMatch {
     }
 
     public static BlackjackMatch calculateMatch(Player player, Dealer dealer) {
-        final BlackjackMatch resultByBust = getWinLoseByBust(player, dealer);
-        if (resultByBust != null) return resultByBust;
-
-        final BlackjackMatch resultByBlackjack = getWinDrawByBlackjack(player, dealer);
-        if (resultByBlackjack != null) return resultByBlackjack;
-
+        if (player.isBust() || dealer.isBust()) {
+            return getWinLoseByBust(player);
+        }
+        if (player.isBlackjack() || dealer.isBlackjack()) {
+            return getWinDrawByBlackjack(player, dealer);
+        }
         return getWinDrawLoseByScore(player, dealer);
     }
 
-    private static BlackjackMatch getWinLoseByBust(Player player, Dealer dealer) {
+    private static BlackjackMatch getWinLoseByBust(Player player) {
         if (player.isBust()) {
             return LOSE;
         }
-        if (dealer.isBust()) {
-            return WIN;
-        }
-        return null;
+        return WIN;
     }
 
     private static BlackjackMatch getWinDrawByBlackjack(Player player, Dealer dealer) {
@@ -46,10 +43,7 @@ public enum BlackjackMatch {
         if (isDrawBlackjack(player, dealer)) {
             return DRAW;
         }
-        if (isLoseBlackjack(player, dealer)) {
-            return LOSE_BLACK_JACK;
-        }
-        return null;
+        return LOSE_BLACK_JACK;
     }
 
     private static boolean isWinBlackjack(Player player, Dealer dealer) {
@@ -74,27 +68,24 @@ public enum BlackjackMatch {
         return LOSE;
     }
 
-    public static BlackjackMatch swapResult(BlackjackMatch result) {
-        BlackjackMatch swapBlackjackResult = swapResultBlackJack(result);
-        if (swapBlackjackResult != null) return swapBlackjackResult;
-
-        if (result == WIN) {
+    public BlackjackMatch swapResult() {
+        if (Math.abs(profitRatio) == WIN_BLACKJACK.profitRatio) {
+            return swapResultBlackjack();
+        }
+        if (profitRatio == WIN.profitRatio) {
             return LOSE;
         }
-        if (result == LOSE) {
+        if (profitRatio == LOSE.profitRatio) {
             return WIN;
         }
         return DRAW;
     }
 
-    private static BlackjackMatch swapResultBlackJack(BlackjackMatch result) {
-        if (result == WIN_BLACKJACK) {
+    private BlackjackMatch swapResultBlackjack() {
+        if (profitRatio == WIN_BLACKJACK.profitRatio) {
             return LOSE_BLACK_JACK;
         }
-        if (result == LOSE_BLACK_JACK) {
-            return WIN_BLACKJACK;
-        }
-        return null;
+        return WIN_BLACKJACK;
     }
 
     public double getProfitRatio() {
