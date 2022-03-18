@@ -35,7 +35,7 @@ public class Records {
     private static Map<String, Integer> getDealerRecords(Dealer dealer, List<Player> players) {
         Map<String, Integer> records = Arrays.stream(Record.values())
                 .collect(Collectors.toMap(Record::getPlayerRecord, record -> 0,
-                        (o1, o2) -> o1, TreeMap::new));
+                        (o1, o2) -> o2, TreeMap::new));
 
         for (Player player : players) {
             String record = Record.getRecord(player, dealer).getDealerRecord();
