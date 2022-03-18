@@ -21,4 +21,8 @@ public class Player {
             throw new IllegalArgumentException(BLANK_NAME_EXCEPTION);
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
