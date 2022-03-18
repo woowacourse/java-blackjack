@@ -1,8 +1,6 @@
 package blackJack.view;
 
 import blackJack.domain.Card.Card;
-import blackJack.domain.Result.DealerScore;
-import blackJack.domain.Result.PlayerScore;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
 import blackJack.domain.User.Players;
@@ -56,12 +54,12 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(String dealerName, DealerScore dealerScore, PlayerScore playerScore) {
+    public static void printFinalResult(String dealerName, Map<String, Integer> playerResults, int dealerResult) {
         System.out.printf(NEW_LINE);
         System.out.println(FINAL_RESULT_MESSAGE);
 
-        System.out.println(String.format(USER_RESULT_FORMAT, dealerName, dealerScore.getDealerProfits()));
-        for (Map.Entry<String, Integer> entry : playerScore.getPlayersProfit().entrySet()) {
+        System.out.println(String.format(USER_RESULT_FORMAT, dealerName, dealerResult));
+        for (Map.Entry<String, Integer> entry : playerResults.entrySet()) {
             System.out.println(String.format(USER_RESULT_FORMAT, entry.getKey(), entry.getValue()));
         }
     }
