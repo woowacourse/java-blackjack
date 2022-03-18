@@ -4,6 +4,7 @@ import blackjack.domain.bet.Money;
 import blackjack.domain.bet.PlayersBet;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Result;
@@ -12,6 +13,7 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.ParticipantDto;
 import blackjack.view.dto.PlayersDto;
 import blackjack.view.dto.ReceiveDecision;
+import java.util.Map;
 
 public class Controller {
 
@@ -26,8 +28,12 @@ public class Controller {
         OutputView.printInitCardHandStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
 
         playBlackJack(cardDeck, dealer, players);
+        Map<Player, Result> judgeTable = Result.createJudgeTable(dealer, players);
+        Map<Participant, Money> participantBetTable = playersBet
+                .calculateHitProfit(judgeTable, dealer);
+
         OutputView.printFinalStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
-        OutputView.printFinalResult(playersBet.calculateHitProfit(Result.createJudgeTable(dealer, players), dealer));
+        OutputView.printFinalResult(participantBetTable);
     }
 
     private PlayersBet createPlayersBetMoney(Players players) {
