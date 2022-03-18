@@ -24,11 +24,11 @@ public class GameResult {
 
     private void initGameResult(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            bettingResult.put(player, elicitBettingResult(player, dealer));
+            bettingResult.put(player, calculateBettingResult(player, dealer));
         }
     }
 
-    private Long elicitBettingResult(Player player, Dealer dealer) {
+    private Long calculateBettingResult(Player player, Dealer dealer) {
         ParticipantGameInfo playerGameInfo = new ParticipantGameInfo(player.getCards());
         ParticipantGameInfo dealerGameInfo = new ParticipantGameInfo(dealer.getCards());
 
