@@ -34,8 +34,8 @@ public enum PrizeCalculator {
         if (this == BLACKJACK) {
             return calculateWhenBlackjack(dealerBlackjack, bettingAmount);
         }
-        if (dealerScore > 21) {
-            return calculateWhenDealerBust(bettingAmount);
+        if (this == BUST) {
+            return bettingAmount * lossEarningRate;
         }
 
         return calculateWhenDefault(playerScore, dealerScore, bettingAmount);
@@ -48,11 +48,10 @@ public enum PrizeCalculator {
         return winEarningRate * bettingAmount;
     }
 
-    private double calculateWhenDealerBust(final double bettingAmount) {
-        return winEarningRate * bettingAmount;
-    }
-
     private double calculateWhenDefault(final int playerScore, final int dealerScore, final double bettingAmount) {
+        if (dealerScore > 21) {
+            return winEarningRate * bettingAmount;
+        }
         if (playerScore > dealerScore) {
             return winEarningRate * bettingAmount;
         }

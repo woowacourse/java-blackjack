@@ -21,18 +21,4 @@ class MoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 100이상 10억 이하여야 합니다.");
     }
-
-    @ParameterizedTest
-    @DisplayName("10으로 나누어 떨어지지 않는 값으로 초기화하면 예외를 던진다.")
-    @ValueSource(ints = {101, 103, 109})
-    void validateLastIndex(int value) {
-        // give
-        final Money money = new Money();
-
-        // when
-        // then
-        assertThatThrownBy(() -> money.init(value))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅 금액은 10으로 나누어 떨어져야 합니다.");
-    }
 }
