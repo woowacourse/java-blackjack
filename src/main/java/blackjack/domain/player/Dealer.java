@@ -10,7 +10,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean acceptableCard() {
-        return cards.calculateExpandScore() <= ADD_CARD_CONDITION;
+        return cards.calculateScore() <= ADD_CARD_CONDITION;
     }
 
     @Override

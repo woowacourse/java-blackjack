@@ -15,7 +15,7 @@ public class Participant extends Player {
     }
 
     private boolean isUnderMaxScore() {
-        return cards.calculateDefaultScore() <= Result.BLACKJACK_SCORE;
+        return cards.calculateEndScore() <= Result.BLACKJACK_SCORE;
     }
 
     private boolean acceptCard() {

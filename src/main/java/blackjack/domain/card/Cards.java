@@ -28,14 +28,14 @@ public class Cards {
     }
 
     public int calculateEndScore() {
-        final int score = calculateExpandScore();
+        final int score = calculateScore();
         if (score <= Result.BLACKJACK_SCORE) {
             return score;
         }
         return calculateDefaultScore();
     }
 
-    public int calculateExpandScore() {
+    public int calculateScore() {
         if (containsAce()) {
             return calculateDefaultScore() + ANOTHER_ACE_SCORE;
         }
@@ -47,7 +47,7 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    public int calculateDefaultScore() {
+    private int calculateDefaultScore() {
         return cards.stream()
                 .mapToInt(card -> card.getScore().getAmount())
                 .sum();
