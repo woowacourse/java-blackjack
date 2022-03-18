@@ -10,7 +10,7 @@ import blackjack.dto.GamerDto;
 import blackjack.view.InputConverter;
 import blackjack.view.OutputView;
 
-public class Blackjack {
+public class BlackjackGame {
 
     public void run() {
         Dealer dealer = new Dealer();
