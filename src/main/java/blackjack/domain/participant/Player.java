@@ -13,14 +13,14 @@ public class Player extends Participant {
     }
 
     public boolean isHittable() {
-        return score < GOAL_SCORE;
+        return score < TARGET_SCORE_FOR_BLACKJACK;
     }
 
     public boolean isWin(int comparisonScore) {
-        if (score > GOAL_SCORE) {
+        if (score > TARGET_SCORE_FOR_BLACKJACK) {
             return false;
         }
-        if (comparisonScore > GOAL_SCORE) {
+        if (comparisonScore > TARGET_SCORE_FOR_BLACKJACK) {
             return true;
         }
         return score >= comparisonScore;
