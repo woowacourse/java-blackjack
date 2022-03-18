@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
@@ -36,5 +37,50 @@ class BustTest {
         // then
         assertThatThrownBy(bust::stand)
                 .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("끝났는지 물어보면 true를 반환한다.")
+    void finishedTrue() {
+        // given
+        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
+        cards = cards.add(Card.of(Pattern.CLOVER, Denomination.TWO));
+        State bust = new Bust(cards);
+
+        // when
+        boolean actual = bust.isFinished();
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("Blackjack인지 물어보면 false를 반환한다.")
+    void blackjackFalse() {
+        // given
+        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
+        cards = cards.add(Card.of(Pattern.CLOVER, Denomination.TWO));
+        State bust = new Bust(cards);
+
+        // when
+        boolean actual = bust.isBlackjack();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("Bust인지 물어보면 true를 반환한다.")
+    void bustTrue() {
+        // given
+        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
+        cards = cards.add(Card.of(Pattern.CLOVER, Denomination.TWO));
+        State bust = new Bust(cards);
+
+        // when
+        boolean actual = bust.isBust();
+
+        // then
+        assertThat(actual).isTrue();
     }
 }

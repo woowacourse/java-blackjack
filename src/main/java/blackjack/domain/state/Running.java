@@ -19,11 +19,26 @@ public abstract class Running implements State {
         if (cards.isBust()) {
             return new Bust(cards);
         }
-        return new PlayerHit(cards);
+        return new Hit(cards);
     }
 
     @Override
     public State stand() {
         return new Stand(cards);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
     }
 }

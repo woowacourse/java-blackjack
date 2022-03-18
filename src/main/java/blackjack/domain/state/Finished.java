@@ -22,4 +22,9 @@ public abstract class Finished implements State {
     public State stand() {
         throw new UnsupportedOperationException("[ERROR] 게임을 진행할 수 없습니다.");
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

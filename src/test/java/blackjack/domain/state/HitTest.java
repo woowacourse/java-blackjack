@@ -53,4 +53,46 @@ class HitTest {
         // then
         assertThat(actual).isInstanceOf(Stand.class);
     }
+
+    @Test
+    @DisplayName("끝났는지 물어보면 false를 반환한다.")
+    void finishedFalse() {
+        // given
+        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
+        State hit = new Hit(cards);
+
+        // when
+        boolean actual = hit.isFinished();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("Blackjack인지 물어보면 false를 반환한다.")
+    void blackjackFalse() {
+        // given
+        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
+        State hit = new Hit(cards);
+
+        // when
+        boolean actual = hit.isBlackjack();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("Bust인지 물어보면 false를 반환한다.")
+    void bustFalse() {
+        // given
+        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
+        State hit = new Hit(cards);
+
+        // when
+        boolean actual = hit.isBust();
+
+        // then
+        assertThat(actual).isFalse();
+    }
 }
