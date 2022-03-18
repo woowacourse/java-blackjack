@@ -17,7 +17,8 @@ public enum GameOutcome {
     public static GameOutcome calculateOutcome(final int score, final int compareScore) {
         if (score > compareScore) {
             return WIN;
-        } else if (score < compareScore) {
+        }
+        if (score < compareScore) {
             return LOSE;
         }
         return DRAW;

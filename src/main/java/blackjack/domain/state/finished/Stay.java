@@ -18,7 +18,8 @@ public class Stay extends Finished {
     GameOutcome compare(final State another) {
         if (another.isSameStateWith(BlackJack.class)) {
             return LOSE;
-        } else if (another.isSameStateWith(Bust.class)) {
+        }
+        if (another.isSameStateWith(Bust.class)) {
             return WIN;
         }
         return cards.isHigherThan(another.cards());
