@@ -58,7 +58,13 @@ public class OutputView {
     }
 
     public static void printPrize(final String name, final double prize) {
-        System.out.println(name + ": " + String.format("%.0f", prize));
+        System.out.print(name + ": ");
+
+        if (prize == (int) prize) {
+            System.out.printf("%d%n", (int) prize);
+            return;
+        }
+        System.out.printf("%s%n", prize);
     }
 
     public static void printError(final String message) {
