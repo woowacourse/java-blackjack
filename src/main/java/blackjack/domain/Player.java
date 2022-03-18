@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static blackjack.domain.Denomination.*;
+import static blackjack.domain.GameResult.BLACKJACK;
 
 import java.util.List;
 

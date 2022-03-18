@@ -18,11 +18,9 @@ import java.util.List;
 
 public class Application {
 
-    public static final int BATTING_MONEY_INIT_VALUE = 0;
-
     public static void main(String[] args) {
         Deck deck = new Deck(Card.VALUES);
-        Dealer dealer = new Dealer(getInitCards(deck), BATTING_MONEY_INIT_VALUE);
+        Dealer dealer = new Dealer(getInitCards(deck));
         Players players = createPlayers(deck);
         OutputView.printStartInfo(GamerDto.from(dealer), PlayersDto.from(players));
 

@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 
+import static blackjack.domain.BettingMoney.BETTING_MONEY_INIT_VALUE;
+
 import java.util.List;
 
 public class Dealer extends Gamer {
@@ -8,8 +10,8 @@ public class Dealer extends Gamer {
     private static final int DRAWABLE_LIMIT_VALUE = 16;
     private static final String DEALER_NAME = "딜러";
 
-    public Dealer(List<Card> cards, int battingMoney) {
-        super(DEALER_NAME, battingMoney, cards);
+    public Dealer(List<Card> cards) {
+        super(DEALER_NAME, BETTING_MONEY_INIT_VALUE, cards);
     }
 
     @Override
