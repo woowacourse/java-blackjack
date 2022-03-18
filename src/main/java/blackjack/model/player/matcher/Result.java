@@ -13,9 +13,11 @@ public class Result {
         Money profit(Money money) {
             if (this == Status.WIN) {
                 return money;
-            } else if (this == Status.LOSS) {
+            }
+            if (this == Status.LOSS) {
                 return money.negate();
-            } else if (this == Status.BLACKJACK) {
+            }
+            if (this == Status.BLACKJACK) {
                 return money.multiply(BLACKJACK_PROFIT_RATE);
             }
             return new Money(BigDecimal.ZERO);

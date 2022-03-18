@@ -7,7 +7,8 @@ public enum Answer {
     public static Answer of(String value) {
         if (value.equals("y")) {
             return YES;
-        } else if (value.equals("n")) {
+        }
+        if (value.equals("n")) {
             return NO;
         }
         throw new IllegalArgumentException("잘못된 값입니다...");

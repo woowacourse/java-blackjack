@@ -20,7 +20,8 @@ public abstract class Matcher {
     public static Matcher of(Dealer dealer) {
         if (dealer.isBlackjack()) {
             return new DealerBlackjackCaseMatcher(dealer);
-        } else if (dealer.isBust()) {
+        }
+        if (dealer.isBust()) {
             return new DealerBustCaseMatcher(dealer);
         }
         return new DealerNormalCaseMatcher(dealer);

@@ -13,7 +13,8 @@ final class DealerNormalCaseMatcher extends Matcher {
     protected Result playerResult(Dealer dealer, Gamer gamer) {
         if (gamer.isBust()) {
             return Result.loss(gamer.bettingMoney());
-        } else if (gamer.isBlackjack()) {
+        }
+        if (gamer.isBlackjack()) {
             return Result.blackjack(gamer.bettingMoney());
         }
         return compareWithScore(dealer, gamer);
@@ -22,7 +23,8 @@ final class DealerNormalCaseMatcher extends Matcher {
     private Result compareWithScore(Dealer dealer, Gamer gamer) {
         if (gamer.lessScoreThan(dealer)) {
             return Result.loss(gamer.bettingMoney());
-        } else if (gamer.moreScoreThan(dealer)) {
+        }
+        if (gamer.moreScoreThan(dealer)) {
             return Result.win(gamer.bettingMoney());
         }
         return Result.draw(gamer.bettingMoney());
