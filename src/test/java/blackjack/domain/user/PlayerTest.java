@@ -12,10 +12,15 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.strategy.hit.PlayerHitStrategy;
+import blackjack.domain.user.state.Hit;
 
 public class PlayerTest {
 
     public static final int MAX_DRAWABLE_COUNT = 11;
+
+    private Player createDefaultPlayer() {
+        return new Player("pobi", new Hit(new Hand()), "1000");
+    }
 
     @DisplayName("플레이어 생성 검증")
     @Test
@@ -24,7 +29,7 @@ public class PlayerTest {
         String name = "pobi";
 
         //when
-        Player player = new Player(name, 1000);
+        Player player = new Player(name, new Hit(new Hand()),"1000");
 
         //then
         assertThat(player).isNotNull();
@@ -34,10 +39,10 @@ public class PlayerTest {
     @Test
     public void testDrawCard() {
         //given
-        Player player = new Player("pobi", 1000);
+        Player player = createDefaultPlayer();
+        player.hit(new Card(Suit.CLOVER, Denomination.ACE));
 
         //when
-        player.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
         List<Card> cards = player.getHandCards();
 
         //then
@@ -49,24 +54,24 @@ public class PlayerTest {
     public void testCardDrawable() {
         //given
         Deck deck = new Deck();
-        Player player = new Player("pobi", 1000);
+        Player player = createDefaultPlayer();
 
         //when
         for (int i = 0; i < MAX_DRAWABLE_COUNT; i++) {
-            player.receiveCard(deck.drawCard());
+            player.hit(deck.drawCard());
         }
         //then
-        assertThat(player.isBust()).isTrue();
+        assertThat(player.isFinished()).isTrue();
     }
 
     @DisplayName("플레어어가 보여주는 초기 카드는 2장이다.")
     @Test
     public void testShowInitCards() {
         //given
-        Player player = new Player("pobi", 1000);
+        Player player = createDefaultPlayer();
 
-        player.receiveCard(new Card(Suit.CLOVER, Denomination.SEVEN));
-        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        player.hit(new Card(Suit.CLOVER, Denomination.SEVEN));
+        player.hit(new Card(Suit.SPADE, Denomination.JACK));
 
         //when
         List<Card> cards = player.showInitCards();
@@ -80,7 +85,7 @@ public class PlayerTest {
     public void testPlayerHitWithInputY() {
         // given
         Deck deck = new Deck();
-        Player player = new Player("pobi", 1000);
+        Player player = createDefaultPlayer();
         // when
         boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> true));
         // then
@@ -92,7 +97,7 @@ public class PlayerTest {
     public void testPlayerHitWithInputN() {
         // given
         Deck deck = new Deck();
-        Player player = new Player("pobi", 1000);
+        Player player = createDefaultPlayer();
         // when
         boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> false));
         // then

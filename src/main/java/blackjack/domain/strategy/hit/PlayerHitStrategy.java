@@ -13,6 +13,5 @@ public class PlayerHitStrategy implements HitStrategy {
     @Override
     public boolean isHit() {
         return supplier.get();
-
     }
 }

@@ -1,6 +1,11 @@
 package blackjack.domain.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -8,18 +13,14 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.strategy.hit.DealerHitStrategy;
 
-import java.util.List;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 public class DealerTest {
 
     @DisplayName("딜러 생성 검증")
     @Test
     public void createDealer() {
         //given & when
-        Dealer dealer = new Dealer();
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer(deck);
 
         //then
         assertThat(dealer).isNotNull();
@@ -29,10 +30,11 @@ public class DealerTest {
     @Test
     public void testDrawCard() {
         //given
-        Dealer dealer = new Dealer();
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer(deck);
 
         //when
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.EIGHT));
+        dealer.hit(new Card(Suit.CLOVER, Denomination.EIGHT));
         List<Card> cards = dealer.getHandCards();
 
         //then
@@ -44,10 +46,10 @@ public class DealerTest {
     public void testShowInitCards() {
         //given
         Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
 
-        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
-        dealer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
+        dealer.hit(new Card(Suit.DIAMOND, Denomination.ACE));
+        dealer.hit(new Card(Suit.HEART, Denomination.JACK));
         //when
         List<Card> cards = dealer.showInitCards();
         //then
@@ -59,8 +61,8 @@ public class DealerTest {
     public void testDealerHitWithScoreLessThan17() {
         // given
         Deck deck = new Deck();
-        Dealer dealer = new Dealer();
-        DealerHitStrategy strategy = new DealerHitStrategy(dealer.getScore());
+        Dealer dealer = new Dealer(deck);
+        DealerHitStrategy strategy = new DealerHitStrategy(dealer.calculateScore());
         // when
         boolean isHit = dealer.hitOrStay(deck, strategy);
         // then
@@ -72,13 +74,13 @@ public class DealerTest {
     public void testDealerStayWithScoreGreaterOrEqualThan17() {
         // given
         Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
 
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
-        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.KING));
+        dealer.hit(new Card(Suit.CLOVER, Denomination.JACK));
+        dealer.hit(new Card(Suit.CLOVER, Denomination.KING));
         // when
 
-        boolean isHit = dealer.hitOrStay(deck, new DealerHitStrategy(dealer.getScore()));
+        boolean isHit = dealer.hitOrStay(deck, new DealerHitStrategy(dealer.calculateScore()));
         // then
         assertThat(isHit).isFalse();
     }

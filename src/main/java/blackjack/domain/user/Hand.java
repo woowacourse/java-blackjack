@@ -10,8 +10,8 @@ public class Hand {
 
     private final List<Card> cards;
 
-    private Hand(List<Card> cards) {
-        this.cards = cards;
+    public Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public Hand() {
@@ -32,6 +32,10 @@ public class Hand {
 
     public boolean isBust() {
         return calculateScore().isBust();
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateScore().getScore() == 21;
     }
 
     public List<Card> getCards() {

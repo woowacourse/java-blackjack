@@ -1,7 +1,5 @@
 package blackjack.domain.strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +12,10 @@ import blackjack.domain.strategy.hit.PlayerHitStrategy;
 class HitStrategyTest {
 
     @Test
-    @DisplayName("(플레이어) y가 입력되면 카드를 한장 더 받을 수 있다.")
+    @DisplayName("(플레이어) 참이 입력되면 카드를 한장 더 받을 수 있다.")
     public void testIsHitOfPlayerWithY() {
         // given
-        String input = "y";
+        boolean input = true;
         // when
         HitStrategy strategy = new PlayerHitStrategy(() -> input);
 
@@ -29,23 +27,11 @@ class HitStrategyTest {
     @DisplayName("(플레이어) n이 입력되면 카드를 더이상 받지 않는다.")
     public void testIsStayOfPlayerWithN() {
         // given
-        String input = "n";
+        boolean input = false;
         // when
         HitStrategy strategy = new PlayerHitStrategy(() -> input);
         // then
         Assertions.assertThat(strategy.isHit()).isFalse();
-    }
-
-    @Test
-    @DisplayName("(플레이어) y또는 n이 아니면 예외를 던진다.")
-    public void throwsExceptionWhenInputIsNotWhetherYOrN() {
-        // when
-        String input = "a";
-        // then
-        HitStrategy strategy = new PlayerHitStrategy(() -> input);
-
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(strategy::isHit);
     }
 
     @Test
