@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public final class Player extends BlackjackParticipant {
 
     private static final int OPEN_CARDS_COUNT = 2;
+    private static final int MAX_HIT_SCORE = 21;
 
     private final String name;
 
@@ -34,7 +35,8 @@ public final class Player extends BlackjackParticipant {
     @Override
     protected boolean shouldStay() {
         CardBundle cardBundle = cardHand.getCardBundle();
-        return cardBundle.isBlackJackScore();
+        int scoreInt = cardBundle.toScoreInt();
+        return scoreInt == MAX_HIT_SCORE;
     }
 
     @Override

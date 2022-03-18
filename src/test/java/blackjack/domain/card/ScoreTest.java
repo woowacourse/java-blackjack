@@ -50,17 +50,6 @@ public class ScoreTest {
         assertThat(newScore.toInt()).isEqualTo(25);
     }
 
-    @DisplayName("incrementOneAce 메서드는 다른 Score 인스턴스를 받아 에이스 한 개를 1점 대신 11점으로 간주한 점수로 변환하여 반환한다.")
-    @Test
-    void incrementOneAce() {
-        Score score = Score.valueOf(10);
-
-        Score actual = score.incrementOneAce();
-        Score expected = Score.valueOf(20);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @DisplayName("각 Score 인스턴스의 크기를 비교할 수 있다.")
     @Nested
     class CompareToTest {

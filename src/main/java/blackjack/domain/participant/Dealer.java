@@ -10,7 +10,7 @@ public final class Dealer extends BlackjackParticipant {
 
     public static final String NAME = "딜러";
     private static final int OPEN_CARDS_COUNT = 1;
-    private static final int DEALER_MAX_HIT_SCORE = 16;
+    private static final int MAX_HIT_SCORE = 16;
 
     public Dealer(final CardHand cardHand) {
         super(cardHand);
@@ -33,8 +33,8 @@ public final class Dealer extends BlackjackParticipant {
     @Override
     protected boolean shouldStay() {
         CardBundle cardBundle = cardHand.getCardBundle();
-        int scoreInt = cardBundle.getScoreInt();
-        return scoreInt > DEALER_MAX_HIT_SCORE;
+        int scoreInt = cardBundle.toScoreInt();
+        return scoreInt > MAX_HIT_SCORE;
     }
 
     @Override

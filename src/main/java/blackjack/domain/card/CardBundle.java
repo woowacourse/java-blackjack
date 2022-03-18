@@ -16,7 +16,7 @@ public class CardBundle {
     private CardBundle(final List<Card> cards) {
         validateNoDuplicate(cards);
         this.cards = Collections.unmodifiableList(cards);
-        this.score = getBestScore();
+        this.score = calculateBestScore();
     }
 
     public static CardBundle of(final Card card1) {
@@ -39,46 +39,36 @@ public class CardBundle {
         }
     }
 
-    private Score getBestScore() {
-        Score defaultScore = getDefaultScoreSum();
+    private Score calculateBestScore() {
+        Score defaultScore = getDefaultScore();
         if (!containsAce()) {
             return defaultScore;
         }
-        Score maxScore = defaultScore.incrementOneAce();
-        if (!maxScore.isBustScore()) {
-            return maxScore;
-        }
-        return defaultScore;
+        return defaultScore.incrementAceIfNotBust();
     }
 
-    private Score getDefaultScoreSum() {
+    private Score getDefaultScore() {
         return cards.stream()
                 .map(Card::getRankValue)
                 .reduce(Score.valueOf(0), Score::add);
     }
 
     private boolean containsAce() {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-
-        return aceCount > 0;
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
         if (cards.size() != BLACKJACK_CARD_SIZE) {
             return false;
         }
-        return isBlackJackScore();
-    }
-
-    public boolean isBlackJackScore() {
-        int score = getScoreInt();
-        return score == Score.BLACKJACK;
+        int scoreInt = this.toScoreInt();
+        return scoreInt == Score.BLACKJACK;
     }
 
     public boolean isBust() {
-        return score.isBustScore();
+        int score = toScoreInt();
+        return score > Score.BLACKJACK;
     }
 
     public List<Card> getCards() {
@@ -89,7 +79,7 @@ public class CardBundle {
         return score;
     }
 
-    public int getScoreInt() {
+    public int toScoreInt() {
         return score.toInt();
     }
 

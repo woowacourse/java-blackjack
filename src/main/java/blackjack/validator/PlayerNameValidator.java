@@ -11,6 +11,9 @@ public class PlayerNameValidator {
     private static final String NO_PLAYER_EXCEPTION_MESSAGE = "플레이어가 없는 게임은 존재할 수 없습니다.";
     private static final String DUPLICATE_PLAYER_NAMES_EXCEPTION_MESSAGE = "플레이어명은 중복될 수 없습니다.";
 
+    private PlayerNameValidator() {
+    }
+
     public static void validateNameNotBlank(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(BLANK_NAME_INPUT_EXCEPTION_MESSAGE);
