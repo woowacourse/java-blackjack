@@ -9,7 +9,7 @@ public class Cards {
     private final List<Card> value;
 
     public Cards(List<Card> cards) {
-        this.value = cards;
+        this.value = new ArrayList<>(cards);
     }
 
     public Cards() {

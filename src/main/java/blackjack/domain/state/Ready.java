@@ -36,6 +36,11 @@ public final class Ready implements State {
     }
 
     @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

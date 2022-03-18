@@ -28,6 +28,11 @@ public class Hit implements State {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

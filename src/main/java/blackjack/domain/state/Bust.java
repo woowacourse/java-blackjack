@@ -22,6 +22,11 @@ public class Bust implements State {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public boolean isFinished() {
         return true;
     }

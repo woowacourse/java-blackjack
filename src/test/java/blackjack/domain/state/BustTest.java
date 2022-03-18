@@ -34,6 +34,18 @@ class BustTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
+    @DisplayName("버스트 상태의 준비 상태 유무는 false이다.")
+    @Test
+    void 버스트_준비상태() {
+        State bust = new Ready().draw(JACK_SPACE)
+                .draw(KING_SPACE)
+                .draw(TWO_SPACE);
+
+        boolean result = bust.isReady();
+
+        assertThat(result).isFalse();
+    }
+
     @DisplayName("버스트 상태의 끝난 상태 유무는 true이다.")
     @Test
     void 버스트_끝난상태() {

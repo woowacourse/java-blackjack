@@ -38,9 +38,19 @@ class HitTest {
         assertThat(hit.stay()).isInstanceOf(Stay.class);
     }
 
+    @DisplayName("히트 상태에서 준비 상태 유무는 false이다.")
+    @Test
+    void 히트_준비상태() {
+        State hit = new Hit(TWELVE_HIT);
+
+        boolean result = hit.isReady();
+
+        assertThat(result).isFalse();
+    }
+
     @DisplayName("히트 상태에서 끝난 상태 유무는 false이다.")
     @Test
-    void 레디_끝난상태() {
+    void 히트_끝난상태() {
         State hit = new Hit(TWELVE_HIT);
 
         boolean result = hit.isFinished();

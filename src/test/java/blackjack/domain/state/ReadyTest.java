@@ -52,6 +52,16 @@ class ReadyTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
+    @DisplayName("레디 상태의 준비 상태 유무는 true이다.")
+    @Test
+    void 레디_준비상태() {
+        State ready = new Ready();
+
+        boolean result = ready.isReady();
+
+        assertThat(result).isTrue();
+    }
+
     @DisplayName("레디 상태의 끝난 상태 유무는 false이다.")
     @Test
     void 레디_끝난상태() {

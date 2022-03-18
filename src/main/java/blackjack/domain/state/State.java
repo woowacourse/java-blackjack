@@ -9,6 +9,8 @@ public interface State {
 
     State stay();
 
+    boolean isReady();
+
     boolean isFinished();
 
     Cards cards();
