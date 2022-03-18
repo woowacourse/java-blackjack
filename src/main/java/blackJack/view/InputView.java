@@ -16,6 +16,7 @@ public class InputView {
     private static final String INPUT_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String YES = "y";
     private static final String NO = "n";
+    public static final String INPUT_BETTING_MONEY_MESSAGE = "%s의 배팅 금액은?";
 
     private static String input() {
         Scanner scanner = new Scanner(System.in);
@@ -57,4 +58,16 @@ public class InputView {
         }
     }
 
+    public static Integer inputBettingMoney(String playerName) {
+        System.out.println(String.format(INPUT_BETTING_MONEY_MESSAGE,playerName));
+        String input = input();
+        validateNumeric(input);
+        return Integer.parseInt(input);
+    }
+
+    private static void validateNumeric(String input) {
+        if(!input.matches("[+-]?\\d*(\\.\\d+)?")){
+            throw new IllegalArgumentException(INPUT_IS_NOT_NUMBER);
+        }
+    }
 }

@@ -20,8 +20,8 @@ public class Game {
     private PlayerScore playerScore = new PlayerScore();
     private DealerScore dealerScore = new DealerScore();
 
-    public Game(List<String> playerNames, Dealer dealer) {
-        this.players = new Players(playerNames);
+    public Game(List<String> playerNames, Dealer dealer, List<Integer> bettingMoneys) {
+        this.players = new Players(playerNames,bettingMoneys);
         this.dealer = dealer;
         this.cards = new Cards(CARD_CACHE);
         handOutInitCard();

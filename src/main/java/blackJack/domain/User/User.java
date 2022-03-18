@@ -14,6 +14,7 @@ public abstract class User {
     public static final int WINNING_LIMIT = 21;
     protected String name;
     protected Cards cards;
+    protected BettingMoney bettingMoney;
 
     public User(String name) {
         this.name = name;

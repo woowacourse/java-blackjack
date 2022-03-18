@@ -1,14 +1,14 @@
 package blackJack.domain.User;
 
 import blackJack.domain.Result;
-import blackJack.utils.ExeptionMessage;
 
 public class Player extends User {
 
     private static final int PLAYER_ADD_CARD_LIMIT = 21;
 
-    public Player(String name) {
+    public Player(String name, Integer money) {
         super(name);
+        bettingMoney = new BettingMoney(money);
     }
 
     public boolean isPossibleToAdd() {

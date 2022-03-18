@@ -3,17 +3,15 @@ package blackJack.domain.User;
 import blackJack.domain.Card.Card;
 import blackJack.domain.Card.Denomination;
 import blackJack.domain.Card.Suit;
-import blackJack.utils.ExeptionMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackJack.domain.Card.CardFactory.CARD_CACHE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
-    private Player player = new Player("test");
+    private Player player = new Player("test", bettingMoneys.get(i));
 
     @Test
     @DisplayName("플레이어가 블랙잭인지 확인한다.")

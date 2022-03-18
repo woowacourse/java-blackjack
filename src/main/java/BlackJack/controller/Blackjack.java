@@ -17,7 +17,8 @@ public class Blackjack {
 
     public void run() {
         List<String> playerNames = InputView.inputPlayerNames();
-        Game game = new Game(playerNames, new Dealer());
+        List<Integer> bettingMoneys = getBettingMoneys(playerNames);
+        Game game = new Game(playerNames, new Dealer(),bettingMoneys);
         OutputView.printDrawMessage(playerNames);
         OutputView.printTotalUserCards(game.getDealer(), game.getPlayers());
 
@@ -36,6 +37,14 @@ public class Blackjack {
                 game.getDealerScore(),
                 game.getPlayerScore()
         );
+    }
+
+    private List<Integer> getBettingMoneys(List<String> playerNames) {
+        List<Integer> bettingMoneys = new ArrayList<>();
+        for (String playerName : playerNames) {
+            bettingMoneys.add(InputView.inputBettingMoney(playerName));
+        }
+        return bettingMoneys;
     }
 
     private List<User> makeUserList(Game game) {

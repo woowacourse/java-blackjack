@@ -5,7 +5,6 @@ import blackJack.domain.Card.Cards;
 import blackJack.domain.Card.Denomination;
 import blackJack.domain.Card.Suit;
 import blackJack.domain.Result;
-import blackJack.utils.ExeptionMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class DealerTest {
 
     private Dealer dealer = new Dealer();
-    Player player = new Player("test");
+    Player player = new Player("test", bettingMoneys.get(i));
 
     @Test
     @DisplayName("딜러가 소지한 카드가 16 이하면 true를 반환한다.")

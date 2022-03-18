@@ -8,9 +8,11 @@ import java.util.List;
 public class Dealer extends User {
 
     private static final int DEALER_ADD_CARD_LIMIT = 16;
+    public static final int INIT_BETTING_MONEY = 0;
 
     public Dealer() {
         super("딜러");
+        bettingMoney = new BettingMoney(INIT_BETTING_MONEY);
     }
 
     public boolean isPossibleToAdd() {
