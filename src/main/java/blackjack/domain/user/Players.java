@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckStrategy;
 
 public class Players {
@@ -36,10 +35,5 @@ public class Players {
 
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
-	}
-
-	public void addCardToAllPlayers(final Deck deck) {
-		players.stream()
-			.forEach(player -> player.addTwoCards(deck));
 	}
 }

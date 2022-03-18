@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.DeckStrategy;
+import blackjack.domain.result.BettingBox;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -71,10 +72,11 @@ public class BlackJackGameController {
 	private void progressDealerTurn(Dealer dealer, DeckStrategy deck) {
 		while(dealer.isRunning()) {
 			dealer.addCard(deck.distributeCard());
+			outputView.displayDealerUnderSevenTeen();
 		}
 	}
 
-	private void makeResult(Players players, Dealer dealer) {
+	private void makeResult2(Players players, Dealer dealer) {
 		// outputView.displayAllCardAndScore(dealer.getName(), dealer.getScore(), dealer.getCards());
 		// for (Player player : players.getPlayers()) {
 		// 	outputView.displayAllCardAndScore(player.getName(), player.getScore(), player.getCards());
@@ -82,5 +84,14 @@ public class BlackJackGameController {
 		// Result result = new Result();
 		// Map<Player, ResultType> gameResult = result.getResult(players.getPlayers(), dealer);
 		// outputView.displayResult(gameResult);
+	}
+
+	private void makeResult(Players players, Dealer dealer) {
+		outputView.displayAllCardAndScore(dealer.getName(), dealer.getScore(), dealer.getCards());
+		for (Player player : players.getPlayers()) {
+			outputView.displayAllCardAndScore(player.getName(), player.getScore(), player.getCards());
+		}
+		final BettingBox bettingBox = new BettingBox(players.getPlayers(), dealer);
+		outputView.displayProfitResult(bettingBox.playerProfit(), bettingBox.dealerProfit());
 	}
 }

@@ -19,8 +19,8 @@ public class Player extends Gamer {
 		changeState(this.state.draw(card));
 	}
 
-	public double getMoney() {
-		return money.getMoney();
+	public Money getMoney() {
+		return this.money;
 	}
 
 	@Override

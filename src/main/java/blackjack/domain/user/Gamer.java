@@ -55,4 +55,8 @@ public abstract class Gamer {
 	public void stay() {
 		changeState(state.stay());
 	}
+
+	public State state() {
+		return this.state;
+	}
 }

@@ -1,9 +1,11 @@
 package blackjack.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 
 public class OutputView {
@@ -69,5 +71,12 @@ public class OutputView {
 
 	public void printException(final String message) {
 		System.out.println("[ERROR] " + message);
+	}
+
+	public void displayProfitResult(Map<Player, Money> playerProfit, double dealerProfit) {
+		System.out.printf("딜러: %d\n", dealerProfit);
+		for (Player player : playerProfit.keySet()) {
+			System.out.printf("%s: %d", player.getName(), player.getMoney().getMoney());
+		}
 	}
 }
