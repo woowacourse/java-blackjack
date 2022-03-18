@@ -18,7 +18,7 @@ public class BettingMoney {
         }
     }
 
-    public double calculateProfit(double profitRatio) {
-        return money * profitRatio;
+    public int getMoney() {
+        return money;
     }
 }

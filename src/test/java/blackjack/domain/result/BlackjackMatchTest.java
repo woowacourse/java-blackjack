@@ -20,7 +20,7 @@ class BlackjackMatchTest {
         player.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.WIN);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.WIN);
     }
 
     @Test
@@ -29,7 +29,7 @@ class BlackjackMatchTest {
         player.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.DIAMOND, Denomination.JACK));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.DRAW);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.DRAW);
     }
 
     @Test
@@ -38,7 +38,7 @@ class BlackjackMatchTest {
         player.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.LOSE);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.LOSE);
     }
 
     @Test
@@ -49,7 +49,7 @@ class BlackjackMatchTest {
         player.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.EIGHT));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.LOSE);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.LOSE);
     }
 
     @Test
@@ -60,7 +60,7 @@ class BlackjackMatchTest {
         dealer.receiveCard(Card.from(Suit.DIAMOND, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.WIN);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.WIN);
     }
 
     @Test
@@ -73,7 +73,7 @@ class BlackjackMatchTest {
         dealer.receiveCard(Card.from(Suit.SPADE, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.LOSE);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.LOSE);
     }
 
     @Test
@@ -85,7 +85,7 @@ class BlackjackMatchTest {
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.WIN_BLACKJACK);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.WIN_BLACKJACK);
     }
 
     @Test
@@ -96,7 +96,7 @@ class BlackjackMatchTest {
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.JACK));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.ACE));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.DRAW);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.DRAW);
     }
 
     @Test
@@ -109,6 +109,6 @@ class BlackjackMatchTest {
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.NINE));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
 
-        assertThat(BlackjackMatch.calculateMatch(player, dealer)).isEqualTo(BlackjackMatch.DRAW);
+        assertThat(BlackjackMatch.of(player, dealer)).isEqualTo(BlackjackMatch.DRAW);
     }
 }
