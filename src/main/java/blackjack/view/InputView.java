@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -52,9 +53,20 @@ public class InputView {
     }
 
     private static long getLong() {
-        long result = scanner.nextLong();
-        scanner.nextLine();
-        return result;
+        try {
+            long result = scanner.nextLong();
+            validatePositive(result);
+            scanner.nextLine();
+            return result;
+        } catch (InputMismatchException e) {
+            throw new IllegalArgumentException("허용되지 않은 입력입니다. 정수를 입력해주세요.");
+        }
+    }
+
+    private static void validatePositive(long input) {
+        if (input <= 0) {
+            throw new IllegalArgumentException("허용되지 않은 입력입니다. 양수를 입력해주세요.");
+        }
     }
 
     private static void printEmptyLine() {
