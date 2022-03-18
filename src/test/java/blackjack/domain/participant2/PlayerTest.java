@@ -7,6 +7,7 @@ import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER8;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
@@ -28,13 +29,30 @@ public class PlayerTest {
     private static final CardsViewStrategy2 VIEW_STRATEGY = (p) -> {
     };
 
+    private CardHand cardHand;
     private Participant player;
 
     @BeforeEach
     void setUp() {
-        CardHand cardHand = new OneCard(CLOVER8).hit(CLOVER_KING);
+        cardHand = new OneCard(CLOVER8).hit(CLOVER_KING);
         player = new Player("jeong", cardHand);
 
+    }
+
+    @DisplayName("공백으로 구성된 이름으로 플레이어를 생성하려는 경우 예외가 발생한다.")
+    @Test
+    void constructor_throwExceptionOnBlankName() {
+        assertThatThrownBy(() -> new Player("  ", cardHand))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어는 이름을 지녀야 합니다.");
+    }
+
+    @DisplayName("플레이어의 이름을 '딜러'로 생성하려는 경우 예외가 발생한다.")
+    @Test
+    void constructor_throwExceptionOnDealerName() {
+        assertThatThrownBy(() -> new Player("딜러", cardHand))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 딜러가 될 수 없습니다.");
     }
 
     @DisplayName("플레이어 drawAll 메서드 테스트")

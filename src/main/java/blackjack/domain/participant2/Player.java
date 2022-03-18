@@ -1,5 +1,8 @@
 package blackjack.domain.participant2;
 
+import static blackjack.validator.PlayerNameValidator.validateNameNotBlank;
+import static blackjack.validator.PlayerNameValidator.validateNameNotDealer;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.hand.CardHand;
@@ -14,7 +17,9 @@ public final class Player extends BlackjackParticipant {
 
     public Player(final String name, final CardHand cardHand) {
         super(cardHand);
-        this.name =name;
+        validateNameNotBlank(name);
+        validateNameNotDealer(name);
+        this.name = name;
     }
 
     @Override
