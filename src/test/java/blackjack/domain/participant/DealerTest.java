@@ -1,22 +1,23 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.CardBundleFixture.cardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.CLOVER2;
+import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
-import static blackjack.fixture.CardRepository.CLOVER5;
-import static blackjack.fixture.CardRepository.CLOVER6;
-import static blackjack.fixture.CardRepository.CLOVER7;
-import static blackjack.fixture.CardRepository.CLOVER8;
-import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.hand.CardHand;
+import blackjack.domain.hand.OneCard;
+import blackjack.fixture.CardDeckStub;
 import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayChoiceStrategy;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
@@ -25,69 +26,53 @@ public class DealerTest {
     private static final CardsViewStrategy VIEW_STRATEGY = (p) -> {
     };
 
-    @DisplayName("딜러가 drawAllCards 메서드 실행시, 17 이상의 카드 패를 지닐 때까지 카드 한 장을 추가한다.")
-    @Test
-    void drawAllCards() {
-        CardBundle cardBundle = cardBundleOf(CLOVER4, CLOVER5);
-        Dealer dealer = Dealer.of(cardBundle);
+    private CardHand cardHand;
 
-        dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER8);
-
-        assertThat(extractCards(dealer)).containsExactly(CLOVER4, CLOVER5, CLOVER8);
-        assertThat(dealer.canDraw()).isFalse();
+    @BeforeEach
+    void setUp() {
+        cardHand = new OneCard(CLOVER4).hit(CLOVER_KING);
     }
 
-    @DisplayName("Dealer 인스턴스에는 CardBundle의 isBust 메서드가 구현되어있다.")
-    @Test
-    void isBust_implementationTest() {
-        CardBundle cardBundle = cardBundleOf(CLOVER6, CLOVER10);
-        Dealer dealer = Dealer.of(cardBundle);
-        dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER_KING);
+    @DisplayName("딜러 drawAll 메서드 테스트")
+    @Nested
+    class DrawAllCardsTest {
 
-        boolean actual = dealer.isBust();
+        @DisplayName("계속 드로우하도록 하면 16 이하일 때 계속 드로우를 하고 21을 넘어가면 버스트된다.")
+        @Test
+        void drawAll_bust() {
+            Participant dealer = new Dealer(cardHand);
 
-        assertThat(actual).isTrue();
+            dealer.drawAll(HIT_CHOICE, VIEW_STRATEGY, CardDeckStub.of(CLOVER2, CLOVER10));
+
+            assertThat(extractCards(dealer))
+                    .containsExactly(CLOVER4, CLOVER_KING, CLOVER2, CLOVER10);
+        }
+
+        @DisplayName("계속 드로우하도록 해도 17~21이 되었을 때 카드 뽑기를 중단한다.")
+        @Test
+        void drawAll_stayOn17() {
+            Participant dealer = new Dealer(cardHand);
+
+            dealer.drawAll(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER3);
+
+            assertThat(extractCards(dealer)).containsExactly(CLOVER4, CLOVER_KING, CLOVER3);
+        }
     }
 
-    @DisplayName("Dealer 인스턴스에는 Participant의 isBlackjack 메서드가 구현되어있다.")
+    @DisplayName("openInitialCards 메서드는 딜러 초기에 받은 두 장 카드만을 반환한다.")
     @Test
-    void isBlackjack_implementationTest() {
-        CardBundle cardBundle = cardBundleOf(CLOVER10, CLOVER_ACE);
-        Dealer dealer = Dealer.of(cardBundle);
+    void openInitialCards() {
+        Participant dealer = new Dealer(cardHand);
+        dealer.drawAll(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER10);
 
-        boolean actual = dealer.isBlackjack();
-
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("딜러의 패가 17이상 21이하인 경우 버스트도, 블랙잭도 아니지만, 더 이상 드로우를 하지 않는다.")
-    @Test
-    void dealerStayTest() {
-        CardBundle cardBundle = cardBundleOf(CLOVER7, CLOVER10);
-        Dealer dealer = Dealer.of(cardBundle);
-
-        assertThat(dealer.canDraw()).isFalse();
-        assertThat(dealer.isBlackjack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-
-        dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER_KING);
-        assertThat(extractCards(dealer)).containsExactly(CLOVER7, CLOVER10);
-    }
-
-    @DisplayName("딜러의 getInitialOpenCards 메서드는 초기에 받은 카드 중 한 장이 담긴 컬렉션을 반환한다.")
-    @Test
-    void getInitialOpenCards() {
-        CardBundle cardBundle = cardBundleOf(CLOVER4, CLOVER5);
-        Dealer dealer = Dealer.of(cardBundle);
-
-        List<Card> actual = dealer.getInitialOpenCards();
+        List<Card> actual = dealer.openInitialCards();
 
         assertThat(actual).containsExactly(CLOVER4);
-        assertThat(actual.size()).isEqualTo(1);
     }
 
     private List<Card> extractCards(Participant participant) {
-        CardBundle cardBundle = participant.getCardBundle();
+        CardBundle cardBundle = participant.getHand().getCardBundle();
         return cardBundle.getCards();
     }
 }
+

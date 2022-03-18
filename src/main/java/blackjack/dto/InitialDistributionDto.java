@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.participant.GameParticipants;
+import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ public class InitialDistributionDto {
 
     private final List<ParticipantCardsDto> participantsInfo = new ArrayList<>();
 
-    private InitialDistributionDto(final GameParticipants participants) {
+    private InitialDistributionDto(final Participants participants) {
         participants.getValue()
                 .forEach(this::initParticipantInfo);
     }

@@ -1,8 +1,8 @@
-package blackjack.domain.participant2;
+package blackjack.domain.participant;
 
 import blackjack.domain.hand.CardHand;
 import blackjack.strategy.CardSupplier;
-import blackjack.strategy.CardsViewStrategy2;
+import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayChoiceStrategy;
 
 public abstract class BlackjackParticipant implements Participant {
@@ -15,7 +15,7 @@ public abstract class BlackjackParticipant implements Participant {
 
     @Override
     public final void drawAll(final HitOrStayChoiceStrategy hitOrStay,
-                              final CardsViewStrategy2 viewStrategy,
+                              final CardsViewStrategy viewStrategy,
                               final CardSupplier supplier) {
         while (!cardHand.isFinished()) {
             cardHand = hitOrStay(hitOrStay, supplier);

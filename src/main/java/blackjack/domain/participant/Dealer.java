@@ -1,42 +1,40 @@
 package blackjack.domain.participant;
 
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.card.Score;
+import blackjack.domain.hand.CardHand;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Dealer extends Participant {
+public final class Dealer extends BlackjackParticipant {
 
-    public static final String UNIQUE_NAME = "딜러";
-    private static final int INITIAL_DEALER_OPEN_CARDS_COUNT = 1;
+    public static final String NAME = "딜러";
+    private static final int OPEN_CARDS_COUNT = 1;
+    private static final int DEALER_MAX_HIT_SCORE = 16;
 
-    private Dealer(final CardBundle cardBundle) {
-        super(cardBundle, Dealer::stayStrategy);
-    }
-
-    private static boolean stayStrategy(final CardBundle cardBundle) {
-        int score = cardBundle.getScoreInt();
-        return score > Score.DEALER_EXTRA_CARD_LIMIT;
-    }
-
-    public static Dealer of(final CardBundle cardBundle) {
-        return new Dealer(cardBundle);
+    public Dealer(final CardHand cardHand) {
+        super(cardHand);
     }
 
     @Override
     public String getName() {
-        return UNIQUE_NAME;
+        return NAME;
     }
 
     @Override
-    public List<Card> getInitialOpenCards() {
+    public List<Card> openInitialCards() {
         return cardHand.getCardBundle()
                 .getCards()
                 .stream()
-                .limit(INITIAL_DEALER_OPEN_CARDS_COUNT)
+                .limit(OPEN_CARDS_COUNT)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    protected boolean shouldStay() {
+        CardBundle cardBundle = cardHand.getCardBundle();
+        int scoreInt = cardBundle.getScoreInt();
+        return scoreInt > DEALER_MAX_HIT_SCORE;
     }
 
     @Override

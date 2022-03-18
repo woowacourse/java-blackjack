@@ -1,4 +1,4 @@
-package blackjack.domain.betting2;
+package blackjack.domain.betting;
 
 import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER7;
@@ -8,9 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.hand.CardHand;
 import blackjack.domain.hand.OneCard;
-import blackjack.domain.participant2.Dealer;
-import blackjack.domain.participant2.Participant;
-import blackjack.domain.participant2.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

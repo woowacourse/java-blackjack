@@ -6,11 +6,11 @@ import blackjack.dto.ParticipantCardsDto;
 public class BettingResult {
 
     private final ParticipantCardsDto participantCards;
-    private final int moneyOutcome;
+    private final int profit;
 
-    public BettingResult(Participant participant, int moneyOutcome) {
+    public BettingResult(Participant participant, int profit) {
         this.participantCards = ParticipantCardsDto.of(participant);
-        this.moneyOutcome = moneyOutcome;
+        this.profit = profit;
     }
 
     public String getParticipantName() {
@@ -21,15 +21,15 @@ public class BettingResult {
         return participantCards;
     }
 
-    public int getMoneyOutcome() {
-        return moneyOutcome;
+    public int getProfit() {
+        return profit;
     }
 
     @Override
     public String toString() {
         return "BettingResult{" +
                 "participantCards=" + participantCards +
-                ", moneyOutcome=" + moneyOutcome +
+                ", moneyOutcome=" + profit +
                 '}';
     }
 }

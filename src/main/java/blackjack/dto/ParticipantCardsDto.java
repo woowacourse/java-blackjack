@@ -18,7 +18,7 @@ public class ParticipantCardsDto {
 
     public static ParticipantCardsDto of(final Participant participant) {
         String name = participant.getName();
-        CardBundle cardBundle = participant.getCardBundle();
+        CardBundle cardBundle = participant.getHand().getCardBundle();
         List<Card> cards = cardBundle.getCards();
         Score score = cardBundle.getScore();
 
@@ -27,8 +27,8 @@ public class ParticipantCardsDto {
 
     public static ParticipantCardsDto ofInitial(final Participant participant) {
         String name = participant.getName();
-        List<Card> openCardInfo = participant.getInitialOpenCards();
-        CardBundle cardBundle = participant.getCardBundle();
+        List<Card> openCardInfo = participant.openInitialCards();
+        CardBundle cardBundle = participant.getHand().getCardBundle();
         Score score = cardBundle.getScore();
 
         return new ParticipantCardsDto(name, openCardInfo, score);

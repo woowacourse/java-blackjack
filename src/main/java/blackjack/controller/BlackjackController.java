@@ -8,13 +8,11 @@ import static blackjack.view.OutputView.printInitialParticipantsCards;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.betting.BettingResults;
 import blackjack.domain.betting.PlayerBettings;
-import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
-import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
 import blackjack.dto.InitialDistributionDto;
-import blackjack.strategy.CardBundleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -24,9 +22,8 @@ public class BlackjackController {
     public BlackjackGame initializeGame() {
         final CardStack cardDeck = new CardDeck();
         final List<String> playerNames = requestPlayerNamesInput();
-        final CardBundleStrategy strategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
 
-        return new BlackjackGame(cardDeck, playerNames, strategy);
+        return new BlackjackGame(cardDeck, playerNames);
     }
 
     public PlayerBettings initializeBettings(final BlackjackGame game) {
@@ -38,7 +35,7 @@ public class BlackjackController {
     public void playGame(final BlackjackGame game) {
         final InitialDistributionDto dto = InitialDistributionDto.of(game);
 
-        if (game.isBlackjackDealer()) {
+        if (game.getParticipants().getDealer().getHand().isBlackjack()){
             printDealerBlackjackInfo(dto);
             return;
         }
@@ -55,7 +52,7 @@ public class BlackjackController {
     }
 
     public void showBettingResults(final BlackjackGame game, final PlayerBettings bettings) {
-        final GameParticipants participants = game.getParticipants();
+        final Participants participants = game.getParticipants();
         final Participant dealer = participants.getDealer();
 
         final BettingResults results = new BettingResults(dealer, bettings);

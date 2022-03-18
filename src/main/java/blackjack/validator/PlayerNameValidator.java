@@ -1,6 +1,6 @@
 package blackjack.validator;
 
-import blackjack.domain.participant2.Dealer;
+import blackjack.domain.participant.Dealer;
 import java.util.HashSet;
 import java.util.List;
 

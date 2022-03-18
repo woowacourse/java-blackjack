@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.betting.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.hand.CardHand;
 import blackjack.domain.participant.Participant;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ParticipantCardsDto;
@@ -63,7 +64,7 @@ public class OutputView {
         StringBuilder builder = new StringBuilder();
 
         builder.append(getPlayerCardHandInfo(player));
-        if (!player.canDraw()) {
+        if (player.getHand().isFinished()) {
             builder.append(CAN_NOT_HIT_INFO_DELIMITER_TEXT)
                     .append(getCanNotHitInfoOf(player));
         }
@@ -72,16 +73,17 @@ public class OutputView {
     }
 
     private static String getPlayerCardHandInfo(Participant player) {
-        CardBundle cardBundle = player.getCardBundle();
+        CardBundle cardBundle = player.getHand().getCardBundle();
         final String playerCards = getCardsInfo(cardBundle.getCards());
         return String.format(PLAYER_CARDS_FORMAT, player.getName(), playerCards);
     }
 
     private static String getCanNotHitInfoOf(Participant player) {
-        if (player.isBust()) {
+        CardHand playerHand = player.getHand();
+        if (playerHand.isBust()) {
             return PLAYER_BUST_MESSAGE;
         }
-        if (player.isBlackjack()) {
+        if (playerHand.isBlackjack()) {
             return PLAYER_BLACKJACK_MESSAGE;
         }
         return PLAYER_MAX_SCORE_MESSAGE;
@@ -129,7 +131,7 @@ public class OutputView {
 
     private static String getParticipantGameResult(final BettingResult dto) {
         final String participantName = dto.getParticipantName();
-        final int money = dto.getMoneyOutcome();
+        final int money = dto.getProfit();
 
         return String.format(BETTING_RESULT_FORMAT, participantName, money);
     }

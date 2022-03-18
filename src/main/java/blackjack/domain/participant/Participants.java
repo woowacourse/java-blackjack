@@ -1,4 +1,4 @@
-package blackjack.domain.participant2;
+package blackjack.domain.participant;
 
 import static blackjack.validator.PlayerNameValidator.validateNoDuplicateNames;
 import static blackjack.validator.PlayerNameValidator.validatePlayerExistence;
