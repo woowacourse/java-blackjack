@@ -59,9 +59,15 @@ public final class InputView {
     }
 
     private static void validateBetAmount(final String input) {
-        validateName(input);
+        validateBetNull(input);
         validateTransInteger(input);
         validateRange(Integer.parseInt(input));
+    }
+
+    private static void validateBetNull(final String input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 배팅 값에 빈 값이 들어올 수 없습니다.");
+        }
     }
 
     private static void validateTransInteger(final String input) {
