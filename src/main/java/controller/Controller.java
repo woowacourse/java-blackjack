@@ -64,8 +64,7 @@ public class Controller {
 	}
 
 	private void drawForPlayers(Deck deck, Players players) {
-		players.getNames().stream()
-			.forEach(name -> askAndDrawForPlayer(deck, players, name));
+		players.getNames().forEach(name -> askAndDrawForPlayer(deck, players, name));
 	}
 
 	private void askAndDrawForPlayer(Deck deck, Players players, Name name) {

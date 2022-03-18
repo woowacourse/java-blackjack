@@ -51,7 +51,7 @@ public class OutputView {
 		System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, result.getDealerMoney());
 
 		LinkedHashMap<Participant, EarningRate> playerResults = result.getPlayerResults();
-		playerResults.entrySet().stream()
+		playerResults.entrySet()
 			.forEach(entry -> System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, entry.getKey().showName(),
 				(int)(entry.getKey().showBetting() * entry.getValue().getEarningRate())));
 	}
