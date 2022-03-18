@@ -71,7 +71,7 @@ public class DealerTest {
     }
 
     private List<Card> extractCards(Participant participant) {
-        CardBundle cardBundle = participant.getCardBundle();
+        CardBundle cardBundle = participant.getHand().getCardBundle();
         return cardBundle.getCards();
     }
 }

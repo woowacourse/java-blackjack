@@ -1,6 +1,5 @@
 package blackjack.domain.participant2;
 
-import blackjack.domain.card.CardBundle;
 import blackjack.domain.hand.CardHand;
 import blackjack.strategy.CardSupplier;
 import blackjack.strategy.CardsViewStrategy2;
@@ -34,7 +33,7 @@ public abstract class BlackjackParticipant implements Participant {
     protected abstract boolean shouldStay();
 
     @Override
-    public final CardBundle getCardBundle() {
-        return cardHand.getCardBundle();
+    public final CardHand getHand() {
+        return cardHand;
     }
 }

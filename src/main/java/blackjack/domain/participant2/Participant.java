@@ -1,7 +1,7 @@
 package blackjack.domain.participant2;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.hand.CardHand;
 import blackjack.strategy.CardSupplier;
 import blackjack.strategy.CardsViewStrategy2;
 import blackjack.strategy.HitOrStayChoiceStrategy;
@@ -15,7 +15,7 @@ public interface Participant {
                  final CardsViewStrategy2 viewStrategy,
                  final CardSupplier supplier);
 
-    CardBundle getCardBundle();
-
     String getName();
+
+    CardHand getHand();
 }

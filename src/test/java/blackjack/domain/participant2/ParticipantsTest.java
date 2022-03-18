@@ -38,7 +38,7 @@ public class ParticipantsTest {
                 List.of("a", "b", "c"), cardStack::pop);
 
         for (Participant participant : participants.getValue()) {
-            List<Card> cards = participant.getCardBundle().getCards();
+            List<Card> cards = participant.getHand().getCardBundle().getCards();
             assertThat(cards.size()).isEqualTo(2);
         }
     }
