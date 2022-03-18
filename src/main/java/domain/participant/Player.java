@@ -1,6 +1,8 @@
 package domain.participant;
 
-import domain.card.Hand;
+import domain.participant.info.Betting;
+import domain.participant.info.Hand;
+import domain.participant.info.Name;
 import domain.result.EarningRate;
 
 public class Player extends Participant {

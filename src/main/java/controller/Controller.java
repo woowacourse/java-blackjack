@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Deck;
-import domain.card.Hand;
 import domain.card.deckstrategy.GenerationStandardDeckStrategy;
-import domain.participant.Betting;
 import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.ParticipantInfo;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.participant.info.Betting;
+import domain.participant.info.Hand;
+import domain.participant.info.Name;
+import domain.participant.info.ParticipantInfo;
 import domain.result.Result;
 import view.InputView;
 import view.OutputView;

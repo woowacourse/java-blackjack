@@ -2,7 +2,7 @@ package domain.result;
 
 import java.util.LinkedHashMap;
 
-import domain.participant.ParticipantInfo;
+import domain.participant.info.ParticipantInfo;
 
 public class Result {
 

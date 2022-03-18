@@ -6,6 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import domain.participant.info.Name;
+
 public class NameTest {
 
 	@ParameterizedTest(name = "이름이 공백이거나 빈칸일 경우")

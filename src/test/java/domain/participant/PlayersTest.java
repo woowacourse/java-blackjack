@@ -12,8 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
 import domain.card.Denomination;
-import domain.card.Hand;
 import domain.card.Suit;
+import domain.participant.info.Betting;
+import domain.participant.info.Hand;
+import domain.participant.info.Name;
 
 public class PlayersTest {
 

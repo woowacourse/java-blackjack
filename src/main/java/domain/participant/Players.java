@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
+import domain.participant.info.Name;
+import domain.participant.info.ParticipantInfo;
 import domain.result.EarningRate;
 
 public class Players {

@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.participant.Name;
-import domain.participant.ParticipantInfo;
+import domain.participant.info.Name;
+import domain.participant.info.ParticipantInfo;
 import domain.result.EarningRate;
 import domain.result.Result;
 

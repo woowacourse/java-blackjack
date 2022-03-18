@@ -1,7 +1,9 @@
-package domain.card;
+package domain.participant.info;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.card.Card;
 
 public class Hand {
 	private static final int LIMIT_TO_NOT_BUST_SCORE = 21;

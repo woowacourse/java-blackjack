@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.info;
 
 import java.util.Objects;
 

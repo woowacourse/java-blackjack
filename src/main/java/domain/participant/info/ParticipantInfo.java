@@ -1,6 +1,6 @@
-package domain.participant;
+package domain.participant.info;
 
-import domain.card.Hand;
+import domain.participant.Participant;
 
 public class ParticipantInfo {
 	private final Name name;
