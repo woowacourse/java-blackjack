@@ -50,6 +50,9 @@ public class Player extends Participant {
         private int revenue = 0;
 
         private BettingMoney(int initial) {
+            if (initial <= 0) {
+                throw new IllegalArgumentException("[ERROR] 금액은 1원 이상 입력하셔야 합니다.");
+            }
             this.initial = initial;
         }
 
