@@ -1,6 +1,6 @@
 package view;
 
-import domain.betting.Profits;
+import domain.betting.Profit;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
@@ -106,11 +106,11 @@ public class OutputView {
         System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, name, result);
     }
 
-    public static void printProfit(List<Name> names, Profits profits) {
+    public static void printProfit(List<Name> names, Profit profit) {
         OutputView.printProfitTitle();
-        OutputView.printProfitOfDealer(profits.calculateDealerProfit());
+        OutputView.printProfitOfDealer(profit.calculateDealerProfit());
         for (Name name : names) {
-            OutputView.printProFitOfPlayer(name.getName(), profits.getProfit(name));
+            OutputView.printProFitOfPlayer(name.getName(), profit.getProfit(name));
         }
     }
 

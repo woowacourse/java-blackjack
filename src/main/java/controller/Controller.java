@@ -2,7 +2,7 @@ package controller;
 
 import domain.betting.BettingMoney;
 import domain.betting.BettingReceipt;
-import domain.betting.Profits;
+import domain.betting.Profit;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.card.InitCards;
@@ -80,6 +80,6 @@ public class Controller {
 
     private void printResultAndProfit(Result result, BettingReceipt bettingReceipt, Players players) {
         OutputView.printResult(players.getNames(), result);
-        OutputView.printProfit(players.getNames(), Profits.generateProfits(result,bettingReceipt, players));
+        OutputView.printProfit(players.getNames(), Profit.generateProfits(result,bettingReceipt, players));
     }
 }
