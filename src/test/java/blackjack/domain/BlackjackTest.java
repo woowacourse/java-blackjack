@@ -88,6 +88,14 @@ public class BlackjackTest {
     void openDealerOneCardTest() {
         blackjack.distributeInitialCards(new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6)));
         Dealer dealer = blackjack.getDealer();
-        assertThat(blackjack.openDealerOneCard()).isEqualTo(dealer.pickOneCardToOpen());
+        assertThat(blackjack.openDealerOneCard().containsValue(dealer.pickOpenCardsInInitCards())).isTrue();
+    }
+
+    @DisplayName("현재 차례 플레이어가 카드 하나 오픈하게 하는 기능 테스트")
+    @Test
+    void openTurnPlayerOneCardTest() {
+        blackjack.distributeInitialCards(new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6)));
+        Player player = blackjack.turnPlayer();
+        assertThat(blackjack.openTurnPlayerInitCards().containsValue(player.pickOpenCardsInInitCards())).isTrue();
     }
 }

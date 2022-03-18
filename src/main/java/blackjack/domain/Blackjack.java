@@ -73,8 +73,12 @@ public class Blackjack {
         return false;
     }
 
-    public Card openDealerOneCard() {
-        return dealer.pickOneCardToOpen();
+    public Map<Dealer, Cards> openDealerOneCard() {
+        return Map.of(dealer, dealer.pickOpenCardsInInitCards());
+    }
+
+    public Map<Player, Cards> openTurnPlayerInitCards() {
+        return Map.of(turnPlayer, turnPlayer.pickOpenCardsInInitCards());
     }
 
     public Dealer getDealer() {
