@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.THREE;
 import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.SPADE;
@@ -15,5 +16,6 @@ public class CardFixtures {
     public static final Card TWO_SPACE = new Card(TWO, SPADE);
     public static final Card THREE_SPACE = new Card(THREE, SPADE);
     public static final Card JACK_SPACE = new Card(JACK, SPADE);
+    public static final Card QUEEN_SPACE = new Card(QUEEN, SPADE);
     public static final Card KING_SPACE = new Card(KING, SPADE);
 }

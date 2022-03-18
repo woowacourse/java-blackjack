@@ -38,6 +38,10 @@ public class Player {
         state = state.stay();
     }
 
+    public Name getName() {
+        return name;
+    }
+
     public List<Card> getCards() {
         Cards cards = state.cards();
         return Collections.unmodifiableList(cards.getValue());

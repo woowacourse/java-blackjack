@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import static blackjack.domain.CardFixtures.JACK_SPACE;
 import static blackjack.domain.CardFixtures.KING_SPACE;
+import static blackjack.domain.CardFixtures.QUEEN_SPACE;
 import static blackjack.domain.CardFixtures.THREE_SPACE;
 import static blackjack.domain.CardFixtures.TWO_SPACE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,5 +65,18 @@ class PlayerTest {
         player.stay();
 
         assertThat(player.isFinished()).isTrue();
+    }
+    
+    @DisplayName("플레이어는 현재 상태를 판단하여 게임의 종료 여부를 반환한다.")
+    @Test
+    void 플레이어_종료_여부() {
+        Player player = new Player("mat", 10000);
+        player.hit(KING_SPACE);
+        player.hit(JACK_SPACE);
+        player.hit(QUEEN_SPACE);
+
+        boolean result = player.isFinished();
+
+        assertThat(result).isTrue();
     }
 }
