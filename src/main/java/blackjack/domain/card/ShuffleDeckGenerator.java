@@ -18,7 +18,7 @@ public class ShuffleDeckGenerator implements CardDeckGenerator{
 
     private void addCard(List<Card> cards, Suit cardPattern) {
         for (final Denomination denomination : Denomination.values()) {
-            cards.add(new Card(cardPattern, denomination));
+            cards.add(Card.of(cardPattern, denomination));
         }
     }
 }

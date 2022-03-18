@@ -14,7 +14,7 @@ public class CardTest {
     @Test
     @DisplayName("하트 타입의 숫자 2카드 생성을 확인한다")
     void createHeartNumberCard() {
-        final Card card = new Card(Suit.HEART, Denomination.TWO);
+        final Card card = Card.of(Suit.HEART, Denomination.TWO);
         final String expectedPattern = "하트";
         final int expectedNumber = 2;
 
@@ -27,7 +27,7 @@ public class CardTest {
     @Test
     @DisplayName("클로버 타입의 숫자 2카드 생성을 확인한다")
     void createCloverNumberCard() {
-        final Card card = new Card(Suit.CLOVER, Denomination.THREE);
+        final Card card = Card.of(Suit.CLOVER, Denomination.THREE);
         final String expectedPattern = "클로버";
         final int expectedNumber = 3;
 
@@ -40,7 +40,7 @@ public class CardTest {
     @Test
     @DisplayName("스페이드 타입의 King 카드 생성을 확인한다.")
     void createSpecialTenCard() {
-        final Card card = new Card(Suit.SPADE, Denomination.KING);
+        final Card card = Card.of(Suit.SPADE, Denomination.KING);
         final String expectedPattern = "스페이드";
         final int expectedNumber = 10;
 
@@ -53,7 +53,7 @@ public class CardTest {
     @Test
     @DisplayName("다이아몬드 타입의 Ace 카드 생성을 확인한다.")
     void createSpecialQueenCard() {
-        final Card card = new Card(Suit.DIAMOND, Denomination.ACE);
+        final Card card = Card.of(Suit.DIAMOND, Denomination.ACE);
         final String expectedPattern = "다이아몬드";
         final int expectedNumber = 11;
 
@@ -73,10 +73,10 @@ public class CardTest {
 
     private static Stream<Arguments> provideCardAndExpected() {
         return Stream.of(
-                Arguments.of(new Card(Suit.SPADE, Denomination.ACE), true),
-                Arguments.of(new Card(Suit.HEART, Denomination.ACE), true),
-                Arguments.of(new Card(Suit.DIAMOND, Denomination.TWO), false),
-                Arguments.of(new Card(Suit.CLOVER, Denomination.TEN), false)
+                Arguments.of(Card.of(Suit.SPADE, Denomination.ACE), true),
+                Arguments.of(Card.of(Suit.HEART, Denomination.ACE), true),
+                Arguments.of(Card.of(Suit.DIAMOND, Denomination.TWO), false),
+                Arguments.of(Card.of(Suit.CLOVER, Denomination.TEN), false)
         );
     }
 }
