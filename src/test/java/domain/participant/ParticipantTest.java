@@ -30,7 +30,7 @@ public class ParticipantTest {
 	}
 
 	@ParameterizedTest(name = "손패가 MAX SCORE인지 확인하는 기능 - case : {0}, {1}, {2}")
-	@CsvSource(value = {"ACE, ACE, NINE", "KNIGHT, QUEEN, ACE", "KNIGHT, EIGHT, THREE"})
+	@CsvSource(value = {"ACE, ACE, NINE", "KING, QUEEN, ACE", "KING, EIGHT, THREE"})
 	void isBlackJack(String input1, String input2, String input3) {
 		Card card1 = new Card(Denomination.valueOf(input1), Suit.HEART);
 		Card card2 = new Card(Denomination.valueOf(input2), Suit.SPADE);
