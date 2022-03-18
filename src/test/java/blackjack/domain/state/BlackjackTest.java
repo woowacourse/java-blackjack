@@ -85,7 +85,7 @@ class BlackjackTest {
 
     @DisplayName("플레이어가 블랙잭이어서 우승할 경우 베팅 금액의 1.5 배를 얻는 것을 확인한다.")
     @Test
-    void profit() {
+    void profit_win() {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(1.5);
 

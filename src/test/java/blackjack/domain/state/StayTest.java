@@ -65,13 +65,49 @@ class StayTest {
         assertThat(stay.isFinished()).isTrue();
     }
 
-    // TODO: 딜러와 비교하여 값 변경
-    @DisplayName("Stay 일 경우 베팅 금액만큼 얻는 것을 확인한다.")
+    @DisplayName("플레이어가 버스트여서 패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
     @Test
-    void profit() {
+    void profit_player_bust() {
         Stay stay = new Stay(playingCards, betting);
+        stay.decideRate(-1);
+
+        assertThat(stay.profit()).isEqualTo(-1000.0);
+    }
+
+    @DisplayName("딜러가 버스트여서 승리할 경우 베팅 금액만큼 얻는 것을 확인한다.")
+    @Test
+    void profit_dealer_bust() {
+        Stay stay = new Stay(playingCards, betting);
+        stay.decideRate(1);
 
         assertThat(stay.profit()).isEqualTo(1000.0);
+    }
+
+    @DisplayName("딜러보다 카드 총 합이 작아 패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
+    @Test
+    void profit_lose() {
+        Stay stay = new Stay(playingCards, betting);
+        stay.decideRate(-1);
+
+        assertThat(stay.profit()).isEqualTo(-1000.0);
+    }
+
+    @DisplayName("딜러와 플레이어의 카드 총 합이 같아 무승부일 경우 수익이 없는 것을 확인한다.")
+    @Test
+    void profit_tie() {
+        Stay stay = new Stay(playingCards, betting);
+        stay.decideRate(0);
+
+        assertThat(stay.profit()).isEqualTo(0.0);
+    }
+
+    @DisplayName("딜러보다 카드 총 합이 커서 승리할 경우 베팅 금액만큼 얻는 것을 확인한다.")
+    @Test
+    void profit_win() {
+        Blackjack blackjack = new Blackjack(playingCards, betting);
+        blackjack.decideRate(1);
+
+        assertThat(blackjack.profit()).isEqualTo(1000.0);
     }
 
     @DisplayName("카드 총합을 확인한다.")

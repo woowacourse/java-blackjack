@@ -20,7 +20,6 @@ public class PlayerTest {
     @BeforeEach
     void before() {
         player = new Player("woowahan");
-        player.bet(1000);
         queenSpade = Card.of(Denomination.QUEEN, Suit.SPADE);
     }
 
@@ -36,7 +35,6 @@ public class PlayerTest {
     @Test
     void profit_exception() {
         player = new Player("yukong");
-        player.bet(1000);
 
         assertThatThrownBy(() -> player.profit())
                 .isInstanceOf(IllegalStateException.class)

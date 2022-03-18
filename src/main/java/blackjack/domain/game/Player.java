@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.Grade;
 import blackjack.dto.GamerDto;
 
 import java.util.List;
@@ -58,9 +57,9 @@ public class Player extends Gamer {
 
     private double findRate(final Dealer dealer) {
         if (dealer.isBlackjack() || isBlackjack()) {
-            return Grade.rateBlackjack(dealer, this);
+            return ProfitRate.rateBlackjack(dealer, this);
         }
-        return Grade.rateStay(dealer, this);
+        return ProfitRate.rateStay(dealer, this);
     }
 
     private void openCards(final BiConsumer<String, List<String>> openCards) {

@@ -25,11 +25,6 @@ public abstract class Gamer {
         return state.cardTotal();
     }
 
-    // TODO: 삭제
-    public void bet(final int betting) {
-        state.bet(String.valueOf(betting));
-    }
-
     public void deal(final List<Card> cards) {
         for (Card card : cards) {
             state = state.draw(card);
@@ -53,12 +48,10 @@ public abstract class Gamer {
     }
 
     public boolean isBlackjack() {
-        // TODO: 방식 수정
         return state instanceof Blackjack;
     }
 
     public boolean isBust() {
-        // TODO: 방식 수정
         return state instanceof Bust;
     }
 
