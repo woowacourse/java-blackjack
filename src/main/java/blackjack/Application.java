@@ -23,7 +23,8 @@ public class Application {
 
     private static void processDealerTurn(Participant dealer, Deck deck,
         BlackjackGame blackjackGame) {
-        while (blackjackGame.takeMoreCard(dealer, deck)) {
+        while (dealer.shouldReceive()) {
+            blackjackGame.takeMoreCard(dealer, deck);
             OutputView.printDealerHandDrawMessage();
         }
     }
@@ -36,8 +37,8 @@ public class Application {
     }
 
     private static void playerTurn(Deck deck, BlackjackGame blackjackGame, Participant player) {
-        while (!player.isBust() && InputView.inputOneMoreCard(player) && blackjackGame.takeMoreCard(
-            player, deck)) {
+        while (player.shouldReceive() && InputView.inputOneMoreCard(player)) {
+            blackjackGame.takeMoreCard(player, deck);
             OutputView.showPlayerHand(player);
         }
         if (player.isBust()) {

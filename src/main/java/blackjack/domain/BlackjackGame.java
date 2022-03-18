@@ -40,12 +40,8 @@ public class BlackjackGame {
         participant.receiveCard(deck.draw());
     }
 
-    public boolean takeMoreCard(Participant participant, Deck deck) {
-        if (participant.shouldReceive()) {
-            participant.receiveCard(deck.draw());
-            return true;
-        }
-        return false;
+    public void takeMoreCard(Participant participant, Deck deck) {
+        participant.receiveCard(deck.draw());
     }
 
     public GameScoreBoard calculateGameScore() {
