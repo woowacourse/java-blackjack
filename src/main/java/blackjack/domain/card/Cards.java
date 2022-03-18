@@ -46,6 +46,10 @@ public class Cards {
         return calculateScore() == Cards.MAX_SCORE;
     }
 
+    public boolean isBust() {
+        return calculateScore() > Cards.MAX_SCORE;
+    }
+
     public List<Card> getCardValues() {
         Objects.requireNonNull(cards, "Cards의 내부 값이 null을 참조하고 있습니다.");
         return List.copyOf(cards);

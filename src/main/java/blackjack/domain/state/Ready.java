@@ -1,4 +1,4 @@
-package blackjack.state;
+package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -11,6 +11,6 @@ public final class Ready {
         if (cards.isBlackjack()) {
             return new Blackjack();
         }
-        return new HitTurn();
+        return new HitTurn(cards);
     }
 }
