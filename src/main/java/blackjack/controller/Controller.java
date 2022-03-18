@@ -20,7 +20,7 @@ public class Controller {
         Dealer dealer = Dealer.createDefaultNameDealer();
         Players players = Players.of(InputView.requestPlayerNames());
 
-        PlayersBet playersBet = askPlayersBetMoney(players);
+        PlayersBet playersBet = createPlayersBetMoney(players);
         initDealerCards(cardDeck, dealer);
         initPlayerCards(cardDeck, players);
         OutputView.printInitCardHandStatus(ParticipantDto.of(dealer), PlayersDto.of(players));
@@ -30,7 +30,7 @@ public class Controller {
         OutputView.printFinalResult(playersBet.calculateHitProfit(Result.createJudgeTable(dealer, players), dealer));
     }
 
-    private PlayersBet askPlayersBetMoney(Players players) {
+    private PlayersBet createPlayersBetMoney(Players players) {
         PlayersBet playersBet = new PlayersBet();
         for (Player player : players.getPlayers()) {
             Money money = new Money(InputView.requestMoney(player.getName().getValue()));
