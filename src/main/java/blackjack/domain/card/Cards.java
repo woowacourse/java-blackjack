@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.player.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,6 +36,14 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream().
                 anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return isMaxScore() && cards.size() == Players.INIT_CARD_SIZE;
+    }
+
+    public boolean isMaxScore() {
+        return calculateScore() == Cards.MAX_SCORE;
     }
 
     public List<Card> getCardValues() {

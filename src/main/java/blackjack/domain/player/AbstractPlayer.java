@@ -29,12 +29,12 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isMaxScore() {
-        return cards.calculateScore() == Cards.MAX_SCORE;
+        return cards.isMaxScore();
     }
 
     @Override
     public boolean isBlackjack() {
-        return isMaxScore() && cards.getCardValues().size() == Players.INIT_CARD_SIZE;
+        return cards.isBlackjack();
     }
 
     @Override
