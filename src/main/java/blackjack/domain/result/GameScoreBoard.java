@@ -1,7 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
@@ -19,10 +18,10 @@ public class GameScoreBoard {
         this.playerGameResultMap = playerGameResultMap;
     }
 
-    public static GameScoreBoard recordGameScore(Dealer dealer, List<Player> players) {
+    public static GameScoreBoard recordGameScore(Participant dealer, List<Participant> players) {
         Map<CardScoreResult, Integer> dealerResult = new EnumMap<>(CardScoreResult.class);
         Map<String, String> playerResult = new TreeMap<>();
-        for (Player player : players) {
+        for (Participant player : players) {
             CardScoreResult playerGameScore = CardScoreResult.findCardScoreResult(player, dealer);
             CardScoreResult dealerGameScore = playerGameScore.reverse();
             dealerResult.put(dealerGameScore, dealerResult.getOrDefault(dealerGameScore, 0) + 1);

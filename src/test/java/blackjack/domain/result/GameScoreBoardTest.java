@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.Collections;
 import java.util.List;
@@ -18,8 +19,8 @@ import org.junit.jupiter.api.Test;
 
 class GameScoreBoardTest {
 
-    private Dealer dealer;
-    private List<Player> players;
+    private Participant dealer;
+    private List<Participant> players;
 
     @BeforeEach
     void setUp() {
@@ -49,7 +50,7 @@ class GameScoreBoardTest {
         }
     }
 
-    private List<Player> createPlayers() {
+    private List<Participant> createPlayers() {
         return Collections.singletonList(
             new Player(new Name("승팡"), createCardHand(aceCard, tenCard)));
     }

@@ -36,7 +36,7 @@ class BlackjackGameTest {
     @DisplayName("게임 실행 객체가 정상적으로 생성되었는지 확인")
     @Test
     void create() {
-        List<Player> players = blackjackGame.getPlayers();
+        List<Participant> players = blackjackGame.getPlayers();
         Participant participant = players.get(0);
 
         assertThat(participant.getName()).isEqualTo("seung");
@@ -47,7 +47,7 @@ class BlackjackGameTest {
     void drawBaseCards() {
         blackjackGame.drawBaseCards(deck);
         Participant dealer = blackjackGame.getDealer();
-        List<Player> players = blackjackGame.getPlayers();
+        List<Participant> players = blackjackGame.getPlayers();
         Participant player = players.get(0);
 
         assertAll(
@@ -63,7 +63,7 @@ class BlackjackGameTest {
         participant.receiveCard(stubDeck.draw());
         participant.receiveCard(stubDeck.draw());
 
-        assertThat(blackjackGame.takeMoreCard(participant, deck)).isEqualTo(excepted);
+        assertThat(participant.shouldReceive()).isEqualTo(excepted);
     }
 
     private static Stream<Arguments> takeMoreCardByParticipantCase() {
@@ -81,9 +81,9 @@ class BlackjackGameTest {
     @Test
     void calculateGameScore() {
         StubDeck deck = new StubDeck(List.of(aceCard, tenCard, twoCard, threeCard));
-        List<Player> players = blackjackGame.getPlayers();
-        Player player = players.get(0);
-        Dealer dealer = blackjackGame.getDealer();
+        List<Participant> players = blackjackGame.getPlayers();
+        Participant player = players.get(0);
+        Participant dealer = blackjackGame.getDealer();
 
         player.receiveCard(deck.draw());
         player.receiveCard(deck.draw());

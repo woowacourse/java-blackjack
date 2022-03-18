@@ -3,7 +3,6 @@ package blackjack;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -29,9 +28,9 @@ public class Application {
         }
     }
 
-    private static void processPlayerTurn(List<Player> players, Deck deck,
+    private static void processPlayerTurn(List<Participant> players, Deck deck,
         BlackjackGame blackjackGame) {
-        for (Player player : players) {
+        for (Participant player : players) {
             playerTurn(deck, blackjackGame, player);
         }
     }

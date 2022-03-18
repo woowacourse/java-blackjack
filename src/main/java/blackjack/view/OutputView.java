@@ -4,8 +4,6 @@ import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameScoreBoard;
 import blackjack.domain.result.CardScoreResult;
 import blackjack.domain.participant.Participant;
@@ -27,7 +25,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void showParticipantsHand(Dealer dealer, List<Player> players) {
+    public static void showParticipantsHand(Participant dealer, List<Participant> players) {
         out.printf(TURN_CARD_PROMPT, getPlayerNames(players));
         out.printf(DEALER_CARD_STATUS_FORMAT, dealer.getName(), getCardDetail(dealer));
         for (Participant player : players) {
@@ -36,13 +34,13 @@ public class OutputView {
         out.println();
     }
 
-    private static String getPlayerNames(List<Player> players) {
+    private static String getPlayerNames(List<Participant> players) {
         return players.stream()
-            .map(Player::getName)
+            .map(Participant::getName)
             .collect(joining(DELIMITER));
     }
 
-    private static String getCardDetail(Dealer dealer) {
+    private static String getCardDetail(Participant dealer) {
         Card openCard = dealer.getOpenCard();
         return openCard.getDenomination() + dealer.getOpenCard().getSuit();
     }
@@ -65,9 +63,9 @@ public class OutputView {
         out.println(NEWLINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printParticipantResult(Dealer dealer, List<Player> players) {
+    public static void printParticipantResult(Participant dealer, List<Participant> players) {
         printCardHand(dealer);
-        for (Player player : players) {
+        for (Participant player : players) {
             printCardHand(player);
         }
         out.println();

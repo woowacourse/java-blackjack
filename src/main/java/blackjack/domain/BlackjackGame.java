@@ -13,23 +13,23 @@ public class BlackjackGame {
 
     private static final String DELIMITER = ",";
 
-    private final List<Player> players;
-    private final Dealer dealer;
+    private final List<Participant> players;
+    private final Participant dealer;
 
-    public BlackjackGame(List<Player> players, Dealer dealer) {
+    public BlackjackGame(List<Participant> players, Participant dealer) {
         this.players = players;
         this.dealer = dealer;
     }
 
     public static BlackjackGame create(String inputNames) {
-        List<Player> players = Arrays.stream(inputNames.split(DELIMITER))
+        List<Participant> players = Arrays.stream(inputNames.split(DELIMITER))
             .map(playerName -> new Player(playerName.trim()))
             .collect(Collectors.toList());
         return new BlackjackGame(players, new Dealer());
     }
 
     public void drawBaseCards(Deck deck) {
-        for (Player player : players) {
+        for (Participant player : players) {
             drawBaseCardsByParticipant(deck, player);
         }
         drawBaseCardsByParticipant(deck, dealer);
@@ -52,11 +52,11 @@ public class BlackjackGame {
         return GameScoreBoard.recordGameScore(dealer, players);
     }
 
-    public List<Player> getPlayers() {
+    public List<Participant> getPlayers() {
         return players;
     }
 
-    public Dealer getDealer() {
+    public Participant getDealer() {
         return dealer;
     }
 }
