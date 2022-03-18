@@ -26,7 +26,7 @@ public class PlayersBet {
         return participantBetTable.get(player);
     }
 
-    public Map<Participant, Money> calculateHitProfit(Map<Player, Result> judgeResult, Participant dealer) {
+    public Map<Participant, Money> calculateProfit(Map<Player, Result> judgeResult, Participant dealer) {
         Map<Participant, Money> profitTable = new LinkedHashMap<>();
         giveProfit(judgeResult, profitTable);
         calculateDealerMoney(profitTable, dealer);

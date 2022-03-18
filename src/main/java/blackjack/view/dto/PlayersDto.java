@@ -2,30 +2,30 @@ package blackjack.view.dto;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlayersDto {
 
-    private final Players players;
+    private final List<Player> players;
 
-    public PlayersDto(Players players) {
+    public PlayersDto(List<Player> players) {
         this.players = players;
     }
 
-    public static PlayersDto of(Players players) {
+    public static PlayersDto of(List<Player> players) {
         return new PlayersDto(players);
     }
 
     public String showNames() {
-        return players.getPlayers().stream()
+        return players.stream()
                 .map(player -> player.getName().getValue())
                 .collect(Collectors.joining(", "));
     }
 
     public String showEachCards() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             stringBuilder.append(showCardHandStatus(player));
             stringBuilder.append(System.getProperty("line.separator"));
         }
@@ -40,7 +40,7 @@ public class PlayersDto {
 
     public String showEachResult() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             stringBuilder.append(showCardHandStatus(player) + " 결과 - " + player.calculateBestScore());
             stringBuilder.append(System.getProperty("line.separator"));
         }

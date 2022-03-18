@@ -2,9 +2,9 @@ package blackjack.domain.result;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
 
@@ -38,9 +38,9 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException(NO_CASE_EXCEPTION));
     }
 
-    public static Map<Player, Result> createJudgeTable(Dealer dealer, Players players) {
+    public static Map<Player, Result> createJudgeTable(Dealer dealer, List<Player> players) {
         Map<Player, Result> resultTable = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             resultTable.put(player, Result.of(dealer, player));
         }
         return resultTable;
