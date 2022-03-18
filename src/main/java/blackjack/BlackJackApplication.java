@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -16,8 +17,7 @@ import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
 public class BlackJackApplication {
     public static void main(String[] args) {
         Deck deck = new Deck();
-        List<String> names = InputView.getNames();
-        Players players = new Players(names, getBettingMoney(names), deck);
+        Players players = new Players(createPlayers(deck));
         Dealer dealer = new Dealer(List.of(deck.draw(), deck.draw()));
 
         OutputView.printFirstCards(dealer, players.getPlayers());
@@ -26,6 +26,19 @@ public class BlackJackApplication {
         printAdditionalDrawDealer(deck, dealer);
         OutputView.printFinalCards(dealer, players.getPlayers());
         OutputView.printFinalResult(new BlackJackReferee(players.getPlayers(), dealer));
+    }
+
+    private static List<Player> createPlayers(Deck deck) {
+        List<Player> players = new ArrayList<>();
+        List<String> names = InputView.getNames();
+        for (String name : names) {
+            players.add(createPlayer(deck, name));
+        }
+        return players;
+    }
+
+    private static Player createPlayer(Deck deck, String name) {
+        return new Player(name, List.of(deck.draw(), deck.draw()), InputView.getBettingMoney(name));
     }
 
     private static List<Integer> getBettingMoney(List<String> names) {

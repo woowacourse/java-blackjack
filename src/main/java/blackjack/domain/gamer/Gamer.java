@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class Gamer {
@@ -66,4 +67,17 @@ public abstract class Gamer {
     }
 
     abstract boolean canDraw();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Gamer gamer = (Gamer) o;
+        return name.equals(gamer.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
