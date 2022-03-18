@@ -53,6 +53,20 @@ class StartedTest {
     }
 
     @Test
+    @DisplayName("Started 상태에서는 hit 할 때 카드 점수 합이 21을 넘으면 Bust가 된다.")
+    void bust() {
+        // given
+        List<Card> cards = BlackjackTestUtil.createCards(20);
+        State started = Started.start(cards);
+
+        // when
+        State actual = started.hit(Card.of(Pattern.CLOVER, Denomination.TWO));
+
+        // then
+        assertThat(actual).isInstanceOf(Bust.class);
+    }
+
+    @Test
     @DisplayName("Started 상태에서는 stand를 할 수 있다.")
     void stand() {
         // given
