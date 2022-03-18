@@ -12,4 +12,14 @@ public abstract class Started implements State {
     public Cards getCards() {
         return cards;
     }
+
+    @Override
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
 }

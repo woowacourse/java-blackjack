@@ -7,4 +7,8 @@ public interface State {
     State stand();
 
     State hit(Card card);
+
+    boolean isBust();
+
+    boolean isBlackjack();
 }

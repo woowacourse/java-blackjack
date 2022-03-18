@@ -16,7 +16,7 @@ public final class HitTurn extends Started {
     @Override
     public State hit(Card card) {
         getCards().add(card);
-        if (getCards().isBust()) {
+        if (isBust()) {
             return new Bust(getCards());
         }
         return new HitTurn(getCards());
