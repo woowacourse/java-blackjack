@@ -88,6 +88,6 @@ public final class Cards {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return List.copyOf(cards);
     }
 }

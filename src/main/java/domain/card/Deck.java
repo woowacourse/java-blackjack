@@ -28,6 +28,6 @@ public final class Deck {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return List.copyOf(cards);
     }
 }
