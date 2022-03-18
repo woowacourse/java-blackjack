@@ -1,17 +1,18 @@
 package blackJack.domain.card;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cards {
 
     private static final String ERROR_MESSAGE_HIT_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
-    private final List<Card> cards;
+    private final Set<Card> cards;
 
     public Cards() {
-        this.cards = new ArrayList<>();
+        this.cards = new HashSet<>();
     }
 
     public void add(Card card) {
@@ -36,9 +37,8 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    public List<String> getCardsInfo() {
+    public List<Card> getCards() {
         return cards.stream()
-                .map(Card::getCardInfo)
                 .collect(Collectors.toUnmodifiableList());
     }
 }

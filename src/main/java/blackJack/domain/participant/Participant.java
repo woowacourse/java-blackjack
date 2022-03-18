@@ -46,15 +46,15 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return MatchResult.isBlackJackScore(getScore()) && cards.getCardsInfo().size() == 2;
+        return MatchResult.isBlackJackScore(getScore()) && cards.getCards().size() == 2;
     }
 
     public boolean isBurst() {
         return MatchResult.isBurstScore(getScore());
     }
 
-    public List<String> getCardsInfo() {
-        return cards.getCardsInfo();
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 
     public String getName() {

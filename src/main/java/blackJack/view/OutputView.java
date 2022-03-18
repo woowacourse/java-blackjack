@@ -1,5 +1,6 @@
 package blackJack.view;
 
+import blackJack.domain.card.Card;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
@@ -47,7 +48,7 @@ public class OutputView {
     }
 
     private static void printInitHoldCardMessage(Dealer dealer, List<Player> players) {
-        String firstDealerCardInfo = dealer.getCardsInfo().get(0);
+        String firstDealerCardInfo = getCardsInfo(dealer).get(0);
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, dealer.getName(), firstDealerCardInfo);
 
         for (Player player : players) {
@@ -55,14 +56,20 @@ public class OutputView {
         }
     }
 
+    private static List<String> getCardsInfo(Participant participant) {
+        return participant.getCards().stream()
+                .map(Card::getCardInfo)
+                .collect(Collectors.toList());
+    }
+
     public static void printNowHoldCardInfo(Player player) {
-        String playerCardsInfo = String.join(JOINING_DELIMITER_COMMA, player.getCardsInfo());
+        String playerCardsInfo = String.join(JOINING_DELIMITER_COMMA, getCardsInfo(player));
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, player.getName(), playerCardsInfo);
     }
 
     public static void printDealerReceiveCardCount(Dealer dealer) {
         System.out.printf(OUTPUT_MESSAGE_DEALER_RECEIVE_CARD_COUNT,
-                dealer.getName(), dealer.getCardsInfo().size() - DEFAULT_DEALER_CARD_SIZE);
+                dealer.getName(), dealer.getCards().size() - DEFAULT_DEALER_CARD_SIZE);
         System.out.println();
     }
 
@@ -77,7 +84,7 @@ public class OutputView {
     }
 
     private static void printParticipantGameResult(Participant participant) {
-        String playerCardsInfo = String.join(JOINING_DELIMITER_COMMA, participant.getCardsInfo());
+        String playerCardsInfo = String.join(JOINING_DELIMITER_COMMA, getCardsInfo(participant));
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), playerCardsInfo,
                 participant.getScore());
     }
