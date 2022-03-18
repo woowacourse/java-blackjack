@@ -6,7 +6,7 @@ import blackjack.domain.card.Deck;
 
 public class InitialState extends PlayState {
 
-    private static final int DEFAULT_BETTING_AMOUNT = 1;
+    private static final int DEFAULT_BETTING_AMOUNT = 0;
 
     private InitialState() {
         super(Collections.emptyList(), DEFAULT_BETTING_AMOUNT);
