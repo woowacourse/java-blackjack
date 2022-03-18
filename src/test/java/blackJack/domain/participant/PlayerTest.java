@@ -116,6 +116,21 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("딜러가 버스트로 플레이어가 승리하는 경우 승부 결과 반환 테스트")
+    void getMatchResultOnlyDealerBurst() {
+        Player player = new Player("rookie");
+        player.hit(Card.from(Symbol.CLOVER, Denomination.JACK));
+        player.hit(Card.from(Symbol.SPADE, Denomination.JACK));
+
+        Dealer dealer = new Dealer();
+        dealer.hit(Card.from(Symbol.HEART, Denomination.JACK));
+        dealer.hit(Card.from(Symbol.DIAMOND, Denomination.JACK));
+        dealer.hit(Card.from(Symbol.DIAMOND, Denomination.TWO));
+
+        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.WIN);
+    }
+
+    @Test
     @DisplayName("점수는 같지만 플레이어가 블랙잭으로 승리하는 경우 승부 결과 반환 테스트")
     void getMatchResultPlayerBlackJack() {
         Player player = new Player("rookie");
