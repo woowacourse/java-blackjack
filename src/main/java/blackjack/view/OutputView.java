@@ -10,6 +10,7 @@ import blackjack.view.dto.ParticipantDto;
 import blackjack.view.dto.PlayersDto;
 import blackjack.view.dto.ResultCounterDto;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
 
@@ -52,8 +53,8 @@ public class OutputView {
     public static void printFinalResult(Map<Participant, Money> calculateHitProfit) {
         System.out.println();
         System.out.println("## 최종 수익");
-        for (Participant participant : calculateHitProfit.keySet()) {
-            System.out.printf("%s: %d%n", participant.getName().getValue(), calculateHitProfit.get(participant).getValue());
+        for (Entry<Participant, Money> participantMoneyEntry : calculateHitProfit.entrySet()) {
+            System.out.printf("%s: %d%n", participantMoneyEntry.getKey().getName().getValue(), participantMoneyEntry.getValue().getValue());
         }
     }
 }

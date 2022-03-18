@@ -1,10 +1,11 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.participant.Participant.BEST_SCORE;
+
 import java.util.Objects;
 
 public class Card {
 
-    public static final int BEST_SCORE = 21;
     private static final int ACE_ADDITIONAL_NUMBER = 10;
 
     private final Number number;

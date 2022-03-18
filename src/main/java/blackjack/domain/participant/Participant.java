@@ -1,12 +1,12 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Card.BEST_SCORE;
-
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 
 public abstract class Participant {
+
+    public static final int BEST_SCORE = 21;
 
     protected final Cards cards;
     private final Name name;
