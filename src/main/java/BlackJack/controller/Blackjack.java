@@ -9,7 +9,9 @@ import blackJack.view.InputView;
 import blackJack.view.OutputView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static blackJack.domain.Card.CardFactory.CARD_CACHE;
 
@@ -17,7 +19,7 @@ public class Blackjack {
 
     public void run() {
         List<String> playerNames = InputView.inputPlayerNames();
-        List<Integer> bettingMoneys = getBettingMoneys(playerNames);
+        Map<String,Integer> bettingMoneys = getBettingMoneys(playerNames);
         Game game = new Game(playerNames, new Dealer(),bettingMoneys);
         OutputView.printDrawMessage(playerNames);
         OutputView.printTotalUserCards(game.getDealer(), game.getPlayers());
@@ -39,10 +41,10 @@ public class Blackjack {
         );
     }
 
-    private List<Integer> getBettingMoneys(List<String> playerNames) {
-        List<Integer> bettingMoneys = new ArrayList<>();
+    private Map<String, Integer> getBettingMoneys(List<String> playerNames) {
+        Map<String,Integer> bettingMoneys = new HashMap<>();
         for (String playerName : playerNames) {
-            bettingMoneys.add(InputView.inputBettingMoney(playerName));
+            bettingMoneys.put(playerName,InputView.inputBettingMoney(playerName));
         }
         return bettingMoneys;
     }
