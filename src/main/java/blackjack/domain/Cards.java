@@ -22,16 +22,19 @@ public class Cards {
         for (Card card : value) {
             totalScore = card.addScore(totalScore);
         }
-
-        boolean ace = value.stream().anyMatch(Card::isAceCard);
-        return convertCloseWin(ace, totalScore);
+        return convertCloseWin(totalScore);
     }
 
-    private int convertCloseWin(boolean aceCheck, int totalScore) {
-        if (aceCheck) {
+    private int convertCloseWin(int totalScore) {
+        if (isAce()) {
             return calculateAceScore(totalScore);
         }
         return totalScore;
+    }
+
+    private boolean isAce() {
+        return value.stream()
+                .anyMatch(Card::isAceCard);
     }
 
     private int calculateAceScore(int score) {
