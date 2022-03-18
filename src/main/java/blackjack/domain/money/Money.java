@@ -11,14 +11,7 @@ public class Money {
     }
 
     public Money(int amount) {
-        validatePositive(amount);
         this.amount = amount;
-    }
-
-    private void validatePositive(int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("금액은 0원 이하가 될 수 없습니다.");
-        }
     }
 
     public Money multiply(double rate) {
@@ -27,5 +20,12 @@ public class Money {
 
     public int getAmount() {
         return amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Money{" +
+            "amount=" + amount +
+            '}';
     }
 }
