@@ -69,4 +69,14 @@ class GamerTest {
         int sum = player.getCardsNumberSum();
         assertThat(sum).isEqualTo(14);
     }
+
+    @Test
+    @DisplayName("게이머가 블랙잭인지 확인한다.")
+    void isBlackJack() {
+        Gamer gamer = new Player("beom",
+                List.of(new Card(CardShape.CLOVER, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.ACE)),
+                1000);
+
+        assertThat(gamer.isBlackJack()).isTrue();
+    }
 }

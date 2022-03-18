@@ -30,7 +30,7 @@ public abstract class Gamer {
     public int getCardsNumberSum() {
         int sum = getSumExceptAce();
         List<Card> aces = getAces();
-        return getSumNotToBurst(sum, aces);
+        return getSumNotToBust(sum, aces);
     }
 
     private int getSumExceptAce() {
@@ -46,7 +46,7 @@ public abstract class Gamer {
                 .collect(Collectors.toList());
     }
 
-    private int getSumNotToBurst(int sum, List<Card> aces) {
+    private int getSumNotToBust(int sum, List<Card> aces) {
         for (Card ace : aces) {
             sum += ace.getAceValue(sum);
         }
