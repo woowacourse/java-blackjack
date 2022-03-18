@@ -10,6 +10,7 @@ import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.game.dto.ParticipantsDto;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -30,7 +31,7 @@ public class ConsoleGame {
         blackjackGame.initCardsAllParticipants();
 
         Participants participants = blackjackGame.getParticipants();
-        OutputView.printInitialCards(participants);
+        OutputView.printInitialCards(new ParticipantsDto(participants));
 
         playPlayersTurn(blackjackGame, participants);
         playDealerTurn(blackjackGame, participants);
@@ -101,7 +102,7 @@ public class ConsoleGame {
 
     private void showGameResult(BlackjackGame blackjackGame, Participants participants) {
         GameResult gameResult = blackjackGame.createGameResult();
-        OutputView.printCardsResult(participants.getDealer(), participants.getPlayers());
+        OutputView.printCardsResult(new ParticipantsDto(participants));
         OutputView.printGameResult(gameResult);
     }
 }

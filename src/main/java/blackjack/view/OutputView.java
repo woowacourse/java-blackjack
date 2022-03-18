@@ -5,8 +5,8 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.game.dto.ParticipantsDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,7 +20,7 @@ public class OutputView {
 
     }
 
-    public static void printInitialCards(Participants participants) {
+    public static void printInitialCards(ParticipantsDto participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
 
@@ -45,10 +45,10 @@ public class OutputView {
     }
 
     private static String getCardName(Card card) {
-        return card.getDenomination().getName() + card.getSuit().getName();
+        return card.getDenomination() + card.getSuit();
     }
 
-    public static void printCards(Participant player) {
+    public static void printCards(Player player) {
         System.out.printf("%s카드: %s%n", player.getName(), getCardNames(player.getCards()));
     }
 
@@ -56,10 +56,10 @@ public class OutputView {
         System.out.printf("%n%s는 %d이하라 한장의 카드를 더 받았습니다.%n", name, Dealer.DRAW_STANDARD);
     }
 
-    public static void printCardsResult(Dealer dealer, List<Player> players) {
+    public static void printCardsResult(ParticipantsDto participantsDto) {
         System.out.println();
-        printCardResult(dealer);
-        for (Player player : players) {
+        printCardResult(participantsDto.getDealer());
+        for (Player player : participantsDto.getPlayers()) {
             printCardResult(player);
         }
     }

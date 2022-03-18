@@ -38,12 +38,12 @@ public class Card {
         return new ArrayList<>(CACHE_DECK.values());
     }
 
-    public Number getDenomination() {
-        return number;
+    public int getDenomination() {
+        return number.getValue();
     }
 
-    public Suit getSuit() {
-        return suit;
+    public String getSuit() {
+        return suit.getName();
     }
 
     public int toInt() {
