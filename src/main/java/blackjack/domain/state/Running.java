@@ -1,18 +1,13 @@
 package blackjack.domain.state;
 
-import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
-import java.util.Objects;
 
-public class Running implements State {
-
-    private final Cards cards;
+public class Running extends AbstractState {
 
     Running(Cards cards) {
-        Objects.requireNonNull(cards, "[ERROR] 카드패는 null일 수 없습니다.");
-        this.cards = cards;
+        super(cards);
     }
 
     public static State start(List<Card> initialCards) {
@@ -50,15 +45,5 @@ public class Running implements State {
     @Override
     public boolean isBust() {
         return false;
-    }
-
-    @Override
-    public Cards getCards() {
-        return cards;
-    }
-
-    @Override
-    public Score calculateScore() {
-        return cards.calculateScore();
     }
 }
