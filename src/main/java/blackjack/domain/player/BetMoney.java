@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 public class BetMoney {
 
-    private static final int WIN_RATE = 2;
+    private static final int WIN_RATE = 1;
     private static final double BLACKJACK_EXTRA_POINT = 1.5;
 
     private double money;
@@ -24,10 +24,10 @@ public class BetMoney {
     }
 
     public void plusBlackjackMoney() {
-        this.money = (this.money + this.money * BLACKJACK_EXTRA_POINT);
+        this.money = this.money * BLACKJACK_EXTRA_POINT;
     }
 
     public void minusBlackjackMoney() {
-        this.money = -(this.money + this.money * BLACKJACK_EXTRA_POINT);
+        this.money = -(this.money * BLACKJACK_EXTRA_POINT);
     }
 }

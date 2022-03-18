@@ -49,7 +49,7 @@ class PlayersBetMoneyTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"100:200", "50:100",}, delimiter = ':')
+    @CsvSource(value = {"100:100", "50:50",}, delimiter = ':')
     @DisplayName("플레이어 일반 우승 돈 확인")
     void checkPlayerWinMoney(int firstMoney, int expected) {
         List<Player> playerList = new ArrayList<>();
@@ -67,7 +67,7 @@ class PlayersBetMoneyTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"100:-200", "50:-100",}, delimiter = ':')
+    @CsvSource(value = {"100:-100", "50:-50",}, delimiter = ':')
     @DisplayName("플레이어 일반 패배 돈 확인")
     void checkPlayerLoseMoney(int firstMoney, int expected) {
         List<Player> playerList = new ArrayList<>();
@@ -85,7 +85,7 @@ class PlayersBetMoneyTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"100:250", "50:125",}, delimiter = ':')
+    @CsvSource(value = {"100:150", "50:75",}, delimiter = ':')
     @DisplayName("플레이어 블랙잭 우승 돈 확인")
     void checkPlayerBlackjackMoney(int firstMoney, int expected) {
         List<Player> playerList = new ArrayList<>();
@@ -103,7 +103,7 @@ class PlayersBetMoneyTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"100:-250", "50:-125",}, delimiter = ':')
+    @CsvSource(value = {"100:-150", "50:-75",}, delimiter = ':')
     @DisplayName("플레이어 블랙잭 패배 돈 확인")
     void checkPlayerBlackjackLoseMoney(int firstMoney, int expected) {
         List<Player> playerList = new ArrayList<>();
