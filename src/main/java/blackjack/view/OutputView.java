@@ -7,11 +7,10 @@ import blackjack.dto.GameResultDto;
 import blackjack.dto.GameResultsDto;
 import blackjack.dto.GamerDto;
 import blackjack.dto.PlayersDto;
-import java.util.List;
 
 public class OutputView {
 
-    public static final String DELIMITER_JOINING = ", ";
+    private static final String DELIMITER_JOINING = ", ";
 
     private OutputView() {
     }

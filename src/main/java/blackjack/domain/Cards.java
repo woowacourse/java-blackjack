@@ -8,7 +8,7 @@ import java.util.List;
 public class Cards {
 
     private static final int BONUS_ACE_CONVERT_SCORE = 10;
-    public static final int BLACKJACK_CARD_SIZE = 2;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> value;
 

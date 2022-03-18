@@ -1,13 +1,12 @@
 package blackjack.domain;
 
 import static blackjack.domain.Denomination.*;
-import static blackjack.domain.GameResult.BLACKJACK;
 
 import java.util.List;
 
 public class Player extends Gamer {
 
-    public static final int CONVERT_POSITIVE_VALUE = -1;
+    private static final int CONVERT_POSITIVE_VALUE = -1;
 
     public Player(String name, int battingMoney, List<Card> cards) {
         super(name, battingMoney, cards);
