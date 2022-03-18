@@ -3,15 +3,11 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
-import java.util.Objects;
 
-public final class Started implements State {
-
-    private final Cards cards;
+public final class Started extends Running {
 
     private Started(Cards cards) {
-        Objects.requireNonNull(cards, "[ERROR] 카드패는 null일 수 없습니다.");
-        this.cards = cards;
+        super(cards);
     }
 
     public static State start(List<Card> initialCards) {
@@ -20,19 +16,5 @@ public final class Started implements State {
             return new Blackjack(cards);
         }
         return new Started(cards);
-    }
-
-    @Override
-    public State hit(Card card) {
-        Cards cards = this.cards.add(card);
-        if (cards.isBust()) {
-            return new Bust(cards);
-        }
-        return new Hit(cards);
-    }
-
-    @Override
-    public State stand() {
-        return new Stand(cards);
     }
 }
