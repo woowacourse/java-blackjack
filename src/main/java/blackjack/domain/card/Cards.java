@@ -39,8 +39,8 @@ public class Cards {
     public int getBestScore() {
         int sum = cardHand.stream()
                 .map(Card::getNumber)
-                .map(Number::getScore)
-                .reduce(0, Integer::sum);
+                .mapToInt(Number::getScore)
+                .sum();
 
         for (Card card : cardHand) {
             sum = card.getBest(sum);
