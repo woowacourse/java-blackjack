@@ -2,8 +2,8 @@ package blackjack.controller;
 
 import static blackjack.view.InputView.requestPlayerNamesInput;
 import static blackjack.view.OutputView.printBettingResults;
-import static blackjack.view.OutputView.printDealerBlackjackInfo;
-import static blackjack.view.OutputView.printInitialParticipantsCards;
+import static blackjack.view.OutputView.printDealerBlackjack;
+import static blackjack.view.OutputView.printInitialDistribution;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.betting.BettingResults;
@@ -36,18 +36,18 @@ public class BlackjackController {
         final InitialDistributionDto dto = InitialDistributionDto.of(game);
 
         if (game.getParticipants().getDealer().getHand().isBlackjack()){
-            printDealerBlackjackInfo(dto);
+            printDealerBlackjack(dto);
             return;
         }
 
-        printInitialParticipantsCards(dto);
+        printInitialDistribution(dto);
         distributeAllCards(game);
     }
 
     private void distributeAllCards(final BlackjackGame game) {
         game.drawAllPlayerCards(
                 InputView::requestMoreCardInput,
-                OutputView::printPlayerCardDistributionInfo);
+                OutputView::printHitResult);
         game.drawDealerCards(OutputView::printDealerExtraCardInfo);
     }
 
