@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.Answer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -47,7 +48,7 @@ public class BlackJackApplication {
     }
 
     private static void printPlayerDrawCard(Deck deck, Player player) {
-        while (player.isDrawPossible(InputView::getAnswerOfAdditionalDraw)) {
+        while (player.canDraw() && Answer.from(InputView.getAnswerOfAdditionalDraw(player.getName())).isYes()) {
             player.addCard(deck.draw());
             OutputView.printPlayerCard(player);
         }

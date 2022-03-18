@@ -54,11 +54,11 @@ public enum BlackJackResult {
                 && dealer.getCardsNumberSum() <= MAX_CARD_VALUE && player.getCardsNumberSum() == dealer.getCardsNumberSum();
     }
 
-    public static int getReverse(int value) {
-        return value * REVERSE_VALUE;
-    }
-
     public double getProfitRate() {
         return profitRate;
+    }
+
+    public static int getReverse(int value) {
+        return value * REVERSE_VALUE;
     }
 }

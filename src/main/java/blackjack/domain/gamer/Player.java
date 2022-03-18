@@ -22,10 +22,6 @@ public class Player extends Gamer {
         return BlackJackResult.of(this, dealer);
     }
 
-    public boolean isDrawPossible(UnaryOperator<String> operator) {
-        return canDraw() && Answer.from(operator.apply(getName())).isYes();
-    }
-
     public int getBettingMoney() {
         return bettingMoney.getValue();
     }
