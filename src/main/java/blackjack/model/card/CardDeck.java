@@ -22,8 +22,12 @@ public class CardDeck {
     }
 
     private void pushCardFromSymbol(final List<Card> cards, Symbol symbol) {
-        for (Number number : Number.values()) {
-            cards.add(new Card(number, symbol));
+        for (CardNumber cardNumber : CardNumber.values()) {
+            cards.add(new Card(cardNumber, symbol));
         }
+    }
+
+    public Card draw() {
+        return cards.pop();
     }
 }
