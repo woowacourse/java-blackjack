@@ -31,11 +31,11 @@ class BlackjackProfitResultTest {
         player2.receiveCard(Card.from(Suit.DIAMOND, Denomination.KING));
         player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
 
-        Map<Participant, Double> result = blackjackProfitResult.calculateParticipantsProfit();
+        Map<Participant, BlackjackProfit> result = blackjackProfitResult.calculateParticipantsProfit();
 
         assertThat(result).containsExactly(
-                Map.entry(dealer, -17500.0), Map.entry(player1, -10000.0),
-                Map.entry(player2, 7500.0), Map.entry(player3, 20000.0)
+                Map.entry(dealer, BlackjackProfit.from(-17500.0)), Map.entry(player1, BlackjackProfit.from(-10000.0)),
+                Map.entry(player2, BlackjackProfit.from(7500.0)), Map.entry(player3, BlackjackProfit.from(20000.0))
         );
     }
 
