@@ -99,7 +99,7 @@ public class GameController {
     }
 
     private void finalRevenue(Game game) {
-        Map<Name, PlayRecord> recordMap = PlayRecord.createPlayRecords(game.getPlayers(), game.getDealerScore());
+        Map<Name, PlayRecord> recordMap = PlayRecord.createPlayRecords(game.getPlayers(), game.getDealer());
 
         printFinalRevenues(game.getRevenues(recordMap));
     }

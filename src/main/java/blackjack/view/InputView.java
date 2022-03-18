@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import java.util.InputMismatchException;
+import static camp.nextstep.edu.missionutils.Console.*;
+
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,15 +13,13 @@ public class InputView {
 
     private static final List<String> TEXT_ALLOW = List.of("Y", "y", "N", "n");
 
-    private static final Scanner scanner = new Scanner(System.in);
-
     private InputView() {
     }
 
     public static List<String> requestPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 
-        String text = scanner.nextLine();
+        String text = readLine();
         return Stream.of(text.split(",", -1))
             .map(String::trim)
             .collect(Collectors.toUnmodifiableList());
@@ -30,7 +28,7 @@ public class InputView {
     public static PlayStatus requestHitOrStay(Name name) {
         System.out.println(name.getValue() + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
-        String text = scanner.nextLine().trim();
+        String text = readLine().trim();
         validateHitOrStayInput(text);
 
         if (text.equalsIgnoreCase("y")) {
@@ -54,11 +52,10 @@ public class InputView {
 
     private static long getLong() {
         try {
-            long result = scanner.nextLong();
+            long result = Long.parseLong(readLine());
             validatePositive(result);
-            scanner.nextLine();
             return result;
-        } catch (InputMismatchException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("허용되지 않은 입력입니다. 정수를 입력해주세요.");
         }
     }
