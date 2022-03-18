@@ -1,9 +1,6 @@
 package blackjack.domain.result;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import blackjack.domain.player.BetMoney;
 import blackjack.domain.player.Player;
@@ -74,6 +71,6 @@ public class PlayersBetMoney {
     }
 
     public Map<Player, BetMoney> getPlayersMoney() {
-        return playersMoney;
+        return Collections.unmodifiableMap(playersMoney);
     }
 }
