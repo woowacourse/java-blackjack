@@ -18,36 +18,22 @@ public class GameController {
 
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
-        Dealer dealer = initDealer(cardDeck);
-        Gamblers gamblers = initPlayers(cardDeck);
+        Gamblers gamblers = generatePlayers(cardDeck);
+        Dealer dealer = Dealer.of(cardDeck);
         OutputView.printInitGameState(gamblers, dealer);
-
-        hitOrStandGambler(gamblers, cardDeck);
-        hitOrStandDealer(dealer, cardDeck);
-
-        OutputView.printCardAndPoint(gamblers, dealer);
-        printGameResult(Statistic.of(dealer, gamblers), gamblers);
+//
+//        hitOrStandGambler(gamblers, cardDeck);
+//        hitOrStandDealer(dealer, cardDeck);
+//
+//        OutputView.printCardAndPoint(gamblers, dealer);
+//        printGameResult(Statistic.of(dealer, gamblers), gamblers);
     }
 
-    private Dealer initDealer(CardDeck cardDeck) {
-        Dealer dealer = Dealer.of();
-        dealer.addCard(cardDeck.draw());
-        dealer.addCard(cardDeck.draw());
-        return dealer;
-    }
-
-    private Gamblers initPlayers(CardDeck cardDeck) {
-        Gamblers gamblers = generatePlayers();
-        gamblers.distributeCard(cardDeck);
-        gamblers.distributeCard(cardDeck);
-        return gamblers;
-    }
-
-    private Gamblers generatePlayers() {
+    private Gamblers generatePlayers(CardDeck cardDeck) {
         List<Gambler> gamblerList = new ArrayList<>();
         String[] names = InputView.inputGamblerNames();
         for (String name : names) {
-            gamblerList.add(Gambler.of(Name.of(name)));
+            gamblerList.add(Gambler.of(Name.of(name), cardDeck));
         }
         return Gamblers.of(gamblerList);
     }
@@ -79,7 +65,7 @@ public class GameController {
     }
 
     private void printStateAtFirstQuestion(Gambler gambler) {
-        if (gambler.getCards().size() <= DEFAULT_CARD_AMOUNT) {
+        if (gambler.getCardsByState().size() <= DEFAULT_CARD_AMOUNT) {
             OutputView.printPlayerCardState(gambler);
         }
     }

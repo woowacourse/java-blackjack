@@ -87,4 +87,11 @@ public class Cards {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
+
+    @Override
+    public String toString() {
+        return "Cards{" +
+            ", cards=" + cards +
+            '}';
+    }
 }

@@ -1,36 +1,37 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
-import java.util.List;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 
 public abstract class Player {
 
     private final Name name;
-    private Cards cards;
+    private final State state;
 
-    public Player(Name name) {
+    public Player(Name name, CardDeck cardDeck) {
         this.name = name;
-        this.cards = Cards.create();
+        this.state = new Ready()
+            .draw(cardDeck.draw())
+            .draw(cardDeck.draw());
     }
-
     public abstract boolean isHit();
 
     public void addCard(Card card) {
-        this.cards = cards.add(card);
+        state.draw(card);
     }
 
-    public Cards getCards() {
-        return cards;
+    public Cards getCardsByState(){
+        return state.cards();
     }
-
     public int getPoint() {
-        System.out.println(getCards().sum());
-        return getCards().sum();
+        return state.cards().sum();
     }
 
     public boolean isBust() {
-        return getCards().isBust();
+        return state.cards().isBust();
     }
 
     public String getName() {

@@ -24,15 +24,20 @@ public class OutputView {
     private static final String KOREAN_RESULT_LOSE = "패";
     private static final String KOREAN_RESULT_DRAW = "무";
 
+//    public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
+//        System.out.println();
+//        String gamblerNames = String.join(JOIN_DELIMITER, gamblers.getGamblerNames());
+//        System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), gamblerNames);
+//        System.out.println();
+//    }
     public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
         System.out.println();
         String gamblerNames = String.join(JOIN_DELIMITER, gamblers.getGamblerNames());
         System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), gamblerNames);
         System.out.println();
     }
-
     public static void printPlayerCardState(Player player) {
-        System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCards()));
+        System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCardsByState()));
         System.out.println();
     }
 
@@ -99,7 +104,7 @@ public class OutputView {
     }
 
     private static void printPlayerCardPointState(Player player) {
-        System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCards()));
+        System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCardsByState()));
         System.out.printf(POINT_STATE_MESSAGE, player.getPoint());
         System.out.println();
     }
