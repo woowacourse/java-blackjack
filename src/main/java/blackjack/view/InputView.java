@@ -15,8 +15,12 @@ public class InputView {
     private static final String INPUT_PLAYER_HIT_ASK_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
     private static final String PLAYER_HIT_ANSWER_ERROR_MESSAGE = "[ERROR] 유효하지않은 입력입니다. 입력은 (예는 y, 아니오는 n)로만 입력해 주세요.";
     private static final String PLAYER_HIT_ANSWER_NULL_ERROR_MESSAGE = "[ERROR] 유효하지않은 입력입니다. 입력에 null이 올 수 없습니다.";
+    private static final String INPUT_PLAYER_BETTING_MONEY_ASK_MESSAGE = "%s의 배팅 금액은?";
+    private static final String INPUT_PLAYER_BETTING_MONEY_NUMBER_ERROR_MESSAGE = "[ERROR] 배팅금액에는 숫자만 올 수 있습니다.";
+
 
     private static final Scanner scanner = new Scanner(System.in);
+
 
     public static List<String> inputPlayerName() {
         System.out.println(INPUT_PLAYER_NAME_MESSAGE);
@@ -27,10 +31,29 @@ public class InputView {
         return playerNames;
     }
 
+    public static int inputPlayerBettingMoney(String playerName) {
+        System.out.printf(INPUT_PLAYER_BETTING_MONEY_ASK_MESSAGE, playerName);
+
+        String bettingMoneyAnswer = scanner.nextLine();
+        validateBettingMoneyAnswer(bettingMoneyAnswer);
+
+        return Integer.parseInt(bettingMoneyAnswer);
+    }
+
+    private static void validateBettingMoneyAnswer(String bettingMoneyAnswer) {
+        try {
+            Integer.parseInt(bettingMoneyAnswer);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(INPUT_PLAYER_BETTING_MONEY_NUMBER_ERROR_MESSAGE);
+        }
+    }
+
     public static String inputPlayerHit(String playerName) {
         System.out.printf(INPUT_PLAYER_HIT_ASK_MESSAGE, playerName);
+
         String hitAnswer = scanner.nextLine();
         validateHitAnswer(hitAnswer);
+
         return hitAnswer;
     }
 
@@ -48,5 +71,6 @@ public class InputView {
             throw new IllegalArgumentException(PLAYER_HIT_ANSWER_ERROR_MESSAGE);
         }
     }
+
 
 }
