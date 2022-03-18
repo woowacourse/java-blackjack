@@ -66,4 +66,12 @@ public final class GameMachine {
     public List<Participant> getParticipants() {
         return players.getParticipants();
     }
+
+    @Override
+    public String toString() {
+        return "GameMachine{" +
+                "deck=" + deck +
+                ", players=" + players +
+                '}';
+    }
 }

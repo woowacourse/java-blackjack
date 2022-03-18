@@ -9,7 +9,6 @@ public final class Bet {
     private static final double BLACKJACK = 1.5;
     private static final double BOTH_BLACKJACK = 0.0;
 
-
     private final int betAmount;
     private int profit;
 
@@ -44,4 +43,11 @@ public final class Bet {
         return profit;
     }
 
+    @Override
+    public String toString() {
+        return "Bet{" +
+                "betAmount=" + betAmount +
+                ", profit=" + profit +
+                '}';
+    }
 }

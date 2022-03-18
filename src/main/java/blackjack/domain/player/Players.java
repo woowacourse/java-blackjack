@@ -57,4 +57,12 @@ public final class Players {
     public List<Participant> getParticipants() {
         return participants;
     }
+
+    @Override
+    public String toString() {
+        return "Players{" +
+                "dealer=" + dealer +
+                ", participants=" + participants +
+                '}';
+    }
 }

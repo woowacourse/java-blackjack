@@ -13,4 +13,11 @@ public final class Deck {
     public Card draw() {
         return deck.pop();
     }
+
+    @Override
+    public String toString() {
+        return "Deck{" +
+                "deck=" + deck +
+                '}';
+    }
 }

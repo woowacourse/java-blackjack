@@ -109,4 +109,13 @@ public abstract class Player {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "cards=" + cards +
+                ", name='" + name + '\'' +
+                ", bet=" + bet +
+                '}';
+    }
 }
