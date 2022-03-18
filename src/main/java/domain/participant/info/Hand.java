@@ -10,7 +10,6 @@ public class Hand {
 	private static final int BLACKJACK_SCORE = 21;
 	private static final int ADDITIONAL_SCORE_ACE = 10;
 	private static final int BLACKJACK_SIZE = 2;
-	private static final int ACE_COUNT_LOWER_BOUND = 0;
 
 	private final List<Card> hand;
 
@@ -35,16 +34,22 @@ public class Hand {
 	}
 
 	public int getScore() {
-		int aceCount = (int)hand.stream()
-			.filter(Card::isAce)
-			.count();
+		boolean hasAce = hand.stream().filter(Card::isAce).count() > 0;
 		int score = sumPoint();
 
-		while (aceCount > ACE_COUNT_LOWER_BOUND && score + ADDITIONAL_SCORE_ACE <= LIMIT_TO_NOT_BUST_SCORE) {
+		if (hasAce && canAddAcePoint(score)) {
 			score += ADDITIONAL_SCORE_ACE;
-			aceCount--;
 		}
+
 		return score;
+	}
+
+	private boolean canAddAcePoint(int score) {
+		if (score + ADDITIONAL_SCORE_ACE <= LIMIT_TO_NOT_BUST_SCORE) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public void add(Card card) {
