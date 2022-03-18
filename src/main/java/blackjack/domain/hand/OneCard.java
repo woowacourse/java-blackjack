@@ -5,6 +5,8 @@ import blackjack.domain.card.CardBundle;
 
 public final class OneCard extends Running {
 
+    private final static String CAN_NOT_FINISH_EXCEPTION_MESSAGE = "아직 한 장밖에 없습니다.";
+
     public OneCard(Card card) {
         super(new CardBundle(card));
     }
@@ -20,7 +22,7 @@ public final class OneCard extends Running {
 
     @Override
     public CardHand stay() {
-        throw new IllegalStateException();
+        throw new IllegalStateException(CAN_NOT_FINISH_EXCEPTION_MESSAGE);
     }
 
     @Override

@@ -4,6 +4,8 @@ import blackjack.domain.card.CardBundle;
 
 public abstract class Running extends Started {
 
+    private final static String STILL_RUNNING_EXCEPTION_MESSAGE = "아직 확장되지 않은 패입니다.";
+
     protected Running(CardBundle cardBundle) {
         super(cardBundle);
     }
@@ -25,6 +27,6 @@ public abstract class Running extends Started {
 
     @Override
     public double profit(CardHand dealerHand, int money) {
-        throw new IllegalStateException();
+        throw new IllegalStateException(STILL_RUNNING_EXCEPTION_MESSAGE);
     }
 }
