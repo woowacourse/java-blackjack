@@ -17,7 +17,8 @@ class ProfitResultTest {
         @DisplayName("플레이어 수익을 추가하면 이에 따라 딜러 수익이 결정된다.")
         void addInverseToDealerProfit(double userProfit, double dealerProfit) {
             ProfitResult profitResult = new ProfitResult();
-            profitResult.putPlayerProfit("james", userProfit);
+            Player james = new Player("james", 10000);
+            profitResult.putPlayerProfit(james, Score.DRAW.getProfitRate());
 
             Assertions.assertThat(profitResult.getDealerProfit()).isEqualTo(dealerProfit);
         }

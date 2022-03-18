@@ -55,12 +55,12 @@ public class ParticipantsTest {
             dealer.drawCard(Card.of(CardPattern.SPADE, CardNumber.TEN));
 
             ProfitResult result = players.compete(dealer);
-            Map<String, Double> playersProfit = result.getPlayersProfit();
+            Map<Participant, Double> playersProfit = result.getPlayersProfit();
 
             assertAll(
-                    () -> assertThat(playersProfit).containsEntry(roma.getName(), (double) -10000),
-                    () -> assertThat(playersProfit).containsEntry(tonic.getName(), (double) 0),
-                    () -> assertThat(playersProfit).containsEntry(pobi.getName(), (double) 10000),
+                    () -> assertThat(playersProfit).containsEntry(roma, (double) -10000),
+                    () -> assertThat(playersProfit).containsEntry(tonic, (double) 0),
+                    () -> assertThat(playersProfit).containsEntry(pobi, (double) 10000),
                     () -> assertThat(result.getDealerProfit()).isZero()
             );
 

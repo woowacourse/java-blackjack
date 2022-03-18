@@ -8,10 +8,10 @@ public class ProfitResult {
     public static final int NEGATIVE_ONE = -1;
 
     private double dealerProfit = 0;
-    private final Map<String, Double> playersProfit = new LinkedHashMap<>();
+    private final Map<Participant, Double> playersProfit = new LinkedHashMap<>();
 
-    public void putPlayerProfit(String name, double profit) {
-        playersProfit.put(name, profit);
+    public void putPlayerProfit(Participant participant, double profit) {
+        playersProfit.put(participant, profit);
         dealerProfit += profit * NEGATIVE_ONE;
     }
 
@@ -19,7 +19,7 @@ public class ProfitResult {
         return dealerProfit;
     }
 
-    public Map<String, Double> getPlayersProfit() {
+    public Map<Participant, Double> getPlayersProfit() {
         return playersProfit;
     }
 }

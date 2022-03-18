@@ -42,7 +42,7 @@ public class Participants {
         Score competeResult = player.compete(dealer);
         if (player instanceof Player) {
             double playerTotalProfit = ((Player) player).getTotalProfit(competeResult);
-            profitResult.putPlayerProfit(player.getName(), playerTotalProfit);
+            profitResult.putPlayerProfit(player, playerTotalProfit);
         }
     }
 

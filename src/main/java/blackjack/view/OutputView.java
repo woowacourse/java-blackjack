@@ -62,8 +62,8 @@ public class OutputView {
     public static void printProfitResult(ProfitResultDto profitResultDto) {
         System.out.printf("%n## 최종 수익%n");
         System.out.printf("딜러: %d%n", Math.round(profitResultDto.getDealerProfit()));
-        for (Entry<String, Double> entry : profitResultDto.getPlayersProfit().entrySet()) {
-            System.out.printf("%s: %d%n", entry.getKey(), Math.round(entry.getValue()));
+        for (Entry<ParticipantDto, Double> entry : profitResultDto.getPlayersProfit().entrySet()) {
+            System.out.printf("%s: %d%n", entry.getKey().getName(), Math.round(entry.getValue()));
         }
     }
 
