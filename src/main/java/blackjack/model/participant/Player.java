@@ -2,7 +2,7 @@ package blackjack.model.participant;
 
 public class Player extends Participant {
 
-    protected Player(String name) {
+    public Player(final String name) {
         super(name);
     }
 }

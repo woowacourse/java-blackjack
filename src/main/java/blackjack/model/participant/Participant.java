@@ -1,11 +1,12 @@
 package blackjack.model.participant;
 
+import blackjack.model.card.CardDeck;
 import blackjack.model.state.Ready;
 import blackjack.model.state.State;
 
 public abstract class Participant {
-    protected final String name;
-    protected final State state;
+    private final String name;
+    private final State state;
 
     protected Participant(final String name) {
         checkEmpty(name);
@@ -17,5 +18,9 @@ public abstract class Participant {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 이름은 공백이거나 없을 수 없습니다.");
         }
+    }
+
+    public void draw(CardDeck cardDeck) {
+        state.add(cardDeck.draw());
     }
 }
