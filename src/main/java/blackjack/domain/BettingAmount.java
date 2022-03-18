@@ -1,13 +1,13 @@
 package blackjack.domain;
 
-public class Money {
+public class BettingAmount {
 
     private static final int VALUE_LOWER_BOUND = 1;
     private static final int VALUE_UPPER_BOUND = 1_000_000_000;
 
     private double value;
 
-    public Money() {
+    public BettingAmount() {
         this.value = 0;
     }
 

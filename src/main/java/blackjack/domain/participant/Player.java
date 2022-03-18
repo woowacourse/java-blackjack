@@ -1,23 +1,23 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Money;
+import blackjack.domain.BettingAmount;
 import blackjack.domain.Name;
 import blackjack.domain.card.Deck;
 import blackjack.domain.prizecalculator.PrizeCalculator;
 
 public class Player extends Participant {
 
-    private final Money money;
+    private final BettingAmount bettingAmount;
     private final Name name;
 
     public Player(final String name) {
         super();
-        this.money = new Money();
+        this.bettingAmount = new BettingAmount();
         this.name = new Name(name);
     }
 
     public void initMoney(final int bettingAmount) {
-        money.init(bettingAmount);
+        this.bettingAmount.init(bettingAmount);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Player extends Participant {
     }
 
     public double getBettingAmount() {
-        return money.getValue();
+        return bettingAmount.getValue();
     }
 
     @Override
