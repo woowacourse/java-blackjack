@@ -1,14 +1,14 @@
 package blackjack.domain.card;
 
 import java.util.Collections;
-import java.util.EmptyStackException;
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 public class CardDeck implements CardStack {
 
     private static final String EMPTY_CARD_DECK_EXCEPTION_MESSAGE = "카드가 모두 소진되었습니다!";
 
-    private final Stack<Card> cards = new Stack<>();
+    private final LinkedList<Card> cards = new LinkedList<>();
 
     public CardDeck() {
         initCards();
@@ -32,7 +32,7 @@ public class CardDeck implements CardStack {
     public Card pop() {
         try {
             return cards.pop();
-        } catch (EmptyStackException e) {
+        } catch (NoSuchElementException e) {
             throw new IllegalArgumentException(EMPTY_CARD_DECK_EXCEPTION_MESSAGE);
         }
     }
