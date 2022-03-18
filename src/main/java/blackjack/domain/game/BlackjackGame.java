@@ -1,13 +1,12 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.game.betting.Profits;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,17 +70,7 @@ public class BlackjackGame {
     }
 
     public Map<String, Integer> getParticipantsProfit() {
-        final Map<String, Integer> playersProfit = players.calculateProfit(dealer);
-        final Map<String, Integer> participantsProfit = new HashMap<>();
-        participantsProfit.put(dealer.getName(), calculateDealerProfit(playersProfit.values()));
-        participantsProfit.putAll(playersProfit);
-        return participantsProfit;
-    }
-
-    private int calculateDealerProfit(final Collection<Integer> playerResults) {
-        int totalPlayersProfit = playerResults.stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-        return totalPlayersProfit * -1;
+        final Profits profits = new Profits(players.calculateProfit(dealer));
+        return profits.getAllProfits();
     }
 }

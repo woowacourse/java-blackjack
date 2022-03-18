@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private static final ParticipantName DEALER_NAME = new ParticipantName("딜러");
+    public static final ParticipantName DEALER_NAME = new ParticipantName("딜러");
     private static final int DEALER_LIMIT_SCORE = 17;
 
     private Dealer(final State state) {
