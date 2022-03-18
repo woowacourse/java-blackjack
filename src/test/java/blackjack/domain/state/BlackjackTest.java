@@ -23,4 +23,16 @@ class BlackjackTest {
         assertThatThrownBy(() -> blackjack.hit(Card.of(Pattern.CLOVER, Denomination.ACE)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @DisplayName("Blackjack 상태에서는 stand할 수 없다.")
+    void cannotStand() {
+        // given
+        Cards cards = new Cards(BlackjackTestUtil.createCards(21));
+        State blackjack = new Blackjack(cards);
+
+        // then
+        assertThatThrownBy(blackjack::stand)
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
 }

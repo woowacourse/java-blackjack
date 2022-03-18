@@ -51,4 +51,18 @@ class StartedTest {
         // then
         assertThat(actual).isInstanceOf(Hit.class);
     }
+
+    @Test
+    @DisplayName("Started 상태에서는 stand를 할 수 있다.")
+    void stand() {
+        // given
+        List<Card> cards = BlackjackTestUtil.createCards(20);
+        State started = Started.start(cards);
+
+        // when
+        State actual = started.stand();
+
+        // then
+        assertThat(actual).isInstanceOf(Stand.class);
+    }
 }

@@ -22,8 +22,14 @@ public final class Started implements State {
         return new Started(cards);
     }
 
+    @Override
     public State hit(Card card) {
         cards.add(card);
         return new Hit(cards);
+    }
+
+    @Override
+    public State stand() {
+        return new Stand(cards);
     }
 }

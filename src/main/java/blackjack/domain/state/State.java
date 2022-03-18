@@ -5,4 +5,6 @@ import blackjack.domain.card.Card;
 public interface State {
 
     State hit(Card card);
+
+    State stand();
 }

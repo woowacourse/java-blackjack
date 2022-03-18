@@ -17,4 +17,9 @@ public final class Blackjack implements State {
     public State hit(Card card) {
         throw new UnsupportedOperationException("[ERROR] 게임을 진행할 수 없습니다.");
     }
+
+    @Override
+    public State stand() {
+        throw new UnsupportedOperationException("[ERROR] 게임을 진행할 수 없습니다.");
+    }
 }
