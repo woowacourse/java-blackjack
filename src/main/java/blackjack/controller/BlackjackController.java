@@ -1,11 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.Card.Deck;
+import blackjack.domain.card.Deck;
 import blackjack.domain.PlayerResult;
-import blackjack.domain.User.Betting;
-import blackjack.domain.User.Dealer;
-import blackjack.domain.User.Player;
-import blackjack.domain.User.Players;
+import blackjack.domain.user.Betting;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 import blackjack.dto.UserDto;
 import blackjack.service.batchService;
 import blackjack.view.InputView;

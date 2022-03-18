@@ -1,10 +1,10 @@
-package blackjack.domain.Card;
+package blackjack.domain.card;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import static blackjack.domain.Card.Deck.INIT_CARD_SIZE;
+import static blackjack.domain.card.Deck.INIT_CARD_SIZE;
 
 public class Cards {
     private static final int BUST_LINE = 21;

@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Card.Card;
+import blackjack.domain.card.Card;
 
 public class CardDto {
     private final String shape;

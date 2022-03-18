@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.User.User;
+import blackjack.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;

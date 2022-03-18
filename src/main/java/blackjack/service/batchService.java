@@ -1,8 +1,8 @@
 package blackjack.service;
 
 import blackjack.domain.PlayerResult;
-import blackjack.domain.User.Betting;
-import blackjack.domain.User.Player;
+import blackjack.domain.user.Betting;
+import blackjack.domain.user.Player;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
