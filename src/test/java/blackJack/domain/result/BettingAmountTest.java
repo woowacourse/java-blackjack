@@ -26,7 +26,7 @@ class BettingAmountTest {
 
     @ParameterizedTest(name = "베팅 금액이 양수가 아닌 경우 예외 발생")
     @ValueSource(strings = {"0", "-1"})
-    void checkNotPositiveNumbeer(String value) {
+    void checkNotPositiveNumber(String value) {
         assertThatThrownBy(() -> new BettingAmount(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 양수여야 합니다.");
