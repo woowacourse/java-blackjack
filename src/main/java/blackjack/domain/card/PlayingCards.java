@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class PlayingCards {
 
-    private static final int BLACKJACK_POINT = 21;
+    public static final int BLACKJACK_POINT = 21;
     private static final int ACE_BONUS = 10;
     private static final int BLACKJACK_SIZE = 2;
 

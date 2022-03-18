@@ -21,8 +21,8 @@ import blackjack.domain.card.PlayingCards;
 class MatchTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"SPADE:CLUB:ACE:JACK:FIVE:WIN_BLACKJACK", "SPADE:CLUB:ACE:THREE:FIVE:LOSE"}
-            , delimiter = ':')
+    @CsvSource(value = {"SPADE:CLUB:ACE:JACK:KING:DRAW", "SPADE:CLUB:ACE:JACK:FIVE:WIN_BLACKJACK",
+            "SPADE:CLUB:ACE:THREE:FIVE:LOSE"}, delimiter = ':')
     @DisplayName("승무패 결정 로직 확인")
     public void checkInitCardFindWinner(Suit suit, Suit secondSuit, Denomination denomination,
                                         Denomination secondDenomination, Denomination thirdDenomination, Match result) {
