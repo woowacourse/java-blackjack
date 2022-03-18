@@ -16,14 +16,14 @@ public class GameResult {
     }
 
     public static GameResult of(Dealer dealer, List<Player> players) {
-        Map<String, Integer> playersEarnings = new LinkedHashMap<>();
+        Map<String, Integer> playersProfits = new LinkedHashMap<>();
 
         for (Player player : players) {
             Outcome outcome = Outcome.judge(player, dealer);
-            playersEarnings.put(player.getName(), player.calculateProfit(outcome));
+            playersProfits.put(player.getName(), player.calculateProfit(outcome));
         }
 
-        return new GameResult(playersEarnings);
+        return new GameResult(playersProfits);
     }
 
     public int getDealerProfit() {
