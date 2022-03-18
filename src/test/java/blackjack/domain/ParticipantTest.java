@@ -16,7 +16,7 @@ public class ParticipantTest {
 
         player.addCard(Card.A_SPADE);
         player.addCard(Card.K_CLOVER);
-        assertThat(player.initScore().isBlackjack()).isTrue();
+        assertThat(player.initScore().isMax()).isTrue();
     }
 
     @DisplayName("참가자의 점수가 버스트일 경우 테스트")

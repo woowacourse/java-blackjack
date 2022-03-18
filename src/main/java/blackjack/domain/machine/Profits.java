@@ -27,7 +27,7 @@ public class Profits {
     }
 
     private static Profit getProfit(Dealer dealer, Player player) {
-        if (player.initScore().isBlackjack()) {
+        if (player.initScore().isMax()) {
             return getProfitForBlackjack(dealer, player);
         }
 
@@ -49,7 +49,7 @@ public class Profits {
     }
 
     private static Profit getProfitForBlackjack(Dealer dealer, Player player) {
-        if (dealer.initScore().isBlackjack()) {
+        if (dealer.initScore().isMax()) {
             return new Profit(player.getBetting().getMoney());
         }
 

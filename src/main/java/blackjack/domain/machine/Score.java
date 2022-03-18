@@ -55,7 +55,7 @@ public class Score {
         return sum > MAX_SCORE;
     }
 
-    public boolean isBlackjack() {
+    public boolean isMax() {
         return sum == MAX_SCORE;
     }
 
