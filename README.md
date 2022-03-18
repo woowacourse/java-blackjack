@@ -28,6 +28,11 @@
 - STAY : 카드를 더 이상 받지 않겠다는 뜻
 - BUST : 카드의 합산이 21이 넘는 경우
 - BLACKJACK : 처음 받은 두 장의 카드의 합이 21인 경우
+
+### 블랙잭 규칙
+- 플레이어가 버스트인 경우 딜러가 버스트이더라도 무조건 플레이어 패
+- 딜러가 블랙잭이고 플레이어가 블랙잭이 아닌 상태에서 점수가 21이라면 딜러 승
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
