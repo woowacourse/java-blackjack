@@ -5,7 +5,12 @@ import blackjack.domain.card.CardBundle;
 
 public abstract class Finished extends Started {
 
-    Finished(CardBundle cardBundle) {
+    protected final static double BLACKJACK_WIN_BETTING_YIELD = 1.5;
+    protected final static double WIN_BETTING_YIELD = 1;
+    protected final static double LOSE_BETTING_YIELD = -1;
+    protected final static double DRAW_BETTING_YIELD = 0;
+
+    protected Finished(CardBundle cardBundle) {
         super(cardBundle);
     }
 
@@ -23,4 +28,11 @@ public abstract class Finished extends Started {
     public final boolean isFinished() {
         return true;
     }
+
+    @Override
+    public double profit(CardHand dealerHand, int money) {
+        return calculateDuelResult(dealerHand) * money;
+    }
+
+    protected abstract double calculateDuelResult(CardHand dealerHand);
 }

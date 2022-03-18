@@ -6,7 +6,7 @@ public abstract class Started implements CardHand {
 
     protected final CardBundle cardBundle;
 
-    Started(CardBundle cardBundle) {
+    protected Started(CardBundle cardBundle) {
         this.cardBundle = cardBundle;
     }
 

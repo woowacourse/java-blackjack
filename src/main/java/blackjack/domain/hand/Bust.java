@@ -19,6 +19,11 @@ public final class Bust extends Finished {
     }
 
     @Override
+    protected double calculateDuelResult(CardHand dealerHand) {
+        return LOSE_BETTING_YIELD;
+    }
+
+    @Override
     public String toString() {
         return "Bust{" + "cardBundle=" + cardBundle + '}';
     }

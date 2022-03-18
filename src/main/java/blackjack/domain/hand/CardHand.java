@@ -15,5 +15,7 @@ public interface CardHand {
 
     boolean isBust();
 
+    double profit(CardHand dealerHand, int money);
+
     CardBundle getCardBundle();
 }
