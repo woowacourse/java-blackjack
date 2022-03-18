@@ -10,15 +10,27 @@ public abstract class Participant {
     protected final Name name;
     protected final Cards cards;
 
-    public Participant(Name name, Cards cards) {
+    protected Participant(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public abstract boolean isFinished();
+    protected abstract boolean isFinished();
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
+    }
 
     public void drawCard(Card card) {
         cards.add(card);
+    }
+
+    public int compareSum(Participant otherParticipant) {
+        return this.cards.sum() - otherParticipant.cards.sum();
     }
 
     public String getName() {
@@ -34,7 +46,7 @@ public abstract class Participant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return name.equals(that.name);
+        return Objects.equals(name, that.name);
     }
 
     @Override

@@ -1,38 +1,23 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.MatchResult;
 
 public class Player extends Participant {
 
+    private final BetMoney betMoney;
     private boolean isStay = false;
 
-    public Player(Name name, Cards cards) {
+    public Player(Name name, Cards cards, BetMoney betMoney) {
         super(name, cards);
+        this.betMoney = betMoney;
+    }
+
+    public Player(Name name, Cards cards) {
+        this(name, cards, new BetMoney(BetMoney.UNIT));
     }
 
     public void stay() {
         isStay = true;
-    }
-
-    public MatchResult match(Dealer dealer) {
-        if (isWin(dealer)) {
-            return MatchResult.WIN;
-        }
-        if (isLose(dealer)) {
-            return MatchResult.LOSE;
-        }
-        return MatchResult.DRAW;
-    }
-
-    private boolean isWin(Dealer dealer) {
-        return (this.cards.isBlackJack() && !dealer.cards.isBlackJack())
-                || (!this.cards.isBust() && (dealer.cards.isBust() || dealer.cards.sum() < this.cards.sum()));
-    }
-
-    private boolean isLose(Dealer dealer) {
-        return (dealer.cards.isBlackJack() && !this.cards.isBlackJack())
-                || (!dealer.cards.isBust() && (this.cards.isBust() || dealer.cards.sum() > this.cards.sum()));
     }
 
     @Override
@@ -44,11 +29,7 @@ public class Player extends Participant {
         return isStay;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "name=" + name +
-                ", cards=" + cards +
-                '}';
+    public double calculateRevenue(double leverage) {
+        return betMoney.calculateRevenue(leverage);
     }
 }

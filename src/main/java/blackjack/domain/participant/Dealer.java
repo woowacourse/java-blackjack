@@ -14,19 +14,12 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        return this.cards.getValue().get(FIRST_CARD_INDEX);
+        return this.cards.getValue()
+                .get(FIRST_CARD_INDEX);
     }
 
     @Override
     public boolean isFinished() {
-        return cards.sum() > DRAW_STANDARD || cards.isBlackJack();
-    }
-
-    @Override
-    public String toString() {
-        return "Dealer{" +
-                "name=" + name +
-                ", cards=" + cards +
-                '}';
+        return cards.sum() > DRAW_STANDARD;
     }
 }
