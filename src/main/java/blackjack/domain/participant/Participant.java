@@ -44,9 +44,9 @@ public abstract class Participant {
         return initialScore.equals(Score.valueOf(Score.MAXIMUM_SCORE));
     }
 
-    public ResultType compareWith(Participant other) {
+    protected ResultType compareWith(Participant other) {
         if (isWin(other)) {
-            return getWinType();
+            return getResultTypeIfScoreIsGreaterThanOther(other);
         }
 
         if (isLose(other)) {
@@ -56,7 +56,7 @@ public abstract class Participant {
         return ResultType.DRAW;
     }
 
-    private ResultType getWinType() {
+    private ResultType getResultTypeIfScoreIsGreaterThanOther(Participant other) {
         if (isBlackjack()) {
             return ResultType.WIN_WITH_BLACKJACK;
         }
@@ -66,6 +66,10 @@ public abstract class Participant {
     private boolean isWin(Participant other) {
         int playerScore = getCurrentScore().getValue();
         int otherScore = other.getCurrentScore().getValue();
+
+        if (other.isBlackjack()) {
+            return false;
+        }
 
         boolean isGreaterThanOtherAndNotBusted = playerScore > otherScore && !isBusted();
         boolean isNotBustedButOtherIsBusted = !isBusted() && other.isBusted();
@@ -77,10 +81,11 @@ public abstract class Participant {
         int playerScore = getCurrentScore().getValue();
         int otherScore = other.getCurrentScore().getValue();
 
+        boolean isNotBlackjackButOtherIsBlackjack = !isBlackjack() && other.isBlackjack();
         boolean isLessThanOtherAndOtherIsNotBusted = playerScore < otherScore && !other.isBusted();
         boolean isBustedButOtherIsNotBusted = isBusted() && !other.isBusted();
 
-        return isLessThanOtherAndOtherIsNotBusted || isBustedButOtherIsNotBusted;
+        return isNotBlackjackButOtherIsBlackjack || isLessThanOtherAndOtherIsNotBusted || isBustedButOtherIsNotBusted;
     }
 
     @Override

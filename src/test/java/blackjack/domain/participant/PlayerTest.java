@@ -11,6 +11,7 @@ import static blackjack.domain.fixture.CardRepository.CLOVER8;
 import static blackjack.domain.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
 import static blackjack.domain.fixture.CardRepository.CLOVER_QUEEN;
+import static blackjack.domain.fixture.CardRepository.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -215,6 +216,37 @@ public class PlayerTest {
         // when
         Money actual = player.calculateProfit(dealer);
         Money expected = Money.from(0);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 전달된 딜러도 블랙잭이고, 플레이어도 블랙잭이라면 0의 값을 가진 Money 를 반환한다.")
+    @Test
+    void calculateProfit_returnsZeroProfitIfBothBlackjack() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER_KING), Money.from(10000));
+        Dealer dealer = Dealer.of(Hand.of(HEART_ACE, CLOVER_QUEEN));
+
+        // when
+        Money actual = player.calculateProfit(dealer);
+        Money expected = Money.from(0);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 전달된 딜러의 점수가 플레이어와 동일하지만, 딜러만 블랙잭인 경우, 베팅 금액의 반대 부호를 가진 Money 를 반환한다.")
+    @Test
+    void calculateProfit_returnsZeroProfitIfSameScoreButDealerOnlyBlackjack() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER4), Money.from(10000));
+        player.receiveCard(CLOVER6);
+        Dealer dealer = Dealer.of(Hand.of(HEART_ACE, CLOVER10));
+
+        // when
+        Money actual = player.calculateProfit(dealer);
+        Money expected = Money.from(-10000);
 
         // then
         assertThat(actual).isEqualTo(expected);
