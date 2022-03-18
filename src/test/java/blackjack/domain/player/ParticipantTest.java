@@ -35,5 +35,5 @@ public class ParticipantTest {
         participant.hit(Card.of(CardNumber.TEN, Type.SPADE));
 
         assertThat(participant.canHit()).isTrue();
-}
+    }
 }
