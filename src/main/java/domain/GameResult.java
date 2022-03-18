@@ -1,20 +1,37 @@
 package domain;
 
 import domain.card.CardState;
-import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
 
 public enum GameResult {
-    WIN,
-    DRAW,
-    LOSE,
+    WIN_BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1),
     ;
 
-    public static GameResult getPlayerResult(final Cards playerCards, final Cards dealerCards) {
-        final CardState playerCardsState = playerCards.getCardState();
-        final CardState dealerCardsState = dealerCards.getCardState();
+    private static final int REVERSE_PROFIT = -1;
+
+    private final double profitRate;
+
+    GameResult(double profitRate) {
+        this.profitRate = profitRate;
+    }
+
+    public static int calculatePlayerProfit(final Player player, final Participant dealer) {
+        final GameResult gameResult = getPlayerResult(player, dealer);
+
+        return (int) (gameResult.profitRate * player.getBettingMoney());
+    }
+
+    private static GameResult getPlayerResult(final Participant player, final Participant dealer) {
+        final CardState playerCardsState = player.getCardState();
+        final CardState dealerCardsState = dealer.getCardState();
 
         if (playerCardsState.isStand() && dealerCardsState.isStand()) {
-            return getPlayerResult(playerCards.calculateSum(), dealerCards.calculateSum());
+            return getPlayerResult(player.getTotalScore(), dealer.getTotalScore());
         }
         return getPlayerResult(playerCardsState, dealerCardsState);
     }
@@ -33,23 +50,18 @@ public enum GameResult {
         if ((playerCardsState.isBlackJack() && dealerCardsState.isBlackJack())) {
             return DRAW;
         }
-        if (playerCardsState.isBlackJack() || playerCardsState.isStand() && dealerCardsState.isBust()) {
+        if (playerCardsState.isBlackJack()) {
+            return WIN_BLACKJACK;
+        }
+        if (playerCardsState.isStand() && dealerCardsState.isBust()) {
             return WIN;
         }
         return LOSE;
     }
 
-    private static GameResult reverseFrom(final GameResult origin) {
-        if (origin == WIN) {
-            return LOSE;
-        }
-        if (origin == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
+    public static int calculateDealerProfit(final Dealer dealer, final Player player) {
+        final GameResult playerResult = getPlayerResult(player, dealer);
 
-    public static GameResult getDealerResult(final Cards dealerCards, final Cards playerCards) {
-        return reverseFrom(getPlayerResult(playerCards, dealerCards));
+        return REVERSE_PROFIT * (int) (playerResult.profitRate * player.getBettingMoney());
     }
 }

@@ -1,8 +1,8 @@
 package domain.participant;
 
-import domain.GameResult;
 import domain.HitThreshold;
 import domain.card.Card;
+import domain.card.CardState;
 import domain.card.Cards;
 
 import java.util.List;
@@ -36,5 +36,7 @@ public abstract class Participant {
         return cards.calculateSum();
     }
 
-    public abstract GameResult getGameResult(final Participant other);
+    public CardState getCardState() {
+        return cards.getCardState();
+    }
 }

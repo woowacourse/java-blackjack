@@ -16,8 +16,7 @@ public final class Dealer extends Participant {
         return cards.getCards().get(FIRST_INDEX);
     }
 
-    @Override
-    public GameResult getGameResult(final Participant player) {
-        return GameResult.getDealerResult(this.cards, player.cards);
+    public int getGameProfit(final Player player) {
+        return GameResult.calculateDealerProfit(this, player);
     }
 }
