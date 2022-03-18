@@ -17,6 +17,7 @@ public class InputView {
     private static final String INVALID_HIT_MESSAGE = "예는 y, 아니오는 n를 입력하세요.";
     private static final String DO_HIT = "y";
     private static final String DO_NOT_HIT = "n";
+    private static final String INVALID_NUMBER_MESSAGE = "숫자를 입력해주세요.";
 
     private InputView() {
     }
@@ -44,7 +45,7 @@ public class InputView {
         return input;
     }
 
-    static boolean hasNoDuplication(final String input) {
+    private static boolean hasNoDuplication(final String input) {
         final List<String> parsedInput = getSplitAndTrim(input);
         final int beforeCount = parsedInput.size();
         final int afterCount = (int) parsedInput.stream().distinct().count();
@@ -53,6 +54,20 @@ public class InputView {
 
     private static List<String> getSplitAndTrim(final String input) {
         return Arrays.stream(input.split(NAME_OR_CARD_DELIMITER)).map(String::trim).collect(Collectors.toList());
+    }
+
+    public static int inputBettingMoney(final Player player) {
+        System.out.printf("%s의 배팅 금액은?%n", player.getName());
+        return convertToInt(readLine());
+    }
+
+    private static int convertToInt(final String string) {
+        try {
+            return Integer.parseInt(string);
+        } catch (NumberFormatException e) {
+            print(INVALID_NUMBER_MESSAGE);
+            return convertToInt(readLine());
+        }
     }
 
     public static boolean inputTryToHit(final Player player) {
