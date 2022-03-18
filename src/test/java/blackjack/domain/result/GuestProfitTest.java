@@ -1,70 +1,73 @@
 package blackjack.domain.result;
 
+import static blackjack.domain.Fixture.ACE_CLOVER;
+import static blackjack.domain.Fixture.ACE_HEART;
+import static blackjack.domain.Fixture.FIVE_CLOVER;
+import static blackjack.domain.Fixture.FIVE_HEART;
+import static blackjack.domain.Fixture.KING_CLOVER;
+import static blackjack.domain.Fixture.NINE_CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import blackjack.domain.money.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Guests;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 public class GuestProfitTest {
 
-    @ParameterizedTest(name = "[{index}] 딜러 {0}, {1}, 참가자 {2}, {3} -> {4} 원")
-    @MethodSource("generateCalculateMoneyArguments")
-    @DisplayName("참가자의 수익률을 계산한다.")
-    void calculateMoney(Card card1, Card card2, Card card3, Card card4, long expected) {
-        Dealer dealer = new Dealer();
-        dealer.takeCard(card1);
-        dealer.takeCard(card2);
+    @Nested
+    @DisplayName("참가자의 수익을 계산한다.")
+    class CalculateTest {
 
-        Guests guests = new Guests(List.of("김제니", "박채영"));
-        for (Guest guest : guests) {
-            guest.takeCard(card3);
-            guest.takeCard(card4);
-            guest.betMoney(Money.valueOf(10_000));
+        @Test
+        @DisplayName("블랙잭인 경우 수익은 1.5배한 금액이다.")
+        void blackjack() {
+            runTest(ACE_CLOVER, FIVE_CLOVER, ACE_HEART, KING_CLOVER, 15_000);
         }
 
-        GuestProfit guestProfit = new GuestProfit(dealer, guests);
-        Map<Guest, Money> profits = guestProfit.getProfits();
-
-        for (Guest guest : guests) {
-            assertThat(profits).contains(entry(guest, Money.valueOf(expected)));
+        @Test
+        @DisplayName("일반 승리인 경우 수익은 1배한 금액이다.")
+        void win() {
+            runTest(ACE_CLOVER, FIVE_CLOVER, NINE_CLOVER, ACE_HEART, 10_000);
         }
-    }
 
-    static Stream<Arguments> generateCalculateMoneyArguments() {
-        return Stream.of(
-                Arguments.of(
-                        new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
-                        new Card(Denomination.ACE, Suit.HEART), new Card(Denomination.KING, Suit.CLOVER),
-                        15_000
-                ),
-                Arguments.of(
-                        new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
-                        new Card(Denomination.ACE, Suit.HEART), new Card(Denomination.NINE, Suit.CLOVER),
-                        10_000
-                ),
-                Arguments.of(
-                        new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
-                        new Card(Denomination.ACE, Suit.HEART), new Card(Denomination.FIVE, Suit.CLOVER),
-                        0
-                ),
-                Arguments.of(
-                        new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE),
-                        new Card(Denomination.THREE, Suit.HEART), new Card(Denomination.NINE, Suit.CLOVER),
-                        -10_000
-                )
-        );
+        @Test
+        @DisplayName("무승부인 경우 수익은 0배한 금액이다.")
+        void draw() {
+            runTest(ACE_CLOVER, FIVE_CLOVER, ACE_HEART, FIVE_HEART, 0);
+        }
+
+        @Test
+        @DisplayName("패한 경우 수익은 -1배한 금액이다.")
+        void lose() {
+            runTest(ACE_CLOVER, FIVE_CLOVER, KING_CLOVER, FIVE_HEART, -10_000);
+        }
+
+        private void runTest(Card card1, Card card2, Card card3, Card card4, long expected) {
+            Dealer dealer = new Dealer();
+            dealer.takeCard(card1);
+            dealer.takeCard(card2);
+
+            Guests guests = new Guests(List.of("김제니", "박채영"));
+            for (Guest guest : guests) {
+                guest.takeCard(card3);
+                guest.takeCard(card4);
+                guest.betMoney(Money.valueOf(10_000));
+            }
+
+            GuestProfit guestProfit = new GuestProfit(dealer, guests);
+            Map<Guest, Money> profits = guestProfit.getProfits();
+
+            for (Guest guest : guests) {
+                assertThat(profits).contains(entry(guest, Money.valueOf(expected)));
+            }
+        }
     }
 }
