@@ -9,11 +9,11 @@ public final class Dealer extends Player {
 
     private static final int ADD_CARD_CONDITION = 16;
     private static final int FIRST = 0;
-    private static final int DEALER_BET_AMOUNT = 0;
-    private static final String DEALER_NAME = "딜러";
+    private static final int BET_AMOUNT = 0;
+    private static final String NAME = "딜러";
 
     public Dealer(final List<Card> cards) {
-        super(cards, DEALER_NAME, new Bet(DEALER_BET_AMOUNT));
+        super(cards, NAME, new Bet(BET_AMOUNT));
     }
 
     @Override

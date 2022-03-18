@@ -37,7 +37,7 @@ public final class GameMachine {
         }
     }
 
-    public List<Participant> createParticipants(final List<String> names, final Map<String, Bet> bets) {
+    private List<Participant> createParticipants(final List<String> names, final Map<String, Bet> bets) {
         return names.stream()
                 .map(name -> new Participant(Cards.createInitCards(deck), name, bets.get(name)))
                 .collect(Collectors.toList());
