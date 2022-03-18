@@ -18,13 +18,13 @@ public class BlackJackGame {
     private Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(final Map<String, String> moneysByName) {
+    public BlackJackGame(final Map<String, Integer> moneysByName) {
         this.cardDeck = CardDeck.generate();
         this.dealer = new Dealer(cardDeck.provideInitCards());
         this.players = new Players(initPlayers(moneysByName, cardDeck));
     }
 
-    private List<Player> initPlayers(final Map<String, String> moneysByName, final CardDeck cardDeck) {
+    private List<Player> initPlayers(final Map<String, Integer> moneysByName, final CardDeck cardDeck) {
         return moneysByName.keySet()
                 .stream()
                 .map(name -> new Player(name, moneysByName.get(name), cardDeck.provideInitCards()))

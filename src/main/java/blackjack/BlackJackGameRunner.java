@@ -13,7 +13,7 @@ public class BlackJackGameRunner {
 
     public void run() {
         final List<String> playerNames = InputView.inputPlayerNames();
-        final Map<String, String> battingMoneysByName = inputBattingMoney(playerNames);
+        final Map<String, Integer> battingMoneysByName = inputBattingMoney(playerNames);
         final BlackJackGame blackJackGame = new BlackJackGame(battingMoneysByName);
         OutputView.showGameInitInfo(blackJackGame.getParticipants());
 
@@ -24,7 +24,7 @@ public class BlackJackGameRunner {
         OutputView.printAllOutcomeResult(blackJackGame.getParticipantsProfit());
     }
 
-    private Map<String, String> inputBattingMoney(final List<String> names) {
+    private Map<String, Integer> inputBattingMoney(final List<String> names) {
         return names.stream()
                 .collect(Collectors.toMap(name -> name, InputView::inputBattingMoney));
     }

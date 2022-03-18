@@ -1,39 +1,28 @@
 package blackjack.domain.game;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class BettingMoney {
 
-    private static final BettingMoney zeroBettingMoney = new BettingMoney(0);
+    private static final BettingMoney zeroBettingMoney = new BettingMoney("0");
 
-    private static final Pattern NATURAL_NUMBER_PATTERN = Pattern.compile("^[1-9][0-9]*$");
     private static final int BATTING_MONEY_UNIT = 10;
 
     private final int value;
 
-    private BettingMoney(final int value) {
+    private BettingMoney(final String value) {
+        this.value = Integer.parseInt(value);
+    }
+
+    public BettingMoney(final int value) {
+        validateMinValue(value);
+        validateUnit(value);
         this.value = value;
     }
 
-    public BettingMoney(final String value) {
-        Objects.requireNonNull(value, "배팅 금액에는 null이 들어올 수 없습니다.");
-        validateBlank(value);
-        validateNaturalNumber(value);
-        final int battingMoney = Integer.parseInt(value);
-        validateUnit(battingMoney);
-        this.value = battingMoney;
-    }
-
-    private void validateNaturalNumber(final String value) {
-        if (!NATURAL_NUMBER_PATTERN.matcher(value).matches()) {
-            throw new IllegalArgumentException("배팅 금액은 자연수여야 합니다.");
-        }
-    }
-
-    private void validateBlank(final String value) {
-        if (value.isBlank()) {
-            throw new IllegalArgumentException("배팅 금액은 빈 값으로 만들 수 없습니다.");
+    private void validateMinValue(final int value) {
+        if (value <= 0) {
+            throw new IllegalArgumentException("배팅 금액은 양수여야 합니다.");
         }
     }
 
@@ -47,7 +36,7 @@ public class BettingMoney {
         return (int) (value * profitRate);
     }
 
-    public static BettingMoney getDealerBattingMoney() {
+    public static BettingMoney getZeroBettingMoney() {
         return zeroBettingMoney;
     }
 

@@ -4,6 +4,7 @@ import blackjack.domain.participant.Participant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class InputView {
@@ -15,6 +16,8 @@ public class InputView {
     private static final String PLAYER_NAME_BLANK = " ";
     private static final String PLAYER_NAME_NOT_BLANK = "";
     private static final String PLAYER_NAME_DELIMITER = ",";
+
+    private static final Pattern NATURAL_NUMBER_PATTERN = Pattern.compile("^[0-9]*$");
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -29,9 +32,24 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static String inputBattingMoney(final String name) {
+    public static int inputBattingMoney(final String name) {
         System.out.println(name + INPUT_BATTING_MONEY_MESSAGE);
-        return scanner.nextLine();
+        String userInput = scanner.nextLine();
+        validateBlank(userInput);
+        validateNaturalNumber(userInput);
+        return Integer.parseInt(userInput);
+    }
+
+    private static void validateBlank(final String value) {
+        if (value.isBlank()) {
+            throw new IllegalArgumentException("배팅 금액은 빈 값으로 만들 수 없습니다.");
+        }
+    }
+
+    private static void validateNaturalNumber(final String value) {
+        if (!NATURAL_NUMBER_PATTERN.matcher(value).matches()) {
+            throw new IllegalArgumentException("배팅 금액은 정수여야 합니다.");
+        }
     }
 
     public static String inputDrawCommand(final Participant currentTurnParticipant) {

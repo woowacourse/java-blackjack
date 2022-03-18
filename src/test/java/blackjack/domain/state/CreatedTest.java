@@ -21,7 +21,7 @@ class CreatedTest {
     @DisplayName("카드들을 반환한다.")
     void getCards() {
         final List<Card> cards = Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK));
-        final State state = new Bust(new Cards(cards), new BettingMoney("2000"));
+        final State state = new Bust(new Cards(cards), new BettingMoney(2000));
         assertThat(state.cards().getValues()).isEqualTo(cards);
     }
 }

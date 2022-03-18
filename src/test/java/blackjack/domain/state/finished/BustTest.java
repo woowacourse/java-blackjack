@@ -26,7 +26,7 @@ class BustTest {
     @MethodSource("provideStateAndExpected")
     void getProfit(State another, int expected) {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
-        final BettingMoney bettingMoney = new BettingMoney("2000");
+        final BettingMoney bettingMoney = new BettingMoney(2000);
         State state = new Bust(cards, bettingMoney);
         assertThat(state.getProfit(another)).isEqualTo(expected);
     }
@@ -38,9 +38,9 @@ class BustTest {
                 new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
 
         return Stream.of(
-                Arguments.of(new BlackJack(blackJackCards, new BettingMoney("2000")), -2000),
-                Arguments.of(new Stay(stayCards, new BettingMoney("2000")), -2000),
-                Arguments.of(new Bust(bustCards, new BettingMoney("2000")), 0)
+                Arguments.of(new BlackJack(blackJackCards, new BettingMoney(2000)), -2000),
+                Arguments.of(new Stay(stayCards, new BettingMoney(2000)), -2000),
+                Arguments.of(new Bust(bustCards, new BettingMoney(2000)), 0)
         );
     }
 }

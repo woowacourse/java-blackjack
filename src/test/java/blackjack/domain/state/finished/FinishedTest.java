@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class FinishedTest {
 
     private final Cards cards = new Cards(new ArrayList<>());
-    private final BettingMoney bettingMoney = new BettingMoney("2000");
+    private final BettingMoney bettingMoney = new BettingMoney(2000);
     private final State state = new Stay(cards, bettingMoney);
 
     @Test

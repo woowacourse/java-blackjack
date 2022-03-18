@@ -18,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     public Dealer(final List<Card> cards) {
-        super(DEALER_NAME, BettingMoney.getDealerBattingMoney(), cards);
+        super(DEALER_NAME, BettingMoney.getZeroBettingMoney(), cards);
     }
 
     @Override

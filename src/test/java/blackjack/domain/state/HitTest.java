@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 class HitTest {
 
     final List<Card> cards = new ArrayList<>(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
-    State state = State.create(new Cards(cards), new BettingMoney("2000"));
+    State state = State.create(new Cards(cards), new BettingMoney(2000));
 
     @Test
     @DisplayName("새 카드를 넣어, 카드의 합이 21이 넘게 되면 Bust를 반환한다.")
@@ -47,8 +47,8 @@ class HitTest {
     @DisplayName("Hit 상태에서 수익을 반환하려고 하면 예외를 발생시킨다.")
     void getProfitException() {
         final Cards cards = new Cards(new ArrayList<>());
-        final State running = new Hit(cards, new BettingMoney("2000"));
-        final State another = new Stay(cards, new BettingMoney("2000"));
+        final State running = new Hit(cards, new BettingMoney(2000));
+        final State another = new Stay(cards, new BettingMoney(2000));
 
         assertThatThrownBy(() -> running.getProfit(another))
                 .isInstanceOf(IllegalStateException.class)
