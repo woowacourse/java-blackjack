@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CardStatusTest {
+class CardsTest {
 
 	@Test
 	@DisplayName("카드가 2장이고 번호 합이 21이면 블랙잭이다.")
