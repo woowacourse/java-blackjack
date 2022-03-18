@@ -39,6 +39,10 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
+    public boolean isBust() {
+        return totalScore() > 21;
+    }
+
     public int totalScore() {
         return value.stream()
                 .map(Card::getDenomination)
