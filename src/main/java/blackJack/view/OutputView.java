@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    public static final String NEW_LINE = System.getProperty("line.separator");
     private static final String DRAW_MESSAGE = "딜러와 %s에게 2장의 나누었습니다.\n";
     private static final String CARD_FORMAT = "%s카드: %s";
     private static final String DELIMITER = ", ";
@@ -21,7 +22,6 @@ public class OutputView {
     private static final String FINAL_RESULT_MESSAGE = "## 최종 수익";
     private static final String NAME_FORMAT = "%s:";
     private static final String USER_RESULT_FORMAT = "%s: %d";
-    public static final String NEW_LINE = System.getProperty("line.separator");
 
     public static void printDrawMessage(List<String> userNames) {
         System.out.printf(String.format(DRAW_MESSAGE, userNames.stream().collect(Collectors.joining(DELIMITER))));

@@ -19,8 +19,8 @@ public class Blackjack {
 
     public void run() {
         List<String> playerNames = InputView.inputPlayerNames();
-        Map<String,Integer> bettingMoneys = getBettingMoneys(playerNames);
-        Game game = new Game(playerNames, new Dealer(),bettingMoneys);
+        Map<String, Integer> bettingMoneys = getBettingMoneys(playerNames);
+        Game game = new Game(playerNames, new Dealer(), bettingMoneys);
         OutputView.printDrawMessage(playerNames);
         OutputView.printTotalUserCards(game.getDealer(), game.getPlayers());
 
@@ -42,9 +42,9 @@ public class Blackjack {
     }
 
     private Map<String, Integer> getBettingMoneys(List<String> playerNames) {
-        Map<String,Integer> bettingMoneys = new HashMap<>();
+        Map<String, Integer> bettingMoneys = new HashMap<>();
         for (String playerName : playerNames) {
-            bettingMoneys.put(playerName,InputView.inputBettingMoney(playerName));
+            bettingMoneys.put(playerName, InputView.inputBettingMoney(playerName));
         }
         return bettingMoneys;
     }

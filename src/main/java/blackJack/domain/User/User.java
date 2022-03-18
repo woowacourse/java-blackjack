@@ -2,12 +2,9 @@ package blackJack.domain.User;
 
 import blackJack.domain.Card.Card;
 import blackJack.domain.Card.Cards;
-import blackJack.utils.ExeptionMessage;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static blackJack.domain.Card.CardFactory.CARD_CACHE;
 
 public abstract class User {
 
@@ -28,7 +25,7 @@ public abstract class User {
         return false;
     }
 
-    public boolean isBurst(){
+    public boolean isBurst() {
         return this.getScore() > WINNING_LIMIT;
     }
 

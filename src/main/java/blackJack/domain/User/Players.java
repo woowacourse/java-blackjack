@@ -11,7 +11,7 @@ public class Players {
 
     public Players(List<String> playersNames, Map<String, Integer> bettingMoneys) {
         for (String playersName : playersNames) {
-            players.add(new Player(playersName,bettingMoneys.get(playersName)));
+            players.add(new Player(playersName, bettingMoneys.get(playersName)));
         }
     }
 

@@ -2,12 +2,10 @@ package blackJack.domain;
 
 import blackJack.domain.Card.Cards;
 import blackJack.domain.User.Dealer;
-import blackJack.domain.User.Player;
 import blackJack.domain.User.Players;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static blackJack.domain.Card.CardFactory.CARD_CACHE;
 
@@ -21,7 +19,7 @@ public class Game {
     private DealerScore dealerScore = new DealerScore();
 
     public Game(List<String> playerNames, Dealer dealer, Map<String, Integer> bettingMoneys) {
-        this.players = new Players(playerNames,bettingMoneys);
+        this.players = new Players(playerNames, bettingMoneys);
         this.dealer = dealer;
         this.cards = new Cards(CARD_CACHE);
         handOutInitCard();
@@ -34,8 +32,8 @@ public class Game {
         }
     }
 
-    public void makeFinalResult(){
-        playerScore.makePlayerResult(dealer,players);
+    public void makeFinalResult() {
+        playerScore.makePlayerResult(dealer, players);
         dealerScore.makeDealerResult(playerScore);
     }
 

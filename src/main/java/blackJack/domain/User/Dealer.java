@@ -1,14 +1,9 @@
 package blackJack.domain.User;
 
-import blackJack.utils.ExeptionMessage;
-
-import java.util.Arrays;
-import java.util.List;
-
 public class Dealer extends User {
 
-    private static final int DEALER_ADD_CARD_LIMIT = 16;
     public static final int INIT_BETTING_MONEY = 0;
+    private static final int DEALER_ADD_CARD_LIMIT = 16;
 
     public Dealer() {
         super("딜러");
@@ -16,7 +11,7 @@ public class Dealer extends User {
     }
 
     public boolean isPossibleToAdd() {
-        if(this.getScore() < DEALER_ADD_CARD_LIMIT){
+        if (this.getScore() < DEALER_ADD_CARD_LIMIT) {
             return true;
         }
         return false;

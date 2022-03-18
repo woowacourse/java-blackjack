@@ -19,7 +19,7 @@ public class PlayerScore {
 
     public void makePlayerResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            results.put(player, Result.judge(dealer,player));
+            results.put(player, Result.judge(dealer, player));
         }
         makePlayersProfit();
     }

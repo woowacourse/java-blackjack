@@ -10,7 +10,7 @@ public enum Result {
     BlackJack("승", (dealer, player) -> !dealer.isBlackJack() && player.isBlackJack(), 1.5),
     LOSE("패", (dealer, player) -> player.isBurst() || !dealer.isBurst() && dealer.getScore() > player.getScore(), -1),
     WIN("승", (dealer, player) -> dealer.isBurst() || !player.isBurst() && dealer.getScore() < player.getScore(), 1),
-    DRAW("무",(dealer, player) -> !player.isBurst() && dealer.getScore() == player.getScore(), 0);
+    DRAW("무", (dealer, player) -> !player.isBurst() && dealer.getScore() == player.getScore(), 0);
 
     private final String printFormat;
     private final BiPredicate<Dealer, Player> predicate;
@@ -24,7 +24,7 @@ public enum Result {
 
     public static Result judge(Dealer dealer, Player player) {
         return Arrays.stream(values())
-                .filter(result -> result.predicate.test(dealer,player))
+                .filter(result -> result.predicate.test(dealer, player))
                 .findFirst()
                 .get();
     }
