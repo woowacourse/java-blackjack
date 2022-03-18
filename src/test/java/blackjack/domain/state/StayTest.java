@@ -34,8 +34,6 @@ public class StayTest {
 	void init_dealer() {
 		dealer = new Dealer(new MockDeck(List.of(Card.of(Denomination.NINE, Suit.DIAMOND),
 			Card.of(Denomination.ACE, Suit.DIAMOND))));
-		// dealer.addCard(Card.of(Denomination.NINE, Suit.DIAMOND));
-		// dealer.addCard(Card.of(Denomination.ACE, Suit.DIAMOND));
 	}
 
 	@Test

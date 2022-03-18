@@ -9,6 +9,10 @@ public class Money {
 		this.money= money;
 	}
 
+	public Money multiply(double value) {
+		return new Money(this.money * value);
+	}
+
 	public double getMoney() {
 		return money;
 	}
@@ -26,9 +30,5 @@ public class Money {
 	@Override
 	public int hashCode() {
 		return Objects.hash(money);
-	}
-
-	public Money multiply(double value) {
-		return new Money(this.money * value);
 	}
 }

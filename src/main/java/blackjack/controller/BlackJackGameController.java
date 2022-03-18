@@ -38,14 +38,18 @@ public class BlackJackGameController {
 		List<Player> players = new ArrayList<>();
 		try {
 			List<String> playerNames = inputView.inputPlayerNames();
-			for (String playerName : playerNames) {
-				double money = inputView.inputMoney(playerName);
-				players.add(new Player(playerName, money, deck));
-			}
+			addPlayers(players, playerNames);
 			return new Players(players);
 		} catch (IllegalArgumentException exception) {
 			outputView.printException(exception.getMessage());
 			return generatePlayers();
+		}
+	}
+
+	private void addPlayers(List<Player> players, List<String> playerNames) {
+		for (String playerName : playerNames) {
+			double money = inputView.inputMoney(playerName);
+			players.add(new Player(playerName, money, deck));
 		}
 	}
 

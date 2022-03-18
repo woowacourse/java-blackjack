@@ -19,15 +19,15 @@ public abstract class Gamer {
 		addTwoCards(deck);
 	}
 
-	public void addCard(final Card card){
-		changeState(this.state.draw(card));
-	}
-
-	public void addTwoCards(final DeckStrategy deck) {
+	private void addTwoCards(final DeckStrategy deck) {
 		Cards cards = new Cards();
 		cards.addCard(deck.distributeCard());
 		cards.addCard(deck.distributeCard());
 		state = InitialTurn.createState(cards);
+	}
+
+	public void addCard(final Card card){
+		changeState(this.state.draw(card));
 	}
 
 	public boolean isBlackJack() {
