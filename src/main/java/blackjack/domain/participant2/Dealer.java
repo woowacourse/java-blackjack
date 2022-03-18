@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public final class Dealer extends BlackjackParticipant {
 
-    private static final String DEALER_NAME = "딜러";
+    public static final String NAME = "딜러";
     private static final int OPEN_CARDS_COUNT = 1;
     private static final int DEALER_MAX_HIT_SCORE = 16;
 
@@ -18,7 +18,7 @@ public final class Dealer extends BlackjackParticipant {
 
     @Override
     public String getName() {
-        return DEALER_NAME;
+        return NAME;
     }
 
     @Override
