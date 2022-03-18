@@ -72,7 +72,7 @@ public class BlackjackGame {
     private void proceedPlayer(Player player, CardDeck deck) {
         while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
             player.hit(deck);
-            OutputView.printParticipantCards(new ParticipantResponse(player));
+            OutputView.printPlayerCards(new ParticipantResponse(player));
         }
         showStopReason(player);
     }
@@ -105,8 +105,10 @@ public class BlackjackGame {
 
     private void showResult(Dealer dealer, List<Player> players) {
         OutputView.printCardResultMessage();
-        OutputView.printParticipantCards(new ParticipantResponse(dealer));
-        players.forEach(player -> OutputView.printParticipantCards(new ParticipantResponse(player)));
+        OutputView.printPlayerCards(new ParticipantResponse(dealer));
+        OutputView.printPlayersCards(players.stream()
+                .map(ParticipantResponse::new)
+                .collect(Collectors.toUnmodifiableList()));
         OutputView.printGameResult(GameResult.of(dealer, players));
     }
 }

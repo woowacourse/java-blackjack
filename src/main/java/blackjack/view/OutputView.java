@@ -20,15 +20,19 @@ public class OutputView {
                 .collect(Collectors.toUnmodifiableList());
         System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.%n%n", dealer.getName(), String.join(", ", playerNames));
         printInitialDealerCards(dealer);
-        players.forEach(OutputView::printParticipantCards);
+        players.forEach(OutputView::printPlayerCards);
     }
 
-    public static void printInitialDealerCards(ParticipantInitialResponse participant) {
-        String cardsInfo = createCardsString(participant.getCards());
-        System.out.printf("%s 카드: %s%n", participant.getName(), cardsInfo);
+    public static void printInitialDealerCards(ParticipantInitialResponse dealer) {
+        String cardsInfo = createCardsString(dealer.getCards());
+        System.out.printf("%s 카드: %s%n", dealer.getName(), cardsInfo);
     }
 
-    public static void printParticipantCards(ParticipantResponse participant) {
+    public static void printPlayersCards(List<ParticipantResponse> players) {
+        players.forEach(OutputView::printPlayerCards);
+    }
+
+    public static void printPlayerCards(ParticipantResponse participant) {
         String cardsInfo = createCardsString(participant.getCards());
         System.out.printf("%s 카드: %s - 합계: %d%n", participant.getName(), cardsInfo, participant.getScore());
     }
