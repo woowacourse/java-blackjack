@@ -47,7 +47,7 @@ public class ResultTest {
 		card_A = new Card(Denomination.ACE, Suit.CLOVER);
 		card_2 = new Card(Denomination.TWO, Suit.CLOVER);
 		card_Q = new Card(Denomination.QUEEN, Suit.CLOVER);
-		card_K = new Card(Denomination.KNIGHT, Suit.CLOVER);
+		card_K = new Card(Denomination.KING, Suit.CLOVER);
 		card_6 = new Card(Denomination.SIX, Suit.CLOVER);
 		card_9 = new Card(Denomination.NINE, Suit.CLOVER);
 		cards_20 = new ArrayList<>(Arrays.asList(card_A, card_9));
