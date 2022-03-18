@@ -18,7 +18,7 @@ public class BlackJackReferee {
     private void addResults(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             BlackJackResult result = player.match(dealer);
-            playerResults.put(player.getName(), (int) (player.getBettingMoney() * result.getValue()));
+            playerResults.put(player.getName(), (int) (player.getBettingMoney() * result.getProfitRate()));
         }
     }
 

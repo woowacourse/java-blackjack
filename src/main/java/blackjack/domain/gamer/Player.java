@@ -22,11 +22,6 @@ public class Player extends Gamer {
         return BlackJackResult.of(this, dealer);
     }
 
-    public boolean isSameName(String name) {
-        return this.getName()
-                .equals(name);
-    }
-
     public boolean isDrawPossible(UnaryOperator<String> operator) {
         return canDraw() && Answer.from(operator.apply(getName())).isYes();
     }

@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -41,25 +40,6 @@ public class BlackJackApplication {
         return new Player(name, List.of(deck.draw(), deck.draw()), InputView.getBettingMoney(name));
     }
 
-    private static List<Integer> getBettingMoney(List<String> names) {
-        List<Integer> bettingMoneys = new ArrayList<>();
-        for (String name : names) {
-            bettingMoneys.add(InputView.getBettingMoney(name));
-        }
-        return bettingMoneys;
-    }
-
-    private static void printAdditionalDrawDealer(Deck deck, Dealer dealer) {
-        distributeToDealer(dealer, deck);
-        OutputView.printAdditionalDrawDealer(dealer.getCardsSize() - INIT_DISTRIBUTION_COUNT);
-    }
-
-    private static void distributeToDealer(Dealer dealer, Deck deck) {
-        while (dealer.canDraw()) {
-            dealer.addCard(deck.draw());
-        }
-    }
-
     private static void drawAdditionalCard(Deck deck, Players players) {
         for (Player player : players.getPlayers()) {
             printPlayerDrawCard(deck, player);
@@ -70,6 +50,17 @@ public class BlackJackApplication {
         while (player.isDrawPossible(InputView::getAnswerOfAdditionalDraw)) {
             player.addCard(deck.draw());
             OutputView.printPlayerCard(player);
+        }
+    }
+
+    private static void printAdditionalDrawDealer(Deck deck, Dealer dealer) {
+        distributeToDealer(dealer, deck);
+        OutputView.printAdditionalDrawDealer(dealer.getCardsSize() - INIT_DISTRIBUTION_COUNT);
+    }
+
+    private static void distributeToDealer(Dealer dealer, Deck deck) {
+        while (dealer.canDraw()) {
+            dealer.addCard(deck.draw());
         }
     }
 }

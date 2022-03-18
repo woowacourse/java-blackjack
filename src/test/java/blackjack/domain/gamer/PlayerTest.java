@@ -23,10 +23,11 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어와 이름이 같다면 True를 반환한다.")
+    @DisplayName("플레이어와 이름이 같다면 같은 객체로 판단한다.")
     void isSameName() {
-        List<Card> cards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.NINE));
-        Player player1 = new Player("더즈", cards, 1000);
-        assertThat(player1.isSameName("더즈")).isTrue();
+        Card card = new Card(CardShape.CLOVER, CardNumber.FIVE);
+        Player player1 = new Player("범고래", List.of(card), 1000);
+        Player player2 = new Player("범고래", List.of(card), 2000);
+        assertThat(player1).isEqualTo(player2);
     }
 }

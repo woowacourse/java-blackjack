@@ -54,7 +54,7 @@ class BlackJackResultTest {
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
-        assertThat(blackJackResult.getReverse((int) blackJackResult.getValue() * player.getBettingMoney())).isEqualTo(-1000);
+        assertThat(blackJackResult.getReverse((int) blackJackResult.getProfitRate() * player.getBettingMoney())).isEqualTo(-1000);
     }
 
     @Test

@@ -79,4 +79,13 @@ class GamerTest {
 
         assertThat(gamer.isBlackJack()).isTrue();
     }
+
+    @Test
+    @DisplayName("이름이 같으면 같은 객체로 판단한다.")
+    void isEquals() {
+        Card card = new Card(CardShape.CLOVER, CardNumber.FIVE);
+        Gamer player1 = new Player("범고래", List.of(card), 1000);
+        Gamer player2 = new Player("범고래", List.of(card), 2000);
+        assertThat(player1).isEqualTo(player2);
+    }
 }
