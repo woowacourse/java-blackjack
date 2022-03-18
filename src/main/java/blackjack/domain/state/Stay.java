@@ -27,6 +27,11 @@ public class Stay implements State {
 		return money.multiply(profitRate(dealer));
 	}
 
+	@Override
+	public boolean isRunning() {
+		return false;
+	}
+
 	public double profitRate(Dealer dealer) {
 		if (dealer.compare2(this.cards) > 0) {
 			return -1;

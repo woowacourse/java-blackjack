@@ -27,6 +27,11 @@ public class BlackJack implements State{
 		return money.multiply(profitRate(dealer));
 	}
 
+	@Override
+	public boolean isRunning() {
+		return false;
+	}
+
 	public double profitRate(Dealer dealer) {
 		if (dealer.isBlackJack()) {
 			return 0;

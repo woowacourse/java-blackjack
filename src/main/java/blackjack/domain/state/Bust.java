@@ -27,6 +27,11 @@ public class Bust implements State{
 		return money.multiply(profitRate());
 	}
 
+	@Override
+	public boolean isRunning() {
+		return false;
+	}
+
 	public double profitRate() {
 		return -1;
 	}

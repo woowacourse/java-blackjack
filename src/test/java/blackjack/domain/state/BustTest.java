@@ -28,7 +28,7 @@ public class BustTest {
 	@DisplayName("draw를 했을때 카드의 합이 21을 초과하면 버스트 상태로 되는지 확인")
 	void bust_state() {
 		//given
-		State state = StateFactory.createState(cards);
+		State state = InitialTurn.createState(cards);
 		//when
 		state = state.draw(Card.of(Denomination.FOUR, Suit.DIAMOND));
 		//given
@@ -45,5 +45,17 @@ public class BustTest {
 		Money profit = state.calculateProfit(money, new Dealer());
 		//then
 		assertThat(profit).isEqualTo(new Money(-10000));
+	}
+
+	@Test
+	@DisplayName("Running 중이 아닌지 확인")
+	void not_running() {
+		//given
+		State state = InitialTurn.createState(cards)
+			.draw(Card.of(Denomination.FOUR, Suit.DIAMOND));
+		//when
+		boolean isRunning = state.isRunning();
+		//given
+		assertThat(isRunning).isFalse();
 	}
 }

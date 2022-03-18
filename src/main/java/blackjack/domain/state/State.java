@@ -11,4 +11,6 @@ public interface State {
 	State stay();
 
 	Money calculateProfit(Money money, Dealer dealer);
+
+	boolean isRunning();
 }

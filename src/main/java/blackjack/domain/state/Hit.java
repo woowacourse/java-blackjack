@@ -29,6 +29,11 @@ public class Hit implements State {
 
 	@Override
 	public Money calculateProfit(Money money, Dealer dealer) {
-		return null;
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public boolean isRunning() {
+		return true;
 	}
 }

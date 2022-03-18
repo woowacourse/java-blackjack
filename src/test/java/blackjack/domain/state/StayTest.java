@@ -37,7 +37,7 @@ public class StayTest {
 	@Test
 	void stay_state() {
 		//given
-		State state = StateFactory.createState(cards);
+		State state = InitialTurn.createState(cards);
 		//when
 		final State newState = state.stay();
 		//given
@@ -45,16 +45,15 @@ public class StayTest {
 			.isInstanceOf(IllegalStateException.class);
 	}
 
-
 	@Nested
-	@DisplayName("스테이 상태에서")
-	class StayStateProfitTest{
+	@DisplayName("스테이 상태에서 수익이")
+	class StayStateProfitTest {
 		@Test
-		@DisplayName("플레이어가 패배했을때 수익이 -1배가 되는지 확인")
+		@DisplayName("플레이어가 패배했을때 -1배가 되는지 확인")
 		void profit_player_lose() {
 			//given
-			State playerState = StateFactory.createState(cards);
-			playerState = playerState.stay();
+			State playerState = InitialTurn.createState(cards)
+				.stay();
 			//when
 			Money profit = playerState.calculateProfit(money, dealer);
 			//then
@@ -62,12 +61,12 @@ public class StayTest {
 		}
 
 		@Test
-		@DisplayName("플레이어가 승리했을때 수익이 1배가 되는지 확인")
+		@DisplayName("플레이어가 승리했을때 1배가 되는지 확인")
 		void profit_player_win() {
 			//given
-			State playerState = StateFactory.createState(cards);
-			playerState = playerState.draw(Card.of(Denomination.THREE, Suit.DIAMOND));
-			playerState = playerState.stay();
+			State playerState = InitialTurn.createState(cards);
+			playerState = playerState.draw(Card.of(Denomination.THREE, Suit.DIAMOND))
+				.stay();
 			//when
 			Money profit = playerState.calculateProfit(money, dealer);
 			//then
@@ -75,16 +74,29 @@ public class StayTest {
 		}
 
 		@Test
-		@DisplayName("무승부일때 수익이 0배가 되는지 확인")
+		@DisplayName("무승부일때 0배가 되는지 확인")
 		void profit_push() {
 			//given
-			State playerState = StateFactory.createState(cards);
-			playerState = playerState.draw(Card.of(Denomination.TWO, Suit.DIAMOND));
-			playerState = playerState.stay();
+			State playerState = InitialTurn.createState(cards);
+			playerState = playerState.draw(Card.of(Denomination.TWO, Suit.DIAMOND))
+				.stay();
 			//when
 			Money profit = playerState.calculateProfit(money, dealer);
 			//then
 			assertThat(profit).isEqualTo(new Money(0));
 		}
 	}
+
+	@Test
+	@DisplayName("Running 중이 아닌지 확인")
+	void not_running() {
+		//given
+		State state = InitialTurn.createState(cards)
+			.stay();
+		//when
+		boolean isRunning = state.isRunning();
+		//given
+		assertThat(isRunning).isFalse();
+	}
+
 }
