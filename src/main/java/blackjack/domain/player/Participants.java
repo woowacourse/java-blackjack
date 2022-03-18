@@ -50,13 +50,13 @@ public class Participants implements Iterable<Participant> {
         participants.put(participant, new Money(bet));
     }
 
-    @Override
-    public Iterator<Participant> iterator() {
-        return participants.keySet().iterator();
-    }
-
     public int getRevenue(Participant participant, Result result) {
         Money bet = participants.get(participant);
         return bet.getRevenue(result);
+    }
+
+    @Override
+    public Iterator<Participant> iterator() {
+        return participants.keySet().iterator();
     }
 }

@@ -10,7 +10,6 @@ public class Participant extends Player {
 
     @Override
     public boolean canAddCard() {
-        Score score = new Score(this);
-        return score.CanAddPlayerCard();
+        return new Score(this).CanAddPlayerCard();
     }
 }

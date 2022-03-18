@@ -19,19 +19,27 @@ public class BlackJackController {
         final Dealer dealer = new Dealer();
         final Participants participants = getParticipants();
         putBet(participants);
-
         giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
         askAndGiveCardsToParticipants(blackJackMachine, participants);
         giveCardsToDealer(blackJackMachine, dealer);
 
         calculateTotalScores(dealer, participants);
-        decideYeilds(dealer, participants);
+        decideYields(dealer, participants);
     }
 
     private void putBet(Participants participants) {
         for (Participant participant : participants) {
+            putParticipantBet(participants, participant);
+        }
+    }
+
+    private void putParticipantBet(Participants participants, Participant participant) {
+        try {
             int bet = InputView.getBet(participant);
             participants.putBet(participant, bet);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            putParticipantBet(participants,participant);
         }
     }
 
@@ -101,7 +109,7 @@ public class BlackJackController {
         }
     }
 
-    private void decideYeilds(final Dealer dealer, final Participants participants) {
+    private void decideYields(final Dealer dealer, final Participants participants) {
         final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
         OutputView.printResults(dealer, participantResult);
     }
