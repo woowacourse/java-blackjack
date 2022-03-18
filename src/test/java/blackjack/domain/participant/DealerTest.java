@@ -13,7 +13,7 @@ import blackjack.domain.hand.CardHand;
 import blackjack.domain.hand.OneCard;
 import blackjack.fixture.CardDeckStub;
 import blackjack.strategy.CardsViewStrategy;
-import blackjack.strategy.HitOrStayChoiceStrategy;
+import blackjack.strategy.HitOrStayStrategy;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    private static final HitOrStayChoiceStrategy HIT_CHOICE = () -> true;
+    private static final HitOrStayStrategy HIT_CHOICE = () -> true;
     private static final CardsViewStrategy VIEW_STRATEGY = (p) -> {
     };
 

@@ -5,12 +5,12 @@ import blackjack.domain.card.CardStack;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.strategy.CardsViewStrategy;
-import blackjack.strategy.HitOrStayChoiceStrategy;
+import blackjack.strategy.HitOrStayStrategy;
 import java.util.List;
 
 public class BlackjackGame {
 
-    private static final HitOrStayChoiceStrategy ALWAYS_HIT_STRATEGY = () -> true;
+    private static final HitOrStayStrategy ALWAYS_HIT_STRATEGY = () -> true;
 
     private final CardStack cardDeck;
     private final Participants participants;
@@ -22,7 +22,7 @@ public class BlackjackGame {
         this.participants = Participants.of(playerNames, cardDeck::pop);
     }
 
-    public void drawAllPlayerCards(final HitOrStayChoiceStrategy hitOrStayStrategy,
+    public void drawAllPlayerCards(final HitOrStayStrategy hitOrStayStrategy,
                                    final CardsViewStrategy cardsView) {
 
         List<Participant> players = participants.getPlayers();

@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.hand.CardHand;
 import blackjack.strategy.CardSupplier;
 import blackjack.strategy.CardsViewStrategy;
-import blackjack.strategy.HitOrStayChoiceStrategy;
+import blackjack.strategy.HitOrStayStrategy;
 
 public abstract class BlackjackParticipant implements Participant {
 
@@ -14,7 +14,7 @@ public abstract class BlackjackParticipant implements Participant {
     }
 
     @Override
-    public final void drawAll(final HitOrStayChoiceStrategy hitOrStay,
+    public final void drawAll(final HitOrStayStrategy hitOrStay,
                               final CardsViewStrategy viewStrategy,
                               final CardSupplier supplier) {
         while (!cardHand.isFinished()) {
@@ -23,7 +23,7 @@ public abstract class BlackjackParticipant implements Participant {
         }
     }
 
-    private CardHand hitOrStay(HitOrStayChoiceStrategy hitOrStay, CardSupplier supplier) {
+    private CardHand hitOrStay(HitOrStayStrategy hitOrStay, CardSupplier supplier) {
         if (!shouldStay() && hitOrStay.shouldHit()) {
             return cardHand.hit(supplier.getCard());
         }

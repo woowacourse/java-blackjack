@@ -1,7 +1,7 @@
 package blackjack.strategy;
 
 @FunctionalInterface
-public interface HitOrStayChoiceStrategy  {
+public interface HitOrStayStrategy {
 
     boolean shouldHit();
 }
