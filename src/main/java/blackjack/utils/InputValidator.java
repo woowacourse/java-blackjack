@@ -13,6 +13,8 @@ public class InputValidator {
     private static final String LIMIT_NUMBER_OF_PLAYERS_ERROR_MESSAGE = "[Error]: 게임에 참가할 수 있는 인원은 최대 8명입니다.";
     private static final String MONEY_IS_NOT_NUMBER_ERROR_MESSAGE = "[Error]: 배팅 금액은 숫자여야 합니다.";
     private static final String REGEX_NUMBER = "[0-9]+";
+    private static final String MINIMUM_MONEY_ERROR_MESSAGE = "[Error]: 금액은 양수여야 합니다.";
+    private static final int MINIMUM_LIMIT_MONEY = 1;
 
     private InputValidator() {
     }
@@ -55,6 +57,12 @@ public class InputValidator {
     public static void isDigit(String number) {
         if (!number.matches(REGEX_NUMBER)) {
             throw new IllegalArgumentException(MONEY_IS_NOT_NUMBER_ERROR_MESSAGE);
+        }
+    }
+
+    public static void isBiggerThanZero(String name) {
+        if (toInteger(name) < MINIMUM_LIMIT_MONEY) {
+            throw new IllegalArgumentException(MINIMUM_MONEY_ERROR_MESSAGE);
         }
     }
 

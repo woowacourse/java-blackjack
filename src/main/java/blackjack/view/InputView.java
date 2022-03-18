@@ -42,6 +42,7 @@ public class InputView {
         String number = SCANNER.nextLine();
         InputValidator.inputBlank(number);
         InputValidator.isDigit(number);
+        InputValidator.isBiggerThanZero(number);
         return InputValidator.toInteger(number);
     }
 }
