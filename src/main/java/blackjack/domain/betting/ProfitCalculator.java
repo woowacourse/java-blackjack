@@ -34,4 +34,11 @@ public class ProfitCalculator {
     private int multiplyMoneyAndRate(Player player, double earningRate) {
         return player.calculateProfit(earningRate);
     }
+
+    public int getDealerProfit() {
+        return -(int) playerProfit.values()
+            .stream()
+            .mapToInt(profit -> profit)
+            .sum();
+    }
 }

@@ -85,9 +85,11 @@ public class OutputView {
         }
     }
 
-    public static void printProfitResult(Map<Player, Integer> playerProfitResult) {
+    public static void printProfitResult(Map<Player, Integer> playerProfitResult, int dealerProfitResult) {
         System.out.println();
         System.out.println(PARTICIPANT_PROFIT_RESULT_MESSAGE);
+
+        System.out.println(DEALER_DIRECTION + dealerProfitResult);
 
         playerProfitResult.forEach(
             (key, value) -> System.out.println(

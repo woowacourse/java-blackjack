@@ -75,4 +75,18 @@ public class ProfitCalculatorTest {
 
     }
 
+    @Test
+    @DisplayName("딜러의 수익을 계산한다.")
+    void calculateDealerProfit() {
+        Map<Player, WinningResult> playerWinningResultMap = new LinkedHashMap<>();
+        Player player = new Player("앤지");
+        player.createBettingMoney(new BettingMoney(1000));
+        playerWinningResultMap.putIfAbsent(player, WinningResult.LOSE);
+        ProfitCalculator profitCalculator = new ProfitCalculator(playerWinningResultMap);
+
+        profitCalculator.calculate();
+
+        assertThat(profitCalculator.getDealerProfit()).isEqualTo(1000);
+    }
+
 }
