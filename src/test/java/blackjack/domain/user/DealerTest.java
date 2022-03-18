@@ -22,7 +22,7 @@ public class DealerTest {
 		)));
 		Player player = new Player("pobi", 1000,
 			new MockDeck(List.of(Card.of(Denomination.NINE, Suit.DIAMOND),
-			Card.of(Denomination.FIVE, Suit.CLOVER))));
+				Card.of(Denomination.FIVE, Suit.CLOVER))));
 		//when
 		//then
 		assertThat(dealer.compare(player.state.getCards())).isGreaterThan(0);
