@@ -38,4 +38,15 @@ class HitTest {
 
         assertThat(state).isInstanceOf(Bust.class);
     }
+
+    @DisplayName("stay 를 실행하여 Stay 상태가 되는 것을 확인한다.")
+    @Test
+    void stay() {
+        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards, betting);
+
+        State state = hit.stay();
+
+        assertThat(state).isInstanceOf(Stay.class);
+    }
 }

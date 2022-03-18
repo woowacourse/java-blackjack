@@ -22,6 +22,11 @@ public class Bust extends Finished {
     }
 
     @Override
+    public State stay() {
+        throw new IllegalStateException("Bust 상태일 때는 stay 를 실행할 수 없습니다.");
+    }
+
+    @Override
     public double profit() {
         return betting.profit(PROFIT_RATE);
     }

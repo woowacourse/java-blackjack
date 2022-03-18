@@ -25,4 +25,9 @@ public class Ready implements State {
         }
         return new Hit(playingCards, betting);
     }
+
+    @Override
+    public State stay() {
+        return new Stay(playingCards, betting);
+    }
 }

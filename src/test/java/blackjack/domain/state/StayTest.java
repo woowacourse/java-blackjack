@@ -8,12 +8,11 @@ import blackjack.domain.game.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
-class BustTest {
+class StayTest {
 
     private static final PlayingCards playingCards = new PlayingCards();
     private static final Betting betting = new Betting(1000);
@@ -21,28 +20,29 @@ class BustTest {
     @DisplayName("draw 를 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
     void draw() {
-        Bust bust = new Bust(playingCards, betting);
+        Stay stay = new Stay(playingCards, betting);
 
-        assertThatThrownBy(() -> bust.draw(Card.of(Denomination.KING, Suit.SPADE)))
+        assertThatThrownBy(() -> stay.draw(Card.of(Denomination.KING, Suit.SPADE)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Bust 상태일 때는 draw 를 실행할 수 없습니다.");
+                .hasMessage("Stay 상태일 때는 draw 를 실행할 수 없습니다.");
     }
 
     @DisplayName("stay 를 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
     void stay() {
-        Bust bust = new Bust(playingCards, betting);
+        Stay stay = new Stay(playingCards, betting);
 
-        assertThatThrownBy(bust::stay)
+        assertThatThrownBy(stay::stay)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Bust 상태일 때는 stay 를 실행할 수 없습니다.");
+                .hasMessage("Stay 상태일 때는 stay 를 실행할 수 없습니다.");
     }
 
-    @DisplayName("버스트일 경우 베팅 금액만큼 잃는 것을 확인한다.")
+    // TODO: 딜러와 비교하여 값 변경
+    @DisplayName("Stay 일 경우 베팅 금액만큼 얻는 것을 확인한다.")
     @Test
     void profit() {
-        Bust bust = new Bust(playingCards, betting);
+        Stay stay = new Stay(playingCards, betting);
 
-        assertThat(bust.profit()).isEqualTo(-1000.0);
+        assertThat(stay.profit()).isEqualTo(1000.0);
     }
 }

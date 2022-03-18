@@ -7,6 +7,8 @@ import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,5 +40,16 @@ class ReadyTest {
         ready = ready.draw(Card.of(Denomination.KING, Suit.SPADE));
 
         assertThat(ready.draw(Card.of(Denomination.ACE, Suit.SPADE))).isInstanceOf(Blackjack.class);
+    }
+
+    @DisplayName("stay 를 실행하여 Stay 상태가 되는 것을 확인한다.")
+    @Test
+    void stay() {
+        State ready = new Ready(betting);
+        ready = ready.draw(Card.of(Denomination.KING, Suit.SPADE));
+
+        State state = ready.stay();
+
+        assertThat(state).isInstanceOf(Stay.class);
     }
 }

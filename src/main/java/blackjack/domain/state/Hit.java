@@ -23,4 +23,8 @@ public class Hit implements State {
         }
         return this;
     }
+
+    public State stay() {
+        return new Stay(playingCards, betting);
+    }
 }
