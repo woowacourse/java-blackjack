@@ -2,10 +2,11 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HoldCards {
 
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int SUM_HIDDEN_ACE = 10;
     private static final int INIT_SIZE = 2;
 
     private final List<Card> cards;
@@ -21,12 +22,12 @@ public class HoldCards {
         return new HoldCards(cards);
     }
 
-    public int getTotalNumber() {
-        return CardNumber.getOptimizeTotalNumber(
-            cards.stream()
-                .map(Card::getCardNumber)
-                .collect(Collectors.toList())
-        );
+    public int getOptimizeTotalNumber() {
+        int totalNumber = getTotalNumber();
+        if (isContainAce() && (totalNumber + SUM_HIDDEN_ACE) <= BLACKJACK_NUMBER) {
+            return totalNumber + SUM_HIDDEN_ACE;
+        }
+        return totalNumber;
     }
 
     public void add(Card card) {
@@ -43,5 +44,16 @@ public class HoldCards {
 
     public boolean isInitSize() {
         return cards.size() == INIT_SIZE;
+    }
+
+    private int getTotalNumber() {
+        return cards.stream()
+            .mapToInt(card -> card.getCardNumber().getValue())
+            .sum();
+    }
+
+    private boolean isContainAce() {
+        return cards.stream()
+            .anyMatch(card -> card.getCardNumber().isAce());
     }
 }

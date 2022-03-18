@@ -22,7 +22,7 @@ public class CardsTest {
                 List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK),
                     Card.of(CardPattern.HEART, CardNumber.EIGHT)));
 
-            Assertions.assertThat(cards.getTotalNumber()).isEqualTo(18);
+            Assertions.assertThat(cards.getOptimizeTotalNumber()).isEqualTo(18);
         }
 
         @ParameterizedTest
@@ -37,7 +37,7 @@ public class CardsTest {
                     Card.of(CardPattern.SPADE, cardNumber2),
                     Card.of(CardPattern.DIAMOND, cardNumber3)));
 
-            Assertions.assertThat(cards.getTotalNumber()).isEqualTo(expected);
+            Assertions.assertThat(cards.getOptimizeTotalNumber()).isEqualTo(expected);
         }
     }
 
@@ -53,7 +53,7 @@ public class CardsTest {
                     Card.of(CardPattern.HEART, CardNumber.EIGHT)));
             cards.add(Card.of(CardPattern.CLOVER, CardNumber.FOUR));
 
-            Assertions.assertThat(cards.getTotalNumber()).isEqualTo(22);
+            Assertions.assertThat(cards.getOptimizeTotalNumber()).isEqualTo(22);
         }
     }
 }

@@ -25,15 +25,15 @@ public class Player {
     }
 
     public boolean isBust() {
-        return holdCards.getTotalNumber() > BLACKJACK_NUMBER;
+        return holdCards.getOptimizeTotalNumber() > BLACKJACK_NUMBER;
     }
 
     public boolean isBlackjack() {
-        return holdCards.isInitSize() && holdCards.getTotalNumber() == BLACKJACK_NUMBER;
+        return holdCards.isInitSize() && holdCards.getOptimizeTotalNumber() == BLACKJACK_NUMBER;
     }
 
     public int getTotalNumber() {
-        return holdCards.getTotalNumber();
+        return holdCards.getOptimizeTotalNumber();
     }
 
     public Score compete(Dealer dealer) {
