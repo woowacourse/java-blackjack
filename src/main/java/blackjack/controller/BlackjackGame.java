@@ -4,7 +4,6 @@ import blackjack.domain.game.Deck;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
-import blackjack.domain.result.Result;
 import blackjack.dto.GamerDto;
 import blackjack.view.InputConverter;
 import blackjack.view.OutputView;
@@ -16,23 +15,22 @@ public class BlackjackGame {
 
         OutputView.printPlayerNameInstruction();
         Players players = InputConverter.createPlayers();
-        Result result = new Result(players);
 
         bet(players);
 
-        drawCards(dealer, players, result);
-        showProfit(dealer, players, result);
+        drawCards(dealer, players);
+        showProfit(dealer, players);
     }
 
     private void bet(final Players players) {
         players.bet(OutputView::printBetting, InputConverter::createBetting);
     }
 
-    private void drawCards(final Dealer dealer, final Players players, final Result result) {
+    private void drawCards(final Dealer dealer, final Players players) {
         Deck deck = new Deck();
         dealCard(dealer, players, deck);
 
-        if (result.isKeepPlaying(dealer)) {
+        if (players.isKeepPlaying(dealer)) {
             players.draw(deck, InputConverter::isDrawing, OutputView::printCards);
             OutputView.printNewLine();
             dealer.draw(deck, OutputView::printDrawDealer);
@@ -56,9 +54,8 @@ public class BlackjackGame {
         OutputView.printNewLine();
     }
 
-    private void showProfit(final Dealer dealer, final Players players, final Result result) {
+    private void showProfit(final Dealer dealer, final Players players) {
         showTotalScore(dealer, players);
-        result.compete(dealer);
 
         OutputView.printProfitTitle();
         OutputView.printProfit(dealer.getName(), (int) dealer.profit(players.totalProfit()));

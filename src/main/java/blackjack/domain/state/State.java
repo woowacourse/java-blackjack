@@ -11,6 +11,8 @@ public interface State {
 
     State stay();
 
+    boolean isRunning();
+
     boolean isFinished();
 
     double profit();

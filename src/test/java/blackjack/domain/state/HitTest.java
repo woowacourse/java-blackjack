@@ -65,6 +65,16 @@ class HitTest {
         assertThat(state).isInstanceOf(Stay.class);
     }
 
+    @DisplayName("게임이 진행중인 상태인지 확인한다.")
+    @Test
+    void is_running() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards, betting);
+
+        assertThat(hit.isRunning()).isTrue();
+    }
+
     @DisplayName("종료된 상태인지 확인한다.")
     @Test
     void is_finished() {

@@ -49,6 +49,14 @@ class BlackjackTest {
                 .hasMessage("현재 상태는 stay 를 실행할 수 없습니다.");
     }
 
+    @DisplayName("게임이 진행중인 상태인지 확인한다.")
+    @Test
+    void is_running() {
+        Blackjack blackjack = new Blackjack(playingCards, betting);
+
+        assertThat(blackjack.isRunning()).isFalse();
+    }
+
     @DisplayName("종료된 상태인지 확인한다.")
     @Test
     void is_finished() {

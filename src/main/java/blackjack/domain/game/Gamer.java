@@ -44,6 +44,14 @@ public abstract class Gamer {
         state = state.stay();
     }
 
+    public boolean isRunning() {
+        return state.isRunning();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
     public boolean isBlackjack() {
         // TODO: 방식 수정
         return state instanceof Blackjack;

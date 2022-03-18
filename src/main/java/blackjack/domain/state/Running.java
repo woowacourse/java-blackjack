@@ -16,6 +16,10 @@ public abstract class Running extends Started {
         throw new IllegalStateException("현재 상태는 수익을 계산할 수 없습니다.");
     }
 
+    public boolean isRunning() {
+        return true;
+    }
+
     public boolean isFinished() {
         return false;
     }

@@ -48,6 +48,14 @@ class BustTest {
                 .hasMessage("현재 상태는 stay 를 실행할 수 없습니다.");
     }
 
+    @DisplayName("게임이 진행중인 상태인지 확인한다.")
+    @Test
+    void is_running() {
+        Bust bust = new Bust(playingCards, betting);
+
+        assertThat(bust.isRunning()).isFalse();
+    }
+
     @DisplayName("종료된 상태인지 확인한다.")
     @Test
     void is_finished() {

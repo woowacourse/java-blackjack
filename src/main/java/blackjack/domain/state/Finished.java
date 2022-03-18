@@ -17,6 +17,10 @@ public abstract class Finished extends Started {
         throw new IllegalStateException("현재 상태는 stay 를 실행할 수 없습니다.");
     }
 
+    public boolean isRunning() {
+        return false;
+    }
+
     public boolean isFinished() {
         return true;
     }

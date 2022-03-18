@@ -64,6 +64,14 @@ class ReadyTest {
         assertThat(state).isInstanceOf(Stay.class);
     }
 
+    @DisplayName("게임이 진행중인 상태인지 확인한다.")
+    @Test
+    void is_running() {
+        Ready ready = new Ready();
+
+        assertThat(ready.isRunning()).isTrue();
+    }
+
     @DisplayName("종료된 상태인지 확인한다.")
     @Test
     void is_finished() {

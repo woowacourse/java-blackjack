@@ -43,6 +43,18 @@ public class Players {
         }
     }
 
+    public boolean isKeepPlaying(final Dealer dealer) {
+        if (dealer.isFinished()) {
+            return false;
+        }
+        for (Player player : players) {
+            if (player.isRunning()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public double totalProfit() {
         double totalProfit = 0;
         for (Player player : players) {

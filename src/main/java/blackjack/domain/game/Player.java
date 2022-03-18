@@ -59,7 +59,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean isDrawable() {
-        // TODO: 방식 수정
-        return state instanceof Ready  || state instanceof Hit;
+        return state.isRunning();
     }
 }
