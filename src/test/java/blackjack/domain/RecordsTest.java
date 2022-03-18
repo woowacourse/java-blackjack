@@ -13,12 +13,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.dto.DealerResultDto;
-import blackjack.domain.dto.PlayerResultDto;
-import blackjack.domain.dto.ResultDto;
+import blackjack.domain.dto.DealerRecordDto;
+import blackjack.domain.dto.PlayerRecordDto;
+import blackjack.domain.dto.RecordsDto;
 
 public class RecordsTest {
-    private ResultDto dto;
+    private RecordsDto dto;
 
     @BeforeEach
     void setUp() {
@@ -38,9 +38,9 @@ public class RecordsTest {
     @DisplayName("딜러 전적 테스트")
     @Test
     void dealerRecords() {
-        DealerResultDto dealerResultDto = dto.getDealerResultDto();
+        DealerRecordDto dealerRecordDto = dto.getDealerResultDto();
 
-        Map<String, Integer> actual = dealerResultDto.getOutcome();
+        Map<String, Integer> actual = dealerRecordDto.getOutcome();
 
         Map<String, Integer> expected = new LinkedHashMap<>();
         expected.put("승", 1);
@@ -53,9 +53,9 @@ public class RecordsTest {
     @DisplayName("플레이 전적 테스트")
     @Test
     void playersRecords() {
-        PlayerResultDto playerResultDto = dto.getPlayerResultDto();
+        PlayerRecordDto playerRecordDto = dto.getPlayerResultDto();
 
-        Map<String, String> actual = playerResultDto.getOutcome();
+        Map<String, String> actual = playerRecordDto.getOutcome();
 
         Map<String, String> expected = new LinkedHashMap<>();
         expected.put("범블비", "패");

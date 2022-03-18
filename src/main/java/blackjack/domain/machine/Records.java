@@ -7,21 +7,21 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import blackjack.domain.dto.DealerResultDto;
-import blackjack.domain.dto.PlayerResultDto;
-import blackjack.domain.dto.ResultDto;
+import blackjack.domain.dto.DealerRecordDto;
+import blackjack.domain.dto.PlayerRecordDto;
+import blackjack.domain.dto.RecordsDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public class Records {
-    public static ResultDto of(Dealer dealer, List<Player> players) {
+    public static RecordsDto of(Dealer dealer, List<Player> players) {
         Map<String, String> playerRecords = getPlayerRecords(dealer, players);
         Map<String, Integer> dealerRecords = getDealerRecords(dealer, players);
 
-        PlayerResultDto playerResultDto = new PlayerResultDto(playerRecords);
-        DealerResultDto dealerResultDto = new DealerResultDto(dealer.getName(), dealerRecords);
+        PlayerRecordDto playerRecordDto = new PlayerRecordDto(playerRecords);
+        DealerRecordDto dealerRecordDto = new DealerRecordDto(dealer.getName(), dealerRecords);
 
-        return new ResultDto(dealerResultDto, playerResultDto);
+        return new RecordsDto(dealerRecordDto, playerRecordDto);
     }
 
     private static Map<String, String> getPlayerRecords(Dealer dealer, List<Player> players) {

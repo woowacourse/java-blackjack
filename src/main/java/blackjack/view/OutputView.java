@@ -6,9 +6,9 @@ import blackjack.domain.machine.ProfitResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.dto.DealerResultDto;
-import blackjack.domain.dto.PlayerResultDto;
-import blackjack.domain.dto.ResultDto;
+import blackjack.domain.dto.DealerRecordDto;
+import blackjack.domain.dto.PlayerRecordDto;
+import blackjack.domain.dto.RecordsDto;
 
 import java.util.List;
 import java.util.Map;
@@ -77,17 +77,17 @@ public class OutputView {
         return (SCORE_MESSAGE + score);
     }
 
-    public static void printRecord(ResultDto resultDto) {
+    public static void printRecord(RecordsDto recordsDto) {
         System.out.println();
         System.out.println(RECORD_MESSAGE);
-        printDealerRecord(resultDto.getDealerResultDto());
-        printPlayerRecord(resultDto.getPlayerResultDto());
+        printDealerRecord(recordsDto.getDealerResultDto());
+        printPlayerRecord(recordsDto.getPlayerResultDto());
     }
 
-    private static void printDealerRecord(DealerResultDto dealerResultDto) {
-        System.out.print(dealerResultDto.getName() + COLON);
+    private static void printDealerRecord(DealerRecordDto dealerRecordDto) {
+        System.out.print(dealerRecordDto.getName() + COLON);
 
-        Map<String, Integer> outcome = dealerResultDto.getOutcome();
+        Map<String, Integer> outcome = dealerRecordDto.getOutcome();
         outcome.keySet()
                 .forEach(record -> printNotZeroRecordForDealer(outcome, record));
 
@@ -100,8 +100,8 @@ public class OutputView {
         }
     }
 
-    private static void printPlayerRecord(PlayerResultDto playerResultDto) {
-        Map<String, String> outcome = playerResultDto.getOutcome();
+    private static void printPlayerRecord(PlayerRecordDto playerRecordDto) {
+        Map<String, String> outcome = playerRecordDto.getOutcome();
         outcome.keySet()
                 .forEach(player -> System.out.println(player + COLON + outcome.get(player)));
     }
