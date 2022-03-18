@@ -8,8 +8,9 @@ import blackjack.domain.card.Cards;
 
 public abstract class Participant {
 
-    private static final int BLACKJACK_COUNT = 2;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BUST_STANDARD = 21;
 
     private final Name name;
     protected final Cards cards;
@@ -38,11 +39,11 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return cards.isOverScoreThan(BLACKJACK_SCORE);
+        return cards.isOverScoreThan(BUST_STANDARD);
     }
 
     public boolean isBlackjack() {
-        return cards.isSameSize(BLACKJACK_COUNT) && cards.isSameScore(BLACKJACK_SCORE);
+        return cards.isSameSize(BLACKJACK_CARD_SIZE) && cards.isSameScore(BLACKJACK_SCORE);
     }
 
     public abstract boolean isHittable();
