@@ -2,12 +2,12 @@ package blackjack.dto;
 
 public abstract class PlayerDto {
     private final String name;
-    private final HandDto deck;
+    private final HandDto hand;
     private final int score;
 
-    protected PlayerDto(String name, HandDto deck, int score) {
+    protected PlayerDto(String name, HandDto hand, int score) {
         this.name = name;
-        this.deck = deck;
+        this.hand = hand;
         this.score = score;
     }
 
@@ -16,7 +16,7 @@ public abstract class PlayerDto {
     }
 
     public HandDto getHand() {
-        return deck;
+        return hand;
     }
 
     public int getScore() {
