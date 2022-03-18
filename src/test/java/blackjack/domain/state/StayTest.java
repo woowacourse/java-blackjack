@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import static blackjack.domain.CardFixture.SPADE_ACE;
 import static blackjack.domain.CardFixture.SPADE_TWO;
 import static blackjack.domain.CardFixture.SPADE_THREE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -14,9 +15,7 @@ public class StayTest {
 
     @BeforeEach
     void setUp() {
-        stay = new Ready()
-                .draw(SPADE_TWO)
-                .draw(SPADE_THREE)
+        stay = Ready.deal(SPADE_TWO, SPADE_THREE)
                 .stay();
     }
 

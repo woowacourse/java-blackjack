@@ -15,9 +15,7 @@ public class HitTest {
     @Test
     @DisplayName("카드 두 장을 받고 블랙잭이 아니면 hit가 된다.")
     void hit() {
-        State state = new Ready()
-                .draw(SPADE_ACE)
-                .draw(SPADE_TWO);
+        State state = Ready.deal(SPADE_ACE, SPADE_TWO);
 
         assertThat(state).isInstanceOf(Hit.class);
     }
@@ -25,9 +23,7 @@ public class HitTest {
     @Test
     @DisplayName("hit일 때 draw를 하고 bust가 아니면 hit가 된다.")
     void hit_draw() {
-        State state = new Ready()
-                .draw(SPADE_ACE)
-                .draw(SPADE_TWO)
+        State state = Ready.deal(SPADE_ACE, SPADE_TWO)
                 .draw(SPADE_TEN);
 
         assertThat(state).isInstanceOf(Hit.class);
@@ -36,9 +32,7 @@ public class HitTest {
     @Test
     @DisplayName("hit일 때 draw를 하고 21이 초과하면 bust가 된다.")
     void hit_bust() {
-        State state = new Ready()
-                .draw(SPADE_THREE)
-                .draw(SPADE_NINE)
+        State state = Ready.deal(SPADE_THREE, SPADE_NINE)
                 .draw(SPADE_TEN);
 
         assertThat(state).isInstanceOf(Bust.class);
@@ -47,9 +41,7 @@ public class HitTest {
     @Test
     @DisplayName("hit일 때 draw를 하고 21이 되어도 hit가 된다.")
     void hit_not_blackjack_21() {
-        State state = new Ready()
-                .draw(SPADE_TWO)
-                .draw(SPADE_NINE)
+        State state = Ready.deal(SPADE_NINE, SPADE_TWO)
                 .draw(SPADE_TEN);
 
         assertThat(state).isInstanceOf(Hit.class);
@@ -58,9 +50,8 @@ public class HitTest {
     @Test
     @DisplayName("hit일 때 stay를 하면 stay가 된다.")
     void hit_stay() {
-        State state = new Ready()
-                .draw(SPADE_ACE)
-                .draw(SPADE_TWO)
+        State state = Ready
+                .deal(SPADE_ACE, SPADE_TWO)
                 .stay();
 
         assertThat(state).isInstanceOf(Stay.class);

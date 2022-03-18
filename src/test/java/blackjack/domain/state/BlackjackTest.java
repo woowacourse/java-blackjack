@@ -15,11 +15,9 @@ public class BlackjackTest {
 
     @BeforeEach
     void setUp() {
-        blackjack = new Ready()
-                .draw(SPADE_ACE)
-                .draw(SPADE_TEN);
-    }
+        blackjack = Ready.deal(SPADE_ACE, SPADE_TEN);
 
+    }
     @Test
     @DisplayName("blackjack일 때 draw를 하면 에러가 발생한다.")
     void draw() {
