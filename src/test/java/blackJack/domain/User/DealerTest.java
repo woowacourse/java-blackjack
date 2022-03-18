@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class DealerTest {
 
     private Dealer dealer = new Dealer();
-    Player player = new Player("test", bettingMoneys.get(i));
+    Player player = new Player("test",10000);
 
     @Test
     @DisplayName("딜러가 소지한 카드가 16 이하면 true를 반환한다.")

@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
-    private Player player = new Player("test", bettingMoneys.get(i));
+    private Player player = new Player("test", 10000);
 
     @Test
     @DisplayName("플레이어가 블랙잭인지 확인한다.")

@@ -41,8 +41,8 @@ public class Game {
 
     public boolean checkDealerIsBlackJack() {
         if (dealer.isBlackJack()) {
-            dealerScore.makeBlackjackResult(players);
             playerScore.makeBlackjackResult(players);
+            dealerScore.makeDealerResult(playerScore);
             return true;
         }
         return false;

@@ -4,39 +4,42 @@ import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
 import blackJack.domain.User.Players;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerScore {
-    private Map<String, Result> playersScore;
+
+    private Map<Player, Result> results;
+    private Map<String, Integer> profits;
 
     public PlayerScore() {
-        this.playersScore = new HashMap<>();
+        this.results = new HashMap<>();
+        this.profits = new HashMap<>();
     }
-
-    public void addResult(Player player, Result result) {
-        playersScore.put(player.getName(), result);
-    }
-
 
     public void makePlayerResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-           this.addResult(player, Result.judge(dealer,player));
+            results.put(player, Result.judge(dealer,player));
         }
+        makePlayersProfit();
     }
 
-    public Map<String, Result> getPlayersScore() {
-        return playersScore;
+    public Map<String, Integer> makePlayersProfit() {
+        for (Map.Entry<Player, Result> entry : results.entrySet()) {
+            profits.put(entry.getKey().getName(), entry.getValue().calculateBenefit(entry.getKey()));
+        }
+        return profits;
     }
 
-    public Map<String, Result> getPlayersResult() {
-        return Collections.unmodifiableMap(playersScore);
+    public Map<String, Integer> getPlayersProfit() {
+        return profits;
     }
 
     public void makeBlackjackResult(Players players) {
         for (Player player : players.getPlayers()) {
-            addResult(player,player.judgeByBlackjack());
+            results.put(player, player.judgeByBlackjack());
         }
+        makePlayersProfit();
     }
+
 }

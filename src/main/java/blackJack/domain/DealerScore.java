@@ -9,36 +9,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DealerScore {
-    Map<Result, Integer> dealerScore;
+    double dealerProfits = 0;
 
-    public DealerScore() {
-        dealerScore = new EnumMap<Result, Integer>(Result.class);
-        for (Result value : Result.values()) {
-            dealerScore.put(value,0);
-        }
+    public void makeDealerResult(PlayerScore playerScore){
+        List<Integer> results = playerScore.getPlayersProfit().entrySet().stream()
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toUnmodifiableList());
+        dealerProfits = results.stream().mapToDouble(Integer::intValue).sum() * -1;
     }
 
-    public void addResult(Result result, Integer count) {
-        dealerScore.put(result, count);
+    public int getDealerProfits() {
+        return (int)dealerProfits;
     }
 
-    private int getDealerResultCount(Result result, List<Result> results) {
-        return (int) results.stream().filter((r) -> r.equals(result)).count();
-    }
-
-    public Map<Result, Integer> makeDealerResult(PlayerScore playerScore) {
-        List<Result> results = playerScore.getPlayersResult().values().stream().collect(Collectors.toUnmodifiableList());
-        for (Result value : Result.values()) {
-            addResult(value, getDealerResultCount(Result.reverse(value), results));
-        }
-        return dealerScore;
-    }
-
-    public Map<Result, Integer> getDealerScore() {
-        return dealerScore;
-    }
-
-    public void makeBlackjackResult(Players players) {
-         addResult(Result.WIN, players.getPlayers().size());
-    }
 }

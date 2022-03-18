@@ -21,6 +21,18 @@ public abstract class User {
         this.cards = new Cards(new ArrayList<>());
     }
 
+    public boolean isBlackJack() {
+        if (cards.isOnlyTwoCards() && cards.calculateScore() == WINNING_LIMIT) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isBurst(){
+        return this.getScore() > WINNING_LIMIT;
+    }
+
+
     public void requestCard(Card card) {
         this.cards.add(card);
     }
@@ -43,16 +55,7 @@ public abstract class User {
         return cards.calculateScore();
     }
 
-    public boolean isBlackJack() {
-        if (cards.isOnlyTwoCards() && cards.calculateScore() == WINNING_LIMIT) {
-            return true;
-        }
-        return false;
+    public int getBettingMoney() {
+        return bettingMoney.getMoney();
     }
-
-    public boolean isBurst(){
-        return this.getScore() > WINNING_LIMIT;
-    }
-
-
 }
