@@ -1,19 +1,16 @@
 package domain.card;
 
-import static domain.MockCard.CLUB_ACE_CARD;
-import static domain.MockCard.HEART_TEN_CARD;
-import static domain.MockCard.SPADE_NINE_CARD;
-import static domain.card.CardState.BLACKJACK;
-import static domain.card.CardState.BUST;
-import static domain.card.CardState.STAND;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.HitThreshold;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static domain.MockCard.*;
+import static domain.card.CardState.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardStateTest {
 

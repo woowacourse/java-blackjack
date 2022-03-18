@@ -1,18 +1,17 @@
 package domain.utils;
 
-import static domain.MockCard.CLUB_ACE_CARD;
-import static domain.MockCard.HEART_TEN_CARD;
-import static domain.MockCard.SPADE_NINE_CARD;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.card.Card;
-import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import utils.CardConvertor;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static domain.MockCard.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardConvertorTest {
     @ParameterizedTest
