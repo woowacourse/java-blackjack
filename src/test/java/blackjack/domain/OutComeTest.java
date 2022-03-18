@@ -2,12 +2,12 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.JustBlackjackDeck;
 import blackjack.domain.card.JustTwoSpadeDeck;
-import blackjack.domain.card.RandomDeck;
 import blackjack.domain.card.Type;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
@@ -26,7 +26,7 @@ public class OutComeTest {
         dealer.hit(Card.of(CardNumber.TEN, Type.SPADE));
         dealer.hit(Card.of(CardNumber.TEN, Type.HEART));
 
-        Player player = new Participant(new Name("aki"), deck);
+        Player player = new Participant(new Name("aki"), deck, new BetMoney(1));
         player.hit(Card.of(CardNumber.TEN, Type.SPADE));
         player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
 
@@ -40,7 +40,7 @@ public class OutComeTest {
         Player dealer = new Dealer(deck);
         dealer.hit(Card.of(CardNumber.SEVEN, Type.CLOVER));
 
-        Player player = new Participant(new Name("aki"), deck);
+        Player player = new Participant(new Name("aki"), deck, new BetMoney(1));
         player.hit(Card.of(CardNumber.TEN, Type.SPADE));
         player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
 
@@ -55,7 +55,7 @@ public class OutComeTest {
         dealer.hit(Card.of(CardNumber.TEN, Type.CLOVER));
         dealer.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
 
-        Player player = new Participant(new Name("aki"), deck);
+        Player player = new Participant(new Name("aki"), deck, new BetMoney(1));
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.LOSE);
     }
@@ -67,7 +67,7 @@ public class OutComeTest {
         Deck justTwoDeck = new JustTwoSpadeDeck();
         Player dealer = new Dealer(blackjackDeck);
 
-        Player player = new Participant(new Name("aki"), justTwoDeck);
+        Player player = new Participant(new Name("aki"), justTwoDeck, new BetMoney(1));
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.WIN);
     }
@@ -80,7 +80,7 @@ public class OutComeTest {
 
         Player dealer = new Dealer(justTwoDeck);
 
-        Player player = new Participant(new Name("aki"), blackjackDeck);
+        Player player = new Participant(new Name("aki"), blackjackDeck, new BetMoney(1));
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.LOSE);
     }
@@ -91,7 +91,7 @@ public class OutComeTest {
         Deck blackjackDeck = new JustBlackjackDeck();
         Player dealer = new Dealer(blackjackDeck);
 
-        Player player = new Participant(new Name("aki"), blackjackDeck);
+        Player player = new Participant(new Name("aki"), blackjackDeck, new BetMoney(1));
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.DRAW);
     }
@@ -103,7 +103,7 @@ public class OutComeTest {
         Player dealer = new Dealer(deck);
         dealer.hit(Card.of(CardNumber.FIVE, Type.CLOVER));
 
-        Player player = new Participant(new Name("aki"), deck);
+        Player player = new Participant(new Name("aki"), deck, new BetMoney(1));
 
         assertThat(Outcome.matchAboutDealer((Dealer) dealer, player)).isEqualTo(Outcome.WIN);
     }

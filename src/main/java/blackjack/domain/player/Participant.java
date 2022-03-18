@@ -1,13 +1,17 @@
 package blackjack.domain.player;
 
+import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.Deck;
 import blackjack.domain.state.Ready;
 
 public class Participant extends AbstractPlayer implements Player {
 
-    public Participant(Name name, Deck deck) {
+    private final BetMoney money;
+
+    public Participant(Name name, Deck deck, BetMoney money) {
         this.name = name;
         this.state = Ready.dealToParticipant(deck.pick(), deck.pick());
+        this.money = money;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class PlayerBetMoniesTest {
         int money = 10000;
         BetMoney betMoney = new BetMoney(money);
         Deck deck = new RandomDeck();
-        Player player = new Participant(new Name("alien"), deck);
+        Player player = new Participant(new Name("alien"), deck, new BetMoney(1));
 
         Map<Player, BetMoney> betMonies = new LinkedHashMap<>();
         betMonies.put(player, betMoney);

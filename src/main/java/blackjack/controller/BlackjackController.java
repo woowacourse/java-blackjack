@@ -25,8 +25,6 @@ public class BlackjackController {
         Deck deck = new RandomDeck();
 
         Players players = createPlayers(deck);
-
-        PlayerBetMonies betMonies = createPlayerBetMonies(players.getParticipants());
         ResultView.printInitCard(players);
 
         play(players, deck);
@@ -46,19 +44,13 @@ public class BlackjackController {
     private List<Player> toPlayers(List<String> names, Deck deck) {
         return names.stream()
                 .map(Name::new)
-                .map(name -> new Participant(name, deck))
+                .map(name -> new Participant(name, deck, getBetMoney(name)))
                 .collect(Collectors.toList());
     }
 
-    private PlayerBetMonies createPlayerBetMonies(List<Player> players) {
-        Map<Player, BetMoney> betMonies = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            int input = InputView.requestBetMoney(player.getName());
-            betMonies.put(player, new BetMoney(input));
-        }
-
-        return new PlayerBetMonies(betMonies);
+    private BetMoney getBetMoney(Name name) {
+        int input = InputView.requestBetMoney(name);
+        return new BetMoney(input);
     }
 
     private void play(Players players, Deck deck) {
