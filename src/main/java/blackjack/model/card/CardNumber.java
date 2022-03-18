@@ -30,6 +30,10 @@ public enum CardNumber {
         this.valueForPrint = valueForPrint;
     }
 
+    public String getValueForPrint() {
+        return valueForPrint;
+    }
+
     public static int calculateScore(final List<CardNumber> cardNumbers) {
         int score = calculateBaseScore(cardNumbers);
         if (hasAceIn(cardNumbers)) {

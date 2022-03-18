@@ -2,8 +2,9 @@ package blackjack.model.state;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
+import java.util.List;
 
-public class Blackjack implements State{
+public class Blackjack implements State {
 
     private final Cards cards;
 
@@ -19,5 +20,10 @@ public class Blackjack implements State{
     @Override
     public boolean isReady() {
         return false;
+    }
+
+    @Override
+    public List<String> getCards() {
+        return cards.getCardNames();
     }
 }

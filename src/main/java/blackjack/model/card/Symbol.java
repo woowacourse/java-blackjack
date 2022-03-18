@@ -13,4 +13,8 @@ public enum Symbol {
     Symbol(String value) {
         this.value = value;
     }
+
+    public String getValue() {
+        return value;
+    }
 }

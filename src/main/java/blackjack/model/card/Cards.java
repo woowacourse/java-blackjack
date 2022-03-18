@@ -45,4 +45,10 @@ public class Cards {
     public boolean isBust() {
         return sumScore() > MAX_SCORE;
     }
+
+    public List<String> getCardNames() {
+        return values.stream()
+                .map(Card::getNumberAndSymbol)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

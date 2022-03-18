@@ -2,14 +2,15 @@ package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
 import blackjack.view.MoneyBetter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Participants {
     private static final int PLAYER_COUNT_LIMIT = 8;
 
-    private final List<Player> players;
-    private final Dealer dealer;
+    private final List<Participant> players;
+    private final Participant dealer;
 
     public Participants(final List<String> names, final MoneyBetter moneyBetter) {
         checkPlayersCount(names);
@@ -39,9 +40,17 @@ public class Participants {
     }
 
     public void drawFrom(final CardDeck cardDeck) {
-        for (Player player : players) {
+        for (Participant player : players) {
             player.drawFrom(cardDeck);
         }
         dealer.drawFrom(cardDeck);
+    }
+
+    public List<Participant> getParticipants() {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(players.stream()
+                .collect(Collectors.toUnmodifiableList()));
+        return participants;
     }
 }

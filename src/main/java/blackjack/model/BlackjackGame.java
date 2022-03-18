@@ -1,6 +1,7 @@
 package blackjack.model;
 
 import blackjack.model.card.CardDeck;
+import blackjack.model.participant.Participant;
 import blackjack.model.participant.Participants;
 import blackjack.view.MoneyBetter;
 import java.util.List;
@@ -16,5 +17,9 @@ public class BlackjackGame {
 
     public void start() {
         participants.drawFrom(cardDeck);
+    }
+
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
     }
 }

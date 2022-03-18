@@ -12,4 +12,8 @@ public class Card {
     public CardNumber getNumber() {
         return cardNumber;
     }
+
+    public String getNumberAndSymbol() {
+        return cardNumber.getValueForPrint() + symbol.getValue();
+    }
 }
