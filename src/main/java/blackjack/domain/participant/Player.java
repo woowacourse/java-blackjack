@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Cards.MAX_SCORE;
-
 import blackjack.domain.Money;
 import blackjack.domain.Name;
 import blackjack.domain.card.Deck;
@@ -32,58 +30,21 @@ public class Player extends Participant {
     public void hit(final Deck deck) {
         cards.add(deck.drawCard());
 
-        updateStatus();
+        if (cards.isBust()) {
+            playerStatus = PlayerStatus.BUST;
+        }
     }
 
     public void stay() {
-        playerStatus = PlayerStatus.STAY;
-        updateStatus();
-    }
-
-    private void updateStatus() {
-        if (cards.isBust()) {
-            playerStatus = PlayerStatus.BUST;
-            return;
-        }
-        if (cards.isBlackjack(2)) {
-            playerStatus = PlayerStatus.BLACKJACK;
-        }
-    }
-
-    public void calculatePrize(final boolean isDealerBlackjack, final int dealerScore) {
         if (isBlackjack()) {
-            updateWhenBlackjack(isDealerBlackjack);
-        }
-
-        if (isPush(dealerScore)) {
-            money.toZero();
-        }
-        if (isLoss(dealerScore)) {
-            money.toNegative();
-        }
-    }
-
-    private void updateWhenBlackjack(final boolean isDealerBlackjack) {
-        if (isDealerBlackjack) {
-            money.toZero();
+            playerStatus = PlayerStatus.BLACKJACK;
             return;
         }
-
-        money.multiply();
+        playerStatus = PlayerStatus.STAY;
     }
 
-    private boolean isPush(final int dealerScore) {
-        return dealerScore == getScore() && getScore() <= MAX_SCORE;
-    }
-
-    private boolean isLoss(final int dealerScore) {
-        if (getScore() > MAX_SCORE) {
-            return true;
-        }
-        if (dealerScore > MAX_SCORE) {
-            return false;
-        }
-        return dealerScore > getScore();
+    public PlayerStatus getPlayerStatus() {
+        return playerStatus;
     }
 
     public int getPrize() {
