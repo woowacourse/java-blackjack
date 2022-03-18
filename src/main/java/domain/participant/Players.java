@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.card.Deck;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +40,6 @@ public final class Players {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return List.copyOf(players);
     }
 }
