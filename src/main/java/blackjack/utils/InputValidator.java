@@ -4,9 +4,9 @@ import java.util.List;
 
 public class InputValidator {
 
+    public static final String HIT = "y";
     private static final String BLANK_ERROR_MESSAGE = "[Error]: 내용을 입력해주세요.";
     private static final String REQUEST_HIT_FORMAT_ERROR_MESSAGE = "[Error]: 대답은 y/n 형식으로 입력해주세요.";
-    public static final String HIT = "y";
     private static final String STOP_HIT = "n";
     private static final String HAS_DUPLICATE_NAME_ERROR_MESSAGE = "[Error]: 중복된 이름이 존재합니다.";
     private static final int LIMIT_NUMBER_OF_PLAYERS = 8;

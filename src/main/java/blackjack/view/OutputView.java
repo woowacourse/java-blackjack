@@ -8,7 +8,6 @@ import blackjack.domain.card.PlayingCard;
 import blackjack.domain.player.BetMoney;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.GameResponse;
-import blackjack.domain.result.Match;
 import blackjack.domain.result.PlayersBetMoney;
 import blackjack.domain.result.Profits;
 
@@ -23,7 +22,6 @@ public class OutputView {
     private static final String FINAL_WINNER_PROFIT_GUIDE_MESSAGE = "## 최종 수익";
     private static final String FINAL_POINT_GUIDE_MESSAGE = " - 결과";
     private static final char NEW_LINE = '\n';
-    private static final char FINAL_MATCH_DELIMITER = ' ';
     private static final int DELETE_FINAL_DELIMITER = 2;
 
     private OutputView() {
@@ -109,15 +107,5 @@ public class OutputView {
         for (Player player : profitKeys) {
             System.out.println(player.getName() + RESULT_START_DELIMITER + profit.get(player).getMoney());
         }
-    }
-
-    private static String accumulateMatchResult(Map<Match, Integer> matchResult) {
-        StringBuilder sb = new StringBuilder();
-        for (Match match : matchResult.keySet()) {
-            sb.append(matchResult.get(match))
-                    .append(match.getResult())
-                    .append(FINAL_MATCH_DELIMITER);
-        }
-        return sb.toString();
     }
 }

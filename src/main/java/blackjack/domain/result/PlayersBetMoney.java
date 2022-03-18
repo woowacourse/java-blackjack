@@ -54,19 +54,23 @@ public class PlayersBetMoney {
     }
 
     public void calcPlusMoney(Players players, Player guest) {
-        playersMoney.get(findPlayer(players, guest)).plusMoney();
+        playersMoney.get(findPlayer(players, guest))
+                .plusMoney();
     }
 
     public void calcPlusBlackjackMoney(Players players, Player guest) {
-        playersMoney.get(findPlayer(players, guest)).plusBlackjackMoney();
+        playersMoney.get(findPlayer(players, guest))
+                .plusBlackjackMoney();
     }
 
     public void calcMinusMoney(Players players, Player guest) {
-        playersMoney.get(findPlayer(players, guest)).minusMoney();
+        playersMoney.get(findPlayer(players, guest))
+                .minusMoney();
     }
 
     public void calcMinusBlackjackMoney(Players players, Player guest) {
-        playersMoney.get(findPlayer(players, guest)).minusBlackjackMoney();
+        playersMoney.get(findPlayer(players, guest))
+                .minusBlackjackMoney();
     }
 
 

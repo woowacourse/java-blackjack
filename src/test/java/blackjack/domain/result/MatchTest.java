@@ -119,6 +119,7 @@ class MatchTest {
     @DisplayName("일반 승 매치 확인")
     void checkWin() {
         Match match = Match.WIN;
+
         assertThat(match.isMatchWin()).isTrue();
     }
 
@@ -126,6 +127,7 @@ class MatchTest {
     @DisplayName("블랙잭 승 매치 확인")
     void checkBlackjackWin() {
         Match match = Match.WIN_BLACKJACK;
+
         assertThat(match.isMatchBlackjackWin()).isTrue();
     }
 
@@ -133,6 +135,7 @@ class MatchTest {
     @DisplayName("일반 패 매치 확인")
     void checkLose() {
         Match match = Match.LOSE;
+
         assertThat(match.isMatchLose()).isTrue();
     }
 
@@ -140,6 +143,7 @@ class MatchTest {
     @DisplayName("블랙잭 패 매치 확인")
     void checkBlackjackLose() {
         Match match = Match.LOSE_BLACKJACK;
+
         assertThat(match.isMatchBlackjackLose()).isTrue();
     }
 }

@@ -59,8 +59,4 @@ public enum Match {
     public boolean isMatchWin() {
         return this.result.equals(WIN.result);
     }
-
-    public String getResult() {
-        return result;
-    }
 }

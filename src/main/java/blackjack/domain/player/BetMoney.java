@@ -28,6 +28,6 @@ public class BetMoney {
     }
 
     public void minusBlackjackMoney() {
-        this.money = -((this.money + this.money * BLACKJACK_EXTRA_POINT));
+        this.money = -(this.money + this.money * BLACKJACK_EXTRA_POINT);
     }
 }

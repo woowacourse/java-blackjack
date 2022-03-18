@@ -1,19 +1,19 @@
 package blackjack.domain.result;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -61,8 +61,8 @@ class PlayersBetMoneyTest {
         Map<Player, BetMoney> playersMoney = new LinkedHashMap<>();
         playersMoney.put(firstGuest, new BetMoney(firstMoney));
         PlayersBetMoney playersBetMoney = new PlayersBetMoney(playersMoney);
-
         playersBetMoney.getPlayersMoney().get(firstGuest).plusMoney();
+
         assertThat(playersBetMoney.getPlayersMoney().get(firstGuest).getMoney()).isEqualTo(expected);
     }
 
@@ -79,8 +79,8 @@ class PlayersBetMoneyTest {
         Map<Player, BetMoney> playersMoney = new LinkedHashMap<>();
         playersMoney.put(firstGuest, new BetMoney(firstMoney));
         PlayersBetMoney playersBetMoney = new PlayersBetMoney(playersMoney);
-
         playersBetMoney.getPlayersMoney().get(firstGuest).minusMoney();
+
         assertThat(playersBetMoney.getPlayersMoney().get(firstGuest).getMoney()).isEqualTo(expected);
     }
 
@@ -97,8 +97,8 @@ class PlayersBetMoneyTest {
         Map<Player, BetMoney> playersMoney = new LinkedHashMap<>();
         playersMoney.put(firstGuest, new BetMoney(firstMoney));
         PlayersBetMoney playersBetMoney = new PlayersBetMoney(playersMoney);
-
         playersBetMoney.getPlayersMoney().get(firstGuest).plusBlackjackMoney();
+
         assertThat(playersBetMoney.getPlayersMoney().get(firstGuest).getMoney()).isEqualTo(expected);
     }
 
@@ -115,8 +115,8 @@ class PlayersBetMoneyTest {
         Map<Player, BetMoney> playersMoney = new LinkedHashMap<>();
         playersMoney.put(firstGuest, new BetMoney(firstMoney));
         PlayersBetMoney playersBetMoney = new PlayersBetMoney(playersMoney);
-
         playersBetMoney.getPlayersMoney().get(firstGuest).minusBlackjackMoney();
+
         assertThat(playersBetMoney.getPlayersMoney().get(firstGuest).getMoney()).isEqualTo(expected);
     }
 }
