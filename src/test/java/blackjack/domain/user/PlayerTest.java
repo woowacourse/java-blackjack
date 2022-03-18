@@ -1,12 +1,12 @@
 package blackjack.domain.user;
 
+import static blackjack.TestUtils.createDeck;
+import static blackjack.TestUtils.createPlayerByName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
-import blackjack.domain.vo.Name;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private static final int MAX_DRAWABLE_COUNT = 11;
-    private static final int MINIMUM_BETTING_AMOUNT = 10;
 
     @DisplayName("플레이어 생성 검증")
     @Test
@@ -85,13 +84,5 @@ public class PlayerTest {
 
         //then
         assertThat(cards.size()).isEqualTo(2);
-    }
-
-    private Deck createDeck() {
-        return new Deck(new ShuffledDeckGenerateStrategy());
-    }
-
-    private Player createPlayerByName(String name) {
-        return Player.from(Name.of(name), new BettingMoney(MINIMUM_BETTING_AMOUNT));
     }
 }

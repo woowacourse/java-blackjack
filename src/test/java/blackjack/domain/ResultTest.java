@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static blackjack.domain.Result.BLACKJACK;
 import static blackjack.domain.Result.LOSS;
+import static blackjack.TestUtils.createPlayerByName;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.FIVE;
 import static blackjack.domain.card.Denomination.KING;
@@ -16,10 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.vo.Name;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Map;
@@ -96,9 +95,5 @@ class ResultTest {
                 new Card(DIAMOND, SIX),
                 new Card(SPADE, ACE)    //17
         )));
-    }
-
-    private Player createPlayerByName(String name) {
-        return Player.from(Name.of(name), new BettingMoney(MINIMUM_BETTING_AMOUNT));
     }
 }

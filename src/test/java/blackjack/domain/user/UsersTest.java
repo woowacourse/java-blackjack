@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import static blackjack.TestUtils.createPlayerByName;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.TEN;
 import static blackjack.domain.card.Suit.DIAMOND;
@@ -18,8 +19,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class UsersTest {
-
-    private static final int MINIMUM_BETTING_AMOUNT = 10;
 
     @DisplayName("문자열 기반 Users 생성 검증")
     @Test
@@ -91,9 +90,5 @@ class UsersTest {
         //then
         assertThat(player.isBlackJack()).isTrue();
 
-    }
-
-    private Player createPlayerByName(String name) {
-        return Player.from(Name.of(name), new BettingMoney(MINIMUM_BETTING_AMOUNT));
     }
 }

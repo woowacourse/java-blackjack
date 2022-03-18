@@ -1,10 +1,11 @@
 package blackjack.domain.user;
 
+import static blackjack.TestUtils.createDealer;
+import static blackjack.TestUtils.createDeck;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -71,13 +72,5 @@ public class DealerTest {
         return cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();
-    }
-
-    private Deck createDeck() {
-        return new Deck(new ShuffledDeckGenerateStrategy());
-    }
-
-    private Dealer createDealer() {
-        return Dealer.create();
     }
 }
