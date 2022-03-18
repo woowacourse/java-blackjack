@@ -42,7 +42,7 @@ public class PlayersBetMoney {
                 .stream()
                 .mapToDouble(player -> playersMoney.get(player).getMoney())
                 .sum();
-        playersMoney.put(dealer, new BetMoney(profit));
+        playersMoney.put(dealer, new BetMoney(-profit));
     }
 
     private Player findPlayer(Players players, Player guest) {

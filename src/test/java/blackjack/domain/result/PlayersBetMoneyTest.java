@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayersBetMoneyTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"100:-500:-400", "100:100:200", "-100:100:0"}, delimiter = ':')
+    @CsvSource(value = {"100:-500:400", "100:100:-200", "-100:100:0"}, delimiter = ':')
     @DisplayName("딜러 돈 합산 확인")
     void checkInitDealerMoney(int firstMoney, int secondMoney, int expected) {
         List<Player> playerList = new ArrayList<>();
