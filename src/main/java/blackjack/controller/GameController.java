@@ -101,7 +101,7 @@ public class GameController {
     }
 
     private void printDealerPrize() {
-        int dealerPrize = 0;
+        double dealerPrize = 0;
         for (Player player : players.getValue()) {
             final PrizeCalculator prizeCalculator = PrizeCalculator.from(player.getPlayerStatus());
             dealerPrize += prizeCalculator.calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),

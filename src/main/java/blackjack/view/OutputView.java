@@ -52,13 +52,13 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다.");
     }
 
-    public static void printDealerPrize(final int prize) {
+    public static void printDealerPrize(final double prize) {
         System.out.printf("%n## 최종 수익%n");
         printPrize("딜러", prize);
     }
 
-    public static void printPrize(final String name, final int prize) {
-        System.out.println(name + ": " + prize);
+    public static void printPrize(final String name, final double prize) {
+        System.out.println(name + ": " + String.format("%.0f", prize));
     }
 
     public static void printError(final String message) {

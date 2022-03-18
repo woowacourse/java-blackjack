@@ -5,7 +5,7 @@ public class Money {
     private static final int VALUE_LOWER_BOUND = 100;
     private static final int VALUE_UPPER_BOUND = 1_000_000_000;
 
-    private int value;
+    private double value;
 
     public Money() {
         this.value = 0;
@@ -18,7 +18,7 @@ public class Money {
 
     private void validate(final int value) {
         validateBound(value);
-        validateLastIndex(value);
+//        validateLastIndex(value);
     }
 
     private void validateBound(final int value) {
@@ -27,13 +27,15 @@ public class Money {
         }
     }
 
+/*
     private void validateLastIndex(final int value) {
         if (value % 10 != 0) {
             throw new IllegalArgumentException("베팅 금액은 10으로 나누어 떨어져야 합니다.");
         }
     }
+*/
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 }

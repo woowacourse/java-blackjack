@@ -47,7 +47,7 @@ public class Player extends Participant {
         return playerStatus;
     }
 
-    public int getBettingAmount() {
+    public double getBettingAmount() {
         return money.getValue();
     }
 

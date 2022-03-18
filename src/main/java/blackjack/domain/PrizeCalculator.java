@@ -30,7 +30,7 @@ public enum PrizeCalculator {
     }
 
     public double calculate(final int playerScore, final int dealerScore, final boolean dealerBlackjack,
-                            final int bettingAmount) {
+                            final double bettingAmount) {
         if (this == BLACKJACK) {
             return calculateWhenBlackjack(dealerBlackjack, bettingAmount);
         }
@@ -41,18 +41,18 @@ public enum PrizeCalculator {
         return calculateWhenDefault(playerScore, dealerScore, bettingAmount);
     }
 
-    private double calculateWhenBlackjack(final boolean dealerBlackjack, final int bettingAmount) {
+    private double calculateWhenBlackjack(final boolean dealerBlackjack, final double bettingAmount) {
         if (dealerBlackjack) {
             return pushEarningRate * bettingAmount;
         }
         return winEarningRate * bettingAmount;
     }
 
-    private double calculateWhenDealerBust(final int bettingAmount) {
+    private double calculateWhenDealerBust(final double bettingAmount) {
         return winEarningRate * bettingAmount;
     }
 
-    private double calculateWhenDefault(final int playerScore, final int dealerScore, final int bettingAmount) {
+    private double calculateWhenDefault(final int playerScore, final int dealerScore, final double bettingAmount) {
         if (playerScore > dealerScore) {
             return winEarningRate * bettingAmount;
         }
