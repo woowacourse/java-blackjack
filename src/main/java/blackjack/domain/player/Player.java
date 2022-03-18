@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.Rule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.regex.Pattern;
 public abstract class Player {
 
     private static final Pattern NON_SPECIAL_CHARACTERS = Pattern.compile("^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\\s]*$");
-    private static final int BLACKJACK_CARDS_SIZE = 2;
 
     private final String name;
     private final Cards cards;
@@ -45,7 +43,7 @@ public abstract class Player {
     }
 
     public boolean isBust() {
-        return cards.calculateTotalScore() > Rule.WINNING_SCORE.getValue();
+        return cards.isBust();
     }
 
     public boolean isNotBust() {
@@ -53,8 +51,7 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        return cards.getSize() == BLACKJACK_CARDS_SIZE &&
-                cards.calculateTotalScore() == Rule.WINNING_SCORE.getValue();
+        return cards.isBlackjack();
     }
 
     public boolean isNotBlackjack() {
