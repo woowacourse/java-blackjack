@@ -6,14 +6,18 @@ import static blackjack.domain.fixture.CardRepository.CLOVER3;
 import static blackjack.domain.fixture.CardRepository.CLOVER4;
 import static blackjack.domain.fixture.CardRepository.CLOVER5;
 import static blackjack.domain.fixture.CardRepository.CLOVER6;
+import static blackjack.domain.fixture.CardRepository.CLOVER7;
+import static blackjack.domain.fixture.CardRepository.CLOVER8;
 import static blackjack.domain.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
+import static blackjack.domain.fixture.CardRepository.CLOVER_QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.ResultType;
+import blackjack.domain.money.Money;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +30,8 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         Hand hand = Hand.of(CLOVER4, CLOVER5);
-        player = Player.of("hudi", hand);
+        Money betMoney = Money.from(1000);
+        player = Player.of("hudi", hand, betMoney);
     }
 
     @DisplayName("Player 인스턴스가 생성된다.")
@@ -39,7 +44,7 @@ public class PlayerTest {
     @Test
     void of_withEmptyNameThrowsIllegalArgumentException() {
         Hand hand = Hand.of(CLOVER4, CLOVER5);
-        assertThatThrownBy(() -> Player.of("", hand))
+        assertThatThrownBy(() -> Player.of("", hand, Money.from(10000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 1글자 이상이어야합니다.");
     }
@@ -90,7 +95,7 @@ public class PlayerTest {
     @Test
     void compareWith_returnsResultTypeWin() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER2, CLOVER3));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER2, CLOVER3), Money.from(10000));
 
         // when
         ResultType actual = player.compareWith(winPlayer);
@@ -104,7 +109,7 @@ public class PlayerTest {
     @Test
     void compareWith_returnsResultTypeLose() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER5, CLOVER6));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER5, CLOVER6), Money.from(10000));
 
         // when
         ResultType actual = player.compareWith(winPlayer);
@@ -118,7 +123,7 @@ public class PlayerTest {
     @Test
     void compareWith_returnsResultTypeDraw() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER3, CLOVER6));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER3, CLOVER6), Money.from(10000));
 
         // when
         ResultType actual = player.compareWith(winPlayer);
@@ -132,7 +137,7 @@ public class PlayerTest {
     @Test
     void isBlackjack_returnsTrueOnBlackjack() {
         // given
-        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER10));
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER10), Money.from(10000));
 
         // when
         boolean actual = player.isBlackjack();
@@ -145,7 +150,7 @@ public class PlayerTest {
     @Test
     void isBlackjack_returnsFalseIfTotalScoreIs21ButNotBlackjack() {
         // given
-        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER4));
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER4), Money.from(10000));
         player.receiveCard(CLOVER6);
 
         // when
@@ -153,5 +158,65 @@ public class PlayerTest {
 
         // then
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("calculateProfit 에 점수가 플레이어보다 낮은 딜러를 전달하면, 베팅 금액만큼의 값을 가진 Money 를 반환한다.")
+    @Test
+    void calculateProfit_returnsWinProfitIfWin() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER4), Money.from(10000));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER2, CLOVER3));
+
+        // when
+        Money actual = player.calculateProfit(dealer);
+        Money expected = Money.from(10000);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 점수가 플레이어보다 낮은 딜러를 전달하고, 플레이어는 블랙잭일 경우, 베팅 금액의 1.5배의 값을 가진 Money 를 반환한다.")
+    @Test
+    void calculateProfit_returnsWinWithBlackjackProfitIfWinWithBlackjack() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER10), Money.from(10000));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER8, CLOVER7));
+
+        // when
+        Money actual = player.calculateProfit(dealer);
+        Money expected = Money.from(15000);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 점수가 플레이어보다 높은 딜러를 전달하면, 베팅 금액의 반대 부호를 가진 Money 를 반환한다.")
+    @Test
+    void calculateProfit_returnsNegativeProfitIfLose() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER4), Money.from(10000));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER_QUEEN, CLOVER_KING));
+
+        // when
+        Money actual = player.calculateProfit(dealer);
+        Money expected = Money.from(-10000);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 점수가 플레이어와 같은 딜러를 전달하면, 0의 값을 가진 Money 를 반환한다.")
+    @Test
+    void calculateProfit_returnsZeroProfitIfDraw() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER4), Money.from(10000));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER8, CLOVER7));
+
+        // when
+        Money actual = player.calculateProfit(dealer);
+        Money expected = Money.from(0);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }

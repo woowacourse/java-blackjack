@@ -2,6 +2,7 @@ package blackjack.domain.money;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.game.ResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -120,5 +121,81 @@ public class MoneyTest {
 
         // then
         assertThat(actual).isTrue();
+    }
+
+
+    @DisplayName("calculateProfit 에 ResultType.WIN 을 전달하면, 동등한 Money 를 반환한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {1000, 2000, 3000})
+    void calculateProfit_withResultTypeWinReturnsSameMoney(int input) {
+        // given
+        Money money = Money.from(input);
+
+        // when
+        Money actual = money.calculateProfit(ResultType.WIN);
+        Money expected = Money.from(input);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 ResultType.LOSE 을 전달하면, 음수값을 갖는 Money 를 반환한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {1000, 2000, 3000})
+    void calculateProfit_witResultTypeLoseReturnsNegativeMoney(int input) {
+        // given
+        Money money = Money.from(input);
+
+        // when
+        Money actual = money.calculateProfit(ResultType.LOSE);
+        Money expected = Money.from(input * -1);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 ResultType.WIN_WITH_BLACKJACK 전략을 전달하면, 1.5배 값을 갖는 Money 를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"0,0", "1000,1500", "3000,4500"})
+    void calculateProfit_withResultTypeWinWithBlackjackReturnsMoneyMultipliedOnePointFive(int betted, int profit) {
+        // given
+        Money money = Money.from(betted);
+
+        // when
+        Money actual = money.calculateProfit(ResultType.WIN_WITH_BLACKJACK);
+        Money expected = Money.from(profit);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 블랙잭으로 승리 전략을 전달하면, 1.5배 값이 소수라면 반올림된다.")
+    @ParameterizedTest
+    @CsvSource(value = {"1555,2333", "2333,3500"})
+    void calculateProfit_withResultTypeWinWithBlackjackReturnsRoundedMoney(int betted, int profit) {
+        // given
+        Money money = Money.from(betted);
+
+        // when
+        Money actual = money.calculateProfit(ResultType.WIN_WITH_BLACKJACK);
+        Money expected = Money.from(profit);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("calculateProfit 에 ResultType.DRAW 전략을 전달하면, 항상 0 값을 갖는 Money 를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"0,0", "1000,0", "3000,0"})
+    void calculateProfit_withResultTypeDrawReturnsZeroMoney(int betted, int profit) {
+        // given
+        Money money = Money.from(betted);
+
+        // when
+        Money actual = money.calculateProfit(ResultType.DRAW);
+        Money expected = Money.from(profit);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }

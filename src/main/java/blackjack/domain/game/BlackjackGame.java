@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.card.Hand;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class BlackjackGame {
 
     private List<Player> generatePlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> Player.of(name, generateInitialHand()))
+                .map(name -> Player.of(name, generateInitialHand(), Money.from(10000)))
                 .collect(Collectors.toList());
     }
 

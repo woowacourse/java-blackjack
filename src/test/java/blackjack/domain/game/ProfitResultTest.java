@@ -31,9 +31,9 @@ public class ProfitResultTest {
     @BeforeEach
     void setUp() {
         dealer = Dealer.of(Hand.of(CLOVER4, CLOVER5));
-        winPlayer = Player.of("winPlayer", Hand.of(CLOVER6, CLOVER7));
-        blackjackWinPlayer = Player.of("blackjackWinPlayer", Hand.of(CLOVER_ACE, CLOVER10));
-        losePlayer = Player.of("losePlayer", Hand.of(CLOVER2, CLOVER3));
+        winPlayer = Player.of("winPlayer", Hand.of(CLOVER6, CLOVER7), Money.from(10000));
+        blackjackWinPlayer = Player.of("blackjackWinPlayer", Hand.of(CLOVER_ACE, CLOVER10), Money.from(10000));
+        losePlayer = Player.of("losePlayer", Hand.of(CLOVER2, CLOVER3), Money.from(10000));
     }
 
     @DisplayName("of 메소드는 Player 와 BetAndProfit 의 Map 과 Dealer 를 전달받아 ProfitResult 를 생성해 반환한다.")

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+// TODO: run 제외하고 접근제어자를 private 으로 변경
 public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = initializeGame();

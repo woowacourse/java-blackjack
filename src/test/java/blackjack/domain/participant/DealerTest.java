@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.ResultType;
+import blackjack.domain.money.Money;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -80,7 +81,7 @@ public class DealerTest {
     @Test
     void compareWith_returnsResultTypeWin() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER2, CLOVER3));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER2, CLOVER3), Money.from(10000));
 
         // when
         ResultType actual = dealer.compareWith(winPlayer);
@@ -94,7 +95,7 @@ public class DealerTest {
     @Test
     void compareWith_returnsResultTypeLose() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER5, CLOVER6));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER5, CLOVER6), Money.from(10000));
 
         // when
         ResultType actual = dealer.compareWith(winPlayer);
@@ -108,7 +109,7 @@ public class DealerTest {
     @Test
     void compareWith_returnsResultTypeDraw() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER3, CLOVER6));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER3, CLOVER6), Money.from(10000));
 
         // when
         ResultType actual = dealer.compareWith(winPlayer);

@@ -46,7 +46,7 @@ public abstract class Participant {
 
     public ResultType compareWith(Participant other) {
         if (isWin(other)) {
-            return ResultType.WIN;
+            return getWinType();
         }
 
         if (isLose(other)) {
@@ -54,6 +54,13 @@ public abstract class Participant {
         }
 
         return ResultType.DRAW;
+    }
+
+    private ResultType getWinType() {
+        if (isBlackjack()) {
+            return ResultType.WIN_WITH_BLACKJACK;
+        }
+        return ResultType.WIN;
     }
 
     private boolean isWin(Participant other) {

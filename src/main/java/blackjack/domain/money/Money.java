@@ -1,5 +1,7 @@
 package blackjack.domain.money;
 
+import blackjack.domain.game.ResultType;
+
 public class Money {
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
@@ -20,6 +22,11 @@ public class Money {
 
     public static Money createAsNegative(Money money) {
         return new Money(-money.value);
+    }
+
+    public Money calculateProfit(ResultType resultType) {
+        int calculatedValue = resultType.profitCalculator.apply(value);
+        return new Money(calculatedValue);
     }
 
     public Money add(Money operandMoney) {
