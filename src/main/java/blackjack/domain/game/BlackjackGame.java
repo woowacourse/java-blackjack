@@ -7,7 +7,7 @@ import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
 
@@ -16,9 +16,9 @@ public class BlackjackGame {
     private final Participants participants;
     private final CardDistributor cardDistributor;
 
-    public BlackjackGame(List<Name> names, List<BettingAmount> bettingAmounts, DeckGenerator deckGenerator) {
+    public BlackjackGame(Map<Name, BettingAmount> participantInfos, DeckGenerator deckGenerator) {
         cardDistributor = new CardDistributor(deckGenerator);
-        this.participants = new Participants(names, bettingAmounts);
+        this.participants = new Participants(participantInfos);
     }
 
     public void initCardsAllParticipants() {

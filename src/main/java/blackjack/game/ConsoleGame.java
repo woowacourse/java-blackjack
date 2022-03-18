@@ -13,8 +13,9 @@ import blackjack.domain.participant.Player;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class ConsoleGame {
 
@@ -40,8 +41,8 @@ public class ConsoleGame {
     private BlackjackGame createBlackjackGame(DeckGenerator deckGenerator) {
         try {
             List<Name> playerNames = InputView.inputPlayerNames();
-            List<BettingAmount> bettingAmounts = getBettingAmounts(playerNames);
-            return new BlackjackGame(playerNames, bettingAmounts, deckGenerator);
+            Map<Name, BettingAmount> participantInfos = getBettingAmounts(playerNames);
+            return new BlackjackGame(participantInfos, deckGenerator);
 
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
@@ -49,10 +50,12 @@ public class ConsoleGame {
         }
     }
 
-    private List<BettingAmount> getBettingAmounts(List<Name> names) {
-        return names.stream()
-                .map(this::inputBettingAmounts)
-                .collect(Collectors.toUnmodifiableList());
+    private Map<Name, BettingAmount> getBettingAmounts(List<Name> names) {
+        Map<Name, BettingAmount> map = new HashMap<>();
+        for (Name name : names) {
+            map.put(name, inputBettingAmounts(name));
+        }
+        return map;
     }
 
     private BettingAmount inputBettingAmounts(Name name) {

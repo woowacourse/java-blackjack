@@ -1,17 +1,15 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Participants {
 
     private static final int MAX_PLAYER_COUNT = 8;
     private static final int NOT_CONTAINS_NUMBER = -1;
-    private static final String ERROR_LIST_SIZE = "플레이어 이름과 배팅 금액이 매칭되지 않습니다.";
     private static final String ERROR_OVER_PLAYER_COUNT = String.format("게임에 참여하는 최대 인원은 %d명 입니다.", MAX_PLAYER_COUNT);
 
     private final List<Player> players;
@@ -23,9 +21,9 @@ public class Participants {
         validatePlayers(players);
     }
 
-    public Participants(List<Name> names, List<BettingAmount> bettingAmounts) {
+    public Participants(Map<Name, BettingAmount> participantInfos) {
         this.dealer = new Dealer();
-        this.players = initPlayers(new ArrayList<>(names), new ArrayList<>(bettingAmounts));
+        this.players = initPlayers(participantInfos);
         validatePlayers(players);
     }
 
@@ -35,12 +33,10 @@ public class Participants {
         }
     }
 
-    private List<Player> initPlayers(List<Name> names, List<BettingAmount> bettingAmounts) {
-        if (names.size() != bettingAmounts.size()) {
-            throw new IllegalArgumentException(ERROR_LIST_SIZE);
-        }
-        return IntStream.range(0, names.size())
-                .mapToObj(i -> new Player(names.get(i), bettingAmounts.get(i)))
+    private List<Player> initPlayers(Map<Name, BettingAmount> participantInfos) {
+        return participantInfos.entrySet()
+                .stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toUnmodifiableList());
     }
 
