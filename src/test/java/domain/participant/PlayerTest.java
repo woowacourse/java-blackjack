@@ -43,7 +43,7 @@ class PlayerTest {
 
         assertThatThrownBy(() -> player.hit(deck))
             .isInstanceOf(IllegalStateException.class)
-            .hasMessage(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
+            .hasMessage(ExceptionMessages.PLAYER_CAN_NOT_HIT_ERROR);
     }
 
     @Test

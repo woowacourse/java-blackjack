@@ -1,5 +1,8 @@
 package domain.participant;
 
+import domain.card.Deck;
+import utils.ExceptionMessages;
+
 public final class Player extends Participant {
 
     private static final int MAX_SCORE = 21;
@@ -24,6 +27,14 @@ public final class Player extends Participant {
 
         return Result.judgeResult(calculateScore(), dealer.calculateScore());
 
+    }
+
+    @Override
+    public void hit(Deck deck) {
+        if (!canHit()) {
+            throw new IllegalStateException(ExceptionMessages.PLAYER_CAN_NOT_HIT_ERROR);
+        }
+        this.cards = cards.addCard(deck.handOut());
     }
 
     @Override

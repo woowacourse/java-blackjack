@@ -44,7 +44,7 @@ public final class BlackJackController {
 
     private void handOverTwoCards(Players players, Dealer dealer, Deck deck) {
         players.runInitialTurn(deck);
-        dealer.pickTwoCards(deck);
+        dealer.receiveInitialTwoCards(deck);
         outputView.showInitialTurnStatus(players, dealer);
     }
 

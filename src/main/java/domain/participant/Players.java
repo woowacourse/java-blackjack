@@ -25,7 +25,7 @@ public final class Players {
 
     public void runInitialTurn(Deck deck) {
         for (Player player : players) {
-            player.pickTwoCards(deck);
+            player.receiveInitialTwoCards(deck);
         }
     }
 

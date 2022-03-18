@@ -3,9 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
-import java.util.Collections;
 import java.util.List;
-import utils.ExceptionMessages;
 
 public abstract class Participant {
 
@@ -19,14 +17,9 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public void hit(Deck deck) {
-        if (!canHit()) {
-            throw new IllegalStateException(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
-        }
-        this.cards = cards.addCard(deck.handOut());
-    }
+    public abstract void hit(Deck deck);
 
-    public void pickTwoCards(Deck deck) {
+    public void receiveInitialTwoCards(Deck deck) {
         this.cards = cards.addCards(deck.handOutInitialTwoCards());
     }
 
@@ -47,7 +40,6 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
+        return cards.getCards();
     }
-
 }

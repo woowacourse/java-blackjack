@@ -1,11 +1,13 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Deck;
 import java.util.List;
+import utils.ExceptionMessages;
 
 public final class Dealer extends Participant {
 
-    public static final int CONVERT_POSITIVE = -1;
+    private static final int CONVERT_POSITIVE = -1;
     private static final int MAX_CARD_SUM = 16;
     public static final int FIRST_CARD_INDEX = 0;
     private static final String NAME = "딜러";
@@ -26,7 +28,15 @@ public final class Dealer extends Participant {
     }
 
     @Override
+    public void hit(Deck deck) {
+        if (!canHit()) {
+            throw new IllegalStateException(ExceptionMessages.DEALER_CAN_NOT_HIT_ERROR);
+        }
+        this.cards = cards.addCard(deck.handOut());
+    }
+
+    @Override
     public boolean canHit() {
-        return cards.calculateSum() <= MAX_CARD_SUM;
+        return !isBlackJack() && cards.calculateSum() <= MAX_CARD_SUM;
     }
 }
