@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected static final int GOAL_SCORE = 21;
+    protected static final int TARGET_SCORE_FOR_BLACKJACK = 21;
     private static final int ADDITIONAL_SCORE_FOR_ACE = 10;
 
     protected int score = 0;
@@ -28,7 +28,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack(int count) {
-        return cards.size() == count && score == GOAL_SCORE;
+        return cards.size() == count && score == TARGET_SCORE_FOR_BLACKJACK;
     }
 
     public TotalScoreDto computeTotalScore() {
@@ -59,6 +59,6 @@ public abstract class Participant {
     }
 
     private boolean isBetterToGiveMoreForAce() {
-        return score + ADDITIONAL_SCORE_FOR_ACE <= GOAL_SCORE;
+        return score + ADDITIONAL_SCORE_FOR_ACE <= TARGET_SCORE_FOR_BLACKJACK;
     }
 }
