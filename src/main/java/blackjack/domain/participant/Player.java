@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.Money;
 import blackjack.domain.Name;
 import blackjack.domain.card.Deck;
+import blackjack.domain.prizecalculator.PrizeCalculator;
 
 public class Player extends Participant {
 
@@ -41,6 +42,10 @@ public class Player extends Participant {
             return;
         }
         playerStatus = PlayerStatus.STAY;
+    }
+
+    public PrizeCalculator findCalculator() {
+        return playerStatus.findCalculator();
     }
 
     public PlayerStatus getPlayerStatus() {

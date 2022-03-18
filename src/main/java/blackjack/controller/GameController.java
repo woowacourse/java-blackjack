@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.PrizeCalculator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
@@ -101,21 +100,20 @@ public class GameController {
     }
 
     private void printDealerPrize() {
-        double dealerPrize = 0;
-        for (Player player : players.getValue()) {
-            final PrizeCalculator prizeCalculator = PrizeCalculator.from(player.getPlayerStatus());
-            dealerPrize += prizeCalculator.calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
-                    player.getBettingAmount()) * -1;
-        }
-        OutputView.printDealerPrize(dealerPrize);
+        double dealerPrize = players.getValue().stream()
+                .mapToDouble(player -> player.findCalculator()
+                        .calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
+                                player.getBettingAmount()))
+                .sum();
+        OutputView.printDealerPrize(dealerPrize * -1);
     }
 
     private void printPlayersPrize() {
         for (Player player : players.getValue()) {
-            final PrizeCalculator prizeCalculator = PrizeCalculator.from(player.getPlayerStatus());
-            OutputView.printPrize(player.getName(),
-                    (int) prizeCalculator.calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
-                            player.getBettingAmount()));
+            final double prize = player.findCalculator()
+                    .calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
+                            player.getBettingAmount());
+            OutputView.printPrize(player.getName(), prize);
         }
     }
 }
