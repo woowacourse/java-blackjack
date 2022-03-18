@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.card.Score;
 import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.CanHit;
 import blackjack.domain.state.CardHand;
@@ -47,10 +46,6 @@ public abstract class Participant {
         return cardHand.stay();
     }
 
-    public Score getScore() {
-        return getCardBundle().getScore();
-    }
-
     public boolean canDraw() {
         return !cardHand.isFinished();
     }
@@ -63,19 +58,15 @@ public abstract class Participant {
         return cardHand.isBust();
     }
 
-    public abstract String getName();
-
     public abstract List<Card> getInitialOpenCards();
 
     public CardHand getCardHand() {
         return cardHand;
     }
 
-    public List<Card> getCards() {
-        return getCardBundle().getCards();
-    }
+    public abstract String getName();
 
-    private CardBundle getCardBundle() {
+    public CardBundle getCardBundle() {
         return cardHand.getCardBundle();
     }
 }

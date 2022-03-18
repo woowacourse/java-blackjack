@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.betting.BettingResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardBundle;
 import blackjack.domain.participant.Participant;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ParticipantCardsDto;
@@ -71,7 +72,8 @@ public class OutputView {
     }
 
     private static String getPlayerCardHandInfo(Participant player) {
-        final String playerCards = getCardsInfo(player.getCards());
+        CardBundle cardBundle = player.getCardBundle();
+        final String playerCards = getCardsInfo(cardBundle.getCards());
         return String.format(PLAYER_CARDS_FORMAT, player.getName(), playerCards);
     }
 

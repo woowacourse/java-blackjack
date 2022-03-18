@@ -9,13 +9,13 @@ public interface CardHand {
 
     CardHand stay();
 
-    CardBundle getCardBundle();
-
-    double getBettingYieldVersus(CardHand targetState);
-
     boolean isFinished();
 
     boolean isBlackjack();
 
     boolean isBust();
+
+    double getBettingYieldVersus(CardHand targetState);
+
+    CardBundle getCardBundle();
 }

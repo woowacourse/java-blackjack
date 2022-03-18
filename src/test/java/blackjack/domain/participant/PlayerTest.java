@@ -60,30 +60,30 @@ public class PlayerTest {
     @Nested
     class DrawAllCardsTest {
 
-    @DisplayName("계속 드로우하도록 하면 21이상이 될 때까지 카드를 추가한다.")
-    @Test
-    void drawAllCards_keepDrawingUntilBust() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER5, CLOVER6);
-        CardSupplier cardSupplier =  new CardDeckStub(List.of(CLOVER2, CLOVER10, CLOVER3));
+        @DisplayName("계속 드로우하도록 하면 21이상이 될 때까지 카드를 추가한다.")
+        @Test
+        void drawAllCards_keepDrawingUntilBust() {
+            CardBundle cardBundle = generateCardBundleOf(CLOVER5, CLOVER6);
+            CardSupplier cardSupplier = new CardDeckStub(List.of(CLOVER2, CLOVER10, CLOVER3));
 
-        Dealer dealer = Dealer.of(cardBundle);
-        dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, cardSupplier);
+            Dealer dealer = Dealer.of(cardBundle);
+            dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, cardSupplier);
 
-        assertThat(dealer.getCards()).containsExactly(CLOVER5, CLOVER6, CLOVER2, CLOVER10);
-        assertThat(dealer.canDraw()).isFalse();
-        assertThat(dealer.isBust()).isTrue();
-    }
+            assertThat(extractCards(dealer)).containsExactly(CLOVER5, CLOVER6, CLOVER2, CLOVER10);
+            assertThat(dealer.canDraw()).isFalse();
+            assertThat(dealer.isBust()).isTrue();
+        }
 
         @DisplayName("계속 드로우하도록 해도 21이 되었을 때 카드 뽑기를 중단한다.")
         @Test
         void drawAllCards_keepDrawingUntil21() {
             CardBundle cardBundle = generateCardBundleOf(CLOVER5, CLOVER6);
-            CardSupplier cardSupplier =  new CardDeckStub(List.of(CLOVER10, CLOVER3));
+            CardSupplier cardSupplier = new CardDeckStub(List.of(CLOVER10, CLOVER3));
 
             Dealer dealer = Dealer.of(cardBundle);
             dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, cardSupplier);
 
-            assertThat(dealer.getCards()).containsExactly(CLOVER5, CLOVER6, CLOVER10);
+            assertThat(extractCards(dealer)).containsExactly(CLOVER5, CLOVER6, CLOVER10);
             assertThat(dealer.canDraw()).isFalse();
             assertThat(dealer.isBust()).isFalse();
         }
@@ -94,9 +94,9 @@ public class PlayerTest {
             CardBundle cardBundle = generateCardBundleOf(CLOVER5, CLOVER6);
 
             Dealer dealer = Dealer.of(cardBundle);
-            dealer.drawAllCards(STAY_CHOICE, VIEW_STRATEGY, ()->CLOVER10);
+            dealer.drawAllCards(STAY_CHOICE, VIEW_STRATEGY, () -> CLOVER10);
 
-            assertThat(dealer.getCards()).containsExactly(CLOVER5, CLOVER6);
+            assertThat(extractCards(dealer)).containsExactly(CLOVER5, CLOVER6);
             assertThat(dealer.canDraw()).isFalse();
         }
     }
@@ -145,5 +145,10 @@ public class PlayerTest {
         public Card getCard() {
             return cards.poll();
         }
+    }
+
+    private List<Card> extractCards(Participant participant) {
+        CardBundle cardBundle = participant.getCardBundle();
+        return cardBundle.getCards();
     }
 }

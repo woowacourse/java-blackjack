@@ -33,7 +33,7 @@ public class DealerTest {
 
         dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER8);
 
-        assertThat(dealer.getCards()).containsExactly(CLOVER4, CLOVER5, CLOVER8);
+        assertThat(extractCards(dealer)).containsExactly(CLOVER4, CLOVER5, CLOVER8);
         assertThat(dealer.canDraw()).isFalse();
     }
 
@@ -71,7 +71,7 @@ public class DealerTest {
         assertThat(dealer.isBust()).isFalse();
 
         dealer.drawAllCards(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER_KING);
-        assertThat(dealer.getCards()).containsExactly(CLOVER7, CLOVER10);
+        assertThat(extractCards(dealer)).containsExactly(CLOVER7, CLOVER10);
     }
 
     @DisplayName("딜러의 getInitialOpenCards 메서드는 초기에 받은 카드 중 한 장이 담긴 컬렉션을 반환한다.")
@@ -84,5 +84,10 @@ public class DealerTest {
 
         assertThat(actual).containsExactly(CLOVER4);
         assertThat(actual.size()).isEqualTo(1);
+    }
+
+    private List<Card> extractCards(Participant participant) {
+        CardBundle cardBundle = participant.getCardBundle();
+        return cardBundle.getCards();
     }
 }

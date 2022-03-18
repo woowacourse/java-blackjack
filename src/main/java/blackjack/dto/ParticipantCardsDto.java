@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.Score;
 import blackjack.domain.participant.Participant;
 import java.util.List;
@@ -17,8 +18,9 @@ public class ParticipantCardsDto {
 
     public static ParticipantCardsDto of(final Participant participant) {
         String name = participant.getName();
-        List<Card> cards = participant.getCards();
-        Score score = participant.getScore();
+        CardBundle cardBundle = participant.getCardBundle();
+        List<Card> cards = cardBundle.getCards();
+        Score score = cardBundle.getScore();
 
         return new ParticipantCardsDto(name, cards, score);
     }
@@ -26,7 +28,8 @@ public class ParticipantCardsDto {
     public static ParticipantCardsDto ofInitial(final Participant participant) {
         String name = participant.getName();
         List<Card> openCardInfo = participant.getInitialOpenCards();
-        Score score = participant.getScore();
+        CardBundle cardBundle = participant.getCardBundle();
+        Score score = cardBundle.getScore();
 
         return new ParticipantCardsDto(name, openCardInfo, score);
     }
