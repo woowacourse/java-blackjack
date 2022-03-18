@@ -19,15 +19,15 @@ public class BlackjackProfitResult {
 
     public Map<Participant, BlackjackProfit> calculateParticipantsProfit() {
         final Map<Participant, BlackjackProfit> profitResult = new LinkedHashMap<>();
-        profitResult.put(dealer, calculateDealerProfit());
-        profitResult.putAll(calculatePlayersProfit());
+        final Map<Player, BlackjackProfit> playersProfitResult = calculatePlayersProfit();
+        profitResult.put(dealer, calculateDealerProfit(playersProfitResult));
+        profitResult.putAll(playersProfitResult);
         return profitResult;
     }
 
-    private BlackjackProfit calculateDealerProfit() {
-        final Map<Player, BlackjackProfit> playersResult = calculatePlayersProfit();
+    private BlackjackProfit calculateDealerProfit(Map<Player, BlackjackProfit> playersProfitResult) {
         double dealerProfit = 0;
-        for (BlackjackProfit blackjackProfit : playersResult.values()) {
+        for (BlackjackProfit blackjackProfit : playersProfitResult.values()) {
             dealerProfit -= blackjackProfit.getProfit();
         }
         return BlackjackProfit.from(dealerProfit);
