@@ -32,7 +32,7 @@ public class RecordsTest {
         Blackjack blackjack = Blackjack.of(intendedNumberGenerator, dealer, players);
 
         //dealer: 12점, player: 7점(범블비), 14점(잉)
-        dto = blackjack.result(dealer, players);
+        dto = blackjack.record(dealer, players);
     }
 
     @DisplayName("딜러 전적 테스트")

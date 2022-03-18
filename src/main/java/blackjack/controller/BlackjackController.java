@@ -49,7 +49,7 @@ public class BlackjackController {
 
     private void endGame(Blackjack blackjack, Dealer dealer, Players players) {
         OutputView.printCardsAndResult(dealer, players.getPlayers());
-        OutputView.printRecord(blackjack.result(dealer, players));
-        OutputView.printProfit(blackjack.profitResult(dealer, players));
+        OutputView.printRecord(blackjack.record(dealer, players));
+        OutputView.printProfit(blackjack.profit(dealer, players));
     }
 }

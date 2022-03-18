@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.machine.Profit;
-import blackjack.domain.machine.ProfitResult;
+import blackjack.domain.machine.Profits;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -106,7 +106,7 @@ public class OutputView {
                 .forEach(player -> System.out.println(player + COLON + outcome.get(player)));
     }
 
-    public static void printProfit(ProfitResult profitResult) {
+    public static void printProfit(Profits profitResult) {
         System.out.println();
         System.out.println(PROFIT_MESSAGE);
         Map<Participant, Profit> profits = profitResult.getResult();

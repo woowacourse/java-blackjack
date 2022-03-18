@@ -7,22 +7,22 @@ import blackjack.domain.participant.Players;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProfitResult {
+public class Profits {
     private static final double BLACKJACK_RATE = 1.5;
 
     private final Map<Participant, Profit> result;
 
-    private ProfitResult(Map<Participant, Profit> result) {
+    private Profits(Map<Participant, Profit> result) {
         this.result = result;
     }
 
-    public static ProfitResult of(Dealer dealer, Players players) {
+    public static Profits of(Dealer dealer, Players players) {
         Map<Participant, Profit> result = players.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(player -> player, player -> getProfit(dealer, player)));
         result.put(dealer, getDealerProfit(result));
 
-        return new ProfitResult(result);
+        return new Profits(result);
     }
 
     private static Profit getProfit(Dealer dealer, Player player) {

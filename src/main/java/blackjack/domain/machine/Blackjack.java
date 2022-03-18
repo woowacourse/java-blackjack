@@ -36,11 +36,11 @@ public class Blackjack {
         dealer.addCard(cardPickMachine.pickCard(numberGenerator));
     }
 
-    public RecordsDto result(Dealer dealer, Players players) {
+    public RecordsDto record(Dealer dealer, Players players) {
         return Records.of(dealer, players.getPlayers());
     }
 
-    public ProfitResult profitResult(Dealer dealer, Players players) {
-        return ProfitResult.of(dealer, players);
+    public Profits profit(Dealer dealer, Players players) {
+        return Profits.of(dealer, players);
     }
 }

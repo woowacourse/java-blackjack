@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import blackjack.domain.card.Card;
 import blackjack.domain.machine.Blackjack;
 import blackjack.domain.machine.Profit;
-import blackjack.domain.machine.ProfitResult;
+import blackjack.domain.machine.Profits;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -17,10 +17,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ProfitResultTest {
+public class ProfitsTest {
     private Dealer dealer;
     private Players players;
-    private ProfitResult profitResult;
+    private Profits profits;
 
     @BeforeEach
     void setUp() {
@@ -34,13 +34,13 @@ public class ProfitResultTest {
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 10));
         Blackjack.of(intendedNumberGenerator, dealer, players);
 
-        profitResult = ProfitResult.of(dealer, players);
+        profits = Profits.of(dealer, players);
     }
 
     @DisplayName("플레이어의 수익률 결과를 테스트")
     @Test
     void playerProfit() {
-        Map<Participant, Profit> result = profitResult.getResult();
+        Map<Participant, Profit> result = profits.getResult();
 
         assertThat(result.get(new Player("범블비", 0L)))
                 .isEqualTo(new Profit(10000L));
@@ -49,7 +49,7 @@ public class ProfitResultTest {
     @DisplayName("플레이어의 수익률 결과를 테스트")
     @Test
     void dealerProfit() {
-        Map<Participant, Profit> result = profitResult.getResult();
+        Map<Participant, Profit> result = profits.getResult();
 
         assertThat(result.get(new Dealer()))
                 .isEqualTo(new Profit(-10000L));
@@ -66,9 +66,9 @@ public class ProfitResultTest {
         dealer.addCard(Card.EIGHT_CLOVER);
         dealer.addCard(Card.FIVE_CLOVER);
 
-        ProfitResult profitResult = ProfitResult.of(dealer, players);
+        Profits profits = Profits.of(dealer, players);
 
-        assertThat(profitResult.getResult().get(player))
+        assertThat(profits.getResult().get(player))
                 .isEqualTo(new Profit(15000L));
     }
 
@@ -83,9 +83,9 @@ public class ProfitResultTest {
         dealer.addCard(Card.A_SPADE);
         dealer.addCard(Card.J_SPADE);
 
-        ProfitResult profitResult = ProfitResult.of(dealer, players);
+        Profits profits = Profits.of(dealer, players);
 
-        assertThat(profitResult.getResult().get(player))
+        assertThat(profits.getResult().get(player))
                 .isEqualTo(new Profit(10000L));
     }
 }
