@@ -3,6 +3,8 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Pattern;
 import blackjack.util.BlackjackTestUtil;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -34,5 +36,19 @@ class StartedTest {
 
         // then
         assertThat(actual).isInstanceOf(Blackjack.class);
+    }
+
+    @Test
+    @DisplayName("Started 상태에서는 hit을 할 수 있다.")
+    void hit() {
+        // given
+        List<Card> cards = BlackjackTestUtil.createCards(20);
+        State started = Started.start(cards);
+
+        // when
+        State actual = started.hit(Card.of(Pattern.CLOVER, Denomination.ACE));
+
+        // then
+        assertThat(actual).isInstanceOf(Hit.class);
     }
 }

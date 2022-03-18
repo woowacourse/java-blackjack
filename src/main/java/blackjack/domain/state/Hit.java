@@ -3,8 +3,9 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public final class Blackjack implements State {
-    public Blackjack(Cards cards) {
+public class Hit implements State {
+    public Hit(Cards cards) {
+
     }
 
     @Override
