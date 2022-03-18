@@ -1,7 +1,9 @@
 package blackjack.domain.player;
 
+import java.util.Arrays;
 import java.util.List;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.card.HoldCards;
@@ -32,6 +34,12 @@ public class Player {
 
     public int getTotalNumber() {
         return holdCards.getTotalNumber();
+    }
+
+    public Score compete(Dealer dealer) {
+        return Arrays.stream(Score.values())
+            .filter(score -> score.match(this, dealer))
+            .findAny().orElse(Score.LOSE);
     }
 
     public Player copy() {

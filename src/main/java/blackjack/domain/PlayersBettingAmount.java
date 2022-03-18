@@ -29,6 +29,6 @@ public class PlayersBettingAmount {
 
     private int getProfit(Player player, Dealer dealer) {
         BettingAmount bettingAmount = profitResult.get(player);
-        return (int)bettingAmount.getDividend(Score.compete(player, dealer));
+        return (int)bettingAmount.getDividend(player.compete(dealer));
     }
 }
