@@ -1,13 +1,18 @@
 package blackjack.domain.machine;
 
-import blackjack.domain.participant.Player;
 import java.util.Objects;
 
 public class Profit {
+    private static final long INIT_MONEY = 0L;
+
     private final long money;
 
     public Profit(long money) {
         this.money = money;
+    }
+
+    public Profit() {
+        money = INIT_MONEY;
     }
 
     @Override

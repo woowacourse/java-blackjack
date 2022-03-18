@@ -5,10 +5,11 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class ProfitResult {
+    private static final double BLACKJACK_RATE = 1.5;
+
     private final Map<Participant, Profit> result;
 
     private ProfitResult(Map<Participant, Profit> result) {
@@ -43,7 +44,7 @@ public class ProfitResult {
             return new Profit(-player.getBetting().getMoney());
         }
 
-        return new Profit(0L);
+        return new Profit();
     }
 
     private static Profit getProfitForBlackjack(Dealer dealer, Player player) {
@@ -51,7 +52,7 @@ public class ProfitResult {
             return new Profit(player.getBetting().getMoney());
         }
 
-        return new Profit((long) (1.5 * player.getBetting().getMoney()));
+        return new Profit((long) (BLACKJACK_RATE * player.getBetting().getMoney()));
     }
 
     private static Profit getDealerProfit(Map<Participant, Profit> playersProfit) {
