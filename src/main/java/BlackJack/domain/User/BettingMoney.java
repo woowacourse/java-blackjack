@@ -7,4 +7,7 @@ public class BettingMoney {
         this.money  = money;
     }
 
+    public int getMoney() {
+        return money;
+    }
 }
