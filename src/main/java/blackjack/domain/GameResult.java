@@ -20,10 +20,7 @@ public enum GameResult {
         this.condition = condition;
     }
 
-    public static GameResult of(int score, int otherScore, boolean blackJackChecker) {
-        if (blackJackChecker) {
-            return BLACKJACK;
-        }
+    public static GameResult of(int score, int otherScore) {
         return Arrays.stream(values())
                 .filter(gameResult -> gameResult.condition.test(score, otherScore))
                 .findAny()

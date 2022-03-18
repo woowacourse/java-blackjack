@@ -24,7 +24,10 @@ public class Player extends Gamer {
         if (dealer.isBust()) {
             return GameResult.WIN;
         }
-        return GameResult.of(getTotalScore(), dealer.getTotalScore(), isBlackJack());
+        if (isBlackJack()) {
+            return GameResult.BLACKJACK;
+        }
+        return GameResult.of(getTotalScore(), dealer.getTotalScore());
     }
 
     @Override
