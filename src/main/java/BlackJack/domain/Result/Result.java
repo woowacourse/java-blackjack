@@ -40,9 +40,9 @@ public enum Result {
     public static Map<String, Integer> makePlayerResult(Dealer dealer, Players players) {
         Map<Player, Result> results = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            results.put(player, Result.judge(dealer, player));
+            results.put(player, judge(dealer, player));
         }
-        return calculateProfit(results);
+        return calculatePlayersProfit(results);
     }
 
     public static Map<String, Integer> makeBlackjackResult(Players players) {
@@ -50,10 +50,10 @@ public enum Result {
         for (Player player : players.getPlayers()) {
             results.put(player, player.judgeByBlackjack());
         }
-        return calculateProfit(results);
+        return calculatePlayersProfit(results);
     }
 
-    public static Map<String, Integer> calculateProfit(Map<Player, Result> results) {
+    public static Map<String, Integer> calculatePlayersProfit(Map<Player, Result> results) {
         Map<String, Integer> profits = new HashMap<>();
         for (Map.Entry<Player, Result> entry :  results.entrySet()) {
             profits.put(entry.getKey().getName(), entry.getValue().calculateProfit(entry.getKey()));
@@ -61,8 +61,8 @@ public enum Result {
         return profits;
     }
 
-    public static int calculateDealerProfit(Map<String, Integer> playerScore) {
-        List<Integer> results = playerScore.entrySet().stream()
+    public static int calculateDealerProfit(Map<String, Integer> playerResult) {
+        List<Integer> results = playerResult.entrySet().stream()
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toUnmodifiableList());
 
