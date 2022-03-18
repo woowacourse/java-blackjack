@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class Score implements Comparable<Score> {
 
@@ -60,13 +59,7 @@ public class Score implements Comparable<Score> {
         static Map<Integer, Score> cache = new HashMap<>();
 
         static Score getCache(final int value) {
-            return Optional.ofNullable(cache.get(value))
-                    .orElseGet(() -> createNewCache(value));
-        }
-
-        static Score createNewCache(final int value) {
-            cache.put(value, new Score(value));
-            return cache.get(value);
+            return cache.computeIfAbsent(value, Score::new);
         }
     }
 }

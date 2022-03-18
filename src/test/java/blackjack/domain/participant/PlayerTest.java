@@ -88,7 +88,6 @@ public class PlayerTest {
             assertThat(dealer.isBust()).isFalse();
         }
 
-
         @DisplayName("stay를 선택하는 경우 21이 아니어도 카드를 뽑지 않는다.")
         @Test
         void drawAllCards_immediatelyStops() {
