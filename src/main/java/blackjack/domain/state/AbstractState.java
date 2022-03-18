@@ -1,7 +1,9 @@
 package blackjack.domain.state;
 
 import blackjack.domain.Score;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractState implements State {
@@ -14,8 +16,8 @@ public abstract class AbstractState implements State {
     }
 
     @Override
-    public Cards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 
     @Override

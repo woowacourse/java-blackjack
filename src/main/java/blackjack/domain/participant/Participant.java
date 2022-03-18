@@ -40,7 +40,7 @@ public abstract class Participant {
     public abstract List<Card> showInitialCards();
 
     public List<Card> getCards() {
-        return List.copyOf(state.getCards().getCards());
+        return List.copyOf(state.getCards());
     }
 
     public String getName() {
