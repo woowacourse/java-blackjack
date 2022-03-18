@@ -3,28 +3,38 @@ package blackJack.domain.result;
 import blackJack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class BlackJackGameResult {
 
-    private static final int DEFAULT_EARNING = 0;
+    private final int dealerEarning;
+    private final Map<String, Integer> playerEarnings;
 
-    private final Map<Player, OutCome> outComes = new LinkedHashMap<>();
-
-    public void add(Player player, OutCome outCome) {
-        outComes.put(player, outCome);
+    private BlackJackGameResult(int dealerEarning, Map<String, Integer> playerEarnings) {
+        this.dealerEarning = dealerEarning;
+        this.playerEarnings = new LinkedHashMap<>(playerEarnings);
     }
 
-    public BlackJackGameBoard calculateEarning() {
+    public static BlackJackGameResult from(Map<Player, OutCome> outComes) {
+        return calculateEarning(outComes);
+    }
+
+    private static BlackJackGameResult calculateEarning(Map<Player, OutCome> outComes) {
         final Map<String, Integer> playerEarnings = new LinkedHashMap<>();
-        int dealerEarning = DEFAULT_EARNING;
+        outComes.forEach((key, value) ->
+                playerEarnings.put(key.getName(), value.calculateEarning(key.getBet())));
 
-        for (Entry<Player, OutCome> player : outComes.entrySet()) {
-            final int playerEarning = player.getValue().calculateEarning(player.getKey().getBet());
-            playerEarnings.put(player.getKey().getName(), playerEarning);
-            dealerEarning += player.getValue().calculateReverseEarning(playerEarning);
-        }
+        int dealerEarning = playerEarnings.values().stream()
+                .mapToInt(earning -> earning * -1)
+                .sum();
 
-        return new BlackJackGameBoard(dealerEarning, playerEarnings);
+        return new BlackJackGameResult(dealerEarning, playerEarnings);
+    }
+
+    public int getDealerEarning() {
+        return dealerEarning;
+    }
+
+    public Map<String, Integer> getPlayerEarnings() {
+        return playerEarnings;
     }
 }

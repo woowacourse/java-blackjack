@@ -1,6 +1,6 @@
 package blackJack.view;
 
-import blackJack.domain.result.BlackJackGameBoard;
+import blackJack.domain.result.BlackJackGameResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,11 +89,11 @@ public class OutputView {
             participant.getScore());
     }
 
-    public static void printEarningResult(Dealer dealer, BlackJackGameBoard blackJackGameBoard) {
+    public static void printEarningResult(Dealer dealer, BlackJackGameResult blackJackGameResult) {
         System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_EARNING));
-        System.out.printf(OUTPUT_MESSAGE_EARNING_INFO, dealer.getName(), blackJackGameBoard.getDealerEarning());
+        System.out.printf(OUTPUT_MESSAGE_EARNING_INFO, dealer.getName(), blackJackGameResult.getDealerEarning());
 
-        blackJackGameBoard.getPlayerEarnings().forEach((key, value)
+        blackJackGameResult.getPlayerEarnings().forEach((key, value)
                 -> System.out.printf(OUTPUT_MESSAGE_EARNING_INFO, key, value));
     }
 

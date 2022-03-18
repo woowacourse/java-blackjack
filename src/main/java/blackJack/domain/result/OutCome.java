@@ -44,12 +44,4 @@ public enum OutCome {
     public int calculateEarning(Bet bet) {
         return (int) (bet.getValue() * profit);
     }
-
-    public int calculateReverseEarning(int earning) {
-        return (int) (LOSE.getProfit() * earning);
-    }
-
-    public double getProfit() {
-        return profit;
-    }
 }

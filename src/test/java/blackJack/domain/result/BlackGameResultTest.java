@@ -7,8 +7,8 @@ import blackJack.domain.card.Denomination;
 import blackJack.domain.card.Suit;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +17,17 @@ class BlackGameResultTest {
     @Test
     @DisplayName("게임의 수익률을 계산하는 결과 테스트")
     void calculateEarningResult() {
+        Map<Player, OutCome> outComes = createOutComes();
+
+        BlackJackGameResult blackJackGameResult = BlackJackGameResult.from(outComes);
+
+        assertThat(blackJackGameResult.getDealerEarning()).isEqualTo(-1000);
+        assertThat(blackJackGameResult.getPlayerEarnings()).isEqualTo(
+                new LinkedHashMap<>(Map.of("kei", -1000, "rookie", 2000))
+        );
+    }
+
+    public Map<Player, OutCome> createOutComes() {
         Player player1 = new Player("kei");
         Player player2 = new Player("rookie");
         Dealer dealer = new Dealer();
@@ -32,16 +43,11 @@ class BlackGameResultTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.JACK));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.TEN));
 
-        BlackJackGameResult blackJackGameResult = new BlackJackGameResult();
+        Map<Player, OutCome> outComes = new LinkedHashMap<>();
 
-        blackJackGameResult.add(player1, OutCome.LOSE);
-        blackJackGameResult.add(player2, OutCome.WIN);
+        outComes.put(player1, OutCome.LOSE);
+        outComes.put(player2, OutCome.WIN);
 
-        HashMap<String, Integer> gameResult = new LinkedHashMap<>();
-        gameResult.put("kei", -1000);
-        gameResult.put("rookie", 2000);
-
-        assertThat(blackJackGameResult.calculateEarning().getDealerEarning()).isEqualTo(-1000);
-        assertThat(blackJackGameResult.calculateEarning().getPlayerEarnings()).isEqualTo(gameResult);
+        return outComes;
     }
 }

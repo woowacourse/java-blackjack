@@ -39,13 +39,13 @@ public class BlackJackGame {
         return value == YesOrNo.YES;
     }
 
-    public BlackJackGameBoard calculateResult() {
-        final BlackJackGameResult blackjackGameResult = new BlackJackGameResult();
+    public BlackJackGameResult calculateResult() {
+        final Map<Player, OutCome> outComes = new LinkedHashMap<>();
         for (Player player : participants.getPlayers()) {
-            blackjackGameResult.add(player, getDealer().calculateOutCome(player));
+            outComes.put(player, getDealer().calculateOutCome(player));
         }
 
-        return blackjackGameResult.calculateEarning();
+        return BlackJackGameResult.from(outComes);
     }
 
     public Participants getParticipants() {

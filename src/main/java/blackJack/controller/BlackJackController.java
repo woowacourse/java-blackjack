@@ -1,10 +1,10 @@
 package blackJack.controller;
 
 import blackJack.domain.BlackJackGame;
-import blackJack.domain.result.BlackJackGameBoard;
 import blackJack.domain.card.Deck;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
+import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.YesOrNo;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
@@ -12,15 +12,15 @@ import blackJack.view.OutputView;
 public class BlackJackController {
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame(Deck.create(), getParticipants());
+        final BlackJackGame blackJackGame = new BlackJackGame(Deck.create(), getParticipants());
 
         additionalBattingMoney(blackJackGame);
         defaultRound(blackJackGame);
         additionalRound(blackJackGame);
 
-        final BlackJackGameBoard blackJackGameBoard = blackJackGame.calculateResult();
+        final BlackJackGameResult blackJackGameResult = blackJackGame.calculateResult();
         OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printEarningResult(blackJackGame.getDealer(), blackJackGameBoard);
+        OutputView.printEarningResult(blackJackGame.getDealer(), blackJackGameResult);
     }
 
     private void additionalBattingMoney(BlackJackGame blackJackGame) {
