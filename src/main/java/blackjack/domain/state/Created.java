@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.BettingMoney;
+import blackjack.domain.game.betting.BettingMoney;
 
 public abstract class Created implements State {
 

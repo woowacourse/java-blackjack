@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import static blackjack.domain.card.Cards.BLACK_JACK_NUMBER;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.BettingMoney;
+import blackjack.domain.game.betting.BettingMoney;
 import blackjack.domain.participant.vo.ParticipantName;
 import blackjack.domain.state.State;
 import java.util.List;

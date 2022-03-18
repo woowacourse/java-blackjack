@@ -4,8 +4,8 @@ import static blackjack.domain.game.GameOutcome.LOSE;
 import static blackjack.domain.game.GameOutcome.WIN;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.BettingMoney;
 import blackjack.domain.game.GameOutcome;
+import blackjack.domain.game.betting.BettingMoney;
 import blackjack.domain.state.State;
 
 public class Stay extends Finished {
