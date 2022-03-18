@@ -17,6 +17,7 @@ public enum Result {
     WIN((dealer, player) -> dealer.isBurst() || !player.isBurst() && dealer.getScore() < player.getScore(), 1),
     DRAW((dealer, player) -> !player.isBurst() && dealer.getScore() == player.getScore(), 0);
 
+    public static final int REVERSE_PROFIT = -1;
     private final BiPredicate<Dealer, Player> predicate;
     private final double profit;
 
@@ -65,6 +66,6 @@ public enum Result {
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toUnmodifiableList());
 
-        return (int) (results.stream().mapToDouble(Integer::intValue).sum() * -1);
+        return (int) (results.stream().mapToDouble(Integer::intValue).sum() * REVERSE_PROFIT);
     }
 }

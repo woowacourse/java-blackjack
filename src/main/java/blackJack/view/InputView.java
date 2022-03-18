@@ -17,6 +17,7 @@ public class InputView {
     private static final String INPUT_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String YES = "y";
     private static final String NO = "n";
+    public static final String IS_DIGIT = "[+-]?\\d*(\\.\\d+)?";
 
     private static String input() {
         Scanner scanner = new Scanner(System.in);
@@ -66,7 +67,7 @@ public class InputView {
     }
 
     private static void validateNumeric(String input) {
-        if (!input.matches("[+-]?\\d*(\\.\\d+)?")) {
+        if (!input.matches(IS_DIGIT)) {
             throw new IllegalArgumentException(INPUT_IS_NOT_NUMBER);
         }
     }
