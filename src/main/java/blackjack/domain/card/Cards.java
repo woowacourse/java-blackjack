@@ -1,12 +1,14 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
 
     private static final int BLACK_JACK_SCORE = 21;
-    private static final int FIRST_RECEIVED_CARD_SIZE = 2;
+    private static final int INITIAL_CARD_SIZE = 2;
     private static final int NUMBER_TO_USE_ACE_CARD_WITH_ONE = 10;
 
     private final List<Card> cards;
@@ -15,20 +17,25 @@ public class Cards {
         this.cards = cards;
     }
 
+    public Cards(Card... card) {
+        this.cards = Arrays.stream(card)
+                .collect(Collectors.toList());
+    }
+
     public void addCard(final Card card) {
         cards.add(card);
     }
 
-    public boolean isFirstReceivedCards() {
-        return cards.size() == FIRST_RECEIVED_CARD_SIZE;
+    public boolean isInitialCards() {
+        return cards.size() == INITIAL_CARD_SIZE;
     }
 
     public boolean isBlackJack() {
-        return isFirstReceivedCards() && getTotalScore() == BLACK_JACK_SCORE;
+        return isInitialCards() && sum() == BLACK_JACK_SCORE;
     }
 
     public boolean isBust() {
-        return calculateScore(getTotalScore(), getCountOfAce()) > BLACK_JACK_SCORE;
+        return calculateScore(sum(), getCountOfAce()) > BLACK_JACK_SCORE;
     }
 
     public int calculateScore(final int score, final int countOfAce) {
@@ -38,9 +45,9 @@ public class Cards {
         return calculateScore(score - NUMBER_TO_USE_ACE_CARD_WITH_ONE, countOfAce - 1);
     }
 
-    public int getTotalScore() {
+    public int sum() {
         return cards.stream()
-                .mapToInt(Card::getCardNumber)
+                .mapToInt(Card::getSuit)
                 .sum();
     }
 

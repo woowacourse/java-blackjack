@@ -1,11 +1,16 @@
 package blackjack.domain.player;
 
+import static blackjack.domain.Fixtures.ACE_DIAMOND;
+import static blackjack.domain.Fixtures.JACK_DIAMOND;
+import static blackjack.domain.Fixtures.KING_DIAMOND;
+import static blackjack.domain.Fixtures.SIX_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Fixtures;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +43,7 @@ public class PlayerTest {
     @DisplayName("유저의 카드 총합이 21을 초과하면, false를 반환한다.")
     void isImpossibleToPickCardForUser() {
         final User user = new User("pobi", initializeCardsForUser());
-        user.drawCard(new Card(CardPattern.CLOVER, CardNumber.TWO));
+        user.drawCard(Fixtures.TWO_DIAMOND);
         final boolean expected = false;
 
         final boolean actual = user.canDrawCard();
@@ -46,15 +51,13 @@ public class PlayerTest {
     }
 
     private List<Card> initializeCardsForUser() {
-        return new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                new Card(CardPattern.HEART, CardNumber.KING)));
+        return new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND));
     }
 
     @Test
     @DisplayName("딜러의 카드 총합이 16이하이면, true를 반환한다.")
     void isPossibleToPickCardForDealer() {
-        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                new Card(CardPattern.HEART, CardNumber.SIX));
+        List<Card> cards = Arrays.asList(JACK_DIAMOND, SIX_DIAMOND);
         final Dealer dealer = new Dealer(cards);
         final boolean expected = true;
 
@@ -65,8 +68,7 @@ public class PlayerTest {
     @Test
     @DisplayName("딜러의 카드 총합이 16을 초과하면, false를 반환한다.")
     void isImpossibleToPickCardForDealer() {
-        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                new Card(CardPattern.HEART, CardNumber.KING));
+        List<Card> cards = Arrays.asList(JACK_DIAMOND, KING_DIAMOND);
         final Dealer dealer = new Dealer(cards);
         final boolean expected = false;
 
@@ -77,10 +79,8 @@ public class PlayerTest {
     @Test
     @DisplayName("유저가 처음 받은 카드가 2장이 아니라면, 예외를 발생한다.")
     void checkFirstReceivedCardsSizeForUser() {
-        assertThatThrownBy(() -> new User("pobi", Arrays.asList(
-                new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                new Card(CardPattern.HEART, CardNumber.KING),
-                new Card(CardPattern.HEART, CardNumber.KING))
+        assertThatThrownBy(() ->
+                new User("pobi", Arrays.asList(JACK_DIAMOND, KING_DIAMOND, ACE_DIAMOND)
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("처음 제공받는 카드는 2장이어야 합니다.");
@@ -89,10 +89,8 @@ public class PlayerTest {
     @Test
     @DisplayName("딜러가 처음 받은 카드가 2장이 아니라면, 예외를 발생한다.")
     void checkFirstReceivedCardsSizeForDealer() {
-        assertThatThrownBy(() -> new Dealer(Arrays.asList(
-                new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                new Card(CardPattern.HEART, CardNumber.KING),
-                new Card(CardPattern.HEART, CardNumber.KING))
+        assertThatThrownBy(() ->
+                new Dealer(Arrays.asList(JACK_DIAMOND, KING_DIAMOND, ACE_DIAMOND)
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("처음 제공받는 카드는 2장이어야 합니다.");
@@ -101,8 +99,7 @@ public class PlayerTest {
     @Test
     @DisplayName("딜러가 블랙잭인 경우를 확인한다.")
     void isBlackJack() {
-        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.ACE),
-                new Card(CardPattern.HEART, CardNumber.KING));
+        List<Card> cards = Arrays.asList(ACE_DIAMOND, KING_DIAMOND);
         Dealer dealer = new Dealer(cards);
         final boolean expected = true;
 

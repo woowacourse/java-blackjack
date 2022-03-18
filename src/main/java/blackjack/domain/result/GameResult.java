@@ -3,15 +3,11 @@ package blackjack.domain.result;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
-import blackjack.money.BettingMoney;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-
-    private static final int MINUS = -1;
-    private static final double BLACKJACK_RATE = 1.5;
 
     private final Map<String, Result> userResult;
     private final Map<Result, Integer> dealerResult;
@@ -45,35 +41,5 @@ public class GameResult {
 
     public Map<Result, Integer> getDealerResult() {
         return Collections.unmodifiableMap(dealerResult);
-    }
-
-    public Map<String, Integer> getUserRevenue(final Map<User, BettingMoney> userBettingMoney) {
-        Map<String, Integer> userRevenue = new HashMap<>();
-        for (User user : userBettingMoney.keySet()) {
-            int revenue = (int) calculateRevenue(user, userResult.get(user.getName()), userBettingMoney.get(user));
-            userRevenue.put(user.getName(), revenue);
-        }
-        return userRevenue;
-    }
-
-    private double calculateRevenue(User user, Result result, BettingMoney bettingMoney) {
-        if (result == Result.WIN && user.isBlackJack()) {
-            return bettingMoney.getValue() * BLACKJACK_RATE;
-        }
-        if (result == Result.WIN) {
-            return bettingMoney.getValue();
-        }
-        if (result == Result.LOSE) {
-            return bettingMoney.getValue() * MINUS;
-        }
-        return 0;
-    }
-
-    public int getDealerRevenue(Map<String, Integer> userRevenue) {
-        int sum = 0;
-        for (String userName : userRevenue.keySet()) {
-            sum += userRevenue.get(userName);
-        }
-        return sum * MINUS;
     }
 }

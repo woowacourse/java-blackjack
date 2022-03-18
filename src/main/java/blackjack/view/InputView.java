@@ -44,10 +44,10 @@ public class InputView {
     }
 
     private static boolean validateDrawCardAnswer(final String answer) {
-        if (!answer.equals(YES) && !answer.equals(NO)) {
-            throw new IllegalArgumentException(ANSWER_EXCEPTION_MESSAGE);
+        if (answer.equals(YES) || answer.equals(NO)) {
+            return answer.equals(YES);
         }
-        return answer.equals(YES);
+        throw new IllegalArgumentException(ANSWER_EXCEPTION_MESSAGE);
     }
 
     public static int inputBettingMoney(User user) {

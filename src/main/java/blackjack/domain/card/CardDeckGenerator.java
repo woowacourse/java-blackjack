@@ -8,15 +8,15 @@ public class CardDeckGenerator {
 
     public static CardDeck createCardDeck() {
         List<Card> cards = new LinkedList<>();
-        for (final CardPattern cardPattern : CardPattern.values()) {
+        for (final Denomination cardPattern : Denomination.values()) {
             addCard(cards, cardPattern);
         }
         Collections.shuffle(cards);
         return new CardDeck(cards);
     }
 
-    private static void addCard(List<Card> cards, CardPattern cardPattern) {
-        for (final CardNumber cardNumber : CardNumber.values()) {
+    private static void addCard(List<Card> cards, Denomination cardPattern) {
+        for (final Suit cardNumber : Suit.values()) {
             cards.add(new Card(cardPattern, cardNumber));
         }
     }

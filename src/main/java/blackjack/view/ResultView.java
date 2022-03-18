@@ -41,12 +41,12 @@ public class ResultView {
     private static String checkPlayerType(final Player player) {
         if (player instanceof Dealer) {
             return player.getCardsToList().stream()
-                    .map(card -> card.getCardNumberType() + card.getCardPattern())
+                    .map(card -> card.getSuitType() + card.getDenomination())
                     .findFirst()
                     .orElseThrow();
         }
         return player.getCardsToList().stream()
-                .map(card -> card.getCardNumberType() + card.getCardPattern())
+                .map(card -> card.getSuitType() + card.getDenomination())
                 .collect(Collectors.joining(", "));
     }
 
@@ -66,7 +66,7 @@ public class ResultView {
     private static String makeDealerFinalCards(final Dealer dealer) {
         StringBuilder sb = new StringBuilder();
         String dealerCards = String.join(", ", dealer.getCardsToList().stream()
-                .map(card -> card.getCardNumberType() + card.getCardPattern())
+                .map(card -> card.getSuitType() + card.getDenomination())
                 .collect(Collectors.toList()));
         sb.append(dealer.getName())
                 .append(CARD_MARK_MESSAGE)

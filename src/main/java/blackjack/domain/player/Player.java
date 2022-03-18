@@ -19,7 +19,7 @@ public abstract class Player {
     }
 
     private void validateReceivedCardsSize(final Cards cards) {
-        if (!cards.isFirstReceivedCards()) {
+        if (!cards.isInitialCards()) {
             throw new IllegalArgumentException(FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE);
         }
     }
@@ -51,6 +51,6 @@ public abstract class Player {
     }
 
     public final int getTotalScore() {
-        return cards.calculateScore(cards.getTotalScore(), cards.getCountOfAce());
+        return cards.calculateScore(cards.sum(), cards.getCountOfAce());
     }
 }

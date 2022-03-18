@@ -2,27 +2,27 @@ package blackjack.domain.card;
 
 public class Card {
 
-    private final CardPattern cardPattern;
-    private final CardNumber cardNumber;
+    private final Denomination denomination;
+    private final Suit suit;
 
-    public Card(final CardPattern cardPattern, final CardNumber cardNumber) {
-        this.cardPattern = cardPattern;
-        this.cardNumber = cardNumber;
+    public Card(final Denomination denomination, final Suit suit) {
+        this.denomination = denomination;
+        this.suit = suit;
     }
 
     public boolean isAceCard() {
-        return cardNumber == CardNumber.ACE;
+        return suit == Suit.ACE;
     }
 
-    public String getCardPattern() {
-        return cardPattern.getPattern();
+    public String getDenomination() {
+        return denomination.getValue();
     }
 
-    public String getCardNumberType() {
-        return cardNumber.getType();
+    public String getSuitType() {
+        return suit.getType();
     }
 
-    public int getCardNumber() {
-        return cardNumber.getValue();
+    public int getSuit() {
+        return suit.getValue();
     }
 }

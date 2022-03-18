@@ -13,7 +13,7 @@ public class CardDeckTest {
         final CardDeck cardDeck = CardDeckGenerator.createCardDeck();
         final int expected = 51;
 
-        cardDeck.selectCard();
+        cardDeck.drawCard();
         final int actual = cardDeck.size();
         assertThat(actual).isEqualTo(expected);
     }

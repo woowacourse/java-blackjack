@@ -5,9 +5,8 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
-import blackjack.money.BettingMoney;
-import java.util.Collections;
-import java.util.HashMap;
+import blackjack.domain.result.Result;
+import blackjack.money.UserBettingMoney;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,38 +17,29 @@ public class GameMachine {
     private static final String PLAY_GAME_COUNT_EXCEPTION_MESSAGE = "게임에 참여할 수 있는 유저는 최대 7명입니다.";
 
     private final CardDeck cardDeck;
-    private final Map<User, BettingMoney> userBettingMoney;
+    private UserBettingMoney userBettingMoney;
 
     public GameMachine(final CardDeck cardDeck) {
         this.cardDeck = cardDeck;
-        this.userBettingMoney = new HashMap<>();
     }
 
     public Dealer createDealer() {
-        return new Dealer(cardDeck.selectOriginalCard());
+        return new Dealer(cardDeck.drawInitialCard());
     }
 
     public Users createUsers(final List<String> userNames) {
         validateUserCount(userNames);
         List<User> users = userNames.stream()
-                .map(userName -> new User(userName, cardDeck.selectOriginalCard()))
+                .map(userName -> new User(userName, cardDeck.drawInitialCard()))
                 .collect(Collectors.toList());
-        initUserBettingMoney(users);
+        userBettingMoney = new UserBettingMoney(users);
         return new Users(users);
     }
 
-    private static void validateUserCount(final List<String> users) {
+    private void validateUserCount(final List<String> users) {
         if (users.size() > MAX_PLAY_GAME_COUNT) {
             throw new IllegalArgumentException(PLAY_GAME_COUNT_EXCEPTION_MESSAGE);
         }
-    }
-
-    private void initUserBettingMoney(final List<User> users) {
-        users.forEach(user -> this.userBettingMoney.put(user, null));
-    }
-
-    public void putBettingMoney(final User user, final int money) {
-        userBettingMoney.put(user, BettingMoney.of(money));
     }
 
     public boolean checkPlayerReceiveCard(final Player player) {
@@ -61,10 +51,18 @@ public class GameMachine {
     }
 
     public void drawCardToPlayer(final Player player) {
-        player.drawCard(cardDeck.selectCard());
+        player.drawCard(cardDeck.drawCard());
     }
 
-    public Map<User, BettingMoney> getUserBettingMoney() {
-        return Collections.unmodifiableMap(userBettingMoney);
+    public void putBettingMoney(User user, int money) {
+        userBettingMoney.putBettingMoney(user, money);
+    }
+
+    public Map<String, Integer> getUserRevenue(final Map<String, Result> userResult) {
+        return userBettingMoney.getUserRevenue(userResult);
+    }
+
+    public int getDealerRevenue() {
+        return userBettingMoney.getDealerRevenue();
     }
 }

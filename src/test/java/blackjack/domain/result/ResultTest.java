@@ -1,10 +1,16 @@
 package blackjack.domain.result;
 
+import static blackjack.domain.Fixtures.ACE_DIAMOND;
+import static blackjack.domain.Fixtures.ACE_HEART;
+import static blackjack.domain.Fixtures.JACK_DIAMOND;
+import static blackjack.domain.Fixtures.KING_DIAMOND;
+import static blackjack.domain.Fixtures.SIX_DIAMOND;
+import static blackjack.domain.Fixtures.TWO_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
@@ -29,38 +35,40 @@ class ResultTest {
 
     static Stream<Arguments> provideScoreAndResult() {
         return Stream.of(
-                Arguments.of(Result.DRAW, makeUser(CardNumber.ACE, CardNumber.KING),
-                        makeDealer(CardNumber.ACE, CardNumber.KING)),
                 Arguments.of(Result.DRAW,
-                        makeBustPlayer(makeUser(CardNumber.JACK, CardNumber.THREE), CardNumber.KING),
-                        makeBustPlayer(makeDealer(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN)),
-                Arguments.of(Result.WIN, makeUser(CardNumber.ACE, CardNumber.KING),
-                        makeDealer(CardNumber.KING, CardNumber.JACK)),
-                Arguments.of(Result.WIN, makeUser(CardNumber.ACE, CardNumber.KING),
-                        makeBustPlayer(makeDealer(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN)),
-                Arguments.of(Result.LOSE, makeUser(CardNumber.KING, CardNumber.JACK),
-                        makeDealer(CardNumber.ACE, CardNumber.KING)),
+                        makeUser(ACE_DIAMOND, KING_DIAMOND),
+                        makeDealer(ACE_HEART, JACK_DIAMOND)),
+                Arguments.of(Result.DRAW,
+                        makeBustPlayer(makeUser(JACK_DIAMOND, TWO_DIAMOND), KING_DIAMOND),
+                        makeBustPlayer(makeDealer(KING_DIAMOND, SIX_DIAMOND), JACK_DIAMOND)),
+                Arguments.of(Result.WIN,
+                        makeUser(ACE_DIAMOND, KING_DIAMOND),
+                        makeDealer(KING_DIAMOND, JACK_DIAMOND)),
+                Arguments.of(Result.WIN,
+                        makeUser(ACE_DIAMOND, KING_DIAMOND),
+                        makeBustPlayer(makeDealer(KING_DIAMOND, TWO_DIAMOND), JACK_DIAMOND)),
                 Arguments.of(Result.LOSE,
-                        makeBustPlayer(makeUser(CardNumber.KING, CardNumber.FIVE), CardNumber.SEVEN),
-                        makeDealer(
-                                CardNumber.ACE, CardNumber.KING))
+                        makeUser(KING_DIAMOND, JACK_DIAMOND),
+                        makeDealer(ACE_DIAMOND, KING_DIAMOND)),
+                Arguments.of(Result.LOSE,
+                        makeBustPlayer(makeUser(KING_DIAMOND, TWO_DIAMOND), JACK_DIAMOND),
+                        makeDealer(ACE_DIAMOND, KING_DIAMOND))
         );
     }
 
-    static Player makeUser(final CardNumber cardNumber1, final CardNumber cardNumber2) {
+    static Player makeUser(final Card card1, final Card card2) {
         List<Card> cards = new ArrayList<>(
-                List.of(new Card(CardPattern.DIAMOND, cardNumber1), new Card(CardPattern.DIAMOND, cardNumber2)));
+                List.of(card1, card2));
         return new User("AAA", cards);
     }
 
-    static Player makeDealer(final CardNumber cardNumber1, final CardNumber cardNumber2) {
-        List<Card> cards = new ArrayList<>(
-                List.of(new Card(CardPattern.DIAMOND, cardNumber1), new Card(CardPattern.DIAMOND, cardNumber2)));
+    static Player makeDealer(final Card card1, final Card card2) {
+        List<Card> cards = new ArrayList<>(List.of(card1, card2));
         return new Dealer(cards);
     }
 
-    static Player makeBustPlayer(Player player, CardNumber cardNumber) {
-        player.drawCard(new Card(CardPattern.DIAMOND, cardNumber));
+    static Player makeBustPlayer(Player player, Card card) {
+        player.drawCard(card);
         return player;
     }
 }
