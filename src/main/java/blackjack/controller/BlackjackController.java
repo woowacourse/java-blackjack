@@ -27,7 +27,8 @@ public class BlackjackController {
     }
 
     public PlayerBettings initializeBettings(final BlackjackGame game) {
-        List<Participant> players = game.getParticipants().getPlayers();
+        Participants participants = game.getParticipants();
+        List<Participant> players = participants.getPlayers();
 
         return PlayerBettings.of(players, InputView::requestBettingAmountInput);
     }
@@ -35,7 +36,7 @@ public class BlackjackController {
     public void playGame(final BlackjackGame game) {
         final InitialDistributionDto dto = InitialDistributionDto.of(game);
 
-        if (game.getParticipants().getDealer().getHand().isBlackjack()){
+        if (checkDealerBlackjack(game)){
             printDealerBlackjack(dto);
             return;
         }
@@ -44,10 +45,16 @@ public class BlackjackController {
         distributeAllCards(game);
     }
 
+    private boolean checkDealerBlackjack(BlackjackGame game) {
+        return game.getParticipants()
+                .getDealer()
+                .getHand()
+                .isBlackjack();
+    }
+
     private void distributeAllCards(final BlackjackGame game) {
         game.drawAllPlayerCards(
-                InputView::requestMoreCardInput,
-                OutputView::printHitResult);
+                InputView::requestMoreCardInput, OutputView::printHitResult);
         game.drawDealerCards(OutputView::printDealerExtraCardInfo);
     }
 
