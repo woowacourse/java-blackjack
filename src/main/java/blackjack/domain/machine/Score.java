@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.participant.Guest;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Score {
 
@@ -41,13 +40,7 @@ public class Score {
     }
 
     private void checkBlackjack(Set<Card> cards) {
-        if (isNotTwoCards(cards)) {
-            return;
-        }
-        if (isNotTwentyOnePoint()) {
-            return;
-        }
-        if (containsTenCard(cards)) {
+        if (isNotTwoCards(cards) || isNotTwentyOnePoint()) {
             return;
         }
         blackjack = true;
@@ -59,10 +52,6 @@ public class Score {
 
     private boolean isNotTwoCards(Set<Card> cards) {
         return cards.size() != 2;
-    }
-
-    private boolean containsTenCard(Set<Card> cards) {
-        return cards.stream().map(Card::getRank).collect(Collectors.toList()).contains(Rank.TEN);
     }
 
     private int countAces(Set<Card> cards) {
@@ -86,4 +75,7 @@ public class Score {
         return card.getRank().getPoint();
     }
 
+    public boolean isBust() {
+        return point > Guest.LIMIT_POINT;
+    }
 }

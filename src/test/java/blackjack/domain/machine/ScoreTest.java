@@ -100,11 +100,4 @@ class ScoreTest {
                 new Card(Suit.SPADE, Rank.SIX)));
         assertThat(score.isBlackjack()).isFalse();
     }
-
-    @Test
-    @DisplayName("2개 카드의 합이 21이고 10이 포함되었을 때 블랙잭이 아님을 확인")
-    public void checkNoBlackjackWithRankTenCard() {
-        score = new Score(Set.of(new Card(Suit.SPADE, Rank.ACE), new Card(Suit.SPADE, Rank.TEN)));
-        assertThat(score.isBlackjack()).isFalse();
-    }
 }
