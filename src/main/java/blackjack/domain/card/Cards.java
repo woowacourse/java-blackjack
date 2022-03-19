@@ -12,7 +12,11 @@ public class Cards {
 	private final List<Card> cards;
 
 	public Cards() {
-		this.cards = new ArrayList<>();
+		this(new ArrayList<>());
+	}
+
+	public Cards(List<Card> cards) {
+		this.cards = cards;
 	}
 
 	public void addCard(Card card) {
