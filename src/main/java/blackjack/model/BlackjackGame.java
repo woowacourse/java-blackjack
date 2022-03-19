@@ -3,9 +3,9 @@ package blackjack.model;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Participant;
 import blackjack.model.participant.Participants;
-import blackjack.view.TurnProgress;
 import blackjack.view.GameSign;
 import blackjack.view.MoneyBetter;
+import blackjack.view.TurnProgress;
 import java.util.List;
 
 public class BlackjackGame {
@@ -25,7 +25,7 @@ public class BlackjackGame {
         return participants.getParticipants();
     }
 
-    public void hitUntilPossible(final GameSign gameSign, final TurnProgress turnProgress) {
+    public void hitToParticipants(final GameSign gameSign, final TurnProgress turnProgress) {
         participants.hitFrom(cardDeck, gameSign, turnProgress);
     }
 }

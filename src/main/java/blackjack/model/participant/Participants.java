@@ -1,9 +1,9 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
-import blackjack.view.TurnProgress;
 import blackjack.view.GameSign;
 import blackjack.view.MoneyBetter;
+import blackjack.view.TurnProgress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -11,7 +11,9 @@ public interface State {
 
     boolean isHit();
 
+    State stay();
+
     List<String> getCards();
 
-    State stay();
+    int getScore();
 }

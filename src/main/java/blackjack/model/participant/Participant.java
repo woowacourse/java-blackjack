@@ -8,8 +8,8 @@ import blackjack.view.TurnProgress;
 import java.util.List;
 
 public abstract class Participant {
-    private final String name;
-    private State state;
+    protected final String name;
+    protected State state;
 
     protected Participant(final String name) {
         checkEmpty(name);
@@ -29,24 +29,7 @@ public abstract class Participant {
         }
     }
 
-    public void hitFrom(final CardDeck cardDeck, final GameSign gameSign, final TurnProgress turnProgress) {
-        while (this.state.isHit() && isNotStay(gameSign)) {
-            this.state = this.state.add(cardDeck.draw());
-            turnProgress.show(this);
-        }
-    }
-
-    private boolean isNotStay(final GameSign gameSign) {
-        String sign = gameSign.choiceSignTo(name);
-        if (sign.equals("y")) {
-            return true;
-        }
-        if (sign.equals("n")) {
-            this.state = state.stay();
-            return false;
-        }
-        throw new IllegalArgumentException("[ERROR] y 또는 n만 입력해주세요");
-    }
+    public abstract void hitFrom(final CardDeck cardDeck, final GameSign gameSign, final TurnProgress turnProgress);
 
     public String getName() {
         return name;

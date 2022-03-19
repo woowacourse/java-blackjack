@@ -16,10 +16,11 @@ public final class Ready implements State {
         this.cards = cards;
     }
 
+    @Override
     public State add(final Card card) {
         Cards cards = this.cards.add(card);
 
-        if (cards.isBlackjack()){
+        if (cards.isBlackjack()) {
             return new Blackjack(cards);
         }
         if (cards.canHit()) {
@@ -41,6 +42,11 @@ public final class Ready implements State {
     @Override
     public List<String> getCards() {
         return cards.getCardNames();
+    }
+
+    @Override
+    public int getScore() {
+        return cards.sumScore();
     }
 
     @Override

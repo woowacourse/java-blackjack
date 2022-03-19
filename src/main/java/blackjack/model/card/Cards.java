@@ -35,7 +35,7 @@ public class Cards {
         return sumScore() == MAX_SCORE;
     }
 
-    private int sumScore() {
+    public int sumScore() {
         final List<CardNumber> cardNumbers = values.stream()
                 .map(Card::getNumber)
                 .collect(Collectors.toUnmodifiableList());

@@ -33,6 +33,11 @@ public class Blackjack implements State {
     }
 
     @Override
+    public int getScore() {
+        return cards.sumScore();
+    }
+
+    @Override
     public State stay() {
         throw new IllegalArgumentException("[ERROR] 현재 Blackjack이기 때문에 Stay 할 수 없습니다.");
     }

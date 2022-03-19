@@ -41,6 +41,11 @@ public class Hit implements State {
     }
 
     @Override
+    public int getScore() {
+        return cards.sumScore();
+    }
+
+    @Override
     public State stay() {
         return new Stay(cards);
     }

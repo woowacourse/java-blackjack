@@ -33,6 +33,11 @@ public class Stay implements State {
     }
 
     @Override
+    public int getScore() {
+        return cards.sumScore();
+    }
+
+    @Override
     public State stay() {
         throw new IllegalArgumentException("[ERROR] 이미 Stay 상태 입니다.");
     }
