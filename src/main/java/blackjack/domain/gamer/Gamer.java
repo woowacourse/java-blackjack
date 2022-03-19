@@ -22,7 +22,7 @@ public abstract class Gamer {
 	public abstract boolean isWin(Gamer gamer);
 
 	public boolean isDraw(Gamer gamer) {
-		return !isWin(gamer) || gamer.isWin(this);
+		return !isWin(gamer) && !gamer.isWin(this);
 	}
 
 	public boolean isLose(Gamer gamer) {
