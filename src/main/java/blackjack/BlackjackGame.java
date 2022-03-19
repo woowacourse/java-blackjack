@@ -35,10 +35,10 @@ public class BlackjackGame {
     }
 
     private void printParticipantsFirstCards() {
-        OutputView.printParticipantsFirstCards(ParticipantCards.createDealerFirstCards(dealer), playersFirstCards());
+        OutputView.printParticipantsFirstCards(ParticipantCards.createDealerFirstCards(dealer), playersCards());
     }
 
-    private List<ParticipantCards> playersFirstCards() {
+    private List<ParticipantCards> playersCards() {
         return players.players()
                 .stream()
                 .map(ParticipantCards::from)
