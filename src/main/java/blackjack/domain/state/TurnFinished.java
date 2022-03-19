@@ -18,4 +18,9 @@ public abstract class TurnFinished extends Started {
     public State hit(Card card) {
         throw new IllegalStateException("턴이 종료되어서 히트할 수 없습니다.");
     }
+
+    @Override
+    public double prizeRate() {
+        throw new IllegalStateException("아직 결과를 내지 않아서 수익을 계산할 수 없습니다.");
+    }
 }

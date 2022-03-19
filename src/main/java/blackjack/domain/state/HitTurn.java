@@ -21,4 +21,14 @@ public final class HitTurn extends Started {
         }
         return new HitTurn(getCards());
     }
+
+    @Override
+    public double prizeRate() {
+        throw new IllegalStateException("아직 턴이 끝나지 않아서 수익을 계산할 수 없습니다.");
+    }
+
+    @Override
+    public State judge(State result) {
+        throw new IllegalStateException("아직 턴이 끝나지 않아서 승패를 판단할 수 없습니다.");
+    }
 }
