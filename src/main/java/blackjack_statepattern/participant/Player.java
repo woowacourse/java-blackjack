@@ -11,4 +11,5 @@ public final class Player extends Participant {
     public int getBetMoney() {
         return betMoney;
     }
+
 }

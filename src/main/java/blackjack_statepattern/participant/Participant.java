@@ -20,4 +20,12 @@ public abstract class Participant {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "name='" + name + '\'' +
+                ", state=" + state +
+                '}';
+    }
 }
