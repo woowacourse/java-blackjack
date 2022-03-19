@@ -5,10 +5,8 @@ import static blackjack.view.OutputView.*;
 import static java.util.stream.Collectors.*;
 
 import java.util.List;
-import java.util.Map;
 
 import blackjack.domain.Game;
-import blackjack.domain.PlayRecord;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.ShuffleDeck;
 import blackjack.domain.participant.Betting;
@@ -27,8 +25,8 @@ public class GameController {
         drawPlayerCards(game);
         drawDealerCards(game);
 
-        finalParticipantsCards(game);
-        finalRevenue(game);
+        finalParticipantsCards(game.getParticipants());
+        printFinalRevenues(game.getRevenues());
     }
 
     private List<Name> getNames() {
@@ -76,15 +74,9 @@ public class GameController {
         printDealerDrawCardCount(drawCount);
     }
 
-    private void finalParticipantsCards(Game game) {
-        for (Participant participant : game.getParticipants()) {
+    private void finalParticipantsCards(List<Participant> participants) {
+        for (Participant participant : participants) {
             printParticipantCardsWithScore(participant);
         }
-    }
-
-    private void finalRevenue(Game game) {
-        Map<Name, PlayRecord> recordMap = PlayRecord.createPlayRecords(game.getPlayers(), game.getDealer());
-
-        printFinalRevenues(game.getRevenues(recordMap));
     }
 }

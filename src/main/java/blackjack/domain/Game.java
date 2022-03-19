@@ -17,6 +17,8 @@ import blackjack.domain.state.stateparticipant.Player;
 
 public class Game {
 
+    private static final String HIT_REQUEST = "y";
+
     private final CardDeck cardDeck;
     private final Dealer dealer;
     private final List<Player> players;
@@ -46,7 +48,7 @@ public class Game {
     }
 
     public void drawPlayerCard(Player player, String hitOrStay) {
-        if (hitOrStay.equalsIgnoreCase("y")) {
+        if (hitOrStay.equalsIgnoreCase(HIT_REQUEST)) {
             player.draw(cardDeck.drawCard());
             return;
         }
@@ -75,8 +77,8 @@ public class Game {
         return List.copyOf(players);
     }
 
-    public Map<Name, Long> getRevenues(Map<Name, PlayRecord> recordMap) {
-        return dealer.getRevenues(recordMap);
+    public Map<Name, Long> getRevenues() {
+        return dealer.getRevenues(PlayRecord.createPlayRecords(players, dealer));
     }
 
     public List<Participant> getParticipants() {
