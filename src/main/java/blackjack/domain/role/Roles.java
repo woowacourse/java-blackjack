@@ -47,8 +47,8 @@ public class Roles {
 		return dealer;
 	}
 
-	public void joinPlayers(final Map<String, Integer> playersInformation) {
-		players = playersInformation.entrySet()
+	public void joinPlayers(final Map<String, Integer> playersNameAndBattingAmount) {
+		players = playersNameAndBattingAmount.entrySet()
 			.stream()
 			.map(player -> new Player(player.getKey(), new Hand(), new BettingAmount(player.getValue())))
 			.collect(Collectors.toList());

@@ -34,8 +34,8 @@ public class BlackJack {
 		roles.initDealer();
 	}
 
-	private void joinPlayers(final Map<String, Integer> playersInformation) {
-		roles.joinPlayers(playersInformation);
+	private void joinPlayers(final Map<String, Integer> playersNameAndBattingAmount) {
+		roles.joinPlayers(playersNameAndBattingAmount);
 	}
 
 	private void distributeCard() {
