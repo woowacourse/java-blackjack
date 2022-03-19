@@ -1,5 +1,9 @@
 package blackjack.model.state;
 
+import static blackjack.model.ProfitResult.LOSE;
+import static blackjack.model.ProfitResult.WIN;
+
+import blackjack.model.ProfitResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import java.util.List;
@@ -38,7 +42,28 @@ public class Stay implements State {
     }
 
     @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
     public State stay() {
         throw new IllegalArgumentException("[ERROR] 이미 Stay 상태 입니다.");
+    }
+
+    @Override
+    public ProfitResult calculateProfit(State otherState) {
+        if (otherState.isBlackjack()) {
+            return LOSE;
+        }
+        if (otherState.isBust()) {
+            return WIN;
+        }
+        return ProfitResult.compareTo(this, otherState);
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.model.state;
 
+import blackjack.model.ProfitResult;
 import blackjack.model.card.Card;
 import java.util.List;
 
@@ -13,7 +14,13 @@ public interface State {
 
     State stay();
 
+    ProfitResult calculateProfit(State otherState);
+
     List<String> getCards();
 
     int getScore();
+
+    boolean isBust();
+
+    boolean isBlackjack();
 }

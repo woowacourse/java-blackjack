@@ -4,6 +4,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Participant;
 import blackjack.model.participant.Participants;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
     private final Participants participants;
@@ -18,11 +19,15 @@ public class BlackjackGame {
         participants.drawFrom(cardDeck);
     }
 
+    public void hitToParticipants(final GameSign gameSign, final TurnProgress turnProgress) {
+        participants.hitFrom(cardDeck, gameSign, turnProgress);
+    }
+
     public List<Participant> getParticipants() {
         return participants.getParticipants();
     }
 
-    public void hitToParticipants(final GameSign gameSign, final TurnProgress turnProgress) {
-        participants.hitFrom(cardDeck, gameSign, turnProgress);
+    public Map<String, Double> createBettingResult() {
+        return participants.createBettingResult();
     }
 }

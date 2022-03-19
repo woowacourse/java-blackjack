@@ -20,6 +20,11 @@ public class Dealer extends Participant {
         turnProgress.show(this);
     }
 
+    @Override
+    public double getProfit(Participant otherParticipant) {
+        throw new IllegalArgumentException("[ERROR] 딜러는 베팅 금액을 가지고 있지 않습니다.");
+    }
+
     private boolean isNotStay() {
         if (isFinished()) {
             this.state = this.state.stay();

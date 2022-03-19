@@ -12,5 +12,6 @@ public class Application {
         OutputView.printStartResult(blackjackGame.getParticipants());
         blackjackGame.hitToParticipants(InputView::inputSign, OutputView::printParticipantCardsResult);
         OutputView.printParticipantsScoreResult(blackjackGame.getParticipants());
+        OutputView.printParticipantsBettingResult(blackjackGame.createBettingResult());
     }
 }

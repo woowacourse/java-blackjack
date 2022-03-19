@@ -1,5 +1,6 @@
 package blackjack.model.state;
 
+import blackjack.model.ProfitResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import java.util.List;
@@ -50,7 +51,22 @@ public final class Ready implements State {
     }
 
     @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
     public State stay() {
         throw new IllegalArgumentException("[ERROR] 현재 Ready이기 때문에 Stay 할 수 없습니다.");
+    }
+
+    @Override
+    public ProfitResult calculateProfit(State otherState) {
+        throw new IllegalArgumentException("[ERROR] 아직 카드 분배가 끝나지 않아 수익률을 계산 할 수 없습니다‼");
     }
 }

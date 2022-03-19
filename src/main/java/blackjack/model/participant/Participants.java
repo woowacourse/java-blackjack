@@ -5,7 +5,9 @@ import blackjack.model.game.GameSign;
 import blackjack.model.game.MoneyBetter;
 import blackjack.model.game.TurnProgress;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -42,9 +44,7 @@ public class Participants {
     }
 
     public void drawFrom(final CardDeck cardDeck) {
-        for (Participant player : players) {
-            player.drawFrom(cardDeck);
-        }
+        players.forEach(player -> player.drawFrom(cardDeck));
         dealer.drawFrom(cardDeck);
     }
 
@@ -59,5 +59,13 @@ public class Participants {
     public void hitFrom(final CardDeck cardDeck, final GameSign gameSign, final TurnProgress turnProgress) {
         players.forEach(player -> player.hitFrom(cardDeck, gameSign, turnProgress));
         dealer.hitFrom(cardDeck, gameSign, turnProgress);
+    }
+
+    public Map<String, Double> createBettingResult() {
+        Map<String, Double> result = new LinkedHashMap<>();
+        for (Participant player : players) {
+            result.put(player.getName(), player.getProfit(dealer));
+        }
+        return result;
     }
 }

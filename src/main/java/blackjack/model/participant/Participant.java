@@ -1,10 +1,10 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
-import blackjack.model.state.Ready;
-import blackjack.model.state.State;
 import blackjack.model.game.GameSign;
 import blackjack.model.game.TurnProgress;
+import blackjack.model.state.Ready;
+import blackjack.model.state.State;
 import java.util.List;
 
 public abstract class Participant {
@@ -30,6 +30,8 @@ public abstract class Participant {
     }
 
     public abstract void hitFrom(final CardDeck cardDeck, final GameSign gameSign, final TurnProgress turnProgress);
+
+    public abstract double getProfit(final Participant otherParticipant);
 
     public String getName() {
         return name;

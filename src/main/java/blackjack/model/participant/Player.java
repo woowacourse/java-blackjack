@@ -7,7 +7,7 @@ import blackjack.model.game.TurnProgress;
 public class Player extends Participant {
     private static final int PLAYER_HIT_LIMIT_SCORE = 20;
 
-    private final int bet;
+    protected final int bet;
 
     public Player(final String name, final int bet) {
         super(name);
@@ -19,6 +19,12 @@ public class Player extends Participant {
         if (bet <= 0) {
             throw new IllegalArgumentException("[ERROR] 베팅 금액은 0보다 큰 금액이여야 합니다.");
         }
+    }
+
+    public double getProfit(Participant otherPlayer) {
+        return (int) (bet * this.state
+                .calculateProfit(otherPlayer.state)
+                .getProfit());
     }
 
     @Override
