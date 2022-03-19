@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import blackjack.domain.participant.ParticipantName;
+
 public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -18,7 +20,7 @@ public class InputView {
     private static final String INPUT_BETTING_MONEY_MESSAGE = "%s의 배팅 금액은?";
     private static final String BETTING_MONEY_FORMAT_ERROR_MESSAGE = "베팅 금액은 숫자만 입력할 수 있습니다.";
 
-    public static List<String> inputPlayerName() {
+    public static List<String> inputPlayersName() {
         System.out.println(INPUT_PLAYER_NAME_MESSAGE);
         List<String> playerNames = Arrays.asList(scanner.nextLine().split(SPLIT_REGEX));
         validatePlayerNames(playerNames);
@@ -28,6 +30,13 @@ public class InputView {
     private static void validatePlayerNames(List<String> playerNames) {
         if (playerNames.isEmpty()) {
             throw new IllegalArgumentException(PLAYER_NAME_INPUT_ERROR_MESSAGE);
+        }
+        playerNames.stream().forEach(InputView::validatePlayerName);
+    }
+
+    private static void validatePlayerName(String playerName) {
+        if (playerName.isBlank()) {
+            throw new IllegalArgumentException(ParticipantName.NAME_EMPTY_ERROR);
         }
     }
 

@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantsDto;
@@ -16,21 +15,20 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        Participants participants = createParticipants();
-        BlackjackGame blackjackGame = new BlackjackGame(participants);
+        BlackjackGame blackjackGame = new BlackjackGame(createPlayers());
 
         printInitialCards(blackjackGame);
         dealMoreCards(blackjackGame);
-        printResult(blackjackGame.getParticipants());
+        printResult(blackjackGame);
     }
 
-    private Participants createParticipants() {
+    private List<Player> createPlayers() {
         List<String> names = inputPlayersName();
-        return new Participants(createPlayersWithBettingMoney(names));
+        return createPlayersWithBettingMoney(names);
     }
 
     private List<String> inputPlayersName() {
-        return InputView.inputPlayerName();
+        return InputView.inputPlayersName();
     }
 
     private List<Player> createPlayersWithBettingMoney(List<String> names) {
@@ -63,9 +61,9 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(Participants participants) {
-        OutputView.printCardsAndPoint(ParticipantsDto.from(participants));
-        GameResult gameResult = new GameResult(participants);
+    private void printResult(BlackjackGame blackjackGame) {
+        OutputView.printCardsAndPoint(ParticipantsDto.from(blackjackGame.getParticipants()));
+        GameResult gameResult = new GameResult(blackjackGame.getParticipants());
         OutputView.printProfitResult(ProfitResultDto.from(gameResult.calculateTotalProfitResult()));
     }
 }
