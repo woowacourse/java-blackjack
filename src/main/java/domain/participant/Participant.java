@@ -34,7 +34,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return calculateScore() == MAX_SCORE;
+        return calculateScore() == MAX_SCORE && cards.size() == 2;
     }
 
     public int calculateScore() {
