@@ -43,7 +43,7 @@ public class HoldCards {
 
     private static void validateInitCardSize(List<Card> cards) {
         if (cards.size() != INIT_CARD_SIZE) {
-            throw new IllegalArgumentException("초기 카드는 2장씩 나눠져야 합니다.");
+            throw new IllegalArgumentException("초기 카드는 " + INIT_CARD_SIZE + "장씩 나눠져야 합니다.");
         }
     }
 
