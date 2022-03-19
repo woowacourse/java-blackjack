@@ -43,15 +43,4 @@ class HitTest {
             .isThrownBy(() -> state.calculateProfit(new Money(1000), new Stay(HandFixtures.STAY_HAND_15)));
     }
 
-    @Test
-    @DisplayName("히트는 버스트가 아니다.")
-    public void hitIsNotBust() {
-        // given
-        State state = new Hit(HandFixtures.STAY_HAND_15);
-
-        // when
-        boolean isBust = state.isBust();
-        // then
-        assertThat(isBust).isFalse();
-    }
 }

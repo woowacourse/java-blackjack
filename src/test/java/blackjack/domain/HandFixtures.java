@@ -7,7 +7,7 @@ public class HandFixtures {
 
     public static final Hand STAY_HAND_15 = createHand(CardFixtures.FIVE, CardFixtures.TEN);
     public static final Hand STAY_HAND_17 = createHand(CardFixtures.SEVEN, CardFixtures.TEN);
-    public static final Hand BLACKJACK_HAND = createHand(CardFixtures.FIVE, CardFixtures.TEN);
+    public static final Hand BLACKJACK_HAND = createHand(CardFixtures.ACE, CardFixtures.TEN);
     public static final Hand BUST_HAND = createHand(CardFixtures.FIVE, CardFixtures.TEN, CardFixtures.JACK);
 
     private static Hand createHand(Card ... cards) {

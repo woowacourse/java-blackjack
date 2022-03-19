@@ -79,6 +79,17 @@ public class Score {
         return this.score > other.score;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+            "score=" + score +
+            '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -92,9 +103,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
-    }
-
-    public int getScore() {
-        return score;
     }
 }
