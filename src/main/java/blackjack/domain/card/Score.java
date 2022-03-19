@@ -71,6 +71,10 @@ public class Score {
         return score > BLACKJACK;
     }
 
+    public boolean isBlackJackScore() {
+        return score == BLACKJACK;
+    }
+
     public boolean isGreaterThan(Score other) {
         return this.score > other.score;
     }

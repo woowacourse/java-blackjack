@@ -48,7 +48,7 @@ public class BlackJackGame {
     }
 
     public void hitOrStayCardsDealer(Consumer<User> consumer) {
-        hitOrStayCards(users.getDealer(), new DealerHitStrategy(() -> users.getDealer().calculateScore()), consumer);
+        hitOrStayCards(users.getDealer(), new DealerHitStrategy(() -> users.getDealer().getScore()), consumer);
     }
 
     private void hitOrStayCards(User user, HitStrategy strategy, Consumer<User> consumer) {

@@ -8,38 +8,40 @@ import blackjack.domain.card.Score;
 
 public class Hand {
 
-    private final List<Card> cards;
+    private static final int INIT_SIZE = 2;
 
-    public Hand(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    private final List<Card> cards;
+    private final Score score;
+
+    private Hand(List<Card> cards, Score score) {
+        this.cards = cards;
+        this.score = score;
     }
 
     public Hand() {
-        this(new ArrayList<>());
+        this(new ArrayList<>(), Score.getZero());
     }
 
-    public void addCard(Card card) {
+    public Hand addCard(Card card) {
+        List<Card> cards = new ArrayList<>(this.cards);
         cards.add(card);
-    }
-
-    public boolean isWinTo(Hand other) {
-        return this.calculateScore().isGreaterThan(other.calculateScore());
-    }
-
-    public Score calculateScore() {
-        return Score.addUpPointToScore(cards);
+        return new Hand(cards, Score.addUpPointToScore(cards));
     }
 
     public boolean isBust() {
-        return calculateScore().isBust();
+        return score.isBust();
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && calculateScore().getScore() == 21;
+        return cards.size() == INIT_SIZE && score.isBlackJackScore();
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public List<Card> getCards() {
-        return getCards(cards.size());
+        return getCards(size());
     }
 
     public List<Card> getCards(int count) {
@@ -48,10 +50,14 @@ public class Hand {
     }
 
     private void validateCount(int count) {
-        if (count > cards.size()) {
+        if (count > size()) {
             throw new IllegalArgumentException(
                 String.format("보유한 카드의 개수(%d)가 %d보다 작습니다.", cards.size(), count)
             );
         }
+    }
+
+    public Score getScore() {
+        return score;
     }
 }
