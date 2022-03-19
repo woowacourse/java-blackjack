@@ -16,7 +16,9 @@ public class BettingMoney {
     }
 
     public BettingMoney times(double percent) {
-        return new BettingMoney(amount.multiply(BigDecimal.valueOf(percent)));
+        BigDecimal multiplied = BigDecimal.valueOf(percent);
+        BigDecimal result = amount.multiply(multiplied);
+        return new BettingMoney(result);
     }
 
     public int getAmount() {
