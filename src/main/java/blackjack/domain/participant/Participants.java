@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import blackjack.domain.card.Deck;
 
@@ -39,12 +40,12 @@ public class Participants {
     }
 
     public boolean isAllPlayerTurnEnd() {
-        try {
-            getCurrentPlayer();
-        } catch (NullPointerException e) {
-            return true;
-        }
-        return false;
+        return getCanHitPlayers().count() == 0;
+    }
+
+    private Stream<Player> getCanHitPlayers() {
+        return players.stream()
+            .filter(Player::canHit);
     }
 
     public void dealToPlayer(Deck deck) {
@@ -64,10 +65,16 @@ public class Participants {
     }
 
     public Player getCurrentPlayer() {
-        return players.stream()
-            .filter(Player::canHit)
+        validateRemainPlayerTurn();
+        return getCanHitPlayers()
             .findFirst()
-            .orElseThrow(() -> new NullPointerException(PLAYER_TURN_ACCESS_ERROR_MESSAGE));
+            .get();
+    }
+
+    private void validateRemainPlayerTurn() {
+        if (isAllPlayerTurnEnd()) {
+            throw new IllegalArgumentException(PLAYER_TURN_ACCESS_ERROR_MESSAGE);
+        }
     }
 
     public Dealer getDealer() {
