@@ -61,8 +61,8 @@ public class OutputView {
                 .stream()
                 .forEach(
                         entry -> System.out.printf("\n%s카드: %s - 결과: %d",
-                                getCardInfo(entry.getKey().getCards()),
-                                String.join(", "),
+                                entry.getKey().getUserName(),
+                                String.join(", ", getCardInfo(entry.getKey().getCards())),
                                 entry.getValue())
                 );
     }
