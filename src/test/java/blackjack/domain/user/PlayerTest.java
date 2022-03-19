@@ -57,9 +57,8 @@ public class PlayerTest {
         Player player = createDefaultPlayer();
 
         //when
-        for (int i = 0; i < MAX_DRAWABLE_COUNT; i++) {
-            player.hit(deck.drawCard());
-        }
+        while (player.hit(deck.drawCard()));
+
         //then
         assertThat(player.isFinished()).isTrue();
     }

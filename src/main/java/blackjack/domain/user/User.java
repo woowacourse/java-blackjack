@@ -6,53 +6,66 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 import blackjack.domain.strategy.hit.HitStrategy;
+import blackjack.domain.user.state.State;
 
 public abstract class User {
 
-    protected final Hand hand;
+    protected State state;
     private final Name name;
 
-    private User(Hand hand, Name name) {
-        this.hand = hand;
+    private User(State state, Name name) {
+        this.state = state;
         this.name = name;
     }
 
-    protected User(String input) {
-        this(new Hand(), new Name(input));
+    protected User(String input, State state) {
+        this(state, new Name(input));
     }
 
-    public void receiveCard(Card card) {
-        hand.addCard(card);
+    public boolean hit(Card card) {
+        state = state.hit(card);
+        return !isFinished();
     }
 
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
-    public boolean isWinTo(User other) {
-        return this.hand.isWinTo(other.hand);
+    public boolean stay() {
+        state = state.stay();
+        return !isFinished();
     }
 
     public boolean hitOrStay(Deck deck, HitStrategy strategy) {
-        boolean isHit = strategy.isHit();
-        if (isHit) {
-            receiveCard(deck.drawCard());
+        if (strategy.isHit()) {
+            return hit(deck.drawCard());
         }
-        return isHit && !isBust();
+        return stay();
+    }
+
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public Score calculateScore() {
+        return state.calculateScore();
     }
 
     public List<Card> getHandCards() {
-        return hand.getCards();
+        return state.getHandCards();
     }
 
     public String getName() {
         return name.getName();
     }
 
-    public Score getScore() {
-        return hand.calculateScore();
-    }
-
     public abstract List<Card> showInitCards();
 
+    @Override
+    public String toString() {
+        return "User{" +
+            "state=" + state +
+            ", name=" + name +
+            '}';
+    }
 }

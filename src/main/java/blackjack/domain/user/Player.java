@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.money.BettingMoney;
 import blackjack.domain.money.Money;
 import blackjack.domain.user.state.Hit;
@@ -20,10 +19,8 @@ public class Player extends User {
         this.money = new BettingMoney(inputMoney);
     }
 
-    public static Player of(String inputName, String inputMoney, Deck deck) {
-        return new Player(inputName,
-            new Hit(new Hand(List.of(deck.drawCard(), deck.drawCard()))),
-            inputMoney);
+    public static Player of(String inputName, String inputMoney) {
+        return new Player(inputName, new Hit(new Hand()), inputMoney);
     }
 
     @Override
@@ -33,5 +30,9 @@ public class Player extends User {
 
     public Money calculateProfit(Dealer dealer) {
         return state.calculateProfit(money, dealer.state);
+    }
+
+    public State getState() {
+        return state;
     }
 }

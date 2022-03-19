@@ -19,8 +19,7 @@ public class DealerTest {
     @Test
     public void createDealer() {
         //given & when
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
 
         //then
         assertThat(dealer).isNotNull();
@@ -31,7 +30,7 @@ public class DealerTest {
     public void testDrawCard() {
         //given
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
 
         //when
         dealer.hit(new Card(Suit.CLOVER, Denomination.EIGHT));
@@ -46,7 +45,7 @@ public class DealerTest {
     public void testShowInitCards() {
         //given
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
 
         dealer.hit(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.hit(new Card(Suit.HEART, Denomination.JACK));
@@ -61,12 +60,15 @@ public class DealerTest {
     public void testDealerHitWithScoreLessThan17() {
         // given
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck);
-        DealerHitStrategy strategy = new DealerHitStrategy(dealer.calculateScore());
+        Dealer dealer = new Dealer();
+        DealerHitStrategy strategy = new DealerHitStrategy(dealer::calculateScore);
+
+        dealer.hit(new Card(Suit.DIAMOND, Denomination.SIX));
+        dealer.hit(new Card(Suit.DIAMOND, Denomination.TEN));
         // when
         boolean isHit = dealer.hitOrStay(deck, strategy);
         // then
-        assertThat(isHit).isTrue();
+        assertThat(dealer.getHandCards().size()).isEqualTo(3);
     }
 
     @Test
@@ -74,14 +76,14 @@ public class DealerTest {
     public void testDealerStayWithScoreGreaterOrEqualThan17() {
         // given
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
 
         dealer.hit(new Card(Suit.CLOVER, Denomination.JACK));
         dealer.hit(new Card(Suit.CLOVER, Denomination.KING));
         // when
 
-        boolean isHit = dealer.hitOrStay(deck, new DealerHitStrategy(dealer.calculateScore()));
+        dealer.hitOrStay(deck, new DealerHitStrategy(dealer::calculateScore));
         // then
-        assertThat(isHit).isFalse();
+        assertThat(dealer.getHandCards().size()).isEqualTo(2);
     }
 }
