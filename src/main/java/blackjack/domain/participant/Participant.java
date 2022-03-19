@@ -49,4 +49,8 @@ public abstract class Participant {
     public final String getName() {
         return name;
     }
+
+    public boolean isBlackJack() {
+        return state.isBlackJack();
+    }
 }

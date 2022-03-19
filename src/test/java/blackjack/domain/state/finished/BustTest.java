@@ -33,6 +33,6 @@ public class BustTest {
 
         BetMoney betMoney = new BetMoney(10000);
 
-        assertThat(state.profit(betMoney, 18)).isEqualTo(-10000);
+        assertThat(state.profit(betMoney, 18, false)).isEqualTo(-10000);
     }
 }

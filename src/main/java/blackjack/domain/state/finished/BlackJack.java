@@ -12,7 +12,12 @@ public final class BlackJack extends Finished {
     }
 
     @Override
-    public double profit(BetMoney betMoney, int dealerScore) {
+    public boolean isBlackJack() {
+        return true;
+    }
+
+    @Override
+    public double profit(BetMoney betMoney, int dealerScore, boolean isDealerBlackJack) {
         return betMoney.getMoney() * EARNING_RATE;
     }
 }

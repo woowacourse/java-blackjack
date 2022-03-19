@@ -63,7 +63,7 @@ public class Participants {
     }
 
     public ProfitDto createUserProfitDto(String name) {
-        return new ProfitDto(name, users.profit(name, dealer.score()));
+        return new ProfitDto(name, users.profit(name, dealer.score(), dealer.isBlackJack()));
     }
 
     public void changeUserStateToStand(String name) {

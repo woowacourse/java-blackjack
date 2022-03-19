@@ -37,20 +37,32 @@ class StandTest {
     }
 
     @Test
-    @DisplayName("딜러의 점수보다 높으면 1배의 수익금을 얻는다.")
-    void profitWinTest() {
-        assertThat(state.profit(betMoney, 18)).isEqualTo(10000);
+    @DisplayName("딜러가 블랙잭이면 1배의 수익금을 얻는다.")
+    void profitBlackJackWinTest() {
+        assertThat(state.profit(betMoney, 18, true)).isEqualTo(10000);
     }
 
     @Test
-    @DisplayName("딜러의 점수보다 낮으면 -1배의 수익금을 얻는다.")
-    void profitLoseTest() {
-        assertThat(state.profit(betMoney, 20)).isEqualTo(-10000);
+    @DisplayName("딜러가 버스트면 1배의 수익금을 얻는다.")
+    void profitBustWinTest() {
+        assertThat(state.profit(betMoney, 22, false)).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트와 블랙잭이 아니고 딜러의 점수보다 높다면 1배의 수익금을 얻는다.")
+    void profitNotBustBlackJackWinTest() {
+        assertThat(state.profit(betMoney, 18, false)).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트와 블랙잭이 아니고 딜러의 점수보다 낮으면 -1배의 수익금을 얻는다.")
+    void profitNotBustBlackJackLoseTest() {
+        assertThat(state.profit(betMoney, 20, false)).isEqualTo(-10000);
     }
 
     @Test
     @DisplayName("딜러와 점수가 같으면 수익금이 없다.")
     void profitDrawTest() {
-        assertThat(state.profit(betMoney, 19)).isEqualTo(0);
+        assertThat(state.profit(betMoney, 19, false)).isEqualTo(0);
     }
 }

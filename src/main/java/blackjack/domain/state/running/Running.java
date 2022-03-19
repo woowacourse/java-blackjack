@@ -11,7 +11,12 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public final double profit(BetMoney betMoney, int dealerScore) {
+    public final double profit(BetMoney betMoney, int dealerScore, boolean isDealerBlackJack) {
         throw new IllegalStateException();
+    }
+
+    @Override
+    public final boolean isBlackJack() {
+        return false;
     }
 }

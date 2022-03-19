@@ -48,7 +48,7 @@ public class UserTest {
         user.drawCard(deck);
         user.drawCard(deck);
 
-        assertThat(user.calculateProfit(19))
+        assertThat(user.calculateProfit(19, false))
                 .isEqualTo(-10000);
     }
 
@@ -66,7 +66,7 @@ public class UserTest {
         user.drawCard(deck);
         user.changeToStand();
 
-        assertThat(user.calculateProfit(20))
+        assertThat(user.calculateProfit(20, false))
                 .isEqualTo(-10000);
     }
 
@@ -84,7 +84,7 @@ public class UserTest {
         user.drawCard(deck);
         user.changeToStand();
 
-        assertThat(user.calculateProfit(17))
+        assertThat(user.calculateProfit(17, false))
                 .isEqualTo(10000);
     }
 
@@ -102,7 +102,7 @@ public class UserTest {
         user.drawCard(deck);
         user.changeToStand();
 
-        assertThat(user.calculateProfit(18))
+        assertThat(user.calculateProfit(18, false))
                 .isEqualTo(0);
     }
 
@@ -122,7 +122,7 @@ public class UserTest {
         user.drawCard(deck);
         user.changeToStand();
 
-        assertThat(user.calculateProfit(13))
+        assertThat(user.calculateProfit(13, false))
                 .isEqualTo(0);
     }
 

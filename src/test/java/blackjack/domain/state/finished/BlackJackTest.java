@@ -31,6 +31,6 @@ class BlackJackTest {
 
         BetMoney betMoney = new BetMoney(10000);
 
-        assertThat(state.profit(betMoney, 18)).isEqualTo(15000);
+        assertThat(state.profit(betMoney, 18, false)).isEqualTo(15000);
     }
 }

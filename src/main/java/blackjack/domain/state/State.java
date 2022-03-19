@@ -14,5 +14,7 @@ public interface State {
 
     State stand();
 
-    double profit(BetMoney betMoney, int dealerScore);
+    boolean isBlackJack();
+
+    double profit(BetMoney betMoney, int dealerScore, boolean isDealerBlackJack);
 }

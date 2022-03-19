@@ -43,8 +43,8 @@ public class Users {
         return findUserByName(name).score();
     }
 
-    public double profit(String name, int dealerScore) {
-        return findUserByName(name).calculateProfit(dealerScore);
+    public double profit(String name, int dealerScore, boolean isDealerBlackJack) {
+        return findUserByName(name).calculateProfit(dealerScore, isDealerBlackJack);
     }
 
     public void changeToStand(String name) {

@@ -64,7 +64,7 @@ class InitTest {
         State state = new Init();
         BetMoney betMoney = new BetMoney(10000);
 
-        assertThatThrownBy(() -> state.profit(betMoney, 20))
+        assertThatThrownBy(() -> state.profit(betMoney, 20, false))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

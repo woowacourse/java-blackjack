@@ -12,7 +12,12 @@ public final class Bust extends Finished {
     }
 
     @Override
-    public double profit(BetMoney betMoney, int dealerScore) {
+    public boolean isBlackJack() {
+        return false;
+    }
+
+    @Override
+    public double profit(BetMoney betMoney, int dealerScore, boolean isDealerBlackJack) {
         return betMoney.getMoney() * EARNING_RATE;
     }
 }

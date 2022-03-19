@@ -14,7 +14,7 @@ public class User extends Participant {
         betMoney = new BetMoney(money);
     }
 
-    public double calculateProfit(int dealerScore) {
-        return super.state.profit(betMoney, dealerScore);
+    public double calculateProfit(int dealerScore, boolean isDealerBlackJack) {
+        return super.state.profit(betMoney, dealerScore, isDealerBlackJack);
     }
 }
