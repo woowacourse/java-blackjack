@@ -9,6 +9,7 @@ import blackjack.domain.money.Money;
 public class Player extends Participant {
 
     private static final String INVALID_NAME_LENGTH_EXCEPTION_MESSAGE = "이름은 1글자 이상이어야합니다.";
+    private static final String NEGATIVE_BET_MONEY_EXCEPTION_MESSAGE = "베팅 금액은 음수일 수 없습니다.";
 
     private final Money betMoney;
 
@@ -19,12 +20,20 @@ public class Player extends Participant {
 
     public static Player of(final String name, final Hand hand, final Money betMoney) {
         validateNameNotEmpty(name);
+        validateBetMoney(betMoney);
+
         return new Player(name, hand, betMoney);
     }
 
     private static void validateNameNotEmpty(String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException(INVALID_NAME_LENGTH_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private static void validateBetMoney(Money betMoney) {
+        if (betMoney.isNegative()) {
+            throw new IllegalArgumentException(NEGATIVE_BET_MONEY_EXCEPTION_MESSAGE);
         }
     }
 

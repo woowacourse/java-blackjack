@@ -23,6 +23,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
 
@@ -48,6 +50,16 @@ public class PlayerTest {
         assertThatThrownBy(() -> Player.of("", hand, Money.from(10000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 1글자 이상이어야합니다.");
+    }
+
+    @DisplayName("Player 의 베팅 금액이 음수면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {-1000, -1})
+    void of_withNegativeBetMoneyThrowsIllegalArgumentException(int input) {
+        Hand hand = Hand.of(CLOVER4, CLOVER5);
+        assertThatThrownBy(() -> Player.of("hudi", hand, Money.from(input)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 음수일 수 없습니다.");
     }
 
     @DisplayName("Card 를 전달받아 Hand 에 추가할 수 있다.")
