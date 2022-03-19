@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import blackjack.domain.Name;
-import blackjack.domain.state.Cards;
 
 public enum PlayRecord {
 
@@ -18,27 +17,27 @@ public enum PlayRecord {
     static Map<Name, PlayRecord> createPlayRecords(List<Player> players, Dealer dealer) {
         return List.copyOf(players).stream()
             .collect(toUnmodifiableMap(Player::getName,
-                player -> of(dealer.getCards(), player.getCards())));
+                player -> of(dealer, player)));
     }
 
-    private static PlayRecord of(Cards dealerCards, Cards playerCards) {
-        if (isPlayerLoss(dealerCards, playerCards)) {
+    private static PlayRecord of(Dealer dealer, Player player) {
+        if (isPlayerLoss(dealer, player)) {
             return LOSS;
         }
 
-        if (dealerCards.sum() == playerCards.sum() && !dealerCards.isBlackjack()) {
+        if (dealer.getScore() == player.getScore() && !dealer.isBlackjack()) {
             return PUSH;
         }
 
-        if (playerCards.isBlackjack()) {
+        if (player.isBlackjack()) {
             return BLACKJACK;
         }
 
         return WIN;
     }
 
-    private static boolean isPlayerLoss(Cards dealerCards, Cards playerCards) {
-        return playerCards.isBust() || (!dealerCards.isBust() && playerCards.sum() < dealerCards.sum())
-            || (dealerCards.isBlackjack() && !playerCards.isBlackjack());
+    private static boolean isPlayerLoss(Dealer dealer, Player player) {
+        return player.isBust() || (!dealer.isBust() && dealer.isBiggerThan(player))
+            || (dealer.isBlackjack() && !player.isBlackjack());
     }
 }

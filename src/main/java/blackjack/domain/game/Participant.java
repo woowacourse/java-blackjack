@@ -19,27 +19,39 @@ public abstract class Participant {
         draw(secondCard);
     }
 
-    final State getState() {
-        return state;
-    }
-
     final void draw(Card card) {
         this.state = state.draw(card);
     }
 
-    public abstract Name getName();
-
-    public final Cards getCards() {
-        return state.getCards();
-    }
-
-    public final int getScore() {
-        return getCards().sum();
-    }
+    public abstract boolean isDrawable();
 
     void stay() {
         state = state.stay();
     }
 
-    public abstract boolean isDrawable();
+    final State getState() {
+        return state;
+    }
+
+    final boolean isBiggerThan(Participant other) {
+        return getScore() > other.getScore();
+    }
+
+    final boolean isBlackjack() {
+        return getCards().isBlackjack();
+    }
+
+    final boolean isBust() {
+        return getCards().isBust();
+    }
+
+    public final Cards getCards() {
+        return state.getCards();
+    }
+
+    public abstract Name getName();
+
+    public final int getScore() {
+        return getCards().sum();
+    }
 }
