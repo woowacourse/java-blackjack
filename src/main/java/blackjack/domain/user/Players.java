@@ -1,12 +1,13 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Deck;
 import blackjack.domain.PlayerResult;
+import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
@@ -15,12 +16,13 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players create(List<String> playerNames, List<Bet> bets, Deck deck) {
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < playerNames.size(); i++) {
-            players.add(new Player(playerNames.get(i), bets.get(i), deck.drawInitCards()));
-        }
-        return new Players(players);
+    public static Players create(Map<String, Bet> playerBets, Deck deck) {
+        return playerBets.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue(), deck.drawInitCards()))
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        Players::new
+                ));
     }
 
     public int size() {

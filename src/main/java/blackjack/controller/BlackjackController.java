@@ -14,6 +14,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,13 +24,11 @@ public class BlackjackController {
     public void run() {
         Deck deck = new Deck();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        List<Bet> bets = startBettings(inputPlayerNames);
+        Map<String, Bet> playerBets = startBettings(inputPlayerNames);
         Dealer dealer = new Dealer(deck.drawInitCards());
-        Players players = Players.create(inputPlayerNames, bets, deck);
+        Players players = Players.create(playerBets, deck);
 
         OutputView.printDrawMessage(inputPlayerNames);
-
-
         OutputView.printTotalUserCards(CardDto.from(dealer.getOneCard()), converToPlayerDtos(players));
 
         List<UserScoreDto> userScoreDtos = playGame(dealer, players, deck);
@@ -48,12 +47,12 @@ public class BlackjackController {
         OutputView.printFinalResult(batchService.calculate(statistics));
     }
 
-    private List<Bet> startBettings(List<String> inputPlayerNames) {
-        List<Bet> bets = new ArrayList<>();
-        for (String inputPlayerName : inputPlayerNames) {
-            bets.add(Bet.from(InputView.askBetAmount(inputPlayerName)));
-        }
-        return bets;
+    private Map<String, Bet> startBettings(List<String> inputPlayerNames) {
+        return inputPlayerNames.stream()
+                .collect(Collectors.toMap(inputPlayerName -> inputPlayerName,
+                        inputPlayerName -> Bet.from(InputView.askBetAmount(inputPlayerName))
+                        , (a, b) -> b,
+                        LinkedHashMap::new));
     }
 
     private List<UserScoreDto> playGame(Dealer dealer, Players players, Deck deck) {
