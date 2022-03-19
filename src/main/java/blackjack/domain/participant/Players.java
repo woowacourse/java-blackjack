@@ -34,12 +34,9 @@ public class Players {
     }
 
     public Money calculateTotalProfit(Dealer dealer) {
-        Money totalProfit = Money.from(0);
-        for (Player player : value) {
-            totalProfit = totalProfit.add(player.calculateProfit(dealer));
-        }
-
-        return totalProfit;
+        return value.stream()
+                .map(player -> player.calculateProfit(dealer))
+                .reduce(Money.from(0), Money::add);
     }
 
     public List<Player> getValue() {
