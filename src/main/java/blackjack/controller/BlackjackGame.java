@@ -5,10 +5,8 @@ import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
 import blackjack.domain.participant.human.name.Name;
-import blackjack.domain.result.PayoutCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,14 +63,8 @@ public final class BlackjackGame {
     private void printGameResult(final Players players, final Dealer dealer) {
         OutputView.printHandAndPoint(players, dealer);
 
-        int dealerMoney = 0;
-        Map<Player, Integer> payouts = new HashMap<>();
-        for (Player player : players.get()) {
-            payouts.put(player, PayoutCalculator.compute(player, dealer));
-            dealerMoney -= payouts.get(player);
-        }
-
-        OutputView.printResult(dealer, dealerMoney);
+        Map<Player,Integer> payouts = players.getPayouts(dealer);
+        OutputView.printResult(dealer, dealer.getRemainMoney(payouts));
         payouts.forEach(OutputView::printHumanResult);
     }
 }

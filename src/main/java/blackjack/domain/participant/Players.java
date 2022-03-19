@@ -1,9 +1,12 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.cards.CardDeck;
+import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
+import blackjack.domain.result.PayoutCalculator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Players {
@@ -30,6 +33,13 @@ public final class Players {
 
     public void giveCard(CardDeck cardDeck) {
         value.forEach(player -> player.addCard(cardDeck.pop()));
+    }
+
+    public Map<Player, Integer> getPayouts(final Dealer dealer) {
+        return value.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> PayoutCalculator.compute(player, dealer)));
     }
 
     public List<String> getNames() {
