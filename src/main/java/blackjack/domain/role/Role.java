@@ -60,7 +60,7 @@ public abstract class Role {
 	}
 
 	public void earnAmountByBlackJack() {
-		if (isBlackJack()) {
+		if (!isBlackJack()) {
 			return;
 		}
 		bettingAmount.giveOneAndHalfTime();
