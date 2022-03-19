@@ -12,6 +12,8 @@ public enum Result {
 	WIN(1.0, (dealer, player) -> new ResultCalculator(dealer, player).isWin()),
 	DRAW(0.0, (dealer, player) -> new ResultCalculator(dealer, player).isDraw());
 
+	private static final String ERROR_MESSAGE_NO_RULE = "[ERROR] 결과를 산출할 수 없는 경우입니다.";
+
 	private final double multiple;
 	private final BiPredicate<Dealer, Player> condition;
 
@@ -24,7 +26,7 @@ public enum Result {
 		return Arrays.stream(Result.values())
 			.filter(result -> result.condition.test(dealer, player))
 			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("[ERROR] 결과를 산출할 수 없는 경우입니다."));
+			.orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_NO_RULE));
 	}
 
 	int getEarning(int amount) {
