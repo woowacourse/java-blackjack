@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Cards {
@@ -17,7 +18,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return isReady() && hasAce() && totalScore() == 11;
+        return isReady() && hasAce() && totalScore() == 21;
     }
 
     public boolean isReady() {
@@ -34,10 +35,15 @@ public class Cards {
     }
 
     public int totalScore() {
-        return value.stream()
-                .map(Card::getDenomination)
-                .mapToInt(Denomination::getScore)
-                .sum();
+        ArrayList<Card> newCards = new ArrayList<>(value);
+        newCards.sort(Comparator.naturalOrder());
+
+        int totalScore = 0;
+        for (Card card : newCards) {
+            totalScore = card.calculateScore(totalScore);
+        }
+
+        return totalScore;
     }
 
     public void append(Card card) {
