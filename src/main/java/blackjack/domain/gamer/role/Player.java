@@ -8,6 +8,7 @@ import blackjack.domain.gamer.Money;
 import blackjack.domain.result.Match;
 
 public final class Player extends Role{
+    private static final double BLACKJACK_RATIO = 1.5;
 
     private final Money betMoney;
 
@@ -60,7 +61,7 @@ public final class Player extends Role{
 
     private double profitRatio(Match match) {
         if (match.equals(Match.WIN) && cardGroup.isBlackJack()) {
-            return 1.5;
+            return BLACKJACK_RATIO;
         }
         if (match.equals(Match.WIN)) {
             return 1;
