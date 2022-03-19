@@ -30,7 +30,7 @@ public final class Player extends AbstractParticipant {
         }
     }
 
-    public double profit(final Dealer dealer) {
+    public int profit(final Dealer dealer) {
         return blackjackGameState.profit(betMoney, dealer.blackjackGameState);
     }
 }

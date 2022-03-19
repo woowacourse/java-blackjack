@@ -38,8 +38,8 @@ public abstract class Finished extends AbstractBlackjackGameState {
     }
 
     @Override
-    public final double profit(final int betMoney, final BlackjackGameState dealerGameState) {
-        return betMoney * earningRate(dealerGameState);
+    public final int profit(final int betMoney, final BlackjackGameState dealerGameState) {
+        return (int) (betMoney * earningRate(dealerGameState));
     }
 
     abstract double earningRate(final BlackjackGameState blackjackGameState);

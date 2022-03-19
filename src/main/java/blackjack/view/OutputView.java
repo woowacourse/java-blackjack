@@ -17,7 +17,7 @@ public class OutputView {
     private static final String PROVIDE_CARD_TO_DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PARTICIPANT_CARD_RESULT_AND_SCORE_MESSAGE = "%s 카드: %s - 결과: %d%n";
     private static final String PARTICIPANT_PROFIT_RESULT_TITLE = "## 최종 수익";
-    private static final String PARTICIPANT_PROFIT_RESULT_MESSAGE = "%s: %.0f%n";
+    private static final String PARTICIPANT_PROFIT_RESULT_MESSAGE = "%s: %d%n";
 
     private static final String PLAYER_NAME_DELIMITER = ", ";
     private static final String CARD_DELIMITER = ", ";
@@ -72,7 +72,7 @@ public class OutputView {
         System.out.println(PARTICIPANT_PROFIT_RESULT_TITLE);
     }
 
-    public static void printParticipantProfit(final String name, final double profit) {
+    public static void printParticipantProfit(final String name, final int profit) {
         System.out.printf(PARTICIPANT_PROFIT_RESULT_MESSAGE, name, profit);
     }
 

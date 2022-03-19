@@ -11,7 +11,7 @@ public interface BlackjackGameState {
 
     boolean isFinished();
 
-    double profit(final int betMoney, final BlackjackGameState dealerGameState);
+    int profit(final int betMoney, final BlackjackGameState dealerGameState);
 
     boolean isBust();
 

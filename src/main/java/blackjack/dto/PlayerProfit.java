@@ -6,9 +6,9 @@ import blackjack.domain.participant.Player;
 public class PlayerProfit {
 
     private final String name;
-    private final double profit;
+    private final int profit;
 
-    private PlayerProfit(final String name, final double profit) {
+    private PlayerProfit(final String name, final int profit) {
         this.name = name;
         this.profit = profit;
     }
@@ -21,7 +21,7 @@ public class PlayerProfit {
         return name;
     }
 
-    public double getProfit() {
+    public int getProfit() {
         return profit;
     }
 }

@@ -102,17 +102,13 @@ public class Players {
         currentPlayerTurnIndex++;
     }
 
-    public double dealerProfit(final Dealer dealer) {
-        final double result = calculateAllPlayersProfit(dealer);
-        if (result == 0) {
-            return 0;
-        }
-        return result;
+    public int dealerProfit(final Dealer dealer) {
+        return calculateAllPlayersProfit(dealer);
     }
 
-    private double calculateAllPlayersProfit(final Dealer dealer) {
+    private int calculateAllPlayersProfit(final Dealer dealer) {
         return players.stream()
-                .mapToDouble(player -> player.profit(dealer))
+                .mapToInt(player -> player.profit(dealer))
                 .sum() * (-1);
     }
 
