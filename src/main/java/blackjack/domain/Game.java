@@ -35,7 +35,7 @@ public final class Game {
         players.forEach(player -> player.init(cardDeck.drawCard(), cardDeck.drawCard()));
     }
 
-    public Optional<Player> findHitPlayer() {
+    public Optional<Player> RunningPlayer() {
         return players.stream()
             .filter(player -> !player.isFinished())
             .findFirst();

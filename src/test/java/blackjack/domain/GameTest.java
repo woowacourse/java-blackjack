@@ -63,7 +63,7 @@ public class GameTest {
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
 
         // when
-        Optional<Player> hitPlayer = game.findHitPlayer();
+        Optional<Player> hitPlayer = game.RunningPlayer();
         if (hitPlayer.isPresent()) {
             State actual = hitPlayer.get().getState();
             // then

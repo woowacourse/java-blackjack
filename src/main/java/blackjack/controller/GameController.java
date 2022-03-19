@@ -54,17 +54,15 @@ public final class GameController {
     }
 
     private void drawPlayerCards(Game game) {
-        validatePlayersPresent(game.getPlayers());
-        while (game.findHitPlayer().isPresent()) {
-            Player player = game.findHitPlayer().get();
-            game.drawPlayerCard(player, requestHitOrStay(player.getName()));
-            printParticipantCards(player);
+        if (game.RunningPlayer().isPresent()) {
+            keepDrawing(game, game.RunningPlayer().get());
         }
     }
 
-    private void validatePlayersPresent(List<Player> players) {
-        if (players.isEmpty()) {
-            throw new IllegalStateException("플레이어가 존재하지 않습니다.");
+    private void keepDrawing(Game game, Player player) {
+        while (!player.isFinished()) {
+            game.drawPlayerCard(player, requestHitOrStay(player.getName()));
+            printParticipantCards(player);
         }
     }
 
