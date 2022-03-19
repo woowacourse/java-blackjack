@@ -24,6 +24,15 @@ public class GameStatistic {
         return new GameStatistic(result);
     }
 
+    public double profit(Player player){
+        return gameResult.get(player);
+    }
+
+    public double getTotalNonProfit(){
+        return -1*gameResult.values().stream()
+            .mapToDouble(Double::doubleValue)
+            .sum();
+    }
     public Map<Player, Double> getGameResult() {
         return Map.copyOf(gameResult);
     }

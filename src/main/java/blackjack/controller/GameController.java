@@ -27,8 +27,8 @@ public class GameController {
         hitOrStandDealer(dealer, cardDeck);
 
         OutputView.printCardAndPoint(gamblers, dealer);
-        GameStatistic.of(dealer, gamblers);
-//        printGameResult(Statistic.of(dealer, gamblers), gamblers);
+        GameStatistic statistic = GameStatistic.of(dealer, gamblers);
+        printGameResult(statistic, dealer);
     }
 
     private Gamblers generatePlayers(CardDeck cardDeck) {
@@ -74,8 +74,7 @@ public class GameController {
         }
     }
 
-    private void printGameResult(Statistic statistic, Gamblers gamblers) {
-        OutputView.printTotalResult(statistic);
-        OutputView.printTotalResultByGambler(statistic, gamblers);
+    private void printGameResult(GameStatistic gameStatistic, Dealer dealer) {
+        OutputView.printGameResult(gameStatistic, dealer);
     }
 }

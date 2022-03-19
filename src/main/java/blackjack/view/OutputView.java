@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.GameStatistic;
 import blackjack.domain.Statistic;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
@@ -24,7 +25,7 @@ public class OutputView {
     private static final String KOREAN_RESULT_LOSE = "패";
     private static final String KOREAN_RESULT_DRAW = "무";
 
-//    public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
+    //    public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
 //        System.out.println();
 //        String gamblerNames = String.join(JOIN_DELIMITER, gamblers.getGamblerNames());
 //        System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), gamblerNames);
@@ -36,6 +37,7 @@ public class OutputView {
         System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), gamblerNames);
         System.out.println();
     }
+
     public static void printPlayerCardState(Player player) {
         System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCards()));
         System.out.println();
@@ -107,5 +109,14 @@ public class OutputView {
         System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCards()));
         System.out.printf(POINT_STATE_MESSAGE, player.getPoint());
         System.out.println();
+    }
+
+    public static void printGameResult(GameStatistic gameStatistic, Dealer dealer) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.println(dealer.getName() + ": " + gameStatistic.getTotalNonProfit());
+        for (Player player : gameStatistic.getGameResult().keySet()) {
+            System.out.println(player.getName() + ": " + gameStatistic.profit(player));
+        }
     }
 }
