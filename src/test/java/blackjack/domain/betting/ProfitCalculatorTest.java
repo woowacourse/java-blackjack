@@ -86,7 +86,7 @@ public class ProfitCalculatorTest {
 
         profitCalculator.calculate();
 
-        assertThat(profitCalculator.getDealerProfit()).isEqualTo(1000);
+        assertThat(profitCalculator.calculateDealerProfit()).isEqualTo(1000);
     }
 
 }

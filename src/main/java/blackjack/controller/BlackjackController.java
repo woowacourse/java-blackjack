@@ -111,7 +111,7 @@ public class BlackjackController {
         profitCalculator.calculate();
 
         Map<Player, Integer> playerProfitResult = profitCalculator.getPlayerProfit();
-        int dealerProfitResult = profitCalculator.getDealerProfit();
+        int dealerProfitResult = profitCalculator.calculateDealerProfit();
 
         OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
     }
