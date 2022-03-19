@@ -18,12 +18,12 @@ public final class BlackjackGame {
 
     public void run() {
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer(cardDeck.popCards(2));
+        Dealer dealer = new Dealer(cardDeck.popCards(INIT_CARD_NUMBER));
         Players players = initPlayers(cardDeck);
         OutputView.printInitCards(players, dealer);
 
         startGame(players, dealer, cardDeck);
-        endGame(players, dealer);
+        printGameResult(players, dealer);
     }
 
     private Players initPlayers(final CardDeck cardDeck) {
@@ -62,7 +62,7 @@ public final class BlackjackGame {
         }
     }
 
-    private void endGame(final Players players, final Dealer dealer) {
+    private void printGameResult(final Players players, final Dealer dealer) {
         OutputView.printHandAndPoint(players, dealer);
 
         int dealerMoney = 0;
