@@ -4,6 +4,7 @@ import java.util.Set;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
+import blackjack.domain.state.finished.Blackjack;
 
 public class Ready implements State {
 
