@@ -50,6 +50,6 @@ public class BlackJackController {
 
     private void gameResult(Game game) {
         OutputView.printFinalCard(game.getDealerAndPlayerCard());
-//        OutputView.printFinalResult(game.getParticipantProfits());
+        OutputView.printFinalResult(game.getParticipantProfits());
     }
 }

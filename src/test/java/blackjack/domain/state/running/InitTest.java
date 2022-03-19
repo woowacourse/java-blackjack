@@ -5,6 +5,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.TestCardGenerator;
+import blackjack.domain.money.BetMoney;
 import blackjack.domain.state.State;
 import blackjack.domain.state.finished.BlackJack;
 import org.junit.jupiter.api.DisplayName;
@@ -53,6 +54,17 @@ class InitTest {
         State state = new Init();
 
         assertThatThrownBy(state::stand)
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+
+    @Test
+    @DisplayName("profit 메서드를 실행시키면 예외가 발생한다.")
+    void profitTest() {
+        State state = new Init();
+        BetMoney betMoney = new BetMoney(10000);
+
+        assertThatThrownBy(() -> state.profit(betMoney, 20))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

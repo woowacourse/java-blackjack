@@ -2,11 +2,14 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.CardGenerator;
-import blackjack.domain.participant.*;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Users;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ProfitDto;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
@@ -82,11 +85,11 @@ public class Game {
     }
 
     public List<ProfitDto> getParticipantProfits() {
-        List<ProfitDto> profitDtos = new ArrayList<>();
-        profitDtos.add(participants.createDealerProfitDto());
+        List<ProfitDto> profitDtos = new LinkedList<>();
         for (String userName : participants.getUserNames()) {
             profitDtos.add(participants.createUserProfitDto(userName));
         }
+        profitDtos.add(0, participants.createDealerProfitDto(profitDtos));
         return profitDtos;
     }
 }

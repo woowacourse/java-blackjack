@@ -1,6 +1,7 @@
 package blackjack.domain.state.running;
 
 import blackjack.domain.card.HoldingCards;
+import blackjack.domain.money.BetMoney;
 import blackjack.domain.state.Started;
 
 public abstract class Running extends Started {
@@ -10,7 +11,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public final boolean isFinished() {
-        return false;
+    public final double profit(BetMoney betMoney, int dealerScore) {
+        throw new IllegalStateException();
     }
 }

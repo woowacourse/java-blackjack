@@ -19,7 +19,7 @@ public class OutputView {
     private static final String CARD_PRINT_FORMAT = "%s 카드: %s";
     private static final String SCORE_FORMAT = " - 점수 : %d";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 수익";
-    private static final String USER_RESULT_FORMAT = "%s: %d";
+    private static final String USER_RESULT_FORMAT = "%s: %.0f";
 
     public static void printInitDistribute(List<ParticipantDto> participantDtos) {
         System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT + lineSeparator(),

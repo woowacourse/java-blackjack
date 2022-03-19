@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -26,15 +25,5 @@ public class Users {
                 .filter(user -> user.getName().equals(name))
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
-    }
-
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(users);
-    }
-
-    public int getTotalProfit(int dealerSum) {
-        return users.stream()
-                .mapToInt(user -> user.calculateProfit(dealerSum))
-                .sum();
     }
 }

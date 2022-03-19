@@ -3,9 +3,9 @@ package blackjack.dto;
 public class ProfitDto {
 
     private final String name;
-    private final int money;
+    private final double money;
 
-    public ProfitDto(String name, int money) {
+    public ProfitDto(String name, double money) {
         this.name = name;
         this.money = money;
     }
@@ -14,7 +14,7 @@ public class ProfitDto {
         return name;
     }
 
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 }

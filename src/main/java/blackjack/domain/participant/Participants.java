@@ -10,8 +10,6 @@ import static blackjack.domain.Game.DEALER_NAME;
 
 public class Participants {
 
-    private static final int PROFIT_REVERSE = -1;
-
     private final Users users;
     private final Dealer dealer;
 
@@ -60,8 +58,8 @@ public class Participants {
         return ParticipantDto.of(name, users.findUserByName(name).getHoldingCards(), users.findUserByName(name).score());
     }
 
-    public ProfitDto createDealerProfitDto() {
-        return new ProfitDto(dealer.getName(), PROFIT_REVERSE * users.getTotalProfit(dealer.score()));
+    public ProfitDto createDealerProfitDto(List<ProfitDto> userProfits) {
+        return new ProfitDto(dealer.getName(), dealer.calculateProfit(userProfits));
     }
 
     public ProfitDto createUserProfitDto(String name) {
