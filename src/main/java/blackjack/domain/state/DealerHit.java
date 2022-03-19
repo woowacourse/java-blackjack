@@ -13,7 +13,7 @@ public class DealerHit extends Hit {
     
     public static State from(PlayerCards cards) {
         if (cards.isBust()) {
-            return new Bust(cards);
+            return new DealerBust(cards);
         }
         if (cards.getTotalScore() > MAX_SCORE) {
             return new Stay(cards);
@@ -25,7 +25,7 @@ public class DealerHit extends Hit {
     public State draw(Card card) {
         cards.add(card);
         if (cards.isBust()) {
-            return new Bust(cards);
+            return new DealerBust(cards);
         }
         if (cards.getTotalScore() > MAX_SCORE) {
             return new Stay(cards);

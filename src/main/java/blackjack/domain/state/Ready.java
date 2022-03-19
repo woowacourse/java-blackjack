@@ -13,7 +13,7 @@ public abstract class Ready implements State {
         List<Card> cards = new ArrayList<>(List.of(card1, card2));
         PlayerCards playerCards = new PlayerCards(cards);
         if (playerCards.isBlackjack()) {
-            return new Blackjack(playerCards);
+            return new ParticipantBlackjack(playerCards);
         }
         return new ParticipantHit(playerCards);
     }
@@ -22,7 +22,7 @@ public abstract class Ready implements State {
         List<Card> cards = new ArrayList<>(List.of(card1, card2));
         PlayerCards playerCards = new PlayerCards(cards);
         if (playerCards.isBlackjack()) {
-            return new Blackjack(playerCards);
+            return new DealerBlackjack(playerCards);
         }
         return DealerHit.from(playerCards);
     }

@@ -13,7 +13,7 @@ public class ParticipantHit extends Hit {
     public State draw(Card card) {
         cards.add(card);
         if (cards.isBust()) {
-            return new Bust(cards);
+            return new ParticipantBust(cards);
         }
         return this;
     }

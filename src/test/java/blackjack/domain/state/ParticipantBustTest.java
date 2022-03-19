@@ -3,13 +3,14 @@ package blackjack.domain.state;
 import static blackjack.domain.CardFixture.SPADE_NINE;
 import static blackjack.domain.CardFixture.SPADE_TEN;
 import static blackjack.domain.CardFixture.SPADE_THREE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BustTest {
+public class ParticipantBustTest {
 
     private State bust;
 
@@ -17,6 +18,12 @@ public class BustTest {
     void setUp() {
         bust = Ready.dealToParticipant(SPADE_THREE, SPADE_NINE)
                 .draw(SPADE_TEN);
+    }
+
+    @Test
+    @DisplayName("참가자가 bust면 ParticipantBust가 된다.")
+    void dealer_bust() {
+        assertThat(bust).isInstanceOf(ParticipantBust.class);
     }
 
     @Test
