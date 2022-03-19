@@ -42,6 +42,10 @@ public abstract class Player {
         return !cards.isBust();
     }
 
+    public boolean isGreaterThan(Player player) {
+        return calculateFinalScore() > player.calculateFinalScore();
+    }
+
     public List<Card> getCards() {
         return this.cards.getCards();
     }

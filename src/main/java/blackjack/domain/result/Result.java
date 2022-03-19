@@ -1,23 +1,45 @@
 package blackjack.domain.result;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.player.Player;
+
+import java.util.function.Function;
 
 public enum Result {
 
-    WIN,
-    LOSE,
-    DRAW,
+    WIN(Money::betting),
+    LOSE(money -> money.betting() * -1),
+    DRAW(money -> 0),
+    BLACKJACK(money -> (int) (money.betting() * 1.5)),
     ;
 
     public static final int BLACKJACK_SCORE = 21;
 
-    public static Result competeResult(Player dealer, Player participant) {
+    private final Function<Money, Integer> profitCalculator;
+
+    Result(final Function<Money, Integer> profitCalculator) {
+        this.profitCalculator = profitCalculator;
+    }
+
+    public static int calculateProfit(Money money, Result result) {
+        return result.profitCalculator.apply(money);
+    }
+
+    public static int calculateOppositeProfit(int profit) {
+        return profit * -1;
+    }
+
+    public static Result calculateResult(Player dealer, Player participant) {
         if (checkDraw(dealer, participant)) {
             return Result.DRAW;
         }
-        if (compete(dealer, participant)) {
+        if (participant.isBlackjack()) {
+            return Result.BLACKJACK;
+        }
+        if (isParticipantWin(dealer, participant)) {
             return Result.WIN;
         }
+
         return Result.LOSE;
     }
 
@@ -41,23 +63,7 @@ public enum Result {
         return dealer.calculateFinalScore() == participant.calculateFinalScore();
     }
 
-    private static boolean compete(final Player dealer, final Player participant) {
-        if (participant.isBlackjack()) {
-            return true;
-        }
-
-        return isParticipantWin(dealer.calculateFinalScore(), participant.calculateFinalScore());
-    }
-
-    private static boolean isParticipantWin(int dealerScore, int participantScore) {
-        return participantScore <= BLACKJACK_SCORE && participantScore > dealerScore;
-    }
-
-    public boolean isWin() {
-        return this == WIN;
-    }
-
-    public boolean isLose() {
-        return this == LOSE;
+    private static boolean isParticipantWin(final Player dealer, final Player participant) {
+        return !dealer.isNotBust() || participant.isNotBust() && participant.isGreaterThan(dealer);
     }
 }

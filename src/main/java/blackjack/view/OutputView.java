@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.player.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -77,25 +78,44 @@ public class OutputView {
         System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
     }
 
-    public static void printGameResult(final List<Player> participants, final int dealerProfit) {
+    public static void printPlayersProfit(Map<Player, Integer> profits, int dealerProfit) {
         System.out.println("## 최종 수익");
-        printDealerResult(dealerProfit);
-        printParticipantsResult(participants);
+        printDealerProfit(dealerProfit);
+        printParticipantsProfit(profits);
     }
 
-    private static void printDealerResult(final int dealerProfit) {
+    public static void printDealerProfit(int dealerProfit) {
         System.out.println("딜러" + EXPLAIN_SYMBOL + dealerProfit);
     }
 
-    private static void printParticipantsResult(final List<Player> participants) {
-        participants.forEach(OutputView::printParticipantResult);
+    private static void printParticipantsProfit(Map<Player, Integer> profits) {
+        profits.keySet().forEach(participant -> printParticipantProfit(participant, profits.get(participant)));
     }
 
-    private static void printParticipantResult(final Player player) {
-        if (player.isParticipant()) {
-            Participant participant = (Participant) player;
-            System.out.print(participant.getName() + EXPLAIN_SYMBOL);
-            System.out.println(participant.money().profit());
-        }
+    private static void printParticipantProfit(final Player participant, final int profit) {
+        System.out.print(participant.getName() + EXPLAIN_SYMBOL);
+        System.out.println(profit);
     }
+//    public static void printGameResult(final List<Player> participants, final int dealerProfit) {
+//        System.out.println("## 최종 수익");
+//        printDealerResult(dealerProfit);
+//        printParticipantsResult(participants);
+//    }
+//
+//    private static void printDealerResult(final int dealerProfit) {
+//        System.out.println("딜러" + EXPLAIN_SYMBOL + dealerProfit);
+//    }
+//
+//    private static void printParticipantsResult(final List<Player> participants) {
+//        participants.forEach(OutputView::printParticipantResult);
+//    }
+//
+//    private static void printParticipantResult(final Player player) {
+//        if (player.isParticipant()) {
+//            Participant participant = (Participant) player;
+//            System.out.print(participant.getName() + EXPLAIN_SYMBOL);
+//            System.out.println(participant.money().profit());
+//        }
+
+//    }
 }

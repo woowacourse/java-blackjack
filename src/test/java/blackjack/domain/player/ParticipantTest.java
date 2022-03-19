@@ -18,7 +18,7 @@ class ParticipantTest {
     @DisplayName("참여자 이름은 비어있을 수 없다")
     void checkNameNullOrEmpty(String name) {
         AcceptStrategy inputStrategy = new ParticipantAcceptStrategy();
-        assertThatThrownBy(() -> new Participant(name, inputStrategy, new Money(0)))
+        assertThatThrownBy(() -> new Participant(name, inputStrategy))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 비어있을 수 없습니다.");
     }
@@ -27,7 +27,7 @@ class ParticipantTest {
     @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
     void addParticipantCard() {
         Deck deck = new Deck(new RandomCardGenerator());
-        Participant participant = new Participant("pobi", name -> true, new Money(0));
+        Participant participant = new Participant("pobi", name -> true);
         participant.addCard(deck.draw());
         participant.addCard(deck.draw());
         int size = participant.getCards().size();
@@ -38,7 +38,7 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 Burst가 되지 않으면 카드를 받을 수 있다.")
     void acceptCardWhenNotBurst() {
-        Participant participant = new Participant("pobi", name -> true, new Money(0));
+        Participant participant = new Participant("pobi", name -> true);
 
         participant.addCard(new Card(Type.CLOVER, Score.TWO));
         participant.addCard(new Card(Type.SPADE, Score.ACE));
@@ -50,7 +50,7 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 Burst가 되면 카드를 받을 수 없다.")
     void notAcceptCardWhenBurst() {
-        Participant participant = new Participant("pobi", name -> true, new Money(0));
+        Participant participant = new Participant("pobi", name -> true);
         participant.addCard(new Card(Type.DIAMOND, Score.KING));
         participant.addCard(new Card(Type.DIAMOND, Score.JACK));
         participant.addCard(new Card(Type.DIAMOND, Score.TWO));

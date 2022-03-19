@@ -1,58 +1,28 @@
 package blackjack.domain.result;
 
-import blackjack.domain.player.Participant;
+import blackjack.domain.betting.Money;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 
-import java.util.List;
+import java.util.*;
 
 public class ProfitCalculator {
 
-    public static void calculateParticipantsProfit(final Players players) {
-        for (Player participant : players.getParticipants()) {
-            Result participantResult = Result.competeResult(players.getDealer(), participant);
-            calculateParticipantProfit(participant, participantResult);
+    public static Map<Player, Integer> calculateParticipantsProfit(final Map<Player, Money> bettings, final Player dealer) {
+        Map<Player, Integer> profits = new HashMap<>();
+        for (Player participant : bettings.keySet()) {
+            int profit = calculateParticipantProfit(bettings, dealer, participant);
+            profits.put(participant, profit);
         }
+        return profits;
     }
 
-    private static void calculateParticipantProfit(final Player player, final Result result) {
-        validateParticipant(player);
-        Participant participant = (Participant) player;
-        calculate(participant, result);
+    private static int calculateParticipantProfit(Map<Player, Money> bettings, Player dealer, Player participant) {
+        Result participantResult = Result.calculateResult(dealer, participant);
+        return Result.calculateProfit(bettings.get(participant), participantResult);
     }
 
-    public static int calculateDealerProfit(List<Player> participants) {
-        int profit = 0;
-        for (Player participant : participants) {
-            profit += calculateDealerProfit(participant);
-        }
-        return profit;
-    }
-
-    private static void calculate(final Participant participant, final Result result) {
-        if (result.isWin() && participant.isBlackjack()) {
-            participant.increaseBlackjackMoney();
-            return;
-        }
-        if (result.isWin()) {
-            participant.increaseMoney();
-            return;
-        }
-        if (result.isLose()) {
-            participant.decreaseMoney();
-        }
-    }
-
-    public static int calculateDealerProfit(final Player player) {
-        validateParticipant(player);
-        Participant participant = (Participant) player;
-        return -participant.money().profit();
-    }
-
-    private static void validateParticipant(final Player player) {
-        if (!player.isParticipant()) {
-            throw new IllegalArgumentException("[ERROR] 참가자가 아닙니다.");
-        }
+    public static int calculateDealerProfit(Collection<Integer> profits) {
+        return profits.stream().mapToInt(Result::calculateOppositeProfit).sum();
     }
 
 }
