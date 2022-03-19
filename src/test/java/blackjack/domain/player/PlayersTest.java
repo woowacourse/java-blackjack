@@ -134,7 +134,7 @@ class PlayersTest {
 
     @Nested
     @DisplayName("isPossibleToPlay 메서드는")
-    class Describe_isPossibleToPlay {
+    class DescribeIsPossibleToPlay {
 
         private Player bustPlayer;
         private Player stayPlayer;
@@ -155,11 +155,11 @@ class PlayersTest {
 
         @Nested
         @DisplayName("플레이 가능한 플레이어가 남아있다면")
-        class Context_with_remain_playable_player {
+        class ContextWithRemainPlayablePlayer {
 
             @Test
             @DisplayName("참을 반환한다")
-            void it_returns_true() {
+            void itReturnsTrue() {
                 Players players = new Players(List.of(playablePlayer, bustPlayer));
                 assertThat(players.isAllPlayerSatisfy(Player::isAbleToHit)).isTrue();
             }
@@ -167,11 +167,11 @@ class PlayersTest {
 
         @Nested
         @DisplayName("플레이 가능한 플레이어가 남아있지 않다면")
-        class Context_with_no_playable_player {
+        class ContextWithNoPlayablePlayer {
 
             @Test
             @DisplayName("거짓을 반환한다")
-            void it_returns_false() {
+            void itReturnsFalse() {
                 Players players = new Players(List.of(stayPlayer, bustPlayer));
                 assertThat(players.isAllPlayerSatisfy(Player::isAbleToHit)).isFalse();
             }

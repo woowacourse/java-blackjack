@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.fixture.FixedSequenceDeck;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,32 +16,32 @@ class ResultTest {
     @Test
     @DisplayName("블랙잭일 경우 입력값의 1.5배를 정수형으로 반환한다")
     void testBlackjack() {
-        Assertions.assertThat(Result.BLACKJACK.calculateDividend(10000L)).isEqualTo(15000L);
+        assertThat(Result.BLACKJACK.calculateDividend(10000L)).isEqualTo(15000L);
     }
 
     @Test
     @DisplayName("승리할 경우 입력값의 1.0배를 정수형으로 반환한다")
     void testWin() {
-        Assertions.assertThat(Result.WIN.calculateDividend(10000L)).isEqualTo(10000L);
+        assertThat(Result.WIN.calculateDividend(10000L)).isEqualTo(10000L);
     }
 
     @Test
     @DisplayName("블랙잭일 경우 입력값의 -1.0배를 정수형으로 반환한다")
     void testLose() {
-        Assertions.assertThat(Result.LOSE.calculateDividend(10000L)).isEqualTo(-10000L);
+        assertThat(Result.LOSE.calculateDividend(10000L)).isEqualTo(-10000L);
     }
 
     @Nested
     @DisplayName("calculateResult 메서드는")
-    class Describe_calculateResult {
+    class DescribeCalculateResult {
 
         @Nested
         @DisplayName("블랙잭을 반환한다")
-        class It_returns_blackjack {
+        class ItReturnsBlackjack {
 
             @Test
             @DisplayName("플레이어가 블랙잭이고 딜러는 블랙잭이 아닌 경우")
-            void context_with_player_blackjack_only() {
+            void contextWithPlayerBlackjackOnly() {
                 Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, ACE),
                         new Card(HEART, SEVEN), new Card(SPADE, QUEEN));
 
@@ -60,7 +59,7 @@ class ResultTest {
 
             @Test
             @DisplayName("플레이어와 딜러 모두 블랙잭인 경우")
-            void context_with_both_are_blackjack() {
+            void contextWithBothAreBlackjack() {
                 Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, ACE),
                         new Card(HEART, JACK), new Card(SPADE, ACE));
 
@@ -72,7 +71,7 @@ class ResultTest {
 
             @Test
             @DisplayName("플레이어가 딜러보다 점수가 높으면서 블랙잭이 아닌 경우")
-            void context_with_player_has_higher_score_and_not_blackjack() {
+            void contextWithPlayerHasHigherScoreAndNotBlackjack() {
                 Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
                         new Card(HEART, JACK), new Card(SPADE, SEVEN));
 
@@ -84,7 +83,7 @@ class ResultTest {
 
             @Test
             @DisplayName("플레이어와 딜러가 점수가 같은 경우")
-            void context_with_player_and_dealer_has_same_score() {
+            void contextWithPlayerAndDealerHasSameScore() {
                 Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
                         new Card(HEART, JACK), new Card(SPADE, EIGHT));
 
@@ -96,7 +95,7 @@ class ResultTest {
 
             @Test
             @DisplayName("딜러가 버스트이고 플레이어는 버스트가 아닌 경우")
-            void context_with_dealer_is_bust() {
+            void contextWithDealerIsBust() {
                 Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
                         new Card(HEART, JACK), new Card(SPADE, SIX), new Card(SPADE, SEVEN));
 
@@ -114,7 +113,7 @@ class ResultTest {
 
             @Test
             @DisplayName("플레이어가 버스트인 경우")
-            void context_with_player_is_bust() {
+            void contextWithPlayerIsBust() {
                 Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
                         new Card(HEART, JACK), new Card(SPADE, SEVEN), new Card(SPADE, QUEEN));
 
@@ -127,7 +126,7 @@ class ResultTest {
 
             @Test
             @DisplayName("플레이어와 딜러 모두 버스트인 경우")
-            void context_with_both_are_bust() {
+            void contextWithBothAreBust() {
                 Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
                         new Card(HEART, JACK), new Card(SPADE, SEVEN), new Card(SPADE, SIX), new Card(HEART, QUEEN));
 
@@ -141,7 +140,7 @@ class ResultTest {
 
             @Test
             @DisplayName("딜러가 플레이어보다 점수가 높은 경우")
-            void context_with_dealer_score_higher_than_player() {
+            void contextWithDealerScoreHigherThanPlayer() {
                 Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
                         new Card(SPADE, ACE), new Card(SPADE, QUEEN));
 

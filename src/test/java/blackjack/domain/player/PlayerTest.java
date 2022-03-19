@@ -43,7 +43,7 @@ class PlayerTest {
 
     @DisplayName("isAbleToHit 메서드는")
     @Nested
-    class Describe_isAbleToHit {
+    class DescribeIsAbleToHit {
 
         @Test
         @DisplayName("21점 미만이라면 참을 반환한다")
