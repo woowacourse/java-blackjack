@@ -53,10 +53,10 @@ public class OutputView {
 
     public void showFinalTurnStatus(Players players, Dealer dealer) {
         System.out.println(makeCardStatus(dealer.getName(), dealer.getCards()) + CARDS_SCORE_MESSAGE
-            + dealer.calculateScore());
+            + dealer.score());
         for (Player player : players.getPlayers()) {
             System.out.println(makeCardStatus(player.getName(),
-                player.getCards()) + CARDS_SCORE_MESSAGE + player.calculateScore());
+                player.getCards()) + CARDS_SCORE_MESSAGE + player.score());
         }
     }
 

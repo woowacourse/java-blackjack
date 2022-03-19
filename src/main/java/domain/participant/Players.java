@@ -39,7 +39,7 @@ public class Players {
     public Map<Player, Result> checkResults(Dealer dealer) {
         Map<Player, Result> playerResult = new LinkedHashMap<>();
         List<Result> results = players.stream()
-            .map(player -> Result.judgeResult(player, dealer))
+            .map(player -> Result.of(player, dealer))
             .collect(Collectors.toList());
 
         for (int i = 0; i < players.size(); i++) {

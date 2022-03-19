@@ -30,14 +30,14 @@ public abstract class Participant {
     public abstract boolean canDrawCard();
 
     public boolean isBurst() {
-        return calculateScore() > MAX_SCORE;
+        return score() > MAX_SCORE;
     }
 
     public boolean isBlackJack() {
-        return calculateScore() == MAX_SCORE && cards.size() == 2;
+        return score() == MAX_SCORE && cards.size() == 2;
     }
 
-    public int calculateScore() {
+    public int score() {
         return cards.calculateScore();
     }
 

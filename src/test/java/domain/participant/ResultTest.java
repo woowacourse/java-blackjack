@@ -10,11 +10,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ResultTest {
+
     private Dealer dealer;
     private Player player;
 
     @BeforeEach
-    void initDealer(){
+    void initDealer() {
         dealer = new Dealer();
         player = new Player("name", 1000);
     }
@@ -23,13 +24,12 @@ class ResultTest {
     @DisplayName("플레이어가 블랙잭이고, 딜러가 블랙잭 아닌경우는 BlackJack을 return한다.")
     void judgeBlackJackResult() {
         player.hit(Card.of(Symbol.SPADE, Denomination.TEN));
-        player.hit(Card.of(Symbol.CLOVER, Denomination.TEN));
         player.hit(Card.of(Symbol.SPADE, Denomination.ACE));
 
         dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
         dealer.hit(Card.of(Symbol.HEART, Denomination.EIGHT));
 
-        assertThat(Result.judgeResult(player,dealer)).isEqualTo(Result.BLACKJACK);
+        assertThat(Result.of(player, dealer)).isEqualTo(Result.BLACKJACK);
     }
 
 
@@ -37,14 +37,12 @@ class ResultTest {
     @DisplayName("둘다 blakJack인 경우 draw를 return한다.")
     void judgeBothBlackJacksResult() {
         player.hit(Card.of(Symbol.SPADE, Denomination.TEN));
-        player.hit(Card.of(Symbol.CLOVER, Denomination.TEN));
         player.hit(Card.of(Symbol.SPADE, Denomination.ACE));
 
         dealer.hit(Card.of(Symbol.SPADE, Denomination.QUEEN));
-        dealer.hit(Card.of(Symbol.CLOVER, Denomination.FIVE));
-        dealer.hit(Card.of(Symbol.HEART, Denomination.SIX));
+        dealer.hit(Card.of(Symbol.CLOVER, Denomination.ACE));
 
-        assertThat(Result.judgeResult(player,dealer)).isEqualTo(Result.DRAW);
+        assertThat(Result.of(player, dealer)).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -56,8 +54,9 @@ class ResultTest {
 
         dealer.hit(Card.of(Symbol.SPADE, Denomination.QUEEN));
         dealer.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
+        System.out.println(dealer.isBurst());
 
-        assertThat(Result.judgeResult(player,dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.of(player, dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -70,7 +69,22 @@ class ResultTest {
         player.hit(Card.of(Symbol.SPADE, Denomination.QUEEN));
         player.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
 
-        assertThat(Result.judgeResult(player,dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.of(player, dealer)).isEqualTo(Result.WIN);
+    }
+
+
+    @Test
+    @DisplayName("둘다 burst인 경우 draw을 return한다.")
+    void judgeALLBurstResult() {
+        dealer.hit(Card.of(Symbol.SPADE, Denomination.TEN));
+        dealer.hit(Card.of(Symbol.SPADE, Denomination.SIX));
+        dealer.hit(Card.of(Symbol.CLOVER, Denomination.QUEEN));
+
+        player.hit(Card.of(Symbol.SPADE, Denomination.QUEEN));
+        player.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
+        player.hit(Card.of(Symbol.CLOVER, Denomination.QUEEN));
+
+        assertThat(Result.of(player, dealer)).isEqualTo(Result.DRAW);
     }
 
 }
