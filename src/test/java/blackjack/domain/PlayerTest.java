@@ -92,6 +92,21 @@ public class PlayerTest {
 
             Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
         }
+
+        @Test
+        @DisplayName("플레이어가 블랙잭, 딜러가 블랙잭이 아닐 때 플레이어가 이긴다.")
+        void returnResultWithPlayerBlackjack() {
+            Player player = new Player("player", 0);
+            Dealer dealer = new Dealer();
+            player.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            player.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.ACE));
+
+            dealer.drawCard(Card.of(CardPattern.SPADE, CardNumber.TEN));
+            dealer.drawCard(Card.of(CardPattern.SPADE, CardNumber.QUEEN));
+            dealer.drawCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+
+            Assertions.assertThat(player.compete(dealer)).isEqualTo(Score.WIN);
+        }
     }
 
     @Nested

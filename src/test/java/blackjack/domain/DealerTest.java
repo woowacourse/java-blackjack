@@ -5,6 +5,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -74,6 +75,21 @@ public class DealerTest {
             player.drawCard(Card.of(CardPattern.SPADE, cardNumber));
 
             Assertions.assertThat(dealer.compete(player)).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("딜러가 블랙잭, 플레이어가 블랙잭이 아닐 때 딜러가 이긴다.")
+        void returnResultWithDealerBust2() {
+            Player player = new Player("player", 0);
+            Dealer dealer = new Dealer();
+            dealer.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            dealer.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.ACE));
+
+            player.drawCard(Card.of(CardPattern.SPADE, CardNumber.TEN));
+            player.drawCard(Card.of(CardPattern.SPADE, CardNumber.QUEEN));
+            player.drawCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+
+            Assertions.assertThat(dealer.compete(player)).isEqualTo(Score.WIN);
         }
     }
 }
