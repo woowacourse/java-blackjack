@@ -30,14 +30,14 @@ class CardTest {
     @DisplayName("숫자확인 기능 테스트")
     void getDenomination() {
         assertThat(card.getDenomination())
-                .isEqualTo(Denomination.ACE);
+                .isEqualTo("A");
     }
 
     @Test
     @DisplayName("문양확인 기능 테스트")
     void getSuit() {
         assertThat(card.getSuit())
-                .isEqualTo(Suit.CLOVER);
+                .isEqualTo("클로버");
     }
 
     @Test

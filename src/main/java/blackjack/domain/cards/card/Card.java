@@ -21,16 +21,16 @@ public final class Card {
         return this.denomination.equals(denomination);
     }
 
-    public Denomination getDenomination() {
-        return denomination;
-    }
-
     public int getPoint() {
         return denomination.getPoint();
     }
 
-    public Suit getSuit() {
-        return suit;
+    public String getDenomination() {
+        return denomination.getInitial();
+    }
+
+    public String getSuit() {
+        return suit.get();
     }
 
     @Override

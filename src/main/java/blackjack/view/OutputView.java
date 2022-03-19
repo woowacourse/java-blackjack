@@ -48,7 +48,7 @@ public final class OutputView {
 
     private static String getCardsState(List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getDenomination().getInitial() + card.getSuit().getValue())
+                .map(card -> card.getDenomination() + card.getSuit())
                 .collect(Collectors.joining(CARDS_DELIMITER));
     }
 
