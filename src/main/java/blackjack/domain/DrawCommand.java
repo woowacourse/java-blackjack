@@ -20,6 +20,6 @@ public enum DrawCommand {
     }
 
     public boolean isAccept() {
-        return inputValue.equals(YES.inputValue);
+        return inputValue == YES.inputValue;
     }
 }
