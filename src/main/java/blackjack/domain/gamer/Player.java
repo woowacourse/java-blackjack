@@ -2,27 +2,27 @@ package blackjack.domain.gamer;
 
 import static blackjack.domain.card.CardGroup.BLACKJACK_NUMBER;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.result.Match;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Gamer{
 
-    public Player(String name) {
+    private final BettingMoney bettingMoney;
+
+    public Player(String name, BettingMoney bettingMoney) {
         super(name);
+        this.bettingMoney = bettingMoney;
     }
 
-    public Player(String name, List<Card> cards) {
+    public Player(String name, List<Card> cards, BettingMoney bettingMoney) {
         super(name, cards);
+        this.bettingMoney = bettingMoney;
     }
 
-    public static List<Player> of(List<String> playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName));
-        }
-        return players;
+    public static Player of(String playerName, BettingMoney bettingMoney) {
+        return new Player(playerName, bettingMoney);
     }
 
     public Match compareCardsSumTo(int anotherCardsSum) {

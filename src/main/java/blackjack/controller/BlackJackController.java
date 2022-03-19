@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.BlackJack;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -11,6 +12,7 @@ import blackjack.dto.GamerCardsResultDto;
 import blackjack.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
@@ -29,11 +31,31 @@ public class BlackJackController {
     }
 
     private PlayerGroup initializePlayerGroup() {
+        List<String> playerNames = getPlayerNames();
+        List<Player> players = new ArrayList<>();
+        for (String playerName: playerNames) {
+            BettingMoney bettingMoney = getBettingMoney(playerName);
+            players.add(Player.of(playerName, bettingMoney));
+        }
+        return new PlayerGroup(players);
+    }
+
+    private List<String> getPlayerNames() {
         try {
-            return new PlayerGroup(Player.of(InputView.requestPlayerNames()));
+            return InputView.requestPlayerNames();
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
-            return initializePlayerGroup();
+            return getPlayerNames();
+        }
+    }
+
+    private BettingMoney getBettingMoney(String playerName) {
+        try {
+            int amount = InputView.requestBettingMoney(playerName);
+            return BettingMoney.of(amount);
+        } catch (Exception exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            return getBettingMoney(playerName);
         }
     }
 

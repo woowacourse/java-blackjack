@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.result.Match;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class PlayerGroup {
     public List<Player> getPlayers() {
         List<Player> copiedPlayers = new ArrayList<>();
         for (Player player : players) {
-            Player copiedPlayer = new Player(player.getName(), player.getCards());
+            Player copiedPlayer = new Player(player.getName(), player.getCards(), BettingMoney.of(10));
             copiedPlayers.add(copiedPlayer);
         }
         return copiedPlayers;

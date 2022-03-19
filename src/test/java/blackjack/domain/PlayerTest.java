@@ -15,7 +15,7 @@ class PlayerTest {
     @ParameterizedTest(name = "{index}: {1}")
     @MethodSource("invalidParameters")
     @DisplayName("플레이어 생성 오류 테스트")
-    void playerInvalidTest(List<String> playerNames, String testName) {
+    void playerInvalidTest(List<String> playerNames, List<BettingMoney> playerBettingMoney,String testName) {
         assertThatThrownBy(() -> Player.of(playerNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
