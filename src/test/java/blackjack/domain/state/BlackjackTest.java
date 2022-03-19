@@ -4,7 +4,6 @@ import static blackjack.domain.CardFixtures.JACK_SPACE;
 import static blackjack.domain.CardFixtures.KING_SPACE;
 import static blackjack.domain.CardFixtures.TWO_SPACE;
 import static blackjack.domain.CardsFixtures.BLACKJACK;
-import static blackjack.domain.CardsFixtures.HIT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -18,13 +17,6 @@ class BlackjackTest {
     @Test
     void 블랙잭_생성() {
         assertDoesNotThrow(() -> new Blackjack(BLACKJACK));
-    }
-
-    @DisplayName("블랙잭 상태가 아닌 카드가 전달되면 예외를 던진다.")
-    @Test
-    void 블랙잭_생성_실패() {
-        assertThatThrownBy(() -> new Blackjack(HIT))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("블랙잭 상태에서 추가적인 카드 뽑기는 불가능하다. 즉 실행할 경우 예외를 던진다.")
