@@ -1,30 +1,26 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Stack;
 
 public class RandomCardGenerator implements CardGenerator {
 
     @Override
     public Stack<Card> generate() {
-        List<Card> cards = makeCards();
-        Collections.shuffle(cards);
-        Stack<Card> deck = new Stack<>();
-        deck.addAll(cards);
+        Stack<Card> deck = makeDeck();
+        Collections.shuffle(deck);
         return deck;
     }
 
-    private List<Card> makeCards() {
-        List<Card> cards = new ArrayList<>();
+    private Stack<Card> makeDeck() {
+        Stack<Card> deck = new Stack<>();
         for (Type type : Type.getTypeValues()) {
-            makeCardByScore(cards, type);
+            makeCardByScore(deck, type);
         }
-        return cards;
+        return deck;
     }
 
-    private void makeCardByScore(final List<Card> cards, final Type type) {
+    private void makeCardByScore(final Stack<Card> cards, final Type type) {
         for (Score score : Score.getScoreValues()) {
             cards.add(new Card(type, score));
         }
