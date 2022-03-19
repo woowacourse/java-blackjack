@@ -16,10 +16,10 @@ class FinishedTest {
 
     @Test
     void 최종_수익_계산() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN), Card.of(SPADES, A)));
+        final Cards cards = new Cards(List.of(new Card(SPADES, KING), new Card(SPADES, QUEEN), new Card(SPADES, A)));
         final BlackjackGameState stand = new Stand(cards, cards.score());
 
-        final Cards compareCards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, QUEEN)));
+        final Cards compareCards = new Cards(List.of(new Card(SPADES, KING), new Card(SPADES, QUEEN)));
         final BlackjackGameState compareStand = new Stand(compareCards, compareCards.score());
 
         assertThat(stand.profit(1000, compareStand)).isEqualTo(1000);

@@ -14,7 +14,7 @@ public class DealerTest {
 
     @Test
     void 완료되지않은_딜러가_카드리스트를_반환할_때_예외발생() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, TWO), Card.of(SPADES, THREE)));
+        final Cards cards = new Cards(List.of(new Card(SPADES, TWO), new Card(SPADES, THREE)));
         final Dealer dealer = new Dealer(cards);
 
         assertThatThrownBy(() -> dealer.cards())

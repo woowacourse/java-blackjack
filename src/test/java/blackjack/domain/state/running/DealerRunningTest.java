@@ -22,34 +22,34 @@ class DealerRunningTest {
 
     @Test
     void hit할_때_최대_값이_21이_넘으면_Bust_반환() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, SEVEN), Card.of(SPADES, EIGHT)));
+        final Cards cards = new Cards(List.of(new Card(SPADES, SEVEN), new Card(SPADES, EIGHT)));
         final BlackjackGameState running = DealerRunning.createDealerGameState(cards);
-        final BlackjackGameState nextState = running.hit(Card.of(SPADES, A));
+        final BlackjackGameState nextState = running.hit(new Card(SPADES, A));
 
         assertThat(nextState).isInstanceOf(Bust.class);
     }
 
     @Test
     void hit할_때_최대_값이_21이_넘지않고_17이_넘으면_STAND_반환() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, FOUR), Card.of(SPADES, TWO)));
+        final Cards cards = new Cards(List.of(new Card(SPADES, FOUR), new Card(SPADES, TWO)));
         final BlackjackGameState running = DealerRunning.createDealerGameState(cards);
-        final BlackjackGameState nextState = running.hit(Card.of(SPADES, A));
+        final BlackjackGameState nextState = running.hit(new Card(SPADES, A));
 
         assertThat(nextState).isInstanceOf(Stand.class);
     }
 
     @Test
     void hit할_때_최대_값이_17이_넘지않으면_Running_반환() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, THREE), Card.of(SPADES, TWO)));
+        final Cards cards = new Cards(List.of(new Card(SPADES, THREE), new Card(SPADES, TWO)));
         final BlackjackGameState running = DealerRunning.createDealerGameState(cards);
-        final BlackjackGameState nextState = running.hit(Card.of(SPADES, A));
+        final BlackjackGameState nextState = running.hit(new Card(SPADES, A));
 
         assertThat(nextState).isInstanceOf(DealerRunning.class);
     }
 
     @Test
     void stay_할_때_예외발생() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, THREE), Card.of(SPADES, TWO)));
+        final Cards cards = new Cards(List.of(new Card(SPADES, THREE), new Card(SPADES, TWO)));
         final BlackjackGameState running = DealerRunning.createDealerGameState(cards);
 
         assertThatThrownBy(() -> running.stay())

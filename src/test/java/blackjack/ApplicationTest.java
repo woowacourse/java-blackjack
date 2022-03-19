@@ -61,9 +61,9 @@ public class ApplicationTest extends NsTest {
                             "딜러와 ori, huni에게 2장을 나누었습니다.", "딜러: K하트", "ori 카드: K스페이드, Q스페이드",
                             "huni 카드: J스페이드, 10스페이드"));
                 },
-                Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SEVEN),
-                        Card.of(SPADES, KING), Card.of(SPADES, QUEEN),
-                        Card.of(SPADES, JACK), Card.of(SPADES, TEN))
+                Arrays.asList(new Card(HEARTS, KING), new Card(HEARTS, SEVEN),
+                        new Card(SPADES, KING), new Card(SPADES, QUEEN),
+                        new Card(SPADES, JACK), new Card(SPADES, TEN))
         );
     }
 
@@ -75,12 +75,12 @@ public class ApplicationTest extends NsTest {
                     assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
                             "## 최종 수익", "딜러: 11000", "ori: -10000", "huni: -1000"));
                 },
-                Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SIX),
-                        Card.of(SPADES, KING), Card.of(SPADES, QUEEN),
-                        Card.of(CLUBS, KING), Card.of(CLUBS, QUEEN),
-                        Card.of(SPADES, JACK),
-                        Card.of(CLUBS, JACK),
-                        Card.of(HEARTS, QUEEN))
+                Arrays.asList(new Card(HEARTS, KING), new Card(HEARTS, SIX),
+                        new Card(SPADES, KING), new Card(SPADES, QUEEN),
+                        new Card(CLUBS, KING), new Card(CLUBS, QUEEN),
+                        new Card(SPADES, JACK),
+                        new Card(CLUBS, JACK),
+                        new Card(HEARTS, QUEEN))
         );
     }
 
@@ -92,9 +92,9 @@ public class ApplicationTest extends NsTest {
                     assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
                             "## 최종 수익", "딜러: 0", "ori: 0", "huni: 0"));
                 },
-                Arrays.asList(Card.of(SPADES, KING), Card.of(SPADES, A),
-                        Card.of(HEARTS, KING), Card.of(HEARTS, A),
-                        Card.of(CLUBS, KING), Card.of(CLUBS, A))
+                Arrays.asList(new Card(SPADES, KING), new Card(SPADES, A),
+                        new Card(HEARTS, KING), new Card(HEARTS, A),
+                        new Card(CLUBS, KING), new Card(CLUBS, A))
         );
     }
 
@@ -106,10 +106,10 @@ public class ApplicationTest extends NsTest {
                     assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
                             "## 최종 수익", "딜러: -16500", "ori: 15000", "huni: 1500"));
                 },
-                Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SIX),
-                        Card.of(SPADES, KING), Card.of(SPADES, A),
-                        Card.of(CLUBS, KING), Card.of(CLUBS, A),
-                        Card.of(HEARTS, FIVE))
+                Arrays.asList(new Card(HEARTS, KING), new Card(HEARTS, SIX),
+                        new Card(SPADES, KING), new Card(SPADES, A),
+                        new Card(CLUBS, KING), new Card(CLUBS, A),
+                        new Card(HEARTS, FIVE))
         );
     }
 
@@ -121,10 +121,10 @@ public class ApplicationTest extends NsTest {
                     assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
                             "## 최종 수익", "딜러: -11000", "ori: 10000", "huni: 1000"));
                 },
-                Arrays.asList(Card.of(HEARTS, KING), Card.of(HEARTS, SIX),
-                        Card.of(SPADES, KING), Card.of(SPADES, SEVEN),
-                        Card.of(SPADES, TWO), Card.of(SPADES, THREE),
-                        Card.of(HEARTS, JACK))
+                Arrays.asList(new Card(HEARTS, KING), new Card(HEARTS, SIX),
+                        new Card(SPADES, KING), new Card(SPADES, SEVEN),
+                        new Card(SPADES, TWO), new Card(SPADES, THREE),
+                        new Card(HEARTS, JACK))
         );
     }
 
@@ -135,11 +135,11 @@ public class ApplicationTest extends NsTest {
                     run("pobi, json", "10000", "20000", "y", "n", "n");
                     assertThat(output()).contains("딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20");
                 },
-                Arrays.asList(Card.of(DIAMONDS, THREE), Card.of(CLUBS, NINE),
-                        Card.of(HEARTS, TWO), Card.of(SPADES, EIGHT),
-                        Card.of(CLUBS, SEVEN), Card.of(SPADES, KING),
-                        Card.of(CLUBS, A),
-                        Card.of(DIAMONDS, EIGHT))
+                Arrays.asList(new Card(DIAMONDS, THREE), new Card(CLUBS, NINE),
+                        new Card(HEARTS, TWO), new Card(SPADES, EIGHT),
+                        new Card(CLUBS, SEVEN), new Card(SPADES, KING),
+                        new Card(CLUBS, A),
+                        new Card(DIAMONDS, EIGHT))
         );
     }
 

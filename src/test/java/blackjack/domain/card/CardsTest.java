@@ -28,7 +28,7 @@ class CardsTest {
 
     @Test
     void 생성_시_cards크기가_2미만인_경우_예외발생() {
-        assertThatThrownBy(() -> new Cards(List.of(Card.of(SPADES, A))))
+        assertThatThrownBy(() -> new Cards(List.of(new Card(SPADES, A))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("cards는 2장이상이 들어와야 합니다.");
     }
@@ -42,9 +42,9 @@ class CardsTest {
 
     private static Stream<Arguments> generateIsBustValues() {
         return Stream.of(
-                Arguments.of(List.of(Card.of(SPADES, KING), Card.of(SPADES, SEVEN), Card.of(SPADES, TEN)), true),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(SPADES, TEN)), false),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(SPADES, EIGHT)), false)
+                Arguments.of(List.of(new Card(SPADES, KING), new Card(SPADES, SEVEN), new Card(SPADES, TEN)), true),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, TEN)), false),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, EIGHT)), false)
         );
     }
 
@@ -57,15 +57,15 @@ class CardsTest {
 
     private static Stream<Arguments> generateIsBlackjackValues() {
         return Stream.of(
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(SPADES, TEN)), true),
-                Arguments.of(List.of(Card.of(SPADES, KING), Card.of(SPADES, SEVEN), Card.of(SPADES, FOUR)), false),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(SPADES, EIGHT)), false)
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, TEN)), true),
+                Arguments.of(List.of(new Card(SPADES, KING), new Card(SPADES, SEVEN), new Card(SPADES, FOUR)), false),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, EIGHT)), false)
         );
     }
 
     @Test
     void 최대_스코어가_버스트인지_확인() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, SEVEN), Card.of(SPADES, EIGHT), Card.of(SPADES, A)));
+        final Cards cards = new Cards(List.of(new Card(SPADES, SEVEN), new Card(SPADES, EIGHT), new Card(SPADES, A)));
         assertThat(cards.isMaxScoreBust()).isTrue();
     }
 }

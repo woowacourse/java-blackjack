@@ -14,13 +14,6 @@ class CardDeckTest {
     }
 
     @Test
-    void 생성_시_cards가_null이_들어올_경우_예외발생() {
-        assertThatThrownBy(() -> new CardDeck(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("cards는 null이 들어올 수 없습니다.");
-    }
-
-    @Test
     void 카드가_없을_때_카드반환_요청_시_예외발생() {
         final CardDeck cardDeck = CardDeck.createNewShuffledCardDeck();
         for (int i = 1; i <= 52; i++) {

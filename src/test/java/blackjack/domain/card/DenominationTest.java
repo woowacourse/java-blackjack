@@ -26,11 +26,11 @@ class DenominationTest {
 
     private static Stream<Arguments> generateMaxCalculateScoreValues() {
         return Stream.of(
-                Arguments.of(List.of(Card.of(SPADES, THREE), Card.of(SPADES, SEVEN), Card.of(SPADES, TEN)), 20),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(SPADES, TEN)), 21),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(HEARTS, A)), 22),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(SPADES, THREE), Card.of(SPADES, EIGHT)), 22),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(SPADES, EIGHT)), 19)
+                Arguments.of(List.of(new Card(SPADES, THREE), new Card(SPADES, SEVEN), new Card(SPADES, TEN)), 20),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, TEN)), 21),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(HEARTS, A)), 22),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, THREE), new Card(SPADES, EIGHT)), 22),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, EIGHT)), 19)
         );
     }
 
@@ -43,11 +43,11 @@ class DenominationTest {
 
     private static Stream<Arguments> generateCalculateScoreValues() {
         return Stream.of(
-                Arguments.of(List.of(Card.of(SPADES, THREE), Card.of(SPADES, SEVEN), Card.of(SPADES, TEN)), 20),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(SPADES, TEN)), 21),
-                Arguments.of(List.of(Card.of(SPADES, A), Card.of(HEARTS, A), Card.of(HEARTS, TEN)), 12),
+                Arguments.of(List.of(new Card(SPADES, THREE), new Card(SPADES, SEVEN), new Card(SPADES, TEN)), 20),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, TEN)), 21),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(HEARTS, A), new Card(HEARTS, TEN)), 12),
                 Arguments.of(List.of(
-                        Card.of(SPADES, A), Card.of(HEARTS, A), Card.of(SPADES, TEN), Card.of(HEARTS, TEN)), 22)
+                        new Card(SPADES, A), new Card(HEARTS, A), new Card(SPADES, TEN), new Card(HEARTS, TEN)), 22)
         );
     }
 }

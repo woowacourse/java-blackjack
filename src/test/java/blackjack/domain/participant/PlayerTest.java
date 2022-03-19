@@ -20,7 +20,7 @@ class PlayerTest {
 
     @BeforeEach
     void setup() {
-        cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
+        cards = new Cards(List.of(new Card(SPADES, KING), new Card(SPADES, FIVE)));
     }
 
     @Test
@@ -48,7 +48,7 @@ class PlayerTest {
 
     @Test
     void 카드를_받아_유저_생성() {
-        final Cards cards = new Cards(List.of(Card.of(SPADES, KING), Card.of(SPADES, FIVE)));
+        final Cards cards = new Cards(List.of(new Card(SPADES, KING), new Card(SPADES, FIVE)));
         final Player player = new Player(new Name("name"), 1000, cards);
 
         assertThat(player).isInstanceOf(Player.class);
