@@ -1,14 +1,12 @@
 package blackjack_statepattern;
 
-import java.util.stream.Stream;
+import java.util.List;
 
-public class Game {
+public final class Game {
     public static Object start(final Card first, final Card second) {
 
-        int sum = first.score() + second.score();
-        boolean hasAce = Stream.of(first, second)
-                .anyMatch(Card::isAce);
-        if (11 == sum && hasAce) {
+        Cards cards = new Cards(List.of(first, second));
+        if (cards.isBlackjack()) {
             return new Blackjack();
         }
         return new Hit();
