@@ -26,11 +26,6 @@ public class Ready extends Running {
 
     @Override
     public State stay() {
-        throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean isReady() {
-        return true;
+        throw new IllegalStateException("Ready 상태에서 Stay 할 수 없습니다.");
     }
 }

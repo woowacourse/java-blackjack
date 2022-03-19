@@ -12,8 +12,6 @@ public interface State {
 
     State blackjack();
 
-    boolean isReady();
-
     boolean isFinished();
 
     double profit(BettingMoney bettingMoney);

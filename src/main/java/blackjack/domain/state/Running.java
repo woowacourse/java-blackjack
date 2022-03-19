@@ -30,7 +30,7 @@ public abstract class Running implements State {
 
     @Override
     public double profit(BettingMoney bettingMoney) {
-        throw new IllegalStateException();
+        throw new IllegalStateException("Running 상태에서 수입을 확인할 수 없습니다.");
     }
 
     @Override

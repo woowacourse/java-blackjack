@@ -92,7 +92,8 @@ class ReadyTest {
         State ready = new Ready(new HoldCards());
 
         assertThatIllegalStateException()
-            .isThrownBy(ready::stay);
+            .isThrownBy(ready::stay)
+            .withMessage("Ready 상태에서 Stay 할 수 없습니다.");
     }
 
     @Test
@@ -118,6 +119,7 @@ class ReadyTest {
         State ready = new Ready(new HoldCards());
 
         assertThatIllegalStateException()
-            .isThrownBy(() -> ready.profit(new BettingMoney(1000)));
+            .isThrownBy(() -> ready.profit(new BettingMoney(1000)))
+            .withMessage("Running 상태에서 수입을 확인할 수 없습니다.");
     }
 }

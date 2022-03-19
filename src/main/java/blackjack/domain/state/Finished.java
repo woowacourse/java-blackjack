@@ -14,22 +14,17 @@ public abstract class Finished implements State {
 
     @Override
     public final State draw(Card card) {
-        throw new IllegalStateException();
-    }
-
-    @Override
-    public final boolean isReady() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("Finish 상태에서 카드를 뽑을 수 없습니다.");
     }
 
     @Override
     public final State stay() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("Finish 상태에서 Stay 할 수 없습니다.");
     }
 
     @Override
     public final State blackjack() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("Finish 상태에서 블랙잭을 확인할 수 없습니다.");
     }
 
     @Override
