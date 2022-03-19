@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.math.BigDecimal;
 import java.util.Objects;
