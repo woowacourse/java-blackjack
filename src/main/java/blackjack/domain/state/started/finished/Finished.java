@@ -1,25 +1,19 @@
-package blackjack.domain.state.finished;
+package blackjack.domain.state.started.finished;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
 import blackjack.domain.state.State;
+import blackjack.domain.state.started.Started;
 
-public abstract class Finished implements State {
+public abstract class Finished extends Started {
 
-    private final Cards cards;
-
-    Finished(Cards cards) {
-        this.cards = cards;
+    protected Finished(Cards cards) {
+        super(cards);
     }
 
     @Override
     public final State draw(Card card) {
         throw new IllegalStateException("Finished 상태에선 카드를 더 받을 수 없습니다.");
-    }
-
-    @Override
-    public final Cards getCards() {
-        return cards;
     }
 
     @Override

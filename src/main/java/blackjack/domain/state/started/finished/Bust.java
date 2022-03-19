@@ -1,4 +1,4 @@
-package blackjack.domain.state.finished;
+package blackjack.domain.state.started.finished;
 
 import blackjack.domain.participant.Cards;
 

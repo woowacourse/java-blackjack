@@ -1,24 +1,18 @@
-package blackjack.domain.state.running;
+package blackjack.domain.state.started.running;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
 import blackjack.domain.state.State;
+import blackjack.domain.state.started.Started;
 
-public abstract class Running implements State {
-
-    protected final Cards cards;
+public abstract class Running extends Started {
 
     protected Running(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     @Override
     public abstract State draw(Card card);
-
-    @Override
-    public final Cards getCards() {
-        return cards;
-    }
 
     @Override
     public abstract State stay();
