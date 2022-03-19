@@ -19,7 +19,7 @@ public class GameController {
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
         Gamblers gamblers = generatePlayers(cardDeck);
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = generateDealer(cardDeck);
         OutputView.printInitGameState(gamblers, dealer);
 
         playTurnGambler(gamblers, cardDeck);
@@ -29,15 +29,27 @@ public class GameController {
         printGameResult(GameStatistic.of(dealer, gamblers), dealer);
     }
 
+    private Dealer generateDealer(CardDeck cardDeck) {
+        Dealer dealer = Dealer.of();
+        dealer.init(cardDeck);
+        return dealer;
+    }
+
     private Gamblers generatePlayers(CardDeck cardDeck) {
         List<Gambler> gamblerList = new ArrayList<>();
         String[] names = InputView.inputGamblerNames();
         for (String name : names) {
-            Name gamblerName = Name.of(name);
-            double money = InputView.inputGamblerBetMoney(gamblerName);
-            gamblerList.add(Gambler.of(gamblerName, money, cardDeck));
+            gamblerList.add(generatePlayer(cardDeck, name));
         }
         return Gamblers.of(gamblerList);
+    }
+
+    private Gambler generatePlayer(CardDeck cardDeck, String name) {
+        Name gamblerName = Name.of(name);
+        double money = InputView.inputGamblerBetMoney(gamblerName);
+        Gambler gambler = Gambler.of(gamblerName, money);
+        gambler.init(cardDeck);
+        return gambler;
     }
 
     private void playTurnGambler(Gamblers gamblers, CardDeck cardDeck) {
@@ -68,6 +80,7 @@ public class GameController {
             dealer.addCard(cardDeck.draw());
             OutputView.printDealerCardAdded();
         }
+        dealer.stay();
     }
 
     private void printGameResult(GameStatistic gameStatistic, Dealer dealer) {
