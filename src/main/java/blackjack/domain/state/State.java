@@ -9,7 +9,7 @@ public interface State {
 
     boolean isBust();
 
-    HoldingCards cards();
+    HoldingCards holdingCards();
 
     int cardSum();
 

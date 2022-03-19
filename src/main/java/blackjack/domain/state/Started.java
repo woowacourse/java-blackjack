@@ -11,7 +11,7 @@ public abstract class Started implements State {
     }
 
     @Override
-    public HoldingCards cards() {
+    public HoldingCards holdingCards() {
         return holdingCards;
     }
 

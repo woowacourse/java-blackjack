@@ -39,7 +39,7 @@ public abstract class Participant {
     }
 
     public final List<Card> getHoldingCards() {
-        return state.cards().getAllCards();
+        return state.holdingCards().getAllCards();
     }
 
     public final String getName() {
