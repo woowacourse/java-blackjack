@@ -7,10 +7,16 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
+    private static final int MINIMUM_HIT_CARD_COUNT = 2;
+
     private final Set<Card> cards;
 
     public Cards(Set<Card> cards) {
         this.cards = cards;
+    }
+
+    public Cards(List<Card> cards) {
+        this.cards = new HashSet<>(cards);
     }
 
     public Cards() {
@@ -29,6 +35,10 @@ public class Cards {
     public boolean isBust() {
         final Score score = new Score(calculateScore());
         return score.isBust();
+    }
+
+    public boolean isReady() {
+        return cards.size() < MINIMUM_HIT_CARD_COUNT;
     }
 
     public int calculateScore() {
