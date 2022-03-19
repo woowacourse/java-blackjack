@@ -13,6 +13,8 @@ public interface State {
 
     int cardSum();
 
+    State stand(); // stay상태로 이동하는 메서드 (더이상 입력 받지 않는다고 한다면 stay로 이동하기 위해!!!)
+
     boolean isFinished();
 
     /**

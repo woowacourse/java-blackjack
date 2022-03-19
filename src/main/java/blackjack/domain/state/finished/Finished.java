@@ -20,4 +20,9 @@ public abstract class Finished extends Started {
     public final boolean isFinished() {
         return true;
     }
+
+    @Override
+    public final State stand() {
+        throw new IllegalStateException();
+    }
 }

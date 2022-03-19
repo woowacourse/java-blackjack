@@ -7,4 +7,9 @@ public final class BlackJack extends Finished {
     public BlackJack(HoldingCards holdingCards) {
         super(holdingCards);
     }
+
+    @Override
+    public boolean isBust() {
+        throw new IllegalStateException();
+    }
 }

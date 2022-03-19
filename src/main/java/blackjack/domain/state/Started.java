@@ -11,17 +11,12 @@ public abstract class Started implements State {
     }
 
     @Override
-    public HoldingCards holdingCards() {
+    public final HoldingCards holdingCards() {
         return holdingCards;
     }
 
     @Override
     public final int cardSum() {
         return holdingCards.cardSum();
-    }
-
-    @Override
-    public final boolean isBust() {
-        return holdingCards.isBust();
     }
 }
