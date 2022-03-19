@@ -34,7 +34,10 @@ public abstract class User {
     }
 
     public boolean isSameScoreWithNotBlackJack(User user) {
-        return this.cards.isSameScoreWithNotBlackJack(user.cards);
+        if (this.isBlackJack() || user.isBlackJack()) {
+            return false;
+        }
+        return this.cards.isSameScore(user.cards);
     }
 
     public boolean isGreaterScoreThan(User user) {

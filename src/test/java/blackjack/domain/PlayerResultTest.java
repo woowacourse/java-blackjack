@@ -61,4 +61,26 @@ class PlayerResultTest {
         PlayerResult expected = PlayerResult.WIN;
         assertThat(actual).isEqualTo(expected);
     }
+
+
+    @Test
+    @DisplayName("플레이어가 21이고 딜러가 블랙잭으로 점수가 같다면 플레이어가 진다.")
+    void isSameScoreWithBlackjackTest() {
+        Cards playerCards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.CLOVER, Number.TEN), new Card(Shape.CLOVER, Number.ACE)));
+        Cards dealerCards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.CLOVER, Number.ACE)));
+        Player player = new Player("test", Bet.from(1000), playerCards);
+        Dealer dealer = new Dealer(dealerCards);
+        PlayerResult actual = PlayerResult.valueOf(dealer, player);
+        assertThat(actual).isEqualTo(PlayerResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 둘 다 블랙잭이면 무승부이다.")
+    void isAllBlackjackTest() {
+        Cards blackjack = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.CLOVER, Number.ACE)));
+        Player player = new Player("test", Bet.from(1000), blackjack);
+        Dealer dealer = new Dealer(blackjack);
+        PlayerResult actual = PlayerResult.valueOf(dealer, player);
+        assertThat(actual).isEqualTo(PlayerResult.DRAW);
+    }
 }

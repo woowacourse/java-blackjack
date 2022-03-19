@@ -13,12 +13,12 @@ public class Cards {
 
     private final Set<Card> cards;
 
-    public Cards(List<Card> deck) {
-        this(new LinkedHashSet<>(deck));
+    public Cards(List<Card> cards) {
+        this(new LinkedHashSet<>(cards));
     }
 
-    private Cards(Set<Card> deck) {
-        this.cards = new LinkedHashSet<>(deck);
+    private Cards(Set<Card> cards) {
+        this.cards = new LinkedHashSet<>(cards);
     }
 
     public Set<Card> getCards() {
@@ -72,10 +72,7 @@ public class Cards {
         return this.getScore() > cards.getScore();
     }
 
-    public boolean isSameScoreWithNotBlackJack(Cards cards) {
-        if (this.isBlackJack() && cards.isBlackJack()) {
-            return false;
-        }
+    public boolean isSameScore(Cards cards) {
         return !isBust() && this.getScore() == cards.getScore();
     }
 }

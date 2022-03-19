@@ -10,7 +10,7 @@ public enum PlayerResult {
     BLACKJACK(1.5, (dealer, player) -> player.isBlackJack() && !dealer.isBlackJack()),
     WIN(1, (dealer, player) -> dealer.isBust() || (player.isGreaterScoreThan(dealer) && !player.isBust())),
     DRAW(0, (dealer, player) -> isAllBlackJack(dealer, player) || dealer.isSameScoreWithNotBlackJack(player)),
-    LOSE(-1, (dealer, player) -> player.isBust() || (dealer.isGreaterScoreThan(player) && !dealer.isBust())),
+    LOSE(-1, (dealer, player) -> dealer.isBlackJack() || player.isBust() || (dealer.isGreaterScoreThan(player) && !dealer.isBust())),
     ;
 
     private final double profit;
