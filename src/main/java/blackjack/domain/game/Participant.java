@@ -1,6 +1,8 @@
-package blackjack.domain.participant;
+package blackjack.domain.game;
 
+import blackjack.domain.Name;
 import blackjack.domain.card.Card;
+import blackjack.domain.state.Cards;
 import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
 
@@ -12,16 +14,16 @@ public abstract class Participant {
         this.state = new Ready();
     }
 
-    public final void init(Card firstCard, Card secondCard) {
+    final void init(Card firstCard, Card secondCard) {
         draw(firstCard);
         draw(secondCard);
     }
 
-    public final State getState() {
+    final State getState() {
         return state;
     }
 
-    public final void draw(Card card) {
+    final void draw(Card card) {
         this.state = state.draw(card);
     }
 
@@ -35,11 +37,9 @@ public abstract class Participant {
         return getCards().sum();
     }
 
-    public void stay() {
+    void stay() {
         state = state.stay();
     }
 
-    public final boolean isFinished() {
-        return state.isFinished();
-    }
+    public abstract boolean isDrawable();
 }

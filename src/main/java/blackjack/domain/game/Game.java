@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.participant.Betting;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
+import blackjack.domain.DrawCount;
+import blackjack.domain.Name;
 
 public final class Game {
 
@@ -37,7 +33,7 @@ public final class Game {
 
     public Optional<Player> RunningPlayer() {
         return players.stream()
-            .filter(player -> !player.isFinished())
+            .filter(Player::isDrawable)
             .findFirst();
     }
 

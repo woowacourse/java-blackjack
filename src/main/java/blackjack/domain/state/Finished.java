@@ -19,7 +19,7 @@ abstract class Finished extends Running {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public boolean isDrawable() {
+        return false;
     }
 }

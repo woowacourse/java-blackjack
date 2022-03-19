@@ -22,7 +22,7 @@ public abstract class Started implements State {
     public abstract State stay();
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public boolean isDrawable() {
+        return true;
     }
 }

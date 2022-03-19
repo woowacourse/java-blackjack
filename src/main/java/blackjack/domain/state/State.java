@@ -10,5 +10,5 @@ public interface State {
 
     State stay();
 
-    boolean isFinished();
+    boolean isDrawable();
 }

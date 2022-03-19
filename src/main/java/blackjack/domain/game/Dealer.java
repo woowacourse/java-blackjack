@@ -1,10 +1,9 @@
-package blackjack.domain.participant;
+package blackjack.domain.game;
 
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.PlayRecord;
-import blackjack.domain.card.Card;
+import blackjack.domain.Name;
 
 public final class Dealer extends Participant {
 
@@ -13,20 +12,17 @@ public final class Dealer extends Participant {
 
     private final BettingTable bettingTable;
 
-    public Dealer(List<Betting> bettings) {
+    Dealer(List<Betting> bettings) {
         super();
         this.bettingTable = new BettingTable(List.copyOf(bettings));
     }
 
+    @Override
     public boolean isDrawable() {
-        return !isFinished() && getCards().sum() <= HIT_CONDITION;
+        return getState().isDrawable() && getCards().sum() <= HIT_CONDITION;
     }
 
-    public Card openCard() {
-        return getCards().findFirst();
-    }
-
-    public Map<Name, Long> getRevenues(Map<Name, PlayRecord> recordMap) {
+    Map<Name, Long> getRevenues(Map<Name, PlayRecord> recordMap) {
         return bettingTable.getRevenues(getName(), recordMap);
     }
 
