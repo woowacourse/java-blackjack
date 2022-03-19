@@ -18,7 +18,7 @@ public class BlackjackGame {
     private final Players players;
 
     public BlackjackGame(final Map<String, Integer> moneysByName) {
-        this.cardDeck = CardDeck.generate();
+        this.cardDeck = new CardDeck();
         this.dealer = new Dealer(cardDeck.provideInitCards());
         this.players = new Players(initPlayers(moneysByName, cardDeck));
     }

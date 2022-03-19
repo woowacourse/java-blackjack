@@ -43,7 +43,7 @@ class PlayerTest {
     @DisplayName("카드를 받을 수 있다.")
     void draw() {
         final Player player = new Player("user", 2000, new ArrayList<>());
-        final Card card = Card.getAllCards().get(0);
+        final Card card = Card.of(SPADE, A);
         player.draw(card);
         assertThat(player.getCards()).containsExactly(card);
     }
