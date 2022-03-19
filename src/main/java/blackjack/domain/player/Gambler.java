@@ -12,8 +12,12 @@ public class Gambler extends Player {
         return new Gambler(name, cardDeck);
     }
 
+    public boolean isFirstQuestion() {
+        return getState().cards().size() <= 2;
+    }
+
     @Override
     public boolean isHit() {
-        return !isBust();
+        return !getState().isFinished();
     }
 }

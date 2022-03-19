@@ -26,7 +26,7 @@ public class Gamblers {
         }
     }
 
-    public List<Gambler> getCardNeedGamblers() {
+    public List<Gambler> findHitGambler() {
         return gamblers.stream()
             .filter(Gambler::isHit)
             .collect(Collectors.toList());

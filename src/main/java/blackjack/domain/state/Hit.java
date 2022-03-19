@@ -12,7 +12,7 @@ public class Hit extends Running {
     @Override
     public State draw(Card card) {
         Cards cards = this.cards().add(card);
-        if (cards.isBust2()) {
+        if (cards.isBust()) {
             return new Bust(cards);
         }
         return new Hit(cards);

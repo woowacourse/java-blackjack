@@ -21,9 +21,14 @@ public class GameController {
         Gamblers gamblers = generatePlayers(cardDeck);
         Dealer dealer = Dealer.of(cardDeck);
         OutputView.printInitGameState(gamblers, dealer);
-//
-//        hitOrStandGambler(gamblers, cardDeck);
-//        hitOrStandDealer(dealer, cardDeck);
+
+        /**
+         * 1. HIT 인지 확인
+         * -> 우선, ifFinished -> false
+         * ->
+         */
+        hitOrStandGambler(gamblers, cardDeck);
+        hitOrStandDealer(dealer, cardDeck);
 //
 //        OutputView.printCardAndPoint(gamblers, dealer);
 //        printGameResult(Statistic.of(dealer, gamblers), gamblers);
@@ -39,7 +44,7 @@ public class GameController {
     }
 
     private void hitOrStandGambler(Gamblers gamblers, CardDeck cardDeck) {
-        for (Gambler gambler : gamblers.getCardNeedGamblers()) {
+        for (Gambler gambler : gamblers.findHitGambler()) {
             askHitOrStand(gambler, cardDeck);
         }
     }
@@ -65,7 +70,7 @@ public class GameController {
     }
 
     private void printStateAtFirstQuestion(Gambler gambler) {
-        if (gambler.getCardsByState().size() <= DEFAULT_CARD_AMOUNT) {
+        if (gambler.isFirstQuestion()) {
             OutputView.printPlayerCardState(gambler);
         }
     }

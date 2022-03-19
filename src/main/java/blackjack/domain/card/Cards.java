@@ -25,13 +25,17 @@ public class Cards {
             .sum();
     }
 
+    public boolean isBlackJack() {
+        return 11 == sum() && hasAce();
+    }
+
     public boolean hasAce() {
         return cards.stream()
             .anyMatch(Card::isAce);
     }
 
-    public boolean isBlackJack() {
-        return 11 == sum() && hasAce();
+    public boolean isBust() {
+        return sum() > 21;
     }
 
     public boolean isReady() {
@@ -48,50 +52,11 @@ public class Cards {
         return new Cards(newValue);
     }
 
-    public boolean isBust2() {
-        return sum() > 21;
-    }
-
     public int size() {
-        return cards.size();
-    }
-
-    public boolean isBust() {
-        return getPoint() > BLACKJACK;
-    }
-
-    public int getPoint() {
-        int point = 0;
-        for (Card card : cards) {
-            point += card.getDenomination().getPoint();
-        }
-
-        return calculateAcePoint(point);
-    }
-
-    private int calculateAcePoint(int sumOfPoint) {
-        int aceCount = countAce();
-        while (sumOfPoint > BLACKJACK && aceCount >= MINIMUM_ACE_AMOUNT) {
-            sumOfPoint -= DIFFERENCE_POINT_OF_ACE;
-            aceCount--;
-        }
-        return sumOfPoint;
-    }
-
-    private int countAce() {
-        return (int) cards.stream()
-            .filter(card -> card.getDenomination().equals(Denomination.ACE))
-            .count();
+        return this.cards.size();
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
-    }
-
-    @Override
-    public String toString() {
-        return "Cards{" +
-            ", cards=" + cards +
-            '}';
     }
 }

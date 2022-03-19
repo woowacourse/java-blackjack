@@ -152,7 +152,7 @@
         - "플레이어가 이기는 경우"
         - "무승부인 경우"
 - [ ] `Card` - 캐시가 없는 경우 예외를 던지는 것이 최선의 전략인지?
-- [ ] `Gambler` - `getCardNeedGambler`
+- [x] `Gambler` - `getCardNeedGambler`
     - `findHitGambler`라는 네이밍은 어떤지.
 - [ ] `Name` - `NULL_NAME` 상수가 `EMPTY_NAME`인지
 - [ ] `Name` - `validateNullName()`

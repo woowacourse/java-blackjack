@@ -9,7 +9,7 @@ import blackjack.domain.state.State;
 public abstract class Player {
 
     private final Name name;
-    private final State state;
+    private State state;
 
     public Player(Name name, CardDeck cardDeck) {
         this.name = name;
@@ -20,10 +20,12 @@ public abstract class Player {
     public abstract boolean isHit();
 
     public void addCard(Card card) {
-        state.draw(card);
+        this.state = state.draw(card);
     }
-
-    public Cards getCardsByState(){
+    public State getState(){
+        return state;
+    }
+    public Cards getCards(){
         return state.cards();
     }
     public int getPoint() {
@@ -31,7 +33,7 @@ public abstract class Player {
     }
 
     public boolean isBust() {
-        return state.cards().isBust();
+        return state.isFinished();
     }
 
     public String getName() {
