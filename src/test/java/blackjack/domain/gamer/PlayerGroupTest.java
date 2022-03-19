@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -10,7 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.gamer.role.Player;
 
 class PlayerGroupTest {

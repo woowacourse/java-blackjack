@@ -9,6 +9,7 @@ import blackjack.domain.gamer.role.Dealer;
 import blackjack.domain.gamer.role.Player;
 import blackjack.domain.gamer.role.Role;
 import blackjack.domain.result.GameResult;
+import blackjack.domain.result.ProfitResult;
 
 public class BlackJack {
     private final Gamers gamers;

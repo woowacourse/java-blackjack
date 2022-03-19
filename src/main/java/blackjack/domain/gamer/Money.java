@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 public class Money {
     private int amount;

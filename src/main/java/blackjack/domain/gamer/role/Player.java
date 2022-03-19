@@ -3,8 +3,8 @@ package blackjack.domain.gamer.role;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.domain.Money;
 import blackjack.domain.card.Card;
+import blackjack.domain.gamer.Money;
 import blackjack.domain.result.Match;
 
 public final class Player extends Role{
