@@ -1,7 +1,14 @@
 package blackjack.domain.process;
 
+import blackjack.domain.betting.BettingToken;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
@@ -23,5 +30,19 @@ public class BlackJackGame {
 
 	public void shuffleDeck() {
 		this.deck.shuffle();
+	}
+
+	public List<Name> generateNames(List<String> inputNames) {
+		return inputNames.stream()
+			.map(Name::new)
+			.collect(Collectors.toList());
+	}
+
+	public Players generatePlayers(List<Name> names, List<BettingToken> bettingTokens) {
+		List<Player> players = new ArrayList<>();
+		for (int i = 0; i < names.size(); i++) {
+			players.add(new Player(bettingTokens.get(i), names.get(i)));
+		}
+		return new Players(players);
 	}
 }

@@ -14,8 +14,7 @@ public class Players {
 	public Players(List<Player> players) {
 		validateEmptyPlayers(players);
 		validateFullPlayers(players);
-		this.players = new ArrayList<>();
-		this.players.addAll(players);
+		this.players = new ArrayList<>(players);
 	}
 
 	public static Players from(List<Name> names) {

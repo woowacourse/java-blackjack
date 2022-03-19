@@ -1,15 +1,30 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.betting.BettingToken;
 import blackjack.domain.card.Cards;
 
 public class Player extends Gamer {
+	private final BettingToken bettingToken;
+
+	public Player(Cards cards, BettingToken bettingToken, Name name) {
+		super(cards, name);
+		this.bettingToken = bettingToken;
+	}
 
 	public Player(Cards cards, Name name) {
-		super(cards, name);
+		this(cards, new BettingToken(), name);
+	}
+
+	public Player(BettingToken bettingToken, Name name) {
+		this(new Cards(), bettingToken, name);
 	}
 
 	public Player(Name name) {
 		this(new Cards(), name);
+	}
+
+	public BettingToken getBettingToken() {
+		return bettingToken;
 	}
 
 	@Override

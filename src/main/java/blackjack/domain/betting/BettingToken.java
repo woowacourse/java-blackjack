@@ -15,6 +15,10 @@ public class BettingToken {
 		this.money = money;
 	}
 
+	public BettingToken() {
+		this.money = 0;
+	}
+
 	public int getMoney() {
 		return money;
 	}

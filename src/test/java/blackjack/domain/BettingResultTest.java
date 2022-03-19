@@ -26,7 +26,6 @@ public class BettingResultTest {
 	Player player1;
 	Player player2;
 	Player player3;
-	BettingTokens bettingTokens;
 
 	@BeforeEach
 	void gamer_init() {
@@ -34,8 +33,6 @@ public class BettingResultTest {
 		player2 = getBlackJackedPlayer();
 		player3 = getNormalPlayer();
 		players = new Players(List.of(player1, player2, player3));
-		bettingTokens = new BettingTokens(
-			List.of(new BettingToken(3000), new BettingToken(1000), new BettingToken(2000)));
 	}
 
 	@Test
@@ -43,7 +40,7 @@ public class BettingResultTest {
 		Dealer dealer = new Dealer(new Cards(
 			List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER), new Card(CardDenomination.KING, CardSuit.SPADE),
 				new Card(CardDenomination.TWO, CardSuit.SPADE))));
-		BettingResult bettingResult = BettingResult.of(players, dealer, bettingTokens);
+		BettingResult bettingResult = BettingResult.of(players, dealer);
 		assertThat(bettingResult.getGamersBettingResult().values()).containsSequence(
 			Profit.of(Match.NONE, -500), Profit.of(Match.NONE, -3000),
 			Profit.of(Match.NONE, 1500), Profit.of(Match.NONE, 2000));
@@ -53,7 +50,7 @@ public class BettingResultTest {
 	void dealer_blackjack() {
 		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
 			new Card(CardDenomination.ACE, CardSuit.SPADE))));
-		BettingResult bettingResult = BettingResult.of(players, dealer, bettingTokens);
+		BettingResult bettingResult = BettingResult.of(players, dealer);
 		assertThat(bettingResult.getGamersBettingResult().values()).containsSequence(
 			Profit.of(Match.NONE, 5000), Profit.of(Match.NONE, -3000),
 			Profit.of(Match.NONE, 0), Profit.of(Match.NONE, -2000));
@@ -63,7 +60,7 @@ public class BettingResultTest {
 	void dealer_normal() {
 		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
 			new Card(CardDenomination.NINE, CardSuit.SPADE))));
-		BettingResult bettingResult = BettingResult.of(players, dealer, bettingTokens);
+		BettingResult bettingResult = BettingResult.of(players, dealer);
 		assertThat(bettingResult.getGamersBettingResult().values()).containsSequence(
 			Profit.of(Match.NONE, 3500), Profit.of(Match.NONE, -3000),
 			Profit.of(Match.NONE, 1500), Profit.of(Match.NONE, -2000));
@@ -72,18 +69,18 @@ public class BettingResultTest {
 	private Player getBustedPlayer() {
 		return new Player(new Cards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.SPADE), new Card(CardDenomination.TEN, CardSuit.DIAMOND),
-				new Card(CardDenomination.TWO, CardSuit.HEART))), new Name("pobi"));
+				new Card(CardDenomination.TWO, CardSuit.HEART))), new BettingToken(3000), new Name("pobi"));
 	}
 
 	private Player getBlackJackedPlayer() {
 		return new Player(new Cards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.ACE, CardSuit.DIAMOND))),
-			new Name("jason"));
+			new BettingToken(1000), new Name("jason"));
 	}
 
 	private Player getNormalPlayer() {
 		return new Player(new Cards(
 			List.of(new Card(CardDenomination.SIX, CardSuit.HEART), new Card(CardDenomination.FIVE, CardSuit.DIAMOND))),
-			new Name("alpha"));
+			new BettingToken(2000), new Name("alpha"));
 	}
 }

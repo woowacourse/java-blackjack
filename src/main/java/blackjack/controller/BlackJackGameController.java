@@ -11,7 +11,10 @@ import blackjack.domain.process.BlackJackGame;
 import blackjack.domain.process.BettingResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
+import javax.print.DocFlavor.READER;
 
 public class BlackJackGameController {
 	private final InputView inputView;
@@ -23,41 +26,45 @@ public class BlackJackGameController {
 	}
 
 	public void gameStart() {
-		Players players = generatePlayers();
-		Dealer dealer = new Dealer();
 		BlackJackGame blackJackGame = new BlackJackGame(new Deck());
-		BettingTokens bettingTokens = generateBettingMoneys(players);
+		Players players = generatePlayers(blackJackGame);
+		Dealer dealer = new Dealer();
 		initializeCard(players, dealer, blackJackGame);
 		progressPlayerTurn(players, blackJackGame);
 		progressDealerTurn(players, dealer, blackJackGame);
-		makeResult(players, dealer, bettingTokens);
+		makeResult(players, dealer);
 	}
 
-	private Players generatePlayers() {
+	private Players generatePlayers(BlackJackGame blackJackGame) {
+		List<Name> names = generateNames(blackJackGame);
+		return blackJackGame.generatePlayers(names, generateBettingMoneys(names));
+	}
+
+	private List<Name> generateNames(BlackJackGame blackJackGame) {
 		try {
-			return Players.from(inputView.inputPlayerNames().stream().map(Name::new).collect(Collectors.toList()));
+			return blackJackGame.generateNames(inputView.inputPlayerNames());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return generatePlayers();
+			return generateNames(blackJackGame);
 		}
 	}
 
-	private BettingTokens generateBettingMoneys(Players players) {
+	private List<BettingToken> generateBettingMoneys(List<Name> names) {
 		outputView.displayNewLine();
-		BettingTokens bettingTokens = new BettingTokens(players.getPlayersSize());
-		for (Player player : players.getPlayers()) {
-			bettingTokens.addBettingMoney(inputMoney(player.getName()));
+		List<BettingToken> bettingTokens = new ArrayList<>();
+		for (Name name : names) {
+			bettingTokens.add(inputMoney(name.getName()));
 		}
 		return bettingTokens;
 	}
 
-	private void makeResult(Players players, Dealer dealer, BettingTokens bettingTokens) {
+	private void makeResult(Players players, Dealer dealer) {
 		outputView.displayNewLine();
 		outputView.displayAllCardAndScore(dealer);
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player);
 		}
-		BettingResult bettingResult = BettingResult.of(players, dealer, bettingTokens);
+		BettingResult bettingResult = BettingResult.of(players, dealer);
 		outputView.displayNewLine();
 		outputView.displayResult(bettingResult);
 	}
