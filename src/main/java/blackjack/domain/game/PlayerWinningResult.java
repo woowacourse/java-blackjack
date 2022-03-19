@@ -53,7 +53,7 @@ public enum PlayerWinningResult {
     }
 
     public int getBettingProfit(int money, boolean isBlackjack) {
-        if (isBlackjack) {
+        if (this == WIN && isBlackjack) {
             return (int)(money * BLACKJACK_BETTING_PROFIT_RATE);
         }
         return money * bettingProfitRate;
