@@ -19,20 +19,11 @@ public class BlackjackGame {
 	}
 
 	private Blackjack generateGame() {
-		List<Player> players = InputView.askPlayerName().stream()
-			.map(name -> new Player(name, askBetAmount(name)))
+		List<Player> players = InputView.askPlayerNames().stream()
+			.map(name -> new Player(name, InputView.askBetAmounts(name)))
 			.collect(Collectors.toList());
 
 		return Blackjack.from(players);
-	}
-
-	private int askBetAmount(String playerName) {
-		try {
-			return InputView.askBetAmount(playerName);
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-			return askBetAmount(playerName);
-		}
 	}
 
 	private void startGame(Blackjack blackJack) {

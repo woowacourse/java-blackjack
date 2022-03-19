@@ -8,8 +8,6 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
 public class Blackjack {
-	private static final String ERROR_MESSAGE_PLAYER_NUMBER_EXCEED = "[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.";
-	private static final int MAX_PLAYER_NUMBER = 8;
 	private static final int STARTING_CARDS_COUNT = 2;
 
 	private final Dealer dealer;
@@ -23,14 +21,7 @@ public class Blackjack {
 	}
 
 	public static Blackjack from(List<Player> players) {
-		validatePlayerNumber(players);
 		return new Blackjack(new Dealer(), players);
-	}
-
-	private static void validatePlayerNumber(List<Player> players) {
-		if (players.size() > MAX_PLAYER_NUMBER) {
-			throw new IllegalArgumentException(ERROR_MESSAGE_PLAYER_NUMBER_EXCEED);
-		}
 	}
 
 	public void handOutStartingCards() {
