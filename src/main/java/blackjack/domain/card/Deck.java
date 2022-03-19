@@ -17,17 +17,6 @@ public class Deck {
         this.cards = cards;
     }
 
-    private static void validateCardNotDuplicated(final List<Card> cards) {
-        if (isCardDuplicated(cards)) {
-            throw new IllegalArgumentException("중복된 카드는 존재할 수 없습니다.");
-        }
-    }
-
-    private static boolean isCardDuplicated(final List<Card> cards) {
-        return cards.stream()
-                .anyMatch(card -> Collections.frequency(cards, card) > 1);
-    }
-
     public static Deck generate(final DeckGenerator deckGenerator) {
         return new Deck(deckGenerator.generate());
     }
@@ -45,12 +34,22 @@ public class Deck {
     }
 
     public Card drawCard() {
-        validateCardDrawable();
+        validateDrawableCardExist();
         return cards.remove(0);
     }
 
+    private static void validateCardNotDuplicated(final List<Card> cards) {
+        if (isCardDuplicated(cards)) {
+            throw new IllegalArgumentException("중복된 카드는 존재할 수 없습니다.");
+        }
+    }
 
-    private void validateCardDrawable() {
+    private static boolean isCardDuplicated(final List<Card> cards) {
+        return cards.stream()
+                .anyMatch(card -> Collections.frequency(cards, card) > 1);
+    }
+
+    private void validateDrawableCardExist() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("더 이상 뽑을 수 있는 카드가 없습니다.");
         }

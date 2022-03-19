@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,8 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.condition.PlayerCount;
 import blackjack.domain.participant.state.State;
-import blackjack.domain.participant.validation.PlayerNameValidator;
 import blackjack.domain.result.MatchCalculator;
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.MatchStatus;
@@ -19,15 +20,11 @@ public class Players {
     private final List<Player> players;
 
     private Players(final List<String> playerNames, final Deck deck) {
-        validatePlayerNames(playerNames);
+        validateNameNotDuplicated(playerNames);
+        validateNameCountIsEnough(playerNames);
         this.players = playerNames.stream()
                 .map(playerName -> Player.readyToPlay(playerName, deck.distributeInitialCards()))
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    private void validatePlayerNames(final List<String> playerNames) {
-        PlayerNameValidator.validateNameNotDuplicated(playerNames);
-        PlayerNameValidator.validateNameCountEnough(playerNames);
     }
 
     public static Players readyToPlay(final List<String> names, final Deck deck) {
@@ -67,6 +64,23 @@ public class Players {
     public List<Card> getPlayerCards(final String playerName) {
         final Player player = findByPlayerName(playerName);
         return player.getCards();
+    }
+
+    private static void validateNameNotDuplicated(final List<String> playerNames) {
+        if (isPlayerNameDuplicated(playerNames)) {
+            throw new IllegalArgumentException("플레이어명은 중복될 수 없습니다.");
+        }
+    }
+
+    private static boolean isPlayerNameDuplicated(final List<String> playerNames) {
+        return playerNames.stream()
+                .anyMatch(playerName -> Collections.frequency(playerNames, playerName) > 1);
+    }
+
+    private static void validateNameCountIsEnough(final List<String> playerNames) {
+        if (PlayerCount.isCountOutOfRange(playerNames.size())) {
+            throw new IllegalArgumentException("플레이어는 8명 이하여야 합니다.");
+        }
     }
 
 }

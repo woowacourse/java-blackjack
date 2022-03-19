@@ -20,7 +20,6 @@ public class CardHands {
     }
 
     public int calculateScore() {
-        final List<Card> cards = new ArrayList<>(this.cards);
         return ScoreCalculator.calculateScore(cards);
     }
 

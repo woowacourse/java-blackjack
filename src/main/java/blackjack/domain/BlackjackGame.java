@@ -58,9 +58,7 @@ public class BlackjackGame {
     }
 
     public MatchResult calculateMatchResult() {
-        if (players.isAnyPlayerNotFinished()) {
-            throw new IllegalStateException("턴이 종료되지 않은 플레이어가 존재합니다.");
-        }
+        validateAllPlayersFinished();
         return players.judgeMatchStatusOfPlayers(dealer);
     }
 
@@ -86,4 +84,9 @@ public class BlackjackGame {
         return players.getPlayerCards(playerName);
     }
 
+    private void validateAllPlayersFinished() {
+        if (players.isAnyPlayerNotFinished()) {
+            throw new IllegalStateException("턴이 종료되지 않은 플레이어가 존재합니다.");
+        }
+    }
 }

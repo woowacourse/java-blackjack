@@ -13,7 +13,8 @@ public class ScoreCalculator {
     private static final int DEFAULT_SCORE = 0;
 
     public static int calculateScore(final List<Card> cards) {
-        List<Integer> sortedTotalSums = calculateSortedTotalSums(cards);
+        final List<Card> copyCards = new ArrayList<>(cards);
+        List<Integer> sortedTotalSums = calculateSortedTotalSums(copyCards);
         if (sortedTotalSums.isEmpty()) {
             return DEFAULT_SCORE;
         }
@@ -56,7 +57,7 @@ public class ScoreCalculator {
         final List<Integer> revereSortedTotalSums = new ArrayList<>(sortedTotalSums);
         Collections.reverse(revereSortedTotalSums);
         return revereSortedTotalSums.stream()
-                .filter(score -> ENABLE_MAXIMUM_SCORE_UNDER_BUST.isNotUnderThan(score))
+                .filter(ENABLE_MAXIMUM_SCORE_UNDER_BUST::isNotUnderThan)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("21 이하의 점수가 존재하지 않습니다."));
     }

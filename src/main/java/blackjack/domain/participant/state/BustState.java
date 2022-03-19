@@ -23,14 +23,6 @@ public final class BustState extends FinishState {
     }
 
     @Override
-    protected void validateScoreIsCompatible(final List<Card> cards) {
-        final int score = ScoreCalculator.calculateScore(cards);
-        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isNotUnderThan(score)) {
-            throw new IllegalArgumentException("합계가 21 초과여야 Bust 상태가 될 수 있습니다.");
-        }
-    }
-
-    @Override
     public MatchStatus judgeMatchStatus(State state) {
         return MatchStatus.LOSS;
     }
@@ -43,6 +35,14 @@ public final class BustState extends FinishState {
     @Override
     public boolean isBust() {
         return true;
+    }
+
+    @Override
+    protected void validateScoreIsCompatible(final List<Card> cards) {
+        final int score = ScoreCalculator.calculateScore(cards);
+        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isNotUnderThan(score)) {
+            throw new IllegalArgumentException("합계가 21 초과여야 Bust 상태가 될 수 있습니다.");
+        }
     }
 
 }

@@ -10,14 +10,19 @@ public final class Dealer extends Participant {
 
     private Dealer(final List<Card> cards) {
         super(cards);
-        changeToStandIfPossible();
+        stayIfScoreIsOverThanDealerLimit();
     }
 
     public static Dealer readyToPlay(final List<Card> cards) {
         return new Dealer(cards);
     }
 
-    private void changeToStandIfPossible() {
+    public void drawCard(final Card card) {
+        this.state = state.drawCard(card);
+        stayIfScoreIsOverThanDealerLimit();
+    }
+
+    private void stayIfScoreIsOverThanDealerLimit() {
         if (isDealerCannotDrawCardAnymore()) {
             this.state = state.stay();
         }
@@ -25,11 +30,6 @@ public final class Dealer extends Participant {
 
     private boolean isDealerCannotDrawCardAnymore() {
         return state.isPossibleToDrawCard() && DEALER_ENABLE_MINIMUM_SCORE.isNotOverThan(state.getScore());
-    }
-
-    public void drawCard(final Card card) {
-        this.state = state.drawCard(card);
-        changeToStandIfPossible();
     }
 
     public Card getFirstCard() {

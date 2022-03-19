@@ -15,7 +15,8 @@ public final class HitState extends PlayState {
     private final CardHands cards;
 
     HitState(final List<Card> cards) {
-        validateCardsCompatible(cards);
+        validateCardSizeIsEnough(cards);
+        validateCardScoreIsCompatible(cards);
         this.cards = new CardHands(cards);
     }
 
@@ -25,17 +26,6 @@ public final class HitState extends PlayState {
 
     static HitState of(final Card... cards) {
         return from(List.of(cards));
-    }
-
-    private static void validateCardsCompatible(final List<Card> cards) {
-        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isOverThan(cards.size())) {
-            throw new IllegalArgumentException("카드는 2장 이상이어야 합니다.");
-        }
-
-        final int score = ScoreCalculator.calculateScore(cards);
-        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isUnderThan(score)) {
-            throw new IllegalArgumentException("합계가 21 이상이므로 Hit 상태가 될 수 없습니다.");
-        }
     }
 
     @Override
@@ -73,6 +63,19 @@ public final class HitState extends PlayState {
     @Override
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    private static void validateCardSizeIsEnough(final List<Card> cards) {
+        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isOverThan(cards.size())) {
+            throw new IllegalArgumentException("카드는 2장 이상이어야 합니다.");
+        }
+    }
+
+    private static void validateCardScoreIsCompatible(final List<Card> cards) {
+        final int score = ScoreCalculator.calculateScore(cards);
+        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isUnderThan(score)) {
+            throw new IllegalArgumentException("합계가 21 이상이므로 Hit 상태가 될 수 없습니다.");
+        }
     }
 
 }

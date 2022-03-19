@@ -23,14 +23,6 @@ public final class StandState extends FinishState {
     }
 
     @Override
-    protected void validateScoreIsCompatible(final List<Card> cards) {
-        final int score = ScoreCalculator.calculateScore(cards);
-        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isUnderThan(score)) {
-            throw new IllegalArgumentException("합계가 21 이하여야 Stand 상태가 될 수 있습니다.");
-        }
-    }
-
-    @Override
     public MatchStatus judgeMatchStatus(State otherState) {
         final int thisScore = this.getScore();
         final int otherScore = otherState.getScore();
@@ -51,6 +43,14 @@ public final class StandState extends FinishState {
     @Override
     public boolean isBust() {
         return false;
+    }
+
+    @Override
+    protected void validateScoreIsCompatible(final List<Card> cards) {
+        final int score = ScoreCalculator.calculateScore(cards);
+        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isUnderThan(score)) {
+            throw new IllegalArgumentException("합계가 21 이하여야 Stand 상태가 될 수 있습니다.");
+        }
     }
 
 }

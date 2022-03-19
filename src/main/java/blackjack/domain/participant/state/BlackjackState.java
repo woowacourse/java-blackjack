@@ -23,14 +23,6 @@ public final class BlackjackState extends FinishState {
     }
 
     @Override
-    protected void validateScoreIsCompatible(final List<Card> cards) {
-        final int score = ScoreCalculator.calculateScore(cards);
-        if (BLACKJACK_SCORE.isNotEquals(score)) {
-            throw new IllegalArgumentException("합계가 21 이어야 Blackjack 상태가 될 수 있습니다.");
-        }
-    }
-
-    @Override
     public MatchStatus judgeMatchStatus(State state) {
         if (state.isBlackjack()) {
             return MatchStatus.DRAW;
@@ -46,6 +38,14 @@ public final class BlackjackState extends FinishState {
     @Override
     public boolean isBust() {
         return false;
+    }
+
+    @Override
+    protected void validateScoreIsCompatible(final List<Card> cards) {
+        final int score = ScoreCalculator.calculateScore(cards);
+        if (BLACKJACK_SCORE.isNotEquals(score)) {
+            throw new IllegalArgumentException("합계가 21 이어야 Blackjack 상태가 될 수 있습니다.");
+        }
     }
 
 }

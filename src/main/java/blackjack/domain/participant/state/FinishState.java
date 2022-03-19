@@ -13,22 +13,10 @@ public abstract class FinishState implements State {
     private final CardHands cards;
 
     FinishState(final List<Card> cards) {
-        validateCardsCompatible(cards);
-        this.cards = new CardHands(cards);
-    }
-
-    private void validateCardsCompatible(final List<Card> cards) {
         validateCardSizeIsEnough(cards);
         validateScoreIsCompatible(cards);
+        this.cards = new CardHands(cards);
     }
-
-    private void validateCardSizeIsEnough(final List<Card> cards) {
-        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isOverThan(cards.size())) {
-            throw new IllegalArgumentException("카드는 2장 이상이어야 합니다.");
-        }
-    }
-
-    protected abstract void validateScoreIsCompatible(final List<Card> cards);
 
     public abstract MatchStatus judgeMatchStatus(final State state);
 
@@ -61,5 +49,13 @@ public abstract class FinishState implements State {
     public final List<Card> getCards() {
         return cards.getCards();
     }
+
+    private void validateCardSizeIsEnough(final List<Card> cards) {
+        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isOverThan(cards.size())) {
+            throw new IllegalArgumentException("카드는 2장 이상이어야 합니다.");
+        }
+    }
+
+    protected abstract void validateScoreIsCompatible(final List<Card> cards);
 
 }

@@ -17,19 +17,13 @@ public final class InitialState extends PlayState {
     }
 
     public static State initiallyDrawCards(final List<Card> cards) {
-        validateInitialCardsSize(cards);
+        validateInitialCardSizeIsEnough(cards);
         final InitialState initialState = new InitialState(cards);
         return initialState.considerStateByScore();
     }
 
     public static State initiallyDrawCards(final Card... cards) {
         return initiallyDrawCards(List.of(cards));
-    }
-
-    private static void validateInitialCardsSize(final List<Card> cards) {
-        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isNotEquals(cards.size())) {
-            throw new IllegalArgumentException("처음에 배분받는 카드는 2장이어야 합니다.");
-        }
     }
 
     private State considerStateByScore() {
@@ -63,6 +57,12 @@ public final class InitialState extends PlayState {
     @Override
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    private static void validateInitialCardSizeIsEnough(final List<Card> cards) {
+        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isNotEquals(cards.size())) {
+            throw new IllegalArgumentException("처음에 배분받는 카드는 2장이어야 합니다.");
+        }
     }
 
 }

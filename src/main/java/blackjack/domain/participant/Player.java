@@ -15,20 +15,12 @@ public final class Player extends Participant {
         this.name = name;
     }
 
-    private static void validateNameNotBlank(final String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
-        }
-    }
-
     public static Player readyToPlay(final String name, final List<Card> cards) {
         return new Player(name, cards);
     }
 
     public void betAmount(final int amount) {
-        if (bettingAmount != null) {
-            throw new IllegalStateException("이미 베팅을 했습니다.");
-        }
+        validateNotYetBetAmount();
         this.bettingAmount = new BettingAmount(amount);
     }
 
@@ -50,6 +42,18 @@ public final class Player extends Participant {
 
     public int getBettingAmount() {
         return bettingAmount.getAmount();
+    }
+
+    private static void validateNameNotBlank(final String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
+        }
+    }
+
+    private void validateNotYetBetAmount() {
+        if (bettingAmount != null) {
+            throw new IllegalStateException("이미 베팅을 했습니다.");
+        }
     }
 
 }
