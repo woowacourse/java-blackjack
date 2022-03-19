@@ -54,9 +54,7 @@ public class BlackJackGame {
 		askHitOrStay();
 
 		BettingResult result = BlackJackReferee.create(dealer, players);
-		OutputView.printAdditionalDrawDealer(dealer.findHitCount());
-		OutputView.printFinalCards(dealer, players);
-		OutputView.printFinalResult(result);
+		printFinalMessages(dealer, players, result);
 	}
 
 	private void checkFirstHandOut(Dealer dealer, List<Player> players) {
@@ -88,7 +86,7 @@ public class BlackJackGame {
 	}
 
 	private void selectHitOrStay(String name) {
-		while (gamers.isBust(name) && InputView.askHitOrStay(name)) {
+		while (!gamers.isBust(name) && InputView.askHitOrStay(name)) {
 			gamers.giveCardToPlayer(name, deck);
 			OutputView.printNameAndCards(name, gamers.findCardsOfPlayer(name));
 		}
@@ -98,5 +96,11 @@ public class BlackJackGame {
 		while (gamers.checkDealerDrawPossible()) {
 			gamers.giveCardToDealer(deck);
 		}
+	}
+
+	private void printFinalMessages(Dealer dealer, List<Player> players, BettingResult result) {
+		OutputView.printAdditionalDrawDealer(dealer.findHitCount());
+		OutputView.printFinalCards(dealer, players);
+		OutputView.printFinalResult(result);
 	}
 }
