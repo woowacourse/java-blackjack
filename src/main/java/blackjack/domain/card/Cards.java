@@ -39,11 +39,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_CARD_HAND_COUNT && containsAce() && getBestPossible() == BLACKJACK_SCORE;
-    }
-
-    private boolean containsAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return cards.size() == BLACKJACK_CARD_HAND_COUNT && getBestPossible() == BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {
