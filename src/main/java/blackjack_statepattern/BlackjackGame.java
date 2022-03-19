@@ -2,6 +2,7 @@ package blackjack_statepattern;
 
 import blackjack_statepattern.card.CardDeck;
 import blackjack_statepattern.dto.CardsDto;
+import blackjack_statepattern.participant.BetMoney;
 import blackjack_statepattern.participant.Dealer;
 import blackjack_statepattern.participant.Participant;
 import blackjack_statepattern.participant.Player;
@@ -33,9 +34,9 @@ public final class BlackjackGame {
                 .collect(Collectors.toList()));
     }
 
-    private int askBetMoney(String name) {
+    private BetMoney askBetMoney(String name) {
         try {
-            return InputView.askBetMoney(name);
+            return new BetMoney(InputView.askBetMoney(name));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return askBetMoney(name);

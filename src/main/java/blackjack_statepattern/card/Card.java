@@ -69,4 +69,12 @@ public final class Card {
     public String getDenominationName() {
         return denomination.getName();
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "suit=" + suit +
+                ", denomination=" + denomination +
+                '}';
+    }
 }

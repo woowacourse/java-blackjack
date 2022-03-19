@@ -8,8 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack_statepattern.card.Cards;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class BustTest {
 
@@ -22,12 +26,22 @@ public class BustTest {
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    @DisplayName("버스트인 상태에서 수익을 계산할 수 있다.")
-    void profit() {
-        Bust bust = new Bust(new Cards(SPADES_JACK, SPADES_TWO, SPADES_TEN));
+    @ParameterizedTest
+    @DisplayName("버스트면 플레이어는 항상 돈을 잃는다.")
+    @MethodSource("bustCardProvider")
+    void profit(Cards cards, double earningRate) {
+        Bust bust = new Bust(new Cards(SPADES_JACK, SPADES_TEN, SPADES_TWO));
         int money = 1000;
-        double profit = bust.profit(money);
-        assertThat(profit).isEqualTo(money * bust.earningRate());
+        double profit = bust.profit(cards, money);
+        assertThat(profit).isEqualTo(money * earningRate);
+    }
+
+    public static Stream<Arguments> bustCardProvider() {
+        return Stream.of(
+                Arguments.arguments(new Cards(SPADES_JACK, SPADES_ACE), -1),
+                Arguments.arguments(new Cards(SPADES_JACK, SPADES_TEN), -1),
+                Arguments.arguments(new Cards(SPADES_JACK, SPADES_TEN, SPADES_TWO), -1)
+
+        );
     }
 }

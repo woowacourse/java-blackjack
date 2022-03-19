@@ -22,10 +22,6 @@ public class Cards {
         this.value = value;
     }
 
-    public static List<Card> copyOf(Cards cards) {
-        return new ArrayList<>(cards.getCards());
-    }
-
     public int computeScore() {
         int sum = sum();
         if (hasAce() && sum <= BLACKJACK_SCORE - ACE_BONUS_SCORE) {
@@ -72,5 +68,12 @@ public class Cards {
         return value.stream()
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 카드가 한장도 없습니다."));
+    }
+
+    @Override
+    public String toString() {
+        return "Cards{" +
+                "value=" + value +
+                '}';
     }
 }
