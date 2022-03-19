@@ -147,6 +147,22 @@ public class GameResultTest {
         assertThat(finalResultBoard.get(gamer)).isEqualTo(15000);
     }
 
+    @Test
+    @DisplayName("딜러의 수익을 계산한다.")
+    void calculateGamersProfit() {
+        //given
+        Dealer dealer = new Dealer();
+        get_21_Point(dealer);
+
+        Gamer gamer = settingGamer();
+        get_20_Point(gamer);
+        //when
+        Map<Gamer, Long> finalResultBoard = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer));
+        //then
+        assertThat(GameResult.calculateDealerProfit(finalResultBoard)).isEqualTo(10000);
+    }
+
     private Gamer settingGamer() {
         return new Gamer("judy", 10000);
     }

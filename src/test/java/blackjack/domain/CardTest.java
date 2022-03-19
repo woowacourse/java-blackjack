@@ -38,4 +38,18 @@ public class CardTest {
         assertTrue(card.isAce());
     }
 
+    @Test
+    @DisplayName("카드의 Denomination Point를 확인한다.")
+    void checkCardDenominationPoint() {
+        Card card = new Card(Suit.DIAMOND, Denomination.JACK);
+        assertThat(card.denominationPoint()).isEqualTo(10);
+    }
+
+    @Test
+    @DisplayName("카드의 Denomination name과 Suit name을 확인한다.")
+    void checkCardOfDenominationAndSuit() {
+        Card card = new Card(Suit.DIAMOND, Denomination.JACK);
+        assertThat(card.getName()).isEqualTo("J다이아몬드");
+    }
+
 }
