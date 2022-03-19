@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class HoldingCards {
@@ -14,6 +13,10 @@ public class HoldingCards {
 
     public HoldingCards() {
         this.cards = new ArrayList<>();
+    }
+
+    public HoldingCards(List<Card> cards) {
+        this.cards = cards;
     }
 
     public void addCard(Card card) {
@@ -29,7 +32,7 @@ public class HoldingCards {
                 .mapToInt(Card::getNumber)
                 .sum();
 
-        if (sum > BUST_STANDARD) {
+        if (sum > BUST_STANDARD) { // Ace를 갖고 있고 10을 더해도 Bust가 아니면 11로 계산하도록 수정
             sum = adjustSum(sum);
         }
         return sum;
@@ -49,6 +52,23 @@ public class HoldingCards {
         return (int) cards.stream()
                 .filter(card -> card.getCardNumber() == CardNumber.ACE)
                 .count();
+    }
+
+    public boolean isBlackJack() {
+        return hasAce() && hasNumberTenCard() ;
+    }
+
+    private boolean hasNumberTenCard() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumber() == CardNumber.TEN ||
+                        card.getCardNumber() == CardNumber.JACK ||
+                        card.getCardNumber() == CardNumber.QUEEN ||
+                        card.getCardNumber() == CardNumber.KING);
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
     }
 
     public List<Card> getAllCards() {
