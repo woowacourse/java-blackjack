@@ -22,4 +22,12 @@ public final class Card {
     private static String toKey(Suit suit, Denomination denomination) {
         return suit.name() + denomination.name();
     }
+
+    public int score() {
+        return denomination.getScore();
+    }
+
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
 }

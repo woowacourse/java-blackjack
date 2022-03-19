@@ -22,4 +22,8 @@ public enum Denomination {
         this.score = score;
         this.name = name;
     }
+
+    public int getScore() {
+        return score;
+    }
 }
