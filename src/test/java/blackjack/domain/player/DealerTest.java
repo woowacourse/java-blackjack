@@ -26,8 +26,6 @@ public class DealerTest {
     void showDealerCards() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(deck);
-        dealer.hit(deck.pick());
-        dealer.hit(deck.pick());
         assertThat(dealer.getShowCards().getCardValues().size())
                 .isEqualTo(1);
     }

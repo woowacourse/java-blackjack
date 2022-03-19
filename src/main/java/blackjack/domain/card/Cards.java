@@ -7,7 +7,8 @@ import java.util.Objects;
 
 public class Cards {
     private static final int ACE_GAP = 10;
-    public static final int MAX_SCORE = 21;
+    private static final int MAX_SCORE = 21;
+    private static final int INIT_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -39,7 +40,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return isMaxScore() && cards.size() == Players.INIT_CARD_SIZE;
+        return isMaxScore() && cards.size() == INIT_CARD_SIZE;
     }
 
     public boolean isMaxScore() {
