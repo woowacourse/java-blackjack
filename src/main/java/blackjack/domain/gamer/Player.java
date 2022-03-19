@@ -29,10 +29,10 @@ public class Player extends Gamer {
 
 	@Override
 	public boolean isWin(Gamer gamer) {
-		if (!this.isBlackJack() && !gamer.isBlackJack() && !this.isBust() && !gamer.isBust()){
-			return this.getScore() > gamer.getScore();
+		if (isBlackJackWin(gamer) || (isNotBustBoth(gamer) && isHigherScore(gamer))) {
+			return true;
 		}
-		return (this.isBlackJack() && !gamer.isBlackJack()) || (!this.isBust() && gamer.isBust());
+		return !this.isBust() && gamer.isBust();
 	}
 
 	@Override

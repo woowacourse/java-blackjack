@@ -29,6 +29,18 @@ public abstract class Gamer {
 		return !isWin(gamer) && !isDraw(gamer);
 	}
 
+	protected boolean isBlackJackWin(Gamer gamer) {
+		return this.isBlackJack() && !gamer.isBlackJack();
+	}
+
+	protected boolean isHigherScore(Gamer gamer) {
+		return this.getScore() > gamer.getScore();
+	}
+
+	protected boolean isNotBustBoth(Gamer gamer) {
+		return !this.isBust() && !gamer.isBust();
+	}
+
 	public List<Card> getCards() {
 		return this.cards.getCards();
 	}
