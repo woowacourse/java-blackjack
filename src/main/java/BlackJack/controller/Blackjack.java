@@ -1,6 +1,9 @@
 package blackJack.controller;
 
+import blackJack.domain.Card.Card;
 import blackJack.domain.Card.Deck;
+import blackJack.domain.Card.Denomination;
+import blackJack.domain.Card.Suit;
 import blackJack.domain.Result.Result;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
@@ -9,10 +12,9 @@ import blackJack.domain.User.User;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static blackJack.domain.Card.Deck.initDeck;
 
 public class Blackjack {
 
@@ -20,7 +22,7 @@ public class Blackjack {
 
     public void run() {
         final Dealer dealer = new Dealer();
-        final Deck deck = new Deck();
+        final Deck deck = new Deck(initDeck());
         List<String> playerNames = InputView.inputPlayerNames();
         Map<String, Integer> bettingMoneys = getBettingMoneys(playerNames);
         final Players players = new Players(playerNames, bettingMoneys);
