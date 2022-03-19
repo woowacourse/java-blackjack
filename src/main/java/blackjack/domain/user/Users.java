@@ -7,7 +7,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import blackjack.domain.money.Money;
 
 public class Users {
@@ -46,6 +49,12 @@ public class Users {
 
     public boolean isDealerBlackjack() {
         return dealer.isBlackjack();
+    }
+
+    public void stayAllPlayers() {
+        for (Player player : players) {
+            player.stay();
+        }
     }
 
     public Map<Player, Money> createPlayerProfit() {
