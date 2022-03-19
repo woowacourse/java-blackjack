@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Profit {
 
+    public static final double BLACKJACK_WIN_PROFIT_RATE = 1.5;
+
     private final int amount;
 
     public Profit(int amount) {
@@ -15,7 +17,7 @@ public class Profit {
     }
 
     public static boolean isDivisibleByTen(int money) {
-        return money * 1.5 % 10 != 0;
+        return money * BLACKJACK_WIN_PROFIT_RATE % 10 != 0;
     }
 
     public static Profit of(Betting bettingMoney, Result result, boolean isBlackjackWin) {

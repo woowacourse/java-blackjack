@@ -17,7 +17,7 @@ public class Betting {
 
     public int calculateResult(Result result, boolean isBlackjackWin) {
         if (isBlackjackWin) {
-            return (int) (amount * 1.5);
+            return (int) (amount * Profit.BLACKJACK_WIN_PROFIT_RATE);
         }
         return amount * result.getProfitRate();
     }
