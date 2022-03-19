@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.betting.Money;
 import blackjack.domain.player.Player;
 
+import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
@@ -23,13 +24,9 @@ public enum Result {
     }
 
     public static Result calculateResult(final Player dealer, final Player participant) {
-        for (Result result : values()) {
-            if (result.resultCalculator.test(dealer, participant)) {
-                return result;
-            }
-        }
-
-        throw new RuntimeException("[ERROR] 결과를 찾을 수 없습니다.");
+        return Arrays.stream(values())
+                .filter(result -> result.resultCalculator.test(dealer, participant))
+                .findFirst().orElseThrow(() -> new RuntimeException("[ERROR] 결과를 찾을 수 없습니다."));
     }
 
     private static boolean checkWin(final Player dealer, final Player participant) {

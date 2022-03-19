@@ -20,13 +20,13 @@ public class Blackjack {
     public void play() {
         final Deck deck = new Deck(new RandomCardGenerator());
         final List<Player> participants = createParticipants(InputView.requestNames());
-        final Map<Player, Money> bettings = makeBettingWithParticipants(participants);
+        final Map<Player, Money> bettingBox = makeBettingWithParticipants(participants);
         final Players players = initPlayers(participants, deck);
 
         OutputView.printPlayersInitCardInfo(players);
         decideGetMoreCard(players, deck);
         announcePlayersFinishInfo(players);
-        announcePlayersProfit(bettings, players.getDealer());
+        announcePlayersProfit(bettingBox, players.getDealer());
     }
 
     private List<Player> createParticipants(final List<String> names) {
@@ -40,11 +40,11 @@ public class Blackjack {
     }
 
     private Map<Player, Money> makeBettingWithParticipants(List<Player> participants) {
-        Map<Player, Money> bettings = new HashMap<>();
+        Map<Player, Money> bettingBox = new HashMap<>();
         for (Player participant : participants) {
-            bettings.put(participant, new Money(InputView.requestBetting(participant.getName())));
+            bettingBox.put(participant, new Money(InputView.requestBetting(participant.getName())));
         }
-        return bettings;
+        return bettingBox;
     }
 
     private Players initPlayers(final List<Player> participants, final Deck deck) {
