@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.fixture.CardBundleFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserTest {
@@ -16,18 +17,15 @@ class UserTest {
     @Test
     @DisplayName("유저가 버스트 났으면 True")
     void isBustTest() {
-        Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.JACK),
-                new Card(Shape.CLOVER, Number.JACK)));
-        Dealer dealer = new Dealer(cards);
+        Dealer dealer = new Dealer(_21_OVER_CARDS);
         assertThat(dealer.isBust()).isTrue();
     }
 
     @Test
     @DisplayName("플레이어와 딜러의 점수가 같다면 True")
     void isSameScoreTest() {
-        Cards cards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK)));
-        Player player = new Player("test", Bet.from(1000), cards);
-        Dealer dealer = new Dealer(cards);
+        Player player = new Player("test", Bet.from(1000), _21_UNDER_CARDS);
+        Dealer dealer = new Dealer(_21_UNDER_CARDS);
         assertThat(player.isSameScoreWithNotBlackJack(dealer)).isTrue();
     }
 
@@ -52,9 +50,7 @@ class UserTest {
     @Test
     @DisplayName("블랙잭이 아닌, 카드들의 합이 21이면 블랙잭이 아니다. - False")
     void isNotBlackJackTest() {
-        Cards cards = new Cards(List.of(new Card(Shape.CLOVER, Number.TWO), new Card(Shape.CLOVER, Number.TEN),
-                new Card(Shape.DIAMOND, Number.NINE)));
-        Dealer dealer = new Dealer(cards);
+        Dealer dealer = new Dealer(_21_NOT_BLACKJACK);
         assertThat(dealer.isBlackJack()).isFalse();
     }
 
