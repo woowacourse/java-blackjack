@@ -7,6 +7,8 @@ import blackjack.domain.state.finished.BlackJack;
 
 public final class Init extends Running {
 
+    private static final String ERROR_DRAW_CARD = "[ERROR] 초기 상태에서는 2장의 카드까지만 받을 수 있습니다.";
+
     public Init() {
         super(new HoldingCards());
     }
@@ -25,7 +27,7 @@ public final class Init extends Running {
             holdingCards().addCard(deck.drawCard());
             return nextState();
         }
-        throw new IllegalStateException("[ERROR] 초기 상태에서는 2장의 카드까지만 받을 수 있습니다.");
+        throw new IllegalStateException(ERROR_DRAW_CARD);
     }
 
     private State nextState() {

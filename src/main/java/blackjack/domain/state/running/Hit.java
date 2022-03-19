@@ -8,7 +8,7 @@ import blackjack.domain.state.finished.Stand;
 
 public final class Hit extends Running {
 
-    Hit(HoldingCards holdingCards) {
+    public Hit(HoldingCards holdingCards) {
         super(holdingCards);
     }
 

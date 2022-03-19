@@ -5,6 +5,8 @@ import blackjack.domain.money.BetMoney;
 
 public final class Stand extends Finished {
 
+    private static final int LOSE_EARNING_RATE = -1;
+
     public Stand(HoldingCards holdingCards) {
         super(holdingCards);
     }
@@ -16,7 +18,7 @@ public final class Stand extends Finished {
             return betMoney.getMoney();
         }
         if (score < dealerScore) {
-            return betMoney.getMoney() * -1;
+            return betMoney.getMoney() * LOSE_EARNING_RATE;
         }
         return 0;
     }
