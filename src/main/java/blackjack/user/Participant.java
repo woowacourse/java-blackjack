@@ -4,6 +4,7 @@ import blackjack.Card;
 import blackjack.Cards;
 import blackjack.Deck;
 import blackjack.State;
+import java.util.List;
 
 public abstract class Participant {
     private final String name;
@@ -18,6 +19,10 @@ public abstract class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public List<Card> getCards() {
+        return myCards.getCards();
     }
 
     public void drawInitialCards(Deck deck) {

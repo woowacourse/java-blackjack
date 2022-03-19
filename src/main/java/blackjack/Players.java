@@ -3,12 +3,14 @@ package blackjack;
 import blackjack.user.Player;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public class Players {
+public class Players implements Iterable {
     private static final String NAME_DUPLICATION_EXCEPTION = "[ERROR] 중복된 플레이어 이름이 있습니다.";
     private final Queue<Player> players;
 
@@ -38,5 +40,22 @@ public class Players {
 
     public void changeTurn() {
         players.add(players.remove());
+    }
+
+    public void drawAdditionalCard(Deck deck) {
+        for (Player player : players) {
+            player.drawInitialCards(deck);
+        }
+    }
+
+    @Override
+    public Iterator iterator() {
+        return players.iterator();
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 }

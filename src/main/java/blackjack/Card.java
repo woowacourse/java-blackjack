@@ -28,6 +28,14 @@ public class Card {
         return CACHE.get(suit).get(denomination);
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
     public int score() {
         return denomination.score();
     }
