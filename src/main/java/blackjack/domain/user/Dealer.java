@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Dealer extends User {
@@ -10,9 +11,13 @@ public class Dealer extends User {
         super("딜러", cards);
     }
 
+
     @Override
     public boolean isHit() {
         return cards.getScore() <= DEALER_ADD_CARD_LIMIT;
     }
 
+    public Card getOneCard() {
+        return cards.getCards().iterator().next();
+    }
 }

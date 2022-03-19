@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.dto.CardDto;
+import blackjack.dto.PlayerDto;
 import blackjack.dto.UserDto;
 
 import java.util.List;
@@ -14,22 +16,21 @@ public class OutputView {
     private static final String SCORE_FORMAT = " - 결과: %d";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 수익";
     private static final String REVENUE_FORMAT = "%s: %.0f\n";
-    private static final int START_PLAYERS_INDEX = 1;
 
     public static void printDrawMessage(List<String> userNames) {
         System.out.printf(DRAW_MESSAGE, String.join(DELIMITER, userNames));
     }
 
-    public static void printTotalUserCards(List<UserDto> users) {
-        System.out.printf((CARD_FORMAT) + "%n", DEALER, users.get(0).getCards().get(0));
-        for (int i = START_PLAYERS_INDEX; i < users.size(); i++) {
-            printPlayerCard(users.get(i));
+    public static void printTotalUserCards(CardDto dealerCardDto, List<PlayerDto> playerDtos) {
+        System.out.printf((CARD_FORMAT) + "%n", DEALER, dealerCardDto.getCardInfo());
+        for (PlayerDto playerDto : playerDtos) {
+            printPlayerCard(playerDto);
         }
     }
 
-    public static void printPlayerCard(UserDto userDto) {
-        String cards = String.join(DELIMITER, userDto.getCards());
-        System.out.printf((CARD_FORMAT) + "%n", userDto.getName(), cards);
+    public static void printPlayerCard(PlayerDto playerDto) {
+        String cards = String.join(DELIMITER, playerDto.getCards());
+        System.out.printf((CARD_FORMAT) + "%n", playerDto.getName(), cards);
     }
 
     public static void printAddDealerCard() {

@@ -1,11 +1,13 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Deck;
 import blackjack.domain.PlayerResult;
+import blackjack.domain.card.Deck;
 import blackjack.domain.user.Bet;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.dto.CardDto;
+import blackjack.dto.PlayerDto;
 import blackjack.dto.UserDto;
 import blackjack.service.batchService;
 import blackjack.view.InputView;
@@ -14,6 +16,7 @@ import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -25,10 +28,18 @@ public class BlackjackController {
         Players players = Players.create(inputPlayerNames, bets, deck);
 
         OutputView.printDrawMessage(inputPlayerNames);
-        OutputView.printTotalUserCards(convertToUserDtos(dealer, players));
+
+
+        OutputView.printTotalUserCards(CardDto.from(dealer.getOneCard()), converToPlayerDtos(players));
 
         List<UserDto> userDtos = playGame(dealer, players, deck);
         finishGame(dealer, players, userDtos);
+    }
+
+    private List<PlayerDto> converToPlayerDtos(Players players) {
+        return players.getPlayers().stream()
+                .map(PlayerDto::from)
+                .collect(Collectors.toList());
     }
 
     private void finishGame(Dealer dealer, Players players, List<UserDto> userDtos) {
@@ -59,7 +70,7 @@ public class BlackjackController {
     private void askOneMoreCard(Player player, Deck deck) {
         while (player.isHit() && InputView.askOneMoreCard(player.getName())) {
             player.addCard(deck.drawOneCard());
-            OutputView.printPlayerCard(UserDto.from(player));
+            OutputView.printPlayerCard(PlayerDto.from(player));
         }
     }
 
