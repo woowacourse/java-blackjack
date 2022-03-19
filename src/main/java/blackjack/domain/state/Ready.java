@@ -52,6 +52,6 @@ public final class Ready implements State {
 
     @Override
     public double earningRate(State state) {
-        return 0;
+        throw new IllegalStateException();
     }
 }

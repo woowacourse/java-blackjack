@@ -4,6 +4,7 @@ import static blackjack.domain.CardFixtures.JACK_SPACE;
 import static blackjack.domain.CardsFixtures.FIVE_HIT;
 import static blackjack.domain.CardsFixtures.TWELVE_HIT;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,5 +57,12 @@ class HitTest {
         boolean result = hit.isFinished();
 
         assertThat(result).isFalse();
+    }
+
+    @DisplayName("히트 상태에서 earning rate를 구할 수 없다. 즉 예외를 던진다.")
+    @Test
+    void 히트_수익율_불가() {
+        assertThatThrownBy(() -> new Hit(TWELVE_HIT).earningRate(new Ready()))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

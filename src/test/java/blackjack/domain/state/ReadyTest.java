@@ -71,4 +71,11 @@ class ReadyTest {
 
         assertThat(result).isFalse();
     }
+
+    @DisplayName("레디 상태에서 earning rate를 구할 수 없다. 즉 예외를 던진다.")
+    @Test
+    void 레디_수익율_불가() {
+        assertThatThrownBy(() -> new Ready().earningRate(new Ready()))
+                .isInstanceOf(IllegalStateException.class);
+    }
 }
