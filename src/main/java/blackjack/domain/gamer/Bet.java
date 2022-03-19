@@ -25,10 +25,6 @@ public class Bet {
 		}
 	}
 
-	public static int calculateMinusAmount(int amount) {
-		return amount * -1;
-	}
-
 	public int multiply(double value) {
 		return (int) (value * amount);
 	}

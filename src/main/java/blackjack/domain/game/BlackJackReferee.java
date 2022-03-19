@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.gamer.Bet;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackResult;
@@ -30,9 +29,13 @@ public class BlackJackReferee {
             int playerEarning = player.calculateEarning(result.getProfit());
 
             playerEarnings.put(player.getName(), playerEarning);
-            dealerEarning += Bet.calculateMinusAmount(playerEarning);
+            dealerEarning += calculateReverseEarning(playerEarning);
         }
         return new BlackJackReferee(dealerEarning, playerEarnings);
+    }
+
+    private static int calculateReverseEarning(int earning) {
+        return earning * -1;
     }
 
     public int getDealerEarning() {
