@@ -11,6 +11,9 @@ import java.util.Map;
 import blackjack.domain.ProfitResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
+import blackjack.domain.gamer.role.Dealer;
+import blackjack.domain.gamer.role.Player;
+import blackjack.domain.gamer.role.Role;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Match;
@@ -84,11 +87,11 @@ public class Gamers {
         return (int) matches.stream().filter(value -> value == type.getOpposite()).count();
     }
 
-    public List<Player> getPlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        playerGroup.addAllTo(players);
-        return Collections.unmodifiableList(players);
+    public List<Role> getPlayers() {
+        List<Role> roles = new ArrayList<>();
+        roles.add(dealer);
+        playerGroup.addAllTo(roles);
+        return Collections.unmodifiableList(roles);
     }
 
     public Dealer getDealer() {

@@ -4,8 +4,8 @@ import java.util.List;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.ProfitResult;
-import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
+import blackjack.domain.gamer.role.Player;
 import blackjack.domain.result.GameResult;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
