@@ -18,4 +18,14 @@ class BlackjackWinTest {
                 .stand();
         assertThat(state1.judge(state2)).isInstanceOf(BlackjackWin.class);
     }
+
+    @Test
+    @DisplayName("블랙잭으로 이길 경우 수익 비율이 1.5배가 되는지 확인한다.")
+    void blackjackWinRate() {
+        State state1 = Ready.start(new Card(Denomination.JACK, Suit.CLUBS), new Card(Denomination.ACE, Suit.CLUBS));
+        State state2 = Ready.start(new Card(Denomination.JACK, Suit.SPADES), new Card(Denomination.NINE, Suit.SPADES))
+                .stand();
+        State blackjackWin =  state1.judge(state2);
+        assertThat(blackjackWin.prizeRate()).isEqualTo(1.5);
+    }
 }
