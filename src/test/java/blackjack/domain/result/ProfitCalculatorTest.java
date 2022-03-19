@@ -18,4 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ProfitCalculatorTest {
 
+    @Test
+    @DisplayName("딜러의 수익금은 참가자의 수익금의 -1배이다.")
+    void calculateDealerProfit() {
+        assertThat(ProfitCalculator.calculateDealerProfit(List.of(-1000, 20000))).isEqualTo(-19000);
+    }
 }
