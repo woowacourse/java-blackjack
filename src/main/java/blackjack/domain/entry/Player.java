@@ -27,6 +27,10 @@ public class Player extends Participant {
         );
     }
 
+    public int calculateBettingMoney(PlayerOutcome playerOutcome) {
+        return (int) (bettingMoney * playerOutcome.getDividendRate());
+    }
+
     @Override
     public String getName() {
         return name;

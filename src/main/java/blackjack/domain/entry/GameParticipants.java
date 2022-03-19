@@ -1,9 +1,11 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.PlayerOutcome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameParticipants {
     private final Dealer dealer;
@@ -14,8 +16,24 @@ public class GameParticipants {
         this.players = players;
     }
 
-    public GameResult getGameResult() {
-        return new GameResult(players.match(dealer));
+    public Map<Participant, Integer> calculateBettingResult() {
+        Map<Participant, Integer> bettingResult = getBettingResult();
+        bettingResult.put(dealer, dealer.calculateBettingMoney(bettingResult));
+
+        return bettingResult;
+    }
+
+    private Map<PlayerOutcome, List<Player>> getGameResult() {
+        return players.match(dealer);
+    }
+
+    private Map<Participant, Integer> getBettingResult() {
+        return getGameResult().entrySet().stream()
+                .map(entry -> entry.getValue()
+                        .stream()
+                        .collect(Collectors.toMap(player -> player, player -> player.calculateBettingMoney(entry.getKey())))
+                ).flatMap(m -> m.entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public List<Participant> getParticipant() {
@@ -32,4 +50,5 @@ public class GameParticipants {
     public Dealer getDealer() {
         return dealer;
     }
+
 }

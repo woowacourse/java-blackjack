@@ -34,10 +34,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(BettingResult bettingResult) {
+    public static void printGameResult(Map<Participant, Integer> bettingResult) {
         System.out.println("## 최종 수익");
 
-        bettingResult.getBettingResult().forEach((participant, money) -> {
+        bettingResult.forEach((participant, money) -> {
             System.out.println(MessageFormat.format("{0}: {1}", participant.getName(), money));
         });
     }

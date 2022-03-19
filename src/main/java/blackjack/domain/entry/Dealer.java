@@ -5,6 +5,7 @@ import blackjack.domain.card.HoldCards;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer extends Participant {
     private static final int MORE_CARD_STANDARD = 16;
@@ -32,5 +33,11 @@ public class Dealer extends Participant {
     private Card findFirstCard(HoldCards holdCards) {
         return holdCards.getFirstCard()
                 .orElseThrow(() -> new IllegalArgumentException("카드가 존재하지 않습니다."));
+    }
+
+    public int calculateBettingMoney(Map<Participant, Integer> bettingResult) {
+        return - bettingResult.values().stream()
+                .mapToInt(money -> money)
+                .sum();
     }
 }

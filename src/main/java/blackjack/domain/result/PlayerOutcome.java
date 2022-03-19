@@ -3,15 +3,17 @@ package blackjack.domain.result;
 import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public enum PlayerOutcome {
-    BLACKJACK_WIN("블랙잭 승"),
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK_WIN("블랙잭 승", 1.5),
+    WIN("승", 1),
+    LOSE("패", -1),
+    DRAW("무", 0);
 
     private String value;
+    private double dividendRate;
 
-    PlayerOutcome(String value) {
+    PlayerOutcome(String value, double dividendRate) {
         this.value = value;
+        this.dividendRate = dividendRate;
     }
 
     // TODO 더 좋은 방법 찾기
@@ -46,5 +48,9 @@ public enum PlayerOutcome {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public double getDividendRate() {
+        return dividendRate;
     }
 }

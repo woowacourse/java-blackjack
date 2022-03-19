@@ -4,8 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.*;
-import blackjack.domain.result.BettingResult;
-import blackjack.domain.result.GameResult;
 
 import java.util.List;
 import java.util.Map;
@@ -33,9 +31,8 @@ public class BlackjackGame {
                 .collect(Collectors.toMap(participant -> participant, Participant::calculateCardsSum));
     }
 
-    public BettingResult getBettingResult() {
-        GameResult gameResult = gameParticipants.getGameResult();
-        return gameResult.calculateBettingResult(getDealer());
+    public Map<Participant, Integer> getBettingResult() {
+        return gameParticipants.calculateBettingResult();
     }
 
     public List<Player> getPlayers() {
