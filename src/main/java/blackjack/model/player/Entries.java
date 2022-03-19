@@ -90,7 +90,7 @@ public final class Entries {
         return Profits.of(this.values.stream()
                 .collect(Collectors.toMap(
                         entry -> entry,
-                        entry -> entry.profitOf(compare(dealer, entry)),
+                        entry -> entry.winProfit(compare(dealer, entry)),
                         (a, b) -> b)), dealer);
     }
 

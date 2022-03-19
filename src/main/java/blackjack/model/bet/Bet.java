@@ -33,7 +33,7 @@ public final class Bet {
         }
     }
 
-    public Amount profitOf(Result result) {
-        return result.apply(this.amount);
+    Amount multipliedAmountBy(double rate) {
+        return this.amount.multipliedBy(rate);
     }
 }

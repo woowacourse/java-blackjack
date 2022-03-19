@@ -14,13 +14,14 @@ public class ProfitsTest {
     @DisplayName("참가자가 20000원을 잃고 10000원을 얻으면 딜러의 수익은 10000원이다")
     @Test
     void getDealerProfit_10000() {
-        Map<Entry, Amount> entryProfits = new HashMap<>();
-        entryProfits.put(new Entry("포키"), new Amount(-20000));
-        entryProfits.put(new Entry("리버"), new Amount(10000));
+        Map<Entry, Profit> entryProfits = new HashMap<>();
+        entryProfits.put(new Entry("포키"), new Profit(new Amount(-20000)));
+        entryProfits.put(new Entry("리버"), new Profit(new Amount(10000)));
         Dealer dealer = new Dealer();
-        Profits profits = Profits.of(entryProfits, dealer);
 
-        Amount actualAmount = profits.getValues().get(dealer);
-        assertThat(actualAmount.getValue()).isEqualTo(10000);
+        Profits profits = Profits.of(entryProfits, dealer);
+        Profit dealerProfit = profits.getValues().get(dealer);
+
+        assertThat(dealerProfit.getValue()).isEqualTo(10000);
     }
 }
