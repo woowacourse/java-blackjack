@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import static blackjack.validator.PlayerNameValidator.validateNameNotBlank;
-import static blackjack.validator.PlayerNameValidator.validateNameNotDealer;
+import static blackjack.domain.participant.validator.PlayerNameValidator.validateNameNotBlank;
+import static blackjack.domain.participant.validator.PlayerNameValidator.validateNameNotDealer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
