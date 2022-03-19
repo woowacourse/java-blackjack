@@ -16,7 +16,7 @@ public class Hit extends Running {
     public State add(Card card) {
         Cards cards = this.cards.add(card);
 
-        if (cards.isMaxScore()) {
+        if (cards.isFinishScore()) {
             return new Stay(cards);
         }
         if (cards.isBust()) {

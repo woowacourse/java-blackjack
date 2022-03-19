@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
     private static final int START_CARD_COUNT = 2;
-    private static final int MAX_SCORE = 21;
+    private static final int FINISH_SCORE = 21;
 
     private final List<Card> values;
 
@@ -24,15 +24,15 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return canHit() && isMaxScore();
+        return canHit() && isFinishScore();
     }
 
     public boolean canHit() {
         return values.size() == START_CARD_COUNT;
     }
 
-    public boolean isMaxScore() {
-        return sumScore() == MAX_SCORE;
+    public boolean isFinishScore() {
+        return sumScore() == FINISH_SCORE;
     }
 
     public int sumScore() {
@@ -43,7 +43,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return sumScore() > MAX_SCORE;
+        return sumScore() > FINISH_SCORE;
     }
 
     public List<String> getCardNames() {
