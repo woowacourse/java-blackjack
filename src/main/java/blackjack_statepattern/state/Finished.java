@@ -18,4 +18,17 @@ public abstract class Finished extends Started {
     public final State stay() {
         throw new IllegalArgumentException("스테이 할 수 없습니다.");
     }
+
+    @Override
+    public final boolean isFinished() {
+        return true;
+    }
+
+    @Override
+    public double profit(final double money) {
+        return money * earningRate();
+    }
+
+    protected abstract double earningRate();
+
 }

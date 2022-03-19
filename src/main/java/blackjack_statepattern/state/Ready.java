@@ -3,7 +3,7 @@ package blackjack_statepattern.state;
 import blackjack_statepattern.Card;
 import blackjack_statepattern.Cards;
 
-public final class Ready extends Started {
+public final class Ready extends Running {
     public Ready() {
         this(new Cards());
     }

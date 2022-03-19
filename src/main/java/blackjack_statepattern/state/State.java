@@ -9,4 +9,8 @@ public interface State {
     State stay();
 
     Cards cards();
+
+    boolean isFinished();
+
+    double profit(double money);
 }
