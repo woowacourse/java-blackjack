@@ -18,7 +18,7 @@ public class ProfitCalculator {
 
     private static int calculateParticipantProfit(Map<Player, Money> bettings, Player dealer, Player participant) {
         Result participantResult = Result.calculateResult(dealer, participant);
-        return Result.calculateProfit(bettings.get(participant), participantResult);
+        return participantResult.calculateProfit(bettings.get(participant));
     }
 
     public static int calculateDealerProfit(Collection<Integer> profits) {

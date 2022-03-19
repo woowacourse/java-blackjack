@@ -1,12 +1,11 @@
 package blackjack.domain.card;
 
-import blackjack.domain.result.Result;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
 
+    private static final int BLACKJACK_SCORE = 21;
     private static final int ANOTHER_ACE_SCORE = 10;
     private static final int BLACKJACK_SIZE = 2;
 
@@ -29,7 +28,7 @@ public class Cards {
 
     public int calculateEndScore() {
         final int score = calculateScore();
-        if (score <= Result.BLACKJACK_SCORE) {
+        if (score <= BLACKJACK_SCORE) {
             return score;
         }
         return calculateDefaultScore();
@@ -54,11 +53,11 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_SIZE && calculateEndScore() == Result.BLACKJACK_SCORE;
+        return cards.size() == BLACKJACK_SIZE && calculateEndScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
-        return calculateEndScore() > Result.BLACKJACK_SCORE;
+        return calculateEndScore() > BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {

@@ -142,24 +142,24 @@ class ResultTest {
     @Test
     @DisplayName("블랙잭이면 배팅 금액의 1.5배를 수익으로 얻는다.")
     void multipleProfitWhenBlackjack() {
-        assertThat(Result.calculateProfit(new Money(1000), Result.BLACKJACK)).isEqualTo(1500);
+        assertThat(Result.BLACKJACK.calculateProfit(new Money(1000))).isEqualTo(1500);
     }
 
     @Test
     @DisplayName("승리하면 배팅 금액 만큼 수익으로 얻는다.")
     void getProfitWhenWin() {
-        assertThat(Result.calculateProfit(new Money(1000), Result.WIN)).isEqualTo(1000);
+        assertThat(Result.WIN.calculateProfit(new Money(1000))).isEqualTo(1000);
     }
 
     @Test
     @DisplayName("패배하면 배팅 금액 만큼 잃는다.")
     void loseProfitWhenLose() {
-        assertThat(Result.calculateProfit(new Money(1000), Result.LOSE)).isEqualTo(-1000);
+        assertThat(Result.LOSE.calculateProfit(new Money(1000))).isEqualTo(-1000);
     }
 
     @Test
     @DisplayName("무승부이면 수익이 0이다.")
     void noProfitWhenDraw() {
-        assertThat(Result.calculateProfit(new Money(1000), Result.DRAW)).isEqualTo(0);
+        assertThat(Result.DRAW.calculateProfit(new Money(1000))).isEqualTo(0);
     }
 }

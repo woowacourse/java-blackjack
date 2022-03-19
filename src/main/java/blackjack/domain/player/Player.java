@@ -38,11 +38,15 @@ public abstract class Player {
         return cards.isBlackjack();
     }
 
-    public boolean isNotBust() {
-        return !cards.isBust();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
-    public boolean isGreaterThan(Player player) {
+    public boolean isSameScore(Player player) {
+        return calculateFinalScore() == player.calculateFinalScore();
+    }
+
+    public boolean isScoreGreaterThan(Player player) {
         return calculateFinalScore() > player.calculateFinalScore();
     }
 

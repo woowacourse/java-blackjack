@@ -20,13 +20,13 @@ public class Blackjack {
     public void play() {
         final Deck deck = new Deck(new RandomCardGenerator());
         final List<Player> participants = createParticipants(InputView.requestNames());
-        final Map<Player, Money> betting = makeBettingWithParticipants(participants);
+        final Map<Player, Money> bettings = makeBettingWithParticipants(participants);
         final Players players = initPlayers(participants, deck);
 
         OutputView.printPlayersInitCardInfo(players);
         decideGetMoreCard(players, deck);
         announcePlayersFinishInfo(players);
-        announcePlayersProfit(betting, players.getDealer());
+        announcePlayersProfit(bettings, players.getDealer());
     }
 
     private List<Player> createParticipants(final List<String> names) {

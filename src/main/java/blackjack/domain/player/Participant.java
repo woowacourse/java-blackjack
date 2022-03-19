@@ -1,5 +1,4 @@
 package blackjack.domain.player;
-import blackjack.domain.result.Result;
 
 public class Participant extends Player {
 
@@ -10,17 +9,13 @@ public class Participant extends Player {
         this.acceptStrategy = acceptStrategy;
     }
 
-    private boolean isUnderMaxScore() {
-        return cards.calculateEndScore() <= Result.BLACKJACK_SCORE;
-    }
-
     private boolean acceptCard() {
         return acceptStrategy.accept(this.name);
     }
 
     @Override
     public boolean acceptableCard() {
-        return isUnderMaxScore() && acceptCard();
+        return !cards.isBust() && acceptCard();
     }
 
     @Override
