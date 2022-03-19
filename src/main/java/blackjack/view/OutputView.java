@@ -85,7 +85,7 @@ public class OutputView {
         }
     }
 
-    public static void printProfitResult(Map<Player, Integer> playerProfitResult, int dealerProfitResult) {
+    public static void printProfitResult(Map<Player, Long> playerProfitResult, long dealerProfitResult) {
         System.out.println();
         System.out.println(PARTICIPANT_PROFIT_RESULT_MESSAGE);
 

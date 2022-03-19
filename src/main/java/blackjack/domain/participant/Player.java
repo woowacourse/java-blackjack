@@ -29,8 +29,8 @@ public class Player extends Participant {
         return getScore() < HIT_THRESHOLD_NUMBER;
     }
 
-    public int calculateProfit(double earningRate) {
-        return (int) (bettingMoney.getBettingMoney()*earningRate);
+    public long calculateProfit(double earningRate) {
+        return (long) (bettingMoney.getBettingMoney()*earningRate);
     }
 
     public String getName() {

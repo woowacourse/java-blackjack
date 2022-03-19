@@ -10,7 +10,7 @@ public class ProfitCalculator {
     private static final EarningRateCalculator earningRateCalculator = new EarningRateCalculator();
 
     private final Map<Player, WinningResult> playerResult;
-    private final Map<Player, Integer> playerProfit = new LinkedHashMap<>();
+    private final Map<Player, Long> playerProfit = new LinkedHashMap<>();
 
     public ProfitCalculator(Map<Player, WinningResult> playerResult) {
         this.playerResult = playerResult;
@@ -23,22 +23,22 @@ public class ProfitCalculator {
         });
     }
 
-    public Map<Player, Integer> getPlayerProfit() {
+    public Map<Player, Long> getPlayerProfit() {
         return playerProfit;
     }
 
-    public int calculateDealerProfit() {
-        return -(int) playerProfit.values()
+    public long calculateDealerProfit() {
+        return -(long) playerProfit.values()
             .stream()
-            .mapToInt(profit -> profit)
+            .mapToLong(profit -> profit)
             .sum();
     }
 
-    private int calculateProfit(Player player, WinningResult winningResult) {
+    private long calculateProfit(Player player, WinningResult winningResult) {
         return multiplyMoneyAndRate(player, earningRateCalculator.calculate(winningResult));
     }
 
-    private int multiplyMoneyAndRate(Player player, double earningRate) {
+    private long multiplyMoneyAndRate(Player player, double earningRate) {
         return player.calculateProfit(earningRate);
     }
 

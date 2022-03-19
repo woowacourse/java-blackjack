@@ -9,14 +9,14 @@ public class BettingMoney {
     private static final String BETTING_MONEY_MINIMUM_ERROR_MESSAGE = "[ERROR] 배팅 금액에는 100미만의 값은 올 수 없습니다.";
     private static final String BETTING_MONEY_BASIC_UNIT_ERROR_MESSAGE = "[ERROR] 배팅 금액은 100원 단위여야 합니다.";
 
-    private final int bettingMoney;
+    private final long bettingMoney;
 
     public BettingMoney(int bettingMoney) {
         validateBettingMoney(bettingMoney);
         this.bettingMoney = bettingMoney;
     }
 
-    public int getBettingMoney() {
+    public long getBettingMoney() {
         return bettingMoney;
     }
 
