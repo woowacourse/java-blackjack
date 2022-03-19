@@ -1,14 +1,12 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.fixture.FixedSequenceDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.card.Denomination.*;
-import static blackjack.domain.card.Symbol.*;
+import static blackjack.domain.fixture.CardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -18,7 +16,7 @@ class PlayerTest {
     @Test
     @DisplayName("이름은 공백일 수 없다")
     void throwExceptionWhenNameLengthIsBlank() {
-        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        Deck deck = FixedSequenceDeck.generateDeck(DUMMY_CARD, DUMMY_CARD);
 
         assertThatThrownBy(() -> new Player(" ", deck.initialDraw()))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -27,7 +25,7 @@ class PlayerTest {
     @Test
     @DisplayName("이름은 6자를 초과할 수 없다")
     void throwExceptionWhenNameLengthOverMaxLength() {
-        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        Deck deck = FixedSequenceDeck.generateDeck(DUMMY_CARD,DUMMY_CARD);
         assertThatThrownBy(() -> new Player("1234567", deck.initialDraw()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -35,7 +33,7 @@ class PlayerTest {
     @Test
     @DisplayName("첫 공개 카드는 두 장을 반환한다")
     void testOpenCards() {
-        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        Deck deck = FixedSequenceDeck.generateDeck(DUMMY_CARD, DUMMY_CARD);
         Player player = new Player("pobi", deck.initialDraw());
 
         assertThat(player.openCards().size()).isEqualTo(2);
@@ -49,7 +47,7 @@ class PlayerTest {
         @DisplayName("21점 미만이라면 참을 반환한다")
         void testIsAbleToHit1() {
             // given
-            Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+            Deck deck = FixedSequenceDeck.generateDeck(SPADE_NINE, SPADE_TWO);
             Player player = new Player("pobi", deck.initialDraw());
 
             // when
@@ -63,7 +61,7 @@ class PlayerTest {
         @DisplayName("블랙잭이면 거짓을 반환한다")
         void testIsAbleToHit2() {
             // given
-            Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, ACE), new Card(DIAMOND, JACK));
+            Deck deck = FixedSequenceDeck.generateDeck(SPADE_JACK, SPADE_ACE);
             Player player = new Player("pobi", deck.initialDraw());
             // when
             boolean actual = player.isAbleToHit();
@@ -75,7 +73,7 @@ class PlayerTest {
         @DisplayName("버스트면 거짓을 반환한다")
         void testIsAbleToHit3() {
             // given
-            Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE), new Card(DIAMOND, SEVEN));
+            Deck deck = FixedSequenceDeck.generateDeck(SPADE_JACK, SPADE_JACK, SPADE_JACK);
             Player player = new Player("pobi", deck.initialDraw());
             player.addCard(deck.draw());
 
@@ -90,7 +88,7 @@ class PlayerTest {
         @DisplayName("player가 stay하면 거짓을 반환한다")
         void testIsAbleToHit4() {
             // given
-            Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+            Deck deck = FixedSequenceDeck.generateDeck(DUMMY_CARD, DUMMY_CARD);
             Player player = new Player("pobi", deck.initialDraw());
 
             // when
@@ -105,8 +103,7 @@ class PlayerTest {
         @DisplayName("21점이면 거짓을 반환한다")
         void testIsAbleToHit5() {
             // given
-            Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE),
-                    new Card(HEART, SIX));
+            Deck deck = FixedSequenceDeck.generateDeck(SPADE_JACK, SPADE_JACK, SPADE_ACE);
             Player player = new Player("pobi", deck.initialDraw());
             player.addCard(deck.draw());
 

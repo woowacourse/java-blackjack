@@ -1,14 +1,12 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.fixture.FixedSequenceDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.card.Denomination.*;
-import static blackjack.domain.card.Symbol.*;
+import static blackjack.domain.fixture.CardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
@@ -42,8 +40,9 @@ class ResultTest {
             @Test
             @DisplayName("플레이어가 블랙잭이고 딜러는 블랙잭이 아닌 경우")
             void contextWithPlayerBlackjackOnly() {
-                Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, ACE),
-                        new Card(HEART, SEVEN), new Card(SPADE, QUEEN));
+                Deck deck = FixedSequenceDeck.generateDeck(
+                        SPADE_JACK, SPADE_ACE,
+                        SPADE_JACK, SPADE_JACK);
 
                 Player player = new Player("pobi", deck.initialDraw());
                 Dealer dealer = new Dealer(deck.initialDraw());
@@ -60,8 +59,9 @@ class ResultTest {
             @Test
             @DisplayName("플레이어와 딜러 모두 블랙잭인 경우")
             void contextWithBothAreBlackjack() {
-                Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, ACE),
-                        new Card(HEART, JACK), new Card(SPADE, ACE));
+                Deck deck = FixedSequenceDeck.generateDeck(
+                        SPADE_JACK, SPADE_ACE,
+                        SPADE_JACK, SPADE_ACE);
 
                 Player player = new Player("pobi", deck.initialDraw());
                 Dealer dealer = new Dealer(deck.initialDraw());
@@ -72,8 +72,9 @@ class ResultTest {
             @Test
             @DisplayName("플레이어가 딜러보다 점수가 높으면서 블랙잭이 아닌 경우")
             void contextWithPlayerHasHigherScoreAndNotBlackjack() {
-                Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
-                        new Card(HEART, JACK), new Card(SPADE, SEVEN));
+                Deck deck = FixedSequenceDeck.generateDeck(
+                        SPADE_JACK, SPADE_JACK,
+                        SPADE_JACK, SPADE_NINE);
 
                 Player player = new Player("pobi", deck.initialDraw());
                 Dealer dealer = new Dealer(deck.initialDraw());
@@ -84,8 +85,9 @@ class ResultTest {
             @Test
             @DisplayName("플레이어와 딜러가 점수가 같은 경우")
             void contextWithPlayerAndDealerHasSameScore() {
-                Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
-                        new Card(HEART, JACK), new Card(SPADE, EIGHT));
+                Deck deck = FixedSequenceDeck.generateDeck(
+                        SPADE_NINE, SPADE_NINE,
+                        SPADE_NINE, SPADE_NINE);
 
                 Player player = new Player("pobi", deck.initialDraw());
                 Dealer dealer = new Dealer(deck.initialDraw());
@@ -96,8 +98,9 @@ class ResultTest {
             @Test
             @DisplayName("딜러가 버스트이고 플레이어는 버스트가 아닌 경우")
             void contextWithDealerIsBust() {
-                Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
-                        new Card(HEART, JACK), new Card(SPADE, SIX), new Card(SPADE, SEVEN));
+                Deck deck = FixedSequenceDeck.generateDeck(
+                        SPADE_JACK, SPADE_JACK,
+                        SPADE_JACK, SPADE_JACK, SPADE_TWO);
 
                 Player player = new Player("pobi", deck.initialDraw());
                 Dealer dealer = new Dealer(deck.initialDraw());
@@ -114,8 +117,9 @@ class ResultTest {
             @Test
             @DisplayName("플레이어가 버스트인 경우")
             void contextWithPlayerIsBust() {
-                Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
-                        new Card(HEART, JACK), new Card(SPADE, SEVEN), new Card(SPADE, QUEEN));
+                Deck deck = FixedSequenceDeck.generateDeck(
+                        SPADE_JACK, SPADE_JACK, SPADE_JACK,
+                        SPADE_JACK, SPADE_JACK);
 
                 Player player = new Player("pobi", deck.initialDraw());
                 player.addCard(deck.draw());
@@ -127,8 +131,9 @@ class ResultTest {
             @Test
             @DisplayName("플레이어와 딜러 모두 버스트인 경우")
             void contextWithBothAreBust() {
-                Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
-                        new Card(HEART, JACK), new Card(SPADE, SEVEN), new Card(SPADE, SIX), new Card(HEART, QUEEN));
+                Deck deck = FixedSequenceDeck.generateDeck(
+                        SPADE_JACK, SPADE_JACK, SPADE_JACK,
+                        SPADE_JACK, SPADE_JACK, SPADE_JACK);
 
                 Player player = new Player("pobi", deck.initialDraw());
                 player.addCard(deck.draw());
@@ -141,8 +146,9 @@ class ResultTest {
             @Test
             @DisplayName("딜러가 플레이어보다 점수가 높은 경우")
             void contextWithDealerScoreHigherThanPlayer() {
-                Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT),
-                        new Card(SPADE, ACE), new Card(SPADE, QUEEN));
+                Deck deck = FixedSequenceDeck.generateDeck(
+                        SPADE_TWO, SPADE_TWO,
+                        SPADE_JACK, SPADE_JACK);
 
                 Player player = new Player("pobi", deck.initialDraw());
                 Dealer dealer = new Dealer(deck.initialDraw());
