@@ -38,7 +38,6 @@ public class BlackjackGame {
 	}
 
 	private void decideHitOrNot(Blackjack blackJack, Player player) {
-
 		while (shouldHit(player)) {
 			blackJack.handOutCardTo(player);
 			ResultView.showEachPlayerStatus(player);
