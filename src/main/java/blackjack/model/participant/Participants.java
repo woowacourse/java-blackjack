@@ -1,6 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
+import blackjack.view.TurnProgress;
 import blackjack.view.GameSign;
 import blackjack.view.MoneyBetter;
 import java.util.ArrayList;
@@ -55,8 +56,8 @@ public class Participants {
         return participants;
     }
 
-    public void hitFrom(final CardDeck cardDeck, final GameSign gameSign) {
-        players.forEach(player -> player.hitFrom(cardDeck, gameSign));
-        dealer.hitFrom(cardDeck, gameSign);
+    public void hitFrom(final CardDeck cardDeck, final GameSign gameSign, final TurnProgress turnProgress) {
+        players.forEach(player -> player.hitFrom(cardDeck, gameSign, turnProgress));
+        dealer.hitFrom(cardDeck, gameSign, turnProgress);
     }
 }

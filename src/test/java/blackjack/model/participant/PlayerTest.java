@@ -47,7 +47,7 @@ public class PlayerTest {
         Participant leaver = new Player("리버", 100);
         leaver.drawFrom(cardDeck);
 
-        assertThatThrownBy(() -> leaver.hitFrom(cardDeck, (participantName) -> "rdt"))
+        assertThatThrownBy(() -> leaver.hitFrom(cardDeck, (participantName) -> "rdt", null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] y 또는 n만 입력해주세요");
     }

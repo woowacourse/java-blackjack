@@ -4,6 +4,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.state.Ready;
 import blackjack.model.state.State;
 import blackjack.view.GameSign;
+import blackjack.view.TurnProgress;
 import java.util.List;
 
 public abstract class Participant {
@@ -28,9 +29,10 @@ public abstract class Participant {
         }
     }
 
-    public void hitFrom(final CardDeck cardDeck, final GameSign gameSign) {
+    public void hitFrom(final CardDeck cardDeck, final GameSign gameSign, final TurnProgress turnProgress) {
         while (this.state.isHit() && isNotStay(gameSign)) {
             this.state = this.state.add(cardDeck.draw());
+            turnProgress.show(this);
         }
     }
 
