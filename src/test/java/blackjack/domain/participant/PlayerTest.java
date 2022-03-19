@@ -15,18 +15,16 @@ public class PlayerTest {
 	@Test
 	@DisplayName("이름이 공백이면 예외가 발생한다")
 	void nameException_Empty() {
-		assertThatThrownBy(() ->
-			new Player("", 10)
-		).isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> new Player("", 10))
+			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("[ERROR] 이름은 공백일 수 없습니다.");
 	}
 
 	@Test
 	@DisplayName("이름에 특수문자가 포한되면 예외가 발생한다")
 	void nameException_SpacialChar() {
-		assertThatThrownBy(() ->
-			new Player("@as!", 10)
-		).isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> new Player("@as!", 10))
+			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("[ERROR] 이름에 특수문자가 포함될 수 없습니다.");
 	}
 
@@ -46,5 +44,15 @@ public class PlayerTest {
 		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.ACE));
 		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.KING));
 		assertThat(player.isBlackjack()).isTrue();
+	}
+
+	@Test
+	@DisplayName("점수가 23이면 버스트이다")
+	void isBust() {
+		Player player = new Player("yaho", 10);
+		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.QUEEN));
+		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.KING));
+		player.receiveCard(new Card(CardSymbol.SPADE, CardNumber.THREE));
+		assertThat(player.isBust()).isTrue();
 	}
 }
