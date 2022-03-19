@@ -2,7 +2,6 @@ package blackjack.domain.money;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,15 +33,6 @@ class MoneyTest {
         assertThat(money.getAmount()).isEqualTo(1000);
     }
 
-    @Test
-    @DisplayName("0원 미만은 생성할 수 없다.")
-    public void throwsExceptionWithNegativeInteger() {
-        // given & when
-        int amount = -1;
-        // then
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> new Money(amount));
-    }
 
     @Test
     @DisplayName("금액을 곱한다.")

@@ -31,8 +31,4 @@ public class Player extends User {
     public Money calculateProfit(Dealer dealer) {
         return state.calculateProfit(money, dealer.state);
     }
-
-    public State getState() {
-        return state;
-    }
 }
