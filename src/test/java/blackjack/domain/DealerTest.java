@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.property.CardNumber;
 import blackjack.domain.card.property.CardShape;
-import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.role.Dealer;
 
 class DealerTest {
 

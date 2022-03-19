@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import blackjack.domain.card.CardPack;
+import blackjack.domain.gamer.role.Player;
+import blackjack.domain.gamer.role.Role;
 import blackjack.domain.result.Match;
 
 public class PlayerGroup {
@@ -56,7 +58,7 @@ public class PlayerGroup {
         }
     }
 
-    public void addAllTo(List<Player> gamers) {
+    public void addAllTo(List<Role> gamers) {
         gamers.addAll(players);
     }
 

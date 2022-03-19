@@ -1,8 +1,8 @@
-package blackjack.domain.gamer;
+package blackjack.domain.gamer.role;
 
 import blackjack.domain.card.Card;
 
-public class Dealer extends Player {
+public final class Dealer extends Role {
     private static final String NAME = "딜러";
     private static final int DEALER_STAND_CONDITION = 16;
 
@@ -16,7 +16,7 @@ public class Dealer extends Player {
             return;
         }
 
-        super.addCard(card);
+        cardGroup.addCard(card);
     }
 
     @Override

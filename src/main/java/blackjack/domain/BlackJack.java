@@ -3,10 +3,11 @@ package blackjack.domain;
 import java.util.List;
 
 import blackjack.domain.card.CardPack;
-import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
-import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
+import blackjack.domain.gamer.role.Dealer;
+import blackjack.domain.gamer.role.Player;
+import blackjack.domain.gamer.role.Role;
 import blackjack.domain.result.GameResult;
 
 public class BlackJack {
@@ -38,7 +39,7 @@ public class BlackJack {
         return gamers.getGameResult();
     }
 
-    public List<Player> getGamers() {
+    public List<Role> getGamers() {
         return gamers.getPlayers();
     }
 
