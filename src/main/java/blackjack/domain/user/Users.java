@@ -54,16 +54,6 @@ public class Users {
         consumerDealer.accept(getDealer());
     }
 
-    public void drawAdditionalCard(Consumer<User> consumerPlayer, Consumer<User> consumerDealer) {
-        List<Player> players = getPlayers();
-
-        for (Player player : players) {
-            consumerPlayer.accept(player);
-        }
-
-        consumerDealer.accept(getDealer());
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
