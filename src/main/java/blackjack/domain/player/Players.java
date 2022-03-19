@@ -1,9 +1,8 @@
 package blackjack.domain.player;
 
 import blackjack.domain.BettingBox;
-import blackjack.domain.card.Card;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Deck;
-import blackjack.domain.state.Ready;
 import blackjack.domain.strategy.BetInputStrategy;
 import blackjack.domain.strategy.HitStrategy;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players fromNamesAndGuestHitStrategy(List<String> names, Deck deck, HitStrategy hitStrategy) {
+    public static Players createPlayers(List<String> names, Deck deck, HitStrategy hitStrategy) {
         validate(names);
         List<Player> allPlayers = new ArrayList<>(toPlayers(names, deck, hitStrategy));
         allPlayers.add(new Dealer(deck));
@@ -69,20 +68,20 @@ public class Players {
         }
     }
 
-    private void hitOrStand(Player player, Deck deck, Consumer<Player> hitCallback) {
+    private void hitOrStand(Player player, Deck deck, Consumer<Player> afterHitCallback) {
         while (player.isHittable()) {
             player.hit(deck.pick());
-            hitCallback.accept(player);
+            afterHitCallback.accept(player);
         }
     }
 
     public BettingBox bet(BetInputStrategy betInputStrategy) {
-        BettingBox bettingBox = new BettingBox();
+        Map<Player, BettingMoney> bettingBoxValuse = new LinkedHashMap<>();
         List<Player> guests = getGuests();
         for (Player guest : guests) {
-            bettingBox.betGuest(guest, betInputStrategy.inputBettingMoney(guest));
+            bettingBoxValuse.put(guest, betInputStrategy.inputBettingMoney(guest));
         }
-        return bettingBox;
+        return new BettingBox(bettingBoxValuse);
     }
 
     public Player findDealer() {

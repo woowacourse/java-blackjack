@@ -18,19 +18,19 @@ public class BlackjackGame {
 
     public void run() {
         Deck deck = new Deck();
-        Players players = Players.fromNamesAndGuestHitStrategy(inputPlayerNames(), deck, this::inputHitCommand);
+        Players players = createPlayers(deck);
         BettingBox bettingBox = players.bet(this::inputBettingMoney);
         OutputView.printInitCard(getCardStatus(players));
         players.playersHit(deck, OutputView::printPresentStatus);
         outputGameResult(players, bettingBox);
     }
 
-    private List<String> inputPlayerNames() {
+    private Players createPlayers(Deck deck) {
         try {
-            return InputView.inputPlayerNames();
+            return Players.createPlayers(InputView.inputPlayerNames(), deck, this::inputHitCommand);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return inputPlayerNames();
+            return createPlayers(deck);
         }
     }
 
