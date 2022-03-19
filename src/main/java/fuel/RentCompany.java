@@ -23,7 +23,8 @@ public class RentCompany {
     public String generateReport() {
         StringBuilder stringBuilder = new StringBuilder();
         for (AbstractCar abstractCar : abstractCars) {
-            stringBuilder.append(String.format(CAR_REPORT_FORMAT, abstractCar.getName(), (int) abstractCar.getChargeQuantity()));
+            stringBuilder.append(String
+                    .format(CAR_REPORT_FORMAT, abstractCar.getName(), (int) abstractCar.getChargeQuantity()));
         }
         return stringBuilder.toString();
     }

@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.Deck;

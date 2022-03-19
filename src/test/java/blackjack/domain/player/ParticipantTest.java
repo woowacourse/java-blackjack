@@ -4,12 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.bet.BetMoney;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.JustTenSpadeDeck;
 import blackjack.domain.card.RandomDeck;
-import blackjack.domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -10,7 +10,7 @@ public class DealerHit extends Hit {
     DealerHit(PlayerCards cards) {
         this.cards = cards;
     }
-    
+
     public static State from(PlayerCards cards) {
         if (cards.isBust()) {
             return new DealerBust(cards);

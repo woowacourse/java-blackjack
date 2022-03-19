@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
-import static blackjack.domain.CardFixture.SPADE_TWO;
 import static blackjack.domain.CardFixture.SPADE_THREE;
+import static blackjack.domain.CardFixture.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.BeforeEach;

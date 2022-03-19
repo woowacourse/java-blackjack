@@ -10,10 +10,10 @@ import blackjack.domain.card.JustBlackjackDeck;
 import blackjack.domain.card.JustTenSpadeDeck;
 import blackjack.domain.card.JustTwoSpadeDeck;
 import blackjack.domain.card.Type;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
 public class AbstractPlayerTest {
 
