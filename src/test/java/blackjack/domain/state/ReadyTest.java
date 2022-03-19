@@ -41,7 +41,6 @@ public class ReadyTest {
     @Test
     @DisplayName("Ready 상태에서 2장 입력 결과가 Hit일 경우 - 추가 draw 결과 Bust")
     void hitAndBust() {
-        // 카드 2장 넣어서 BlackJack  or Hit
         final State state = new Ready().draw(SPADE_TWO)
             .draw(SPADE_JACK)
             .draw(SPADE_JACK);

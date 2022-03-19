@@ -7,7 +7,6 @@ import static blackjack.Fixture.SPADE_NINE;
 import static blackjack.Fixture.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.Fixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
