@@ -120,7 +120,6 @@ class RolesTest {
 		roles.joinPlayers(Map.of("player", 1000));
 		roles.distributeCardToDealer(deck);
 		roles.distributeCardToPlayers(deck);
-		roles.judgeBlackJack();
 		List<Role> players = roles.calculatePlayerResult();
 
 		assertThat(players.get(0).calculateBettingResult()).isEqualTo(expectedResult);

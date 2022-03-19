@@ -12,7 +12,7 @@ class BettingAmountTest {
 	@DisplayName("배팅 금액이 제대로 초기화 되는지 확인")
 	void init_Betting_Amount() {
 		BettingAmount bettingAmount = new BettingAmount(1000);
-		assertThat(bettingAmount.getFinalValue()).isEqualTo(1000);
+		assertThat(bettingAmount.getTotalValue()).isEqualTo(1000);
 	}
 
 	@Test
@@ -29,7 +29,7 @@ class BettingAmountTest {
 	void receive_One_And_Half_Time() {
 		BettingAmount bettingAmount = new BettingAmount(1000);
 		bettingAmount.giveOneAndHalfTime();
-		assertThat(bettingAmount.getFinalValue()).isEqualTo(1500);
+		assertThat(bettingAmount.getTotalValue()).isEqualTo(1500);
 	}
 
 	@Test
@@ -37,7 +37,7 @@ class BettingAmountTest {
 	void lose_All_Betting_Amount() {
 		BettingAmount bettingAmount = new BettingAmount(1000);
 		bettingAmount.loseAll();
-		assertThat(bettingAmount.getFinalValue()).isEqualTo(0);
+		assertThat(bettingAmount.getTotalValue()).isEqualTo(0);
 	}
 
 	@Test

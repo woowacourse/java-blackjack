@@ -24,7 +24,7 @@ public class BlackJack {
 		final List<String> playersName = InputView.requestPlayerName();
 		joinPlayers(InputView.betMoney(playersName));
 		distributeCard();
-		roles.judgeBlackJack();
+		// roles.judgeBlackJack();
 		redrawCard();
 		calculateFinalResult();
 	}

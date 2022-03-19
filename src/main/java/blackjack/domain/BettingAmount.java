@@ -6,15 +6,15 @@ public class BettingAmount {
 	private static final String LACK_OF_BETTING_AMOUNT_ERROR = "배팅 금액은 최소 10원이어야 합니다.";
 
 	private final int initialValue;
-	private int finalValue;
+	private int totalValue;
 
 	public BettingAmount(final int value) {
 		this(value, value);
 	}
 
-	public BettingAmount(final int finalValue, final int initialValue) {
+	public BettingAmount(final int totalValue, final int initialValue) {
 		validateBettingAmount(initialValue);
-		this.finalValue = finalValue;
+		this.totalValue = totalValue;
 		this.initialValue = initialValue;
 	}
 
@@ -25,23 +25,23 @@ public class BettingAmount {
 	}
 
 	public void giveOneAndHalfTime() {
-		finalValue = finalValue + finalValue / 2;
+		totalValue = totalValue + totalValue / 2;
 	}
 
 	public void giveTwoTimes() {
-		finalValue *= 2;
+		totalValue *= 2;
 	}
 
 	public void loseAll() {
-		finalValue = 0;
+		totalValue = 0;
 	}
 
 	public int calculateIncome() {
-		return finalValue - initialValue;
+		return totalValue - initialValue;
 	}
 
-	public int getFinalValue() {
-		return finalValue;
+	public int getTotalValue() {
+		return totalValue;
 	}
 
 	public int getInitialValue() {
