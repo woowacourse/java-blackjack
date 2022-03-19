@@ -44,18 +44,18 @@ public enum GameResult {
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하는 결과가 없습니다."));
     }
 
-    public static Map<Gamer, Integer> calculateGamersProfit(final Player dealer,
+    public static Map<Gamer, Long> calculateGamersProfit(final Player dealer,
         final List<Gamer> gamers) {
         return gamers.stream()
             .collect(Collectors.toMap(gamer -> gamer,
-                gamer -> (int) (GameResult.findResult(dealer, gamer).getMultiplePoint() * gamer
+                gamer -> (long) (GameResult.findResult(dealer, gamer).getMultiplePoint() * gamer
                     .BetMoney()),
                 (e1, e2) -> e1, LinkedHashMap::new));
     }
 
-    public static int calculateDealerProfit(Map<Gamer, Integer> gamersProfit) {
+    public static Long calculateDealerProfit(Map<Gamer, Long> gamersProfit) {
         return gamersProfit.values().stream()
-            .mapToInt(result -> -result)
+            .mapToLong(result -> -result)
             .sum();
     }
 

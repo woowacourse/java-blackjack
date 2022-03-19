@@ -97,8 +97,8 @@ public class OutputView {
             gamer.calculateResult());
     }
 
-    public static void printFinalResultBoard(final Map<Gamer, Integer> gamersProfit,
-        int dealerProfit) {
+    public static void printFinalResultBoard(final Map<Gamer, Long> gamersProfit,
+        Long dealerProfit) {
         System.out.println(FINAL_RESULT_MESSAGE);
 
         System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, dealerProfit);
