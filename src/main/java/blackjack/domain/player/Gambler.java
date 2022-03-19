@@ -4,12 +4,15 @@ import blackjack.domain.card.CardDeck;
 
 public class Gambler extends Player {
 
-    private Gambler(Name name, CardDeck cardDeck) {
+    private double money;
+
+    private Gambler(Name name, double money, CardDeck cardDeck) {
         super(name, cardDeck);
+        this.money = money;
     }
 
-    public static Gambler of(Name name, CardDeck cardDeck) {
-        return new Gambler(name, cardDeck);
+    public static Gambler of(Name name, double money, CardDeck cardDeck) {
+        return new Gambler(name, money, cardDeck);
     }
 
     public boolean isFirstQuestion() {

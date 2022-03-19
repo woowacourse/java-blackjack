@@ -21,7 +21,11 @@ public class InputView {
         String inputNames = SCANNER.nextLine();
         return validateDuplicatedName(inputNames);
     }
-
+    public static int inputGamblerBetMoney(String name){
+        System.out.println(name + "의 베팅 금액은?");
+        String inputNames = SCANNER.nextLine();
+        return Integer.parseInt(inputNames);
+    }
     public static boolean inputOneMoreCard(String name) {
         System.out.printf(ONE_MORE_CARD_INPUT_MESSAGE + System.lineSeparator(), name);
         String inputAnswer = SCANNER.nextLine();
