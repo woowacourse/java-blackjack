@@ -56,14 +56,14 @@ public class InputView {
         }
     }
 
-    public static Integer askBetAmount(String inputPlayerName) {
+    public static Double askBetAmount(String inputPlayerName) {
         System.out.printf(ASK_BET_AMOUNT, inputPlayerName);
-        return convertToInt(input());
+        return convertToDouble(input());
     }
 
-    private static int convertToInt(String input) {
+    private static Double convertToDouble(String input) {
         try {
-            return Integer.parseInt(input);
+            return Double.parseDouble(input);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("[ERROR] 숫자형식이 아닙니다.");
         }

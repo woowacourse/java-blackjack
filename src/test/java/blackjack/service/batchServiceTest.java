@@ -40,6 +40,21 @@ class batchServiceTest {
                 () -> assertThat(playerProfit.get("test3")).isEqualTo(0),
                 () -> assertThat(dealerProfit).isEqualTo(-1500)
         );
+    }
+
+    @Test
+    @DisplayName("1원을 배팅했을때 블랙잭으로 우승하면 1.5원의 수익이 생긴다.")
+    void calculateBetOneTest() {
+        Cards blackJack = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.DIAMOND, Number.ACE)));
+        Map<Player, PlayerResult> statistics = new LinkedHashMap<>();
+        statistics.put(new Player("giron", Bet.from(1), blackJack), PlayerResult.BLACKJACK);
+        UserProfitDto calculate = batchService.calculate(statistics);
+        Map<String, Double> playerProfit = calculate.getPlayerProfit();
+        double dealerProfit = calculate.getDealerProfit();
+        assertAll(
+                () -> assertThat(playerProfit.get("giron")).isEqualTo(1.5),
+                () -> assertThat(dealerProfit).isEqualTo(-1.5)
+        );
 
     }
 }

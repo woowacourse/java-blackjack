@@ -5,20 +5,20 @@ import java.util.Objects;
 public class Bet {
     private static final int MIN_MONEY_VALUE = 0;
 
-    private final int amount;
+    private final double amount;
 
-    private Bet(int amount) {
+    private Bet(double amount) {
         validateNaturalNumber(amount);
         this.amount = amount;
     }
 
-    private void validateNaturalNumber(int amount) {
+    private void validateNaturalNumber(double amount) {
         if (amount <= MIN_MONEY_VALUE) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 0보다 커야됩니다.");
         }
     }
 
-    public static Bet from(int amount) {
+    public static Bet from(double amount) {
         return new Bet(amount);
     }
 

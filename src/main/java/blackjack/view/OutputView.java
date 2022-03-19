@@ -16,7 +16,7 @@ public class OutputView {
     private static final String ADD_DEALER_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String SCORE_FORMAT = " - 결과: %d";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 수익";
-    private static final String REVENUE_FORMAT = "%s: %.0f\n";
+    private static final String REVENUE_FORMAT = "%s: %.3f\n";
 
     public static void printDrawMessage(List<String> userNames) {
         System.out.printf(DRAW_MESSAGE, String.join(DELIMITER, userNames));
