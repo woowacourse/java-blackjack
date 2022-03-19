@@ -37,4 +37,4 @@
 
 ## 블랙잭 모델 다이어그램
 
-<img src="blackJackModelDiagram.png" alt="black jack model diagram" />
+<img src="blackJackDomainModel.png" alt="black jack model diagram" />
