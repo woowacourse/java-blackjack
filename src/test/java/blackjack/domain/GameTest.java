@@ -28,7 +28,7 @@ public class GameTest {
     @Test
     @DisplayName("게임을 초기화 한다.")
     void initGame() {
-        // give
+        // given
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi"), Name.of("rick")), List.of());
 
         // when
@@ -41,7 +41,7 @@ public class GameTest {
     @Test
     @DisplayName("모든 참가자에게 카드를 2장씩 분배한다.")
     void initParticipants() {
-        // give
+        // given
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi"), Name.of("rick")), List.of());
 
         // when
@@ -59,7 +59,7 @@ public class GameTest {
     @Test
     @DisplayName("상태가 HIT인 플레이어를 Optional로 반환한다.")
     void findHitPlayer() {
-        // give
+        // given
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
 
         // when
@@ -75,7 +75,7 @@ public class GameTest {
     @CsvSource(value = {"y:30", "n:20"}, delimiter = ':')
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
     void drawCard_HIT(String hitOrStay, int expected) {
-        // give
+        // given
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
         Player player = game.getPlayers().get(0);
 
@@ -90,7 +90,7 @@ public class GameTest {
     @Test
     @DisplayName("딜러의 첫 번째 카드를 반환한다.")
     void dealerFirstCard() {
-        // give
+        // given
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
 
         // when
@@ -103,7 +103,7 @@ public class GameTest {
     @Test
     @DisplayName("딜러의 중지 조건에 만족할 때 까지 카드를 뽑는다. (BUST X)")
     void drawCards_Not_BUST() {
-        // give
+        // given
         CardDeck cardDeck = new CardDeck(() -> new ArrayDeque<>(List.of(
             new Card(SPADE, QUEEN), new Card(HEART, SEVEN),
             new Card(DIAMOND, QUEEN), new Card(CLUB, SEVEN))));
@@ -111,17 +111,17 @@ public class GameTest {
 
         // when
         game.drawDealerCards();
-        State actual = game.getDealer().getState();
+        int actual = game.getDealerScore();
 
         // then
-        assertThat(actual).isInstanceOf(Hit.class);
+        assertThat(actual).isEqualTo(17);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"SEVEN:false", "SIX:true"}, delimiter = ':')
     @DisplayName("딜러가 카드를 추가로 뽑았는지 아닌지 검증한다.")
     void isDraw(CardNumber cardNumber, boolean expected) {
-        // give
+        // given
         CardDeck cardDeck = new CardDeck(() -> new ArrayDeque<>(List.of(
             new Card(DIAMOND, ACE),
             new Card(HEART, QUEEN), new Card(SPADE, SEVEN),
@@ -138,7 +138,7 @@ public class GameTest {
     @Test
     @DisplayName("딜러의 턴을 진행한다, 16 초과할 때까지 카드를 뽑는다. (Bust)")
     void drawDealerCard() {
-        // give
+        // given
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
 
         // when

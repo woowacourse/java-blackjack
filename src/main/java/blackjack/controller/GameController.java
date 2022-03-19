@@ -10,7 +10,6 @@ import blackjack.domain.Game;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.ShuffleDeck;
 import blackjack.domain.participant.Betting;
-import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
 import blackjack.domain.state.stateparticipant.Participant;
 import blackjack.domain.state.stateparticipant.Player;
@@ -20,10 +19,11 @@ public class GameController {
 
     public void play() {
         List<Name> names = getNames();
-        Game game = initPlay(names, getBettings(names));
+        Game game = initGame(names, getBettings(names));
+        printDrawResult(game.getParticipants());
 
         drawPlayerCards(game);
-        drawDealerCards(game);
+        printDealerDrawCardCount(game.drawDealerCards());
 
         finalParticipantsCards(game.getParticipants());
         printFinalRevenues(game.getRevenues());
@@ -41,17 +41,16 @@ public class GameController {
             .collect(toUnmodifiableList());
     }
 
-    private Game initPlay(List<Name> names, List<Betting> bettings) {
-        Game game = new Game(new CardDeck(new ShuffleDeck()), names, bettings);
-
+    private Game initGame(List<Name> names, List<Betting> bettings) {
         printInitResult(names);
+        return new Game(new CardDeck(new ShuffleDeck()), names, bettings);
+    }
 
-        for (Participant participant : game.getParticipants()) {
+    private void printDrawResult(List<Participant> participants) {
+        for (Participant participant : participants) {
             OutputView.printParticipantCards(participant);
         }
-
         printEmptyLine();
-        return game;
     }
 
     private void drawPlayerCards(Game game) {
@@ -67,11 +66,6 @@ public class GameController {
         if (players.isEmpty()) {
             throw new IllegalStateException("플레이어가 존재하지 않습니다.");
         }
-    }
-
-    private void drawDealerCards(Game game) {
-        DrawCount drawCount = game.drawDealerCards();
-        printDealerDrawCardCount(drawCount);
     }
 
     private void finalParticipantsCards(List<Participant> participants) {
