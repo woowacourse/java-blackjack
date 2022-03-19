@@ -1,7 +1,7 @@
 package blackjack_statepattern.state;
 
-import blackjack_statepattern.Card;
-import blackjack_statepattern.Cards;
+import blackjack_statepattern.card.Card;
+import blackjack_statepattern.card.Cards;
 
 public abstract class Finished extends Started {
 
@@ -11,12 +11,12 @@ public abstract class Finished extends Started {
 
     @Override
     public final State draw(final Card card) {
-        throw new IllegalArgumentException("더이상 드로우할 수 없습니다.");
+        throw new IllegalArgumentException("[ERROR] 턴이 종료되어 더이상 카드를 받을 수 없습니다.");
     }
 
     @Override
     public final State stay() {
-        throw new IllegalArgumentException("스테이 할 수 없습니다.");
+        throw new IllegalArgumentException("[ERROR] 턴이 종료되어 스테이할 수 없습니다.");
     }
 
     @Override

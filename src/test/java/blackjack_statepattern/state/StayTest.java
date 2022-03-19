@@ -5,7 +5,7 @@ import static blackjack_statepattern.Fixture.SPADES_JACK;
 import static blackjack_statepattern.Fixture.SPADES_TWO;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import blackjack_statepattern.Cards;
+import blackjack_statepattern.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

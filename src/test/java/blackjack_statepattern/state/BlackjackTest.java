@@ -4,10 +4,11 @@ import static blackjack_statepattern.Fixture.SPADES_ACE;
 import static blackjack_statepattern.Fixture.SPADES_JACK;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack_statepattern.Card;
-import blackjack_statepattern.Cards;
-import blackjack_statepattern.Denomination;
-import blackjack_statepattern.Suit;
+import blackjack_statepattern.card.Card;
+import blackjack_statepattern.card.Cards;
+import blackjack_statepattern.card.Denomination;
+import blackjack_statepattern.card.Suit;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,5 +21,14 @@ public class BlackjackTest {
         assertThatThrownBy(
                 () -> blackjack.draw(Card.of(Suit.SPADES, Denomination.TEN))
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("블랙잭인 상태에서 수익을 계산할 수 있다.")
+    void blackjackProfit() {
+        Blackjack blackjack = new Blackjack(new Cards(SPADES_JACK, SPADES_ACE));
+        int money = 1000;
+        double profit = blackjack.profit(money);
+        Assertions.assertThat(profit).isEqualTo(money * blackjack.earningRate());
     }
 }

@@ -1,4 +1,4 @@
-package blackjack_statepattern;
+package blackjack_statepattern.card;
 
 public enum Denomination {
     ACE(1, "A"),

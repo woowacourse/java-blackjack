@@ -1,4 +1,4 @@
-package blackjack_statepattern;
+package blackjack_statepattern.card;
 
 import java.util.ArrayList;
 import java.util.List;

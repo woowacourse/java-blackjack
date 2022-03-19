@@ -1,6 +1,6 @@
 package blackjack_statepattern.state;
 
-import blackjack_statepattern.Cards;
+import blackjack_statepattern.card.Cards;
 
 public abstract class Started implements State{
 

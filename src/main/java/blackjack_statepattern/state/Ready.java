@@ -1,7 +1,7 @@
 package blackjack_statepattern.state;
 
-import blackjack_statepattern.Card;
-import blackjack_statepattern.Cards;
+import blackjack_statepattern.card.Card;
+import blackjack_statepattern.card.Cards;
 
 public final class Ready extends Running {
     public Ready() {
@@ -26,6 +26,6 @@ public final class Ready extends Running {
 
     @Override
     public State stay() {
-        throw new IllegalArgumentException("아직 준비중인 상태입니다.");
+        throw new IllegalArgumentException("[ERROR] 준비 상태에서는 중지할 수 없습니다.");
     }
 }

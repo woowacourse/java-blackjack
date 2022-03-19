@@ -1,7 +1,7 @@
 package blackjack_statepattern.state;
 
-import blackjack_statepattern.Card;
-import blackjack_statepattern.Cards;
+import blackjack_statepattern.card.Card;
+import blackjack_statepattern.card.Cards;
 
 public interface State {
     State draw(Card card);

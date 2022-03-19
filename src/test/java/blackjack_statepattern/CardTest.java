@@ -2,6 +2,9 @@ package blackjack_statepattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack_statepattern.card.Card;
+import blackjack_statepattern.card.Denomination;
+import blackjack_statepattern.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

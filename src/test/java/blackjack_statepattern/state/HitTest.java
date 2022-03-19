@@ -6,7 +6,7 @@ import static blackjack_statepattern.Fixture.SPADES_TEN;
 import static blackjack_statepattern.Fixture.SPADES_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack_statepattern.Cards;
+import blackjack_statepattern.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +29,7 @@ public class HitTest {
     }
 
     @Test
-    @DisplayName("히트 상태에서 카드 받기를 거부하면 스테이 상태")
+    @DisplayName("히트 상태에서 stay를 하면 스테이 상태를 반환")
     void stay() {
         State state = new Hit(new Cards(SPADES_JACK, SPADES_TWO))
                 .draw(SPADES_ACE)

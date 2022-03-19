@@ -1,4 +1,4 @@
-package blackjack_statepattern;
+package blackjack_statepattern.card;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ public final class Card {
         return cache.computeIfAbsent(toKey(suit, denomination), ignored -> new Card(suit, denomination));
     }
 
-    private static String toKey(Suit suit, Denomination denomination) {
+    private static String toKey(final Suit suit, final Denomination denomination) {
         return suit.name() + denomination.name();
     }
 
