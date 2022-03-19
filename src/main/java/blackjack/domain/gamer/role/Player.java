@@ -14,7 +14,7 @@ public final class Player extends Role{
 
     public Player(String name) {
         super(name);
-        this.betMoney = new Money(0);
+        this.betMoney = new Money();
     }
 
     public static List<Player> of(List<String> playerNames) {
