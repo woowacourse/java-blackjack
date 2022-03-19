@@ -22,10 +22,10 @@ public class Cards {
         for (Card card : value) {
             totalScore = card.addScore(totalScore);
         }
-        return convertCloseWin(totalScore);
+        return convertToClosestBlackJackScore(totalScore);
     }
 
-    private int convertCloseWin(int totalScore) {
+    private int convertToClosestBlackJackScore(int totalScore) {
         if (isAce()) {
             return calculateAceScore(totalScore);
         }
