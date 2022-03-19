@@ -13,14 +13,10 @@ public class Dealer extends Participant {
     }
 
     public boolean checkUnderScoreStandard() {
-        return holdingCards.cardSum() <= MIN_SCORE_STANDARD;
+        return state.cardSum() <= MIN_SCORE_STANDARD;
     }
 
     public List<Card> getHoldingCardsWithoutHidden() {
-        return holdingCards.getCardsWithOutHiddenCard();
-    }
-
-    public List<Card> getHoldingCards() {
-        return holdingCards.getAllCards();
+        return state.cards().getCardsWithOutHiddenCard();
     }
 }

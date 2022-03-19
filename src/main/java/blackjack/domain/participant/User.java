@@ -16,7 +16,7 @@ public class User extends Participant {
     }
 
     public int calculateProfit(int dealerSum) {
-        Result result = Result.checkUserResult(holdingCards.cardSum(), dealerSum);
+        Result result = Result.checkUserResult(score(), dealerSum);
         if (result == Result.WIN) {
             return betMoney.getMoney();
         }

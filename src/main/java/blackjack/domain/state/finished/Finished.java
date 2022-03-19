@@ -2,14 +2,13 @@ package blackjack.domain.state.finished;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldingCards;
+import blackjack.domain.state.Started;
 import blackjack.domain.state.State;
 
-public abstract class Finished implements State {
+public abstract class Finished extends Started {
 
-    private final HoldingCards holdingCards;
-
-    protected Finished(HoldingCards holdingCards) {
-        this.holdingCards = holdingCards;
+    public Finished(HoldingCards holdingCards) {
+        super(holdingCards);
     }
 
     @Override

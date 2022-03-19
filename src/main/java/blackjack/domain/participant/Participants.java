@@ -53,18 +53,18 @@ public class Participants {
     }
 
     public ParticipantDto createDealerCardAndScoreDto() {
-        return ParticipantDto.of(dealer.getName(), dealer.getHoldingCards(), dealer.getScore());
+        return ParticipantDto.of(dealer.getName(), dealer.getHoldingCards(), dealer.score());
     }
 
     public ParticipantDto createUserCardAndScoreDto(String name) {
-        return ParticipantDto.of(name, users.findUserByName(name).getHoldingCards(), users.findUserByName(name).getScore());
+        return ParticipantDto.of(name, users.findUserByName(name).getHoldingCards(), users.findUserByName(name).score());
     }
 
     public ProfitDto createDealerProfitDto() {
-        return new ProfitDto(dealer.getName(), PROFIT_REVERSE * users.getTotalProfit(dealer.getScore()));
+        return new ProfitDto(dealer.getName(), PROFIT_REVERSE * users.getTotalProfit(dealer.score()));
     }
 
     public ProfitDto createUserProfitDto(String name) {
-        return new ProfitDto(name, users.findUserByName(name).calculateProfit(dealer.getScore()));
+        return new ProfitDto(name, users.findUserByName(name).calculateProfit(dealer.score()));
     }
 }

@@ -17,21 +17,21 @@ public final class Init extends Running {
 
     @Override
     public State drawCard(Deck deck) {
-        if (super.holdingCards().size() == 0) {
-            holdingCards().addCard(deck.drawCard());
-            return new Init(super.holdingCards());
+        if (super.cards().size() == 0) {
+            cards().addCard(deck.drawCard());
+            return new Init(super.cards());
         }
-        if (super.holdingCards().size() == 1) {
-            holdingCards().addCard(deck.drawCard());
+        if (super.cards().size() == 1) {
+            cards().addCard(deck.drawCard());
             return nextState();
         }
         throw new IllegalStateException("[ERROR] 초기 상태에서는 2장의 카드까지만 받을 수 있습니다.");
     }
 
     private State nextState() {
-        if (super.holdingCards().isBlackJack()) {
-            return new BlackJack(super.holdingCards());
+        if (super.cards().isBlackJack()) {
+            return new BlackJack(super.cards());
         }
-        return new Hit(super.holdingCards());
+        return new Hit(super.cards());
     }
 }
