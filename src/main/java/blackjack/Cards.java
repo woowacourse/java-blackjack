@@ -26,6 +26,10 @@ public class Cards {
         return optimizeSum(sum);
     }
 
+    public int numberOfCards() {
+        return cards.size();
+    }
+
     private int optimizeSum(int sum) {
         if (hasAce()) {
             return sum + BONUS_SCORE;
