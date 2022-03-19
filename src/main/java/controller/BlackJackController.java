@@ -5,7 +5,9 @@ import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -73,6 +75,8 @@ public class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        outputView.showResult(dealer, players.checkResults(dealer));
+        Map<Player, Integer> playerResult = players.checkResults(dealer);
+        List<Integer> playerMoney = new ArrayList<>(playerResult.values());
+        outputView.showResult(dealer.getName(), dealer.getResultMoney(playerMoney), playerResult);
     }
 }

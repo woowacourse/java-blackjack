@@ -76,17 +76,15 @@ public class OutputView {
         System.out.println(DEALER_HIT_CARD_MESSAGE);
     }
 
-    public void showResult(Dealer dealer, Map<Player, PlayerResult> playerResult) {
+    public void showResult(String dealerName, int dealerMoney, Map<Player, Integer> playerResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
-        System.out.println(dealer.getName() + DELIMITER + dealer.getResultMoney(playerResult));
-
+        System.out.println(dealerName + DELIMITER + dealerMoney);
         showPlayersResult(playerResult);
     }
 
-    private void showPlayersResult(Map<Player, PlayerResult> playerResult) {
-        for (Entry<Player, PlayerResult> result : playerResult.entrySet()) {
-            System.out.println(result.getKey().getName() + DELIMITER
-                + (int) (result.getValue().getProfitRate() * result.getKey().getMoney()));
+    private void showPlayersResult(Map<Player, Integer> playerResult) {
+        for (Entry<Player, Integer> result : playerResult.entrySet()) {
+            System.out.println(result.getKey().getName() + DELIMITER + result.getValue());
         }
     }
 
