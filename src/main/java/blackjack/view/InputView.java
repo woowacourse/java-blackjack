@@ -38,12 +38,12 @@ public class InputView {
     }
 
     private static void validateHitOrStay(String input) {
-        if (isNotYorN(input)) {
+        if (isNotHitOrStay(input)) {
             throw new IllegalArgumentException(NOT_HIT_OR_STAND_ERROR_MESSAGE);
         }
     }
 
-    private static boolean isNotYorN(String input) {
+    private static boolean isNotHitOrStay(String input) {
         return !input.equals(HIT) && !input.equals(STAND);
     }
 }
