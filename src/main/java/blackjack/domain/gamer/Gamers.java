@@ -98,6 +98,10 @@ public class Gamers {
         return dealer;
     }
 
+    private int money(Player player, Match match) {
+        return player.getProfitMoney(match);
+    }
+
     public ProfitResult getProfitResult() {
         int dealerMoney = 0;
 
@@ -111,9 +115,5 @@ public class Gamers {
         }
         profitResult.replace(dealer.getName(), dealerMoney);
         return new ProfitResult(profitResult);
-    }
-
-    private int money(Player player, Match match) {
-        return player.getProfitMoney(match);
     }
 }
