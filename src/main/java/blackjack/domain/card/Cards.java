@@ -17,7 +17,7 @@ public class Cards {
         this.cards = cards;
     }
 
-    public Cards(Card... card) {
+    public Cards(final Card... card) {
         this.cards = Arrays.stream(card)
                 .collect(Collectors.toList());
     }

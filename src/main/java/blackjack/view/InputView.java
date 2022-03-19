@@ -50,14 +50,14 @@ public class InputView {
         throw new IllegalArgumentException(ANSWER_EXCEPTION_MESSAGE);
     }
 
-    public static int inputBettingMoney(User user) {
+    public static int inputBettingMoney(final User user) {
         System.out.println();
         System.out.println(user.getName() + BETTING_MONEY_QUESTION_MESSAGE);
         String money = scanner.nextLine();
         return validateNumber(money);
     }
 
-    private static int validateNumber(String money) {
+    private static int validateNumber(final String money) {
         try {
             return Integer.parseInt(money);
         } catch (NumberFormatException e) {

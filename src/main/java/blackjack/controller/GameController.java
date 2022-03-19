@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.GameMachine;
 import blackjack.domain.card.CardDeckGenerator;
-import blackjack.domain.card.ShuffleDeckGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
@@ -15,7 +14,7 @@ public class GameController {
 
     private final CardDeckGenerator cardDeckGenerator;
 
-    public GameController(CardDeckGenerator cardDeckGenerator) {
+    public GameController(final CardDeckGenerator cardDeckGenerator) {
         this.cardDeckGenerator = cardDeckGenerator;
     }
 
@@ -34,18 +33,18 @@ public class GameController {
         processForFinalRevenue(gameMachine, gameResult);
     }
 
-    private void inputBettingMoney(GameMachine gameMachine, Users users) {
+    private void inputBettingMoney(final GameMachine gameMachine, final Users users) {
         for (User user : users.getUsers()) {
             gameMachine.putBettingMoney(user, InputView.inputBettingMoney(user));
         }
     }
 
-    private void playTurn(GameMachine gameMachine, Dealer dealer, Users users) {
+    private void playTurn(final GameMachine gameMachine, Dealer dealer, final Users users) {
         turnOfUsers(gameMachine, users);
         turnOfDealer(gameMachine, dealer);
     }
 
-    private void turnOfUsers(GameMachine gameMachine, Users users) {
+    private void turnOfUsers(final GameMachine gameMachine, final Users users) {
         for (User user : users.getUsers()) {
             processForUser(gameMachine, user);
         }
@@ -58,20 +57,20 @@ public class GameController {
         }
     }
 
-    private void turnOfDealer(GameMachine gameMachine, Dealer dealer) {
+    private void turnOfDealer(final GameMachine gameMachine, final Dealer dealer) {
         if (dealer.canDrawCard()) {
             gameMachine.drawCardToPlayer(dealer);
             ResultView.printDealerReceiveCard();
         }
     }
 
-    private GameResult createGameResult(Dealer dealer, Users users) {
+    private GameResult createGameResult(final Dealer dealer, final Users users) {
         GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
         ResultView.printGameResult(gameResult);
         return gameResult;
     }
 
-    private void processForFinalRevenue(GameMachine gameMachine, GameResult gameResult) {
+    private void processForFinalRevenue(final GameMachine gameMachine, final GameResult gameResult) {
         Map<User, Integer> userRevenue = gameMachine.getUserRevenue(gameResult.getUserResult());
         ResultView.printDealerRevenue(gameMachine.getDealerRevenue());
         ResultView.printFinalRevenue(userRevenue);

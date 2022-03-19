@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.player.User;
 import blackjack.domain.result.Result;
-import blackjack.money.BettingMoney;
 import blackjack.money.UserBettingMoney;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +19,10 @@ import org.junit.jupiter.api.Test;
 
 public class UserBettingMoneyTest {
 
-    private User user1 = new User("pobi", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
-    private User user2 = new User("jun", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
-    private User user3 = new User("jason", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
-    private Map<User, Result> userResult = new HashMap<>(Map.ofEntries(
+    private final User user1 = new User("pobi", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
+    private final User user2 = new User("jun", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
+    private final User user3 = new User("jason", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
+    private final Map<User, Result> userResult = new HashMap<>(Map.ofEntries(
             Map.entry(user1, Result.WIN),
             Map.entry(user2, Result.DRAW),
             Map.entry(user3, Result.LOSE)

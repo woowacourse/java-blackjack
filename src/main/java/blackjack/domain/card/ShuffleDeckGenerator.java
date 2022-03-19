@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ShuffleDeckGenerator implements CardDeckGenerator{
+public class ShuffleDeckGenerator implements CardDeckGenerator {
 
     @Override
     public CardDeck createCardDeck() {
@@ -16,7 +16,7 @@ public class ShuffleDeckGenerator implements CardDeckGenerator{
         return new CardDeck(cards);
     }
 
-    private void addCard(List<Card> cards, Suit cardPattern) {
+    private void addCard(final List<Card> cards, final Suit cardPattern) {
         for (final Denomination denomination : Denomination.values()) {
             cards.add(Card.of(cardPattern, denomination));
         }

@@ -43,7 +43,7 @@ public class BettingMoneyTest {
     @ParameterizedTest
     @MethodSource("provideUserAndResultAndBettingMoney")
     @DisplayName("승무패에 따른 유저의 결과를 확인한다.")
-    void calculateRevenue(User user, Result result, int expected) {
+    void calculateRevenue(final User user, final Result result, final int expected) {
         final BettingMoney bettingMoney = BettingMoney.of(10000);
 
         int actual = (int) bettingMoney.calculateRevenue(user, result);

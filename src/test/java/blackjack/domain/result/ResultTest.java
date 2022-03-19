@@ -65,7 +65,7 @@ class ResultTest {
         return new Dealer(cards);
     }
 
-    static Player makeBustPlayer(Player player, Card card) {
+    static Player makeBustPlayer(final Player player, final Card card) {
         player.drawCard(card);
         return player;
     }

@@ -46,7 +46,7 @@ public class GameMachine {
         player.drawCard(cardDeck.drawCard());
     }
 
-    public void putBettingMoney(User user, int money) {
+    public void putBettingMoney(final User user, final int money) {
         userBettingMoney.putBettingMoney(user, money);
     }
 

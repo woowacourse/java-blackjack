@@ -14,7 +14,7 @@ public class TestDeckGenerator implements CardDeckGenerator {
         return new CardDeck(cards);
     }
 
-    private void addCard(List<Card> cards, Suit cardPattern) {
+    private void addCard(final List<Card> cards, final Suit cardPattern) {
         for (final Denomination cardNumber : Denomination.values()) {
             cards.add(Card.of(cardPattern, cardNumber));
         }

@@ -12,9 +12,8 @@ import org.junit.jupiter.api.Test;
 
 public class GameMachineTest {
 
-    private CardDeckGenerator cardDeckGenerator = new ShuffleDeckGenerator();
-
-    private GameMachine gameMachine = new GameMachine(cardDeckGenerator.createCardDeck());
+    private final CardDeckGenerator cardDeckGenerator = new ShuffleDeckGenerator();
+    private final GameMachine gameMachine = new GameMachine(cardDeckGenerator.createCardDeck());
 
     @Test
     @DisplayName("유저들을 생성을 확인한다.")
