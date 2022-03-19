@@ -26,7 +26,7 @@ public abstract class Player {
     }
 
     public boolean isBlackJack() {
-        return cards.isBlackJackSize();
+        return cards.isBlackJack();
     }
 
     public abstract List<Card> openCards();

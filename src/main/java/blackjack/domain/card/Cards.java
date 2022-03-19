@@ -48,7 +48,7 @@ public class Cards {
         return point;
     }
 
-    public boolean isBlackJackSize() {
+    public boolean isBlackJack() {
         return cards.size() == BLACK_JACK_CARDS_SIZE && calculateTotalPoint() == BLACK_JACK_POINT;
     }
 
