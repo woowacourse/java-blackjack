@@ -8,4 +8,5 @@ public class Fixture {
     public static final Card SPADE_ACE = Card.of(Denomination.ACE, Symbol.SPADE);
     public static final Card SPADE_TWO = Card.of(Denomination.TWO, Symbol.SPADE);
     public static final Card SPADE_JACK = Card.of(Denomination.JACK, Symbol.SPADE);
+    public static final Card SPADE_NINE = Card.of(Denomination.NINE, Symbol.SPADE);
 }

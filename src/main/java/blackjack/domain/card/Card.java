@@ -32,19 +32,19 @@ public class Card {
             .orElseThrow(() -> new IllegalArgumentException(CARD_CACHE_INDEX_ERROR_MESSAGE));
     }
 
-    public Denomination getDenomination() {
-        return denomination;
-    }
-
-    public Symbol getSymbol() {
-        return symbol;
-    }
-
     public int point() {
         return denomination.getPoint();
     }
 
     public boolean isAce() {
         return denomination.equals(Denomination.ACE);
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
+    public Symbol getSymbol() {
+        return symbol;
     }
 }
