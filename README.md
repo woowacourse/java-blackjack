@@ -103,3 +103,6 @@
     - GameResult
         - Map<Player, Double> 형식으로 구현
         - Key : Player, Value : Profit
+3. Statistic 클래스 제거 및 관련 메서드 제거 
+   - Statistic 클래스 제거
+   - Player : isBust() 제거

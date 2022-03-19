@@ -2,12 +2,11 @@ package blackjack.view;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.GameStatistic;
-import blackjack.domain.Statistic;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Gamblers;
+import blackjack.domain.player.Player;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -25,12 +24,6 @@ public class OutputView {
     private static final String KOREAN_RESULT_LOSE = "패";
     private static final String KOREAN_RESULT_DRAW = "무";
 
-    //    public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
-//        System.out.println();
-//        String gamblerNames = String.join(JOIN_DELIMITER, gamblers.getGamblerNames());
-//        System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), gamblerNames);
-//        System.out.println();
-//    }
     public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
         System.out.println();
         String gamblerNames = String.join(JOIN_DELIMITER, gamblers.getGamblerNames());
@@ -63,26 +56,6 @@ public class OutputView {
     public static void printDealerCardAdded() {
         System.out.println();
         System.out.println(DEALER_NO_MORE_CARD_MESSAGE);
-    }
-
-    public static void printTotalResult(Statistic statistic) {
-        System.out.println(System.lineSeparator() + TOTAL_RESULT_MASSAGE);
-        StringBuilder dealerResult = new StringBuilder(DEALER_RESULT_PREFIX);
-        for (GameResult gameResult : GameResult.values()) {
-            int resultCount = statistic.getCountByGameResult(gameResult);
-            String resultString = changeGameResultToKorean(changeDealerResult(gameResult));
-            dealerResult.append(resultCount + resultString + COUNT_JOIN_DELIMITER);
-        }
-        System.out.println(dealerResult);
-    }
-
-    public static void printTotalResultByGambler(Statistic statistic, Gamblers gamblers) {
-        for (Gambler gambler : gamblers.getGamblers()) {
-            GameResult playerResult = statistic.getGameResultByGambler(gambler);
-            System.out.printf(PLAYER_RESULT_MESSAGE, gambler.getName(),
-                changeGameResultToKorean(playerResult));
-            System.out.println();
-        }
     }
 
     private static String printCardList(Cards cards) {

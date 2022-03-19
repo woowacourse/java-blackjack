@@ -20,12 +20,16 @@ public abstract class Player {
 
     public abstract boolean isHit();
 
-    public boolean isBlackJack() {
-        return state.cards().isBlackJack();
-    }
-
     public void addCard(Card card) {
         this.state = state.draw(card);
+    }
+
+    public int getPoint() {
+        return state.cards().sum();
+    }
+
+    public void stay() {
+        this.state = state.stay();
     }
 
     public State getState() {
@@ -36,19 +40,7 @@ public abstract class Player {
         return state.cards();
     }
 
-    public int getPoint() {
-        return state.cards().sum();
-    }
-
-    public boolean isBust() {
-        return state.isFinished();
-    }
-
     public String getName() {
         return name.getName();
-    }
-
-    public void stay() {
-        this.state = state.stay();
     }
 }
