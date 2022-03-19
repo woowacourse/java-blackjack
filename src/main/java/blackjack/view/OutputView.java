@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.joining;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.PlayerResult;
 import java.util.List;
 
 public class OutputView {
@@ -64,5 +65,11 @@ public class OutputView {
     private static void printPlayerResult(Player player) {
         String cardsInfo = generateCardsMessage(player.getCards());
         System.out.println(player.getName() + ": " + cardsInfo + " - 결과: " + player.getTotalScore());
+    }
+
+    public static void printProfit(int dealerProfit, List<PlayerResult> players) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        System.out.println("딜러: " + dealerProfit);
+        players.forEach(player -> System.out.println(player.getName() + ": " + player.getProfit()));
     }
 }

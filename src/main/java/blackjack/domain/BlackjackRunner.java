@@ -7,6 +7,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.RandomCardsGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackRunner {
+
+    private static final int REVERSE_MONEY = -1;
 
     public void run() {
         Deck deck = new Deck(new RandomCardsGenerator());
@@ -33,6 +36,7 @@ public class BlackjackRunner {
         drawDealer(deck, dealer);
 
         OutputView.printResult(dealer, players);
+        OutputView.printProfit(getDealerProfit(dealer, players), createPlayerResults(dealer, players));
     }
 
     private void ready(Deck deck, Dealer dealer, List<Player> players) {
@@ -71,6 +75,7 @@ public class BlackjackRunner {
             player.hit(deck.pick());
             OutputView.printPlayerCard(player);
         }
+        player.stay();
     }
 
     private void drawDealer(Deck deck, Dealer dealer) {
@@ -79,5 +84,17 @@ public class BlackjackRunner {
             OutputView.printDealerDrawable();
             drawDealer(deck, dealer);
         }
+    }
+
+    private int getDealerProfit(Dealer dealer, List<Player> players) {
+        return players.stream()
+                .mapToInt(player -> player.calculateProfit(dealer) * REVERSE_MONEY)
+                .sum();
+    }
+
+    private List<PlayerResult> createPlayerResults(Dealer dealer, List<Player> players) {
+        return players.stream()
+                .map(player -> new PlayerResult(player.getName(), player.calculateProfit(dealer)))
+                .collect(toList());
     }
 }
