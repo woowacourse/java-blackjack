@@ -20,4 +20,9 @@ public class Bust implements State {
     public Cards getCards() {
         return cards;
     }
+
+    @Override
+    public State stay() {
+        throw new IllegalStateException("Bust 상태에선 Stay를 할 수 없습니다.");
+    }
 }

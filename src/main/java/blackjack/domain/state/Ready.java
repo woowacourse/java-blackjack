@@ -36,4 +36,9 @@ public class Ready implements State {
     public Cards getCards() {
         return cards;
     }
+
+    @Override
+    public State stay() {
+        throw new IllegalStateException("Ready 상태에선 Stay를 할 수 없습니다.");
+    }
 }

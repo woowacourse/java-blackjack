@@ -67,4 +67,16 @@ public class ReadyTest {
         //then
         assertThat(bustState).isInstanceOf(Bust.class);
     }
+
+    @Test
+    @DisplayName("stay 메소드 호출로 Stay 상태로 바뀐다.")
+    void toPush() {
+        State hitState = new Hit(new Cards(Set.of(new Card(HEART, JACK), new Card(CLUB, JACK))));
+
+        //when
+        State stayState = hitState.stay();
+
+        //then
+        assertThat(stayState).isInstanceOf(Stay.class);
+    }
 }

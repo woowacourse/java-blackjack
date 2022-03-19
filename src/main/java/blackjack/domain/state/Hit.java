@@ -26,4 +26,9 @@ public class Hit implements State {
     public Cards getCards() {
         return cards;
     }
+
+    @Override
+    public State stay() {
+        return new Stay(cards);
+    }
 }
