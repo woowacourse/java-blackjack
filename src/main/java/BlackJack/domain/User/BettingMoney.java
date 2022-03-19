@@ -7,7 +7,7 @@ public class BettingMoney {
     private int money;
 
     public BettingMoney(int money) {
-
+        validatePositive(money);
         this.money = money;
     }
 
