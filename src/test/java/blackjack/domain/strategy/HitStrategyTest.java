@@ -1,5 +1,7 @@
 package blackjack.domain.strategy;
 
+import java.util.function.Supplier;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,9 +40,9 @@ class HitStrategyTest {
     @DisplayName("(딜러) 현재 점수가 17보다 낮으면 카드를 받을 수 있다.")
     public void testIsIHitOfDealerWithScoreLowerThan17() {
         // given
-        Score score = new Score(16);
+        Supplier<Score> supplier = () -> new Score(16);
         // when
-        HitStrategy strategy = new DealerHitStrategy(score);
+        HitStrategy strategy = new DealerHitStrategy(supplier);
         // then
         Assertions.assertThat(strategy.isHit()).isTrue();
     }
@@ -49,9 +51,9 @@ class HitStrategyTest {
     @DisplayName("(딜러) 현재 점수가 17보다 크거나 같으면 카드를 받을 수 없다.")
     public void testIsStayOfDealerWithScoreGreaterOrEqualThan17() {
         // given
-        Score score = new Score(17);
+        Supplier<Score> supplier = () -> new Score(17);
         // when
-        HitStrategy strategy = new DealerHitStrategy(score);
+        HitStrategy strategy = new DealerHitStrategy(supplier);
         // then
         Assertions.assertThat(strategy.isHit()).isFalse();
     }
