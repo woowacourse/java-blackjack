@@ -4,7 +4,7 @@ import java.util.Deque;
 
 import blackjack.domain.card.deckstrategy.DeckStrategy;
 
-public class CardDeck {
+public final class CardDeck {
 
     private final Deque<Card> deck;
 

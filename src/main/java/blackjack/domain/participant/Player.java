@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
     private final Name name;
 

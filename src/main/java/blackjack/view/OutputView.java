@@ -10,7 +10,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 
-public class OutputView {
+public final class OutputView {
 
     private OutputView() {
     }

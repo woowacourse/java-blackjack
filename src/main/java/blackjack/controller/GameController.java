@@ -15,7 +15,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.view.OutputView;
 
-public class GameController {
+public final class GameController {
 
     public void play() {
         List<Name> names = getNames();

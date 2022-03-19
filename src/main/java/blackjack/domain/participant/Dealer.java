@@ -6,7 +6,7 @@ import java.util.Map;
 import blackjack.domain.PlayRecord;
 import blackjack.domain.card.Card;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
     private static final int HIT_CONDITION = 16;
     private static final String NAME = "딜러";

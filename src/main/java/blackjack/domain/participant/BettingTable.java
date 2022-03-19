@@ -8,7 +8,7 @@ import java.util.Map;
 
 import blackjack.domain.PlayRecord;
 
-public class BettingTable {
+public final class BettingTable {
 
     private final List<Betting> bettings;
 

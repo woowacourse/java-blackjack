@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import blackjack.domain.PlayRecord;
 
-public class Betting {
+public final class Betting {
 
     private static final double BLACKJACK_MULTIPLIER = 1.5;
 

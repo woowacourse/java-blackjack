@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 import blackjack.domain.participant.Name;
 
-public class InputView {
+public final class InputView {
 
     private static final List<String> TEXT_ALLOW = List.of("Y", "y", "N", "n");
 

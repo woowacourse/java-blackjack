@@ -13,7 +13,7 @@ import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
-public class Game {
+public final class Game {
 
     private static final String HIT_REQUEST = "y";
 

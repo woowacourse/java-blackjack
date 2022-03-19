@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import blackjack.domain.card.Card;
 
-public class Cards {
+public final class Cards {
 
     private static final int ACE_BIG = 11;
 
