@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class User {
 
-    public static final int WINNING_LIMIT = 21;
+    public static final int WINNING_SCORE = 21;
     protected String name;
     protected Cards cards;
     protected BettingMoney bettingMoney;
@@ -19,14 +19,14 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        if (cards.isOnlyTwoCards() && cards.calculateScore() == WINNING_LIMIT) {
+        if (cards.isOnlyTwoCards() && cards.calculateScore() == WINNING_SCORE) {
             return true;
         }
         return false;
     }
 
     public boolean isBurst() {
-        return this.getScore() > WINNING_LIMIT;
+        return this.getScore() > WINNING_SCORE;
     }
 
 
