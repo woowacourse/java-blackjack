@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import static blackjack.TestUtils.createDeck;
 import static blackjack.TestUtils.createPlayerByName;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -26,17 +25,6 @@ public class PlayerTest {
 
         //then
         assertThat(player).isNotNull();
-    }
-
-    @DisplayName("플레이어 생성시 이름 검증")
-    @Test
-    public void testBlankName() {
-        //given
-        String name = " ";
-
-        //when & then
-        assertThatThrownBy(() -> createPlayerByName(name))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("플레이어는 카드를 뽑을 수 있다.")

@@ -5,11 +5,11 @@ import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.DeckGenerateStrategy;
-import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
+import blackjack.domain.vo.BettingMoney;
 import blackjack.domain.vo.Name;
 import blackjack.dto.UserDto;
 import java.util.LinkedHashMap;

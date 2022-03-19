@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.vo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;

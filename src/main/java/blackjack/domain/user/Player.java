@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.vo.BettingMoney;
 import blackjack.domain.vo.Name;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class Player extends User {
         return new Player(name, money);
     }
 
-    public int getRevenue(double earningRate) {
-        return money.calculateRevenue(earningRate);
+    public BettingMoney getBettingMoney() {
+        return money;
     }
 
     @Override

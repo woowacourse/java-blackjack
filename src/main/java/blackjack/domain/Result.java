@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toMap;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
+import blackjack.domain.vo.BettingMoney;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -50,17 +51,21 @@ public enum Result {
     private static LinkedHashMap<String, Integer> calculatePlayerRevenue(List<Player> players, Dealer dealer) {
         return players.stream()
                 .collect(toMap(
-                        player -> player.getName(), player -> player.getRevenue(findResult(player, dealer).getRate()),
+                        player -> player.getName(), player -> findResult(player, dealer),
                         (e1, e2) -> e1,
                         LinkedHashMap::new)
                 );
     }
 
-    private static Result findResult(User player, User dealer) {
-        return Arrays.stream(values())
+    private static int findResult(Player player, Dealer dealer) {
+        BettingMoney bettingMoney = player.getBettingMoney();
+
+        Result result = Arrays.stream(values())
                 .filter(value -> value.biPredicate.test(player, dealer))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
+
+        return bettingMoney.calculateRevenue(result.getRate());
     }
 
     private static int calculateDealerRevenue(Map<String, Integer> playerRevenue) {

@@ -4,9 +4,9 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
-import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
+import blackjack.domain.vo.BettingMoney;
 import blackjack.domain.vo.Name;
 import java.util.HashMap;
 import java.util.List;

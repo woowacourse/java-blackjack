@@ -5,8 +5,8 @@ import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
-import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.User;
+import blackjack.domain.vo.BettingMoney;
 import blackjack.domain.vo.Name;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;

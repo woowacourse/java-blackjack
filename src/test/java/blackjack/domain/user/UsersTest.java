@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
+import blackjack.domain.vo.BettingMoney;
 import blackjack.domain.vo.Name;
 import java.util.ArrayDeque;
 import java.util.List;
