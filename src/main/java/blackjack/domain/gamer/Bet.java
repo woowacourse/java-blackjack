@@ -2,6 +2,8 @@ package blackjack.domain.gamer;
 
 import java.util.Objects;
 
+import blackjack.domain.result.BlackJackResult;
+
 public class Bet {
 
 	private static final String INVALID_RANGE_ERROR = "금액은 0보다 커야 합니다";
@@ -25,8 +27,8 @@ public class Bet {
 		}
 	}
 
-	public int multiply(double value) {
-		return (int) (value * amount);
+	public int makeEarning(BlackJackResult result) {
+		return (int) (result.getProfit() * amount);
 	}
 
 	@Override

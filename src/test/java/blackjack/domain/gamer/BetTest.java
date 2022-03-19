@@ -46,7 +46,7 @@ class BetTest {
 	@DisplayName("수익률에 따른 수익 계산")
 	void calculateEarning(String input, int bet) {
 		BlackJackResult result = BlackJackResult.valueOf(input);
-		int earning = new Bet(1000).multiply(result.getProfit());
+		int earning = new Bet(1000).makeEarning(result);
 		assertThat(earning).isEqualTo(bet);
 	}
 }

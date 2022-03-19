@@ -11,8 +11,9 @@ public class Player extends Gamer{
         this.bet = new Bet(amount);
     }
 
-    public BlackJackResult match(Dealer dealer) {
-        return BlackJackResult.of(this.cards, dealer.cards);
+    public int match(Dealer dealer) {
+        BlackJackResult result = BlackJackResult.of(this.cards, dealer.cards);
+        return bet.makeEarning(result);
     }
 
     public boolean isSameName(String name) {
@@ -21,9 +22,5 @@ public class Player extends Gamer{
 
     public boolean isBust() {
         return cards.isBust();
-    }
-
-    public int calculateEarning(double profit) {
-        return bet.multiply(profit);
     }
 }

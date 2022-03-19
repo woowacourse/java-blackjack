@@ -24,7 +24,7 @@ class PlayerTest {
         pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
         pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.ACE));
 
-        assertThat(pobi.match(dealer)).isEqualTo(BlackJackResult.WIN);
+        assertThat(pobi.match(dealer)).isEqualTo(10);
     }
 
     @Test

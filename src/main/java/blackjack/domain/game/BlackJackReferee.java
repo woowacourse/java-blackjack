@@ -6,7 +6,6 @@ import java.util.Map;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.result.BlackJackResult;
 
 public class BlackJackReferee {
 
@@ -25,9 +24,7 @@ public class BlackJackReferee {
         Map<String, Integer> playerEarnings = new LinkedHashMap<>();
 
         for (Player player : players) {
-            BlackJackResult result = player.match(dealer);
-            int playerEarning = player.calculateEarning(result.getProfit());
-
+            int playerEarning = player.match(dealer);
             playerEarnings.put(player.getName(), playerEarning);
             dealerEarning += calculateReverseEarning(playerEarning);
         }
