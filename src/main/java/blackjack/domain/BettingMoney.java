@@ -2,8 +2,8 @@ package blackjack.domain;
 
 public class BettingMoney {
 
-    private static final String LESS_THAN_MINIMUM_MONEY_ERROR_MESSAGE = "10미만의 금액은 입력할 수 없습니다.";
-    private static final int MINIMUM_MONEY = 10;
+    private static final String LESS_THAN_MINIMUM_MONEY_ERROR_MESSAGE = "금액은 10원 단위로 입력해야 합니다.";
+    private static final int BASED_UNIT_AMOUNT = 10;
 
     private final int amount;
 
@@ -17,9 +17,13 @@ public class BettingMoney {
     }
 
     private void validateAmount(int amount) {
-        if (amount < MINIMUM_MONEY) {
+        if (isInvalidUnitAmount(amount)) {
             throw new IllegalArgumentException(LESS_THAN_MINIMUM_MONEY_ERROR_MESSAGE);
         }
+    }
+
+    private boolean isInvalidUnitAmount(int amount) {
+        return amount % BASED_UNIT_AMOUNT != 0;
     }
 
     public int getAmount() {
