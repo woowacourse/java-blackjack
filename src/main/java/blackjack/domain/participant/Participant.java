@@ -1,4 +1,4 @@
-package blackjack.domain.role;
+package blackjack.domain.participant;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 
-public abstract class Role {
+public abstract class Participant {
 
 	protected static final String METHOD_ERROR = "메서드를 사용할 수 없습니다.";
 
@@ -19,7 +19,7 @@ public abstract class Role {
 
 	private boolean drawMore;
 
-	public Role(final String name, final Hand hand, final BettingAmount bettingAmount) {
+	public Participant(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		this.name = name;
 		this.hand = hand;
 		this.bettingAmount = bettingAmount;
@@ -81,7 +81,7 @@ public abstract class Role {
 
 	public abstract void distributeBettingAmount(final Outcome outcome);
 
-	public abstract void distributeBettingAmount(final Outcome outcome, final Role role);
+	public abstract void distributeBettingAmount(final Outcome outcome, final Participant role);
 
 	protected int getCurrentIncome() {
 		return bettingAmount.getTotalValue();

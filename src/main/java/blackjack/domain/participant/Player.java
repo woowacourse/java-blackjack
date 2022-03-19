@@ -1,11 +1,11 @@
-package blackjack.domain.role;
+package blackjack.domain.participant;
 
 import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Hand;
 
-public class Player extends Role {
+public class Player extends Participant {
 
 	public Player(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		super(name, hand, bettingAmount);
@@ -23,7 +23,7 @@ public class Player extends Role {
 	}
 
 	@Override
-	public void distributeBettingAmount(Outcome outcome, Role role) {
+	public void distributeBettingAmount(Outcome outcome, Participant role) {
 		throw new IllegalArgumentException(METHOD_ERROR);
 	}
 

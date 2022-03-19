@@ -1,4 +1,4 @@
-package blackjack.domain.role;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +31,7 @@ class RolesTest {
 		final Deck deck = initDeck();
 
 		roles.initDealer();
-		final Role dealer = roles.distributeCardToDealer(deck);
+		final Participant dealer = roles.distributeCardToDealer(deck);
 
 		assertAll(
 			() -> assertThat(dealer.getCards().size()).isEqualTo(1),
@@ -45,8 +45,8 @@ class RolesTest {
 		final Deck deck = initDeck();
 
 		roles.joinPlayers(Map.of("player", 1000));
-		final List<Role> players = roles.distributeCardToPlayers(deck);
-		final Role actualPlayer = players.get(0);
+		final List<Participant> players = roles.distributeCardToPlayers(deck);
+		final Participant actualPlayer = players.get(0);
 
 		assertThat(actualPlayer.getCards()).isEqualTo(List.of(CardMockFactory.of("A클로버"),
 			CardMockFactory.of("10클로버")));
@@ -59,7 +59,7 @@ class RolesTest {
 	void check_Player_Draw_Card(final RedrawChoice redrawChoice, final int expectedTheNumberOfCard) {
 		final Deck deck = initDeck();
 		roles.joinPlayers(Map.of("player", 1000));
-		final Role player = roles.drawPlayer(deck, redrawChoice, "player");
+		final Participant player = roles.drawPlayer(deck, redrawChoice, "player");
 
 		assertThat(player.getCards().size()).isEqualTo(expectedTheNumberOfCard);
 	}
@@ -75,7 +75,7 @@ class RolesTest {
 	void check_dealer_Draw_Card(final Deck deck, final int expectedTheNumberOfCard) {
 		roles.initDealer();
 		roles.distributeCardToDealer(deck);
-		final Role dealer = roles.drawDealer(deck);
+		final Participant dealer = roles.drawDealer(deck);
 
 		assertThat(dealer.getCards().size()).isEqualTo(expectedTheNumberOfCard);
 	}
@@ -121,7 +121,7 @@ class RolesTest {
 		roles.joinPlayers(Map.of("player", 1000));
 		roles.distributeCardToDealer(deck);
 		roles.distributeCardToPlayers(deck);
-		List<Role> players = roles.calculatePlayerResult();
+		List<Participant> players = roles.calculatePlayerResult();
 
 		assertThat(players.get(0).calculateBettingResult()).isEqualTo(expectedResult);
 	}

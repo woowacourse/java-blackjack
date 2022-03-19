@@ -65,7 +65,7 @@ class HandTest {
 		return Stream.of(
 			Arguments.of(hand1, 21),
 			Arguments.of(hand2, 21),
-			Arguments.of(hand3, 0),
+			Arguments.of(hand3, 30),
 			Arguments.of(hand4, 20));
 	}
 

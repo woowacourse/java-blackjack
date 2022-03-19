@@ -1,4 +1,4 @@
-package blackjack.domain.role;
+package blackjack.domain.participant;
 
 import java.util.List;
 import java.util.Map;
@@ -16,28 +16,28 @@ public class Roles {
 
 	private static final String NO_PLAYER = "";
 
-	private List<Role> players;
-	private Role dealer;
+	private List<Participant> players;
+	private Participant dealer;
 
 	public void initDealer() {
 		dealer = new Dealer(new Hand(), DealerDrawChoice::chooseDraw);
 	}
 
-	public Role distributeCardToDealer(final Deck deck) {
+	public Participant distributeCardToDealer(final Deck deck) {
 		dealer.draw(deck, 1);
-		final Role dealerStatus = new Dealer(dealer.getHand(), DealerDrawChoice::chooseDraw);
+		final Participant dealerStatus = new Dealer(dealer.getHand(), DealerDrawChoice::chooseDraw);
 		dealer.draw(deck, 1);
 		return dealerStatus;
 	}
 
-	public List<Role> distributeCardToPlayers(final Deck deck) {
-		for (Role player : players) {
+	public List<Participant> distributeCardToPlayers(final Deck deck) {
+		for (Participant player : players) {
 			player.draw(deck, 2);
 		}
 		return players;
 	}
 
-	public Role drawDealer(final Deck deck) {
+	public Participant drawDealer(final Deck deck) {
 		if (!dealer.canDraw()) {
 			dealer.stopDraw();
 			return dealer;
@@ -53,8 +53,8 @@ public class Roles {
 			.collect(Collectors.toList());
 	}
 
-	public Role drawPlayer(final Deck deck, final RedrawChoice answer, final String name) {
-		final Role currentPlayer = findPlayer(name);
+	public Participant drawPlayer(final Deck deck, final RedrawChoice answer, final String name) {
+		final Participant currentPlayer = findPlayer(name);
 		if (answer == RedrawChoice.NO) {
 			currentPlayer.stopDraw();
 			return currentPlayer;
@@ -63,7 +63,7 @@ public class Roles {
 		return currentPlayer;
 	}
 
-	private Role findPlayer(final String name) {
+	private Participant findPlayer(final String name) {
 		return players.stream()
 			.filter(player -> player.getName().equals(name))
 			.findFirst()
@@ -73,14 +73,14 @@ public class Roles {
 	public String getCurrentPlayerName() {
 		return players.stream()
 			.filter(player -> player.canDraw() && player.wantDraw())
-			.map(Role::getName)
+			.map(Participant::getName)
 			.findFirst()
 			.orElse(NO_PLAYER);
 	}
 
-	public List<Role> calculatePlayerResult() {
+	public List<Participant> calculatePlayerResult() {
 		calculateBlackJackResult();
-		for (Role player : players) {
+		for (Participant player : players) {
 			final Outcome outcome = judge(player);
 			player.distributeBettingAmount(outcome);
 		}
@@ -91,20 +91,20 @@ public class Roles {
 		if (dealer.isBlackJack()) {
 			return;
 		}
-		for (Role player : players) {
+		for (Participant player : players) {
 			player.earnAmountByBlackJack();
 		}
 	}
 
-	public Role calculateDealerResult() {
-		for (Role player : players) {
+	public Participant calculateDealerResult() {
+		for (Participant player : players) {
 			final Outcome outcome = judge(player);
 			dealer.distributeBettingAmount(outcome.getCounterpartRoleOutcome(), player);
 		}
 		return dealer;
 	}
 
-	private Outcome judge(final Role player) {
+	private Outcome judge(final Participant player) {
 		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
 	}
 }

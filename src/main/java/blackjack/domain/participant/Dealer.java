@@ -1,4 +1,4 @@
-package blackjack.domain.role;
+package blackjack.domain.participant;
 
 import java.util.function.Supplier;
 
@@ -7,7 +7,7 @@ import blackjack.domain.BlackJack;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Hand;
 
-public class Dealer extends Role {
+public class Dealer extends Participant {
 
 	private static final int CAN_DRAW_STANDARD = 16;
 	private static final String DEALER_NAME = "딜러";
@@ -25,7 +25,7 @@ public class Dealer extends Role {
 	}
 
 	@Override
-	public void distributeBettingAmount(Outcome outcome, Role role) {
+	public void distributeBettingAmount(Outcome outcome, Participant role) {
 		if (outcome == Outcome.VICTORY) {
 			final int finalIncome = bettingAmount.getTotalValue() + role.getCurrentIncome();
 			bettingAmount = new BettingAmount(finalIncome, bettingAmount.getInitialValue());

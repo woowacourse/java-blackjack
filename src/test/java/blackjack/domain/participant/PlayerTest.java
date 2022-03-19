@@ -1,4 +1,4 @@
-package blackjack.domain.role;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -21,7 +21,7 @@ class PlayerTest {
 	@ParameterizedTest(name = "{index} {displayName} hand={0}")
 	@MethodSource("createHand")
 	void drawableTest(final Hand hand, final boolean expectedResult) {
-		Role player = new Player("player", hand, new BettingAmount(1000));
+		Participant player = new Player("player", hand, new BettingAmount(1000));
 		assertThat(player.canDraw()).isEqualTo(expectedResult);
 	}
 

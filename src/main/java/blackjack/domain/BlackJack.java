@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.role.Role;
-import blackjack.domain.role.Roles;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Roles;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -38,8 +38,8 @@ public class BlackJack {
 	}
 
 	private void distributeCard() {
-		final Role dealer = roles.distributeCardToDealer(deck);
-		final List<Role> players = roles.distributeCardToPlayers(deck);
+		final Participant dealer = roles.distributeCardToDealer(deck);
+		final List<Participant> players = roles.distributeCardToPlayers(deck);
 		OutputView.printInitialStatus(dealer, players);
 	}
 
@@ -47,7 +47,7 @@ public class BlackJack {
 		String currentPlayer = roles.getCurrentPlayerName();
 		while (!hasMorePlayer(currentPlayer)) {
 			final String answer = InputView.drawOneMoreCard(currentPlayer);
-			final Role playerStatus = roles.drawPlayer(deck, RedrawChoice.of(answer), currentPlayer);
+			final Participant playerStatus = roles.drawPlayer(deck, RedrawChoice.of(answer), currentPlayer);
 			OutputView.printPersonalHand(playerStatus);
 			currentPlayer = roles.getCurrentPlayerName();
 		}
@@ -59,8 +59,8 @@ public class BlackJack {
 	}
 
 	private void calculateFinalResult() {
-		final List<Role> playersResult = roles.calculatePlayerResult();
-		final Role dealerResult = roles.calculateDealerResult();
+		final List<Participant> playersResult = roles.calculatePlayerResult();
+		final Participant dealerResult = roles.calculateDealerResult();
 		OutputView.printFinalResult(dealerResult, playersResult);
 	}
 
