@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import static blackjack.Fixture.SPADE_FIVE;
+import static blackjack.Fixture.SPADE_TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -55,6 +58,17 @@ public class PlayersTest {
         assertThatThrownBy(() -> players.getPlayerCards(notExistedPlayerName))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessageContaining("플레이어를 찾을 수 없습니다.");
+    }
+
+    @DisplayName("턴이 종료되지 않은 플레이어가 존재하는지 확인할 수 있어야 한다.")
+    @Test
+    void isAnyPlayerNotFinishedTest() {
+        final ManualDeckGenerator manualDeckGenerator = new ManualDeckGenerator();
+        manualDeckGenerator.initCards(List.of(SPADE_TEN, SPADE_FIVE));
+        final Deck deck = Deck.generate(manualDeckGenerator);
+        final Players players = Players.readyToPlay(List.of("player"), deck);
+
+        assertThat(players.isAnyPlayerNotFinished()).isTrue();
     }
 
     @DisplayName("플레이어 이름으로 해당 플레이어가 보유한 카드 패를 확인할 수 있어야 한다.")

@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.BlackjackCardRule.INITIALLY_DISTRIBUTED_CARD_COUNT;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,10 +32,23 @@ public class Deck {
         return new Deck(deckGenerator.generate());
     }
 
+    public List<Card> distributeInitialCards() {
+        return drawCards(INITIALLY_DISTRIBUTED_CARD_COUNT.getCount());
+    }
+
+    private List<Card> drawCards(final int count) {
+        final List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            cards.add(drawCard());
+        }
+        return cards;
+    }
+
     public Card drawCard() {
         validateCardDrawable();
         return cards.remove(0);
     }
+
 
     private void validateCardDrawable() {
         if (cards.isEmpty()) {

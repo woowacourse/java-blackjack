@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.state.State;
 import blackjack.domain.participant.validation.PlayerNameValidator;
 import blackjack.domain.result.MatchCalculator;
 import blackjack.domain.result.MatchResult;
@@ -20,7 +21,7 @@ public class Players {
     private Players(final List<String> playerNames, final Deck deck) {
         validatePlayerNames(playerNames);
         this.players = playerNames.stream()
-                .map(playerName -> Player.readyToPlay(playerName, deck))
+                .map(playerName -> Player.readyToPlay(playerName, deck.distributeInitialCards()))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -33,26 +34,11 @@ public class Players {
         return new Players(names, deck);
     }
 
-    private Player findByPlayerName(final String playerName) {
+    public Player findByPlayerName(final String playerName) {
         return players.stream()
                 .filter(player -> player.equalsName(playerName))
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException("플레이어를 찾을 수 없습니다."));
-    }
-
-    public void betAmount(final String playerName, final int amount) {
-        final Player player = findByPlayerName(playerName);
-        player.betAmount(amount);
-    }
-
-    public void drawCard(final String playerName, final Deck deck, final boolean needToDrawCard) {
-        final Player player = findByPlayerName(playerName);
-        player.drawCard(deck.drawCard(), needToDrawCard);
-    }
-
-    public boolean isPlayerPossibleToDrawCard(final String playerName) {
-        final Player player = findByPlayerName(playerName);
-        return player.isPossibleToDrawCard();
     }
 
     public MatchResult judgeMatchStatusOfPlayers(final Dealer dealer) {
@@ -62,6 +48,16 @@ public class Players {
             matchStatuses.put(player, matchStatus);
         }
         return new MatchResult(matchStatuses);
+    }
+
+    public boolean isAnyPlayerNotFinished() {
+        return players.stream()
+                .map(Participant::getState)
+                .anyMatch(this::isNotFinished);
+    }
+
+    private boolean isNotFinished(final State playerState) {
+        return !playerState.isFinished();
     }
 
     public List<Player> getPlayers() {

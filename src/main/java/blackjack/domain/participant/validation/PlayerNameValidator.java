@@ -10,11 +10,7 @@ public class PlayerNameValidator {
     private PlayerNameValidator() {
     }
 
-    public static void validateNameNotBlank(final String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
-        }
-    }
+
 
     public static void validateNameNotDuplicated(final List<String> playerNames) {
         if (isPlayerNameDuplicated(playerNames)) {

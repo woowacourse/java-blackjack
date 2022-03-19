@@ -46,14 +46,12 @@ public class PlayersTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                DIAMOND_KING,
-                                DIAMOND_TEN
+                                DIAMOND_KING, DIAMOND_TEN
                         ), "sun"
                 ),
                 Arguments.of(
                         List.of(
-                                DIAMOND_EIGHT,
-                                DIAMOND_NINE
+                                DIAMOND_EIGHT, DIAMOND_NINE
                         ), "if"
                 )
         );
@@ -64,20 +62,16 @@ public class PlayersTestProvider {
                 Arguments.of(
                         List.of("sun"),
                         List.of(
-                                DIAMOND_KING,
-                                DIAMOND_TEN,
-                                DIAMOND_EIGHT,
-                                DIAMOND_NINE
+                                DIAMOND_KING, DIAMOND_TEN,
+                                DIAMOND_EIGHT, DIAMOND_NINE
                         ),
                         Map.of("sun", MatchStatus.LOSS)
                 ),
                 Arguments.of(
                         List.of("sun", "if"),
                         List.of(
-                                SPADE_NINE,
-                                HEART_EIGHT,
-                                SPADE_TEN,
-                                SPADE_EIGHT,
+                                SPADE_NINE, HEART_EIGHT,
+                                SPADE_TEN, SPADE_EIGHT,
                                 HEART_TEN,
                                 SPADE_TWO
                         ),

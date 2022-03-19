@@ -18,4 +18,8 @@ public enum BlackjackCardRule {
         return this.count > count;
     }
 
+    public int getCount() {
+        return count;
+    }
+
 }

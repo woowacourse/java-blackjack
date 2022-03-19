@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.card.generator.RandomDeckGenerator;
 import blackjack.view.BlackjackView;
@@ -21,8 +20,7 @@ public class MainApplication {
         final OutputView outputView = new OutputView();
         final BlackjackView blackjackView = new BlackjackView(inputView, outputView);
         final DeckGenerator deckGenerator = new RandomDeckGenerator();
-        final BlackjackGame blackjackGame = new BlackjackGame(deckGenerator);
-        final BlackjackApplication blackjackApplication = new BlackjackApplication(blackjackGame, blackjackView);
+        final BlackjackApplication blackjackApplication = new BlackjackApplication(deckGenerator, blackjackView);
 
         blackjackApplication.run();
     }

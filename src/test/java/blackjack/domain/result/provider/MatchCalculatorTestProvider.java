@@ -14,7 +14,6 @@ import static blackjack.Fixture.SPADE_ACE;
 import static blackjack.Fixture.SPADE_KING;
 import static blackjack.Fixture.SPADE_TEN;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -22,8 +21,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.generator.ManualDeckGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.MatchStatus;
@@ -211,32 +208,16 @@ public class MatchCalculatorTestProvider {
     }
 
     private static Dealer generateDealer(final List<Card> initializedCards, List<Card> drewCards) {
-        final Deck deck = generateDeck(initializedCards, drewCards);
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        drewCards.forEach(card -> dealer.drawCard(deck.drawCard()));
+        final Dealer dealer = Dealer.readyToPlay(initializedCards);
+        drewCards.forEach(dealer::drawCard);
         return dealer;
     }
 
     private static Player generatePlayer(final List<Card> initializedCards, List<Card> drewCards) {
-        final Deck deck = generateDeck(initializedCards, drewCards);
-        final Player player = Player.readyToPlay("name", deck);
+        final Player player = Player.readyToPlay("name", initializedCards);
         player.betAmount(1000);
-        drewCards.forEach(card -> player.drawCard(deck.drawCard(), true));
+        drewCards.forEach(player::drawCard);
         return player;
-    }
-
-    private static Deck generateDeck(final List<Card> initializedCards, final List<Card> drewCards) {
-        final List<Card> cards = appendCards(initializedCards, drewCards);
-        final ManualDeckGenerator manualDeckGenerator = new ManualDeckGenerator();
-        manualDeckGenerator.initCards(cards);
-        return Deck.generate(manualDeckGenerator);
-    }
-
-    private static List<Card> appendCards(final List<Card> cards1, final List<Card> cards2) {
-        final List<Card> cards = new ArrayList<>();
-        cards.addAll(cards1);
-        cards.addAll(cards2);
-        return cards;
     }
 
 }

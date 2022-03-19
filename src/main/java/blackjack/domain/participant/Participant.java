@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.participant.state.InitialState;
 import blackjack.domain.participant.state.State;
 
@@ -11,10 +10,8 @@ public abstract class Participant {
 
     protected State state;
 
-    protected Participant(final Deck deck) {
-        final Card first = deck.drawCard();
-        final Card second = deck.drawCard();
-        this.state = InitialState.initiallyDrawCards(first, second);
+    protected Participant(final List<Card> cards) {
+        this.state = InitialState.initiallyDrawCards(cards);
     }
 
     public boolean isPossibleToDrawCard() {

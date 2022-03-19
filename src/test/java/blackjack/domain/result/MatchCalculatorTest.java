@@ -40,7 +40,7 @@ class MatchCalculatorTest {
     @ParameterizedTest
     @MethodSource("blackjack.domain.result.provider.MatchCalculatorTestProvider#provideForPlayerDrawIfBothNotBlackjackTest")
     void playerDrawIfBothNotBlackjackTest(final Dealer dealer, final Player player) {
-        player.drawCard(SPADE_ACE, false);
+        player.drawCard(SPADE_ACE);
 
         final MatchStatus actualMatchStatus = MatchCalculator.judgeMatchStatusOfPlayer(player, dealer);
         assertThat(actualMatchStatus).isEqualTo(MatchStatus.DRAW);
@@ -52,7 +52,7 @@ class MatchCalculatorTest {
     void judgeMatchStatusIfPlayerStandTest(final Dealer dealer,
                                            final Player player,
                                            final MatchStatus expectedMatchStatus) {
-        player.drawCard(SPADE_ACE, false);
+        player.drawCard(SPADE_ACE);
 
         final MatchStatus actualMatchStatus = MatchCalculator.judgeMatchStatusOfPlayer(player, dealer);
         assertThat(actualMatchStatus).isEqualTo(expectedMatchStatus);

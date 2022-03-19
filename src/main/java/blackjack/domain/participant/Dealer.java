@@ -1,36 +1,35 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.BlackjackScoreRule.DEALER_ENABLE_MINIMUM_SCORE;
+
 import java.util.List;
 
-import blackjack.domain.BlackjackScoreRule;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.participant.state.State;
 
 public final class Dealer extends Participant {
 
-    private Dealer(final Deck deck) {
-        super(deck);
+    private Dealer(final List<Card> cards) {
+        super(cards);
+        changeToStandIfPossible();
     }
 
-    public static Dealer readyToPlay(final Deck deck) {
-        return new Dealer(deck);
+    public static Dealer readyToPlay(final List<Card> cards) {
+        return new Dealer(cards);
     }
 
-    public void drawCard(final Card card) {
-        this.state = considerState(card);
-    }
-
-    private State considerState(final Card card) {
+    private void changeToStandIfPossible() {
         if (isDealerCannotDrawCardAnymore()) {
-            return state.stay();
+            this.state = state.stay();
         }
-        return state.drawCard(card);
     }
 
     private boolean isDealerCannotDrawCardAnymore() {
-        return state.isPossibleToDrawCard() &&
-                (BlackjackScoreRule.DEALER_ENABLE_MINIMUM_SCORE.isNotOverThan(state.getScore()));
+        return state.isPossibleToDrawCard() && DEALER_ENABLE_MINIMUM_SCORE.isNotOverThan(state.getScore());
+    }
+
+    public void drawCard(final Card card) {
+        this.state = state.drawCard(card);
+        changeToStandIfPossible();
     }
 
     public Card getFirstCard() {

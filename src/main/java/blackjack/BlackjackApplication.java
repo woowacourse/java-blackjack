@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.result.MatchResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.MatchResultDto;
@@ -15,38 +16,38 @@ import blackjack.view.BlackjackView;
 
 public class BlackjackApplication {
 
-    private final BlackjackGame blackjackGame;
+    private final DeckGenerator deckGenerator;
     private final BlackjackView blackjackView;
 
-    public BlackjackApplication(final BlackjackGame blackjackGame, final BlackjackView blackjackView) {
-        this.blackjackGame = blackjackGame;
+    public BlackjackApplication(final DeckGenerator deckGenerator, final BlackjackView blackjackView) {
+        this.deckGenerator = deckGenerator;
         this.blackjackView = blackjackView;
     }
 
     public void run() {
-        registerPlayers();
-        proceedBettingTurn();
-        announceInitiallyDistributedCards();
+        final BlackjackGame blackjackGame = initializeBlackjackGame();
+        proceedBettingTurn(blackjackGame);
+        announceInitiallyDistributedCards(blackjackGame);
 
-        proceedPlayersTurn();
-        proceedDealerTurn();
-        announceFinalScoresOfParticipants();
-        announceMatchResult();
+        proceedPlayersTurn(blackjackGame);
+        proceedDealerTurn(blackjackGame);
+        announceFinalScoresOfParticipants(blackjackGame);
+        announceMatchResult(blackjackGame);
     }
 
-    private void registerPlayers() {
+    private BlackjackGame initializeBlackjackGame() {
         final List<String> playerNames = blackjackView.requestPlayerNames();
-        blackjackGame.registerPlayers(playerNames);
+        return BlackjackGame.initialize(deckGenerator, playerNames);
     }
 
-    private void proceedBettingTurn() {
+    private void proceedBettingTurn(final BlackjackGame blackjackGame) {
         for (final String playerName : blackjackGame.getPlayerNames()) {
             final int bettingAmount = blackjackView.requestPlayerBettingAmount(playerName);
             blackjackGame.playerBet(playerName, bettingAmount);
         }
     }
 
-    private void announceInitiallyDistributedCards() {
+    private void announceInitiallyDistributedCards(final BlackjackGame blackjackGame) {
         final DealerInitialCardDto dealerInitialCardDto = DealerInitialCardDto.toDto(blackjackGame.getDealerFirstCard());
         final List<PlayerInitialCardsDto> playerInitialCardDtos = blackjackGame.getPlayers().stream()
                 .map(PlayerInitialCardsDto::toDto)
@@ -55,14 +56,14 @@ public class BlackjackApplication {
         blackjackView.printInitiallyDistributedCards(dealerInitialCardDto, playerInitialCardDtos);
     }
 
-    private void proceedPlayersTurn() {
+    private void proceedPlayersTurn(final BlackjackGame blackjackGame) {
         final List<String> playerNames = blackjackGame.getPlayerNames();
         for (final String playerName : playerNames) {
-            proceedPlayerTurn(playerName);
+            proceedPlayerTurn(blackjackGame, playerName);
         }
     }
 
-    private void proceedPlayerTurn(final String playerName) {
+    private void proceedPlayerTurn(final BlackjackGame blackjackGame, final String playerName) {
         while (blackjackGame.isPlayerPossibleToDrawCard(playerName)) {
             final boolean needToDrawCard = blackjackView.requestDrawingCardChoice(playerName);
             blackjackGame.playerDrawCard(playerName, needToDrawCard);
@@ -74,14 +75,14 @@ public class BlackjackApplication {
         }
     }
 
-    private void proceedDealerTurn() {
+    private void proceedDealerTurn(final BlackjackGame blackjackGame) {
         while (blackjackGame.isDealerPossibleToDrawCard()) {
             blackjackGame.dealerDrawCard();
             blackjackView.printMessageOfDealerDrewCard();
         }
     }
 
-    private void announceFinalScoresOfParticipants() {
+    private void announceFinalScoresOfParticipants(final BlackjackGame blackjackGame) {
         final DealerDto dealerDto = DealerDto.toDto(blackjackGame.getDealer());
         final List<PlayerDto> playerDtos = blackjackGame.getPlayers().stream()
                 .map(PlayerDto::toDto)
@@ -90,7 +91,7 @@ public class BlackjackApplication {
         blackjackView.printFinalScores(dealerDto, playerDtos);
     }
 
-    private void announceMatchResult() {
+    private void announceMatchResult(final BlackjackGame blackjackGame) {
         final MatchResult matchResult = blackjackGame.calculateMatchResult();
         final MatchResultDto matchResultDto = MatchResultDto.toDto(matchResult);
 
