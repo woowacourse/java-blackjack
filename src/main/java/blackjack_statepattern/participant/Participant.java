@@ -3,6 +3,7 @@ package blackjack_statepattern.participant;
 import blackjack_statepattern.card.Card;
 import blackjack_statepattern.state.Ready;
 import blackjack_statepattern.state.State;
+import java.util.List;
 
 public abstract class Participant {
     private final String name;
@@ -23,5 +24,9 @@ public abstract class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public List<Card> getCards() {
+        return state.cards().getCards();
     }
 }

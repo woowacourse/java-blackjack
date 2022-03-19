@@ -61,4 +61,12 @@ public final class Card {
     public int hashCode() {
         return Objects.hash(suit, denomination);
     }
+
+    public String getSuitName() {
+        return suit.getName();
+    }
+
+    public String getDenominationName() {
+        return denomination.getName();
+    }
 }

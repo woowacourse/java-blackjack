@@ -48,4 +48,14 @@ public class Cards {
     public boolean isReady() {
         return value.size() < 2;
     }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(value);
+    }
+
+    public Card getOneCard() {
+        return value.stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 카드가 한장도 없습니다."));
+    }
 }

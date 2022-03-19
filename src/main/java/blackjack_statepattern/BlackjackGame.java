@@ -51,6 +51,7 @@ public final class BlackjackGame {
         for (Player player : players) {
             distributeCard(player);
         }
+        OutputView.printDistributedCards(blackjackBoard.getCardsDto());
     }
 
     private void distributeCard(Participant participant) {

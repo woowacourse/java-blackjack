@@ -1,9 +1,14 @@
 package blackjack_statepattern;
 
+import blackjack_statepattern.card.Card;
+import blackjack_statepattern.dto.CardDto;
 import blackjack_statepattern.participant.Dealer;
+import blackjack_statepattern.participant.Participant;
 import blackjack_statepattern.participant.Player;
 import blackjack_statepattern.participant.Players;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class BlackjackBoard {
 
@@ -21,5 +26,14 @@ public final class BlackjackBoard {
 
     public List<Player> getPlayers() {
         return players.getPlayers();
+    }
+
+    public CardDto getCardsDto() {
+        Map<Participant, List<Card>> participantsCards = new LinkedHashMap<>();
+        participantsCards.put(dealer, List.of(dealer.getOneCard()));
+        for (Player player : getPlayers()) {
+            participantsCards.put(player, player.getCards());
+        }
+        return CardDto.of(participantsCards);
     }
 }
