@@ -6,11 +6,11 @@ import blackjack.domain.participant.Name;
 import blackjack.domain.state.State;
 import blackjack.domain.state.started.Ready;
 
-public abstract class StateParticipant {
+public abstract class Participant {
 
     private State state;
 
-    StateParticipant() {
+    Participant() {
         this.state = new Ready();
     }
 
@@ -31,5 +31,13 @@ public abstract class StateParticipant {
 
     public final Cards getCards() {
         return state.getCards();
+    }
+
+    public final int getScore() {
+        return getCards().sum();
+    }
+
+    public void stay() {
+        state = state.stay();
     }
 }

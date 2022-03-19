@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Betting;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
+import blackjack.domain.state.stateparticipant.Dealer;
+import blackjack.domain.state.stateparticipant.Player;
 
 public class Game {
 
@@ -29,8 +29,8 @@ public class Game {
     }
 
     private void init() {
-        dealer.init(cardDeck);
-        players.forEach(player -> player.init(cardDeck));
+        dealer.init(cardDeck.drawCard(), cardDeck.drawCard());
+        players.forEach(player -> player.init(cardDeck.drawCard(), cardDeck.drawCard()));
     }
 
     public Card dealerFirstCard() {
@@ -39,13 +39,13 @@ public class Game {
 
     public Optional<Player> findHitPlayer() {
         return players.stream()
-            .filter(Player::isHit)
+            .filter(player -> !player.getState().isFinished())
             .findFirst();
     }
 
-    public void drawPlayerCard(Player player, PlayStatus playStatus) {
-        if (playStatus == PlayStatus.HIT) {
-            player.hit(cardDeck.drawCard());
+    public void drawPlayerCard(Player player, String hitOrStay) {
+        if (hitOrStay.equalsIgnoreCase("y")) {
+            player.draw(cardDeck.drawCard());
             return;
         }
         player.stay();

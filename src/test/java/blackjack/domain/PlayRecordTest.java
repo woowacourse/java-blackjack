@@ -4,7 +4,6 @@ import static blackjack.domain.card.CardNumber.*;
 import static blackjack.domain.card.CardSymbol.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Map;
 
@@ -15,19 +14,18 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
+import blackjack.domain.state.stateparticipant.Dealer;
+import blackjack.domain.state.stateparticipant.Player;
 
 public class PlayRecordTest {
     Player player = new Player(Name.of("pobi"));
 
     @BeforeEach
     void setUp() {
-        player.hit(new Card(DIAMOND, KING));
-        player.hit(new Card(DIAMOND, SEVEN));
+        player.draw(new Card(DIAMOND, KING));
+        player.draw(new Card(DIAMOND, SEVEN));
     }
 
     @ParameterizedTest
@@ -36,9 +34,8 @@ public class PlayRecordTest {
     void getRecord_dealerNotBust(CardNumber cardNumber, PlayRecord expected) {
         // give
         Dealer dealer = new Dealer(List.of());
-        dealer.init(new CardDeck(() -> new ArrayDeque<>(
-            List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, NINE)))));
-        player.hit(new Card(DIAMOND, cardNumber));
+        dealer.init(new Card(DIAMOND, JACK), new Card(DIAMOND, NINE));
+        player.draw(new Card(DIAMOND, cardNumber));
 
         // when
         PlayRecord actual = PlayRecord.createPlayRecords(List.of(player), dealer)
@@ -54,10 +51,9 @@ public class PlayRecordTest {
     void getRecord_dealerBust(CardNumber cardNumber, PlayRecord expected) {
         // give
         Dealer dealer = new Dealer(List.of());
-        dealer.init(new CardDeck(() -> new ArrayDeque<>(
-            List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, NINE)))));
-        dealer.hit(new Card(DIAMOND, THREE));
-        player.hit(new Card(DIAMOND, cardNumber));
+        dealer.init(new Card(DIAMOND, JACK), new Card(DIAMOND, NINE));
+        dealer.draw(new Card(DIAMOND, THREE));
+        player.draw(new Card(DIAMOND, cardNumber));
 
         // when
         PlayRecord actual = PlayRecord.createPlayRecords(List.of(player), dealer)
@@ -72,8 +68,7 @@ public class PlayRecordTest {
     void getRecords() {
         //given
         Dealer dealer = new Dealer(List.of());
-        dealer.init(new CardDeck(() -> new ArrayDeque<>(
-            List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, SIX)))));
+        dealer.init(new Card(DIAMOND, JACK), new Card(DIAMOND, SIX));
 
         //when
         Map<Name, PlayRecord> actual = PlayRecord.createPlayRecords(

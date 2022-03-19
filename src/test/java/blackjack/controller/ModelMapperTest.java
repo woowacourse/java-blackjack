@@ -14,8 +14,8 @@ import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
+import blackjack.domain.state.stateparticipant.Participant;
+import blackjack.domain.state.stateparticipant.Player;
 import blackjack.dto.ParticipantDto;
 
 class ModelMapperTest {
@@ -26,7 +26,7 @@ class ModelMapperTest {
         CardDeck cardDeck = new CardDeck(new TestDeck());
         Participant player = new Player(Name.of("pobi"));
 
-        player.init(cardDeck);
+        player.init(cardDeck.drawCard(), cardDeck.drawCard());
         dto = ModelMapper.map(player);
     }
 

@@ -1,14 +1,13 @@
 package blackjack.domain;
 
-import static blackjack.domain.PlayStatus.*;
 import static java.util.stream.Collectors.*;
 
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
+import blackjack.domain.state.stateparticipant.Dealer;
+import blackjack.domain.state.stateparticipant.Player;
 
 public enum PlayRecord {
 
@@ -28,11 +27,11 @@ public enum PlayRecord {
             return LOSS;
         }
 
-        if (dealer.getScore() == player.getScore() && !dealer.isBlackjack()) {
+        if (dealer.getScore() == player.getScore() && !dealer.getCards().isBlackjack()) {
             return PUSH;
         }
 
-        if (player.isBlackjack()) {
+        if (player.getState().getCards().isBlackjack()) {
             return BLACKJACK;
         }
 
@@ -40,7 +39,7 @@ public enum PlayRecord {
     }
 
     private static boolean isPlayerLoss(Dealer dealer, Player player) {
-        return isBust(player.getScore()) || (!isBust(dealer.getScore()) && player.getScore() < dealer.getScore())
-            || (dealer.isBlackjack() && !player.isBlackjack());
+        return player.getCards().isBust() || (!dealer.getCards().isBust() && player.getScore() < dealer.getScore())
+            || (dealer.getCards().isBlackjack() && !player.getCards().isBlackjack());
     }
 }

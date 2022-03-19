@@ -1,12 +1,15 @@
-package blackjack.domain.participant;
+package blackjack.domain.state.stateparticipant;
 
 import java.util.List;
 import java.util.Map;
 
 import blackjack.domain.PlayRecord;
-import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Betting;
+import blackjack.domain.participant.BettingTable;
+import blackjack.domain.participant.DrawCount;
+import blackjack.domain.participant.Name;
 
 public class Dealer extends Participant {
 
@@ -22,16 +25,20 @@ public class Dealer extends Participant {
 
     public DrawCount drawCards(CardDeck cardDeck) {
         int count = 0;
-        while (getStatus() == PlayStatus.HIT && getScore() <= HIT_CONDITION) {
-            hit(cardDeck.drawCard());
+        while (isDrawable()) {
+            draw(cardDeck.drawCard());
             count++;
         }
 
         return DrawCount.of(count);
     }
 
+    private boolean isDrawable() {
+        return !getState().isFinished() && getCards().sum() <= HIT_CONDITION;
+    }
+
     public Card openCard() {
-        return cards.findFirst();
+        return getCards().findFirst();
     }
 
     public Map<Name, Long> getRevenues(Map<Name, PlayRecord> recordMap) {

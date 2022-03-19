@@ -20,6 +20,10 @@ public final class Hit extends Running {
             return new Bust(newCards);
         }
 
+        if (newCards.sum() == 21) {
+            return new Stay(newCards);
+        }
+
         return new Hit(cards.add(card));
     }
 

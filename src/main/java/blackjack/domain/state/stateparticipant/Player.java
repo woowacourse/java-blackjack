@@ -1,6 +1,6 @@
-package blackjack.domain.participant;
+package blackjack.domain.state.stateparticipant;
 
-import blackjack.domain.PlayStatus;
+import blackjack.domain.participant.Name;
 
 public class Player extends Participant {
 
@@ -10,10 +10,7 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public void stay() {
-        playStatus = PlayStatus.STAY;
-    }
-
+    @Override
     public Name getName() {
         return name;
     }

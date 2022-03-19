@@ -32,7 +32,7 @@ public class StateDealerTest {
     @DisplayName("조건에 만족할 때 까지 카드를 뽑는다. (버스트)")
     void drawCards_Bust() {
         // give
-        StateDealer dealer = new StateDealer(List.of());
+        Dealer dealer = new Dealer(List.of());
         CardDeck cardDeck = new CardDeck(new TestDeck());
         dealer.init(cardDeck.drawCard(), cardDeck.drawCard());
 
@@ -48,7 +48,7 @@ public class StateDealerTest {
     @DisplayName("조건에 만족할 때 까지 카드를 뽑는다. (BUST X)")
     void drawCards_Not_BUST() {
         // give
-        StateDealer dealer = new StateDealer(List.of());
+        Dealer dealer = new Dealer(List.of());
         CardDeck cardDeck = new CardDeck(new TestNoBustDeck());
         dealer.init(cardDeck.drawCard(), cardDeck.drawCard());
 
@@ -64,7 +64,7 @@ public class StateDealerTest {
     @DisplayName("처음 받은 카드 중에 한 장의 카드를 공개한다.")
     void openCard() {
         // give
-        StateDealer dealer = new StateDealer(List.of());
+        Dealer dealer = new Dealer(List.of());
         CardDeck cardDeck = new CardDeck(new TestNoBustDeck());
         dealer.init(cardDeck.drawCard(), cardDeck.drawCard());
 
@@ -80,7 +80,7 @@ public class StateDealerTest {
     @DisplayName("딜러가 카드를 추가로 뽑았는지 아닌지 검증한다.")
     void isDraw(CardNumber cardNumber, boolean expected) {
         // give
-        StateDealer dealer = new StateDealer(List.of());
+        Dealer dealer = new Dealer(List.of());
         CardDeck cardDeck = new CardDeck(() -> new ArrayDeque<>(List.of(
             new Card(DIAMOND, ACE),
             new Card(DIAMOND, QUEEN), new Card(CLUB, cardNumber))));
@@ -97,7 +97,7 @@ public class StateDealerTest {
     @DisplayName("딜러의 수익을 반환한다.")
     void dealerRevenue() {
         //given
-        StateDealer dealer = new StateDealer(List.of(new Betting(Name.of("pobi"), 10000),
+        Dealer dealer = new Dealer(List.of(new Betting(Name.of("pobi"), 10000),
             new Betting(Name.of("jason"), 20000)));
 
         //when

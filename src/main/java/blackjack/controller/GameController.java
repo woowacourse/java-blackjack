@@ -9,14 +9,13 @@ import java.util.Map;
 
 import blackjack.domain.Game;
 import blackjack.domain.PlayRecord;
-import blackjack.domain.PlayStatus;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.ShuffleDeck;
 import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
+import blackjack.domain.state.stateparticipant.Participant;
+import blackjack.domain.state.stateparticipant.Player;
 import blackjack.dto.ParticipantDto;
 
 public class GameController {
@@ -72,7 +71,7 @@ public class GameController {
 
         while (game.findHitPlayer().isPresent()) {
             Player player = game.findHitPlayer().get();
-            PlayStatus hitOrStay = requestHitOrStay(player.getName());
+            String hitOrStay = requestHitOrStay(player.getName());
 
             game.drawPlayerCard(player, hitOrStay);
 

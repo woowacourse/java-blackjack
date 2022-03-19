@@ -16,7 +16,9 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
+import blackjack.domain.state.State;
+import blackjack.domain.state.started.running.Hit;
+import blackjack.domain.state.stateparticipant.Player;
 
 public class GameTest {
 
@@ -60,22 +62,22 @@ public class GameTest {
         // when
         Optional<Player> hitPlayer = game.findHitPlayer();
         if (hitPlayer.isPresent()) {
-            boolean actual = hitPlayer.get().isHit();
+            State actual = hitPlayer.get().getState();
             // then
-            assertThat(actual).isTrue();
+            assertThat(actual).isInstanceOf(Hit.class);
         }
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"HIT:30", "STAY:20"}, delimiter = ':')
+    @CsvSource(value = {"y:30", "n:20"}, delimiter = ':')
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
-    void drawCard_HIT(PlayStatus playStatus, int expected) {
+    void drawCard_HIT(String hitOrStay, int expected) {
         // give
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
         Player player = game.getPlayers().get(0);
 
         // when
-        game.drawPlayerCard(player, playStatus);
+        game.drawPlayerCard(player, hitOrStay);
         int actual = player.getScore();
 
         // then

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import blackjack.domain.PlayStatus;
 import blackjack.domain.participant.Name;
 
 public class InputView {
@@ -25,17 +24,13 @@ public class InputView {
             .collect(Collectors.toUnmodifiableList());
     }
 
-    public static PlayStatus requestHitOrStay(Name name) {
+    public static String requestHitOrStay(Name name) {
         System.out.println(name.getValue() + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         String text = readLine().trim();
         validateHitOrStayInput(text);
 
-        if (text.equalsIgnoreCase("y")) {
-            return PlayStatus.HIT;
-        }
-
-        return PlayStatus.STAY;
+        return text;
     }
 
     private static void validateHitOrStayInput(String text) {

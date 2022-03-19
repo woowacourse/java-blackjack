@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.state.stateparticipant.Participant;
 import blackjack.dto.ParticipantDto;
 
 public class ModelMapper {
@@ -9,6 +9,6 @@ public class ModelMapper {
     }
 
     static ParticipantDto map(Participant participant) {
-        return new ParticipantDto(participant.getName(), participant.getCards(), participant.getScore());
+        return new ParticipantDto(participant.getName(), participant.getCards().getValue(), participant.getScore());
     }
 }

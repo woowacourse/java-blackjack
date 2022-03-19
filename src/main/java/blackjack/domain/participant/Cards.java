@@ -8,7 +8,6 @@ import java.util.Set;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 
 public class Cards {
@@ -25,10 +24,6 @@ public class Cards {
         Set<Card> newCards = new LinkedHashSet<>(value);
         newCards.add(card);
         return new Cards(newCards);
-    }
-
-    PlayStatus getStatus() {
-        return PlayStatus.of(sum());
     }
 
     public int sum() {
@@ -55,7 +50,7 @@ public class Cards {
             .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
     }
 
-    Set<Card> getValue() {
+    public Set<Card> getValue() {
         return new LinkedHashSet<>(value);
     }
 
@@ -65,10 +60,14 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return PlayStatus.isBlackjack(sum(), value.size());
+        return sum() == 21 && value.size() == 2;
     }
 
     public int size() {
         return value.size();
+    }
+
+    public boolean isBust() {
+        return sum() > 21;
     }
 }

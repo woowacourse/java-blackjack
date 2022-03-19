@@ -14,7 +14,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 
@@ -56,15 +55,15 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"SEVEN:BUST", "FOUR:HIT"}, delimiter = ':')
+    @CsvSource(value = {"SEVEN:true", "FOUR:false"}, delimiter = ':')
     @DisplayName("합산한 값이 21을 초과하면 BUST를 반환한다.")
-    void isBust1(CardNumber cardNumber, PlayStatus expected) {
+    void isBust1(CardNumber cardNumber, boolean expected) {
         // give
         Cards cards = new Cards(Set.of(new Card(DIAMOND, JACK), new Card(DIAMOND, FIVE),
             new Card(DIAMOND, cardNumber)));
 
         // when
-        PlayStatus actual = cards.getStatus();
+        boolean actual = cards.isBust();
 
         // then
         assertThat(actual).isEqualTo(expected);
