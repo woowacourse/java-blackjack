@@ -11,6 +11,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class BlackJackGame {
 
@@ -35,10 +36,19 @@ public class BlackJackGame {
     private Gamers setGamers() {
         try {
             return Gamers
-                .createGamers(InputView.requestPlayerName(), InputView::requestBettingMoney);
+                .createGamers(InputView.requestPlayerName(), requestBettingMoney());
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return setGamers();
+        }
+    }
+
+    private Function<String, Integer> requestBettingMoney() {
+        try {
+            return InputView::requestBettingMoney;
+        } catch (IllegalStateException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            return requestBettingMoney();
         }
     }
 

@@ -11,7 +11,7 @@ public class BetMoney {
 
     private void checkNegative(final long betMoney) {
         if (betMoney < 0) {
-            throw new IllegalArgumentException("[ERROR] 배팅금액은 음수일 수 없습니다.");
+            throw new IllegalStateException("[ERROR] 배팅금액은 음수일 수 없습니다.");
         }
     }
 
