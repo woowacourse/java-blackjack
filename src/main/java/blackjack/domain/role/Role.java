@@ -47,7 +47,7 @@ public abstract class Role {
 	}
 
 	public int calculateFinalScore() {
-		return hand.calculateOptimalScore();
+		return hand.calculateScore();
 	}
 
 	public int calculateBettingResult() {
@@ -72,10 +72,6 @@ public abstract class Role {
 
 	public boolean wantDraw() {
 		return drawMore;
-	}
-
-	public String calculateFinalResult() {
-		return hand.getFinalScore();
 	}
 
 	public abstract boolean canDraw();

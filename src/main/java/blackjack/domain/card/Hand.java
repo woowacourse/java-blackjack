@@ -25,23 +25,12 @@ public class Hand {
 		cards.add(card);
 	}
 
-	public String getFinalScore() {
-		int score = calculateOptimalScore();
-		if (score == BlackJack.BUST_SCORE) {
-			return BlackJack.BUST_MESSAGE;
-		}
-		return Integer.toString(score);
-	}
-
-	public int calculateOptimalScore() {
+	public int calculateScore() {
 		int totalScore = cards.stream()
 			.mapToInt(Card::getScore)
 			.sum();
-		if (isBust(totalScore)) {
-			return BlackJack.BUST_SCORE;
-		}
 		if (hasAce()) {
-			return getOptimizedScore(totalScore, totalScore + ACE_AS_ELEVEN);
+			return calculateScoreWithAce(totalScore, totalScore + ACE_AS_ELEVEN);
 		}
 		return totalScore;
 	}
@@ -56,7 +45,7 @@ public class Hand {
 			.anyMatch(score -> score == Denomination.ACE.getScore());
 	}
 
-	private int getOptimizedScore(final int aceAsOneScore, final int aceAsElevenScore) {
+	private int calculateScoreWithAce(final int aceAsOneScore, final int aceAsElevenScore) {
 		if (isBust(aceAsElevenScore)) {
 			return aceAsOneScore;
 		}
@@ -74,7 +63,7 @@ public class Hand {
 	}
 
 	public boolean isBlackJack() {
-		return calculateOptimalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER
+		return calculateScore() == BlackJack.OPTIMIZED_WINNING_NUMBER
 			&& cards.size() == THE_NUMBER_OF_INITIAL_CARD;
 	}
 }

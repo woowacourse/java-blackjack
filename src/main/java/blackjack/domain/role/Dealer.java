@@ -35,10 +35,10 @@ public class Dealer extends Role {
 
 	@Override
 	public boolean canDraw() {
-		if (hand.calculateOptimalScore() >= BlackJack.OPTIMIZED_WINNING_NUMBER) {
+		if (hand.calculateScore() >= BlackJack.OPTIMIZED_WINNING_NUMBER) {
 			return false;
 		}
-		if (hand.calculateOptimalScore() <= CAN_DRAW_STANDARD) {
+		if (hand.calculateScore() <= CAN_DRAW_STANDARD) {
 			return true;
 		}
 		if (!hand.hasAce()) {

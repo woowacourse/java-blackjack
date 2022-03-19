@@ -1,11 +1,9 @@
 package blackjack.view;
 
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Outcome;
+import blackjack.domain.BlackJack;
 import blackjack.domain.role.Role;
 
 public class OutputView {
@@ -80,7 +78,12 @@ public class OutputView {
 
 	private static void printPersonalFinalResult(final Role result) {
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCardsName()));
-		System.out.println(RESULT + result.calculateFinalResult());
+		final int score = result.calculateFinalScore();
+		String scoreResult = Integer.toString(score);
+		if (score > BlackJack.OPTIMIZED_WINNING_NUMBER) {
+			scoreResult = BlackJack.BUST_MESSAGE;
+		}
+		System.out.println(RESULT + scoreResult);
 	}
 
 	private static void printDealerOutcome(final Role dealerResult) {
@@ -95,11 +98,4 @@ public class OutputView {
 		}
 	}
 
-	private static String getValue(final Map<Outcome, Integer> rawResult) {
-		final Outcome outcome = rawResult.keySet()
-			.stream()
-			.findFirst()
-			.orElseThrow(NoSuchElementException::new);
-		return outcome.getValue();
-	}
 }

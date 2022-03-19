@@ -13,7 +13,6 @@ public class BlackJack {
 
 	public static final String BUST_MESSAGE = "파산";
 	public static final int BUST = 0;
-	public static final int BUST_SCORE = 0;
 	public static final int OPTIMIZED_WINNING_NUMBER = 21;
 
 	private Deck deck;
@@ -24,7 +23,6 @@ public class BlackJack {
 		final List<String> playersName = InputView.requestPlayerName();
 		joinPlayers(InputView.betMoney(playersName));
 		distributeCard();
-		// roles.judgeBlackJack();
 		redrawCard();
 		calculateFinalResult();
 	}

@@ -29,7 +29,7 @@ public class Player extends Role {
 
 	@Override
 	public boolean canDraw() {
-		final int score = hand.calculateOptimalScore();
+		final int score = hand.calculateScore();
 		if (hand.isBlackJack()) {
 			return false;
 		}
