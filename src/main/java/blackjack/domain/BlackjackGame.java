@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.card.HoldCards.INIT_CARD_SIZE;
+
 public class BlackjackGame {
     public static final int BLACKJACK_NUMBER = 21;
 
@@ -49,12 +51,12 @@ public class BlackjackGame {
     }
 
     private Dealer createDealer() {
-        return new Dealer(HoldCards.init(List.of(deck.draw(), deck.draw())));
+        return new Dealer(HoldCards.init(deck.drawCards(INIT_CARD_SIZE)));
     }
 
     private Players toPlayers(Map<String, Integer> names) {
         return new Players(names.entrySet().stream()
-                .map(entry -> new Player(entry.getKey(), entry.getValue(), HoldCards.init(List.of(deck.draw(), deck.draw()))))
+                .map(entry -> new Player(entry.getKey(), entry.getValue(), HoldCards.init(deck.drawCards(INIT_CARD_SIZE))))
                 .collect(Collectors.toList()));
     }
 }
