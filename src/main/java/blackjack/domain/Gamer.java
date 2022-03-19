@@ -10,11 +10,11 @@ public abstract class Gamer {
     private final BettingMoney bettingMoney;
     private final Cards cards;
 
-    public Gamer(String name, int bettingMoney, List<Card> cards) {
+    public Gamer(String name, BettingMoney bettingMoney, List<Card> cards) {
         this.name = name.trim();
         checkName(this.name);
 
-        this.bettingMoney = new BettingMoney(bettingMoney);
+        this.bettingMoney = bettingMoney;
         this.cards = new Cards(cards);
     }
 

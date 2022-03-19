@@ -14,7 +14,7 @@ class GamerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "   "})
     void 이름_공백_예외(String value) {
-        assertThatThrownBy(() -> new Player(value, 1000, CardsTestDataGenerator.generateBlackJackCards()))
+        assertThatThrownBy(() -> new Player(value, new BettingMoney(1000), CardsTestDataGenerator.generateBlackJackCards()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 공백이 아니어야합니다.");
     }
@@ -22,6 +22,6 @@ class GamerTest {
     @DisplayName("이름이 정상적으로 생성된다.")
     @Test
     void 이름_생성_정상() {
-        assertDoesNotThrow(() -> new Player("pobi", 1000, CardsTestDataGenerator.generateBlackJackCards()));
+        assertDoesNotThrow(() -> new Player("pobi", new BettingMoney(1000), CardsTestDataGenerator.generateBlackJackCards()));
     }
 }

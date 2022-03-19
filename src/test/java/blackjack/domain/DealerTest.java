@@ -63,7 +63,7 @@ public class DealerTest {
     @Test
     void 배팅금액_합계_승리() {
         Dealer dealer = new Dealer(generateBlackJackCards());
-        Player player = new Player("sudal", 1000, generateTotalScoreGraterThan17Cards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreGraterThan17Cards());
 
         player.calculateBettingMoneyResult(dealer);
         dealer.calculateBettingMoneyResult(player);
@@ -75,7 +75,7 @@ public class DealerTest {
     @Test
     void 배팅금액_합계_패배() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", 1000, generateTotalScoreGraterThan17Cards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreGraterThan17Cards());
 
         player.calculateBettingMoneyResult(dealer);
         dealer.calculateBettingMoneyResult(player);
@@ -87,7 +87,7 @@ public class DealerTest {
     @Test
     void 배팅금액_합계_블랙잭_패배() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", 1000, generateBlackJackCards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
 
         player.calculateBettingMoneyResult(dealer);
         dealer.calculateBettingMoneyResult(player);
@@ -99,7 +99,7 @@ public class DealerTest {
     @Test
     void 배팅금액_합계_블랙잭_무승부() {
         Dealer dealer = new Dealer(generateBlackJackCards());
-        Player player = new Player("sudal", 1000, generateBlackJackCards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
 
         player.calculateBettingMoneyResult(dealer);
         dealer.calculateBettingMoneyResult(player);
@@ -111,7 +111,7 @@ public class DealerTest {
     @Test
     void 배팅금액_합계_무승부() {
         Dealer dealer = new Dealer(generate21Cards());
-        Player player = new Player("sudal", 1000, generate21Cards());
+        Player player = new Player("sudal", new BettingMoney(1000), generate21Cards());
 
         player.calculateBettingMoneyResult(dealer);
         dealer.calculateBettingMoneyResult(player);

@@ -2,6 +2,7 @@ package blackjack;
 
 import static java.util.stream.Collectors.*;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
@@ -42,8 +43,13 @@ public class Application {
         return new Players(players);
     }
 
-    private static int createBettingMoney(String playerName) {
-        return InputView.insertBettingMoney(playerName);
+    private static BettingMoney createBettingMoney(String playerName) {
+        try {
+            return new BettingMoney(InputView.insertBettingMoney(playerName));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return createBettingMoney(playerName);
+        }
     }
 
     public static void playing(Deck deck, Player player) {

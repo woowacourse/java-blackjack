@@ -7,6 +7,7 @@ import static blackjack.domain.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Card;
 import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
@@ -24,7 +25,7 @@ public class PlayerTest {
     @DisplayName("이름과 카드 리스트가 주어지면 정상적으로 생성된다.")
     @Test
     void 플레이어_생성_정상() {
-        assertDoesNotThrow(() -> new Player("mat", 0, generateBlackJackCards()));
+        assertDoesNotThrow(() -> new Player("mat", new BettingMoney(0), generateBlackJackCards()));
     }
 
     @DisplayName("플레이어의 총 점수가 21점 이하인 경우 hit가 가능하다.")
@@ -32,7 +33,7 @@ public class PlayerTest {
     void 플레이어_게임_지속_가능() {
         String name = "mat";
         List<Card> cards = generateTotalScoreNotMoreThan21Cards();
-        Player player = new Player(name, 0, cards);
+        Player player = new Player(name, new BettingMoney(0), cards);
 
         assertThat(player.canHit()).isTrue();
     }
@@ -42,7 +43,7 @@ public class PlayerTest {
     void 플레이어_게임_지속_불가능() {
         String name = "sudal";
         List<Card> cards = generateTotalScoreGraterThan21Cards();
-        Player player = new Player(name, 0, cards);
+        Player player = new Player(name, new BettingMoney(0), cards);
 
         assertThat(player.canHit()).isFalse();
     }
@@ -52,7 +53,7 @@ public class PlayerTest {
     void 카드_합침() {
         String name = "mat";
         List<Card> cards = generateBlackJackCards();
-        Player player = new Player(name, 0, cards);
+        Player player = new Player(name, new BettingMoney(0), cards);
         Card card = Card.of(FIVE, SPADE);
 
         player.addCard(card);
@@ -76,7 +77,7 @@ public class PlayerTest {
         List<Card> normalCards = generateTotalScoreNotMoreThan21Cards();
 
         Dealer dealer = new Dealer(bustCards);
-        Player player = new Player("sudal", 0, normalCards);
+        Player player = new Player("sudal", new BettingMoney(0), normalCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -91,7 +92,7 @@ public class PlayerTest {
         List<Card> playerByBustValue = generateTotalScoreGraterThan21Cards();
 
         Dealer dealer = new Dealer(dealerByBustValue);
-        Player player = new Player("sudal", 0, playerByBustValue);
+        Player player = new Player("sudal", new BettingMoney(0), playerByBustValue);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -106,7 +107,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan21Cards();
 
         Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", 0, maxValueCards);
+        Player player = new Player("sudal", new BettingMoney(0), maxValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -122,7 +123,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
 
         Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", 0, maxValueCards);
+        Player player = new Player("sudal", new BettingMoney(0), maxValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -138,7 +139,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
 
         Dealer dealer = new Dealer(maxValueCards);
-        Player player = new Player("sudal", 0, minValueCards);
+        Player player = new Player("sudal", new BettingMoney(0), minValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -154,7 +155,7 @@ public class PlayerTest {
         List<Card> tieValueByDealer = generate21Cards();
 
         Dealer dealer = new Dealer(tieValueByDealer);
-        Player player = new Player("sudal", 0, tieValueByPlayer);
+        Player player = new Player("sudal", new BettingMoney(0), tieValueByPlayer);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -170,7 +171,7 @@ public class PlayerTest {
         List<Card> tieValueByDealer = generate21Cards();
 
         Dealer dealer = new Dealer(tieValueByDealer);
-        Player player = new Player("sudal", 0, tieValueByPlayer);
+        Player player = new Player("sudal", new BettingMoney(0), tieValueByPlayer);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -180,7 +181,7 @@ public class PlayerTest {
     @DisplayName("플레이어가 이겼을 때 최종 배팅 머니 계산")
     @Test
     void 배팅금액_합계_승리() {
-        Player player = new Player("sudal", 1000, generateTotalScoreGraterThan17Cards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreGraterThan17Cards());
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
 
         player.calculateBettingMoneyResult(dealer);
@@ -192,7 +193,7 @@ public class PlayerTest {
     @Test
     void 배팅금액_합계_블랙잭_승리() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", 1000, generateBlackJackCards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
 
         player.calculateBettingMoneyResult(dealer);
 
@@ -203,7 +204,7 @@ public class PlayerTest {
     @Test
     void 배팅금액_합계_패배() {
         Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
-        Player player = new Player("sudal", 1000, generateTotalScoreNotMoreThan16Cards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreNotMoreThan16Cards());
 
         player.calculateBettingMoneyResult(dealer);
 
@@ -214,7 +215,7 @@ public class PlayerTest {
     @Test
     void 배팅금액_합계_무승부() {
         Dealer dealer = new Dealer(generateBlackJackCards());
-        Player player = new Player("sudal", 1000, generateBlackJackCards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
 
         player.calculateBettingMoneyResult(dealer);
 

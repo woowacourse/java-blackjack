@@ -11,12 +11,22 @@ import blackjack.dto.PlayersDto;
 public class OutputView {
 
     private static final String DELIMITER_JOINING = ", ";
+    private static final String ERROR = "[ERROR] ";
+    private static final String NUMBER_FORMAT_MESSAGE = "숫자를 입력하셔야 합니다.";
+    private static final String STRING = "string";
 
     private OutputView() {
     }
 
     public static void printGuideMessage(String message) {
         System.out.println(message);
+    }
+
+    public static void printErrorMessage(String message) {
+        if (message.contains(STRING)) {
+            message = NUMBER_FORMAT_MESSAGE;
+        }
+        System.out.println(ERROR + message);
     }
 
     public static void printStartInfo(GamerDto dealer, PlayersDto players) {

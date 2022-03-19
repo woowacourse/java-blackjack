@@ -8,7 +8,7 @@ public class Player extends Gamer {
 
     private static final int CONVERT_POSITIVE_VALUE = -1;
 
-    public Player(String name, int battingMoney, List<Card> cards) {
+    public Player(String name, BettingMoney battingMoney, List<Card> cards) {
         super(name, battingMoney, cards);
     }
 

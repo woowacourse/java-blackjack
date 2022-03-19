@@ -24,9 +24,9 @@ public class InputView {
                 .collect(toList());
     }
 
-    public static int insertBettingMoney(String playerName) {
+    public static String insertBettingMoney(String playerName) {
         OutputView.printGuideMessage(playerName + "의 배팅 금액은?");
-        return Integer.parseInt(SCANNER.nextLine());
+        return SCANNER.nextLine();
     }
 
     public static PlayCommand getPlayCommand(Player player) {
