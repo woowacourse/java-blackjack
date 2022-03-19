@@ -3,7 +3,7 @@ package blackjack_statepattern;
 import java.util.List;
 
 public final class Game {
-    public static Object start(final Card first, final Card second) {
+    public static State start(final Card first, final Card second) {
 
         Cards cards = new Cards(List.of(first, second));
         if (cards.isBlackjack()) {
