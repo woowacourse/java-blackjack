@@ -1,10 +1,10 @@
 package blackjack.model.game;
 
+import blackjack.model.BettingResult;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Participant;
 import blackjack.model.participant.Participants;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
     private final Participants participants;
@@ -27,7 +27,7 @@ public class BlackjackGame {
         return participants.getParticipants();
     }
 
-    public Map<String, Double> createBettingResult() {
+    public BettingResult createBettingResult() {
         return participants.createBettingResult();
     }
 }

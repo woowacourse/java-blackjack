@@ -1,9 +1,9 @@
 package blackjack.model.state;
 
-import static blackjack.model.ProfitResult.LOSE;
-import static blackjack.model.ProfitResult.WIN;
+import static blackjack.model.Profits.LOSE;
+import static blackjack.model.Profits.WIN;
 
-import blackjack.model.ProfitResult;
+import blackjack.model.Profits;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import java.util.List;
@@ -57,13 +57,13 @@ public class Stay implements State {
     }
 
     @Override
-    public ProfitResult calculateProfit(State otherState) {
+    public Profits calculateProfit(State otherState) {
         if (otherState.isBlackjack()) {
             return LOSE;
         }
         if (otherState.isBust()) {
             return WIN;
         }
-        return ProfitResult.compareTo(this, otherState);
+        return Profits.compareTo(this, otherState);
     }
 }

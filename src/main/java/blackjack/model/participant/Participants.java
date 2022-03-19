@@ -1,13 +1,12 @@
 package blackjack.model.participant;
 
+import blackjack.model.BettingResult;
 import blackjack.model.card.CardDeck;
 import blackjack.model.game.GameSign;
 import blackjack.model.game.MoneyBetter;
 import blackjack.model.game.TurnProgress;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -61,11 +60,7 @@ public class Participants {
         dealer.hitFrom(cardDeck, gameSign, turnProgress);
     }
 
-    public Map<String, Double> createBettingResult() {
-        Map<String, Double> result = new LinkedHashMap<>();
-        for (Participant player : players) {
-            result.put(player.getName(), player.getProfit(dealer));
-        }
-        return result;
+    public BettingResult createBettingResult() {
+        return new BettingResult(dealer, players);
     }
 }

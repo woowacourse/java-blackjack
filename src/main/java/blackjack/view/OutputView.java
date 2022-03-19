@@ -1,8 +1,8 @@
 package blackjack.view;
 
+import blackjack.model.BettingResult;
 import blackjack.model.participant.Participant;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -41,10 +41,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printParticipantsBettingResult(Map<String, Double> bettingResult) {
+    public static void printParticipantsBettingResult(BettingResult bettingResult) {
         System.out.println();
         System.out.println("## 최종 수익");
-        bettingResult.forEach(OutputView::printParticipantBettingResult);
+        bettingResult.getResult().forEach(OutputView::printParticipantBettingResult);
     }
 
     private static void printParticipantBettingResult(String name, Double money) {

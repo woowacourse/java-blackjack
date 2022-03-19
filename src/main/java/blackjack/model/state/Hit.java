@@ -1,6 +1,6 @@
 package blackjack.model.state;
 
-import blackjack.model.ProfitResult;
+import blackjack.model.Profits;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import java.util.List;
@@ -52,7 +52,7 @@ public class Hit implements State {
     }
 
     @Override
-    public ProfitResult calculateProfit(State otherState) {
+    public Profits calculateProfit(State otherState) {
         throw new IllegalArgumentException("[ERROR] 아직 카드 분배가 끝나지 않아 수익률을 계산 할 수 없습니다‼");
     }
 
