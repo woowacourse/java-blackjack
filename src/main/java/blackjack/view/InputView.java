@@ -36,9 +36,9 @@ public class InputView {
 		return amounts;
 	}
 
-	private static String inputData(final Consumer<String> validation, final InputMessage inputMessage) {
+	private static String inputData(final Consumer<String> validation, final Runnable inputMessage) {
 		try {
-			inputMessage.print();
+			inputMessage.run();
 			final String data = scanner.nextLine();
 			validation.accept(data);
 			return data;
