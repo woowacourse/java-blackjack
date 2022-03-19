@@ -1,16 +1,15 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
+import blackjack.domain.state.State;
 import blackjack.domain.state.finished.Bust;
 import blackjack.domain.state.finished.Stay;
 
-public class Hit implements State {
-
-    private final Cards cards;
+public final class Hit extends Running {
 
     public Hit(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     @Override
@@ -22,11 +21,6 @@ public class Hit implements State {
         }
 
         return new Hit(cards.add(card));
-    }
-
-    @Override
-    public Cards getCards() {
-        return cards;
     }
 
     @Override

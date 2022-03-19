@@ -14,6 +14,8 @@ import blackjack.domain.participant.Cards;
 import blackjack.domain.state.finished.Blackjack;
 import blackjack.domain.state.finished.Bust;
 import blackjack.domain.state.finished.Stay;
+import blackjack.domain.state.running.Hit;
+import blackjack.domain.state.running.Ready;
 
 public class ReadyTest {
 

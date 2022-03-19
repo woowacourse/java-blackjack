@@ -1,21 +1,20 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
 import java.util.Set;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
+import blackjack.domain.state.State;
 import blackjack.domain.state.finished.Blackjack;
 
-public class Ready implements State {
-
-    private final Cards cards;
-
-    public Ready(Cards cards) {
-        this.cards = cards;
-    }
+public final class Ready extends Running {
 
     public Ready() {
         this(new Cards(Set.of()));
+    }
+
+    public Ready(Cards cards) {
+        super(cards);
     }
 
     @Override
@@ -31,11 +30,6 @@ public class Ready implements State {
         }
 
         return new Ready(newCards);
-    }
-
-    @Override
-    public Cards getCards() {
-        return cards;
     }
 
     @Override

@@ -8,7 +8,7 @@ public abstract class Finished implements State {
 
     private final Cards cards;
 
-    protected Finished(Cards cards) {
+    Finished(Cards cards) {
         this.cards = cards;
     }
 
