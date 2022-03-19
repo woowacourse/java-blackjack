@@ -1,8 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.entry.vo.BettingMoney;
+import blackjack.domain.entry.vo.Name;
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,22 +18,33 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static Map<String, Integer> inputBettingMoney() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        List<String> playerNames = toNames(SCANNER.nextLine().trim());
+    public static Map<Name, BettingMoney> inputNameAndBettingMoney() {
+        try {
+            System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+            return inputPlayerBettingMoney(toNames(SCANNER.nextLine().trim()));
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            return inputNameAndBettingMoney();
+        }
+    }
 
-        Map<String, Integer> players = new HashMap<>();
+    private static Map<Name, BettingMoney> inputPlayerBettingMoney(List<String> playerNames) {
+        Map<Name, BettingMoney> players = new LinkedHashMap<>();
         for (String playerName : playerNames) {
-            System.out.println(MessageFormat.format("{0}의 배팅 금액은?", playerName));
-            int bettingMoney = validateNaturalNumber(isNumeric(SCANNER.nextLine()));
-            players.put(playerName, bettingMoney);
+            System.out.println(MessageFormat.format("{0}의 배팅 금액은? (1000단위, 최대 500만)", playerName));
+            players.put(new Name(playerName), new BettingMoney(validateNaturalNumber(isNumeric(SCANNER.nextLine()))));
         }
         return players;
     }
 
     public static String inputCommand(String name) {
-        System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
-        return validateCommand(SCANNER.nextLine().trim().toLowerCase());
+        try {
+            System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
+            return validateCommand(SCANNER.nextLine().trim().toLowerCase());
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            return inputCommand(name);
+        }
     }
 
     private static List<String> toNames(String names) {

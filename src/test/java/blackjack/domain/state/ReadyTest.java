@@ -12,7 +12,7 @@ import static blackjack.fixtures.CardFixtures.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.BettingMoney;
+import blackjack.domain.entry.vo.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

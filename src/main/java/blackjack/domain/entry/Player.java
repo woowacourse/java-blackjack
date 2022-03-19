@@ -1,5 +1,8 @@
 package blackjack.domain.entry;
 
+import blackjack.domain.entry.vo.BettingMoney;
+import blackjack.domain.entry.vo.Name;
+
 public class Player {
 
     private final Name name;

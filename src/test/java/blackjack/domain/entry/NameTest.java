@@ -1,6 +1,7 @@
 package blackjack.domain.entry;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import blackjack.domain.entry.vo.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

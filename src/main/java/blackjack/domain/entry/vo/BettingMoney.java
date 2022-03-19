@@ -1,4 +1,4 @@
-package blackjack.domain.entry;
+package blackjack.domain.entry.vo;
 
 public class BettingMoney {
 

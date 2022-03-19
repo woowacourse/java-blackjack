@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.BettingMoney;
+import blackjack.domain.entry.vo.BettingMoney;
 
 public interface State {
 

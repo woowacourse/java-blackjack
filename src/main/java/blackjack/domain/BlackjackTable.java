@@ -3,9 +3,9 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.BettingMoney;
+import blackjack.domain.entry.vo.BettingMoney;
 import blackjack.domain.entry.Dealer;
-import blackjack.domain.entry.Name;
+import blackjack.domain.entry.vo.Name;
 import blackjack.domain.entry.Player;
 import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
@@ -18,7 +18,7 @@ public class BlackjackTable {
     private final Deck deck = new Deck();
     private final Players players;
 
-    public BlackjackTable(Map<String, Integer> bettingPlayers) {
+    public BlackjackTable(Map<Name, BettingMoney> bettingPlayers) {
         this.players = new Players(createDealer(), toPlayers(bettingPlayers));
     }
 
@@ -50,8 +50,8 @@ public class BlackjackTable {
         return players.getNames();
     }
 
-    public Map<Name, HoldCards> getPlayers() {
-        return players.stay();
+    public Map<Name, List<Card>> getPlayers() {
+        return players.getPlayersCard();
     }
 
     public Map<String, Double> getResult() {
@@ -62,13 +62,9 @@ public class BlackjackTable {
         return players.getDealer();
     }
 
-    private Map<Player, State> toPlayers(Map<String, Integer> bettingPlayers) {
+    private Map<Player, State> toPlayers(Map<Name, BettingMoney> bettingPlayers) {
         return bettingPlayers.keySet().stream()
-            .collect(Collectors.toMap(name -> toPlayer(bettingPlayers, name), name -> toReady()));
-    }
-
-    private Player toPlayer(Map<String, Integer> bettingPlayers, String name) {
-        return new Player(new Name(name), new BettingMoney(bettingPlayers.get(name)));
+            .collect(Collectors.toMap(name -> new Player(name, bettingPlayers.get(name)), name -> toReady()));
     }
 
     private State toReady() {

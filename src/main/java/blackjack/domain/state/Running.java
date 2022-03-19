@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.BettingMoney;
+import blackjack.domain.entry.vo.BettingMoney;
 
 public abstract class Running implements State {
 

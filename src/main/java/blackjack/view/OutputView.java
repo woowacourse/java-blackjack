@@ -1,55 +1,41 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Dealer;
-import blackjack.domain.entry.Name;
+import blackjack.domain.entry.vo.Name;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
     private static final String NAME_DELIMITER = ", ";
 
-    public static void printDealerCards(Dealer dealer, Map<Name, HoldCards> players) {
-        Set<Name> names = players.keySet();
-        System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.",
-            names.stream().map(Name::getValue).collect(Collectors.joining(NAME_DELIMITER))));
-        printDealerCards(dealer.getName(), dealer.getHoldCards().getCards());
+    public static void printAllCards(Dealer dealer, Map<Name, List<Card>> players) {
+        System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", toNames(players)));
+        System.out.println();
+        printCard(dealer.getName(), dealer.getHoldCards().getCards());
         for (Name name : players.keySet()) {
-            printPlayerCards(name.getValue(), players.get(name).getCards());
+            printCard(name.getValue(), players.get(name));
         }
         System.out.println();
     }
 
-    public static void printReceivingMoreCardOfDealer(int hitCount) {
+    public static void printDealerHitCount(int hitCount) {
+        System.out.println();
         System.out.println(MessageFormat.format("딜러는 16이하라 {0}장의 카드를 더 받았습니다.", hitCount));
+        System.out.println();
     }
 
-    public static void printPlayerCards(String name, List<Card> cards) {
+    public static void printCard(String name, List<Card> cards) {
         System.out.println(MessageFormat.format("{0}카드: {1}", name, cards.stream()
             .map(card -> card.getNumber().getName() + card.getSuit().getName())
             .collect(Collectors.joining(NAME_DELIMITER))));
     }
 
-    public static void printDealerCards(String name, List<Card> cards) {
-        Card card = cards.get(0);
-        System.out.println(MessageFormat
-            .format("{0}카드: {1}", name,
-                String.join(NAME_DELIMITER, card.getNumber().getName() + card.getSuit().getName())));
-    }
-
     public static void printResult(String name, List<Card> cards, int result) {
         System.out.println(MessageFormat.format("{0}카드: {1} - 결과: {2}", name, cards(cards), result));
-    }
-
-    private static String cards(List<Card> cards) {
-        return cards.stream()
-            .map(card -> card.getNumber().getName() + card.getSuit().getName())
-            .collect(Collectors.joining(NAME_DELIMITER));
     }
 
     public static void printGameResult(Map<String, Double> result) {
@@ -59,5 +45,17 @@ public class OutputView {
         for (String name : result.keySet()) {
             System.out.println(name + ": " + result.get(name).intValue());
         }
+    }
+
+    private static String toNames(Map<Name, List<Card>> players) {
+        return players.keySet().stream()
+            .map(Name::getValue)
+            .collect(Collectors.joining(NAME_DELIMITER));
+    }
+
+    private static String cards(List<Card> cards) {
+        return cards.stream()
+            .map(card -> card.getNumber().getName() + card.getSuit().getName())
+            .collect(Collectors.joining(NAME_DELIMITER));
     }
 }

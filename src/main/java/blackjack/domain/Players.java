@@ -1,10 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.BettingMoney;
+import blackjack.domain.entry.vo.BettingMoney;
 import blackjack.domain.entry.Dealer;
-import blackjack.domain.entry.Name;
+import blackjack.domain.entry.vo.Name;
 import blackjack.domain.entry.Player;
 import blackjack.domain.state.State;
 import java.util.LinkedHashMap;
@@ -32,7 +31,7 @@ public class Players {
         return players.keySet().stream()
             .filter(player -> player.equalsName(name))
             .findFirst()
-            .map(this::stay)
+            .map(this::getPlayersCard)
             .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 플에이어가 존재하지 않습니다."));
     }
 
@@ -44,9 +43,9 @@ public class Players {
             .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 플에이어가 존재하지 않습니다."));
     }
 
-    public Map<Name, HoldCards> stay() {
+    public Map<Name, List<Card>> getPlayersCard() {
         return players.keySet().stream()
-            .collect(Collectors.toMap(Player::getName, player -> players.get(player).getHoldCards()));
+            .collect(Collectors.toMap(Player::getName, player -> players.get(player).getHoldCards().getCards()));
     }
 
     public Map<String, Double> getPlayerEarningMoney() {
@@ -65,7 +64,7 @@ public class Players {
             .collect(Collectors.toList());
     }
 
-    private List<Card> stay(Player player) {
+    private List<Card> getPlayersCard(Player player) {
         State state = players.get(player).stay();
         players.put(player, state);
         return state.getHoldCards().getCards();
