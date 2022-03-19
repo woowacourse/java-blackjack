@@ -87,11 +87,11 @@ class BlackJackTest {
         Player pepper = new Player("페퍼");
         pepper.addCard(Card.of(CardShape.HEART, CardNumber.THREE));
         pepper.addCard(Card.of(CardShape.SPADE, CardNumber.EIGHT));
-        pepper.addCard(Card.of(CardShape.CLUB, CardNumber.Q));
+        pepper.addCard(Card.of(CardShape.CLUB, CardNumber.QUEEN));
 
         Player ash = new Player("애쉬");
         ash.addCard(Card.of(CardShape.CLUB, CardNumber.SEVEN));
-        ash.addCard(Card.of(CardShape.SPADE, CardNumber.K));
+        ash.addCard(Card.of(CardShape.SPADE, CardNumber.KING));
 
         PlayerGroup playerGroup = new PlayerGroup(Arrays.asList(pepper, ash));
 
@@ -106,13 +106,13 @@ class BlackJackTest {
 
     private GameResult initializeBustGameResult() {
         Player pepper = new Player("페퍼");
-        pepper.addCard(Card.of(CardShape.CLUB, CardNumber.K));
-        pepper.addCard(Card.of(CardShape.SPADE, CardNumber.J));
-        pepper.addCard(Card.of(CardShape.DIAMOND, CardNumber.J));
+        pepper.addCard(Card.of(CardShape.CLUB, CardNumber.KING));
+        pepper.addCard(Card.of(CardShape.SPADE, CardNumber.JACK));
+        pepper.addCard(Card.of(CardShape.DIAMOND, CardNumber.JACK));
 
         Player ash = new Player("애쉬");
         ash.addCard(Card.of(CardShape.CLUB, CardNumber.SEVEN));
-        ash.addCard(Card.of(CardShape.SPADE, CardNumber.K));
+        ash.addCard(Card.of(CardShape.SPADE, CardNumber.KING));
 
         PlayerGroup playerGroup = new PlayerGroup(Arrays.asList(pepper, ash));
 

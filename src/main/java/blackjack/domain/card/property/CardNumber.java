@@ -11,16 +11,16 @@ public enum CardNumber {
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    Q("Q", 10),
-    K("K", 10),
-    J("J", 10)
+    QUEEN("Q", 10),
+    KING("K", 10),
+    JACK("J", 10)
     ;
 
-    private final String name;
+    private final String abbreviation;
     private final int number;
 
-    CardNumber(String name, int number) {
-        this.name = name;
+    CardNumber(String abbreviation, int number) {
+        this.abbreviation = abbreviation;
         this.number = number;
     }
 
@@ -28,8 +28,8 @@ public enum CardNumber {
         return this.equals(ACE);
     }
 
-    public String getName() {
-        return name;
+    public String getAbbreviation() {
+        return abbreviation;
     }
 
     public int getNumber() {

@@ -38,9 +38,9 @@ class CardsTest {
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-                Arguments.of(CardNumber.FOUR, CardNumber.Q, CardNumber.SIX, false, "숫자 합이 20이면 false를 반환해야 합니다."),
-                Arguments.of(CardNumber.J, CardNumber.SEVEN, CardNumber.FOUR, false, "숫자 합이 21이면 false를 반환해야 합니다."),
-                Arguments.of(CardNumber.J, CardNumber.Q, CardNumber.TWO, true, "숫자 합이 22이면 true를 반환해야 합니다.")
+                Arguments.of(CardNumber.FOUR, CardNumber.QUEEN, CardNumber.SIX, false, "숫자 합이 20이면 false를 반환해야 합니다."),
+                Arguments.of(CardNumber.JACK, CardNumber.SEVEN, CardNumber.FOUR, false, "숫자 합이 21이면 false를 반환해야 합니다."),
+                Arguments.of(CardNumber.JACK, CardNumber.QUEEN, CardNumber.TWO, true, "숫자 합이 22이면 true를 반환해야 합니다.")
         );
     }
 }

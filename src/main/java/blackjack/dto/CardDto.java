@@ -15,7 +15,7 @@ public class CardDto {
     }
 
     public static CardDto of(Card card) {
-        return new CardDto(card.getCardShape().getName(), card.getCardNumber().getName());
+        return new CardDto(card.getCardShape().getName(), card.getCardNumber().getAbbreviation());
     }
 
     public static List<CardDto> of(List<Card> cards) {
