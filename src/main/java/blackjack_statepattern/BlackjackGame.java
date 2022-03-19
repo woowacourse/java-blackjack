@@ -1,6 +1,7 @@
 package blackjack_statepattern;
 
 import blackjack_statepattern.card.CardDeck;
+import blackjack_statepattern.dto.CardsDto;
 import blackjack_statepattern.participant.Dealer;
 import blackjack_statepattern.participant.Participant;
 import blackjack_statepattern.participant.Player;
@@ -17,6 +18,7 @@ public final class BlackjackGame {
     public void run() {
         initializeGame();
         playGame();
+        printResult();
     }
 
     private void initializeGame() {
@@ -43,6 +45,7 @@ public final class BlackjackGame {
     private void playGame() {
         distributeCards();
         playPlayersTurn();
+        playDealerTurn();
     }
 
     private void distributeCards() {
@@ -52,7 +55,7 @@ public final class BlackjackGame {
         for (Player player : players) {
             distributeCard(player);
         }
-        OutputView.printDistributedCards(blackjackBoard.getCardsDto());
+        OutputView.printDistributedCards(blackjackBoard.getInitialCardsDto());
     }
 
     private void distributeCard(Participant participant) {
@@ -63,11 +66,9 @@ public final class BlackjackGame {
 
     private void playPlayersTurn() {
         List<Player> players = blackjackBoard.getPlayers();
-        Dealer dealer = blackjackBoard.getDealer();
         for (Player player : players) {
             playPlayerTurn(player);
         }
-        playDealerTurn(dealer);
     }
 
     private void playPlayerTurn(Player player) {
@@ -92,13 +93,20 @@ public final class BlackjackGame {
         }
     }
 
-    private void playDealerTurn(Dealer dealer) {
+    private void playDealerTurn() {
+        Dealer dealer = blackjackBoard.getDealer();
         while (!dealer.isFinished() && dealer.isUnder17()) {
             dealer.receiveCard(cardDeck.draw());
+            OutputView.printDealerReceiveCardMessage();
         }
         if (dealer.isUnder17()) {
             dealer.stay();
         }
+    }
+
+    private void printResult() {
+        CardsDto finalCardsDto = blackjackBoard.getFinalCardsDto();
+        OutputView.printFinalCards(finalCardsDto);
     }
 
 }

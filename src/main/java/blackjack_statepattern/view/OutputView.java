@@ -1,7 +1,7 @@
 package blackjack_statepattern.view;
 
 import blackjack_statepattern.card.Card;
-import blackjack_statepattern.dto.CardDto;
+import blackjack_statepattern.dto.CardsDto;
 import blackjack_statepattern.participant.Participant;
 import blackjack_statepattern.participant.Player;
 import java.util.List;
@@ -17,8 +17,8 @@ public class OutputView {
         System.out.println(e.getMessage());
     }
 
-    public static void printDistributedCards(CardDto cardDto) {
-        Map<Participant, List<Card>> participantCards = cardDto.getParticipantCards();
+    public static void printDistributedCards(CardsDto cardsDto) {
+        Map<Participant, List<Card>> participantCards = cardsDto.getParticipantCards();
         System.out.println(showParticipantsNames(participantCards.keySet()) + "에게 2장을 나누었습니다.");
 
         for (Participant participant : participantCards.keySet()) {
@@ -44,5 +44,18 @@ public class OutputView {
 
     public static void printPlayerCards(Player player) {
         System.out.println(player.getName() + "카드: " + showCards(player.getCards()));
+    }
+
+    public static void printDealerReceiveCardMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printFinalCards(CardsDto cardsDto) {
+        Map<Participant, List<Card>> participantCards = cardsDto.getParticipantCards();
+
+        for (Participant participant : participantCards.keySet()) {
+            System.out.println(participant.getName() + "카드: " + showCards(participantCards.get(participant)) + " - 결과: "
+                    + participant.getScore());
+        }
     }
 }

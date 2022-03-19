@@ -5,15 +5,15 @@ import blackjack_statepattern.participant.Participant;
 import java.util.List;
 import java.util.Map;
 
-public class CardDto {
+public class CardsDto {
     private final Map<Participant, List<Card>> participantCards;
 
-    private CardDto(Map<Participant, List<Card>> participantCards) {
+    private CardsDto(Map<Participant, List<Card>> participantCards) {
         this.participantCards = participantCards;
     }
 
-    public static CardDto of(Map<Participant, List<Card>> participantCards) {
-        return new CardDto(participantCards);
+    public static CardsDto of(Map<Participant, List<Card>> participantCards) {
+        return new CardsDto(participantCards);
     }
 
     public Map<Participant, List<Card>> getParticipantCards() {
