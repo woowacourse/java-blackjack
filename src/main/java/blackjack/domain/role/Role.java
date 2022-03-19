@@ -10,11 +10,13 @@ import blackjack.domain.card.Hand;
 
 public abstract class Role {
 
+	protected static final String METHOD_ERROR = "메서드를 사용할 수 없습니다.";
+
 	protected final String name;
 	protected final Hand hand;
+	protected BettingAmount bettingAmount;
 
 	private boolean drawMore;
-	private BettingAmount bettingAmount;
 
 	public Role(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		this.name = name;
@@ -27,32 +29,6 @@ public abstract class Role {
 		for (int i = 0; i < theNumberOfCars; i++) {
 			hand.addCard(deck.draw());
 		}
-	}
-
-	public void distributeBettingAmount(final Outcome outcome) {
-		if (winWithoutBlackJack(outcome)) {
-			bettingAmount.giveTwoTimes();
-		}
-	}
-
-	private boolean winWithoutBlackJack(final Outcome outcome) {
-		return outcome == Outcome.VICTORY && !hand.isBlackJack();
-	}
-
-	public void recordCompeteResult(final Outcome outcome, final Role player) {
-		if (outcome == Outcome.VICTORY) {
-			final int finalIncome = bettingAmount.getTotalValue() + player.getCurrentIncome();
-			bettingAmount = new BettingAmount(finalIncome, bettingAmount.getInitialValue());
-			player.loseAll();
-		}
-	}
-
-	private int getCurrentIncome() {
-		return bettingAmount.getTotalValue();
-	}
-
-	private void loseAll() {
-		bettingAmount.loseAll();
 	}
 
 	public int getIncome() {
@@ -105,4 +81,16 @@ public abstract class Role {
 	public abstract boolean canDraw();
 
 	public abstract int getDrawStandard();
+
+	public abstract void distributeBettingAmount(final Outcome outcome);
+
+	public abstract void distributeBettingAmount(final Outcome outcome, final Role role);
+
+	protected int getCurrentIncome() {
+		return bettingAmount.getTotalValue();
+	}
+
+	protected void loseAll() {
+		bettingAmount.loseAll();
+	}
 }

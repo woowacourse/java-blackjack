@@ -2,12 +2,29 @@ package blackjack.domain.role;
 
 import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Hand;
 
 public class Player extends Role {
 
 	public Player(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		super(name, hand, bettingAmount);
+	}
+
+	@Override
+	public void distributeBettingAmount(Outcome outcome) {
+		if (winWithoutBlackJack(outcome)) {
+			bettingAmount.giveTwoTimes();
+		}
+	}
+
+	private boolean winWithoutBlackJack(final Outcome outcome) {
+		return outcome == Outcome.VICTORY && !hand.isBlackJack();
+	}
+
+	@Override
+	public void distributeBettingAmount(Outcome outcome, Role role) {
+		throw new IllegalArgumentException(METHOD_ERROR);
 	}
 
 	@Override

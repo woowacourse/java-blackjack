@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Hand;
 
 public class Dealer extends Role {
@@ -16,6 +17,20 @@ public class Dealer extends Role {
 	public Dealer(final Hand hand, final Supplier<Boolean> drawable) {
 		super(DEALER_NAME, hand, new BettingAmount(10));
 		this.drawable = drawable;
+	}
+
+	@Override
+	public void distributeBettingAmount(Outcome outcome) {
+		throw new IllegalArgumentException(METHOD_ERROR);
+	}
+
+	@Override
+	public void distributeBettingAmount(Outcome outcome, Role role) {
+		if (outcome == Outcome.VICTORY) {
+			final int finalIncome = bettingAmount.getTotalValue() + role.getCurrentIncome();
+			bettingAmount = new BettingAmount(finalIncome, bettingAmount.getInitialValue());
+			role.loseAll();
+		}
 	}
 
 	@Override

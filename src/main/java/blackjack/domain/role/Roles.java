@@ -99,7 +99,7 @@ public class Roles {
 	public Role calculateDealerResult() {
 		for (Role player : players) {
 			final Outcome outcome = judge(player);
-			dealer.recordCompeteResult(outcome.getCounterpartRoleOutcome(), player);
+			dealer.distributeBettingAmount(outcome.getCounterpartRoleOutcome(), player);
 		}
 		return dealer;
 	}
