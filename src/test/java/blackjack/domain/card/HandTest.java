@@ -43,7 +43,7 @@ class HandTest {
 			CardMockFactory.of("J클로버"));
 		final Hand hand2 = CreateHand.create(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"));
 
-		return Stream.of(Arguments.of(hand1, 30), Arguments.of(hand2, 20));
+		return Stream.of(Arguments.of(hand1, 0), Arguments.of(hand2, 20));
 	}
 
 	@DisplayName("현재 패에 가지고 있는 최적의 점수 계산 확인")
@@ -65,7 +65,7 @@ class HandTest {
 		return Stream.of(
 			Arguments.of(hand1, 21),
 			Arguments.of(hand2, 21),
-			Arguments.of(hand3, 30),
+			Arguments.of(hand3, 0),
 			Arguments.of(hand4, 20));
 	}
 

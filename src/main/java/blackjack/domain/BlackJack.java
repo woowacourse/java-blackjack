@@ -60,9 +60,7 @@ public class BlackJack {
 	}
 
 	private void calculateFinalResult() {
-		final List<Participant> playersResult = roles.calculatePlayerResult();
-		final Participant dealerResult = roles.calculateDealerResult();
-		OutputView.printFinalResult(dealerResult, playersResult);
+		OutputView.printFinalResult(roles.calculateResult());
 	}
 
 }

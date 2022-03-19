@@ -58,21 +58,14 @@ public class OutputView {
 			dealer.getName() + IS + SPACE + (dealer.getDrawStandard() + 1) + FAIL_TO_RECEIVE_ONE_MORE_CARD + "\n");
 	}
 
-	public static void printFinalResult(final Participant dealerResult, final List<Participant> playersResult) {
-		printDealerFinalResult(dealerResult);
-		playersResult.forEach(OutputView::printPlayerFinalResult);
+	public static void printFinalResult(final List<Participant> results) {
+		results.forEach(OutputView::printFinalResult);
 		System.out.print("\n");
 		System.out.println(FINAL_OUTCOME);
-		printDealerOutcome(dealerResult);
-		printPlayerOutcome(playersResult);
+		printOutcome(results);
 	}
 
-	private static void printDealerFinalResult(final Participant result) {
-		System.out.print(result.getName() + SPACE + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		printPersonalFinalResult(result);
-	}
-
-	private static void printPlayerFinalResult(final Participant result) {
+	private static void printFinalResult(final Participant result) {
 		System.out.print(result.getName() + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		printPersonalFinalResult(result);
 	}
@@ -93,15 +86,10 @@ public class OutputView {
 			.collect(Collectors.toList());
 	}
 
-	private static void printDealerOutcome(final Participant dealerResult) {
-		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.println(dealerResult.getIncome());
-	}
-
-	private static void printPlayerOutcome(final List<Participant> playersResult) {
-		for (Participant playerResult : playersResult) {
-			System.out.print(playerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-			System.out.println(playerResult.getIncome());
+	private static void printOutcome(final List<Participant> results) {
+		for (Participant result : results) {
+			System.out.print(result.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
+			System.out.println(result.getIncome());
 		}
 	}
 

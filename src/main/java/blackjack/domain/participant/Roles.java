@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -78,13 +79,17 @@ public class Roles {
 			.orElse(NO_PLAYER);
 	}
 
-	public List<Participant> calculatePlayerResult() {
+	public List<Participant> calculateResult() {
 		calculateBlackJackResult();
 		for (Participant player : players) {
 			final Outcome outcome = judge(player);
 			player.distributeBettingAmount(outcome);
+			dealer.distributeBettingAmount(outcome.getCounterpartRoleOutcome(), player);
 		}
-		return players;
+		final List<Participant> results = new ArrayList<>();
+		results.add(dealer);
+		results.addAll(players);
+		return results;
 	}
 
 	private void calculateBlackJackResult() {
@@ -94,14 +99,6 @@ public class Roles {
 		for (Participant player : players) {
 			player.earnAmountByBlackJack();
 		}
-	}
-
-	public Participant calculateDealerResult() {
-		for (Participant player : players) {
-			final Outcome outcome = judge(player);
-			dealer.distributeBettingAmount(outcome.getCounterpartRoleOutcome(), player);
-		}
-		return dealer;
 	}
 
 	private Outcome judge(final Participant player) {

@@ -121,9 +121,9 @@ class RolesTest {
 		roles.joinPlayers(Map.of("player", 1000));
 		roles.distributeCardToDealer(deck);
 		roles.distributeCardToPlayers(deck);
-		List<Participant> players = roles.calculatePlayerResult();
+		List<Participant> players = roles.calculateResult();
 
-		assertThat(players.get(0).calculateBettingResult()).isEqualTo(expectedResult);
+		assertThat(players.get(1).calculateBettingResult()).isEqualTo(expectedResult);
 	}
 
 	private static Stream<Arguments> getBettingStatus() {
