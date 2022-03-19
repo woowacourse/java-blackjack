@@ -9,10 +9,6 @@ public class Dealer extends Gamer{
         super(NAME);
     }
 
-    public int getCardSize() {
-        return getCards().size();
-    }
-
     public int findHitCount() {
         return getCards().size() - BLACKJACK_CARD_COUNT;
     }
