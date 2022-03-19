@@ -1,11 +1,11 @@
 package blackjack.domain.card;
 
+import blackjack.domain.BlackJack;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private static final int SELECT_ACE_VALUE_STANDARD = 11;
-    private static final int ADD_BENEFICIAL_VALUE = 10;
 
     private final List<Card> cards;
 
@@ -18,14 +18,14 @@ public class Cards {
     }
 
     public int sum() {
-        return getCalibratedScore(cards.stream()
+        return calibratedScore(cards.stream()
             .mapToInt(Card::getValue)
             .sum());
     }
 
-    private int getCalibratedScore(int sum) {
-        if (hasAce()) {
-            return selectAceValue(sum);
+    private int calibratedScore(int sum) {
+        if (hasAce() && !BlackJack.isOverMaxScore(sum + CardValue.ACE_CAlIBRATION_SCORE)) {
+            return sum + CardValue.ACE_CAlIBRATION_SCORE;
         }
         return sum;
     }
@@ -33,13 +33,6 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream()
             .anyMatch(Card::isAce);
-    }
-
-    private int selectAceValue(int sum) {
-        if (sum <= SELECT_ACE_VALUE_STANDARD) {
-            sum += ADD_BENEFICIAL_VALUE;
-        }
-        return sum;
     }
 
     public List<Card> getCards() {

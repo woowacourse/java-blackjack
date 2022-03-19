@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.BlackJack;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
@@ -12,7 +13,6 @@ public class Participant {
     private static final String ERROR_MESSAGE_EMPTY_NAME = "[ERROR] 이름은 공백일 수 없습니다.";
     private static final Pattern ALLOWED_CHARACTERS = Pattern.compile(".*[^0-9a-zA-Zㄱ-ㅎ가-힣_]+.*");
     private static final String ERROR_MESSAGE_UNAVAILABLE_CHARACTER = "[ERROR] 이름에 특수문자가 포함될 수 없습니다.";
-    private static final int MAX_SCORE = 21;
 
     private final String name;
     private final Cards cards;
@@ -58,11 +58,15 @@ public class Participant {
     }
 
     public Boolean isOverMaxScore() {
-        return getScore() > MAX_SCORE;
+        return BlackJack.isOverMaxScore(getScore());
     }
 
     public int getScore() {
         return cards.sum();
+    }
+
+    public boolean isBlackJack() {
+        return BlackJack.isMaxScore(getScore()) && getCards().size() == 2;
     }
 
     public String getName() {

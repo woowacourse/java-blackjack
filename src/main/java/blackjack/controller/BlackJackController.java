@@ -35,13 +35,13 @@ public class BlackJackController {
     }
 
     private void betMoney(BlackJackDto blackJackDto) {
-        for (Participant player : blackJackDto.getParticipants().getPlayers()) {
+        for (Participant player : blackJackDto.getPlayers()) {
             player.bet(inputView.askBettingAmount(player.getName()));
         }
     }
 
     private void decidePlayersReceivingAdditionalCard(BlackJack blackJack, BlackJackDto blackJackDto) {
-        for (Participant player : blackJackDto.getParticipants().getPlayers()) {
+        for (Participant player : blackJackDto.getPlayers()) {
             decidePlayerReceivingAdditionalCard(blackJack, blackJackDto, player);
         }
     }
@@ -58,7 +58,7 @@ public class BlackJackController {
     private void decideDealerReceivingAdditionalCard(BlackJack blackJack, BlackJackDto blackJackDto) {
         boolean dealerNeedAdditionalCard = blackJackDto.getParticipants().isDealerNeedAdditionalCard();
         if (dealerNeedAdditionalCard) {
-            blackJack.handOutCardTo(blackJackDto.getParticipants().getDealer());
+            blackJack.handOutCardTo(blackJackDto.getDealer());
         }
         resultView.showWhetherDealerReceivedOrNot(dealerNeedAdditionalCard);
     }

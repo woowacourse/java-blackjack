@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackDto {
-    private static final String NAME_DELIMITER = ": ";
     private static final String CARD_DELIMITER = ", ";
     private static final int FIRST_CARD = 0;
 
@@ -26,7 +25,7 @@ public class BlackJackDto {
 
     public String getDealerOpenCard() {
         Participant dealer = participants.getDealer();
-        return dealer.getName() + NAME_DELIMITER + dealer.getCards().get(FIRST_CARD).getName();
+        return String.format("%s: %s", dealer.getName(), dealer.getCards().get(FIRST_CARD).getName());
     }
 
     public String getPlayerCardStatus(Participant participant) {
@@ -34,20 +33,28 @@ public class BlackJackDto {
             .map(Card::getName)
             .toArray(String[]::new);
 
-        return participant.getName() + NAME_DELIMITER + String.join(CARD_DELIMITER, playerCardStatus);
+        return String.format("%s: %s", participant.getName(), String.join(CARD_DELIMITER, playerCardStatus));
     }
 
     public String getDealerRevenue(Result result) {
-        return participants.getDealer().getName() + NAME_DELIMITER + result.getDealerRevenue();
+        return String.format("%s: %d", participants.getDealer().getName(), result.getDealerRevenue());
     }
 
     public List<String> getPlayersRevenue(Result result) {
         return participants.getPlayers().stream()
-            .map(player -> player.getName() + NAME_DELIMITER + result.getPlayerRevenue(player))
+            .map(player -> String.format("%s: %d", player.getName(), result.getPlayerRevenue(player)))
             .collect(Collectors.toList());
     }
 
     public Participants getParticipants() {
         return participants;
+    }
+
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
+    }
+
+    public Participant getDealer() {
+        return participants.getDealer();
     }
 }
