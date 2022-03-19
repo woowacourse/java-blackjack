@@ -44,4 +44,17 @@ public class Player extends Participant{
     private Result judgeResult(Dealer dealer) {
         return Result.calculateResult(this, dealer);
     }
+
+    public boolean isWinAgainst(Dealer dealer) {
+        return (dealer.isBlackjack() && super.isBlackjack()) ||
+                !(super.isBlackjack() || super.isBust()) && (super.getScore() >= dealer.getScore());
+    }
+
+    public boolean isLoseAgainst(Dealer dealer) {
+        return super.isBust() || super.getScore() < dealer.getScore();
+    }
+
+    public boolean isBlackjackResult(Dealer dealer) {
+        return !dealer.isBlackjack() && super.isBlackjack();
+    }
 }
