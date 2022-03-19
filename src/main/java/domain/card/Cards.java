@@ -18,17 +18,9 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int aceAmount = countAceAmount();
-        if (aceAmount > 0) {
-            return judgeAdvantageResult(aceAmount);
-        }
-        return calculateSum();
-    }
-
-    private int judgeAdvantageResult(int aceAmount) {
-        return IntStream.range(0, aceAmount + 1)
+        return IntStream.range(0, countAceAmount() + 1)
             .map(aceCount -> calculateSum() + aceCount * ACE_ADDITIONAL_VALUE)
-            .filter(result -> result < BLACKJACK_MAX_VALUE_CRITERIA)
+            .filter(result -> result <= BLACKJACK_MAX_VALUE_CRITERIA)
             .max()
             .orElse(calculateSum());
     }
