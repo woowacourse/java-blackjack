@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
+
     private static final String NAME_DELIMITER = ",";
     private static final String YES = "y";
     private static final String NO = "n";

@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import static blackjack.fixtures.CardFixtures.SPADE_ACE;
+import static blackjack.fixtures.CardFixtures.SPADE_EIGHT;
 import static blackjack.fixtures.CardFixtures.SPADE_FOUR;
 import static blackjack.fixtures.CardFixtures.SPADE_KING;
 import static blackjack.fixtures.CardFixtures.SPADE_NINE;
@@ -30,7 +31,7 @@ class ReadyTest {
     void notBlackjack() {
         State state = Ready.start(SPADE_ACE, SPADE_NINE);
 
-        assertThat(state.isBlackjack()).isInstanceOf(Hit.class);
+        assertThat(state.blackjack()).isInstanceOf(Hit.class);
     }
 
     @Test
@@ -100,6 +101,15 @@ class ReadyTest {
         State ready = new Ready(new HoldCards());
 
         assertThat(ready.isFinished()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드의 합이 21이 넘는 경우 Finished 상태가 된다.")
+    void isFinished() {
+        State state = Ready.start(SPADE_EIGHT, SPADE_SEVEN);
+        state = state.draw(SPADE_NINE);
+
+        assertThat(state.isFinished()).isTrue();
     }
 
     @Test

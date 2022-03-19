@@ -21,11 +21,16 @@ public class Ready extends Running {
         if (!holdCards().isReady()) {
             return new Ready(holdCards());
         }
-        return isBlackjack();
+        return blackjack();
     }
 
     @Override
     public State stay() {
         throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean isReady() {
+        return true;
     }
 }

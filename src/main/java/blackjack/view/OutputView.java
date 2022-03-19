@@ -1,64 +1,63 @@
 package blackjack.view;
 
-import blackjack.dto.response.CardCountingResult;
-import blackjack.dto.response.PlayerCardResult;
-import blackjack.dto.response.PlayerGameResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.HoldCards;
+import blackjack.domain.entry.Dealer;
+import blackjack.domain.entry.Name;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DEALER_NAME = "딜러";
+
     private static final String NAME_DELIMITER = ", ";
 
-    public static void printFirstTurnCards(List<PlayerCardResult> firstTurnCards) {
-        System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", toCardName(firstTurnCards)));
-        firstTurnCards.stream()
-            .map(firstTurnCard -> printPlayerCard(firstTurnCard.getPlayerName(), firstTurnCard.getCards()))
-            .forEach(System.out::println);
-        System.out.println();
-    }
-
-    public static void printPlayerCards(PlayerCardResult playerCardResult) {
-        System.out.println(printPlayerCard(playerCardResult.getPlayerName(), playerCardResult.getCards()));
-        System.out.println();
-    }
-
-    public static void printReceivingMoreCardOfDealer() {
-        System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
-    }
-
-    public static void printCardCountingResult(List<CardCountingResult> cardCountingResults) {
-        for (CardCountingResult cardCountingResult : cardCountingResults) {
-            System.out.println(MessageFormat.format("{0} - 결과: {1}",
-                printPlayerCard(
-                    cardCountingResult.getName(), cardCountingResult.getCards()), cardCountingResult.getCount()));
+    public static void printDealerCards(Dealer dealer, Map<Name, HoldCards> players) {
+        Set<Name> names = players.keySet();
+        System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.",
+            names.stream().map(Name::getValue).collect(Collectors.joining(NAME_DELIMITER))));
+        printDealerCards(dealer.getName(), dealer.getHoldCards().getCards());
+        for (Name name : players.keySet()) {
+            printPlayerCards(name.getValue(), players.get(name).getCards());
         }
         System.out.println();
     }
 
-    public static void printGameResult(List<PlayerGameResult> playerGameResults) {
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + sumPlayersProfit(playerGameResults) * -1);
-        playerGameResults.forEach(result -> System.out.println(result.getPlayerName() + ": " + result.getProfit()));
+    public static void printReceivingMoreCardOfDealer() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    private static String toCardName(List<PlayerCardResult> firstTurnCards) {
-        return firstTurnCards.stream()
-            .map(PlayerCardResult::getPlayerName)
-            .filter(name -> !name.equals(DEALER_NAME))
+    public static void printPlayerCards(String name, List<Card> cards) {
+        System.out.println(MessageFormat.format("{0}카드: {1}", name, cards.stream()
+            .map(card -> card.getNumber().getName() + card.getSuit().getName())
+            .collect(Collectors.joining(NAME_DELIMITER))));
+    }
+
+    public static void printDealerCards(String name, List<Card> cards) {
+        Card card = cards.get(0);
+        System.out.println(MessageFormat
+            .format("{0}카드: {1}", name,
+                String.join(NAME_DELIMITER, card.getNumber().getName() + card.getSuit().getName())));
+    }
+
+    public static void printResult(String name, List<Card> cards, int result) {
+        System.out.println(MessageFormat.format("{0}카드: {1} - 결과: {2}", name, cards(cards), result));
+    }
+
+    private static String cards(List<Card> cards) {
+        return cards.stream()
+            .map(card -> card.getNumber().getName() + card.getSuit().getName())
             .collect(Collectors.joining(NAME_DELIMITER));
     }
 
-    private static String printPlayerCard(String playerName, List<String> cardNames) {
-        return MessageFormat.format("{0}카드: {1}", playerName, String.join(NAME_DELIMITER, cardNames));
-    }
-
-    private static int sumPlayersProfit(List<PlayerGameResult> playerGameResults) {
-        return playerGameResults.stream()
-            .mapToInt(PlayerGameResult::getProfit)
-            .sum();
+    public static void printGameResult(Map<String, Double> result) {
+        int dealer = result.values().stream().mapToInt(Double::intValue).sum() * -1;
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealer);
+        for (String name : result.keySet()) {
+            System.out.println(name + ": " + result.get(name).intValue());
+        }
     }
 }

@@ -22,4 +22,9 @@ public final class Hit extends Running {
     public State stay() {
         return new Stay(holdCards());
     }
+
+    @Override
+    public boolean isReady() {
+        return false;
+    }
 }

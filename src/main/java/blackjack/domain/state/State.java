@@ -5,11 +5,14 @@ import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.BettingMoney;
 
 public interface State {
+
     State draw(Card card);
 
     State stay();
 
-    State isBlackjack();
+    State blackjack();
+
+    boolean isReady();
 
     boolean isFinished();
 

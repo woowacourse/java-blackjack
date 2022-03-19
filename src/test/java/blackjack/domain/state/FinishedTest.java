@@ -33,7 +33,7 @@ class FinishedTest {
         State finished = new Blackjack(new HoldCards());
 
         assertThatIllegalStateException()
-            .isThrownBy(finished::isBlackjack);
+            .isThrownBy(finished::blackjack);
     }
 
     @Test

@@ -1,6 +1,5 @@
 package blackjack.fixtures;
 
-import blackjack.domain.card.Card;
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.EIGHT;
 import static blackjack.domain.card.CardNumber.FOUR;
@@ -11,8 +10,10 @@ import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardNumber.THREE;
 import static blackjack.domain.card.CardNumber.TWO;
 import static blackjack.domain.card.Suit.SPADE;
+import blackjack.domain.card.Card;
 
 public class CardFixtures {
+
     public static final Card SPADE_ACE = Card.valueOf(SPADE, ACE);
     public static final Card SPADE_TWO = Card.valueOf(SPADE, TWO);
     public static final Card SPADE_THREE = Card.valueOf(SPADE, THREE);

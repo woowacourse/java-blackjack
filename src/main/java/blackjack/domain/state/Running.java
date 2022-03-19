@@ -4,6 +4,7 @@ import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.BettingMoney;
 
 public abstract class Running implements State {
+
     private final HoldCards holdCards;
 
     Running(HoldCards holdCards) {
@@ -15,7 +16,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public final State isBlackjack() {
+    public final State blackjack() {
         if (holdCards().isBlackjack()) {
             return new Blackjack(holdCards());
         }

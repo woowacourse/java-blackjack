@@ -5,6 +5,7 @@ import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.BettingMoney;
 
 public abstract class Finished implements State {
+
     private final HoldCards holdCards;
 
     Finished(HoldCards holdCards) {
@@ -17,12 +18,17 @@ public abstract class Finished implements State {
     }
 
     @Override
+    public final boolean isReady() {
+        throw new IllegalStateException();
+    }
+
+    @Override
     public final State stay() {
         throw new IllegalStateException();
     }
 
     @Override
-    public final State isBlackjack() {
+    public final State blackjack() {
         throw new IllegalStateException();
     }
 

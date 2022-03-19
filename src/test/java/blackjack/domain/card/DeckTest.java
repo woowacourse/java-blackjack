@@ -1,16 +1,13 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.CardNumber.*;
-import static blackjack.domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
+
     @Test
     @DisplayName("카드 뭉치에서 카드 한 장을 꺼낸다.")
     void getCard() {
@@ -39,7 +36,7 @@ public class DeckTest {
         }
 
         assertThatIllegalArgumentException()
-                .isThrownBy(deck::draw)
-                .withMessage("더 이상 꺼낼 카드가 존재하지 않습니다.");
+            .isThrownBy(deck::draw)
+            .withMessage("더 이상 꺼낼 카드가 존재하지 않습니다.");
     }
 }

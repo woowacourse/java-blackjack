@@ -1,9 +1,9 @@
 package blackjack.domain.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.HoldCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class StayTest {
 

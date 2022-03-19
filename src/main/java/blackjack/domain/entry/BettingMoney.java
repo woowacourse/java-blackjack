@@ -1,9 +1,6 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.PlayerOutcome;
-
 public class BettingMoney {
-    private static final double BLACKJACK_RATIO = 1.5;
 
     private static final int MINIMUM_AMOUNT_UNIT = 1000;
     private static final int MAXIMUM_AMOUNT = 5_000_000;
@@ -13,14 +10,6 @@ public class BettingMoney {
     public BettingMoney(int amount) {
         validateRange(amount);
         this.amount = amount;
-    }
-
-    public int countBlackjackPay() {
-        return (int) (this.amount * BLACKJACK_RATIO);
-    }
-
-    public int bet(PlayerOutcome playerOutcome) {
-        return playerOutcome.betting(this);
     }
 
     private void validateRange(int amount) {

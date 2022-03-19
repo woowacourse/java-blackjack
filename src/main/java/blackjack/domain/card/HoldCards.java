@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HoldCards {
+
     private static final int FIRST_CARD = 0;
     private static final int INIT_CARD_SIZE = 2;
 

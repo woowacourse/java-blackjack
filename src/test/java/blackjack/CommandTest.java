@@ -30,8 +30,8 @@ public class CommandTest {
         String input = "noop";
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Command.find(input))
-                .withMessageContaining("존재하지 않는 명령입니다.");
+            .isThrownBy(() -> Command.find(input))
+            .withMessageContaining("존재하지 않는 명령입니다.");
     }
 
     @Test

@@ -1,98 +1,49 @@
 package blackjack;
 
 import blackjack.domain.BlackjackTable;
-import blackjack.domain.Command;
-import blackjack.domain.entry.Participant;
-import blackjack.domain.entry.Player;
-import blackjack.dto.response.CardCountingResult;
-import blackjack.dto.response.PlayerCardResult;
-import blackjack.dto.response.PlayerGameResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.HoldCards;
+import blackjack.domain.entry.Dealer;
+import blackjack.domain.entry.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
     public void start() {
         List<String> names = InputView.inputNames();
         Map<String, Integer> bettingPlayers = InputView.inputBettingMoney(names);
-        BlackjackTable blackjackTable = new BlackjackTable(bettingPlayers);
 
-        OutputView.printFirstTurnCards(toFirstTurnCards(blackjackTable.getParticipants()));
-        hit(blackjackTable);
-        OutputView.printCardCountingResult(toCardCountingResult(blackjackTable.getParticipants()));
-        OutputView.printGameResult(toGameResults(blackjackTable.countGameResult()));
-    }
-
-    private List<PlayerCardResult> toFirstTurnCards(List<Participant> participants) {
-        return participants.stream()
-            .map(participant -> new PlayerCardResult(participant.getName(), participant.openCard()))
-            .collect(Collectors.toList());
-    }
-
-    private void hit(BlackjackTable blackjackTable) {
-        for (Participant participant : blackjackTable.getPlayers()) {
-            hitPlayer(blackjackTable, participant);
+        // 카드 분배
+        BlackjackTable table = new BlackjackTable(bettingPlayers);
+        while (table.isReady()) {
+            table.divideCard();
         }
-        hitDealer(blackjackTable);
-    }
+        OutputView.printDealerCards(table.getDealer(), table.getPlayers());
 
-    private void hitPlayer(BlackjackTable blackjackTable, Participant participant) {
-        if (participant.hasBlackjack()) {
-            return;
+        // 플레이어 추가 분배
+        for (String name : names) {
+            while (!table.isFinished(name)) {
+                List<Card> cards = table.hit(new Name(name), InputView.inputCommand(name));
+                OutputView.printPlayerCards(name, cards);
+            }
         }
-        hitOrStay(blackjackTable, participant);
-    }
 
-    private void hitOrStay(BlackjackTable blackjackTable, Participant participant) {
-        Command command = Command.find(InputView.inputCommand(participant.getName()));
-        if (command.isStay()) {
-            OutputView.printPlayerCards(toPlayerCard(participant));
-            return;
-        }
-        moreHit(blackjackTable, participant);
-    }
-
-    private void moreHit(BlackjackTable blackjackTable, Participant participant) {
-        blackjackTable.hit(participant);
-        OutputView.printPlayerCards(toPlayerCard(participant));
-        if (!participant.canHit()) {
-            return;
-        }
-        hitOrStay(blackjackTable, participant);
-    }
-
-    private void hitDealer(BlackjackTable blackjackTable) {
-        Participant dealer = blackjackTable.getDealer();
-        while (dealer.canHit()) {
-            blackjackTable.hit(dealer);
+        // 딜러 추가 분배
+        while (!table.isFinishedDealer()) {
+            table.divideCardByDealer();
             OutputView.printReceivingMoreCardOfDealer();
         }
-    }
 
-    private PlayerCardResult toPlayerCard(Participant participant) {
-        return new PlayerCardResult(participant.getName(), participant.getHoldCards().getCards());
-    }
-
-    private List<CardCountingResult> toCardCountingResult(List<Participant> participants) {
-        return participants.stream()
-            .map(this::toCardCountingResult)
-            .collect(Collectors.toList());
-    }
-
-    private CardCountingResult toCardCountingResult(Participant participant) {
-        return new CardCountingResult(
-            participant.getName(),
-            participant.getHoldCards().getCards(),
-            participant.countCards()
-        );
-    }
-
-    private List<PlayerGameResult> toGameResults(Map<Player, Integer> countGameResult) {
-        return countGameResult.keySet().stream()
-            .map(player -> new PlayerGameResult(player.getName(), countGameResult.get(player)))
-            .collect(Collectors.toList());
+        // 결과
+        Dealer dealer = table.getDealer();
+        Map<Name, HoldCards> players = table.getPlayers();
+        OutputView.printResult(dealer.getName(), dealer.getHoldCards().getCards(), dealer.getHoldCards().countBestNumber());
+        for (Name name : players.keySet()) {
+            OutputView.printResult(name.getValue(), players.get(name).getCards(), players.get(name).countBestNumber());
+        }
+        OutputView.printGameResult(table.getResult());
     }
 }
