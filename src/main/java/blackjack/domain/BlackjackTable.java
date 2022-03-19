@@ -16,31 +16,34 @@ import java.util.stream.Collectors;
 public class BlackjackTable {
 
     private final Deck deck = new Deck();
-    private final Dealer dealer;
     private final Players players;
 
     public BlackjackTable(Map<String, Integer> bettingPlayers) {
-        this.dealer = new Dealer(HoldCards.initTwoCards(deck.draw(), deck.draw()));
-        this.players = new Players(toPlayers(bettingPlayers));
+        this.players = new Players(createDealer(), toPlayers(bettingPlayers));
     }
 
-    public List<Card> hit(Name name, String command) {
-        if (Command.find(command).isStay()) {
-            return players.stayBy(name).getCards();
+    private Dealer createDealer() {
+        return new Dealer(HoldCards.initTwoCards(deck.draw(), deck.draw()));
+    }
+
+    public boolean isFinishedPlayer(Name name) {
+        return players.isFinished(name);
+    }
+
+    public List<Card> hit(Name name, Command command) {
+        if (command.isStay()) {
+            return players.stayBy(name);
         }
-        return players.hitBy(name, deck.draw()).getCards();
+        return players.hitBy(name, deck.draw());
     }
 
-    public boolean isFinishedDealer() {
-        return !dealer.canHit();
-    }
-
-    public void divideCardByDealer() {
-        dealer.addCard(deck.draw());
-    }
-
-    public Dealer getDealer() {
-        return dealer;
+    public int countHitDealer() {
+        int hitCount = 0;
+        while (!players.isFinishedDealer()) {
+            players.hitDealer(deck.draw());
+            hitCount++;
+        }
+        return hitCount;
     }
 
     public List<Name> getPlayerNames() {
@@ -55,8 +58,8 @@ public class BlackjackTable {
         return players.getPlayerEarningMoney();
     }
 
-    public boolean isFinishedPlayer(Name name) {
-        return players.isFinished(name);
+    public Dealer getDealer() {
+        return players.getDealer();
     }
 
     private Map<Player, State> toPlayers(Map<String, Integer> bettingPlayers) {

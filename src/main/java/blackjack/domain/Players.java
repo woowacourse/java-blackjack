@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.BettingMoney;
+import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Name;
 import blackjack.domain.entry.Player;
 import blackjack.domain.state.State;
@@ -12,9 +13,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
+
+    private final Dealer dealer;
     private final Map<Player, State> players;
 
-    public Players(Map<Player, State> players) {
+    public Players(Dealer dealer, Map<Player, State> players) {
+        this.dealer = dealer;
         this.players = players;
     }
 
@@ -24,7 +28,7 @@ public class Players {
             .anyMatch(player -> players.get(player).isFinished());
     }
 
-    public HoldCards stayBy(Name name) {
+    public List<Card> stayBy(Name name) {
         return players.keySet().stream()
             .filter(player -> player.equalsName(name))
             .findFirst()
@@ -32,7 +36,7 @@ public class Players {
             .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 플에이어가 존재하지 않습니다."));
     }
 
-    public HoldCards hitBy(Name name, Card card) {
+    public List<Card> hitBy(Name name, Card card) {
         return players.keySet().stream()
             .filter(player -> player.equalsName(name))
             .findFirst()
@@ -61,15 +65,27 @@ public class Players {
             .collect(Collectors.toList());
     }
 
-    private HoldCards stay(Player player) {
+    private List<Card> stay(Player player) {
         State state = players.get(player).stay();
-        players.put(player, state.stay());
-        return state.getHoldCards();
+        players.put(player, state);
+        return state.getHoldCards().getCards();
     }
 
-    private HoldCards hit(Card card, Player player) {
+    private List<Card> hit(Card card, Player player) {
         State state = players.get(player).draw(card);
         players.put(player, state);
-        return state.getHoldCards();
+        return state.getHoldCards().getCards();
+    }
+
+    public boolean isFinishedDealer() {
+        return !dealer.canHit();
+    }
+
+    public void hitDealer(Card card) {
+        dealer.addCard(card);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

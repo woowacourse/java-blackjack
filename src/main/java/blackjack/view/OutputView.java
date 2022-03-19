@@ -25,8 +25,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printReceivingMoreCardOfDealer() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public static void printReceivingMoreCardOfDealer(int hitCount) {
+        System.out.println(MessageFormat.format("딜러는 16이하라 {0}장의 카드를 더 받았습니다.", hitCount));
     }
 
     public static void printPlayerCards(String name, List<Card> cards) {
