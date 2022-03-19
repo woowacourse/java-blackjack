@@ -16,6 +16,10 @@ public class BlackjackGame {
     public BlackjackGame(List<String> playerNames) {
         this.cards = new Cards(new CardShuffleMachine());
         this.blackjackPlayers = new Players(playerNames);
+
+    }
+
+    public void initGame() {
         blackjackPlayers.startWithTwoCards(cards);
     }
 
@@ -79,5 +83,9 @@ public class BlackjackGame {
         Match dealerResult = result.getDealerResult();
         results.addResult(dealer, dealerResult);
         results.addResult(guest, result);
+    }
+
+    public List<Player> getGuest() {
+        return blackjackPlayers.getGuests();
     }
 }

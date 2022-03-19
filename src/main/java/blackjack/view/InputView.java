@@ -22,4 +22,9 @@ public class InputView {
         System.out.println(name + REQUEST_WANT_MORE_CARD_MESSAGE);
         return SCANNER.nextLine();
     }
+
+    public static double inputBettingMoney(String playerName) {
+        System.out.printf("%s의 배팅 금액은?\n", playerName);
+        return Double.parseDouble(SCANNER.nextLine());
+    }
 }

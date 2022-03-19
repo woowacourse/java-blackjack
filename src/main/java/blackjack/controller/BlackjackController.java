@@ -7,14 +7,18 @@ import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
     public void playGame() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
 
+        Map<Player, Double> bettingBox = betMoney(blackjackGame.getGuest());
         OutputView.announceStartGame(blackjackGame.getPlayerNames());
+        blackjackGame.initGame();
         OutputView.announcePresentCards(toResponse(blackjackGame.getPlayers()));
 
         decideGuestsToGetMoreCards(blackjackGame);
@@ -22,6 +26,15 @@ public class BlackjackController {
 
         printResult(blackjackGame);
     }
+
+    private Map<Player, Double> betMoney(List<Player> players) {
+        Map<Player, Double> bettingBox = new LinkedHashMap<>();
+        for (Player player : players) {
+            bettingBox.put(player, InputView.inputBettingMoney(player.getName()));
+        }
+        return bettingBox;
+    }
+
 
     private List<GameResponse> toResponse(List<Player> players) {
         List<GameResponse> gameResponses = new ArrayList<>();
