@@ -31,6 +31,14 @@ public class PlayersTest {
 	}
 
 	@Test
+	@DisplayName("플레이어가 BlackJack 인지 판별")
+	void checkBlackJack() {
+		Players players = new Players(Arrays.asList(pobi, jason));
+		int pobiIdx = 0;
+		assertThat(players.checkBlackJack(pobiIdx)).isTrue();
+	}
+
+	@Test
 	@DisplayName("플레이어가 Bust 인지 판별")
 	void checkBust() {
 		Players players = new Players(Arrays.asList(pobi, jason));
@@ -43,7 +51,7 @@ public class PlayersTest {
 	void addCard() {
 		Players players = new Players(Arrays.asList(pobi, jason));
 		int pobiIdx = 0;
-		players.addCard(0, SIX_CLOVER);
+		players.addCard(pobiIdx, SIX_CLOVER);
 		assertThat(pobi.showHand()).isEqualTo(List.of("A클로버", "Q클로버", "6클로버"));
 	}
 }
