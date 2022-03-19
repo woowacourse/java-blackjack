@@ -5,10 +5,10 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.TestCardGenerator;
-import blackjack.dto.ProfitDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static blackjack.domain.Game.DEALER_NAME;
@@ -49,9 +49,9 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 수익금은 모든 유저의 수익금의 합의 -1배이다.")
     void calculateProfitTest() {
-        List<ProfitDto> profitDtos = List.of(new ProfitDto("rex", 20000), new ProfitDto("pobi", 0), new ProfitDto("bust", -5000));
+        List<Double> profits = Arrays.asList(20000.0, 0.0, -5000.0);
         Dealer dealer = new Dealer(DEALER_NAME);
 
-        assertThat(dealer.calculateProfit(profitDtos)).isEqualTo(-15000);
+        assertThat(dealer.calculateProfit(profits)).isEqualTo(-15000);
     }
 }

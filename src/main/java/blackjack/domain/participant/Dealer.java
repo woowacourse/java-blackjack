@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.dto.ProfitDto;
 
 import java.util.List;
 
@@ -24,9 +23,9 @@ public class Dealer extends Participant {
                 .subList(WITHOUT_HIDDEN_CARD_INDEX, state.holdingCards().size());
     }
 
-    public double calculateProfit(List<ProfitDto> profitDtos) {
-        double sum = profitDtos.stream()
-                .mapToDouble(ProfitDto::getMoney)
+    public double calculateProfit(List<Double> profits) {
+        double sum = profits.stream()
+                .mapToDouble(profit -> profit)
                 .sum();
         return PROFIT_REVERSE * sum;
     }

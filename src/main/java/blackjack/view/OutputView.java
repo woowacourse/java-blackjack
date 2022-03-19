@@ -72,6 +72,6 @@ public class OutputView {
     }
 
     private static void printUserResult(ProfitDto profitDto) {
-        System.out.printf(USER_RESULT_FORMAT + lineSeparator(), profitDto.getName(), profitDto.getMoney());
+        System.out.printf(USER_RESULT_FORMAT + lineSeparator(), profitDto.getName(), profitDto.getProfit());
     }
 }

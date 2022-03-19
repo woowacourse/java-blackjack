@@ -11,6 +11,7 @@ import blackjack.dto.ProfitDto;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Game {
 
@@ -89,7 +90,10 @@ public class Game {
         for (String userName : participants.getUserNames()) {
             profitDtos.add(participants.createUserProfitDto(userName));
         }
-        profitDtos.add(0, participants.createDealerProfitDto(profitDtos));
+        List<Double> profits = profitDtos.stream()
+                .map(ProfitDto::getProfit)
+                .collect(Collectors.toList());
+        profitDtos.add(0, participants.createDealerProfitDto(profits));
         return profitDtos;
     }
 }

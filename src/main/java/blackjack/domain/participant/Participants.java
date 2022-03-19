@@ -58,7 +58,7 @@ public class Participants {
         return ParticipantDto.of(name, users.findUserByName(name).getHoldingCards(), users.findUserByName(name).score());
     }
 
-    public ProfitDto createDealerProfitDto(List<ProfitDto> userProfits) {
+    public ProfitDto createDealerProfitDto(List<Double> userProfits) {
         return new ProfitDto(dealer.getName(), dealer.calculateProfit(userProfits));
     }
 
