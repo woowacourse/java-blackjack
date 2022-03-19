@@ -17,6 +17,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isHit() {
-        return getPoint() <= AVAILABLE_POINT_FOR_ADD_CARD || !getState().isFinished();
+        return getPoint() <= AVAILABLE_POINT_FOR_ADD_CARD && !getState().isFinished();
     }
 }

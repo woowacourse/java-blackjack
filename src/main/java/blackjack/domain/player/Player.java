@@ -17,17 +17,21 @@ public abstract class Player {
             .draw(cardDeck.draw())
             .draw(cardDeck.draw());
     }
+
     public abstract boolean isHit();
 
     public void addCard(Card card) {
         this.state = state.draw(card);
     }
-    public State getState(){
+
+    public State getState() {
         return state;
     }
-    public Cards getCards(){
+
+    public Cards getCards() {
         return state.cards();
     }
+
     public int getPoint() {
         return state.cards().sum();
     }

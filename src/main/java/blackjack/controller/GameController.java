@@ -22,15 +22,10 @@ public class GameController {
         Dealer dealer = Dealer.of(cardDeck);
         OutputView.printInitGameState(gamblers, dealer);
 
-        /**
-         * 1. HIT 인지 확인
-         * -> 우선, ifFinished -> false
-         * ->
-         */
         hitOrStandGambler(gamblers, cardDeck);
         hitOrStandDealer(dealer, cardDeck);
-//
-//        OutputView.printCardAndPoint(gamblers, dealer);
+
+        OutputView.printCardAndPoint(gamblers, dealer);
 //        printGameResult(Statistic.of(dealer, gamblers), gamblers);
     }
 
