@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Participant;
 
 public class InputView {
 
@@ -32,8 +32,8 @@ public class InputView {
         }
     }
 
-    public static String requestDrawCommand(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
+    public static String requestDrawCommand(Participant participant) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", participant.getName());
         return scanner.nextLine();
     }
 }

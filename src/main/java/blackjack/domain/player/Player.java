@@ -5,35 +5,12 @@ import java.util.List;
 
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Drawable;
 import blackjack.domain.card.HoldCards;
 
-public class Player {
-
-    public static final int BLACKJACK_NUMBER = 21;
-
-    private final HoldCards holdCards;
-    private final Name name;
+public class Player extends Participant {
 
     public Player(Name name, HoldCards holdCards) {
-        this.name = name;
-        this.holdCards = holdCards;
-    }
-
-    public void drawCard(Drawable drawable) {
-        holdCards.add(drawable.draw());
-    }
-
-    public boolean isBust() {
-        return holdCards.getOptimizeTotalNumber() > BLACKJACK_NUMBER;
-    }
-
-    public boolean isBlackjack() {
-        return holdCards.isInitSize() && holdCards.getOptimizeTotalNumber() == BLACKJACK_NUMBER;
-    }
-
-    public int getTotalNumber() {
-        return holdCards.getOptimizeTotalNumber();
+        super(name, holdCards);
     }
 
     public Score compete(Dealer dealer) {
@@ -42,15 +19,18 @@ public class Player {
             .findAny().orElse(Score.LOSE);
     }
 
+    @Override
+    public boolean canHit() {
+        return holdCards.getOptimizeTotalNumber() <= BLACKJACK_NUMBER;
+    }
+
+    @Override
+    public List<Card> openCards() {
+        return getHoldCards();
+    }
+
+    @Override
     public Player copy() {
         return new Player(name, holdCards.copy());
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getHoldCards() {
-        return holdCards.getCards();
     }
 }

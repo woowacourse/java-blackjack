@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class HoldCards {
 
@@ -55,5 +56,9 @@ public class HoldCards {
     private boolean isContainAce() {
         return cards.stream()
             .anyMatch(card -> card.getCardNumber().isAce());
+    }
+
+    public Optional<Card> getFirstCard() {
+        return cards.stream().findFirst();
     }
 }

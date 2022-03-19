@@ -28,7 +28,7 @@ public class BettingAmountTest {
     @DisplayName("getProfit은")
     class GetProfit {
         @ParameterizedTest
-        @CsvSource(value = {"WIN|1500", "DRAW|1000", "LOSE|-1000"}, delimiter = '|')
+        @CsvSource(value = {"BLACKJACK_WIN|1500", "WIN|1000", "LOSE|-1000"}, delimiter = '|')
         @DisplayName("Score에 따라 수익을 반환한다.")
         void it_return_profit(Score score, double expected) {
             BettingAmount bettingAmount = new BettingAmount(1000);

@@ -23,13 +23,13 @@ public class Name {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
+    public boolean equals(Object object) {
+        if (this == object)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (object == null || getClass() != object.getClass())
             return false;
-        Name name = (Name)o;
-        return Objects.equals(value, name.value);
+        Name name = (Name)object;
+        return value.equals(name.value);
     }
 
     @Override

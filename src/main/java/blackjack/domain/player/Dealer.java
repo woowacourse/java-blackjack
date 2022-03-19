@@ -1,18 +1,37 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Drawable;
+import java.util.Collections;
+import java.util.List;
+
+import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
 
-    private static final String NAME = "딜러";
+    private static final Name NAME = new Name("딜러");
     private static final int DRAWABLE_BOUND = 16;
 
-    public Dealer(Drawable deck) {
-        super(new Name(NAME), HoldCards.drawTwoCards(deck));
+    public Dealer(HoldCards holdCards) {
+        super(NAME, holdCards);
     }
 
-    public boolean isDrawable() {
+    private Card findFirstCard() {
+        return holdCards.getFirstCard()
+            .orElseThrow(() -> new IllegalArgumentException("카드가 존재하지 않습니다."));
+    }
+
+    @Override
+    public boolean canHit() {
         return getTotalNumber() <= DRAWABLE_BOUND;
+    }
+
+    @Override
+    public List<Card> openCards() {
+        return Collections.singletonList(findFirstCard());
+    }
+
+    @Override
+    public Participant copy() {
+        return new Dealer(holdCards.copy());
     }
 }
