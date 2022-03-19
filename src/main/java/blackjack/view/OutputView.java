@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.Cards;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
-import blackjack.dto.ParticipantDto;
+import blackjack.domain.state.stateparticipant.Participant;
 
 public class OutputView {
 
@@ -25,12 +26,13 @@ public class OutputView {
         System.out.println("딜러: " + card.getNumber().getName() + card.getSymbol().getName());
     }
 
-    public static void printPlayerCards(ParticipantDto dto) {
-        System.out.println(dto.getName() + "카드: " + String.join(", ", getCardsStatus(dto)));
+    public static void printPlayerCards(Participant participant) {
+        System.out.println(
+            participant.getName().getValue() + "카드: " + String.join(", ", getCardsStatus(participant.getCards())));
     }
 
-    private static List<String> getCardsStatus(ParticipantDto dto) {
-        return dto.getCards().stream()
+    private static List<String> getCardsStatus(Cards cards) {
+        return cards.getValue().stream()
             .map(card -> card.getNumber().getName() + card.getSymbol().getName())
             .collect(Collectors.toList());
     }
@@ -48,9 +50,9 @@ public class OutputView {
         return "딜러가 16초과여서 카드를 받지않았습니다.";
     }
 
-    public static void printParticipantCardsWithScore(ParticipantDto dto) {
-        System.out.println(dto.getName() + "카드: " + String.join(", ", getCardsStatus(dto))
-            + " - 결과: " + dto.getScore());
+    public static void printParticipantCardsWithScore(Participant participant) {
+        System.out.println(participant.getName() + "카드: " + String.join(", ", getCardsStatus(participant.getCards()))
+            + " - 결과: " + participant.getScore());
     }
 
     public static void printFinalRevenues(Map<Name, Long> revenues) {
