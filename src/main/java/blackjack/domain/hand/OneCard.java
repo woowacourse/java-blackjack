@@ -22,7 +22,7 @@ public final class OneCard extends Running {
 
     @Override
     public CardHand stay() {
-        throw new IllegalStateException(CAN_NOT_FINISH_EXCEPTION_MESSAGE);
+        throw new UnsupportedOperationException(CAN_NOT_FINISH_EXCEPTION_MESSAGE);
     }
 
     @Override

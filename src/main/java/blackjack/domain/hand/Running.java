@@ -27,6 +27,6 @@ public abstract class Running extends Started {
 
     @Override
     public double profit(CardHand dealerHand, int money) {
-        throw new IllegalStateException(STILL_RUNNING_EXCEPTION_MESSAGE);
+        throw new UnsupportedOperationException(STILL_RUNNING_EXCEPTION_MESSAGE);
     }
 }

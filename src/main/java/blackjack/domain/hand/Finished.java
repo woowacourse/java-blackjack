@@ -17,12 +17,12 @@ public abstract class Finished extends Started {
 
     @Override
     public final CardHand hit(Card card) {
-        throw new IllegalStateException(ALREADY_FINISHED_EXCEPTION_MESSAGE);
+        throw new UnsupportedOperationException(ALREADY_FINISHED_EXCEPTION_MESSAGE);
     }
 
     @Override
     public final CardHand stay() {
-        throw new IllegalStateException(ALREADY_FINISHED_EXCEPTION_MESSAGE);
+        throw new UnsupportedOperationException(ALREADY_FINISHED_EXCEPTION_MESSAGE);
     }
 
     @Override
