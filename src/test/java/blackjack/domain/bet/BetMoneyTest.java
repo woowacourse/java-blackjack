@@ -18,8 +18,17 @@ public class BetMoneyTest {
     }
 
     @Test
-    @DisplayName("베팅 금액은 1원 이상 입력해야한다.")
-    void under_min_amount_error() {
+    @DisplayName("베팅 금액은 10원 단위로 입력해야한다.")
+    void amount_error() {
+        int money = 1;
+
+        assertThatThrownBy(() -> new BetMoney(money))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("베팅 금액은 양수로 입력해야한다.")
+    void negitive_zero_number_error() {
         int money = 0;
 
         assertThatThrownBy(() -> new BetMoney(money))

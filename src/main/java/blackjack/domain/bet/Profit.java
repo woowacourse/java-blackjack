@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Profit {
 
-    private final double profit;
+    private final int profit;
 
-    public Profit(double profit) {
+    public Profit(int profit) {
         this.profit = profit;
     }
 

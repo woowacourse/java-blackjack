@@ -22,7 +22,7 @@ public class AbstractPlayerTest {
     @BeforeEach
     void setUp() {
         Deck deck = new JustTenSpadeDeck();
-        abstractPlayer = new Participant(new Name("alien"), deck, new BetMoney(1));
+        abstractPlayer = new Participant(new Name("alien"), deck, new BetMoney(10));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class AbstractPlayerTest {
     @DisplayName("isBlackjack 메서드는 카드가 두장이면서 21점이면 참을 반환한다.")
     void check_blackjack() {
         Deck deck = new JustBlackjackDeck();
-        BetMoney money = new BetMoney(1);
+        BetMoney money = new BetMoney(10);
         AbstractPlayer abstractPlayer = new Participant(new Name("alien"), deck, money);
 
         assertThat(abstractPlayer.isBlackjack()).isTrue();
@@ -86,7 +86,7 @@ public class AbstractPlayerTest {
     @DisplayName("Ace 가진 카드의 총합이 21을 넘지 않으면 Ace는 11로 계산한다.")
     void ace_calculate_11() {
         Deck deck = new JustTwoSpadeDeck();
-        BetMoney money = new BetMoney(1);
+        BetMoney money = new BetMoney(10);
         AbstractPlayer abstractPlayer = new Participant(new Name("alien"), deck, money);
         abstractPlayer.hit(Card.of(CardNumber.ACE, Type.HEART));
 

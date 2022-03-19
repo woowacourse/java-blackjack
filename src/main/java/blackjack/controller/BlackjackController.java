@@ -108,7 +108,7 @@ public class BlackjackController {
         Map<Player, Profit> results = new LinkedHashMap<>();
         Player dealer = players.getDealer();
         results.put(dealer, new Profit(0));
-        double dealerProfit = 0.0;
+        int dealerProfit = 0;
 
         for (Player player : players.getParticipants()) {
             Outcome playerOutcome = Outcome.matchAboutPlayer((Dealer) dealer, player).not();

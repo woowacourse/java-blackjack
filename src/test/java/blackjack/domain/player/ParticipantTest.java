@@ -20,7 +20,7 @@ public class ParticipantTest {
     void create_player() {
         Name name = new Name("aki");
         Deck deck = new RandomDeck();
-        BetMoney betMoney = new BetMoney(1);
+        BetMoney betMoney = new BetMoney(10);
 
         assertThatCode(() -> new Participant(name, deck, betMoney)).doesNotThrowAnyException();
     }
@@ -29,7 +29,7 @@ public class ParticipantTest {
     @DisplayName("Participant는 딜러가 아니다.")
     void check_dealer() {
         Deck deck = new RandomDeck();
-        BetMoney betMoney = new BetMoney(1);
+        BetMoney betMoney = new BetMoney(10);
 
         Player participant = new Participant(new Name("alien"), deck, betMoney);
 
@@ -40,7 +40,7 @@ public class ParticipantTest {
     @DisplayName("canHit 메서드는 카드의 총합이 21미만이면 참이 반환된다.")
     void validate_range_true() {
         Deck deck = new JustTenSpadeDeck();
-        BetMoney betMoney = new BetMoney(1);
+        BetMoney betMoney = new BetMoney(10);
         Player participant = new Participant(new Name("alien"), deck, betMoney);
 
         assertThat(participant.canHit()).isTrue();

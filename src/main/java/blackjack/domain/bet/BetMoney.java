@@ -1,24 +1,31 @@
 package blackjack.domain.bet;
 
-import blackjack.domain.Outcome;
 import java.util.Objects;
 
 public class BetMoney {
 
-    private static final int MIN_AMOUNT = 1;
-    private static final String UNDER_MIN_AMOUNT_ERROR_MESSAGE = "배팅 금액은 " + MIN_AMOUNT + "원 이상입력해야합니다.";
+    private static final int AMOUNT_STANDARD = 10;
+    private static final String AMOUNT_STANDARD_ERROR_MESSAGE = "배팅 금액은 " + AMOUNT_STANDARD + "원 단위로 입력해야합니다.";
+    private static final String NEGATIVE_OR_ZERO_ERROR_MESSAGE = "배팅 금액은 양수로 입력해야합니다.";
 
     private final int money;
 
     public BetMoney(int money) {
-        validateMinAmount(money);
+        validateAmount(money);
+        validateNegativeOrZero(money);
 
         this.money = money;
     }
 
-    private void validateMinAmount(int money) {
-        if (money < MIN_AMOUNT) {
-            throw new IllegalArgumentException(UNDER_MIN_AMOUNT_ERROR_MESSAGE);
+    private void validateAmount(int money) {
+        if (money % AMOUNT_STANDARD != 0) {
+            throw new IllegalArgumentException(AMOUNT_STANDARD_ERROR_MESSAGE);
+        }
+    }
+
+    private void validateNegativeOrZero(int money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException(NEGATIVE_OR_ZERO_ERROR_MESSAGE);
         }
     }
 
@@ -27,7 +34,7 @@ public class BetMoney {
     }
 
     public Profit getProfit(double rate) {
-        return new Profit(money * rate);
+        return new Profit((int) (money * rate));
     }
 
     @Override
