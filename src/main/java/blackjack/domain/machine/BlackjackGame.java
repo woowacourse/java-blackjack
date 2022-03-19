@@ -2,11 +2,14 @@ package blackjack.domain.machine;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Cards;
+import blackjack.domain.machine.result.JudgeFactory;
+import blackjack.domain.machine.result.MatchResults;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
 
@@ -22,7 +25,6 @@ public class BlackjackGame {
     public void initGame() {
         blackjackPlayers.startWithTwoCards(cards);
     }
-
 
     public boolean hasNextGuest() {
         return blackjackPlayers.hasNextGuest();
@@ -53,12 +55,17 @@ public class BlackjackGame {
         dealer.addCard(cards.assignCard());
     }
 
-    public Results calculateResult() {
-        Results results = new Results();
+    public Results calculateResult(Map<Player, Double> bettingBox) {
         Player dealer = blackjackPlayers.getDealer();
         List<Player> guests = blackjackPlayers.getGuests();
+        return scoreResults(bettingBox, dealer, guests);
+    }
+
+    private Results scoreResults(Map<Player, Double> bettingBox, Player dealer, List<Player> guests) {
+        Results results = new Results(dealer);
         for (Player player : guests) {
-            scorePlayers(dealer, player, results);
+            MatchResults result = JudgeFactory.matchResult(player.getScore(), dealer.getScore());
+            results.addResult(dealer, bettingBox, result);
         }
         return results;
     }
@@ -73,16 +80,6 @@ public class BlackjackGame {
 
     public Player getTurnPlayer() {
         return blackjackPlayers.getTurnPlayer();
-    }
-
-    private void scorePlayers(Player dealer, Player guest, Results results) {
-        int playerPoint = guest.getDeck().sumPoints();
-        int dealerPoint = dealer.getDeck().sumPoints();
-
-        Match result = Match.findWinner(playerPoint, dealerPoint);
-        Match dealerResult = result.getDealerResult();
-        results.addResult(dealer, dealerResult);
-        results.addResult(guest, result);
     }
 
     public List<Player> getGuest() {

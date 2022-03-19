@@ -4,7 +4,7 @@ public abstract class MatchResults {
 
     abstract double profitRate();
 
-    final double calculateProfit(int money) {
+    public final double calculateProfit(double money) {
         return money * profitRate();
     };
 

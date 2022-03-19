@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.machine.Score;
 
 public abstract class Player {
 
@@ -24,5 +25,28 @@ public abstract class Player {
         return cards;
     }
 
+    public Score getScore() {
+        return cards.score();
+    }
+
     public abstract boolean isDealer();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Player player = (Player) o;
+
+        return name != null ? name.equals(player.name) : player.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
 }

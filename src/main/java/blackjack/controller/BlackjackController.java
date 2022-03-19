@@ -24,7 +24,7 @@ public class BlackjackController {
         decideGuestsToGetMoreCards(blackjackGame);
         decideDealerGetMoreCard(blackjackGame);
 
-        printResult(blackjackGame);
+        printResult(blackjackGame, bettingBox);
     }
 
     private Map<Player, Double> betMoney(List<Player> players) {
@@ -76,8 +76,9 @@ public class BlackjackController {
         OutputView.announceDealerStopMoreCard();
     }
 
-    private void printResult(BlackjackGame blackjackGame) {
+    private void printResult(BlackjackGame blackjackGame,
+                             Map<Player, Double> bettingBox) {
         OutputView.announceResultCards(toResponse(blackjackGame.getPlayers()));
-        OutputView.announceResultWinner(blackjackGame.calculateResult());
+        OutputView.announceResultWinner(blackjackGame.calculateResult(bettingBox));
     }
 }

@@ -22,6 +22,10 @@ public class Deck {
         return cards;
     }
 
+    public Score score() {
+        return new Score(cards);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

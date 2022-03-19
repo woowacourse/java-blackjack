@@ -1,9 +1,12 @@
 package blackjack.domain.machine;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.participant.Guest;
+import blackjack.domain.participant.Player;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +37,10 @@ class BlackjackGameTest {
     @Test
     @DisplayName("두 명이 참가한 상태에서 결과 객체가 딜러와 참가자 1명 총 2명인지 확인")
     void checkCalculateResult() {
-        Results results = blackjackGame.calculateResult();
+        Map<Player, Double> bettingBox = new LinkedHashMap<>();
+        Player player = new Guest("eden");
+        bettingBox.put(player, (double) 1000);
+        Results results = blackjackGame.calculateResult(bettingBox);
         assertThat(results.getPlayers().size()).isEqualTo(2);
     }
 }
