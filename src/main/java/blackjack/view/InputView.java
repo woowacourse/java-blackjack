@@ -16,7 +16,10 @@ public class InputView {
 
     public static List<String> inputUsersName() {
         System.out.println(INPUT_USERNAME_GUIDE);
-        return Arrays.stream(scanner.nextLine().split(REGEX)).collect(Collectors.toList());
+        String userNameInput = scanner.nextLine();
+        String[] userNames = userNameInput.split(REGEX);
+        return Arrays.stream(userNames)
+                .collect(Collectors.toList());
     }
 
     public static boolean inputMoreCard(String userName) {
