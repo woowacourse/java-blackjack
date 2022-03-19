@@ -32,7 +32,9 @@ public class ParticipantTest {
     @DisplayName("베팅 금액을 잘 입력받는지")
     void Bet_Money() {
         Participant player = Participant.createPlayer("panda");
+
         player.bet(10000);
+
         assertThat(player.getBetting()).isEqualTo(10000);
     }
 
@@ -41,7 +43,9 @@ public class ParticipantTest {
     void Receive_Card() {
         Participant player = Participant.createPlayer("yaho");
         CardDeck cardDeck = new CardDeck();
+
         player.receiveCard(cardDeck.pickCard());
+
         assertThat(player.getCards().size()).isEqualTo(1);
     }
 
@@ -49,9 +53,11 @@ public class ParticipantTest {
     @DisplayName("카드의 총합이 21이상인지 판정")
     void Is_Over_21() {
         Participant player = Participant.createPlayer("yaho");
+
         player.receiveCard(new Card("8스페이드", 8));
         player.receiveCard(new Card("9하트", 9));
         player.receiveCard(new Card("5다이아몬드", 5));
+        
         assertThat(player.isOverMaxScore()).isEqualTo(true);
     }
 }

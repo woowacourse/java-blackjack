@@ -18,9 +18,11 @@ public class BlackJackDtoTest {
     void Open_Only_One_Dealer_Card() {
         List<String> playerNames = Arrays.asList("a", "b");
         BlackJack blackJack = BlackJack.createFrom(playerNames);
-        blackJack.handOutStartingCards();
         BlackJackDto blackJackDto = BlackJackDto.from(blackJack);
         Participant dealer = blackJackDto.getParticipants().getDealer();
+
+        blackJack.handOutStartingCards();
+
         assertThat(blackJackDto.getDealerOpenCard()).isEqualTo(dealer.getName() + ": " + dealer.getCards().get(0).getName());
     }
 
@@ -29,10 +31,12 @@ public class BlackJackDtoTest {
     void Return_Player_Current_Cards_Status() {
         List<String> playerNames = Arrays.asList("a", "b");
         BlackJack blackJack = BlackJack.createFrom(playerNames);
-        blackJack.handOutStartingCards();
         BlackJackDto blackJackDto = BlackJackDto.from(blackJack);
         Participant player = blackJackDto.getParticipants().getPlayers().get(0);
+
+        blackJack.handOutStartingCards();
         String[] playerCardStatus = player.getCards().stream().map(Card::getName).toArray(String[]::new);
+        
         assertThat(blackJackDto.getPlayerCardStatus(player)).isEqualTo(player.getName() + ": " + String.join(", ", playerCardStatus));
     }
 }

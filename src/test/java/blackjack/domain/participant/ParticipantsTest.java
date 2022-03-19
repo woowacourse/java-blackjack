@@ -20,6 +20,7 @@ public class ParticipantsTest {
         Participants participants = blackJack.getParticipants();
 
         participants.handOutCardToAll(new CardDeck());
+
         assertThat(participants.getPlayers().stream()
             .allMatch(player -> player.getCards().size() == 1))
             .isEqualTo(true);
@@ -32,10 +33,24 @@ public class ParticipantsTest {
         BlackJack blackJack = BlackJack.createFrom(playerNames);
         Participants participants = blackJack.getParticipants();
         Participant dealer = participants.getDealer();
+
         dealer.receiveCard(new Card("8스페이드", 8));
         dealer.receiveCard(new Card("5하트", 5));
+
         assertThat(participants.isDealerNeedAdditionalCard()).isEqualTo(true);
-        dealer.receiveCard(new Card("7클로버", 7));
+    }
+
+    @Test
+    @DisplayName("17 이하 일때 딜러가 카드를 더 받지 않는지")
+    void Dealer_NOT_Receive_Additional_Card_OVER_17() {
+        List<String> playerNames = Arrays.asList("a", "b");
+        BlackJack blackJack = BlackJack.createFrom(playerNames);
+        Participants participants = blackJack.getParticipants();
+        Participant dealer = participants.getDealer();
+
+        dealer.receiveCard(new Card("8스페이드", 8));
+        dealer.receiveCard(new Card("J하트", 10));
+        
         assertThat(participants.isDealerNeedAdditionalCard()).isEqualTo(false);
     }
 }

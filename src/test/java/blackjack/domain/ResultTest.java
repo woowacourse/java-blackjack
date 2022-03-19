@@ -36,27 +36,30 @@ public class ResultTest {
     @Test
     @DisplayName("딜러의 수익을 잘 계산하는지")
     void Calculate_Dealer_Revenue() {
-
         Result result = new Result(participants);
+
         result.calculatePlayersRevenue();
+
         assertThat(result.getDealerRevenue()).isEqualTo(200);
     }
 
     @Test
     @DisplayName("플레이어가 승리한 경우 수익을 잘 계산하는지")
     void Calculate_Winning_Player_Revenue() {
-
         Result result = new Result(participants);
+
         result.calculatePlayersRevenue();
+
         assertThat(result.getPlayerRevenue(participants.getPlayers().get(0))).isEqualTo(1000);
     }
 
     @Test
     @DisplayName("플레이어가 패배한 경우 수익을 잘 계산하는지")
     void Calculate_Losing_Player_Revenue() {
-
         Result result = new Result(participants);
+
         result.calculatePlayersRevenue();
+        
         assertThat(result.getPlayerRevenue(participants.getPlayers().get(1))).isEqualTo(-1200);
     }
 }
