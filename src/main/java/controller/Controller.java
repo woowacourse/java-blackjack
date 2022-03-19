@@ -70,7 +70,8 @@ public class Controller {
 	}
 
 	private void askAndDrawForPlayer(Deck deck, Players players, int idx) {
-		while (!players.checkBust(idx) && InputView.askDraw(players.showName(idx))) {
+		while (!players.checkBlackJack(idx) && !players.checkBust(idx)
+			&& InputView.askDraw(players.showName(idx))) {
 			players.addCard(idx, deck.draw());
 			OutputView.printHand(players.showName(idx), players.showHand(idx));
 		}

@@ -27,6 +27,10 @@ public class Players {
 		return players.get(idx).isBust();
 	}
 
+	public boolean checkBlackJack(int idx) {
+		return players.get(idx).isBlackJack();
+	}
+
 	public LinkedHashMap<Participant, EarningRate> getResult(Dealer other) {
 		LinkedHashMap<Participant, EarningRate> map = new LinkedHashMap<>();
 		players.stream()
@@ -49,4 +53,5 @@ public class Players {
 	public int showScore(int idx) {
 		return players.get(idx).getScore();
 	}
+
 }
