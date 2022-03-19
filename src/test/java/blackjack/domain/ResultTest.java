@@ -1,9 +1,11 @@
 package blackjack.domain;
 
 import static blackjack.Fixtures.CLOVER_ACE;
+import static blackjack.Fixtures.CLOVER_FIVE;
 import static blackjack.Fixtures.DIAMOND_FIVE;
 import static blackjack.Fixtures.DIAMOND_SIX;
 import static blackjack.Fixtures.SPADE_ACE;
+import static blackjack.Fixtures.SPADE_FIVE;
 import static blackjack.Fixtures.SPADE_KING;
 import static blackjack.Fixtures.SPADE_QUEEN;
 import static blackjack.Fixtures.SPADE_SEVEN;
@@ -11,6 +13,7 @@ import static blackjack.Fixtures.SPADE_TWO;
 import static blackjack.TestUtils.createPlayerByName;
 import static blackjack.domain.Result.BLACKJACK;
 import static blackjack.domain.Result.LOSS;
+import static blackjack.domain.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;
@@ -81,6 +84,35 @@ class ResultTest {
 
         //then
         assertThat(result.get(players.get(0).getName())).isEqualTo(MINIMUM_BETTING_AMOUNT);
+    }
+
+    @DisplayName("둘 다 버스트가 아니고 둘이 같은 경우")
+    @Test
+    public void testSameScoreWhenNotBust() {
+        //given
+        Deck deck = new Deck(() -> new ArrayDeque<>(List.of(
+                SPADE_QUEEN,
+                CLOVER_FIVE,
+                SPADE_KING,
+                SPADE_FIVE
+        )));
+
+        List<Player> players = List.of(createPlayerByName("pobi"));
+
+        for (Player player : players) {
+            player.drawCard(deck);
+            player.drawCard(deck);
+        }
+
+        Dealer dealer = Dealer.create();
+        dealer.drawCard(deck);
+        dealer.drawCard(deck);
+
+        //when
+        Map<String, Integer> result = Result.calculateRevenue(players, dealer);
+
+        //then
+        assertThat(result.get(players.get(0).getName())).isEqualTo((int)(MINIMUM_BETTING_AMOUNT * WIN.getRate()));
     }
 
     private Deck initDeck() {
