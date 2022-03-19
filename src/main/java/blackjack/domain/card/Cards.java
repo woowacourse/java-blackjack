@@ -53,6 +53,6 @@ public class Cards {
     }
 
     public boolean isBurst() {
-        return cards.size() > BLACK_JACK_POINT;
+        return calculateTotalPoint() > BLACK_JACK_POINT;
     }
 }
