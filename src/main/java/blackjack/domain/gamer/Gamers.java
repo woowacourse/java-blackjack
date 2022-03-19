@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.ProfitResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.gamer.role.Dealer;
@@ -18,6 +17,7 @@ import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Match;
 import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.ProfitResult;
 
 public class Gamers {
     private final Dealer dealer;
