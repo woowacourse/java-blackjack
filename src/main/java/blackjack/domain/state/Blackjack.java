@@ -13,6 +13,6 @@ public class Blackjack extends TurnFinished {
         if (turnFinished.isBlackjack()) {
             return new Draw(getCards());
         }
-        return new Win(getCards());
+        return new BlackjackWin(getCards());
     }
 }
