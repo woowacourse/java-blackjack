@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Result {
-    private static final int BLACK_JACK_SCORE = 21;
 
     private final Map<Participant, Integer> playersRevenue;
     private final Participants participants;
@@ -27,21 +26,7 @@ public class Result {
     }
 
     private double calculateOdds(Participant player) {
-        return Odds.getOddsRatio(isWin(player.getScore(), participants.getDealer().getScore()), isBlackJack(player));
-    }
-
-    private boolean isWin(int playerScore, int dealerScore) {
-        if (playerScore > BLACK_JACK_SCORE) {
-            return false;
-        }
-        if (dealerScore > BLACK_JACK_SCORE) {
-            return true;
-        }
-        return dealerScore < playerScore;
-    }
-
-    private boolean isBlackJack(Participant player) {
-        return player.getScore() == BLACK_JACK_SCORE;
+        return Odds.getOddsRatio(player, participants.getDealer());
     }
 
     public int getDealerRevenue() {
