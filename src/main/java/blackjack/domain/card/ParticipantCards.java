@@ -9,7 +9,8 @@ public class ParticipantCards {
     private static final int INITIAL_CARD_SIZE = 2;
     private static final int BLACKJACK_THRESHOLD_NUMBER = 21;
     private static final int ACE_SCORE_DIFFERENCE = 10;
-    private static final String CARDS_EMPTY_ERROR_MESSAGE = "참여자가 가진 카드가 존재하지 않습니다";
+    private static final String CARDS_EMPTY_ERROR_MESSAGE = "초기 카드 세팅이 되어있지 않습니다.";
+    private static final String CARDS_NOT_EMPTY_ERROR_MESSAGE = "초기 카드는 카드가 없는 상태에서만 받을 수 있습니다.";
 
     private final List<Card> cards;
 
@@ -18,8 +19,13 @@ public class ParticipantCards {
     }
 
     public void addInitialCards(List<Card> cards) {
-        for (Card card : cards) {
-            this.cards.add(card);
+        validateEmpty();
+        this.cards.addAll(cards);
+    }
+
+    private void validateEmpty() {
+        if (!cards.isEmpty()) {
+            throw new IllegalArgumentException(CARDS_NOT_EMPTY_ERROR_MESSAGE);
         }
     }
 
@@ -28,6 +34,7 @@ public class ParticipantCards {
     }
 
     public void addCard(Card card) {
+        validateCardsSize();
         cards.add(card);
     }
 
@@ -44,7 +51,7 @@ public class ParticipantCards {
     }
 
     private int calculateScoreAdvantageousWithAce(int score) {
-        if (isExistAce() && score + ACE_SCORE_DIFFERENCE <= BLACKJACK_THRESHOLD_NUMBER) {
+        if (isExistAce() && isNotOverThresholdWithConvertedAcePoint(score)) {
             score += ACE_SCORE_DIFFERENCE;
         }
         return score;
@@ -53,6 +60,10 @@ public class ParticipantCards {
     private boolean isExistAce() {
         return cards.stream()
             .anyMatch(Card::isAce);
+    }
+
+    private boolean isNotOverThresholdWithConvertedAcePoint(int score) {
+        return score + ACE_SCORE_DIFFERENCE <= BLACKJACK_THRESHOLD_NUMBER;
     }
 
     public Card getFirstCard() {
