@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
@@ -10,6 +11,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.MatchResult;
+import blackjack.domain.result.MatchStatus;
 
 public class BlackjackGame {
 
@@ -59,7 +61,8 @@ public class BlackjackGame {
 
     public MatchResult calculateMatchResult() {
         validateAllPlayersFinished();
-        return players.judgeMatchStatusOfPlayers(dealer);
+        final Map<Player, MatchStatus> matchStatuses = players.judgeMatchStatusOfPlayers(dealer);
+        return new MatchResult(matchStatuses);
     }
 
     public Dealer getDealer() {

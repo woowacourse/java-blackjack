@@ -1,7 +1,5 @@
 package blackjack.domain.result;
 
-import java.util.Map;
-
 public enum MatchStatus {
 
     BLACKJACK(1.5),
@@ -17,12 +15,6 @@ public enum MatchStatus {
 
     public int multiplyRate(final int number) {
         return (int) Math.floor(this.rate * number);
-    }
-
-    public Long countMatchStatus(final Map<String, MatchStatus> matchStatuses) {
-        return matchStatuses.values().stream()
-                .filter(this::equals)
-                .count();
     }
 
 }

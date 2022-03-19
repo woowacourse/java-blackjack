@@ -38,13 +38,13 @@ public class Players {
                 .orElseThrow(() -> new NoSuchElementException("플레이어를 찾을 수 없습니다."));
     }
 
-    public MatchResult judgeMatchStatusOfPlayers(final Dealer dealer) {
+    public Map<Player, MatchStatus> judgeMatchStatusOfPlayers(final Dealer dealer) {
         final Map<Player, MatchStatus> matchStatuses = new LinkedHashMap<>();
         for (final Player player : players) {
             final MatchStatus matchStatus = MatchCalculator.judgeMatchStatusOfPlayer(player, dealer);
             matchStatuses.put(player, matchStatus);
         }
-        return new MatchResult(matchStatuses);
+        return matchStatuses;
     }
 
     public boolean isAnyPlayerNotFinished() {
