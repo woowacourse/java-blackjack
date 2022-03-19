@@ -77,7 +77,7 @@ public class BlackjackGame {
 	}
 
 	private boolean shouldHit(Player player) {
-		return !(player.isBust()) && player.shouldHit(InputView.askHit(player.getName()));
+		return !(player.isBust()) && InputView.askHit(player.getName());
 	}
 
 	private void decideDealerHitOrNot(BlackJack blackJack) {

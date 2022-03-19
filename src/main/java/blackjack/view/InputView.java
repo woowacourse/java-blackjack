@@ -35,12 +35,12 @@ public class InputView {
 		}
 	}
 
-	public static String askHit(String name) {
+	public static Boolean askHit(String name) {
 		System.out.printf(MESSAGE_ASK_HIT_CHOICE, name);
 		try {
 			String input = scanner.nextLine().toLowerCase(Locale.ROOT);
 			checkValidChoice(input);
-			return input;
+			return CHOICE_YES.equals(input);
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return askHit(name);
