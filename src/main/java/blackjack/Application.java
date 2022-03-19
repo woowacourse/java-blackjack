@@ -53,11 +53,15 @@ public class Application {
     }
 
     public static void playing(Deck deck, Player player) {
-        PlayCommand playCommand = PlayCommand.YES;
-        while (player.canHit() && playCommand.isContinue()) {
+        PlayCommand playCommand;
+        do {
             playCommand = toPlayCommand(player);
             drawCard(deck, player, playCommand);
-        }
+        } while (canPlay(player, playCommand));
+    }
+
+    private static boolean canPlay(Player player, PlayCommand playCommand) {
+        return player.canHit() && playCommand.isContinue();
     }
 
     private static PlayCommand toPlayCommand(Player player) {
