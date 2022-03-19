@@ -84,8 +84,8 @@ public class Game {
 
     public long getDealerResult() {
         long result = 0L;
-        Map<String, Long> playerResults1 = getPlayerResults();
-        Collection<Long> values = playerResults1.values();
+        Map<String, Long> playerResults = getPlayerResults();
+        Collection<Long> values = playerResults.values();
         for (Long value : values) {
             result -= value;
         }

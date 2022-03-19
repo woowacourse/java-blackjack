@@ -22,7 +22,7 @@ public class Player extends Participant{
     }
 
     public boolean isAbleToHit() {
-        return !stay && !super.isBlackjack() && !super.isMaxScore() && !super.isBust();
+        return !(stay || super.isBlackjack() || super.isMaxScore() || super.isBust());
     }
 
     public void stay() {
