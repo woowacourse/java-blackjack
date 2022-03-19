@@ -3,7 +3,7 @@ package blackjack.view;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.BettingResult;
+import blackjack.domain.result.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;

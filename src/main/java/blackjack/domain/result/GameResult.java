@@ -3,7 +3,6 @@ package blackjack.domain.result;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import blackjack.domain.BettingResult;
 import blackjack.domain.gamer.Player;
 
 public class GameResult {

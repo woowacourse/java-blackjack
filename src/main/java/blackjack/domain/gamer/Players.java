@@ -1,14 +1,10 @@
 package blackjack.domain.gamer;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import blackjack.domain.result.Results;
 
 public class Players {
 
@@ -49,10 +45,6 @@ public class Players {
         return names.stream()
             .map(Player::new)
             .collect(Collectors.toList());
-    }
-
-    public void initGameResult(Map<Gamer, Results> gameResult) {
-        players.forEach(player -> gameResult.put(player, new Results(new ArrayList<>())));
     }
 
     public List<Player> getPlayers() {

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,7 +12,6 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.GameResult;
 
 class BettingResultTest {
 
