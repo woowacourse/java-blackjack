@@ -20,10 +20,6 @@ public abstract class Human {
         cards.add(card);
     }
 
-    public void addCards(final List<Card> addedCards) {
-        addedCards.forEach(cards::add);
-    }
-
     public Card getInitCard() {
         return cards.getFirstCard();
     }

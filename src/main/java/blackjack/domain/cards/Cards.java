@@ -13,8 +13,8 @@ public final class Cards {
         this.value = new ArrayList<>();
     }
 
-    public Cards(List<Card> rawValue) {
-        this.value = rawValue;
+    public Cards(List<Card> value) {
+        this.value = value;
     }
 
     public void add(final Card card) {

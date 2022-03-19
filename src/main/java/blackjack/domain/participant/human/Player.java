@@ -1,9 +1,10 @@
 package blackjack.domain.participant.human;
 
 import blackjack.domain.cards.Cards;
+import blackjack.domain.cards.card.Card;
 import blackjack.domain.participant.human.name.Name;
 import blackjack.domain.result.Betting;
-import blackjack.domain.result.Result;
+import java.util.List;
 
 public final class Player extends Human {
     private Betting betting;
@@ -15,6 +16,10 @@ public final class Player extends Human {
     public Player initBetting(int betting) {
         this.betting = new Betting(betting);
         return this;
+    }
+
+    public void addCards(final List<Card> cards) {
+        cards.forEach(this.cards::add);
     }
 
     public boolean isCardsThatSize(final int size) {

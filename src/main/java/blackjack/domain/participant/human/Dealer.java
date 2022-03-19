@@ -8,8 +8,8 @@ import java.util.List;
 public final class Dealer extends Human {
     private static final int HIT_DEALER_POINT = 16;
 
-    public Dealer(List<Card> rawCards) {
-        super(new Cards(rawCards), new Name("딜러"));
+    public Dealer(List<Card> cards) {
+        super(new Cards(cards), new Name("딜러"));
     }
 
     public boolean isAbleToHit() {

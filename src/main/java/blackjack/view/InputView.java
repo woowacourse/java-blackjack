@@ -30,11 +30,11 @@ public final class InputView {
                 .collect(Collectors.toList());
     }
 
-    private static void validateNames(final String input) {
-        if (input == null || input.isEmpty()) {
+    private static void validateNames(final String name) {
+        if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException(NULL_NAMES_ERROR_MESSAGE);
         }
-        if (input.startsWith(NAMES_REGEX) || input.endsWith(NAMES_REGEX)) {
+        if (name.startsWith(NAMES_REGEX) || name.endsWith(NAMES_REGEX)) {
             throw new IllegalArgumentException(NAME_SIZE_MIN_ERROR_MESSAGE);
         }
     }
@@ -53,8 +53,8 @@ public final class InputView {
         return input.equalsIgnoreCase(YES_INPUT);
     }
 
-    private static void validateAnswer(final String input) {
-        if (!input.equalsIgnoreCase(YES_INPUT) && !input.equalsIgnoreCase(NO_INPUT)) {
+    private static void validateAnswer(final String answer) {
+        if (!answer.equalsIgnoreCase(YES_INPUT) && !answer.equalsIgnoreCase(NO_INPUT)) {
             throw new IllegalArgumentException(NULL_ANSWER_YN_ERROR_MESSAGE);
         }
     }

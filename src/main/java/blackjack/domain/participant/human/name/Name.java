@@ -9,9 +9,9 @@ public final class Name {
 
     private final String value;
 
-    public Name(final String input) {
-        validateName(input);
-        this.value = input;
+    public Name(final String value) {
+        validateName(value);
+        this.value = value;
     }
 
     private void validateName(final String input) {

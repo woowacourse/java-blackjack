@@ -75,15 +75,14 @@
   - [x] fromNames(), fromText()
   - [x] 정적 팩터리 메서드가 생성자만 호출하는 경우 삭제
   - [x] 테스트 코드의 간편화를 위해 fixture 클래스를 테스트코드 내부에 생성
-- [ ] rawValue라는 변수명은 좋은 이름은 아닌 것 같아요.
-- [ ] BlackjackGame에 이렇게 로직이 많이 노출될 필요가 있나요?
-- [ ] players -> 사용되지 않는 calculateBettingMoney 메서드 제거
-- [ ] raw...라는 표현 대신 다른 변수명 생각하기
+- [x] raw... 변수명 변경
+- [x] players -> 사용되지 않는 calculateBettingMoney 메서드 제거
 - [ ] player
     - [ ] calculateResult() -> 메서드를 호출할 때마다 점수가 재계산되는데 여기서 해당 메서드를 계속 호출하고 있군요.
     - [ ] Result.fromBoolean(!isBust()) 같은 표현은 의미 파악이 몹시 어려운 것 같습니다.
-        - 차라리 enum 인스턴스를 그냥 직접 사용하는 것이 더 나아 보여요.
+  - 차라리 enum 인스턴스를 그냥 직접 사용하는 것이 더 나아 보여요.
     - [ ] Player.is.... -> 문법적으로 어색
+- [ ] BlackjackGame에 이렇게 로직이 많이 노출될 필요가 있나요?
 - [ ] PrideCalculator ->
     - hashCode() 메서드 용도 공부
     - hashCode() 대신 다른 방식으로 사용
