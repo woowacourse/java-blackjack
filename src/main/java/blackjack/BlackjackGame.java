@@ -6,8 +6,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.dto.ParticipantCards;
+import blackjack.dto.ParticipantProfit;
 import blackjack.dto.ParticipantScoreResult;
-import blackjack.dto.PlayerProfit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -31,7 +31,7 @@ public class BlackjackGame {
         runPlayerTurn();
         runDealerTurn();
         printAllParticipantCards();
-        printAllProfits();
+        printParticipantProfits();
     }
 
     private void printParticipantsFirstCards() {
@@ -84,13 +84,13 @@ public class BlackjackGame {
                 .collect(Collectors.toList()));
     }
 
-    private void printAllProfits() {
-        OutputView.printProfitTitle();
-        OutputView.printParticipantProfit(dealer.getName(), players.dealerProfit(dealer));
-        final List<PlayerProfit> playerProfits = players.players()
-                .stream()
-                .map(player -> PlayerProfit.of(player, dealer))
-                .collect(Collectors.toList());
-        OutputView.printParticipantProfits(playerProfits);
+    private void printParticipantProfits() {
+        OutputView.printParticipantProfits(
+                ParticipantProfit.createDealerProfit(dealer, players),
+                players.players()
+                        .stream()
+                        .map(player -> ParticipantProfit.createPlayerProfit(player, dealer))
+                        .collect(Collectors.toList())
+        );
     }
 }

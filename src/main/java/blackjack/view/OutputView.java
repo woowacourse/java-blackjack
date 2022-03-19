@@ -4,8 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.dto.ParticipantCards;
+import blackjack.dto.ParticipantProfit;
 import blackjack.dto.ParticipantScoreResult;
-import blackjack.dto.PlayerProfit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,15 +68,18 @@ public class OutputView {
         participantScoreResults.forEach(OutputView::printPlayerScoreResult);
     }
 
-    public static void printProfitTitle() {
+    public static void printParticipantProfits(final ParticipantProfit dealerProfit, final List<ParticipantProfit> participantProfits) {
         System.out.println(PARTICIPANT_PROFIT_RESULT_TITLE);
+        printParticipantProfit(dealerProfit.getName(), dealerProfit.getProfit());
+        printParticipantProfits(participantProfits);
     }
 
-    public static void printParticipantProfit(final String name, final int profit) {
+    private static void printParticipantProfit(final String name, final int profit) {
         System.out.printf(PARTICIPANT_PROFIT_RESULT_MESSAGE, name, profit);
     }
 
-    public static void printParticipantProfits(final List<PlayerProfit> playerProfits) {
-        playerProfits.forEach(playerProfit -> printParticipantProfit(playerProfit.getName(), playerProfit.getProfit()));
+    private static void printParticipantProfits(final List<ParticipantProfit> participantProfits) {
+        participantProfits
+                .forEach(participantProfit -> printParticipantProfit(participantProfit.getName(), participantProfit.getProfit()));
     }
 }
