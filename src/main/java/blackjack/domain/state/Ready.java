@@ -30,7 +30,7 @@ public final class Ready extends Started {
 
     @Override
     public State stay() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("스테이 상태로 변경할 수 없습니다.");
     }
 
     @Override
@@ -45,6 +45,6 @@ public final class Ready extends Started {
 
     @Override
     public double earningRate(State state) {
-        throw new IllegalStateException();
+        throw new IllegalStateException("수익율를 조회할 수 없습니다.");
     }
 }

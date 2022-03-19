@@ -20,6 +20,6 @@ public abstract class Running extends Started {
 
     @Override
     public final double earningRate(State state) {
-        throw new IllegalStateException();
+        throw new IllegalStateException("수익율을 조회할 수 없습니다.");
     }
 }

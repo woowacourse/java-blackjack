@@ -16,12 +16,12 @@ public abstract class Finished extends Started {
 
     @Override
     public final State draw(Card card) {
-        throw new IllegalStateException();
+        throw new IllegalStateException("카드를 뽑을 수 없는 상태입니다.");
     }
 
     @Override
     public final State stay() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("스테이 상태로 변경할 수 없습니다.");
     }
 
     @Override
