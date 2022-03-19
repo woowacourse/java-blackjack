@@ -9,7 +9,7 @@ public class Card {
     private boolean isOpen = true;
 
     public Card(CardShape shape, CardNumber number) {
-        this.cardProperty = new CardProperty(shape, number);
+        this.cardProperty = CardProperty.of(shape, number);
     }
 
     public void open() {
