@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardStack;
+import blackjack.domain.hand.CardHand;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.strategy.CardsViewStrategy;
@@ -12,14 +13,14 @@ public class BlackjackGame {
 
     private static final HitOrStayStrategy ALWAYS_HIT_STRATEGY = () -> true;
 
-    private final CardStack cardDeck;
+    private final CardStack cardStack;
     private final Participants participants;
 
-    public BlackjackGame(final CardStack cardDeck,
+    public BlackjackGame(final CardStack cardStack,
                          final List<String> playerNames) {
 
-        this.cardDeck = cardDeck;
-        this.participants = Participants.of(playerNames, cardDeck::pop);
+        this.cardStack = cardStack;
+        this.participants = Participants.of(playerNames, cardStack::pop);
     }
 
     public void drawAllPlayerCards(final HitOrStayStrategy hitOrStayStrategy,
@@ -37,22 +38,27 @@ public class BlackjackGame {
         dealer.drawAll(ALWAYS_HIT_STRATEGY, dealerView, this::popCard);
     }
 
-    private Card popCard() {
-        return cardDeck.pop();
-    }
-
-    private Participant getDealer() {
-        return participants.getDealer();
+    public boolean isBlackjackDealer() {
+        CardHand dealerHand = getDealer().getHand();
+        return dealerHand.isBlackjack();
     }
 
     public Participants getParticipants() {
         return participants;
     }
 
+    private Card popCard() {
+        return cardStack.pop();
+    }
+
+    private Participant getDealer() {
+        return participants.getDealer();
+    }
+
     @Override
     public String toString() {
         return "BlackjackGame{" +
-                "cardDeck=" + cardDeck +
+                "cardStack=" + cardStack +
                 ", participants=" + participants +
                 '}';
     }

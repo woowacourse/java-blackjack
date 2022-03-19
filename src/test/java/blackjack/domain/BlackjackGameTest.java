@@ -1,13 +1,18 @@
 package blackjack.domain;
 
+import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardStack;
 import blackjack.domain.hand.CardHand;
 import blackjack.domain.participant.Participant;
 import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayStrategy;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
@@ -84,11 +89,41 @@ public class BlackjackGameTest {
         }
     }
 
+    @DisplayName("isBlackjackDealer 메서드는 딜러가 블랙잭인 경우 true를 반환한다.")
+    @Test
+    void isBlackjackDealer() {
+        CardStack blackjackDeck = CardStackStub.of(CLOVER10, CLOVER_ACE, CLOVER10, CLOVER_ACE);
+        BlackjackGame blackjackGame = new BlackjackGame(blackjackDeck, List.of("p1"));
+
+        boolean actual = blackjackGame.isBlackjackDealer();
+
+        assertThat(actual).isTrue();
+    }
+
     private Participant extractDealer(BlackjackGame blackjackGame) {
         return blackjackGame.getParticipants().getDealer();
     }
 
     private List<Participant> extractPlayers(BlackjackGame blackjackGame) {
         return blackjackGame.getParticipants().getPlayers();
+    }
+
+    private static class CardStackStub implements CardStack {
+
+        private final LinkedList<Card> cards = new LinkedList<>();
+
+        private CardStackStub(List<Card> cards) {
+            this.cards.addAll(cards);
+        }
+
+        public static CardStackStub of(Card... cards) {
+            List<Card> cardList = List.of(cards);
+            return new CardStackStub(cardList);
+        }
+
+        @Override
+        public Card pop() {
+            return cards.poll();
+        }
     }
 }

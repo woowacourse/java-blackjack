@@ -36,20 +36,13 @@ public class BlackjackController {
     public void playGame(final BlackjackGame game) {
         final InitialDistributionDto dto = InitialDistributionDto.of(game);
 
-        if (checkDealerBlackjack(game)){
+        if (game.isBlackjackDealer()){
             printDealerBlackjack(dto);
             return;
         }
 
         printInitialDistribution(dto);
         distributeAllCards(game);
-    }
-
-    private boolean checkDealerBlackjack(BlackjackGame game) {
-        return game.getParticipants()
-                .getDealer()
-                .getHand()
-                .isBlackjack();
     }
 
     private void distributeAllCards(final BlackjackGame game) {
