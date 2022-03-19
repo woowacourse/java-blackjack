@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import blackjack.domain.participant.Name;
+import blackjack.domain.Name;
 
 public final class InputView {
 

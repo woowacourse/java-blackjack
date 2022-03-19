@@ -1,13 +1,10 @@
-package blackjack.domain.state.finished;
+package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Cards;
-import blackjack.domain.state.State;
-import blackjack.domain.state.running.Running;
 
-public abstract class Finished extends Running {
+abstract class Finished extends Running {
 
-    protected Finished(Cards cards) {
+    Finished(Cards cards) {
         super(cards);
     }
 

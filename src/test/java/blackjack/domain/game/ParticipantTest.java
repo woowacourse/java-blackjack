@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.game;
 
 import static blackjack.domain.card.CardNumber.*;
 import static blackjack.domain.card.CardSymbol.*;
@@ -9,14 +9,14 @@ import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.Name;
 import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Bust;
+import blackjack.domain.state.Running;
 import blackjack.domain.state.Started;
 import blackjack.domain.state.State;
-import blackjack.domain.state.finished.Blackjack;
-import blackjack.domain.state.finished.Bust;
-import blackjack.domain.state.running.Running;
 
 public class ParticipantTest {
 

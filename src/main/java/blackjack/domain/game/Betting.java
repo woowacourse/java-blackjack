@@ -1,10 +1,10 @@
-package blackjack.domain.participant;
+package blackjack.domain.game;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import blackjack.domain.PlayRecord;
+import blackjack.domain.Name;
 
 public final class Betting {
 

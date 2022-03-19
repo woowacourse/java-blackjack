@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.state;
 
 import static blackjack.domain.card.CardNumber.*;
 
@@ -18,11 +18,11 @@ public final class Cards {
 
     private final Set<Card> value;
 
-    public Cards(Set<Card> value) {
+    Cards(Set<Card> value) {
         this.value = new LinkedHashSet<>(value);
     }
 
-    public Cards add(Card card) {
+    Cards add(Card card) {
         Set<Card> newCards = new LinkedHashSet<>(value);
         newCards.add(card);
         return new Cards(newCards);
@@ -32,16 +32,16 @@ public final class Cards {
         return isReadyToStop() && isEndInit();
     }
 
-    public boolean isReadyToStop() {
+    public boolean isBust() {
+        return sum() > MAX_HIT_SCORE;
+    }
+
+    boolean isReadyToStop() {
         return sum() == MAX_HIT_SCORE;
     }
 
-    public boolean isEndInit() {
-        return size() == INIT_NUMBER_OF_CARDS;
-    }
-
-    public boolean isBust() {
-        return sum() > MAX_HIT_SCORE;
+    boolean isEndInit() {
+        return value.size() == INIT_NUMBER_OF_CARDS;
     }
 
     public int sum() {
@@ -66,10 +66,6 @@ public final class Cards {
         return value.stream()
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
-    }
-
-    public int size() {
-        return value.size();
     }
 
     public Set<Card> getValue() {

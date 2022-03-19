@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.state;
 
 import static blackjack.domain.card.CardNumber.*;
 import static blackjack.domain.card.CardSymbol.*;

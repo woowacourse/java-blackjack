@@ -10,11 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Cards;
-import blackjack.domain.state.finished.Blackjack;
-import blackjack.domain.state.finished.Bust;
-import blackjack.domain.state.finished.Stay;
-import blackjack.domain.state.running.Hit;
 
 public class ReadyTest {
 

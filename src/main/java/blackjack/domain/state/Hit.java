@@ -1,14 +1,10 @@
-package blackjack.domain.state.running;
+package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Cards;
-import blackjack.domain.state.State;
-import blackjack.domain.state.finished.Bust;
-import blackjack.domain.state.finished.Stay;
 
 public final class Hit extends Running {
 
-    public Hit(Cards cards) {
+    Hit(Cards cards) {
         super(cards);
     }
 

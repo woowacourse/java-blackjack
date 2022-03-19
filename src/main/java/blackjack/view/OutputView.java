@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.DrawCount;
+import blackjack.domain.Name;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
+import blackjack.domain.game.Dealer;
+import blackjack.domain.game.Participant;
 
 public final class OutputView {
 

@@ -1,7 +1,8 @@
-package blackjack.domain.card;
+package blackjack.domain.game;
 
 import java.util.Deque;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.deckstrategy.DeckStrategy;
 
 public final class CardDeck {
@@ -12,7 +13,7 @@ public final class CardDeck {
         this.deck = deckStrategy.create();
     }
 
-    public Card drawCard() {
+    Card drawCard() {
         return deck.removeLast();
     }
 }

@@ -6,13 +6,13 @@ import static java.util.stream.Collectors.*;
 
 import java.util.List;
 
-import blackjack.domain.Game;
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.Name;
 import blackjack.domain.card.deckstrategy.ShuffleDeck;
-import blackjack.domain.participant.Betting;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
+import blackjack.domain.game.Betting;
+import blackjack.domain.game.CardDeck;
+import blackjack.domain.game.Game;
+import blackjack.domain.game.Participant;
+import blackjack.domain.game.Player;
 import blackjack.view.OutputView;
 
 public final class GameController {
@@ -60,7 +60,7 @@ public final class GameController {
     }
 
     private void keepDrawing(Game game, Player player) {
-        while (!player.isFinished()) {
+        while (player.isDrawable()) {
             game.drawPlayerCard(player, requestHitOrStay(player.getName()));
             printParticipantCards(player);
         }
