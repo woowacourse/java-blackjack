@@ -36,6 +36,7 @@ public final class Entries {
 
     private static int countDistinct(List<String> names) {
         return (int) names.stream()
+                .map(String::trim)
                 .distinct()
                 .count();
     }

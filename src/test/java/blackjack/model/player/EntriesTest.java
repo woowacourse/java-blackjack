@@ -12,7 +12,7 @@ public class EntriesTest {
     @DisplayName("중복된 이름이 있을 때 예외가 발생한다.")
     @Test
     void nextEntry_exception_duplicate_name() {
-        List<String> names = List.of("포키", "리버", "포키");
+        List<String> names = List.of("포키 ", "리버", "포키");
 
         assertThatThrownBy(() -> Entries.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
