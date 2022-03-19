@@ -23,7 +23,7 @@ public class Cards {
         int sumOfPoint = cards.stream()
             .mapToInt(Card::point)
             .sum();
-        if(hasAce() && sumOfPoint <= 11){
+        if (hasAce() && sumOfPoint <= 11) {
             sumOfPoint += 10;
         }
         return sumOfPoint;

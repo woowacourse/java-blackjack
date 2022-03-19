@@ -80,5 +80,26 @@
             - 딜러보다 21에 멀 경우 : 베팅금액 잃음.
         - 딜러 버스트 : 베팅금액 * 1
 - [x] 최종 수익 결과 출력
-  
-    
+
+### 2단계 수정 필요 항목
+
+- [ ] Gambler, Dealer 생성 시 CardDeck 인자 사용으로 인한 Test 깨짐
+    - 기존 : Dealer.of()
+    - 현재 : Dealer.of(cardDeck)
+
+### 2단계 변경점
+
+1. Player별 상태 클래스 분리
+    - State
+        - Started
+            - Running
+                - Ready
+                - Hit
+            - Finished
+                - Stay
+                - Bust
+                - BlackJack
+2. 블랙잭 게임 결과 클래스 추가
+    - GameResult
+        - Map<Player, Double> 형식으로 구현
+        - Key : Player, Value : Profit
