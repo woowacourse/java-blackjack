@@ -20,14 +20,14 @@ public enum Result {
 		this.condition = condition;
 	}
 
-	public static Result of(Dealer dealer, Player player) {
+	static Result of(Dealer dealer, Player player) {
 		return Arrays.stream(Result.values())
 			.filter(result -> result.condition.test(dealer, player))
 			.findAny()
 			.orElseThrow(() -> new IllegalArgumentException("[ERROR] 결과를 산출할 수 없는 경우입니다."));
 	}
 
-	public int getEarning(int amount) {
+	int getEarning(int amount) {
 		return (int)(this.multiple * amount);
 	}
 }

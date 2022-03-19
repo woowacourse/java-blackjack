@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Blackjack;
@@ -9,6 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.Revenue;
 
 public class ResultView {
 
@@ -78,23 +78,21 @@ public class ResultView {
 
 	public static void showResult(Blackjack blackJack) {
 		System.out.println(MESSAGE_FINAL_RESULT);
-		Map<Player, Integer> result = blackJack.calculateResult();
-		showDealerResult(blackJack, result);
-		showPlayerResults(result);
+		showDealerResult(blackJack);
+		showPlayerResults(blackJack);
 	}
 
-	private static void showDealerResult(Blackjack blackJack, Map<Player, Integer> result) {
-		int dealerEarning = -result.values().stream()
-			.mapToInt(amount -> amount)
-			.sum();
-
+	private static void showDealerResult(Blackjack blackJack) {
+		Revenue revenue = Revenue.of(blackJack);
 		Dealer dealer = blackJack.getDealer();
-		System.out.println(dealer.getName() + DELIMITER_COLON + dealerEarning);
+		System.out.println(dealer.getName() + DELIMITER_COLON + (-revenue.getTotalRevenue()));
 	}
 
-	private static void showPlayerResults(Map<Player, Integer> result) {
-		result.keySet().stream()
-			.map(player -> player.getName() + DELIMITER_COLON + result.get(player))
+	private static void showPlayerResults(Blackjack blackjack) {
+		Revenue revenue = Revenue.of(blackjack);
+		List<Player> players = blackjack.getPlayers();
+		players.stream()
+			.map(player -> player.getName() + DELIMITER_COLON + revenue.getRevenue(player))
 			.forEach(System.out::println);
 	}
 }

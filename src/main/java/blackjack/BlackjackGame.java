@@ -90,7 +90,6 @@ public class BlackjackGame {
 
 	private void finishGame(Blackjack blackJack) {
 		ResultView.showFinalStatus(blackJack);
-		blackJack.calculateResult();
 		ResultView.showResult(blackJack);
 	}
 }
