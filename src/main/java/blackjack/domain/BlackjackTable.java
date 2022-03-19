@@ -70,4 +70,8 @@ public class BlackjackTable {
     private State toReady() {
         return Ready.start(deck.draw(), deck.draw());
     }
+
+    public Map<Name, HoldCards> getAllPlayers() {
+        return players.getAllPlayersCard();
+    }
 }

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.vo.Name;
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,11 +12,12 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String NAME_DELIMITER = ", ";
+    private static final int FIRST_DEALER_CARD = 0;
 
     public static void printAllCards(Dealer dealer, Map<Name, List<Card>> players) {
         System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", toNames(players)));
         System.out.println();
-        printCard(dealer.getName(), dealer.getHoldCards().getCards());
+        printCard(dealer.getName(), Collections.singletonList(dealer.getHoldCards().getCards().get(FIRST_DEALER_CARD)));
         for (Name name : players.keySet()) {
             printCard(name.getValue(), players.get(name));
         }

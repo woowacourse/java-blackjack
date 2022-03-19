@@ -5,8 +5,8 @@ import blackjack.domain.card.HoldCards;
 
 public class Dealer {
 
+    public static final String NAME = "딜러";
     private static final int MORE_CARD_STANDARD = 16;
-    private static final String NAME = "딜러";
 
     private final HoldCards holdCards;
 

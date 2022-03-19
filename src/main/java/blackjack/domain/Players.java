@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.vo.BettingMoney;
 import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.vo.Name;
@@ -86,5 +87,13 @@ public class Players {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public Map<Name, HoldCards> getAllPlayersCard() {
+        Map<Name, HoldCards> allPlayers = new LinkedHashMap<>();
+        allPlayers.put(Name.DEALER, dealer.getHoldCards());
+        allPlayers.putAll(players.keySet().stream()
+            .collect(Collectors.toMap(Player::getName, player -> players.get(player).getHoldCards())));
+        return allPlayers;
     }
 }
