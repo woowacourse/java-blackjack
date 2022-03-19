@@ -1,23 +1,28 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomGenerator;
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GameMachine {
+public final class GameMachine {
 
     private final Deck deck;
     private final Players players;
 
-    public GameMachine(final List<String> names) {
+    public GameMachine(final List<String> names, final Map<String, Bet> bets) {
         validationNames(names);
-        this.deck = new Deck();
-        this.players = new Players(createParticipants(names), createDealer());
+        validationBets(bets);
+        this.deck = new Deck(new RandomGenerator());
+        this.players = new Players(createParticipants(names, bets), createDealer());
     }
 
     private void validationNames(final List<String> names) {
@@ -26,21 +31,27 @@ public class GameMachine {
         }
     }
 
-    public List<Participant> createParticipants(final List<String> names) {
+    private void validationBets(final Map<String, Bet> bets) {
+        if (bets == null || bets.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 잘못된 배팅 입력입니다.");
+        }
+    }
+
+    private List<Participant> createParticipants(final List<String> names, final Map<String, Bet> bets) {
         return names.stream()
-                .map(name -> new Participant(deck.initDistributeCard(), name))
+                .map(name -> new Participant(Cards.createInitCards(deck), name, bets.get(name)))
                 .collect(Collectors.toList());
     }
 
     private Dealer createDealer() {
-        return new Dealer(deck.initDistributeCard());
+        return new Dealer(Cards.createInitCards(deck));
     }
 
     public Card playDraw() {
         return deck.draw();
     }
 
-    public boolean isDealerGetCard() {
+    public boolean isDealerGetAdditionalCard() {
         if (players.getDealer().acceptableCard()) {
             players.addDealerCard(deck.draw());
             return true;
@@ -52,7 +63,15 @@ public class GameMachine {
         return this.players;
     }
 
-    public List<Participant> getParicipants() {
+    public List<Participant> getParticipants() {
         return players.getParticipants();
+    }
+
+    @Override
+    public String toString() {
+        return "GameMachine{" +
+                "deck=" + deck +
+                ", players=" + players +
+                '}';
     }
 }

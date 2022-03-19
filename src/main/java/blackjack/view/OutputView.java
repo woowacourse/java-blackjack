@@ -9,7 +9,7 @@ import blackjack.domain.player.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 
     private static final int INIT_DISTRIBUTE_SIZE = 2;
     private static final int ADD_CARD_CONDITION = 16;
@@ -19,7 +19,7 @@ public class OutputView {
         final List<Participant> participants = players.getParticipants();
         final Dealer dealer = players.getDealer();
 
-        final String basicDistribute = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
+        final String basicDistribute = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "장을 나누어주었습니다.";
         System.out.println();
         System.out.printf((basicDistribute) + "%n", String.join(DELIMITER, extractNames(participants)));
         printInitDealerInfo(dealer);
@@ -38,9 +38,9 @@ public class OutputView {
     }
 
     private static void printParticipantsInfo(final List<Participant> participants) {
-        participants.forEach(
-                participant -> System.out.println(makePlayerCardInfo(participant))
-        );
+        for (Participant participant : participants) {
+            System.out.println(makePlayerCardInfo(participant));
+        }
         System.out.println();
     }
 
@@ -59,7 +59,7 @@ public class OutputView {
     }
 
     public static void printParticipantOverMaxScore(final String name) {
-        System.out.println(name + "은 최고점수를 초과하여 카드를 더 이상 받을 수 없습니다.");
+        System.out.println(name + "은 최고점수 이상이기에 카드를 더 이상 받을 수 없습니다.");
     }
 
     public static void printDealerAcceptCard() {
@@ -82,30 +82,18 @@ public class OutputView {
     }
 
     public static void printResult(final Players players) {
-        System.out.println("## 최종 승패");
-        printDealerResult(players.getDealer());
-        printParticipantsResult(players.getParticipants());
-    }
-
-    private static void printDealerResult(final Player dealer) {
-        System.out.printf(dealer.getName() + ": %d승 %d패%n", dealer.getWinCount(),
-                dealer.getLoseCount());
-    }
-
-    private static void printParticipantsResult(final List<Participant> participants) {
-        participants.forEach(OutputView::printParticipantResult);
-    }
-
-    private static void printParticipantResult(final Player participant) {
-        System.out.print(participant.getName() + ": ");
-        if (participant.getWinCount() == 1) {
-            System.out.println("승");
-            return;
+        System.out.println("## 최종 수익");
+        printPlayerResult(players.getDealer());
+        for (Participant participant : players.getParticipants()) {
+            printPlayerResult(participant);
         }
-        System.out.println("패");
     }
 
-    public static void printErrorMessage(String message) {
+    private static void printPlayerResult(final Player player) {
+        System.out.println(player.getName() + ": " + player.getBetProfit());
+    }
+
+    public static void printErrorMessage(final String message) {
         System.out.println(message);
     }
 }

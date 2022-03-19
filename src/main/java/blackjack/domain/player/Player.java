@@ -12,14 +12,14 @@ public abstract class Player {
 
     private final Cards cards;
     private final String name;
-    private final State state;
+    private final Bet bet;
 
-    Player(final List<Card> cards, final String name) {
+    Player(final List<Card> cards, final String name, final Bet bet) {
         validateCards(cards);
         validateName(name);
         this.cards = new Cards(cards);
         this.name = name;
-        this.state = new State();
+        this.bet = bet;
     }
 
     private void validateCards(final List<Card> cards) {
@@ -37,7 +37,7 @@ public abstract class Player {
     public abstract boolean acceptableCard();
 
     public int calculateFinalScore() {
-        final int score = getScoreByAceEleven();
+        final int score = getMaxScore();
 
         if (score <= MAX_SCORE) {
             return score;
@@ -50,11 +50,23 @@ public abstract class Player {
     }
 
     public void win() {
-        state.win();
+        bet.win();
     }
 
     public void lose() {
-        state.lose();
+        bet.lose();
+    }
+
+    public void bothBlackjack() {
+        bet.bothBlackjack();
+    }
+
+    public void blackjack() {
+        bet.blackjack();
+    }
+
+    protected int calculateInitCardScore() {
+        return cards.calculateInitCardScore();
     }
 
     public List<Card> getCards() {
@@ -65,19 +77,19 @@ public abstract class Player {
         return this.name;
     }
 
-    public int getWinCount() {
-        return state.getWinCount();
+    public Bet getBet() {
+        return bet;
     }
 
-    public int getLoseCount() {
-        return state.getLoseCount();
+    public int getBetProfit() {
+        return bet.getProfit();
     }
 
     protected int getScoreByAceOne() {
-        return cards.calculateScoreByAceOne();
+        return cards.calculateScore();
     }
 
-    protected int getScoreByAceEleven() {
+    protected int getMaxScore() {
         return cards.calculateMaxScore();
     }
 
@@ -96,5 +108,14 @@ public abstract class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "cards=" + cards +
+                ", name='" + name + '\'' +
+                ", bet=" + bet +
+                '}';
     }
 }

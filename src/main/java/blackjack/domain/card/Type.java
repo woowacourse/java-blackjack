@@ -11,7 +11,7 @@ public enum Type {
 
     private final String name;
 
-    Type(String name) {
+    Type(final String name) {
         this.name = name;
     }
 

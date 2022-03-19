@@ -3,7 +3,9 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public final class Cards {
+
+    private static final int INIT_DISTRIBUTE_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -13,14 +15,24 @@ public class Cards {
         addCards(cards);
     }
 
+    public static List<Card> createInitCards(final Deck deck) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < INIT_DISTRIBUTE_SIZE; i++) {
+            cards.add(deck.draw());
+        }
+        return cards;
+    }
+
     private void validateInitCards(final List<Card> cards) {
-        if (cards == null || cards.size() != Deck.INIT_DISTRIBUTE_SIZE) {
+        if (cards == null || cards.size() != INIT_DISTRIBUTE_SIZE) {
             throw new IllegalArgumentException("[ERROR] 잘못 배분된 카드입니다.");
         }
     }
 
     private void addCards(final List<Card> cards) {
-        cards.forEach(this::addCard);
+        for (Card card : cards) {
+            addCard(card);
+        }
     }
 
     public void addCard(final Card card) {
@@ -34,22 +46,52 @@ public class Cards {
         }
     }
 
-    public int calculateScoreByAceOne() {
-        return cards.stream().mapToInt(card -> card.getScore().getAmount()).sum();
-    }
-
     public int calculateMaxScore() {
-        if (isContainsAce()) {
-            return calculateScoreByAceOne() + Score.getDifferenceAcesScore();
+        if (containsAce()) {
+            return calculateScore() + Score.getDifferenceAcesScore();
         }
-        return calculateScoreByAceOne();
+        return calculateScore();
     }
 
-    private boolean isContainsAce() {
-        return cards.stream().anyMatch(card -> card.getScore() == Score.ACE);
+    private boolean containsAce() {
+        return cards.stream().anyMatch(Card::isScoreAce);
+    }
+
+    public int calculateScore() {
+        return cards.stream().mapToInt(card -> card.getScoreAmount()).sum();
+    }
+
+    public int calculateInitCardScore() {
+        if (containsInitAce()) {
+            return calculateInitMaxScore();
+        }
+        return calculateInitScore();
+    }
+
+    private boolean containsInitAce() {
+        return getInitCards().stream().anyMatch(Card::isScoreAce);
+    }
+
+    private int calculateInitMaxScore() {
+        return calculateInitScore() + Score.getDifferenceAcesScore();
+    }
+
+    private int calculateInitScore() {
+        return getInitCards().stream().mapToInt(card -> card.getScoreAmount()).sum();
+    }
+
+    private List<Card> getInitCards() {
+        return cards.subList(0, INIT_DISTRIBUTE_SIZE);
     }
 
     public List<Card> getCards() {
         return this.cards;
+    }
+
+    @Override
+    public String toString() {
+        return "Cards{" +
+                "cards=" + cards +
+                '}';
     }
 }

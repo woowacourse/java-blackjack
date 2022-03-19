@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +18,11 @@ public class CardsTest {
     @Test
     @DisplayName("카드를 추가할 떄 null을 전달하면 예외를 발생한다.")
     void thrownExceptionWhenGivenNull() {
-        Cards cards = new Cards(new Deck().initDistributeCard());
+        Deck deck = new Deck(new RandomGenerator());
+        List<Card> initCards = new ArrayList<>();
+        initCards.add(deck.draw());
+        initCards.add(deck.draw());
+        Cards cards = new Cards(initCards);
         assertThatThrownBy(() -> cards.addCard(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 올바른 카드를 입력해주세요.");
@@ -44,7 +49,7 @@ public class CardsTest {
         ));
         cards.addCard(new Card(Type.CLOVER, Score.THREE));
 
-        assertThat(cards.calculateScoreByAceOne()).isEqualTo(6);
+        assertThat(cards.calculateScore()).isEqualTo(6);
     }
 
     @ParameterizedTest
@@ -68,5 +73,17 @@ public class CardsTest {
                         new Card(Type.CLOVER, Score.THREE)
                 )
         );
+    }
+
+    @Test
+    @DisplayName("초기 카드 2장의 점수 합을 구한다.")
+    void sumInitCardScore() {
+        Cards cards = new Cards(List.of(
+                new Card(Type.SPADE, Score.JACK),
+                new Card(Type.DIAMOND, Score.FIVE)
+        ));
+        cards.addCard(new Card(Type.CLOVER, Score.THREE));
+
+        assertThat(cards.calculateInitCardScore()).isEqualTo(15);
     }
 }

@@ -4,8 +4,9 @@ import blackjack.domain.card.Card;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class Players {
+public final class Players {
 
     private static final int MIN_SIZE = 2;
     private static final int MAX_SIZE = 8;
@@ -31,7 +32,7 @@ public class Players {
     }
 
     private void validateDuplicated(final List<Participant> participants) {
-        final HashSet<Participant> notDuplicatedParticipants = new HashSet<>(participants);
+        final Set<Participant> notDuplicatedParticipants = new HashSet<>(participants);
 
         if (notDuplicatedParticipants.size() != participants.size()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름은 중복될 수 없습니다.");
@@ -43,8 +44,10 @@ public class Players {
     }
 
     public void competeWithDealer() {
-        participants.forEach(player ->
-                dealer.compete(player));
+        for (Participant participant : participants) {
+            dealer.compete(participant);
+        }
+        dealer.calculateDealerProfit(participants);
     }
 
     public Dealer getDealer() {
@@ -53,5 +56,13 @@ public class Players {
 
     public List<Participant> getParticipants() {
         return participants;
+    }
+
+    @Override
+    public String toString() {
+        return "Players{" +
+                "dealer=" + dealer +
+                ", participants=" + participants +
+                '}';
     }
 }

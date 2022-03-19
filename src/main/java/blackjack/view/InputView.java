@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Player;
 
 import java.util.Arrays;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public final class InputView {
 
     private static final String YES = "y";
     private static final String NO = "n";
@@ -47,5 +48,43 @@ public class InputView {
             throw new IllegalArgumentException(String.format("[ERROR] %s 또는 %s으로 입력하세요.", YES, NO));
         }
         return input.equals(YES);
+    }
+
+    public static Bet responseBetAmount(final String name) {
+        System.out.println();
+        System.out.println(name + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        validateBetAmount(input);
+        return convertBetAmountInput(Integer.parseInt(input));
+    }
+
+    private static void validateBetAmount(final String input) {
+        validateBetNull(input);
+        validateTransInteger(input);
+        validateRange(Integer.parseInt(input));
+    }
+
+    private static void validateBetNull(final String input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 배팅 값에 빈 값이 들어올 수 없습니다.");
+        }
+    }
+
+    private static void validateTransInteger(final String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("[ERROR] 양의 정수를 입력해주세요.");
+        }
+    }
+
+    private static void validateRange(final int betAmount) {
+        if (betAmount < 0) {
+            throw new IllegalArgumentException("[ERROR] 양의 정수를 입력해주세요.");
+        }
+    }
+
+    private static Bet convertBetAmountInput(final int betAmount) {
+        return new Bet(betAmount);
     }
 }
