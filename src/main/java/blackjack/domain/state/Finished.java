@@ -4,6 +4,11 @@ import blackjack.domain.card.Card;
 
 public abstract class Finished extends Ready {
 
+    protected static final double WIN_RATE = 1;
+    protected static final double BLACKJACK_WIN_RATE = 1.5;
+    protected static final double DRAW_RATE = 0;
+    protected static final double LOSE_RATE = -1;
+
     Finished() {
     }
 

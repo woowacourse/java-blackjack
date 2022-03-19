@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Outcome;
+import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.PlayerCards;
 import blackjack.domain.state.State;
@@ -13,6 +15,11 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public void hit(Card card) {
         state = state.draw(card);
+    }
+
+    @Override
+    public void stay() {
+        state = state.stay();
     }
 
     @Override
@@ -33,6 +40,11 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public PlayerCards getPlayerCards() {
         return state.getCards();
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Deck;
 import blackjack.domain.state.Ready;
 

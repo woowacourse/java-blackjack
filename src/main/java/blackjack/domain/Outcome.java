@@ -16,7 +16,7 @@ public enum Outcome {
         this.outcome = outcome;
     }
 
-    public static Outcome matchAboutDealer(Dealer dealer, Player player) {
+    public static Outcome matchAboutPlayer(Dealer dealer, Player player) {
         if (checkWin(dealer, player)) {
             return WIN;
         }
@@ -27,6 +27,16 @@ public enum Outcome {
     }
 
     private static boolean checkWin(Player dealer, Player player) {
+        if (!player.isBust() && dealer.isBust()) {
+            return true;
+        }
+        if (!dealer.isBlackjack() && player.isBlackjack()) {
+            return true;
+        }
+        return !player.isBust() && dealer.getScore() < player.getScore();
+    }
+
+    private static boolean checkLose(Player dealer, Player player) {
         if (player.isBust()) {
             return true;
         }
@@ -34,16 +44,6 @@ public enum Outcome {
             return true;
         }
         return !dealer.isBust() && dealer.getScore() > player.getScore();
-    }
-
-    private static boolean checkLose(Player dealer, Player player) {
-        if (!player.isBust() && dealer.isBust()) {
-            return true;
-        }
-        if (!dealer.isBlackjack() && player.isBlackjack()) {
-            return true;
-        }
-        return !dealer.isBust() && dealer.getScore() < player.getScore();
     }
 
     public Outcome not() {

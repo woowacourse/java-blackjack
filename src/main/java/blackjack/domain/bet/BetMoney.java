@@ -1,5 +1,6 @@
 package blackjack.domain.bet;
 
+import blackjack.domain.Outcome;
 import java.util.Objects;
 
 public class BetMoney {
@@ -23,6 +24,10 @@ public class BetMoney {
 
     public int get() {
         return money;
+    }
+
+    public Profit getProfit(double rate) {
+        return new Profit(money * rate);
     }
 
     @Override

@@ -1,8 +1,9 @@
 package blackjack.controller;
 
+import blackjack.PlayerProfitResults;
 import blackjack.domain.HitOrStayAnswer;
 import blackjack.domain.bet.BetMoney;
-import blackjack.domain.bet.PlayerBetMonies;
+import blackjack.domain.bet.Profit;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
@@ -11,7 +12,6 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.Participant;
 import blackjack.domain.card.RandomDeck;
 import blackjack.domain.Outcome;
-import blackjack.domain.PlayerOutcomeResults;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.LinkedHashMap;
@@ -68,6 +68,9 @@ public class BlackjackController {
             ResultView.printPlayerCard(player);
             takeParticipantCards(player, deck);
         }
+        if (player.canHit()) {
+            player.stay();
+        }
     }
 
     private boolean canHit(Player player) {
@@ -98,17 +101,22 @@ public class BlackjackController {
 
     private void printResults(Players players) {
         ResultView.printCardsResults(players);
-        ResultView.printOutcomeResults(calculateOutcomeResults(players));
+        ResultView.printProfitResults(calculateProfitResults(players));
     }
 
-    private PlayerOutcomeResults calculateOutcomeResults(Players players) {
-        Map<Player, Outcome> results = new LinkedHashMap<>();
+    private PlayerProfitResults calculateProfitResults(Players players) {
+        Map<Player, Profit> results = new LinkedHashMap<>();
         Player dealer = players.getDealer();
+        results.put(dealer, new Profit(0));
+        double dealerProfit = 0.0;
 
         for (Player player : players.getParticipants()) {
-            Outcome dealerOutcome = Outcome.matchAboutDealer((Dealer) dealer, player);
-            results.put(player, dealerOutcome.not());
+            Outcome playerOutcome = Outcome.matchAboutPlayer((Dealer) dealer, player).not();
+            Profit profit = ((Participant) player).getProfit(playerOutcome);
+            dealerProfit -= profit.get();
+            results.put(player, profit);
         }
-        return new PlayerOutcomeResults(results);
+        results.put(dealer, new Profit(dealerProfit));
+        return new PlayerProfitResults(results);
     }
 }
