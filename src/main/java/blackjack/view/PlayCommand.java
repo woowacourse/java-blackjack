@@ -28,4 +28,9 @@ public enum PlayCommand {
     public boolean isYes() {
         return this == YES;
     }
+
+
+    public boolean isNo() {
+        return this == NO;
+    }
 }

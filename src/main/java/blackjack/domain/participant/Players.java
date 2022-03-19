@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ public class Players {
 
     private final List<Player> value;
 
-    public Players(Deck deck, Map<String, Integer> names) {
+    public Players(Map<String, Integer> names) {
         this.value = names.keySet()
                 .stream()
                 .map(name -> new Player(name, names.get(name)))

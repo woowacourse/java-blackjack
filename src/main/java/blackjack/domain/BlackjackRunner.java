@@ -6,13 +6,14 @@ import static java.util.stream.Collectors.toList;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.RandomCardsGenerator;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.dto.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackRunner {
 
@@ -21,40 +22,27 @@ public class BlackjackRunner {
     public void run() {
         Deck deck = new Deck(new RandomCardsGenerator());
         Dealer dealer = new Dealer();
-
-        Map<String, Integer> names = InputView.getNames();
-        List<Player> players = names.keySet()
-                .stream()
-                .map(name -> new Player(name, names.get(name)))
-                .collect(toList());
-
-        ready(deck, dealer, players);
-
-        OutputView.printStart(dealer, players);
+        Players players = new Players(InputView.getNames());
+        ready(deck, dealer, players.getValue());
+        OutputView.printStart(dealer, players.getValue());
 
         players.forEach(player -> playing(deck, player, YES));
         drawDealer(deck, dealer);
 
-        OutputView.printResult(dealer, players);
-        OutputView.printProfit(getDealerProfit(dealer, players), createPlayerResults(dealer, players));
+        List<Player> playersValue = players.getValue();
+        OutputView.printResult(dealer, playersValue);
+        OutputView.printProfit(getDealerProfit(dealer, playersValue), createPlayerResults(dealer, playersValue));
     }
 
     private void ready(Deck deck, Dealer dealer, List<Player> players) {
-        readyDealer(deck, dealer);
-        players.forEach(player -> readyPlayer(deck, player));
+        readyParticipant(deck, dealer);
+        players.forEach(player -> readyParticipant(deck, player));
     }
 
-    private void readyDealer(Deck deck, Dealer dealer) {
-        if (!dealer.isReady()) {
-            dealer.hit(deck.pick());
-            readyDealer(deck, dealer);
-        }
-    }
-
-    private void readyPlayer(Deck deck, Player player) {
-        if (!player.isReady()) {
-            player.hit(deck.pick());
-            readyPlayer(deck, player);
+    private void readyParticipant(Deck deck, Participant participant) {
+        if (!participant.isReady()) {
+            participant.hit(deck.pick());
+            readyParticipant(deck, participant);
         }
     }
 
@@ -75,7 +63,10 @@ public class BlackjackRunner {
             player.hit(deck.pick());
             OutputView.printPlayerCard(player);
         }
-        player.stay();
+
+        if (playCommand.isNo()) {
+            player.stay();
+        }
     }
 
     private void drawDealer(Deck deck, Dealer dealer) {
