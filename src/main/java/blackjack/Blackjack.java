@@ -2,44 +2,29 @@ package blackjack;
 
 import blackjack.user.Dealer;
 import blackjack.user.Participant;
-import java.util.List;
 
 public class Blackjack {
-    private final Dealer dealer;
-    private final Players players;
     private final Deck deck;
 
-    private Blackjack(List<String> playerNames) {
-        dealer = Dealer.generate();
-        players = Players.generateWithNames(playerNames);
+    private Blackjack() {
         deck = Deck.makeRandomShuffledDeck();
     }
 
-    private Blackjack(List<String> playerNames, Deck deck) {
-        dealer = Dealer.generate();
-        players = Players.generateWithNames(playerNames);
+    private Blackjack(Deck deck) {
         this.deck = deck;
     }
 
-    public static Blackjack generate(List<String> playerNames) {
-        return new Blackjack(playerNames);
+    public static Blackjack generate() {
+        return new Blackjack();
     }
 
-    public static Blackjack generateWithDeck(List<String> playerNames, Deck deck) {
-        return new Blackjack(playerNames, deck);
+    public static Blackjack generateWithDeck(Deck deck) {
+        return new Blackjack(deck);
     }
 
-    public void distributeInitCards() {
+    public void distributeInitCards(Dealer dealer, Players players) {
         dealer.drawInitialCards(deck);
         players.drawInitialCards(deck);
-    }
-
-    public Players players() {
-        return players;
-    }
-
-    public Dealer dealer() {
-        return dealer;
     }
 
     public boolean isPossibleToGetCard(Participant player) {

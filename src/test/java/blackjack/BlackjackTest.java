@@ -2,6 +2,7 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.*;
 
+import blackjack.user.Dealer;
 import blackjack.user.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -14,13 +15,11 @@ class BlackjackTest {
         Deck deck = Deck.makeIntendedShuffledDeck(List.of(
                 Card.generate(Suit.DIAMOND, Denomination.TWO), Card.generate(Suit.DIAMOND, Denomination.THREE),
                 Card.generate(Suit.DIAMOND, Denomination.FOUR), Card.generate(Suit.DIAMOND, Denomination.FIVE)));
-        Blackjack blackjack = Blackjack.generateWithDeck(List.of("pobi"), deck);
-        blackjack.distributeInitCards();
-        int sizeSum = 0;
-        for (Object player : blackjack.players()) {
-            sizeSum += ((Player)player).getCards().numberOfCards();
-        }
-        assertThat(sizeSum).isEqualTo(2);
+        Blackjack blackjack = Blackjack.generateWithDeck(deck);
+        Players players = Players.generateWithNames(List.of("pobi"));
+        Dealer dealer = Dealer.generate();
+        blackjack.distributeInitCards(dealer, players);
+        assertThat(dealer.getCards().numberOfCards()).isEqualTo(2);
     }
 
     @DisplayName("더 받을 수 있으면 TRUE리턴하는지 테스트")
@@ -29,9 +28,11 @@ class BlackjackTest {
         Deck deck = Deck.makeIntendedShuffledDeck(List.of(
                 Card.generate(Suit.DIAMOND, Denomination.TWO), Card.generate(Suit.DIAMOND, Denomination.THREE),
                 Card.generate(Suit.DIAMOND, Denomination.FOUR), Card.generate(Suit.DIAMOND, Denomination.FIVE)));
-        Blackjack blackjack = Blackjack.generateWithDeck(List.of("pobi"), deck);
-
-        assertThat(blackjack.isPossibleToGetCard(blackjack.dealer())).isTrue();
+        Blackjack blackjack = Blackjack.generateWithDeck(deck);
+        Players players = Players.generateWithNames(List.of("pobi"));
+        Dealer dealer = Dealer.generate();
+        blackjack.distributeInitCards(dealer, players);
+        assertThat(blackjack.isPossibleToGetCard(dealer)).isTrue();
     }
 
     @DisplayName("더 받을 수 없으면 false리턴하는지 테스트")
@@ -40,9 +41,11 @@ class BlackjackTest {
         Deck deck = Deck.makeIntendedShuffledDeck(List.of(
                 Card.generate(Suit.DIAMOND, Denomination.TEN), Card.generate(Suit.DIAMOND, Denomination.ACE),
                 Card.generate(Suit.HEART, Denomination.ACE), Card.generate(Suit.HEART, Denomination.TEN)));
-        Blackjack blackjack = Blackjack.generateWithDeck(List.of("pobi"), deck);
-        blackjack.distributeInitCards();
-        assertThat(blackjack.isPossibleToGetCard(blackjack.dealer())).isFalse();
+        Blackjack blackjack = Blackjack.generateWithDeck(deck);
+        Players players = Players.generateWithNames(List.of("pobi"));
+        Dealer dealer = Dealer.generate();
+        blackjack.distributeInitCards(dealer, players);
+        assertThat(blackjack.isPossibleToGetCard(dealer)).isFalse();
     }
 
     @Test
@@ -51,9 +54,11 @@ class BlackjackTest {
                 Card.generate(Suit.DIAMOND, Denomination.TWO), Card.generate(Suit.DIAMOND, Denomination.THREE),
                 Card.generate(Suit.DIAMOND, Denomination.FOUR), Card.generate(Suit.DIAMOND, Denomination.FIVE),
                 Card.generate(Suit.SPADE, Denomination.ACE), Card.generate(Suit.SPADE, Denomination.TEN)));
-        Blackjack blackjack = Blackjack.generateWithDeck(List.of("pobi"), deck);
-        blackjack.distributeInitCards();
-        blackjack.distributeAdditionalCard(blackjack.dealer());
-        assertThat(blackjack.dealer().getCards().numberOfCards()).isEqualTo(3);
+        Blackjack blackjack = Blackjack.generateWithDeck(deck);
+        Players players = Players.generateWithNames(List.of("pobi"));
+        Dealer dealer = Dealer.generate();
+        blackjack.distributeInitCards(dealer, players);
+        blackjack.distributeAdditionalCard(dealer);
+        assertThat(dealer.getCards().numberOfCards()).isEqualTo(3);
     }
 }
