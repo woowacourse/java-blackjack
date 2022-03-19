@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Cards;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
+import blackjack.domain.state.stateparticipant.Dealer;
 import blackjack.domain.state.stateparticipant.Participant;
 
 public class OutputView {
@@ -22,17 +22,23 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public static void printDealerFirstCard(Card card) {
-        System.out.println("딜러: " + card.getNumber().getName() + card.getSymbol().getName());
+    public static void printParticipantCards(Participant participant) {
+        if (participant instanceof Dealer) {
+            printDealerFirstCard(participant);
+            return;
+        }
+        System.out.println(participant.getName().getValue() + "카드: "
+            + String.join(", ", getCardsStatus(participant)));
     }
 
-    public static void printPlayerCards(Participant participant) {
-        System.out.println(
-            participant.getName().getValue() + "카드: " + String.join(", ", getCardsStatus(participant.getCards())));
+    private static void printDealerFirstCard(Participant participant) {
+        Card card = participant.getCards().findFirst();
+        System.out.println(participant.getName().getValue() + ": "
+            + card.getNumber().getName() + card.getSymbol().getName());
     }
 
-    private static List<String> getCardsStatus(Cards cards) {
-        return cards.getValue().stream()
+    private static List<String> getCardsStatus(Participant participant) {
+        return participant.getCards().getValue().stream()
             .map(card -> card.getNumber().getName() + card.getSymbol().getName())
             .collect(Collectors.toList());
     }
@@ -51,7 +57,7 @@ public class OutputView {
     }
 
     public static void printParticipantCardsWithScore(Participant participant) {
-        System.out.println(participant.getName() + "카드: " + String.join(", ", getCardsStatus(participant.getCards()))
+        System.out.println(participant.getName().getValue() + "카드: " + String.join(", ", getCardsStatus(participant))
             + " - 결과: " + participant.getScore());
     }
 

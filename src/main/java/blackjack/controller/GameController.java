@@ -14,7 +14,9 @@ import blackjack.domain.card.deckstrategy.ShuffleDeck;
 import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
+import blackjack.domain.state.stateparticipant.Participant;
 import blackjack.domain.state.stateparticipant.Player;
+import blackjack.view.OutputView;
 
 public class GameController {
 
@@ -45,11 +47,11 @@ public class GameController {
         Game game = new Game(new CardDeck(new ShuffleDeck()), names, bettings);
 
         printInitResult(names);
-        printDealerFirstCard(game.dealerFirstCard());
 
-        for (Player player : game.getPlayers()) {
-            printPlayerCards(player);
+        for (Participant participant : game.getParticipants()) {
+            OutputView.printParticipantCards(participant);
         }
+
         printEmptyLine();
         return game;
     }
@@ -59,7 +61,7 @@ public class GameController {
         while (game.findHitPlayer().isPresent()) {
             Player player = game.findHitPlayer().get();
             game.drawPlayerCard(player, requestHitOrStay(player.getName()));
-            printPlayerCards(player);
+            printParticipantCards(player);
         }
     }
 
@@ -75,9 +77,8 @@ public class GameController {
     }
 
     private void finalParticipantsCards(Game game) {
-        printParticipantCardsWithScore(game.getDealer());
-        for (Player player : game.getPlayers()) {
-            printParticipantCardsWithScore(player);
+        for (Participant participant : game.getParticipants()) {
+            printParticipantCardsWithScore(participant);
         }
     }
 
