@@ -20,13 +20,17 @@ public class Cards {
     }
 
     public int sum() {
-        return cards.stream()
+        int sumOfPoint = cards.stream()
             .mapToInt(Card::point)
             .sum();
+        if(hasAce() && sumOfPoint <= 11){
+            sumOfPoint += 10;
+        }
+        return sumOfPoint;
     }
 
     public boolean isBlackJack() {
-        return 11 == sum() && hasAce();
+        return 21 == sum() && size() == 2;
     }
 
     public boolean hasAce() {
