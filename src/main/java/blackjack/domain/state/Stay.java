@@ -37,7 +37,7 @@ public class Stay implements State {
 		return this.cards;
 	}
 
-	public double profitRate(Dealer dealer) {
+	private double profitRate(Dealer dealer) {
 		if (dealer.compare(this.cards) > 0) {
 			return -1;
 		}

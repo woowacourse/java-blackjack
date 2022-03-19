@@ -37,7 +37,7 @@ public class Bust implements State{
 		return this.cards;
 	}
 
-	public double profitRate() {
+	private double profitRate() {
 		return -1;
 	}
 }

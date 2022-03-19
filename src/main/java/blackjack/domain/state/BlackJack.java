@@ -37,7 +37,7 @@ public class BlackJack implements State{
 		return this.cards;
 	}
 
-	public double profitRate(Dealer dealer) {
+	private double profitRate(Dealer dealer) {
 		if (dealer.isBlackJack()) {
 			return 0;
 		}
