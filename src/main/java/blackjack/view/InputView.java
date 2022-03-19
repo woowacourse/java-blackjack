@@ -33,7 +33,7 @@ public class InputView {
             validateEmpty(input);
             validateInteger(input);
             return Integer.parseInt(input);
-        } catch (Exception exception) {
+        } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return requestBettingMoney(playerName);
         }
