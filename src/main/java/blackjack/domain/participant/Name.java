@@ -15,27 +15,27 @@ public class Name {
 		this.name = validateName(name);
 	}
 
-	private static String validateName(String input) {
+	private String validateName(String input) {
 		String name = input.trim();
 		checkBlankName(name);
 		checkUnavailableName(name);
 		return name;
 	}
 
-	private static void checkBlankName(String input) {
+	private void checkBlankName(String input) {
 		if (input.equals(BLANK)) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_EMPTY_NAME);
 		}
 	}
 
-	private static void checkUnavailableName(String input) {
+	private void checkUnavailableName(String input) {
 		Matcher matcher = ALLOWED_CHARACTERS.matcher(input);
 		if (matcher.matches()) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_UNAVAILABLE_CHARACTER);
 		}
 	}
 
-	public String getName() {
+	String getName() {
 		return name;
 	}
 }

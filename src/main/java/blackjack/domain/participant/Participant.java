@@ -39,6 +39,6 @@ public abstract class Participant {
 	}
 
 	public Cards getCards() {
-		return this.cards;
+		return new Cards(cards.getCards());
 	}
 }

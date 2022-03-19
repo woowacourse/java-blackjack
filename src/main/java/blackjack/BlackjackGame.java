@@ -1,12 +1,9 @@
 package blackjack;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Blackjack;
-import blackjack.domain.Money;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -22,35 +19,19 @@ public class BlackjackGame {
 	}
 
 	private Blackjack generateGame() {
-		List<Name> playerNames = askPlayerName();
-		List<Player> players = new ArrayList<>();
-		for (Name playerName : playerNames) {
-			Money money = askBetAmount(playerName);
-			players.add(new Player(playerName, money));
-		}
+		List<Player> players = InputView.askPlayerName().stream()
+			.map(name -> new Player(name, askBetAmount(name)))
+			.collect(Collectors.toList());
 
 		return Blackjack.from(players);
 	}
 
-	private Money askBetAmount(Name playerName) {
-		String name = playerName.getName();
+	private int askBetAmount(String playerName) {
 		try {
-			return new Money(InputView.askBetAmount(name));
+			return InputView.askBetAmount(playerName);
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return askBetAmount(playerName);
-		}
-	}
-
-	private List<Name> askPlayerName() {
-		List<String> inputs = InputView.askPlayerName();
-		try {
-			return inputs.stream()
-				.map(Name::new)
-				.collect(Collectors.toList());
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-			return askPlayerName();
 		}
 	}
 
