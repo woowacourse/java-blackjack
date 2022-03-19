@@ -17,7 +17,7 @@ public class InputView {
     private static final String INPUT_NEED_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String NEWLINE = System.lineSeparator();
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final String INPUT_BATTING_MONEY = "%s%s의 배팅 금액은?%n";
+    private static final String INPUT_BETTING_MONEY = "%s%s의 배팅 금액은?%n";
 
     private InputView() {
     }
@@ -29,7 +29,7 @@ public class InputView {
         validateMaximumGamblers(names.size());
 
         return names.stream()
-                .map(name -> Wallet.of(name, scanBattingMoney(name)))
+                .map(name -> Wallet.of(name, scanBettingMoney(name)))
                 .collect(toList());
     }
 
@@ -40,8 +40,8 @@ public class InputView {
                 .collect(toList());
     }
 
-    private static int scanBattingMoney(String name) {
-        System.out.printf(INPUT_BATTING_MONEY, NEWLINE, name);
+    private static int scanBettingMoney(String name) {
+        System.out.printf(INPUT_BETTING_MONEY, NEWLINE, name);
         return Integer.parseInt(SCANNER.nextLine());
     }
 
