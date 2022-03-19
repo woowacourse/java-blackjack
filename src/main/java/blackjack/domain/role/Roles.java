@@ -79,7 +79,7 @@ public class Roles {
 	}
 
 	public List<Role> calculatePlayerResult() {
-		judgeBlackJack();
+		calculateBlackJackResult();
 		for (Role player : players) {
 			final Outcome outcome = judge(player);
 			player.distributeBettingAmount(outcome);
@@ -87,7 +87,7 @@ public class Roles {
 		return players;
 	}
 
-	public void judgeBlackJack() {
+	private void calculateBlackJackResult() {
 		if (dealer.isBlackJack()) {
 			return;
 		}
