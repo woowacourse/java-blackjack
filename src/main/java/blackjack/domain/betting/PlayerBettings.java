@@ -1,6 +1,7 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
 import blackjack.strategy.BettingStrategy;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +14,10 @@ public class PlayerBettings {
         this.value = value;
     }
 
-    public static PlayerBettings of(List<Participant> players, BettingStrategy bettingStrategy) {
+    public static PlayerBettings of(Participants participants, BettingStrategy bettingStrategy) {
 
-        List<PlayerBetting> playerBettings = players.stream()
+        List<PlayerBetting> playerBettings = participants.getPlayers()
+                .stream()
                 .map(player -> initPlayerBetting(bettingStrategy, player))
                 .collect(Collectors.toUnmodifiableList());
 

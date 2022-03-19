@@ -28,9 +28,7 @@ public class BlackjackController {
 
     public PlayerBettings initializeBettings(final BlackjackGame game) {
         Participants participants = game.getParticipants();
-        List<Participant> players = participants.getPlayers();
-
-        return PlayerBettings.of(players, InputView::requestBettingAmountInput);
+        return PlayerBettings.of(participants, InputView::requestBettingAmountInput);
     }
 
     public void playGame(final BlackjackGame game) {
