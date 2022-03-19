@@ -1,12 +1,21 @@
 package blackjack_statepattern.card;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public final class Card {
 
     private static final Map<String, Card> cache = new HashMap<>(52);
+
+    static {
+        Arrays.stream(Suit.values())
+                .forEach(suit -> Arrays.stream(Denomination.values())
+                .forEach(denomination -> cache.put(toKey(suit, denomination), new Card(suit, denomination))));
+    }
 
     private final Suit suit;
     private final Denomination denomination;
@@ -22,6 +31,10 @@ public final class Card {
 
     private static String toKey(final Suit suit, final Denomination denomination) {
         return suit.name() + denomination.name();
+    }
+
+    public static List<Card> getAllCard() {
+        return new ArrayList<>(cache.values());
     }
 
     public int score() {
