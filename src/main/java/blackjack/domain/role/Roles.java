@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import blackjack.domain.BettingAmount;
-import blackjack.domain.BlackJack;
 import blackjack.domain.DealerDrawChoice;
 import blackjack.domain.Outcome;
 import blackjack.domain.RedrawChoice;
@@ -71,15 +70,6 @@ public class Roles {
 			.orElseThrow(NoSuchElementException::new);
 	}
 
-	public void judgeBlackJack() {
-		if (dealer.calculateFinalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER) {
-			return;
-		}
-		for (Role player : players) {
-			player.earnAmountByBlackJack();
-		}
-	}
-
 	public String getCurrentPlayerName() {
 		return players.stream()
 			.filter(player -> player.canDraw() && player.wantDraw())
@@ -89,11 +79,21 @@ public class Roles {
 	}
 
 	public List<Role> calculatePlayerResult() {
+		judgeBlackJack();
 		for (Role player : players) {
 			final Outcome outcome = judge(player);
 			player.distributeBettingAmount(outcome);
 		}
 		return players;
+	}
+
+	public void judgeBlackJack() {
+		if (dealer.isBlackJack()) {
+			return;
+		}
+		for (Role player : players) {
+			player.earnAmountByBlackJack();
+		}
 	}
 
 	public Role calculateDealerResult() {

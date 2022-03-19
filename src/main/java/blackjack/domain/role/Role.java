@@ -41,14 +41,14 @@ public abstract class Role {
 
 	public void recordCompeteResult(final Outcome outcome, final Role player) {
 		if (outcome == Outcome.VICTORY) {
-			final int finalIncome = bettingAmount.getFinalValue() + player.getCurrentIncome();
+			final int finalIncome = bettingAmount.getTotalValue() + player.getCurrentIncome();
 			bettingAmount = new BettingAmount(finalIncome, bettingAmount.getInitialValue());
 			player.loseAll();
 		}
 	}
 
 	private int getCurrentIncome() {
-		return bettingAmount.getFinalValue();
+		return bettingAmount.getTotalValue();
 	}
 
 	private void loseAll() {
@@ -60,10 +60,14 @@ public abstract class Role {
 	}
 
 	public void earnAmountByBlackJack() {
-		if (calculateFinalScore() != BlackJack.OPTIMIZED_WINNING_NUMBER) {
+		if (isBlackJack()) {
 			return;
 		}
 		bettingAmount.giveOneAndHalfTime();
+	}
+
+	public boolean isBlackJack() {
+		return calculateFinalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER;
 	}
 
 	public int calculateFinalScore() {
