@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.RealDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.user.Dealer;
@@ -43,7 +43,7 @@ public class BustTest {
 		State state = new Bust(cards);
 		Money money = new Money(10000);
 		//when
-		Money profit = state.calculateProfit(money, new Dealer(new Deck()));
+		Money profit = state.calculateProfit(money, new Dealer(new RealDeck()));
 		//then
 		assertThat(profit).isEqualTo(new Money(-10000));
 	}

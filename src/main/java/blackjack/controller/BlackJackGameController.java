@@ -3,7 +3,7 @@ package blackjack.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.domain.card.DeckStrategy;
+import blackjack.domain.card.Deck;
 import blackjack.domain.result.BettingBox;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -15,12 +15,12 @@ public class BlackJackGameController {
 
 	private final InputView inputView;
 	private final OutputView outputView;
-	private final DeckStrategy deck;
+	private final Deck deck;
 
-	public BlackJackGameController(InputView inputView, OutputView outputView, DeckStrategy deckStrategy) {
+	public BlackJackGameController(InputView inputView, OutputView outputView, Deck deck) {
 		this.inputView = inputView;
 		this.outputView = outputView;
-		this.deck = deckStrategy;
+		this.deck = deck;
 	}
 
 	public void gameStart() {
@@ -62,13 +62,13 @@ public class BlackJackGameController {
 		}
 	}
 
-	private void progressPlayerTurn(Players players, DeckStrategy deck) {
+	private void progressPlayerTurn(Players players, Deck deck) {
 		for (Player player : players.getPlayers()) {
 			progressOnePlayer(deck, player);
 		}
 	}
 
-	private void progressOnePlayer(DeckStrategy deck, Player player) {
+	private void progressOnePlayer(Deck deck, Player player) {
 		while (player.isRunning() && decidePlayerHit(player)) {
 			player.addCard(deck.distributeCard());
 			outputView.displayAllCard(player.getName(), player.state().getCards().getCards());
@@ -83,7 +83,7 @@ public class BlackJackGameController {
 		return true;
 	}
 
-	private void progressDealerTurn(Dealer dealer, DeckStrategy deck) {
+	private void progressDealerTurn(Dealer dealer, Deck deck) {
 		while(dealer.isRunning() && isDealerHit(dealer)) {
 			dealer.addCard(deck.distributeCard());
 			outputView.displayDealerUnderSevenTeen();
@@ -97,7 +97,6 @@ public class BlackJackGameController {
 		}
 		return true;
 	}
-
 
 	private void makeResult(Players players, Dealer dealer) {
 		outputView.displayAllCardAndScore(dealer.getName(), dealer.getScore(), dealer.getCards());

@@ -5,7 +5,7 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.DeckStrategy;
+import blackjack.domain.card.Deck;
 import blackjack.domain.state.InitialTurn;
 import blackjack.domain.state.State;
 
@@ -14,12 +14,12 @@ public abstract class Gamer {
 
 	protected State state;
 
-	public Gamer(final String name, final DeckStrategy deck) {
+	public Gamer(final String name, final Deck deck) {
 		this.name = new Name(name);
 		addTwoCards(deck);
 	}
 
-	private void addTwoCards(final DeckStrategy deck) {
+	private void addTwoCards(final Deck deck) {
 		Cards cards = new Cards();
 		cards.addCard(deck.distributeCard());
 		cards.addCard(deck.distributeCard());

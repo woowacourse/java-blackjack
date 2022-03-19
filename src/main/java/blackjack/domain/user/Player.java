@@ -2,13 +2,13 @@ package blackjack.domain.user;
 
 import java.util.Objects;
 
-import blackjack.domain.card.DeckStrategy;
+import blackjack.domain.card.Deck;
 
 public class Player extends Gamer {
 
 	private final Money money;
 
-	public Player(final String name, final double money, final DeckStrategy deck) {
+	public Player(final String name, final double money, final Deck deck) {
 		super(name, deck);
 		this.money = new Money(money);
 	}

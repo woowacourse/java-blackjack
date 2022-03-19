@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.RealDeck;
 
 public class PlayersTest {
 	@Test
@@ -26,7 +26,7 @@ public class PlayersTest {
 		List<String> playerNames = List.of("pobi", "pobi");
 		List<Player> players = new ArrayList<>();
 		for (String playerName : playerNames) {
-			players.add(new Player(playerName, 1000, new Deck()));
+			players.add(new Player(playerName, 1000, new RealDeck()));
 		}
 
 		assertThatThrownBy(() -> new Players(players))

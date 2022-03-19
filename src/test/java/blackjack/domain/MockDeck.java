@@ -5,9 +5,9 @@ import java.util.Deque;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.DeckStrategy;
+import blackjack.domain.card.Deck;
 
-public class MockDeck implements DeckStrategy {
+public class MockDeck implements Deck {
 
 	private Deque<Card> cards;
 

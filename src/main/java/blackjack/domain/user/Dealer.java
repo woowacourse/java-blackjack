@@ -1,12 +1,12 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.DeckStrategy;
+import blackjack.domain.card.Deck;
 
 public class Dealer extends Gamer {
 	private static final String DEALER_NAME = "딜러";
 
-	public Dealer(final DeckStrategy deck) {
+	public Dealer(final Deck deck) {
 		super(DEALER_NAME, deck);
 	}
 

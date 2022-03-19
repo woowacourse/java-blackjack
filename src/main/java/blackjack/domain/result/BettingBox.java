@@ -19,8 +19,8 @@ public class BettingBox {
 			.forEach(player -> putProfit(dealer, player));
 	}
 
-	private Money putProfit(Dealer dealer, Player player) {
-		return playersProfit.put(player, calculateProfit(dealer, player));
+	private void putProfit(Dealer dealer, Player player) {
+		playersProfit.put(player, calculateProfit(dealer, player));
 	}
 
 	private Money calculateProfit(Dealer dealer, Player player) {
