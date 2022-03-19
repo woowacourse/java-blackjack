@@ -24,11 +24,11 @@ public enum Result {
             (player.calculateScore() < dealer.calculateScore())),
     ;
 
-    private final double profit;
+    private final double times;
     private final BiPredicate<Gamer, Gamer> calculateResult;
 
-    Result(double profit, BiPredicate<Gamer, Gamer> calculateResult) {
-        this.profit = profit;
+    Result(double times, BiPredicate<Gamer, Gamer> calculateResult) {
+        this.times = times;
         this.calculateResult = calculateResult;
     }
 
@@ -40,10 +40,10 @@ public enum Result {
     }
 
     public int calculateRevenue(int money) {
-        return (int)(profit * money);
+        return (int)(times * money);
     }
 
     public int calculateReverseRevenue(int money) {
-        return (int)(LOSE.profit * money);
+        return (int)(LOSE.times * money);
     }
 }

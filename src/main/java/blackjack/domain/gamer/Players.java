@@ -34,9 +34,9 @@ public class Players {
     }
 
     private void validateDuplicate(final List<String> names) {
-        Set<String> duplicateNames = new HashSet<>(names);
+        Set<String> distinctNames = new HashSet<>(names);
 
-        if (names.size() != duplicateNames.size()) {
+        if (names.size() != distinctNames.size()) {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
     }

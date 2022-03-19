@@ -10,7 +10,6 @@ import blackjack.domain.card.Cards;
 public abstract class Gamer {
 
     private static final String NAME_INPUT_ERROR_MESSAGE = "참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.";
-    private static final int DRAWABLE_NUMBER = 21;
 
     protected final String name;
     protected final Cards cards;
@@ -38,11 +37,11 @@ public abstract class Gamer {
     }
 
     public boolean isBlackjack() {
-        return cards.calculateScore() == DRAWABLE_NUMBER;
+        return cards.isBlackjack();
     }
 
     public boolean isBust() {
-        return cards.calculateScore() > DRAWABLE_NUMBER;
+        return cards.isBust();
     }
 
     public List<Card> getCards() {
