@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.DeckGenerateStrategy;
@@ -65,9 +66,13 @@ public class BlackJack {
         User dealer = users.getDealer();
         result.put(UserDto.from(dealer), dealer.getScore());
 
-        users.getPlayers()
+        Map<UserDto, Integer> playerResult = users.getPlayers()
                 .stream()
-                .forEach(player -> result.put(UserDto.from(player), player.getScore()));
+                .collect(toMap(UserDto::from, User::getScore,
+                                (e1, e2) -> e1,
+                                LinkedHashMap::new));
+
+        result.putAll(playerResult);
 
         return result;
     }
