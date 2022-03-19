@@ -24,7 +24,7 @@ public class Dealer extends Gamer {
         addMoney(reversBettingMoney((Player) player));
     }
 
-    public int reversBettingMoney(Player player) {
+    private int reversBettingMoney(Player player) {
         return player.reverseBettingMoney();
     }
 }

@@ -34,7 +34,7 @@ public class Players {
         }
     }
 
-    public boolean hasBlackJack() {
+    private boolean hasBlackJack() {
         return value.stream().anyMatch(Player::isBlackJack);
     }
 
