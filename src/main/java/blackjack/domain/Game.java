@@ -57,8 +57,8 @@ public class Game {
         return participants.createUserCardInfoDto(userName);
     }
 
-    public boolean checkUserBust(String userName) {
-        return participants.checkUserBust(userName);
+    public boolean checkUserNotBust(String userName) {
+        return !participants.checkUserBust(userName);
     }
 
     public void changeUserStateToStand(String userName) {

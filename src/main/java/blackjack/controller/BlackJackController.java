@@ -34,10 +34,10 @@ public class BlackJackController {
     }
 
     private void playEachUser(Game game, String userName) {
-        while (!game.checkUserBust(userName) && InputView.inputMoreCard(userName)) {
+        while (game.checkUserNotBust(userName) && InputView.inputMoreCard(userName)) {
             OutputView.printParticipantCards(game.playEachUser(userName));
         }
-        if (!game.checkUserBust(userName)) {
+        if (game.checkUserNotBust(userName)) {
             game.changeUserStateToStand(userName);
         }
     }
