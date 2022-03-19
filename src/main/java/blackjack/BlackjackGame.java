@@ -35,7 +35,7 @@ public class BlackjackGame {
 	private Money askBetAmount(Name playerName) {
 		String name = playerName.getName();
 		try {
-			return Money.from(InputView.askBetAmount(name));
+			return new Money(InputView.askBetAmount(name));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return askBetAmount(playerName);

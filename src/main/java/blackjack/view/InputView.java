@@ -21,6 +21,20 @@ public class InputView {
 		return Arrays.asList(input.split(NAME_DELIMITER));
 	}
 
+	public static int askBetAmount(String name) {
+		System.out.printf(MESSAGE_ASK_BET_AMOUNT, name);
+		return checkType(scanner.nextLine(), name);
+	}
+
+	private static int checkType(String input, String name) {
+		try {
+			return Integer.parseInt(input);
+		} catch (NumberFormatException e) {
+			System.out.println("[ERROR] 배팅 금액은 숫자로 입력해야 합니다");
+			return askBetAmount(name);
+		}
+	}
+
 	public static String askHit(String name) {
 		System.out.printf(MESSAGE_ASK_HIT_CHOICE, name);
 		try {
@@ -28,18 +42,14 @@ public class InputView {
 			checkValidChoice(input);
 			return input;
 		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 			return askHit(name);
 		}
 	}
 
-	private static void checkValidChoice(String choice) {
-		if (!(choice.equals(CHOICE_YES) || choice.equals(CHOICE_NO))) {
+	private static void checkValidChoice(String input) {
+		if (!(input.equals(CHOICE_YES) || input.equals(CHOICE_NO))) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_ILLEGAL_CHOICE_FORMAT);
 		}
-	}
-
-	public static String askBetAmount(String name) {
-		System.out.printf(MESSAGE_ASK_BET_AMOUNT, name);
-		return scanner.nextLine();
 	}
 }
