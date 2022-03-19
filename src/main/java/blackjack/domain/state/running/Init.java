@@ -17,12 +17,18 @@ public final class Init extends Running {
 
     @Override
     public State drawCard(Deck deck) {
+        if (super.holdingCards().size() == 0) {
+            holdingCards().addCard(deck.drawCard());
+            return new Init(super.holdingCards());
+        }
+        if (super.holdingCards().size() == 1) {
+            holdingCards().addCard(deck.drawCard());
+            return nextState();
+        }
         throw new IllegalStateException("[ERROR] 초기 상태에서는 2장의 카드까지만 받을 수 있습니다.");
     }
 
-    public State initDistributed(Deck deck) {
-        super.holdingCards().addCard(deck.drawCard());
-        super.holdingCards().addCard(deck.drawCard());
+    private State nextState() {
         if (super.holdingCards().isBlackJack()) {
             return new BlackJack(super.holdingCards());
         }

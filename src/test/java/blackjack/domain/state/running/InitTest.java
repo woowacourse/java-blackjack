@@ -5,6 +5,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.TestCardGenerator;
+import blackjack.domain.state.State;
 import blackjack.domain.state.finished.BlackJack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InitTest {
 
@@ -24,9 +24,11 @@ class InitTest {
                         new Card(CardNumber.QUEEN, CardType.CLOVER)));
         Deck deck = new Deck(cardGenerator);
 
-        Init state = new Init();
+        State state = new Init();
+        state = state.drawCard(deck);
+        state = state.drawCard(deck);
 
-        assertThat(state.initDistributed(deck)).isInstanceOf(Hit.class);
+        assertThat(state).isInstanceOf(Hit.class);
     }
 
     @Test
@@ -37,26 +39,10 @@ class InitTest {
                         new Card(CardNumber.JACK, CardType.CLOVER)));
         Deck deck = new Deck(cardGenerator);
 
-        Init state = new Init();
+        State state = new Init();
+        state = state.drawCard(deck);
+        state = state.drawCard(deck);
 
-        assertThat(state.initDistributed(deck)).isInstanceOf(BlackJack.class);
+        assertThat(state).isInstanceOf(BlackJack.class);
     }
-
-    @Test
-    @DisplayName("초기 상태에서 초기 분배 2장 이외의 카드를 뽑으려 할 경우 예외를 발생시킨다.")
-    void drawCardTest() {
-        TestCardGenerator cardGenerator = new TestCardGenerator(
-                List.of(new Card(CardNumber.ACE, CardType.CLOVER),
-                        new Card(CardNumber.JACK, CardType.CLOVER),
-                        new Card(CardNumber.TWO, CardType.CLOVER)));
-        Deck deck = new Deck(cardGenerator);
-
-        Init state = new Init();
-        state.initDistributed(deck);
-
-        assertThatThrownBy(() -> state.drawCard(deck))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("[ERROR] 초기 상태에서는 2장의 카드까지만 받을 수 있습니다.");
-    }
-
 }

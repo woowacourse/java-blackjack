@@ -71,6 +71,10 @@ public class HoldingCards {
                 .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public List<Card> getAllCards() {
         return List.copyOf(cards);
     }
