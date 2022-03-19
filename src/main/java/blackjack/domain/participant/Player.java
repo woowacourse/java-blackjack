@@ -47,8 +47,41 @@ public class Player extends Participant {
     }
 
     public Money calculateProfit(Dealer dealer) {
-        ResultType resultType = super.compareWith(dealer);
+        ResultType resultType = compareWith(dealer);
         return betMoney.calculateProfit(resultType);
+    }
+
+    public ResultType compareWith(Dealer other) {
+        if (isBlackjack()) {
+            return getResultTypeIfBlackjack(other);
+        }
+
+        if (isBusted()) {
+            return ResultType.LOSE;
+        }
+
+        return getResultTypeIfOrdinary(other);
+    }
+
+    private ResultType getResultTypeIfBlackjack(Participant other) {
+        if (other.isBlackjack()) {
+            return ResultType.DRAW;
+        }
+
+        return ResultType.WIN_WITH_BLACKJACK;
+    }
+
+    private ResultType getResultTypeIfOrdinary(Participant other) {
+        boolean isScoreGreaterThanOther = getCurrentScore().isGreaterThan(other.getCurrentScore());
+        boolean isScoreLessThanOther = getCurrentScore().isLessThan(other.getCurrentScore());
+
+        if (other.isBusted() || isScoreGreaterThanOther) {
+            return ResultType.WIN;
+        }
+        if (other.isBlackjack() || isScoreLessThanOther) {
+            return ResultType.LOSE;
+        }
+        return ResultType.DRAW;
     }
 
     @Override

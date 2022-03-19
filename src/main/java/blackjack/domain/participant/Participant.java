@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
 import java.util.List;
 
@@ -42,51 +41,6 @@ public abstract class Participant {
         Score initialScore = Score.calculateSumFrom(initialCards);
 
         return initialScore.equals(Score.valueOf(Score.MAXIMUM_SCORE));
-    }
-
-    protected ResultType compareWith(Participant other) {
-        if (isBlackjack()) {
-            return getResultTypeIfBlackjack(other);
-        }
-
-        if (isBusted()) {
-            return getResultTypeIfBusted(other);
-        }
-
-        return getResultTypeIfOrdinary(other);
-    }
-
-    private ResultType getResultTypeIfBlackjack(Participant other) {
-        if (other.isBlackjack()) {
-            return ResultType.DRAW;
-        }
-        if (other.isBusted()) {
-            return ResultType.WIN_WITH_BLACKJACK;
-        }
-        return ResultType.WIN_WITH_BLACKJACK;
-    }
-
-    private ResultType getResultTypeIfBusted(Participant other) {
-        if (other.isBlackjack()) {
-            return ResultType.LOSE;
-        }
-        if (other.isBusted()) {
-            return ResultType.DRAW;
-        }
-        return ResultType.LOSE;
-    }
-
-    private ResultType getResultTypeIfOrdinary(Participant other) {
-        boolean isScoreGreaterThanOther = getCurrentScore().isGreaterThan(other.getCurrentScore());
-        boolean isScoreLessThanOther = getCurrentScore().isLessThan(other.getCurrentScore());
-
-        if (other.isBusted() || isScoreGreaterThanOther) {
-            return ResultType.WIN;
-        }
-        if (other.isBlackjack() || isScoreLessThanOther) {
-            return ResultType.LOSE;
-        }
-        return ResultType.DRAW;
     }
 
     @Override

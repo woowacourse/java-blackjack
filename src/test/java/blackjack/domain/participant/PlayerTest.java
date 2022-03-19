@@ -104,42 +104,42 @@ public class PlayerTest {
 
     // TODO: Nested 사용하여 정리
 
-    @DisplayName("compareWith 메소드는 딜러 자신보다 패가 나쁜 Participant 를 전달받으면 ResultType.WIN 를 반환한다.")
+    @DisplayName("compareWith 메소드는 자신보다 패가 나쁜 Dealer 를 전달받으면 ResultType.WIN 를 반환한다.")
     @Test
     void compareWith_returnsResultTypeWin() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER2, CLOVER3), Money.from(10000));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER2, CLOVER3));
 
         // when
-        ResultType actual = player.compareWith(winPlayer);
+        ResultType actual = player.compareWith(dealer);
         ResultType expected = ResultType.WIN;
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("compareWith 메소드는 딜러 자신보다 패가 좋은 Participant 를 전달받으면 ResultType.LOSE 를 반환한다.")
+    @DisplayName("compareWith 메소드는 딜러 자신보다 패가 좋은 Dealer 를 전달받으면 ResultType.LOSE 를 반환한다.")
     @Test
     void compareWith_returnsResultTypeLose() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER5, CLOVER6), Money.from(10000));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER5, CLOVER6));
 
         // when
-        ResultType actual = player.compareWith(winPlayer);
+        ResultType actual = player.compareWith(dealer);
         ResultType expected = ResultType.LOSE;
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("compareWith 메소드는 딜러 자신과 대등한 패를 가진 Participant 를 전달받으면 ResultType.DRAW 를 반환한다.")
+    @DisplayName("compareWith 메소드는 자신과 대등한 패를 가진 Dealer 를 전달받으면 ResultType.DRAW 를 반환한다.")
     @Test
     void compareWith_returnsResultTypeDraw() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER3, CLOVER6), Money.from(10000));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER3, CLOVER6));
 
         // when
-        ResultType actual = player.compareWith(winPlayer);
+        ResultType actual = player.compareWith(dealer);
         ResultType expected = ResultType.DRAW;
 
         // then
