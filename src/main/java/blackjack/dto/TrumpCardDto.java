@@ -44,7 +44,7 @@ public final class TrumpCardDto {
         this.symbol = symbol;
     }
 
-    public static List<TrumpCardDto> from(Hand hand) {
+    static List<TrumpCardDto> from(Hand hand) {
         return hand.getCards().stream()
                 .map(TrumpCardDto::from)
                 .collect(Collectors.toList());

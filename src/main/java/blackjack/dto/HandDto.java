@@ -10,7 +10,7 @@ public final class HandDto {
         this.cards = cards;
     }
 
-    public static HandDto from(Player player) {
+    static HandDto from(Player player) {
         return new HandDto(TrumpCardDto.from(player.getHand()));
     }
 

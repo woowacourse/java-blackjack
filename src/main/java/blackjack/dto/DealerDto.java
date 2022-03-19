@@ -15,7 +15,7 @@ public final class DealerDto extends PlayerDto {
         return from(game.getDealer(), game.countCardsAddedToDealer());
     }
 
-    public static DealerDto fromNameOf(Dealer dealer) {
+    static DealerDto fromNameOf(Dealer dealer) {
         return from(dealer, 0);
     }
 
@@ -23,7 +23,6 @@ public final class DealerDto extends PlayerDto {
         return new DealerDto(
                 dealer.getName(), HandDto.from(dealer), addedCount, dealer.getScore());
     }
-
 
     public int getAddedCount() {
         return addedCount;

@@ -20,7 +20,7 @@ public final class EntryDto extends PlayerDto {
         return from(game.getCurrentEntry());
     }
 
-    public static EntryDto from(Entry entry) {
+    static EntryDto from(Entry entry) {
         return new EntryDto(entry.getName(), HandDto.from(entry), entry.getScore());
     }
 }
