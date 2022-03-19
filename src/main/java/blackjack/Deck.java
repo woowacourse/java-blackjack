@@ -31,6 +31,10 @@ public class Deck {
         return new Deck(cards);
     }
 
+    public static Deck makeIntendedShuffledDeck(List<Card> cards) {
+        return new Deck(cards);
+    }
+
     public Card pickTopCard() {
         if (deck.isEmpty()) {
             throw new IllegalStateException(EMPTY_DECK_EXCEPTION);

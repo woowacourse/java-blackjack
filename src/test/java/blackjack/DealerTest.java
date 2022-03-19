@@ -3,10 +3,12 @@ package blackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.user.Dealer;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
+
     @DisplayName("초기 state가 true인지 확인하는 테스트")
     @Test
     void isHitTest() {
@@ -17,8 +19,9 @@ public class DealerTest {
     @Test
     void isHitTest2() {
         Dealer dealer = Dealer.generate();
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.NINE));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.TEN), Card.generate(Suit.DIAMOND, Denomination.NINE)));
+        dealer.drawInitialCards(deck);
         assertThat(dealer.isHit()).isFalse();
     }
 
@@ -26,8 +29,9 @@ public class DealerTest {
     @Test
     void isBlackjackTest() {
         Dealer dealer = Dealer.generate();
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.ACE));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.Q));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.ACE), Card.generate(Suit.DIAMOND, Denomination.TEN)));
+        dealer.drawInitialCards(deck);
         assertThat(dealer.isBlackjack()).isTrue();
     }
 
@@ -35,35 +39,46 @@ public class DealerTest {
     @Test
     void isBlackjackTest2() {
         Dealer dealer = Dealer.generate();
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.SIX));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.EIGHT),
+                        Card.generate(Suit.DIAMOND, Denomination.SEVEN),
+                        Card.generate(Suit.DIAMOND, Denomination.SIX)));
+        dealer.drawInitialCards(deck);
+        dealer.drawAdditionalCard(deck);
         assertThat(dealer.isBlackjack()).isFalse();
     }
 
     @Test
     void isBurstTest_true() {
         Dealer dealer = Dealer.generate();
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.Q));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.EIGHT),
+                        Card.generate(Suit.DIAMOND, Denomination.NINE),
+                        Card.generate(Suit.DIAMOND, Denomination.TEN)));
+        dealer.drawInitialCards(deck);
+        dealer.drawAdditionalCard(deck);
         assertThat(dealer.isBust()).isTrue();
     }
 
     @Test
     void isBurstTest_false() {
         Dealer dealer = Dealer.generate();
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.TWO));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.TWO),
+                        Card.generate(Suit.DIAMOND, Denomination.THREE),
+                        Card.generate(Suit.DIAMOND, Denomination.FOUR)));
+        dealer.drawInitialCards(deck);
+        dealer.drawAdditionalCard(deck);
         assertThat(dealer.isBust()).isFalse();
     }
 
     @Test
     void pickOpenCardsTest() {
         Dealer dealer = Dealer.generate();
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
-        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.TWO),
+                        Card.generate(Suit.DIAMOND, Denomination.THREE)));
+        dealer.drawInitialCards(deck);
         assertThat(dealer.pickOpenCards().numberOfCards()).isEqualTo(1);
     }
 }

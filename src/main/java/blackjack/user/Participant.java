@@ -2,6 +2,7 @@ package blackjack.user;
 
 import blackjack.Card;
 import blackjack.Cards;
+import blackjack.Deck;
 import blackjack.State;
 
 public abstract class Participant {
@@ -19,8 +20,14 @@ public abstract class Participant {
         return name;
     }
 
-    public void addCard(Card card) {
-        myCards.addCard(card);
+    public void drawInitialCards(Deck deck) {
+        myCards.addCard(deck.pickTopCard());
+        myCards.addCard(deck.pickTopCard());
+        updateStateAfterAddCard();
+    }
+
+    public void drawAdditionalCard(Deck deck) {
+        myCards.addCard(deck.pickTopCard());
         updateStateAfterAddCard();
     }
 

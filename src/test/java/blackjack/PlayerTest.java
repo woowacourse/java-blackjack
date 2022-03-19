@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjack.user.Dealer;
 import blackjack.user.Player;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,8 +40,10 @@ public class PlayerTest {
     @Test
     void isBlackjackTest() {
         Player player = Player.generate("pobi");
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.ACE));
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.Q));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.ACE),
+                        Card.generate(Suit.DIAMOND, Denomination.TEN)));
+        player.drawInitialCards(deck);
         assertThat(player.isBlackjack()).isTrue();
     }
 
@@ -48,35 +51,46 @@ public class PlayerTest {
     @Test
     void isBlackjackTest2() {
         Player player = Player.generate("pobi");
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.SIX));
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.EIGHT),
+                        Card.generate(Suit.DIAMOND, Denomination.SEVEN),
+                        Card.generate(Suit.DIAMOND, Denomination.SIX)));
+        player.drawInitialCards(deck);
+        player.drawAdditionalCard(deck);
         assertThat(player.isBlackjack()).isFalse();
     }
 
     @Test
     void isBurstTest_true() {
         Player player = Player.generate("pobi");
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.Q));
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.TEN),
+                        Card.generate(Suit.DIAMOND, Denomination.NINE),
+                        Card.generate(Suit.DIAMOND, Denomination.EIGHT)));
+        player.drawInitialCards(deck);
+        player.drawAdditionalCard(deck);
         assertThat(player.isBust()).isTrue();
     }
 
     @Test
     void isBurstTest_false() {
         Player player = Player.generate("pobi");
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.TWO));
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.TWO),
+                        Card.generate(Suit.DIAMOND, Denomination.THREE),
+                        Card.generate(Suit.DIAMOND, Denomination.FOUR)));
+        player.drawInitialCards(deck);
+        player.drawAdditionalCard(deck);
         assertThat(player.isBust()).isFalse();
     }
 
     @Test
     void pickOpenCardsTest() {
         Player player = Player.generate("pobi");
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.TWO));
-        player.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
+        Deck deck = Deck.makeIntendedShuffledDeck(
+                List.of(Card.generate(Suit.DIAMOND, Denomination.TWO),
+                        Card.generate(Suit.DIAMOND, Denomination.THREE)));
+        player.drawInitialCards(deck);
         assertThat(player.pickOpenCards().numberOfCards()).isEqualTo(2);
     }
 }
