@@ -7,8 +7,6 @@ public interface State {
 
     State drawCard(Deck deck);
 
-    boolean isBust();
-
     HoldingCards holdingCards();
 
     int cardSum();

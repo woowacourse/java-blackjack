@@ -20,8 +20,7 @@ public final class Hit extends Running {
         return new Hit(holdingCards());
     }
 
-    @Override
-    public boolean isBust() {
+    private boolean isBust() {
         return super.holdingCards().isBust();
     }
 }

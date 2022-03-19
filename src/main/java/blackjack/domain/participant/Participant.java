@@ -20,14 +20,14 @@ public abstract class Participant {
         this.state = new Init();
     }
 
-    private final void validateName(String name) {
+    private void validateName(String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException(ERROR_INVALID_NAME);
         }
     }
 
     public final boolean isBust() {
-        return state.isBust();
+        return state.holdingCards().isBust();
     }
 
     public final void receiveCard(Deck deck) {
