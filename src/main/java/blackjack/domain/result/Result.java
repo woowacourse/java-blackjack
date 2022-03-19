@@ -10,9 +10,9 @@ import java.util.function.Function;
 public enum Result {
 
     WIN(Result::checkWin, Money::betting),
-    LOSE(Result::checkLose, money -> money.betting() * Constants.LOSE_MULTIPLE),
-    DRAW(Result::checkDraw, money -> Constants.DRAW_MULTIPLE),
-    BLACKJACK(Result::checkBlackjack, money -> (int) (money.betting() * Constants.BLACKJACK_MULTIPLE)),
+    LOSE(Result::checkLose, money -> money.betting() * ProfitRate.LOSE_RATE),
+    DRAW(Result::checkDraw, money -> ProfitRate.DRAW_RATE),
+    BLACKJACK(Result::checkBlackjack, money -> (int) (money.betting() * ProfitRate.BLACKJACK_RATE)),
     ;
 
     private final BiPredicate<Player, Player> resultCalculator;
@@ -75,9 +75,9 @@ public enum Result {
         return profit * -1;
     }
 
-    private static class Constants {
-        private static final int LOSE_MULTIPLE = -1;
-        private static final double BLACKJACK_MULTIPLE = 1.5;
-        private static final int DRAW_MULTIPLE = 0;
+    private static class ProfitRate {
+        private static final int LOSE_RATE = -1;
+        private static final double BLACKJACK_RATE = 1.5;
+        private static final int DRAW_RATE = 0;
     }
 }
