@@ -43,10 +43,6 @@ public class GameParticipants {
         return participants;
     }
 
-    public List<Player> getPlayers() {
-        return players.getPlayers();
-    }
-
     public Dealer getDealer() {
         return dealer;
     }

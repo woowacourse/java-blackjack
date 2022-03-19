@@ -27,6 +27,14 @@ public class BlackjackGame {
         participant.putCard(deck.draw());
     }
 
+    public Participant find(String playerName) {
+        return gameParticipants.find(playerName);
+    }
+
+    public boolean canDealerHit() {
+        return gameParticipants.getDealer().canHit();
+    }
+
     public boolean canHit(Command command, String playerName) {
         return command.isHit() && find(playerName).canHit();
     }
@@ -40,16 +48,8 @@ public class BlackjackGame {
         return gameParticipants.calculateBettingResult();
     }
 
-    public List<Player> getPlayers() {
-        return gameParticipants.getPlayers();
-    }
-
     public List<Participant> getParticipant() {
         return gameParticipants.getParticipant();
-    }
-
-    public Dealer getDealer() {
-        return gameParticipants.getDealer();
     }
 
     private Dealer createDealer() {
@@ -60,13 +60,5 @@ public class BlackjackGame {
         return new Players(names.entrySet().stream()
                 .map(entry -> new Player(entry.getKey(), entry.getValue(), HoldCards.init(deck.drawCards(INIT_CARD_SIZE))))
                 .collect(Collectors.toList()));
-    }
-
-    public Participant find(String playerName) {
-        return gameParticipants.find(playerName);
-    }
-
-    public boolean canDealerHit() {
-        return getDealer().canHit();
     }
 }
