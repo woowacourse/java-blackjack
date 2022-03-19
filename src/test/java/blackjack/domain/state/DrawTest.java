@@ -27,4 +27,15 @@ class DrawTest {
         State state2 = Ready.start(new Card(Denomination.JACK, Suit.SPADES), new Card(Denomination.ACE, Suit.SPADES));
         assertThat(state1.judge(state2)).isInstanceOf(Draw.class);
     }
+
+    @Test
+    @DisplayName("무승부시 수익 배율이 0이 되는지 확인한다.")
+    void winRate() {
+        State stand1 = Ready.start(new Card(Denomination.JACK, Suit.CLUBS), new Card(Denomination.NINE, Suit.CLUBS))
+                .stand();
+        State stand2 = Ready.start(new Card(Denomination.JACK, Suit.SPADES), new Card(Denomination.NINE, Suit.SPADES))
+                .stand();
+        State draw = stand1.judge(stand2);
+        assertThat(draw.prizeRate()).isEqualTo(0);
+    }
 }
