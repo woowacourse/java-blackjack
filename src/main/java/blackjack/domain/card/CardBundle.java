@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class CardBundle {
 
@@ -88,6 +89,23 @@ public class CardBundle {
 
     private int getScoreValue() {
         return score.toInt();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CardBundle other = (CardBundle) o;
+        return Objects.equals(cards, other.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 
     @Override

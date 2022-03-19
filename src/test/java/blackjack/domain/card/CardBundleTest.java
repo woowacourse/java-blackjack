@@ -188,4 +188,32 @@ public class CardBundleTest {
             assertThat(actual).isTrue();
         }
     }
+
+    @DisplayName("동일한 카드들로 구성된 인스턴스들은 동일하다고 간주된다.")
+    @Test
+    void equals_trueOnSameCardsComposition() {
+        CardBundle cardBundle1 = new CardBundle(CLOVER2).add(CLOVER10);
+        CardBundle cardBundle2 = new CardBundle(CLOVER2).add(CLOVER10);
+
+        assertThat(cardBundle1).isEqualTo(cardBundle2);
+    }
+
+    @DisplayName("카드 구성이 같더라도 순서가 다른 경우 서로 다르다고 간주된다.")
+    @Test
+    void equals_falseOnWrongCardOrder() {
+        CardBundle cardBundle1 = new CardBundle(CLOVER2).add(CLOVER10);
+        CardBundle cardBundle2 = new CardBundle(CLOVER10).add(CLOVER2);
+
+        assertThat(cardBundle1).isNotEqualTo(cardBundle2);
+    }
+
+    @DisplayName("동일한 카드들로 구성된 인스턴스들의 해쉬 값은 동일하다.")
+    @Test
+    void hashCode_trueOnSameCardsComposition() {
+        CardBundle cardBundle1 = new CardBundle(CLOVER2).add(CLOVER10);
+        CardBundle cardBundle2 = new CardBundle(CLOVER2).add(CLOVER10);
+
+        assertThat(cardBundle1.hashCode())
+                .isEqualTo(cardBundle2.hashCode());
+    }
 }
