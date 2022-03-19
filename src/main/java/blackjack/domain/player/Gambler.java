@@ -19,6 +19,10 @@ public class Gambler extends Player {
         return getState().cards().size() <= 2;
     }
 
+    public double getMoney() {
+        return money;
+    }
+
     @Override
     public boolean isHit() {
         return !getState().isFinished();

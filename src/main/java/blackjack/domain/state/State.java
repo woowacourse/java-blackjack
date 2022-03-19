@@ -14,5 +14,5 @@ public interface State {
     //TODO: 인자 넣어서 테스트
     boolean isFinished();
 
-    double profit(double money);
+    double profit(double money, State state);
 }

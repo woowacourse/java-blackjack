@@ -9,7 +9,7 @@ public final class Bust extends Finished {
     }
 
     @Override
-    protected double earningRate() {
+    protected double earningRate(State state) {
         return -1;
     }
 }

@@ -1,12 +1,13 @@
 package blackjack.controller;
 
+import blackjack.domain.GameStatistic;
 import blackjack.domain.Statistic;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Gamblers;
+import blackjack.domain.player.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class GameController {
         hitOrStandDealer(dealer, cardDeck);
 
         OutputView.printCardAndPoint(gamblers, dealer);
+        GameStatistic.of(dealer, gamblers);
 //        printGameResult(Statistic.of(dealer, gamblers), gamblers);
     }
 
@@ -33,7 +35,7 @@ public class GameController {
         List<Gambler> gamblerList = new ArrayList<>();
         String[] names = InputView.inputGamblerNames();
         for (String name : names) {
-            double money = (double)InputView.inputGamblerBetMoney(name);
+            double money = (double) InputView.inputGamblerBetMoney(name);
             gamblerList.add(Gambler.of(Name.of(name), money, cardDeck));
         }
         return Gamblers.of(gamblerList);
@@ -63,6 +65,7 @@ public class GameController {
             OutputView.printPlayerCardState(gambler);
             askHitOrStand(gambler, cardDeck);
         }
+        gambler.stay();
     }
 
     private void printStateAtFirstQuestion(Gambler gambler) {

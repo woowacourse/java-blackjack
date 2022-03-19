@@ -9,8 +9,16 @@ public final class Stay extends Finished {
     }
 
     @Override
-    protected double earningRate() {
-        return 1;
+    protected double earningRate(State compareState) {
+        if (compareState instanceof BlackJack) {
+            return -1;
+        }
+        if (compareState instanceof Bust) {
+            return 1;
+        }
+        if (compareState.cards().sum() < this.cards().sum()) {
+            return 1;
+        }
+        return -1;
     }
-
 }

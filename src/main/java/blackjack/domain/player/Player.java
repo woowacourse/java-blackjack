@@ -20,6 +20,10 @@ public abstract class Player {
 
     public abstract boolean isHit();
 
+    public boolean isBlackJack() {
+        return state.cards().isBlackJack();
+    }
+
     public void addCard(Card card) {
         this.state = state.draw(card);
     }
@@ -42,5 +46,9 @@ public abstract class Player {
 
     public String getName() {
         return name.getName();
+    }
+
+    public void stay() {
+        this.state = state.stay();
     }
 }

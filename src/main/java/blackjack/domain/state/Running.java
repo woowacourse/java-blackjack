@@ -14,7 +14,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public final double profit(double money) {
-        throw new IllegalStateException();
+    public final double profit(double money, State state) {
+        throw new IllegalStateException("현재 Running 상태");
     }
 }

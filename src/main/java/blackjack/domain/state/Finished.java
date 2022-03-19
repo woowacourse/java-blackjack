@@ -25,9 +25,9 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public double profit(double money) {
-        return money * earningRate();
+    public double profit(double money, State state) {
+        return money * earningRate(state);
     }
 
-    protected abstract double earningRate();
+    protected abstract double earningRate(State state);
 }
