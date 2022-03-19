@@ -1,13 +1,16 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.game.betting.BettingMoney;
 
 public abstract class Created implements State {
 
-    protected final Cards cards;
+    protected Cards cards;
+    protected final BettingMoney bettingMoney;
 
-    protected Created(final Cards cards) {
+    protected Created(final Cards cards, final BettingMoney bettingMoney) {
         this.cards = cards;
+        this.bettingMoney = bettingMoney;
     }
 
     @Override

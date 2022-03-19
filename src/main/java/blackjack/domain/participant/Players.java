@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameOutcome;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,13 +28,14 @@ public class Players {
                 .count();
     }
 
-    public List<Player> getInitPlayers() {
+    public List<Player> getValues() {
         return values;
     }
 
     public void turnToNextPlayer() {
         validateAllTurnEnd();
-        currentTurnPlayer().stay();
+        Player currentPlayerAfterStay = currentTurnPlayer().stay();
+        values.set(currentTurnIndex, currentPlayerAfterStay);
         currentTurnIndex++;
     }
 
@@ -50,15 +50,19 @@ public class Players {
     }
 
     public Player drawCurrentPlayer(final Card card) {
-        final Player currentPlayer = currentTurnPlayer();
-        currentPlayer.draw(card);
-        checkCanTurnNext(currentPlayer);
-        return currentPlayer;
+        final Player currentPlayerAfterDraw = currentTurnPlayer().draw(card);
+        values.set(currentTurnIndex, currentPlayerAfterDraw);
+        checkCanTurnNext(currentPlayerAfterDraw);
+        return currentPlayerAfterDraw;
     }
 
     private Player currentTurnPlayer() {
         validateAllTurnEnd();
-        return values.get(currentTurnIndex);
+        Player currentPlayer = values.get(currentTurnIndex);
+        if (currentPlayer.canDraw()) {
+            return currentPlayer;
+        }
+        return values.get(++currentTurnIndex);
     }
 
     private void checkCanTurnNext(final Player currentPlayer) {
@@ -71,8 +75,8 @@ public class Players {
         return currentTurnPlayer();
     }
 
-    public Map<String, GameOutcome> calculateAllResults(final Dealer dealer) {
+    public Map<String, Integer> calculateProfit(final Dealer dealer) {
         return values.stream()
-                .collect(Collectors.toUnmodifiableMap(Player::getName, dealer::judgeOutcomeOfPlayer));
+                .collect(Collectors.toUnmodifiableMap(Player::getName, dealer::calculateProfitOf));
     }
 }

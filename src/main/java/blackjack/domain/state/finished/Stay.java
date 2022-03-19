@@ -5,19 +5,21 @@ import static blackjack.domain.game.GameOutcome.WIN;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameOutcome;
+import blackjack.domain.game.betting.BettingMoney;
 import blackjack.domain.state.State;
 
 public class Stay extends Finished {
 
-    public Stay(final Cards cards) {
-        super(cards);
+    public Stay(final Cards cards, final BettingMoney bettingMoney) {
+        super(cards, bettingMoney);
     }
 
     @Override
-    public GameOutcome compare(final State another) {
-        if (another.isSameStateWith(BlackJack.class)) {
+    GameOutcome compare(final State another) {
+        if (another.isSameStateWith(Blackjack.class)) {
             return LOSE;
-        } else if (another.isSameStateWith(Bust.class)) {
+        }
+        if (another.isSameStateWith(Bust.class)) {
             return WIN;
         }
         return cards.isHigherThan(another.cards());

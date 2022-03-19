@@ -1,48 +1,56 @@
 package blackjack;
 
-import blackjack.dto.CurrentTurnParticipant;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.participant.Participant;
 import blackjack.view.input.DrawCommand;
 import blackjack.view.input.InputView;
 import blackjack.view.output.OutputView;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackGameRunner {
 
     public void run() {
         final List<String> playerNames = InputView.inputPlayerNames();
-        final GameCommunicator gameCommunicator = new GameCommunicator(playerNames);
-        OutputView.showGameInitInfo(gameCommunicator.getInitDealerInfo(), gameCommunicator.getInitPlayerInfo());
+        final Map<String, Integer> bettingMoneysByName = inputBettingMoney(playerNames);
+        final BlackjackGame blackJackGame = new BlackjackGame(bettingMoneysByName);
+        OutputView.showGameInitInfo(blackJackGame.getParticipants());
 
-        runPlayerTurn(gameCommunicator);
-        runDealerTurn(gameCommunicator);
+        runPlayerTurn(blackJackGame);
+        runDealerTurn(blackJackGame);
 
-        OutputView.printResultPlayerInfos(gameCommunicator.getPlayerResultInfos());
-        OutputView.printAllOutcomeResult(gameCommunicator.getWinningResult());
+        OutputView.printResultPlayerInfos(blackJackGame.getParticipants());
+        OutputView.printAllOutcomeResult(blackJackGame.getParticipantsProfit());
     }
 
-    private void runDealerTurn(final GameCommunicator gameCommunicator) {
-        while (!gameCommunicator.isDealerTurnEnd()) {
-            gameCommunicator.drawDealer();
+    private Map<String, Integer> inputBettingMoney(final List<String> names) {
+        return names.stream()
+                .collect(Collectors.toMap(name -> name, InputView::inputBettingMoney));
+    }
+
+    private void runDealerTurn(final BlackjackGame blackjackGame) {
+        while (!blackjackGame.isDealerTurnEnd()) {
+            blackjackGame.drawDealer();
             OutputView.printDealerDraw();
         }
-        gameCommunicator.stayDealer();
+        blackjackGame.stayDealer();
     }
 
-    private void runPlayerTurn(final GameCommunicator gameCommunicator) {
-        while (!gameCommunicator.isAllPlayersEnd()) {
-            final String command = InputView.inputDrawCommand(gameCommunicator.getCurrentTurnPlayerInfo());
+    private void runPlayerTurn(final BlackjackGame blackjackGame) {
+        while (!blackjackGame.isAllPlayersEnd()) {
+            final String command = InputView.inputDrawCommand(blackjackGame.getCurrentTurnPlayer());
             final DrawCommand drawCommand = DrawCommand.from(command);
-            final CurrentTurnParticipant currentCurrentTurnParticipant =
-                    checkCurrentPlayerDrawNew(gameCommunicator, drawCommand);
-            OutputView.printPlayerCardInfo(currentCurrentTurnParticipant);
+            final Participant currentTurnParticipant = checkCurrentPlayerDrawNew(blackjackGame, drawCommand);
+            OutputView.printPlayerCardInfo(currentTurnParticipant);
         }
     }
 
-    private CurrentTurnParticipant checkCurrentPlayerDrawNew(
-            final GameCommunicator gameCommunicator, final DrawCommand command) {
+    private Participant checkCurrentPlayerDrawNew(
+            final BlackjackGame blackjackGame, final DrawCommand command) {
         if (command.isNo()) {
-            return gameCommunicator.drawNextPlayer();
+            return blackjackGame.drawNextPlayer();
         }
-        return gameCommunicator.drawCurrentPlayer();
+        return blackjackGame.drawCurrentPlayer();
     }
 }

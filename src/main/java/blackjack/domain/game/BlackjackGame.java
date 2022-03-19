@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.game.betting.Profits;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -10,21 +11,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackJackGame {
+public class BlackjackGame {
 
     private final CardDeck cardDeck;
-    private final Dealer dealer;
+    private Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(final List<String> playerNames) {
-        this.cardDeck = CardDeck.generate();
+    public BlackjackGame(final Map<String, Integer> moneysByName) {
+        this.cardDeck = new CardDeck();
         this.dealer = new Dealer(cardDeck.provideInitCards());
-        this.players = new Players(initPlayers(playerNames, cardDeck));
+        this.players = new Players(initPlayers(moneysByName, cardDeck));
     }
 
-    private List<Player> initPlayers(final List<String> playerNames, final CardDeck cardDeck) {
-        return playerNames.stream()
-                .map(name -> new Player(name, cardDeck.provideInitCards()))
+    private List<Player> initPlayers(final Map<String, Integer> moneysByName, final CardDeck cardDeck) {
+        return moneysByName.keySet()
+                .stream()
+                .map(name -> new Player(name, moneysByName.get(name), cardDeck.provideInitCards()))
                 .collect(Collectors.toList());
     }
 
@@ -47,21 +49,13 @@ public class BlackJackGame {
     }
 
     public void drawDealer() {
-        dealer.draw(cardDeck.provideCard());
+        dealer = dealer.draw(cardDeck.provideCard());
     }
 
     public void stayDealer() {
         if (!dealer.isBust()) {
-            dealer.stay();
+            dealer = dealer.stay();
         }
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getInitPlayers() {
-        return players.getInitPlayers();
     }
 
     public Player getCurrentTurnPlayer() {
@@ -71,12 +65,12 @@ public class BlackJackGame {
     public List<Participant> getParticipants() {
         final List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
-        participants.addAll(players.getInitPlayers());
+        participants.addAll(players.getValues());
         return participants;
     }
 
-    public OutComeResult getWinningResult() {
-        final Map<String, GameOutcome> playerResults = players.calculateAllResults(dealer);
-        return new OutComeResult(playerResults);
+    public Map<String, Integer> getParticipantsProfit() {
+        final Profits profits = new Profits(players.calculateProfit(dealer));
+        return profits.getAllProfits();
     }
 }

@@ -7,6 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Cards;
+import blackjack.domain.game.betting.BettingMoney;
 import blackjack.domain.state.State;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
@@ -14,11 +15,12 @@ import org.junit.jupiter.api.Test;
 
 class FinishedTest {
 
-    final Cards cards = new Cards(new ArrayList<>());
-    final State state = new Stay(cards);
+    private final Cards cards = new Cards(new ArrayList<>());
+    private final BettingMoney bettingMoney = new BettingMoney(2000);
+    private final State state = new Stay(cards, bettingMoney);
 
     @Test
-    @DisplayName("턴이 종료된 상태에서 카드를 더 받으려하면 예외를 발생시킨다.")
+    @DisplayName("자신과 다른 State 비교해 수익를 반환한다.")
     void drawException() {
         final Card card = Card.of(CardPattern.SPADE, CardNumber.TWO);
         assertThatThrownBy(() -> state.draw(card))
