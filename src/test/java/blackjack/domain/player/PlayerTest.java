@@ -25,7 +25,7 @@ public class PlayerTest {
     @DisplayName("이름과 카드 리스트가 주어지면 정상적으로 생성된다.")
     @Test
     void 플레이어_생성_정상() {
-        assertDoesNotThrow(() -> new Player("mat", new BettingMoney(0), generateBlackJackCards()));
+        assertDoesNotThrow(() -> new Player("mat", new BettingMoney(), generateBlackJackCards()));
     }
 
     @DisplayName("플레이어의 총 점수가 21점 이하인 경우 hit가 가능하다.")
@@ -33,7 +33,7 @@ public class PlayerTest {
     void 플레이어_게임_지속_가능() {
         String name = "mat";
         List<Card> cards = generateTotalScoreNotMoreThan21Cards();
-        Player player = new Player(name, new BettingMoney(0), cards);
+        Player player = new Player(name, new BettingMoney(), cards);
 
         assertThat(player.canHit()).isTrue();
     }
@@ -43,7 +43,7 @@ public class PlayerTest {
     void 플레이어_게임_지속_불가능() {
         String name = "sudal";
         List<Card> cards = generateTotalScoreGraterThan21Cards();
-        Player player = new Player(name, new BettingMoney(0), cards);
+        Player player = new Player(name, new BettingMoney(), cards);
 
         assertThat(player.canHit()).isFalse();
     }
@@ -53,7 +53,7 @@ public class PlayerTest {
     void 카드_합침() {
         String name = "mat";
         List<Card> cards = generateBlackJackCards();
-        Player player = new Player(name, new BettingMoney(0), cards);
+        Player player = new Player(name, new BettingMoney(), cards);
         Card card = Card.of(FIVE, SPADE);
 
         player.addCard(card);
@@ -77,7 +77,7 @@ public class PlayerTest {
         List<Card> normalCards = generateTotalScoreNotMoreThan21Cards();
 
         Dealer dealer = new Dealer(bustCards);
-        Player player = new Player("sudal", new BettingMoney(0), normalCards);
+        Player player = new Player("sudal", new BettingMoney(), normalCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -92,7 +92,7 @@ public class PlayerTest {
         List<Card> playerByBustValue = generateTotalScoreGraterThan21Cards();
 
         Dealer dealer = new Dealer(dealerByBustValue);
-        Player player = new Player("sudal", new BettingMoney(0), playerByBustValue);
+        Player player = new Player("sudal", new BettingMoney(), playerByBustValue);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -107,7 +107,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan21Cards();
 
         Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", new BettingMoney(0), maxValueCards);
+        Player player = new Player("sudal", new BettingMoney(), maxValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -123,7 +123,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
 
         Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", new BettingMoney(0), maxValueCards);
+        Player player = new Player("sudal", new BettingMoney(), maxValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -139,7 +139,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
 
         Dealer dealer = new Dealer(maxValueCards);
-        Player player = new Player("sudal", new BettingMoney(0), minValueCards);
+        Player player = new Player("sudal", new BettingMoney(), minValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -155,7 +155,7 @@ public class PlayerTest {
         List<Card> tieValueByDealer = generate21Cards();
 
         Dealer dealer = new Dealer(tieValueByDealer);
-        Player player = new Player("sudal", new BettingMoney(0), tieValueByPlayer);
+        Player player = new Player("sudal", new BettingMoney(), tieValueByPlayer);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -171,7 +171,7 @@ public class PlayerTest {
         List<Card> tieValueByDealer = generate21Cards();
 
         Dealer dealer = new Dealer(tieValueByDealer);
-        Player player = new Player("sudal", new BettingMoney(0), tieValueByPlayer);
+        Player player = new Player("sudal", new BettingMoney(), tieValueByPlayer);
 
         GameResult gameResult = player.createResult(dealer);
 

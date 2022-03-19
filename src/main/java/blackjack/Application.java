@@ -37,10 +37,15 @@ public class Application {
     }
 
     private static Players createPlayers(Deck deck) {
-        List<Player> players = InputView.getNames().stream()
-                .map(name -> new Player(name, createBettingMoney(name), getInitCards(deck)))
-                .collect(toList());
-        return new Players(players);
+        try {
+            List<Player> players = InputView.getNames().stream()
+                    .map(name -> new Player(name, createBettingMoney(name), getInitCards(deck)))
+                    .collect(toList());
+            return new Players(players);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return createPlayers(deck);
+        }
     }
 
     private static BettingMoney createBettingMoney(String playerName) {

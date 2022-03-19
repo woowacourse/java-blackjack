@@ -11,6 +11,10 @@ public class BettingMoney {
         this.value = value;
     }
 
+    public BettingMoney() {
+        this.value = BETTING_MONEY_INIT_VALUE;
+    }
+
     public BettingMoney(String value) {
         this(Integer.parseInt(value));
     }

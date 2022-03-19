@@ -11,7 +11,7 @@ public class Dealer extends Gamer {
     private static final String DEALER_NAME = "딜러";
 
     public Dealer(List<Card> cards) {
-        super(DEALER_NAME, new BettingMoney(BETTING_MONEY_INIT_VALUE), cards);
+        super(DEALER_NAME, new BettingMoney(), cards);
     }
 
     @Override
