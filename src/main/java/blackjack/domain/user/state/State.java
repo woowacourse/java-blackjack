@@ -15,8 +15,8 @@ public abstract class State {
         this.hand = hand;
     }
 
-    public Score calculateScore() {
-        return hand.calculateScore();
+    public Score getScore() {
+        return hand.getScore();
     }
 
     public List<Card> getHandCards() {
@@ -36,6 +36,4 @@ public abstract class State {
     public abstract boolean isBlackjack();
 
     public abstract Money calculateProfit(Money bettingMoney, State opponentState);
-
-    protected abstract boolean isBust();
 }

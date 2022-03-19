@@ -14,11 +14,6 @@ public class Bust extends Finished {
     }
 
     @Override
-    protected boolean isBust() {
-        return true;
-    }
-
-    @Override
     public double calculateEarningRate(State opponentState) {
         return -1.0;
     }

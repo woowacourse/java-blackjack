@@ -20,9 +20,4 @@ public class BlackJack extends Finished {
     public boolean isBlackjack() {
         return true;
     }
-
-    @Override
-    protected boolean isBust() {
-        return false;
-    }
 }

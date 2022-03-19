@@ -5,8 +5,6 @@ import blackjack.domain.user.Hand;
 
 public class Ready extends Running {
 
-    private static final int HIT_SIZE = 2;
-
     private Ready(Hand hand) {
         super(hand);
     }
@@ -17,19 +15,19 @@ public class Ready extends Running {
 
     @Override
     public State hit(Card card) {
-        Hand added = hand.addCard(card);
-        if (added.isBlackJack()) {
-            return new BlackJack(added);
+        Hand hand = this.hand.addCard(card);
+        if (hand.isBlackJack()) {
+            return new BlackJack(hand);
         }
-        if (added.size() == HIT_SIZE) {
-            return new Hit(added);
+        if (hand.size() == Hit.SIZE) {
+            return new Hit(hand);
         }
-        return new Ready(added);
+        return new Ready(hand);
     }
 
     @Override
     public State stay() {
-        throw new IllegalStateException("ready - stay ?");
+        throw new IllegalStateException("준비 상태에서는 스테이를 할 수 없습니다.");
     }
 
 }

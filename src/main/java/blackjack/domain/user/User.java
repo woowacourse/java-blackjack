@@ -47,8 +47,8 @@ public abstract class User {
         return state.isFinished();
     }
 
-    public Score calculateScore() {
-        return state.calculateScore();
+    public Score getScore() {
+        return state.getScore();
     }
 
     public List<Card> getHandCards() {

@@ -1,5 +1,6 @@
 package blackjack.domain.user.state;
 
+import blackjack.domain.card.Score;
 import blackjack.domain.user.Hand;
 
 public class Stay extends Finished {
@@ -14,28 +15,15 @@ public class Stay extends Finished {
     }
 
     @Override
-    protected boolean isBust() {
-        return false;
-    }
-
-    @Override
     public double calculateEarningRate(State opponentState) {
-        if (opponentState.isBust()) {
+        Score opponentScore = opponentState.getScore();
+
+        if (opponentState.hand.isBust() || this.getScore().isGreaterThan(opponentScore)) {
             return 1;
         }
-        if (opponentState.isBlackjack()) {
-            return -1;
+        if (this.getScore().equals(opponentScore)) {
+            return 0;
         }
-        return calculateEarningRateByScore(opponentState);
-    }
-
-    private double calculateEarningRateByScore(State opponentState) {
-        if (this.calculateScore().isGreaterThan(opponentState.calculateScore())) {
-            return 1; // 이김
-        }
-        if (opponentState.calculateScore().isGreaterThan(this.calculateScore())) {
-            return -1; // 짐
-        }
-        return 0;
+        return -1;
     }
 }

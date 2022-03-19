@@ -26,9 +26,4 @@ public abstract class Running extends State {
     public Money calculateProfit(Money bettingMoney, State opponentState) {
         throw new IllegalStateException("점수를 계산할 수 없는 상태입니다.");
     }
-
-    @Override
-    protected boolean isBust() {
-        return false;
-    }
 }

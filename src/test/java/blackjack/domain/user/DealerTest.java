@@ -61,7 +61,7 @@ public class DealerTest {
         // given
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        DealerHitStrategy strategy = new DealerHitStrategy(dealer::calculateScore);
+        DealerHitStrategy strategy = new DealerHitStrategy(dealer::getScore);
 
         dealer.hit(new Card(Suit.DIAMOND, Denomination.SIX));
         dealer.hit(new Card(Suit.DIAMOND, Denomination.TEN));
@@ -82,7 +82,7 @@ public class DealerTest {
         dealer.hit(new Card(Suit.CLOVER, Denomination.KING));
         // when
 
-        dealer.hitOrStay(deck, new DealerHitStrategy(dealer::calculateScore));
+        dealer.hitOrStay(deck, new DealerHitStrategy(dealer::getScore));
         // then
         assertThat(dealer.getHandCards().size()).isEqualTo(2);
     }
