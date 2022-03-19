@@ -50,6 +50,10 @@ public abstract class Participant {
         return state.equals(State.BUST);
     }
 
+    public int score() {
+        return myCards.scoreSum();
+    }
+
     protected void setStateBlackjackIfSatisfied() {
         if (2 == myCards.numberOfCards() && 21 == myCards.scoreSum()) {
             state = State.BLACKJACK;

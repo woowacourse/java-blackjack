@@ -16,14 +16,14 @@ public class BlackjackController {
         OutputView.printInitialDistributionEndMessage(dealer.getName(), players.getNames());
         OutputView.printDealerCards(dealer.getName(), dealer.pickOpenCards());
         for (Object player : players) {
-            OutputView.printCards(((Player)player).getName(), ((Player)player).pickOpenCards());
+            OutputView.printCards(((Player)player).getName(), ((Player)player).pickOpenCards(), true);
         }
     }
 
     private void distributeAdditionCardsToPlayer(Player player, Deck deck) {
         while (player.isHit() && InputView.askToGetAdditionCard(player.getName())) {
             player.drawAdditionalCard(deck);
-            OutputView.printCards(player.getName(), player.getCards());
+            OutputView.printCards(player.getName(), player.getCards(), true);
         }
         player.setStateStayIfSatisfied(true);
     }
@@ -42,6 +42,16 @@ public class BlackjackController {
         distributeAdditionCardsToDealer(dealer, deck);
     }
 
+    private void openCardsWithScore(Dealer dealer, Players players) {
+        OutputView.printCards(dealer.getName(), dealer.getCards(), false);
+        OutputView.printScore(dealer.score());
+        for (Object obj : players) {
+            Player player = (Player) obj;
+            OutputView.printCards(player.getName(), player.getCards(), false);
+            OutputView.printScore(player.score());
+        }
+    }
+
     public void run() {
         Deck deck = Deck.makeRandomShuffledDeck();
         Dealer dealer = Dealer.generate();
@@ -50,5 +60,7 @@ public class BlackjackController {
         distributeInitCards(dealer, players, deck);
         openInitialCards(dealer, players);
         distributeAdditionCardsToAllParticipant(dealer, players, deck);
+
+        openCardsWithScore(dealer, players);
     }
 }
