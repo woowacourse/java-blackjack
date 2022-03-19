@@ -15,18 +15,13 @@ import blackjack.domain.card.CardShape;
 
 class GamersTest {
 
-	@Test
-	@DisplayName("중복된 이름이 있으면 예외가 발생한다.")
-	void validateDuplicationName() {
-		assertThatThrownBy(() -> new Gamers(List.of("a", "a"), s -> 10))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("중복된 이름이 존재합니다.");
-	}
+	private List<Player> players = List.of(
+		new Player("pobi", 10), new Player("jason", 10));
 
 	@Test
 	@DisplayName("이름으로 플레이어를 찾아낸다.")
 	void findPlayerByName() {
-		Gamers gamers = new Gamers(List.of("pobi", "jason"), s -> 10);
+		Gamers gamers = new Gamers(players);
 		Player jason = gamers.findPlayerByName("jason");
 		assertThat(jason.isSameName("jason")).isTrue();
 	}
@@ -34,7 +29,7 @@ class GamersTest {
 	@Test
 	@DisplayName("모든 플레이어의 이름을 찾아낸다.")
 	void findPlayerNames() {
-		Gamers gamers = new Gamers(List.of("pobi", "jason"), s -> 10);
+		Gamers gamers = new Gamers(players);
 		List<String> names = gamers.findPlayerNames();
 		assertThat(names).containsExactly("pobi", "jason");
 	}
@@ -43,7 +38,7 @@ class GamersTest {
 	@CsvSource(value = {"TWO:true", "ACE:false"}, delimiter = ':')
 	@DisplayName("이름을 입력 받아, 해당 플레이어가 카드 총 합이 21이 넘는 버스트 상태인지 확인한다.")
 	void isBurst(String input, boolean result) {
-		Gamers gamers = new Gamers(List.of("pobi", "jason"), s -> 10);
+		Gamers gamers = new Gamers(players);
 		Player pobi = gamers.findPlayerByName("pobi");
 
 		pobi.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.KING));

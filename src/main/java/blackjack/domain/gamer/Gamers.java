@@ -1,16 +1,15 @@
 package blackjack.domain.gamer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.BettingInjector;
 
 public class Gamers {
 
-	private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
 	private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
 
 	private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
@@ -18,21 +17,9 @@ public class Gamers {
 	private final Dealer dealer;
 	private final List<Player> players;
 
-	public Gamers(List<String> names, BettingInjector betting) {
-		validateDuplicationNames(names);
+	public Gamers(List<Player> players) {
 		this.dealer = new Dealer();
-		this.players = names.stream()
-			.map(name -> new Player(name, betting.inject(name)))
-			.collect(Collectors.toList());
-	}
-
-	private void validateDuplicationNames(List<String> names) {
-		int count = (int) names.stream()
-			.distinct()
-			.count();
-		if (count != names.size()) {
-			throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
-		}
+		this.players = new ArrayList<>(players);
 	}
 
 	public void giveCardToAllGamers(Deck deck) {

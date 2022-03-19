@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -14,12 +15,30 @@ public class BlackJackGame {
 	public static final int INIT_DISTRIBUTION_COUNT = 2;
 	private static final int DEALER_OPEN_COUNT_FIRST = 1;
 
+	private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
+
 	private final Gamers gamers;
 	private final Deck deck;
 
 	public BlackJackGame(List<String> names, BettingInjector betting, Deck deck) {
-		this.gamers = new Gamers(names, betting);
+		validateDuplicationNames(names);
+		this.gamers = new Gamers(createPlayers(names, betting));
 		this.deck = deck;
+	}
+
+	private void validateDuplicationNames(List<String> names) {
+		int count = (int) names.stream()
+			.distinct()
+			.count();
+		if (count != names.size()) {
+			throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
+		}
+	}
+
+	private List<Player> createPlayers(List<String> names, BettingInjector betting) {
+		return names.stream()
+			.map(name -> new Player(name, betting.inject(name)))
+			.collect(Collectors.toList());
 	}
 
 	public BettingResult play(HitRequester hitOrStay, CardsChecker cardChecker) {
