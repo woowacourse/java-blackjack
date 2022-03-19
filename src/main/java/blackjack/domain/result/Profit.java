@@ -9,11 +9,11 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 
-public class BettingBox {
+public class Profit {
 
 	private final Map<Player, Money> playersProfit;
 
-	public BettingBox(List<Player> players, Dealer dealer) {
+	public Profit(List<Player> players, Dealer dealer) {
 		this.playersProfit = new HashMap<>();
 		players.stream()
 			.forEach(player -> putProfit(dealer, player));

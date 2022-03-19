@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.BettingBox;
+import blackjack.domain.result.Profit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -103,7 +103,7 @@ public class BlackJackGameController {
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player.getName(), player.getScore(), player.getCards());
 		}
-		final BettingBox bettingBox = new BettingBox(players.getPlayers(), dealer);
-		outputView.displayProfitResult(bettingBox.playerProfit(), bettingBox.dealerProfit());
+		final Profit profit = new Profit(players.getPlayers(), dealer);
+		outputView.displayProfitResult(profit.playerProfit(), profit.dealerProfit());
 	}
 }
