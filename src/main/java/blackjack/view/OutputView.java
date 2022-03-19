@@ -2,7 +2,8 @@ package blackjack.view;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.PlayerDto;
-import blackjack.dto.UserDto;
+import blackjack.dto.UserProfitDto;
+import blackjack.dto.UserScoreDto;
 
 import java.util.List;
 import java.util.Map;
@@ -37,17 +38,18 @@ public class OutputView {
         System.out.println(ADD_DEALER_CARD_MESSAGE);
     }
 
-    public static void printTotalResult(List<UserDto> userDtos) {
-        for (UserDto userDto : userDtos) {
-            String cards = String.join(DELIMITER, userDto.getCards());
-            System.out.printf(CARD_FORMAT + SCORE_FORMAT + "%n", userDto.getName(), cards, userDto.getScore());
+    public static void printTotalResult(List<UserScoreDto> userScoreDtos) {
+        for (UserScoreDto userScoreDto : userScoreDtos) {
+            String cards = String.join(DELIMITER, userScoreDto.getCards());
+            System.out.printf(CARD_FORMAT + SCORE_FORMAT + "%n", userScoreDto.getName(), cards, userScoreDto.getScore());
         }
     }
 
-    public static void printFinalResult(Map<String, Double> settlement) {
+    public static void printFinalResult(UserProfitDto userProfitDto) {
         System.out.println(FINAL_RESULT_MESSAGE);
+        System.out.printf(REVENUE_FORMAT, DEALER, userProfitDto.getDealerProfit());
 
-        for (Map.Entry<String, Double> entry : settlement.entrySet()) {
+        for (Map.Entry<String, Double> entry : userProfitDto.getPlayerProfit().entrySet()) {
             System.out.printf(REVENUE_FORMAT, entry.getKey(), entry.getValue());
         }
     }

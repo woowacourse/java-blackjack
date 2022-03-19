@@ -8,7 +8,7 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.dto.CardDto;
 import blackjack.dto.PlayerDto;
-import blackjack.dto.UserDto;
+import blackjack.dto.UserScoreDto;
 import blackjack.service.batchService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -32,8 +32,8 @@ public class BlackjackController {
 
         OutputView.printTotalUserCards(CardDto.from(dealer.getOneCard()), converToPlayerDtos(players));
 
-        List<UserDto> userDtos = playGame(dealer, players, deck);
-        finishGame(dealer, players, userDtos);
+        List<UserScoreDto> userScoreDtos = playGame(dealer, players, deck);
+        finishGame(dealer, players, userScoreDtos);
     }
 
     private List<PlayerDto> converToPlayerDtos(Players players) {
@@ -42,8 +42,8 @@ public class BlackjackController {
                 .collect(Collectors.toList());
     }
 
-    private void finishGame(Dealer dealer, Players players, List<UserDto> userDtos) {
-        OutputView.printTotalResult(userDtos);
+    private void finishGame(Dealer dealer, Players players, List<UserScoreDto> userScoreDtos) {
+        OutputView.printTotalResult(userScoreDtos);
         Map<Player, PlayerResult> statistics = players.getStatistics(dealer);
         OutputView.printFinalResult(batchService.calculate(statistics));
     }
@@ -56,7 +56,7 @@ public class BlackjackController {
         return bets;
     }
 
-    private List<UserDto> playGame(Dealer dealer, Players players, Deck deck) {
+    private List<UserScoreDto> playGame(Dealer dealer, Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
             askOneMoreCard(player, deck);
         }
@@ -74,13 +74,13 @@ public class BlackjackController {
         }
     }
 
-    private List<UserDto> convertToUserDtos(Dealer dealer, Players players) {
-        List<UserDto> userDtos = new ArrayList<>();
-        userDtos.add(UserDto.from(dealer));
+    private List<UserScoreDto> convertToUserDtos(Dealer dealer, Players players) {
+        List<UserScoreDto> userScoreDtos = new ArrayList<>();
+        userScoreDtos.add(UserScoreDto.from(dealer));
         for (Player player : players.getPlayers()) {
-            UserDto from = UserDto.from(player);
-            userDtos.add(from);
+            UserScoreDto from = UserScoreDto.from(player);
+            userScoreDtos.add(from);
         }
-        return userDtos;
+        return userScoreDtos;
     }
 }

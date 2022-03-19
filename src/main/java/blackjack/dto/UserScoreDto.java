@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserDto {
+public class UserScoreDto {
     private final String name;
     private final List<CardDto> cards;
     private final int score;
 
-    private UserDto(String name, List<CardDto> cards, int score) {
+    private UserScoreDto(String name, List<CardDto> cards, int score) {
         this.name = name;
         this.cards = new ArrayList<>(cards);
         this.score = score;
@@ -31,11 +31,11 @@ public class UserDto {
         return score;
     }
 
-    public static UserDto from(User user) {
+    public static UserScoreDto from(User user) {
         List<CardDto> collect = user.getCards().getCards().stream()
                 .map(CardDto::from)
                 .collect(Collectors.toList());
-        return new UserDto(user.getName(), collect, user.getScore());
+        return new UserScoreDto(user.getName(), collect, user.getScore());
     }
 
 }
