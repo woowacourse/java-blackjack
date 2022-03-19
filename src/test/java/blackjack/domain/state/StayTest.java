@@ -97,7 +97,7 @@ class StayTest {
 
         assertThat(result).isEqualTo(1);
     }
-    
+
     @DisplayName("상대 상태가 버스트가 아닐 때 점수가 같으면 무승부이므로 earning rate는 0이다.")
     @Test
     void 스테이_무승부() {

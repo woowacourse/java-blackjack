@@ -1,9 +1,11 @@
 package blackjack.domain.participant;
 
 import static blackjack.domain.CardFixtures.ACE_SPACE;
+import static blackjack.domain.CardFixtures.FIVE_SPACE;
 import static blackjack.domain.CardFixtures.JACK_SPACE;
 import static blackjack.domain.CardFixtures.KING_SPACE;
 import static blackjack.domain.CardFixtures.QUEEN_SPACE;
+import static blackjack.domain.CardFixtures.SIX_SPACE;
 import static blackjack.domain.CardFixtures.THREE_SPACE;
 import static blackjack.domain.CardFixtures.TWO_SPACE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,7 +46,7 @@ class PlayerTest {
 
         assertThat(result).isTrue();
     }
-    
+
     @DisplayName("플레이어는 현재 상태를 판단하여 hit를 진행한다.")
     @Test
     void 플레이어_히트() {
@@ -55,7 +57,7 @@ class PlayerTest {
 
         assertThat(cards.size()).isEqualTo(1);
     }
-    
+
     @DisplayName("플레이어가 stay를 진행할 경우 더 이상 게임을 진행하지 않는다.")
     @Test
     void 플레이어_스테이() {
@@ -67,7 +69,7 @@ class PlayerTest {
 
         assertThat(player.isFinished()).isTrue();
     }
-    
+
     @DisplayName("플레이어는 현재 상태를 판단하여 게임의 종료 여부를 반환한다.")
     @Test
     void 플레이어_종료_여부() {
@@ -123,6 +125,23 @@ class PlayerTest {
         int result = player.calculateProfit(dealer);
 
         assertThat(result).isZero();
+    }
+
+    @DisplayName("플레이어가 블랙잭이고 딜러가 21점일 때 승인 경우 배팅 금액의 1.5배를 얻는다.")
+    @Test
+    void 플레이어_블랙잭_딜러_21_승() {
+        Dealer dealer = new Dealer();
+        dealer.hit(FIVE_SPACE);
+        dealer.hit(KING_SPACE);
+        dealer.hit(SIX_SPACE);
+
+        Player player = new Player("mat", 10000);
+        player.hit(ACE_SPACE);
+        player.hit(KING_SPACE);
+
+        int result = player.calculateProfit(dealer);
+
+        assertThat(result).isEqualTo(15000);
     }
 
     @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 무승부인 경우 배팅 금액의 0배를 얻는다.")

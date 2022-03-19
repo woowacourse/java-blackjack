@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards;
 public abstract class Finished extends Started {
 
     protected static final double BLACKJACK_WIN_RATE = 1.5;
-    protected  static final int WIN_RATE = 1;
+    protected static final int WIN_RATE = 1;
     protected static final int TIE_RATE = 0;
     protected static final int LOW_RATE = -1;
 
