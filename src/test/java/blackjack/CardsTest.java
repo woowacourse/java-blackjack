@@ -9,9 +9,9 @@ public class CardsTest {
     @Test
     void scoreSumTest() {
         Cards cards = Cards.generateEmpty();
-        cards.addCard(Card.generate(Suit.DIAMOND, Denomination.ACE));
+        cards.addCard(Card.generate(Suit.DIAMOND, Denomination.FIVE));
         cards.addCard(Card.generate(Suit.HEART, Denomination.ACE));
-        cards.addCard(Card.generate(Suit.CLOVER, Denomination.ACE));
-        assertThat(cards.scoreSum()).isEqualTo(13);
+        cards.addCard(Card.generate(Suit.CLOVER, Denomination.K));
+        assertThat(cards.scoreSum()).isEqualTo(16);
     }
 }

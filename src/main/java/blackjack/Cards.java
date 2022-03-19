@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Cards {
     private static final int BONUS_SCORE = 10;
+    private static final int MAX_SCORE = 21;
     private List<Card> cards;
 
     private Cards() {
@@ -39,7 +40,7 @@ public class Cards {
     }
 
     private int optimizeSum(int sum) {
-        if (hasAce()) {
+        if (hasAce() && sum + BONUS_SCORE <= MAX_SCORE) {
             return sum + BONUS_SCORE;
         }
         return sum;
