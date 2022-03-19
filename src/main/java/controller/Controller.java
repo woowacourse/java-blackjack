@@ -1,16 +1,19 @@
 package controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
 import domain.participant.info.Name;
+import domain.result.EarningRate;
 import domain.result.Result;
 import view.InputView;
 import view.OutputView;
@@ -29,7 +32,7 @@ public class Controller {
 		}
 
 		printHandAndScore(dealer, players);
-		OutputView.printResult(new Result(players.getResult(dealer)));
+		printResult(dealer, players);
 	}
 
 	private List<Name> makeNames() {
@@ -100,5 +103,16 @@ public class Controller {
 		IntStream.range(0, players.getSize())
 			.forEach(idx -> OutputView.printHandAndScore(players.showName(idx), players.showHand(idx),
 				players.showScore(idx)));
+	}
+
+	public static void printResult(Dealer dealer, Players players) {
+		Result result = Result.of(dealer, players);
+		OutputView.printEndMessage();
+		OutputView.printResult(dealer.showName(), result.getDealerMoney());
+
+		LinkedHashMap<Participant, EarningRate> playerResults = result.getPlayerResults();
+		playerResults.entrySet()
+			.forEach(entry -> OutputView.printResult(entry.getKey().showName(),
+				(int)(entry.getKey().showBetting() * entry.getValue().getEarningRate())));
 	}
 }

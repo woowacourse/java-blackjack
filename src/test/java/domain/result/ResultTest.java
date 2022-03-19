@@ -42,7 +42,7 @@ public class ResultTest {
 		Player gugu = new Player(new Name("gugu"), new Hand(cards_17), new Betting(40000));
 		Dealer dealer = new Dealer(new Hand(cards_17));
 		Players players = new Players(Arrays.asList(pobi, jason, woni, gugu));
-		Result result = new Result(players.getResult(dealer));
+		Result result = Result.of(dealer, players);
 		assertThat(result.getDealerMoney()).isEqualTo(40000);
 	}
 
@@ -55,7 +55,8 @@ public class ResultTest {
 		Player gugu = new Player(new Name("gugu"), new Hand(cards_17), new Betting(40000));
 		Dealer dealer = new Dealer(new Hand(cards_BURST));
 		Players players = new Players(Arrays.asList(pobi, jason, woni, gugu));
-		Result result = new Result(players.getResult(dealer));
+		Result result = Result.of(dealer, players);
 		assertThat(result.getDealerMoney()).isEqualTo(-40000);
 	}
+
 }

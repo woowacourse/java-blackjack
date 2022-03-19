@@ -1,11 +1,6 @@
 package view;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-
-import domain.participant.Participant;
-import domain.result.EarningRate;
-import domain.result.Result;
 
 public class OutputView {
 
@@ -14,8 +9,7 @@ public class OutputView {
 	private static final String JOINING_DELIMITER = ", ";
 	private static final String INIT_MESSAGE_FORMAT = "\n딜러와 %s에게 2장의 나누었습니다.\n";
 	private static final String RESULT_TITLE_MESSAGE = "\n## 최종 승패";
-	private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d\n";
-	private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %d\n";
+	private static final String RESULT_MESSAGE_FORMAT = "%s: %d\n";
 	private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
 	private static final int FIRST_CARD_INDEX = 0;
 
@@ -46,18 +40,15 @@ public class OutputView {
 		System.out.println(DEALER_DRAW_MESSAGE);
 	}
 
-	public static void printResult(Result result) {
-		printMessage(RESULT_TITLE_MESSAGE);
-		System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, result.getDealerMoney());
-
-		LinkedHashMap<Participant, EarningRate> playerResults = result.getPlayerResults();
-		playerResults.entrySet()
-			.forEach(entry -> System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, entry.getKey().showName(),
-				(int)(entry.getKey().showBetting() * entry.getValue().getEarningRate())));
+	public static void printResult(String name, int money) {
+		System.out.printf(RESULT_MESSAGE_FORMAT, name, money);
 	}
 
 	private static String joinNameAndCard(String name, List<String> cards) {
 		return String.format(SHOW_HAND_FORMAT, name, String.join(JOINING_DELIMITER, cards));
 	}
 
+	public static void printEndMessage() {
+		printMessage(RESULT_TITLE_MESSAGE);
+	}
 }
