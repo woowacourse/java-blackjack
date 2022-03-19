@@ -42,7 +42,7 @@ public class Players implements Iterable {
         players.add(players.remove());
     }
 
-    public void drawAdditionalCard(Deck deck) {
+    public void drawInitialCards(Deck deck) {
         for (Player player : players) {
             player.drawInitialCards(deck);
         }

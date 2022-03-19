@@ -8,8 +8,8 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     private void distributeInitCards(Dealer dealer, Players players, Deck deck) {
-        dealer.drawAdditionalCard(deck);
-        players.drawAdditionalCard(deck);
+        dealer.drawInitialCards(deck);
+        players.drawInitialCards(deck);
     }
 
     private void openInitialCards(Dealer dealer, Players players) {
