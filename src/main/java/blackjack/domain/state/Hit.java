@@ -15,7 +15,7 @@ public class Hit implements Status {
     public Status draw(Card card) {
         cards.receiveCard(card);
         if (cards.isBust()) {
-            return new Bust();
+            return new Bust(cards);
         }
         return new Hit(cards);
     }

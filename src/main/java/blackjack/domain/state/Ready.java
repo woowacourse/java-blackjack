@@ -5,6 +5,8 @@ import blackjack.domain.card.Cards;
 
 public class Ready implements Status {
 
+    private static final String ERROR_MESSAGE_CANNOT_MOVE_TO_STAY = "올바르지 않은 결과입니다.";
+
     private final Cards cards;
 
     public Ready(Cards cards) {
@@ -25,5 +27,10 @@ public class Ready implements Status {
             return new Blackjack(cards);
         }
         return new Hit(cards);
+    }
+
+    @Override
+    public Status stay() {
+        throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_MOVE_TO_STAY);
     }
 }
