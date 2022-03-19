@@ -67,9 +67,9 @@ public class Hand {
 		return new ArrayList<>(cards);
 	}
 
-	public List<String> getCardsInformation() {
+	public List<String> getCardsName() {
 		return cards.stream()
-			.map(Card::getInformation)
+			.map(Card::getName)
 			.collect(Collectors.toList());
 	}
 

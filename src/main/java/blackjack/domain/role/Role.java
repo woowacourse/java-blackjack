@@ -86,8 +86,8 @@ public abstract class Role {
 		return new Hand(hand.getCards());
 	}
 
-	public List<String> getCardsInformation() {
-		return hand.getCardsInformation();
+	public List<String> getCardsName() {
+		return hand.getCardsName();
 	}
 
 	public boolean wantDraw() {

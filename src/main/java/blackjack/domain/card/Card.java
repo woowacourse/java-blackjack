@@ -12,7 +12,7 @@ public class Card implements Comparable<Card> {
 		this.denomination = denomination;
 	}
 
-	public String getInformation() {
+	public String getName() {
 		return denomination.getName() + suit.getName();
 	}
 

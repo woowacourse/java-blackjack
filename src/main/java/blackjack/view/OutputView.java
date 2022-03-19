@@ -45,7 +45,7 @@ public class OutputView {
 
 	public static void printPersonalHand(final Role roleStatus) {
 		System.out.print(roleStatus.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, roleStatus.getCardsInformation()));
+		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, roleStatus.getCardsName()));
 	}
 
 	public static void printDealerStatus(final Role dealer) {
@@ -79,7 +79,7 @@ public class OutputView {
 	}
 
 	private static void printPersonalFinalResult(final Role result) {
-		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCardsInformation()));
+		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCardsName()));
 		System.out.println(RESULT + result.calculateFinalResult());
 	}
 

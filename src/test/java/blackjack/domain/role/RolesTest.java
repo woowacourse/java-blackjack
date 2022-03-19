@@ -34,8 +34,8 @@ class RolesTest {
 		final Role dealer = roles.distributeCardToDealer(deck);
 
 		assertAll(
-			() -> assertThat(dealer.getCardsInformation().size()).isEqualTo(1),
-			() -> assertThat(dealer.getCardsInformation()).isEqualTo(List.of("A클로버"))
+			() -> assertThat(dealer.getCardsName().size()).isEqualTo(1),
+			() -> assertThat(dealer.getCardsName()).isEqualTo(List.of("A클로버"))
 		);
 	}
 
@@ -48,7 +48,7 @@ class RolesTest {
 		final List<Role> players = roles.distributeCardToPlayers(deck);
 		final Role actualPlayer = players.get(0);
 
-		assertThat(actualPlayer.getCardsInformation()).isEqualTo(List.of("A클로버", "10클로버"));
+		assertThat(actualPlayer.getCardsName()).isEqualTo(List.of("A클로버", "10클로버"));
 
 	}
 
@@ -60,7 +60,7 @@ class RolesTest {
 		roles.joinPlayers(Map.of("player", 1000));
 		final Role player = roles.drawPlayer(deck, redrawChoice, "player");
 
-		assertThat(player.getCardsInformation().size()).isEqualTo(expectedTheNumberOfCard);
+		assertThat(player.getCardsName().size()).isEqualTo(expectedTheNumberOfCard);
 	}
 
 	private Deck initDeck() {
@@ -76,7 +76,7 @@ class RolesTest {
 		roles.distributeCardToDealer(deck);
 		final Role dealer = roles.drawDealer(deck);
 
-		assertThat(dealer.getCardsInformation().size()).isEqualTo(expectedTheNumberOfCard);
+		assertThat(dealer.getCardsName().size()).isEqualTo(expectedTheNumberOfCard);
 	}
 
 	private static Stream<Arguments> getDealerDeck() {

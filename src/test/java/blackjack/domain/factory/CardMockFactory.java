@@ -16,7 +16,7 @@ public class CardMockFactory {
 	static {
 		cards = Arrays.stream(Denomination.values())
 			.map(denomination -> new Card(Suit.CLOVER, denomination))
-			.collect(Collectors.toMap(Card::getInformation, Function.identity()));
+			.collect(Collectors.toMap(Card::getName, Function.identity()));
 	}
 
 	public static Card of(final String information) {
