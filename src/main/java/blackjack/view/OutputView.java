@@ -3,11 +3,10 @@ package blackjack.view;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.card.Card;
+import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.game.BlackJackReferee;
 import blackjack.domain.result.BettingResult;
 
 public class OutputView {
@@ -21,7 +20,7 @@ public class OutputView {
 	}
 
 	public static void checkHoldingCards(String name, List<Card> cards) {
-		System.out.println(name + "카드: " + filterNames(cards));
+		System.out.println(name + "카드: " + connectCardsWithName(cards));
 	}
 
 	public static void printAdditionalDrawDealer(int count) {
@@ -40,18 +39,18 @@ public class OutputView {
 
 	private static void printDealerFinalCards(Dealer dealer) {
 		System.out.printf("%s카드: %s- 결과: %d\n",
-			dealer.getName(), filterNames(dealer.getCards()), dealer.sumCardsNumber());
+			dealer.getName(), connectCardsWithName(dealer.getCards()), dealer.sumCardsNumber());
 	}
 
 	private static void printPlayerFinalCards(List<Player> players) {
 		for (Player player : players) {
 			System.out.printf("%s카드: %s- 결과: %d\n",
-				player.getName(), filterNames(player.getCards()), player.sumCardsNumber());
+				player.getName(), connectCardsWithName(player.getCards()), player.sumCardsNumber());
 		}
 		System.out.println();
 	}
 
-	private static String filterNames(List<Card> cards) {
+	private static String connectCardsWithName(List<Card> cards) {
 		return cards.stream()
 			.map(card -> card.getName() + card.getSymbol())
 			.collect(Collectors.joining(", "));
