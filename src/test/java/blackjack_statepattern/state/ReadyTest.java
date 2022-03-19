@@ -1,4 +1,4 @@
-package blackjack_statepattern;
+package blackjack_statepattern.state;
 
 import static blackjack_statepattern.Fixture.SPADES_ACE;
 import static blackjack_statepattern.Fixture.SPADES_JACK;

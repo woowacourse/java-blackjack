@@ -1,4 +1,4 @@
-package blackjack_statepattern;
+package blackjack_statepattern.state;
 
 import static blackjack_statepattern.Fixture.SPADES_ACE;
 import static blackjack_statepattern.Fixture.SPADES_JACK;
@@ -6,6 +6,7 @@ import static blackjack_statepattern.Fixture.SPADES_TEN;
 import static blackjack_statepattern.Fixture.SPADES_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack_statepattern.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

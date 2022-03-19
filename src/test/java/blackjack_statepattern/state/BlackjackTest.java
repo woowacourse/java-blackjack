@@ -1,9 +1,12 @@
-package blackjack_statepattern;
+package blackjack_statepattern.state;
 
 import static blackjack_statepattern.Fixture.SPADES_ACE;
 import static blackjack_statepattern.Fixture.SPADES_JACK;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack_statepattern.Card;
+import blackjack_statepattern.Denomination;
+import blackjack_statepattern.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

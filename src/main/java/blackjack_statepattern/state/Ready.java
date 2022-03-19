@@ -1,5 +1,7 @@
-package blackjack_statepattern;
+package blackjack_statepattern.state;
 
+import blackjack_statepattern.Card;
+import blackjack_statepattern.Cards;
 import java.util.List;
 
 public final class Ready implements State {
@@ -9,7 +11,7 @@ public final class Ready implements State {
         this(new Cards());
     }
 
-    public Ready(final Cards cards) {
+    private Ready(final Cards cards) {
         this.cards = cards;
     }
 

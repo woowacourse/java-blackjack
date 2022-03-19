@@ -1,11 +1,15 @@
-package blackjack_statepattern;
+package blackjack_statepattern.state;
 
-public class Bust implements State{
+import blackjack_statepattern.Card;
+import blackjack_statepattern.Cards;
+
+public class Bust implements State {
     private final Cards cards;
 
-    public Bust(Cards cards) {
+    Bust(Cards cards) {
         this.cards = cards;
     }
+
     @Override
     public State draw(Card card) {
         throw new IllegalArgumentException("버스트일 때 카드를 받을 수 없습니다.");

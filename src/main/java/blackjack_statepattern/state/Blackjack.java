@@ -1,10 +1,13 @@
-package blackjack_statepattern;
+package blackjack_statepattern.state;
+
+import blackjack_statepattern.Card;
+import blackjack_statepattern.Cards;
 
 public class Blackjack implements State {
 
     private final Cards cards;
 
-    public Blackjack(Cards cards) {
+    Blackjack(Cards cards) {
         this.cards = cards;
     }
 
