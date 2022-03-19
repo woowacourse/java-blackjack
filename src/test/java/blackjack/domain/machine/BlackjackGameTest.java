@@ -2,6 +2,7 @@ package blackjack.domain.machine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.machine.result.Fixtures;
 import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
@@ -32,6 +33,15 @@ class BlackjackGameTest {
     void checkAddCardToPlayer() {
         GameResponse gameResponse = blackjackGame.addCardToPlayer();
         assertThat(gameResponse.getName()).isEqualTo("eden");
+    }
+
+    @Test
+    @DisplayName("bust 점수일 때 터지는지 확인")
+    void checkOverLimit() {
+        blackjackGame.getTurnPlayer().addCard(Fixtures.SPADE_JACK);
+        blackjackGame.getTurnPlayer().addCard(Fixtures.SPADE_TEN);
+        blackjackGame.getTurnPlayer().addCard(Fixtures.SPADE_NINE);
+        assertThat(blackjackGame.checkOverLimit()).isTrue();
     }
 
     @Test
