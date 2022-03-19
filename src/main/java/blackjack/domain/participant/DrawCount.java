@@ -9,7 +9,10 @@ public enum DrawCount {
     TWO(2, "두"),
     THREE(3, "세"),
     FOUR(4, "네"),
-    FIVE(5, "다섯");
+    FIVE(5, "다섯"),
+    SIX(6, "여섯"),
+    SEVEN(7, "일곱");
+
 
     private final int value;
     private final String name;
