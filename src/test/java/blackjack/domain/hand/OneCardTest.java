@@ -40,7 +40,7 @@ public class OneCardTest {
     void stay() {
         CardHand cardHand = new OneCard(CLOVER10);
 
-        assertThatExceptionOfType(IllegalStateException.class)
+        assertThatExceptionOfType(UnsupportedOperationException.class)
                 .isThrownBy(cardHand::stay);
     }
 

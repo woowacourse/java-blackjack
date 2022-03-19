@@ -21,14 +21,14 @@ public class BlackjackTest {
     @DisplayName("hit 메서드 실행시, 예외가 발생한다.")
     @Test
     void hit_exception() {
-        assertThatExceptionOfType(IllegalStateException.class)
+        assertThatExceptionOfType(UnsupportedOperationException.class)
                 .isThrownBy(() -> cardHand.hit(CLOVER2));
     }
 
     @DisplayName("stay 메서드 실행시, 예외가 발생한다.")
     @Test
     void stay() {
-        assertThatExceptionOfType(IllegalStateException.class)
+        assertThatExceptionOfType(UnsupportedOperationException.class)
                 .isThrownBy((cardHand::stay));
     }
 
