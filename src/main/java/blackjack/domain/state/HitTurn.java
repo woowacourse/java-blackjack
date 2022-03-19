@@ -31,4 +31,9 @@ public final class HitTurn extends Started {
     public State judge(State result) {
         throw new IllegalStateException("아직 턴이 끝나지 않아서 승패를 판단할 수 없습니다.");
     }
+
+    @Override
+    public boolean isHitTurn() {
+        return true;
+    }
 }

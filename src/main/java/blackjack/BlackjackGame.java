@@ -19,7 +19,7 @@ public class BlackjackGame {
 
     public void run() {
         Deck deck = new Deck();
-        Players players = Players.fromNamesAndGuestHitStrategy(inputPlayerNames(), this::inputHitCommand);
+        Players players = Players.fromNamesAndGuestHitStrategy(inputPlayerNames(), deck, this::inputHitCommand);
         BettingBox bettingBox = players.bet(this::inputBettingMoney);
         players.deal(deck, Players.INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));

@@ -1,7 +1,9 @@
 package blackjack.domain.player;
 
 import blackjack.domain.BettingBox;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.Ready;
 import blackjack.domain.strategy.BetInputStrategy;
 import blackjack.domain.strategy.HitStrategy;
 import java.util.ArrayList;
@@ -25,10 +27,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players fromNamesAndGuestHitStrategy(List<String> names, HitStrategy hitStrategy) {
+    public static Players fromNamesAndGuestHitStrategy(List<String> names, Deck deck, HitStrategy hitStrategy) {
         validate(names);
-        List<Player> allPlayers = new ArrayList<>(toPlayers(names, hitStrategy));
-        allPlayers.add(new Dealer());
+        List<Player> allPlayers = new ArrayList<>(toPlayers(names, deck, hitStrategy));
+        allPlayers.add(new Dealer(deck));
         return new Players(allPlayers);
     }
 
@@ -42,9 +44,9 @@ public class Players {
         }
     }
 
-    private static List<Player> toPlayers(List<String> names, HitStrategy hitStrategy) {
+    private static List<Player> toPlayers(List<String> names,Deck deck, HitStrategy hitStrategy) {
         return names.stream()
-                .map(name -> new Guest(name, hitStrategy))
+                .map(name -> new Guest(name, deck, hitStrategy))
                 .collect(Collectors.toList());
     }
 

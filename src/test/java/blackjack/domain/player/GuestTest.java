@@ -12,7 +12,8 @@ public class GuestTest {
     @Test
     @DisplayName("히트 조건을 가지는 전략 패턴에 맞게 히트하는지 확인")
     void hitStrategyTest() {
-        Guest a = new Guest("a", (p) -> HitFlag.Y);
+        Deck deck = new Deck();
+        Guest a = new Guest("a", deck, (p) -> HitFlag.Y);
         assertThat(a.checkHitFlag())
                 .isEqualTo(HitFlag.Y);
     }
@@ -21,9 +22,7 @@ public class GuestTest {
     @DisplayName("게스트가 카드를 보여줄 때 모든 카드를 공개하는지 확인")
     void showCardsTest() {
         Deck deck = new Deck();
-        Guest a = new Guest("a", (p) -> HitFlag.Y);
-        a.hit(deck.pick());
-        a.hit(deck.pick());
+        Guest a = new Guest("a", deck, (p) -> HitFlag.Y);
         assertThat(a.getShowCards().getCardValues().size())
                 .isEqualTo(2);
     }

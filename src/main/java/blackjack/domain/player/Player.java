@@ -7,8 +7,6 @@ import blackjack.domain.card.Cards;
 public interface Player {
     boolean isBust();
 
-    boolean isMaxScore();
-
     boolean isBlackjack();
 
     boolean isHittable();

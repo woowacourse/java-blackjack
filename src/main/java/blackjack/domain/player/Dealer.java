@@ -2,7 +2,9 @@ package blackjack.domain.player;
 
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
+import blackjack.domain.card.Deck;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 import java.util.List;
 
 public class Dealer extends AbstractPlayer {
@@ -10,8 +12,8 @@ public class Dealer extends AbstractPlayer {
     private static final int HIT_FLAG_SCORE = 16;
     private static final int FIRST_CARD_INDEX = 0;
 
-    public Dealer() {
-        super(DEALER_NAME, new Cards(new ArrayList<>()));
+    public Dealer(Deck deck) {
+        super(DEALER_NAME, Ready.start(deck.pick(), deck.pick()));
     }
 
     @Override

@@ -23,4 +23,9 @@ public abstract class TurnFinished extends Started {
     public double prizeRate() {
         throw new IllegalStateException("아직 결과를 내지 않아서 수익을 계산할 수 없습니다.");
     }
+
+    @Override
+    public boolean isHitTurn() {
+        return false;
+    }
 }

@@ -18,4 +18,6 @@ public interface State {
     State judge(State turnFinished);
 
     Cards getCards();
+
+    boolean isHitTurn();
 }

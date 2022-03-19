@@ -13,7 +13,7 @@ public class DealerTest {
     @DisplayName("딜러가 16이하일 때만 카드 추가하는지 확인")
     void checkHitAddCardTest() {
         Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
         while (dealer.checkHitFlag() == HitFlag.Y) {
             dealer.hit(deck.pick());
         }
@@ -25,7 +25,7 @@ public class DealerTest {
     @DisplayName("딜러가 카드를 한장만 보여주는지 확인")
     void showDealerCards() {
         Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
         dealer.hit(deck.pick());
         dealer.hit(deck.pick());
         assertThat(dealer.getShowCards().getCardValues().size())
