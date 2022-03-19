@@ -20,7 +20,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean calculateBattingMoneyResult(Gamer player) {
+    public boolean calculateBettingMoneyResult(Gamer player) {
         if (player.isTie(this)) {
             return false;
         }
@@ -28,11 +28,11 @@ public class Dealer extends Gamer {
         if (player.isBlackJack() && isBlackJack()) {
             return false;
         }
-        return addMoney(reversBattingMoney((Player) player));
+        return addMoney(reversBettingMoney((Player) player));
     }
 
-    public int reversBattingMoney(Player player) {
-        return player.reverseBattingMoney();
+    public int reversBettingMoney(Player player) {
+        return player.reverseBeMoney();
     }
 }
 

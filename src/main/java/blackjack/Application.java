@@ -37,13 +37,13 @@ public class Application {
 
     private static Players createPlayers(Deck deck) {
         List<Player> players = InputView.getNames().stream()
-                .map(name -> new Player(name, createBattingMoney(name), getInitCards(deck)))
+                .map(name -> new Player(name, createBettingMoney(name), getInitCards(deck)))
                 .collect(toList());
         return new Players(players);
     }
 
-    private static int createBattingMoney(String playerName) {
-        return InputView.insertBattingMoney(playerName);
+    private static int createBettingMoney(String playerName) {
+        return InputView.insertBettingMoney(playerName);
     }
 
     public static void playing(Deck deck, Player player) {

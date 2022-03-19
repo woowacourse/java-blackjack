@@ -10,11 +10,11 @@ public abstract class Gamer {
     private final BettingMoney bettingMoney;
     private final Cards cards;
 
-    public Gamer(String name, int battingMoney, List<Card> cards) {
+    public Gamer(String name, int bettingMoney, List<Card> cards) {
         this.name = name.trim();
         checkName(this.name);
 
-        this.bettingMoney = new BettingMoney(battingMoney);
+        this.bettingMoney = new BettingMoney(bettingMoney);
         this.cards = new Cards(cards);
     }
 
@@ -46,7 +46,7 @@ public abstract class Gamer {
 
     abstract boolean canHit();
 
-    abstract boolean calculateBattingMoneyResult(Gamer player);
+    abstract boolean calculateBettingMoneyResult(Gamer player);
 
     public boolean addMoney(int value) {
         return bettingMoney.addMoney(value);

@@ -75,14 +75,14 @@ public class OutputView {
     }
 
     private static void printDealerGameResult(GameResultDto result) {
-        System.out.printf("\n## 최종 수익\n" + result.getName() + ": %s\n", result.getBattingMoney());
+        System.out.printf("\n## 최종 수익\n" + result.getName() + ": %s\n", result.getBettingMoney());
     }
 
     private static void printPlayerGameResult(GameResultsDto results) {
         String resultInfo = results
                 .getValue()
                 .stream()
-                .map(player -> player.getName() + ": " + player.getBattingMoney())
+                .map(player -> player.getName() + ": " + player.getBettingMoney())
                 .collect(joining("\n"));
 
         System.out.println(resultInfo);

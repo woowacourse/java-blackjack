@@ -11,12 +11,12 @@ public enum GameResult {
     BLACKJACK("블랙잭", 0.5, (score, otherScore) -> score == 21);
 
     private final String value;
-    private final double battingMoneyResult;
+    private final double bettingMoneyResult;
     private final BiPredicate<Integer, Integer> condition;
 
-    GameResult(String value, double battingMoneyResult, BiPredicate<Integer, Integer> condition) {
+    GameResult(String value, double bettingMoneyResult, BiPredicate<Integer, Integer> condition) {
         this.value = value;
-        this.battingMoneyResult = battingMoneyResult;
+        this.bettingMoneyResult = bettingMoneyResult;
         this.condition = condition;
     }
 
@@ -31,7 +31,7 @@ public enum GameResult {
         return value;
     }
 
-    public double getBattingMoneyResult() {
-        return battingMoneyResult;
+    public double getBettingMoneyResult() {
+        return bettingMoneyResult;
     }
 }

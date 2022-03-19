@@ -6,11 +6,11 @@ import java.util.Objects;
 public class GameResultDto {
 
     private final String name;
-    private final int battingMoney;
+    private final int bettingMoney;
 
-    public GameResultDto(String gamerName, int battingMoney) {
+    public GameResultDto(String gamerName, int bettingMoney) {
         this.name = gamerName;
-        this.battingMoney = battingMoney;
+        this.bettingMoney = bettingMoney;
     }
 
     public static GameResultDto from(Gamer gamer) {
@@ -38,7 +38,7 @@ public class GameResultDto {
         return Objects.hash(name);
     }
 
-    public int getBattingMoney() {
-        return battingMoney;
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 }

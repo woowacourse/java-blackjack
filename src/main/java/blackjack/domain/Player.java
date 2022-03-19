@@ -31,18 +31,18 @@ public class Player extends Gamer {
     }
 
     @Override
-    public boolean calculateBattingMoneyResult(Gamer dealer) {
+    public boolean calculateBettingMoneyResult(Gamer dealer) {
         GameResult gameResult = createResult(dealer);
 
         if (dealer.isBlackJack() && isBlackJack()) {
             return true;
         }
 
-        double result = gameResult.getBattingMoneyResult() * getBettingMoney();
+        double result = gameResult.getBettingMoneyResult() * getBettingMoney();
         return addMoney((int) result);
     }
 
-    public int reverseBattingMoney() {
+    public int reverseBeMoney() {
         return getBettingMoney() * CONVERT_POSITIVE_VALUE;
     }
 }
