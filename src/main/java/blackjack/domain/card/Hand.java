@@ -27,7 +27,7 @@ public class Hand {
 
 	public String getFinalScore() {
 		int score = calculateOptimalScore();
-		if (score == BlackJack.BUST) {
+		if (score == BlackJack.BUST_SCORE) {
 			return BlackJack.BUST_MESSAGE;
 		}
 		return Integer.toString(score);
@@ -38,7 +38,7 @@ public class Hand {
 			.mapToInt(Card::getScore)
 			.sum();
 		if (isBust(totalScore)) {
-			return BlackJack.BUST;
+			return BlackJack.BUST_SCORE;
 		}
 		if (hasAce()) {
 			return getOptimizedScore(totalScore, totalScore + ACE_AS_ELEVEN);
