@@ -1,5 +1,6 @@
 package blackjack.domain.participant.state;
 
+import static blackjack.domain.BlackjackCardRule.INITIALLY_DISTRIBUTED_CARD_COUNT;
 import static blackjack.domain.BlackjackScoreRule.ENABLE_MAXIMUM_SCORE_UNDER_BUST;
 
 import java.util.List;
@@ -35,6 +36,13 @@ public final class BustState extends FinishState {
     @Override
     public boolean isBust() {
         return true;
+    }
+
+    @Override
+    protected void validateCardSizeIsEnough(final List<Card> cards) {
+        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isOverThan(cards.size())) {
+            throw new IllegalArgumentException("카드는 2장 이상이어야 합니다.");
+        }
     }
 
     @Override

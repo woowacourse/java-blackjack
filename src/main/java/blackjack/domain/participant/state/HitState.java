@@ -73,7 +73,7 @@ public final class HitState extends PlayState {
 
     private static void validateCardScoreIsCompatible(final List<Card> cards) {
         final int score = ScoreCalculator.calculateScore(cards);
-        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isUnderThan(score)) {
+        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isNotOverThan(score)) {
             throw new IllegalArgumentException("합계가 21 이상이므로 Hit 상태가 될 수 없습니다.");
         }
     }

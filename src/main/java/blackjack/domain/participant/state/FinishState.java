@@ -1,7 +1,5 @@
 package blackjack.domain.participant.state;
 
-import static blackjack.domain.BlackjackCardRule.INITIALLY_DISTRIBUTED_CARD_COUNT;
-
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -50,11 +48,7 @@ public abstract class FinishState implements State {
         return cards.getCards();
     }
 
-    private void validateCardSizeIsEnough(final List<Card> cards) {
-        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isOverThan(cards.size())) {
-            throw new IllegalArgumentException("카드는 2장 이상이어야 합니다.");
-        }
-    }
+    protected abstract void validateCardSizeIsEnough(final List<Card> cards);
 
     protected abstract void validateScoreIsCompatible(final List<Card> cards);
 

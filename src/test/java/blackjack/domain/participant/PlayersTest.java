@@ -5,7 +5,6 @@ import static blackjack.Fixture.SPADE_TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -32,7 +31,7 @@ public class PlayersTest {
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForPlayerNameDuplicatedExceptionTest")
     void playerNameDuplicatedExceptionTest(final List<String> playerNames) {
-        final Deck deck = generateDeck(Collections.emptyList());
+        final Deck deck = Deck.generate(new RandomDeckGenerator());
         assertThatThrownBy(() -> Players.readyToPlay(playerNames, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
@@ -42,7 +41,7 @@ public class PlayersTest {
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForPlayerCountTooManyExceptionTest")
     void playerCountTooManyExceptionTest(final List<String> playerNames) {
-        final Deck deck = generateDeck(Collections.emptyList());
+        final Deck deck = Deck.generate(new RandomDeckGenerator());
         assertThatThrownBy(() -> Players.readyToPlay(playerNames, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어는 8명 이하여야 합니다.");
@@ -63,9 +62,7 @@ public class PlayersTest {
     @DisplayName("턴이 종료되지 않은 플레이어가 존재하는지 확인할 수 있어야 한다.")
     @Test
     void isAnyPlayerNotFinishedTest() {
-        final ManualDeckGenerator manualDeckGenerator = new ManualDeckGenerator();
-        manualDeckGenerator.initCards(List.of(SPADE_TEN, SPADE_FIVE));
-        final Deck deck = Deck.generate(manualDeckGenerator);
+        final Deck deck = generateDeck(List.of(SPADE_TEN, SPADE_FIVE));
         final Players players = Players.readyToPlay(List.of("player"), deck);
 
         assertThat(players.isAnyPlayerNotFinished()).isTrue();

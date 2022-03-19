@@ -7,6 +7,7 @@ import static blackjack.Fixture.SPADE_ACE;
 import static blackjack.Fixture.SPADE_FIVE;
 import static blackjack.Fixture.SPADE_KING;
 import static blackjack.Fixture.SPADE_TEN;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -19,10 +20,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 class ScoreCalculatorTest {
 
     @DisplayName("합계를 계산할 수 있어야 한다.")
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 합계 : {1}, 카드 : {0}")
     @MethodSource("provideForCalculateScoreTest")
     void calculateScoreTest(final List<Card> cards, final int expectedScore) {
-
+        final int actualScore = ScoreCalculator.calculateScore(cards);
+        assertThat(actualScore).isEqualTo(expectedScore);
     }
 
     public static Stream<Arguments> provideForCalculateScoreTest() {

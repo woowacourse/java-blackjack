@@ -33,39 +33,19 @@ class CardHandsTest {
     private static Stream<Arguments> provideForParameterizedTest() {
         return Stream.of(
                 Arguments.of(
-                        List.of(
-                                SPADE_ACE,
-                                HEART_ACE,
-                                CLOVER_ACE,
-                                DIAMOND_KING
-                        ), 14
+                        List.of(SPADE_ACE, HEART_ACE, CLOVER_ACE, DIAMOND_KING), 13
                 ),
                 Arguments.of(
-                        List.of(
-                                SPADE_ACE,
-                                HEART_KING
-                        ), 21
+                        List.of(SPADE_ACE, HEART_KING), 21
                 ),
                 Arguments.of(
-                        List.of(
-                                SPADE_ACE,
-                                HEART_ACE,
-                                HEART_KING
-                        ), 12
+                        List.of(SPADE_ACE, HEART_ACE, HEART_KING), 12
                 ),
                 Arguments.of(
-                        List.of(
-                                SPADE_KING,
-                                HEART_KING,
-                                DIAMOND_KING
-                        ), 30
+                        List.of(SPADE_KING, HEART_KING, DIAMOND_KING), 30
                 ),
                 Arguments.of(
-                        List.of(
-                                SPADE_KING,
-                                HEART_KING,
-                                CLOVER_TWO
-                        ), 22
+                        List.of(SPADE_KING, HEART_KING, CLOVER_TWO), 22
                 )
         );
     }

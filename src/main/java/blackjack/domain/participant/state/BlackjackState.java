@@ -1,5 +1,6 @@
 package blackjack.domain.participant.state;
 
+import static blackjack.domain.BlackjackCardRule.INITIALLY_DISTRIBUTED_CARD_COUNT;
 import static blackjack.domain.BlackjackScoreRule.BLACKJACK_SCORE;
 
 import java.util.List;
@@ -38,6 +39,13 @@ public final class BlackjackState extends FinishState {
     @Override
     public boolean isBust() {
         return false;
+    }
+
+    @Override
+    protected void validateCardSizeIsEnough(final List<Card> cards) {
+        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isNotEquals(cards.size())) {
+            throw new IllegalArgumentException("카드는 2장 이어야 합니다.");
+        }
     }
 
     @Override

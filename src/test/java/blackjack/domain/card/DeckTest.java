@@ -31,6 +31,16 @@ class DeckTest {
                 .hasMessageContaining("중복된 카드는 존재할 수 없습니다.");
     }
 
+    @DisplayName("2장의 카드를 배분할 수 있어야 한다.")
+    @ParameterizedTest(name = "[{index}] 카드 : {0}")
+    @MethodSource("blackjack.domain.card.provider.DeckTestProvider#provideForDistributeInitialCardsTest")
+    void distributeInitialCardsTest(final List<Card> cards) {
+        final Deck deck = this.generateDeck(cards);
+        final List<Card> actualCards = deck.distributeInitialCards();
+        final List<Card> expectedCards = cards.subList(0, 2);
+        assertThat(actualCards).isEqualTo(expectedCards);
+    }
+
     @DisplayName("한번에 한장씩 카드를 뽑을 수 있어야 한다.")
     @ParameterizedTest(name = "[{index}] 카드 : {0}")
     @MethodSource("blackjack.domain.card.provider.DeckTestProvider#provideForDrawCardTest")

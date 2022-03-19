@@ -17,17 +17,21 @@ public class DeckTestProvider {
     public static Stream<Arguments> provideForCardDuplicatedExceptionTest() {
         return Stream.of(
                 Arguments.of(
-                        List.of(
-                                SPADE_ACE,
-                                SPADE_ACE
-                        )
+                        List.of(SPADE_ACE, SPADE_ACE)
                 ),
                 Arguments.of(
-                        List.of(
-                                SPADE_ACE,
-                                HEART_KING,
-                                SPADE_ACE
-                        )
+                        List.of(SPADE_ACE, HEART_KING, SPADE_ACE)
+                )
+        );
+    }
+
+    public static Stream<Arguments> provideForDistributeInitialCardsTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(DIAMOND_ACE, DIAMOND_EIGHT)
+                ),
+                Arguments.of(
+                        List.of(SPADE_ACE, HEART_EIGHT, DIAMOND_EIGHT)
                 )
         );
     }
@@ -35,17 +39,13 @@ public class DeckTestProvider {
     public static Stream<Arguments> provideForDrawCardTest() {
         return Stream.of(
                 Arguments.of(
-                        List.of(
-                                DIAMOND_ACE,
-                                DIAMOND_EIGHT
-                        )
+                        List.of(DIAMOND_ACE)
                 ),
                 Arguments.of(
-                        List.of(
-                                SPADE_ACE,
-                                HEART_EIGHT,
-                                DIAMOND_EIGHT
-                        )
+                        List.of(DIAMOND_ACE, DIAMOND_EIGHT)
+                ),
+                Arguments.of(
+                        List.of(SPADE_ACE, HEART_EIGHT, DIAMOND_EIGHT)
                 )
         );
     }
@@ -53,14 +53,10 @@ public class DeckTestProvider {
     public static Stream<Arguments> provideForDrawableCardNotExistExceptionTest() {
         return Stream.of(
                 Arguments.of(
-                        List.of(
-                                SPADE_ACE
-                        ),
-                        List.of(
-                                SPADE_ACE,
-                                DIAMOND_ACE,
-                                HEART_ACE
-                        )
+                        List.of(SPADE_ACE)
+                ),
+                Arguments.of(
+                        List.of(SPADE_ACE, DIAMOND_ACE, HEART_ACE)
                 )
         );
     }
