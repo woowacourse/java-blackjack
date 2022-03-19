@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BettingResult {
+    private static final int REVERSE_EARNING = -1;
     private final Map<Participant, Integer> bettingResult;
 
     private BettingResult(Map<Participant, Integer> bettingResult) {
@@ -26,7 +27,7 @@ public class BettingResult {
     }
 
     private static int getDealerEarning(int earning) {
-        return earning * (-1);
+        return earning * REVERSE_EARNING;
     }
 
     public Map<Participant, Integer> getBettingResult() {
