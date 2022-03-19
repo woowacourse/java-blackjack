@@ -50,7 +50,7 @@ public class GameController {
     }
 
     private void hitOrStandDealer(Dealer dealer, CardDeck cardDeck) {
-        if (dealer.isHit()) {
+        while (dealer.isHit()) {
             dealer.addCard(cardDeck.draw());
             OutputView.printDealerCardAdded();
         }
