@@ -29,7 +29,7 @@ class BettingAmountTest {
 	void receive_One_And_Half_Time() {
 		BettingAmount bettingAmount = new BettingAmount(1000);
 		bettingAmount.giveOneAndHalfTime();
-		assertThat(bettingAmount.getTotalValue()).isEqualTo(1500);
+		assertThat(bettingAmount.getTotalValue()).isEqualTo(2500);
 	}
 
 	@Test

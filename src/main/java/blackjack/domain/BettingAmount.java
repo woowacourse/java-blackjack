@@ -25,7 +25,7 @@ public class BettingAmount {
 	}
 
 	public void giveOneAndHalfTime() {
-		totalValue = totalValue + totalValue / 2;
+		totalValue = totalValue * 2 + totalValue / 2;
 	}
 
 	public void giveTwoTimes() {
