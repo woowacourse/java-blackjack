@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class InputView {
 
-    public static final String INPUT_BET_MONEY_MESSAGE = "의 베팅 금액은?";
+    private static final String INPUT_BET_MONEY_MESSAGE = "의 베팅 금액은?";
     private static final String NAMES_DUPLICATED_ERROR_MESSAGE = "[ERROR] 중복된 이름을 입력할 수 없습니다.";
     private static final String NULL_ANSWER_INPUT_ERROR_MESSAGE = "[ERROR] y,n 이외의 문자를 입력할 수 없습니다.";
     private static final String NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -25,6 +25,7 @@ public class InputView {
     }
 
     public static double inputGamblerBetMoney(Name name) {
+        System.out.println();
         System.out.println(name.getName() + INPUT_BET_MONEY_MESSAGE);
         String inputNames = SCANNER.nextLine();
         return Double.parseDouble(inputNames);

@@ -1,7 +1,5 @@
 package blackjack.domain.player;
 
-import java.util.regex.Pattern;
-
 public class Name {
 
     public static final String EMPTY_NAME = "";
