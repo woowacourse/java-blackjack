@@ -22,7 +22,7 @@ public class BlackJackController {
 
 		OutputView.printGamers(dealer, players);
 
-		BettingResult result = blackJackGame.play(InputView::askHitOrStay, OutputView::checkHoldingCards);
+		BettingResult result = blackJackGame.play(InputView::askHitOrStay, OutputView::printNameAndCards);
 
 		OutputView.printAdditionalDrawDealer(dealer.findHitCount());
 		OutputView.printFinalCards(dealer, players);

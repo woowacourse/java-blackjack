@@ -19,7 +19,7 @@ public class OutputView {
 			dealer.getName(), names, BlackJackGame.INIT_DISTRIBUTION_COUNT);
 	}
 
-	public static void checkHoldingCards(String name, List<Card> cards) {
+	public static void printNameAndCards(String name, List<Card> cards) {
 		System.out.println(name + "카드: " + connectCardsWithName(cards));
 	}
 
