@@ -3,9 +3,9 @@ package blackjack.domain.state.started.finished;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
 import blackjack.domain.state.State;
-import blackjack.domain.state.started.Started;
+import blackjack.domain.state.started.running.Running;
 
-public abstract class Finished extends Started {
+public abstract class Finished extends Running {
 
     protected Finished(Cards cards) {
         super(cards);
@@ -19,5 +19,10 @@ public abstract class Finished extends Started {
     @Override
     public final State stay() {
         throw new IllegalStateException("Finished 상태에선 상태를 변경할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }

@@ -15,8 +15,8 @@ public abstract class StateParticipant {
     }
 
     public final void init(Card firstCard, Card secondCard) {
-        State newState = state.draw(firstCard);
-        state = newState.draw(secondCard);
+        draw(firstCard);
+        draw(secondCard);
     }
 
     public final State getState() {

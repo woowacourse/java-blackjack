@@ -8,15 +8,15 @@ import java.util.Map;
 
 import blackjack.domain.PlayRecord;
 
-class BettingTable {
+public class BettingTable {
 
     private final List<Betting> bettings;
 
-    BettingTable(List<Betting> bettings) {
+    public BettingTable(List<Betting> bettings) {
         this.bettings = List.copyOf(bettings);
     }
 
-    Map<Name, Long> getRevenues(Name dealerName, Map<Name, PlayRecord> recordMap) {
+    public Map<Name, Long> getRevenues(Name dealerName, Map<Name, PlayRecord> recordMap) {
         Map<Name, PlayRecord> copyOfRecordMap = Map.copyOf(recordMap);
         Map<Name, Long> result = new LinkedHashMap<>();
 

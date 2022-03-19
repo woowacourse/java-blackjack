@@ -22,4 +22,9 @@ public abstract class Started implements State {
 
     @Override
     public abstract State stay();
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

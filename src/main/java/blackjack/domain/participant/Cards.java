@@ -49,7 +49,7 @@ public class Cards {
             .anyMatch(Card::isAce);
     }
 
-    Card findFirst() {
+    public Card findFirst() {
         return value.stream()
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
