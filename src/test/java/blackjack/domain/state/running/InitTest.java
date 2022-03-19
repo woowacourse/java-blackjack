@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InitTest {
 
@@ -44,5 +45,14 @@ class InitTest {
         state = state.drawCard(deck);
 
         assertThat(state).isInstanceOf(BlackJack.class);
+    }
+
+    @Test
+    @DisplayName("stand 메서드를 실행시키면 예외를 발생시킨다.")
+    void standTest() {
+        State state = new Init();
+
+        assertThatThrownBy(state::stand)
+                .isInstanceOf(IllegalStateException.class);
     }
 }

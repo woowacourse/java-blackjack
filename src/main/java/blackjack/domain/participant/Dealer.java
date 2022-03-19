@@ -18,8 +18,7 @@ public class Dealer extends Participant {
     }
 
     public List<Card> getHoldingCardsWithoutHidden() {
-        return state.holdingCards()
-                .getAllCards()
+        return getHoldingCards()
                 .subList(WITHOUT_HIDDEN_CARD_INDEX, state.holdingCards().size());
     }
 }
