@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import blackjack.domain.BlackJack;
 
@@ -54,12 +53,6 @@ public class Hand {
 
 	public List<Card> getCards() {
 		return new ArrayList<>(cards);
-	}
-
-	public List<String> getCardsName() {
-		return cards.stream()
-			.map(Card::getName)
-			.collect(Collectors.toList());
 	}
 
 	public boolean isBlackJack() {

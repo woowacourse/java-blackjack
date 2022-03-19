@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.BlackJack;
+import blackjack.domain.card.Card;
 import blackjack.domain.role.Role;
 
 public class OutputView {
@@ -43,7 +44,7 @@ public class OutputView {
 
 	public static void printPersonalHand(final Role roleStatus) {
 		System.out.print(roleStatus.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, roleStatus.getCardsName()));
+		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, convertCardsToCardSName(roleStatus.getCards())));
 	}
 
 	public static void printDealerStatus(final Role dealer) {
@@ -77,13 +78,19 @@ public class OutputView {
 	}
 
 	private static void printPersonalFinalResult(final Role result) {
-		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCardsName()));
+		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, convertCardsToCardSName(result.getCards())));
 		final int score = result.calculateFinalScore();
 		String scoreResult = Integer.toString(score);
 		if (score > BlackJack.OPTIMIZED_WINNING_NUMBER) {
 			scoreResult = BlackJack.BUST_MESSAGE;
 		}
 		System.out.println(RESULT + scoreResult);
+	}
+
+	private static List<String> convertCardsToCardSName(final List<Card> cards) {
+		return cards.stream()
+			.map(Card::getName)
+			.collect(Collectors.toList());
 	}
 
 	private static void printDealerOutcome(final Role dealerResult) {

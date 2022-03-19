@@ -5,6 +5,7 @@ import java.util.List;
 import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
 import blackjack.domain.Outcome;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 
@@ -62,12 +63,12 @@ public abstract class Role {
 		return name;
 	}
 
-	public Hand getHand() {
-		return new Hand(hand.getCards());
+	public List<Card> getCards() {
+		return hand.getCards();
 	}
 
-	public List<String> getCardsName() {
-		return hand.getCardsName();
+	public Hand getHand() {
+		return new Hand(hand.getCards());
 	}
 
 	public boolean wantDraw() {
