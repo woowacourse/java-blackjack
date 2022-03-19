@@ -66,13 +66,13 @@ public class BlackjackGameTest {
                     new CardDeck(), List.of("p1", "p2", "p3"));
 
             blackjackGame.drawAllPlayerCards(HIT_CHOICE, VIEW_STRATEGY);
-            List<CardHand> playerHands = extractPlayers(blackjackGame).stream()
+
+            List<Boolean> actual = extractPlayers(blackjackGame).stream()
                     .map(Participant::getHand)
+                    .map(CardHand::isFinished)
                     .collect(Collectors.toUnmodifiableList());
 
-            for (CardHand playerHand : playerHands) {
-                assertThat(playerHand.isFinished()).isTrue();
-            }
+            assertThat(actual).containsOnly(true);
         }
     }
 

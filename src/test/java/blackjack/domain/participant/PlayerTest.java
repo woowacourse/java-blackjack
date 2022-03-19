@@ -117,7 +117,8 @@ public class PlayerTest {
     }
 
     private List<Card> extractCards(Participant participant) {
-        CardBundle cardBundle = participant.getHand().getCardBundle();
+        CardHand cardHand = participant.getHand();
+        CardBundle cardBundle = cardHand.getCardBundle();
         return cardBundle.getCards();
     }
 

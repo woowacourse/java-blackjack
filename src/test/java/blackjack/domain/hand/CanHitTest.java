@@ -35,8 +35,7 @@ public class CanHitTest {
     @DisplayName("hit 메서드 실행시, 21을 초과하게 되면 Bust 인스턴스를 반환한다.")
     @Test
     void hit_bust() {
-        CardHand cardHand = new CanHit(CARD_BUNDLE_20)
-                .hit(CLOVER2);
+        CardHand cardHand = new CanHit(CARD_BUNDLE_20).hit(CLOVER2);
 
         assertThat(cardHand).isInstanceOf(Bust.class);
     }
