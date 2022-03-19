@@ -32,26 +32,18 @@ public class HoldingCards {
                 .mapToInt(Card::getNumber)
                 .sum();
 
-        if (sum > BUST_STANDARD) { // Ace를 갖고 있고 10을 더해도 Bust가 아니면 11로 계산하도록 수정
+        if (sum < BUST_STANDARD) {
             sum = adjustSum(sum);
         }
         return sum;
     }
 
     private int adjustSum(int sum) {
-        int aceCount = getAceCount();
 
-        while (sum > BUST_STANDARD && aceCount > 0) {
-            sum -= ACE_DIFFERENCE;
-            aceCount -= 1;
+        while (hasAce() && (sum + ACE_DIFFERENCE) <= BUST_STANDARD ) {
+            sum += ACE_DIFFERENCE;
         }
         return sum;
-    }
-
-    private int getAceCount() {
-        return (int) cards.stream()
-                .filter(card -> card.getCardNumber() == CardNumber.ACE)
-                .count();
     }
 
     public boolean isBlackJack() {
