@@ -26,12 +26,12 @@ public class Participants {
         users.betting(name, money);
     }
 
-    public void receiveCard(String name, Deck deck) {
+    public void drawCard(String name, Deck deck) {
         if (name.equals(DEALER_NAME)) {
-            dealer.receiveCard(deck);
+            dealer.drawCard(deck);
             return;
         }
-        users.receiveCard(name, deck);
+        users.drawCard(name, deck);
     }
 
     public boolean checkUserBust(String name) {

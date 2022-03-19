@@ -25,8 +25,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean inputMoreCard(String userName) {
-        System.out.printf(INPUT_MORE_CARD_FORMAT, userName);
+    public static boolean inputMoreCard(String name) {
+        System.out.printf(INPUT_MORE_CARD_FORMAT, name);
         return isContinue(scanner.nextLine());
     }
 
@@ -40,8 +40,8 @@ public class InputView {
         throw new IllegalArgumentException(INPUT_INVALID_ANSWER);
     }
 
-    public static int inputBettingMoney(String userName) {
-        System.out.printf(INPUT_BETTING_MONEY, userName);
+    public static int inputBettingMoney(String name) {
+        System.out.printf(INPUT_BETTING_MONEY, name);
         return validateNonIntegerAndConvert(scanner.nextLine());
     }
 

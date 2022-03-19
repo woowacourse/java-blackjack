@@ -30,8 +30,8 @@ public class Game {
         return participants.getUserNames();
     }
 
-    public void initBettingMoney(String userName, int money) {
-        participants.betting(userName, money);
+    public void initBettingMoney(String name, int money) {
+        participants.betting(name, money);
     }
 
     public List<ParticipantDto> initDistributed() {
@@ -39,9 +39,9 @@ public class Game {
         cardDistribute(DEALER_NAME);
         participantDtos.add(participants.createDealerCardInfoDto());
 
-        for (String userName : participants.getUserNames()) {
-            cardDistribute(userName);
-            participantDtos.add(participants.createUserCardInfoDto(userName));
+        for (String name : participants.getUserNames()) {
+            cardDistribute(name);
+            participantDtos.add(participants.createUserCardInfoDto(name));
         }
 
         return participantDtos;
@@ -49,26 +49,26 @@ public class Game {
 
     private void cardDistribute(String name) {
         for (int i = 0; i < INIT_DISTRIBUTE_NUM; i++) {
-            participants.receiveCard(name, deck);
+            participants.drawCard(name, deck);
         }
     }
 
-    public ParticipantDto playEachUser(String userName) {
-        participants.receiveCard(userName, deck);
-        return participants.createUserCardInfoDto(userName);
+    public ParticipantDto playEachUser(String name) {
+        participants.drawCard(name, deck);
+        return participants.createUserCardInfoDto(name);
     }
 
-    public boolean checkUserNotBust(String userName) {
-        return !participants.checkUserBust(userName);
+    public boolean checkUserNotBust(String name) {
+        return !participants.checkUserBust(name);
     }
 
-    public void changeUserStateToStand(String userName) {
-        participants.changeUserStateToStand(userName);
+    public void changeUserStateToStand(String name) {
+        participants.changeUserStateToStand(name);
     }
 
     public boolean playDealer() {
         if (participants.checkDealerScoreStandard()) {
-            participants.receiveCard(DEALER_NAME, deck);
+            participants.drawCard(DEALER_NAME, deck);
             return true;
         }
         return false;
@@ -78,8 +78,8 @@ public class Game {
         List<ParticipantDto> participantDtos = new ArrayList<>();
         participantDtos.add(participants.createDealerCardAndScoreDto());
 
-        for (String userName : participants.getUserNames()) {
-            participantDtos.add(participants.createUserCardAndScoreDto(userName));
+        for (String name : participants.getUserNames()) {
+            participantDtos.add(participants.createUserCardAndScoreDto(name));
         }
 
         return participantDtos;

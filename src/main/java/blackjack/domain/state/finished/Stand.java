@@ -13,7 +13,7 @@ public final class Stand extends Finished {
 
     @Override
     public double profit(BetMoney betMoney, int dealerScore) {
-        int score = super.cardSum();
+        int score = super.cardScore();
         if (score > dealerScore) {
             return betMoney.getMoney();
         }

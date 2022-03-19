@@ -30,7 +30,7 @@ public abstract class Participant {
         return state.holdingCards().isBust();
     }
 
-    public final void receiveCard(Deck deck) {
+    public final void drawCard(Deck deck) {
         state = state.drawCard(deck);
     }
 
@@ -39,7 +39,7 @@ public abstract class Participant {
     }
 
     public final int score() {
-        return state.cardSum();
+        return state.cardScore();
     }
 
     public final List<Card> getHoldingCards() {

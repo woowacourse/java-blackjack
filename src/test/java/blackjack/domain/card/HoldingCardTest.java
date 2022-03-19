@@ -21,7 +21,7 @@ public class HoldingCardTest {
         holdingCards.addCard(new Card(CardNumber.EIGHT, CardType.HEART));
         holdingCards.addCard(new Card(CardNumber.SIX, CardType.DIAMOND));
 
-        assertThat(holdingCards.cardSum()).isEqualTo(16);
+        assertThat(holdingCards.cardScore()).isEqualTo(16);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class HoldingCardTest {
         holdingCards.addCard(new Card(CardNumber.ACE, CardType.CLOVER));
         holdingCards.addCard(new Card(CardNumber.TEN, CardType.HEART));
 
-        assertThat(holdingCards.cardSum()).isEqualTo(21);
+        assertThat(holdingCards.cardScore()).isEqualTo(21);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class HoldingCardTest {
         holdingCards.addCard(new Card(CardNumber.ACE, CardType.HEART));
         holdingCards.addCard(new Card(CardNumber.ACE, CardType.DIAMOND));
 
-        assertThat(holdingCards.cardSum()).isEqualTo(13);
+        assertThat(holdingCards.cardScore()).isEqualTo(13);
     }
 
     @ParameterizedTest(name = "{index} {displayName}")

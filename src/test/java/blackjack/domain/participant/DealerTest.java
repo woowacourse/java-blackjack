@@ -25,8 +25,8 @@ class DealerTest {
         Deck deck = new Deck(cardGenerator);
 
         Dealer dealer = new Dealer(DEALER_NAME);
-        dealer.receiveCard(deck);
-        dealer.receiveCard(deck);
+        dealer.drawCard(deck);
+        dealer.drawCard(deck);
 
         assertThat(dealer.checkUnderScoreStandard()).isFalse();
     }
@@ -40,8 +40,8 @@ class DealerTest {
         Deck deck = new Deck(cardGenerator);
 
         Dealer dealer = new Dealer(DEALER_NAME);
-        dealer.receiveCard(deck);
-        dealer.receiveCard(deck);
+        dealer.drawCard(deck);
+        dealer.drawCard(deck);
 
         assertThat(dealer.checkUnderScoreStandard()).isTrue();
     }

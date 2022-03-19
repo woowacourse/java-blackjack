@@ -10,7 +10,7 @@ public interface State {
 
     HoldingCards holdingCards();
 
-    int cardSum();
+    int cardScore();
 
     State stand();
 

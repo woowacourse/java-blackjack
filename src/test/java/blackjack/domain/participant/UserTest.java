@@ -44,9 +44,9 @@ public class UserTest {
 
         User user = new User("Pobi");
         user.betting(10000);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
 
         assertThat(user.calculateProfit(19))
                 .isEqualTo(-10000);
@@ -62,8 +62,8 @@ public class UserTest {
 
         User user = new User("Pobi");
         user.betting(10000);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
         user.changeToStand();
 
         assertThat(user.calculateProfit(20))
@@ -80,8 +80,8 @@ public class UserTest {
 
         User user = new User("Pobi");
         user.betting(10000);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
         user.changeToStand();
 
         assertThat(user.calculateProfit(17))
@@ -98,8 +98,8 @@ public class UserTest {
 
         User user = new User("Pobi");
         user.betting(10000);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
         user.changeToStand();
 
         assertThat(user.calculateProfit(18))
@@ -117,9 +117,9 @@ public class UserTest {
 
         User user = new User("Pobi");
         user.betting(10000);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
         user.changeToStand();
 
         assertThat(user.calculateProfit(13))
@@ -136,9 +136,9 @@ public class UserTest {
         Deck deck = new Deck(cardGenerator);
 
         User user = new User("Pobi");
-        user.receiveCard(deck);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
 
         assertThat(user.isBust()).isTrue();
     }
@@ -153,9 +153,9 @@ public class UserTest {
         Deck deck = new Deck(cardGenerator);
 
         User user = new User("Pobi");
-        user.receiveCard(deck);
-        user.receiveCard(deck);
-        user.receiveCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
 
         assertThat(user.isBust()).isFalse();
     }

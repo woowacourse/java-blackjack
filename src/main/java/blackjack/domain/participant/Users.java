@@ -27,8 +27,8 @@ public class Users {
         findUserByName(name).betting(money);
     }
 
-    public void receiveCard(String name, Deck deck) {
-        findUserByName(name).receiveCard(deck);
+    public void drawCard(String name, Deck deck) {
+        findUserByName(name).drawCard(deck);
     }
 
     public boolean isBust(String name) {

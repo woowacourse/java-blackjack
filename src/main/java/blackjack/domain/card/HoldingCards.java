@@ -23,26 +23,26 @@ public class HoldingCards {
     }
 
     public boolean isBust() {
-        return cardSum() > BUST_STANDARD;
+        return cardScore() > BUST_STANDARD;
     }
 
-    public int cardSum() {
-        int sum = cards.stream()
+    public int cardScore() {
+        int score = cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
 
-        if (sum < BUST_STANDARD) {
-            sum = adjustSum(sum);
+        if (score < BUST_STANDARD) {
+            score = adjustScore(score);
         }
-        return sum;
+        return score;
     }
 
-    private int adjustSum(int sum) {
+    private int adjustScore(int score) {
 
-        while (hasAce() && (sum + ACE_DIFFERENCE) <= BUST_STANDARD ) {
-            sum += ACE_DIFFERENCE;
+        while (hasAce() && (score + ACE_DIFFERENCE) <= BUST_STANDARD ) {
+            score += ACE_DIFFERENCE;
         }
-        return sum;
+        return score;
     }
 
     public boolean isBlackJack() {
