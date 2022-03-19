@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.betting.BettingToken;
-import blackjack.domain.betting.BettingTokens;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Name;
@@ -13,8 +12,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.print.DocFlavor.READER;
 
 public class BlackJackGameController {
 	private final InputView inputView;
@@ -64,7 +61,7 @@ public class BlackJackGameController {
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player);
 		}
-		BettingResult bettingResult = BettingResult.of(players, dealer);
+		BettingResult bettingResult = new BettingResult(players, dealer);
 		outputView.displayNewLine();
 		outputView.displayResult(bettingResult);
 	}

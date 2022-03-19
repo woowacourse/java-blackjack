@@ -1,10 +1,8 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.betting.BettingToken;
-import blackjack.domain.betting.BettingTokens;
 import blackjack.domain.betting.Profit;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDenomination;
@@ -15,9 +13,9 @@ import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.process.BettingResult;
-import blackjack.domain.process.Match;
 import java.util.List;
 
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,30 +38,33 @@ public class BettingResultTest {
 		Dealer dealer = new Dealer(new Cards(
 			List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER), new Card(CardDenomination.KING, CardSuit.SPADE),
 				new Card(CardDenomination.TWO, CardSuit.SPADE))));
-		BettingResult bettingResult = BettingResult.of(players, dealer);
-		assertThat(bettingResult.getGamersBettingResult().values()).containsSequence(
-			Profit.of(Match.NONE, -500), Profit.of(Match.NONE, -3000),
-			Profit.of(Match.NONE, 1500), Profit.of(Match.NONE, 2000));
+		BettingResult bettingResult = new BettingResult(players, dealer);
+		List<Integer> totalResult = bettingResult.calculatePlayersBettingResult().values().stream()
+			.map(Profit::calculateResult)
+			.collect(Collectors.toList());
+		assertThat(totalResult).containsSequence(-500, -3000, 1500, 2000);
 	}
 
 	@Test
 	void dealer_blackjack() {
 		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
 			new Card(CardDenomination.ACE, CardSuit.SPADE))));
-		BettingResult bettingResult = BettingResult.of(players, dealer);
-		assertThat(bettingResult.getGamersBettingResult().values()).containsSequence(
-			Profit.of(Match.NONE, 5000), Profit.of(Match.NONE, -3000),
-			Profit.of(Match.NONE, 0), Profit.of(Match.NONE, -2000));
+		BettingResult bettingResult = new BettingResult(players, dealer);
+		List<Integer> totalResult = bettingResult.calculatePlayersBettingResult().values().stream()
+			.map(Profit::calculateResult)
+			.collect(Collectors.toList());
+		assertThat(totalResult).containsSequence(5000, -3000, 0, -2000);
 	}
 
 	@Test
 	void dealer_normal() {
 		Dealer dealer = new Dealer(new Cards(List.of(new Card(CardDenomination.QUEEN, CardSuit.CLOVER),
 			new Card(CardDenomination.NINE, CardSuit.SPADE))));
-		BettingResult bettingResult = BettingResult.of(players, dealer);
-		assertThat(bettingResult.getGamersBettingResult().values()).containsSequence(
-			Profit.of(Match.NONE, 3500), Profit.of(Match.NONE, -3000),
-			Profit.of(Match.NONE, 1500), Profit.of(Match.NONE, -2000));
+		BettingResult bettingResult = new BettingResult(players, dealer);
+		List<Integer> totalResult = bettingResult.calculatePlayersBettingResult().values().stream()
+			.map(Profit::calculateResult)
+			.collect(Collectors.toList());
+		assertThat(totalResult).containsSequence(3500, -3000, 1500, -2000);
 	}
 
 	private Player getBustedPlayer() {

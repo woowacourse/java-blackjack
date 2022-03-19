@@ -7,27 +7,29 @@ public class Profit {
 	private static final double PROFIT_RATIO = 1.5;
 	private static final int DECREASE_RATIO = -1;
 
-	private final int prizeValue;
+	private final int bettingMoney;
+	private final Match match;
 
-	private Profit(int prizeValue) {
-		this.prizeValue = prizeValue;
+	private Profit(Match match, int bettingMoney) {
+		this.match = match;
+		this.bettingMoney = bettingMoney;
 	}
 
-	public static Profit of(Match match, int money) {
-		if (match == Match.DRAW) {
-			return new Profit(0);
-		}
-		if (match == Match.LOSE) {
-			return new Profit(money * DECREASE_RATIO);
-		}
-		if (match == Match.BLACKJACK_WIN) {
-			return new Profit((int)(money * PROFIT_RATIO));
-		}
-		return new Profit(money);
+	public static Profit of(Match match, int bettingMoney) {
+		return new Profit(match, bettingMoney);
 	}
 
-	public int getPrizeValue() {
-		return prizeValue;
+	public int calculateResult() {
+		if (this.match == Match.DRAW) {
+			return 0;
+		}
+		if (this.match == Match.LOSE) {
+			return DECREASE_RATIO * this.bettingMoney;
+		}
+		if (this.match == Match.BLACKJACK_WIN) {
+			return (int) (PROFIT_RATIO * this.bettingMoney);
+		}
+		return this.bettingMoney;
 	}
 
 	@Override
@@ -39,11 +41,11 @@ public class Profit {
 			return false;
 		}
 		Profit profit = (Profit) o;
-		return prizeValue == profit.prizeValue;
+		return bettingMoney == profit.bettingMoney && match == profit.match;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(prizeValue);
+		return Objects.hash(bettingMoney, match);
 	}
 }
