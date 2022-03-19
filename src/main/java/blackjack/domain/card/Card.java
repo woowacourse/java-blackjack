@@ -29,7 +29,8 @@ public class Card {
             .filter(card -> card.getDenomination().equals(inputDenomination))
             .filter(card -> card.getSymbol().equals(inputSymbol))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(CARD_CACHE_INDEX_ERROR_MESSAGE));
+            .orElse(new Card(inputDenomination,inputSymbol));
+//            .orElseThrow(() -> new IllegalArgumentException(CARD_CACHE_INDEX_ERROR_MESSAGE));
     }
 
     public int point() {

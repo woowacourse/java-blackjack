@@ -138,21 +138,23 @@
 
 ### 📋 3차 피드백 수정 필요 항목
 
-- [ ] `GameResult` - `getDealerResult` 함수 네이밍 수정
-    - 메서드의 이름만으로 메서드가 어떤 `GameResult`를 반환하는지 짐작하기 어렵다.
-    - 플레이어 입장에서 계산된 `GameResult`에서만 호출된다고 가정하는 것 같다.
-    - 딜러의 입장에서 계산된 결과를 플레이어 입장의 결과로 변환해야한다면 동일한 메서드지만 `getPlayerResult`와 같이 구현할 수 있을 것이다.
+- [x] `GameResult` - `getDealerResult` 함수 네이밍 수정 
+    - ~~메서드의 이름만으로 메서드가 어떤 `GameResult`를 반환하는지 짐작하기 어렵다.~~
+    - ~~플레이어 입장에서 계산된 `GameResult`에서만 호출된다고 가정하는 것 같다.~~
+    - ~~딜러의 입장에서 계산된 결과를 플레이어 입장의 결과로 변환해야한다면 동일한 메서드지만 `getPlayerResult`와 같이 구현할 수 있을 것이다.~~
+    - 2단계를 진행하면서 해당 클래스 미사용 
+      - 비슷한 맥락으로 `GameResult`에서 각 플레이어 별 `profit`, 딜러가 사용하는 통계 `nonTotalProfit`과 같이 네이밍하여 사용
 - [x] `GameController` - `hitOrStandDealer`
     - 동사로 시작하는 이름은 어떤지
     - 동사로 시작하면서 플레이어의 차례를 보낸다는 의미로 `playTurnDealer`, `playTurnGambler`로 수정 
 - [ ] `Statistic` - `getResultAtBurst`
-    - At은 if의 의미인지
+    - ~~At은 if의 의미인지
         - 처음에 IF를 사용하려했으나 함수명에 if가 들어가는 것은 좋은 것 같지 않아 At으로 수정
     - 조건에 따라 메서드 이름을 나누는 경우 더 직관적인가?
         - "딜러가 이기는 경우"
         - "플레이어가 이기는 경우"
         - "무승부인 경우"
-- [ ] `Card` - 캐시가 없는 경우 예외를 던지는 것이 최선의 전략인지?
+- [x] `Card` - 캐시가 없는 경우 예외를 던지는 것이 최선의 전략인지?
 - [x] `Gambler` - `getCardNeedGambler`
     - `findHitGambler`라는 네이밍은 어떤지.
 - [x] `Name` - `NULL_NAME` 상수가 `EMPTY_NAME`인지
