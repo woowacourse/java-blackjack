@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.dto.CardDto;
+import blackjack.domain.card.Card;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantsDto;
 import blackjack.dto.ProfitResultDto;
@@ -31,11 +31,12 @@ public class OutputView {
     }
 
     private static void printInitialDealerCardInformation(ParticipantDto dealer) {
-        CardDto dealerFirstCard = dealer.getCards().get(0);
-
-        System.out.printf(CARD_INFORMATION_FORMAT, dealer.getName(),
-            dealerFirstCard.getDenomination() + dealerFirstCard.getSuit());
+        System.out.printf(CARD_INFORMATION_FORMAT, dealer.getName(), getCardInfo(dealer.getFirstCard()));
         System.out.println();
+    }
+
+    private static String getCardInfo(Card card) {
+        return DenominationView.getName(card.getDenomination()) + SuitView.getName(card.getSuit());
     }
 
     private static void printInitialPlayersCardInformation(List<ParticipantDto> players) {
@@ -52,7 +53,7 @@ public class OutputView {
     public static void printCards(ParticipantDto participant) {
         List<String> participantCardInfo = participant.getCards()
             .stream()
-            .map(x -> x.getDenomination() + x.getSuit())
+            .map(card -> getCardInfo(card))
             .collect(Collectors.toList());
 
         String cardInfo = String.join(NAME_DELIMITER, participantCardInfo);
