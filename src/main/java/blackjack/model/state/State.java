@@ -9,5 +9,9 @@ public interface State {
 
     boolean isReady();
 
+    boolean isHit();
+
     List<String> getCards();
+
+    State stay();
 }

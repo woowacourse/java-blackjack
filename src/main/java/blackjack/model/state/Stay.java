@@ -23,7 +23,17 @@ public class Stay implements State {
     }
 
     @Override
+    public boolean isHit() {
+        return false;
+    }
+
+    @Override
     public List<String> getCards() {
         return cards.getCardNames();
+    }
+
+    @Override
+    public State stay() {
+        throw new IllegalArgumentException("[ERROR] 이미 Stay 상태 입니다.");
     }
 }

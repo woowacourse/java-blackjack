@@ -1,6 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
+import blackjack.view.GameSign;
 import blackjack.view.MoneyBetter;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,5 +53,10 @@ public class Participants {
         participants.addAll(players.stream()
                 .collect(Collectors.toUnmodifiableList()));
         return participants;
+    }
+
+    public void hitFrom(final CardDeck cardDeck, final GameSign gameSign) {
+        players.forEach(player -> player.hitFrom(cardDeck, gameSign));
+        dealer.hitFrom(cardDeck, gameSign);
     }
 }

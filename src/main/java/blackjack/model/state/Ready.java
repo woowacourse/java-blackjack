@@ -34,7 +34,17 @@ public final class Ready implements State {
     }
 
     @Override
+    public boolean isHit() {
+        return false;
+    }
+
+    @Override
     public List<String> getCards() {
         return cards.getCardNames();
+    }
+
+    @Override
+    public State stay() {
+        throw new IllegalArgumentException("[ERROR] 현재 Ready이기 때문에 Stay 할 수 없습니다.");
     }
 }

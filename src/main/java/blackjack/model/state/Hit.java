@@ -31,7 +31,17 @@ public class Hit implements State {
     }
 
     @Override
+    public boolean isHit() {
+        return true;
+    }
+
+    @Override
     public List<String> getCards() {
         return cards.getCardNames();
+    }
+
+    @Override
+    public State stay() {
+        return new Stay(cards);
     }
 }

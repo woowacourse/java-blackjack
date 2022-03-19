@@ -3,6 +3,7 @@ package blackjack.model;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Participant;
 import blackjack.model.participant.Participants;
+import blackjack.view.GameSign;
 import blackjack.view.MoneyBetter;
 import java.util.List;
 
@@ -21,5 +22,9 @@ public class BlackjackGame {
 
     public List<Participant> getParticipants() {
         return participants.getParticipants();
+    }
+
+    public void hitUntilPossible(final GameSign gameSign) {
+        participants.hitFrom(cardDeck, gameSign);
     }
 }
