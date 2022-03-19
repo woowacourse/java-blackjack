@@ -16,6 +16,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class ScoreTest {
 
@@ -45,6 +47,34 @@ public class ScoreTest {
         Score newScore = score.add(anotherScore);
 
         assertThat(newScore.getValue()).isEqualTo(25);
+    }
+
+    @DisplayName("isGreaterThan 에 점수를 전달하면, 현재 점수가 전달된 점수보다 더 큰지에 대한 여부를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"5,true", "10,false", "15,false"})
+    void isGreaterThan(int input, boolean expected) {
+        // given
+        Score score = Score.valueOf(10);
+
+        // when
+        boolean actual = score.isGreaterThan(Score.valueOf(input));
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("isLessThan 에 점수를 전달하면, 현재 점수가 전달된 점수보다 더 작은지에 대한 여부를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"5,false", "10,false", "15,true"})
+    void isLessThan(int input, boolean expected) {
+        // given
+        Score score = Score.valueOf(10);
+
+        // when
+        boolean actual = score.isLessThan(Score.valueOf(input));
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("calculateSumFrom 에 카드패를 전달하면 각 카드가 지닌 값들의 합을 합산하여 반환한다.")

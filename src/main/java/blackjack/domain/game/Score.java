@@ -63,6 +63,14 @@ public class Score implements Comparable<Score> {
         return ScoreCache.getCache(addedValue);
     }
 
+    public boolean isGreaterThan(Score other) {
+        return this.value > other.value;
+    }
+
+    public boolean isLessThan(Score other) {
+        return this.value < other.value;
+    }
+
     public boolean isBusted() {
         return this.value > MAXIMUM_SCORE;
     }
@@ -70,6 +78,7 @@ public class Score implements Comparable<Score> {
     public boolean isOverDealerHitThreshold() {
         return this.value > DEALER_HIT_THRESHOLD;
     }
+
 
     public int getValue() {
         return value;

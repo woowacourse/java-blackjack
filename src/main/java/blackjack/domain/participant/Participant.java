@@ -45,47 +45,48 @@ public abstract class Participant {
     }
 
     protected ResultType compareWith(Participant other) {
-        if (isWin(other)) {
-            return getResultTypeIfScoreIsGreaterThanOther(other);
+        if (isBlackjack()) {
+            return getResultTypeIfBlackjack(other);
         }
 
-        if (isLose(other)) {
-            return ResultType.LOSE;
+        if (isBusted()) {
+            return getResultTypeIfBusted(other);
         }
 
-        return ResultType.DRAW;
+        return getResultTypeIfOrdinary(other);
     }
 
-    private ResultType getResultTypeIfScoreIsGreaterThanOther(Participant other) {
-        if (isBlackjack()) {
+    private ResultType getResultTypeIfBlackjack(Participant other) {
+        if (other.isBlackjack()) {
+            return ResultType.DRAW;
+        }
+        if (other.isBusted()) {
             return ResultType.WIN_WITH_BLACKJACK;
         }
-        return ResultType.WIN;
+        return ResultType.WIN_WITH_BLACKJACK;
     }
 
-    private boolean isWin(Participant other) {
-        int playerScore = getCurrentScore().getValue();
-        int otherScore = other.getCurrentScore().getValue();
-
+    private ResultType getResultTypeIfBusted(Participant other) {
         if (other.isBlackjack()) {
-            return false;
+            return ResultType.LOSE;
         }
-
-        boolean isGreaterThanOtherAndNotBusted = playerScore > otherScore && !isBusted();
-        boolean isNotBustedButOtherIsBusted = !isBusted() && other.isBusted();
-
-        return isGreaterThanOtherAndNotBusted || isNotBustedButOtherIsBusted;
+        if (other.isBusted()) {
+            return ResultType.DRAW;
+        }
+        return ResultType.LOSE;
     }
 
-    private boolean isLose(Participant other) {
-        int playerScore = getCurrentScore().getValue();
-        int otherScore = other.getCurrentScore().getValue();
+    private ResultType getResultTypeIfOrdinary(Participant other) {
+        boolean isScoreGreaterThanOther = getCurrentScore().isGreaterThan(other.getCurrentScore());
+        boolean isScoreLessThanOther = getCurrentScore().isLessThan(other.getCurrentScore());
 
-        boolean isNotBlackjackButOtherIsBlackjack = !isBlackjack() && other.isBlackjack();
-        boolean isLessThanOtherAndOtherIsNotBusted = playerScore < otherScore && !other.isBusted();
-        boolean isBustedButOtherIsNotBusted = isBusted() && !other.isBusted();
-
-        return isNotBlackjackButOtherIsBlackjack || isLessThanOtherAndOtherIsNotBusted || isBustedButOtherIsNotBusted;
+        if (other.isBusted() || isScoreGreaterThanOther) {
+            return ResultType.WIN;
+        }
+        if (other.isBlackjack() || isScoreLessThanOther) {
+            return ResultType.LOSE;
+        }
+        return ResultType.DRAW;
     }
 
     @Override

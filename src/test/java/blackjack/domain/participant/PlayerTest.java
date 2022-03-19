@@ -236,6 +236,23 @@ public class PlayerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("calculateProfit 에 전달된 딜러와 플레이어 둘다 버스트되었다면 0의 값을 가진 Money 를 반환한다.")
+    @Test
+    void calculateProfit_returnsZeroProfitIfBothBust() {
+        // given
+        Player player = Player.of("player", Hand.of(CLOVER_ACE, CLOVER_KING), Money.from(10000));
+        player.receiveCard(CLOVER2);
+        Dealer dealer = Dealer.of(Hand.of(HEART_ACE, CLOVER_QUEEN));
+        dealer.receiveCard(CLOVER3);
+
+        // when
+        Money actual = player.calculateProfit(dealer);
+        Money expected = Money.from(0);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("calculateProfit 에 전달된 딜러의 점수가 플레이어와 동일하지만, 딜러만 블랙잭인 경우, 베팅 금액의 반대 부호를 가진 Money 를 반환한다.")
     @Test
     void calculateProfit_returnsZeroProfitIfSameScoreButDealerOnlyBlackjack() {
