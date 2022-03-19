@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static blackjack.domain.game.GameResult.BLACKJACK_VALUE;
 
+import blackjack.domain.game.Status;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,14 +34,18 @@ public class Cards {
                 .mapToInt(Card::toInt)
                 .sum();
 
-        if (canAddAddtionalValue(sum)) {
+        if (canAddAdditionalValue(sum)) {
             sum += ACE_ADDITIONAL_VALUE;
         }
 
         return sum;
     }
 
-    private boolean canAddAddtionalValue(int sum) {
+    public Status getStatus() {
+        return Status.findStatus(getCount(), sum());
+    }
+
+    private boolean canAddAdditionalValue(int sum) {
         return hasAce() && !exceedBust(sum);
     }
 

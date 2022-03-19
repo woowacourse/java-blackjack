@@ -21,4 +21,16 @@ public enum Status {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 cards 입니다."));
     }
+
+    public boolean isBlackjack() {
+        return this == BLACKJACK;
+    }
+
+    public boolean isBust() {
+        return this == BUST;
+    }
+
+    public boolean isNone() {
+        return this == NONE;
+    }
 }
