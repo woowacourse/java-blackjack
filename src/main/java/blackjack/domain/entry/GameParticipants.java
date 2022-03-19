@@ -51,4 +51,13 @@ public class GameParticipants {
         return dealer;
     }
 
+    public Participant find(String name) {
+        if (name.equals("딜러")) {
+            return dealer;
+        }
+        return players.getPlayers().stream()
+                .filter(player -> name.equals(player.getName()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임 참여자 이름입니다."));
+    }
 }

@@ -2,9 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.Command;
-import blackjack.domain.entry.Dealer;
-import blackjack.domain.entry.Participant;
-import blackjack.domain.entry.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -17,12 +14,11 @@ public class BlackjackController {
     public void run() {
         List<String> playerNames = InputView.inputNames();
         BlackjackGame blackjackGame = new BlackjackGame(betMoney(playerNames));
-        List<Participant> participants = blackjackGame.getParticipant();
-        OutputView.printPlayersDefaultCard(participants);
+        OutputView.printPlayersDefaultCard(blackjackGame.getParticipant());
 
-        hit(blackjackGame);
+        hit(blackjackGame, playerNames);
 
-        OutputView.printCardResult(blackjackGame.getCardResult(participants));
+        OutputView.printCardResult(blackjackGame.getCardResult());
         OutputView.printGameResult(blackjackGame.getBettingResult());
     }
 
@@ -31,34 +27,32 @@ public class BlackjackController {
                 .collect(Collectors.toMap(name -> name, InputView::inputBettingMoney));
     }
 
-    private void hit(BlackjackGame blackjackGame) {
-        List<Player> players = blackjackGame.getPlayers();
-        for (Player player : players) {
-            hitPlayer(blackjackGame, player);
+    private void hit(BlackjackGame blackjackGame, List<String> playerNames) {
+        for (String playerName : playerNames) {
+            hitPlayer(blackjackGame, playerName);
         }
         hitDealer(blackjackGame);
     }
 
-    private void hitPlayer(BlackjackGame blackjackGame, Player player) {
+    private void hitPlayer(BlackjackGame blackjackGame, String playerName) {
         Command command;
 
         do {
-            command = Command.find(InputView.inputCommand(player));
-            hit(blackjackGame, player, command);
-            OutputView.printPlayerCards(player);
-        } while (command.isHit() && player.canHit());
+            command = Command.find(InputView.inputCommand(playerName));
+            hit(blackjackGame, playerName, command);
+            OutputView.printPlayerCards(blackjackGame.find(playerName));
+        } while (blackjackGame.canHit(command, playerName));
     }
 
-    private void hit(BlackjackGame blackjackGame, Player player, Command command) {
+    private void hit(BlackjackGame blackjackGame, String playerName, Command command) {
         if (command.isHit()) {
-            blackjackGame.hit(player);
+            blackjackGame.hit(playerName);
         }
     }
 
     private void hitDealer(BlackjackGame blackjackGame) {
-        Dealer dealer = blackjackGame.getDealer();
-        while (dealer.canHit()) {
-            blackjackGame.hit(dealer);
+        while (blackjackGame.canDealerHit()) {
+            blackjackGame.hit("딜러");
             OutputView.printReceivingMoreCardOfDealer();
         }
     }
