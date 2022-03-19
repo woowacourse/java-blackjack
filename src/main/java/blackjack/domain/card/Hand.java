@@ -9,7 +9,7 @@ import blackjack.domain.BlackJack;
 public class Hand {
 
 	private static final int ACE_AS_ELEVEN = 10;
-	private static final int theNumberOfInitialCard = 2;
+	private static final int THE_NUMBER_OF_INITIAL_CARD = 2;
 
 	private final List<Card> cards;
 
@@ -75,6 +75,6 @@ public class Hand {
 
 	public boolean isBlackJack() {
 		return calculateOptimalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER
-			&& cards.size() == theNumberOfInitialCard;
+			&& cards.size() == THE_NUMBER_OF_INITIAL_CARD;
 	}
 }
