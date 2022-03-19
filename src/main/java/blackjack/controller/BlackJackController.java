@@ -27,18 +27,18 @@ public class BlackJackController {
     }
 
     private void playAllUser(Game game) {
-        for (String userName : game.getUserNames()) {
-            playEachUser(game, userName);
+        for (String name : game.getUserNames()) {
+            playEachUser(game, name);
         }
         playDealer(game);
     }
 
-    private void playEachUser(Game game, String userName) {
-        while (game.checkUserNotBust(userName) && InputView.inputMoreCard(userName)) {
-            OutputView.printParticipantCards(game.playEachUser(userName));
+    private void playEachUser(Game game, String name) {
+        while (game.checkUserNotBust(name) && InputView.inputMoreCard(name)) {
+            OutputView.printParticipantCards(game.playEachUser(name));
         }
-        if (game.checkUserNotBust(userName)) {
-            game.changeUserStateToStand(userName);
+        if (game.checkUserNotBust(name)) {
+            game.changeUserStateToStand(name);
         }
     }
 

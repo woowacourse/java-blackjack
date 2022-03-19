@@ -22,8 +22,8 @@ public class Participants {
         return users.getUserNames();
     }
 
-    public void betting(String userName, int money) {
-        users.findUserByName(userName).betting(money);
+    public void betting(String name, int money) {
+        users.betting(name, money);
     }
 
     public void receiveCard(String name, Deck deck) {
@@ -31,11 +31,11 @@ public class Participants {
             dealer.receiveCard(deck);
             return;
         }
-        users.findUserByName(name).receiveCard(deck);
+        users.receiveCard(name, deck);
     }
 
     public boolean checkUserBust(String name) {
-        return users.findUserByName(name).isBust();
+        return users.isBust(name);
     }
 
     public boolean checkDealerScoreStandard() {
@@ -47,7 +47,7 @@ public class Participants {
     }
 
     public ParticipantDto createUserCardInfoDto(String name) {
-        return ParticipantDto.of(name, users.findUserByName(name).getHoldingCards());
+        return ParticipantDto.of(name, users.holdingCards(name));
     }
 
     public ParticipantDto createDealerCardAndScoreDto() {
@@ -55,7 +55,7 @@ public class Participants {
     }
 
     public ParticipantDto createUserCardAndScoreDto(String name) {
-        return ParticipantDto.of(name, users.findUserByName(name).getHoldingCards(), users.findUserByName(name).score());
+        return ParticipantDto.of(name, users.holdingCards(name), users.score(name));
     }
 
     public ProfitDto createDealerProfitDto(List<Double> userProfits) {
@@ -63,10 +63,10 @@ public class Participants {
     }
 
     public ProfitDto createUserProfitDto(String name) {
-        return new ProfitDto(name, users.findUserByName(name).calculateProfit(dealer.score()));
+        return new ProfitDto(name, users.profit(name, dealer.score()));
     }
 
-    public void changeUserStateToStand(String userName) {
-        users.findUserByName(userName).changeToStand();
+    public void changeUserStateToStand(String name) {
+        users.changeToStand(name);
     }
 }
