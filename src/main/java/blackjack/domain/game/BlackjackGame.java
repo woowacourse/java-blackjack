@@ -1,17 +1,18 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDistributor;
 import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class BlackjackGame {
 
-    private static final int INIT_CARD_COUNT = 2;
+    public static final int INIT_CARD_COUNT = 2;
 
     private final Participants participants;
     private final CardDistributor cardDistributor;
@@ -22,20 +23,12 @@ public class BlackjackGame {
     }
 
     public void initCardsAllParticipants() {
-        initCards(participants.getDealer());
-        for (Player player : participants.getPlayers()) {
-            initCards(player);
-        }
-    }
-
-    private void initCards(Participant participant) {
-        for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            participants.drawCard(participant, cardDistributor.distribute());
-        }
+        Supplier<Card> supplier = cardDistributor::distribute;
+        participants.initCardsAllParticipants(supplier);
     }
 
     public void drawCard(Participant participant) {
-        participants.drawCard(participant, cardDistributor.distribute());
+        participant.drawCard(cardDistributor.distribute());
     }
 
     public GameResult createGameResult() {
