@@ -18,12 +18,12 @@ public class Player extends Participant {
         return !cards.isBusted();
     }
 
-    public int isWinner(Dealer dealer) {
+    public int calculatePrize(Dealer dealer) {
         if (isBusted() || dealer.isWinner(this) || (!isBlackJack() && dealer.isBlackJack())) {
-            return bet.getLosingMoney();
+            return bet.getLosingPrize();
         }
         if (dealer.hasSameScore(this) && (bothBlackJack(dealer) || bothNotBlackJack(dealer))) {
-            return bet.getDrawMoney();
+            return bet.getDrawPrize();
         }
         if (cards.isBlackJack()) {
             return bet.getBlackJackPrize();

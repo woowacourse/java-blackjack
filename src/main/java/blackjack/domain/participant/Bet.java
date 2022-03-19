@@ -20,11 +20,11 @@ public class Bet {
         }
     }
 
-    public int getLosingMoney() {
+    public int getLosingPrize() {
         return -bet;
     }
 
-    public int getDrawMoney() {
+    public int getDrawPrize() {
         return DRAW_MONEY;
     }
 

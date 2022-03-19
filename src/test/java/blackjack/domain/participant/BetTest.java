@@ -30,7 +30,7 @@ class BetTest {
     void getLosingMoney_Betting10000_ReturnsNegative10000() {
         Bet bet = new Bet(10000);
 
-        assertThat(bet.getLosingMoney()).isEqualTo(-10000);
+        assertThat(bet.getLosingPrize()).isEqualTo(-10000);
     }
 
     @DisplayName("무승부 시 0 반환")
@@ -38,7 +38,7 @@ class BetTest {
     void getDrawMoney_Betting10000_ReturnsZero() {
         Bet bet = new Bet(10000);
 
-        assertThat(bet.getDrawMoney()).isEqualTo(0);
+        assertThat(bet.getDrawPrize()).isEqualTo(0);
     }
 
     @DisplayName("승리 시 베팅만큼 수익 발생")

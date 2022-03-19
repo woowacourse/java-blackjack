@@ -94,7 +94,7 @@ class PlayerTest {
                 new Card(Number.NINE, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getWinningPrize());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getWinningPrize());
     }
 
     @DisplayName("딜러의 점수가 더 높은 경우 패배")
@@ -110,7 +110,7 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getLosingMoney());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getLosingPrize());
     }
 
     @DisplayName("플레이어가 버스트된 경우 패배")
@@ -127,7 +127,7 @@ class PlayerTest {
                 new Card(Number.NINE, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getLosingMoney());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getLosingPrize());
     }
 
     @DisplayName("딜러가 버스트된 경우 승리")
@@ -144,7 +144,7 @@ class PlayerTest {
                 new Card(Number.QUEEN, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getWinningPrize());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getWinningPrize());
     }
 
     @DisplayName("둘 다 버스트된 경우 패배")
@@ -162,7 +162,7 @@ class PlayerTest {
                 new Card(Number.QUEEN, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getLosingMoney());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getLosingPrize());
     }
 
     @DisplayName("동일한 점수를 가질 경우 무승부")
@@ -178,7 +178,7 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getDrawMoney());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getDrawPrize());
     }
 
     @DisplayName("동일한 점수를 가지고 버스트된 경우 패배")
@@ -196,7 +196,7 @@ class PlayerTest {
                 new Card(Number.NINE, Kind.HEART),
                 new Card(Number.TEN, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getLosingMoney());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getLosingPrize());
     }
 
     @DisplayName("플레이어만 블랙잭일 경우 승리")
@@ -213,7 +213,7 @@ class PlayerTest {
                 new Card(Number.JACK, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getBlackJackPrize());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getBlackJackPrize());
     }
 
     @DisplayName("둘 다 블랙잭일 경우 무승부")
@@ -229,7 +229,7 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getDrawMoney());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getDrawPrize());
     }
 
     @DisplayName("딜러만 블랙잭일 경우 패배")
@@ -246,6 +246,6 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.HEART),
                 new Card(Number.KING, Kind.HEART))));
 
-        assertThat(player.isWinner(dealer)).isEqualTo(player.getBet().getLosingMoney());
+        assertThat(player.calculatePrize(dealer)).isEqualTo(player.getBet().getLosingPrize());
     }
 }

@@ -17,7 +17,7 @@ public class Players {
     public Map<Player, Integer> judgeResult(Dealer dealer) {
         Map<Player, Integer> result = new LinkedHashMap<>();
         for (Player player : players) {
-            result.put(player, player.isWinner(dealer));
+            result.put(player, player.calculatePrize(dealer));
         }
         return result;
     }

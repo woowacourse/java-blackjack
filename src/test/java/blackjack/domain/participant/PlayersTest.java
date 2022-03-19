@@ -63,7 +63,7 @@ public class PlayersTest {
     void judgeResult_DrawPlayer_ReturnsDraw() {
 
         assertThat(players.judgeResult(dealer).get(players.getPlayers().get(1)))
-                .isEqualTo(players.getPlayers().get(1).getBet().getDrawMoney());
+                .isEqualTo(players.getPlayers().get(1).getBet().getDrawPrize());
     }
 
     @DisplayName("플레이어 패배 테스트")
@@ -71,6 +71,6 @@ public class PlayersTest {
     void judgeResult_LosingPlayer_ReturnsLose() {
 
         assertThat(players.judgeResult(dealer).get(players.getPlayers().get(2)))
-                .isEqualTo(players.getPlayers().get(2).getBet().getLosingMoney());
+                .isEqualTo(players.getPlayers().get(2).getBet().getLosingPrize());
     }
 }
