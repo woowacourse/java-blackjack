@@ -37,6 +37,9 @@ public class BlackJackController {
         while (!game.checkUserBust(userName) && InputView.inputMoreCard(userName)) {
             OutputView.printParticipantCards(game.playEachUser(userName));
         }
+        if (!game.checkUserBust(userName)) {
+            game.changeUserStateToStand(userName);
+        }
     }
 
     private void playDealer(Game game) {
@@ -47,6 +50,6 @@ public class BlackJackController {
 
     private void gameResult(Game game) {
         OutputView.printFinalCard(game.getDealerAndPlayerCard());
-        OutputView.printFinalResult(game.getParticipantProfits());
+//        OutputView.printFinalResult(game.getParticipantProfits());
     }
 }

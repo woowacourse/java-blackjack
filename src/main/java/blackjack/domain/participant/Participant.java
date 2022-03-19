@@ -12,7 +12,7 @@ public abstract class Participant {
     private static final String ERROR_INVALID_NAME = "[ERROR] 유저의 이름은 한 글자 이상이어야 합니다.";
 
     protected final String name;
-    protected final State state;
+    protected State state;
 
     public Participant(String name) {
         validateName(name);
@@ -31,7 +31,11 @@ public abstract class Participant {
     }
 
     public final void receiveCard(Deck deck) {
-        state.drawCard(deck);
+        state = state.drawCard(deck);
+    }
+
+    public final void changeToStand() {
+        state = state.stand();
     }
 
     public final int score() {

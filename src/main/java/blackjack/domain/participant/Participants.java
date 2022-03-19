@@ -20,12 +20,12 @@ public class Participants {
         this.dealer = dealer;
     }
 
-    public void betting(String userName, int money) {
-        users.findUserByName(userName).betting(money);
-    }
-
     public List<String> getUserNames() {
         return users.getUserNames();
+    }
+
+    public void betting(String userName, int money) {
+        users.findUserByName(userName).betting(money);
     }
 
     public void receiveCard(String name, Deck deck) {
@@ -66,5 +66,9 @@ public class Participants {
 
     public ProfitDto createUserProfitDto(String name) {
         return new ProfitDto(name, users.findUserByName(name).calculateProfit(dealer.score()));
+    }
+
+    public void changeUserStateToStand(String userName) {
+        users.findUserByName(userName).changeToStand();
     }
 }

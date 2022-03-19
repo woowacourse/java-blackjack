@@ -34,4 +34,9 @@ public final class Init extends Running {
         }
         return new Hit(super.holdingCards());
     }
+
+    @Override
+    public boolean isBust() {
+        throw new IllegalStateException();
+    }
 }

@@ -50,17 +50,17 @@ public class HoldingCards {
         return hasAce() && hasNumberTenCard() ;
     }
 
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
+    }
+
     private boolean hasNumberTenCard() {
         return cards.stream()
                 .anyMatch(card -> card.getCardNumber() == CardNumber.TEN ||
                         card.getCardNumber() == CardNumber.JACK ||
                         card.getCardNumber() == CardNumber.QUEEN ||
                         card.getCardNumber() == CardNumber.KING);
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
     }
 
     public int size() {

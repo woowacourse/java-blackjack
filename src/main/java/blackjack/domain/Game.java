@@ -22,12 +22,12 @@ public class Game {
         this.deck = new Deck(new CardGenerator());
     }
 
-    public void initBettingMoney(String userName, int money) {
-        participants.betting(userName, money);
-    }
-
     public List<String> getUserNames() {
         return participants.getUserNames();
+    }
+
+    public void initBettingMoney(String userName, int money) {
+        participants.betting(userName, money);
     }
 
     public List<ParticipantDto> initDistributed() {
@@ -56,6 +56,10 @@ public class Game {
 
     public boolean checkUserBust(String userName) {
         return participants.checkUserBust(userName);
+    }
+
+    public void changeUserStateToStand(String userName) {
+        participants.changeUserStateToStand(userName);
     }
 
     public boolean playDealer() {

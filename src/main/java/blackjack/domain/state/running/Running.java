@@ -17,11 +17,6 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public boolean isBust() {
-        throw new IllegalStateException();
-    }
-
-    @Override
     public final State stand() {
         return new Stand(holdingCards());
     }
