@@ -4,6 +4,10 @@ import blackjack.domain.card.Cards;
 
 public final class Stay extends Finished {
 
+    public static final int LOSE_RATE = -1;
+    public static final int WIN_RATE = 1;
+    public static final int DRAW_RATE = 0;
+
     Stay(final Cards cards) {
         super(cards);
     }
@@ -11,14 +15,17 @@ public final class Stay extends Finished {
     @Override
     protected double earningRate(State compareState) {
         if (compareState instanceof BlackJack) {
-            return -1;
+            return LOSE_RATE;
         }
         if (compareState instanceof Bust) {
-            return 1;
+            return WIN_RATE;
         }
         if (compareState.cards().sum() < this.cards().sum()) {
-            return 1;
+            return WIN_RATE;
         }
-        return -1;
+        if (compareState.cards().sum() == this.cards().sum()) {
+            return DRAW_RATE;
+        }
+        return LOSE_RATE;
     }
 }

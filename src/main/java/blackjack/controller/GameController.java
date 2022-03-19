@@ -22,12 +22,11 @@ public class GameController {
         Dealer dealer = Dealer.of(cardDeck);
         OutputView.printInitGameState(gamblers, dealer);
 
-        hitOrStandGambler(gamblers, cardDeck);
-        hitOrStandDealer(dealer, cardDeck);
+        playTurnGambler(gamblers, cardDeck);
+        playTurnDealer(dealer, cardDeck);
 
         OutputView.printCardAndPoint(gamblers, dealer);
-        GameStatistic statistic = GameStatistic.of(dealer, gamblers);
-        printGameResult(statistic, dealer);
+        printGameResult(GameStatistic.of(dealer, gamblers), dealer);
     }
 
     private Gamblers generatePlayers(CardDeck cardDeck) {
@@ -40,36 +39,33 @@ public class GameController {
         return Gamblers.of(gamblerList);
     }
 
-    private void hitOrStandGambler(Gamblers gamblers, CardDeck cardDeck) {
-        for (Gambler gambler : gamblers.findHitGambler()) {
-            askHitOrStand(gambler, cardDeck);
+    private void playTurnGambler(Gamblers gamblers, CardDeck cardDeck) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            chooseHitOrStay(cardDeck, gambler);
+            printCardStateFirstQuestion(gambler);
         }
     }
 
-    private void hitOrStandDealer(Dealer dealer, CardDeck cardDeck) {
+    private void chooseHitOrStay(CardDeck cardDeck, Gambler gambler) {
+        while (gambler.isHit() && InputView.inputOneMoreCard(gambler.getName())) {
+            gambler.addCard(cardDeck.draw());
+            OutputView.printPlayerCardState(gambler);
+        }
+        if (gambler.isHit()) {
+            gambler.stay();
+        }
+    }
+
+    private void printCardStateFirstQuestion(Gambler gambler) {
+        if (gambler.isFirstQuestion()) {
+            OutputView.printPlayerCardState(gambler);
+        }
+    }
+
+    private void playTurnDealer(Dealer dealer, CardDeck cardDeck) {
         while (dealer.isHit()) {
             dealer.addCard(cardDeck.draw());
             OutputView.printDealerCardAdded();
-        }
-    }
-
-    private void askHitOrStand(Gambler gambler, CardDeck cardDeck) {
-        decideHitGambler(gambler, cardDeck);
-        printStateAtFirstQuestion(gambler);
-    }
-
-    private void decideHitGambler(Gambler gambler, CardDeck cardDeck) {
-        if (InputView.inputOneMoreCard(gambler.getName())) {
-            gambler.addCard(cardDeck.draw());
-            OutputView.printPlayerCardState(gambler);
-            askHitOrStand(gambler, cardDeck);
-        }
-        gambler.stay();
-    }
-
-    private void printStateAtFirstQuestion(Gambler gambler) {
-        if (gambler.isFirstQuestion()) {
-            OutputView.printPlayerCardState(gambler);
         }
     }
 

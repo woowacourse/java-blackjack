@@ -142,8 +142,9 @@
     - 메서드의 이름만으로 메서드가 어떤 `GameResult`를 반환하는지 짐작하기 어렵다.
     - 플레이어 입장에서 계산된 `GameResult`에서만 호출된다고 가정하는 것 같다.
     - 딜러의 입장에서 계산된 결과를 플레이어 입장의 결과로 변환해야한다면 동일한 메서드지만 `getPlayerResult`와 같이 구현할 수 있을 것이다.
-- [ ] `GameController` - `hitOrStandDealer`
+- [x] `GameController` - `hitOrStandDealer`
     - 동사로 시작하는 이름은 어떤지
+    - 동사로 시작하면서 플레이어의 차례를 보낸다는 의미로 `playTurnDealer`, `playTurnGambler`로 수정 
 - [ ] `Statistic` - `getResultAtBurst`
     - At은 if의 의미인지
         - 처음에 IF를 사용하려했으나 함수명에 if가 들어가는 것은 좋은 것 같지 않아 At으로 수정
