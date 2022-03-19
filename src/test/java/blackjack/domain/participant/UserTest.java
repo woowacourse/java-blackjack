@@ -64,6 +64,7 @@ public class UserTest {
         user.betting(10000);
         user.receiveCard(deck);
         user.receiveCard(deck);
+        user.changeToStand();
 
         assertThat(user.calculateProfit(20))
                 .isEqualTo(-10000);
@@ -81,6 +82,7 @@ public class UserTest {
         user.betting(10000);
         user.receiveCard(deck);
         user.receiveCard(deck);
+        user.changeToStand();
 
         assertThat(user.calculateProfit(17))
                 .isEqualTo(10000);
@@ -98,6 +100,7 @@ public class UserTest {
         user.betting(10000);
         user.receiveCard(deck);
         user.receiveCard(deck);
+        user.changeToStand();
 
         assertThat(user.calculateProfit(18))
                 .isEqualTo(0);
@@ -117,6 +120,7 @@ public class UserTest {
         user.receiveCard(deck);
         user.receiveCard(deck);
         user.receiveCard(deck);
+        user.changeToStand();
 
         assertThat(user.calculateProfit(13))
                 .isEqualTo(0);
