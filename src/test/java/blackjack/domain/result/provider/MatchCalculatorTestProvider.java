@@ -1,5 +1,19 @@
 package blackjack.domain.result.provider;
 
+import static blackjack.Fixture.DIAMOND_ACE;
+import static blackjack.Fixture.DIAMOND_KING;
+import static blackjack.Fixture.DIAMOND_SIX;
+import static blackjack.Fixture.DIAMOND_TEN;
+import static blackjack.Fixture.DIAMOND_THREE;
+import static blackjack.Fixture.DIAMOND_TWO;
+import static blackjack.Fixture.HEART_ACE;
+import static blackjack.Fixture.HEART_FIVE;
+import static blackjack.Fixture.HEART_KING;
+import static blackjack.Fixture.HEART_SEVEN;
+import static blackjack.Fixture.SPADE_ACE;
+import static blackjack.Fixture.SPADE_KING;
+import static blackjack.Fixture.SPADE_TEN;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,8 +22,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.ManualDeckGenerator;
 import blackjack.domain.participant.Dealer;
@@ -19,29 +31,29 @@ import blackjack.domain.result.MatchStatus;
 public class MatchCalculatorTestProvider {
 
     public static final List<Card> BLACKJACK_INITIAL_CARDS = List.of(
-            new Card(CardNumber.ACE, CardPattern.SPADE),
-            new Card(CardNumber.KING, CardPattern.DIAMOND)
+            SPADE_ACE,
+            DIAMOND_KING
     );
 
     public static Stream<Arguments> provideForPlayerLossIfPlayerBustTest() {
         final Player bustStateOfPlayer = generatePlayer(
                 List.of(
-                        new Card(CardNumber.KING, CardPattern.SPADE),
-                        new Card(CardNumber.KING, CardPattern.DIAMOND)
+                        SPADE_KING,
+                        DIAMOND_KING
                 ),
                 List.of(
-                        new Card(CardNumber.KING, CardPattern.HEART)
+                        HEART_KING
                 )
         );
         return Stream.of(
                 Arguments.of(
                         generateDealer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.SEVEN, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_SEVEN
                                 ),
                                 List.of(
-                                        new Card(CardNumber.TWO, CardPattern.DIAMOND)
+                                        DIAMOND_TWO
                                 )
                         ),
                         bustStateOfPlayer
@@ -80,11 +92,11 @@ public class MatchCalculatorTestProvider {
                 Arguments.of(
                         generateDealer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.SEVEN, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_SEVEN
                                 ),
                                 List.of(
-                                        new Card(CardNumber.TWO, CardPattern.DIAMOND)
+                                        DIAMOND_TWO
                                 )
                         ),
                         blackjackStateOfPlayer
@@ -92,11 +104,11 @@ public class MatchCalculatorTestProvider {
                 Arguments.of(
                         generateDealer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.SEVEN, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_SEVEN
                                 ),
                                 List.of(
-                                        new Card(CardNumber.KING, CardPattern.DIAMOND)
+                                        DIAMOND_KING
                                 )
                         ),
                         blackjackStateOfPlayer
@@ -109,41 +121,41 @@ public class MatchCalculatorTestProvider {
                 Arguments.of(
                         generateDealer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.FIVE, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_FIVE
                                 ),
                                 List.of(
-                                        new Card(CardNumber.SIX, CardPattern.DIAMOND)
+                                        DIAMOND_SIX
                                 )
                         ),
                         generatePlayer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.FIVE, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_FIVE
                                 ),
                                 List.of(
-                                        new Card(CardNumber.SIX, CardPattern.DIAMOND)
+                                        DIAMOND_SIX
                                 )
                         )
                 ),
                 Arguments.of(
                         generateDealer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.FIVE, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_FIVE
                                 ),
                                 List.of(
-                                        new Card(CardNumber.THREE, CardPattern.DIAMOND),
-                                        new Card(CardNumber.ACE, CardPattern.HEART)
+                                        DIAMOND_THREE,
+                                        HEART_ACE
                                 )
                         ),
                         generatePlayer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.FIVE, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_FIVE
                                 ),
                                 List.of(
-                                        new Card(CardNumber.THREE, CardPattern.DIAMOND)
+                                        DIAMOND_THREE
                                 )
                         )
                 )
@@ -155,20 +167,20 @@ public class MatchCalculatorTestProvider {
                 Arguments.of(
                         generateDealer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.FIVE, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_FIVE
                                 ),
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.DIAMOND)
+                                        DIAMOND_TEN
                                 )
                         ),
                         generatePlayer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.FIVE, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_FIVE
                                 ),
                                 List.of(
-                                        new Card(CardNumber.SIX, CardPattern.DIAMOND)
+                                        DIAMOND_SIX
                                 )
                         ),
                         MatchStatus.WIN
@@ -176,21 +188,21 @@ public class MatchCalculatorTestProvider {
                 Arguments.of(
                         generateDealer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.FIVE, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_FIVE
                                 ),
                                 List.of(
-                                        new Card(CardNumber.THREE, CardPattern.DIAMOND),
-                                        new Card(CardNumber.ACE, CardPattern.HEART)
+                                        DIAMOND_THREE,
+                                        HEART_ACE
                                 )
                         ),
                         generatePlayer(
                                 List.of(
-                                        new Card(CardNumber.TEN, CardPattern.SPADE),
-                                        new Card(CardNumber.FIVE, CardPattern.HEART)
+                                        SPADE_TEN,
+                                        HEART_FIVE
                                 ),
                                 List.of(
-                                        new Card(CardNumber.ACE, CardPattern.DIAMOND)
+                                        DIAMOND_ACE
                                 )
                         ),
                         MatchStatus.LOSS
@@ -201,7 +213,7 @@ public class MatchCalculatorTestProvider {
     private static Dealer generateDealer(final List<Card> initializedCards, List<Card> drewCards) {
         final Deck deck = generateDeck(initializedCards, drewCards);
         final Dealer dealer = Dealer.readyToPlay(deck);
-        drewCards.forEach(card -> dealer.drawCard(deck));
+        drewCards.forEach(card -> dealer.drawCard(deck.drawCard()));
         return dealer;
     }
 
@@ -209,7 +221,7 @@ public class MatchCalculatorTestProvider {
         final Deck deck = generateDeck(initializedCards, drewCards);
         final Player player = Player.readyToPlay("name", deck);
         player.betAmount(1000);
-        drewCards.forEach(card -> player.drawCard(deck, true));
+        drewCards.forEach(card -> player.drawCard(deck.drawCard(), true));
         return player;
     }
 

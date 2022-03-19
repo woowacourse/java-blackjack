@@ -1,13 +1,22 @@
 package blackjack.domain.participant.provider;
 
+import static blackjack.Fixture.DIAMOND_ACE;
+import static blackjack.Fixture.DIAMOND_FIVE;
+import static blackjack.Fixture.DIAMOND_KING;
+import static blackjack.Fixture.DIAMOND_SIX;
+import static blackjack.Fixture.DIAMOND_TWO;
+import static blackjack.Fixture.HEART_KING;
+import static blackjack.Fixture.SPADE_ACE;
+import static blackjack.Fixture.SPADE_FIVE;
+import static blackjack.Fixture.SPADE_KING;
+import static blackjack.Fixture.SPADE_QUEEN;
+import static blackjack.Fixture.SPADE_TEN;
+import static blackjack.Fixture.SPADE_TWO;
+
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.provider.Arguments;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
 
 public class PlayerTestProvider {
 
@@ -15,20 +24,20 @@ public class PlayerTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
-                                new Card(CardNumber.KING, CardPattern.SPADE)
+                                DIAMOND_ACE,
+                                SPADE_KING
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
-                                new Card(CardNumber.QUEEN, CardPattern.SPADE)
+                                DIAMOND_ACE,
+                                SPADE_QUEEN
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
-                                new Card(CardNumber.TEN, CardPattern.SPADE)
+                                DIAMOND_ACE,
+                                SPADE_TEN
                         )
                 )
         );
@@ -38,16 +47,16 @@ public class PlayerTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.TWO, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.DIAMOND),
-                                new Card(CardNumber.KING, CardPattern.SPADE)
+                                SPADE_TWO,
+                                DIAMOND_KING,
+                                SPADE_KING
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.HEART),
-                                new Card(CardNumber.KING, CardPattern.DIAMOND),
-                                new Card(CardNumber.KING, CardPattern.SPADE)
+                                HEART_KING,
+                                DIAMOND_KING,
+                                SPADE_KING
                         )
                 )
 
@@ -58,16 +67,16 @@ public class PlayerTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.DIAMOND),
-                                new Card(CardNumber.ACE, CardPattern.SPADE)
+                                SPADE_KING,
+                                DIAMOND_KING,
+                                SPADE_ACE
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.HEART),
-                                new Card(CardNumber.SIX, CardPattern.DIAMOND),
-                                new Card(CardNumber.FIVE, CardPattern.SPADE)
+                                HEART_KING,
+                                DIAMOND_SIX,
+                                SPADE_FIVE
                         )
                 )
         );
@@ -77,16 +86,16 @@ public class PlayerTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.SPADE),
-                                new Card(CardNumber.TWO, CardPattern.DIAMOND),
-                                new Card(CardNumber.TWO, CardPattern.SPADE)
+                                SPADE_KING,
+                                DIAMOND_TWO,
+                                SPADE_TWO
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.HEART),
-                                new Card(CardNumber.FIVE, CardPattern.DIAMOND),
-                                new Card(CardNumber.FIVE, CardPattern.SPADE)
+                                HEART_KING,
+                                DIAMOND_FIVE,
+                                SPADE_FIVE
                         )
                 )
         );

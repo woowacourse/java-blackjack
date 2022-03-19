@@ -1,5 +1,12 @@
 package blackjack.domain.card;
 
+import static blackjack.Fixture.CLOVER_ACE;
+import static blackjack.Fixture.CLOVER_TWO;
+import static blackjack.Fixture.DIAMOND_KING;
+import static blackjack.Fixture.HEART_ACE;
+import static blackjack.Fixture.HEART_KING;
+import static blackjack.Fixture.SPADE_ACE;
+import static blackjack.Fixture.SPADE_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -27,37 +34,37 @@ class CardHandsTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.ACE, CardPattern.HEART),
-                                new Card(CardNumber.ACE, CardPattern.CLOVER),
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND)
+                                SPADE_ACE,
+                                HEART_ACE,
+                                CLOVER_ACE,
+                                DIAMOND_KING
                         ), 14
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.HEART)
+                                SPADE_ACE,
+                                HEART_KING
                         ), 21
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.ACE, CardPattern.HEART),
-                                new Card(CardNumber.KING, CardPattern.HEART)
+                                SPADE_ACE,
+                                HEART_ACE,
+                                HEART_KING
                         ), 12
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.HEART),
-                                new Card(CardNumber.KING, CardPattern.DIAMOND)
+                                SPADE_KING,
+                                HEART_KING,
+                                DIAMOND_KING
                         ), 30
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.HEART),
-                                new Card(CardNumber.TWO, CardPattern.CLOVER)
+                                SPADE_KING,
+                                HEART_KING,
+                                CLOVER_TWO
                         ), 22
                 )
         );

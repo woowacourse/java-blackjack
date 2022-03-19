@@ -1,14 +1,22 @@
 package blackjack.domain.participant.provider;
 
+import static blackjack.Fixture.DIAMOND_EIGHT;
+import static blackjack.Fixture.DIAMOND_KING;
+import static blackjack.Fixture.DIAMOND_NINE;
+import static blackjack.Fixture.DIAMOND_TEN;
+import static blackjack.Fixture.HEART_EIGHT;
+import static blackjack.Fixture.HEART_TEN;
+import static blackjack.Fixture.SPADE_EIGHT;
+import static blackjack.Fixture.SPADE_NINE;
+import static blackjack.Fixture.SPADE_TEN;
+import static blackjack.Fixture.SPADE_TWO;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.provider.Arguments;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
 import blackjack.domain.result.MatchStatus;
 
 public class PlayersTestProvider {
@@ -38,14 +46,14 @@ public class PlayersTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.DIAMOND),
-                                new Card(CardNumber.TEN, CardPattern.DIAMOND)
+                                DIAMOND_KING,
+                                DIAMOND_TEN
                         ), "sun"
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND),
-                                new Card(CardNumber.NINE, CardPattern.DIAMOND)
+                                DIAMOND_EIGHT,
+                                DIAMOND_NINE
                         ), "if"
                 )
         );
@@ -56,22 +64,22 @@ public class PlayersTestProvider {
                 Arguments.of(
                         List.of("sun"),
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.DIAMOND),
-                                new Card(CardNumber.TEN, CardPattern.DIAMOND),
-                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND),
-                                new Card(CardNumber.NINE, CardPattern.DIAMOND)
+                                DIAMOND_KING,
+                                DIAMOND_TEN,
+                                DIAMOND_EIGHT,
+                                DIAMOND_NINE
                         ),
                         Map.of("sun", MatchStatus.LOSS)
                 ),
                 Arguments.of(
                         List.of("sun", "if"),
                         List.of(
-                                new Card(CardNumber.NINE, CardPattern.SPADE),
-                                new Card(CardNumber.EIGHT, CardPattern.HEART),
-                                new Card(CardNumber.TEN, CardPattern.SPADE),
-                                new Card(CardNumber.EIGHT, CardPattern.SPADE),
-                                new Card(CardNumber.TEN, CardPattern.HEART),
-                                new Card(CardNumber.TWO, CardPattern.SPADE)
+                                SPADE_NINE,
+                                HEART_EIGHT,
+                                SPADE_TEN,
+                                SPADE_EIGHT,
+                                HEART_TEN,
+                                SPADE_TWO
                         ),
                         Map.of(
                                 "sun", MatchStatus.WIN,

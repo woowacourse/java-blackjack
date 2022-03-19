@@ -1,13 +1,17 @@
 package blackjack.domain.participant.provider;
 
+import static blackjack.Fixture.DIAMOND_ACE;
+import static blackjack.Fixture.HEART_ACE;
+import static blackjack.Fixture.SPADE_ACE;
+import static blackjack.Fixture.SPADE_EIGHT;
+import static blackjack.Fixture.SPADE_KING;
+import static blackjack.Fixture.SPADE_SEVEN;
+import static blackjack.Fixture.SPADE_TEN;
+
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.provider.Arguments;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
 
 public class DealerTestProvider {
 
@@ -15,16 +19,16 @@ public class DealerTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.TEN, CardPattern.SPADE),
-                                new Card(CardNumber.SEVEN, CardPattern.SPADE),
-                                new Card(CardNumber.ACE, CardPattern.SPADE)
+                                SPADE_TEN,
+                                SPADE_SEVEN,
+                                SPADE_ACE
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.EIGHT, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.SPADE),
-                                new Card(CardNumber.ACE, CardPattern.HEART)
+                                SPADE_EIGHT,
+                                SPADE_KING,
+                                HEART_ACE
                         )
                 )
         );
@@ -34,14 +38,14 @@ public class DealerTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
-                                new Card(CardNumber.KING, CardPattern.SPADE)
+                                DIAMOND_ACE,
+                                SPADE_KING
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.KING, CardPattern.SPADE),
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND)
+                                SPADE_KING,
+                                DIAMOND_ACE
                         )
                 )
         );

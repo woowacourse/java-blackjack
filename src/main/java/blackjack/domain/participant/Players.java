@@ -47,7 +47,7 @@ public class Players {
 
     public void drawCard(final String playerName, final Deck deck, final boolean needToDrawCard) {
         final Player player = findByPlayerName(playerName);
-        player.drawCard(deck, needToDrawCard);
+        player.drawCard(deck.drawCard(), needToDrawCard);
     }
 
     public boolean isPlayerPossibleToDrawCard(final String playerName) {

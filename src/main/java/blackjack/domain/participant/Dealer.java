@@ -2,43 +2,35 @@ package blackjack.domain.participant;
 
 import java.util.List;
 
-import blackjack.domain.BlackjackRule;
+import blackjack.domain.BlackjackScoreRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.state.PlayState;
-import blackjack.domain.participant.state.finished.StandState;
+import blackjack.domain.participant.state.State;
 
 public final class Dealer extends Participant {
 
-    private static final int DEALER_DEFAULT_BETTING_AMOUNT = 1;
-
     private Dealer(final Deck deck) {
         super(deck);
-        readyToHitStateWithinBet();
-    }
-
-    private void readyToHitStateWithinBet() {
-        this.state = state.betAmount(DEALER_DEFAULT_BETTING_AMOUNT);
     }
 
     public static Dealer readyToPlay(final Deck deck) {
         return new Dealer(deck);
     }
 
-    public void drawCard(final Deck deck) {
-        this.state = considerState(deck);
+    public void drawCard(final Card card) {
+        this.state = considerState(card);
     }
 
-    private PlayState considerState(final Deck deck) {
+    private State considerState(final Card card) {
         if (isDealerCannotDrawCardAnymore()) {
-            return new StandState(state);
+            return state.stay();
         }
-        return state.drawCard(deck);
+        return state.drawCard(card);
     }
 
     private boolean isDealerCannotDrawCardAnymore() {
         return state.isPossibleToDrawCard() &&
-                (BlackjackRule.DEALER_ENABLE_MINIMUM_SCORE.isNotOverThan(state.getScore()));
+                (BlackjackScoreRule.DEALER_ENABLE_MINIMUM_SCORE.isNotOverThan(state.getScore()));
     }
 
     public Card getFirstCard() {

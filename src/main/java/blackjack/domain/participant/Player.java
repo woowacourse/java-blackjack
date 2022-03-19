@@ -1,13 +1,14 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.state.PlayState;
-import blackjack.domain.participant.state.finished.StandState;
+import blackjack.domain.participant.state.State;
 import blackjack.domain.participant.validation.PlayerNameValidator;
 
 public final class Player extends Participant {
 
     private final String name;
+    private BettingAmount bettingAmount;
 
     private Player(final String name, final Deck deck) {
         super(deck);
@@ -24,18 +25,21 @@ public final class Player extends Participant {
     }
 
     public void betAmount(final int amount) {
-        this.state = state.betAmount(amount);
-    }
-
-    public void drawCard(final Deck deck, final boolean needToDrawCard) {
-        this.state = considerState(deck, needToDrawCard);
-    }
-
-    private PlayState considerState(final Deck deck, final boolean needToDrawCard) {
-        if (needToDrawCard) {
-            return state.drawCard(deck);
+        if (bettingAmount != null) {
+            throw new IllegalStateException("이미 베팅을 했습니다.");
         }
-        return new StandState(state);
+        this.bettingAmount = new BettingAmount(amount);
+    }
+
+    public void drawCard(final Card card, final boolean needToDrawCard) {
+        this.state = considerState(card, needToDrawCard);
+    }
+
+    private State considerState(final Card card, final boolean needToDrawCard) {
+        if (needToDrawCard) {
+            return state.drawCard(card);
+        }
+        return state.stay();
     }
 
     public boolean equalsName(final String name) {
@@ -47,7 +51,7 @@ public final class Player extends Participant {
     }
 
     public int getBettingAmount() {
-        return state.getBettingAmount();
+        return bettingAmount.getAmount();
     }
 
 }

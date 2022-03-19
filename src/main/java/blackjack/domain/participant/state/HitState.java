@@ -1,33 +1,63 @@
 package blackjack.domain.participant.state;
 
-import static blackjack.domain.BlackjackRule.BLACKJACK_SCORE;
+import static blackjack.domain.BlackjackCardRule.INITIALLY_DISTRIBUTED_CARD_COUNT;
+import static blackjack.domain.BlackjackScoreRule.BLACKJACK_SCORE;
+import static blackjack.domain.BlackjackScoreRule.ENABLE_MAXIMUM_SCORE_UNDER_BUST;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.participant.state.finished.BustState;
-import blackjack.domain.participant.state.finished.StandState;
+import java.util.List;
 
-public class HitState extends PlayState {
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardHands;
+import blackjack.domain.card.ScoreCalculator;
 
-    public HitState(final PlayState state) {
-        super(state);
+public final class HitState extends PlayState {
+
+    private final CardHands cards;
+
+    HitState(final List<Card> cards) {
+        validateCardsCompatible(cards);
+        this.cards = new CardHands(cards);
     }
 
-    @Override
-    public PlayState betAmount(final int amount) {
-        throw new IllegalStateException("이미 베팅이 완료되었습니다.");
+    static HitState from(final List<Card> cards) {
+        return new HitState(cards);
     }
 
-    @Override
-    public PlayState drawCard(final Deck deck) {
-        this.addCard(deck);
-        final int score = this.getScore();
-        if (BLACKJACK_SCORE.isUnderThan(score)) {
-            return new BustState(this);
+    static HitState of(final Card... cards) {
+        return from(List.of(cards));
+    }
+
+    private static void validateCardsCompatible(final List<Card> cards) {
+        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isOverThan(cards.size())) {
+            throw new IllegalArgumentException("카드는 2장 이상이어야 합니다.");
         }
-        if (BLACKJACK_SCORE.equalsScore(score)) {
-            return new StandState(this);
+
+        final int score = ScoreCalculator.calculateScore(cards);
+        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isUnderThan(score)) {
+            throw new IllegalArgumentException("합계가 21 이상이므로 Hit 상태가 될 수 없습니다.");
+        }
+    }
+
+    @Override
+    public State drawCard(final Card card) {
+        cards.addCard(card);
+        return considerStateByScore();
+    }
+
+    private State considerStateByScore() {
+        final int score = this.getScore();
+        if (ENABLE_MAXIMUM_SCORE_UNDER_BUST.isUnderThan(score)) {
+            return BustState.from(this.getCards());
+        }
+        if (BLACKJACK_SCORE.isEquals(score)) {
+            return StandState.from(this.getCards());
         }
         return this;
+    }
+
+    @Override
+    public State stay() {
+        return StandState.from(this.getCards());
     }
 
     @Override
@@ -36,8 +66,13 @@ public class HitState extends PlayState {
     }
 
     @Override
-    public String toString() {
-        return "HitState{}";
+    public int getScore() {
+        return cards.calculateScore();
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 
 }

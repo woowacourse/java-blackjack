@@ -1,32 +1,32 @@
 package blackjack.domain.card.provider;
 
+import static blackjack.Fixture.DIAMOND_ACE;
+import static blackjack.Fixture.DIAMOND_EIGHT;
+import static blackjack.Fixture.HEART_ACE;
+import static blackjack.Fixture.HEART_EIGHT;
+import static blackjack.Fixture.HEART_KING;
+import static blackjack.Fixture.SPADE_ACE;
+
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.provider.Arguments;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
-
 public class DeckTestProvider {
 
     public static Stream<Arguments> provideForCardDuplicatedExceptionTest() {
-        final Card duplicatedCard = new Card(CardNumber.ACE, CardPattern.SPADE);
-        final Card notDuplicatedCard = new Card(CardNumber.KING, CardPattern.DIAMOND);
-
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                duplicatedCard,
-                                duplicatedCard
+                                SPADE_ACE,
+                                SPADE_ACE
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                duplicatedCard,
-                                notDuplicatedCard,
-                                duplicatedCard
+                                SPADE_ACE,
+                                HEART_KING,
+                                SPADE_ACE
                         )
                 )
         );
@@ -36,15 +36,15 @@ public class DeckTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
-                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
+                                DIAMOND_ACE,
+                                DIAMOND_EIGHT
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.EIGHT, CardPattern.HEART),
-                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
+                                SPADE_ACE,
+                                HEART_EIGHT,
+                                DIAMOND_EIGHT
                         )
                 )
         );
@@ -54,12 +54,12 @@ public class DeckTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE)
+                                SPADE_ACE
                         ),
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
-                                new Card(CardNumber.ACE, CardPattern.HEART)
+                                SPADE_ACE,
+                                DIAMOND_ACE,
+                                HEART_ACE
                         )
                 )
         );

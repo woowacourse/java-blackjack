@@ -32,7 +32,7 @@ public class Participants {
     }
 
     public void dealerDrawCard(final Deck deck) {
-        dealer.drawCard(deck);
+        dealer.drawCard(deck.drawCard());
     }
 
     public boolean isDealerPossibleToDrawCard() {

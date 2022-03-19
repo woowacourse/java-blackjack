@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 
 public class Card {
 
-    private final CardNumber cardNumber;
     private final CardPattern cardPattern;
+    private final CardNumber cardNumber;
 
-    public Card(final CardNumber cardNumber, final CardPattern cardPattern) {
-        this.cardNumber = cardNumber;
+    public Card(final CardPattern cardPattern, final CardNumber cardNumber) {
         this.cardPattern = cardPattern;
+        this.cardNumber = cardNumber;
     }
 
     public Set<Integer> addNumbers(final int otherNumber) {
@@ -22,12 +22,12 @@ public class Card {
                 .collect(Collectors.toSet());
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
-    }
-
     public CardPattern getCardPattern() {
         return cardPattern;
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 
     @Override

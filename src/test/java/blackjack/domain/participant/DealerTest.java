@@ -11,8 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.ManualDeckGenerator;
-import blackjack.domain.participant.state.PlayState;
-import blackjack.domain.participant.state.finished.StandState;
 
 class DealerTest {
 
@@ -23,17 +21,6 @@ class DealerTest {
         return Deck.generate(manualDeckGenerator);
     }
 
-    @DisplayName("딜러는 버스트되지 않은 상태에서 카드 합계가 17 이상이면 스탠드 상태여야 한다.")
-    @ParameterizedTest(name = "[{index}] 카드 : {0}")
-    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForDealerCannotDrawCardAnymoreTest")
-    void dealerCannotDrawCardAnymoreTest(final List<Card> initializedCard) {
-        final Deck deck = generateDeck(initializedCard);
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        dealer.drawCard(deck);
-
-        final PlayState actualState = dealer.getState();
-        assertThat(actualState).isInstanceOf(StandState.class);
-    }
 
     @DisplayName("첫번째 카드 한장을 반환할 수 있어야 한다.")
     @ParameterizedTest(name = "[{index}] 카드 : {0}")

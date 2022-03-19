@@ -1,13 +1,12 @@
 package blackjack.domain.result;
 
+import static blackjack.Fixture.SPADE_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.generator.RandomDeckGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
@@ -41,7 +40,7 @@ class MatchCalculatorTest {
     @ParameterizedTest
     @MethodSource("blackjack.domain.result.provider.MatchCalculatorTestProvider#provideForPlayerDrawIfBothNotBlackjackTest")
     void playerDrawIfBothNotBlackjackTest(final Dealer dealer, final Player player) {
-        player.drawCard(Deck.generate(new RandomDeckGenerator()), false);
+        player.drawCard(SPADE_ACE, false);
 
         final MatchStatus actualMatchStatus = MatchCalculator.judgeMatchStatusOfPlayer(player, dealer);
         assertThat(actualMatchStatus).isEqualTo(MatchStatus.DRAW);
@@ -53,7 +52,7 @@ class MatchCalculatorTest {
     void judgeMatchStatusIfPlayerStandTest(final Dealer dealer,
                                            final Player player,
                                            final MatchStatus expectedMatchStatus) {
-        player.drawCard(Deck.generate(new RandomDeckGenerator()), false);
+        player.drawCard(SPADE_ACE, false);
 
         final MatchStatus actualMatchStatus = MatchCalculator.judgeMatchStatusOfPlayer(player, dealer);
         assertThat(actualMatchStatus).isEqualTo(expectedMatchStatus);

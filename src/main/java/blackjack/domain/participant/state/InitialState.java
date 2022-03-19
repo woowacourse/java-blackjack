@@ -1,38 +1,53 @@
 package blackjack.domain.participant.state;
 
-import java.util.Collections;
+import static blackjack.domain.BlackjackCardRule.INITIALLY_DISTRIBUTED_CARD_COUNT;
+import static blackjack.domain.BlackjackScoreRule.BLACKJACK_SCORE;
 
-import blackjack.domain.card.Deck;
+import java.util.List;
 
-public class InitialState extends PlayState {
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardHands;
 
-    private static final int DEFAULT_BETTING_AMOUNT = 0;
+public final class InitialState extends PlayState {
 
-    private InitialState() {
-        super(Collections.emptyList(), DEFAULT_BETTING_AMOUNT);
+    private final CardHands cards;
+
+    private InitialState(final List<Card> cards) {
+        this.cards = new CardHands(cards);
     }
 
-    public static PlayState initializeState(final Deck deck) {
-        final PlayState state = new InitialState();
-        return state.drawCard(deck);
+    public static State initiallyDrawCards(final List<Card> cards) {
+        validateInitialCardsSize(cards);
+        final InitialState initialState = new InitialState(cards);
+        return initialState.considerStateByScore();
     }
 
-    @Override
-    public PlayState drawCard(final Deck deck) {
-        initiallyDrawCards(deck);
-        return new WaitState(this);
+    public static State initiallyDrawCards(final Card... cards) {
+        return initiallyDrawCards(List.of(cards));
     }
 
-    private void initiallyDrawCards(final Deck deck) {
-        final int initiallyDrawCardCount = 2;
-        for (int i = 0; i < initiallyDrawCardCount; i++) {
-            addCard(deck);
+    private static void validateInitialCardsSize(final List<Card> cards) {
+        if (INITIALLY_DISTRIBUTED_CARD_COUNT.isNotEquals(cards.size())) {
+            throw new IllegalArgumentException("처음에 배분받는 카드는 2장이어야 합니다.");
         }
     }
 
+    private State considerStateByScore() {
+        final int score = this.getScore();
+        if (BLACKJACK_SCORE.isEquals(score)) {
+            return BlackjackState.from(this.getCards());
+        }
+        return new HitState(this.getCards());
+    }
+
     @Override
-    public PlayState betAmount(int amount) {
-        throw new IllegalStateException("베팅할 준비가 되지 않았습니다.");
+    public PlayState drawCard(final Card card) {
+        throw new IllegalStateException("카드를 뽑을 준비가 되지 않았습니다.");
+    }
+
+    @Override
+    public State stay() {
+        throw new IllegalStateException("턴이 시작하지 않았습니다.");
     }
 
     @Override
@@ -41,8 +56,13 @@ public class InitialState extends PlayState {
     }
 
     @Override
-    public String toString() {
-        return "InitialState{}";
+    public int getScore() {
+        return cards.calculateScore();
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 
 }
