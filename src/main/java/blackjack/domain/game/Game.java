@@ -64,8 +64,8 @@ public final class Game {
     }
 
     public List<Participant> getParticipants() {
-        List<Participant> participants = new ArrayList<>(players);
-        participants.add(0, dealer);
+        List<Participant> participants = new ArrayList<>(List.of(dealer));
+        participants.addAll(players);
         return participants;
     }
 }
