@@ -2,7 +2,13 @@ package blackjack.domain.betting;
 
 public class BettingMoney {
 
-    private static final String BETTING_MONEY_NEGATIVE_ERROR_MESSAGE = "[ERROR] 배팅 금액에는 0이하의 값은 올 수 없습니다.";
+    private static final int MONEY_MINIMUM_THRESHOLD = 100;
+    private static final int MONEY_BASIC_UNIT = 100;
+    private static final int ZERO = 0;
+
+    private static final String BETTING_MONEY_MINIMUM_ERROR_MESSAGE = "[ERROR] 배팅 금액에는 100이하의 값은 올 수 없습니다.";
+    private static final String BETTING_MONEY_BASIC_UNIT_ERROR_MESSAGE = "[ERROR] 배팅 금액은 100원 단위여야 합니다.";
+
     private final int bettingMoney;
 
     public BettingMoney(int bettingMoney) {
@@ -15,12 +21,20 @@ public class BettingMoney {
     }
 
     private void validateBettingMoney(int bettingMoney) {
-        if (isNegativeOrZero(bettingMoney)) {
-            throw new IllegalArgumentException(BETTING_MONEY_NEGATIVE_ERROR_MESSAGE);
+        validateMinimum(bettingMoney);
+        validateBasicUnit(bettingMoney);
+    }
+
+    private void validateMinimum(int money) {
+        if (money <= MONEY_MINIMUM_THRESHOLD) {
+            throw new IllegalArgumentException(BETTING_MONEY_MINIMUM_ERROR_MESSAGE);
         }
     }
 
-    private boolean isNegativeOrZero(int money) {
-        return money <= 0;
+    private void validateBasicUnit(int money) {
+        if (money % MONEY_BASIC_UNIT != ZERO) {
+            throw new IllegalArgumentException(BETTING_MONEY_BASIC_UNIT_ERROR_MESSAGE);
+        }
+
     }
 }
