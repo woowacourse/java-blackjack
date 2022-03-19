@@ -81,7 +81,7 @@ public class OutputView {
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, convertCardsToCardSName(result.getCards())));
 		final int score = result.calculateFinalScore();
 		String scoreResult = Integer.toString(score);
-		if (score > BlackJack.OPTIMIZED_WINNING_NUMBER) {
+		if (score == BlackJack.BUST_SCORE) {
 			scoreResult = BlackJack.BUST_MESSAGE;
 		}
 		System.out.println(RESULT + scoreResult);

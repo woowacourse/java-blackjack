@@ -28,6 +28,9 @@ public class Hand {
 		int totalScore = cards.stream()
 			.mapToInt(Card::getScore)
 			.sum();
+		if (isBust(totalScore)) {
+			return BlackJack.BUST_SCORE;
+		}
 		if (hasAce()) {
 			return calculateScoreWithAce(totalScore, totalScore + ACE_AS_ELEVEN);
 		}
