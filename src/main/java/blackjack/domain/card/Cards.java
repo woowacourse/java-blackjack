@@ -25,10 +25,7 @@ public class Cards {
         int sumOfPoint = cards.stream()
             .mapToInt(Card::point)
             .sum();
-        if (hasAce() && sumOfPoint <= MINIMUM_POINT_FOR_ACE) {
-            sumOfPoint += ACE_POINT;
-        }
-        return sumOfPoint;
+        return calculateAcePoint(sumOfPoint);
     }
 
     public Cards add(Card card) {
@@ -60,5 +57,12 @@ public class Cards {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    private int calculateAcePoint(int point) {
+        if (hasAce() && point <= MINIMUM_POINT_FOR_ACE) {
+            point += ACE_POINT;
+        }
+        return point;
     }
 }
