@@ -31,7 +31,7 @@ public class PlayerTest {
     class IsBust {
 
         @ParameterizedTest
-        @CsvSource(value = {"ACE|false", "TWO|true"}, delimiter = '|')
+        @CsvSource(value = {"ACE,false", "TWO,true"})
         @DisplayName("패의 합이 21이 넘는지 유무를 알려준다.")
         void returnFalse(CardNumber cardNumber, boolean expected) {
             Participant player = new Player("roma", 0);
@@ -59,7 +59,7 @@ public class PlayerTest {
         }
 
         @Test
-        @DisplayName("본인의 카드가 버스트일 때 항상 패배한다.")
+        @DisplayName("플레이어의 카드가 버스트일 때 항상 패배한다.")
         void returnResultWithPlayerBust() {
             Player player = new Player("player", 0);
             Dealer dealer = new Dealer();
@@ -77,7 +77,7 @@ public class PlayerTest {
         }
 
         @ParameterizedTest
-        @CsvSource(value = {"TEN|LOSE", "ACE|WIN"}, delimiter = '|')
+        @CsvSource(value = {"TEN,LOSE", "ACE,WIN"})
         @DisplayName("딜러가 버스트일 때 승부 결과를 반환한다.")
         void returnResultWithDealerBust(CardNumber cardNumber, Score expected) {
             Player player = new Player("player", 0);
