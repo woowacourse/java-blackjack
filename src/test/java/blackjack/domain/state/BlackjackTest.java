@@ -84,8 +84,8 @@ class BlackjackTest {
                 .draw(KING_SPACE)
                 .draw(JACK_SPACE);
 
-        double earningRate = blackjack.earningRate(otherState);
+        double result = blackjack.earningRate(otherState);
 
-        assertThat(earningRate).isEqualTo(1.5);
+        assertThat(result).isEqualTo(1.5);
     }
 }

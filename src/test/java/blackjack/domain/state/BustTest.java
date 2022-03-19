@@ -57,4 +57,20 @@ class BustTest {
 
         assertThat(result).isTrue();
     }
+
+    @DisplayName("버스트 상태에서는 상대 상태에 상관없이 earning rate는 -1이다.")
+    @Test
+    void 버스트_수익율() {
+        State bust = new Ready().draw(JACK_SPACE)
+                .draw(KING_SPACE)
+                .draw(TWO_SPACE);
+
+        State otherBust = new Ready().draw(JACK_SPACE)
+                .draw(KING_SPACE)
+                .draw(TWO_SPACE);
+
+        double result = bust.earningRate(otherBust);
+
+        assertThat(result).isEqualTo(-1);
+    }
 }

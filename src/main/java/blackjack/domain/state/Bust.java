@@ -38,6 +38,6 @@ public class Bust implements State {
 
     @Override
     public double earningRate(State state) {
-        return 0;
+        return -1;
     }
 }
