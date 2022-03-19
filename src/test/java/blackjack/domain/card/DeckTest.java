@@ -14,4 +14,18 @@ public class DeckTest {
 
         assertThat(deck.pickCard()).isNotNull();
     }
+
+    @Test
+    @DisplayName("Deck에서 카드를 뽑을 때 비어있는지 검증한다.")
+    void validateDeckEmpty() {
+        Deck deck = new Deck();
+
+        for (int i = 0; i < 52; i++) {
+            deck.pickCard();
+        }
+
+        assertThatThrownBy(()-> {
+            deck.pickCard();
+        }).isInstanceOf(IndexOutOfBoundsException.class);
+    }
 }
