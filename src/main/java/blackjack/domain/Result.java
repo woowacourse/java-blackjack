@@ -23,7 +23,8 @@ public enum Result {
     ),
     LOSS(-1.0, (
             (player, dealer) -> ((!player.isBust() && !dealer.isBust())
-                    && (player.getScore() < dealer.getScore())))
+                    && (player.getScore() < dealer.getScore())
+            || (player.isBust() && !dealer.isBust())))
     );
 
     private final Double rate;

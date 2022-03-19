@@ -115,6 +115,37 @@ class ResultTest {
         assertThat(result.get(players.get(0).getName())).isEqualTo((int)(MINIMUM_BETTING_AMOUNT * WIN.getRate()));
     }
 
+    @DisplayName("딜러는 버스트가 아니고 플레이어만 버스트인 경우")
+    @Test
+    public void testPlayerBust() {
+        //given
+        Deck deck = new Deck(() -> new ArrayDeque<>(List.of(
+                SPADE_QUEEN,
+                SPADE_QUEEN,
+                SPADE_TWO,
+                SPADE_KING,
+                SPADE_FIVE
+        )));
+
+        List<Player> players = List.of(createPlayerByName("pobi"));
+
+        for (Player player : players) {
+            player.drawCard(deck);
+            player.drawCard(deck);
+            player.drawCard(deck);
+        }
+
+        Dealer dealer = Dealer.create();
+        dealer.drawCard(deck);
+        dealer.drawCard(deck);
+
+        //when
+        Map<String, Integer> result = Result.calculateRevenue(players, dealer);
+
+        //then
+        assertThat(result.get(players.get(0).getName())).isEqualTo((int)(MINIMUM_BETTING_AMOUNT * LOSS.getRate()));
+    }
+
     private Deck initDeck() {
         return new Deck(() -> new ArrayDeque<>(List.of(
                 CLOVER_ACE,
