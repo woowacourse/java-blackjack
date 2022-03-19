@@ -46,6 +46,6 @@ public class Blackjack {
 	}
 
 	public List<Player> getPlayers() {
-		return players;
+		return List.copyOf(players);
 	}
 }
