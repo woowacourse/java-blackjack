@@ -8,8 +8,6 @@ import java.util.Set;
 
 public class Cards {
     private static final String DUPLICATE_EXCEPTION_MESSAGE = "카드 패에 중복된 카드가 존재할 수 없습니다.";
-    private static final int BLACKJACK_CARD_HAND_COUNT = 2;
-    private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -39,7 +37,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_CARD_HAND_COUNT && getBestPossible() == BLACKJACK_SCORE;
+        return Score.calculate(cards).isBlackJack(cards);
     }
 
     public List<Card> getCards() {
