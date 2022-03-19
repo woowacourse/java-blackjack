@@ -18,16 +18,28 @@ public enum PlayerWinningResult {
     }
 
     public static PlayerWinningResult of(Dealer dealer, Player player) {
-        if ((dealer.isBlackjack() && !player.isBlackjack()) || player.isBust()) {
+        if (isDealerOnlyBlackjack(dealer, player) || player.isBust()) {
             return LOSE;
         }
-        if ((!dealer.isBlackjack() && player.isBlackjack()) || dealer.isBust()) {
+        if (isPlayerOnlyBlackjack(dealer, player) || dealer.isBust()) {
             return WIN;
         }
-        if (dealer.isBlackjack() && player.isBlackjack()) {
+        if (isDealerAndPlayerBlackjack(dealer, player)) {
             return DRAW;
         }
         return getResultWithScore(dealer, player);
+    }
+
+    private static boolean isDealerOnlyBlackjack(Dealer dealer, Player player) {
+        return dealer.isBlackjack() && !player.isBlackjack();
+    }
+
+    private static boolean isPlayerOnlyBlackjack(Dealer dealer, Player player) {
+        return !dealer.isBlackjack() && player.isBlackjack();
+    }
+
+    private static boolean isDealerAndPlayerBlackjack(Dealer dealer, Player player) {
+        return dealer.isBlackjack() && player.isBlackjack();
     }
 
     private static PlayerWinningResult getResultWithScore(Dealer dealer, Player player) {
