@@ -10,6 +10,11 @@ public final class Hit extends Running {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public State draw(final Card card) {
         Cards cards = cards().add(card);
 

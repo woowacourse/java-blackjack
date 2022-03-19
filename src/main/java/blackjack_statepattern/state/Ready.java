@@ -13,6 +13,11 @@ public final class Ready extends Running {
     }
 
     @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
     public State draw(Card card) {
         Cards cards = cards().add(card);
         if (cards.isReady()) {

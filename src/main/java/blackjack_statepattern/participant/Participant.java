@@ -13,19 +13,15 @@ public abstract class Participant {
         this.state = new Ready();
     }
 
-    public void draw(Card card) {
+    public boolean isReady() {
+        return state.isReady();
+    }
+
+    public void receiveCard(Card card) {
         state = state.draw(card);
     }
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public String toString() {
-        return "Participant{" +
-                "name='" + name + '\'' +
-                ", state=" + state +
-                '}';
     }
 }

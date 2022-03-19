@@ -12,5 +12,7 @@ public interface State {
 
     boolean isFinished();
 
+    boolean isReady();
+
     double profit(double money);
 }

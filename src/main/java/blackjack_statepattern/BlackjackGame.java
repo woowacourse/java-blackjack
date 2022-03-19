@@ -1,10 +1,13 @@
 package blackjack_statepattern;
 
 import blackjack_statepattern.card.CardDeck;
+import blackjack_statepattern.participant.Dealer;
+import blackjack_statepattern.participant.Participant;
 import blackjack_statepattern.participant.Player;
 import blackjack_statepattern.participant.Players;
 import blackjack_statepattern.view.InputView;
 import blackjack_statepattern.view.OutputView;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public final class BlackjackGame {
@@ -12,8 +15,13 @@ public final class BlackjackGame {
     private CardDeck cardDeck;
 
     public void run() {
-        Players players = initializePlayers();
-        System.out.println(players);
+        initializeGame();
+        playGame();
+    }
+
+    private void initializeGame() {
+        blackjackBoard = new BlackjackBoard(new Dealer(), initializePlayers());
+        cardDeck = CardDeck.createNewCardDeck();
     }
 
     private Players initializePlayers() {
@@ -31,4 +39,24 @@ public final class BlackjackGame {
             return getBetMoney(name);
         }
     }
+
+    private void playGame() {
+        distributeCards();
+    }
+
+    private void distributeCards() {
+        Dealer dealer = blackjackBoard.getDealer();
+        List<Player> players = blackjackBoard.getPlayers();
+        distributeCard(dealer);
+        for (Player player : players) {
+            distributeCard(player);
+        }
+    }
+
+    private void distributeCard(Participant participant) {
+        while (participant.isReady()) {
+            participant.receiveCard(cardDeck.draw());
+        }
+    }
+
 }
