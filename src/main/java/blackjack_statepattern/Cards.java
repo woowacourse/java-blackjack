@@ -11,6 +11,10 @@ public class Cards {
         this.value = cards;
     }
 
+    public Cards() {
+        this(new ArrayList<>());
+    }
+
     public int sum() {
         return value.stream()
                 .mapToInt(Card::score)
@@ -35,5 +39,9 @@ public class Cards {
 
     public boolean isBust() {
         return sum() > 21;
+    }
+
+    public boolean isReady() {
+        return value.size() < 2;
     }
 }
