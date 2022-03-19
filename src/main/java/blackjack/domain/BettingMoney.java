@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class BettingMoney {
 
-    public static final int BETTING_MONEY_INIT_VALUE = 0;
+    private static final int BETTING_MONEY_INIT_VALUE = 0;
 
     private int value;
 

@@ -184,7 +184,7 @@ public class PlayerTest {
         Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreGraterThan17Cards());
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
 
-        player.calculateBettingMoneyResult(dealer);
+        player.changeByBettingMoneyResult(dealer);
 
         assertThat(player.getBettingMoney()).isEqualTo(1000);
     }
@@ -195,7 +195,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
 
-        player.calculateBettingMoneyResult(dealer);
+        player.changeByBettingMoneyResult(dealer);
 
         assertThat(player.getBettingMoney()).isEqualTo(1500);
     }
@@ -206,7 +206,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
         Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreNotMoreThan16Cards());
 
-        player.calculateBettingMoneyResult(dealer);
+        player.changeByBettingMoneyResult(dealer);
 
         assertThat(player.getBettingMoney()).isEqualTo(-1000);
     }
@@ -217,7 +217,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer(generateBlackJackCards());
         Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
 
-        player.calculateBettingMoneyResult(dealer);
+        player.changeByBettingMoneyResult(dealer);
 
         assertThat(player.getBettingMoney()).isEqualTo(1000);
     }

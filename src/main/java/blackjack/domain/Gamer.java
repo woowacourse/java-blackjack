@@ -46,7 +46,7 @@ public abstract class Gamer {
 
     abstract boolean canHit();
 
-    abstract boolean calculateBettingMoneyResult(Gamer player);
+    abstract void changeByBettingMoneyResult(Gamer player);
 
     public boolean addMoney(int value) {
         return bettingMoney.addMoney(value);

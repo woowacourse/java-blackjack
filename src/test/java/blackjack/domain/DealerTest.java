@@ -65,8 +65,8 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateBlackJackCards());
         Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreGraterThan17Cards());
 
-        player.calculateBettingMoneyResult(dealer);
-        dealer.calculateBettingMoneyResult(player);
+        player.changeByBettingMoneyResult(dealer);
+        dealer.changeByBettingMoneyResult(player);
 
         assertThat(dealer.getBettingMoney()).isEqualTo(1000);
     }
@@ -77,8 +77,8 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreGraterThan17Cards());
 
-        player.calculateBettingMoneyResult(dealer);
-        dealer.calculateBettingMoneyResult(player);
+        player.changeByBettingMoneyResult(dealer);
+        dealer.changeByBettingMoneyResult(player);
 
         assertThat(dealer.getBettingMoney()).isEqualTo(-1000);
     }
@@ -89,8 +89,8 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
 
-        player.calculateBettingMoneyResult(dealer);
-        dealer.calculateBettingMoneyResult(player);
+        player.changeByBettingMoneyResult(dealer);
+        dealer.changeByBettingMoneyResult(player);
 
         assertThat(dealer.getBettingMoney()).isEqualTo(-1500);
     }
@@ -101,8 +101,8 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateBlackJackCards());
         Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
 
-        player.calculateBettingMoneyResult(dealer);
-        dealer.calculateBettingMoneyResult(player);
+        player.changeByBettingMoneyResult(dealer);
+        dealer.changeByBettingMoneyResult(player);
 
         assertThat(dealer.getBettingMoney()).isEqualTo(0);
     }
@@ -113,8 +113,8 @@ public class DealerTest {
         Dealer dealer = new Dealer(generate21Cards());
         Player player = new Player("sudal", new BettingMoney(1000), generate21Cards());
 
-        player.calculateBettingMoneyResult(dealer);
-        dealer.calculateBettingMoneyResult(player);
+        player.changeByBettingMoneyResult(dealer);
+        dealer.changeByBettingMoneyResult(player);
 
         assertThat(dealer.getBettingMoney()).isEqualTo(0);
     }

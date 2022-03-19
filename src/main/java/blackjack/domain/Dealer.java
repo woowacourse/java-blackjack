@@ -1,8 +1,5 @@
 package blackjack.domain;
 
-
-import static blackjack.domain.BettingMoney.BETTING_MONEY_INIT_VALUE;
-
 import java.util.List;
 
 public class Dealer extends Gamer {
@@ -20,19 +17,19 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean calculateBettingMoneyResult(Gamer player) {
+    public void changeByBettingMoneyResult(Gamer player) {
         if (player.isTie(this)) {
-            return false;
+            return;
+        }
+        if (player.isBlackJack() && isBlackJack()) {
+            return;
         }
 
-        if (player.isBlackJack() && isBlackJack()) {
-            return false;
-        }
-        return addMoney(reversBettingMoney((Player) player));
+        addMoney(reversBettingMoney((Player) player));
     }
 
     public int reversBettingMoney(Player player) {
-        return player.reverseBeMoney();
+        return player.reverseBettingMoney();
     }
 }
 

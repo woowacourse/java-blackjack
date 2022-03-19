@@ -21,11 +21,11 @@ public class Players {
     }
 
     public void createPlayerResult(Dealer dealer) {
-        value.forEach(player -> player.calculateBettingMoneyResult(dealer));
+        value.forEach(player -> player.changeByBettingMoneyResult(dealer));
     }
 
     public void createDealerResult(Dealer dealer) {
-        value.forEach(player -> dealer.calculateBettingMoneyResult(player));
+        value.forEach(player -> dealer.changeByBettingMoneyResult(player));
     }
 
     public void playPlayers(Deck deck) {
