@@ -19,7 +19,7 @@ public class Blackjack {
 
     public void play() {
         final Deck deck = new Deck(new RandomCardGenerator());
-        final List<Player> participants = createParticipants(InputView.responseNames());
+        final List<Player> participants = createParticipants(InputView.requestNames());
         final Map<Player, Money> betting = makeBettingWithParticipants(participants);
         final Players players = initPlayers(participants, deck);
 
@@ -42,7 +42,7 @@ public class Blackjack {
     private Map<Player, Money> makeBettingWithParticipants(List<Player> participants) {
         Map<Player, Money> bettings = new HashMap<>();
         for (Player participant : participants) {
-            bettings.put(participant, new Money(InputView.responseBetting(participant.getName())));
+            bettings.put(participant, new Money(InputView.requestBetting(participant.getName())));
         }
         return bettings;
     }

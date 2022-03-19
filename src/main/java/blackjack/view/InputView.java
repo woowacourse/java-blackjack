@@ -15,14 +15,14 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> responseNames() {
+    public static List<String> requestNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String names = scanner.nextLine();
         validateName(names);
         return convertNameInput(names);
     }
 
-    public static int responseBetting(String name) {
+    public static int requestBetting(String name) {
         System.out.println(name + "의 배팅 금액은?");
         String input = scanner.nextLine();
         validateNumber(input);
@@ -47,17 +47,17 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String responseReceiveMoreCard(final String name) {
+    public static String requestReceiveMoreCard(final String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
         return scanner.nextLine();
     }
 
     public static boolean oneMoreCard(final String name) {
-        final String input = InputView.responseReceiveMoreCard(name);
+        final String input = InputView.requestReceiveMoreCard(name);
         if (!input.equals(YES) && !input.equals(NO)) {
             throw new IllegalArgumentException(String.format("[ERROR] %s 또는 %s으로 입력하세요.", YES, NO));
         }
         return input.equals(YES);
     }
-    
+
 }
