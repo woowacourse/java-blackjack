@@ -1,17 +1,8 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.CardNumber.ACE;
-import static blackjack.domain.card.CardNumber.EIGHT;
-import static blackjack.domain.card.CardNumber.FIVE;
-import static blackjack.domain.card.CardNumber.JACK;
-import static blackjack.domain.card.CardNumber.KING;
-import static blackjack.domain.card.CardNumber.QUEEN;
-import static blackjack.domain.card.CardNumber.SEVEN;
-import static blackjack.domain.card.CardNumber.TEN;
-import static blackjack.domain.card.CardSymbol.CLUBS;
-import static blackjack.domain.card.CardSymbol.DIAMONDS;
-import static blackjack.domain.card.CardSymbol.HEARTS;
-import static blackjack.domain.card.CardSymbol.SPADES;
+import static blackjack.domain.Fixture.*;
+import static blackjack.domain.card.CardNumber.*;
+import static blackjack.domain.card.CardSymbol.*;
 
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -47,7 +38,7 @@ class HoldingCardTest {
     void under21withAce_isNotBust() {
         HoldingCard holdingCard = new HoldingCard();
 
-        List<Card> cards = List.of(Card.valueOf(JACK, CLUBS), Card.valueOf(KING, CLUBS), Card.valueOf(ACE, CLUBS));
+        List<Card> cards = List.of(Card.valueOf(JACK, CLUBS), Card.valueOf(KING, CLUBS), ACE_CLUBS);
         cards.forEach(holdingCard::add);
 
         Assertions.assertThat(holdingCard.isBust()).isFalse();
@@ -59,7 +50,7 @@ class HoldingCardTest {
         HoldingCard holdingCard = new HoldingCard();
 
         List<Card> cards = List.of(Card.valueOf(JACK, CLUBS), Card.valueOf(KING, CLUBS),
-                Card.valueOf(ACE, CLUBS), Card.valueOf(ACE, SPADES));
+                ACE_CLUBS, ACE_SPADES);
         cards.forEach(holdingCard::add);
 
         Assertions.assertThat(holdingCard.isBust()).isTrue();
@@ -70,8 +61,7 @@ class HoldingCardTest {
     void fourAce_calculate() {
         HoldingCard holdingCard = new HoldingCard();
 
-        List<Card> cards = List.of(Card.valueOf(ACE, CLUBS), Card.valueOf(ACE, SPADES),
-                Card.valueOf(ACE, HEARTS), Card.valueOf(ACE, DIAMONDS));
+        List<Card> cards = List.of(ACE_CLUBS, ACE_SPADES, ACE_HEARTS, ACE_DIAMONDS);
         cards.forEach(holdingCard::add);
 
         Assertions.assertThat(holdingCard.computeTotalScore()).isEqualTo(14);
@@ -82,8 +72,8 @@ class HoldingCardTest {
     void fourAce_Add7_calculate() {
         HoldingCard holdingCard = new HoldingCard();
 
-        List<Card> cards = List.of(Card.valueOf(ACE, CLUBS), Card.valueOf(ACE, SPADES),
-                Card.valueOf(ACE, HEARTS), Card.valueOf(ACE, DIAMONDS), Card.valueOf(SEVEN, DIAMONDS));
+        List<Card> cards = List.of(ACE_CLUBS, ACE_SPADES,
+                ACE_HEARTS, ACE_DIAMONDS, Card.valueOf(SEVEN, DIAMONDS));
         cards.forEach(holdingCard::add);
 
         Assertions.assertThat(holdingCard.computeTotalScore()).isEqualTo(21);
@@ -94,8 +84,7 @@ class HoldingCardTest {
     void fourAce_Add17_calculate() {
         HoldingCard holdingCard = new HoldingCard();
 
-        List<Card> cards = List.of(Card.valueOf(ACE, CLUBS), Card.valueOf(ACE, SPADES),
-                Card.valueOf(ACE, HEARTS), Card.valueOf(ACE, DIAMONDS),
+        List<Card> cards = List.of(ACE_CLUBS, ACE_SPADES, ACE_HEARTS, ACE_DIAMONDS,
                 Card.valueOf(SEVEN, DIAMONDS), Card.valueOf(TEN, DIAMONDS));
         cards.forEach(holdingCard::add);
 
