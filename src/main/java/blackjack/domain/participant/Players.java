@@ -103,13 +103,13 @@ public class Players {
     }
 
     public int dealerProfit(final Dealer dealer) {
-        return calculateAllPlayersProfit(dealer);
+        return calculateAllPlayersProfit(dealer) * -1;
     }
 
     private int calculateAllPlayersProfit(final Dealer dealer) {
         return players.stream()
                 .mapToInt(player -> player.profit(dealer))
-                .sum() * (-1);
+                .sum();
     }
 
     public List<Player> players() {
