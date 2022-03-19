@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class GameStatistic {
 
+    private static final int NON_PROFIT_FLAG = -1;
+
     private final Map<Player, Double> gameResult;
 
     public GameStatistic(Map<Player, Double> gameResult) {
@@ -24,15 +26,16 @@ public class GameStatistic {
         return new GameStatistic(result);
     }
 
-    public double profit(Player player){
+    public double profit(Player player) {
         return gameResult.get(player);
     }
 
-    public double getTotalNonProfit(){
-        return -1*gameResult.values().stream()
+    public double getTotalNonProfit() {
+        return NON_PROFIT_FLAG * gameResult.values().stream()
             .mapToDouble(Double::doubleValue)
             .sum();
     }
+
     public Map<Player, Double> getGameResult() {
         return Map.copyOf(gameResult);
     }
