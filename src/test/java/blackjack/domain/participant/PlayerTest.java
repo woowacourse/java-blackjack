@@ -13,7 +13,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.hand.CardHand;
 import blackjack.domain.hand.OneCard;
-import blackjack.fixture.CardDeckStub;
+import blackjack.fixture.CardSupplierStub;
 import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayStrategy;
 import java.util.List;
@@ -63,7 +63,7 @@ public class PlayerTest {
         void drawAll_keepDrawingUntilBust() {
             List<Card> cardsToBeAdded = List.of(CLOVER2, CLOVER3, CLOVER4);
 
-            player.drawAll(HIT_CHOICE, VIEW_STRATEGY, new CardDeckStub(cardsToBeAdded));
+            player.drawAll(HIT_CHOICE, VIEW_STRATEGY, new CardSupplierStub(cardsToBeAdded));
 
             assertThat(extractCards(player)).containsExactly(CLOVER8, CLOVER_KING, CLOVER2, CLOVER3);
         }
@@ -73,7 +73,7 @@ public class PlayerTest {
         void drawAll_stayOn21() {
             List<Card> cardsToBeAdded = List.of(CLOVER3, CLOVER4);
 
-            player.drawAll(HIT_CHOICE, VIEW_STRATEGY, new CardDeckStub(cardsToBeAdded));
+            player.drawAll(HIT_CHOICE, VIEW_STRATEGY, new CardSupplierStub(cardsToBeAdded));
 
             assertThat(extractCards(player)).containsExactly(CLOVER8, CLOVER_KING, CLOVER3);
         }
@@ -90,7 +90,7 @@ public class PlayerTest {
     @DisplayName("openInitialCards 메서드는 플레이어가 초기에 받은 두 장 카드만을 반환한다.")
     @Test
     void openInitialCards() {
-        player.drawAll(HIT_CHOICE, VIEW_STRATEGY, CardDeckStub.of(CLOVER2, CLOVER10));
+        player.drawAll(HIT_CHOICE, VIEW_STRATEGY, CardSupplierStub.of(CLOVER2, CLOVER10));
 
         List<Card> actual = player.openInitialCards();
 

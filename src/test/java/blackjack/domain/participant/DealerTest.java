@@ -11,7 +11,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.hand.CardHand;
 import blackjack.domain.hand.OneCard;
-import blackjack.fixture.CardDeckStub;
+import blackjack.fixture.CardSupplierStub;
 import blackjack.strategy.CardsViewStrategy;
 import blackjack.strategy.HitOrStayStrategy;
 import java.util.List;
@@ -42,7 +42,7 @@ public class DealerTest {
         void drawAll_bust() {
             Participant dealer = new Dealer(cardHand);
 
-            dealer.drawAll(HIT_CHOICE, VIEW_STRATEGY, CardDeckStub.of(CLOVER2, CLOVER10));
+            dealer.drawAll(HIT_CHOICE, VIEW_STRATEGY, CardSupplierStub.of(CLOVER2, CLOVER10));
 
             assertThat(extractCards(dealer))
                     .containsExactly(CLOVER4, CLOVER_KING, CLOVER2, CLOVER10);

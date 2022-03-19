@@ -5,17 +5,17 @@ import blackjack.strategy.CardSupplier;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CardDeckStub implements CardSupplier {
+public class CardSupplierStub implements CardSupplier {
 
     private final LinkedList<Card> cards = new LinkedList<>();
 
-    public CardDeckStub(List<Card> cards) {
+    public CardSupplierStub(List<Card> cards) {
         this.cards.addAll(cards);
     }
 
-    public static CardDeckStub of(Card... cards) {
+    public static CardSupplierStub of(Card... cards) {
         List<Card> cardList = List.of(cards);
-        return new CardDeckStub(cardList);
+        return new CardSupplierStub(cardList);
     }
 
     @Override
