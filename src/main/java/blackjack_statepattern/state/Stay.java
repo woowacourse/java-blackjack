@@ -1,5 +1,9 @@
 package blackjack_statepattern.state;
 
-public final class Stay extends Finished {
+import blackjack_statepattern.Cards;
 
+public final class Stay extends Finished {
+    Stay(final Cards cards) {
+        super(cards);
+    }
 }

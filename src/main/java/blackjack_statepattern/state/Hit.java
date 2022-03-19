@@ -3,17 +3,16 @@ package blackjack_statepattern.state;
 import blackjack_statepattern.Card;
 import blackjack_statepattern.Cards;
 
-public class Hit implements State {
+public class Hit extends Started {
 
-    private final Cards cards;
 
     Hit(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     @Override
     public State draw(final Card card) {
-        Cards cards = this.cards.add(card);
+        Cards cards = cards().add(card);
 
         if (cards.isBust()) {
             return new Bust(cards);
@@ -23,6 +22,6 @@ public class Hit implements State {
 
     @Override
     public State stay() {
-        return new Stay();
+        return new Stay(cards());
     }
 }
