@@ -11,13 +11,18 @@ import org.junit.jupiter.api.Test;
 public class CardDeckTest {
 
     @Test
-    @DisplayName("카드 뭉치에서 카드를 한 장 뽑아서 준다.")
+    @DisplayName("카드 뭉치의 맨 위의 카드 한 장을 뽑아서 준다.")
     void drawCard() {
         // given
-        CardDeck deck = CardDeck.createGameDeck();
+        Card firstCard = Card.of(Pattern.DIAMOND, Denomination.ACE);
+        Card secondCard = Card.of(Pattern.DIAMOND, Denomination.TWO);
+        CardDeck deck = new CardDeck(List.of(firstCard, secondCard));
+
+        // when
+        Card actual = deck.draw();
 
         // then
-        assertThat(deck.draw()).isInstanceOf(Card.class);
+        assertThat(actual).isEqualTo(firstCard).isNotEqualTo(secondCard);
     }
 
     @Test
