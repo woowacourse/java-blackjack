@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import blackjack.domain.strategy.DeckGenerateStrategy;
 import java.util.Deque;
-import java.util.List;
 
 public class Deck {
 
@@ -15,10 +14,6 @@ public class Deck {
     public Card drawCard() {
         validateExist();
         return cards.pop();
-    }
-
-    public List<Card> drawInitCards() {
-        return List.of(drawCard(), drawCard());
     }
 
     private void validateExist() {

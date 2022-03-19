@@ -1,18 +1,13 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Result;
 import blackjack.dto.CardDto;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 public class OutputView {
 
@@ -21,6 +16,7 @@ public class OutputView {
     public void printErrorMessage(String errorMessage) {
         System.out.println(ERROR + errorMessage);
     }
+
     public void printInitCards(UsersDto usersDto) {
         List<String> playerNames = usersDto.getPlayerNames();
 
@@ -42,7 +38,7 @@ public class OutputView {
         System.out.printf("%s카드: %s\n", userDto.getUserName(), String.join(", ", cardInfo));
     }
 
-    public void printCards(UserDto userDto) {
+    public void printCardsInfoWithName(UserDto userDto) {
         List<CardDto> cards = userDto.getCards();
 
         List<String> cardInfo = getCardInfo(cards);
@@ -56,41 +52,27 @@ public class OutputView {
                 .collect(toList());
     }
 
-    public void printDealer() {
+    public void printDealerMessage() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printWithScore(UserDto userDto, int score) {
-        List<CardDto> cards = userDto.getCards();
-
-        List<String> cardInfo = getCardInfo(cards);
-
-        System.out.printf("\n%s카드: %s - 결과: %d", userDto.getUserName(), String.join(", ", cardInfo), score);
-    }
-
-    public void printYield(Map<String, Result> map) {
-        System.out.println("\n\n## 최종승패");
-
-        String dealerYield = calculateDealerYield(map);
-        System.out.printf("딜러: %s\n", dealerYield);
-
-        printPlayerYield(map);
-    }
-
-    private String calculateDealerYield(Map<String, Result> map) {
-        return map.values().stream()
-                .collect(groupingBy(
-                        Result::reverseResult, TreeMap::new, counting()
-                ))
-                .entrySet()
+    public void printWithScore(Map<UserDto, Integer> result) {
+        result.entrySet()
                 .stream()
-                .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(joining(" "));
+                .forEach(
+                        entry -> System.out.printf("\n%s카드: %s - 결과: %d",
+                                entry.getKey().getUserName(),
+                                String.join(", ", getCardInfo(entry.getKey().getCards())),
+                                entry.getValue())
+                );
     }
 
-    private void printPlayerYield(Map<String, Result> map) {
-        for (Entry<String, Result> entry : map.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getName());
+    public void printRevenue(Map<String, Integer> revenue) {
+        System.out.println("\n\n## 최종 수익");
+
+        for (Entry<String, Integer> entry : revenue.entrySet()) {
+            System.out.printf("%s: %d\n", entry.getKey(), entry.getValue());
         }
+
     }
 }

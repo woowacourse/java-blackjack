@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int BLACKJACK_NUMBER = 21;
+    private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_POINT_DIFFERENCE = 10;
 
     private final List<Card> cards;
@@ -15,7 +15,15 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public int getScore() {
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean isSameBlackJackScore() {
+        return calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public int calculateScore() {
         if (containsAce(cards)) {
             return sumWithAce();
         }
@@ -31,17 +39,33 @@ public class Cards {
     private int sumWithAce() {
         int sum = getSumPoint();
 
-        if (sum + ACE_POINT_DIFFERENCE <= BLACKJACK_NUMBER) {
+        if (sum + ACE_POINT_DIFFERENCE <= BLACKJACK_SCORE) {
             sum = sum + ACE_POINT_DIFFERENCE;
         }
+
+        validateNegative(sum);
         
         return sum;
     }
 
     public int getSumPoint() {
-        return cards.stream()
+        int sum = cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();
+
+        validateNegative(sum);
+
+        return sum;
+    }
+
+    private void validateNegative(int score) {
+        if (score < 0) {
+            throw new RuntimeException("점수 계산에 문제가 있습니다.");
+        }
+    }
+
+    public boolean isDefaultSize() {
+        return cards.size() == 2;
     }
 
     public void add(Card card) {

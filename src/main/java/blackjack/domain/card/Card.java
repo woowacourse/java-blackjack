@@ -14,6 +14,10 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public boolean isAce() {
+        return denomination == ACE;
+    }
+
     public Suit getSuit() {
         return suit;
     }
@@ -32,10 +36,6 @@ public class Card {
 
     public int getPoint() {
         return denomination.getPoint();
-    }
-
-    public boolean isAce() {
-        return denomination == ACE;
     }
 
 

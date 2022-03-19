@@ -1,18 +1,18 @@
 package blackjack.domain.user;
 
+import static blackjack.TestUtils.createDeck;
+import static blackjack.TestUtils.createPlayerByName;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    public static final int MAX_DRAWABLE_COUNT = 11;
+    private static final int MAX_DRAWABLE_COUNT = 11;
 
     @DisplayName("플레이어 생성 검증")
     @Test
@@ -21,21 +21,10 @@ public class PlayerTest {
         String name = "pobi";
 
         //when
-        Player player = Player.from(name);
+        Player player = createPlayerByName(name);
 
         //then
         assertThat(player).isNotNull();
-    }
-
-    @DisplayName("플레이어 생성시 이름 검증")
-    @Test
-    public void testBlankName() {
-        //given
-        String name = " ";
-
-        //when & then
-        assertThatThrownBy(() -> Player.from(name))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("플레이어는 카드를 뽑을 수 있다.")
@@ -43,7 +32,7 @@ public class PlayerTest {
     public void testDrawCard() {
         //given
         Deck deck = createDeck();
-        Player player = Player.from("pobi");
+        Player player = createPlayerByName("pobi");
 
         //when
         player.drawCard(deck);
@@ -58,7 +47,7 @@ public class PlayerTest {
     public void testCardDrawable() {
         //given
         Deck deck = createDeck();
-        Player player = Player.from("pobi");
+        Player player = createPlayerByName("pobi");
 
         //when
         for (int i = 0; i < MAX_DRAWABLE_COUNT; i++) {
@@ -73,7 +62,7 @@ public class PlayerTest {
     public void testShowInitCards() {
         //given
         Deck deck = createDeck();
-        Player player = Player.from("pobi");
+        Player player = createPlayerByName("pobi");
 
         player.drawCard(deck);
         player.drawCard(deck);
@@ -83,9 +72,5 @@ public class PlayerTest {
 
         //then
         assertThat(cards.size()).isEqualTo(2);
-    }
-
-    private Deck createDeck() {
-        return new Deck(new ShuffledDeckGenerateStrategy());
     }
 }
