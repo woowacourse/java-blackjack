@@ -38,7 +38,7 @@ public enum Result {
 
     private static boolean isWin(Player player, Dealer dealer) {
         return (dealer.isBlackjack() && player.isBlackjack()) ||
-                (!player.isBlackjack() && !player.isBust() && (player.getScore() >= dealer.getScore()));
+                !(player.isBlackjack() || player.isBust()) && (player.getScore() >= dealer.getScore());
 
     }
 
