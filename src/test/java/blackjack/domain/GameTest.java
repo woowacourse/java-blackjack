@@ -17,9 +17,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
 import blackjack.domain.participant.Name;
 import blackjack.domain.state.State;
+import blackjack.domain.state.started.finished.Bust;
 import blackjack.domain.state.started.running.Hit;
 import blackjack.domain.state.stateparticipant.Player;
 
@@ -46,7 +46,7 @@ public class GameTest {
 
         // when
         List<Integer> actual = new ArrayList<>();
-        actual.add(game.getDealerScore());
+        actual.add(game.getParticipants().get(0).getScore());
         List<Player> players = game.getPlayers();
         for (Player player : players) {
             actual.add(player.getScore());
@@ -88,19 +88,6 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("딜러의 첫 번째 카드를 반환한다.")
-    void dealerFirstCard() {
-        // given
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
-
-        // when
-        Card actual = game.dealerFirstCard();
-
-        // then
-        assertThat(actual).isEqualTo(new Card(CardSymbol.CLUB, CardNumber.FIVE));
-    }
-
-    @Test
     @DisplayName("딜러의 중지 조건에 만족할 때 까지 카드를 뽑는다. (BUST X)")
     void drawCards_Not_BUST() {
         // given
@@ -111,10 +98,10 @@ public class GameTest {
 
         // when
         game.drawDealerCards();
-        int actual = game.getDealerScore();
+        State actual = game.getParticipants().get(0).getState();
 
         // then
-        assertThat(actual).isEqualTo(17);
+        assertThat(actual).isInstanceOf(Hit.class);
     }
 
     @ParameterizedTest
@@ -143,9 +130,9 @@ public class GameTest {
 
         // when
         game.drawDealerCards();
-        int actual = game.getDealerScore();
+        State actual = game.getParticipants().get(0).getState();
 
         // then
-        assertThat(actual).isEqualTo(25);
+        assertThat(actual).isInstanceOf(Bust.class);
     }
 }

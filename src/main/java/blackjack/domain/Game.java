@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.DrawCount;
@@ -37,10 +36,6 @@ public class Game {
         players.forEach(player -> player.init(cardDeck.drawCard(), cardDeck.drawCard()));
     }
 
-    public Card dealerFirstCard() {
-        return dealer.openCard();
-    }
-
     public Optional<Player> findHitPlayer() {
         return players.stream()
             .filter(player -> !player.isFinished())
@@ -63,14 +58,6 @@ public class Game {
         }
 
         return DrawCount.of(count);
-    }
-
-    public int getDealerScore() {
-        return dealer.getScore();
-    }
-
-    public Dealer getDealer() {
-        return dealer;
     }
 
     public List<Player> getPlayers() {
