@@ -26,7 +26,8 @@ public class BlackjackBoard {
 
     private void distributeCards() {
         dealer.receiveCard(cardDeck.drawCard());
-        players.getPlayers().forEach(player -> player.receiveCards(cardDeck.drawCard(INIT_CARD_COUNT)));
+        players.getPlayers()
+                .forEach(player -> player.receiveCards(cardDeck.drawCard(INIT_CARD_COUNT)));
     }
 
     public boolean isAllPlayerFinished() {
