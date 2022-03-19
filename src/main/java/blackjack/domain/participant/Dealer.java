@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-
 public class Dealer extends Participant {
 	private static final String DEALER_NAME = "딜러";
 	private static final int DEALER_HIT_CARD_STANDARD = 16;
@@ -10,8 +8,8 @@ public class Dealer extends Participant {
 		super(new Name(DEALER_NAME));
 	}
 
-	public Card getFirstCard() {
-		return super.getCards().pickFirstCard();
+	public String getFirstCardName() {
+		return getCards().getFirstCardName();
 	}
 
 	public boolean shouldHit() {

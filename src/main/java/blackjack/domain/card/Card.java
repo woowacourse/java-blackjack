@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public class Card {
+public final class Card {
 	private final CardSymbol symbol;
 	private final CardNumber number;
 
@@ -9,15 +9,15 @@ public class Card {
 		this.number = number;
 	}
 
-	public boolean isAce() {
+	boolean isAce() {
 		return number.equals(CardNumber.ACE);
 	}
 
-	public String getName() {
+	String getName() {
 		return number.getName() + symbol.getName();
 	}
 
-	public int getNumber() {
+	int getNumber() {
 		return number.getNumber();
 	}
 }

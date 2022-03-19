@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Blackjack;
-import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -36,8 +35,7 @@ public class ResultView {
 
 	private static void showDealerStartingStatus(Blackjack blackJack) {
 		Dealer dealer = blackJack.getDealer();
-		Card firstCard = dealer.getFirstCard();
-		System.out.println(dealer.getName() + DELIMITER_COLON + firstCard.getName());
+		System.out.println(dealer.getName() + DELIMITER_COLON + dealer.getFirstCardName());
 	}
 
 	private static void showPlayerStartingStatus(Blackjack blackJack) {

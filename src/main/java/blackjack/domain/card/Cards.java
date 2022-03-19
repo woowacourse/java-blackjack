@@ -63,6 +63,10 @@ public class Cards {
 		this.cards.remove(card);
 	}
 
+	public String getFirstCardName() {
+		return pickFirstCard().getName();
+	}
+
 	public List<String> getCardNames() {
 		return this.cards.stream()
 			.map(Card::getName)
