@@ -9,8 +9,9 @@ import blackjack.domain.card.property.CardNumber;
 import blackjack.domain.card.property.CardShape;
 
 public class CardPack {
-    private final List<Card> cardPack = new LinkedList<>();
     private static final List<Card> cards = createCards();
+
+    private final List<Card> cardPack = new LinkedList<>();
 
     public CardPack() {
         initializeCards();
