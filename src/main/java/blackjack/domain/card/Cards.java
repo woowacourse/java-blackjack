@@ -59,7 +59,7 @@ public class Cards {
 		Collections.shuffle(this.cards);
 	}
 
-	public Card pickFirstCard() {
+	private Card pickFirstCard() {
 		return this.cards.get(0);
 	}
 
