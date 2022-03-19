@@ -20,4 +20,9 @@ public class Hit implements State {
         }
         return new Hit(cards);
     }
+
+    @Override
+    public State stay() {
+        return new Stay();
+    }
 }

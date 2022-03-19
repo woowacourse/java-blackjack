@@ -14,8 +14,8 @@ public class HitTest {
     @Test
     @DisplayName("히트 상태에서 드로우하고 21미만일 경우 드로우 가능")
     void hit_and_draw() {
-        Hit hit = new Hit(new Cards(SPADES_TWO, SPADES_JACK));
-        State state = hit.draw(SPADES_ACE);
+        State state = new Hit(new Cards(SPADES_TWO, SPADES_JACK))
+                .draw(SPADES_ACE);
 
         assertThat(state).isInstanceOf(Hit.class);
     }
@@ -23,8 +23,17 @@ public class HitTest {
     @Test
     @DisplayName("히트 상태에서 21을 초과하면 버스트")
     void hit_and_bust() {
-        Hit hit = new Hit(new Cards(SPADES_JACK, SPADES_TWO));
-        State state = hit.draw(SPADES_TEN);
+        State state = new Hit(new Cards(SPADES_JACK, SPADES_TWO))
+                .draw(SPADES_TEN);
         assertThat(state).isInstanceOf(Bust.class);
+    }
+
+    @Test
+    @DisplayName("히트 상태에서 카드 받기를 거부하면 스테이 상태")
+    void stay() {
+        State state = new Hit(new Cards(SPADES_JACK, SPADES_TWO))
+                .draw(SPADES_ACE)
+                .stay();
+        assertThat(state).isInstanceOf(Stay.class);
     }
 }

@@ -2,7 +2,6 @@ package blackjack_statepattern.state;
 
 import blackjack_statepattern.Card;
 import blackjack_statepattern.Cards;
-import java.util.List;
 
 public final class Ready implements State {
     private final Cards cards;
@@ -27,12 +26,8 @@ public final class Ready implements State {
         return new Hit(cards);
     }
 
-    public static State start(final Card first, final Card second) {
-        Cards cards = new Cards(List.of(first, second));
-        if (cards.isBlackjack()) {
-            return new Blackjack(cards);
-        }
-        return new Hit(cards);
+    @Override
+    public State stay() {
+        throw new IllegalArgumentException("아직 준비중인 상태입니다.");
     }
-
 }
