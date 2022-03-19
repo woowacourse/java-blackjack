@@ -20,14 +20,17 @@ public class MatchResult {
     private Map<String, Integer> calculatePlayerOutcomes(final Map<Player, MatchStatus> resultOfPlayers) {
         final Map<String, Integer> playerOutcomes = new LinkedHashMap<>();
         for (final Entry<Player, MatchStatus> entry : resultOfPlayers.entrySet()) {
-            final Player player = entry.getKey();
-            final MatchStatus matchStatus = entry.getValue();
-
-            final String playerName = player.getName();
-            final int outCome = matchStatus.multiplyRate(player.getBettingAmount());
-            playerOutcomes.put(playerName, outCome);
+            appendPlayerOutcome(playerOutcomes, entry.getKey(), entry.getValue());
         }
         return playerOutcomes;
+    }
+
+    private void appendPlayerOutcome(final Map<String, Integer> playerOutcomes,
+                                     final Player player,
+                                     final MatchStatus matchStatus) {
+        final String playerName = player.getName();
+        final int outCome = matchStatus.multiplyRate(player.getBettingAmount());
+        playerOutcomes.put(playerName, outCome);
     }
 
     private int calculateDealerOutcome(final Map<String, Integer> playerOutcomes) {
