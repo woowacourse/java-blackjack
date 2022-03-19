@@ -1,11 +1,16 @@
 package blackjack.domain.participant;
 
+import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.CLOVER2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
+import blackjack.domain.hand.CardHand;
+import blackjack.domain.hand.OneCard;
+import blackjack.fixture.CardSupplierStub;
+import blackjack.strategy.CardSupplier;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,27 +25,22 @@ public class ParticipantsTest {
         cardStack = new CardDeck();
     }
 
-    @DisplayName("플레이어명의 개수(n)과 딜러 1명을 합한 n+1명의 참여자가 생성된다.")
+    @DisplayName("1명의 딜러와 플레이어명 리스트 크기 만큼의 플레이어가 2장의 패를 가진 상태로 생성된다.")
     @Test
-    void initializeDealerAndPlayers() {
-        Participants participants = Participants.of(
-                List.of("a", "b", "c"), cardStack::pop);
+    void init_initializeDealerAndPlayers() {
+        CardSupplier cards = CardSupplierStub.of(
+                CLOVER2, CLOVER10, CLOVER2, CLOVER10, CLOVER2, CLOVER10);
+        Participants participants = Participants.of(List.of("a", "b"), cards);
 
-        int actual = participants.getValue().size();
+        CardHand expectedCardHand = new OneCard(CLOVER2).hit(CLOVER10);
+        Dealer expectedDealer = new Dealer(expectedCardHand);
+        List<Player> expectedPlayers = List.of(
+                new Player("a", expectedCardHand),
+                new Player("b", expectedCardHand)
+        );
 
-        assertThat(actual).isEqualTo(4);
-    }
-
-    @DisplayName("모든 참여자들은 2장의 패를 가진 상태로 초기화된다.")
-    @Test
-    void initializeAllParticipantsWithTwoCards() {
-        Participants participants = Participants.of(
-                List.of("a", "b", "c"), cardStack::pop);
-
-        for (Participant participant : participants.getValue()) {
-            List<Card> cards = participant.getHand().getCardBundle().getCards();
-            assertThat(cards.size()).isEqualTo(2);
-        }
+        assertThat(participants.getDealer()).isEqualTo(expectedDealer);
+        assertThat(participants.getPlayers()).containsAll(expectedPlayers);
     }
 
     @DisplayName("플레이어명의 리스트가 비어있는 경우, 예외가 발생한다.")
