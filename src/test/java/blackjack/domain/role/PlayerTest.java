@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.BattingAmount;
+import blackjack.domain.BettingAmount;
 import blackjack.domain.card.Hand;
 import blackjack.domain.factory.CardMockFactory;
 import blackjack.domain.util.CreateHand;
@@ -21,7 +21,7 @@ class PlayerTest {
 	@ParameterizedTest(name = "{index} {displayName} hand={0}")
 	@MethodSource("createHand")
 	void drawableTest(final Hand hand, final boolean expectedResult) {
-		Role player = new Player("player", hand, new BattingAmount(1000));
+		Role player = new Player("player", hand, new BettingAmount(1000));
 		assertThat(player.canDraw()).isEqualTo(expectedResult);
 	}
 

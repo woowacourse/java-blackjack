@@ -2,7 +2,7 @@ package blackjack.domain.role;
 
 import java.util.List;
 
-import blackjack.domain.BattingAmount;
+import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Deck;
@@ -14,12 +14,12 @@ public abstract class Role {
 	protected final Hand hand;
 
 	private boolean drawMore;
-	private BattingAmount battingAmount;
+	private BettingAmount bettingAmount;
 
-	public Role(final String name, final Hand hand, final BattingAmount battingAmount) {
+	public Role(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		this.name = name;
 		this.hand = hand;
-		this.battingAmount = battingAmount;
+		this.bettingAmount = bettingAmount;
 		this.drawMore = true;
 	}
 
@@ -31,7 +31,7 @@ public abstract class Role {
 
 	public void distributeBettingAmount(final Outcome outcome) {
 		if (winWithoutBlackJack(outcome)) {
-			battingAmount.giveTwoTimes();
+			bettingAmount.giveTwoTimes();
 		}
 	}
 
@@ -41,29 +41,29 @@ public abstract class Role {
 
 	public void recordCompeteResult(final Outcome outcome, final Role player) {
 		if (outcome == Outcome.VICTORY) {
-			final int finalIncome = battingAmount.getFinalValue() + player.getCurrentIncome();
-			battingAmount = new BattingAmount(finalIncome, battingAmount.getInitialValue());
+			final int finalIncome = bettingAmount.getFinalValue() + player.getCurrentIncome();
+			bettingAmount = new BettingAmount(finalIncome, bettingAmount.getInitialValue());
 			player.loseAll();
 		}
 	}
 
 	private int getCurrentIncome() {
-		return battingAmount.getFinalValue();
+		return bettingAmount.getFinalValue();
 	}
 
 	private void loseAll() {
-		battingAmount.loseAll();
+		bettingAmount.loseAll();
 	}
 
 	public int getIncome() {
-		return battingAmount.calculateIncome();
+		return bettingAmount.calculateIncome();
 	}
 
 	public void earnAmountByBlackJack() {
 		if (calculateFinalScore() != BlackJack.OPTIMIZED_WINNING_NUMBER) {
 			return;
 		}
-		battingAmount.giveOneAndHalfTime();
+		bettingAmount.giveOneAndHalfTime();
 	}
 
 	public int calculateFinalScore() {
@@ -71,7 +71,7 @@ public abstract class Role {
 	}
 
 	public int calculateBettingResult() {
-		return battingAmount.calculateIncome();
+		return bettingAmount.calculateIncome();
 	}
 
 	public void stopDraw() {

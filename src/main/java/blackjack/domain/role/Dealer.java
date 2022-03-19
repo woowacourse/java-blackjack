@@ -2,7 +2,7 @@ package blackjack.domain.role;
 
 import java.util.function.Supplier;
 
-import blackjack.domain.BattingAmount;
+import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
 import blackjack.domain.card.Hand;
 
@@ -14,7 +14,7 @@ public class Dealer extends Role {
 	private final Supplier<Boolean> drawable;
 
 	public Dealer(final Hand hand, final Supplier<Boolean> drawable) {
-		super(DEALER_NAME, hand, new BattingAmount(10));
+		super(DEALER_NAME, hand, new BettingAmount(10));
 		this.drawable = drawable;
 	}
 

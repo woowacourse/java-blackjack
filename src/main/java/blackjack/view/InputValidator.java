@@ -12,7 +12,7 @@ public class InputValidator {
 	private static final String INPUT_CONTAINS_SPACE_ERROR = "입력 값에 공백을 포함할 수 없습니다.";
 	private static final String NAME_DUPLICATED_ERROR = "중복된 이름을 사용할 수 없습니다.";
 	private static final String PROPER_CHOICE_ERROR = "선택하는 입력 값은 y 또는 n 이어야 합니다.";
-	private static final String BATTING_AMOUNT_NOT_NUMBER_ERROR = "배팅 금액은 자연수여야 합니다.";
+	private static final String BETTING_AMOUNT_NOT_NUMBER_ERROR = "배팅 금액은 자연수여야 합니다.";
 	private static final String SPACE = " ";
 	private static final String NAME_DISTRIBUTOR = ",";
 	private static final String CHOICE_YES = "y";
@@ -65,7 +65,7 @@ public class InputValidator {
 
 	private static void validateNumber(String number) {
 		if (!COMPILED_NUMBER_PATTERN.matcher(number).matches()) {
-			throw new IllegalArgumentException(BATTING_AMOUNT_NOT_NUMBER_ERROR);
+			throw new IllegalArgumentException(BETTING_AMOUNT_NOT_NUMBER_ERROR);
 		}
 	}
 }

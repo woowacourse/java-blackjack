@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import blackjack.domain.BattingAmount;
+import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
 import blackjack.domain.DealerDrawChoice;
 import blackjack.domain.Outcome;
@@ -50,7 +50,7 @@ public class Roles {
 	public void joinPlayers(final Map<String, Integer> playersInformation) {
 		players = playersInformation.entrySet()
 			.stream()
-			.map(player -> new Player(player.getKey(), new Hand(), new BattingAmount(player.getValue())))
+			.map(player -> new Player(player.getKey(), new Hand(), new BettingAmount(player.getValue())))
 			.collect(Collectors.toList());
 	}
 

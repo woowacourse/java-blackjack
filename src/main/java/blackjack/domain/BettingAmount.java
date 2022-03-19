@@ -1,26 +1,26 @@
 package blackjack.domain;
 
-public class BattingAmount {
+public class BettingAmount {
 
 	private static final int MIN_VALUE = 10;
-	private static final String LACK_OF_BATTING_AMOUNT_ERROR = "배팅 금액은 최소 10원이어야 합니다.";
+	private static final String LACK_OF_BETTING_AMOUNT_ERROR = "배팅 금액은 최소 10원이어야 합니다.";
 
 	private final int initialValue;
 	private int finalValue;
 
-	public BattingAmount(final int value) {
+	public BettingAmount(final int value) {
 		this(value, value);
 	}
 
-	public BattingAmount(final int finalValue, final int initialValue) {
-		validateBattingAmount(initialValue);
+	public BettingAmount(final int finalValue, final int initialValue) {
+		validateBettingAmount(initialValue);
 		this.finalValue = finalValue;
 		this.initialValue = initialValue;
 	}
 
-	private void validateBattingAmount(final int value) {
+	private void validateBettingAmount(final int value) {
 		if (value < MIN_VALUE) {
-			throw new IllegalArgumentException(LACK_OF_BATTING_AMOUNT_ERROR);
+			throw new IllegalArgumentException(LACK_OF_BETTING_AMOUNT_ERROR);
 		}
 	}
 

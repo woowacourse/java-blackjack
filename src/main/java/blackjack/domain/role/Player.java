@@ -1,13 +1,13 @@
 package blackjack.domain.role;
 
-import blackjack.domain.BattingAmount;
+import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
 import blackjack.domain.card.Hand;
 
 public class Player extends Role {
 
-	public Player(final String name, final Hand hand, final BattingAmount battingAmount) {
-		super(name, hand, battingAmount);
+	public Player(final String name, final Hand hand, final BettingAmount bettingAmount) {
+		super(name, hand, bettingAmount);
 	}
 
 	@Override
