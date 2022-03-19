@@ -7,7 +7,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import domain.card.Card;
@@ -27,17 +26,6 @@ public class ParticipantTest {
 		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card, card1, card1)),
 			new Betting(0));
 		assertThat(participant.isBust()).isTrue();
-	}
-
-	@ParameterizedTest(name = "손패가 MAX SCORE인지 확인하는 기능 - case : {0}, {1}, {2}")
-	@CsvSource(value = {"ACE, ACE, NINE", "KING, QUEEN, ACE", "KING, EIGHT, THREE"})
-	void isBlackJack(String input1, String input2, String input3) {
-		Card card1 = new Card(Denomination.valueOf(input1), Suit.HEART);
-		Card card2 = new Card(Denomination.valueOf(input2), Suit.SPADE);
-		Card card3 = new Card(Denomination.valueOf(input3), Suit.CLOVER);
-		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card1, card2, card3)),
-			new Betting(0));
-		assertThat(participant.isMaxScore()).isTrue();
 	}
 
 	@Test()

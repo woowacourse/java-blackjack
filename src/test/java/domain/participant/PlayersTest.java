@@ -39,22 +39,7 @@ public class PlayersTest {
 	}
 
 	@Test
-	@DisplayName("모든 플레이어가 Bust 인지 판별")
-	void checkAllBust() {
-		Players players = new Players(Arrays.asList(pobi, jason));
-		assertThat(players.checkAllBust()).isFalse();
-	}
-
-	@Test
-	@DisplayName("이름으로 플레이어가 21인지 판별")
-	void checkMaxScore() {
-		Players players = new Players(Arrays.asList(pobi, jason));
-		int pobiIdx = 0;
-		assertThat(players.checkMaxScore(pobiIdx)).isTrue();
-	}
-
-	@Test
-	@DisplayName("플레이어 draw 확인")
+	@DisplayName("플레이어 draw가 정상적으로 되는지 확인")
 	void addCard() {
 		Players players = new Players(Arrays.asList(pobi, jason));
 		int pobiIdx = 0;

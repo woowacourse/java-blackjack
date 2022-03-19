@@ -24,11 +24,7 @@ public class Hand {
 	public boolean isBust() {
 		return sumPoint() > LIMIT_TO_NOT_BUST_SCORE;
 	}
-
-	public boolean isMaxScore() {
-		return getScore() == LIMIT_TO_NOT_BUST_SCORE;
-	}
-
+	
 	public int getScore() {
 		boolean hasAce = hand.stream().filter(Card::isAce).count() > 0;
 		int score = sumPoint();

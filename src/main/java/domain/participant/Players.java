@@ -23,19 +23,8 @@ public class Players {
 		players.get(idx).addCard(card);
 	}
 
-	public boolean checkAllBust() {
-		long count = players.stream()
-			.filter(Player::isBust)
-			.count();
-		return count == players.size();
-	}
-
 	public boolean checkBust(int idx) {
 		return players.get(idx).isBust();
-	}
-
-	public boolean checkMaxScore(int idx) {
-		return players.get(idx).isMaxScore();
 	}
 
 	public LinkedHashMap<Participant, EarningRate> getResult(Dealer other) {
@@ -45,7 +34,7 @@ public class Players {
 		return map;
 	}
 
-	public int getSize() {
+	public int getNumberOfPlayers() {
 		return players.size();
 	}
 

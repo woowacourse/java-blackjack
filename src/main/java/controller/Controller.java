@@ -28,7 +28,7 @@ public class Controller {
 
 		if (!dealer.isBlackJack()) {
 			drawForPlayers(deck, players);
-			drawForDealer(deck, dealer, players);
+			drawForDealer(deck, dealer);
 		}
 
 		printHandAndScore(dealer, players);
@@ -60,37 +60,23 @@ public class Controller {
 		OutputView.printInitMessage(players.showNames());
 		OutputView.printOneHandForDealer(dealer.showName(), dealer.showHand());
 
-		IntStream.range(0, players.getSize())
+		IntStream.range(0, players.getNumberOfPlayers())
 			.forEach(idx -> OutputView.printHand(players.showName(idx), players.showHand(idx)));
 	}
 
 	private void drawForPlayers(Deck deck, Players players) {
-		IntStream.range(0, players.getSize())
+		IntStream.range(0, players.getNumberOfPlayers())
 			.forEach(idx -> askAndDrawForPlayer(deck, players, idx));
 	}
 
 	private void askAndDrawForPlayer(Deck deck, Players players, int idx) {
-		boolean isKeepDraw = !(players.checkMaxScore(idx));
-
-		while (isKeepDraw && InputView.askDraw(players.showName(idx))) {
+		while (!players.checkBust(idx) && InputView.askDraw(players.showName(idx))) {
 			players.addCard(idx, deck.draw());
 			OutputView.printHand(players.showName(idx), players.showHand(idx));
-			isKeepDraw = checkMaxScoreOrBust(players, idx);
 		}
 	}
 
-	private boolean checkMaxScoreOrBust(Players players, int idx) {
-		if (players.checkMaxScore(idx) || players.checkBust(idx)) {
-			return false;
-		}
-		return true;
-	}
-
-	private void drawForDealer(Deck deck, Dealer dealer, Players players) {
-		if (players.checkAllBust()) {
-			return;
-		}
-
+	private void drawForDealer(Deck deck, Dealer dealer) {
 		while (!dealer.isEnoughCard()) {
 			OutputView.printDealerDrawMessage();
 			dealer.addCard(deck.draw());
@@ -100,7 +86,7 @@ public class Controller {
 	public void printHandAndScore(Dealer dealer, Players players) {
 		OutputView.printHandAndScore(dealer.showName(), dealer.showHand(), dealer.getScore());
 
-		IntStream.range(0, players.getSize())
+		IntStream.range(0, players.getNumberOfPlayers())
 			.forEach(idx -> OutputView.printHandAndScore(players.showName(idx), players.showHand(idx),
 				players.showScore(idx)));
 	}

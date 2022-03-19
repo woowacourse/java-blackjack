@@ -27,10 +27,6 @@ public class Participant {
 		return hand.isBust();
 	}
 
-	public boolean isMaxScore() {
-		return hand.isMaxScore();
-	}
-
 	public int getScore() {
 		return hand.getScore();
 	}
@@ -49,9 +45,5 @@ public class Participant {
 
 	public int showBetting() {
 		return betting.getBettingMoney();
-	}
-
-	public Name getName() {
-		return name;
 	}
 }
