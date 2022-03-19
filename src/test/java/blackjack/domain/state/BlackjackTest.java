@@ -1,5 +1,7 @@
 package blackjack.domain.state;
 
+import static blackjack.domain.CardFixtures.JACK_SPACE;
+import static blackjack.domain.CardFixtures.KING_SPACE;
 import static blackjack.domain.CardFixtures.TWO_SPACE;
 import static blackjack.domain.CardsFixtures.BLACKJACK;
 import static blackjack.domain.CardsFixtures.HIT;
@@ -61,5 +63,29 @@ class BlackjackTest {
         boolean result = blackjack.isFinished();
 
         assertThat(result).isTrue();
+    }
+
+    @DisplayName("상대 상태가 블랙잭이면 무승부이므로 earning rate는 0이다.")
+    @Test
+    void 블랙잭_무승부() {
+        State blackjack = new Blackjack(BLACKJACK);
+        State otherBlackjack = new Blackjack(BLACKJACK);
+
+        double earningRate = blackjack.earningRate(otherBlackjack);
+
+        assertThat(earningRate).isEqualTo(0);
+    }
+
+    @DisplayName("상대 상태가 블랙잭이 아니면 승이므로 earning rate는 1.5이다.")
+    @Test
+    void 블랙잭_승() {
+        State blackjack = new Blackjack(BLACKJACK);
+        State otherState = new Ready()
+                .draw(KING_SPACE)
+                .draw(JACK_SPACE);
+
+        double earningRate = blackjack.earningRate(otherState);
+
+        assertThat(earningRate).isEqualTo(1.5);
     }
 }

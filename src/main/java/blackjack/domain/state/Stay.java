@@ -35,4 +35,9 @@ public class Stay implements State {
     public Cards cards() {
         return null;
     }
+
+    @Override
+    public double earningRate(State state) {
+        return 0;
+    }
 }

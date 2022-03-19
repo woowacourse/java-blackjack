@@ -42,4 +42,14 @@ public class Blackjack implements State {
     public Cards cards() {
         return cards;
     }
+
+    @Override
+    public double earningRate(State state) {
+        Cards otherCards = state.cards();
+        if (otherCards.isBlackjack()) {
+            return 0;
+        }
+
+        return 1.5;
+    }
 }

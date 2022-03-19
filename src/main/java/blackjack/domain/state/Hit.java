@@ -41,4 +41,9 @@ public class Hit implements State {
     public Cards cards() {
         return cards;
     }
+
+    @Override
+    public double earningRate(State state) {
+        return 0;
+    }
 }

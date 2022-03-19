@@ -14,4 +14,6 @@ public interface State {
     boolean isFinished();
 
     Cards cards();
+
+    double earningRate(State state);
 }
