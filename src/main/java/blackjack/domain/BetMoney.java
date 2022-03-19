@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class BetMoney {
 
-    private int betMoney;
+    private final int betMoney;
 
     public BetMoney(int betMoney) {
         checkNegative(betMoney);

@@ -39,7 +39,7 @@ public enum GameResult {
 
     public static GameResult findResult(final Player dealer, final Gamer gamer) {
         return Arrays.stream(values())
-            .filter((result) -> result.predicate.test(dealer, gamer))
+            .filter(result -> result.predicate.test(dealer, gamer))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하는 결과가 없습니다."));
     }

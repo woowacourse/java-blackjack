@@ -17,8 +17,6 @@ public abstract class Player {
         cards.save(card);
     }
 
-    public abstract List<Card> openCards();
-
     public List<Card> showCards() {
         return List.copyOf(cards.getCards());
     }
@@ -27,10 +25,12 @@ public abstract class Player {
         return cards.calculateTotalPoint();
     }
 
-    public abstract boolean isReceivable();
-
     public boolean isBlackJack() {
         return cards.isBlackJackSize();
     }
+
+    public abstract List<Card> openCards();
+
+    public abstract boolean isReceivable();
 
 }
