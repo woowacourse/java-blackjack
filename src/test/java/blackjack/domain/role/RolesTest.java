@@ -137,5 +137,4 @@ class RolesTest {
 			Arguments.of(deck2, 500)
 		);
 	}
-
 }
