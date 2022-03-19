@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.HoldCards;
+import blackjack.domain.entry.Dealer;
 
 public final class Bust extends Finished {
 
@@ -11,7 +12,7 @@ public final class Bust extends Finished {
     }
 
     @Override
-    protected double earningRate() {
+    protected double earningRate(Dealer dealer) {
         return BUST_RATE;
     }
 }

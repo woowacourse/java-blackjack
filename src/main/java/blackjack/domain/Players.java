@@ -54,7 +54,7 @@ public class Players {
         for (Player player : players.keySet()) {
             BettingMoney bettingMoney = player.getBettingMoney();
             State state = players.get(player);
-            result.put(player.getName().getValue(), state.profit(bettingMoney));
+            result.put(player.getName().getValue(), state.profit(bettingMoney, dealer));
         }
         return result;
     }

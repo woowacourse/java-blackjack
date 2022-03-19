@@ -1,5 +1,7 @@
 package blackjack.domain.entry.vo;
 
+import java.util.Objects;
+
 public class BettingMoney {
 
     private static final int MINIMUM_AMOUNT_UNIT = 1000;
@@ -19,6 +21,23 @@ public class BettingMoney {
         if (amount > MAXIMUM_AMOUNT) {
             throw new IllegalArgumentException("배팅 금액은 500만을 넘을 수 없습니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof BettingMoney)) {
+            return false;
+        }
+        BettingMoney that = (BettingMoney) o;
+        return amount == that.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
     }
 
     public int getAmount() {

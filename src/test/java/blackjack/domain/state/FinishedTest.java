@@ -1,6 +1,6 @@
 package blackjack.domain.state;
 
-import static blackjack.fixtures.CardFixtures.SPADE_ACE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import blackjack.domain.card.HoldCards;

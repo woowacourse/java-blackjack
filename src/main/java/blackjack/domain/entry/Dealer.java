@@ -1,6 +1,7 @@
 package blackjack.domain.entry;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.HoldCards;
 
 public class Dealer {
@@ -32,5 +33,13 @@ public class Dealer {
 
     public void addCard(Card card) {
         this.holdCards.addCard(card);
+    }
+
+    public boolean isBlackjack() {
+        return holdCards.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return holdCards.countBestNumber() > CardNumber.BLACK_JACK_NUMBER;
     }
 }

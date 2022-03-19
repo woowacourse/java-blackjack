@@ -1,8 +1,8 @@
 package blackjack.domain.entry;
 
-import static blackjack.fixtures.CardFixtures.SPADE_EIGHT;
-import static blackjack.fixtures.CardFixtures.SPADE_NINE;
-import static blackjack.fixtures.CardFixtures.SPADE_SEVEN;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_EIGHT;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_NINE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_SEVEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.HoldCards;
 import org.junit.jupiter.api.DisplayName;

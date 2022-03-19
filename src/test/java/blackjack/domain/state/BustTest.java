@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import static blackjack.fixtures.BlackjackFixtures.TEN_DEALER;
 import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.HoldCards;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,7 @@ class BustTest {
     void bustRate() {
         Bust bust = new Bust(new HoldCards());
 
-        assertThat(bust.earningRate()).isEqualTo(-1);
+        assertThat(bust.earningRate(TEN_DEALER)).isEqualTo(-1);
     }
 
 }

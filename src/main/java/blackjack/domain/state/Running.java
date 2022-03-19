@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.HoldCards;
+import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.vo.BettingMoney;
 
 public abstract class Running implements State {
@@ -29,7 +30,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public double profit(BettingMoney bettingMoney) {
+    public double profit(BettingMoney bettingMoney, Dealer dealer) {
         throw new IllegalStateException("Running 상태에서 수입을 확인할 수 없습니다.");
     }
 

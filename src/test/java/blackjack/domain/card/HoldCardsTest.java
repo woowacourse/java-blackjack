@@ -1,9 +1,9 @@
 package blackjack.domain.card;
 
-import static blackjack.fixtures.CardFixtures.SPADE_ACE;
-import static blackjack.fixtures.CardFixtures.SPADE_FOUR;
-import static blackjack.fixtures.CardFixtures.SPADE_TEN;
-import static blackjack.fixtures.CardFixtures.SPADE_THREE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_ACE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_FOUR;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_TEN;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import java.util.List;

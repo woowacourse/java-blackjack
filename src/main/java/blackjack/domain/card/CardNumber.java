@@ -17,8 +17,8 @@ public enum CardNumber {
     QUEEN(10, "Q"),
     KING(10, "K");
 
+    public static final int BLACK_JACK_NUMBER = 21;
     private static final int SUM_HIDDEN_ACE = -1 + 11;
-    private static final int BLACK_JACK_NUMBER = 21;
     private static final int BLACKJACK_CARDS_SIZE = 2;
 
     private final int value;

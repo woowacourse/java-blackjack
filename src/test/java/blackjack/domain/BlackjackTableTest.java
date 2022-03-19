@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import static blackjack.fixtures.CardFixtures.SPADE_EIGHT;
-import static blackjack.fixtures.CardFixtures.SPADE_NINE;
-import static blackjack.fixtures.CardFixtures.SPADE_SEVEN;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_EIGHT;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_NINE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_SEVEN;
 import blackjack.domain.entry.vo.Name;
 import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;

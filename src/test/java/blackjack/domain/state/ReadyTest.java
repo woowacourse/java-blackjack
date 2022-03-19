@@ -1,14 +1,15 @@
 package blackjack.domain.state;
 
-import static blackjack.fixtures.CardFixtures.SPADE_ACE;
-import static blackjack.fixtures.CardFixtures.SPADE_EIGHT;
-import static blackjack.fixtures.CardFixtures.SPADE_FOUR;
-import static blackjack.fixtures.CardFixtures.SPADE_KING;
-import static blackjack.fixtures.CardFixtures.SPADE_NINE;
-import static blackjack.fixtures.CardFixtures.SPADE_SEVEN;
-import static blackjack.fixtures.CardFixtures.SPADE_TEN;
-import static blackjack.fixtures.CardFixtures.SPADE_THREE;
-import static blackjack.fixtures.CardFixtures.SPADE_TWO;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_ACE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_EIGHT;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_FOUR;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_KING;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_NINE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_SEVEN;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_TEN;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_THREE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_TWO;
+import static blackjack.fixtures.BlackjackFixtures.TEN_DEALER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import blackjack.domain.card.HoldCards;
@@ -39,7 +40,7 @@ class ReadyTest {
     void blackjackMoney() {
         State state = Ready.start(SPADE_ACE, SPADE_KING);
 
-        assertThat(state.profit(new BettingMoney(10000))).isEqualTo(15000);
+        assertThat(state.profit(new BettingMoney(10000), TEN_DEALER)).isEqualTo(15000);
     }
 
     @Test
@@ -74,7 +75,7 @@ class ReadyTest {
         State state = Ready.start(SPADE_THREE, SPADE_KING);
         state = state.draw(SPADE_NINE);
 
-        assertThat(state.profit(new BettingMoney(10000))).isEqualTo(-10000);
+        assertThat(state.profit(new BettingMoney(10000), TEN_DEALER)).isEqualTo(-10000);
     }
 
     @Test
@@ -119,7 +120,7 @@ class ReadyTest {
         State ready = new Ready(new HoldCards());
 
         assertThatIllegalStateException()
-            .isThrownBy(() -> ready.profit(new BettingMoney(1000)))
+            .isThrownBy(() -> ready.profit(new BettingMoney(1000), TEN_DEALER))
             .withMessage("Running 상태에서 수입을 확인할 수 없습니다.");
     }
 }
