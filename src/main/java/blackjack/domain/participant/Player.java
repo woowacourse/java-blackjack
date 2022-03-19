@@ -35,8 +35,7 @@ public final class Player extends BlackjackParticipant {
     @Override
     protected boolean shouldStay() {
         CardBundle cardBundle = cardHand.getCardBundle();
-        int scoreInt = cardBundle.toScoreInt();
-        return scoreInt == MAX_HIT_SCORE;
+        return cardBundle.hasScoreOf(MAX_HIT_SCORE);
     }
 
     @Override

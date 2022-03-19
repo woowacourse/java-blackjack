@@ -59,13 +59,23 @@ public class CardBundle {
         if (cards.size() != BLACKJACK_CARD_SIZE) {
             return false;
         }
-        int scoreInt = this.toScoreInt();
-        return scoreInt == Score.BLACKJACK;
+        int scoreValue = getScoreValue();
+        return scoreValue == Score.BLACKJACK;
     }
 
     public boolean isBust() {
-        int score = toScoreInt();
-        return score > Score.BLACKJACK;
+        int scoreValue = getScoreValue();
+        return scoreValue > Score.BLACKJACK;
+    }
+
+    public boolean hasScoreOf(int targetValue) {
+        int scoreValue = getScoreValue();
+        return scoreValue == targetValue;
+    }
+
+    public boolean hasScoreOver(int targetValue) {
+        int scoreValue = getScoreValue();
+        return scoreValue > targetValue;
     }
 
     public List<Card> getCards() {
@@ -76,7 +86,7 @@ public class CardBundle {
         return score;
     }
 
-    public int toScoreInt() {
+    private int getScoreValue() {
         return score.toInt();
     }
 
