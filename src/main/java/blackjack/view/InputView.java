@@ -16,12 +16,10 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static List<String> inputNames() {
+    public static Map<String, Integer> inputBettingMoney() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return toNames(SCANNER.nextLine().trim());
-    }
+        List<String> playerNames = toNames(SCANNER.nextLine().trim());
 
-    public static Map<String, Integer> inputBettingMoney(List<String> playerNames) {
         Map<String, Integer> players = new HashMap<>();
         for (String playerName : playerNames) {
             System.out.println(MessageFormat.format("{0}의 배팅 금액은?", playerName));

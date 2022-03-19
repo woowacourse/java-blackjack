@@ -13,37 +13,35 @@ import java.util.Map;
 public class BlackjackGame {
 
     public void start() {
-        List<String> names = InputView.inputNames();
-        Map<String, Integer> bettingPlayers = InputView.inputBettingMoney(names);
-
         // 카드 분배
-        BlackjackTable table = new BlackjackTable(bettingPlayers);
-        while (table.isReady()) {
-            table.divideCard();
-        }
-        OutputView.printDealerCards(table.getDealer(), table.getPlayers());
+        BlackjackTable blackjackTable = new BlackjackTable(InputView.inputBettingMoney());
+        OutputView.printDealerCards(blackjackTable.getDealer(), blackjackTable.getPlayers());
 
-        // 플레이어 추가 분배
-        for (String name : names) {
-            while (!table.isFinished(name)) {
-                List<Card> cards = table.hit(new Name(name), InputView.inputCommand(name));
-                OutputView.printPlayerCards(name, cards);
-            }
+        // 플레이어 Hit
+        for (Name name : blackjackTable.getPlayerNames()) {
+            hit(blackjackTable, name);
         }
 
-        // 딜러 추가 분배
-        while (!table.isFinishedDealer()) {
-            table.divideCardByDealer();
+        // 딜러 Hit
+        while (!blackjackTable.isFinishedDealer()) {
+            blackjackTable.divideCardByDealer();
             OutputView.printReceivingMoreCardOfDealer();
         }
 
         // 결과
-        Dealer dealer = table.getDealer();
-        Map<Name, HoldCards> players = table.getPlayers();
+        Dealer dealer = blackjackTable.getDealer();
+        Map<Name, HoldCards> players = blackjackTable.getPlayers();
         OutputView.printResult(dealer.getName(), dealer.getHoldCards().getCards(), dealer.getHoldCards().countBestNumber());
         for (Name name : players.keySet()) {
             OutputView.printResult(name.getValue(), players.get(name).getCards(), players.get(name).countBestNumber());
         }
-        OutputView.printGameResult(table.getResult());
+        OutputView.printGameResult(blackjackTable.getResult());
+    }
+
+    private void hit(BlackjackTable blackjackTable, Name name) {
+        while (!blackjackTable.isFinishedPlayer(name)) {
+            List<Card> cards = blackjackTable.hit(name, InputView.inputCommand(name.getValue()));
+            OutputView.printPlayerCards(name.getValue(), cards);
+        }
     }
 }
