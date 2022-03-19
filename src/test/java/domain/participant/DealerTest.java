@@ -6,11 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -58,12 +54,12 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 결과값을 받는다.")
     void checkResultTest() {
-        Map<Player, Result> testPlayerResult = new HashMap<>();
+        Map<Player, PlayerResult> testPlayerResult = new HashMap<>();
 
-        testPlayerResult.put(new Player("name", 1000), Result.LOSE);
-        testPlayerResult.put(new Player("name", 2000), Result.DRAW);
-        testPlayerResult.put(new Player("name", 3000), Result.WIN);
-        testPlayerResult.put(new Player("name", 4000), Result.BLACKJACK);
+        testPlayerResult.put(new Player("name", 1000), PlayerResult.LOSE);
+        testPlayerResult.put(new Player("name", 2000), PlayerResult.DRAW);
+        testPlayerResult.put(new Player("name", 3000), PlayerResult.WIN);
+        testPlayerResult.put(new Player("name", 4000), PlayerResult.BLACKJACK);
 
         assertThat(dealer.getResultMoney(testPlayerResult)).isEqualTo(-8000);
     }

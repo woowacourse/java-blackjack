@@ -11,7 +11,7 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    public int getResultMoney(Map<Player, Result> playersResult) {
+    public int getResultMoney(Map<Player, PlayerResult> playersResult) {
         return (int) playersResult.entrySet().stream()
             .mapToDouble(entry -> entry.getKey().getMoney() * entry.getValue().getProfitRate() * -1)
             .sum();

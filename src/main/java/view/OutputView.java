@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.participant.Result;
+import domain.participant.PlayerResult;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -76,15 +76,15 @@ public class OutputView {
         System.out.println(DEALER_HIT_CARD_MESSAGE);
     }
 
-    public void showResult(Dealer dealer, Map<Player, Result> playerResult) {
+    public void showResult(Dealer dealer, Map<Player, PlayerResult> playerResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
         System.out.println(dealer.getName() + DELIMITER + dealer.getResultMoney(playerResult));
 
         showPlayersResult(playerResult);
     }
 
-    private void showPlayersResult(Map<Player, Result> playerResult) {
-        for (Entry<Player, Result> result : playerResult.entrySet()) {
+    private void showPlayersResult(Map<Player, PlayerResult> playerResult) {
+        for (Entry<Player, PlayerResult> result : playerResult.entrySet()) {
             System.out.println(result.getKey().getName() + DELIMITER
                 + (int) (result.getValue().getProfitRate() * result.getKey().getMoney()));
         }

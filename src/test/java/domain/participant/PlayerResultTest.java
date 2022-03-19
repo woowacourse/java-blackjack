@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ResultTest {
+class PlayerResultTest {
 
     private Dealer dealer;
     private Player player;
@@ -29,7 +29,7 @@ class ResultTest {
         dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
         dealer.hit(Card.of(Symbol.HEART, Denomination.EIGHT));
 
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.BLACKJACK);
+        assertThat(PlayerResult.of(player, dealer)).isEqualTo(PlayerResult.BLACKJACK);
     }
 
 
@@ -42,7 +42,7 @@ class ResultTest {
         dealer.hit(Card.of(Symbol.SPADE, Denomination.QUEEN));
         dealer.hit(Card.of(Symbol.CLOVER, Denomination.ACE));
 
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.DRAW);
+        assertThat(PlayerResult.of(player, dealer)).isEqualTo(PlayerResult.DRAW);
     }
 
     @Test
@@ -56,7 +56,7 @@ class ResultTest {
         dealer.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
         System.out.println(dealer.isBurst());
 
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.LOSE);
+        assertThat(PlayerResult.of(player, dealer)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -69,7 +69,7 @@ class ResultTest {
         player.hit(Card.of(Symbol.SPADE, Denomination.QUEEN));
         player.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
 
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.WIN);
+        assertThat(PlayerResult.of(player, dealer)).isEqualTo(PlayerResult.WIN);
     }
 
 
@@ -84,7 +84,7 @@ class ResultTest {
         player.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
         player.hit(Card.of(Symbol.CLOVER, Denomination.QUEEN));
 
-        assertThat(Result.of(player, dealer)).isEqualTo(Result.DRAW);
+        assertThat(PlayerResult.of(player, dealer)).isEqualTo(PlayerResult.DRAW);
     }
 
 }

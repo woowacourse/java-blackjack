@@ -3,7 +3,7 @@ package domain.participant;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-public enum Result {
+public enum PlayerResult {
     BLACKJACK(1.5, ((player, dealer) -> player.isBlackJack() && !dealer.isBlackJack())),
     DRAW(0, (player, dealer) -> player.isBlackJack() && dealer.isBlackJack()
         || player.score() == dealer.score() || player.isBurst() && dealer.isBurst()),
@@ -15,12 +15,12 @@ public enum Result {
     private final double profitRate;
     private final BiPredicate<Player, Dealer> condition;
 
-    Result(double profitRate, BiPredicate<Player, Dealer> condition) {
+    PlayerResult(double profitRate, BiPredicate<Player, Dealer> condition) {
         this.profitRate = profitRate;
         this.condition = condition;
     }
 
-    public static Result of(Player player, Dealer dealer) {
+    public static PlayerResult of(Player player, Dealer dealer) {
         return Arrays.stream(values())
             .filter(result -> result.condition.test(player, dealer))
             .findAny()

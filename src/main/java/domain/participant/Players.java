@@ -36,10 +36,10 @@ public class Players {
             .collect(Collectors.toList());
     }
 
-    public Map<Player, Result> checkResults(Dealer dealer) {
-        Map<Player, Result> playerResult = new LinkedHashMap<>();
-        List<Result> results = players.stream()
-            .map(player -> Result.of(player, dealer))
+    public Map<Player, PlayerResult> checkResults(Dealer dealer) {
+        Map<Player, PlayerResult> playerResult = new LinkedHashMap<>();
+        List<PlayerResult> results = players.stream()
+            .map(player -> PlayerResult.of(player, dealer))
             .collect(Collectors.toList());
 
         for (int i = 0; i < players.size(); i++) {
