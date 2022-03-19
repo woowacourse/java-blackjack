@@ -3,13 +3,13 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.human.Dealer;
-import blackjack.domain.result.PrideCalculator;
+import blackjack.domain.result.PayoutCalculator;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class PrideCalculatorTest {
+class PayoutCalculatorTest {
 
     @Nested
     @DisplayName("플레이어 1.5배 우승 결과 테스트")
@@ -22,7 +22,7 @@ class PrideCalculatorTest {
             fx.POBI.addCard(fx.TEN);
             Dealer dealer = new Dealer(List.of(fx.TEN, fx.NINE, fx.TEN));
 
-            assertThat(PrideCalculator.compute(fx.POBI, dealer))
+            assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(15000);
         }
     }
@@ -38,7 +38,7 @@ class PrideCalculatorTest {
             fx.POBI.addCard(fx.TEN);
             Dealer dealer = new Dealer(List.of(fx.ACE, fx.TEN));
 
-            assertThat(PrideCalculator.compute(fx.POBI, dealer))
+            assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(0);
         }
     }
@@ -54,7 +54,7 @@ class PrideCalculatorTest {
             fx.POBI.addCard(fx.TEN);
             Dealer dealer = new Dealer(
                     List.of(fx.TEN, fx.NINE, fx.EIGHT));
-            assertThat(PrideCalculator.compute(fx.POBI, dealer))
+            assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(10000);
         }
     }
@@ -69,7 +69,7 @@ class PrideCalculatorTest {
             fx.POBI.addCard(fx.TWO);
             fx.POBI.addCard(fx.TEN);
             Dealer dealer = new Dealer(List.of(fx.TEN, fx.NINE, fx.ACE));
-            assertThat(PrideCalculator.compute(fx.POBI, dealer))
+            assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(-10000);
         }
     }
@@ -84,7 +84,7 @@ class PrideCalculatorTest {
             fx.POBI.addCard(fx.TEN);
             fx.POBI.addCard(fx.TEN);
             Dealer dealer = new Dealer(List.of(fx.ACE, fx.ACE));
-            assertThat(PrideCalculator.compute(fx.POBI, dealer))
+            assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(10000);
         }
     }
@@ -100,7 +100,7 @@ class PrideCalculatorTest {
             fx.POBI.addCard(fx.ACE);
             fx.POBI.addCard(fx.ACE);
             Dealer dealer = new Dealer(List.of(fx.ACE, fx.ACE));
-            assertThat(PrideCalculator.compute(fx.POBI, dealer))
+            assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(0);
         }
     }
@@ -116,7 +116,7 @@ class PrideCalculatorTest {
             fx.POBI.addCard(fx.TEN);
             fx.POBI.addCard(fx.TEN);
             Dealer dealer = new Dealer(List.of(fx.ACE, fx.NINE));
-            assertThat(PrideCalculator.compute(fx.POBI, dealer))
+            assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(-10000);
         }
     }

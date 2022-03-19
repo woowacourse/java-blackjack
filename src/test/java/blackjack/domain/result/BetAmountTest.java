@@ -7,23 +7,23 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BettingTest {
+class BetAmountTest {
 
     @Test
     @DisplayName("생성자 테스트")
     void create() {
-        assertThat(new Betting(1))
-                .isEqualTo(new Betting(1));
+        assertThat(new BetAmount(1))
+                .isEqualTo(new BetAmount(1));
     }
 
     @Test
     @DisplayName("생성자 오류 테스트")
     void createError() {
         assertAll(
-                () -> assertThatThrownBy(() -> new Betting(-1))
+                () -> assertThatThrownBy(() -> new BetAmount(-1))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("1 이상의 정수를 입력해주세요."),
-                () -> assertThatThrownBy(() -> new Betting(0))
+                () -> assertThatThrownBy(() -> new BetAmount(0))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("1 이상의 정수를 입력해주세요.")
         );
@@ -32,7 +32,7 @@ class BettingTest {
     @Test
     @DisplayName("배율 테스트")
     void multipleTest() {
-        assertThat(new Betting(10000).getMultipliedMoney(1.5))
+        assertThat(new BetAmount(10000).getMultipliedMoney(1.5))
                 .isEqualTo(15000);
     }
 }

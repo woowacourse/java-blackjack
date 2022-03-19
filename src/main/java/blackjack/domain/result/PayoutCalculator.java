@@ -3,10 +3,10 @@ package blackjack.domain.result;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
 
-public final class PrideCalculator {
+public final class PayoutCalculator {
     private final int playerMoney;
 
-    public PrideCalculator(Player player, Dealer dealer) {
+    public PayoutCalculator(Player player, Dealer dealer) {
         this.playerMoney = compute(player, dealer);
     }
 

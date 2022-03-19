@@ -3,18 +3,18 @@ package blackjack.domain.participant.human;
 import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.participant.human.name.Name;
-import blackjack.domain.result.Betting;
+import blackjack.domain.result.BetAmount;
 import java.util.List;
 
 public final class Player extends Human {
-    private Betting betting;
+    private BetAmount betAmount;
 
     public Player(final Name name) {
         super(new Cards(), name);
     }
 
     public Player initBetting(int betting) {
-        this.betting = new Betting(betting);
+        this.betAmount = new BetAmount(betting);
         return this;
     }
 
@@ -35,6 +35,6 @@ public final class Player extends Human {
     }
 
     public int getMultipliedMoney(double scale) {
-        return betting.getMultipliedMoney(scale);
+        return betAmount.getMultipliedMoney(scale);
     }
 }

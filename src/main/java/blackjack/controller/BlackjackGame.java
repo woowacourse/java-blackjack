@@ -5,7 +5,7 @@ import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
 import blackjack.domain.participant.human.name.Name;
-import blackjack.domain.result.PrideCalculator;
+import blackjack.domain.result.PayoutCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public final class BlackjackGame {
         ).initCard(cardDeck);
     }
 
-    private Player requestBetting(Player player) {
+    private Player requestBetting(final Player player) {
         return player.initBetting(InputView.inputPlayerBetting(player.getName()));
     }
 
@@ -66,15 +66,13 @@ public final class BlackjackGame {
         OutputView.printHandAndPoint(players, dealer);
 
         int dealerMoney = 0;
-        Map<Player, Integer> prides = new HashMap<>();
+        Map<Player, Integer> payouts = new HashMap<>();
         for (Player player : players.get()) {
-            prides.put(player, PrideCalculator.compute(player, dealer));
-            dealerMoney -= prides.get(player);
+            payouts.put(player, PayoutCalculator.compute(player, dealer));
+            dealerMoney -= payouts.get(player);
         }
 
         OutputView.printResult(dealer, dealerMoney);
-        for (Player player : players.get()) {
-            OutputView.printHumanResult(player, prides.get(player));
-        }
+        payouts.forEach(OutputView::printHumanResult);
     }
 }
