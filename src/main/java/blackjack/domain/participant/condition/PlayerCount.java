@@ -2,7 +2,7 @@ package blackjack.domain.participant.condition;
 
 public enum PlayerCount {
 
-    ALLOWED_MINIMUM_COUNT(0),
+    ALLOWED_MINIMUM_COUNT(1),
     ALLOWED_MAXIMUM_COUNT(8);
 
     private final int count;
