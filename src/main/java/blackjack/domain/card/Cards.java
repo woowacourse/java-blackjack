@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int READY_SIZE = 2;
+
     private final List<Card> value;
 
     public Cards(List<Card> cards) {
@@ -15,23 +18,6 @@ public class Cards {
 
     public Cards() {
         this(new ArrayList<>());
-    }
-
-    public boolean isBlackjack() {
-        return isReady() && hasAce() && totalScore() == 21;
-    }
-
-    public boolean isReady() {
-        return value.size() == 2;
-    }
-
-    private boolean hasAce() {
-        return value.stream()
-                .anyMatch(Card::isAce);
-    }
-
-    public boolean isBust() {
-        return totalScore() > 21;
     }
 
     public int totalScore() {
@@ -44,6 +30,23 @@ public class Cards {
         }
 
         return totalScore;
+    }
+
+    public boolean isBlackjack() {
+        return isReady() && hasAce() && totalScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isReady() {
+        return value.size() == READY_SIZE;
+    }
+
+    private boolean hasAce() {
+        return value.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    public boolean isBust() {
+        return totalScore() > BLACKJACK_SCORE;
     }
 
     public void append(Card card) {

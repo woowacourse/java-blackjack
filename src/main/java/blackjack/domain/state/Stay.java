@@ -13,13 +13,13 @@ public class Stay extends Finished {
         Cards otherCards = state.cards();
 
         if (otherCards.isBust() || cards.totalScore() > otherCards.totalScore()) {
-            return 1;
+            return WIN_RATE;
         }
 
         if (cards.totalScore() == otherCards.totalScore()) {
-            return 0;
+            return TIE_RATE;
         }
 
-        return -1;
+        return LOW_RATE;
     }
 }

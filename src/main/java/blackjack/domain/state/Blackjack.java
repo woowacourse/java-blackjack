@@ -12,9 +12,9 @@ public class Blackjack extends Finished {
     public double earningRate(State state) {
         Cards otherCards = state.cards();
         if (otherCards.isBlackjack()) {
-            return 0;
+            return TIE_RATE;
         }
 
-        return 1.5;
+        return BLACKJACK_WIN_RATE;
     }
 }

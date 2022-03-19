@@ -10,6 +10,6 @@ public class Bust extends Finished {
 
     @Override
     public double earningRate(State state) {
-        return -1;
+        return LOW_RATE;
     }
 }
