@@ -22,16 +22,11 @@ public abstract class Gamer {
 	public abstract boolean isWin(Gamer gamer);
 
 	public boolean isDraw(Gamer gamer) {
-		return (isGamersInNormalCase(gamer)
-			&& this.getScore() == gamer.getScore()) || this.isBlackJack() && gamer.isBlackJack();
+		return !isWin(gamer) || gamer.isWin(this);
 	}
 
 	public boolean isLose(Gamer gamer) {
 		return !isWin(gamer) && !isDraw(gamer);
-	}
-
-	private boolean isGamersInNormalCase(Gamer gamer) {
-		return !this.isBlackJack() && !this.isBust() && !gamer.isBlackJack() && !gamer.isBust();
 	}
 
 	public List<Card> getCards() {
