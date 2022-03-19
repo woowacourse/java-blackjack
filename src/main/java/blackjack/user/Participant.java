@@ -32,8 +32,10 @@ public abstract class Participant {
     }
 
     public void drawAdditionalCard(Deck deck) {
-        myCards.addCard(deck.pickTopCard());
-        updateStateAfterAddCard();
+        if (isHit()) {
+            myCards.addCard(deck.pickTopCard());
+            updateStateAfterAddCard();
+        }
     }
 
     public boolean isHit() {
