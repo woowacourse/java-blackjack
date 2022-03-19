@@ -23,7 +23,7 @@ class GameResultTest {
         gameResult.updatePlayerBettingResult(
                 new Gamer("player", List.of(new Card(ACE, SPADE), new Card(JACK, HEART)),
                         new Betting(1000)), WIN);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(1500);
+        assertThat(gameResult.getPlayersResult().values()).containsExactly(new Profit(1500));
     }
 
     @Test
@@ -33,7 +33,7 @@ class GameResultTest {
         gameResult.updatePlayerBettingResult(
                 new Gamer("player", List.of(new Card(NINE, SPADE), new Card(JACK, HEART)),
                         new Betting(1000)), DRAW);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(0);
+        assertThat(gameResult.getPlayersResult().values()).containsExactly(new Profit(0));
     }
 
     @ParameterizedTest(name = "[{index}] 베팅 금액 1배 테스트")
@@ -42,7 +42,7 @@ class GameResultTest {
     void playerWinBettingTest(Gamer gamer, int money) {
         GameResult gameResult = new GameResult();
         gameResult.updatePlayerBettingResult(gamer, WIN);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(money);
+        assertThat(gameResult.getPlayersResult().values()).containsExactly(new Profit(money));
     }
 
     private static Stream<Arguments> provideWinPlayer() {
@@ -65,7 +65,7 @@ class GameResultTest {
     void playerLoseBettingTest(Gamer gamer, int money) {
         GameResult gameResult = new GameResult();
         gameResult.updatePlayerBettingResult(gamer, LOSE);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(money);
+        assertThat(gameResult.getPlayersResult().values()).containsExactly(new Profit(money));
     }
 
     private static Stream<Arguments> provideLosePlayer() {

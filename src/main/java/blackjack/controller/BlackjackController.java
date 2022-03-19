@@ -4,6 +4,7 @@ import blackjack.model.Betting;
 import blackjack.model.Card;
 import blackjack.model.CardDeck;
 import blackjack.model.GameResult;
+import blackjack.model.Profit;
 import blackjack.model.Result;
 import blackjack.model.dto.CardDTO;
 import blackjack.model.dto.PlayerDTO;
@@ -105,10 +106,10 @@ public class BlackjackController {
         OutputView.printResults(gameResult.getDealerResult(), createGamerBettingInfo(gameResult.getPlayersResult()));
     }
 
-    private Map<String, Integer> createGamerBettingInfo(Map<Gamer, Integer> GamerBettingResult) {
+    private Map<String, Integer> createGamerBettingInfo(Map<Gamer, Profit> GamerBettingResult) {
         Map<String, Integer> playerBettingResult = new LinkedHashMap<>();
         for (Gamer gamer : GamerBettingResult.keySet()) {
-            playerBettingResult.put(gamer.getName(), GamerBettingResult.get(gamer));
+            playerBettingResult.put(gamer.getName(), GamerBettingResult.get(gamer).getAmount());
         }
         return playerBettingResult;
     }

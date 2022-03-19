@@ -26,10 +26,6 @@ public abstract class Player {
         return cards;
     }
 
-    public int getCardSize() {
-        return cards.getEachCard().size();
-    }
-
     public void take(Card card) {
         if (!isHittable()) {
             throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
@@ -42,7 +38,7 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        return score().getValue() == BLACKJACK_NUMBER && getCardSize() == INITIAL_CARD_COUNT;
+        return score().getValue() == BLACKJACK_NUMBER && cards.getEachCard().size() == INITIAL_CARD_COUNT;
     }
 
     public abstract List<Card> openCards();

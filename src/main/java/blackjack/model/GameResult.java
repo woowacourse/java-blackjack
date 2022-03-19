@@ -8,40 +8,30 @@ import java.util.Map;
 public class GameResult {
 
     private int dealerResult;
-    private final Map<Gamer, Integer> playersResult;
+    private final Map<Gamer, Profit> playersResult;
 
     public GameResult() {
         playersResult = new HashMap<>();
     }
 
     public void updatePlayerBettingResult(Gamer gamer, Result result) {
-        playersResult.put(gamer, calculatePlayerBettingMoney(gamer, result));
+        playersResult.put(gamer, calculateProfit(gamer, result));
     }
 
-    private Integer calculatePlayerBettingMoney(Gamer gamer, Result result) {
+    private Profit calculateProfit(Gamer gamer, Result result) {
         if (isPossibleToGetAdditionalMoney(gamer, result)) {
-            return (int) (gamer.getBetting().getAmount() * 1.5);
+            return Profit.of(gamer.getBetting(), result, true);
         }
-        return calculateBettingResult(gamer.getBetting(), result);
+        return Profit.of(gamer.getBetting(), result, false);
     }
 
     private boolean isPossibleToGetAdditionalMoney(Gamer gamer, Result result) {
         return result == Result.WIN && gamer.isBlackjack();
     }
 
-    private Integer calculateBettingResult(Betting bettingMoney, Result result) {
-        if (result == Result.WIN) {
-            return bettingMoney.getAmount();
-        }
-        if (result == Result.LOSE) {
-            return -bettingMoney.getAmount();
-        }
-        return 0;
-    }
-
     public void calculateDealerResult() {
-        for (Integer money : playersResult.values()) {
-            dealerResult -= money;
+        for (Profit money : playersResult.values()) {
+            dealerResult -= money.getAmount();
         }
     }
 
@@ -49,7 +39,7 @@ public class GameResult {
         return dealerResult;
     }
 
-    public Map<Gamer, Integer> getPlayersResult() {
+    public Map<Gamer, Profit> getPlayersResult() {
         return new LinkedHashMap<>(playersResult);
     }
 }

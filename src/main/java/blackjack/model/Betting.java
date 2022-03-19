@@ -10,9 +10,16 @@ public class Betting {
     }
 
     private void validateAmount(int amount) {
-        if ((amount * 1.5) % 10 != 0) {
+        if (Profit.isDivisibleByTen(amount)) {
             throw new IllegalStateException("유효하지 않은 금액입니다.");
         }
+    }
+
+    public int calculateResult(Result result, boolean isBlackjackWin) {
+        if (isBlackjackWin) {
+            return (int) (amount * 1.5);
+        }
+        return amount * result.getProfitRate();
     }
 
     public int getAmount() {
