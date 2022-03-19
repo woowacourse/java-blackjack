@@ -30,10 +30,6 @@ public enum WinningResult {
         return LOSE;
     }
 
-    public String getResult() {
-        return result;
-    }
-
     public WinningResult convertResult() {
         if (this == DRAW) {
             return this;
@@ -42,6 +38,22 @@ public enum WinningResult {
             return WIN;
         }
         return LOSE;
+    }
+
+    public boolean isBlackjack() {
+        return this == BLACKJACK;
+    }
+
+    public boolean isWin() {
+        return this == WIN;
+    }
+
+    public boolean isLose() {
+        return this == LOSE;
+    }
+
+    public String getResult() {
+        return result;
     }
 
 }

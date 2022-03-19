@@ -28,6 +28,10 @@ public class ProfitCalculator {
     }
 
     private int calculateProfit(Player player, WinningResult winningResult) {
-        return (int) (player.getBettingMoney().getBettingMoney() * earningRateCalculator.calculate(winningResult));
+        return multiplyMoneyAndRate(player, earningRateCalculator.calculate(winningResult));
+    }
+
+    private int multiplyMoneyAndRate(Player player, double earningRate) {
+        return player.calculateProfit(earningRate);
     }
 }
