@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Cards {
@@ -51,6 +52,13 @@ public class Cards {
         }
     }
 
+    public List<Card> getFrontCards(int cardSize) {
+        return IntStream.range(0, cardSize)
+            .boxed()
+            .map(cards::get)
+            .collect(Collectors.toList());
+    }
+
     public int calculateScore() {
         int aceCount = calculateAceCount();
         int minimumSum = calculateMinimumSum();
@@ -79,6 +87,18 @@ public class Cards {
 
     public boolean isSameSize(int size) {
         return cards.size() == size;
+    }
+
+    public boolean isOverScoreThan(int score) {
+        return calculateScore() > score;
+    }
+
+    public boolean isLessScoreThan(int score) {
+        return calculateScore() < score;
+    }
+
+    public boolean isSameScore(int score) {
+        return calculateScore() == score;
     }
 
     public List<Card> getValues() {

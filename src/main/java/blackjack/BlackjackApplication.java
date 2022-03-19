@@ -1,22 +1,26 @@
 package blackjack;
 
-import blackjack.domain.HitRequest;
-import blackjack.domain.Judgement;
-import blackjack.domain.card.CardFactory;
-import blackjack.domain.card.Cards;
-import blackjack.domain.participant.Name;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackJackApplication {
+import blackjack.domain.HitRequest;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Cards;
+import blackjack.domain.participant.BetMoney;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.participant.Profit;
+import blackjack.domain.participant.Referee;
+import blackjack.dto.ParticipantProfit;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
+
+public class BlackjackApplication {
 
     public static void main(String[] args) {
         CardDeck deck = new CardDeck(CardFactory.createBlackJackCards());
@@ -48,8 +52,18 @@ public class BlackJackApplication {
     }
 
     private static Player createPlayer(CardDeck deck, Name name) {
+        BetMoney betMoney = inputMoney(name);
         Cards cards = new Cards(deck.drawDouble());
-        return new Player(name, cards);
+        return new Player(name, cards, betMoney);
+    }
+
+    private static BetMoney inputMoney(Name name) {
+        try {
+            return new BetMoney(InputView.inputPlayerBetAmount(name.getValue()));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return inputMoney(name);
+        }
     }
 
     private static void play(CardDeck deck, Dealer dealer, Players players) {
@@ -57,23 +71,23 @@ public class BlackJackApplication {
         proceedPlayersTurn(players, deck);
         proceedDealer(dealer, deck);
         showFinalScore(dealer, players);
-        showWinResult(dealer, players);
+        showProfitResult(dealer, players);
     }
 
     private static void alertStart(Dealer dealer, Players players) {
-        OutputView.printStartMessage(dealer, players.getValues());
-        OutputView.printDealerFirstCard(dealer);
-        players.getValues()
-            .forEach(player -> OutputView.printParticipantCards(player, player.calculateScore()));
+        OutputView.printStartMessage(dealer.getName(), players.getPlayerNames());
+        OutputView.printParticipantFirstCards(dealer.getName(), dealer.showFirstCards());
+        players.getPlayers()
+            .forEach(player -> OutputView.printParticipantFirstCards(player.getName(), player.showFirstCards()));
     }
 
     private static void proceedPlayersTurn(Players players, CardDeck deck) {
-        players.getValues()
+        players.getPlayers()
             .forEach(player -> proceedPlayer(player, deck));
     }
 
     private static void proceedPlayer(Player player, CardDeck deck) {
-        while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
+        while (player.isHittable() && inputHitRequest(player).isGoingOn()) {
             player.hit(deck.draw());
             OutputView.printParticipantCards(player, player.calculateScore());
         }
@@ -90,7 +104,7 @@ public class BlackJackApplication {
     }
 
     private static void showStopReason(Player player) {
-        if (player.isBlackJack()) {
+        if (player.isBlackjack()) {
             OutputView.printBlackJackMessage(player.getName());
             return;
         }
@@ -109,17 +123,24 @@ public class BlackJackApplication {
     private static void showFinalScore(Dealer dealer, Players players) {
         OutputView.printCardResultMessage();
         OutputView.printParticipantCards(dealer, dealer.calculateScore());
-        players.getValues()
+        players.getPlayers()
             .forEach(player -> OutputView.printParticipantCards(player, player.calculateScore()));
     }
 
-    private static void showWinResult(Dealer dealer, Players players) {
-        final Map<String, Judgement> playersResult = players.calculateJudgmentResult(dealer);
-        final Map<Judgement, Integer> dealerResult = playersResult.values().stream()
-            .collect(Collectors.toMap(Judgement::getOpposite, j -> 1, Integer::sum));
+    private static void showProfitResult(Dealer dealer, Players players) {
+        final Map<Player, Profit> playerResults = Referee.calculatePlayersProfit(players.getPlayers(), dealer);
+        final List<ParticipantProfit> playersProfit = createParticipantsProfit(playerResults);
+        final Profit dealerProfit = Referee.calculateDealerProfit(new ArrayList<>(playerResults.values()));
 
-        OutputView.printWinResultMessage();
-        OutputView.printDealerWinResult(dealer.getName(), dealerResult);
-        OutputView.printPlayersWinResult(playersResult);
+        OutputView.printProfitResultMessage();
+        OutputView.printParticipantProfitResult(ParticipantProfit.of(dealer, dealerProfit));
+        playersProfit.forEach(OutputView::printParticipantProfitResult);
+    }
+
+    private static List<ParticipantProfit> createParticipantsProfit(Map<Player, Profit> playerResults) {
+        return playerResults.keySet()
+            .stream()
+            .map(player -> ParticipantProfit.of(player, playerResults.get(player)))
+            .collect(Collectors.toList());
     }
 }

@@ -1,18 +1,19 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-
 import java.util.List;
 import java.util.Objects;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+
 public abstract class Participant {
 
-    private static final int BLACKJACK_COUNT = 2;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BUST_STANDARD = 21;
 
     private final Name name;
-    private final Cards cards;
+    protected final Cards cards;
 
     protected Participant(Name name, Cards cards) {
         validateName(name);
@@ -38,14 +39,24 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
+        return cards.isOverScoreThan(BUST_STANDARD);
     }
 
-    public boolean isBlackJack() {
-        return cards.isSameSize(BLACKJACK_COUNT) && calculateScore() == BLACKJACK_SCORE;
+    public boolean isBlackjack() {
+        return cards.isSameSize(BLACKJACK_CARD_SIZE) && cards.isSameScore(BLACKJACK_SCORE);
     }
 
-    abstract public boolean isHittable();
+    public boolean isHittable() {
+        return cards.isLessScoreThan(getHitStandard());
+    }
+
+    public List<Card> showFirstCards() {
+        return cards.getFrontCards(getFirstOpenCardSize());
+    }
+
+    protected abstract int getHitStandard();
+
+    protected abstract int getFirstOpenCardSize();
 
     public List<Card> getCards() {
         return cards.getValues();
