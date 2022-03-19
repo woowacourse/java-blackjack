@@ -8,8 +8,9 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.Result;
 
-public class BlackJack {
+public class Blackjack {
 	private static final String ERROR_MESSAGE_PLAYER_NUMBER_EXCEED = "[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.";
 	private static final int MAX_PLAYER_NUMBER = 8;
 	private static final int STARTING_CARDS_COUNT = 2;
@@ -18,15 +19,15 @@ public class BlackJack {
 	private final List<Player> players;
 	private final CardDeck cardDeck;
 
-	private BlackJack(Dealer dealer, List<Player> players) {
+	private Blackjack(Dealer dealer, List<Player> players) {
 		this.dealer = dealer;
 		this.players = players;
 		this.cardDeck = CardDeck.create();
 	}
 
-	public static BlackJack from(List<Player> players) {
+	public static Blackjack from(List<Player> players) {
 		validatePlayerNumber(players);
-		return new BlackJack(new Dealer(), players);
+		return new Blackjack(new Dealer(), players);
 	}
 
 	private static void validatePlayerNumber(List<Player> players) {
@@ -55,15 +56,11 @@ public class BlackJack {
 	public Map<Player, Integer> calculateResult() {
 		Map<Player, Integer> earning = new LinkedHashMap<>();
 		for (Player player : players) {
-			Result result = isWin(player);
+			Result result = Result.of(dealer, player);
 			int betAmount = player.getBetAmount();
 			earning.put(player, result.getEarning(betAmount));
 		}
 		return earning;
-	}
-
-	private Result isWin(Player player) {
-		return Result.of(dealer, player);
 	}
 
 	public Dealer getDealer() {

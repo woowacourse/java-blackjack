@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.participant.Player;
 
-public class BlackJackTest {
+public class BlackjackTest {
 
 	@Test
 	@DisplayName("참가자의 수가 8명을 초과하면 예외가 발생한다")
@@ -26,7 +26,7 @@ public class BlackJackTest {
 				new Player("g", 10),
 				new Player("h", 10),
 				new Player("i", 10));
-			BlackJack.from(players);
+			Blackjack.from(players);
 		}).isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.");
 	}
@@ -37,7 +37,7 @@ public class BlackJackTest {
 		List<Player> players = Arrays.asList(
 			new Player("a", 10),
 			new Player("b", 10));
-		BlackJack blackJack = BlackJack.from(players);
+		Blackjack blackJack = Blackjack.from(players);
 		blackJack.handOutCardTo(blackJack.getPlayers().get(0));
 		assertThat(blackJack.getPlayers().get(0).getCards().getCards().size()).isEqualTo(1);
 		assertThat(blackJack.getPlayers().get(1).getCards().getCards().size()).isEqualTo(0);
@@ -49,7 +49,7 @@ public class BlackJackTest {
 		List<Player> players = Arrays.asList(
 			new Player("a", 10),
 			new Player("b", 10));
-		BlackJack blackJack = BlackJack.from(players);
+		Blackjack blackJack = Blackjack.from(players);
 		blackJack.handOutStartingCards();
 		assertThat(blackJack.getDealer().getCards().getCards().size()).isEqualTo(2);
 		assertThat(blackJack.getPlayers().get(0).getCards().getCards().size()).isEqualTo(2);
