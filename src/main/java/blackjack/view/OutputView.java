@@ -12,17 +12,12 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String TOTAL_RESULT_MASSAGE = "## 최종 승패";
-    private static final String DEALER_RESULT_PREFIX = "딜러: ";
-    private static final String COUNT_JOIN_DELIMITER = " ";
     private static final String INIT_CARD_MESSAGE = "%s와 %s에게 2장의 카드를 나누었습니다.";
     private static final String CARD_STATE_MESSAGE = "%s카드: %s";
     private static final String POINT_STATE_MESSAGE = " - 결과 : %d";
-    private static final String PLAYER_RESULT_MESSAGE = "%s: %s";
+    private static final String PLAYER_RESULT_MESSAGE = "%s: %.0f" + System.lineSeparator();
     private static final String JOIN_DELIMITER = ", ";
-    private static final String KOREAN_RESULT_WIN = "승";
-    private static final String KOREAN_RESULT_LOSE = "패";
-    private static final String KOREAN_RESULT_DRAW = "무";
+    private static final String TOTAL_PROFIT_MESSAGE = "## 최종 수익";
 
     public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
         System.out.println();
@@ -64,20 +59,6 @@ public class OutputView {
             .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
-    private static GameResult changeDealerResult(GameResult gameResult) {
-        return gameResult.getDealerResult();
-    }
-
-    private static String changeGameResultToKorean(GameResult gameResult) {
-        if (gameResult.equals(GameResult.WIN)) {
-            return KOREAN_RESULT_WIN;
-        }
-        if (gameResult.equals(GameResult.LOSE)) {
-            return KOREAN_RESULT_LOSE;
-        }
-        return KOREAN_RESULT_DRAW;
-    }
-
     private static void printPlayerCardPointState(Player player) {
         System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCards()));
         System.out.printf(POINT_STATE_MESSAGE, player.getPoint());
@@ -86,10 +67,12 @@ public class OutputView {
 
     public static void printGameResult(GameStatistic gameStatistic, Dealer dealer) {
         System.out.println();
-        System.out.println("## 최종 수익");
-        System.out.println(dealer.getName() + ": " + gameStatistic.getTotalNonProfit());
+        System.out.println(TOTAL_PROFIT_MESSAGE);
+        System.out.printf(PLAYER_RESULT_MESSAGE, dealer.getName(),
+            gameStatistic.getTotalNonProfit());
         for (Player player : gameStatistic.getGameResult().keySet()) {
-            System.out.println(player.getName() + ": " + gameStatistic.profit(player));
+            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(),
+                gameStatistic.profit(player));
         }
     }
 }
