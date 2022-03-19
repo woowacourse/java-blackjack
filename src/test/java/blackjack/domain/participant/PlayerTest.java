@@ -122,7 +122,7 @@ class PlayerTest {
 
         int result = player.calculateProfit(dealer);
 
-        assertThat(result).isEqualTo(0);
+        assertThat(result).isZero();
     }
 
     @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 무승부인 경우 배팅 금액의 0배를 얻는다.")
@@ -139,7 +139,7 @@ class PlayerTest {
 
         int result = player.calculateProfit(dealer);
 
-        assertThat(result).isEqualTo(0);
+        assertThat(result).isZero();
     }
 
     @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 승인 경우 배팅 금액의 1배를 얻는다.")

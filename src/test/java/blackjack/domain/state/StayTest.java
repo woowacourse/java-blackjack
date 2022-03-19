@@ -113,7 +113,7 @@ class StayTest {
 
         double result = stay.earningRate(otherStay);
 
-        assertThat(result).isEqualTo(0);
+        assertThat(result).isZero();
     }
 
     @DisplayName("상대 상태가 버스트가 아닐 때 점수가 더 낮으면 패이므로 earning rate는 -1이다.")
