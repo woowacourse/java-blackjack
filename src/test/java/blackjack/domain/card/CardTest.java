@@ -2,20 +2,15 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.Fixture;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
 import blackjack.domain.cards.card.denomination.Suit;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardTest {
-    private Card card;
-
-    @BeforeEach
-    void setUp() {
-        card = Card.of(Denomination.ACE, Suit.SPADE);
-    }
+    private final Card card = new Fixture().ACE;
 
     @Test
     @DisplayName("같은 숫자인지 확인하는 기능 True 테스트")
@@ -42,7 +37,7 @@ class CardTest {
     @DisplayName("문양확인 기능 테스트")
     void getSuit() {
         assertThat(card.getSuit())
-                .isEqualTo(Suit.SPADE);
+                .isEqualTo(Suit.CLOVER);
     }
 
     @Test
@@ -55,7 +50,7 @@ class CardTest {
     @Test
     @DisplayName("동일 카드인지 확인 기능 테스트")
     void testEquals() {
-        assertThat(Card.of(Denomination.TEN, Suit.SPADE))
-                .isEqualTo(Card.of(Denomination.TEN, Suit.SPADE));
+        assertThat(Card.of(Denomination.TEN, Suit.CLOVER))
+                .isEqualTo(Card.of(Denomination.TEN, Suit.CLOVER));
     }
 }

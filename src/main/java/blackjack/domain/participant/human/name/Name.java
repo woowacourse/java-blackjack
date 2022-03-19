@@ -1,5 +1,6 @@
 package blackjack.domain.participant.human.name;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public final class Name {
@@ -8,23 +9,36 @@ public final class Name {
 
     private final String value;
 
-    private Name(final String input) {
+    public Name(final String input) {
         validateName(input);
         this.value = input;
     }
 
-    private static void validateName(final String input) {
+    private void validateName(final String input) {
         if (!NAME_PATTERN.matcher(input).matches()) {
             throw new IllegalArgumentException(NAME_ERROR_MESSAGE);
         }
     }
 
-    public static Name valueOf(final String name) {
-        return new Name(name);
-    }
-
     public String get() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Name name = (Name) o;
+        return Objects.equals(value, name.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 
     @Override

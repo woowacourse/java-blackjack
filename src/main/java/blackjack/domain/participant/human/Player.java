@@ -8,28 +8,8 @@ import blackjack.domain.result.Result;
 public final class Player extends Human {
     private Betting betting;
 
-    private Player(final Name name) {
+    public Player(final Name name) {
         super(new Cards(), name);
-    }
-
-    public static Player fromName(final Name name) {
-        return new Player(name);
-    }
-
-    public static Player fromText(final String name) {
-        return new Player(Name.valueOf(name));
-    }
-
-    public boolean isCardsThatSize(final int size) {
-        return cards.size() == size;
-    }
-
-    public boolean hasMorePoint(final Dealer dealer) {
-        return dealer.getPoint().compareTo(getPoint()) < 0;
-    }
-
-    public boolean isDraw(final Dealer dealer) {
-        return dealer.getPoint().equals(getPoint());
     }
 
     public Player initBetting(int betting) {
@@ -37,17 +17,19 @@ public final class Player extends Human {
         return this;
     }
 
-    public Betting getBetting() {
-        return betting;
+    public boolean isCardsThatSize(final int size) {
+        return cards.size() == size;
     }
 
-    public Result calculateResult(Dealer dealer) {
-        if (dealer.isBust()) {
-            return Result.fromBoolean(!isBust());
-        }
-        if (!isBust() && isDraw(dealer)) {
-            return Result.DRAW;
-        }
-        return Result.fromBoolean(!isBust() && hasMorePoint(dealer));
+    public boolean hasMorePoint(final Dealer dealer) {
+        return getPoint() > dealer.getPoint();
+    }
+
+    public boolean isDraw(final Dealer dealer) {
+        return dealer.getPoint() == getPoint();
+    }
+
+    public int getMultipliedMoney(double scale) {
+        return betting.getMultipliedMoney(scale);
     }
 }

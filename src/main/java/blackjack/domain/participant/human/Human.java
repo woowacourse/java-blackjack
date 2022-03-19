@@ -7,7 +7,7 @@ import blackjack.domain.result.Point;
 import java.util.List;
 
 public abstract class Human {
-    private static final Point BLACKJACK_POINT = Point.fromValue(21);
+    private static final int BLACKJACK_NUMBER = 21;
     protected final Name name;
     protected final Cards cards;
 
@@ -29,15 +29,15 @@ public abstract class Human {
     }
 
     public boolean isBust() {
-        return getPoint().compareTo(BLACKJACK_POINT) > 0;
+        return getPoint() > BLACKJACK_NUMBER;
     }
 
-    public boolean isBlackjack() {
-        return getPoint().equals(BLACKJACK_POINT);
+    public boolean isMaxPoint() {
+        return getPoint() == BLACKJACK_NUMBER;
     }
 
-    public Point getPoint() {
-        return Point.fromCards(cards);
+    public int getPoint() {
+        return new Point(cards).get();
     }
 
     public String getName() {

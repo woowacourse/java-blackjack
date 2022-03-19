@@ -30,26 +30,9 @@ class BettingTest {
     }
 
     @Test
-    @DisplayName("해시코드 테스트")
-    void testHashCode() {
-        assertThat(new Betting(10000).hashCode())
-                .isEqualTo(10000);
-    }
-
-    @Test
     @DisplayName("배율 테스트")
     void multipleTest() {
-        assertThat(new Betting(10000).getMultiple(1.5).hashCode())
+        assertThat(new Betting(10000).getMultipliedMoney(1.5))
                 .isEqualTo(15000);
-    }
-
-    @Test
-    @DisplayName("비교 테스트")
-    void compareTo() {
-        assertAll(
-                () -> assertThat(new Betting(100).compareTo(new Betting(101))).isLessThan(0),
-                () -> assertThat(new Betting(100).compareTo(new Betting(100))).isEqualTo(0),
-                () -> assertThat(new Betting(100).compareTo(new Betting(99))).isGreaterThan(0)
-        );
     }
 }

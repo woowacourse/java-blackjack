@@ -2,50 +2,27 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.cards.card.Card;
-import blackjack.domain.cards.card.denomination.Denomination;
-import blackjack.domain.cards.card.denomination.Suit;
 import blackjack.domain.participant.human.Dealer;
-import blackjack.domain.participant.human.Human;
-import blackjack.domain.participant.human.Player;
 import blackjack.domain.result.PrideCalculator;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PrideCalculatorTest {
-    private final Player player = Player.fromText("pobi").initBetting(10000);
-
-    void addCardList(Human human, List<String> cards) {
-        for (String card : cards) {
-            human.addCard(Card.of(Denomination.fromInitial(card), Suit.CLOVER));
-        }
-    }
 
     @Nested
     @DisplayName("플레이어 1.5배 우승 결과 테스트")
     class PlayerWinMaxTest {
-        PrideCalculator prideCalculator;
-
-        @BeforeEach
-        void setup() {
-            // given
-            addCardList(player, List.of("A", "10"));
-
-        }
+        private final Fixture fx = new Fixture();
 
         @Test
         void resultTest() {
-            Dealer dealer = new Dealer(List.of(
-                    Card.of(Denomination.EIGHT, Suit.CLOVER),
-                    Card.of(Denomination.TEN, Suit.CLOVER),
-                    Card.of(Denomination.TEN, Suit.SPADE)
-            ));
+            fx.POBI.addCard(fx.ACE);
+            fx.POBI.addCard(fx.TEN);
+            Dealer dealer = new Dealer(List.of(fx.TEN, fx.NINE, fx.TEN));
 
-            // then
-            assertThat(PrideCalculator.compute(player,dealer))
+            assertThat(PrideCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(15000);
         }
     }
@@ -53,23 +30,15 @@ class PrideCalculatorTest {
     @Nested
     @DisplayName("플레이어 2장블랙잭/딜러블랙잭 무승부 결과 테스트")
     class PlayerWinMax2Test {
-        PrideCalculator prideCalculator;
-
-        @BeforeEach
-        void setup() {
-            // given
-            addCardList(player, List.of("A", "10"));
-        }
+        private final Fixture fx = new Fixture();
 
         @Test
         void resultTest() {
-            Dealer dealer = new Dealer(List.of(
-                    Card.of(Denomination.ACE, Suit.CLOVER),
-                    Card.of(Denomination.TEN, Suit.CLOVER)
-            ));
+            fx.POBI.addCard(fx.ACE);
+            fx.POBI.addCard(fx.TEN);
+            Dealer dealer = new Dealer(List.of(fx.ACE, fx.TEN));
 
-            // then
-            assertThat(PrideCalculator.compute(player,dealer))
+            assertThat(PrideCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(0);
         }
     }
@@ -77,24 +46,15 @@ class PrideCalculatorTest {
     @Nested
     @DisplayName("딜러 버스트 결과 테스트")
     class DealerOverTest {
-        PrideCalculator prideCalculator;
-
-        @BeforeEach
-        void setup() {
-            // given
-            addCardList(player, List.of("5", "10"));
-        }
+        private final Fixture fx = new Fixture();
 
         @Test
         void resultTest() {
-            Dealer dealer = new Dealer(List.of(
-                    Card.of(Denomination.FIVE, Suit.CLOVER),
-                    Card.of(Denomination.TEN, Suit.CLOVER),
-                    Card.of(Denomination.NINE, Suit.CLOVER)
-            ));
-
-            // then
-            assertThat(PrideCalculator.compute(player,dealer))
+            fx.POBI.addCard(fx.TWO);
+            fx.POBI.addCard(fx.TEN);
+            Dealer dealer = new Dealer(
+                    List.of(fx.TEN, fx.NINE, fx.EIGHT));
+            assertThat(PrideCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(10000);
         }
     }
@@ -102,24 +62,14 @@ class PrideCalculatorTest {
     @Nested
     @DisplayName("딜러 21이하, 플레이어 21이하 결과 딜러승리 테스트")
     class DealerPlayerUnder1Test {
-        PrideCalculator prideCalculator;
-
-        @BeforeEach
-        void setup() {
-            // given
-            addCardList(player, List.of("5", "10"));
-        }
+        private final Fixture fx = new Fixture();
 
         @Test
         void resultTest() {
-            Dealer dealer = new Dealer(List.of(
-                    Card.of(Denomination.NINE, Suit.CLOVER),
-                    Card.of(Denomination.TEN, Suit.CLOVER),
-                    Card.of(Denomination.ACE, Suit.CLOVER)
-            ));
-
-            // then
-            assertThat(PrideCalculator.compute(player,dealer))
+            fx.POBI.addCard(fx.TWO);
+            fx.POBI.addCard(fx.TEN);
+            Dealer dealer = new Dealer(List.of(fx.TEN, fx.NINE, fx.ACE));
+            assertThat(PrideCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(-10000);
         }
     }
@@ -127,23 +77,14 @@ class PrideCalculatorTest {
     @Nested
     @DisplayName("딜러 21이하, 플레이어 21이하 결과 플레이어 승리 테스트")
     class DealerPlayerUnder2Test {
-        PrideCalculator prideCalculator;
-
-        @BeforeEach
-        void setup() {
-            // given
-            addCardList(player, List.of("5", "10"));
-        }
+        private final Fixture fx = new Fixture();
 
         @Test
         void resultTest() {
-            Dealer dealer = new Dealer(List.of(
-                    Card.of(Denomination.TWO, Suit.CLOVER),
-                    Card.of(Denomination.TEN, Suit.CLOVER)
-            ));
-
-            // then
-            assertThat(PrideCalculator.compute(player,dealer))
+            fx.POBI.addCard(fx.TEN);
+            fx.POBI.addCard(fx.TEN);
+            Dealer dealer = new Dealer(List.of(fx.ACE, fx.ACE));
+            assertThat(PrideCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(10000);
         }
     }
@@ -151,23 +92,15 @@ class PrideCalculatorTest {
     @Nested
     @DisplayName("딜러 21이하, 플레이어 21이하 결과 무승부 테스트")
     class DealerPlayerUnder3Test {
-        PrideCalculator prideCalculator;
-
-        @BeforeEach
-        void setup() {
-            // given
-            addCardList(player, List.of("5", "10"));
-        }
+        private final Fixture fx = new Fixture();
 
         @Test
         void resultTest() {
-            Dealer dealer = new Dealer(List.of(
-                    Card.of(Denomination.SEVEN, Suit.CLOVER),
-                    Card.of(Denomination.EIGHT, Suit.CLOVER)
-            ));
 
-            // then
-            assertThat(PrideCalculator.compute(player,dealer))
+            fx.POBI.addCard(fx.ACE);
+            fx.POBI.addCard(fx.ACE);
+            Dealer dealer = new Dealer(List.of(fx.ACE, fx.ACE));
+            assertThat(PrideCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(0);
         }
     }
@@ -175,23 +108,15 @@ class PrideCalculatorTest {
     @Nested
     @DisplayName("딜러 21이하, 플레이어 버스트 결과 테스트")
     class DealerUnderPlayerHighTest {
-        PrideCalculator prideCalculator;
-
-        @BeforeEach
-        void setup() {
-            // given
-            addCardList(player, List.of("5", "10", "9"));
-        }
+        private final Fixture fx = new Fixture();
 
         @Test
         void resultTest() {
-            Dealer dealer = new Dealer(List.of(
-                    Card.of(Denomination.SEVEN, Suit.CLOVER),
-                    Card.of(Denomination.EIGHT, Suit.CLOVER)
-            ));
-
-            // then
-            assertThat(PrideCalculator.compute(player, dealer))
+            fx.POBI.addCard(fx.TWO);
+            fx.POBI.addCard(fx.TEN);
+            fx.POBI.addCard(fx.TEN);
+            Dealer dealer = new Dealer(List.of(fx.ACE, fx.NINE));
+            assertThat(PrideCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(-10000);
         }
     }

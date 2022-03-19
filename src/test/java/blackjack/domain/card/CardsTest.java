@@ -3,10 +3,9 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Fixture;
 import blackjack.domain.cards.Cards;
-import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
-import blackjack.domain.cards.card.denomination.Suit;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +17,8 @@ public class CardsTest {
     @BeforeEach
     void setup() {
         cards = new Cards();
-        cards.add(Card.of(Denomination.fromInitial("A"), Suit.SPADE));
-        cards.add(Card.of(Denomination.fromInitial("A"), Suit.CLOVER));
+        cards.add(new Fixture().ACE);
+        cards.add(new Fixture().ACE);
     }
 
     @Test
@@ -33,7 +32,7 @@ public class CardsTest {
     @DisplayName("첫 카드 리턴 기능 테스트")
     void getFirstCardTest() {
         assertThat(cards.getFirstCard())
-                .isEqualTo(Card.of(Denomination.fromInitial("A"), Suit.SPADE));
+                .isEqualTo(new Fixture().ACE);
     }
 
     @Test
@@ -54,8 +53,6 @@ public class CardsTest {
     @DisplayName("카드 리스트 리턴 기능 테스트")
     void get() {
         assertThat(cards.getCopy())
-                .isEqualTo(List.of(
-                        Card.of(Denomination.fromInitial("A"), Suit.SPADE),
-                        Card.of(Denomination.fromInitial("A"), Suit.CLOVER)));
+                .isEqualTo(List.of(new Fixture().ACE, new Fixture().ACE));
     }
 }

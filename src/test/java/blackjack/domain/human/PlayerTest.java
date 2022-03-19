@@ -2,71 +2,44 @@ package blackjack.domain.human;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.cards.card.Card;
-import blackjack.domain.cards.card.denomination.Denomination;
-import blackjack.domain.cards.card.denomination.Suit;
-import blackjack.domain.participant.human.Player;
+import blackjack.domain.Fixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
+    private final Fixture fx = new Fixture();
 
     @Test
     @DisplayName("참여자 객체 생성 기능 테스트")
     public void createTest() {
-        Player player = Player.fromText("test");
-        assertThat(player.getName())
-                .isEqualTo("test");
+        assertThat(fx.POBI.getName())
+                .isEqualTo("pobi");
     }
 
     @Test
     @DisplayName("참여자 객체 카드 추가 기능 테스트")
     public void addCardTest() {
-        // given
-        Player player = Player.fromText("test");
-        Card card5 = Card.of(Denomination.fromInitial("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.fromInitial("6"), Suit.SPADE);
-
-        // when
-        player.addCard(card5);
-        player.addCard(card6);
-
-        // then
-        assertThat(player.getPoint().hashCode())
-                .isEqualTo(11);
+        fx.POBI.addCard(fx.ACE);
+        fx.POBI.addCard(fx.TEN);
+        assertThat(fx.POBI.getPoint())
+                .isEqualTo(21);
     }
 
     @Test
     @DisplayName("참여자 객체 카드 2개인지 확인 기능 테스트")
     public void isThatSize() {
-        // given
-        Player player = Player.fromText("test");
-        Card card5 = Card.of(Denomination.fromInitial("5"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.fromInitial("6"), Suit.SPADE);
-
-        // when
-        player.addCard(card5);
-        player.addCard(card6);
-
-        // then
-        assertThat(player.isCardsThatSize(2))
+        fx.HUNCH.addCard(fx.TEN);
+        fx.HUNCH.addCard(fx.NINE);
+        assertThat(fx.HUNCH.isCardsThatSize(2))
                 .isTrue();
     }
 
     @Test
     @DisplayName("카드모음 포인트 올바른지 테스트")
     public void equalPointTest() {
-        // given
-        Player player = Player.fromText("test");
-        Card card5 = Card.of(Denomination.fromInitial("2"), Suit.SPADE);
-        Card card6 = Card.of(Denomination.fromInitial("9"), Suit.SPADE);
-
-        // when
-        player.addCard(card5);
-        player.addCard(card6);
-
-        // then
-        assertThat(player.getPoint().hashCode())
-                .isEqualTo(11);
+        fx.JASON.addCard(fx.EIGHT);
+        fx.JASON.addCard(fx.ACE);
+        assertThat(fx.JASON.getPoint())
+                .isEqualTo(19);
     }
 }

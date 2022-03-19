@@ -28,8 +28,8 @@ public final class BlackjackGame {
 
     private Players initPlayers(final CardDeck cardDeck) {
         List<Name> names = InputView.inputPlayerNames();
-        return Players.fromRawValue(names.stream()
-                .map(Player::fromName)
+        return new Players(names.stream()
+                .map(Player::new)
                 .map(this::requestBetting)
                 .collect(Collectors.toList())
         ).initCard(cardDeck);
@@ -46,7 +46,7 @@ public final class BlackjackGame {
     }
 
     private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
-        while (!player.isBust() && !player.isBlackjack() && InputView.inputOneMoreCard(player.getName())) {
+        while (!player.isBust() && !player.isMaxPoint() && InputView.inputOneMoreCard(player.getName())) {
             player.addCard(cardDeck.pop());
             OutputView.printHumanHand(player);
         }

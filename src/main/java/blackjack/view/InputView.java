@@ -26,7 +26,7 @@ public final class InputView {
         String input = SCANNER.nextLine();
         validateNames(input);
         return Stream.of(input.split(NAMES_SPLIT_REGEX))
-                .map(Name::valueOf)
+                .map(Name::new)
                 .collect(Collectors.toList());
     }
 

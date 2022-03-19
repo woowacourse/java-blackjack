@@ -14,7 +14,7 @@ public class NameTest {
     @Test
     @DisplayName("이름 객체 생성 통과여부 테스트")
     public void createTest() {
-        assertThat(Name.valueOf("jack").get())
+        assertThat(new Name("jack").get())
                 .isEqualTo("jack");
     }
 
@@ -23,7 +23,7 @@ public class NameTest {
 
     @DisplayName("이름 객체 생성 실패여부 테스트")
     public void setNameFailTest(String input) {
-        assertThatThrownBy(() -> Name.valueOf(input))
+        assertThatThrownBy(() -> new Name(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름 형식에 맞게 입력해야 합니다.");
     }

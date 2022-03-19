@@ -2,36 +2,29 @@ package blackjack.domain.result;
 
 import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.denomination.Denomination;
+import java.util.Objects;
 
-public final class Point implements Comparable<Point> {
+public final class Point {
     private static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_MINUS_NUMBER = 10;
-    private static final int MIN_ACE_COUNT = 0;
+    private static final int MIN_COUNT = 0;
 
     private final int value;
 
-    private Point(final int number) {
-        this.value = number;
-    }
-
-    private Point(final Cards cards) {
+    public Point(final Cards cards) {
         this.value = computeWithAce(cards.getRawPoint(), cards.getDenominationCount(Denomination.ACE));
     }
 
-    private static int computeWithAce(int point, int aceCount) {
-        if (point > BLACKJACK_NUMBER && aceCount > MIN_ACE_COUNT) {
+    private int computeWithAce(int point, int aceCount) {
+        if (point > BLACKJACK_NUMBER && aceCount > MIN_COUNT) {
             point -= ACE_MINUS_NUMBER;
             return computeWithAce(point, --aceCount);
         }
         return point;
     }
 
-    public static Point fromCards(final Cards cards) {
-        return new Point(cards);
-    }
-
-    public static Point fromValue(int number) {
-        return new Point(number);
+    public int get() {
+        return value;
     }
 
     @Override
@@ -48,11 +41,6 @@ public final class Point implements Comparable<Point> {
 
     @Override
     public int hashCode() {
-        return value;
-    }
-
-    @Override
-    public int compareTo(Point other) {
-        return Integer.compare(this.value, other.value);
+        return Objects.hash(value);
     }
 }

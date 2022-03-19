@@ -62,7 +62,7 @@ public final class OutputView {
 
     public static void printHumanCardPointState(final Human human) {
         System.out.printf(CARD_STATE_MESSAGE + HUMAN_POINT_STATE + System.lineSeparator(),
-                human.getName(), getCardsState(human.getRawCards()), human.getPoint().hashCode());
+                human.getName(), getCardsState(human.getRawCards()), human.getPoint());
     }
 
     public static void printDealerHit() {
