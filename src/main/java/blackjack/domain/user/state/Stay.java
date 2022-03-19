@@ -15,15 +15,15 @@ public class Stay extends Finished {
     }
 
     @Override
-    public double calculateEarningRate(State opponentState) {
+    public EarningRate calculateEarningRate(State opponentState) {
         Score opponentScore = opponentState.getScore();
 
         if (opponentState.hand.isBust() || this.getScore().isGreaterThan(opponentScore)) {
-            return 1;
+            return EarningRate.WIN;
         }
         if (this.getScore().equals(opponentScore)) {
-            return 0;
+            return EarningRate.TIE;
         }
-        return -1;
+        return EarningRate.LOSS;
     }
 }

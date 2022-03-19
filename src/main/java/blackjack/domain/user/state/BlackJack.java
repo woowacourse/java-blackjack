@@ -9,11 +9,11 @@ public class BlackJack extends Finished {
     }
 
     @Override
-    public double calculateEarningRate(State opponentState) {
+    public EarningRate calculateEarningRate(State opponentState) {
         if (opponentState.isBlackjack()) {
-            return 1.0;
+            return EarningRate.WIN;
         }
-        return 1.5;
+        return EarningRate.BLACKJACK_WIN;
     }
 
     @Override

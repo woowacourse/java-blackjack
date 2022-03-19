@@ -27,8 +27,8 @@ public abstract class Finished extends State {
     public abstract boolean isBlackjack();
 
     public Money calculateProfit(Money bettingMoney, State opponentState) {
-        return bettingMoney.multiply(calculateEarningRate(opponentState));
+        return bettingMoney.multiply(calculateEarningRate(opponentState).getRate());
     }
 
-    public abstract double calculateEarningRate(State opponentState);
+    public abstract EarningRate calculateEarningRate(State opponentState);
 }

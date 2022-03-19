@@ -14,7 +14,7 @@ public class Bust extends Finished {
     }
 
     @Override
-    public double calculateEarningRate(State opponentState) {
-        return -1.0;
+    public EarningRate calculateEarningRate(State opponentState) {
+        return EarningRate.LOSS;
     }
 }
