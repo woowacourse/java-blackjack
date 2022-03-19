@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.BlackJackReferee;
 import blackjack.domain.gamer.Player;
 
 class BlackJackGameTest {
@@ -43,20 +41,5 @@ class BlackJackGameTest {
         int cardNumberSum = blackJackGame.getDealer().sumCardsNumber();
 
         assertThat(cardNumberSum).isGreaterThan(16);
-    }
-
-    @Test
-    @DisplayName("1000원 배팅일 때 지면 수익 -1000원")
-    void createResultLose() {
-        BlackJackGame blackJackGame = new BlackJackGame(
-            List.of("name"), betting -> 1000, new Deck(Card.getCards()));
-
-        BlackJackReferee result = blackJackGame.play(hitRequest -> true, (name, cards) -> {});
-
-        int dealerEarning = result.getDealerEarning();
-        Map<String, Integer> playerEarnings = result.getPlayerEarnings();
-
-        assertThat(playerEarnings.get("name")).isEqualTo(-1000);
-        assertThat(dealerEarning).isEqualTo(1000);
     }
 }

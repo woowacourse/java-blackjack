@@ -7,6 +7,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.result.BettingResult;
 
 public class BlackJackGame {
 
@@ -21,7 +22,7 @@ public class BlackJackGame {
 		this.deck = deck;
 	}
 
-	public BlackJackReferee play(HitRequester hitOrStay, CardsChecker cardChecker) {
+	public BettingResult play(HitRequester hitOrStay, CardsChecker cardChecker) {
 		giveFirstCards();
 		checkFirstCardsOfGamers(cardChecker);
 		askPlayerHitOrStay(hitOrStay, cardChecker);
@@ -70,7 +71,7 @@ public class BlackJackGame {
 		}
 	}
 
-	private BlackJackReferee createResult() {
+	private BettingResult createResult() {
 		return BlackJackReferee.create(gamers.getDealer(), gamers.getPlayers());
 	}
 

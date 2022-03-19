@@ -8,6 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.game.BlackJackReferee;
+import blackjack.domain.result.BettingResult;
 
 public class OutputView {
 
@@ -56,10 +57,10 @@ public class OutputView {
 			.collect(Collectors.joining(", "));
 	}
 
-	public static void printFinalResult(BlackJackReferee gameResultDto) {
+	public static void printFinalResult(BettingResult result) {
 		System.out.println("## 최종 수익");
-		System.out.println("딜러: " + gameResultDto.getDealerEarning());
-		gameResultDto.getPlayerEarnings()
+		System.out.println("딜러: " + result.getDealerEarning());
+		result.getPlayerEarnings()
 			.forEach((name, earning) -> System.out.printf("%s: %s\n", name, earning));
 	}
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.BlackJackReferee;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.result.BettingResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -22,7 +22,7 @@ public class BlackJackController {
 
 		OutputView.printGamers(dealer, players);
 
-		BlackJackReferee result = blackJackGame.play(InputView::askHitOrStay, OutputView::checkHoldingCards);
+		BettingResult result = blackJackGame.play(InputView::askHitOrStay, OutputView::checkHoldingCards);
 
 		OutputView.printAdditionalDrawDealer(dealer.findHitCount());
 		OutputView.printFinalCards(dealer, players);
