@@ -1,6 +1,9 @@
 package blackjack.domain.game;
 
+import static java.util.Arrays.*;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -64,8 +67,8 @@ public final class Game {
     }
 
     public List<Participant> getParticipants() {
-        List<Participant> participants = new ArrayList<>(players);
-        participants.add(0, dealer);
+        List<Participant> participants = new ArrayList<>(List.of(dealer));
+        participants.addAll(players);
         return participants;
     }
 }
