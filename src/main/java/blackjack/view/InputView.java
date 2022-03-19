@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.player.Name;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 public class InputView {
 
+    public static final String INPUT_BET_MONEY_MESSAGE = "의 베팅 금액은?";
     private static final String NAMES_DUPLICATED_ERROR_MESSAGE = "[ERROR] 중복된 이름을 입력할 수 없습니다.";
     private static final String NULL_ANSWER_INPUT_ERROR_MESSAGE = "[ERROR] y,n 이외의 문자를 입력할 수 없습니다.";
     private static final String NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -21,11 +23,13 @@ public class InputView {
         String inputNames = SCANNER.nextLine();
         return validateDuplicatedName(inputNames);
     }
-    public static int inputGamblerBetMoney(String name){
-        System.out.println(name + "의 베팅 금액은?");
+
+    public static double inputGamblerBetMoney(Name name) {
+        System.out.println(name.getName() + INPUT_BET_MONEY_MESSAGE);
         String inputNames = SCANNER.nextLine();
-        return Integer.parseInt(inputNames);
+        return Double.parseDouble(inputNames);
     }
+
     public static boolean inputOneMoreCard(String name) {
         System.out.printf(ONE_MORE_CARD_INPUT_MESSAGE + System.lineSeparator(), name);
         String inputAnswer = SCANNER.nextLine();

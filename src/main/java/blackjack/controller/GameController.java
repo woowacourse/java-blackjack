@@ -33,8 +33,9 @@ public class GameController {
         List<Gambler> gamblerList = new ArrayList<>();
         String[] names = InputView.inputGamblerNames();
         for (String name : names) {
-            double money = (double) InputView.inputGamblerBetMoney(name);
-            gamblerList.add(Gambler.of(Name.of(name), money, cardDeck));
+            Name gamblerName = Name.of(name);
+            double money = InputView.inputGamblerBetMoney(gamblerName);
+            gamblerList.add(Gambler.of(gamblerName, money, cardDeck));
         }
         return Gamblers.of(gamblerList);
     }

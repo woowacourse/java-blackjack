@@ -155,9 +155,11 @@
 - [ ] `Card` - 캐시가 없는 경우 예외를 던지는 것이 최선의 전략인지?
 - [x] `Gambler` - `getCardNeedGambler`
     - `findHitGambler`라는 네이밍은 어떤지.
-- [ ] `Name` - `NULL_NAME` 상수가 `EMPTY_NAME`인지
-- [ ] `Name` - `validateNullName()`
+- [x] `Name` - `NULL_NAME` 상수가 `EMPTY_NAME`인지
+  - 비어있는 이름이라는 의미에서 `NULL_NAME`으로 사용하였고 `EMPTY_NAME`이 적합하여 수정
+- [x] `Name` - `validateNullName()`
     - `String.trim()`의 사용을 통해 조건식을 더 간단하게 수정
+    - `trim()`,`replace()`를 사용하여 공백 제거
 
 ### 📋 3차 코멘트
 
