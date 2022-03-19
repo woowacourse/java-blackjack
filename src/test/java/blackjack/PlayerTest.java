@@ -2,6 +2,7 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.*;
 
+import blackjack.user.Dealer;
 import blackjack.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,5 +70,13 @@ public class PlayerTest {
         player.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
         player.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
         assertThat(player.isBust()).isFalse();
+    }
+
+    @Test
+    void pickOpenCardsTest() {
+        Player player = Player.generate("pobi");
+        player.addCard(Card.generate(Suit.DIAMOND, Denomination.TWO));
+        player.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
+        assertThat(player.pickOpenCards().numberOfCards()).isEqualTo(2);
     }
 }

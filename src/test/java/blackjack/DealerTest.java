@@ -58,4 +58,12 @@ public class DealerTest {
         dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
         assertThat(dealer.isBust()).isFalse();
     }
+
+    @Test
+    void pickOpenCardsTest() {
+        Dealer dealer = Dealer.generate();
+        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.EIGHT));
+        dealer.addCard(Card.generate(Suit.DIAMOND, Denomination.SEVEN));
+        assertThat(dealer.pickOpenCards().numberOfCards()).isEqualTo(1);
+    }
 }

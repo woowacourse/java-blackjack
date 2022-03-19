@@ -30,6 +30,10 @@ public class Cards {
         return cards.size();
     }
 
+    public Card pick(int index) {
+        return cards.get(index);
+    }
+
     private int optimizeSum(int sum) {
         if (hasAce()) {
             return sum + BONUS_SCORE;

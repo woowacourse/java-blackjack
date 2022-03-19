@@ -1,5 +1,6 @@
 package blackjack.user;
 
+import blackjack.Cards;
 import blackjack.State;
 import java.util.Objects;
 
@@ -33,5 +34,10 @@ public class Player extends Participant {
     protected void updateStateAfterAddCard() {
         setStateBlackjackIfSatisfied();
         setStateBustIfSatisfied();
+    }
+
+    @Override
+    public Cards pickOpenCards() {
+        return openAllCards();
     }
 }

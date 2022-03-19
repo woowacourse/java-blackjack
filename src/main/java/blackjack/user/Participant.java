@@ -48,7 +48,13 @@ public abstract class Participant {
         }
     }
 
+    protected Cards openAllCards() {
+        return myCards;
+    }
+
     abstract void setStateStayIfSatisfied(boolean stayFlag);
 
     abstract void updateStateAfterAddCard();
+
+    abstract Cards pickOpenCards();
 }
