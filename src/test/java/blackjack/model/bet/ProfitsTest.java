@@ -15,15 +15,12 @@ public class ProfitsTest {
     @Test
     void getDealerProfit_10000() {
         Map<Entry, Amount> entryProfits = new HashMap<>();
-        int entryProfit1 = -20000;
-        int entryProfit2 = 10000;
-        entryProfits.put(new Entry("포키"), new Amount(entryProfit1));
-        entryProfits.put(new Entry("리버"), new Amount(entryProfit2));
+        entryProfits.put(new Entry("포키"), new Amount(-20000));
+        entryProfits.put(new Entry("리버"), new Amount(10000));
         Dealer dealer = new Dealer();
         Profits profits = Profits.of(entryProfits, dealer);
-        int expected = -(entryProfit1 + entryProfit2);
 
         Amount actualAmount = profits.getValues().get(dealer);
-        assertThat(actualAmount.getValue()).isEqualTo(expected);
+        assertThat(actualAmount.getValue()).isEqualTo(10000);
     }
 }
