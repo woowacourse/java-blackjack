@@ -14,16 +14,16 @@ public class CardDeck {
 
     private LinkedList<Card> createCards() {
         final LinkedList<Card> cards = new LinkedList<>();
-        for (Symbol symbol : Symbol.values()) {
-            pushCardFromSymbol(cards, symbol);
+        for (CardSymbol cardSymbol : CardSymbol.values()) {
+            pushCardFromSymbol(cards, cardSymbol);
         }
         Collections.shuffle(cards);
         return cards;
     }
 
-    private void pushCardFromSymbol(final List<Card> cards, Symbol symbol) {
+    private void pushCardFromSymbol(final List<Card> cards, CardSymbol cardSymbol) {
         for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(cardNumber, symbol));
+            cards.add(new Card(cardNumber, cardSymbol));
         }
     }
 

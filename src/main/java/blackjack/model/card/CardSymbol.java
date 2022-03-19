@@ -1,6 +1,6 @@
 package blackjack.model.card;
 
-public enum Symbol {
+public enum CardSymbol {
 
     HEART("하트"),
     DIAMOND("다이아몬드"),
@@ -10,7 +10,7 @@ public enum Symbol {
 
     private final String value;
 
-    Symbol(String value) {
+    CardSymbol(String value) {
         this.value = value;
     }
 
