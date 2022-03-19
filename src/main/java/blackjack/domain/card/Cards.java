@@ -1,10 +1,14 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.game.GameResult.BLACKJACK_VALUE;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+
+    private static final int ACE_ADDITIONAL_VALUE = 10;
 
     private final List<Card> value;
 
@@ -25,14 +29,28 @@ public class Cards {
     }
 
     public int sum() {
-        return value.stream()
+        int sum = value.stream()
                 .mapToInt(Card::toInt)
                 .sum();
+
+        if (canAddAddtionalValue(sum)) {
+            sum += ACE_ADDITIONAL_VALUE;
+        }
+
+        return sum;
     }
 
-    public boolean hasAce() {
+    private boolean canAddAddtionalValue(int sum) {
+        return hasAce() && !exceedBust(sum);
+    }
+
+    private boolean hasAce() {
         return value.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    private boolean exceedBust(int sum) {
+        return sum + ACE_ADDITIONAL_VALUE > BLACKJACK_VALUE;
     }
 
     public List<Card> getValue() {

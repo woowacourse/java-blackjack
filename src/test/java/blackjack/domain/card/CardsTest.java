@@ -40,7 +40,7 @@ public class CardsTest {
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
-                Arguments.arguments(CLOVER_ACE, 1),
+                Arguments.arguments(CLOVER_ACE, 11),
                 Arguments.arguments(CLOVER_TWO, 2),
                 Arguments.arguments(CLOVER_THREE, 3),
                 Arguments.arguments(CLOVER_FOUR, 4),
