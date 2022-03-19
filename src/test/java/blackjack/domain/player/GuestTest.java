@@ -17,10 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class GuestTest {
 
+
     @Test
     @DisplayName("guest 객체 생성 확인")
     void createGuest() {
-        Guest guest = new Guest("guest", new PlayingCards());
+        Guest guest = new Guest("guest", new PlayingCards(), 100);
 
         assertThat(guest).isInstanceOf(Guest.class);
     }
@@ -28,11 +29,11 @@ class GuestTest {
     @Test
     @DisplayName("카드를 할당 받았는지 확인")
     void checkAddCardToDeck() {
-        Guest guest = new Guest("guest", new PlayingCards());
+        Guest guest = new Guest("guest", new PlayingCards(), 100);
         PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.FOUR);
         guest.addCard(playingCard);
 
-        Guest compareGuest = new Guest("compare_guest", new PlayingCards());
+        Guest compareGuest = new Guest("compare_guest", new PlayingCards(), 100);
         compareGuest.addCard(playingCard);
 
         assertThat(guest).isEqualTo(compareGuest);
@@ -46,7 +47,7 @@ class GuestTest {
         cards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.TWO));
 
-        Guest guest = new Guest("guest", new PlayingCards(cards));
+        Guest guest = new Guest("guest", new PlayingCards(cards), 100);
         assertThat(guest.isBust()).isTrue();
     }
 
@@ -58,7 +59,7 @@ class GuestTest {
         cards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
 
-        Guest guest = new Guest("guest", new PlayingCards(cards));
+        Guest guest = new Guest("guest", new PlayingCards(cards), 100);
         assertThat(guest.isBust()).isFalse();
     }
 
@@ -68,7 +69,7 @@ class GuestTest {
     void checkPlayerResult(Suit suit, Denomination denomination, Denomination secondDenomination, boolean expected) {
         Set<PlayingCard> guestCards = new HashSet<>();
         guestCards.add(new PlayingCard(suit, denomination));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
+        Guest guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(suit, secondDenomination));
@@ -83,7 +84,7 @@ class GuestTest {
         Set<PlayingCard> guestCards = new HashSet<>();
         guestCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
         guestCards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
+        Guest guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         assertThat(guest.isCanHit()).isTrue();
     }
@@ -96,7 +97,7 @@ class GuestTest {
         guestCards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
         guestCards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
         guestCards.add(new PlayingCard(Suit.CLUB, Denomination.ACE));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
+        Guest guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         assertThat(guest.isCanHit()).isFalse();
     }

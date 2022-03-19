@@ -4,8 +4,11 @@ import blackjack.domain.card.PlayingCards;
 
 public class Guest extends AbstractPlayer implements Player {
 
-    public Guest(String name, PlayingCards playingCards) {
+    private final BetMoney betMoney;
+
+    public Guest(String name, PlayingCards playingCards, Integer money) {
         super(name, playingCards);
+        this.betMoney = new BetMoney(money);
     }
 
     @Override
@@ -27,5 +30,9 @@ public class Guest extends AbstractPlayer implements Player {
             return true;
         }
         return player.isLose(this) && !this.isBust();
+    }
+
+    public BetMoney getBetMoney() {
+        return betMoney;
     }
 }

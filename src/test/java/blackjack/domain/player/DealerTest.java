@@ -66,7 +66,7 @@ class DealerTest {
     void checkDealerResult(Suit suit, Denomination denomination, Denomination secondDenomination, boolean expected) {
         Set<PlayingCard> guestCards = new HashSet<>();
         guestCards.add(new PlayingCard(suit, denomination));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
+        Guest guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(suit, secondDenomination));

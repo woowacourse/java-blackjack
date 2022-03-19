@@ -2,32 +2,29 @@ package blackjack.domain.player;
 
 public class BetMoney {
 
-    private static final int WIN_RATE = 1;
-    private static final double BLACKJACK_EXTRA_POINT = 1.5;
+    private final double value;
 
-    private double money;
-
-    public BetMoney(double money) {
-        this.money = money;
+    public BetMoney(double value) {
+        this.value = value;
     }
 
-    public double getMoney() {
-        return money;
+    public double getValue() {
+        return value;
     }
 
-    public void plusMoney() {
-        this.money = money * WIN_RATE;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BetMoney betMoney = (BetMoney) o;
+
+        return Double.compare(betMoney.value, value) == 0;
     }
 
-    public void minusMoney() {
-        this.money = -(money * WIN_RATE);
-    }
-
-    public void plusBlackjackMoney() {
-        this.money = this.money * BLACKJACK_EXTRA_POINT;
-    }
-
-    public void minusBlackjackMoney() {
-        this.money = -(this.money * BLACKJACK_EXTRA_POINT);
+    @Override
+    public int hashCode() {
+        long temp = Double.doubleToLongBits(value);
+        return (int) (temp ^ (temp >>> 32));
     }
 }

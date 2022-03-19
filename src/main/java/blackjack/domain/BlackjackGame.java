@@ -13,7 +13,6 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.GameResponse;
 import blackjack.domain.result.Profits;
-import blackjack.domain.result.PlayersBetMoney;
 
 public class BlackjackGame {
 
@@ -25,15 +24,15 @@ public class BlackjackGame {
         this.blackjackPlayers = players;
     }
 
-    public static BlackjackGame of(Deck deck, List<String> playerNames) {
-        return new BlackjackGame(deck, initPlayers(playerNames));
+    public static BlackjackGame of(Deck deck, List<String> playerNames, HashMap<String, Integer> playersBetMoney) {
+        return new BlackjackGame(deck, initPlayers(playerNames, playersBetMoney));
     }
 
-    private static Players initPlayers(List<String> playerNames) {
+    private static Players initPlayers(List<String> playerNames, HashMap<String, Integer> playersBetMoney) {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
         for (String playerName : playerNames) {
-            players.add(new Guest(playerName, new PlayingCards()));
+            players.add(new Guest(playerName, new PlayingCards(), playersBetMoney.get(playerName)));
         }
         return new Players(players);
     }
@@ -74,10 +73,8 @@ public class BlackjackGame {
         player.addCard(deck.assignCard(playingCardShuffleMachine));
     }
 
-    public Profits calculateResult(Players players, HashMap<String, Integer> playersBetMoney) {
-        Profits profits = new Profits(PlayersBetMoney.of(players, playersBetMoney));
-        profits.competeDealerWithPlayers(players);
-        return profits;
+    public Profits calculateProfits() {
+        return new Profits(blackjackPlayers);
     }
 
     public List<GameResponse> getPlayersGameResponses() {

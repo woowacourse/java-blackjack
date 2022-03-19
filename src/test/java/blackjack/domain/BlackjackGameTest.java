@@ -12,12 +12,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackGameTest {
 
+
     @Test
     @DisplayName("카드가 할당되는지 확인")
     void pickCard() {
+        Guest guest = new Guest("guest", new PlayingCards(), 100);
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
-        Guest guest = new Guest("guest", new PlayingCards());
-        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), new ArrayList<>());
+        HashMap<String, Integer> playersBetMoney = new HashMap<>();
+
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), new ArrayList<>(), playersBetMoney);
         blackjackGame.assignCard(guest, playingCardFixMachine);
         blackjackGame.assignCard(guest, playingCardFixMachine);
 
@@ -29,7 +32,9 @@ class BlackjackGameTest {
     void checkNonExistNextTurn() {
         List<String> players = new ArrayList<>();
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
+        HashMap<String, Integer> playersBetMoney = new HashMap<>();
+
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players, playersBetMoney);
         blackjackGame.initGames(playingCardShuffleMachine);
         blackjackGame.nextTurn();
 
@@ -41,8 +46,12 @@ class BlackjackGameTest {
     void checkExistNextTurn() {
         List<String> players = new ArrayList<>();
         players.add("green");
+
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
-        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
+        HashMap<String, Integer> playersBetMoney = new HashMap<>();
+        playersBetMoney.put("green", 100);
+
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players, playersBetMoney);
         blackjackGame.initGames(playingCardShuffleMachine);
         blackjackGame.nextTurn();
 
@@ -54,8 +63,12 @@ class BlackjackGameTest {
     void checkRightPlayerTurn() {
         List<String> players = new ArrayList<>();
         players.add("green");
+
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
-        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
+        HashMap<String, Integer> playersBetMoney = new HashMap<>();
+        playersBetMoney.put("green", 100);
+
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players, playersBetMoney);
         blackjackGame.initGames(playingCardFixMachine);
         blackjackGame.nextTurn();
 
@@ -67,7 +80,9 @@ class BlackjackGameTest {
     void checkPossibleDealerTurn() {
         List<String> players = new ArrayList<>();
         CardShuffleMachine playingCardFixMachine = new PlayingCardFixMachine();
-        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players);
+        HashMap<String, Integer> playersBetMoney = new HashMap<>();
+
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), players, playersBetMoney);
         blackjackGame.initGames(playingCardFixMachine);
 
         assertThat(blackjackGame.isTurnDealer()).isFalse();

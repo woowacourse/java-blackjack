@@ -20,6 +20,7 @@ import blackjack.domain.card.PlayingCards;
 
 class MatchTest {
 
+
     @ParameterizedTest
     @CsvSource(value = {"SPADE:CLUB:ACE:JACK:KING:DRAW", "SPADE:CLUB:ACE:JACK:FIVE:WIN_BLACKJACK",
             "SPADE:CLUB:ACE:THREE:FIVE:LOSE"}, delimiter = ':')
@@ -29,7 +30,7 @@ class MatchTest {
         Set<PlayingCard> guestCards = new HashSet<>();
         guestCards.add(new PlayingCard(suit, denomination));
         guestCards.add(new PlayingCard(secondSuit, secondDenomination));
-        Player guest = new Guest("guest", new PlayingCards(guestCards));
+        Player guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(suit, denomination));
@@ -48,7 +49,7 @@ class MatchTest {
         guestCards.add(new PlayingCard(suit, denomination));
         guestCards.add(new PlayingCard(secondSuit, thirdDenomination));
         guestCards.add(new PlayingCard(secondSuit, thirdDenomination));
-        Player guest = new Guest("guest", new PlayingCards(guestCards));
+        Player guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(suit, denomination));
@@ -67,7 +68,7 @@ class MatchTest {
         guestCards.add(new PlayingCard(suit, denomination));
         guestCards.add(new PlayingCard(secondSuit, thirdDenomination));
         guestCards.add(new PlayingCard(secondSuit, thirdDenomination));
-        Player guest = new Guest("guest", new PlayingCards(guestCards));
+        Player guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(suit, denomination));
@@ -85,7 +86,7 @@ class MatchTest {
         Set<PlayingCard> guestCards = new HashSet<>();
         guestCards.add(new PlayingCard(suit, denomination));
         guestCards.add(new PlayingCard(secondSuit, denomination));
-        Player guest = new Guest("guest", new PlayingCards(guestCards));
+        Player guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(suit, thirdDenomination));
@@ -105,7 +106,7 @@ class MatchTest {
         guestCards.add(new PlayingCard(suit, thirdDenomination));
         guestCards.add(new PlayingCard(secondSuit, thirdDenomination));
         guestCards.add(new PlayingCard(thirdSuit, thirdDenomination));
-        Player guest = new Guest("guest", new PlayingCards(guestCards));
+        Player guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
         Set<PlayingCard> dealerCards = new HashSet<>();
         dealerCards.add(new PlayingCard(suit, denomination));

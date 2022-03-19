@@ -19,14 +19,14 @@ public class BlackjackController {
 
     public void playGame() {
         List<String> playerNames = receivePlayerNames();
-        HashMap<String, Integer> playersBetMoney = receivePlayersBetMoney(playerNames);
-        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), playerNames);
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), playerNames, receivePlayersBetMoney(playerNames));
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
         blackjackGame.initGames(playingCardShuffleMachine);
 
-        Players players = blackjackGame.getPlayers();
-        startPlayTurn(blackjackGame, playingCardShuffleMachine, players);
-        announceResult(blackjackGame, players, playersBetMoney);
+        announceStartGame(blackjackGame, blackjackGame.getPlayers());
+        turnPlayers(blackjackGame, playingCardShuffleMachine);
+        turnDealer(blackjackGame, playingCardShuffleMachine);
+        announceResult(blackjackGame);
     }
 
     private List<String> receivePlayerNames() {
@@ -53,12 +53,6 @@ public class BlackjackController {
             System.out.println(e.getMessage());
             return receivePlayerBetMoney(name);
         }
-    }
-
-    private void startPlayTurn(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine, Players players) {
-        announceStartGame(blackjackGame, players);
-        turnPlayers(blackjackGame, playingCardShuffleMachine);
-        turnDealer(blackjackGame, playingCardShuffleMachine);
     }
 
     private void announceStartGame(BlackjackGame blackjackGame, Players players) {
@@ -103,9 +97,9 @@ public class BlackjackController {
         OutputView.announcePresentCards(blackjackGame.getTurnPlayerGameResponse());
     }
 
-    private void announceResult(BlackjackGame blackjackGame, Players players, HashMap<String, Integer> playersBetMoney) {
+    private void announceResult(BlackjackGame blackjackGame) {
         OutputView.announceResultCards(blackjackGame.getPlayersGameResponses());
-        Profits profits = blackjackGame.calculateResult(players, playersBetMoney);
+        Profits profits = blackjackGame.calculateProfits();
         OutputView.announceResultProfit(profits);
     }
 }

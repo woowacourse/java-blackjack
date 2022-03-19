@@ -7,7 +7,7 @@ import blackjack.domain.player.Player;
 
 public enum Match {
 
-    WIN_BLACKJACK("블랙잭_승", Match::isBlackjack),
+    WIN_BLACKJACK("블랙잭_승", Match::isBlackjackWin),
     WIN("승", Match::isWin),
     LOSE_BLACKJACK("블랙잭_패", Match::isBlackjackLose),
     LOSE("패", Match::isLose),
@@ -23,13 +23,19 @@ public enum Match {
     }
 
     public static Match findWinner(Player player, Player competitor) {
+        if (!player.isDealer()) {
+            return Arrays.stream(Match.values())
+                    .filter(match -> match.expression.apply(player, competitor))
+                    .findFirst()
+                    .orElseThrow();
+        }
         return Arrays.stream(Match.values())
-                .filter(match -> match.expression.apply(player, competitor))
+                .filter(match -> match.expression.apply(competitor, player))
                 .findFirst()
                 .orElseThrow();
     }
 
-    private static boolean isBlackjack(Player player, Player competitor) {
+    private static boolean isBlackjackWin(Player player, Player competitor) {
         return player.isBlackJack(competitor);
     }
 
@@ -49,19 +55,19 @@ public enum Match {
         return player.isDraw(competitor);
     }
 
-    public boolean isMatchBlackjackLose() {
-        return this.result == LOSE_BLACKJACK.result;
-    }
-
-    public boolean isMatchLose() {
-        return this.result == LOSE.result;
-    }
-
     public boolean isMatchBlackjackWin() {
-        return this.result == WIN_BLACKJACK.result;
+        return this == WIN_BLACKJACK;
     }
 
     public boolean isMatchWin() {
-        return this.result == WIN.result;
+        return this == WIN;
+    }
+
+    public boolean isMatchBlackjackLose() {
+        return this == LOSE_BLACKJACK;
+    }
+
+    public boolean isMatchLose() {
+        return this == LOSE;
     }
 }

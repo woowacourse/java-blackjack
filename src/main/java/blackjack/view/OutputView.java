@@ -2,13 +2,11 @@ package blackjack.view;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import blackjack.domain.card.PlayingCard;
-import blackjack.domain.player.BetMoney;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.GameResponse;
-import blackjack.domain.result.PlayersBetMoney;
+import blackjack.domain.result.Profit;
 import blackjack.domain.result.Profits;
 
 public class OutputView {
@@ -101,11 +99,9 @@ public class OutputView {
 
     public static void announceResultProfit(Profits profits) {
         System.out.println(NEW_LINE + FINAL_WINNER_PROFIT_GUIDE_MESSAGE);
-        PlayersBetMoney playersMoney = profits.getPlayersBetMoney();
-        Map<Player, BetMoney> profit = playersMoney.getPlayersMoney();
-        Set<Player> profitKeys = profit.keySet();
-        for (Player player : profitKeys) {
-            System.out.println(player.getName() + RESULT_START_DELIMITER + profit.get(player).getMoney());
+        Map<Player, Profit> playersProfit = profits.getPlayersProfit();
+        for (Player player : playersProfit.keySet()) {
+            System.out.println(player.getName() + RESULT_START_DELIMITER + playersProfit.get(player).getValue());
         }
     }
 }

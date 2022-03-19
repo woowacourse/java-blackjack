@@ -25,15 +25,15 @@ public class Players {
         return this.players.get(turn);
     }
 
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
     public Player getPlayer(String name) {
         return players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findAny()
                 .orElseThrow();
-    }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
     }
 
     public Player getDealer() {
