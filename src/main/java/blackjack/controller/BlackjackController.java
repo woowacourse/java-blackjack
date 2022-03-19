@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.Command;
+import blackjack.domain.entry.Dealer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -52,7 +53,7 @@ public class BlackjackController {
 
     private void hitDealer(BlackjackGame blackjackGame) {
         while (blackjackGame.canDealerHit()) {
-            blackjackGame.hit("딜러");
+            blackjackGame.hit(Dealer.NAME);
             OutputView.printReceivingMoreCardOfDealer();
         }
     }

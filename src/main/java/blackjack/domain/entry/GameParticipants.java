@@ -48,7 +48,7 @@ public class GameParticipants {
     }
 
     public Participant find(String name) {
-        if (name.equals("딜러")) {
+        if (name.equals(Dealer.NAME)) {
             return dealer;
         }
         return players.getPlayers().stream()
