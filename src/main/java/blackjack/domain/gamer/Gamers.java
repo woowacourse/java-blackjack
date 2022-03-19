@@ -53,7 +53,7 @@ public class Gamers {
 			.orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER_ERROR));
 	}
 
-	public boolean checkPlayerDrawPossible(String name) {
+	public boolean isBust(String name) {
 		return findPlayerByName(name).isBust();
 	}
 

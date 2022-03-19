@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.BlackJackGame;
+import blackjack.controller.BlackJackGame;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BettingResult;

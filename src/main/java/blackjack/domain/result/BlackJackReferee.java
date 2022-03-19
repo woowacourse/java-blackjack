@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain.result;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.Map;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.result.BettingResult;
 
 public class BlackJackReferee {
 

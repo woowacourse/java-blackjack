@@ -14,6 +14,7 @@ import blackjack.domain.card.CardShape;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BettingResult;
+import blackjack.domain.result.BlackJackReferee;
 
 class BlackJackRefereeTest {
 
