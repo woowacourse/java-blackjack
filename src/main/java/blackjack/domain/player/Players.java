@@ -1,27 +1,20 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Deck;
-
-import javax.security.auth.callback.Callback;
 import java.util.*;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final int MIN_SIZE = 2;
+    private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 8;
 
     private final List<Player> participants;
-    private final Deque<Player> copiedParticipants;
     private final Player dealer;
 
     public Players(final List<Player> participants, final Player dealer) {
         validateParticipants(participants);
         this.participants = participants;
-        this.copiedParticipants = new ArrayDeque<>(participants);
         this.dealer = dealer;
     }
 
@@ -54,31 +47,9 @@ public class Players {
         return List.copyOf(participants);
     }
 
-    public Boolean isParticipantAcceptCard(Deck deck) {
-        validateEndParticipants();
-        Player participant = copiedParticipants.getFirst();
-        if (participant.acceptableCard()) {
-            participant.addCard(deck.draw());
-            return true;
+    public void additionalParticipantsDraw(Consumer<Player> consumer) {
+        for (Player participant : participants) {
+            consumer.accept(participant);
         }
-        copiedParticipants.pop();
-        return false;
-    }
-
-    public Player getParticipant() {
-        if (allParticipantsDecided()) {
-            throw new RuntimeException("[ERROR] 참가자가 더이상 존재하지 않습니다.");
-        }
-        return copiedParticipants.getFirst();
-    }
-
-    private void validateEndParticipants() {
-        if (allParticipantsDecided()) {
-            throw new RuntimeException("[ERROR] 참가자가 더이상 존재하지 않습니다.");
-        }
-    }
-
-    public boolean allParticipantsDecided() {
-        return copiedParticipants.isEmpty();
     }
 }

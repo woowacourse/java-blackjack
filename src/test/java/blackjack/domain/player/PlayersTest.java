@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayersTest {
@@ -24,7 +23,7 @@ class PlayersTest {
 
     @ParameterizedTest
     @MethodSource("participantListBySuccess")
-    @DisplayName("참가자는 2~8명 사이이다. (성공)")
+    @DisplayName("참가자는 1~8명 사이이다. (성공)")
     void checkParticipantNumberBySuccess(List<Player> participants) {
         Dealer dealer = new Dealer();
         assertDoesNotThrow(() -> new Players(participants, dealer));
@@ -52,7 +51,7 @@ class PlayersTest {
 
     @ParameterizedTest
     @MethodSource("participantListByFail")
-    @DisplayName("참가자는 2~8명 사이이다. (실패)")
+    @DisplayName("참가자는 1~8명 사이이다. (실패)")
     void checkParticipantNumber(List<Player> participants) {
         Dealer dealer = new Dealer();
 
@@ -65,9 +64,6 @@ class PlayersTest {
         AcceptStrategy inputStrategy = new ParticipantAcceptStrategy();
         return Stream.of(
                 null,
-                List.of(
-                        new Participant("pobi", inputStrategy)
-                ),
                 List.of(
                         new Participant("1", inputStrategy),
                         new Participant("2", inputStrategy),

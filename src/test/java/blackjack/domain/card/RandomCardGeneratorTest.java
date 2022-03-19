@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class DeckCardGeneratorTest {
+public class RandomCardGeneratorTest {
 
     @Test
     @DisplayName("DeckCard는 52장이다.")

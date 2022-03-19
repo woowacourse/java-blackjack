@@ -7,10 +7,10 @@ import java.util.List;
 
 public abstract class Player {
 
-    protected Cards cards;
-    protected String name;
+    final String name;
+    final Cards cards;
 
-    public Player(String name) {
+    Player(final String name) {
         validateEmpty(name);
         this.name = name;
         this.cards = new Cards();
@@ -24,12 +24,30 @@ public abstract class Player {
 
     public abstract boolean acceptableCard();
 
+    public abstract boolean isParticipant();
+
     public int calculateFinalScore() {
-        return cards.calculateFinalScore();
+        return cards.calculateEndScore();
     }
 
     public void addCard(final Card card) {
         cards.addCard(card);
+    }
+
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    public boolean isSameScore(Player player) {
+        return calculateFinalScore() == player.calculateFinalScore();
+    }
+
+    public boolean isScoreGreaterThan(Player player) {
+        return calculateFinalScore() > player.calculateFinalScore();
     }
 
     public List<Card> getCards() {
@@ -37,7 +55,6 @@ public abstract class Player {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
-
 }

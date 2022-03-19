@@ -2,9 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.player.*;
-import blackjack.domain.result.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -18,7 +18,7 @@ public class OutputView {
         final List<Player> participants = players.getParticipants();
         final Player dealer = players.getDealer();
 
-        final String basicDistribute = "%s와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
+        final String basicDistribute = "%s와 %s에게 " + INIT_DISTRIBUTE_SIZE + "장을 나누어주었습니다.";
         System.out.println();
         System.out.printf((basicDistribute) + "%n", dealer.getName(), String.join(DELIMITER, extractNames(participants)));
         printInitDealerInfo(dealer);
@@ -57,13 +57,9 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    public static void printParticipantOverMaxScore(final String name) {
-        System.out.println(name + "은 최고점수를 초과하여 카드를 더 이상 받을 수 없습니다.");
-    }
-
     public static void printDealerAcceptCard() {
         System.out.println("딜러는 " + ADD_CARD_CONDITION + "이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
+
     }
 
     public static void printDealerDenyCard() {
@@ -82,28 +78,44 @@ public class OutputView {
         System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
     }
 
-    public static void printGameResult(final GameResult gameResult) {
-        System.out.println("## 최종 승패");
-        printDealerResult(gameResult.getDealerResult());
-        printParticipantsResult(gameResult.getParticipantResults());
+    public static void printPlayersProfit(Map<Player, Integer> profits, int dealerProfit) {
+        System.out.println("## 최종 수익");
+        printDealerProfit(dealerProfit);
+        printParticipantsProfit(profits);
     }
 
-    private static void printDealerResult(final DealerResult dealerResult) {
-        System.out.println("딜러" + EXPLAIN_SYMBOL + makeResultToText(dealerResult));
+    public static void printDealerProfit(int dealerProfit) {
+        System.out.println("딜러" + EXPLAIN_SYMBOL + dealerProfit);
     }
 
-    private static String makeResultToText(final DealerResult dealerResult) {
-        ResultCount win = dealerResult.getWin();
-        ResultCount lose = dealerResult.getLose();
-        return String.format("%d%s %d%s", win.getCount(), win.getResult().getValue(), lose.getCount(), lose.getResult().getValue());
+    private static void printParticipantsProfit(Map<Player, Integer> profits) {
+        profits.keySet().forEach(participant -> printParticipantProfit(participant, profits.get(participant)));
     }
 
-    private static void printParticipantsResult(final List<ParticipantResult> participantResults) {
-        participantResults.forEach(OutputView::printParticipantResult);
+    private static void printParticipantProfit(final Player participant, final int profit) {
+        System.out.print(participant.getName() + EXPLAIN_SYMBOL);
+        System.out.println(profit);
     }
+//    public static void printGameResult(final List<Player> participants, final int dealerProfit) {
+//        System.out.println("## 최종 수익");
+//        printDealerResult(dealerProfit);
+//        printParticipantsResult(participants);
+//    }
+//
+//    private static void printDealerResult(final int dealerProfit) {
+//        System.out.println("딜러" + EXPLAIN_SYMBOL + dealerProfit);
+//    }
+//
+//    private static void printParticipantsResult(final List<Player> participants) {
+//        participants.forEach(OutputView::printParticipantResult);
+//    }
+//
+//    private static void printParticipantResult(final Player player) {
+//        if (player.isParticipant()) {
+//            Participant participant = (Participant) player;
+//            System.out.print(participant.getName() + EXPLAIN_SYMBOL);
+//            System.out.println(participant.money().profit());
+//        }
 
-    private static void printParticipantResult(final ParticipantResult participantResult) {
-        System.out.print(participantResult.getName() + EXPLAIN_SYMBOL);
-        System.out.println(participantResult.getResult().getValue());
-    }
+//    }
 }

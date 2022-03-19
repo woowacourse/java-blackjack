@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,19 +13,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ParticipantTest {
 
-    private Deck deck;
-    private AcceptStrategy inputStrategy;
-
-    @BeforeEach
-    void setup() {
-        deck = new Deck(new RandomCardGenerator());
-        inputStrategy = new ParticipantAcceptStrategy();
-    }
-
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("참여자 이름은 비어있을 수 없다")
     void checkNameNullOrEmpty(String name) {
+        AcceptStrategy inputStrategy = new ParticipantAcceptStrategy();
         assertThatThrownBy(() -> new Participant(name, inputStrategy))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 비어있을 수 없습니다.");
@@ -33,6 +26,7 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
     void addParticipantCard() {
+        Deck deck = new Deck(new RandomCardGenerator());
         Participant participant = new Participant("pobi", name -> true);
         participant.addCard(deck.draw());
         participant.addCard(deck.draw());
@@ -45,9 +39,10 @@ class ParticipantTest {
     @DisplayName("참가자는 Burst가 되지 않으면 카드를 받을 수 있다.")
     void acceptCardWhenNotBurst() {
         Participant participant = new Participant("pobi", name -> true);
-        participant.addCard(new Card(Type.DIAMOND, Score.ACE));
-        participant.addCard(new Card(Type.SPADE, Score.KING));
-        participant.addCard(new Card(Type.SPADE, Score.THREE));
+
+        participant.addCard(new Card(Type.CLOVER, Score.TWO));
+        participant.addCard(new Card(Type.SPADE, Score.ACE));
+        participant.addCard(new Card(Type.DIAMOND, Score.NINE));
 
         assertThat(participant.acceptableCard()).isEqualTo(true);
     }
@@ -61,4 +56,5 @@ class ParticipantTest {
         participant.addCard(new Card(Type.DIAMOND, Score.TWO));
         assertThat(participant.acceptableCard()).isEqualTo(false);
     }
+
 }

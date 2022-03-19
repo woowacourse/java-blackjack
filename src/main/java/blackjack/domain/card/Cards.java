@@ -1,13 +1,13 @@
 package blackjack.domain.card;
 
-import blackjack.domain.result.Judge;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
 
+    private static final int BLACKJACK_SCORE = 21;
     private static final int ANOTHER_ACE_SCORE = 10;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -26,19 +26,19 @@ public class Cards {
         }
     }
 
-    public int calculateFinalScore() {
-        final int score = calculateScoreByAceEleven();
-        if (score <= Judge.MAX_SCORE) {
+    public int calculateEndScore() {
+        final int score = calculateScore();
+        if (score <= BLACKJACK_SCORE) {
             return score;
         }
-        return calculateScore();
+        return calculateDefaultScore();
     }
 
-    public int calculateScoreByAceEleven() {
+    public int calculateScore() {
         if (containsAce()) {
-            return calculateScore() + ANOTHER_ACE_SCORE;
+            return calculateDefaultScore() + ANOTHER_ACE_SCORE;
         }
-        return calculateScore();
+        return calculateDefaultScore();
     }
 
     private boolean containsAce() {
@@ -46,13 +46,21 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    public int calculateScore() {
+    private int calculateDefaultScore() {
         return cards.stream()
                 .mapToInt(card -> card.getScore().getAmount())
                 .sum();
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_SIZE && calculateEndScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateEndScore() > BLACKJACK_SCORE;
+    }
+
     public List<Card> getCards() {
-        return List.copyOf(this.cards);
+        return List.copyOf(cards);
     }
 }

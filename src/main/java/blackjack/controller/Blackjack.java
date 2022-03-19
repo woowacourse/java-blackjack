@@ -1,13 +1,16 @@
 package blackjack.controller;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardGenerator;
 import blackjack.domain.player.*;
-import blackjack.domain.result.Judge;
+import blackjack.domain.result.ProfitCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Blackjack {
@@ -16,32 +19,40 @@ public class Blackjack {
 
     public void play() {
         final Deck deck = new Deck(new RandomCardGenerator());
-        final Players players = initPlayers(deck);
+        final List<Player> participants = createParticipants(InputView.requestNames());
+        final Map<Player, Money> bettingBox = makeBettingWithParticipants(participants);
+        final Players players = initPlayers(participants, deck);
 
         OutputView.printPlayersInitCardInfo(players);
         decideGetMoreCard(players, deck);
         announcePlayersFinishInfo(players);
-        OutputView.printGameResult(Judge.calculateGameResult(players));
-    }
-
-    private Players initPlayers(final Deck deck) {
-        final List<Player> participants = createParticipants(InputView.responseNames());
-        final Player dealer = createDealer();
-        makeParticipantsInitCards(participants, deck);
-        makePlayerInitCards(dealer, deck);
-        return new Players(participants, dealer);
+        announcePlayersProfit(bettingBox, players.getDealer());
     }
 
     private List<Player> createParticipants(final List<String> names) {
         return names.stream()
-                .map(name -> new Participant(name, new ParticipantAcceptStrategy()))
+                .map(this::createParticipant)
                 .collect(Collectors.toList());
     }
 
-    private Dealer createDealer() {
-        return new Dealer();
+    private Participant createParticipant(final String name) {
+        return new Participant(name, new ParticipantAcceptStrategy());
     }
 
+    private Map<Player, Money> makeBettingWithParticipants(List<Player> participants) {
+        Map<Player, Money> bettingBox = new HashMap<>();
+        for (Player participant : participants) {
+            bettingBox.put(participant, new Money(InputView.requestBetting(participant.getName())));
+        }
+        return bettingBox;
+    }
+
+    private Players initPlayers(final List<Player> participants, final Deck deck) {
+        final Player dealer = new Dealer();
+        makeParticipantsInitCards(participants, deck);
+        makePlayerInitCards(dealer, deck);
+        return new Players(participants, dealer);
+    }
 
     private void makeParticipantsInitCards(final List<Player> participants, final Deck deck) {
         for (Player participant : participants) {
@@ -61,24 +72,20 @@ public class Blackjack {
     }
 
     private void decideParticipantsMoreCard(final Players players, final Deck deck) {
-        while (!players.allParticipantsDecided()) {
-            Player player = players.getParticipant();
-            boolean cardAccept = players.isParticipantAcceptCard(deck);
-            printParticipantCardInfo(cardAccept, player);
-        }
+        players.additionalParticipantsDraw(player -> decideParticipantMoreCard(player, deck));
     }
 
-    private void printParticipantCardInfo(final boolean cardAccept, final Player participant) {
-        if(cardAccept) {
+    private void decideParticipantMoreCard(final Player participant, final Deck deck) {
+        while (participant.acceptableCard()) {
+            participant.addCard(deck.draw());
             OutputView.printPlayerCardInfo(participant);
         }
     }
 
     private void decideDealerMoreCard(final Player dealer, final Deck deck) {
-        if (dealer.acceptableCard()) {
+        while (dealer.acceptableCard()) {
             dealer.addCard(deck.draw());
             OutputView.printDealerAcceptCard();
-            return;
         }
         OutputView.printDealerDenyCard();
     }
@@ -86,5 +93,11 @@ public class Blackjack {
     private void announcePlayersFinishInfo(final Players players) {
         OutputView.printPlayerFinalInfo(players.getDealer());
         OutputView.printFinishParticipantInfo(players.getParticipants());
+    }
+
+    private void announcePlayersProfit(final Map<Player, Money> betting, final Player dealer) {
+        Map<Player, Integer> profits = ProfitCalculator.calculateParticipantsProfit(betting, dealer);
+        int dealerProfit = ProfitCalculator.calculateDealerProfit(profits.values());
+        OutputView.printPlayersProfit(profits, dealerProfit);
     }
 }
