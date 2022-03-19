@@ -69,8 +69,8 @@
 2단계 피드백
 
 - [x] 블랙잭게임-> 매직넘버 INIT_CARD_COUNT 를 popCards(2) 에서도 사용
-- [ ] BlackjackGame 의 endGame 이름 출력하는 일 하는 느낌으로 변경
-- [ ] Players -> 상수와 인스턴스 변수 사이 개행
+- [x] BlackjackGame 의 endGame 이름 출력하는 일 하는 느낌으로 변경
+- [x] Players -> 상수와 인스턴스 변수 사이 개행
 - [ ] BlackjackGame에 이렇게 로직이 많이 노출될 필요가 있나요?
 - [ ] rawValue라는 변수명은 좋은 이름은 아닌 것 같아요.
 - [ ] 테스트 코드에서만 사용되는 메소드 제거
