@@ -6,8 +6,6 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected static final int MAX_BLACKJACK_SCORE = 21;
-
     private final String name;
     protected final Cards cards;
 
@@ -27,6 +25,14 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
     public int calculateScore() {
         return cards.calculateScore();
     }
@@ -44,6 +50,4 @@ public abstract class Participant {
     }
 
     public abstract List<Card> openFirstCards();
-
-    public abstract boolean isBust();
 }

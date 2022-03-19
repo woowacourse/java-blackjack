@@ -18,6 +18,14 @@ public class Cards {
         cards.add(card);
     }
 
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
+    }
+
     public int calculateScore() {
         int totalScore = getTotalScore();
         if (containsAce() && isRangeScore(totalScore)) {
