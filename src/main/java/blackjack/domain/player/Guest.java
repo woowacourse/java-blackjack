@@ -5,7 +5,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.state.Ready;
 import blackjack.domain.strategy.HitStrategy;
-import java.util.ArrayList;
 
 public class Guest extends AbstractPlayer {
     private final HitStrategy hitStrategy;

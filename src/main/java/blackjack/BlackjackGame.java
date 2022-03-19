@@ -10,7 +10,6 @@ import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -63,7 +62,7 @@ public class BlackjackGame {
     private void outputGameResult(Players players, BettingBox bettingBox) {
         OutputView.printCardResults(getCardResults(players));
         players.judge();
-        Map<Player, Integer> prizeResult =  players.getPrizeResult(bettingBox);
+        Map<Player, Integer> prizeResult = players.getPrizeResult(bettingBox);
         OutputView.printResult(prizeResult);
     }
 

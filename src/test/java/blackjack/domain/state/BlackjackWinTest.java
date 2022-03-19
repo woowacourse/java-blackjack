@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
@@ -25,7 +24,7 @@ class BlackjackWinTest {
         State state1 = Ready.start(new Card(Denomination.JACK, Suit.CLUBS), new Card(Denomination.ACE, Suit.CLUBS));
         State state2 = Ready.start(new Card(Denomination.JACK, Suit.SPADES), new Card(Denomination.NINE, Suit.SPADES))
                 .stand();
-        State blackjackWin =  state1.judge(state2);
+        State blackjackWin = state1.judge(state2);
         assertThat(blackjackWin.prizeRate()).isEqualTo(1.5);
     }
 }

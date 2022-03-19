@@ -4,7 +4,6 @@ import blackjack.domain.HitFlag;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.state.Ready;
-import blackjack.domain.state.State;
 import java.util.List;
 
 public class Dealer extends AbstractPlayer {

@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
@@ -29,6 +28,7 @@ class LoseTest {
                 .stand();
         assertThat(stand1.judge(stand2)).isInstanceOf(Lose.class);
     }
+
     @Test
     @DisplayName("지면 수익 배율이 -1이 되는지 확인한다.")
     void loseRate() {

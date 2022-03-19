@@ -44,7 +44,7 @@ public class Players {
         }
     }
 
-    private static List<Player> toPlayers(List<String> names,Deck deck, HitStrategy hitStrategy) {
+    private static List<Player> toPlayers(List<String> names, Deck deck, HitStrategy hitStrategy) {
         return names.stream()
                 .map(name -> new Guest(name, deck, hitStrategy))
                 .collect(Collectors.toList());
