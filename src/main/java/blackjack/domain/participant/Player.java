@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.betting.BettingMoney;
+
 public class Player extends Participant {
 
     private static final int HIT_THRESHOLD_NUMBER = 21;
@@ -11,6 +13,7 @@ public class Player extends Participant {
     private static final String PLAYER_NAME_DEALER_ERROR_MESSAGE = "[ERROR] 플레이어 이름은 딜러가 될 수 없습니다.";
 
     private final String name;
+    private BettingMoney bettingMoney;
 
     public Player(String name) {
         validateName(name);
@@ -29,12 +32,20 @@ public class Player extends Participant {
         return getScore() < HIT_THRESHOLD_NUMBER;
     }
 
+    public void createBettingMoney(BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
+    }
+
     public long calculateProfit(double earningRate) {
         return (long) (bettingMoney.getBettingMoney()*earningRate);
     }
 
     public String getName() {
         return name;
+    }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 
     private void validateName(String name) {
