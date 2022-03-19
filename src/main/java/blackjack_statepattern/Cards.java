@@ -1,27 +1,39 @@
 package blackjack_statepattern;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
 
-    private final List<Card> cards;
+    private final List<Card> value;
 
     public Cards(List<Card> cards) {
-        this.cards = cards;
+        this.value = cards;
     }
 
     public int sum() {
-        return cards.stream()
+        return value.stream()
                 .mapToInt(Card::score)
                 .sum();
     }
 
     public boolean hasAce() {
-        return cards.stream()
+        return value.stream()
                 .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
         return 11 == sum() && hasAce();
+    }
+
+    public Cards add(Card card) {
+        final var newValue = new ArrayList<>(value);
+        newValue.add(card);
+
+        return new Cards(newValue);
+    }
+
+    public boolean isBust() {
+        return sum() > 21;
     }
 }

@@ -9,7 +9,7 @@ public final class Game {
         if (cards.isBlackjack()) {
             return new Blackjack();
         }
-        return new Hit();
+        return new Hit(cards);
     }
 
 }
