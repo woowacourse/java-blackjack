@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 
 public class BlackJackTest {
@@ -18,15 +17,15 @@ public class BlackJackTest {
 	void playerNumberException_8() {
 		assertThatThrownBy(() -> {
 			List<Player> players = Arrays.asList(
-				new Player(Name.from("a"), Money.from("10")),
-				new Player(Name.from("b"), Money.from("10")),
-				new Player(Name.from("c"), Money.from("10")),
-				new Player(Name.from("d"), Money.from("10")),
-				new Player(Name.from("e"), Money.from("10")),
-				new Player(Name.from("f"), Money.from("10")),
-				new Player(Name.from("g"), Money.from("10")),
-				new Player(Name.from("h"), Money.from("10")),
-				new Player(Name.from("i"), Money.from("10")));
+				new Player("a", 10),
+				new Player("b", 10),
+				new Player("c", 10),
+				new Player("d", 10),
+				new Player("e", 10),
+				new Player("f", 10),
+				new Player("g", 10),
+				new Player("h", 10),
+				new Player("i", 10));
 			BlackJack.from(players);
 		}).isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.");
@@ -36,8 +35,8 @@ public class BlackJackTest {
 	@DisplayName("카드를 목표 플레이어에게만 한 장 나누어 준다")
 	void handOutCardTo() {
 		List<Player> players = Arrays.asList(
-			new Player(Name.from("a"), Money.from("10")),
-			new Player(Name.from("b"), Money.from("10")));
+			new Player("a", 10),
+			new Player("b", 10));
 		BlackJack blackJack = BlackJack.from(players);
 		blackJack.handOutCardTo(blackJack.getPlayers().get(0));
 		assertThat(blackJack.getPlayers().get(0).getCards().getCards().size()).isEqualTo(1);
@@ -48,8 +47,8 @@ public class BlackJackTest {
 	@DisplayName("starting card는 2장씩 나누어준다")
 	void handOutStartingCards() {
 		List<Player> players = Arrays.asList(
-			new Player(Name.from("a"), Money.from("10")),
-			new Player(Name.from("b"), Money.from("10")));
+			new Player("a", 10),
+			new Player("b", 10));
 		BlackJack blackJack = BlackJack.from(players);
 		blackJack.handOutStartingCards();
 		assertThat(blackJack.getDealer().getCards().getCards().size()).isEqualTo(2);

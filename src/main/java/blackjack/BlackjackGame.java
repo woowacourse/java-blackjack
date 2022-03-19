@@ -46,7 +46,7 @@ public class BlackjackGame {
 		List<String> inputs = InputView.askPlayerName();
 		try {
 			return inputs.stream()
-				.map(Name::from)
+				.map(Name::new)
 				.collect(Collectors.toList());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());

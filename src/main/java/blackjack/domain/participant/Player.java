@@ -11,6 +11,11 @@ public class Player extends Participant {
 		this.betAmount = money;
 	}
 
+	public Player(String name, int money) {
+		super(new Name(name));
+		this.betAmount = new Money(money);
+	}
+
 	public boolean shouldHit(String input) {
 		return input.equals("y");
 	}

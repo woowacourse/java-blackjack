@@ -7,7 +7,7 @@ public class Dealer extends Participant {
 	private static final int DEALER_HIT_CARD_STANDARD = 16;
 
 	public Dealer() {
-		super(Name.from(DEALER_NAME));
+		super(new Name(DEALER_NAME));
 	}
 
 	public Card getFirstCard() {
