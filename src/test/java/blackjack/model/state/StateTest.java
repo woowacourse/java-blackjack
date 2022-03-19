@@ -8,6 +8,9 @@ import static blackjack.model.state.CardFixture.CLOVER_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.model.state.Finished.Blackjack;
+import blackjack.model.state.Running.Hit;
+import blackjack.model.state.Running.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +47,7 @@ public class StateTest {
 
         assertThatThrownBy(() -> state.add(CLOVER_TWO))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 카드 숫자 합이 Blackjack이므로 카드를 추가 할 수 없습니다.");
+                .hasMessage("[ERROR] 카드를 추가 할 수 없습니다.");
     }
 
     @DisplayName("Stay일때 카드를 추가하면 예외를 발생한다.")
@@ -54,7 +57,7 @@ public class StateTest {
 
         assertThatThrownBy(() -> state.add(CLOVER_TWO))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] Stay상태 이기 때문에 카드를 추가 할 수 없습니다.");
+                .hasMessage("[ERROR] 카드를 추가 할 수 없습니다.");
     }
 
     @DisplayName("Bust일때 카드를 추가하면 예외를 발생한다.")
@@ -64,6 +67,6 @@ public class StateTest {
 
         assertThatThrownBy(() -> state.add(CLOVER_TWO))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] Bust상태 이기 때문에 카드를 추가 할 수 없습니다.");
+                .hasMessage("[ERROR] 카드를 추가 할 수 없습니다.");
     }
 }

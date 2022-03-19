@@ -1,6 +1,9 @@
 package blackjack.model.card;
 
-import static blackjack.model.card.CardNumber.*;
+import static blackjack.model.card.CardNumber.ACE;
+import static blackjack.model.card.CardNumber.JACK;
+import static blackjack.model.card.CardNumber.TEN;
+import static blackjack.model.card.CardNumber.calculateScore;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
