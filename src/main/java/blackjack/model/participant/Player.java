@@ -1,8 +1,8 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
-import blackjack.view.GameSign;
-import blackjack.view.TurnProgress;
+import blackjack.model.game.GameSign;
+import blackjack.model.game.TurnProgress;
 
 public class Player extends Participant {
     private static final int PLAYER_HIT_LIMIT_SCORE = 20;

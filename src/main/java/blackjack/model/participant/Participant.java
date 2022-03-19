@@ -3,8 +3,8 @@ package blackjack.model.participant;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.Ready;
 import blackjack.model.state.State;
-import blackjack.view.GameSign;
-import blackjack.view.TurnProgress;
+import blackjack.model.game.GameSign;
+import blackjack.model.game.TurnProgress;
 import java.util.List;
 
 public abstract class Participant {

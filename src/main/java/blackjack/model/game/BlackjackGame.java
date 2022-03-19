@@ -1,11 +1,8 @@
-package blackjack.model;
+package blackjack.model.game;
 
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Participant;
 import blackjack.model.participant.Participants;
-import blackjack.view.GameSign;
-import blackjack.view.MoneyBetter;
-import blackjack.view.TurnProgress;
 import java.util.List;
 
 public class BlackjackGame {

@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.model.game;
 
 @FunctionalInterface
 public interface GameSign {
