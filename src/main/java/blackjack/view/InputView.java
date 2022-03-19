@@ -34,7 +34,7 @@ public class InputView {
         return amount;
     }
 
-    public static boolean askHitOrStay(String name) {
+    public static boolean askIfHit(String name) {
         System.out.println();
         System.out.println(name + "는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return Answer.from(SCANNER.nextLine()).isYes();
