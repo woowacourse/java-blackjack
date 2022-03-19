@@ -46,12 +46,12 @@ public final class Dealer extends BlackjackParticipant {
             return false;
         }
         Dealer dealer = (Dealer) o;
-        return Objects.equals(getCards(), dealer.getCards());
+        return Objects.equals(getCardBundle(), dealer.getCardBundle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCards());
+        return Objects.hash(getCardBundle());
     }
 
     @Override

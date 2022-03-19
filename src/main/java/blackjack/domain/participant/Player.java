@@ -54,12 +54,12 @@ public final class Player extends BlackjackParticipant {
         }
         Player player = (Player) o;
         return Objects.equals(name, player.name)
-                && Objects.equals(getCards(), player.getCards());
+                && Objects.equals(getCardBundle(), player.getCardBundle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, getCards());
+        return Objects.hash(name, getCardBundle());
     }
 
     @Override
