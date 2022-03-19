@@ -38,4 +38,8 @@ public abstract class Participant {
     public List<String> getCards() {
         return state.getCards();
     }
+
+    public int getScore() {
+        return state.getScore();
+    }
 }
