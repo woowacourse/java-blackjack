@@ -14,11 +14,11 @@ public class GameResult {
     }
 
     public BettingResult calculateRevenue() {
-        Map<Player, Integer> revenue = new LinkedHashMap<>();
+        Map<Player, Double> revenue = new LinkedHashMap<>();
         int dealerRevenue = 0;
 
         for (Map.Entry<Player, Result> player : result.entrySet()) {
-            int playerRevenue = player.getValue().calculateRevenue(player.getKey().getMoney());
+            double playerRevenue = player.getValue().calculateRevenue(player.getKey().getMoney());
             revenue.put(player.getKey(), playerRevenue);
             dealerRevenue += player.getValue().calculateReverseRevenue(playerRevenue);
         }

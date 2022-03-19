@@ -16,7 +16,7 @@ public class OutputView {
     private static final String CARD_INFORMATION_MESSAGE = "%s카드: %s";
     private static final String TOTAL_RESULT_MESSAGE = "%n## 최종 수익%n";
     private static final String DRAW_RESULT_MESSAGE = "%s - 결과: %d";
-    private static final String RESULT_STATUS_MESSAGE = "%s: %d%n";
+    private static final String RESULT_STATUS_MESSAGE = "%s: %.2f%n";
 
     private OutputView() {
     }

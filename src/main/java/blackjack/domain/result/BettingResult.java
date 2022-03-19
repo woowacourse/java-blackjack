@@ -8,19 +8,19 @@ import blackjack.domain.gamer.Player;
 
 public class BettingResult {
 
-    private final int dealerRevenue;
-    private final Map<Gamer, Integer> playerRevenue;
+    private final double dealerRevenue;
+    private final Map<Gamer, Double> playerRevenue;
 
-    public BettingResult(final int dealerRevenue, final Map<Player, Integer> playerRevenue) {
+    public BettingResult(final double dealerRevenue, final Map<Player, Double> playerRevenue) {
         this.dealerRevenue = dealerRevenue;
         this.playerRevenue = new LinkedHashMap<>(playerRevenue);
     }
 
-    public int getDealerRevenue() {
+    public double getDealerRevenue() {
         return dealerRevenue;
     }
 
-    public Map<Gamer, Integer> getPlayerRevenue() {
+    public Map<Gamer, Double> getPlayerRevenue() {
         return playerRevenue;
     }
 }

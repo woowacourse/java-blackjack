@@ -11,17 +11,17 @@ public enum Result {
 
     BLACKJACK(1.5,
         (dealer, player) -> player.isBlackjack() && !dealer.isBlackjack()),
-    WIN(1,
-        (dealer, player) -> dealer.isBust() ||
-            (player.isBlackjack() && !dealer.isBlackjack()) ||
-            (!player.isBust() && (player.calculateScore() > dealer.calculateScore()))),
-    DRAW(0,
-        (dealer, player) -> (!player.isBlackjack() && !dealer.isBlackjack()) &&
-            (player.calculateScore() == dealer.calculateScore())),
     LOSE(-1,
         (dealer, player) -> player.isBust() ||
             (!player.isBlackjack() && dealer.isBlackjack()) ||
-            (player.calculateScore() < dealer.calculateScore())),
+            (!dealer.isBust() && (player.calculateScore() < dealer.calculateScore()))),
+    DRAW(0,
+        (dealer, player) -> (!player.isBlackjack() && !dealer.isBlackjack()) &&
+            (player.calculateScore() == dealer.calculateScore())),
+    WIN(1,
+        (dealer, player) -> dealer.isBust() ||
+            (player.isBlackjack() && !dealer.isBlackjack()) ||
+            (player.calculateScore() > dealer.calculateScore())),
     ;
 
     private final double times;
@@ -39,11 +39,11 @@ public enum Result {
             .orElseThrow();
     }
 
-    public int calculateRevenue(int money) {
-        return (int)(times * money);
+    public double calculateRevenue(int money) {
+        return (times * money);
     }
 
-    public int calculateReverseRevenue(int money) {
-        return (int)(LOSE.times * money);
+    public double calculateReverseRevenue(double money) {
+        return (LOSE.times * money);
     }
 }
