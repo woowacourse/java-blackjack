@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class Participants {
 
+    public static final String DEALER_NAME = "딜러";
     private final List<Participant> participants;
 
     public Participants() {
@@ -62,7 +63,7 @@ public class Participants {
     public List<ProfitResult> calculateProfitResult() {
         List<ProfitResult> profitResults = new ArrayList<>();
         Dealer dealer = getDealer();
-        profitResults.add(new ProfitResult("딜러", calculateDealerProfit()));
+        profitResults.add(new ProfitResult(DEALER_NAME, calculateDealerProfit()));
         for (User user : getUsers()) {
             profitResults.add(new ProfitResult(user.getName(), user.calculateProfit(dealer.getCardSum())));
         }
@@ -87,7 +88,7 @@ public class Participants {
     public int calculateDealerProfit() {
         int dealerProfit = 0;
         for (User user : getUsers()) {
-            dealerProfit += (-user.calculateProfit(getDealer().getCardSum()));
+            dealerProfit -= (user.calculateProfit(getDealer().getCardSum()));
         }
 
         return dealerProfit;
