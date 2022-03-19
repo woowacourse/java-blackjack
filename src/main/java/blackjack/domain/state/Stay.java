@@ -13,12 +13,12 @@ public class Stay implements State {
 
     @Override
     public State draw(Card card) {
-        return null;
+        throw new IllegalStateException();
     }
 
     @Override
     public State stay() {
-        return null;
+        throw new IllegalStateException();
     }
 
     @Override
@@ -33,11 +33,21 @@ public class Stay implements State {
 
     @Override
     public Cards cards() {
-        return null;
+        return cards;
     }
 
     @Override
     public double earningRate(State state) {
-        return 0;
+        Cards otherCards = state.cards();
+
+        if (otherCards.isBust() || cards.totalScore() > otherCards.totalScore()) {
+            return 1;
+        }
+
+        if (cards.totalScore() == otherCards.totalScore()) {
+            return 0;
+        }
+
+        return -1;
     }
 }
