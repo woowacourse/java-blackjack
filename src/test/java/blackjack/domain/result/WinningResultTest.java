@@ -140,4 +140,23 @@ public class WinningResultTest {
         assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.LOSE);
     }
 
+    @Test
+    @DisplayName("딜러와 플레이어 둘 다 블랙잭이면 무승부")
+    void getBlackjackResult() {
+        List<Card> dealerCards = List.of(new Card(Suit.HEART, Denomination.ACE),
+            new Card(Suit.SPADE, Denomination.TEN));
+        List<Card> playerCards = List.of( new Card(Suit.DIAMOND, Denomination.JACK),
+            new Card(Suit.CLOVER, Denomination.ACE));
+
+        Participants participants = Participants.from(List.of("player"));
+
+        Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
+        dealer.receiveInitCards(dealerCards);
+        player.receiveInitCards(playerCards);
+
+        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.DRAW);
+    }
+
 }

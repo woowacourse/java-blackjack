@@ -17,7 +17,7 @@ public enum WinningResult {
     }
 
     public static WinningResult of(Player player, Dealer dealer) {
-        if (player.isBlackjack()) {
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
             return BLACKJACK;
         }
         if (dealer.isBust() && !player.isBust() ||
