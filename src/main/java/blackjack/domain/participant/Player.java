@@ -7,6 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.hand.CardHand;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Player extends BlackjackParticipant {
@@ -41,6 +42,24 @@ public final class Player extends BlackjackParticipant {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(name, player.name)
+                && Objects.equals(getCards(), player.getCards());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, getCards());
     }
 
     @Override

@@ -70,9 +70,43 @@ public class DealerTest {
         assertThat(actual).containsExactly(CLOVER4);
     }
 
+    @DisplayName("카드 패의 구성이 동일한 딜러는 서로 동일하다고 간주된다.")
+    @Test
+    void equals_trueOnSameCardsComposition() {
+        Dealer dealer1 = new Dealer(generateCardHand());
+        Dealer dealer2 = new Dealer(generateCardHand());
+
+        assertThat(dealer1).isEqualTo(dealer2);
+    }
+
+    @DisplayName("카드 구성이 같더라도 순서가 다른 딜러는 서로 다르다고 간주된다.")
+    @Test
+    void equals_falseOnWrongCardOrder() {
+        CardHand cardHand = new OneCard(CLOVER4).hit(CLOVER_KING);
+        CardHand cardHand2 = new OneCard(CLOVER_KING).hit(CLOVER4);
+
+        Dealer dealer1 = new Dealer(cardHand);
+        Dealer dealer2 = new Dealer(cardHand2);
+
+        assertThat(dealer1).isNotEqualTo(dealer2);
+    }
+
+    @DisplayName("카드 패의 구성이 동일한 딜러의 해쉬 값은 서로 동일하다.")
+    @Test
+    void hashCode_trueOnCardHand() {
+        Dealer dealer1 = new Dealer(generateCardHand());
+        Dealer dealer2 = new Dealer(generateCardHand());
+
+        assertThat(dealer1.hashCode()).isEqualTo(dealer2.hashCode());
+    }
+
     private List<Card> extractCards(Participant participant) {
         CardBundle cardBundle = participant.getHand().getCardBundle();
         return cardBundle.getCards();
+    }
+
+    private CardHand generateCardHand() {
+        return new OneCard(CLOVER4).hit(CLOVER_KING);
     }
 }
 

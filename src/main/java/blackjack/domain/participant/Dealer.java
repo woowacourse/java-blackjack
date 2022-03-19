@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.hand.CardHand;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Dealer extends BlackjackParticipant {
@@ -34,6 +35,23 @@ public final class Dealer extends BlackjackParticipant {
     protected boolean shouldStay() {
         CardBundle cardBundle = cardHand.getCardBundle();
         return cardBundle.hasScoreOver(MAX_HIT_SCORE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Dealer dealer = (Dealer) o;
+        return Objects.equals(getCards(), dealer.getCards());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCards());
     }
 
     @Override

@@ -97,8 +97,43 @@ public class PlayerTest {
         assertThat(actual).containsExactly(CLOVER8, CLOVER_KING);
     }
 
+    @DisplayName("이름과 카드 패의 구성이 동일한 플레이어는 서로 동일하다고 간주된다.")
+    @Test
+    void equals_trueOnSameNameAndCardsComposition() {
+        Player player1 = new Player("jeong", generateCardHand());
+        Player player2 = new Player("jeong", generateCardHand());
+
+        assertThat(player1).isEqualTo(player2);
+    }
+
+    @DisplayName("카드 구성이 같더라도 순서가 다른 플레이어는 서로 다르다고 간주된다.")
+    @Test
+    void equals_falseOnWrongCardOrder() {
+        CardHand cardHand = new OneCard(CLOVER4).hit(CLOVER_KING);
+        CardHand cardHand2 = new OneCard(CLOVER_KING).hit(CLOVER4);
+
+        Player player1 = new Player("jeong", cardHand);
+        Player player2 = new Player("jeong", cardHand2);
+
+        assertThat(player1).isNotEqualTo(player2);
+    }
+
+    @DisplayName("이름과 카드 패의 구성이 동일한 딜러의 해쉬 값은 서로 동일하다.")
+    @Test
+    void hashCode_trueOnSameNameAndCardsComposition() {
+        Player player1 = new Player("jeong", generateCardHand());
+        Player player2 = new Player("jeong", generateCardHand());
+
+        assertThat(player1.hashCode())
+                .isEqualTo(player2.hashCode());
+    }
+
     private List<Card> extractCards(Participant participant) {
         CardBundle cardBundle = participant.getHand().getCardBundle();
         return cardBundle.getCards();
+    }
+
+    private CardHand generateCardHand() {
+        return new OneCard(CLOVER4).hit(CLOVER_KING);
     }
 }
