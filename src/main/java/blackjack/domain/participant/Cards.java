@@ -13,6 +13,8 @@ import blackjack.domain.card.Card;
 public final class Cards {
 
     private static final int ACE_BIG = 11;
+    private static final int MAX_HIT_SCORE = 21;
+    private static final int INIT_NUMBER_OF_CARDS = 2;
 
     private final Set<Card> value;
 
@@ -24,6 +26,22 @@ public final class Cards {
         Set<Card> newCards = new LinkedHashSet<>(value);
         newCards.add(card);
         return new Cards(newCards);
+    }
+
+    public boolean isBlackjack() {
+        return isReadyToStop() && isEndInit();
+    }
+
+    public boolean isReadyToStop() {
+        return sum() == MAX_HIT_SCORE;
+    }
+
+    public boolean isEndInit() {
+        return size() == INIT_NUMBER_OF_CARDS;
+    }
+
+    public boolean isBust() {
+        return sum() > MAX_HIT_SCORE;
     }
 
     public int sum() {
@@ -50,6 +68,10 @@ public final class Cards {
             .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
     }
 
+    public int size() {
+        return value.size();
+    }
+
     public Set<Card> getValue() {
         return new LinkedHashSet<>(value);
     }
@@ -57,17 +79,5 @@ public final class Cards {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
-    }
-
-    public boolean isBlackjack() {
-        return sum() == 21 && value.size() == 2;
-    }
-
-    public int size() {
-        return value.size();
-    }
-
-    public boolean isBust() {
-        return sum() > 21;
     }
 }

@@ -16,11 +16,11 @@ public final class Hit extends Running {
     public State draw(Card card) {
         Cards newCards = cards.add(card);
 
-        if (newCards.sum() > 21) {
+        if (newCards.isBust()) {
             return new Bust(newCards);
         }
 
-        if (newCards.sum() == 21) {
+        if (newCards.isReadyToStop()) {
             return new Stay(newCards);
         }
 

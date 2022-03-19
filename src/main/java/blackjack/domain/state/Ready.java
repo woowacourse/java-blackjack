@@ -25,7 +25,7 @@ public final class Ready extends Started {
             return new Blackjack(newCards);
         }
 
-        if (newCards.size() == 2) {
+        if (newCards.isEndInit()) {
             return new Hit(newCards);
         }
 
