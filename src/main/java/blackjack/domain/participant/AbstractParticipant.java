@@ -8,7 +8,7 @@ import java.util.Objects;
 public abstract class AbstractParticipant implements Participant {
 
     private final Name name;
-    BlackjackGameState blackjackGameState;
+    protected BlackjackGameState blackjackGameState;
 
     AbstractParticipant(final Name name, final BlackjackGameState blackjackGameState) {
         Objects.requireNonNull(name, "이름은 null이 들어올 수 없습니다.");
