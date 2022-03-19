@@ -52,8 +52,8 @@ public class DealerTest {
     void isBurstTest_true() {
         Dealer dealer = Dealer.generate();
         Deck deck = Deck.makeIntendedShuffledDeck(
-                List.of(Card.generate(Suit.DIAMOND, Denomination.EIGHT),
-                        Card.generate(Suit.DIAMOND, Denomination.NINE),
+                List.of(Card.generate(Suit.DIAMOND, Denomination.SEVEN),
+                        Card.generate(Suit.DIAMOND, Denomination.EIGHT),
                         Card.generate(Suit.DIAMOND, Denomination.TEN)));
         dealer.drawInitialCards(deck);
         dealer.drawAdditionalCard(deck);
