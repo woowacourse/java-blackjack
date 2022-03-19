@@ -1,10 +1,10 @@
 package blackJack.domain.User;
 
+import blackJack.domain.Card.Deck;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static blackJack.domain.Card.CardFactory.CARD_CACHE;
 
 public class Players {
     private final List<Player> players = new ArrayList<>();
@@ -15,9 +15,9 @@ public class Players {
         }
     }
 
-    public void dealCardToPlayers() {
+    public void dealCardToPlayers(Deck deck) {
         for (Player player : players) {
-            player.dealCard(CARD_CACHE.poll());
+            player.dealCard(deck.getCard());
         }
     }
 

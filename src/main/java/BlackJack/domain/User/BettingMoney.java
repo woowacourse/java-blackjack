@@ -7,6 +7,7 @@ public class BettingMoney {
     private int money;
 
     public BettingMoney(int money) {
+
         this.money = money;
     }
 

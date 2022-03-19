@@ -45,7 +45,7 @@ public abstract class User {
     }
 
     public List<Card> getCards() {
-        return cards.getDeck();
+        return cards.getCards();
     }
 
     public int getScore() {

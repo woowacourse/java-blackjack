@@ -1,6 +1,6 @@
 package blackJack.controller;
 
-import blackJack.domain.Card.Cards;
+import blackJack.domain.Card.Deck;
 import blackJack.domain.Result.Result;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
@@ -14,20 +14,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static blackJack.domain.Card.CardFactory.CARD_CACHE;
-
 public class Blackjack {
 
     private static final int HAND_OUT_COUNT = 2;
 
     public void run() {
         final Dealer dealer = new Dealer();
-        final Cards cards = new Cards(CARD_CACHE);
+        final Deck deck = new Deck();
         List<String> playerNames = InputView.inputPlayerNames();
         Map<String, Integer> bettingMoneys = getBettingMoneys(playerNames);
         final Players players = new Players(playerNames, bettingMoneys);
 
-        handOutInitCard(dealer, players);
+        handOutInitCard(dealer, players, deck);
 
         OutputView.printDrawMessage(playerNames);
         OutputView.printTotalUserCards(dealer, players);
@@ -39,7 +37,7 @@ public class Blackjack {
             return;
         }
 
-        playGame(dealer, players);
+        playGame(dealer, players, deck);
 
         Map<String, Integer> playerResult = Result.makePlayerResult(dealer, players);
         int dealerResult = Result.calculateDealerProfit(playerResult);
@@ -72,28 +70,28 @@ public class Blackjack {
         return users;
     }
 
-    private void playGame(Dealer dealer, Players players) {
+    private void playGame(Dealer dealer, Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            addCardPerPlayer(player);
+            addCardPerPlayer(player,deck);
         }
         while (dealer.isPossibleToAdd()) {
             OutputView.printAddDealerCard();
-            dealer.requestCard(CARD_CACHE.poll());
+            dealer.requestCard(deck.getCard());
         }
         OutputView.printTotalResult(makeUserList(dealer, players));
     }
 
-    private void addCardPerPlayer(Player player) {
+    private void addCardPerPlayer(Player player, Deck deck) {
         while (player.isPossibleToAdd() && InputView.askOneMoreCard(player)) {
-            player.requestCard(CARD_CACHE.poll());
+            player.requestCard(deck.getCard());
             OutputView.printPlayerCard(player);
         }
     }
 
-    private void handOutInitCard(Dealer dealer, Players players) {
+    private void handOutInitCard(Dealer dealer, Players players, Deck deck) {
         for (int i = 0; i < HAND_OUT_COUNT; i++) {
-            dealer.dealCard(CARD_CACHE.poll());
-            players.dealCardToPlayers();
+            dealer.dealCard(deck.getCard());
+            players.dealCardToPlayers(deck);
         }
     }
 
