@@ -34,7 +34,7 @@ public class Dealer extends Participant {
     }
 
     private boolean isDrawable() {
-        return !getState().isFinished() && getCards().sum() <= HIT_CONDITION;
+        return !isFinished() && getCards().sum() <= HIT_CONDITION;
     }
 
     public Card openCard() {

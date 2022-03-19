@@ -40,4 +40,8 @@ public abstract class Participant {
     public void stay() {
         state = state.stay();
     }
+
+    public final boolean isFinished() {
+        return state.isFinished();
+    }
 }

@@ -39,7 +39,7 @@ public class Game {
 
     public Optional<Player> findHitPlayer() {
         return players.stream()
-            .filter(player -> !player.getState().isFinished())
+            .filter(player -> !player.isFinished())
             .findFirst();
     }
 
