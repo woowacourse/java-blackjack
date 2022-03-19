@@ -1,11 +1,9 @@
 package blackjack.domain.result.provider;
 
-import static blackjack.Fixture.DIAMOND_SIX;
-import static blackjack.Fixture.HEART_FIVE;
-import static blackjack.Fixture.HEART_SEVEN;
 import static blackjack.Fixture.SPADE_ACE;
 import static blackjack.Fixture.SPADE_FIVE;
 import static blackjack.Fixture.SPADE_KING;
+import static blackjack.Fixture.SPADE_SEVEN;
 import static blackjack.Fixture.SPADE_SIX;
 import static blackjack.Fixture.SPADE_TEN;
 import static blackjack.Fixture.SPADE_THREE;
@@ -88,7 +86,7 @@ public class MatchCalculatorTestProvider {
                         ),
                         Named.of("Dealer : Stand(17)",
                                 generateDealer(
-                                        List.of(SPADE_TEN, HEART_SEVEN),
+                                        List.of(SPADE_TEN, SPADE_SEVEN),
                                         Collections.emptyList()
                                 )
                         )
@@ -130,8 +128,8 @@ public class MatchCalculatorTestProvider {
                 Arguments.of(
                         Named.of("Player : Stand(21)",
                                 generatePlayer(
-                                        List.of(SPADE_TEN, HEART_FIVE),
-                                        List.of(DIAMOND_SIX)
+                                        List.of(SPADE_TEN, SPADE_FIVE),
+                                        List.of(SPADE_SIX)
                                 )
                         ),
                         Named.of("Dealer : Stand(21)",

@@ -1,6 +1,8 @@
 package blackjack.domain.result;
 
-import static blackjack.Fixture.*;
+import static blackjack.Fixture.SPADE_ACE;
+import static blackjack.Fixture.SPADE_TEN;
+import static blackjack.Fixture.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

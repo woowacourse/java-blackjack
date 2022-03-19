@@ -12,7 +12,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.condition.PlayerCount;
 import blackjack.domain.participant.state.State;
 import blackjack.domain.result.MatchCalculator;
-import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.MatchStatus;
 
 public class Players {

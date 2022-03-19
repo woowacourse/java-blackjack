@@ -1,23 +1,14 @@
 package blackjack.domain.participant.provider;
 
-import static blackjack.Fixture.DIAMOND_EIGHT;
-import static blackjack.Fixture.DIAMOND_KING;
-import static blackjack.Fixture.DIAMOND_NINE;
-import static blackjack.Fixture.DIAMOND_TEN;
-import static blackjack.Fixture.HEART_EIGHT;
-import static blackjack.Fixture.HEART_TEN;
 import static blackjack.Fixture.SPADE_EIGHT;
+import static blackjack.Fixture.SPADE_KING;
 import static blackjack.Fixture.SPADE_NINE;
 import static blackjack.Fixture.SPADE_TEN;
-import static blackjack.Fixture.SPADE_TWO;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.provider.Arguments;
-
-import blackjack.domain.result.MatchStatus;
 
 public class PlayersTestProvider {
 
@@ -46,40 +37,15 @@ public class PlayersTestProvider {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                DIAMOND_KING, DIAMOND_TEN
+                                SPADE_KING, SPADE_TEN
                         ), "sun"
                 ),
                 Arguments.of(
                         List.of(
-                                DIAMOND_EIGHT, DIAMOND_NINE
+                                SPADE_EIGHT, SPADE_NINE
                         ), "if"
                 )
         );
     }
 
-    public static Stream<Arguments> provideForJudgeWinnersTest() {
-        return Stream.of(
-                Arguments.of(
-                        List.of("sun"),
-                        List.of(
-                                DIAMOND_KING, DIAMOND_TEN,
-                                DIAMOND_EIGHT, DIAMOND_NINE
-                        ),
-                        Map.of("sun", MatchStatus.LOSS)
-                ),
-                Arguments.of(
-                        List.of("sun", "if"),
-                        List.of(
-                                SPADE_NINE, HEART_EIGHT,
-                                SPADE_TEN, SPADE_EIGHT,
-                                HEART_TEN,
-                                SPADE_TWO
-                        ),
-                        Map.of(
-                                "sun", MatchStatus.WIN,
-                                "if", MatchStatus.LOSS
-                        )
-                )
-        );
-    }
 }

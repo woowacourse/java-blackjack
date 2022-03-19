@@ -1,12 +1,12 @@
 package blackjack.domain.card;
 
 import static blackjack.Fixture.CLOVER_ACE;
-import static blackjack.Fixture.CLOVER_TWO;
-import static blackjack.Fixture.DIAMOND_KING;
 import static blackjack.Fixture.HEART_ACE;
-import static blackjack.Fixture.HEART_KING;
 import static blackjack.Fixture.SPADE_ACE;
+import static blackjack.Fixture.SPADE_JACK;
 import static blackjack.Fixture.SPADE_KING;
+import static blackjack.Fixture.SPADE_QUEEN;
+import static blackjack.Fixture.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -33,19 +33,19 @@ class CardHandsTest {
     private static Stream<Arguments> provideForParameterizedTest() {
         return Stream.of(
                 Arguments.of(
-                        List.of(SPADE_ACE, HEART_ACE, CLOVER_ACE, DIAMOND_KING), 13
+                        List.of(SPADE_ACE, HEART_ACE, CLOVER_ACE, SPADE_KING), 13
                 ),
                 Arguments.of(
-                        List.of(SPADE_ACE, HEART_KING), 21
+                        List.of(SPADE_ACE, SPADE_JACK), 21
                 ),
                 Arguments.of(
-                        List.of(SPADE_ACE, HEART_ACE, HEART_KING), 12
+                        List.of(SPADE_ACE, HEART_ACE, SPADE_JACK), 12
                 ),
                 Arguments.of(
-                        List.of(SPADE_KING, HEART_KING, DIAMOND_KING), 30
+                        List.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN), 30
                 ),
                 Arguments.of(
-                        List.of(SPADE_KING, HEART_KING, CLOVER_TWO), 22
+                        List.of(SPADE_KING, SPADE_JACK, SPADE_TWO), 22
                 )
         );
     }

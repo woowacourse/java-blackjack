@@ -1,11 +1,11 @@
 package blackjack.domain.card.provider;
 
 import static blackjack.Fixture.DIAMOND_ACE;
-import static blackjack.Fixture.DIAMOND_EIGHT;
 import static blackjack.Fixture.HEART_ACE;
-import static blackjack.Fixture.HEART_EIGHT;
-import static blackjack.Fixture.HEART_KING;
 import static blackjack.Fixture.SPADE_ACE;
+import static blackjack.Fixture.SPADE_EIGHT;
+import static blackjack.Fixture.SPADE_QUEEN;
+import static blackjack.Fixture.SPADE_TWO;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,7 +20,7 @@ public class DeckTestProvider {
                         List.of(SPADE_ACE, SPADE_ACE)
                 ),
                 Arguments.of(
-                        List.of(SPADE_ACE, HEART_KING, SPADE_ACE)
+                        List.of(SPADE_ACE, SPADE_QUEEN, SPADE_ACE)
                 )
         );
     }
@@ -28,10 +28,10 @@ public class DeckTestProvider {
     public static Stream<Arguments> provideForDistributeInitialCardsTest() {
         return Stream.of(
                 Arguments.of(
-                        List.of(DIAMOND_ACE, DIAMOND_EIGHT)
+                        List.of(SPADE_ACE, SPADE_EIGHT)
                 ),
                 Arguments.of(
-                        List.of(SPADE_ACE, HEART_EIGHT, DIAMOND_EIGHT)
+                        List.of(SPADE_ACE, SPADE_EIGHT, SPADE_TWO)
                 )
         );
     }
@@ -39,13 +39,13 @@ public class DeckTestProvider {
     public static Stream<Arguments> provideForDrawCardTest() {
         return Stream.of(
                 Arguments.of(
-                        List.of(DIAMOND_ACE)
+                        List.of(SPADE_ACE)
                 ),
                 Arguments.of(
-                        List.of(DIAMOND_ACE, DIAMOND_EIGHT)
+                        List.of(SPADE_ACE, SPADE_EIGHT)
                 ),
                 Arguments.of(
-                        List.of(SPADE_ACE, HEART_EIGHT, DIAMOND_EIGHT)
+                        List.of(SPADE_ACE, SPADE_EIGHT, SPADE_TWO)
                 )
         );
     }
