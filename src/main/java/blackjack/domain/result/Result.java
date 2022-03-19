@@ -33,6 +33,10 @@ public enum Result {
         return result;
     }
 
+    public boolean isWin() {
+        return this == Result.WIN;
+    }
+
     public String getName() {
         return name;
     }

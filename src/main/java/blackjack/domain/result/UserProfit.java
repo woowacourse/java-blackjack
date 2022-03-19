@@ -23,7 +23,7 @@ public enum UserProfit {
     }
 
     private static UserProfit getTarget(Result result, boolean isBlackJack) {
-        if (result == Result.WIN) {
+        if (result.isWin()) {
             return checkBlackJack(isBlackJack);
         }
         return Arrays.stream(values())
