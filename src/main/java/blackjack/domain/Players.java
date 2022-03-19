@@ -29,7 +29,13 @@ public class Players {
     }
 
     public void playPlayers(Deck deck) {
-        value.forEach(player -> playing(deck, player));
+        if (!hasBlackJack()) {
+            value.forEach(player -> playing(deck, player));
+        }
+    }
+
+    public boolean hasBlackJack() {
+        return value.stream().anyMatch(Player::isBlackJack);
     }
 
     public List<Player> getValue() {

@@ -24,7 +24,7 @@ public class Player extends Gamer {
         if (dealer.isBust()) {
             return GameResult.WIN;
         }
-        if (isBlackJack()) {
+        if (isBlackJack() && !dealer.isBlackJack()) {
             return GameResult.BLACKJACK;
         }
         return GameResult.of(getTotalScore(), dealer.getTotalScore());
@@ -33,11 +33,6 @@ public class Player extends Gamer {
     @Override
     public void changeByBettingMoneyResult(Gamer dealer) {
         GameResult gameResult = createResult(dealer);
-
-        if (dealer.isBlackJack() && isBlackJack()) {
-            return;
-        }
-
         double result = gameResult.getBettingMoneyResult() * getBettingMoney();
         addMoney((int) result);
     }

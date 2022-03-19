@@ -21,10 +21,6 @@ public class Dealer extends Gamer {
         if (player.isTie(this)) {
             return;
         }
-        if (player.isBlackJack() && isBlackJack()) {
-            return;
-        }
-
         addMoney(reversBettingMoney((Player) player));
     }
 
