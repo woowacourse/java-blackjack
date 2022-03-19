@@ -31,6 +31,14 @@ public class Dealer extends AbstractPlayer {
         if (getCards().calculateScore() <= HIT_FLAG_SCORE) {
             return HitFlag.Y;
         }
+        if (!isBust()) {
+            state = state.stand();
+        }
         return HitFlag.N;
+    }
+
+    @Override
+    public void judge(Player dealer) {
+        throw new IllegalStateException("딜러는 참가자처럼 승패를 계산하지 않습니다.");
     }
 }

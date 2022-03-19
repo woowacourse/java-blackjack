@@ -4,7 +4,6 @@ import blackjack.domain.HitFlag;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.state.Ready;
-import blackjack.domain.state.State;
 import blackjack.domain.strategy.HitStrategy;
 import java.util.ArrayList;
 
@@ -23,6 +22,15 @@ public class Guest extends AbstractPlayer {
 
     @Override
     public HitFlag checkHitFlag() {
-        return hitStrategy.getHitFlag(this);
+        HitFlag hitFlag = hitStrategy.getHitFlag(this);
+        if (hitFlag == HitFlag.N) {
+            state = state.stand();
+        }
+        return hitFlag;
+    }
+
+    @Override
+    public void judge(Player dealer) {
+        state = state.judge(dealer.getState());
     }
 }

@@ -35,7 +35,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public void hit(Card card) {
-        state.hit(card);
+        state = state.hit(card);
     }
 
     @Override
@@ -51,5 +51,20 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public boolean isBlackjack() {
         return state.isBlackjack();
+    }
+
+    @Override
+    public void stand() {
+        state = state.stand();
+    }
+
+    @Override
+    public double getPrizeRate() {
+        return state.prizeRate();
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 }

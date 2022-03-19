@@ -19,6 +19,9 @@ public final class HitTurn extends Started {
         if (isBust()) {
             return new Bust(getCards());
         }
+        if (getCards().isMaxScore()) {
+            return new Stand(getCards());
+        }
         return new HitTurn(getCards());
     }
 

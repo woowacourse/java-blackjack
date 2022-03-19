@@ -2,7 +2,6 @@ package blackjack;
 
 import blackjack.domain.BettingBox;
 import blackjack.domain.BettingMoney;
-import blackjack.domain.BlackjackResult;
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -21,7 +20,6 @@ public class BlackjackGame {
         Deck deck = new Deck();
         Players players = Players.fromNamesAndGuestHitStrategy(inputPlayerNames(), deck, this::inputHitCommand);
         BettingBox bettingBox = players.bet(this::inputBettingMoney);
-        players.deal(deck, Players.INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
         players.playersHit(deck, OutputView::printPresentStatus);
         outputGameResult(players, bettingBox);
@@ -64,8 +62,9 @@ public class BlackjackGame {
 
     private void outputGameResult(Players players, BettingBox bettingBox) {
         OutputView.printCardResults(getCardResults(players));
-        BlackjackResult result = BlackjackResult.match(players.findDealer(), players.getGuests());
-        OutputView.printResult(result.getPrizeResult(players.findDealer(), bettingBox));
+        players.judge();
+        Map<Player, Integer> prizeResult =  players.getPrizeResult(bettingBox);
+        OutputView.printResult(prizeResult);
     }
 
     private Map<String, Cards> getCardResults(Players players) {

@@ -9,7 +9,9 @@ import blackjack.domain.strategy.HitStrategy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -103,5 +105,25 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public void judge() {
+        List<Player> guests = getGuests();
+        Player dealer = findDealer();
+        for (Player guest : guests) {
+            guest.judge(dealer);
+        }
+    }
+
+    public Map<Player, Integer> getPrizeResult(BettingBox bettingBox) {
+        Map<Player, Integer> result = new LinkedHashMap<>();
+        int totalPrizeMoney = 0;
+        for (Player guest : getGuests()) {
+            int prizeMoney = (int) (guest.getPrizeRate() * bettingBox.findBettingMoney(guest).getAmount());
+            result.put(guest, prizeMoney);
+            totalPrizeMoney += prizeMoney;
+        }
+        result.put(findDealer(), totalPrizeMoney * -1);
+        return result;
     }
 }
