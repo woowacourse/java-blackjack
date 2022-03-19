@@ -52,7 +52,13 @@ public class Game {
     }
 
     public DrawCount drawDealerCards() {
-        return dealer.drawCards(cardDeck);
+        int count = 0;
+        while (dealer.isDrawable()) {
+            dealer.draw(cardDeck.drawCard());
+            count++;
+        }
+
+        return DrawCount.of(count);
     }
 
     public int getDealerScore() {

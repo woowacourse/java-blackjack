@@ -14,9 +14,7 @@ import blackjack.domain.card.deckstrategy.ShuffleDeck;
 import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
-import blackjack.domain.state.stateparticipant.Participant;
 import blackjack.domain.state.stateparticipant.Player;
-import blackjack.dto.ParticipantDto;
 
 public class GameController {
 
@@ -50,32 +48,18 @@ public class GameController {
         printDealerFirstCard(game.dealerFirstCard());
 
         for (Player player : game.getPlayers()) {
-            printPlayerCards(convertToDto(player));
+            printPlayerCards(player);
         }
         printEmptyLine();
         return game;
     }
 
-    private ParticipantDto convertToDto(Participant participant) {
-        return ModelMapper.map(participant);
-    }
-
-    /**
-     * 플레이어 목록을 순회하여 상태가 HIT 인 플레이어가 존재하지 않을 때까지 반복한다.
-     * 카드 합이 21인 경우(블랙잭인 경우 포함) 자동으로 STAY 상태가 되므로 무시한다.
-     * 플레이어 목록이 빈 경우 IllegalStateException 을 던진다.
-     * @param game initPlay 로 초기화된 game 을 받는다.
-     */
     private void drawPlayerCards(Game game) {
         validatePlayersPresent(game.getPlayers());
-
         while (game.findHitPlayer().isPresent()) {
             Player player = game.findHitPlayer().get();
-            String hitOrStay = requestHitOrStay(player.getName());
-
-            game.drawPlayerCard(player, hitOrStay);
-
-            printPlayerCards(convertToDto(player));
+            game.drawPlayerCard(player, requestHitOrStay(player.getName()));
+            printPlayerCards(player);
         }
     }
 
@@ -91,9 +75,9 @@ public class GameController {
     }
 
     private void finalParticipantsCards(Game game) {
-        printParticipantCardsWithScore(convertToDto(game.getDealer()));
+        printParticipantCardsWithScore(game.getDealer());
         for (Player player : game.getPlayers()) {
-            printParticipantCardsWithScore(convertToDto(player));
+            printParticipantCardsWithScore(player);
         }
     }
 

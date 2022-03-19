@@ -1,7 +1,10 @@
 package blackjack.domain;
 
+import static blackjack.domain.card.CardNumber.*;
+import static blackjack.domain.card.CardSymbol.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -98,7 +101,42 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("딜러의 턴을 진행한다, 16 초과할 때까지 카드를 뽑는다.")
+    @DisplayName("딜러의 중지 조건에 만족할 때 까지 카드를 뽑는다. (BUST X)")
+    void drawCards_Not_BUST() {
+        // give
+        CardDeck cardDeck = new CardDeck(() -> new ArrayDeque<>(List.of(
+            new Card(SPADE, QUEEN), new Card(HEART, SEVEN),
+            new Card(DIAMOND, QUEEN), new Card(CLUB, SEVEN))));
+        Game game = new Game(cardDeck, List.of(Name.of("pobi")), List.of());
+
+        // when
+        game.drawDealerCards();
+        State actual = game.getDealer().getState();
+
+        // then
+        assertThat(actual).isInstanceOf(Hit.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"SEVEN:false", "SIX:true"}, delimiter = ':')
+    @DisplayName("딜러가 카드를 추가로 뽑았는지 아닌지 검증한다.")
+    void isDraw(CardNumber cardNumber, boolean expected) {
+        // give
+        CardDeck cardDeck = new CardDeck(() -> new ArrayDeque<>(List.of(
+            new Card(DIAMOND, ACE),
+            new Card(HEART, QUEEN), new Card(SPADE, SEVEN),
+            new Card(DIAMOND, QUEEN), new Card(CLUB, cardNumber))));
+        Game game = new Game(cardDeck, List.of(Name.of("pobi")), List.of());
+
+        // when
+        boolean actual = game.drawDealerCards().isDraw();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러의 턴을 진행한다, 16 초과할 때까지 카드를 뽑는다. (Bust)")
     void drawDealerCard() {
         // give
         Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());

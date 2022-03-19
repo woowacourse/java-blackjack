@@ -5,10 +5,8 @@ import java.util.Map;
 
 import blackjack.domain.PlayRecord;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.BettingTable;
-import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Name;
 
 public class Dealer extends Participant {
@@ -23,17 +21,7 @@ public class Dealer extends Participant {
         this.bettingTable = new BettingTable(List.copyOf(bettings));
     }
 
-    public DrawCount drawCards(CardDeck cardDeck) {
-        int count = 0;
-        while (isDrawable()) {
-            draw(cardDeck.drawCard());
-            count++;
-        }
-
-        return DrawCount.of(count);
-    }
-
-    private boolean isDrawable() {
+    public boolean isDrawable() {
         return !isFinished() && getCards().sum() <= HIT_CONDITION;
     }
 
