@@ -22,8 +22,6 @@ public enum GameResult {
         || dealer.calculateResult() > gamer.calculateResult()
     );
 
-    public static final int LIMIT_BLACK_JACK_POINT = 21;
-
     private final Double multiplePoint;
     private final BiPredicate<Player, Gamer> predicate;
 
@@ -33,7 +31,7 @@ public enum GameResult {
     }
 
     private static boolean isBurst(Player player) {
-        return player.calculateResult() > LIMIT_BLACK_JACK_POINT;
+        return player.isBurst();
     }
 
     public static GameResult findResult(final Player dealer, final Gamer gamer) {

@@ -52,4 +52,7 @@ public class Cards {
         return cards.size() == BLACK_JACK_CARDS_SIZE && calculateTotalPoint() == BLACK_JACK_POINT;
     }
 
+    public boolean isBurst() {
+        return cards.size() > BLACK_JACK_POINT;
+    }
 }
