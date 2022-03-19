@@ -19,4 +19,14 @@ class LoseTest {
                 .hit(new Card(Denomination.TWO, Suit.SPADES));
         assertThat(bust1.judge(bust2)).isInstanceOf(Lose.class);
     }
+
+    @Test
+    @DisplayName("상대보다 족보가 낮으면 패배 결과가 된다.")
+    void standLose() {
+        State stand1 = Ready.start(new Card(Denomination.JACK, Suit.CLUBS), new Card(Denomination.NINE, Suit.CLUBS))
+                .stand();
+        State stand2 = Ready.start(new Card(Denomination.JACK, Suit.SPADES), new Card(Denomination.TEN, Suit.SPADES))
+                .stand();
+        assertThat(stand1.judge(stand2)).isInstanceOf(Lose.class);
+    }
 }
