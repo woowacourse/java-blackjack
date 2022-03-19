@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain;
 
 import java.util.Arrays;
 
@@ -12,7 +12,6 @@ public enum DrawCount {
     FIVE(5, "다섯"),
     SIX(6, "여섯"),
     SEVEN(7, "일곱");
-
 
     private final int value;
     private final String name;

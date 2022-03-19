@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import blackjack.domain.DrawCount;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.DrawCount;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.state.stateparticipant.Dealer;
-import blackjack.domain.state.stateparticipant.Participant;
+import blackjack.domain.participant.Participant;
 
 public class OutputView {
 

@@ -18,10 +18,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 import blackjack.domain.state.State;
-import blackjack.domain.state.started.finished.Bust;
-import blackjack.domain.state.started.running.Hit;
-import blackjack.domain.state.stateparticipant.Player;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.running.Hit;
 
 public class GameTest {
 

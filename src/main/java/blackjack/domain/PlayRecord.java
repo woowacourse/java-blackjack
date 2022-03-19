@@ -5,9 +5,9 @@ import static java.util.stream.Collectors.*;
 import java.util.List;
 import java.util.Map;
 
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.state.stateparticipant.Dealer;
-import blackjack.domain.state.stateparticipant.Player;
+import blackjack.domain.participant.Player;
 
 public enum PlayRecord {
 

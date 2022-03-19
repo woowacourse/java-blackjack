@@ -1,12 +1,11 @@
-package blackjack.domain.state.started;
+package blackjack.domain.state;
 
 import java.util.Set;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
-import blackjack.domain.state.State;
-import blackjack.domain.state.started.finished.Blackjack;
-import blackjack.domain.state.started.running.Hit;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.running.Hit;
 
 public final class Ready extends Started {
 

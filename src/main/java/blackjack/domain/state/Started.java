@@ -1,8 +1,7 @@
-package blackjack.domain.state.started;
+package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
-import blackjack.domain.state.State;
 
 public abstract class Started implements State {
 

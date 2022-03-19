@@ -1,13 +1,10 @@
-package blackjack.domain.state.stateparticipant;
+package blackjack.domain.participant;
 
 import java.util.List;
 import java.util.Map;
 
 import blackjack.domain.PlayRecord;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Betting;
-import blackjack.domain.participant.BettingTable;
-import blackjack.domain.participant.Name;
 
 public class Dealer extends Participant {
 

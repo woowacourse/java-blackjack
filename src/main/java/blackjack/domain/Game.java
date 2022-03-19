@@ -8,11 +8,10 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Betting;
-import blackjack.domain.participant.DrawCount;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.state.stateparticipant.Dealer;
-import blackjack.domain.state.stateparticipant.Participant;
-import blackjack.domain.state.stateparticipant.Player;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 
 public class Game {
 

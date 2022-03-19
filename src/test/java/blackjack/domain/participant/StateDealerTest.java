@@ -1,4 +1,4 @@
-package blackjack.domain.state.stateparticipant;
+package blackjack.domain.participant;
 
 import static blackjack.domain.card.CardNumber.*;
 import static blackjack.domain.card.CardSymbol.*;
@@ -14,8 +14,6 @@ import blackjack.domain.PlayRecord;
 import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.participant.Betting;
-import blackjack.domain.participant.Name;
 
 public class StateDealerTest {
 

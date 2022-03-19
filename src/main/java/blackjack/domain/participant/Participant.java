@@ -1,10 +1,8 @@
-package blackjack.domain.state.stateparticipant;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Cards;
-import blackjack.domain.participant.Name;
+import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
-import blackjack.domain.state.started.Ready;
 
 public abstract class Participant {
 

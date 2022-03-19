@@ -11,8 +11,8 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.ShuffleDeck;
 import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.Name;
-import blackjack.domain.state.stateparticipant.Participant;
-import blackjack.domain.state.stateparticipant.Player;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import blackjack.view.OutputView;
 
 public class GameController {
