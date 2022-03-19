@@ -21,8 +21,8 @@ public abstract class Participant {
         return name;
     }
 
-    public List<Card> getCards() {
-        return myCards.getCards();
+    public Cards getCards() {
+        return myCards;
     }
 
     public void drawInitialCards(Deck deck) {

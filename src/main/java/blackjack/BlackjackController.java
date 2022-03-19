@@ -1,13 +1,9 @@
 package blackjack;
 
 import blackjack.user.Dealer;
-import blackjack.user.Participant;
 import blackjack.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class BlackjackController {
 
@@ -18,14 +14,32 @@ public class BlackjackController {
 
     private void openInitialCards(Dealer dealer, Players players) {
         OutputView.printInitialDistributionEndMessage(dealer.getName(), players.getNames());
-        OutputView.printCards(dealer.getName(), dealer.pickOpenCards());
+        OutputView.printDealerCards(dealer.getName(), dealer.pickOpenCards());
         for (Object player : players) {
             OutputView.printCards(((Player)player).getName(), ((Player)player).pickOpenCards());
         }
     }
 
-    private void distributeAdditionCards(Dealer dealer, Players players, Deck deck) {
+    private void distributeAdditionCardsToPlayer(Player player, Deck deck) {
+        while (player.isHit() && InputView.askToGetAdditionCard(player.getName())) {
+            player.drawAdditionalCard(deck);
+            OutputView.printCards(player.getName(), player.getCards());
+        }
+        player.setStateStayIfSatisfied(true);
+    }
 
+    private void distributeAdditionCardsToDealer(Dealer dealer, Deck deck) {
+        while (dealer.isHit()) {
+            dealer.drawAdditionalCard(deck);
+            OutputView.printDealerAdditionalCardMessage();
+        }
+    }
+
+    private void distributeAdditionCardsToAllParticipant(Dealer dealer, Players players, Deck deck) {
+        for (Object player : players) {
+            distributeAdditionCardsToPlayer((Player)player, deck);
+        }
+        distributeAdditionCardsToDealer(dealer, deck);
     }
 
     public void run() {
@@ -35,6 +49,6 @@ public class BlackjackController {
 
         distributeInitCards(dealer, players, deck);
         openInitialCards(dealer, players);
-        //distributeAdditionCards(dealer, players, deck);
+        distributeAdditionCardsToAllParticipant(dealer, players, deck);
     }
 }

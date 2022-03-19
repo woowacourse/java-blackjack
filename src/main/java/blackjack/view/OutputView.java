@@ -18,6 +18,7 @@ public class OutputView {
     private static final Map<Denomination, String> denominationToString = new HashMap<>();
     private static final String DEALER_CARDS = "%s: %s\n";
     private static final String PLAYER_CARDS = "%s카드: %s\n";
+    private static final String DEALER_ADDTIONAL_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     static {
         suitToString.put(Suit.CLOVER, "클로버");
@@ -45,10 +46,6 @@ public class OutputView {
         System.out.printf(INITIAL_DISTRIBUTION_END_MESSAGE, dealerName, nameFormat);
     }
 
-    private static String cardToString(Card card) {
-        return denominationToString.get(card.getDenomination()) + suitToString.get(card.getSuit());
-    }
-
     public static void printDealerCards(String name, Cards cards) {
         System.out.printf(DEALER_CARDS, name, makeCardFormat(cards));
     }
@@ -57,11 +54,19 @@ public class OutputView {
         System.out.printf(PLAYER_CARDS, name, makeCardFormat(cards));
     }
 
+    public static void printDealerAdditionalCardMessage() {
+        System.out.println(DEALER_ADDTIONAL_MESSAGE);
+    }
+
     private static String makeCardFormat(Cards cards) {
         List<String> stringOfCards = cards.getCards()
                 .stream()
                 .map(OutputView::cardToString)
                 .collect(Collectors.toList());
         return String.join(BASIC_DELIMITER, stringOfCards);
+    }
+
+    private static String cardToString(Card card) {
+        return denominationToString.get(card.getDenomination()) + suitToString.get(card.getSuit());
     }
 }
