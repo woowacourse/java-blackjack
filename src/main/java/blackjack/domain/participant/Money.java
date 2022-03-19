@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class Money {
 	private static final String ERROR_MESSAGE_POSITIVE = "[ERROR] 배팅 금액은 양수로 입력해야 합니다.";
@@ -28,7 +28,7 @@ public class Money {
 		}
 	}
 
-	public int getAmount() {
+	int getAmount() {
 		return amount;
 	}
 }
