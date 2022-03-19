@@ -1,5 +1,6 @@
 package blackjack_statepattern.view;
 
+import blackjack_statepattern.GameResult;
 import blackjack_statepattern.card.Card;
 import blackjack_statepattern.dto.CardsDto;
 import blackjack_statepattern.participant.Participant;
@@ -43,7 +44,7 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player) {
-        System.out.println(player.getName() + "카드: " + showCards(player.getCards()));
+        System.out.println(player.getName() + "카드: " + showCards(player.getCardsValue()));
     }
 
     public static void printDealerReceiveCardMessage() {
@@ -56,6 +57,15 @@ public class OutputView {
         for (Participant participant : participantCards.keySet()) {
             System.out.println(participant.getName() + "카드: " + showCards(participantCards.get(participant)) + " - 결과: "
                     + participant.getScore());
+        }
+    }
+
+    public static void printGameResult(GameResult gameResult) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        Map<Participant, Double> participantProfit = gameResult.getGameResult();
+        for (Participant participant : participantProfit.keySet()) {
+            System.out.println(participant.getName() + ": " + participantProfit.get(participant).intValue());
         }
     }
 }

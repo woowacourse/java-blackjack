@@ -1,6 +1,7 @@
 package blackjack_statepattern.participant;
 
 import blackjack_statepattern.card.Card;
+import blackjack_statepattern.card.Cards;
 import blackjack_statepattern.state.Ready;
 import blackjack_statepattern.state.State;
 import java.util.List;
@@ -15,7 +16,7 @@ public abstract class Participant {
     }
 
     public void stay() {
-        state.stay();
+        this.state = state.stay();
     }
 
     public boolean isReady() {
@@ -34,11 +35,19 @@ public abstract class Participant {
         return name;
     }
 
-    public List<Card> getCards() {
+    public Cards getCards() {
+        return state.cards();
+    }
+
+    public List<Card> getCardsValue() {
         return state.cards().getCards();
     }
 
     public int getScore() {
         return state.score();
+    }
+
+    public State getState() {
+        return state;
     }
 }

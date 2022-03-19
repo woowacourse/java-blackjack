@@ -107,6 +107,6 @@ public final class BlackjackGame {
     private void printResult() {
         CardsDto finalCardsDto = blackjackBoard.getFinalCardsDto();
         OutputView.printFinalCards(finalCardsDto);
+        OutputView.printGameResult(GameResult.of(blackjackBoard.getDealer(), blackjackBoard.getPlayers()));
     }
-
 }

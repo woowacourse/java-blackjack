@@ -20,6 +20,9 @@ public class CardDeck {
     }
 
     public Card draw() {
+        if (value.isEmpty()) {
+            value.addAll(createNewCardDeck().value);
+        }
         return value.poll();
     }
 }

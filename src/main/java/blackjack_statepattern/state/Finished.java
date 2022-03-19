@@ -30,10 +30,10 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public double profit(final double money) {
-        return money * earningRate();
+    public double profit(Cards cards, final double money) {
+        return money * earningRate(cards);
     }
 
-    protected abstract double earningRate();
+    protected abstract double earningRate(Cards cards);
 
 }

@@ -32,16 +32,16 @@ public final class BlackjackBoard {
         Map<Participant, List<Card>> participantsCards = new LinkedHashMap<>();
         participantsCards.put(dealer, List.of(dealer.getOneCard()));
         for (Player player : getPlayers()) {
-            participantsCards.put(player, player.getCards());
+            participantsCards.put(player, player.getCardsValue());
         }
         return CardsDto.of(participantsCards);
     }
 
     public CardsDto getFinalCardsDto() {
         Map<Participant, List<Card>> participantsCards = new LinkedHashMap<>();
-        participantsCards.put(dealer, dealer.getCards());
+        participantsCards.put(dealer, dealer.getCardsValue());
         for (Player player : getPlayers()) {
-            participantsCards.put(player, player.getCards());
+            participantsCards.put(player, player.getCardsValue());
         }
         return CardsDto.of(participantsCards);
     }

@@ -22,6 +22,10 @@ public class Cards {
         this.value = value;
     }
 
+    public static List<Card> copyOf(Cards cards) {
+        return new ArrayList<>(cards.getCards());
+    }
+
     public int computeScore() {
         int sum = sum();
         if (hasAce() && sum <= BLACKJACK_SCORE - ACE_BONUS_SCORE) {

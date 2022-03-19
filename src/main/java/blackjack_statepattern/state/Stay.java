@@ -8,7 +8,10 @@ public final class Stay extends Finished {
     }
 
     @Override
-    protected double earningRate() {
+    protected double earningRate(Cards cards) {
+        if (cards.isBlackjack() || cards.computeScore() < cards().computeScore()) {
+            return -1;
+        }
         return 1;
     }
 }
