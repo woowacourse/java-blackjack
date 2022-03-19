@@ -41,8 +41,12 @@ public enum Denomination {
 
     private static long countAce(List<Denomination> denominations) {
         return denominations.stream()
-                .filter(denomination -> denomination == ACE)
+                .filter(Denomination::isAce)
                 .count();
+    }
+
+    private static boolean isAce(Denomination denomination) {
+        return denomination == ACE;
     }
 
     private static int calculateBestNumber(int total, long aceCount) {
