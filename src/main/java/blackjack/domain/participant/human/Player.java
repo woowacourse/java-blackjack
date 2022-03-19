@@ -22,7 +22,7 @@ public final class Player extends Human {
         cards.forEach(this.cards::add);
     }
 
-    public boolean isCardsThatSize(final int size) {
+    public boolean hasCardSizeOf(final int size) {
         return cards.size() == size;
     }
 
@@ -30,7 +30,7 @@ public final class Player extends Human {
         return getPoint() > dealer.getPoint();
     }
 
-    public boolean isDraw(final Dealer dealer) {
+    public boolean isDrawState(final Dealer dealer) {
         return dealer.getPoint() == getPoint();
     }
 

@@ -30,7 +30,7 @@ class PlayerTest {
     public void isThatSize() {
         fx.HUNCH.addCard(fx.TEN);
         fx.HUNCH.addCard(fx.NINE);
-        assertThat(fx.HUNCH.isCardsThatSize(2))
+        assertThat(fx.HUNCH.hasCardSizeOf(2))
                 .isTrue();
     }
 

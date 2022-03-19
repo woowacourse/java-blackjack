@@ -11,13 +11,13 @@ public final class PrideCalculator {
     }
 
     public static int compute(Player player, Dealer dealer) {
-        if (player.isCardsThatSize(2) && player.isMaxPoint() && !dealer.isMaxPoint()) {
+        if (player.hasCardSizeOf(2) && player.isMaxPoint() && !dealer.isMaxPoint()) {
             return player.getMultipliedMoney(1.5);
         }
         if (dealer.isBust() || !player.isBust() && player.hasMorePoint(dealer)) {
             return player.getMultipliedMoney(1.0);
         }
-        if (player.isBust() || (!player.hasMorePoint(dealer) && !player.isDraw(dealer))) {
+        if (player.isBust() || (!player.hasMorePoint(dealer) && !player.isDrawState(dealer))) {
             return player.getMultipliedMoney(-1.0);
         }
         return 0;
