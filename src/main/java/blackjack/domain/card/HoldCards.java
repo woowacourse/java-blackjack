@@ -12,6 +12,10 @@ public class HoldCards {
 
     private final List<Card> cards;
 
+    public HoldCards() {
+        this.cards = new ArrayList<>();
+    }
+
     public HoldCards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
         validateSize(cards);
@@ -37,6 +41,14 @@ public class HoldCards {
 
     public boolean isBlackjack() {
         return CardNumber.isBlackjack(toCardNumbers());
+    }
+
+    public boolean isBust() {
+        return countBestNumber() > 21;
+    }
+
+    public boolean isReady() {
+        return cards.size() == 2;
     }
 
     private List<CardNumber> toCardNumbers() {
