@@ -3,12 +3,10 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public final class Ready implements State {
-
-    private final Cards cards;
+public final class Ready extends Started {
 
     private Ready(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     public Ready() {
@@ -43,11 +41,6 @@ public final class Ready implements State {
     @Override
     public boolean isFinished() {
         return false;
-    }
-
-    @Override
-    public Cards cards() {
-        return cards;
     }
 
     @Override

@@ -3,12 +3,10 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Hit implements State {
-
-    private final Cards cards;
+public class Hit extends Running {
 
     protected Hit(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     @Override
@@ -25,25 +23,5 @@ public class Hit implements State {
     @Override
     public State stay() {
         return new Stay(cards);
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public Cards cards() {
-        return cards;
-    }
-
-    @Override
-    public double earningRate(State state) {
-        throw new IllegalStateException();
     }
 }
