@@ -7,12 +7,16 @@ public class Cards {
 
     private final List<Card> value;
 
-    public Cards(List<Card> cards) {
-        this.value = cards;
-    }
-
     public Cards() {
         this(new ArrayList<>());
+    }
+
+    public Cards(final Card... value) {
+        this(List.of(value));
+    }
+
+    public Cards(final List<Card> value) {
+        this.value = value;
     }
 
     public int sum() {

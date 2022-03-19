@@ -13,7 +13,7 @@ public class Hit implements State {
         Cards cards = this.cards.add(card);
 
         if (cards.isBust()) {
-            return new Bust();
+            return new Bust(cards);
         }
         return new Hit(cards);
     }
