@@ -29,6 +29,7 @@ public class BlackjackGame {
     private List<Player> initializePlayers() {
         try {
             return InputView.askPlayerNames().stream()
+                    .map(String::trim)
                     .map((String name) -> new Player(name, makeBetMoney(name)))
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
