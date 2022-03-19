@@ -3,6 +3,7 @@ package blackjack_statepattern.view;
 import blackjack_statepattern.card.Card;
 import blackjack_statepattern.dto.CardDto;
 import blackjack_statepattern.participant.Participant;
+import blackjack_statepattern.participant.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,5 +40,9 @@ public class OutputView {
 
     private static String showCard(Card card) {
         return card.getDenominationName() + card.getSuitName();
+    }
+
+    public static void printPlayerCards(Player player) {
+        System.out.println(player.getName() + "카드: " + showCards(player.getCards()));
     }
 }

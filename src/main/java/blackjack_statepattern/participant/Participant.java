@@ -14,8 +14,16 @@ public abstract class Participant {
         this.state = new Ready();
     }
 
+    public void stay() {
+        state.stay();
+    }
+
     public boolean isReady() {
         return state.isReady();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     public void receiveCard(Card card) {

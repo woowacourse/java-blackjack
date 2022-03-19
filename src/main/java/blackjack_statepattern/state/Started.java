@@ -11,6 +11,11 @@ public abstract class Started implements State{
     }
 
     @Override
+    public int score() {
+        return cards().sum();
+    }
+
+    @Override
     public Cards cards() {
         return cards;
     }

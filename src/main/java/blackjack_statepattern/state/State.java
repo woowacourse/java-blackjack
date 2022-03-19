@@ -14,5 +14,7 @@ public interface State {
 
     boolean isReady();
 
+    int score();
+
     double profit(double money);
 }

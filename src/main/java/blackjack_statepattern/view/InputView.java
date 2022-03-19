@@ -1,5 +1,6 @@
 package blackjack_statepattern.view;
 
+import blackjack_statepattern.participant.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -22,5 +23,10 @@ public class InputView {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 베팅 금액은 숫자로 입력해주세요.");
         }
+    }
+
+    public static String askDrawCommand(Player player) {
+        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        return scanner.nextLine().trim();
     }
 }

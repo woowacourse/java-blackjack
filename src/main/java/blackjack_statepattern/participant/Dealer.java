@@ -10,6 +10,10 @@ public final class Dealer extends Participant {
     }
 
     public Card getOneCard() {
-        return super.state.cards().getOneCard();
+        return state.cards().getOneCard();
+    }
+
+    public boolean isUnder17() {
+        return state.score() < 17;
     }
 }
