@@ -48,10 +48,18 @@ public class BlackjackController {
         }
     }
 
+    private void betting(Blackjack blackjack, Players players) {
+        for (Object obj : players) {
+            Player player = (Player) obj;
+            blackjack.betting(player, InputView.askBettingMoney(player.getName()));
+        }
+    }
+
     public void run() {
         Blackjack blackjack = Blackjack.generate();
         Players players = Players.generateWithNames(InputView.enterPlayerNames());
         Dealer dealer = Dealer.generate();
+        betting(blackjack, players);
 
         blackjack.distributeInitCards(dealer, players);
         openInitialCards(dealer, players);

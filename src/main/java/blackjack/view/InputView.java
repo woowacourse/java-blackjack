@@ -11,6 +11,8 @@ public class InputView {
     private static final String POSITIVE = "y";
     private static final String NEGATIVE = "n";
     private static final String YES_NO_ANSWER_EXCEPTION = "[ERROR] y 혹은 n으로만 대답하세요";
+    private static final String ASK_BETTING_MONEY_MESSAGE = "%s의 배팅 금액은?\n";
+    private static final String MONEY_FORMAT_EXCEPTION = "돈은 숫자로 입력해주세요";
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -29,6 +31,19 @@ public class InputView {
     private static void validateYesOrNo(String answer) {
         if (!answer.equals(POSITIVE) && !answer.equals(NEGATIVE)) {
             throw new IllegalArgumentException(YES_NO_ANSWER_EXCEPTION);
+        }
+    }
+
+    public static int askBettingMoney(String name) {
+        System.out.printf(ASK_BETTING_MONEY_MESSAGE, name);
+        return convertToNumericIfPossibleElseThrow(scanner.nextLine());
+    }
+
+    private static int convertToNumericIfPossibleElseThrow(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException npe) {
+            throw new IllegalArgumentException(MONEY_FORMAT_EXCEPTION);
         }
     }
 }

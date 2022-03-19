@@ -2,16 +2,26 @@ package blackjack;
 
 import blackjack.user.Dealer;
 import blackjack.user.Participant;
+import blackjack.user.Player;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Blackjack {
     private final Deck deck;
+    private final Map<Player, Receipt> bettingTable;
+    private final Map<Player, Receipt> yieldTable;
+
 
     private Blackjack() {
         deck = Deck.makeRandomShuffledDeck();
+        bettingTable = new HashMap<>();
+        yieldTable = new HashMap<>();
     }
 
     private Blackjack(Deck deck) {
         this.deck = deck;
+        bettingTable = new HashMap<>();
+        yieldTable = new HashMap<>();
     }
 
     public static Blackjack generate() {
@@ -33,5 +43,9 @@ public class Blackjack {
 
     public void distributeAdditionalCard(Participant player) {
         player.drawAdditionalCard(deck);
+    }
+
+    public void betting(Player player, int money) {
+        bettingTable.put(player, Receipt.generate(money));
     }
 }
