@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.dto.MatchRecordDto;
 import blackjack.dto.UserDto;
+import blackjack.dto.UserProfitsDto;
 import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -21,10 +21,10 @@ public class BlackJackController {
         BlackJackGame game = BlackJackGame.fromPlayerNames(inputView.inputPlayersAndMoney());
         game.drawInitialCards(users -> outputView.printInitCards(UsersDto.fromInit(users)));
         if (game.isEnd()) {
-            game.settleGame(
+            game.settleGameEarly(
                 user -> outputView.printDealerBlackJack(UserDto.fromEvery(user)),
                 users -> outputView.printAllUserCardsWithScore(UsersDto.fromEvery(users)),
-                matchRecord -> outputView.printMatchResult(MatchRecordDto.fromRecords(matchRecord))
+                (dealer, playerProfits) -> outputView.printPlayerMoney(UserProfitsDto.of(dealer, playerProfits))
             );
             return;
         }
@@ -43,7 +43,7 @@ public class BlackJackController {
     private void end(BlackJackGame game) {
         game.settleGame(
             users -> outputView.printAllUserCardsWithScore(UsersDto.fromEvery(users)),
-            matchRecord -> outputView.printMatchResult(MatchRecordDto.fromRecords(matchRecord))
+            (dealer, playerProfits) -> outputView.printPlayerMoney(UserProfitsDto.of(dealer, playerProfits))
         );
     }
 }

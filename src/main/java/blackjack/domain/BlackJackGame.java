@@ -1,14 +1,17 @@
 package blackjack.domain;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.money.Money;
 import blackjack.domain.strategy.hit.DealerHitStrategy;
 import blackjack.domain.strategy.hit.HitStrategy;
 import blackjack.domain.strategy.hit.PlayerHitStrategy;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
@@ -29,9 +32,9 @@ public class BlackJackGame {
         return new BlackJackGame(users, deck);
     }
 
-    public void drawInitialCards(Consumer<Users> consumer) {
-        users.drawInitCardsPerUsers(deck);
-        consumer.accept(users);
+    public void drawInitialCards(Consumer<Users> initUsersConsumer) {
+        users.drawInitialCardsPerUser(deck);
+        initUsersConsumer.accept(users);
     }
 
     public boolean isEnd() {
@@ -45,7 +48,7 @@ public class BlackJackGame {
     }
 
     public void hitOrStayCardsDealer(Consumer<User> consumer) {
-        hitOrStayCards(users.getDealer(), new DealerHitStrategy(users.getDealer().calculateScore()), consumer);
+        hitOrStayCards(users.getDealer(), new DealerHitStrategy(() -> users.getDealer().calculateScore()), consumer);
     }
 
     private void hitOrStayCards(User user, HitStrategy strategy, Consumer<User> consumer) {
@@ -54,15 +57,17 @@ public class BlackJackGame {
         }
     }
 
-    public void settleGame(Consumer<Users> usersConsumer, Consumer<Map<Player, MatchRecord>> matchRecordConsumer) {
+    public void settleGame(Consumer<Users> usersConsumer, BiConsumer<Dealer, Map<Player, Money>> userMoneyConsumer) {
         usersConsumer.accept(users);
-        matchRecordConsumer.accept(users.createPlayerMatchRecords());
+        userMoneyConsumer.accept(users.getDealer(), users.createPlayerProfit());
     }
 
-    public void settleGame(Consumer<User> dealerConsumer,
+    public void settleGameEarly(Consumer<User> dealerConsumer,
         Consumer<Users> usersConsumer,
-        Consumer<Map<Player, MatchRecord>> matchRecordConsumer) {
+        BiConsumer<Dealer, Map<Player, Money>> playerMoneyConsumer) {
+
+        users.stayAllPlayers();
         dealerConsumer.accept(users.getDealer());
-        settleGame(usersConsumer, matchRecordConsumer);
+        settleGame(usersConsumer, playerMoneyConsumer);
     }
 }
