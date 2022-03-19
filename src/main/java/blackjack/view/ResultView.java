@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.BlackJack;
+import blackjack.domain.Blackjack;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -21,26 +21,26 @@ public class ResultView {
 	private static final String RESULT_DELIMITER = " - 결과: ";
 	private static final String MESSAGE_FINAL_RESULT = "\n## 최종 수익";
 
-	public static void showStartingStatus(BlackJack blackJack) {
+	public static void showStartingStatus(Blackjack blackJack) {
 		System.out.printf(MESSAGE_HAND_OUT_CARD, String.join(DELIMITER_COMMA, getPlayerNames(blackJack)));
 		showDealerStartingStatus(blackJack);
 		showPlayerStartingStatus(blackJack);
 		System.out.println();
 	}
 
-	private static List<String> getPlayerNames(BlackJack blackJack) {
+	private static List<String> getPlayerNames(Blackjack blackJack) {
 		return blackJack.getPlayers().stream()
 			.map(Player::getName)
 			.collect(Collectors.toList());
 	}
 
-	private static void showDealerStartingStatus(BlackJack blackJack) {
+	private static void showDealerStartingStatus(Blackjack blackJack) {
 		Dealer dealer = blackJack.getDealer();
 		Card firstCard = dealer.getFirstCard();
 		System.out.println(dealer.getName() + DELIMITER_COLON + firstCard.getName());
 	}
 
-	private static void showPlayerStartingStatus(BlackJack blackJack) {
+	private static void showPlayerStartingStatus(Blackjack blackJack) {
 		for (Player player : blackJack.getPlayers()) {
 			showEachPlayerStatus(player);
 		}
@@ -67,7 +67,7 @@ public class ResultView {
 		System.out.println(MESSAGE_DEALER_RECEIVE);
 	}
 
-	public static void showFinalStatus(BlackJack blackJack) {
+	public static void showFinalStatus(Blackjack blackJack) {
 		System.out.println();
 		Dealer dealer = blackJack.getDealer();
 		System.out.println(getStatus(dealer) + RESULT_DELIMITER + dealer.getScore());
@@ -76,15 +76,15 @@ public class ResultView {
 		}
 	}
 
-	public static void showResult(BlackJack blackJack) {
+	public static void showResult(Blackjack blackJack) {
 		System.out.println(MESSAGE_FINAL_RESULT);
 		Map<Player, Integer> result = blackJack.calculateResult();
 		showDealerResult(blackJack, result);
 		showPlayerResults(result);
 	}
 
-	private static void showDealerResult(BlackJack blackJack, Map<Player, Integer> result) {
-		int dealerEarning = - result.values().stream()
+	private static void showDealerResult(Blackjack blackJack, Map<Player, Integer> result) {
+		int dealerEarning = -result.values().stream()
 			.mapToInt(amount -> amount)
 			.sum();
 

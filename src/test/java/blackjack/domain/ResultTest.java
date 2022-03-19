@@ -10,6 +10,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.Result;
 
 public class ResultTest {
 

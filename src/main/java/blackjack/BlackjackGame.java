@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.BlackJack;
+import blackjack.domain.Blackjack;
 import blackjack.domain.Money;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
@@ -14,14 +14,14 @@ import blackjack.view.ResultView;
 public class BlackjackGame {
 
 	public void play() {
-		BlackJack blackJack = generateGame();
+		Blackjack blackJack = generateGame();
 		startGame(blackJack);
 		decidePlayerHitOrNot(blackJack);
 		decideDealerHitOrNot(blackJack);
 		finishGame(blackJack);
 	}
 
-	private BlackJack generateGame() {
+	private Blackjack generateGame() {
 		List<Name> playerNames = askPlayerName();
 		List<Player> players = new ArrayList<>();
 		for (Name playerName : playerNames) {
@@ -29,7 +29,7 @@ public class BlackjackGame {
 			players.add(new Player(playerName, money));
 		}
 
-		return BlackJack.from(players);
+		return Blackjack.from(players);
 	}
 
 	private Money askBetAmount(Name playerName) {
@@ -54,18 +54,18 @@ public class BlackjackGame {
 		}
 	}
 
-	private void startGame(BlackJack blackJack) {
+	private void startGame(Blackjack blackJack) {
 		blackJack.handOutStartingCards();
 		ResultView.showStartingStatus(blackJack);
 	}
 
-	private void decidePlayerHitOrNot(BlackJack blackJack) {
+	private void decidePlayerHitOrNot(Blackjack blackJack) {
 		for (Player player : blackJack.getPlayers()) {
 			decideHitOrNot(blackJack, player);
 		}
 	}
 
-	private void decideHitOrNot(BlackJack blackJack, Player player) {
+	private void decideHitOrNot(Blackjack blackJack, Player player) {
 
 		while (shouldHit(player)) {
 			blackJack.handOutCardTo(player);
@@ -80,7 +80,7 @@ public class BlackjackGame {
 		return !(player.isBust()) && InputView.askHit(player.getName());
 	}
 
-	private void decideDealerHitOrNot(BlackJack blackJack) {
+	private void decideDealerHitOrNot(Blackjack blackJack) {
 		boolean isDealerEnough = blackJack.getDealer().shouldHit();
 		if (!isDealerEnough) {
 			blackJack.handOutCardTo(blackJack.getDealer());
@@ -88,7 +88,7 @@ public class BlackjackGame {
 		ResultView.showDealerHitOrNot(isDealerEnough);
 	}
 
-	private void finishGame(BlackJack blackJack) {
+	private void finishGame(Blackjack blackJack) {
 		ResultView.showFinalStatus(blackJack);
 		blackJack.calculateResult();
 		ResultView.showResult(blackJack);
