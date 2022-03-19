@@ -13,12 +13,12 @@ class ProfitResultTest {
     class PutPlayerProfit {
 
         @ParameterizedTest
-        @CsvSource(value = {"10000,-10000", "0,0", "-10000,10000"})
+        @CsvSource(value = {"WIN,-10000", "DRAW,0", "LOSE,10000"})
         @DisplayName("플레이어 수익을 추가하면 이에 따라 딜러 수익이 결정된다.")
-        void addInverseToDealerProfit(double userProfit, double dealerProfit) {
+        void addInverseToDealerProfit(Score score, double dealerProfit) {
             ProfitResult profitResult = new ProfitResult();
             Player james = new Player("james", 10000);
-            profitResult.putPlayerProfit(james, Score.DRAW.getProfitRate());
+            profitResult.putPlayerProfit(james, james.getTotalProfit(score));
 
             Assertions.assertThat(profitResult.getDealerProfit()).isEqualTo(dealerProfit);
         }
