@@ -20,8 +20,9 @@ public final class Cards {
         this.value = value;
     }
 
-    public void add(final Card card) {
+    public Cards add(final Card card) {
         value.add(card);
+        return new Cards(value);
     }
 
     public int size() {
@@ -55,9 +56,9 @@ public final class Cards {
                 .sum();
     }
 
-    public int getDenominationCount(Denomination denomination) {
+    public int getAceCount() {
         return (int) value.stream()
-                .filter(card -> card.isSameDenomination(denomination))
+                .filter(card -> card.isSameDenomination(Denomination.ACE))
                 .count();
     }
 

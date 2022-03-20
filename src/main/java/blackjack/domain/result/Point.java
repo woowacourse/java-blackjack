@@ -12,7 +12,8 @@ public final class Point {
     private final int value;
 
     public Point(final Cards cards) {
-        this.value = computeWithAce(cards.getRawPoint(), cards.getDenominationCount(Denomination.ACE));
+        this.value = computeWithAce(cards.getRawPoint(),
+                cards.getAceCount());
     }
 
     private int computeWithAce(int point, int aceCount) {
