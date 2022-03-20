@@ -20,7 +20,6 @@ import blackjack.domain.card.PlayingCards;
 
 class MatchTest {
 
-
     @ParameterizedTest
     @CsvSource(value = {"SPADE:CLUB:ACE:JACK:KING:DRAW", "SPADE:CLUB:ACE:JACK:FIVE:WIN_BLACKJACK",
             "SPADE:CLUB:ACE:THREE:FIVE:LOSE"}, delimiter = ':')

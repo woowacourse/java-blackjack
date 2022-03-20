@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import java.util.HashSet;
 import java.util.Set;
 
+import blackjack.domain.Fixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,7 +30,7 @@ class DealerTest {
     @DisplayName("카드를 할당받았는지 확인")
     public void checkAddCardToPlayingCard() {
         Dealer dealer = new Dealer();
-        PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.FOUR);
+        PlayingCard playingCard = Fixtures.SPADE_ACE;
         dealer.addCard(playingCard);
 
         Dealer compareDealer = new Dealer();
@@ -42,8 +43,8 @@ class DealerTest {
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘는 경우")
     public void checkDealerCantHit() {
         Set<PlayingCard> dealerCards = new HashSet<>();
-        dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
+        dealerCards.add(Fixtures.SPADE_JACK);
+        dealerCards.add(Fixtures.SPADE_NINE);
         Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
 
         assertThat(dealer.isCanHit()).isFalse();
@@ -53,8 +54,8 @@ class DealerTest {
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘지 않는 경우")
     public void checkDealerCanHit() {
         Set<PlayingCard> dealerCards = new HashSet<>();
-        dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        dealerCards.add(new PlayingCard(Suit.SPADE, Denomination.FIVE));
+        dealerCards.add(Fixtures.SPADE_EIGHT);
+        dealerCards.add(Fixtures.SPADE_TWO);
         Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
 
         assertThat(dealer.isCanHit()).isTrue();

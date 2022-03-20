@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackGameTest {
 
-
     @Test
     @DisplayName("카드가 할당되는지 확인")
     void pickCard() {

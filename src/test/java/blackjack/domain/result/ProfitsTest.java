@@ -2,8 +2,6 @@ package blackjack.domain.result;
 
 import java.util.*;
 
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -11,11 +9,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.*;
+import blackjack.domain.Fixtures;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProfitsTest {
-
 
     @ParameterizedTest
     @CsvSource(value = {"100:-500:400", "100:100:-200", "-100:100:0"}, delimiter = ':')
@@ -27,10 +25,10 @@ class ProfitsTest {
         playerList.add(dealer);
 
         Set<PlayingCard> playingCards = new HashSet<>();
-        playingCards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
+        playingCards.add(Fixtures.SPADE_ACE);
         Guest firstGuest = new Guest("guest", new PlayingCards(playingCards), firstMoney);
         Set<PlayingCard> secondPlayingCards = new HashSet<>();
-        secondPlayingCards.add(new PlayingCard(Suit.SPADE, Denomination.TWO));
+        secondPlayingCards.add(Fixtures.SPADE_TWO);
         Guest secondGuest = new Guest("guest2", new PlayingCards(secondPlayingCards), secondMoney);
         playerList.add(firstGuest);
         playerList.add(secondGuest);
