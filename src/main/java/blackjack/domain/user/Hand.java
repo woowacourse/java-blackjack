@@ -23,9 +23,9 @@ public final class Hand {
     }
 
     public Hand addCard(Card card) {
-        List<Card> cards = new ArrayList<>(this.cards);
-        cards.add(card);
-        return new Hand(cards, Score.addUpPointToScore(cards));
+        List<Card> newCards = new ArrayList<>(this.cards);
+        newCards.add(card);
+        return new Hand(newCards, Score.addUpPointToScore(newCards));
     }
 
     public boolean isBust() {
