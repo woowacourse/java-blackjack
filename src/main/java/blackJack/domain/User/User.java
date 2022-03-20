@@ -5,6 +5,7 @@ import blackJack.domain.Card.Cards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class User {
 
@@ -54,5 +55,18 @@ public abstract class User {
 
     public int getBettingMoney() {
         return bettingMoney.getMoney();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name) && Objects.equals(cards, user.cards) && Objects.equals(bettingMoney, user.bettingMoney);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, cards, bettingMoney);
     }
 }

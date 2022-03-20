@@ -1,10 +1,7 @@
 package blackJack.domain.Card;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
 
 import static blackJack.utils.ExeptionMessage.NO_MORE_CARD;
 
@@ -36,6 +33,16 @@ public class Deck {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Deck deck1 = (Deck) o;
+        return Objects.equals(deck, deck1.deck);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(deck);
+    }
 }

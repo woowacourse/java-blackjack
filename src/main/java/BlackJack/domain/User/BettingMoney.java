@@ -2,6 +2,8 @@ package blackJack.domain.User;
 
 import blackJack.utils.ExeptionMessage;
 
+import java.util.Objects;
+
 public class BettingMoney {
     public static final int NO_MONEY = 0;
     private int money;
@@ -19,5 +21,18 @@ public class BettingMoney {
 
     public int getMoney() {
         return money;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BettingMoney that = (BettingMoney) o;
+        return money == that.money;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 }
