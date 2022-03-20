@@ -8,7 +8,7 @@ public final class Stay extends Finished {
     }
 
     @Override
-    protected double earningRate(State comparedState) {
+    protected double computeEarningRate(State comparedState) {
         Cards comparedCards = comparedState.cards();
         if (comparedCards.isBust() || cards().computeScore() > comparedCards.computeScore()) {
             return WIN_RATE;
