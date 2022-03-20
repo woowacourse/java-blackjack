@@ -160,6 +160,25 @@ public class WinningResultTest {
     }
 
     @Test
+    @DisplayName("플레이어 블랙잭, 딜러가 블랙잭이 아닐 시 플레이어는 블랙잭")
+    void getPlayerBlackjackResult() {
+        List<Card> dealerCards = List.of(new Card(Suit.HEART, Denomination.FIVE),
+            new Card(Suit.SPADE, Denomination.TEN));
+        List<Card> playerCards = List.of( new Card(Suit.DIAMOND, Denomination.JACK),
+            new Card(Suit.CLOVER, Denomination.ACE));
+
+        Participants participants = Participants.from(List.of("player"));
+
+        Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
+        dealer.receiveInitCards(dealerCards);
+        player.receiveInitCards(playerCards);
+
+        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.BLACKJACK);
+    }
+
+    @Test
     @DisplayName("결과를 문자열로 반환한다.")
     void getWinningResult() {
         assertThat(WinningResult.WIN.getResult()).isEqualTo("승");
