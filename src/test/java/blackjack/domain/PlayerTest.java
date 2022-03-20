@@ -27,4 +27,11 @@ public class PlayerTest {
     void blankName(String name) {
         assertThatThrownBy(() -> new Player(name, 1000)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("베팅금액이 0이하일 경우 에러 테스트")
+    @ParameterizedTest
+    @ValueSource(ints = {0, -1000, -25000})
+    void incorrectBettingMoney(int money) {
+        assertThatThrownBy(() -> new Player("잉", money)).isInstanceOf(IllegalArgumentException.class);
+    }
 }
