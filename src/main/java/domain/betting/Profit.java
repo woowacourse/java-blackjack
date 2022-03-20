@@ -11,7 +11,7 @@ public class Profit {
 
     private static final String ABSENT_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름이 존재하지 않습니다.";
     private static final double BLACK_JACK_BONUS_PROFIT_RATE = 1.5;
-    private static final int DEFAULT_PROFIT_RATE = 1;
+    private static final int INT_FOR_NEGATIVE = -1;
 
     private final Map<Name, Double> maps;
 
@@ -20,32 +20,37 @@ public class Profit {
     }
 
     public static Profit generateProfits(Result result, BettingReceipt bettingReceipt, Players players) {
-        Map<Name, Double> profits = new LinkedHashMap<>();
+        Map<Name, Double> maps = new LinkedHashMap<>();
         for (Name name : players.getNames()) {
-            profits.put(name, calculatePlayerProfit(
+            maps.put(name, calculatePlayerProfit(
                     result.getVersusOfPlayer(name),
                     bettingReceipt.getBettingMoney(name),
-                    players.isBlackJackByName(name))
-            );
+                    players.isBlackJackByName(name)
+            ));
         }
-        return new Profit(profits);
+        return new Profit(maps);
     }
 
     private static double calculatePlayerProfit(Versus versusOfPlayer, BettingMoney bettingMoney, boolean isBlackJack) {
         if (versusOfPlayer == Versus.WIN) {
-            return bettingMoney.getBettingMoney() * getBlackJackBonusRate(isBlackJack);
+            return getWinProfit(bettingMoney, isBlackJack);
         }
         if (versusOfPlayer == Versus.LOSE) {
-            return bettingMoney.getBettingMoney() * (-1);
+            return toNegative(bettingMoney.getBettingMoney());
         }
         return 0;
     }
 
-    private static double getBlackJackBonusRate(boolean isBlackJack) {
+    private static double getWinProfit(BettingMoney BettingMoney, boolean isBlackJack) {
+        int bettingMoney = BettingMoney.getBettingMoney();
         if (isBlackJack) {
-            return BLACK_JACK_BONUS_PROFIT_RATE;
+            return bettingMoney * BLACK_JACK_BONUS_PROFIT_RATE;
         }
-        return DEFAULT_PROFIT_RATE;
+        return bettingMoney;
+    }
+
+    private static double toNegative(double profit) {
+        return profit * INT_FOR_NEGATIVE;
     }
 
     public double getProfit(Name name) {
@@ -56,8 +61,9 @@ public class Profit {
     }
 
     public double calculateDealerProfit() {
-        return maps.keySet().stream()
+        double sum = maps.keySet().stream()
                 .mapToDouble(maps::get)
-                .sum() * (-1);
+                .sum();
+        return toNegative(sum);
     }
 }
