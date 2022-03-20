@@ -1,7 +1,8 @@
-package blakjack.domain.state;
+package blakjack.domain.state.running;
 
 import blakjack.domain.Chip;
 import blakjack.domain.PrivateArea;
+import blakjack.domain.state.State;
 import blakjack.domain.state.finished.Bust;
 import blakjack.domain.state.finished.Stay;
 import org.junit.jupiter.api.DisplayName;
@@ -17,11 +18,11 @@ public class HitTest {
         final PrivateArea privateArea = new PrivateArea("칙촉");
         final Chip chip = new Chip(1000);
 
-        final State hit = new Hit(privateArea, chip);
-        hit.draw(CLUB_NINE);
-        hit.draw(HEART_ACE);
+        State init = new Init(privateArea, chip);
+        init = init.draw(CLUB_NINE);
+        init = init.draw(HEART_ACE);
 
-        assertThat(hit.draw(CLUB_NINE)).isExactlyInstanceOf(Hit.class);
+        assertThat(init.draw(CLUB_NINE)).isExactlyInstanceOf(Hit.class);
     }
 
     @Test
@@ -30,11 +31,11 @@ public class HitTest {
         final PrivateArea privateArea = new PrivateArea("칙촉");
         final Chip chip = new Chip(1000);
 
-        final State hit = new Hit(privateArea, chip);
-        hit.draw(CLUB_TEN);
-        hit.draw(CLUB_TEN);
+        State init = new Init(privateArea, chip);
+        init = init.draw(CLUB_TEN);
+        init = init.draw(CLUB_TEN);
 
-        assertThat(hit.draw(CLUB_TEN)).isExactlyInstanceOf(Bust.class);
+        assertThat(init.draw(CLUB_TEN)).isExactlyInstanceOf(Bust.class);
     }
 
     @Test
@@ -43,10 +44,10 @@ public class HitTest {
         final PrivateArea privateArea = new PrivateArea("칙촉");
         final Chip chip = new Chip(1000);
 
-        final State hit = new Hit(privateArea, chip);
-        hit.draw(CLUB_NINE);
-        hit.draw(HEART_ACE);
+        State init = new Init(privateArea, chip);
+        init = init.draw(CLUB_NINE);
+        init = init.draw(HEART_ACE);
 
-        assertThat(hit.stay()).isExactlyInstanceOf(Stay.class);
+        assertThat(init.stay()).isExactlyInstanceOf(Stay.class);
     }
 }

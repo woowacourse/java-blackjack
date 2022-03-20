@@ -1,12 +1,14 @@
-package blakjack.domain.state;
+package blakjack.domain.state.running;
 
 import blakjack.domain.Chip;
 import blakjack.domain.PrivateArea;
+import blakjack.domain.state.State;
+import blakjack.domain.state.finished.Blackjack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blakjack.domain.MockCard.CLUB_TEN;
-import static blakjack.domain.MockCard.HEART_ACE;
+import static blakjack.domain.Fixture.CLUB_TEN;
+import static blakjack.domain.Fixture.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InitTest {
@@ -16,7 +18,7 @@ public class InitTest {
         final PrivateArea privateArea = new PrivateArea("칙촉");
         final Chip chip = new Chip(1000);
 
-        final var init = new Init(privateArea, chip);
+        final State init = new Init(privateArea, chip);
 
         assertThat(init.draw(HEART_ACE)).isExactlyInstanceOf(Init.class);
     }
@@ -27,8 +29,8 @@ public class InitTest {
         final PrivateArea privateArea = new PrivateArea("칙촉");
         final Chip chip = new Chip(1000);
 
-        final var init = new Init(privateArea, chip);
-        init.draw(HEART_ACE);
+        State init = new Init(privateArea, chip);
+        init = init.draw(HEART_ACE);
 
         assertThat(init.draw(CLUB_TEN)).isExactlyInstanceOf(Blackjack.class);
     }
@@ -39,8 +41,8 @@ public class InitTest {
         final PrivateArea privateArea = new PrivateArea("칙촉");
         final Chip chip = new Chip(1000);
 
-        final var init = new Init(privateArea, chip);
-        init.draw(HEART_ACE);
+        State init = new Init(privateArea, chip);
+        init = init.draw(HEART_ACE);
 
         assertThat(init.draw(HEART_ACE)).isExactlyInstanceOf(Hit.class);
     }
