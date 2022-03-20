@@ -1,58 +1,35 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.game.MatchResult;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+import blackjack.domain.game.MatchResult;
 
 public class Players {
 
-    private final Queue<Player> players;
+	private final List<Player> value;
 
-    public Players(List<Player> players) {
-        this.players = new LinkedList<>(players);
-    }
+	public Players(List<Player> value) {
+		this.value = new ArrayList<>(value);
+	}
 
-    public boolean isAllFinished() {
-        return this.players
-                .stream()
-                .allMatch(Player::isFinished);
-    }
+	public boolean isAllBlackJack() {
+		return value.stream()
+			.allMatch(Player::isBlackJack);
+	}
 
-    public boolean isPresentPlayerFinished() {
-        return findPresentPlayer().isFinished();
-    }
+	public Map<Player, MatchResult> match(Dealer dealer) {
+		Map<Player, MatchResult> playerMatchResult = new LinkedHashMap<>();
+		for (Player player : value) {
+			playerMatchResult.put(player, player.state.match(dealer.state));
+		}
+		return playerMatchResult;
+	}
 
-    public void drawCardPresentPlayer(Card card) {
-        players.peek().drawCard(card);
-    }
-
-    public void makePresentPlayerStay() {
-        players.peek().stay();
-    }
-
-    public void passToNextPlayer() {
-        players.offer(players.poll());
-    }
-
-    public Player findPresentPlayer() {
-        return players.peek();
-    }
-
-    public boolean isAllBlackJack() {
-        return players.stream()
-                .allMatch(Player::isBlackJack);
-    }
-
-    public Map<Player, MatchResult> match(Dealer dealer) {
-        Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
-        for (Player player : players) {
-            gameResult.put(player, MatchResult.judge(player, dealer));
-        }
-        return gameResult;
-    }
-
-    public List<Player> getPlayers() {
-        return new ArrayList<>(players);
-    }
+	public List<Player> getValue() {
+		return Collections.unmodifiableList(value);
+	}
 }

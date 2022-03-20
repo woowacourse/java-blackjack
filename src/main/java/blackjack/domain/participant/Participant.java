@@ -20,6 +20,10 @@ public abstract class Participant {
 		return getCards().isReady();
 	}
 
+	public boolean isBlackJack() {
+		return getCards().isBlackJack();
+	}
+
 	public void draw(Card card) {
 		state = state.draw(card);
 	}
