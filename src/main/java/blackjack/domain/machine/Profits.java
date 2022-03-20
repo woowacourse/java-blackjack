@@ -17,13 +17,13 @@ public class Profits {
     }
 
     public static Profits of(Dealer dealer, Players players) {
-        Map<Participant, Profit> result1 = new LinkedHashMap<>();
+        Map<Participant, Profit> result = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            result1.put(player, getProfit(dealer, player));
+            result.put(player, getProfit(dealer, player));
         }
 
-        result1.put(dealer, getDealerProfit(result1));
-        return new Profits(result1);
+        result.put(dealer, getDealerProfit(result));
+        return new Profits(result);
     }
 
     private static Profit getProfit(Dealer dealer, Player player) {
