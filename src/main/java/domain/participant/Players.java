@@ -14,9 +14,9 @@ public final class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players of(Map<String, String> bettingMoneys) {
+    public static Players of(Map<Name, String> bettingMoneys) {
         List<Player> players = new ArrayList<>();
-        for (String playerName : bettingMoneys.keySet()) {
+        for (Name playerName : bettingMoneys.keySet()) {
             players.add(Player.of(playerName, bettingMoneys.get(playerName)));
         }
         return new Players(players);

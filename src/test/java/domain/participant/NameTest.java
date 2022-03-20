@@ -13,7 +13,7 @@ class NameTest {
     @EmptySource
     @DisplayName("이름이 공백인 경우 예외를 발생한다.")
     void playerEmptyNameTest(String input) {
-        assertThatThrownBy(() -> new Name(input))
+        assertThatThrownBy(() -> Name.from(input))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }

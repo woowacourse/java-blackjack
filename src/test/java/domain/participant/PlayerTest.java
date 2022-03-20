@@ -26,7 +26,7 @@ class PlayerTest {
 
     @BeforeEach
     void init() {
-        player = Player.of("test", 3000);
+        player = Player.of(Name.from("test"), 3000);
         dealer = new Dealer();
         deck = Deck.initDeck(Card.values());
     }
@@ -37,7 +37,7 @@ class PlayerTest {
     void playerEmptyNameTest() {
         String name = "";
 
-        assertThatThrownBy(() -> Player.of(name, 2000 ))
+        assertThatThrownBy(() -> Player.of(Name.from(name), 2000 ))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }

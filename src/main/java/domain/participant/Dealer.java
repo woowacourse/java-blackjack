@@ -13,7 +13,7 @@ public final class Dealer extends Participant {
     private static final String NAME = "딜러";
 
     public Dealer() {
-        super(NAME);
+        super(Name.from(NAME));
     }
 
     public int calculateIncome(List<Integer> playerIncomes) {

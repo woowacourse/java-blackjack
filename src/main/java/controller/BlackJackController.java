@@ -3,6 +3,7 @@ package controller;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
@@ -27,7 +28,7 @@ public final class BlackJackController {
 
     private Players createPlayers() {
         try {
-            List<String> playerNames = inputView.inputPlayerName();
+            List<Name> playerNames = Name.from(inputView.inputPlayerName());
             return Players.of(inputView.inputBettings(playerNames));
         } catch (IllegalArgumentException exception) {
             outputView.printError(exception.getMessage());

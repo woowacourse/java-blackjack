@@ -16,13 +16,13 @@ import org.junit.jupiter.api.Test;
 import utils.ExceptionMessages;
 
 class PlayersTest {
-    private Map<String, String> nameAndMoneys;
+    private Map<Name, String> nameAndMoneys;
 
     @BeforeEach
     void setUp() {
         nameAndMoneys = new LinkedHashMap<>();
-        nameAndMoneys.put("kun", "1000");
-        nameAndMoneys.put("runa", "2000");
+        nameAndMoneys.put(Name.from("kun"), "1000");
+        nameAndMoneys.put(Name.from("runa"), "2000");
     }
 
     @Test
@@ -36,8 +36,8 @@ class PlayersTest {
     @Test
     @DisplayName("입력 받은 플레이어 이름이 쉼표만 있을 경우 에러를 발생시킨다.")
     void playersCommaErrorTest() {
-        nameAndMoneys.put("", "3000");
-        nameAndMoneys.put("   ", "4300");
+        nameAndMoneys.put(Name.from(""), "3000");
+        nameAndMoneys.put(Name.from("   "), "4300");
 
         assertThatThrownBy(() -> Players.of(nameAndMoneys))
             .isInstanceOf(IllegalArgumentException.class)

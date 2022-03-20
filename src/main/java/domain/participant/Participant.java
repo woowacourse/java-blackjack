@@ -10,9 +10,9 @@ public abstract class Participant {
     protected final Cards cards;
     protected final Name name;
 
-    public Participant(String name) {
+    public Participant(Name name) {
         this.cards = Cards.getEmptyCardsPack();
-        this.name = new Name(name);
+        this.name = name;
     }
 
     public abstract boolean canHit();

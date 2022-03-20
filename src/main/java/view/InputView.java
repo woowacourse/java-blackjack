@@ -1,5 +1,6 @@
 package view;
 
+import domain.participant.Name;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -38,17 +39,17 @@ public final class InputView {
         return Arrays.asList(names.split(COMMA));
     }
 
-    public Map<String, String> inputBettings(List<String> playerNames) {
-        Map<String, String> bettingMoneys = new LinkedHashMap<>();
-        for (String playerName : playerNames) {
+    public Map<Name, String> inputBettings(List<Name> playerNames) {
+        Map<Name, String> bettingMoneys = new LinkedHashMap<>();
+        for (Name playerName : playerNames) {
             bettingMoneys.put(playerName, inputBettingMoney(playerName));
         }
         return bettingMoneys;
     }
 
-    private String inputBettingMoney(String playerName){
+    private String inputBettingMoney(Name playerName){
         System.out.print(System.lineSeparator());
-        System.out.printf(BETTING_MONEY_INPUT_MESSAGE, playerName);
+        System.out.printf(BETTING_MONEY_INPUT_MESSAGE, playerName.getValue());
         System.out.print(System.lineSeparator());
         return input();
     }
