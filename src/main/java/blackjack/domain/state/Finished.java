@@ -14,7 +14,7 @@ public abstract class Finished extends Started {
     }
 
     public abstract BlackjackMatch showMatch(Status status);
-    
+
     public abstract double profitRate(BlackjackMatch blackjackMatch);
 
     @Override

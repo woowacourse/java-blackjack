@@ -32,6 +32,7 @@ public abstract class Running extends Started {
     public BlackjackMatch showMatch(Status status) {
         throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_SHOW_MATCH);
     }
+
     @Override
     public double profitRate(BlackjackMatch blackjackMatch) {
         throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_PROFIT_RATE);

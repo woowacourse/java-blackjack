@@ -19,7 +19,7 @@ public class Stay extends Finished {
         if (opponentCards.isBust() || cards.calculateScore() > opponentCards.calculateScore()) {
             return BlackjackMatch.WIN;
         }
-        if(cards.calculateScore() == opponentCards.calculateScore()) {
+        if (cards.calculateScore() == opponentCards.calculateScore()) {
             return BlackjackMatch.DRAW;
         }
         return BlackjackMatch.LOSE;
@@ -30,7 +30,7 @@ public class Stay extends Finished {
         if (blackjackMatch == BlackjackMatch.WIN) {
             return WIN_RATE;
         }
-        if(blackjackMatch == BlackjackMatch.DRAW) {
+        if (blackjackMatch == BlackjackMatch.DRAW) {
             return DRAW_RATE;
         }
         return LOSE_RATE;

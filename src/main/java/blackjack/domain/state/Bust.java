@@ -10,6 +10,7 @@ public class Bust extends Finished {
     Bust(Cards cards) {
         super(cards);
     }
+
     @Override
     public BlackjackMatch showMatch(Status status) {
         return BlackjackMatch.LOSE;
