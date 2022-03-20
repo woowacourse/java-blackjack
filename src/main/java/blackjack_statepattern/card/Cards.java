@@ -7,6 +7,7 @@ public class Cards {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int INIT_CARD_COUNT = 2;
 
     private final List<Card> value;
 
@@ -24,10 +25,14 @@ public class Cards {
 
     public int computeScore() {
         int sum = sum();
-        if (hasAce() && sum <= BLACKJACK_SCORE - ACE_BONUS_SCORE) {
+        if (hasAce() && canGetBonus()) {
             sum += ACE_BONUS_SCORE;
         }
         return sum;
+    }
+
+    private boolean canGetBonus() {
+        return sum() <= BLACKJACK_SCORE - ACE_BONUS_SCORE;
     }
 
     public int sum() {
@@ -42,7 +47,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return BLACKJACK_SCORE - ACE_BONUS_SCORE == sum() && hasAce();
+        return computeScore() == BLACKJACK_SCORE && value.size() == INIT_CARD_COUNT;
     }
 
     public Cards add(Card card) {
