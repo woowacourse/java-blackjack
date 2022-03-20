@@ -12,21 +12,21 @@ public class Deck {
         this.deck = deck;
     }
 
-    public static Deck create() {
-        List<Card> cards = Card.initializeDeck();
-        return new Deck(new LinkedList<>(cards));
+    public Deck() {
+        this(new LinkedList<>(Card.initializeDeck()));
     }
 
-    public static Deck of(LinkedList<Card> deck) {
-        Collections.shuffle(deck);
-        return new Deck(deck);
+    public static Deck create() {
+        List<Card> cards = Card.initializeDeck();
+        Collections.shuffle(cards);
+        return new Deck(new LinkedList<>(cards));
     }
 
     public Card distributeCard() {
         return deck.poll();
     }
 
-    public LinkedList<Card> getDeck() {
-        return deck;
+    public List<Card> getDeck() {
+        return Collections.unmodifiableList(deck);
     }
 }

@@ -20,7 +20,7 @@ public class BlackjackController {
     public void run() {
         final Participants participants = getParticipants();
         final Map<Player, BettingMoney> playersInfo = getPlayersBettingMoney(participants.getPlayers());
-        final Deck deck = Deck.of(Deck.create().getDeck());
+        final Deck deck = Deck.create();
         final BlackjackGame blackjackGame = progressGame(participants, deck);
 
         final List<Player> players = playersTurn(blackjackGame, participants);
