@@ -4,8 +4,8 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.CardDeck;
-import blackjack.domain.CardDeckGenerator;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDeckGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
