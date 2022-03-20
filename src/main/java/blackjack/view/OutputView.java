@@ -19,13 +19,21 @@ public class OutputView {
         System.out.println("딜러: " + card.getNumberName() + card.getSymbolName());
     }
 
-    public static void printCards(final Player player) {
-        System.out.println(player.getName() + "카드: " + toCardMessage(player.getCards()));
+    public static void printCards(final List<Player> players) {
+        players.forEach(OutputView::printCards);
+    }
+
+    public static void printCardsAndScore(final List<Player> players) {
+        players.forEach(OutputView::printCardsAndScore);
     }
 
     public static void printCardsAndScore(Participant participant) {
         System.out.println(participant.getName() + "카드: " + toCardMessage(participant.getCards())
                 + " - 결과: " + participant.getScore());
+    }
+
+    public static void printCards(final Player player) {
+        System.out.println(player.getName() + "카드: " + toCardMessage(player.getCards()));
     }
 
     private static String toCardMessage(final Cards cards) {

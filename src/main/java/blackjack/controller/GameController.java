@@ -51,8 +51,7 @@ public class GameController {
         OutputView.printInitResult(players.getNames());
         OutputView.printDealerFirstCard(dealer.openFirstCard());
 
-        final List<Player> allPlayers = players.getValue();
-        allPlayers.forEach(OutputView::printCards);
+        OutputView.printCards(players.getValue());
     }
 
     public void progressPlayerTurns() {
@@ -97,7 +96,7 @@ public class GameController {
         OutputView.breakLine();
 
         OutputView.printCardsAndScore(dealer);
-        players.getValue().forEach(OutputView::printCardsAndScore);
+        OutputView.printCardsAndScore(players.getValue());
     }
 
     private void printDealerPrize() {
