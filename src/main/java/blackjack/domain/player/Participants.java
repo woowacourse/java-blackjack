@@ -46,8 +46,8 @@ public class Participants implements Iterable<Participant> {
         }
     }
 
-    public void putBet(Participant participant, int bet) {
-        participants.put(participant, new Money(bet));
+    public void putBet(final Participant participant, final int bet) {
+        participants.computeIfPresent(participant, (key, value) -> new Money(bet));
     }
 
     public int getRevenue(Participant participant, Result result) {
