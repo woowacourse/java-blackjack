@@ -21,16 +21,16 @@ class ResultOfProfitTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        dealer.hit(Card.from(Symbol.CLOVER, Denomination.JACK));
-        dealer.hit(Card.from(Symbol.CLOVER, Denomination.NINE));
+        dealer.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
+        dealer.hit(Card.of(Symbol.CLOVER, Denomination.NINE));
 
         player1 = new Player("rookie");
-        player1.hit(Card.from(Symbol.CLOVER, Denomination.ACE));
-        player1.hit(Card.from(Symbol.CLOVER, Denomination.QUEEN));
+        player1.hit(Card.of(Symbol.CLOVER, Denomination.ACE));
+        player1.hit(Card.of(Symbol.CLOVER, Denomination.QUEEN));
 
         player2 = new Player("parang");
-        player2.hit(Card.from(Symbol.CLOVER, Denomination.SEVEN));
-        player2.hit(Card.from(Symbol.CLOVER, Denomination.KING));
+        player2.hit(Card.of(Symbol.CLOVER, Denomination.SEVEN));
+        player2.hit(Card.of(Symbol.CLOVER, Denomination.KING));
 
         resultOfProfit = new ResultOfProfit(Map.of(
                 player1, new BettingAmount(10000),

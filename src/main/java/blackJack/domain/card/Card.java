@@ -33,7 +33,7 @@ public class Card {
         }
     }
 
-    public static Card from(Symbol symbol, Denomination denomination) {
+    public static Card of(Symbol symbol, Denomination denomination) {
         return CARDS.stream()
                 .filter(card -> card.symbol == symbol && card.denomination == denomination)
                 .findFirst()

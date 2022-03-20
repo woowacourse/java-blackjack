@@ -15,8 +15,8 @@ class ParticipantTest {
     void isBlackJack() {
         Participant participant = new Player("parang");
 
-        participant.hit(Card.from(Symbol.CLOVER, Denomination.ACE));
-        participant.hit(Card.from(Symbol.CLOVER, Denomination.JACK));
+        participant.hit(Card.of(Symbol.CLOVER, Denomination.ACE));
+        participant.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
 
         assertThat(participant.isBlackJack()).isTrue();
     }
