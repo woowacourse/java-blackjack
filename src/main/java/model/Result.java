@@ -2,30 +2,36 @@ package model;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
-import model.card.Cards;
+import model.participator.Dealer;
+import model.participator.Player;
 
 public enum Result {
-    WIN((player, dealer) -> player.compareTo(dealer) > 0,
-            (playerSum, dealerSum) -> playerSum > dealerSum),
-    LOSE((player, dealer) -> (player.equals(Status.BUST) && dealer.equals(Status.BUST)) || player.compareTo(dealer) < 0,
-            (playerSum, dealerSum) -> playerSum < dealerSum),
+    WIN((player, dealer) -> player.compareTo(dealer) > 0 || dealer.equals(Status.BUST),
+            (playerSum, dealerSum) -> playerSum > dealerSum, 1),
+    LOSE((player, dealer) -> player.compareTo(dealer) < 0,
+            (playerSum, dealerSum) -> playerSum < dealerSum, -1),
     DRAW((player, dealer) -> !player.equals(Status.BUST) && player.compareTo(dealer) == 0,
-            (playerSum, dealerSum) -> playerSum.equals(dealerSum));
+            Integer::equals, 0);
 
     private final BiPredicate<Status, Status> statusCriteria;
     private final BiPredicate<Integer, Integer> cardsSumCriteria;
+    private final int playerBettingIncrease;
 
     Result(BiPredicate<Status, Status> statusCriteria,
-           BiPredicate<Integer, Integer> cardsSumCriteria) {
+           BiPredicate<Integer, Integer> cardsSumCriteria,
+           int playerBettingIncrease) {
         this.statusCriteria = statusCriteria;
         this.cardsSumCriteria = cardsSumCriteria;
+        this.playerBettingIncrease = playerBettingIncrease;
     }
 
-    public static Result of(Cards playerCards, Cards dealerCards) {
-        if (playerCards.isStand() && dealerCards.isStand()) {
-            return Result.of(playerCards.getSum(), dealerCards.getSum());
+    public static Result of(Player player, Dealer dealer) {
+        Status playerStatus = player.getStatus();
+        Status dealerStatus = dealer.getStatus();
+        if (playerStatus.equals(Status.STAND) && dealerStatus.equals(Status.STAND)) {
+            return Result.of(player.getSum(), dealer.getSum());
         }
-        return Result.of(playerCards.getStatus(), dealerCards.getStatus());
+        return Result.of(playerStatus, dealerStatus);
     }
 
     private static Result of(Status playerStatus, Status dealerStatus) {
@@ -50,5 +56,9 @@ public enum Result {
             return WIN;
         }
         return this;
+    }
+
+    public long getEarnedAmount(long amount) {
+        return this.playerBettingIncrease * amount;
     }
 }

@@ -1,21 +1,24 @@
-package model;
+package model.participator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.Status;
+import model.betting.Profit;
 import model.card.Card;
 import model.card.Cards;
-import model.cardGettable.CardsGettable;
+import model.card.cardGettable.CardsGettable;
 
 public abstract class Participator {
-    protected final Cards cards;
     private final String name;
-    protected CardsGettable cardsGettableStrategy;
+    private final Cards cards;
+    private Profit profit;
 
     public Participator(String name) {
         checkNameIsNullOrEmpty(name);
         this.cards = new Cards(new ArrayList<>());
         this.name = name;
+        this.profit = new Profit(0);
     }
 
     private void checkNameIsNullOrEmpty(String name) {
@@ -24,26 +27,42 @@ public abstract class Participator {
         }
     }
 
-    public void receiveCard(Card card) {
-        cards.addCard(card);
-    }
-
     public abstract boolean canReceiveCard();
 
-    public String getPlayerName() {
-        return name;
+    public void receiveCard(Card card) {
+        cards.addCard(card);
     }
 
     public boolean isSameName(String otherName) {
         return name.equals(otherName);
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cardsGettableStrategy.getCards(cards));
+    public void addProfit(long amount) {
+        profit = profit.add(amount);
+    }
+
+    public Status getStatus() {
+        return cards.getStatus();
+    }
+
+    public boolean isBlackJack() {
+        return getStatus().equals(Status.BLACKJACK);
     }
 
     public int getSum() {
         return cards.getSum();
+    }
+
+    public List<Card> getCards(CardsGettable cardsGettable) {
+        return new ArrayList<>(cards.getCardsByStrategy(cardsGettable));
+    }
+
+    public String getPlayerName() {
+        return name;
+    }
+
+    public long getProfit() {
+        return profit.getValue();
     }
 
     @Override

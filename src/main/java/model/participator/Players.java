@@ -1,11 +1,14 @@
-package model;
+package model.participator;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import model.Result;
 import model.card.CardDeck;
+import model.participator.matchplayerselect.MatchPlayerSelectStrategy;
 
 public class Players {
     private final List<Player> players;
@@ -18,9 +21,8 @@ public class Players {
     }
 
     public static Players of(List<String> names) {
-        return new Players(names.stream()
-                .map(Player::new)
-                .collect(toList()));
+        return new Players(names.stream().map(Player::new)
+                .collect(Collectors.toList()));
     }
 
     private boolean isDuplicate(List<Player> player) {
@@ -48,9 +50,24 @@ public class Players {
         return findByName(name).canReceiveCard();
     }
 
-    public Map<String, Result> matchWith(Dealer dealer) {
+    public void matchWith(Dealer dealer, MatchPlayerSelectStrategy strategy) {
+        Map<Player, Result> results = players.stream()
+                .filter(strategy::canSelect)
+                .collect(toMap(Function.identity(), player -> player.matchWith(dealer)));
+        executeAllBetting(results, dealer);
+    }
+
+    private void executeAllBetting(Map<Player, Result> results, Dealer dealer) {
+        for (Player player : results.keySet()) {
+            Result result = results.get(player);
+            player.addProfit(result.getEarnedAmount(player.calculateBettingAmount()));
+            dealer.addProfit(result.getOpposite().getEarnedAmount(player.calculateBettingAmount()));
+        }
+    }
+
+    public boolean anyHasBlackJack() {
         return players.stream()
-                .collect(toMap(player -> player.getPlayerName(), player -> player.matchWith(dealer)));
+                .anyMatch(Participator::isBlackJack);
     }
 
     public List<Player> getPlayers() {

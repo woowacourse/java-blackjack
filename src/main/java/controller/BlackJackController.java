@@ -1,6 +1,6 @@
 package controller;
 
-import static model.Dealer.DEALER_NAME;
+import static model.participator.Dealer.DEALER_NAME;
 
 import dto.AllParticipatorsDto;
 import java.util.List;
@@ -17,34 +17,34 @@ public class BlackJackController {
     }
 
     public void run() {
-        requestUntilValid(() -> initGame());
-        requestUntilValid(() -> hitPlayers());
-        requestUntilValid(() -> hitDealer());
-        requestUntilValid(() -> getCardsResults());
-        requestUntilValid(() -> getMatchResults());
-    }
-
-    private void requestUntilValid(Runnable request) {
-        boolean requestDoneSuccessful;
-        do {
-            requestDoneSuccessful = tryRequest(request);
-        } while (!requestDoneSuccessful);
-    }
-
-    private boolean tryRequest(Runnable request) {
-        try {
-            request.run();
-            return true;
-        } catch (IllegalArgumentException exception) {
-            OutputView.printException(exception.getMessage());
-            return false;
-        }
+        initGame();
+        betPlayers();
+        drawFirstTurn();
+        matchFirstTurn();
+        hitPlayers();
+        hitDealer();
+        getCardsResults();
+        getMatchResults();
     }
 
     private void initGame() {
         List<String> names = InputView.inputPlayerNames();
-        AllParticipatorsDto allParticipatorsDto = service.initGame(names);
+        service.initGame(names);
+    }
+
+    private void betPlayers() {
+        for (String name : service.getPlayerNames()) {
+            service.betByPlayerName(name, InputView.inputBetting(name));
+        }
+    }
+
+    private void drawFirstTurn() {
+        AllParticipatorsDto allParticipatorsDto = service.drawFirstTurn();
         OutputView.printInit(allParticipatorsDto);
+    }
+
+    private void matchFirstTurn() {
+        service.matchFirstTurn();
     }
 
     private void hitPlayers() {
@@ -61,17 +61,17 @@ public class BlackJackController {
     }
 
     private void hitDealer() {
-        if (service.canReceiveCard(DEALER_NAME)) {
+        while (service.canReceiveCard(DEALER_NAME)) {
             service.hitDealer();
             OutputView.printHitDealer();
         }
     }
 
-    private void getMatchResults() {
-        OutputView.printMatchResult(service.match());
-    }
-
     private void getCardsResults() {
         OutputView.printResult(service.getAllCardsAndSums());
+    }
+
+    private void getMatchResults() {
+        OutputView.printMatchResult(service.matchLastTurn());
     }
 }

@@ -31,4 +31,14 @@ public class StatusTest {
         assertThatThrownBy(() -> Status.of(0, 22))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void calculateMargin() {
+        Status blackJack = Status.of(2, 21);
+        Status stand = Status.of(3, 21);
+        Status bust = Status.of(3, 22);
+        assertThat(blackJack.calculateWinMargin(1000)).isEqualTo(1500);
+        assertThat(stand.calculateWinMargin(1000)).isEqualTo(1000);
+        assertThat(bust.calculateWinMargin(1000)).isEqualTo(1000);
+    }
 }

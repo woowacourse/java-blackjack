@@ -1,4 +1,4 @@
-package model;
+package model.participator;
 
 import static model.card.CardFace.ACE;
 import static model.card.CardFace.KING;
@@ -12,8 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
+import model.Result;
 import model.card.Card;
 import model.card.CardFace;
+import model.card.cardGettable.EveryCardsGettable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,10 +25,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class PlayerTest {
 
     private Player player;
+    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         player = new Player("클레이");
+        dealer = new Dealer();
     }
 
     @ParameterizedTest
@@ -46,7 +50,7 @@ public class PlayerTest {
         player.receiveCard(firstCard);
         player.receiveCard(secondCard);
 
-        assertThat(player.getCards()).isEqualTo(Arrays.asList(firstCard, secondCard));
+        assertThat(player.getCards(new EveryCardsGettable())).isEqualTo(Arrays.asList(firstCard, secondCard));
     }
 
     @Test
@@ -86,14 +90,13 @@ public class PlayerTest {
 
     @Test
     void matchWithDealerBothBust() {
-        Dealer dealer = new Dealer();
-        dealer.cards.addCard(new Card(DIAMOND, QUEEN));
-        dealer.cards.addCard(new Card(SPADE, QUEEN));
-        dealer.cards.addCard(new Card(CLOVER, QUEEN));
+        dealer.receiveCard(new Card(DIAMOND, QUEEN));
+        dealer.receiveCard(new Card(SPADE, QUEEN));
+        dealer.receiveCard(new Card(CLOVER, QUEEN));
 
-        player.cards.addCard(new Card(DIAMOND, KING));
-        player.cards.addCard(new Card(SPADE, KING));
-        player.cards.addCard(new Card(CLOVER, KING));
-        assertThat(player.matchWith(dealer)).isEqualTo(Result.LOSE);
+        player.receiveCard(new Card(DIAMOND, KING));
+        player.receiveCard(new Card(SPADE, KING));
+        player.receiveCard(new Card(CLOVER, KING));
+        assertThat(player.matchWith(dealer)).isEqualTo(Result.WIN);
     }
 }

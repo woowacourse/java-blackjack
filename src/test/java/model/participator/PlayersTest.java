@@ -1,4 +1,4 @@
-package model;
+package model.participator;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

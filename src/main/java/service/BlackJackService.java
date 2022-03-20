@@ -1,28 +1,27 @@
 package service;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
-import static model.Dealer.DEALER_NAME;
 
 import dto.AllCardsAndSumDto;
 import dto.AllParticipatorsDto;
 import dto.ParticipatorDto;
-import dto.TotalResultDto;
+import dto.TotalProfitDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Function;
-import model.Dealer;
-import model.Participator;
-import model.Players;
-import model.Result;
+import model.betting.Betting;
 import model.card.Card;
 import model.card.CardDeck;
+import model.card.cardGettable.CardsGettable;
+import model.card.cardGettable.EveryCardsGettable;
+import model.card.cardGettable.FirstCardsGettable;
+import model.participator.Dealer;
+import model.participator.Participator;
+import model.participator.Players;
+import model.participator.matchplayerselect.SelectBlackJackAndNotMatchedPlayerStrategy;
+import model.participator.matchplayerselect.SelectNotMatchedPlayerStrategy;
 import util.CardConvertor;
-import util.ResultConvertor;
 
 public class BlackJackService {
     private static final int INIT_CARD_COUNT = 2;
@@ -31,10 +30,8 @@ public class BlackJackService {
     private Players players;
     private CardDeck cardDeck;
 
-    public AllParticipatorsDto initGame(final List<String> names) {
+    public void initGame(final List<String> names) {
         initParticipatorsAndCardDeck(names);
-        drawFirstTurn();
-        return new AllParticipatorsDto(getPlayersDto(), toParticipatorDto(dealer));
     }
 
     private void initParticipatorsAndCardDeck(List<String> names) {
@@ -43,21 +40,22 @@ public class BlackJackService {
         dealer = new Dealer();
     }
 
-    private void drawFirstTurn() {
+    public AllParticipatorsDto drawFirstTurn() {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             players.receiveCardsAll(cardDeck);
             dealer.receiveCard(cardDeck.drawCard());
         }
+        return new AllParticipatorsDto(getPlayersDto(), toParticipatorDto(dealer, new FirstCardsGettable()));
     }
 
     private List<ParticipatorDto> getPlayersDto() {
         return players.getPlayers().stream()
-                .map(this::toParticipatorDto)
+                .map(player -> toParticipatorDto(player, new EveryCardsGettable()))
                 .collect(toList());
     }
 
-    private ParticipatorDto toParticipatorDto(Participator participator) {
-        return new ParticipatorDto(participator.getPlayerName(), toCardsDto(participator.getCards()));
+    private ParticipatorDto toParticipatorDto(Participator participator, CardsGettable cardsGettable) {
+        return new ParticipatorDto(participator.getPlayerName(), toCardsDto(participator.getCards(cardsGettable)));
     }
 
     private List<String> toCardsDto(List<Card> cards) {
@@ -72,8 +70,14 @@ public class BlackJackService {
                 .collect(toList());
     }
 
+    public void matchFirstTurn() {
+        if (dealer.isBlackJack() || players.anyHasBlackJack()) {
+            players.matchWith(dealer, new SelectBlackJackAndNotMatchedPlayerStrategy());
+        }
+    }
+
     public boolean canReceiveCard(String name) {
-        if (name.equals(DEALER_NAME)) {
+        if (dealer.isSameName(name)) {
             return dealer.canReceiveCard();
         }
         return players.canReceiveCard(name);
@@ -81,37 +85,36 @@ public class BlackJackService {
 
     public ParticipatorDto hitPlayerOf(String name) {
         players.receiveCardTo(name, cardDeck);
-        return toParticipatorDto(players.findByName(name));
+        return toParticipatorDto(players.findByName(name), new EveryCardsGettable());
     }
 
-    public ParticipatorDto hitDealer() {
+    public void hitDealer() {
         dealer.receiveCard(cardDeck.drawCard());
-        return toParticipatorDto(dealer);
     }
 
-    public TotalResultDto match() {
-        Map<String, Result> playerResults = players.matchWith(dealer);
-        return new TotalResultDto(toPlayerResultDto(playerResults), toDealerResultDto(playerResults));
+    public TotalProfitDto matchLastTurn() {
+        players.matchWith(dealer, new SelectNotMatchedPlayerStrategy());
+        return getTotalProfitDto();
     }
 
-    private Map<String, String> toPlayerResultDto(Map<String, Result> playerMatchResults) {
-        return playerMatchResults.entrySet().stream()
-                .collect(toMap(Entry::getKey, entry -> ResultConvertor.convert(entry.getValue())));
-    }
-
-    private Map<String, Long> toDealerResultDto(Map<String, Result> playerResults) {
-        return playerResults.values().stream()
-                .map(result -> ResultConvertor.convert(result.getOpposite()))
-                .collect(groupingBy(Function.identity(), LinkedHashMap::new, counting()));
+    private TotalProfitDto getTotalProfitDto() {
+        Map<String, Long> playerProfits = players.getPlayers().stream()
+                .collect(toMap(Participator::getPlayerName, Participator::getProfit));
+        return new TotalProfitDto(playerProfits, dealer.getProfit());
     }
 
     public AllCardsAndSumDto getAllCardsAndSums() {
-        dealer.setEveryCardGettable();
-        return new AllCardsAndSumDto(getPlayerCardsAndSum(), toParticipatorDto(dealer), dealer.getSum());
+        return new AllCardsAndSumDto(getPlayerCardsAndSum(), toParticipatorDto(dealer, new EveryCardsGettable()),
+                dealer.getSum());
     }
 
     private LinkedHashMap<ParticipatorDto, Integer> getPlayerCardsAndSum() {
         return players.getPlayers().stream().collect(
-                toMap(this::toParticipatorDto, Participator::getSum, (participator, sum) -> sum, LinkedHashMap::new));
+                toMap(player -> toParticipatorDto(player, new EveryCardsGettable()), Participator::getSum,
+                        (participator, sum) -> sum, LinkedHashMap::new));
+    }
+
+    public void betByPlayerName(String name, long inputBetting) {
+        players.findByName(name).bet(Betting.of(inputBetting));
     }
 }
