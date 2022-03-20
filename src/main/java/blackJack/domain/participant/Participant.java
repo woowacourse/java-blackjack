@@ -48,10 +48,6 @@ public abstract class Participant {
         return cards.isBust();
     }
 
-    public Cards getCardsInfo() {
-        return cards;
-    }
-
     public Set<Card> getCards() {
         return cards.getCards();
     }
