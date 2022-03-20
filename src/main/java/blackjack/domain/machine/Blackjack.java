@@ -1,6 +1,5 @@
 package blackjack.domain.machine;
 
-import blackjack.domain.card.CardPickMachine;
 import blackjack.domain.card.Cards;
 import blackjack.domain.dto.RecordsDto;
 import blackjack.domain.participant.Dealer;
@@ -10,11 +9,9 @@ import blackjack.domain.participant.Players;
 public class Blackjack {
     private static final int NUMBER_OF_INIT_CARD = 2;
 
-    private final CardPickMachine cardPickMachine;
     private final Cards cards;
 
     public Blackjack() {
-        this.cardPickMachine = new CardPickMachine();
         this.cards = new Cards();
     }
 
