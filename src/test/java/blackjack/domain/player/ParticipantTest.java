@@ -1,5 +1,8 @@
 package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
@@ -8,20 +11,30 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class ParticipantTest {
 
+    @Test
+    @DisplayName("참가자 이름이 딜러이면 에러를 반환한다.")
+    void checkNameDealerTest() {
+        assertThatThrownBy(() -> new Participant("딜러"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 참가자 이름은 딜러일 수 없습니다.");
+    }
+
+
     @ParameterizedTest(name = "[{index}] cards {0}, canAddCard {1}")
     @MethodSource("parameters1")
     @DisplayName("카드를 추가할 수 있는 지 확인한다.")
-    void canAddCard(List<Card> cards) {
+    void canAddCardTest(List<Card> cards) {
         Participant participant = new Participant("배카라");
         cards.forEach(participant::addCard);
 
-        Assertions.assertThat(participant.canAddCard()).isTrue();
+        assertThat(participant.canAddCard()).isTrue();
     }
 
     static Stream<Arguments> parameters1() {
@@ -43,7 +56,7 @@ public class ParticipantTest {
         cards.forEach(participant::addCard);
         participant.addCard(card);
 
-        Assertions.assertThat(participant.canAddCard()).isFalse();
+        assertThat(participant.canAddCard()).isFalse();
     }
 
     static Stream<Arguments> parameters2() {

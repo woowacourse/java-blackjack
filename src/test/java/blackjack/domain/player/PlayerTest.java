@@ -89,4 +89,11 @@ public class PlayerTest {
 
         assertThat(player.isBlackJack()).isFalse();
     }
+
+    @Test
+    @DisplayName("이름 생성 확인")
+    void getName() {
+        Name name = new Name("배카라");
+        assertThat(name.getName()).isEqualTo("배카라");
+    }
 }
