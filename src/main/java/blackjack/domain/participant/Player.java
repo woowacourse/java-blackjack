@@ -7,7 +7,6 @@ import blackjack.domain.participant.playerstatus.Blackjack;
 import blackjack.domain.participant.playerstatus.Bust;
 import blackjack.domain.participant.playerstatus.CalculableStatus;
 import blackjack.domain.participant.playerstatus.Stay;
-import blackjack.domain.prizecalculator.PrizeCalculator;
 
 public class Player extends Participant {
 
@@ -46,11 +45,12 @@ public class Player extends Participant {
         playerStatus = Stay.getInstance();
     }
 
-    public PrizeCalculator findCalculator() {
+    public double calculateProfit(final int dealerScore, boolean dealerBlackjack) {
         if (playerStatus.isRunning()) {
             throw new IllegalStateException();
         }
-        return ((CalculableStatus) playerStatus).findCalculator();
+        return ((CalculableStatus) playerStatus).calculateProfit(getScore(), dealerScore, dealerBlackjack,
+                bettingAmount.getValue());
     }
 
     public double getBettingAmount() {

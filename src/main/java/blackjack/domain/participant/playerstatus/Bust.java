@@ -1,11 +1,9 @@
 package blackjack.domain.participant.playerstatus;
 
-import blackjack.domain.prizecalculator.BustCalculator;
-import blackjack.domain.prizecalculator.PrizeCalculator;
-
 public final class Bust extends CalculableStatus {
 
     private static final Bust INSTANCE = new Bust();
+    private static final int EARNING_RATE = -1;
 
     private Bust() {
     }
@@ -15,7 +13,8 @@ public final class Bust extends CalculableStatus {
     }
 
     @Override
-    public PrizeCalculator findCalculator() {
-        return BustCalculator.getInstance();
+    public double calculateProfit(final int playerScore, final int dealerScore, final boolean dealerBlackjack,
+                                  final double bettingAmount) {
+        return bettingAmount * EARNING_RATE;
     }
 }

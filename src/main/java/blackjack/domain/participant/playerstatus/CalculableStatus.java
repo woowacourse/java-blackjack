@@ -1,7 +1,5 @@
 package blackjack.domain.participant.playerstatus;
 
-import blackjack.domain.prizecalculator.PrizeCalculator;
-
 public abstract class CalculableStatus implements PlayerStatus {
 
     @Override
@@ -9,5 +7,6 @@ public abstract class CalculableStatus implements PlayerStatus {
         return false;
     }
 
-    public abstract PrizeCalculator findCalculator();
+    public abstract double calculateProfit(int playerScore, int dealerScore, boolean dealerBlackjack,
+                                           double bettingAmount);
 }

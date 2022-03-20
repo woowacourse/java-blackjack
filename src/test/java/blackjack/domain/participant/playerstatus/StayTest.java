@@ -1,13 +1,13 @@
-package blackjack.domain.prizecalculator;
+package blackjack.domain.participant.playerstatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.playerstatus.Stay;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class StayCalculatorTest {
+class StayTest {
+
 
     @ParameterizedTest
     @DisplayName("플레이어가 STAY이고, 딜러보다 점수가 낮을 때 상금을 계산한다.")
@@ -15,10 +15,10 @@ class StayCalculatorTest {
     void calculatePrize_default1(int playerScore, int dealerScore, boolean dealerBlackjack, int bettingAmount,
                                  int expected) {
         // give
-        final PrizeCalculator prizeCalculator = Stay.getInstance().findCalculator();
+        final CalculableStatus status = Stay.getInstance();
 
         // when
-        final double actual = prizeCalculator.calculate(playerScore, dealerScore, dealerBlackjack, bettingAmount);
+        final double actual = status.calculateProfit(playerScore, dealerScore, dealerBlackjack, bettingAmount);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -30,10 +30,10 @@ class StayCalculatorTest {
     void calculatePrize_default2(int playerScore, int dealerScore, boolean dealerBlackjack, int bettingAmount,
                                  int expected) {
         // give
-        final PrizeCalculator prizeCalculator = Stay.getInstance().findCalculator();
+        final CalculableStatus status = Stay.getInstance();
 
         // when
-        final double actual = prizeCalculator.calculate(playerScore, dealerScore, dealerBlackjack, bettingAmount);
+        final double actual = status.calculateProfit(playerScore, dealerScore, dealerBlackjack, bettingAmount);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -45,12 +45,13 @@ class StayCalculatorTest {
     void calculatePrize_default3(int playerScore, int dealerScore, boolean dealerBlackjack, int bettingAmount,
                                  int expected) {
         // give
-        final PrizeCalculator prizeCalculator = Stay.getInstance().findCalculator();
+        final CalculableStatus status = Stay.getInstance();
 
         // when
-        final double actual = prizeCalculator.calculate(playerScore, dealerScore, dealerBlackjack, bettingAmount);
+        final double actual = status.calculateProfit(playerScore, dealerScore, dealerBlackjack, bettingAmount);
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
+
 }

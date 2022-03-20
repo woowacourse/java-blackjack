@@ -100,18 +100,15 @@ public class GameController {
 
     private void printDealerProfit() {
         double dealerProfit = players.getValue().stream()
-                .mapToDouble(player -> player.findCalculator()
-                        .calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
-                                player.getBettingAmount()))
+                .mapToDouble(player -> player.calculateProfit(dealer.getScore(), dealer.isBlackjack()))
                 .sum();
+
         OutputView.printDealerProfit(dealerProfit * -1);
     }
 
     private void printPlayersPrize() {
         for (Player player : players.getValue()) {
-            final double prize = player.findCalculator()
-                    .calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
-                            player.getBettingAmount());
+            final double prize = player.calculateProfit(dealer.getScore(), dealer.isBlackjack());
             OutputView.printPrize(player.getName(), prize);
         }
     }
