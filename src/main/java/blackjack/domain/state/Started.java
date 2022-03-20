@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
-public abstract class Started implements Status {
+public abstract class Started implements State {
 
     protected final Cards cards;
 

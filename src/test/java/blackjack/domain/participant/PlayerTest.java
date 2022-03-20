@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.state.Ready;
-import blackjack.domain.state.Status;
+import blackjack.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,11 +40,11 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
     void hasFalsePlayerNextTurn() {
-        final Status status = new Ready()
+        final State state = new Ready()
                 .draw(Card.from(Suit.SPADE, Denomination.JACK))
                 .draw(Card.from(Suit.HEART, Denomination.JACK))
                 .draw(Card.from(Suit.SPADE, Denomination.TWO));
-        Player player = new Player("kei", status);
+        Player player = new Player("kei", state);
 
         assertThat(player.hasNextTurn()).isFalse();
     }
@@ -52,10 +52,10 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
     void hasTruePlayerNextTurn() {
-        final Status status = new Ready()
+        final State state = new Ready()
                 .draw(Card.from(Suit.SPADE, Denomination.JACK))
                 .draw(Card.from(Suit.HEART, Denomination.JACK));
-        Player player = new Player("kei", status);
+        Player player = new Player("kei", state);
 
         assertThat(player.hasNextTurn()).isTrue();
     }

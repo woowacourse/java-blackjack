@@ -13,8 +13,8 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    public BlackjackMatch showMatch(Status status) {
-        final Cards opponentCards = status.getCards();
+    public BlackjackMatch showMatch(State state) {
+        final Cards opponentCards = state.getCards();
         if (opponentCards.isBlackjack()) {
             return BlackjackMatch.DRAW;
         }

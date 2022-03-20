@@ -3,14 +3,14 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Score;
 import blackjack.domain.result.BlackjackMatch;
 import blackjack.domain.state.Ready;
-import blackjack.domain.state.Status;
+import blackjack.domain.state.State;
 
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
 
-    public Dealer(Status status) {
-        super(DEALER_NAME, status);
+    public Dealer(State state) {
+        super(DEALER_NAME, state);
     }
 
     public Dealer() {

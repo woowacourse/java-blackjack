@@ -17,12 +17,12 @@ class BlackjackTest {
 
     private final Cards cards = new Cards(Set.of(Card.from(Suit.CLOVER, Denomination.JACK),
             Card.from(Suit.DIAMOND, Denomination.ACE)));
-    private final Status status = new Blackjack(cards);
+    private final State state = new Blackjack(cards);
 
     @Test
     @DisplayName("블랙잭에서 카드를 더 받을 때 예외 발생 테스트")
     void drawIfBlackjack() {
-        assertThatThrownBy(() -> status.draw(Card.from(Suit.DIAMOND, Denomination.FIVE)))
+        assertThatThrownBy(() -> state.draw(Card.from(Suit.DIAMOND, Denomination.FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드를 받을 수 없습니다.");
     }
@@ -30,7 +30,7 @@ class BlackjackTest {
     @Test
     @DisplayName("블랙잭에서 Stay 상태로 가려할 때 예외 발생 테스트")
     void drawIfStay() {
-        assertThatThrownBy(status::stay)
+        assertThatThrownBy(state::stay)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바르지 않은 결과입니다.");
     }
@@ -38,35 +38,35 @@ class BlackjackTest {
     @Test
     @DisplayName("턴이 끝난 상태로 나타내는지 테스트")
     void isFinished() {
-        assertThat(status.isFinished()).isTrue();
+        assertThat(state.isFinished()).isTrue();
     }
 
     @Test
     @DisplayName("턴이 진행중인 상태로 나타내지 않는지 테스트")
     void isRunning() {
-        assertThat(status.isRunning()).isFalse();
+        assertThat(state.isRunning()).isFalse();
     }
 
     @Test
     @DisplayName("상대방이 블랙잭이 아닌 경우 승리하는지 테스트")
     void showMatchOpponentNotBlackjack() {
-        final Status anotherStatus = new Stay(new Cards(Set.of(Card.from(Suit.CLOVER, Denomination.JACK),
+        final State anotherState = new Stay(new Cards(Set.of(Card.from(Suit.CLOVER, Denomination.JACK),
                 Card.from(Suit.DIAMOND, Denomination.THREE))));
 
-        assertThat(status.showMatch(anotherStatus)).isEqualTo(BlackjackMatch.WIN);
+        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.WIN);
     }
 
     @Test
     @DisplayName("상대방이 블랙잭인 경우 무승부하는지 테스트")
     void showMatchOpponentBlackjack() {
-        final Status anotherStatus = new Blackjack(cards);
+        final State anotherState = new Blackjack(cards);
 
-        assertThat(status.showMatch(anotherStatus)).isEqualTo(BlackjackMatch.DRAW);
+        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.DRAW);
     }
 
     @Test
     @DisplayName("블랙잭으로 이긴 경우 수익률 1.5배 테스트")
     void profitRatio() {
-        assertThat(status.profitRate(BlackjackMatch.WIN)).isEqualTo(1.5);
+        assertThat(state.profitRate(BlackjackMatch.WIN)).isEqualTo(1.5);
     }
 }

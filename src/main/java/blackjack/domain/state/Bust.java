@@ -12,7 +12,7 @@ public class Bust extends Finished {
     }
 
     @Override
-    public BlackjackMatch showMatch(Status status) {
+    public BlackjackMatch showMatch(State state) {
         return BlackjackMatch.LOSE;
     }
 

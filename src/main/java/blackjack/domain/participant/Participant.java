@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.result.BlackjackMatch;
 import blackjack.domain.state.Ready;
-import blackjack.domain.state.Status;
+import blackjack.domain.state.State;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,12 +14,12 @@ public abstract class Participant {
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
 
     private final String name;
-    private Status status;
+    private State state;
 
-    protected Participant(String name, Status status) {
+    protected Participant(String name, State state) {
         validateName(name);
         this.name = name;
-        this.status = status;
+        this.state = state;
     }
 
     protected Participant(String name) {
@@ -38,34 +38,34 @@ public abstract class Participant {
 
     public void receiveCard(Card card) {
         if (!isFinished()) {
-            status = status.draw(card);
+            state = state.draw(card);
         }
     }
 
     private boolean isFinished() {
-        return status.isFinished();
+        return state.isFinished();
     }
 
     public void requestStay() {
-        if (status.isRunning()) {
-            status = getStatus().stay();
+        if (state.isRunning()) {
+            state = getStatus().stay();
         }
     }
 
     public int getScore() {
-        return status.getCards().calculateScore();
+        return state.getCards().calculateScore();
     }
 
     public String getName() {
         return name;
     }
 
-    public Status getStatus() {
-        return status;
+    public State getStatus() {
+        return state;
     }
 
     public List<Card> getCards() {
-        final Cards cards = status.getCards();
+        final Cards cards = state.getCards();
         return cards.getCards();
     }
 

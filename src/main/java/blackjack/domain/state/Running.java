@@ -14,7 +14,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public final Status draw(Card card) {
+    public final State draw(Card card) {
         final Cards cards = getCards();
         cards.receiveCard(card);
         if (cards.isBust()) {
@@ -24,12 +24,12 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public final Status stay() {
+    public final State stay() {
         return new Stay(getCards());
     }
 
     @Override
-    public BlackjackMatch showMatch(Status status) {
+    public BlackjackMatch showMatch(State state) {
         throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_SHOW_MATCH);
     }
 

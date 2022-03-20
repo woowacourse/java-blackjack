@@ -17,12 +17,12 @@ class StayTest {
 
     private final Cards cards = new Cards(Set.of(Card.from(Suit.CLOVER, Denomination.KING),
             Card.from(Suit.DIAMOND, Denomination.SEVEN)));
-    final Status status = new Stay(cards);
+    final State state = new Stay(cards);
 
     @Test
     @DisplayName("카드를 그만 받는 상황일 때 다시 카드를 받으려 하는 경우 예외 발생 테스트")
     void drawIfStay() {
-        assertThatThrownBy(() -> status.draw(Card.from(Suit.HEART, Denomination.FIVE)))
+        assertThatThrownBy(() -> state.draw(Card.from(Suit.HEART, Denomination.FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드를 받을 수 없습니다.");
     }
@@ -30,7 +30,7 @@ class StayTest {
     @Test
     @DisplayName("카드를 그만 받는 상황일 때 다시 카드를 그만 받으려 하는 경우 예외 발생 테스트")
     void stayIfStay() {
-        assertThatThrownBy(status::stay)
+        assertThatThrownBy(state::stay)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바르지 않은 결과입니다.");
     }
@@ -38,13 +38,13 @@ class StayTest {
     @Test
     @DisplayName("턴이 끝난 상태로 나타내는지 테스트")
     void isFinished() {
-        assertThat(status.isFinished()).isTrue();
+        assertThat(state.isFinished()).isTrue();
     }
 
     @Test
     @DisplayName("턴이 진행중인 상태로 나타내지 않는지 테스트")
     void isRunning() {
-        assertThat(status.isRunning()).isFalse();
+        assertThat(state.isRunning()).isFalse();
     }
 
     @Test
@@ -52,9 +52,9 @@ class StayTest {
     void showMatchOpponentIsBust() {
         final Cards cards = new Cards(Set.of(Card.from(Suit.SPADE, Denomination.JACK),
                 Card.from(Suit.HEART, Denomination.JACK), Card.from(Suit.CLOVER, Denomination.FIVE)));
-        final Status anotherStatus = new Bust(cards);
+        final State anotherState = new Bust(cards);
 
-        assertThat(status.showMatch(anotherStatus)).isEqualTo(BlackjackMatch.WIN);
+        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.WIN);
     }
 
     @Test
@@ -62,9 +62,9 @@ class StayTest {
     void showMatchWinByScore() {
         final Cards cards = new Cards(Set.of(Card.from(Suit.SPADE, Denomination.ACE),
                 Card.from(Suit.CLOVER, Denomination.FIVE)));
-        final Status anotherStatus = new Stay(cards);
+        final State anotherState = new Stay(cards);
 
-        assertThat(status.showMatch(anotherStatus)).isEqualTo(BlackjackMatch.WIN);
+        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.WIN);
     }
 
     @Test
@@ -72,9 +72,9 @@ class StayTest {
     void showMatchDrawByScore() {
         final Cards cards = new Cards(Set.of(Card.from(Suit.CLOVER, Denomination.ACE),
                 Card.from(Suit.CLOVER, Denomination.SIX)));
-        final Status anotherStatus = new Stay(cards);
+        final State anotherState = new Stay(cards);
 
-        assertThat(status.showMatch(anotherStatus)).isEqualTo(BlackjackMatch.DRAW);
+        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.DRAW);
     }
 
     @Test
@@ -82,26 +82,26 @@ class StayTest {
     void showMatchLoseByScore() {
         final Cards cards = new Cards(Set.of(Card.from(Suit.SPADE, Denomination.ACE),
                 Card.from(Suit.HEART, Denomination.SEVEN)));
-        final Status anotherStatus = new Stay(cards);
+        final State anotherState = new Stay(cards);
 
-        assertThat(status.showMatch(anotherStatus)).isEqualTo(BlackjackMatch.LOSE);
+        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.LOSE);
     }
 
     @Test
     @DisplayName("Stay 상태에서 이긴 경우 수익률 1배 테스트")
     void winProfitRatio() {
-        assertThat(status.profitRate(BlackjackMatch.WIN)).isEqualTo(1);
+        assertThat(state.profitRate(BlackjackMatch.WIN)).isEqualTo(1);
     }
 
     @Test
     @DisplayName("Stay 상태에서 비긴 경우 수익률 0배 테스트")
     void drawProfitRatio() {
-        assertThat(status.profitRate(BlackjackMatch.DRAW)).isEqualTo(0);
+        assertThat(state.profitRate(BlackjackMatch.DRAW)).isEqualTo(0);
     }
 
     @Test
     @DisplayName("Stay 상태에서 진 경우 수익률 -1배 테스트")
     void loseProfitRatio() {
-        assertThat(status.profitRate(BlackjackMatch.LOSE)).isEqualTo(-1);
+        assertThat(state.profitRate(BlackjackMatch.LOSE)).isEqualTo(-1);
     }
 }

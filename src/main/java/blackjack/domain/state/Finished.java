@@ -13,17 +13,17 @@ public abstract class Finished extends Started {
         super(cards);
     }
 
-    public abstract BlackjackMatch showMatch(Status status);
+    public abstract BlackjackMatch showMatch(State state);
 
     public abstract double profitRate(BlackjackMatch blackjackMatch);
 
     @Override
-    public final Status draw(Card card) {
+    public final State draw(Card card) {
         throw new IllegalArgumentException(ERROR_MESSAGE_INVALID_DRAW);
     }
 
     @Override
-    public final Status stay() {
+    public final State stay() {
         throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_MOVE_TO_STAY);
     }
 

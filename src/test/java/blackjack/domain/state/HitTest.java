@@ -19,34 +19,34 @@ class HitTest {
     @Test
     @DisplayName("Hit 상태에서 카드를 더 받아 Bust가 되는 경우 테스트")
     void hitAndIsBust() {
-        final Status status = new Hit(cards)
+        final State state = new Hit(cards)
                 .draw(Card.from(Suit.SPADE, Denomination.EIGHT));
 
-        assertThat(status).isInstanceOf(Bust.class);
+        assertThat(state).isInstanceOf(Bust.class);
     }
 
     @Test
     @DisplayName("Hit 상태에서 카드를 더 받아 Hit이 되는 경우 테스트")
     void hitAndIsHit() {
-        final Status status = new Hit(cards)
+        final State state = new Hit(cards)
                 .draw(Card.from(Suit.SPADE, Denomination.TWO));
 
-        assertThat(status).isInstanceOf(Hit.class);
+        assertThat(state).isInstanceOf(Hit.class);
     }
 
     @Test
     @DisplayName("턴이 끝난 상태로 나타내지 않는지 테스트")
     void isFinished() {
-        final Status status = new Hit(cards);
+        final State state = new Hit(cards);
 
-        assertThat(status.isFinished()).isFalse();
+        assertThat(state.isFinished()).isFalse();
     }
 
     @Test
     @DisplayName("턴이 진행중인 상태로 나타내는지 테스트")
     void isRunning() {
-        final Status status = new Hit(cards);
+        final State state = new Hit(cards);
 
-        assertThat(status.isRunning()).isTrue();
+        assertThat(state.isRunning()).isTrue();
     }
 }

@@ -4,13 +4,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.result.BlackjackMatch;
 
-public interface Status {
+public interface State {
 
-    Status draw(Card card);
+    State draw(Card card);
 
-    Status stay();
+    State stay();
 
-    BlackjackMatch showMatch(Status status);
+    BlackjackMatch showMatch(State state);
 
     double profitRate(BlackjackMatch blackjackMatch);
 

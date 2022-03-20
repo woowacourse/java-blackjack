@@ -14,8 +14,8 @@ public class Stay extends Finished {
     }
 
     @Override
-    public BlackjackMatch showMatch(Status status) {
-        final Cards opponentCards = status.getCards();
+    public BlackjackMatch showMatch(State state) {
+        final Cards opponentCards = state.getCards();
         if (opponentCards.isBust() || cards.calculateScore() > opponentCards.calculateScore()) {
             return BlackjackMatch.WIN;
         }
