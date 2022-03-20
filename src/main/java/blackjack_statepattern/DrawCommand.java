@@ -3,8 +3,8 @@ package blackjack_statepattern;
 import java.util.Arrays;
 
 public enum DrawCommand {
-    YES("y"),
-    NO("n");
+    HIT("y"),
+    STAY("n");
 
     private final String value;
 
@@ -20,6 +20,6 @@ public enum DrawCommand {
     }
 
     public boolean isStay() {
-        return value == NO.value;
+        return value == STAY.value;
     }
 }
