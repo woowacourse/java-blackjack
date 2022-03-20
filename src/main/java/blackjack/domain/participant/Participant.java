@@ -28,6 +28,8 @@ public abstract class Participant {
 		state = state.draw(card);
 	}
 
+	public abstract void stay();
+
 	public int score() {
 		return getCards().sum();
 	}

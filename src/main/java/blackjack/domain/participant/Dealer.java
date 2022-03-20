@@ -13,6 +13,12 @@ public class Dealer extends Participant {
 		this(NAME);
 	}
 
+	public void stay() {
+		if (!getCards().isBust()) {
+			state = state.stay();
+		}
+	}
+
 	@Override
 	public boolean isFinished() {
 		return score() > DEALER_FINISHED_SCORE;

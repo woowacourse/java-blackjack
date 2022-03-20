@@ -27,10 +27,11 @@ public class BlackJackController {
 		Players players = initializePlayers(names);
 		startGame(dealer, players.getValue());
 
-		if (!isGameEnd(players, dealer)) {
-			playPlayers(players.getValue());
-			playDealer(dealer);
+		if (dealer.isBlackJack()) {
+			stayAllPlayers(players.getValue());
 		}
+		playPlayers(players.getValue());
+		playDealer(dealer);
 
 		showGameResult(players, dealer);
 	}
@@ -49,8 +50,10 @@ public class BlackJackController {
 		OutputView.printInitialCards(players, dealer);
 	}
 
-	private boolean isGameEnd(Players players, Dealer dealer) {
-		return players.isAllBlackJack() || dealer.isBlackJack();
+	private void stayAllPlayers(List<Player> players) {
+		for (Player player : players) {
+			player.stay();
+		}
 	}
 
 	private void drawInitialCardsToParticipant(Participant participant) {
@@ -85,6 +88,7 @@ public class BlackJackController {
 			OutputView.printDealerDrawInfo();
 			dealer.draw(cardDistributor.distribute());
 		}
+		dealer.stay();
 	}
 
 	private void showGameResult(Players players, Dealer dealer) {

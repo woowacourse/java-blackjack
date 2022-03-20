@@ -19,7 +19,9 @@ public class Player extends Participant {
 	}
 
 	public void stay() {
-		state = state.stay();
+		if (!isFinished()) {
+			state = state.stay();
+		}
 	}
 
 	public int getBetMoney() {
