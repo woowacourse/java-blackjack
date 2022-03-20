@@ -42,7 +42,7 @@ public final class Players {
             .collect(Collectors.toMap(
                 Function.identity(),
                 player-> player.multiply(PlayerResult.of(player,dealer)),
-                (x,y)-> y,
+                (player,result)-> result,
                 LinkedHashMap::new
             ));
     }
