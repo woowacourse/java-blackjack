@@ -1,6 +1,6 @@
 package blackJack.domain.result;
 
-public enum MatchResult {
+public enum BlackJackMatch {
     BLACK_JACK_WIN(1.5),
     WIN(1),
     DRAW(0),
@@ -8,7 +8,7 @@ public enum MatchResult {
 
     private final double profitCoefficient;
 
-    MatchResult(double profitCoefficient) {
+    BlackJackMatch(double profitCoefficient) {
         this.profitCoefficient = profitCoefficient;
     }
 

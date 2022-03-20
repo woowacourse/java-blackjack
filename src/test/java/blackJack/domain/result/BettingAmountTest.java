@@ -34,9 +34,9 @@ class BettingAmountTest {
 
     @ParameterizedTest(name = "승부 결과에 따른 수익 반환 테스트")
     @CsvSource(value = {"BLACK_JACK_WIN,15000", "WIN,10000", "DRAW,0", "LOSE,-10000"})
-    void calculateProfit(MatchResult matchResult, int expectedProfit) {
+    void calculateProfit(BlackJackMatch blackJackMatch, int expectedProfit) {
         BettingAmount bettingAmount = new BettingAmount(10000);
 
-        assertThat(bettingAmount.calculateProfit(matchResult)).isEqualTo(expectedProfit);
+        assertThat(bettingAmount.calculateProfit(blackJackMatch)).isEqualTo(expectedProfit);
     }
 }

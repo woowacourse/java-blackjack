@@ -27,7 +27,7 @@ public class BettingAmount {
         }
     }
 
-    public int calculateProfit(MatchResult matchResult) {
-        return matchResult.calculateProfit(bettingAmount);
+    public int calculateProfit(BlackJackMatch blackJackMatch) {
+        return blackJackMatch.calculateProfit(bettingAmount);
     }
 }

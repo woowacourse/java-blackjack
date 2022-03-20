@@ -1,6 +1,6 @@
 package blackJack.domain.participant;
 
-import blackJack.domain.result.MatchResult;
+import blackJack.domain.result.BlackJackMatch;
 
 public class Player extends Participant {
 
@@ -22,12 +22,12 @@ public class Player extends Participant {
         return !this.getScore().isBurst();
     }
 
-    public MatchResult getMatchResult(Participant dealer) {
+    public BlackJackMatch getMatchResult(Participant dealer) {
         if (this.isBurst()) {
-            return MatchResult.LOSE;
+            return BlackJackMatch.LOSE;
         }
         if (this.isBlackJack() && !dealer.isBlackJack()) {
-            return MatchResult.BLACK_JACK_WIN;
+            return BlackJackMatch.BLACK_JACK_WIN;
         }
         if (this.getScore().compareTo(dealer.getScore()) == 0) {
             return getResultAtSameScore(dealer);
@@ -35,20 +35,20 @@ public class Player extends Participant {
         return getResultAtDifferentScore(dealer);
     }
 
-    private MatchResult getResultAtSameScore(Participant dealer) {
+    private BlackJackMatch getResultAtSameScore(Participant dealer) {
         if (!this.isBlackJack() && dealer.isBlackJack()) {
-            return MatchResult.LOSE;
+            return BlackJackMatch.LOSE;
         }
-        return MatchResult.DRAW;
+        return BlackJackMatch.DRAW;
     }
 
-    private MatchResult getResultAtDifferentScore(Participant dealer) {
+    private BlackJackMatch getResultAtDifferentScore(Participant dealer) {
         if (dealer.isBurst()) {
-            return MatchResult.WIN;
+            return BlackJackMatch.WIN;
         }
         if (this.getScore().compareTo(dealer.getScore()) > 0) {
-            return MatchResult.WIN;
+            return BlackJackMatch.WIN;
         }
-        return MatchResult.LOSE;
+        return BlackJackMatch.LOSE;
     }
 }
