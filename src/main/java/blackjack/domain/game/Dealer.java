@@ -10,16 +10,12 @@ public final class Dealer extends Participant {
     private static final String NAME = "딜러";
 
     Dealer() {
-        super();
+        super(Name.of(NAME));
     }
 
     @Override
     public boolean isDrawable() {
         return getState().isDrawable() && getCards().sum() <= HIT_CONDITION;
-    }
-
-    public Name getName() {
-        return Name.of(NAME);
     }
 
     public long getRevenue(List<Player> players) {

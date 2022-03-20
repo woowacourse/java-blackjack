@@ -9,9 +9,11 @@ import blackjack.domain.state.State;
 public abstract class Participant {
 
     private State state;
+    private final Name name;
 
-    Participant() {
+    Participant(Name name) {
         this.state = new Ready();
+        this.name = name;
     }
 
     final void init(Card firstCard, Card secondCard) {
@@ -49,7 +51,9 @@ public abstract class Participant {
         return state.getCards();
     }
 
-    public abstract Name getName();
+    public final Name getName() {
+        return name;
+    }
 
     public final int getScore() {
         return getCards().sum();

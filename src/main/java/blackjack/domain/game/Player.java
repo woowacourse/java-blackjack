@@ -7,17 +7,11 @@ import blackjack.domain.state.Bet;
 
 public final class Player extends Participant {
 
-    private final Name name;
     private final Bet bet;
 
     Player(Name name, Bet bet) {
-        this.name = name;
+        super(name);
         this.bet = bet;
-    }
-
-    @Override
-    public Name getName() {
-        return name;
     }
 
     public long getRevenue(Dealer dealer) {
