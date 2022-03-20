@@ -9,11 +9,11 @@ import blakjack.domain.state.running.Init;
 public abstract class Participant {
     private final State state;
 
-    public Participant(final PrivateArea privateArea, final Chip chip) {
+    Participant(final PrivateArea privateArea, final Chip chip) {
         this.state = new Init(privateArea, chip);
     }
 
-    public void initCards(final CardDeck cardDeck) {
+    public final void initCards(final CardDeck cardDeck) {
         state.draw(cardDeck.draw());
         state.draw(cardDeck.draw());
     }
