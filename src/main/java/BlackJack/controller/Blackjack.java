@@ -32,14 +32,9 @@ public class Blackjack {
         OutputView.printDrawMessage(playerNames);
         OutputView.printTotalUserCards(dealer, players);
 
-        if (checkDealerIsBlackJack(dealer)) {
-            Map<String, Integer> playersResult = Result.makeBlackjackResult(players);
-            int dealerResult = Result.calculateDealerProfit(playersResult);
-            printProfit(dealer, playersResult, dealerResult);
-            return;
+        if (!dealer.isBlackJack()) {
+            playGame(dealer, players, deck);
         }
-
-        playGame(dealer, players, deck);
 
         Map<String, Integer> playerResult = Result.makePlayerResult(dealer, players);
         int dealerResult = Result.calculateDealerProfit(playerResult);
@@ -95,12 +90,5 @@ public class Blackjack {
             dealer.dealCard(deck.getCard());
             players.dealCardToPlayers(deck);
         }
-    }
-
-    private boolean checkDealerIsBlackJack(Dealer dealer) {
-        if (dealer.isBlackJack()) {
-            return true;
-        }
-        return false;
     }
 }

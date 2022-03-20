@@ -80,17 +80,30 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 카드가 21을 넘으면 21이 안넘은 플레이어는 승리한다.")
-    void PlayerIsWinTest_WhenOver21AndDealerOverThan21() {
+    @DisplayName("딜러가 블랙잭인 경우 블랙잭이 아닌 플레이어는 패배한다.")
+    void PlayerIsLoseTest_WhenDealerIsBlackjack() {
         player.cards.add(new Card(Suit.HEART, Denomination.JACK));
         player.cards.add(new Card(Suit.HEART, Denomination.TEN));
 
         dealer.cards.add(new Card(Suit.HEART, Denomination.JACK));
-        dealer.cards.add(new Card(Suit.HEART, Denomination.EIGHT));
-        dealer.cards.add(new Card(Suit.CLOVER, Denomination.EIGHT));
+        dealer.cards.add(new Card(Suit.HEART, Denomination.ACE));
 
         Result actual = Result.judge(dealer, player);
-        Result expected = Result.WIN;
+        Result expected = Result.LOSE;
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러가와 플레이어가 둘다 블랙잭인 경우 비긴다.")
+    void PlayerIsDrawTest_WhenDealerAndPlayerBlackjack() {
+        player.cards.add(new Card(Suit.HEART, Denomination.JACK));
+        player.cards.add(new Card(Suit.HEART, Denomination.ACE));
+
+        dealer.cards.add(new Card(Suit.HEART, Denomination.JACK));
+        dealer.cards.add(new Card(Suit.HEART, Denomination.ACE));
+
+        Result actual = Result.judge(dealer, player);
+        Result expected = Result.DRAW;
         assertThat(actual).isEqualTo(expected);
     }
 
