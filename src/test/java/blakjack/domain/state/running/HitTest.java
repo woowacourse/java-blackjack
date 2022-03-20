@@ -8,7 +8,7 @@ import blakjack.domain.state.finished.Stay;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blakjack.domain.Fixture.*;
+import static blakjack.domain.card.MockCard.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HitTest {

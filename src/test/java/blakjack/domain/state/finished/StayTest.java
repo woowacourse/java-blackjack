@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static blakjack.domain.Fixture.*;
+import static blakjack.domain.card.MockCard.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StayTest {

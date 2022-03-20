@@ -7,8 +7,8 @@ import blakjack.domain.state.finished.Blackjack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blakjack.domain.Fixture.CLUB_TEN;
-import static blakjack.domain.Fixture.HEART_ACE;
+import static blakjack.domain.card.MockCard.CLUB_TEN;
+import static blakjack.domain.card.MockCard.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InitTest {
