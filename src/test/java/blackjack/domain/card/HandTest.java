@@ -103,4 +103,36 @@ class HandTest {
 
         assertThat(cardHand.isBust()).isTrue();
     }
+
+    @DisplayName("isHit인 Hit경우 확인")
+    @Test
+    void isHitTrue() {
+        Hand cardHand = createCardHand(tenCard, threeCard);
+
+        assertThat(cardHand.isHit()).isTrue();
+    }
+
+    @DisplayName("isHit에서 Bust인 경우 확인")
+    @Test
+    void isHitWhenBust() {
+        Hand cardHand = createCardHand(tenCard, threeCard, kingCard);
+
+        assertThat(cardHand.isHit()).isFalse();
+    }
+
+    @DisplayName("isHit에서 Blackjack인 경우 확인")
+    @Test
+    void isHitWhenBlackjack() {
+        Hand cardHand = createCardHand(aceCard, kingCard);
+
+        assertThat(cardHand.isHit()).isFalse();
+    }
+
+    @DisplayName("isHit에서  카드가 1장인 경우 확인")
+    @Test
+    void isHitWhenCardsSizeOne() {
+        Hand cardHand = createCardHand(aceCard);
+
+        assertThat(cardHand.isHit()).isFalse();
+    }
 }
