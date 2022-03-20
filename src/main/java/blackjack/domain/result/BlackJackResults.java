@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BlackJackReferee {
+public class BlackJackResults {
     private final Map<String, Integer> playerResults = new HashMap<>();
 
-    public BlackJackReferee(List<Player> players, Dealer dealer) {
+    public BlackJackResults(List<Player> players, Dealer dealer) {
         addResults(players, dealer);
     }
 

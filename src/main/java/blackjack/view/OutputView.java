@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.result.BlackJackReferee;
+import blackjack.domain.result.BlackJackResults;
 
 import java.util.List;
 import java.util.Map;
@@ -74,10 +74,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalResult(BlackJackReferee blackJackReferee) {
+    public static void printFinalResult(BlackJackResults blackJackResults) {
         System.out.println("## 최종 수익");
-        printFinalDealerResult(blackJackReferee.getDealerResult());
-        printFinalPlayerResult(blackJackReferee.getPlayerResult());
+        printFinalDealerResult(blackJackResults.getDealerResult());
+        printFinalPlayerResult(blackJackResults.getPlayerResult());
     }
 
     private static void printFinalDealerResult(int dealerResult) {

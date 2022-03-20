@@ -5,7 +5,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.BlackJackReferee;
+import blackjack.domain.result.BlackJackResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -25,7 +25,7 @@ public class BlackJackApplication {
         printAdditionalDrawDealer(deck, dealer);
         OutputView.printFinalCards(dealer, players.getPlayers());
 
-        OutputView.printFinalResult(new BlackJackReferee(players.getPlayers(), dealer));
+        OutputView.printFinalResult(new BlackJackResults(players.getPlayers(), dealer));
     }
 
     private static List<Player> createPlayers(Deck deck) {

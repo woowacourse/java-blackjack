@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BlackJackRefereeTest {
+class BlackJackResultsTest {
 
     @Test
     @DisplayName("아무도 버스트가 아닐 때 플레이어 게임 결과 확인")
@@ -26,9 +26,9 @@ class BlackJackRefereeTest {
         Player jason = new Player("jason", jasonCards, 1000);
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
         pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
-        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi, jason), dealer);
+        BlackJackResults blackJackResults = new BlackJackResults(List.of(pobi, jason), dealer);
 
-        Map<String, Integer> playerResults = blackJackReferee.getPlayerResult();
+        Map<String, Integer> playerResults = blackJackResults.getPlayerResult();
 
         assertThat(playerResults.get("pobi")).isEqualTo(1000);
         assertThat(playerResults.get("jason")).isEqualTo(-1000);
@@ -45,9 +45,9 @@ class BlackJackRefereeTest {
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
         pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
 
-        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi), dealer);
+        BlackJackResults blackJackResults = new BlackJackResults(List.of(pobi), dealer);
 
-        Map<String, Integer> playerResults = blackJackReferee.getPlayerResult();
+        Map<String, Integer> playerResults = blackJackResults.getPlayerResult();
 
         int pobiResult = playerResults.get("pobi");
         assertThat(pobiResult).isEqualTo(1000);
@@ -66,9 +66,9 @@ class BlackJackRefereeTest {
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
         pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
 
-        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi, jason), dealer);
+        BlackJackResults blackJackResults = new BlackJackResults(List.of(pobi, jason), dealer);
 
-        int dealerResult = blackJackReferee.getDealerResult();
+        int dealerResult = blackJackResults.getDealerResult();
 
         assertThat(dealerResult).isEqualTo(0);
     }
@@ -80,9 +80,9 @@ class BlackJackRefereeTest {
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         Dealer dealer = new Dealer(dealerCards);
         Player pobi = new Player("pobi", pobiCards, 1000);
-        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi), dealer);
+        BlackJackResults blackJackResults = new BlackJackResults(List.of(pobi), dealer);
 
-        int dealerResult = blackJackReferee.getDealerResult();
+        int dealerResult = blackJackResults.getDealerResult();
 
         assertThat(dealerResult).isEqualTo(1000);
     }
@@ -95,10 +95,10 @@ class BlackJackRefereeTest {
         Dealer dealer = new Dealer(dealerCards);
         Player pobi = new Player("pobi", pobiCards, 1000);
         dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
-        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi), dealer);
-        int dealerResult = blackJackReferee.getDealerResult();
+        BlackJackResults blackJackResults = new BlackJackResults(List.of(pobi), dealer);
+        int dealerResult = blackJackResults.getDealerResult();
 
-        Map<String, Integer> playerResult = blackJackReferee.getPlayerResult();
+        Map<String, Integer> playerResult = blackJackResults.getPlayerResult();
 
         assertThat(playerResult.get("pobi")).isEqualTo(1500);
         assertThat(dealerResult).isEqualTo(-1500);
@@ -111,9 +111,9 @@ class BlackJackRefereeTest {
         List<Card> pobiCards = List.of(new Card(CardShape.CLOVER, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.ACE));
         Dealer dealer = new Dealer(dealerCards);
         Player pobi = new Player("pobi", pobiCards, 1000);
-        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi), dealer);
+        BlackJackResults blackJackResults = new BlackJackResults(List.of(pobi), dealer);
 
-        int dealerResult = blackJackReferee.getDealerResult();
+        int dealerResult = blackJackResults.getDealerResult();
 
         assertThat(dealerResult).isEqualTo(0);
     }
