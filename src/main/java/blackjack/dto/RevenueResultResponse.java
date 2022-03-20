@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.RevenueResult;
+import blackjack.domain.BettingReturn;
 import blackjack.domain.participant.Dealer;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,23 +12,23 @@ public class RevenueResultResponse {
     private String dealerRevenueMessage;
     private List<String> playersRevenueMessage = new ArrayList<>();
 
-    private RevenueResultResponse(RevenueResult revenueResult) {
-        makeDealerRevenueMessage(revenueResult);
-        makePlayersRevenueMessage(revenueResult);
+    private RevenueResultResponse(BettingReturn bettingReturn) {
+        makeDealerRevenueMessage(bettingReturn);
+        makePlayersRevenueMessage(bettingReturn);
     }
 
-    public static RevenueResultResponse from(RevenueResult revenueResult) {
-        return new RevenueResultResponse(revenueResult);
+    public static RevenueResultResponse from(BettingReturn bettingReturn) {
+        return new RevenueResultResponse(bettingReturn);
     }
 
-    private void makeDealerRevenueMessage(RevenueResult revenueResult) {
+    private void makeDealerRevenueMessage(BettingReturn bettingReturn) {
         String dealerName = Dealer.DEALER_DEFAULT_NAME;
-        int dealerEarnings = revenueResult.getDealerEarnings();
+        int dealerEarnings = bettingReturn.getDealerReturn();
         dealerRevenueMessage = String.format("%s: %d", dealerName, dealerEarnings);
     }
 
-    private void makePlayersRevenueMessage(RevenueResult revenueResult) {
-        Map<String, Integer> playersEarnings = revenueResult.getPlayersEarnings();
+    private void makePlayersRevenueMessage(BettingReturn bettingReturn) {
+        Map<String, Integer> playersEarnings = bettingReturn.getPlayersReturn();
         for (Entry<String, Integer> entry : playersEarnings.entrySet()) {
             String playerName = entry.getKey();
             Integer playerEarnings = entry.getValue();

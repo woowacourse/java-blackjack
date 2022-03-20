@@ -8,6 +8,7 @@ import static blackjack.controller.BlackJackController.receiveBettingMoney;
 import static blackjack.controller.BlackJackController.takeMoreCard;
 
 import blackjack.domain.BettingMoney;
+import blackjack.domain.BettingReturn;
 import blackjack.domain.ScoreBoard;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
@@ -33,8 +34,8 @@ public class BlackJackApplication {
         takeMoreCard(players, dealer, deck);
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, players);
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
-        RevenueResultResponse revenueResultResponse = RevenueResultResponse.from(revenueResult);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
+        RevenueResultResponse revenueResultResponse = RevenueResultResponse.from(bettingReturn);
         printRevenueResultResponse(revenueResultResponse);
     }
 }

@@ -15,8 +15,8 @@ import static blackjack.utils.ParticipantsCreationUtils.createPlayerWithDenomina
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.RevenueResult;
 import blackjack.domain.BettingMoney;
+import blackjack.domain.BettingReturn;
 import blackjack.domain.ScoreBoard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -25,7 +25,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RevenueResultResponseTest {
+class BettingReturnResponseTest {
 
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
@@ -40,10 +40,10 @@ class RevenueResultResponseTest {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         bettingMonies.add(new BettingMoney(pobi.getName(), "10000"));
         bettingMonies.add(new BettingMoney(json.getName(), "20000"));
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
         // when
-        RevenueResultResponse resultResponse = RevenueResultResponse.from(revenueResult);
+        RevenueResultResponse resultResponse = RevenueResultResponse.from(bettingReturn);
         String dealerRevenueMessage = resultResponse.getDealerRevenueMessage();
         String playersRevenueMessage = resultResponse.getPlayersRevenueMessage()
                 .stream()
@@ -65,10 +65,10 @@ class RevenueResultResponseTest {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         bettingMonies.add(new BettingMoney(pobi.getName(), "30000"));
         bettingMonies.add(new BettingMoney(json.getName(), "40000"));
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
         // when
-        RevenueResultResponse resultResponse = RevenueResultResponse.from(revenueResult);
+        RevenueResultResponse resultResponse = RevenueResultResponse.from(bettingReturn);
         String dealerRevenueMessage = resultResponse.getDealerRevenueMessage();
         String playersRevenueMessage = resultResponse.getPlayersRevenueMessage()
                 .stream()

@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.EIGHT;
@@ -16,8 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.BettingMoney;
-import blackjack.domain.ScoreBoard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class RevenueResultTest {
+class BettingReturnTest {
 
     @Test
     @DisplayName("RevenueResult 는 불변 객체다")
@@ -39,10 +37,10 @@ class RevenueResultTest {
         bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
         // when & then
-        assertThatThrownBy(() -> revenueResult.getPlayersEarnings().remove(player.getName()))
+        assertThatThrownBy(() -> bettingReturn.getPlayersReturn().remove(player.getName()))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -57,10 +55,10 @@ class RevenueResultTest {
         bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
-        int playerReturn = revenueResult.findPlayerEarning(player.getName());
-        int dealerReturn = revenueResult.getDealerEarnings();
+        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+        int dealerReturn = bettingReturn.getDealerReturn();
 
         // when & then
         assertAll(
@@ -80,10 +78,10 @@ class RevenueResultTest {
         bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
-        int playerReturn = revenueResult.findPlayerEarning(player.getName());
-        int dealerReturn = revenueResult.getDealerEarnings();
+        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+        int dealerReturn = bettingReturn.getDealerReturn();
 
         // when & then
         assertAll(
@@ -103,10 +101,10 @@ class RevenueResultTest {
         bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
-        int playerReturn = revenueResult.findPlayerEarning(player.getName());
-        int dealerReturn = revenueResult.getDealerEarnings();
+        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+        int dealerReturn = bettingReturn.getDealerReturn();
 
         // when & then
         assertAll(
@@ -126,10 +124,10 @@ class RevenueResultTest {
         bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
-        int playerReturn = revenueResult.findPlayerEarning(player.getName());
-        int dealerReturn = revenueResult.getDealerEarnings();
+        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+        int dealerReturn = bettingReturn.getDealerReturn();
 
         // when & then
         assertAll(
@@ -149,10 +147,10 @@ class RevenueResultTest {
         bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-        RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+        BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
-        int playerReturn = revenueResult.findPlayerEarning(player.getName());
-        int dealerReturn = revenueResult.getDealerEarnings();
+        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+        int dealerReturn = bettingReturn.getDealerReturn();
 
         // when & then
         assertAll(
@@ -176,10 +174,10 @@ class RevenueResultTest {
             bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-            RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+            BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
-            int playerReturn = revenueResult.findPlayerEarning(player.getName());
-            int dealerReturn = revenueResult.getDealerEarnings();
+            int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+            int dealerReturn = bettingReturn.getDealerReturn();
 
             // when & then
             assertAll(
@@ -197,10 +195,10 @@ class RevenueResultTest {
             bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-            RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+            BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
-            int playerReturn = revenueResult.findPlayerEarning(player.getName());
-            int dealerReturn = revenueResult.getDealerEarnings();
+            int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+            int dealerReturn = bettingReturn.getDealerReturn();
 
             // when & then
             assertAll(
@@ -219,10 +217,10 @@ class RevenueResultTest {
             bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
-            RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
+            BettingReturn bettingReturn = BettingReturn.of(scoreBoard, bettingMonies);
 
-            int playerReturn = revenueResult.findPlayerEarning(player.getName());
-            int dealerReturn = revenueResult.getDealerEarnings();
+            int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+            int dealerReturn = bettingReturn.getDealerReturn();
 
             // when & then
             assertAll(
