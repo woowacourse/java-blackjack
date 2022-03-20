@@ -19,12 +19,12 @@ public class BlackJackApplication {
         Deck deck = new Deck();
         Players players = new Players(createPlayers(deck));
         Dealer dealer = new Dealer(List.of(deck.draw(), deck.draw()));
-
         OutputView.printFirstCards(dealer, players.getPlayers());
-        drawAdditionalCard(deck, players);
 
+        drawAdditionalCard(deck, players);
         printAdditionalDrawDealer(deck, dealer);
         OutputView.printFinalCards(dealer, players.getPlayers());
+
         OutputView.printFinalResult(new BlackJackReferee(players.getPlayers(), dealer));
     }
 
