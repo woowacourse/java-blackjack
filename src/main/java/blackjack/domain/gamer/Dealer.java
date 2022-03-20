@@ -10,8 +10,15 @@ public class Dealer extends Gamer {
 
     public Dealer(List<Card> cards) {
         super(NAME);
+        validateInitCardSize();
         for (Card card : cards) {
             addCard(card);
+        }
+    }
+
+    private void validateInitCardSize() {
+        if (getCardsSize() != INIT_DISTRIBUTION_COUNT) {
+            throw new IllegalArgumentException("초기 카드는 2장만 Draw 해야 합니다.");
         }
     }
 
