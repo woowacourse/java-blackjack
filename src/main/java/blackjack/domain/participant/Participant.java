@@ -11,8 +11,6 @@ import blackjack.domain.card.Hand;
 
 public abstract class Participant {
 
-	protected static final String METHOD_ERROR = "메서드를 사용할 수 없습니다.";
-
 	protected final String name;
 	protected final Hand hand;
 	protected BettingAmount battingAmount;
