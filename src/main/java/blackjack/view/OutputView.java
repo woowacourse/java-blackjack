@@ -49,7 +49,7 @@ public class OutputView {
 
 	public static void printDealerStatus(final Participant dealer) {
 		System.out.print("\n");
-		if (dealer.wantDraw()) {
+		if (dealer.selectToDrawMore()) {
 			System.out.println(
 				dealer.getName() + IS + SPACE + dealer.getDrawStandard() + RECEIVED_ONE_MORE_CARD + "\n");
 			return;

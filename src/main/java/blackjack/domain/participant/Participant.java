@@ -68,7 +68,7 @@ public abstract class Participant {
 		return name;
 	}
 
-	public boolean wantDraw() {
+	public boolean selectToDrawMore() {
 		return drawMore;
 	}
 

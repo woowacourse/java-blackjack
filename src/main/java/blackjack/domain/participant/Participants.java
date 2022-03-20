@@ -70,7 +70,7 @@ public class Participants {
 
 	public String getCurrentPlayerName() {
 		return players.stream()
-			.filter(player -> player.canDraw() && player.wantDraw())
+			.filter(player -> player.canDraw() && player.selectToDrawMore())
 			.map(Participant::getName)
 			.findFirst()
 			.orElse(NO_PLAYER);
