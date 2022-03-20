@@ -2,28 +2,29 @@ package blackJack.domain.result;
 
 public class BettingAmount {
 
+    public static final String NOT_POSITIVE_NUMBER_ERROR = "베팅 금액은 0 이상이어야 합니다.";
+
+    public static final int DEFAULT_BETTING_AMOUNT = 0;
+    public static final int MINIMUM_BETTING_AMOUNT = 1;
+
     private final int bettingAmount;
 
-    public BettingAmount(String bettingAmount) {
-        this(toInt(bettingAmount));
-    }
-
-    public BettingAmount(int bettingAmount) {
-        validatePositiveNumber(bettingAmount);
+    private BettingAmount(int bettingAmount) {
         this.bettingAmount = bettingAmount;
     }
 
-    private static int toInt(String bettingAmount) {
-        try {
-            return Integer.parseInt(bettingAmount);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("베팅 금액은 정수여야 합니다.");
-        }
+    public static BettingAmount newByDefault() {
+        return new BettingAmount(DEFAULT_BETTING_AMOUNT);
+    }
+
+    public BettingAmount startBetting(int bettingAmount) {
+        validatePositiveNumber(bettingAmount);
+        return new BettingAmount(bettingAmount);
     }
 
     private void validatePositiveNumber(int bettingAmount) {
-        if (bettingAmount <= 0) {
-            throw new IllegalArgumentException("베팅 금액은 양수여야 합니다.");
+        if (bettingAmount < MINIMUM_BETTING_AMOUNT) {
+            throw new IllegalArgumentException(NOT_POSITIVE_NUMBER_ERROR);
         }
     }
 

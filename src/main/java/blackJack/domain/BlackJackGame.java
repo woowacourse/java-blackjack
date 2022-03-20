@@ -5,7 +5,10 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
+import blackJack.domain.result.BlackJackMatch;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -28,6 +31,21 @@ public class BlackJackGame {
         for (int i = 0; i < count; i++) {
             participant.hit(deck.getCard());
         }
+    }
+
+    public Map<Participant, Integer> calculateDealerProfit() {
+        return Map.of(getDealer(), calculatePlayersProfit().values().stream()
+                .mapToInt(profit -> -profit)
+                .sum());
+    }
+
+    public Map<Participant, Integer> calculatePlayersProfit() {
+        Map<Participant, Integer> playersProfit = new LinkedHashMap<>();
+        for (Player player : getPlayers()) {
+            BlackJackMatch blackJackMatch = player.calculateMatchResult(getDealer());
+            playersProfit.put(player, player.calculateProfit(blackJackMatch));
+        }
+        return playersProfit;
     }
 
     public Participants getParticipants() {

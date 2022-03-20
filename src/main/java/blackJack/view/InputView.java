@@ -28,9 +28,17 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String inputBettingAmount(Player player) {
+    public static int inputBettingAmount(Player player) {
         System.out.printf(INPUT_MESSAGE_BETTING_AMOUNT, player.getName());
-        return scanner.nextLine();
+        return toInt(scanner.nextLine());
+    }
+
+    private static int toInt(String bettingAmount) {
+        try {
+            return Integer.parseInt(bettingAmount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("베팅 금액은 정수여야 합니다.");
+        }
     }
 
     public static String inputOneMoreCard(String name) {

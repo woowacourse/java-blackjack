@@ -5,8 +5,8 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.BettingOutcome;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -89,10 +89,15 @@ public class OutputView {
                 participant.getScore());
     }
 
-    public static void printResultOfProfit(BettingOutcome bettingOutcome, Dealer dealer) {
+    public static void printResultOfProfit(Map<Participant, Integer> dealerProfit,
+                                           Map<Participant, Integer> playersProfit) {
         System.out.println(OUTPUT_MESSAGE_RESULT_OF_PROFIT_TITLE);
-        System.out.printf(OUTPUT_MESSAGE_RESULT_OF_PROFIT, dealer.getName(), bettingOutcome.getDealerProfit(dealer));
-        bettingOutcome.getPlayersProfit(dealer)
-                .forEach((key, value) -> System.out.printf(OUTPUT_MESSAGE_RESULT_OF_PROFIT, key.getName(), value));
+        printParticipantsProfit(dealerProfit);
+        printParticipantsProfit(playersProfit);
+    }
+
+    private static void printParticipantsProfit(Map<Participant, Integer> participantProfit) {
+        participantProfit.forEach((participant, profit)
+                -> System.out.printf(OUTPUT_MESSAGE_RESULT_OF_PROFIT, participant.getName(), profit));
     }
 }
