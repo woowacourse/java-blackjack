@@ -69,4 +69,21 @@ public class CardsTest {
             Assertions.assertThat(cards.isBlackjack()).isEqualTo(expected);
         }
     }
+
+    @Nested
+    @DisplayName("isBust는")
+    class IsBust {
+
+        @ParameterizedTest
+        @CsvSource(value = {"ACE,false", "TWO,true"})
+        @DisplayName("패가 21을 초과하는 지 확인한다.")
+        void checkBlackjack(CardNumber cardNumber, boolean expected) {
+            Cards cards = new Cards();
+            cards.add(Card.of(CardPattern.SPADE, CardNumber.JACK));
+            cards.add(Card.of(CardPattern.SPADE, CardNumber.QUEEN));
+            cards.add(Card.of(CardPattern.SPADE, cardNumber));
+
+            Assertions.assertThat(cards.isBust()).isEqualTo(expected);
+        }
+    }
 }

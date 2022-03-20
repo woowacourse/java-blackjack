@@ -1,11 +1,13 @@
 package blackjack.domain;
 
-import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int TWO_CARDS = 2;
+    private static final int TEN_FOR_ACE = 10;
 
     private final List<Card> cards;
 
@@ -33,7 +35,7 @@ public class Cards {
     }
 
     private int optimizeTotalNumber(boolean containAce, int totalNumber) {
-        int totalNumberInAce11 = totalNumber + 10;
+        int totalNumberInAce11 = totalNumber + TEN_FOR_ACE;
 
         if (containAce && totalNumberInAce11 <= BLACKJACK_NUMBER) {
             return totalNumberInAce11;
@@ -46,6 +48,10 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && getTotalNumber() == BLACKJACK_NUMBER;
+        return cards.size() == TWO_CARDS && getTotalNumber() == BLACKJACK_NUMBER;
+    }
+
+    public boolean isBust() {
+        return getTotalNumber() > BLACKJACK_NUMBER;
     }
 }

@@ -3,7 +3,6 @@ package blackjack.domain;
 public class BlackjackGame {
 
     private static final int INITIAL_CARD_NUMBER = 2;
-    public static final int BLACKJACK_NUMBER = 21;
 
     private final Participants participants;
     private final Participant dealer;

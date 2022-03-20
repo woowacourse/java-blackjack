@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
-
 import java.util.List;
 
 public abstract class Participant {
@@ -39,7 +37,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return getTotalNumber() > BLACKJACK_NUMBER;
+        return cards.isBust();
     }
 
     public int getTotalNumber() {
