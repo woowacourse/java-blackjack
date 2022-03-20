@@ -11,13 +11,9 @@ public abstract class Player {
     private final Name name;
     private State state;
 
-    public Player(Name name) {
+    public Player(Name name, CardDeck cardDeck) {
         this.name = name;
-        this.state = new Ready();
-    }
-
-    public void init(CardDeck cardDeck) {
-        this.state = state
+        this.state = new Ready()
             .draw(cardDeck.draw())
             .draw(cardDeck.draw());
     }

@@ -30,8 +30,8 @@ public class GameController {
     }
 
     private Dealer generateDealer(CardDeck cardDeck) {
-        Dealer dealer = Dealer.of();
-        dealer.init(cardDeck);
+        Dealer dealer = Dealer.of(cardDeck);
+//        dealer.init(cardDeck);
         return dealer;
     }
 
@@ -47,8 +47,8 @@ public class GameController {
     private Gambler generatePlayer(CardDeck cardDeck, String name) {
         Name gamblerName = Name.of(name);
         double money = InputView.inputGamblerBetMoney(gamblerName);
-        Gambler gambler = Gambler.of(gamblerName, money);
-        gambler.init(cardDeck);
+        Gambler gambler = Gambler.of(gamblerName, money, cardDeck);
+//        gambler.init(cardDeck);
         return gambler;
     }
 
