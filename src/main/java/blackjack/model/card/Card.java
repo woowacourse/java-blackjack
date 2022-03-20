@@ -1,12 +1,6 @@
 package blackjack.model.card;
 
-import static java.util.stream.Collectors.toUnmodifiableList;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public final class Card {
 
@@ -60,17 +54,4 @@ public final class Card {
         return rank.hard() + "-" + suit;
     }
 
-    static List<Card> createPool() {
-        List<Card> pool = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            pool.addAll(createCardsEach(suit));
-        }
-        return pool;
-    }
-
-    private static Collection<Card> createCardsEach(Suit suit) {
-        return Stream.of(Rank.values())
-            .map(rank -> new Card(rank, suit))
-            .collect(toUnmodifiableList());
-    }
 }

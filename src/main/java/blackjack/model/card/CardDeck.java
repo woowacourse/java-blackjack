@@ -1,9 +1,13 @@
 package blackjack.model.card;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Stream;
 
 public final class CardDeck {
 
@@ -14,9 +18,23 @@ public final class CardDeck {
     }
 
     private List<Card> shuffledCards() {
-        List<Card> cardPool = Card.createPool();
+        List<Card> cardPool = createCardPool();
         Collections.shuffle(cardPool);
         return cardPool;
+    }
+
+    private List<Card> createCardPool() {
+        List<Card> pool = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            pool.addAll(createCardsEach(suit));
+        }
+        return pool;
+    }
+
+    private List<Card> createCardsEach(Suit suit) {
+        return Stream.of(Rank.values())
+            .map(rank -> new Card(rank, suit))
+            .collect(toUnmodifiableList());
     }
 
     public Card next() {
