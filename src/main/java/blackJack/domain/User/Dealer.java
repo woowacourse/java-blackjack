@@ -17,7 +17,7 @@ public class Dealer extends User {
         return false;
     }
 
-    public Object getFirstCard() {
+    public String getFirstCard() {
         return cards.getFirst();
     }
 }

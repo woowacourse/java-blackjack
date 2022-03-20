@@ -43,7 +43,7 @@ public class Cards {
         return cards.size() == 2;
     }
 
-    public Object getFirst() {
+    public String getFirst() {
         return cards.get(0).getCardInfo();
     }
 
