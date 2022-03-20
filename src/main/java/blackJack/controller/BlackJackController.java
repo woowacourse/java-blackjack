@@ -5,7 +5,7 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
 import blackJack.domain.result.BettingAmount;
-import blackJack.domain.result.ResultOfProfit;
+import blackJack.domain.result.BettingOutcome;
 import blackJack.domain.result.YesOrNo;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
@@ -19,14 +19,14 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
-        ResultOfProfit resultOfProfit = new ResultOfProfit(getBettingAmounts(blackJackGame.getPlayers()));
+        BettingOutcome bettingOutcome = new BettingOutcome(getBettingAmounts(blackJackGame.getPlayers()));
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(blackJackGame.getParticipants());
 
         doPlayerGame(blackJackGame);
         doDealerGame(blackJackGame);
         OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printResultOfProfit(resultOfProfit, blackJackGame.getDealer());
+        OutputView.printResultOfProfit(bettingOutcome, blackJackGame.getDealer());
     }
 
     private Participants getParticipants() {

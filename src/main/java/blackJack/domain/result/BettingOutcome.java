@@ -5,11 +5,11 @@ import blackJack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ResultOfProfit {
+public class BettingOutcome {
 
     private final Map<Player, BettingAmount> bettingAmounts;
 
-    public ResultOfProfit(Map<Player, BettingAmount> bettingAmounts) {
+    public BettingOutcome(Map<Player, BettingAmount> bettingAmounts) {
         this.bettingAmounts = bettingAmounts;
     }
 

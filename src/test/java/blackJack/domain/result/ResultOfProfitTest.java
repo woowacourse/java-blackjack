@@ -16,7 +16,7 @@ class ResultOfProfitTest {
     Dealer dealer;
     Player player1;
     Player player2;
-    ResultOfProfit resultOfProfit;
+    BettingOutcome bettingOutcome;
 
     @BeforeEach
     void setUp() {
@@ -32,7 +32,7 @@ class ResultOfProfitTest {
         player2.hit(Card.of(Symbol.CLOVER, Denomination.SEVEN));
         player2.hit(Card.of(Symbol.CLOVER, Denomination.KING));
 
-        resultOfProfit = new ResultOfProfit(Map.of(
+        bettingOutcome = new BettingOutcome(Map.of(
                 player1, new BettingAmount(10000),
                 player2, new BettingAmount(20000)
         ));
@@ -40,12 +40,12 @@ class ResultOfProfitTest {
 
     @Test
     void getDealerProfit() {
-        assertThat(resultOfProfit.getDealerProfit(dealer)).isEqualTo(5000);
+        assertThat(bettingOutcome.getDealerProfit(dealer)).isEqualTo(5000);
     }
 
     @Test
     void getPlayersProfit() {
-        assertThat(resultOfProfit.getPlayersProfit(dealer)).contains(
+        assertThat(bettingOutcome.getPlayersProfit(dealer)).contains(
                 Map.entry(player1, 15000),
                 Map.entry(player2, -20000)
         );

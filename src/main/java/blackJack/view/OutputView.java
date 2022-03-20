@@ -5,7 +5,7 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.ResultOfProfit;
+import blackJack.domain.result.BettingOutcome;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,10 +89,10 @@ public class OutputView {
                 participant.getScore());
     }
 
-    public static void printResultOfProfit(ResultOfProfit resultOfProfit, Dealer dealer) {
+    public static void printResultOfProfit(BettingOutcome bettingOutcome, Dealer dealer) {
         System.out.println(OUTPUT_MESSAGE_RESULT_OF_PROFIT_TITLE);
-        System.out.printf(OUTPUT_MESSAGE_RESULT_OF_PROFIT, dealer.getName(), resultOfProfit.getDealerProfit(dealer));
-        resultOfProfit.getPlayersProfit(dealer)
+        System.out.printf(OUTPUT_MESSAGE_RESULT_OF_PROFIT, dealer.getName(), bettingOutcome.getDealerProfit(dealer));
+        bettingOutcome.getPlayersProfit(dealer)
                 .forEach((key, value) -> System.out.printf(OUTPUT_MESSAGE_RESULT_OF_PROFIT, key.getName(), value));
     }
 }
