@@ -13,12 +13,13 @@ public class Card {
         this.isOpen = isOpen;
     }
 
-    public static Card of(CardShape shape, CardNumber number) {
-        return new Card(shape, number, true);
+    private Card(Card card) {
+        this.cardProperty = card.cardProperty;
+        this.isOpen = card.isOpen;
     }
 
-    public static Card of(CardShape shape, CardNumber number, boolean isOpen) {
-        return new Card(shape, number, isOpen);
+    public static Card of(CardShape shape, CardNumber number) {
+        return new Card(shape, number, true);
     }
 
     public void open() {
@@ -27,6 +28,10 @@ public class Card {
 
     public void close() {
         isOpen = false;
+    }
+
+    public Card copy() {
+        return new Card(this);
     }
 
     public boolean isAce() {

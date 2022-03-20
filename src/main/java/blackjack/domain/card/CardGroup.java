@@ -74,7 +74,7 @@ public class CardGroup {
     public List<Card> getCards() {
         List<Card> copiedCards = new ArrayList<>();
         for (Card card: cards) {
-            copiedCards.add(Card.of(card.getCardShape(), card.getCardNumber(), card.isOpen()));
+            copiedCards.add(card.copy());
         }
         return copiedCards;
     }
