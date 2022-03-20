@@ -1,10 +1,12 @@
-package blakjack.domain.state;
+package blakjack.domain.state.running;
 
 import blakjack.domain.Chip;
 import blakjack.domain.PrivateArea;
 import blakjack.domain.card.Card;
+import blakjack.domain.state.State;
+import blakjack.domain.state.finished.Blackjack;
 
-public class Init extends State {
+public final class Init extends Running {
     private static final int CARD_COUNT_THRESHOLD = 1;
 
     public Init(final PrivateArea privateArea, final Chip chip) {
@@ -12,8 +14,8 @@ public class Init extends State {
     }
 
     @Override
-        //순서 의존적임
-    State draw(final Card card) {
+    //순서 의존적임
+    public State draw(final Card card) {
         privateArea.addCard(card);
         if (privateArea.isBlackjack()) {
             return new Blackjack(privateArea, chip);
@@ -22,5 +24,10 @@ public class Init extends State {
             return new Hit(privateArea, chip);
         }
         return new Init(privateArea, chip);
+    }
+
+    @Override
+    public State stay() {
+        throw new IllegalStateException();
     }
 }

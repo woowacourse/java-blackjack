@@ -1,12 +1,13 @@
-package blakjack.domain.state;
+package blakjack.domain.state.running;
 
 import blakjack.domain.Chip;
 import blakjack.domain.PrivateArea;
 import blakjack.domain.card.Card;
+import blakjack.domain.state.State;
 import blakjack.domain.state.finished.Bust;
 import blakjack.domain.state.finished.Stay;
 
-public final class Hit extends State {
+public final class Hit extends Running {
     Hit(final PrivateArea privateArea, final Chip chip) {
         super(privateArea, chip);
     }
