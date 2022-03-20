@@ -1,96 +1,95 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Card;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import blackjack.domain.card.CardDistributor;
-import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BlackJackController {
 
-    private static final int INITIAL_DRAW_CARD_COUNT = 2;
+	private final CardDistributor cardDistributor;
 
-    private final CardDistributor cardDistributor;
+	public BlackJackController(CardDistributor cardDistributor) {
+		this.cardDistributor = cardDistributor;
+	}
 
-    public BlackJackController(CardDistributor cardDistributor) {
-        this.cardDistributor = cardDistributor;
-    }
+	public void run() {
+		List<Name> names = InputView.inputPlayerNames();
+		Dealer dealer = new Dealer();
+		Players players = initializePlayers(names);
+		startGame(dealer, players.getValue());
 
-    public void run() {
-        Dealer dealer = new Dealer(new Name(Dealer.NAME), drawInitialCards());
-        Players players = initializePlayers(InputView.inputPlayerNames());
-        OutputView.printInitialCards(players, dealer);
+		if (!isGameEnd(players, dealer)) {
+			playPlayers(players.getValue());
+			playDealer(dealer);
+		}
 
-        if (!isGameEnd(players, dealer)) {
-            playAllPlayers(players);
-            playDealer(dealer);
-        }
+		showGameResult(players, dealer);
+	}
 
-        showGameResult(players, dealer);
-    }
+	private Players initializePlayers(List<Name> names) {
+		return new Players(names.stream()
+			.map(name -> new Player(name, InputView.inputPlayerMoney(name.getValue())))
+			.collect(Collectors.toUnmodifiableList()));
+	}
 
-    private Players initializePlayers(List<Name> names) {
-        List<Player> players = new ArrayList<>();
-        for (int count = 0; count < names.size(); count++) {
-            Name playerName = names.get(count);
-            players.add(new Player(playerName, drawInitialCards(), InputView.inputPlayerMoney(playerName.getValue())));
-        }
-        return new Players(players);
-    }
-    
-    private Cards drawInitialCards() {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < INITIAL_DRAW_CARD_COUNT; i++) {
-            cards.add(cardDistributor.distribute());
-        }
-        return new Cards(cards);
-    }
+	private void startGame(Dealer dealer, List<Player> players) {
+		drawInitialCardsToParticipant(dealer);
+		for (Player player : players) {
+			drawInitialCardsToParticipant(player);
+		}
+		OutputView.printInitialCards(players, dealer);
+	}
 
-    private boolean isGameEnd(Players players, Dealer dealer) {
-        return dealer.isBlackJack() || players.isAllBlackJack();
-    }
+	private boolean isGameEnd(Players players, Dealer dealer) {
+		return players.isAllBlackJack() || dealer.isBlackJack();
+	}
 
-    private void playAllPlayers(Players players) {
-        while (!players.isAllFinished()) {
-            playPresentPlayer(players);
-            players.passToNextPlayer();
-        }
-    }
+	private void drawInitialCardsToParticipant(Participant participant) {
+		while (!participant.isReady()) {
+			participant.draw(cardDistributor.distribute());
+		}
+	}
 
-    private void playPresentPlayer(Players players) {
-        while (!players.isPresentPlayerFinished()) {
-            decideContinueToPlay(players);
-            OutputView.printCards(players.findPresentPlayer());
-        }
-    }
+	private void playPlayers(List<Player> players) {
+		for (Player player : players) {
+			playPlayer(player);
+		}
+	}
 
-    private void decideContinueToPlay(Players players) {
-        boolean isDrawable = InputView.inputWantDraw(players.findPresentPlayer());
-        if (isDrawable) {
-            players.drawCardPresentPlayer(cardDistributor.distribute());
-            return;
-        }
-        players.makePresentPlayerStay();
-    }
+	private void playPlayer(Player player) {
+		while (!player.isFinished()) {
+			decideContinueToPlay(player, InputView.inputWantDraw(player));
+			OutputView.printCards(player);
+		}
+	}
 
-    private void playDealer(Dealer dealer) {
-        while (!dealer.isFinished()) {
-            OutputView.printDealerDrawInfo();
-            dealer.drawCard(cardDistributor.distribute());
-        }
-    }
+	private void decideContinueToPlay(Player player, boolean wantDraw) {
+		if (wantDraw) {
+			player.draw(cardDistributor.distribute());
+			return;
+		}
+		player.stay();
+	}
 
-    private void showGameResult(Players players, Dealer dealer) {
-        GameResult gameResult = new GameResult(players, dealer);
-        OutputView.printCardsResult(dealer, players);
-        OutputView.printGameResult(gameResult);
-    }
+	private void playDealer(Dealer dealer) {
+		while (!dealer.isFinished()) {
+			OutputView.printDealerDrawInfo();
+			dealer.draw(cardDistributor.distribute());
+		}
+	}
+
+	private void showGameResult(Players players, Dealer dealer) {
+		GameResult gameResult = new GameResult(players.match(dealer));
+		OutputView.printCardsResult(dealer, players);
+		OutputView.printGameResult(gameResult);
+	}
 }
