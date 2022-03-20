@@ -1,6 +1,10 @@
 package blackjack.domain.state.running;
 
-import static blackjack.domain.Fixtures.*;
+import static blackjack.domain.Fixtures.ACE;
+import static blackjack.domain.Fixtures.EIGHT;
+import static blackjack.domain.Fixtures.NINE;
+import static blackjack.domain.Fixtures.TEN;
+import static blackjack.domain.Fixtures.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Fixtures;

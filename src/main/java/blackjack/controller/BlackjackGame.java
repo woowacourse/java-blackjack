@@ -27,20 +27,24 @@ public final class BlackjackGame {
     private Players initPlayers(final CardDeck cardDeck) {
         List<Name> names = InputView.inputPlayerNames();
         return new Players(names.stream()
-                .map(Player::new)
-                .map(this::requestBetting)
+                .map(name -> initPlayer(name, cardDeck))
                 .collect(Collectors.toList())
-        ).initCard(cardDeck);
+        );
     }
 
-    private Player requestBetting(final Player player) {
-        return player.initBetting(InputView.inputPlayerBetting(player.getName()));
+    private Player initPlayer(Name name, CardDeck cardDeck) {
+        return new Player(name, InputView.inputPlayerBetting(name.get()),
+                cardDeck.popCards(INIT_CARD_NUMBER));
     }
 
     private void startGame(final Players players, final Dealer dealer, final CardDeck cardDeck) {
         players.get()
                 .forEach(player -> hitOrStayPlayer(player, cardDeck));
         hitOrStayDealer(dealer, cardDeck);
+    }
+
+    private void hitOrStayPlayer2(final Player player, final CardDeck cardDeck) {
+        //player.getState().start(cardDeck.pop())
     }
 
     private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
@@ -63,7 +67,7 @@ public final class BlackjackGame {
     private void printGameResult(final Players players, final Dealer dealer) {
         OutputView.printHandAndPoint(players, dealer);
 
-        Map<Player,Integer> payouts = players.getPayouts(dealer);
+        Map<Player, Integer> payouts = players.getPayouts(dealer);
         OutputView.printResult(dealer, dealer.getRemainMoney(payouts));
         payouts.forEach(OutputView::printHumanResult);
     }

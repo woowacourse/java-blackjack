@@ -1,7 +1,6 @@
 package blackjack.domain.state.finished;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.cards.Cards;
 import org.junit.jupiter.api.DisplayName;

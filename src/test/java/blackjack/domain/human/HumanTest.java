@@ -1,6 +1,9 @@
 package blackjack.domain.human;
 
-import static blackjack.domain.Fixtures.*;
+import static blackjack.domain.Fixtures.ACE;
+import static blackjack.domain.Fixtures.EIGHT;
+import static blackjack.domain.Fixtures.NINE;
+import static blackjack.domain.Fixtures.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Fixtures;

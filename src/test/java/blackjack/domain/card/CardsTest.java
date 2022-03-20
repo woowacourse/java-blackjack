@@ -1,10 +1,9 @@
 package blackjack.domain.card;
 
 
-import static blackjack.domain.Fixtures.*;
+import static blackjack.domain.Fixtures.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Fixtures;
 import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.denomination.Denomination;
 import java.util.List;

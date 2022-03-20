@@ -26,11 +26,6 @@ public final class Players {
         }
     }
 
-    public Players initCard(CardDeck cardDeck) {
-        value.forEach(player -> player.addCards(cardDeck.popCards(INIT_CARD_COUNT)));
-        return this;
-    }
-
     public void giveCard(CardDeck cardDeck) {
         value.forEach(player -> player.addCard(cardDeck.pop()));
     }

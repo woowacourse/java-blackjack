@@ -4,22 +4,19 @@ import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.participant.human.name.Name;
 import blackjack.domain.result.BetAmount;
+import blackjack.domain.state.State;
+import blackjack.domain.state.running.Hit;
 import java.util.List;
 
 public final class Player extends Human {
-    private BetAmount betAmount;
 
-    public Player(final Name name) {
-        super(new Cards(), name);
-    }
+    private final BetAmount betAmount;
+    private final State state;
 
-    public Player initBetting(int betting) {
+    public Player(final Name name, final int betting, final List<Card> cards) {
+        super(new Cards(cards), name);
         this.betAmount = new BetAmount(betting);
-        return this;
-    }
-
-    public void addCards(final List<Card> cards) {
-        cards.forEach(this.cards::add);
+        this.state = new Hit(this.cards);
     }
 
     public boolean hasCardSizeOf(final int size) {
@@ -36,5 +33,9 @@ public final class Player extends Human {
 
     public int getMultipliedMoney(double scale) {
         return betAmount.getMultipliedMoney(scale);
+    }
+
+    public State getState() {
+        return state;
     }
 }
