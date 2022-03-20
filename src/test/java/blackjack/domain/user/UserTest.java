@@ -24,8 +24,8 @@ class UserTest {
     @Test
     @DisplayName("플레이어와 딜러의 점수가 같다면 True")
     void isSameScoreTest() {
-        Player player = new Player("test", Money.from(1000), _21_UNDER_CARDS);
-        Dealer dealer = new Dealer(_21_UNDER_CARDS);
+        Player player = new Player("test", Money.from(1000), _16_CARDS);
+        Dealer dealer = new Dealer(_16_CARDS);
         assertThat(player.isSameScoreWithNotBlackJack(dealer)).isTrue();
     }
 

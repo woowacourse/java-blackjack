@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.PlayerResult;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
@@ -9,7 +9,6 @@ import blackjack.domain.user.Players;
 import blackjack.dto.CardDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.UserScoreDto;
-import blackjack.service.batchService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -24,15 +23,25 @@ public class BlackjackController {
     public void run() {
         Deck deck = new Deck();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        Map<String, Money> playerBets = startBettings(inputPlayerNames);
         Dealer dealer = new Dealer(deck.drawInitCards());
-        Players players = Players.create(playerBets, deck);
+        Map<String, Cards> playerCards = drawInitCards(inputPlayerNames, deck);
+        Map<String, Money> playerBets = startBettings(inputPlayerNames);
+
+        Players players = Players.create(playerBets, playerCards);
 
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(CardDto.from(dealer.getInitCard()), convertToPlayerDtos(players));
 
         List<UserScoreDto> userScoreDtos = playGame(dealer, players, deck);
         finishGame(dealer, players, userScoreDtos);
+    }
+
+    private Map<String, Cards> drawInitCards(List<String> inputPlayerNames, Deck deck) {
+        Map<String, Cards> playerCards = new LinkedHashMap<>();
+        for (String inputPlayerName : inputPlayerNames) {
+            playerCards.put(inputPlayerName, deck.drawInitCards());
+        }
+        return playerCards;
     }
 
     private Map<String, Money> startBettings(List<String> inputPlayerNames) {
@@ -79,8 +88,7 @@ public class BlackjackController {
 
     private void finishGame(Dealer dealer, Players players, List<UserScoreDto> userScoreDtos) {
         OutputView.printTotalResult(userScoreDtos);
-        Map<Player, PlayerResult> statistics = players.getStatistics(dealer);
-        OutputView.printFinalResult(batchService.calculate(statistics));
+        OutputView.printFinalResult(players.getStatistics(dealer));
     }
 
 }

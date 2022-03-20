@@ -20,7 +20,7 @@ public class CardBundleFixture {
             Card.valueOf(Shape.HEART, Number.EIGHT))
     );
 
-    public static Cards _21_UNDER_CARDS = new Cards(List.of(
+    public static Cards _16_CARDS = new Cards(List.of(
             Card.valueOf(Shape.CLOVER, Number.FIVE),
             Card.valueOf(Shape.CLOVER, Number.ACE))
     );
@@ -30,4 +30,15 @@ public class CardBundleFixture {
             Card.valueOf(Shape.DIAMOND, Number.EIGHT),
             Card.valueOf(Shape.HEART, Number.THREE))
     );
+
+    public static Cards _15_INIT_CARDS = new Cards(List.of(
+            Card.valueOf(Shape.CLOVER, Number.JACK),
+            Card.valueOf(Shape.DIAMOND, Number.FIVE))
+    );
+
+    public static Cards _5_CARDS = new Cards(List.of(
+            Card.valueOf(Shape.CLOVER, Number.THREE),
+            Card.valueOf(Shape.DIAMOND, Number.TWO))
+    );
+
 }

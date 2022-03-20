@@ -1,7 +1,8 @@
 package blackjack.domain.user;
 
-import blackjack.domain.PlayerResult;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.dto.UserProfitDto;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,9 +17,9 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players create(Map<String, Money> playerBets, Deck deck) {
+    public static Players create(Map<String, Money> playerBets, Map<String, Cards> playerCards) {
         return playerBets.entrySet().stream()
-                .map(entry -> new Player(entry.getKey(), entry.getValue(), deck.drawInitCards()))
+                .map(entry -> new Player(entry.getKey(), entry.getValue(), playerCards.get(entry.getKey())))
                 .collect(Collectors.collectingAndThen(
                         Collectors.toList(),
                         Players::new
@@ -33,11 +34,14 @@ public class Players {
         return new ArrayList<>(players);
     }
 
-    public Map<Player, PlayerResult> getStatistics(Dealer dealer) {
-        Map<Player, PlayerResult> result = new LinkedHashMap<>();
+    public UserProfitDto getStatistics(Dealer dealer) {
+        Map<String, Double> playerProfit = new LinkedHashMap<>();
+        double dealerProfit= 0;
         for (Player player : players) {
-            result.put(player, PlayerResult.valueOf(dealer, player));
+            double profit = player.calculateProfit(dealer);
+            dealerProfit+=profit;
+            playerProfit.put(player.getName(), profit);
         }
-        return result;
+        return new UserProfitDto(-dealerProfit, playerProfit);
     }
 }

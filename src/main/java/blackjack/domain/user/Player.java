@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.PlayerResult;
 import blackjack.domain.card.Cards;
 
 public class Player extends User {
@@ -11,8 +12,9 @@ public class Player extends User {
         this.money = money;
     }
 
-    public Money getBet() {
-        return money;
+    public double calculateProfit(Dealer dealer) {
+        PlayerResult playerResult = PlayerResult.valueOf(dealer, this);
+        return money.calculate(playerResult.getProfit());
     }
 
     @Override

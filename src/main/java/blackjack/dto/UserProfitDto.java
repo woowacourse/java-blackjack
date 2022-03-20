@@ -1,5 +1,6 @@
 package blackjack.dto;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class UserProfitDto {
@@ -8,7 +9,7 @@ public class UserProfitDto {
 
     public UserProfitDto(double dealerProfit, Map<String, Double> playerProfit) {
         this.dealerProfit = dealerProfit;
-        this.playerProfit = playerProfit;
+        this.playerProfit = new LinkedHashMap<>(playerProfit);
     }
 
     public double getDealerProfit() {
@@ -16,7 +17,7 @@ public class UserProfitDto {
     }
 
     public Map<String, Double> getPlayerProfit() {
-        return playerProfit;
+        return new LinkedHashMap<>(playerProfit);
     }
 
 }

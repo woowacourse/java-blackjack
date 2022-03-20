@@ -23,7 +23,7 @@ class PlayerResultTest {
     void PlayerIsLose_WhenOver21() {
 
         Player player = new Player("test", Money.from(1000), _21_OVER_CARDS);
-        Dealer dealer = new Dealer(_21_UNDER_CARDS);
+        Dealer dealer = new Dealer(_16_CARDS);
 
         PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.LOSE;
@@ -47,7 +47,7 @@ class PlayerResultTest {
     @Test
     @DisplayName("딜러의 카드가 21을 넘으면 21이 안넘은 플레이어는 승리한다.")
     void PlayerIsWinTest_WhenUnder21AndDealerOverThan21() {
-        Player player = new Player("test", Money.from(1000), _21_UNDER_CARDS);
+        Player player = new Player("test", Money.from(1000), _16_CARDS);
         Dealer dealer = new Dealer(_21_OVER_CARDS);
         PlayerResult actual = PlayerResult.valueOf(dealer, player);
         PlayerResult expected = PlayerResult.WIN;
