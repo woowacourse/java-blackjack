@@ -84,8 +84,4 @@ public class Gamer {
     public String getName() {
         return this.name;
     }
-
-    public int getCardsSize() {
-        return cardGroup.getSize();
-    }
 }

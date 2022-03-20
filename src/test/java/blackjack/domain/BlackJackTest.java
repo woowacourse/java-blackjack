@@ -26,9 +26,9 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(playerGroup, new Dealer());
         blackJack.divideCards();
 
-        List<Integer> cardSizes = List.of(pepper.getCardsSize(),
-                ash.getCardsSize(),
-                blackJack.getDealer().getCardsSize());
+        List<Integer> cardSizes = List.of(pepper.getCards().size(),
+                ash.getCards().size(),
+                blackJack.getDealer().getCards().size());
 
         assertThat(cardSizes)
                 .containsExactly(2, 2, 2)
@@ -41,10 +41,10 @@ class BlackJackTest {
         Player pepper = new Player("페퍼", initializeBettingMoney());
         PlayerGroup playerGroup = new PlayerGroup(List.of(pepper));
         BlackJack blackJack = new BlackJack(playerGroup, new Dealer());
-        int pepperCardsSize = pepper.getCardsSize();
+        int pepperCardsSize = pepper.getCards().size();
         blackJack.addCardTo(pepper);
 
-        assertThat(pepper.getCardsSize()).isEqualTo(pepperCardsSize + 1);
+        assertThat(pepper.getCards().size()).isEqualTo(pepperCardsSize + 1);
     }
 
     @Test

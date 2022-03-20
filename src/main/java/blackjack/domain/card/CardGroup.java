@@ -71,10 +71,6 @@ public class CardGroup {
         return initialCardGroup.calculateScore() == BLACKJACK_NUMBER;
     }
 
-    public int getSize() {
-        return cards.size();
-    }
-
     public List<Card> getCards() {
         List<Card> copiedCards = new ArrayList<>();
         for (Card card: cards) {
