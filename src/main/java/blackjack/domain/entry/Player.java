@@ -24,7 +24,7 @@ public class Player extends Participant {
     }
 
     public void draw(Card card) {
-        this.state.draw(card);
+        this.state = state.draw(card);
     }
 
     public void stay() {

@@ -1,7 +1,17 @@
 package blackjack.domain.entry;
 
+import static blackjack.fixtures.BlackjackFixtures.CLUB_ACE;
+import static blackjack.fixtures.BlackjackFixtures.CLUB_EIGHT;
+import static blackjack.fixtures.BlackjackFixtures.CLUB_KING;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_ACE;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_EIGHT;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_FOUR;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_KING;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_SEVEN;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.vo.BettingMoney;
 import blackjack.domain.entry.vo.Name;
 import org.junit.jupiter.api.DisplayName;
@@ -23,5 +33,75 @@ class PlayerTest {
         Player player = new Player(new Name("hoho"), new BettingMoney(10000));
 
         assertThat(player.equalsName(new Name("hoho"))).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어는 딜러가 아니다.")
+    void isNotDealer() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+
+        assertThat(player.isDealer()).isFalse();
+    }
+
+    @Test
+    @DisplayName("두 장의 카드로 게임을 준비한다.")
+    void ready() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_ACE, SPADE_KING);
+
+        assertThat(player.getScore()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("Stay를 할 경우 Finished 상태가 된다.")
+    void finished() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_ACE, SPADE_SEVEN);
+        player.stay();
+
+        assertThat(player.isFinished()).isTrue();
+    }
+
+    @Test
+    @DisplayName("추가로 카드를 뽑아 21이 넘지않는 경우 Running 상태가 된다.")
+    void running() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_ACE, SPADE_FOUR);
+        player.draw(SPADE_TWO);
+
+        assertThat(player.isFinished()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 모두 블랙잭이 경우 배팅금액을 돌려받는다.")
+    void allBlackjack() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_ACE, SPADE_FOUR);
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(CLUB_ACE, CLUB_KING));
+
+        assertThat(player.profit(dealer)).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 블랙잭이 아니고 동점인 경우 배팅 금액을 잃는다.")
+    void isSameScore() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_ACE, SPADE_EIGHT);
+        player.stay();
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(CLUB_ACE, CLUB_EIGHT));
+
+        assertThat(player.profit(dealer)).isEqualTo(-10000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 21점이 넘는 경우 배팅 금액을 잃는다.")
+    void isBust() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_FOUR, SPADE_EIGHT);
+        player.draw(SPADE_KING);
+
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(CLUB_ACE, CLUB_EIGHT));
+
+        assertThat(player.profit(dealer)).isEqualTo(-10000);
     }
 }
