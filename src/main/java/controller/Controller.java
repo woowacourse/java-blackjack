@@ -3,7 +3,7 @@ package controller;
 import domain.betting.BettingMoney;
 import domain.betting.BettingReceipts;
 import domain.betting.Profits;
-import domain.card.Cards;
+import domain.card.Card;
 import domain.card.Deck;
 import domain.card.InitCards;
 import domain.participant.Dealer;
@@ -21,7 +21,7 @@ import view.OutputView;
 public class Controller {
 
     public void run() {
-        Deck deck = new Deck(Cards.getInstance().getCards());
+        Deck deck = new Deck(Card.cache);
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = createPlayers(deck);
         BettingReceipts bettingReceipts = createBettingReceipt(players);
