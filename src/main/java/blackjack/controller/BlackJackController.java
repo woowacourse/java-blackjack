@@ -71,13 +71,13 @@ public class BlackJackController {
         if (InputView.requestHit(playerName)) {
             blackJack.addCardTo(player);
             OutputView.printGamerCard(GamerCardsDto.of(playerName, player.getCards()));
-            requestStatus(player);
+            requestHitOrStandByStatus(player);
             return;
         }
         OutputView.printGamerCard(GamerCardsDto.of(playerName, player.getCards()));
     }
 
-    private void requestStatus(Player player) {
+    private void requestHitOrStandByStatus(Player player) {
         if (player.isNotBust()) {
             requestHitOrStand(player.getName());
         }
