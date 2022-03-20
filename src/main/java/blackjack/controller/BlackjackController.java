@@ -13,28 +13,18 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
 
-    private final Deck deck;
-    private final BlackjackGame blackjackGame;
-
-    public BlackjackController() {
-        deck = Deck.create();
-        blackjackGame = new BlackjackGame(deck);
-    }
+    private BlackjackGame blackjackGame;
 
     public void play() {
-        Dealer dealer = new Dealer();
-        Players players = participatePlayers();
-        inputBettingAmount(players);
-        blackjackGame.initStartingCards(dealer, players);
-        OutputView.printInitCard(dealer, players);
+        blackjackGame = new BlackjackGame(Deck.create(), new Dealer(), participatePlayers());
+        inputBettingAmount();
+        initStartingCards();
 
-        hitOrStandPlayers(players);
-        hitOrStandDealer(dealer);
-        OutputView.printDrawResult(dealer, players);
+        hitOrStand();
 
-        GameResult gameResult = new GameResult(dealer.judgeResult(players));
+        GameResult gameResult = new GameResult(blackjackGame.judgeResult());
         BettingResult bettingResult = gameResult.calculateRevenue();
-        OutputView.printTotalResult(dealer, bettingResult);
+        OutputView.printTotalResult(blackjackGame.getDealer(), bettingResult);
     }
 
     private Players participatePlayers() {
@@ -46,8 +36,9 @@ public class BlackjackController {
         }
     }
 
-    private void inputBettingAmount(Players players) {
-        players.getPlayers().forEach(this::betAmount);
+    private void inputBettingAmount() {
+        blackjackGame.getPlayers()
+            .forEach(this::betAmount);
     }
 
     private void betAmount(Player player) {
@@ -59,14 +50,26 @@ public class BlackjackController {
         }
     }
 
-    private void hitOrStandPlayers(Players players) {
-        players.getPlayers().forEach(this::hitOrStandPlayer);
+    private void initStartingCards() {
+        blackjackGame.initStartingCards();
+        OutputView.printInitCard(blackjackGame.getDealer(), blackjackGame.getPlayers());
+    }
+
+    private void hitOrStand() {
+        hitOrStandPlayers();
+        hitOrStandDealer();
+        OutputView.printDrawResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
+    }
+
+    private void hitOrStandPlayers() {
+        blackjackGame.getPlayers()
+            .forEach(this::hitOrStandPlayer);
     }
 
     private void hitOrStandPlayer(Player player) {
         while (player.canDraw() && isHit(player)) {
-            player.drawCard(deck.draw());
-            OutputView.printGamerDrawCard(player);
+            blackjackGame.drawCard(player);
+            OutputView.printCard(player);
         }
     }
 
@@ -80,9 +83,9 @@ public class BlackjackController {
         }
     }
 
-    private void hitOrStandDealer(Dealer dealer) {
-        while (dealer.canDraw()) {
-            dealer.drawCard(deck.draw());
+    private void hitOrStandDealer() {
+        while (blackjackGame.getDealer().canDraw()) {
+            blackjackGame.drawCard(blackjackGame.getDealer());
             OutputView.printDealerDrawCardMessage();
         }
     }

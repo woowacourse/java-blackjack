@@ -15,14 +15,14 @@ import blackjack.domain.gamer.Players;
 class BlackjackGameTest {
 
     private final Deck deck = Deck.create();
-    private final BlackjackGame blackjackGame = new BlackjackGame(deck);
+    Dealer dealer = new Dealer();
+    Players players = new Players(List.of("짱구", "짱아"));
+    private final BlackjackGame blackjackGame = new BlackjackGame(deck, dealer, players);
 
     @Test
     @DisplayName("블랙잭 게임 시작할 때 딜러와 참가자가 각각 두 장의 카드를 받는지 확인")
     void initTest() {
-        Dealer dealer = new Dealer();
-        Players players = new Players(List.of("짱구", "짱아"));
-        blackjackGame.initStartingCards(dealer, players);
+        blackjackGame.initStartingCards();
 
         assertThat(dealer.getCards()).hasSize(2);
         for (Player player : players.getPlayers()) {
