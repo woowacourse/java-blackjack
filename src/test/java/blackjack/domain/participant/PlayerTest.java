@@ -51,6 +51,14 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어 이름을 돌려준다.")
+    void getPlayerName() {
+        Player player = new Player("앤지");
+
+        assertThat(player.getName()).isEqualTo("앤지");
+    }
+
+    @Test
     @DisplayName("플레이어가 초기 카드 2장을 받는다")
     void receiveInitCard() {
         Player player = new Player("president");
