@@ -1,78 +1,55 @@
 package blackjack.controller;
 
-import blackjack.domain.card.CardGenerator;
-import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.User;
-import blackjack.domain.participant.Users;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.UserResult;
+import blackjack.domain.Game;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
-
 public class BlackJackController {
 
-    private static final int INIT_DISTRIBUTE_NUM = 2;
+    public void run() {
+        Game game = new Game(InputView.inputUsersName());
 
-    public void play() {
-        Users users = new Users(InputView.inputUsersName());
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck(new CardGenerator());
-        initDistribute(deck, users, dealer);
-
-        playGame(users, dealer, deck);
-        gameResult(users, dealer);
+        initBettingMoney(game);
+        initDistribute(game);
+        playAllUser(game);
+        gameResult(game);
     }
 
-    private void initDistribute(Deck deck, Users users, Dealer dealer) {
-        OutputView.printInitDistribute(users);
-
-        cardDistribute(deck, dealer);
-        OutputView.printParticipantCards(dealer.getDealerInfoWithoutHiddenCard());
-
-        for (User user : users.getUsers()) {
-            cardDistribute(deck, user);
-            OutputView.printParticipantCards(user.getUserInfo());
-        }
-        OutputView.printLineSeparators();
-    }
-
-    private void cardDistribute(Deck deck, Participant participant) {
-        for (int i = 0; i < INIT_DISTRIBUTE_NUM; i++) {
-            participant.receiveCard(deck.drawCard());
+    private void initBettingMoney(Game game) {
+        for (String userName : game.getUserNames()) {
+            int money = InputView.inputBettingMoney(userName);
+            game.initBettingMoney(userName, money);
         }
     }
 
-    private void playGame(Users users, Dealer dealer, Deck deck) {
-        for (User user : users.getUsers()) {
-            playEachUser(user, deck);
-        }
-        playDealer(dealer, deck);
+    private void initDistribute(Game game) {
+        OutputView.printInitDistribute(game.initDistributed());
     }
 
-    private void playEachUser(User user, Deck deck) {
-        while (!user.getHoldingCards().checkBust() && InputView.inputMoreCard(user)) {
-            user.receiveCard(deck.drawCard());
-            OutputView.printParticipantCards(user.getUserInfo());
+    private void playAllUser(Game game) {
+        for (String name : game.getUserNames()) {
+            playEachUser(game, name);
+        }
+        playDealer(game);
+    }
+
+    private void playEachUser(Game game, String name) {
+        while (game.checkUserNotBust(name) && InputView.inputMoreCard(name)) {
+            OutputView.printParticipantCards(game.playEachUser(name));
+        }
+        if (game.checkUserNotBust(name)) {
+            game.changeUserStateToStand(name);
         }
     }
 
-    private void playDealer(Dealer dealer, Deck deck) {
-        while (dealer.checkUnderScoreStandard()) {
+    private void playDealer(Game game) {
+        while (game.playDealer()) {
             OutputView.printDealerDraw();
-            dealer.receiveCard(deck.drawCard());
         }
     }
 
-    private void gameResult(Users users, Dealer dealer) {
-        OutputView.printFinalCard(dealer.getDealerInfoWithScore(), users.getUsersInfoWithScore());
-
-        List<UserResult> userResults = users.getUsersInfoWithResult(dealer.getHoldingCards().cardSum());
-        DealerResult dealerResult = new DealerResult(userResults);
-
-        OutputView.printFinalResult(dealerResult, userResults);
+    private void gameResult(Game game) {
+        OutputView.printFinalCard(game.getDealerAndPlayerCard());
+        OutputView.printFinalResult(game.getParticipantProfits());
     }
 }

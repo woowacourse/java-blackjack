@@ -1,9 +1,10 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.UserResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class Users {
@@ -22,19 +23,38 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(users);
+    public void betting(String name, int money) {
+        findUserByName(name).betting(money);
     }
 
-    public List<ParticipantDto> getUsersInfoWithScore() {
-        return users.stream()
-                .map(User::getUserInfoWithScore)
-                .collect(Collectors.toList());
+    public void drawCard(String name, Deck deck) {
+        findUserByName(name).drawCard(deck);
     }
 
-    public List<UserResult> getUsersInfoWithResult(int dealerSum) {
+    public boolean isBust(String name) {
+        return findUserByName(name).isBust();
+    }
+
+    public List<Card> holdingCards(String name) {
+        return findUserByName(name).getHoldingCards();
+    }
+
+    public int score(String name) {
+        return findUserByName(name).score();
+    }
+
+    public double profit(String name, int dealerScore, boolean isDealerBlackJack) {
+        return findUserByName(name).calculateProfit(dealerScore, isDealerBlackJack);
+    }
+
+    public void changeToStand(String name) {
+        findUserByName(name).changeToStand();
+    }
+
+    private User findUserByName(String name) {
         return users.stream()
-                .map(user -> user.getUserInfoWithResult(dealerSum))
-                .collect(Collectors.toList());
+                .filter(user -> user.getName().equals(name))
+                .findAny()
+                .orElseThrow(NoSuchElementException::new);
     }
 }

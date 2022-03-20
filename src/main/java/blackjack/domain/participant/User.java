@@ -1,27 +1,20 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.Result;
-import blackjack.domain.result.UserResult;
+import blackjack.domain.money.BetMoney;
 
 public class User extends Participant {
+
+    private BetMoney betMoney;
 
     public User(String name) {
         super(name);
     }
 
-    public ParticipantDto getUserInfo() {
-        return ParticipantDto.of(name, holdingCards.getAllCards());
+    public void betting(int money) {
+        betMoney = new BetMoney(money);
     }
 
-    public ParticipantDto getUserInfoWithScore() {
-        return ParticipantDto.of(name, holdingCards.getAllCards(), holdingCards.cardSum());
-    }
-
-    public UserResult getUserInfoWithResult(int dealerSum) {
-        return new UserResult(name, checkResult(dealerSum));
-    }
-
-    private Result checkResult(int dealerSum) {
-        return Result.checkUserResult(holdingCards.cardSum(), dealerSum);
+    public double calculateProfit(int dealerScore, boolean isDealerBlackJack) {
+        return super.state.profit(betMoney, dealerScore, isDealerBlackJack);
     }
 }

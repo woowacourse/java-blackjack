@@ -1,11 +1,16 @@
-package blackjack.domain.card;
+package blackjack.domain.card.generator;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardType;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardGenerator {
+public class CardGenerator implements CardGenerateStrategy {
 
+    @Override
     public List<Card> generate() {
         List<Card> cards = generateCards();
         Collections.shuffle(cards);

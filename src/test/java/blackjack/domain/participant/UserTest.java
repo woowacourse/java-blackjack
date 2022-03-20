@@ -3,11 +3,14 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
-import blackjack.domain.result.Result;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.generator.TestCardGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -33,79 +36,127 @@ public class UserTest {
     @Test
     @DisplayName("유저는 보유한 카드의 합이 21이 넘으면 패배한다.")
     void userLoseExceedTwentyOneTest() {
-        User user = new User("Pobi");
-        user.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        user.receiveCard(new Card(CardNumber.SEVEN, CardType.CLOVER));
-        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+        TestCardGenerator cardGenerator = new TestCardGenerator(
+                List.of(new Card(CardNumber.EIGHT, CardType.CLOVER),
+                        new Card(CardNumber.SEVEN, CardType.CLOVER),
+                        new Card(CardNumber.QUEEN, CardType.CLOVER)));
+        Deck deck = new Deck(cardGenerator);
 
-        assertThat(user.getUserInfoWithResult(19).getResult())
-                .isEqualTo(Result.LOSE);
+        User user = new User("Pobi");
+        user.betting(10000);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
+
+        assertThat(user.calculateProfit(19, false))
+                .isEqualTo(-10000);
     }
 
     @Test
     @DisplayName("유저는 보유한 카드의 합이 딜러보다 작으면 패배한다.")
     void userLoseTest() {
-        User user = new User("Pobi");
-        user.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+        TestCardGenerator cardGenerator = new TestCardGenerator(
+                List.of(new Card(CardNumber.EIGHT, CardType.CLOVER),
+                        new Card(CardNumber.QUEEN, CardType.CLOVER)));
+        Deck deck = new Deck(cardGenerator);
 
-        assertThat(user.getUserInfoWithResult(20).getResult())
-                .isEqualTo(Result.LOSE);
+        User user = new User("Pobi");
+        user.betting(10000);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.changeToStand();
+
+        assertThat(user.calculateProfit(20, false))
+                .isEqualTo(-10000);
     }
 
     @Test
     @DisplayName("유저는 보유한 카드의 합이 딜러의 카드 합보다 크면 승리한다.")
     void userWinTest() {
-        User user = new User("Pobi");
-        user.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+        TestCardGenerator cardGenerator = new TestCardGenerator(
+                List.of(new Card(CardNumber.EIGHT, CardType.CLOVER),
+                        new Card(CardNumber.QUEEN, CardType.CLOVER)));
+        Deck deck = new Deck(cardGenerator);
 
-        assertThat(user.getUserInfoWithResult(17).getResult())
-                .isEqualTo(Result.WIN);
+        User user = new User("Pobi");
+        user.betting(10000);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.changeToStand();
+
+        assertThat(user.calculateProfit(17, false))
+                .isEqualTo(10000);
     }
 
     @Test
     @DisplayName("유저는 보유한 카드의 합이 딜러의 카드의 합과 같으면 무승부이다.")
     void userDrawTest() {
-        User user = new User("Pobi");
-        user.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+        TestCardGenerator cardGenerator = new TestCardGenerator(
+                List.of(new Card(CardNumber.EIGHT, CardType.CLOVER),
+                        new Card(CardNumber.QUEEN, CardType.CLOVER)));
+        Deck deck = new Deck(cardGenerator);
 
-        assertThat(user.getUserInfoWithResult(18).getResult())
-                .isEqualTo(Result.DRAW);
+        User user = new User("Pobi");
+        user.betting(10000);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.changeToStand();
+
+        assertThat(user.calculateProfit(18, false))
+                .isEqualTo(0);
     }
 
     @Test
     @DisplayName("Ace는 1 또는 11로 계산될 수 있다.")
     void userDrawTest2() {
-        User user = new User("Pobi");
-        user.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        user.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
-        user.receiveCard(new Card(CardNumber.ACE, CardType.DIAMOND));
+        TestCardGenerator cardGenerator = new TestCardGenerator(
+                List.of(new Card(CardNumber.ACE, CardType.CLOVER),
+                        new Card(CardNumber.ACE, CardType.HEART),
+                        new Card(CardNumber.ACE, CardType.DIAMOND)));
+        Deck deck = new Deck(cardGenerator);
 
-        assertThat(user.getUserInfoWithResult(13).getResult())
-                .isEqualTo(Result.DRAW);
+        User user = new User("Pobi");
+        user.betting(10000);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.changeToStand();
+
+        assertThat(user.calculateProfit(13, false))
+                .isEqualTo(0);
     }
 
     @Test
     @DisplayName("유저가 버스트인 경우를 체크한다.")
     void burstTest() {
-        User user = new User("Pobi");
-        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
-        user.receiveCard(new Card(CardNumber.QUEEN, CardType.HEART));
-        user.receiveCard(new Card(CardNumber.QUEEN, CardType.DIAMOND));
+        TestCardGenerator cardGenerator = new TestCardGenerator(
+                List.of(new Card(CardNumber.QUEEN, CardType.CLOVER),
+                        new Card(CardNumber.QUEEN, CardType.HEART),
+                        new Card(CardNumber.QUEEN, CardType.DIAMOND)));
+        Deck deck = new Deck(cardGenerator);
 
-        assertThat(user.getHoldingCards().checkBust()).isTrue();
+        User user = new User("Pobi");
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
+
+        assertThat(user.isBust()).isTrue();
     }
 
     @Test
     @DisplayName("유저가 버스트가 아닌 경우를 체크한다.")
     void notBurstTest() {
-        User user = new User("Pobi");
-        user.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        user.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
-        user.receiveCard(new Card(CardNumber.ACE, CardType.DIAMOND));
+        TestCardGenerator cardGenerator = new TestCardGenerator(
+                List.of(new Card(CardNumber.ACE, CardType.CLOVER),
+                        new Card(CardNumber.ACE, CardType.HEART),
+                        new Card(CardNumber.ACE, CardType.DIAMOND)));
+        Deck deck = new Deck(cardGenerator);
 
-        assertThat(user.getHoldingCards().checkBust()).isFalse();
+        User user = new User("Pobi");
+        user.drawCard(deck);
+        user.drawCard(deck);
+        user.drawCard(deck);
+
+        assertThat(user.isBust()).isFalse();
     }
 }

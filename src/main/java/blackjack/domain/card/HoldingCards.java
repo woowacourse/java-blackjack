@@ -1,14 +1,12 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class HoldingCards {
 
     public static final int BUST_STANDARD = 21;
     private static final int ACE_DIFFERENCE = 10;
-    private static final int WITHOUT_HIDDEN_CARD_INDEX = 1;
 
     private final List<Card> cards;
 
@@ -16,46 +14,59 @@ public class HoldingCards {
         this.cards = new ArrayList<>();
     }
 
+    public HoldingCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }
 
-    public boolean checkBust() {
-        return cardSum() > BUST_STANDARD;
+    public boolean isBust() {
+        return cardScore() > BUST_STANDARD;
     }
 
-    public int cardSum() {
-        int sum = cards.stream()
+    public int cardScore() {
+        int score = cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
 
-        if (sum > BUST_STANDARD) {
-            sum = adjustSum(sum);
+        if (score < BUST_STANDARD) {
+            score = adjustScore(score);
         }
-        return sum;
+        return score;
     }
 
-    private int adjustSum(int sum) {
-        int aceCount = getAceCount();
+    private int adjustScore(int score) {
 
-        while (sum > BUST_STANDARD && aceCount > 0) {
-            sum -= ACE_DIFFERENCE;
-            aceCount -= 1;
+        while (hasAce() && (score + ACE_DIFFERENCE) <= BUST_STANDARD ) {
+            score += ACE_DIFFERENCE;
         }
-        return sum;
+        return score;
     }
 
-    private int getAceCount() {
-        return (int) cards.stream()
-                .filter(card -> card.getCardNumber() == CardNumber.ACE)
-                .count();
+    public boolean isBlackJack() {
+        return hasAce() && hasNumberTenCard() ;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
+    }
+
+    private boolean hasNumberTenCard() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumber() == CardNumber.TEN ||
+                        card.getCardNumber() == CardNumber.JACK ||
+                        card.getCardNumber() == CardNumber.QUEEN ||
+                        card.getCardNumber() == CardNumber.KING);
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public List<Card> getAllCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public List<Card> getCardsWithOutHiddenCard() {
-        return Collections.unmodifiableList(cards).subList(WITHOUT_HIDDEN_CARD_INDEX, cards.size());
+        return List.copyOf(cards);
     }
 }
