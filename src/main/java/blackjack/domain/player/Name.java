@@ -10,7 +10,6 @@ public class Name {
     public Name(String name) {
         checkNameBlank(name);
         checkNameSpecialCharacters(name);
-
         this.name = name;
     }
 
