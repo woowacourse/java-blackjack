@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class NameTest {
 
     @Test
-    @DisplayName("플레이어이름 객체 생성 성공 테스트")
+    @DisplayName("Name 객체 생성")
     public void createNameTest() {
         assertThat(Name.of("jack").getName())
             .isEqualTo("jack");
