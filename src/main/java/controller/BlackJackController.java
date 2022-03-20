@@ -18,29 +18,12 @@ public class BlackJackController {
     }
 
     public void run() {
-        requestUntilValid(() -> initGame());
-        requestUntilValid(() -> matchFirstTurn());
-        requestUntilValid(() -> hitPlayers());
-        requestUntilValid(() -> hitDealer());
-        requestUntilValid(() -> getCardsResults());
-        requestUntilValid(() -> getMatchResults());
-    }
-
-    private void requestUntilValid(Runnable request) {
-        boolean requestDoneSuccessful;
-        do {
-            requestDoneSuccessful = tryRequest(request);
-        } while (!requestDoneSuccessful);
-    }
-
-    private boolean tryRequest(Runnable request) {
-        try {
-            request.run();
-            return true;
-        } catch (IllegalArgumentException exception) {
-            OutputView.printException(exception.getMessage());
-            return false;
-        }
+        initGame();
+        matchFirstTurn();
+        hitPlayers();
+        hitDealer();
+        getCardsResults();
+        getMatchResults();
     }
 
     private void initGame() {
