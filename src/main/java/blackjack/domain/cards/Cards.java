@@ -2,7 +2,6 @@ package blackjack.domain.cards;
 
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
-import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.result.Point;
 import java.util.ArrayList;
 import java.util.List;

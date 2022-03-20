@@ -1,7 +1,5 @@
 package blackjack.domain.cards.card.denomination;
 
-import java.util.Arrays;
-
 public enum Denomination {
     ACE("A", 11),
     TWO("2", 2),

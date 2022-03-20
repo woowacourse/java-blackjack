@@ -1,7 +1,6 @@
 package blackjack.domain.result;
 
 import blackjack.domain.cards.Cards;
-import blackjack.domain.cards.card.denomination.Denomination;
 import java.util.Objects;
 
 public final class Point {

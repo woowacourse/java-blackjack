@@ -32,7 +32,7 @@ public final class Dealer extends Human {
     }
 
     public int getProfit(final Map<Player, Integer> profits) {
-        return - profits.values()
+        return -profits.values()
                 .stream()
                 .mapToInt(Integer::valueOf)
                 .sum();

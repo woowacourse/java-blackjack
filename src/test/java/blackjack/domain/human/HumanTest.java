@@ -27,7 +27,7 @@ class HumanTest {
     @DisplayName("첫 카드 한장 리턴하는 기능 테스트")
     void getInitCardTest() {
         // when
-        Dealer dealer = new Dealer(List.of(TEN,EIGHT));
+        Dealer dealer = new Dealer(List.of(TEN, EIGHT));
 
         // then
         assertThat(dealer.getFirstCard())

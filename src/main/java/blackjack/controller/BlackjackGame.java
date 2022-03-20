@@ -14,9 +14,7 @@ import blackjack.domain.cards.CardDeck;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
-import blackjack.domain.participant.human.name.Name;
 import blackjack.view.OutputView;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -34,9 +32,8 @@ public final class BlackjackGame {
     }
 
     private Players initPlayers(final CardDeck cardDeck) {
-        List<Name> names = inputPlayerNames();
-        return new Players(names.stream()
-                .map(name -> new Player(name, inputBetting(name.get()), cardDeck.popCards(INIT_NUMBER)))
+        return new Players(inputPlayerNames().stream()
+                .map(name -> new Player(name, inputBetting(name), cardDeck.popCards(INIT_NUMBER)))
                 .collect(Collectors.toList())
         );
     }

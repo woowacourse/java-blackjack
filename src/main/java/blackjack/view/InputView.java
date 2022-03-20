@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.participant.human.name.Name;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -21,12 +20,11 @@ public final class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static List<Name> inputPlayerNames() {
+    public static List<String> inputPlayerNames() {
         System.out.println(NAME_INPUT_MESSAGE);
         String input = SCANNER.nextLine();
         validateNames(input);
         return Stream.of(input.split(NAMES_SPLIT_REGEX))
-                .map(Name::new)
                 .collect(Collectors.toList());
     }
 

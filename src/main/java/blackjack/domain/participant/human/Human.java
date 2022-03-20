@@ -4,7 +4,6 @@ import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.participant.human.name.Name;
 import blackjack.domain.state.State;
-import blackjack.domain.state.finished.Finished;
 import blackjack.domain.state.running.Ready;
 import java.util.List;
 

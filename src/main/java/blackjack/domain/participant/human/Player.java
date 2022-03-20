@@ -12,8 +12,8 @@ public final class Player extends Human {
 
     private final BetAmount betAmount;
 
-    public Player(final Name name, final int betting, final List<Card> cards) {
-        super(cards, name);
+    public Player(final String name, final int betting, final List<Card> cards) {
+        super(cards, new Name(name));
         this.betAmount = new BetAmount(betting);
     }
 
