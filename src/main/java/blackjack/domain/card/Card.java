@@ -5,9 +5,11 @@ import java.util.Map;
 
 public class Card {
 
+    private static final Map<String, Card> CACHE = new HashMap<>();
+
     private final CardNumber number;
     private final CardType type;
-    private static final Map<String, Card> cache = new HashMap<>();
+
 
     private Card(CardNumber number, CardType type) {
         this.type = type;
@@ -15,7 +17,7 @@ public class Card {
     }
 
     public static Card of(CardNumber number, CardType type) {
-        return cache.computeIfAbsent(number.getOriginalName() + type.getName(), key -> new Card(number, type));
+        return CACHE.computeIfAbsent(number.getOriginalName() + type.getName(), key -> new Card(number, type));
     }
 
     public int getNumber() {

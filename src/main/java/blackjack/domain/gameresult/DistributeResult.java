@@ -9,7 +9,6 @@ public class DistributeResult {
 
     private String name;
     private List<Card> cards;
-
     private int cardSum;
 
     public DistributeResult(Participant participant) {

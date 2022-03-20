@@ -1,6 +1,7 @@
 package blackjack.view;
 
 public class InputValidator {
+
     private static final String ERROR_INVALID_INTEGER = "[ERROR] 정수만 입력 가능합니다.";
     private static final String ERROR_NOT_Y_OR_N = "[ERROR] y 또는 n만 입력 가능합니다.";
 
