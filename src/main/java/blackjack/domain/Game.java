@@ -1,13 +1,16 @@
 package blackjack.domain;
 
 import blackjack.domain.card.RandomDeck;
-import blackjack.domain.player.*;
+import blackjack.domain.player.Command;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
 public class Game {
 
@@ -27,23 +30,39 @@ public class Game {
                 .collect(toList()));
     }
 
-    public void playTurn(Command command) {
+    public Player playTurn(Command command) {
         Player currentTurn = players.getCurrentTurn();
         if (command.equals(Command.HIT)) {
             currentTurn.addCard(deck.draw());
+            passTurnToNextIfRequired(currentTurn);
         }
         if (command.equals(Command.STAY)) {
             currentTurn.stay();
+            players.passTurnToNext();
         }
+        return currentTurn;
+    }
+
+    public String getCurrentHittablePlayerName() {
+        players.passTurnUntil(Player::isAbleToHit);
+        return players.getCurrentTurn().getName();
+    }
+
+    public String getCurrentBettablePlayerName() {
+        players.passTurnUntil(Player::isAbleToBet);
+        return players.getCurrentTurn().getName();
     }
 
     public boolean isPossibleToPlay() {
-        return players.isPossibleToPlay();
+        return players.isAllPlayerSatisfy(Player::isAbleToHit);
     }
 
-    public String getCurrentHitablePlayerName() {
-        players.passTurnUntilHitable();
-        return players.getCurrentTurn().getName();
+    public boolean isBettablePlayerRemains() {
+        return players.isAllPlayerSatisfy(Player::isAbleToBet);
+    }
+
+    public void doBetting(long bettingMoney) {
+        players.bettingCurrentPlayer(bettingMoney);
     }
 
     public boolean dealerCanDraw() {
@@ -58,23 +77,28 @@ public class Game {
         return dealer;
     }
 
-    public Map<String, String> getPlayerResults() {
-        return players.calculateResult(dealer).entrySet().stream()
-                .collect(toMap(Map.Entry::getKey, e -> e.getValue().getMessage()));
+
+    public Map<String, Long> getPlayerResults() {
+        return players.calculateResult(dealer);
     }
 
-    public List<String> getDealerResult() {
-        return players.calculateResult(dealer).values().stream()
-                .map(Outcome::reverse)
-                .map(Outcome::getMessage)
-                .collect(toList());
+    public long getDealerResult() {
+        long result = 0L;
+        Map<String, Long> playerResults = getPlayerResults();
+        Collection<Long> values = playerResults.values();
+        for (Long value : values) {
+            result -= value;
+        }
+        return result;
     }
 
     public List<Player> getPlayers() {
         return players.toList();
     }
 
-    public Player getCurrentPlayer() {
-        return players.getCurrentTurn();
+    private void passTurnToNextIfRequired(Player currentTurn) {
+        if (!currentTurn.isAbleToHit()) {
+            players.passTurnToNext();
+        }
     }
 }

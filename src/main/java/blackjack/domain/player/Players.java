@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Players {
 
@@ -22,20 +23,25 @@ public class Players {
         players.offer(players.poll());
     }
 
-    public void passTurnUntilHitable() {
+    public void passTurnUntil(Predicate<Player> condition) {
         int count = 0;
-        while (count < 8 && !getCurrentTurn().isAbleToHit()) {
+        while (count <= MAX_PLAYER_SIZE && !condition.test(getCurrentTurn())) {
             passTurnToNext();
             count++;
         }
     }
 
-    public boolean isPossibleToPlay() {
-        boolean isPossibleToPlay = false;
+    public boolean isAllPlayerSatisfy(Predicate<Player> condition) {
+        boolean isAllFlagTrue = false;
         for (Player player : players) {
-            isPossibleToPlay |= player.isAbleToHit();
+            isAllFlagTrue |= condition.test(player);
         }
-        return isPossibleToPlay;
+        return isAllFlagTrue;
+    }
+
+    public void bettingCurrentPlayer(long bettingMoney) {
+        getCurrentTurn().bet(bettingMoney);
+        passTurnToNext();
     }
 
     public List<Player> toList() {
@@ -54,11 +60,10 @@ public class Players {
         }
     }
 
-    public Map<String, Outcome> calculateResult(Dealer dealer) {
-        Map<String, Outcome> result = new HashMap<>();
+    public Map<String, Long> calculateResult(Dealer dealer) {
+        Map<String, Long> result = new HashMap<>();
         for (Player player : players) {
-            Outcome outcome = player.compareScoreWith(dealer);
-            result.put(player.getName(), outcome);
+            result.put(player.getName(), player.calculateDividend(dealer));
         }
         return result;
     }

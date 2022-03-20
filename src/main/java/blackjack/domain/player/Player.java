@@ -7,20 +7,13 @@ import java.util.List;
 
 public class Player extends Participant{
 
-    private boolean stay = false;
     private static final int OPEN_CARD_SIZE = 2;
 
+    private boolean stay = false;
+    private long bettingMoney = 0;
 
     public Player(String name, Cards cards) {
         super(name, cards);
-    }
-
-    @Override
-    public void addCard(Card card) {
-        super.addCard(card);
-        if (super.isBust() || super.isBlackjack()) {
-            stay = true;
-        }
     }
 
     @Override
@@ -29,26 +22,39 @@ public class Player extends Participant{
     }
 
     public boolean isAbleToHit() {
-        return !super.isBust() && !super.isBlackjack() && !stay;
+        return !(stay || super.isBlackjack() || super.isMaxScore() || super.isBust());
     }
 
     public void stay() {
         stay = true;
     }
 
-    public Outcome compareScoreWith(Dealer dealer) {
-        if (dealer.isBust()) {
-            return Outcome.WIN;
-        }
+    public long calculateDividend(Dealer dealer) {
+        return judgeResult(dealer).calculateDividend(bettingMoney);
+    }
 
-        if (!dealer.isBust() && isBust()) {
-            return Outcome.LOSE;
-        }
+    public void bet(long bettingMoney) {
+        this.bettingMoney = bettingMoney;
+    }
 
-        if (dealer.getScore() > getScore()) {
-            return Outcome.LOSE;
-        }
+    public boolean isAbleToBet() {
+        return bettingMoney == 0;
+    }
 
-        return Outcome.WIN;
+    private Result judgeResult(Dealer dealer) {
+        return Result.calculateResult(this, dealer);
+    }
+
+    public boolean isWinAgainst(Dealer dealer) {
+        return (dealer.isBlackjack() && super.isBlackjack()) ||
+                !(super.isBlackjack() || super.isBust()) && (super.getScore() >= dealer.getScore());
+    }
+
+    public boolean isLoseAgainst(Dealer dealer) {
+        return super.isBust() || super.getScore() < dealer.getScore();
+    }
+
+    public boolean isBlackjackResult(Dealer dealer) {
+        return !dealer.isBlackjack() && super.isBlackjack();
     }
 }

@@ -17,7 +17,7 @@ public class Dealer extends Participant {
     }
 
     public boolean canDraw() {
-        return super.getScore() <= BOUND_FOR_ADDITIONAL_CARD;
+        return super.getScore() <= BOUND_FOR_ADDITIONAL_CARD && !super.isBust();
     }
 
     @Override
