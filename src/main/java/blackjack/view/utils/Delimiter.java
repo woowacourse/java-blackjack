@@ -24,7 +24,7 @@ public enum Delimiter {
     }
 
     public String joinWith(final String... values) {
-        return String.join(this.unit + SPACE.unit, values);
+        return joinWith(List.of(values));
     }
 
 }

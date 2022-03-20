@@ -23,7 +23,7 @@ public class RandomDeckGenerator implements DeckGenerator {
 
     private List<Card> createCardsPerPattern(final CardPattern cardPattern) {
         return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> new Card(cardNumber, cardPattern))
+                .map(cardNumber -> new Card(cardPattern, cardNumber))
                 .collect(Collectors.toList());
     }
 

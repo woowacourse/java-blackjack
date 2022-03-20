@@ -1,5 +1,12 @@
 package blackjack.domain.card;
 
+import static blackjack.Fixture.CLOVER_ACE;
+import static blackjack.Fixture.HEART_ACE;
+import static blackjack.Fixture.SPADE_ACE;
+import static blackjack.Fixture.SPADE_JACK;
+import static blackjack.Fixture.SPADE_KING;
+import static blackjack.Fixture.SPADE_QUEEN;
+import static blackjack.Fixture.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -12,10 +19,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardHandsTest {
 
-    @DisplayName("카드의 합계가 기댓값과 일치해야 한다.")
+    @DisplayName("카드의 합계는 기댓값과 같아야 한다.")
     @ParameterizedTest(name = "[{index}] 기댓값 : {1}, 카드 : {0}")
     @MethodSource("provideForParameterizedTest")
-    void calculateScoreTest(final List<Card> initializedCards, final int expectedScore, final boolean expectedBusted) {
+    void calculateScoreTest(final List<Card> initializedCards, final int expectedScore) {
         final CardHands cards = new CardHands();
         initializedCards.forEach(cards::addCard);
 
@@ -23,53 +30,22 @@ class CardHandsTest {
         assertThat(actualScore).isEqualTo(expectedScore);
     }
 
-    @DisplayName("카드의 합계가 21을 넘으면 버스트된다.")
-    @ParameterizedTest(name = "[{index}] 기댓값 : {2}, 카드 : {0}")
-    @MethodSource("provideForParameterizedTest")
-    void isBustTest(final List<Card> initializedCards, final int expectedScore, final boolean expectedBust) {
-        final CardHands cards = new CardHands();
-        initializedCards.forEach(cards::addCard);
-
-        final boolean actualBust = cards.isBust();
-        assertThat(actualBust).isEqualTo(expectedBust);
-    }
-
     private static Stream<Arguments> provideForParameterizedTest() {
         return Stream.of(
                 Arguments.of(
-                        List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.ACE, CardPattern.HEART),
-                                new Card(CardNumber.ACE, CardPattern.CLOVER),
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND)
-                        ), 14, false
+                        List.of(SPADE_ACE, HEART_ACE, CLOVER_ACE, SPADE_KING), 13
                 ),
                 Arguments.of(
-                        List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.HEART)
-                        ), 21, false
+                        List.of(SPADE_ACE, SPADE_JACK), 21
                 ),
                 Arguments.of(
-                        List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.ACE, CardPattern.HEART),
-                                new Card(CardNumber.KING, CardPattern.HEART)
-                        ), 12, false
+                        List.of(SPADE_ACE, HEART_ACE, SPADE_JACK), 12
                 ),
                 Arguments.of(
-                        List.of(
-                                new Card(CardNumber.KING, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.HEART),
-                                new Card(CardNumber.KING, CardPattern.DIAMOND)
-                        ), 30, true
+                        List.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN), 30
                 ),
                 Arguments.of(
-                        List.of(
-                                new Card(CardNumber.KING, CardPattern.SPADE),
-                                new Card(CardNumber.KING, CardPattern.HEART),
-                                new Card(CardNumber.TWO, CardPattern.CLOVER)
-                        ), 22, true
+                        List.of(SPADE_KING, SPADE_JACK, SPADE_TWO), 22
                 )
         );
     }

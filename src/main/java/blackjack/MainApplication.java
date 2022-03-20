@@ -20,7 +20,8 @@ public class MainApplication {
         final OutputView outputView = new OutputView();
         final BlackjackView blackjackView = new BlackjackView(inputView, outputView);
         final DeckGenerator deckGenerator = new RandomDeckGenerator();
-        final BlackjackApplication blackjackApplication = new BlackjackApplication(blackjackView, deckGenerator);
+        final BlackjackApplication blackjackApplication = new BlackjackApplication(deckGenerator, blackjackView);
+
         blackjackApplication.run();
     }
 

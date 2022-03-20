@@ -1,125 +1,82 @@
 package blackjack.domain.participant;
 
+import static blackjack.Fixture.SPADE_FIVE;
+import static blackjack.Fixture.SPADE_TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.ManualDeckGenerator;
-import blackjack.domain.result.MatchStatus;
+import blackjack.domain.card.generator.RandomDeckGenerator;
 
 public class PlayersTest {
 
-    private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
+    private final ManualDeckGenerator manualDeckGenerator = new ManualDeckGenerator();
 
-    @DisplayName("플레이어명 중복 시 예외 발생")
+    private Deck generateDeck(final List<Card> initializedCards) {
+        manualDeckGenerator.initCards(initializedCards);
+        return Deck.generate(manualDeckGenerator);
+    }
+
+    @DisplayName("플레이어 이름은 서로 중복될 수 없다.")
     @ParameterizedTest(name = "{index} {0}")
-    @MethodSource("provideForPlayerNamesDuplicatedExceptionTest")
-    void playerNamesDuplicatedExceptionTest(final List<String> playerNames, final List<Card> initializedCards) {
-        manualCardStrategy.initCards(initializedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+    @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForPlayerNameDuplicatedExceptionTest")
+    void playerNameDuplicatedExceptionTest(final List<String> playerNames) {
+        final Deck deck = Deck.generate(new RandomDeckGenerator());
         assertThatThrownBy(() -> Players.readyToPlay(playerNames, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
     }
 
-    private static Stream<Arguments> provideForPlayerNamesDuplicatedExceptionTest() {
-        return Stream.of(
-                Arguments.of(List.of("pobi", "pobi"), Collections.emptyList()),
-                Arguments.of(List.of("pobi", "sun", "pobi"), Collections.emptyList())
-        );
+    @DisplayName("플레이어는 8명 이하여야 합니다.")
+    @ParameterizedTest(name = "{index} {0}")
+    @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForPlayerCountTooManyExceptionTest")
+    void playerCountTooManyExceptionTest(final List<String> playerNames) {
+        final Deck deck = Deck.generate(new RandomDeckGenerator());
+        assertThatThrownBy(() -> Players.readyToPlay(playerNames, deck))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("플레이어는 8명 이하여야 합니다.");
     }
 
-    @DisplayName("각 플레이어는 카드 2장을 지닌채 게임을 시작한다.")
+    @DisplayName("플레이어 이름으로 플레이어를 찾을 수 있어야 한다.")
     @ParameterizedTest
-    @MethodSource("provideForReadyToPlayTest")
-    void readyToPlayTest(final List<String> playerNames, final List<Card> expectedCards) {
-        manualCardStrategy.initCards(expectedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+    @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForPlayerNameNotExistExceptionTest")
+    void playerNameNotExistExceptionTest(final List<String> playerNames, final String notExistedPlayerName) {
+        final Deck deck = Deck.generate(new RandomDeckGenerator());
         final Players players = Players.readyToPlay(playerNames, deck);
-        final List<Player> actualPlayers = players.getPlayers();
 
-        final List<String> actualCardNames = actualPlayers.stream()
-                .map(Participant::getCardNames)
-                .flatMap(List::stream)
-                .collect(Collectors.toUnmodifiableList());
-        final List<String> expectedCardNames = expectedCards.stream()
-                .map(Card::getCardName)
-                .collect(Collectors.toUnmodifiableList());
-        assertThat(actualCardNames).isEqualTo(expectedCardNames);
+        assertThatThrownBy(() -> players.getPlayerCards(notExistedPlayerName))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessageContaining("플레이어를 찾을 수 없습니다.");
     }
 
-    private static Stream<Arguments> provideForReadyToPlayTest() {
-        return Stream.of(
-                Arguments.of(
-                        List.of("sun", "if"),
-                        List.of(
-                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
-                                new Card(CardNumber.TWO, CardPattern.DIAMOND),
-                                new Card(CardNumber.THREE, CardPattern.DIAMOND),
-                                new Card(CardNumber.FOUR, CardPattern.DIAMOND)
-                        )
-                )
-        );
+    @DisplayName("턴이 종료되지 않은 플레이어가 존재하는지 확인할 수 있어야 한다.")
+    @Test
+    void isAnyPlayerNotFinishedTest() {
+        final Deck deck = generateDeck(List.of(SPADE_TEN, SPADE_FIVE));
+        final Players players = Players.readyToPlay(List.of("player"), deck);
+
+        assertThat(players.isAnyPlayerNotFinished()).isTrue();
     }
 
-    @DisplayName("각 플레이어는 딜러와의 승패를 계산할 수 있어야 한다.")
-    @MethodSource("provideForJudgeWinnersTest")
+    @DisplayName("플레이어 이름으로 해당 플레이어가 보유한 카드 패를 확인할 수 있어야 한다.")
     @ParameterizedTest
-    void judgeWinnersTest(final List<String> names,
-                        final List<Card> initializedCards,
-                        final Map<String, MatchStatus> expectedWinningStatuses) {
-        manualCardStrategy.initCards(initializedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+    @MethodSource("blackjack.domain.participant.provider.PlayersTestProvider#provideForGetPlayerCardsTest")
+    void getPlayerCardsTest(final List<Card> expectedCards, final String playerName) {
+        final Deck deck = generateDeck(expectedCards);
+        final Players players = Players.readyToPlay(List.of(playerName), deck);
 
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        final Players players = Players.readyToPlay(names, deck);
-
-        final Map<String, MatchStatus> actualWinningStatuses = players.judgeWinners(dealer).getResultOfPlayers();
-        assertThat(actualWinningStatuses).isEqualTo(expectedWinningStatuses);
-    }
-
-    private static Stream<Arguments> provideForJudgeWinnersTest() {
-        return Stream.of(
-                Arguments.of(
-                        List.of("sun"),
-                        List.of(
-                                new Card(CardNumber.KING, CardPattern.DIAMOND),
-                                new Card(CardNumber.TEN, CardPattern.DIAMOND),
-                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND),
-                                new Card(CardNumber.NINE, CardPattern.DIAMOND)
-                        ),
-                        Map.of("sun", MatchStatus.LOSS)
-                ),
-                Arguments.of(
-                        List.of("sun", "if"),
-                        List.of(
-                                new Card(CardNumber.NINE, CardPattern.SPADE),
-                                new Card(CardNumber.EIGHT, CardPattern.HEART),
-                                new Card(CardNumber.TEN, CardPattern.SPADE),
-                                new Card(CardNumber.EIGHT, CardPattern.SPADE),
-                                new Card(CardNumber.TEN, CardPattern.HEART),
-                                new Card(CardNumber.TWO, CardPattern.SPADE)
-                        ),
-                        Map.of(
-                                "sun", MatchStatus.WIN,
-                                "if", MatchStatus.LOSS
-                        )
-                )
-        );
+        final List<Card> actualCards = players.getPlayerCards(playerName);
+        assertThat(actualCards).isEqualTo(expectedCards);
     }
 
 }

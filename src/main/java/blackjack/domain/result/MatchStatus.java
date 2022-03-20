@@ -1,36 +1,20 @@
 package blackjack.domain.result;
 
-import java.util.Arrays;
-import java.util.Map;
-
 public enum MatchStatus {
 
-    WIN("승", true),
-    LOSS("패", false);
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSS(-1);
 
-    private final String name;
-    private final boolean result;
+    private final double rate;
 
-    MatchStatus(final String name, final boolean result) {
-        this.name = name;
-        this.result = result;
+    MatchStatus(final double rate) {
+        this.rate = rate;
     }
 
-    public static MatchStatus from(final boolean result) {
-        return Arrays.stream(MatchStatus.values())
-                .filter(it -> it.result == result)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("승패를 구분 지을 수 없습니다."));
-    }
-
-    public Long countMatchStatus(final Map<String, MatchStatus> matchStatuses) {
-        return matchStatuses.values().stream()
-                .filter(this::equals)
-                .count();
-    }
-
-    public String getName() {
-        return name;
+    public int multiplyRate(final int number) {
+        return (int) Math.floor(this.rate * number);
     }
 
 }

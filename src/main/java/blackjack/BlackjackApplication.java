@@ -3,90 +3,96 @@ package blackjack;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.generator.DeckGenerator;
-import blackjack.domain.participant.CardDrawCallback;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Players;
 import blackjack.domain.result.MatchResult;
+import blackjack.dto.CardDto;
 import blackjack.dto.MatchResultDto;
-import blackjack.dto.ParticipantDto;
+import blackjack.dto.dealer.DealerDto;
+import blackjack.dto.dealer.DealerInitialCardDto;
+import blackjack.dto.player.PlayerDto;
+import blackjack.dto.player.PlayerInitialCardsDto;
 import blackjack.view.BlackjackView;
 
 public class BlackjackApplication {
 
-    private final BlackjackView blackjackView;
     private final DeckGenerator deckGenerator;
+    private final BlackjackView blackjackView;
 
-    public BlackjackApplication(final BlackjackView blackjackView, final DeckGenerator deckGenerator) {
-        this.blackjackView = blackjackView;
+    public BlackjackApplication(final DeckGenerator deckGenerator, final BlackjackView blackjackView) {
         this.deckGenerator = deckGenerator;
+        this.blackjackView = blackjackView;
     }
 
     public void run() {
-        final Deck deck = Deck.generate(deckGenerator);
-        final Dealer dealer = Dealer.readyToPlay(deck);
-        final Players players = Players.readyToPlay(blackjackView.requestPlayerNames(), deck);
-        announceInitiallyDistributedCards(dealer, players);
+        final BlackjackGame blackjackGame = initializeBlackjackGame();
+        proceedBettingTurn(blackjackGame);
+        announceInitiallyDistributedCards(blackjackGame);
 
-        playGame(deck, players, dealer);
-        announceFinalScoresOfParticipants(dealer, players);
-        announceMatchResult(dealer, players);
+        proceedPlayersTurn(blackjackGame);
+        proceedDealerTurn(blackjackGame);
+        announceFinalScoresOfParticipants(blackjackGame);
+        announceMatchResult(blackjackGame);
     }
 
-    private void announceInitiallyDistributedCards(final Dealer dealer, final Players players) {
-        final String firstCardNameOfDealer = dealer.getFirstCardName();
-        final List<ParticipantDto> playerDtos = players.getPlayers().stream()
-                .map(ParticipantDto::toDto)
+    private BlackjackGame initializeBlackjackGame() {
+        final List<String> playerNames = blackjackView.requestPlayerNames();
+        return BlackjackGame.initialize(deckGenerator, playerNames);
+    }
+
+    private void proceedBettingTurn(final BlackjackGame blackjackGame) {
+        for (final String playerName : blackjackGame.getPlayerNames()) {
+            final int bettingAmount = blackjackView.requestPlayerBettingAmount(playerName);
+            blackjackGame.playerBet(playerName, bettingAmount);
+        }
+    }
+
+    private void announceInitiallyDistributedCards(final BlackjackGame blackjackGame) {
+        final DealerInitialCardDto dealerInitialCardDto = DealerInitialCardDto.toDto(blackjackGame.getDealerFirstCard());
+        final List<PlayerInitialCardsDto> playerInitialCardDtos = blackjackGame.getPlayers().stream()
+                .map(PlayerInitialCardsDto::toDto)
                 .collect(Collectors.toList());
 
-        blackjackView.printInitiallyDistributedCards(firstCardNameOfDealer, playerDtos);
+        blackjackView.printInitiallyDistributedCards(dealerInitialCardDto, playerInitialCardDtos);
     }
 
-    private void playGame(final Deck deck, final Players players, final Dealer dealer) {
-        proceedPlayersTurn(deck, players);
-        proceedDealerTurn(deck, dealer);
+    private void proceedPlayersTurn(final BlackjackGame blackjackGame) {
+        final List<String> playerNames = blackjackGame.getPlayerNames();
+        for (final String playerName : playerNames) {
+            proceedPlayerTurn(blackjackGame, playerName);
+        }
     }
 
-    private void proceedPlayersTurn(final Deck deck, final Players players) {
-        players.drawCardsPerPlayer(deck, new CardDrawCallback() {
-            @Override
-            public boolean isContinuable(final String participantName) {
-                return blackjackView.requestDrawingCardChoice(participantName);
-            }
+    private void proceedPlayerTurn(final BlackjackGame blackjackGame, final String playerName) {
+        while (blackjackGame.isPlayerPossibleToDrawCard(playerName)) {
+            final boolean needToDrawCard = blackjackView.requestDrawingCardChoice(playerName);
+            blackjackGame.playerDrawCard(playerName, needToDrawCard);
 
-            @Override
-            public void onUpdate(final String playerName, final List<String> cardNames) {
-                blackjackView.printCurrentCardsOfPlayer(playerName, cardNames);
-            }
-        });
+            final List<CardDto> cardDtos = blackjackGame.getPlayerCards(playerName).stream()
+                    .map(CardDto::toDto)
+                    .collect(Collectors.toUnmodifiableList());
+            blackjackView.printCurrentCardsOfPlayer(playerName, cardDtos);
+        }
     }
 
-    private void proceedDealerTurn(final Deck deck, final Dealer dealer) {
-        dealer.drawCards(deck, new CardDrawCallback() {
-            @Override
-            public boolean isContinuable(final String participantName) {
-                return true;
-            }
-
-            @Override
-            public void onUpdate(final String participantName, final List<String> cardNames) {
-                blackjackView.printMessageOfDealerDrewCard();
-            }
-        });
+    private void proceedDealerTurn(final BlackjackGame blackjackGame) {
+        while (blackjackGame.isDealerPossibleToDrawCard()) {
+            blackjackGame.dealerDrawCard();
+            blackjackView.printMessageOfDealerDrewCard();
+        }
     }
 
-    private void announceFinalScoresOfParticipants(final Dealer dealer, final Players players) {
-        final ParticipantDto dealerDto = ParticipantDto.toDto(dealer);
-        final List<ParticipantDto> playerDtos = players.getPlayers().stream()
-                .map(ParticipantDto::toDto)
+    private void announceFinalScoresOfParticipants(final BlackjackGame blackjackGame) {
+        final DealerDto dealerDto = DealerDto.toDto(blackjackGame.getDealer());
+        final List<PlayerDto> playerDtos = blackjackGame.getPlayers().stream()
+                .map(PlayerDto::toDto)
                 .collect(Collectors.toUnmodifiableList());
 
-        blackjackView.printFinalScoresOfParticipants(dealerDto, playerDtos);
+        blackjackView.printFinalScores(dealerDto, playerDtos);
     }
 
-    private void announceMatchResult(final Dealer dealer, final Players players) {
-        final MatchResult matchResult = players.judgeWinners(dealer);
+    private void announceMatchResult(final BlackjackGame blackjackGame) {
+        final MatchResult matchResult = blackjackGame.calculateMatchResult();
         final MatchResultDto matchResultDto = MatchResultDto.toDto(matchResult);
 
         blackjackView.printMatchResult(matchResultDto);

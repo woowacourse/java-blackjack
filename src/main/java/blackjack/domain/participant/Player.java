@@ -1,28 +1,59 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Deck;
+import java.util.List;
 
-public class Player extends Participant {
+import blackjack.domain.card.Card;
 
-    private Player(final String name, final Deck deck) {
-        super(name, deck);
+public final class Player extends Participant {
+
+    private final String name;
+    private BettingAmount bettingAmount;
+
+    private Player(final String name, final List<Card> cards) {
+        super(cards);
+        validateNameNotBlank(name);
+        this.name = name;
     }
 
-    public static Player readyToPlay(final String name, final Deck deck) {
-        return new Player(name, deck);
+    public static Player readyToPlay(final String name, final List<Card> cards) {
+        return new Player(name, cards);
     }
 
-    @Override
-    public boolean isPossibleToDrawCard() {
-        return isNotBlackjack() && isNotBust();
+    public void betAmount(final int amount) {
+        validateNotYetBetAmount();
+        this.bettingAmount = new BettingAmount(amount);
     }
 
-    private boolean isNotBlackjack() {
-        return !isBlackjack();
+    public void drawCard(final Card card) {
+        this.state = state.drawCard(card);
     }
 
-    private boolean isNotBust() {
-        return !isBust();
+    public void stay() {
+        this.state = state.stay();
+    }
+
+    public boolean equalsName(final String name) {
+        return name.equals(this.name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getBettingAmount() {
+        return bettingAmount.getAmount();
+    }
+
+    private static void validateNameNotBlank(final String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
+        }
+    }
+
+    private void validateNotYetBetAmount() {
+        if (bettingAmount != null) {
+            throw new IllegalStateException("이미 베팅을 했습니다.");
+        }
     }
 
 }

@@ -1,42 +1,47 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.result.MatchStatus;
+import static blackjack.domain.BlackjackScoreRule.DEALER_ENABLE_MINIMUM_SCORE;
 
-public class Dealer extends Participant {
+import java.util.List;
 
-    public static final String DEALER_NAME = "딜러";
-    public static final int DRAWABLE_SCORE_LIMIT = 16;
+import blackjack.domain.card.Card;
 
-    private Dealer(final Deck deck) {
-        super(DEALER_NAME, deck);
+public final class Dealer extends Participant {
+
+    private Dealer(final List<Card> cards) {
+        super(cards);
+        stayIfScoreIsOverThanDealerLimit();
     }
 
-    public static Dealer readyToPlay(final Deck deck) {
-        return new Dealer(deck);
+    public static Dealer readyToPlay(final List<Card> cards) {
+        return new Dealer(cards);
     }
 
-    @Override
-    public boolean isPossibleToDrawCard() {
-        return cards.calculateScore() <= DRAWABLE_SCORE_LIMIT;
+    public void drawCard(final Card card) {
+        this.state = state.drawCard(card);
+        stayIfScoreIsOverThanDealerLimit();
     }
 
-    public MatchStatus judgeWinner(final Player player) {
-        if (player.isBust()) {
-            return MatchStatus.LOSS;
+    private void stayIfScoreIsOverThanDealerLimit() {
+        if (isDealerCannotDrawCardAnymore()) {
+            this.state = state.stay();
         }
-        if (this.isBust()) {
-            return MatchStatus.WIN;
+    }
+
+    private boolean isDealerCannotDrawCardAnymore() {
+        return state.isPossibleToDrawCard() && DEALER_ENABLE_MINIMUM_SCORE.isNotOverThan(state.getScore());
+    }
+
+    public Card getFirstCard() {
+        final List<Card> cards = state.getCards();
+        validateCardNotEmpty(cards);
+        return cards.get(0);
+    }
+
+    private void validateCardNotEmpty(final List<Card> cards) {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드가 존재하지 않습니다.");
         }
-        return MatchStatus.from(this.isLowerThan(player));
-    }
-
-    private boolean isLowerThan(final Player player) {
-        return this.getScore() < player.getScore();
-    }
-
-    public String getFirstCardName() {
-        return cards.getFirstCardName();
     }
 
 }

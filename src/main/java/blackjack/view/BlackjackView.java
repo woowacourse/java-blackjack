@@ -2,8 +2,12 @@ package blackjack.view;
 
 import java.util.List;
 
+import blackjack.dto.CardDto;
 import blackjack.dto.MatchResultDto;
-import blackjack.dto.ParticipantDto;
+import blackjack.dto.dealer.DealerDto;
+import blackjack.dto.dealer.DealerInitialCardDto;
+import blackjack.dto.player.PlayerDto;
+import blackjack.dto.player.PlayerInitialCardsDto;
 import blackjack.view.input.InputView;
 import blackjack.view.output.OutputView;
 
@@ -17,16 +21,23 @@ public class BlackjackView {
         this.outputView = outputView;
     }
 
+    public int requestPlayerBettingAmount(final String playerName) {
+        outputView.printEmptyLine();
+        outputView.printMessage(playerName + "의 베팅 금액은?");
+        return inputView.requestBettingAmount();
+    }
+
     public List<String> requestPlayerNames() {
         outputView.printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return inputView.requestPlayerNames();
     }
 
-    public void printInitiallyDistributedCards(final String dealerFirstCardName, final List<ParticipantDto> playerDtos) {
+    public void printInitiallyDistributedCards(final DealerInitialCardDto dealerInitiallyDrewCardDto,
+                                               final List<PlayerInitialCardsDto> playerInitiallyDrewCardDtos) {
         outputView.printEmptyLine();
-        outputView.printMessageOfInitiallyDistributeCards(playerDtos);
-        outputView.printFirstCardOfDealer(dealerFirstCardName);
-        playerDtos.forEach(outputView::printDistributedCardsOfPlayer);
+        outputView.printMessageOfInitiallyDistributeCards(playerInitiallyDrewCardDtos);
+        outputView.printDistributedCardsOfDealer(dealerInitiallyDrewCardDto);
+        playerInitiallyDrewCardDtos.forEach(outputView::printDistributedCardsOfPlayer);
         outputView.printEmptyLine();
     }
 
@@ -35,23 +46,24 @@ public class BlackjackView {
         return inputView.requestDrawingCardChoice();
     }
 
-    public void printCurrentCardsOfPlayer(final String playerName, final List<String> cardNames) {
-        outputView.printCurrentCardsOfPlayer(playerName, cardNames);
+    public void printCurrentCardsOfPlayer(final String playerName, final List<CardDto> cardDtos) {
+        outputView.printCurrentCardsOfPlayer(playerName, cardDtos);
     }
 
     public void printMessageOfDealerDrewCard() {
+        outputView.printEmptyLine();
         outputView.printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalScoresOfParticipants(final ParticipantDto dealerDto, final List<ParticipantDto> playerDtos) {
+    public void printFinalScores(final DealerDto dealerDto, final List<PlayerDto> playerDtos) {
         outputView.printEmptyLine();
-        outputView.printFinalScoreOfParticipant(dealerDto);
-        outputView.printFinalScoreOfParticipants(playerDtos);
+        outputView.printFinalScoreOfDealer(dealerDto);
+        outputView.printFinalScoreOfPlayers(playerDtos);
     }
 
     public void printMatchResult(final MatchResultDto matchResultDto) {
         outputView.printEmptyLine();
-        outputView.printMessage("## 최종 승패");
+        outputView.printMessage("## 최종 수익");
         outputView.printMatchResult(matchResultDto);
     }
 
