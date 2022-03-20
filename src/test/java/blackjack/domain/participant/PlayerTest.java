@@ -84,4 +84,26 @@ public class PlayerTest {
         assertThat(player.getBettingMoney().getBettingMoney()).isEqualTo(1000);
 
     }
+
+    @Test
+    @DisplayName("점수가 21 미만이면 플레이어는 카드를 더 뽑을 수 있다.")
+    void isHittableTrue() {
+        Player player = new Player("앤지");
+
+        player.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.JACK),
+            new Card(Suit.HEART, Denomination.TEN)));
+
+        assertThat(player.isHittable()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("점수가 21이상이면 플레이어는 카드를 더 뽑을 수 없다.")
+    void isHittableFalse() {
+        Player player = new Player("앤지");
+
+        player.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.JACK),
+            new Card(Suit.HEART, Denomination.ACE)));
+
+        assertThat(player.isHittable()).isEqualTo(false);
+    }
 }
