@@ -12,7 +12,7 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
         players = List.copyOf(players);
         checkPlayerCountToPlayGame(players.size());
         checkDuplicatePlayerName(players);

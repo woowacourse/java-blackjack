@@ -41,8 +41,8 @@ public class BlackjackGame {
         return cardDeck.draw();
     }
 
-    public ParticipantResult findGameResult() {
-        return ParticipantResult.create(dealer, players.getPlayers());
+    public ParticipantProfit findProfit() {
+        return ParticipantProfit.create(dealer, players.getPlayers());
     }
 
     public List<Player> getPlayers() {

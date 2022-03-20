@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.player.Dealer;
 
 public abstract class Finished implements State {
 
@@ -31,10 +32,9 @@ public abstract class Finished implements State {
         return true;
     }
 
-    @Override
-    public final double profit(int money) {
-        return money * earningRate();
+    public final double profit(Dealer dealer, int money) {
+        return money * earningRate(dealer);
     }
 
-    protected abstract double earningRate();
+    protected abstract double earningRate(Dealer dealer);
 }

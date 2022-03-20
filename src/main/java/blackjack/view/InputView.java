@@ -27,7 +27,7 @@ public class InputView {
             System.out.printf("%n%s의 배팅 금액은?%n", playerName);
             return Integer.parseInt(readLine());
         } catch (IllegalArgumentException e) {
-            System.out.println("배팅 금액은 음수로 입력할 수 없습니다.");
+            System.out.println("배팅 금액은 0보다 큰 숫자로만 입력해주세요.");
             return requestPlayerBettingMoney(playerName);
         }
     }

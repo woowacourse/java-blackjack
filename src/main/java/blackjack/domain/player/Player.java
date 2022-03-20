@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -21,12 +20,8 @@ public class Player extends Participant {
         this.bettingMoney = new BettingMoney(money);
     }
 
-    public GameResult findResult(Dealer dealer) {
-        return GameResult.findPlayerResult(this, dealer);
-    }
-
-    public void stay() {
-        state.stay();
+    public double findProfit(Dealer dealer) {
+        return state.profit(dealer, bettingMoney.getValue());
     }
 
     public boolean isHit(DrawStatus drawStatus) {
@@ -36,9 +31,5 @@ public class Player extends Participant {
     @Override
     public List<Card> openFirstCards() {
         return getCards().subList(0, FIRST_OPEN_COUNT);
-    }
-
-    public BettingMoney getBettingMoney() {
-        return bettingMoney;
     }
 }

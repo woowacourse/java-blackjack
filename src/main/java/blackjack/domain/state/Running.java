@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.player.Dealer;
 
 public abstract class Running implements State {
 
@@ -37,7 +38,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public final double profit(int money) {
+    public final double profit(Dealer dealer, int money) {
         throw new IllegalStateException();
     }
 }

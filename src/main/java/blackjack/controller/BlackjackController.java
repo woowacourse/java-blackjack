@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.ParticipantResult;
+import blackjack.domain.ParticipantProfit;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.player.Dealer;
@@ -26,7 +26,7 @@ public class BlackjackController {
     public void run() {
         final BlackjackGame blackjackGame = setUpBlackjackGame();
         playGame(blackjackGame);
-        announceGameResult(blackjackGame);
+        announceProfit(blackjackGame);
     }
 
     private BlackjackGame setUpBlackjackGame() {
@@ -59,11 +59,13 @@ public class BlackjackController {
     }
 
     private void processForPlayer(final BlackjackGame blackjackGame, final Player player) {
-        while (player.isRunning() && player.isHit(requestDrawStatus(player.getName()))) {
+        while (!player.isFinish() && player.isHit(requestDrawStatus(player.getName()))) {
             blackjackGame.hit(player);
             outputView.printPlayerCardStatus(player.getName(), player.getCards());
         }
-        player.stay();
+        if (!player.isBust()) {
+            player.stay();
+        }
     }
 
     private DrawStatus requestDrawStatus(final String playerName) {
@@ -80,12 +82,15 @@ public class BlackjackController {
             outputView.printDealerDrawOneMoreCard();
             blackjackGame.hit(dealer);
         }
+        if (!dealer.isBust()) {
+            dealer.stay();
+        }
     }
 
-    private void announceGameResult(final BlackjackGame blackjackGame) {
-        ParticipantResult participantResult = blackjackGame.findGameResult();
+    private void announceProfit(final BlackjackGame blackjackGame) {
+        ParticipantProfit participantProfit = blackjackGame.findProfit();
 
         outputView.printAllPlayerCardStatus(blackjackGame.getPlayers(), blackjackGame.getDealer());
-        outputView.printGameResult(participantResult.getDealerResultCount(), participantResult.getPlayerResults());
+        outputView.printGameResult(participantProfit.getDealerValue(), participantProfit.getPlayerValues());
     }
 }

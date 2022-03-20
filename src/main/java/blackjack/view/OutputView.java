@@ -1,10 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -60,26 +58,15 @@ public class OutputView {
         System.out.printf("%s카드: %s - 결과: %d%n", name, printCards(cards), cardScore);
     }
 
-    public void printGameResult(final Map<GameResult, Integer> dealerResultCount,
-            final Map<String, GameResult> userResults) {
-        System.out.println("## 최종 승패");
+    public void printGameResult(final double dealerProfit,
+            final Map<String, Double> playerProfit) {
+        System.out.println("## 최종 수익");
 
-        System.out.println(printDealerResult(dealerResultCount));
+        System.out.println("딜러:" + (int) dealerProfit);
 
-        for (String userName : userResults.keySet()) {
-            System.out.println(userName + ": " + userResults.get(userName).getValue());
+        for (String playerName : playerProfit.keySet()) {
+            System.out.println(playerName + ": " + (int) playerProfit.get(playerName).doubleValue());
         }
-    }
-
-    private String printDealerResult(final Map<GameResult, Integer> dealerResultCount) {
-        StringBuilder stringBuilder = new StringBuilder("딜러: ");
-        Arrays.stream(GameResult.values()).forEach(resultType -> {
-            int count = dealerResultCount.get(resultType);
-            if (count > 0) {
-                stringBuilder.append(count).append(resultType.getValue()).append(" ");
-            }
-        });
-        return stringBuilder.toString();
     }
 
     private void printNewLine() {
