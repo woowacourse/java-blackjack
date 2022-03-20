@@ -88,19 +88,19 @@ class HandTest {
         );
     }
 
-    @DisplayName("카드패가 2개로 준비상태가 아니다.")
+    @DisplayName("카드패가 2개로 버스트 상태가 아니다.")
     @Test
-    void isReadyTrue() {
+    void isBustTrue() {
         Hand cardHand = createCardHand(aceCard, tenCard);
 
-        assertThat(cardHand.isReady()).isFalse();
+        assertThat(cardHand.isBust()).isFalse();
     }
 
-    @DisplayName("카드패가 1개로 준비상태이다.")
+    @DisplayName("카드패가 3개로 버스트 상태이다.")
     @Test
-    void isReadyFalse() {
-        Hand cardHand = createCardHand(aceCard);
+    void isBustFalse() {
+        Hand cardHand = createCardHand(tenCard, kingCard, threeCard);
 
-        assertThat(cardHand.isReady()).isTrue();
+        assertThat(cardHand.isBust()).isTrue();
     }
 }

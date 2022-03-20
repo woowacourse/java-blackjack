@@ -10,6 +10,7 @@ public class Hand {
     private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int ACE_UPPER_SCORE = 11;
     private static final int ACE_SCORE_DIFFERENCE = 10;
+    private static final int BASE_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -66,7 +67,7 @@ public class Hand {
         return cards.get(0);
     }
 
-    public boolean isReady() {
-        return cards.size() != 2;
+    public boolean isHit() {
+        return !isBust() && !isBlackjack() && cards.size() >= BASE_SIZE;
     }
 }

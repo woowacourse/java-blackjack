@@ -16,13 +16,13 @@ public final class Ready extends Running {
     @Override
     public State draw(Card card) {
         hand.add(card);
-        if (hand.isReady()) {
-            return new Ready(hand);
+        if (hand.isHit()) {
+            return new Hit(hand);
         }
         if (hand.isBlackjack()) {
             return new Blackjack(hand);
         }
-        return new Hit(hand);
+        return new Ready(hand);
     }
 
     @Override
