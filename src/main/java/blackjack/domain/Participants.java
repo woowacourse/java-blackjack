@@ -33,17 +33,15 @@ public class Participants {
         ProfitResult profitResult = new ProfitResult();
 
         for (Participant player : players) {
-            caclculateProfitResult(profitResult, dealer, player);
+            caclculateProfitResult(profitResult, (Dealer) dealer, (Player) player);
         }
         return profitResult;
     }
 
-    private void caclculateProfitResult(ProfitResult profitResult, Participant dealer, Participant player) {
+    private void caclculateProfitResult(ProfitResult profitResult, Dealer dealer, Player player) {
         Score competeResult = player.compete(dealer);
-        if (player instanceof Player) {
-            double playerTotalProfit = ((Player) player).getTotalProfit(competeResult);
-            profitResult.putPlayerProfit(player, playerTotalProfit);
-        }
+        double playerTotalProfit = player.getTotalProfit(competeResult);
+        profitResult.putPlayerProfit(player, playerTotalProfit);
     }
 
     public void drawPlayerCard(Drawable drawable) {
