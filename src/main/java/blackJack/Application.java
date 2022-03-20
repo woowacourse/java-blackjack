@@ -1,11 +1,11 @@
 package blackJack;
 
-import blackJack.controller.BlackJackController;
+import blackJack.controller.BlackjackController;
 
 public class Application {
 
     public static void main(String[] args) {
-        final BlackJackController blackJackController = new BlackJackController();
-        blackJackController.run();
+        final BlackjackController blackjackController = new BlackjackController();
+        blackjackController.run();
     }
 }

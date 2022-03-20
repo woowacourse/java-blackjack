@@ -10,11 +10,11 @@ public class Bet {
     private final int value;
 
     public Bet(final int value) {
-        validateBattingMoney(value);
+        validateBettingMoney(value);
         this.value = value;
     }
 
-    private void validateBattingMoney(int value) {
+    private void validateBettingMoney(int value) {
         if (value < MINIMUM_VALUE) {
             throw new IllegalArgumentException("배팅금액은 음수일 수 없습니다.");
         }

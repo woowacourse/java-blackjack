@@ -12,17 +12,17 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackGameResultTest {
+class BlackjackGameResultTest {
 
     @Test
     @DisplayName("블랙잭 게임은 게임종료 후 각 참가자들의 수익률을 계산할 수 있다.")
     void calculateEarningResult() {
         Map<Player, OutCome> outComes = createOutComes();
 
-        BlackJackGameResult blackJackGameResult = BlackJackGameResult.from(outComes);
+        BlackjackGameResult blackjackGameResult = BlackjackGameResult.from(outComes);
 
-        assertThat(blackJackGameResult.getDealerEarning()).isEqualTo(-1000);
-        assertThat(blackJackGameResult.getPlayerEarnings()).isEqualTo(
+        assertThat(blackjackGameResult.getDealerEarning()).isEqualTo(-1000);
+        assertThat(blackjackGameResult.getPlayerEarnings()).isEqualTo(
                 new LinkedHashMap<>(Map.of("kei", -1000, "rookie", 2000))
         );
     }

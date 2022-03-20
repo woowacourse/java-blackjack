@@ -1,6 +1,6 @@
 package blackJack.domain;
 
-import blackJack.domain.result.BlackJackGameResult;
+import blackJack.domain.result.BlackjackGameResult;
 import blackJack.domain.result.OutCome;
 import blackJack.domain.result.YesOrNo;
 import java.util.LinkedHashMap;
@@ -13,12 +13,12 @@ import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
 import java.util.Map;
 
-public class BlackJackGame {
+public class BlackjackGame {
 
     private final Deck deck;
     private final Participants participants;
 
-    public BlackJackGame(Deck deck, Participants participants) {
+    public BlackjackGame(Deck deck, Participants participants) {
         this.deck = deck;
         this.participants = participants;
     }
@@ -39,13 +39,13 @@ public class BlackJackGame {
         return value == YesOrNo.YES;
     }
 
-    public BlackJackGameResult calculateResult() {
+    public BlackjackGameResult calculateResult() {
         final Map<Player, OutCome> outComes = new LinkedHashMap<>();
         for (Player player : participants.getPlayers()) {
             outComes.put(player, getDealer().calculateOutCome(player));
         }
 
-        return BlackJackGameResult.from(outComes);
+        return BlackjackGameResult.from(outComes);
     }
 
     public Participants getParticipants() {

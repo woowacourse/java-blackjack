@@ -16,7 +16,7 @@ class BlackJackGameTest {
     void createValidDealer() {
         Participants participants = Participants.fromNames(List.of("rookie"));
 
-        assertThat(new BlackJackGame(Deck.create(), participants)).isNotNull();
+        assertThat(new BlackjackGame(Deck.create(), participants)).isNotNull();
     }
 
     @Test
@@ -25,8 +25,8 @@ class BlackJackGameTest {
         Participants participants = Participants.fromNames(List.of("kei", "rookie"));
         ;
 
-        BlackJackGame blackJackGame = new BlackJackGame(Deck.create(), participants);
-        blackJackGame.defaultDistributeCards();
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), participants);
+        blackjackGame.defaultDistributeCards();
 
         assertAll(
                 () -> assertThat(participants.getPlayers().get(0).getCards().size()).isEqualTo(2),

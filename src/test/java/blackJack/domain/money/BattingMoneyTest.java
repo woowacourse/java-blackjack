@@ -24,7 +24,7 @@ class BattingMoneyTest {
 
     @Test
     @DisplayName("배팅금액은 금액을 입력받아 현재 가지고 있는 금액에 더할 수 있다.")
-    void plusBattingMoney() {
+    void plusBettingMoney() {
         assertThat(Bet.ZERO.add(1000)).isEqualTo(new Bet(1000));
     }
 }

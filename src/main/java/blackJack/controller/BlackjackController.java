@@ -1,54 +1,54 @@
 package blackJack.controller;
 
-import blackJack.domain.BlackJackGame;
+import blackJack.domain.BlackjackGame;
 import blackJack.domain.card.Deck;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.BlackJackGameResult;
+import blackJack.domain.result.BlackjackGameResult;
 import blackJack.domain.result.YesOrNo;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
 
-public class BlackJackController {
+public class BlackjackController {
 
     public void run() {
-        final BlackJackGame blackJackGame = new BlackJackGame(Deck.create(), getParticipants());
+        final BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), getParticipants());
 
-        additionalBattingMoney(blackJackGame);
-        defaultRound(blackJackGame);
-        additionalRound(blackJackGame);
+        additionalBettingMoney(blackjackGame);
+        defaultRound(blackjackGame);
+        additionalRound(blackjackGame);
 
-        final BlackJackGameResult blackJackGameResult = blackJackGame.calculateResult();
-        OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printEarningResult(blackJackGame.getDealer(), blackJackGameResult);
+        final BlackjackGameResult blackjackGameResult = blackjackGame.calculateResult();
+        OutputView.printGameResult(blackjackGame.getParticipants());
+        OutputView.printEarningResult(blackjackGame.getDealer(), blackjackGameResult);
     }
 
-    private void additionalBattingMoney(BlackJackGame blackJackGame) {
-        for (Player player : blackJackGame.getPlayers()) {
+    private void additionalBettingMoney(BlackjackGame blackjackGame) {
+        for (Player player : blackjackGame.getPlayers()) {
             player.betting(getBettingMoney(player));
         }
     }
 
-    private void defaultRound(BlackJackGame blackJackGame) {
-        blackJackGame.defaultDistributeCards();
-        OutputView.printInitCardResult(blackJackGame.getParticipants());
+    private void defaultRound(BlackjackGame blackjackGame) {
+        blackjackGame.defaultDistributeCards();
+        OutputView.printInitCardResult(blackjackGame.getParticipants());
     }
 
-    private void additionalRound(BlackJackGame blackJackGame) {
-        for (Player player : blackJackGame.getPlayers()) {
-            additionalPlayerTurn(blackJackGame, player);
+    private void additionalRound(BlackjackGame blackjackGame) {
+        for (Player player : blackjackGame.getPlayers()) {
+            additionalPlayerTurn(blackjackGame, player);
         }
-        additionalDealerTurn(blackJackGame);
+        additionalDealerTurn(blackjackGame);
     }
 
-    private void additionalPlayerTurn(BlackJackGame blackjackGame, Player player) {
+    private void additionalPlayerTurn(BlackjackGame blackjackGame, Player player) {
         while (blackjackGame.isAvailableDistributeCard(player) && blackjackGame.isApproveDrawCard(getYesOrNo(player))) {
             blackjackGame.distributeCard(player);
             OutputView.printNowHoldCardInfo(player);
         }
     }
 
-    private void additionalDealerTurn(BlackJackGame blackjackGame) {
+    private void additionalDealerTurn(BlackjackGame blackjackGame) {
         while (blackjackGame.isAvailableDistributeCard(blackjackGame.getDealer())) {
             blackjackGame.distributeCard(blackjackGame.getDealer());
         }
@@ -65,7 +65,7 @@ public class BlackJackController {
 
     private int getBettingMoney(Player player) {
         try {
-            return InputView.inputBattingMoney(player.getName());
+            return InputView.inputBettingMoney(player.getName());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getBettingMoney(player);

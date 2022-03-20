@@ -1,6 +1,5 @@
 package blackJack.view;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +14,7 @@ public class InputView {
     private static final String INPUT_DELIMITER_PLAYER_NAMES = ",";
     private static final String INPUT_MESSAGE_ONE_MORE_CARD =
         "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".concat(NEWLINE);
-    private static final String INPUT_MESSAGE_BATTING_MONEY = NEWLINE.concat("%s의 배팅 금액은?").concat(NEWLINE);
+    private static final String INPUT_MESSAGE_BETTING_MONEY = NEWLINE.concat("%s의 배팅 금액은?").concat(NEWLINE);
 
     public static List<String> inputPlayerNames() {
         System.out.println(INPUT_MESSAGE_PLAYER_NAMES);
@@ -34,8 +33,8 @@ public class InputView {
     }
 
 
-    public static int inputBattingMoney(String name) {
-        System.out.printf(INPUT_MESSAGE_BATTING_MONEY, name);
+    public static int inputBettingMoney(String name) {
+        System.out.printf(INPUT_MESSAGE_BETTING_MONEY, name);
         return convertInt(scanner.nextLine());
     }
 

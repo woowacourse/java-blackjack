@@ -12,7 +12,7 @@ public class Cards {
     private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
     private static final int BLACKJACK_NUMBER = 21;
-    private static final int BLACK_JACK_COUNT = 2;
+    private static final int BLACKJACK_COUNT = 2;
 
     private final Set<Card> cards;
 
@@ -60,7 +60,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACK_JACK_COUNT && addScore() == BLACKJACK_NUMBER;
+        return cards.size() == BLACKJACK_COUNT && addScore() == BLACKJACK_NUMBER;
     }
 
     public boolean isBust() {
