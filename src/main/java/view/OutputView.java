@@ -1,10 +1,10 @@
 package view;
 
-import domain.betting.Profit;
+import domain.betting.Profits;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
-import domain.result.Result;
+import domain.result.Results;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,11 +86,11 @@ public class OutputView {
         }
     }
 
-    public static void printResult(List<Name> names, Result result) {
+    public static void printResult(List<Name> names, Results results) {
         OutputView.printResultTitle();
-        OutputView.printResultOfDealer(result.countDealerWin(), result.countDealerDraw(), result.countDealerLose());
+        OutputView.printResultOfDealer(results.countDealerWin(), results.countDealerDraw(), results.countDealerLose());
         for (Name name : names) {
-            OutputView.printResultOfPlayer(name.getName(), result.getVersusOfPlayer(name).getResult());
+            OutputView.printResultOfPlayer(name.getName(), results.getVersusOfPlayer(name).getResult());
         }
     }
 
@@ -106,11 +106,11 @@ public class OutputView {
         System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, name, result);
     }
 
-    public static void printProfit(List<Name> names, Profit profit) {
+    public static void printProfit(List<Name> names, Profits profits) {
         OutputView.printProfitTitle();
-        OutputView.printProfitOfDealer(profit.calculateDealerProfit());
+        OutputView.printProfitOfDealer(profits.calculateDealerProfit());
         for (Name name : names) {
-            OutputView.printProFitOfPlayer(name.getName(), profit.getProfit(name));
+            OutputView.printProFitOfPlayer(name.getName(), profits.getProfit(name));
         }
     }
 

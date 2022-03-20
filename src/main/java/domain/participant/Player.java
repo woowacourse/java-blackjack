@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.result.Versus;
+import domain.result.WinOrLose;
 import java.util.List;
 
 public class Player extends Participant {
@@ -19,31 +19,31 @@ public class Player extends Participant {
         return this.getName().equals(name);
     }
 
-    public Versus compareAtDealerBlackJack() {
+    public WinOrLose compareAtDealerBlackJack() {
         if (this.isBlackJack()) {
-            return Versus.DRAW;
+            return WinOrLose.DRAW;
         }
-        return Versus.LOSE;
+        return WinOrLose.LOSE;
     }
 
-    public Versus compareAtFinal(Dealer dealer) {
+    public WinOrLose compareAtFinal(Dealer dealer) {
         if (isBust()) {
-            return Versus.LOSE;
+            return WinOrLose.LOSE;
         }
         if (this.isBlackJack() || dealer.isBust()) {
-            return Versus.WIN;
+            return WinOrLose.WIN;
         }
         return judgeVersus(dealer.calculateBestScore());
     }
 
-    private Versus judgeVersus(int otherScore) {
+    private WinOrLose judgeVersus(int otherScore) {
         int playerScore = calculateBestScore();
         if (playerScore > otherScore) {
-            return Versus.WIN;
+            return WinOrLose.WIN;
         }
         if (playerScore < otherScore) {
-            return Versus.LOSE;
+            return WinOrLose.LOSE;
         }
-        return Versus.DRAW;
+        return WinOrLose.DRAW;
     }
 }

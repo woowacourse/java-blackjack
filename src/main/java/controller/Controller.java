@@ -1,8 +1,8 @@
 package controller;
 
 import domain.betting.BettingMoney;
-import domain.betting.BettingReceipt;
-import domain.betting.Profit;
+import domain.betting.BettingReceipts;
+import domain.betting.Profits;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.card.InitCards;
@@ -10,7 +10,7 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.Result;
+import domain.result.Results;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,13 +24,13 @@ public class Controller {
         Deck deck = new Deck(Cards.getInstance().getCards());
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = createPlayers(deck);
-        BettingReceipt bettingReceipt = createBettingReceipt(players);
+        BettingReceipts bettingReceipts = createBettingReceipt(players);
 
         OutputView.printInitHands(dealer, players);
 
         if (dealer.isBlackJack()) {
             OutputView.printDealerIsBlackJackMessage();
-            printResultAndProfit(Result.generateResultAtDealerBlackJack(dealer, players), bettingReceipt, players);
+            printResultAndProfit(Results.generateResultAtDealerBlackJack(dealer, players), bettingReceipts, players);
             return;
         }
         OutputView.printPlayerIsBlackJackMessage(players);
@@ -38,7 +38,7 @@ public class Controller {
         drawForPlayers(deck, players);
         drawForDealer(deck, dealer, players);
         OutputView.printStatuses(dealer, players);
-        printResultAndProfit(Result.generateResultAtFinal(dealer, players), bettingReceipt, players);
+        printResultAndProfit(Results.generateResultAtFinal(dealer, players), bettingReceipts, players);
     }
 
     private Players createPlayers(Deck deck) {
@@ -49,12 +49,12 @@ public class Controller {
         return new Players(players);
     }
 
-    private BettingReceipt createBettingReceipt(Players players) {
+    private BettingReceipts createBettingReceipt(Players players) {
         Map<Name, BettingMoney> bettingReceipt = new LinkedHashMap<>();
         for (Name name : players.getNames()) {
             bettingReceipt.put(name, new BettingMoney(InputView.inputMoney(name)));
         }
-        return new BettingReceipt(bettingReceipt);
+        return new BettingReceipts(bettingReceipt);
     }
 
     private void drawForPlayers(Deck deck, Players players) {
@@ -78,8 +78,8 @@ public class Controller {
         }
     }
 
-    private void printResultAndProfit(Result result, BettingReceipt bettingReceipt, Players players) {
-        OutputView.printResult(players.getNames(), result);
-        OutputView.printProfit(players.getNames(), Profit.generateProfits(result, bettingReceipt, players));
+    private void printResultAndProfit(Results results, BettingReceipts bettingReceipts, Players players) {
+        OutputView.printResult(players.getNames(), results);
+        OutputView.printProfit(players.getNames(), Profits.generateProfits(results, bettingReceipts, players));
     }
 }

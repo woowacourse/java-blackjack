@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.result.Versus;
+import domain.result.WinOrLose;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,14 +65,14 @@ public class Players {
         return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
-    public Map<Name, Versus> compareAtDealerBlackJack(Dealer dealer) {
-        Map<Name, Versus> playerResult = new LinkedHashMap<>();
+    public Map<Name, WinOrLose> compareAtDealerBlackJack(Dealer dealer) {
+        Map<Name, WinOrLose> playerResult = new LinkedHashMap<>();
         players.forEach(player -> playerResult.put(player.getName(), player.compareAtDealerBlackJack()));
         return playerResult;
     }
 
-    public Map<Name, Versus> compareResultAtFinal(Dealer dealer) {
-        Map<Name, Versus> playerResult = new LinkedHashMap<>();
+    public Map<Name, WinOrLose> compareResultAtFinal(Dealer dealer) {
+        Map<Name, WinOrLose> playerResult = new LinkedHashMap<>();
         players.forEach(player -> playerResult.put(player.getName(), player.compareAtFinal(dealer)));
         return playerResult;
     }

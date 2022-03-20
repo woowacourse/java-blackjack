@@ -2,12 +2,12 @@ package domain.betting;
 
 import domain.participant.Name;
 import domain.participant.Players;
-import domain.result.Result;
-import domain.result.Versus;
+import domain.result.Results;
+import domain.result.WinOrLose;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Profit {
+public class Profits {
 
     private static final String ABSENT_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름이 존재하지 않습니다.";
     private static final double BLACK_JACK_BONUS_PROFIT_RATE = 1.5;
@@ -15,27 +15,27 @@ public class Profit {
 
     private final Map<Name, Double> maps;
 
-    public Profit(Map<Name, Double> maps) {
+    public Profits(Map<Name, Double> maps) {
         this.maps = Map.copyOf(maps);
     }
 
-    public static Profit generateProfits(Result result, BettingReceipt bettingReceipt, Players players) {
+    public static Profits generateProfits(Results results, BettingReceipts bettingReceipts, Players players) {
         Map<Name, Double> maps = new LinkedHashMap<>();
         for (Name name : players.getNames()) {
             maps.put(name, calculatePlayerProfit(
-                    result.getVersusOfPlayer(name),
-                    bettingReceipt.getBettingMoney(name),
+                    results.getVersusOfPlayer(name),
+                    bettingReceipts.getBettingMoney(name),
                     players.isBlackJackByName(name)
             ));
         }
-        return new Profit(maps);
+        return new Profits(maps);
     }
 
-    private static double calculatePlayerProfit(Versus versusOfPlayer, BettingMoney bettingMoney, boolean isBlackJack) {
-        if (versusOfPlayer == Versus.WIN) {
+    private static double calculatePlayerProfit(WinOrLose winOrLoseOfPlayer, BettingMoney bettingMoney, boolean isBlackJack) {
+        if (winOrLoseOfPlayer == WinOrLose.WIN) {
             return getWinProfit(bettingMoney, isBlackJack);
         }
-        if (versusOfPlayer == Versus.LOSE) {
+        if (winOrLoseOfPlayer == WinOrLose.LOSE) {
             return toNegative(bettingMoney.getBettingMoney());
         }
         return 0;

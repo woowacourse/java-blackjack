@@ -2,7 +2,7 @@ package domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
-import domain.result.Result;
+import domain.result.Results;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.result.Versus;
+import domain.result.WinOrLose;
 
 public class PlayersTest {
 
@@ -77,16 +77,16 @@ public class PlayersTest {
     @Test
     @DisplayName("딜러가 블랙잭인 경우 결과 반환")
     void getResultAtDealerBlackJack() {
-        Result resultMap = Result.generateResultAtDealerBlackJack(dealer_BLACKJACK, players);
-        assertThat(resultMap.getVersusOfPlayer(new Name("player_BLACKJACK"))).isEqualTo(Versus.DRAW);
-        assertThat(resultMap.getVersusOfPlayer(new Name("player_BUST"))).isEqualTo(Versus.LOSE);
+        Results resultMap = Results.generateResultAtDealerBlackJack(dealer_BLACKJACK, players);
+        assertThat(resultMap.getVersusOfPlayer(new Name("player_BLACKJACK"))).isEqualTo(WinOrLose.DRAW);
+        assertThat(resultMap.getVersusOfPlayer(new Name("player_BUST"))).isEqualTo(WinOrLose.LOSE);
     }
 
     @Test
     @DisplayName("최종 게임 결과 반환")
     void getResultAtFinal() {
-        Result resultMap = Result.generateResultAtFinal(dealer_17, players);
-        assertThat(resultMap.getVersusOfPlayer(new Name("player_BLACKJACK"))).isEqualTo(Versus.WIN);
-        assertThat(resultMap.getVersusOfPlayer(new Name("player_BUST"))).isEqualTo(Versus.LOSE);
+        Results resultMap = Results.generateResultAtFinal(dealer_17, players);
+        assertThat(resultMap.getVersusOfPlayer(new Name("player_BLACKJACK"))).isEqualTo(WinOrLose.WIN);
+        assertThat(resultMap.getVersusOfPlayer(new Name("player_BUST"))).isEqualTo(WinOrLose.LOSE);
     }
 }

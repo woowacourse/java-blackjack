@@ -5,20 +5,20 @@ import domain.participant.Name;
 import domain.participant.Players;
 import java.util.Map;
 
-public class Result {
+public class Results {
 
     private static final String ABSENT_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름이 존재하지 않습니다.";
     private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
 
-    private final Map<Name, Versus> maps;
+    private final Map<Name, WinOrLose> maps;
 
-    private Result(Map<Name, Versus> maps) {
+    private Results(Map<Name, WinOrLose> maps) {
         this.maps = Map.copyOf(maps);
     }
 
-    public static Result generateResultAtDealerBlackJack(Dealer dealer, Players players) {
+    public static Results generateResultAtDealerBlackJack(Dealer dealer, Players players) {
         validateDealerIsBlackJack(dealer);
-        return new Result(players.compareAtDealerBlackJack(dealer));
+        return new Results(players.compareAtDealerBlackJack(dealer));
     }
 
     private static void validateDealerIsBlackJack(Dealer dealer) {
@@ -27,11 +27,11 @@ public class Result {
         }
     }
 
-    public static Result generateResultAtFinal(Dealer dealer, Players players) {
-        return new Result(players.compareResultAtFinal(dealer));
+    public static Results generateResultAtFinal(Dealer dealer, Players players) {
+        return new Results(players.compareResultAtFinal(dealer));
     }
 
-    public Versus getVersusOfPlayer(Name name) {
+    public WinOrLose getVersusOfPlayer(Name name) {
         if (!maps.containsKey(name)) {
             throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getName()));
         }
@@ -40,19 +40,19 @@ public class Result {
 
     public int countDealerWin() {
         return (int) maps.keySet().stream()
-                .filter(key -> maps.get(key) == Versus.LOSE)
+                .filter(key -> maps.get(key) == WinOrLose.LOSE)
                 .count();
     }
 
     public int countDealerDraw() {
         return (int) maps.keySet().stream()
-                .filter(key -> maps.get(key) == Versus.DRAW)
+                .filter(key -> maps.get(key) == WinOrLose.DRAW)
                 .count();
     }
 
     public int countDealerLose() {
         return (int) maps.keySet().stream()
-                .filter(key -> maps.get(key) == Versus.WIN)
+                .filter(key -> maps.get(key) == WinOrLose.WIN)
                 .count();
     }
 }
