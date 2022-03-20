@@ -14,7 +14,7 @@ public final class Player extends Participant {
         this.bet = bet;
     }
 
-    public long getRevenue(Dealer dealer) {
+    long getRevenue(Dealer dealer) {
         return getState().revenue(getRecord(dealer), bet);
     }
 
@@ -23,7 +23,7 @@ public final class Player extends Participant {
         return getState().isDrawable();
     }
 
-    public PlayRecord getRecord(Dealer dealer) {
+    private PlayRecord getRecord(Dealer dealer) {
         if (isPlayerLoss(dealer)) {
             return LOSS;
         }

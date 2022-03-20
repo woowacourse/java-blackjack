@@ -18,7 +18,7 @@ public final class Dealer extends Participant {
         return getState().isDrawable() && getCards().sum() <= HIT_CONDITION;
     }
 
-    public long getRevenue(List<Player> players) {
+    long getRevenue(List<Player> players) {
         return -players.stream()
             .mapToLong(player -> player.getRevenue(this))
             .sum();
