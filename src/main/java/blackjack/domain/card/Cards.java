@@ -8,7 +8,6 @@ import static blackjack.domain.card.Deck.INIT_CARD_SIZE;
 
 public class Cards {
     private static final int BUST_LINE = 21;
-    private static final int DEALER_ADD_CARD_LIMIT = 16;
     private static final int EXTRA_SCORE = 10;
 
     private final Set<Card> cards;
@@ -62,10 +61,6 @@ public class Cards {
 
     public boolean isBust() {
         return getScore() > BUST_LINE;
-    }
-
-    public boolean canDealerDraw(){
-        return getScore() <= DEALER_ADD_CARD_LIMIT;
     }
 
     public boolean isGreaterThan(Cards cards) {
