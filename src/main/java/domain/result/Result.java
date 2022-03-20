@@ -8,14 +8,14 @@ import domain.participant.Players;
 
 public class Result {
 
-	private final LinkedHashMap<Participant, EarningRate> playerResults;
+	private final LinkedHashMap<Participant, WinOrLose> playerResults;
 
-	private Result(LinkedHashMap<Participant, EarningRate> playerResults) {
+	private Result(LinkedHashMap<Participant, WinOrLose> playerResults) {
 		this.playerResults = playerResults;
 	}
 
 	public static Result of(Dealer dealer, Players players) {
-		LinkedHashMap<Participant, EarningRate> result = players.getResult(dealer);
+		LinkedHashMap<Participant, WinOrLose> result = players.getResult(dealer);
 		return new Result(result);
 	}
 
@@ -26,7 +26,7 @@ public class Result {
 			.sum();
 	}
 
-	public LinkedHashMap<Participant, EarningRate> getPlayerResults() {
+	public LinkedHashMap<Participant, WinOrLose> getPlayerResults() {
 		return playerResults;
 	}
 }

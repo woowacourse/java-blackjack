@@ -12,8 +12,8 @@ import domain.participant.Players;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
 import domain.participant.info.Name;
-import domain.result.EarningRate;
 import domain.result.Result;
+import domain.result.WinOrLose;
 import view.InputView;
 import view.OutputView;
 
@@ -91,7 +91,7 @@ public class Controller {
 		OutputView.printEndMessage();
 		OutputView.printResult(dealer.getName(), result.getDealerMoney());
 
-		LinkedHashMap<Participant, EarningRate> playerResults = result.getPlayerResults();
+		LinkedHashMap<Participant, WinOrLose> playerResults = result.getPlayerResults();
 		playerResults.entrySet()
 			.forEach(entry -> OutputView.printResult(entry.getKey().getName(),
 				(int)(entry.getKey().getBettingMoney() * entry.getValue().getEarningRate())));

@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import domain.result.EarningRate;
+import domain.result.WinOrLose;
 
 public class Players implements Iterable<Player> {
 	private final List<Player> players;
@@ -21,8 +21,8 @@ public class Players implements Iterable<Player> {
 		return new ArrayList<>(players.stream().map(Player::getName).collect(Collectors.toList()));
 	}
 
-	public LinkedHashMap<Participant, EarningRate> getResult(Dealer other) {
-		LinkedHashMap<Participant, EarningRate> map = new LinkedHashMap<>();
+	public LinkedHashMap<Participant, WinOrLose> getResult(Dealer other) {
+		LinkedHashMap<Participant, WinOrLose> map = new LinkedHashMap<>();
 		players.forEach(player -> map.put(player, player.getResult(other)));
 		return map;
 	}

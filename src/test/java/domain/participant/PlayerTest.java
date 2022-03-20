@@ -13,7 +13,7 @@ import domain.card.Suit;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
 import domain.participant.info.Name;
-import domain.result.EarningRate;
+import domain.result.WinOrLose;
 
 public class PlayerTest {
 
@@ -28,7 +28,7 @@ public class PlayerTest {
 			List.of(new Card(Denomination.JACK, Suit.CLOVER), new Card(Denomination.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
 
-		assertThat(player.getResult(dealer)).isEqualTo(EarningRate.LOSE);
+		assertThat(player.getResult(dealer)).isEqualTo(WinOrLose.LOSE);
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class PlayerTest {
 			List.of(new Card(Denomination.JACK, Suit.CLOVER), new Card(Denomination.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
 
-		assertThat(player.getResult(dealer)).isEqualTo(EarningRate.LOSE);
+		assertThat(player.getResult(dealer)).isEqualTo(WinOrLose.LOSE);
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class PlayerTest {
 			List.of(new Card(Denomination.NINE, Suit.CLOVER), new Card(Denomination.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
 
-		assertThat(player.getResult(dealer)).isEqualTo(EarningRate.BLACK_JACK_WIN);
+		assertThat(player.getResult(dealer)).isEqualTo(WinOrLose.BLACK_JACK_WIN);
 	}
 
 	@Test
@@ -70,6 +70,6 @@ public class PlayerTest {
 			List.of(new Card(Denomination.JACK, Suit.CLOVER), new Card(Denomination.ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
 
-		assertThat(player.getResult(dealer)).isEqualTo(EarningRate.DRAW);
+		assertThat(player.getResult(dealer)).isEqualTo(WinOrLose.DRAW);
 	}
 }

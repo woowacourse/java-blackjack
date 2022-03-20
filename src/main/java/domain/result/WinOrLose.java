@@ -1,6 +1,6 @@
 package domain.result;
 
-public enum EarningRate {
+public enum WinOrLose {
 	WIN(1),
 	DRAW(0),
 	LOSE(-1),
@@ -8,7 +8,7 @@ public enum EarningRate {
 
 	private final double earningRate;
 
-	EarningRate(double earningRate) {
+	WinOrLose(double earningRate) {
 		this.earningRate = earningRate;
 	}
 

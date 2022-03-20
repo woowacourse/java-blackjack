@@ -3,7 +3,7 @@ package domain.participant;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
 import domain.participant.info.Name;
-import domain.result.EarningRate;
+import domain.result.WinOrLose;
 
 public class Player extends Participant {
 
@@ -11,7 +11,7 @@ public class Player extends Participant {
 		super(name, hand, betting);
 	}
 
-	public EarningRate getResult(Dealer dealer) {
+	public WinOrLose getResult(Dealer dealer) {
 		if (dealer.isBlackJack() || isBlackJack()) {
 			return getResultAtBlackJackExist(dealer);
 		}
@@ -22,36 +22,36 @@ public class Player extends Participant {
 		return judgeVersus(dealer.getScore());
 	}
 
-	private EarningRate getResultAtBlackJackExist(Dealer dealer) {
+	private WinOrLose getResultAtBlackJackExist(Dealer dealer) {
 		if (dealer.isBlackJack()) {
 			return getResultAtDealerBlackJack();
 		}
-		return EarningRate.BLACK_JACK_WIN;
+		return WinOrLose.BLACK_JACK_WIN;
 	}
 
-	private EarningRate getResultAtDealerBlackJack() {
+	private WinOrLose getResultAtDealerBlackJack() {
 		if (isBlackJack()) {
-			return EarningRate.DRAW;
+			return WinOrLose.DRAW;
 		}
-		return EarningRate.LOSE;
+		return WinOrLose.LOSE;
 	}
 
-	private EarningRate getResultAtBustExist() {
+	private WinOrLose getResultAtBustExist() {
 		if (isBust()) {
-			return EarningRate.LOSE;
+			return WinOrLose.LOSE;
 		}
 
-		return EarningRate.WIN;
+		return WinOrLose.WIN;
 	}
 
-	private EarningRate judgeVersus(int otherScore) {
+	private WinOrLose judgeVersus(int otherScore) {
 		int myScore = getScore();
 		if (myScore > otherScore) {
-			return EarningRate.WIN;
+			return WinOrLose.WIN;
 		}
 		if (myScore < otherScore) {
-			return EarningRate.LOSE;
+			return WinOrLose.LOSE;
 		}
-		return EarningRate.DRAW;
+		return WinOrLose.DRAW;
 	}
 }
