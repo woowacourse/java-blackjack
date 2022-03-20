@@ -6,8 +6,8 @@ import java.util.List;
 
 public final class Card {
 
-    private final static String NOT_FOUND_CARD = "해당하는 카드가 존재하지 않습니다.";
-    private final static List<Card> CACHE = new ArrayList<>();
+    private static final String NOT_FOUND_CARD = "해당하는 카드가 존재하지 않습니다.";
+    private static final List<Card> CACHE = new ArrayList<>();
 
     private final Symbol symbol;
     private final Denomination denomination;
@@ -38,11 +38,11 @@ public final class Card {
             .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_CARD));
     }
 
-    public int getScore(){
+    public int getScore() {
         return denomination.getScore();
     }
 
-    public String getDenomination(){
+    public String getDenomination() {
         return denomination.getLetter();
     }
 
