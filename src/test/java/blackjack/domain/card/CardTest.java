@@ -42,4 +42,23 @@ public class CardTest {
         Card card = Card.of(CardNumber.TEN, Type.SPADE);
         assertThat(card.getType().getName()).isEqualTo("스페이드");
     }
+
+    @Test
+    @DisplayName("equals, hashCode, toString 테스트")
+    void equals() {
+        CardNumber ace = CardNumber.ACE;
+        CardNumber two = CardNumber.TWO;
+        Type heart = Type.HEART;
+        Card o1 = Card.of(ace, heart);
+        Card o2 = Card.of(ace, heart);
+        Card o3 = Card.of(two, heart);
+        Object o = new Object();
+
+        assertThat(o1.equals(o2)).isTrue();
+        assertThat(o1.equals(o3)).isFalse();
+        assertThat(o1.equals(o1)).isTrue();
+        assertThat(o1.equals(o)).isFalse();
+        assertThat(o1.hashCode() == o2.hashCode()).isTrue();
+        assertThat(o1.toString()).isEqualTo(o2.toString());
+    }
 }

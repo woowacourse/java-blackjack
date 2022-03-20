@@ -7,6 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.PlayerCards;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Ready implements State {
 
@@ -46,4 +47,21 @@ public abstract class Ready implements State {
     public abstract boolean isBlackjack();
 
     public abstract Profit profit(Outcome outcome, BetMoney money);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Ready ready = (Ready) o;
+        return Objects.equals(cards, ready.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
+    }
 }

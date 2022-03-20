@@ -46,16 +46,6 @@ public enum Outcome {
         return !dealer.isBust() && dealer.getScore() > player.getScore();
     }
 
-    public Outcome not() {
-        if (this.equals(WIN)) {
-            return LOSE;
-        }
-        if (this.equals(LOSE)) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
     public String get() {
         return outcome;
     }

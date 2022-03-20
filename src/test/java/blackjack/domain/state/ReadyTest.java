@@ -38,4 +38,32 @@ public class ReadyTest {
         assertThat(actual.get(0)).isEqualTo(SPADE_ACE);
         assertThat(actual.get(1)).isEqualTo(SPADE_NINE);
     }
+
+    @Test
+    @DisplayName("dealer의 상태에 대한 equals, hashCode, toString 테스트")
+    void eq_hc_ts_dealer() {
+        State o1 = Ready.dealToDealer(SPADE_ACE, SPADE_NINE);
+        State o2 = Ready.dealToDealer(SPADE_ACE, SPADE_NINE);
+        Object o = new Object();
+
+        assertThat(o1.equals(o2)).isTrue();
+        assertThat(o1.equals(o1)).isTrue();
+        assertThat(o1.equals(o)).isFalse();
+        assertThat(o1.hashCode() == o2.hashCode()).isTrue();
+        assertThat(o1.toString()).isEqualTo(o2.toString());
+    }
+
+    @Test
+    @DisplayName("participant의 상태에 대한 equals, hashCode, toString 테스트")
+    void eq_hc_ts_participant() {
+        State o1 = Ready.dealToParticipant(SPADE_ACE, SPADE_NINE);
+        State o2 = Ready.dealToParticipant(SPADE_ACE, SPADE_NINE);
+        Object o = new Object();
+
+        assertThat(o1.equals(o2)).isTrue();
+        assertThat(o1.equals(o1)).isTrue();
+        assertThat(o1.equals(o)).isFalse();
+        assertThat(o1.hashCode() == o2.hashCode()).isTrue();
+        assertThat(o1.toString()).isEqualTo(o2.toString());
+    }
 }

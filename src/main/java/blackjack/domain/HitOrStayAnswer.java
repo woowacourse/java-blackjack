@@ -23,7 +23,7 @@ public enum HitOrStayAnswer {
         return HIT_ANSWER.get().equals(answer);
     }
 
-    public String get() {
+    private String get() {
         return answer;
     }
 }

@@ -47,4 +47,19 @@ public class DealerTest {
 
         assertThat(dealer.canHit()).isFalse();
     }
+
+    @Test
+    @DisplayName("equals, hashCode, toString 테스트")
+    void equals() {
+        Deck deck = new JustTenSpadeDeck();
+        Player o1 = new Dealer(deck);
+        Player o2 = new Dealer(deck);
+        Object o = new Object();
+
+        assertThat(o1.equals(o2)).isTrue();
+        assertThat(o1.equals(o1)).isTrue();
+        assertThat(o1.equals(o)).isFalse();
+        assertThat(o1.hashCode() == o2.hashCode()).isTrue();
+        assertThat(o1.toString()).isEqualTo(o2.toString());
+    }
 }

@@ -10,6 +10,8 @@ import blackjack.domain.card.JustBlackjackDeck;
 import blackjack.domain.card.JustTenSpadeDeck;
 import blackjack.domain.card.JustTwoSpadeDeck;
 import blackjack.domain.card.Type;
+import blackjack.domain.state.State;
+import blackjack.domain.state.Stay;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,6 +46,23 @@ public class AbstractPlayerTest {
         assertThat(playerCards.get(0)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
         assertThat(playerCards.get(1)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
         assertThat(playerCards.get(2)).isEqualTo(Card.of(CardNumber.TEN, Type.CLOVER));
+    }
+
+    @Test
+    @DisplayName("stay()를 하면 상태가 stay가 된다.")
+    void stay_test() {
+        abstractPlayer.stay();
+
+        assertThat(abstractPlayer.canHit()).isFalse();
+        assertThat(abstractPlayer.getState()).isInstanceOf(Stay.class);
+    }
+
+    @Test
+    @DisplayName("플레이어의 상태를 반환한다.")
+    void get_state_test() {
+        State state = abstractPlayer.getState();
+
+        assertThat(state).isInstanceOf(State.class);
     }
 
     @Test
@@ -99,5 +118,22 @@ public class AbstractPlayerTest {
         abstractPlayer.hit(Card.of(CardNumber.ACE, Type.SPADE));
 
         assertThat(abstractPlayer.getScore()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("equals, hashCode, toString 테스트")
+    void equals() {
+        Deck deck = new JustTwoSpadeDeck();
+        int input = 10000;
+        BetMoney money = new BetMoney(input);
+        AbstractPlayer o1 = new Participant(new Name("alien"), deck, money);
+        AbstractPlayer o2 = new Participant(new Name("alien"), deck, money);
+        Object o = new Object();
+
+        assertThat(o1.equals(o2)).isTrue();
+        assertThat(o1.equals(o1)).isTrue();
+        assertThat(o1.equals(o)).isFalse();
+        assertThat(o1.hashCode() == o2.hashCode()).isTrue();
+        assertThat(o1.toString()).isEqualTo(o2.toString());
     }
 }

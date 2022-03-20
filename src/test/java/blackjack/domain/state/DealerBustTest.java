@@ -6,6 +6,8 @@ import static blackjack.domain.CardFixture.SPADE_THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Outcome;
+import blackjack.domain.bet.BetMoney;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +39,16 @@ public class DealerBustTest {
     @DisplayName("bust일 때 stay를 하면 에러가 발생한다.")
     void stay() {
         assertThatThrownBy(bust::stay)
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    @DisplayName("딜러가 bust일 때 profit을 구하면 에러가 발생한다.")
+    void profit() {
+        int money = 100;
+        BetMoney betMoney = new BetMoney(money);
+
+        assertThatThrownBy(() -> bust.profit(Outcome.WIN, betMoney))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

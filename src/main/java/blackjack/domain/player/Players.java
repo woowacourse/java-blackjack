@@ -61,13 +61,6 @@ public class Players {
         }
     }
 
-    private void dealCards(Deck deck) {
-        for (Player player : players) {
-            player.hit(deck.pick());
-            player.hit(deck.pick());
-        }
-    }
-
     public Player getDealer() {
         return players.stream()
                 .filter(Player::isDealer)

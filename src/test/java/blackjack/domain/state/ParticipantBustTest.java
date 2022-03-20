@@ -6,6 +6,9 @@ import static blackjack.domain.CardFixture.SPADE_THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Outcome;
+import blackjack.domain.bet.BetMoney;
+import blackjack.domain.bet.Profit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +25,18 @@ public class ParticipantBustTest {
 
     @Test
     @DisplayName("참가자가 bust면 ParticipantBust가 된다.")
-    void dealer_bust() {
+    void participant_bust() {
         assertThat(bust).isInstanceOf(ParticipantBust.class);
+    }
+
+    @Test
+    @DisplayName("참가자가 bust면 수익 금액은 배팅 금액 * -1이 된다.")
+    void bust_profit() {
+        int money = 100;
+        BetMoney betMoney = new BetMoney(money);
+
+        Profit profit = bust.profit(Outcome.WIN, betMoney);
+        assertThat(profit.get()).isEqualTo(money * -1);
     }
 
     @Test

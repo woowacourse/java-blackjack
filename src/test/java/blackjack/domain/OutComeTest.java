@@ -19,6 +19,14 @@ import org.junit.jupiter.api.Test;
 public class OutComeTest {
 
     @Test
+    @DisplayName("Outcome의 get을하면 결과를 문자열로 반환한다.")
+    void get() {
+        assertThat(Outcome.WIN.get()).isEqualTo("승");
+        assertThat(Outcome.DRAW.get()).isEqualTo("무");
+        assertThat(Outcome.LOSE.get()).isEqualTo("패");
+    }
+
+    @Test
     @DisplayName("Outcome의 matchAboutPlayer 메서드는 딜러와 플레이어가 모두 Bust라면 참가자가 패배했다고 판단한다.")
     void compare_all_bust() {
         Deck deck = new JustTwoSpadeDeck();

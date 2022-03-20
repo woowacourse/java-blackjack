@@ -1,10 +1,12 @@
 package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.JustTenSpadeDeck;
 import blackjack.domain.card.RandomDeck;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,38 @@ public class PlayersTest {
         List<Player> players = List.of(aki, alien);
 
         assertThatCode(() -> new Players(players, deck)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("딜러를 찾아서 반환한다.")
+    void get_dealer() {
+        Deck deck = new RandomDeck();
+        Player aki = new Participant(new Name("aki"), deck, new BetMoney(10));
+        Player alien = new Participant(new Name("alien"), deck, new BetMoney(10));
+        List<Player> akiAndAlien = List.of(aki, alien);
+        Players players = new Players(akiAndAlien, deck);
+
+        Player dealer = players.getDealer();
+
+        assertThat(dealer).isInstanceOf(Dealer.class);
+        assertThat(dealer.isDealer()).isTrue();
+    }
+
+    @Test
+    @DisplayName("참가자를 List로 반환한다.")
+    void get_participants() {
+        Deck deck = new RandomDeck();
+        Player aki = new Participant(new Name("aki"), deck, new BetMoney(10));
+        Player alien = new Participant(new Name("alien"), deck, new BetMoney(10));
+        List<Player> akiAndAlien = List.of(aki, alien);
+        Players players = new Players(akiAndAlien, deck);
+
+        List<Player> participants = players.getParticipants();
+
+        assertThat(participants).allSatisfy(player -> {
+            assertThat(player).isInstanceOf(Participant.class);
+            assertThat(player.isDealer()).isFalse();
+        });
     }
 
     @Test
@@ -71,5 +105,22 @@ public class PlayersTest {
 
         assertThatThrownBy(() -> new Players(new ArrayList<>(), deck))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("equals, hashCode, toString 테스트")
+    void equals() {
+        Deck deck = new JustTenSpadeDeck();
+        Player p1 = new Participant(new Name("aki"), deck, new BetMoney(10));
+        Player p2 = new Participant(new Name("alien"), deck, new BetMoney(10));
+        Players o1 = new Players(List.of(p1, p2), deck);
+        Players o2 = new Players(List.of(p1, p2), deck);
+        Object o = new Object();
+
+        assertThat(o1.equals(o2)).isTrue();
+        assertThat(o1.equals(o1)).isTrue();
+        assertThat(o1.equals(o)).isFalse();
+        assertThat(o1.hashCode() == o2.hashCode()).isTrue();
+        assertThat(o1.toString()).isEqualTo(o2.toString());
     }
 }
