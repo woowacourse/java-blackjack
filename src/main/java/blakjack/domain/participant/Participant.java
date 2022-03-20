@@ -10,22 +10,24 @@ import blakjack.domain.state.running.Init;
 import java.util.List;
 
 public abstract class Participant {
-    private final State state;
+    protected State state;
 
     Participant(final PrivateArea privateArea, final Chip chip) {
         this.state = new Init(privateArea, chip);
     }
 
+    abstract public void hit(Card card);
+
     public final void initCards(final CardDeck cardDeck) {
-        state.draw(cardDeck.draw());
-        state.draw(cardDeck.draw());
+        state = state.draw(cardDeck.draw());
+        state = state.draw(cardDeck.draw());
     }
 
     public final String getName() {
         return state.getName();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return state.getCards();
     }
 }

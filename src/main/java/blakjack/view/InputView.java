@@ -2,6 +2,7 @@ package blakjack.view;
 
 import blakjack.domain.Chip;
 import blakjack.domain.PlayerName;
+import blakjack.domain.participant.Participant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,18 +17,20 @@ public class InputView {
     private static final String DUPLICATE_NAME_MESSAGE = "중복된 이름은 사용할 수 없습니다.";
     private static final String BLANK_INPUT_MESSAGE = "값을 입력해주세요.";
     private static final String NOT_NUMBER_MESSAGE = "숫자를 입력하세요.";
+    private static final String DO_HIT = "Y";
+    private static final String NO_HIT = "N";
+    private static final String INVALID_HIT_REQUEST_MESSAGE = "y 또는 n을 입력하세요.";
 
     private InputView() {
     }
 
     public static List<PlayerName> inputPlayerNames() {
         System.out.println(INPUT_NAME_MESSAGE);
-        final String rawInput = readLine();
-        return checkDuplication(convertToPlayerName(rawInput));
+        return checkDuplication(convertToPlayerName(readLine()));
     }
 
     private static String readLine() {
-        String input = SCANNER.nextLine();
+        final String input = SCANNER.nextLine();
         if (input.isBlank()) {
             System.out.println(BLANK_INPUT_MESSAGE);
             return readLine();
@@ -72,5 +75,19 @@ public class InputView {
             System.out.println(NOT_NUMBER_MESSAGE);
             return createChip();
         }
+    }
+
+    public static boolean inputHitRequest(final Participant player) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
+        final String raw = readLine();
+        if (isYorN(raw)) {
+            return DO_HIT.equalsIgnoreCase(raw);
+        }
+        System.out.println(INVALID_HIT_REQUEST_MESSAGE);
+        return inputHitRequest(player);
+    }
+
+    private static boolean isYorN(final String raw) {
+        return DO_HIT.equalsIgnoreCase(raw) || NO_HIT.equalsIgnoreCase(raw);
     }
 }
