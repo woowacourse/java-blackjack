@@ -19,10 +19,10 @@ import org.junit.jupiter.api.Test;
 
 class ProfitsTest {
 
-    Card card_K = new Card(Rank.RANK_K, Suit.DIAMOND);
-    Card card_9 = new Card(Rank.RANK_9, Suit.CLOVER);
-    Card card_4 = new Card(Rank.RANK_4, Suit.CLOVER);
-    Card card_5 = new Card(Rank.RANK_5, Suit.DIAMOND);
+    Card card_K = Card.getCard(Rank.RANK_K, Suit.DIAMOND);
+    Card card_9 = Card.getCard(Rank.RANK_9, Suit.CLOVER);
+    Card card_4 = Card.getCard(Rank.RANK_4, Suit.CLOVER);
+    Card card_5 = Card.getCard(Rank.RANK_5, Suit.DIAMOND);
     List<Card> cards_19 = List.of(card_K, card_9);
     List<Card> cards_BUST = List.of(card_K, card_9, card_4);
     Name name_player_19 = new Name("player_19");

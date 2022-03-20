@@ -22,7 +22,7 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         handForPlayer = new ArrayList<>(
-                List.of(new Card(Rank.RANK_8, Suit.CLOVER), new Card(Rank.RANK_A, Suit.CLOVER))
+                List.of(Card.getCard(Rank.RANK_8, Suit.CLOVER), Card.getCard(Rank.RANK_A, Suit.CLOVER))
         );
         player = new Player(new Name("pobi"), handForPlayer);
     }
@@ -37,7 +37,7 @@ public class PlayerTest {
     @DisplayName("최종 결과를 위한 승패 판단")
     void compareAtFinal() {
         List<Card> handForDealer = new ArrayList<>(
-                List.of(new Card(Rank.RANK_J, Suit.CLOVER), new Card(Rank.RANK_A, Suit.CLOVER)));
+                List.of(Card.getCard(Rank.RANK_J, Suit.CLOVER), Card.getCard(Rank.RANK_A, Suit.CLOVER)));
         Dealer dealer = new Dealer(handForDealer);
         assertThat(player.compareAtFinal(dealer)).isEqualTo(WinOrLose.LOSE);
     }

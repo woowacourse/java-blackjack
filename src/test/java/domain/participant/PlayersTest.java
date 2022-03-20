@@ -18,11 +18,11 @@ import domain.result.WinOrLose;
 
 public class PlayersTest {
 
-    Card card_A = new Card(Rank.RANK_A, Suit.CLOVER);
-    Card card_2 = new Card(Rank.RANK_2, Suit.CLOVER);
-    Card card_Q = new Card(Rank.RANK_Q, Suit.CLOVER);
-    Card card_K = new Card(Rank.RANK_K, Suit.CLOVER);
-    Card card_6 = new Card(Rank.RANK_6, Suit.CLOVER);
+    Card card_A = Card.getCard(Rank.RANK_A, Suit.CLOVER);
+    Card card_2 = Card.getCard(Rank.RANK_2, Suit.CLOVER);
+    Card card_Q = Card.getCard(Rank.RANK_Q, Suit.CLOVER);
+    Card card_K = Card.getCard(Rank.RANK_K, Suit.CLOVER);
+    Card card_6 = Card.getCard(Rank.RANK_6, Suit.CLOVER);
     List<Card> cards_BLACKJACK = new ArrayList<>(Arrays.asList(card_A, card_Q));
     List<Card> cards_BUST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
     Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
@@ -50,7 +50,7 @@ public class PlayersTest {
     @DisplayName("이름으로 플레이어 카드 추가")
     void addCardByName() {
         Name name = new Name("player_BLACKJACK");
-        players.addCardByName(name, new Card(Rank.RANK_A, Suit.DIAMOND));
+        players.addCardByName(name, Card.getCard(Rank.RANK_A, Suit.DIAMOND));
         assertThat(players.showHandByName(name)).isEqualTo("A♣️, Q♣️, A♦️");
     }
 

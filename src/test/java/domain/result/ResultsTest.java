@@ -20,13 +20,13 @@ import domain.participant.Players;
 
 public class ResultsTest {
 
-    Card card_A = new Card(Rank.RANK_A, Suit.CLOVER);
-    Card card_2 = new Card(Rank.RANK_2, Suit.CLOVER);
-    Card card_4 = new Card(Rank.RANK_4, Suit.CLOVER);
-    Card card_Q = new Card(Rank.RANK_Q, Suit.CLOVER);
-    Card card_K = new Card(Rank.RANK_K, Suit.CLOVER);
-    Card card_6 = new Card(Rank.RANK_6, Suit.CLOVER);
-    Card card_9 = new Card(Rank.RANK_9, Suit.CLOVER);
+    Card card_A = Card.getCard(Rank.RANK_A, Suit.CLOVER);
+    Card card_2 = Card.getCard(Rank.RANK_2, Suit.CLOVER);
+    Card card_4 = Card.getCard(Rank.RANK_4, Suit.CLOVER);
+    Card card_Q = Card.getCard(Rank.RANK_Q, Suit.CLOVER);
+    Card card_K = Card.getCard(Rank.RANK_K, Suit.CLOVER);
+    Card card_6 = Card.getCard(Rank.RANK_6, Suit.CLOVER);
+    Card card_9 = Card.getCard(Rank.RANK_9, Suit.CLOVER);
     List<Card> cards_20 = new ArrayList<>(Arrays.asList(card_A, card_9));
     List<Card> cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
     List<Card> cards_BUST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));

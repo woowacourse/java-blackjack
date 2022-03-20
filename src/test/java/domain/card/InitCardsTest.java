@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 class InitCardsTest {
 
-    Card card_A = new Card(Rank.RANK_A, Suit.HEART);
-    Card card_6 = new Card(Rank.RANK_6, Suit.SPADE);
-    Card card_Q = new Card(Rank.RANK_Q, Suit.DIAMOND);
-    Card card_9 = new Card(Rank.RANK_9, Suit.SPADE);
+    Card card_A = Card.getCard(Rank.RANK_A, Suit.HEART);
+    Card card_6 = Card.getCard(Rank.RANK_6, Suit.SPADE);
+    Card card_Q = Card.getCard(Rank.RANK_Q, Suit.DIAMOND);
+    Card card_9 = Card.getCard(Rank.RANK_9, Suit.SPADE);
     Deck deck;
 
     @BeforeEach

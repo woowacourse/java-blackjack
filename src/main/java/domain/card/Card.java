@@ -19,9 +19,23 @@ public class Card {
         }
     }
 
-    public Card(Rank rank, Suit suit) {
+    private Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
+    }
+
+    public static Card getCard(Rank rank, Suit suit) {
+        return cache.stream()
+                .filter(card -> card.getRank().equals(rank))
+                .filter(card -> card.getSuit().equals(suit))
+                .findFirst()
+                .orElse(new Card(rank, suit));
+    }
+
+    public static List<Card> getShuffledCards() {
+        ArrayList<Card> cards = new ArrayList<>(cache);
+        Collections.shuffle(cards);
+        return cards;
     }
 
     public int getPoint() {
@@ -36,9 +50,11 @@ public class Card {
         return rank.getRank() + suit.getSuit();
     }
 
-    public static List<Card> getShuffledCards() {
-        ArrayList<Card> cards = new ArrayList<>(cache);
-        Collections.shuffle(cards);
-        return cards;
+    private Rank getRank() {
+        return rank;
+    }
+
+    private Suit getSuit() {
+        return suit;
     }
 }
