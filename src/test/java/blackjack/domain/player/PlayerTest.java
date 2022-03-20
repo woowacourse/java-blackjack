@@ -178,6 +178,22 @@ public class PlayerTest {
         assertThat(gameResult).isEqualTo(BLACKJACK);
     }
 
+    @DisplayName("딜러가 블랙잭이면 플레이어 패")
+    @Test
+    void 딜러_블랙잭_플레이어_패() {
+        //12점
+        List<Card> loseByPlayer = generate21Cards();
+        //12점
+        List<Card> blackJackByDealer = generateBlackJackCards();
+
+        Dealer dealer = new Dealer(blackJackByDealer);
+        Player player = new Player("sudal", new BettingMoney(), loseByPlayer);
+
+        GameResult gameResult = player.createResult(dealer);
+
+        assertThat(gameResult).isEqualTo(LOSE);
+    }
+
     @DisplayName("플레이어가 이겼을 때 최종 배팅 머니 계산")
     @Test
     void 배팅금액_합계_승리() {

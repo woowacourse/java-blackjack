@@ -18,7 +18,7 @@ public class Player extends Gamer {
     }
 
     public GameResult createResult(Gamer dealer) {
-        if (isBust()) {
+        if (isBust()|| !isBlackJack() && dealer.isBlackJack()) {
             return GameResult.LOSE;
         }
         if (dealer.isBust()) {
