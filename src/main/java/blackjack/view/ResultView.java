@@ -1,14 +1,13 @@
 package blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.ParticipantDto;
-import blackjack.domain.BlackJack;
-import blackjack.domain.card.Card;
+import blackjack.domain.Blackjack;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.Revenue;
 
 public class ResultView {
 
@@ -19,49 +18,42 @@ public class ResultView {
 	private static final String MESSAGE_DEALER_RECEIVE = "딜러는 16이하라 한장의 카드를 더 받았습니다";
 	private static final String MESSAGE_DEALER_NOT_RECEIVE = "딜러는 17이상이라 카드를 더 받지 않았습니다.";
 	private static final String RESULT_DELIMITER = " - 결과: ";
-	private static final String MESSAGE_FINAL_RESULT = "\n## 최종 승패";
-	private static final String MESSAGE_WIN = "승 ";
-	private static final String MESSAGE_LOSE = "패 ";
+	private static final String MESSAGE_FINAL_RESULT = "\n## 최종 수익";
 
-	public static void showStartingStatus(BlackJack blackJack) {
+	public static void showStartingStatus(Blackjack blackJack) {
 		System.out.printf(MESSAGE_HAND_OUT_CARD, String.join(DELIMITER_COMMA, getPlayerNames(blackJack)));
 		showDealerStartingStatus(blackJack);
 		showPlayerStartingStatus(blackJack);
 		System.out.println();
 	}
 
-	private static String[] getPlayerNames(BlackJack blackJack) {
+	private static List<String> getPlayerNames(Blackjack blackJack) {
 		return blackJack.getPlayers().stream()
-			.map(ParticipantDto::from)
-			.map(ParticipantDto::getName)
-			.toArray(String[]::new);
+			.map(Player::getName)
+			.collect(Collectors.toList());
 	}
 
-	private static void showDealerStartingStatus(BlackJack blackJack) {
-		ParticipantDto participantDto = ParticipantDto.from(blackJack.getDealer());
-		Card firstCard = participantDto.getCards().get(0);
-		System.out.println(participantDto.getName() + DELIMITER_COLON + firstCard.getName());
+	private static void showDealerStartingStatus(Blackjack blackJack) {
+		Dealer dealer = blackJack.getDealer();
+		System.out.println(dealer.getName() + DELIMITER_COLON + dealer.getFirstCardName());
 	}
 
-	private static void showPlayerStartingStatus(BlackJack blackJack) {
+	private static void showPlayerStartingStatus(Blackjack blackJack) {
 		for (Player player : blackJack.getPlayers()) {
 			showEachPlayerStatus(player);
 		}
 	}
 
 	public static void showEachPlayerStatus(Player player) {
-		System.out.println(getStatus(ParticipantDto.from(player)));
-		if (player.bust()) {
+		System.out.println(getStatus(player));
+		if (player.isBust()) {
 			System.out.println(MESSAGE_SCORE_OVER_21);
 		}
 	}
 
-	private static String getStatus(ParticipantDto participantDto) {
-		List<String> playerCardStatus = participantDto.getCards().stream()
-			.map(Card::getName)
-			.collect(Collectors.toList());
-
-		return participantDto.getName() + DELIMITER_COLON + String.join(DELIMITER_COMMA, playerCardStatus);
+	private static String getStatus(Participant participant) {
+		List<String> playerCardStatus = participant.getCardNames();
+		return participant.getName() + DELIMITER_COLON + String.join(DELIMITER_COMMA, playerCardStatus);
 	}
 
 	public static void showDealerHitOrNot(Boolean isEnough) {
@@ -73,43 +65,32 @@ public class ResultView {
 		System.out.println(MESSAGE_DEALER_RECEIVE);
 	}
 
-	public static void showFinalStatus(BlackJack blackJack) {
+	public static void showFinalStatus(Blackjack blackJack) {
 		System.out.println();
 		Dealer dealer = blackJack.getDealer();
-		System.out.println(getStatus(ParticipantDto.from(dealer)) + RESULT_DELIMITER + dealer.getScore());
+		System.out.println(getStatus(dealer) + RESULT_DELIMITER + dealer.getScore());
 		for (Player player : blackJack.getPlayers()) {
-			System.out.println(getStatus(ParticipantDto.from(player)) + RESULT_DELIMITER + player.getScore());
+			System.out.println(getStatus(player) + RESULT_DELIMITER + player.getScore());
 		}
 	}
 
-	public static void showResult(BlackJack blackJack) {
+	public static void showResult(Blackjack blackJack) {
 		System.out.println(MESSAGE_FINAL_RESULT);
-		Map<Player, Boolean> result = blackJack.calculateResult();
-		showDealerResult(blackJack, result);
-		showPlayerResults(result);
+		showDealerResult(blackJack);
+		showPlayerResults(blackJack);
 	}
 
-	private static void showDealerResult(BlackJack blackJack, Map<Player, Boolean> result) {
-		int loseCount = (int)result.values().stream()
-			.filter(value -> value)
-			.count();
-		int winCount = result.size() - loseCount;
-
-		ParticipantDto dealer = ParticipantDto.from(blackJack.getDealer());
-		System.out.println(dealer.getName() + DELIMITER_COLON + winCount + MESSAGE_WIN + loseCount + MESSAGE_LOSE);
+	private static void showDealerResult(Blackjack blackJack) {
+		Revenue revenue = Revenue.of(blackJack);
+		Dealer dealer = blackJack.getDealer();
+		System.out.println(dealer.getName() + DELIMITER_COLON + (-revenue.getTotalRevenue()));
 	}
 
-	private static void showPlayerResults(Map<Player, Boolean> result) {
-		result.keySet().stream()
-			.map(player -> ParticipantDto.from(player).getName() + DELIMITER_COLON + decodeResult(
-				result.get(player)))
+	private static void showPlayerResults(Blackjack blackjack) {
+		Revenue revenue = Revenue.of(blackjack);
+		List<Player> players = blackjack.getPlayers();
+		players.stream()
+			.map(player -> player.getName() + DELIMITER_COLON + revenue.getRevenue(player))
 			.forEach(System.out::println);
-	}
-
-	private static String decodeResult(Boolean isWin) {
-		if (isWin) {
-			return MESSAGE_WIN;
-		}
-		return MESSAGE_LOSE;
 	}
 }

@@ -5,11 +5,19 @@ public class Dealer extends Participant {
 	private static final int DEALER_HIT_CARD_STANDARD = 16;
 
 	public Dealer() {
-		super(Name.from(DEALER_NAME));
+		super(new Name(DEALER_NAME));
+	}
+
+	public String getFirstCardName() {
+		return getCards().getFirstCardName();
+	}
+
+	public boolean shouldHit() {
+		return getScore() > DEALER_HIT_CARD_STANDARD;
 	}
 
 	@Override
-	public boolean shouldHit() {
-		return getScore() > DEALER_HIT_CARD_STANDARD;
+	public int getScore() {
+		return super.getCards().sumWithoutCheckAce();
 	}
 }

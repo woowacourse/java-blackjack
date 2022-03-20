@@ -3,15 +3,20 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
-	private static final int CRITERIA_SELECT_ACE_VALUE = 11;
+	private static final int BUST_VALUE = 21;
 	private static final int ADDITIONAL_ACE_VALUE = 10;
 
 	private final List<Card> cards;
 
 	public Cards() {
-		this.cards = new ArrayList<>();
+		this(new ArrayList<>());
+	}
+
+	public Cards(List<Card> cards) {
+		this.cards = cards;
 	}
 
 	public void addCard(Card card) {
@@ -19,13 +24,17 @@ public class Cards {
 	}
 
 	public int sum() {
-		int sum = cards.stream()
-			.mapToInt(Card::getValue)
-			.sum();
+		int sum = sumWithoutCheckAce();
 		if (hasAce()) {
 			return selectAceValue(sum);
 		}
 		return sum;
+	}
+
+	public int sumWithoutCheckAce() {
+		return cards.stream()
+			.mapToInt(Card::getNumber)
+			.sum();
 	}
 
 	private boolean hasAce() {
@@ -35,27 +44,41 @@ public class Cards {
 	}
 
 	private int selectAceValue(int sum) {
-		if (sum <= CRITERIA_SELECT_ACE_VALUE) {
-			sum += ADDITIONAL_ACE_VALUE;
+		if (sum > BUST_VALUE) {
+			sum -= ADDITIONAL_ACE_VALUE;
 		}
 		return sum;
 	}
 
 	public Card pickRandomCard() {
 		shuffle();
-		return pickCard();
+		return pickFirstCard();
 	}
 
 	private void shuffle() {
 		Collections.shuffle(this.cards);
 	}
 
-	private Card pickCard() {
+	private Card pickFirstCard() {
 		return this.cards.get(0);
 	}
 
 	public void remove(Card card) {
 		this.cards.remove(card);
+	}
+
+	public String getFirstCardName() {
+		return pickFirstCard().getName();
+	}
+
+	public List<String> getCardNames() {
+		return this.cards.stream()
+			.map(Card::getName)
+			.collect(Collectors.toList());
+	}
+
+	public int size() {
+		return this.cards.size();
 	}
 
 	public List<Card> getCards() {

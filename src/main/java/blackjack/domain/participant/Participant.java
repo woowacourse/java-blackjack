@@ -16,25 +16,29 @@ public abstract class Participant {
 		this.cards = new Cards();
 	}
 
-	public void receiveCard(Card card) {
+	public final void receiveCard(Card card) {
 		cards.addCard(card);
 	}
 
-	public Boolean bust() {
+	public final Boolean isBust() {
 		return getScore() > MAX_SCORE;
 	}
 
-	abstract public boolean shouldHit();
-
-	public int getScore() {
-		return cards.sum();
+	public final Boolean isBlackjack() {
+		return cards.size() == 2 && getScore() == 21;
 	}
 
-	public String getName() {
+	abstract public int getScore();
+
+	public final List<String> getCardNames() {
+		return cards.getCardNames();
+	}
+
+	public final String getName() {
 		return name.getName();
 	}
 
-	public List<Card> getCards() {
-		return this.cards.getCards();
+	public final Cards getCards() {
+		return new Cards(cards.getCards());
 	}
 }
