@@ -4,7 +4,7 @@ import utils.ExceptionMessages;
 
 public final class BettingMoney {
 
-    public static final int ZERO_MONEY = 0;
+    private static final int ZERO_MONEY = 0;
 
     private final int money;
 
