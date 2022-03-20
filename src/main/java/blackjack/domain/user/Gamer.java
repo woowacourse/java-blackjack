@@ -14,28 +14,29 @@ public abstract class Gamer {
 
 	protected State state;
 
-	public Gamer(final String name, final Deck deck) {
+	protected Gamer(final String name, final Deck deck) {
 		this.name = new Name(name);
-		addTwoCards(deck);
+		state = initialState(deck);
 	}
 
-	private void addTwoCards(final Deck deck) {
+	protected Gamer(final Name name) {
+		this.name = name;
+	}
+
+	private State initialState(final Deck deck) {
+		Cards cards = addTwoCards(deck);
+		return InitialTurn.createState(cards);
+	}
+
+	private Cards addTwoCards(Deck deck) {
 		Cards cards = new Cards();
 		cards.addCard(deck.distributeCard());
 		cards.addCard(deck.distributeCard());
-		state = InitialTurn.createState(cards);
-	}
-
-	public void addCard(final Card card){
-		changeState(this.state.draw(card));
+		return cards;
 	}
 
 	public boolean isBlackJack() {
 		return this.state.getCards().isBlackJack();
-	}
-
-	public void changeState(State changedState) {
-		this.state = changedState;
 	}
 
 	public List<Card> getCards() {
@@ -54,11 +55,23 @@ public abstract class Gamer {
 		return this.state.isRunning();
 	}
 
+	public State state() {
+		return this.state;
+	}
+
+	public Cards cards() {
+		return this.state.getCards();
+	}
+
+	public void addCard(final Card card){
+		changeState(this.state.draw(card));
+	}
+
 	public void stay() {
 		changeState(state.stay());
 	}
 
-	public State state() {
-		return this.state;
+	private void changeState(State changedState){
+		this.state = changedState;
 	}
 }

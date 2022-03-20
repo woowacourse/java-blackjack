@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
 	public static final String EMPTY_PLAYER_EXCEPTION = "플레이어를 한명 이상 입력해야 합니다.";
@@ -36,6 +37,12 @@ public class Players {
 	}
 
 	public List<Player> getPlayers() {
-		return Collections.unmodifiableList(players);
+		return Collections.unmodifiableList(copyPlayers());
+	}
+
+	private List<Player> copyPlayers() {
+		return players.stream()
+			.map(Player::newInstance)
+			.collect(Collectors.toList());
 	}
 }

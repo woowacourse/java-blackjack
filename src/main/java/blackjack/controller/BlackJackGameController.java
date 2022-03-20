@@ -71,7 +71,7 @@ public class BlackJackGameController {
 	private void progressOnePlayer(Deck deck, Player player) {
 		while (player.isRunning() && decidePlayerHit(player)) {
 			player.addCard(deck.distributeCard());
-			outputView.displayAllCard(player.getName(), player.state().getCards().getCards());
+			outputView.displayAllCard(player.getName(), player.cards().getCards());
 		}
 	}
 

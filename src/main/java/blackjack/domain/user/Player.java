@@ -13,6 +13,16 @@ public class Player extends Gamer {
 		this.money = new Money(money);
 	}
 
+	private Player(Player player) {
+		super(player.name);
+		this.money = player.money;
+		this.state = player.state;
+	}
+
+	public static Player newInstance(Player player) {
+		return new Player(player);
+	}
+
 	public Money getMoney() {
 		return this.money;
 	}
