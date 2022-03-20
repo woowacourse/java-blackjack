@@ -7,10 +7,11 @@ import blackjack.domain.user.state.Ready;
 
 public final class Dealer extends User {
 
+    private static final String NAME = "딜러";
     private static final int INIT_COUNT = 1;
 
     public Dealer() {
-        super("딜러", new Ready());
+        super(NAME, new Ready());
     }
 
     @Override
