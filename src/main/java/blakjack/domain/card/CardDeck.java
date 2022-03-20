@@ -2,7 +2,7 @@ package blakjack.domain.card;
 
 import java.util.*;
 
-public final class CardDeck {
+public class CardDeck {
     private static final String EMPTY_MESSAGE = "카드가 모두 소진됐습니다.";
 
     private final Queue<Card> deck = new LinkedList<>();
