@@ -68,8 +68,7 @@ public class ResultView {
                 dealer.getName(), dealer.getAddedCount());
     }
 
-
-    public void printResult(PlayersDto players, ProfitsDto profits) {
+    public void printProfits(PlayersDto players, ProfitsDto profits) {
         printScores(players);
         printProfits(profits);
     }
