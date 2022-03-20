@@ -2,7 +2,7 @@ package blackjack.domain.prizecalculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.PlayerStatus;
+import blackjack.domain.participant.playerstatus.Bust;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,7 +15,7 @@ class BustCalculatorTest {
             "22:false:400:-400"}, delimiter = ':')
     void calculatePrize_bust(int dealerScore, boolean dealerBlackjack, int bettingAmount, int expected) {
         // give
-        final PrizeCalculator prizeCalculator = PlayerStatus.BUST.findCalculator();
+        final PrizeCalculator prizeCalculator = Bust.getInstance().findCalculator();
 
         // when
         final double actual = prizeCalculator.calculate(22, dealerScore, dealerBlackjack, bettingAmount);

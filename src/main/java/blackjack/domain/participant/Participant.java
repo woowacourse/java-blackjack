@@ -2,6 +2,9 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.playerstatus.Blackjack;
+import blackjack.domain.participant.playerstatus.Hit;
+import blackjack.domain.participant.playerstatus.PlayerStatus;
 import java.util.stream.IntStream;
 
 public abstract class Participant {
@@ -13,7 +16,7 @@ public abstract class Participant {
 
     public Participant() {
         this.cards = new Cards();
-        this.playerStatus = PlayerStatus.HIT;
+        this.playerStatus = Hit.getInstance();
     }
 
     public void initCards(Deck deck) {
@@ -31,11 +34,15 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return playerStatus == PlayerStatus.BLACKJACK;
+        return playerStatus == Blackjack.getInstance();
     }
 
     protected boolean checkBlackjack() {
         return cards.isBlackjack(INITIAL_CARD_COUNT);
+    }
+
+    public PlayerStatus getStatus() {
+        return playerStatus;
     }
 
     public abstract void hit(Deck deck);

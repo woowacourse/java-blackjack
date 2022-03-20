@@ -2,6 +2,9 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.playerstatus.Blackjack;
+import blackjack.domain.participant.playerstatus.Bust;
+import blackjack.domain.participant.playerstatus.Stay;
 
 public class Dealer extends Participant {
 
@@ -24,14 +27,14 @@ public class Dealer extends Participant {
 
     public void updateStatus() {
         if (checkBlackjack()) {
-            playerStatus = PlayerStatus.BLACKJACK;
+            playerStatus = Blackjack.getInstance();
             return;
         }
         if (cards.isBust()) {
-            playerStatus = PlayerStatus.BUST;
+            playerStatus = Bust.getInstance();
             return;
         }
-        playerStatus = PlayerStatus.STAY;
+        playerStatus = Stay.getInstance();
     }
 
     public Card openFirstCard() {

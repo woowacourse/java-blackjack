@@ -2,7 +2,7 @@ package blackjack.domain.prizecalculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.PlayerStatus;
+import blackjack.domain.participant.playerstatus.Stay;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,7 +15,7 @@ class StayCalculatorTest {
     void calculatePrize_default1(int playerScore, int dealerScore, boolean dealerBlackjack, int bettingAmount,
                                  int expected) {
         // give
-        final PrizeCalculator prizeCalculator = PlayerStatus.STAY.findCalculator();
+        final PrizeCalculator prizeCalculator = Stay.getInstance().findCalculator();
 
         // when
         final double actual = prizeCalculator.calculate(playerScore, dealerScore, dealerBlackjack, bettingAmount);
@@ -30,7 +30,7 @@ class StayCalculatorTest {
     void calculatePrize_default2(int playerScore, int dealerScore, boolean dealerBlackjack, int bettingAmount,
                                  int expected) {
         // give
-        final PrizeCalculator prizeCalculator = PlayerStatus.STAY.findCalculator();
+        final PrizeCalculator prizeCalculator = Stay.getInstance().findCalculator();
 
         // when
         final double actual = prizeCalculator.calculate(playerScore, dealerScore, dealerBlackjack, bettingAmount);
@@ -45,7 +45,7 @@ class StayCalculatorTest {
     void calculatePrize_default3(int playerScore, int dealerScore, boolean dealerBlackjack, int bettingAmount,
                                  int expected) {
         // give
-        final PrizeCalculator prizeCalculator = PlayerStatus.STAY.findCalculator();
+        final PrizeCalculator prizeCalculator = Stay.getInstance().findCalculator();
 
         // when
         final double actual = prizeCalculator.calculate(playerScore, dealerScore, dealerBlackjack, bettingAmount);

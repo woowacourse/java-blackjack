@@ -5,12 +5,18 @@ import static blackjack.domain.card.CardNumber.JACK;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.NINE;
 import static blackjack.domain.card.CardNumber.QUEEN;
+import static blackjack.domain.card.CardNumber.TWO;
 import static blackjack.domain.card.CardSymbol.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.playerstatus.Blackjack;
+import blackjack.domain.participant.playerstatus.Bust;
+import blackjack.domain.participant.playerstatus.Hit;
+import blackjack.domain.participant.playerstatus.PlayerStatus;
+import blackjack.domain.participant.playerstatus.Stay;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
@@ -43,13 +49,12 @@ class PlayerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"TWO:BUST", "ACE:HIT"}, delimiter = ':')
+    @Test
     @DisplayName("카드를 뽑은 후 상태를 업데이트한다.")
-    void hit(CardNumber cardNumber, PlayerStatus expected) {
+    void hit_bust() {
         // give
         final List<Card> cards = List.of(
-                Card.of(DIAMOND, cardNumber),
+                Card.of(DIAMOND, TWO),
                 Card.of(DIAMOND, QUEEN),
                 Card.of(DIAMOND, JACK));
         final Deck deck = Deck.from(() -> cards);
@@ -60,19 +65,40 @@ class PlayerTest {
                 .forEach(player::hit);
 
         // when
-        final PlayerStatus actual = player.getPlayerStatus();
+        final PlayerStatus actual = player.getStatus();
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(Bust.getInstance());
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"TWO:STAY", "ACE:STAY"}, delimiter = ':')
-    @DisplayName("카드를 더 이상 받지 않는다면 상태를 업데이트한다.")
-    void stay(CardNumber cardNumber, PlayerStatus expected) {
+    @Test
+    @DisplayName("카드를 뽑은 후 상태를 업데이트한다.")
+    void hit_hit() {
         // give
         final List<Card> cards = List.of(
-                Card.of(DIAMOND, cardNumber),
+                Card.of(DIAMOND, ACE),
+                Card.of(DIAMOND, QUEEN),
+                Card.of(DIAMOND, JACK));
+        final Deck deck = Deck.from(() -> cards);
+
+        final Player player = new Player("rick");
+        IntStream.range(0, 3)
+                .mapToObj(i -> deck)
+                .forEach(player::hit);
+
+        // when
+        final PlayerStatus actual = player.getStatus();
+
+        // then
+        assertThat(actual).isEqualTo(Hit.getInstance());
+    }
+
+    @Test
+    @DisplayName("카드를 더 이상 받지 않는다면 상태를 업데이트한다.")
+    void stay() {
+        // give
+        final List<Card> cards = List.of(
+                Card.of(DIAMOND, TWO),
                 Card.of(DIAMOND, NINE),
                 Card.of(DIAMOND, JACK));
         final Deck deck = Deck.from(() -> cards);
@@ -84,10 +110,10 @@ class PlayerTest {
 
         // when
         player.stay();
-        final PlayerStatus actual = player.getPlayerStatus();
+        final PlayerStatus actual = player.getStatus();
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(Stay.getInstance());
     }
 
     @Test
@@ -106,10 +132,10 @@ class PlayerTest {
 
         // when
         player.stay();
-        final PlayerStatus actual = player.getPlayerStatus();
+        final PlayerStatus actual = player.getStatus();
 
         // then
-        assertThat(actual).isEqualTo(PlayerStatus.BLACKJACK);
+        assertThat(actual).isEqualTo(Blackjack.getInstance());
     }
 
     @Test

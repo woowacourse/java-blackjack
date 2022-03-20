@@ -3,6 +3,10 @@ package blackjack.domain.participant;
 import blackjack.domain.BettingAmount;
 import blackjack.domain.Name;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.playerstatus.Blackjack;
+import blackjack.domain.participant.playerstatus.Bust;
+import blackjack.domain.participant.playerstatus.CalculableStatus;
+import blackjack.domain.participant.playerstatus.Stay;
 import blackjack.domain.prizecalculator.PrizeCalculator;
 
 public class Player extends Participant {
@@ -30,24 +34,23 @@ public class Player extends Participant {
         cards.add(deck.drawCard());
 
         if (cards.isBust()) {
-            playerStatus = PlayerStatus.BUST;
+            playerStatus = Bust.getInstance();
         }
     }
 
     public void stay() {
         if (checkBlackjack()) {
-            playerStatus = PlayerStatus.BLACKJACK;
+            playerStatus = Blackjack.getInstance();
             return;
         }
-        playerStatus = PlayerStatus.STAY;
+        playerStatus = Stay.getInstance();
     }
 
     public PrizeCalculator findCalculator() {
-        return playerStatus.findCalculator();
-    }
-
-    PlayerStatus getPlayerStatus() {
-        return playerStatus;
+        if (playerStatus.isRunning()) {
+            throw new IllegalStateException();
+        }
+        return ((CalculableStatus) playerStatus).findCalculator();
     }
 
     public double getBettingAmount() {
