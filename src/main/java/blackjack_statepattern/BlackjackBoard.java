@@ -36,6 +36,10 @@ public final class BlackjackBoard {
         }
     }
 
+    public void hitCard(Participant participant) {
+        participant.receiveCard(cardDeck.draw());
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
@@ -62,7 +66,7 @@ public final class BlackjackBoard {
         return CardsDto.of(participantsCards);
     }
 
-    public void hitCard(Participant participant) {
-        participant.receiveCard(cardDeck.draw());
+    public GameResult getGameResult() {
+        return GameResult.of(dealer, players.getPlayers());
     }
 }

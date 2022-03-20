@@ -1,7 +1,6 @@
 package blackjack_statepattern;
 
 import blackjack_statepattern.card.CardDeck;
-import blackjack_statepattern.dto.CardsDto;
 import blackjack_statepattern.participant.BetMoney;
 import blackjack_statepattern.participant.Dealer;
 import blackjack_statepattern.participant.Player;
@@ -85,8 +84,7 @@ public final class BlackjackGame {
     }
 
     private void printResult() {
-        CardsDto finalCardsDto = blackjackBoard.getFinalCardsDto();
-        OutputView.printFinalCards(finalCardsDto);
-        OutputView.printGameResult(GameResult.of(blackjackBoard.getDealer(), blackjackBoard.getPlayers()));
+        OutputView.printFinalCards(blackjackBoard.getFinalCardsDto());
+        OutputView.printGameResult(blackjackBoard.getGameResult());
     }
 }
