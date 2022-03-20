@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
-    private Name name;
-    private HoldingCards holdingCards = new HoldingCards();
+    private final Name name;
+    private final HoldingCards holdingCards = new HoldingCards();
 
     public Participant(String name) {
         this.name = new Name(name);
