@@ -53,7 +53,7 @@ public class BlackJackController {
     }
 
     private void hitDealer() {
-        if (service.canReceiveCard(DEALER_NAME)) {
+        while (service.canReceiveCard(DEALER_NAME)) {
             service.hitDealer();
             OutputView.printHitDealer();
         }
