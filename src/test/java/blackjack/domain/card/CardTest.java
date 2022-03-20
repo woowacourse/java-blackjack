@@ -23,4 +23,25 @@ public class CardTest {
         Card card = new Card(Denomination.ACE, Suit.DIAMOND);
         assertThat(card.isAce()).isTrue();
     }
+
+    @Test
+    @DisplayName("카드의 문양을 확인한다.")
+    void checkDenomination() {
+        Card card = new Card(Denomination.ACE, Suit.DIAMOND);
+        assertThat(card.getDenomination()).isEqualTo(Denomination.ACE);
+    }
+
+    @Test
+    @DisplayName("카드의 문양 내용을을 확인한다.")
+    void checkDenominationName() {
+        Card card = new Card(Denomination.ACE, Suit.DIAMOND);
+        assertThat(card.getDenominationName()).isEqualTo("A");
+    }
+
+    @Test
+    @DisplayName("카드의 숫자 내용을을 확인한다.")
+    void checkSuitName() {
+        Card card = new Card(Denomination.TWO, Suit.DIAMOND);
+        assertThat(card.getSuitName()).isEqualTo("다이아몬드");
+    }
 }

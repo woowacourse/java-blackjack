@@ -50,4 +50,30 @@ public class CardsTest {
         Assertions.assertThat(cards.getTotalScore()).isEqualTo(21);
 
     }
+
+    @Test
+    @DisplayName("에이스 카드의 개수를 파악한다.")
+    void countAce() {
+        Cards cards = new Cards(
+                List.of(new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE)));
+        cards.addCard(new Card(Denomination.ACE, Suit.HEART));
+        Assertions.assertThat(cards.countAce()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("카드의 개수가 두개일 때 확인")
+    void hasTwoCards() {
+        Cards cards = new Cards(
+                List.of(new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE)));
+        cards.addCard(new Card(Denomination.ACE, Suit.HEART));
+        Assertions.assertThat(cards.hasTwoCards()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드의 개수가 두개가 아닐 때 확인")
+    void hasNotTwoCards() {
+        Cards cards = new Cards(
+                List.of(new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE)));
+        Assertions.assertThat(cards.hasTwoCards()).isTrue();
+    }
 }
