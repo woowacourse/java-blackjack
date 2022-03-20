@@ -138,15 +138,15 @@
 
 ### 📋 3차 피드백 수정 필요 항목
 
-- [x] `GameResult` - `getDealerResult` 함수 네이밍 수정 
+- [x] `GameResult` - `getDealerResult` 함수 네이밍 수정
     - ~~메서드의 이름만으로 메서드가 어떤 `GameResult`를 반환하는지 짐작하기 어렵다.~~
     - ~~플레이어 입장에서 계산된 `GameResult`에서만 호출된다고 가정하는 것 같다.~~
     - ~~딜러의 입장에서 계산된 결과를 플레이어 입장의 결과로 변환해야한다면 동일한 메서드지만 `getPlayerResult`와 같이 구현할 수 있을 것이다.~~
-    - 2단계를 진행하면서 해당 클래스 미사용 
-      - 비슷한 맥락으로 `GameResult`에서 각 플레이어 별 `profit`, 딜러가 사용하는 통계 `nonTotalProfit`과 같이 네이밍하여 사용
+    - 2단계를 진행하면서 해당 클래스 미사용
+        - 비슷한 맥락으로 `GameResult`에서 각 플레이어 별 `profit`, 딜러가 사용하는 통계 `nonTotalProfit`과 같이 네이밍하여 사용
 - [x] `GameController` - `hitOrStandDealer`
     - 동사로 시작하는 이름은 어떤지
-    - 동사로 시작하면서 플레이어의 차례를 보낸다는 의미로 `playTurnDealer`, `playTurnGambler`로 수정 
+    - 동사로 시작하면서 플레이어의 차례를 보낸다는 의미로 `playTurnDealer`, `playTurnGambler`로 수정
 - [ ] `Statistic` - `getResultAtBurst`
     - ~~At은 if의 의미인지
         - 처음에 IF를 사용하려했으나 함수명에 if가 들어가는 것은 좋은 것 같지 않아 At으로 수정
@@ -158,7 +158,7 @@
 - [x] `Gambler` - `getCardNeedGambler`
     - `findHitGambler`라는 네이밍은 어떤지.
 - [x] `Name` - `NULL_NAME` 상수가 `EMPTY_NAME`인지
-  - 비어있는 이름이라는 의미에서 `NULL_NAME`으로 사용하였고 `EMPTY_NAME`이 적합하여 수정
+    - 비어있는 이름이라는 의미에서 `NULL_NAME`으로 사용하였고 `EMPTY_NAME`이 적합하여 수정
 - [x] `Name` - `validateNullName()`
     - `String.trim()`의 사용을 통해 조건식을 더 간단하게 수정
     - `trim()`,`replace()`를 사용하여 공백 제거
@@ -176,3 +176,38 @@
     - 한 두단어로 설명이 가능한 메서드명이 좋지만 다소 길어지더라도 동작을 명확하게 나타내는 것을 우선하기를 권장
 - 문제(도메인)을 코드로 나타내기 전에 실제 문제에 대해 파악하는 것은 구현에 도움
     - 이번 블랙잭 미션에서는 블랙잭이 어떤 게임인지, 사용하는 용어는 무엇인지
+
+## 2단계 - 블랙잭(베팅)
+
+### 1차 피드백
+
+- [ ] `dealer`의 초기 2장 지급 하는 메서드 호출 위치
+    - 컨트롤러 or 생성자
+    - 테스트를 진행하기 위해 컨트롤러로 분리했음.
+- [ ] `GameController`
+    - [ ] `playTurnGambler`, 직관적인 이름으로 수정 -> `playGamblerTurn`
+    - [ ] Line 17, 불필요한 상수 제거
+- [ ] `GameStatistic`
+    - [ ] non profit의 의미
+    - [ ] `FLAG`, `VALUE`와 같은 단어들은 상수/변수/메서드명에 사용됐을 때 역할을 나타내는 데 도움이 되는 경우가 많지 않다.
+    - [ ] `profit` -> `getProfitOf` 이름 수정
+        - 더 잘 나타내는 이름으로 수정하거나 상수를 만들지 않고 처리하는 방법
+    - [ ] `getGameResult`과 `porfit` 메서드는 하나가 불필요한 메서드
+- [ ] `Card`
+    - [ ] 사용하지 않는 코드(주석) 제거
+- [ ] `Gambler`, `Cards`
+    - 동일한 이름의 상수가 선언되어 있다. 서로 다른 의미를 가진 상수인지?
+- [ ] `Cards`
+    - 불변 객체라면 비어있는 `Cards` 객체를 여러 곳에서 사용해도 안전하다.
+    - JDK의 `Optional`이 `empty()`를 어떻게 반환하는지 살펴보기
+    - `isReady()` 함수가 무엇이 준비되었는지 확인하는 것인가
+- [ ] `Finished` <- `Started`
+    - 상속 관계는 논리적으로 타당한가. (이펙티브 자바 p.119)
+- [ ] `State`를 이용한 패턴을 사용했을 때 무엇을 추상화 한것인가.
+    - 메서드 중 일부에 `IllegalStateException` 반환만 하는 구현
+        - `인터페이스 분리 원칙 위반 의심`
+- [ ] 테스트 @DisplayName에서 "테스트"라는 내용의 반복, 불필요해 보임.
+    - `딜러가 Hit이면 isHit()가 참을 반환한다.`와 같이 설명이 잘될 수 있도록 수정
+
+### 피드백 참조
+- [인터페이스 분리 원칙](https://ko.wikipedia.org/wiki/%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4_%EB%B6%84%EB%A6%AC_%EC%9B%90%EC%B9%99)
