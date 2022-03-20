@@ -5,30 +5,10 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.CardFixtures;
 import blackjack.domain.HandFixtures;
 import blackjack.domain.money.Money;
 
 class StayTest {
-
-    @Test
-    @DisplayName("히트시 예외를 던진다.")
-    public void throwsExceptionOnHit() {
-        // given & when
-        State state = new Stay(HandFixtures.STAY_HAND_15);
-        // then
-        assertThatExceptionOfType(IllegalStateException.class)
-            .isThrownBy(() -> state.hit(CardFixtures.ACE));
-    }
-
-    @Test
-    @DisplayName("스테이시 예외를 던진다.")
-    public void throwsExceptionOnStay() {
-        State state = new Stay(HandFixtures.STAY_HAND_15);
-        // then
-        assertThatExceptionOfType(IllegalStateException.class)
-            .isThrownBy(state::stay);
-    }
 
     @Test
     @DisplayName("블랙잭을 상대로 패배한다.")

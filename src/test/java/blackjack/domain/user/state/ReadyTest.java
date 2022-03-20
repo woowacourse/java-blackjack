@@ -37,23 +37,13 @@ class ReadyTest {
     }
 
     @Test
-    @DisplayName("레디 상태에서는 스테이를 할 수 없다.")
-    public void throwsExceptionOnStay() {
+    @DisplayName("스테이를 시도하면 예외를 던진다.")
+    public void throwsExceptionWhenTryingToStay() {
         // given & when
         State state = new Ready();
-        // then
-        Assertions.assertThatExceptionOfType(IllegalStateException.class)
-            .isThrownBy(state::stay);
-    }
 
-    @Test
-    @DisplayName("레디 상태는 블랙잭이 아니다.")
-    public void testIfIsBlackJackFalse() {
-        // given
-        State state = new Ready();
-        // when
-        boolean isBlackjack = state.isBlackjack();
         // then
-        assertThat(isBlackjack).isFalse();
+        assertThatExceptionOfType(IllegalStateException.class)
+            .isThrownBy(() -> state.stay());
     }
 }
