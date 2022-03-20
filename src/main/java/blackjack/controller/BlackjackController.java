@@ -34,7 +34,7 @@ public class BlackjackController {
     }
 
     private void askDealCardToPlayer(Blackjack blackjack, Player player) {
-        while (!player.score().isBust() && !player.initScore().isMax()
+        while (!player.isBust() && !player.isBlackjack()
                 && InputView.askAdditionalCard(player)) {
             blackjack.dealAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
             OutputView.printCards(player);
@@ -42,7 +42,7 @@ public class BlackjackController {
     }
 
     private void askDealCardToDealer(Blackjack blackjack, Dealer dealer) {
-        while (dealer.score().isHit() && !dealer.initScore().isMax()) {
+        while (dealer.isHit() && !dealer.isBlackjack()) {
             blackjack.dealAdditionalCardToDealer(RandomNumberGenerator.getInstance(), dealer);
             OutputView.printDealerAdditionalCard();
         }

@@ -23,7 +23,7 @@ public enum Record {
     }
 
     public static Record getRecord(Player player, Dealer dealer) {
-        if (player.score().isBust() || dealer.score().isBust()) {
+        if (player.isBust() || dealer.isBust()) {
             return getRecordForBust(player, dealer);
         }
 
@@ -43,11 +43,11 @@ public enum Record {
     }
 
     private static Record getRecordForBust(Player player, Dealer dealer) {
-        if (player.score().isBust()) {
+        if (player.isBust()) {
             return DEFEAT;
         }
 
-        if (dealer.score().isBust()) {
+        if (dealer.isBust()) {
             return VICTORY;
         }
 

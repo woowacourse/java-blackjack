@@ -36,9 +36,17 @@ public abstract class Participant {
         return Score.from(myCards);
     }
 
-    public Score initScore() {
+    public boolean isHit() {
+        return Score.from(myCards).isHit();
+    }
+
+    public boolean isBust() {
+        return Score.from(myCards).isBust();
+    }
+
+    public boolean isBlackjack() {
         List<Card> initTwoCards = myCards.subList(FIRST_CARD_INDEX, SECOND_CARD_INDEX + 1);
-        return Score.from(initTwoCards);
+        return Score.from(initTwoCards).isMax();
     }
 
     @Override
