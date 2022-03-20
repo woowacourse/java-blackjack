@@ -5,11 +5,13 @@ import static java.lang.System.out;
 
 import blackjack.domain.participant.Player;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
+    public static final String BETTING_MONEY_FORMAT = NEWLINE + "%s의 베팅 금액은?" + NEWLINE;
 
     private InputView() {
     }
@@ -19,13 +21,26 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static String inputOneMoreCard(Player player) {
+    public static boolean inputOneMoreCard(Player player) {
         out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName());
-        return SCANNER.nextLine();
+        try {
+            String input = SCANNER.nextLine().toLowerCase(Locale.ROOT);
+            return validateCardOption(input);
+        } catch (IllegalArgumentException e) {
+            out.println(e.getMessage());
+            return inputOneMoreCard(player);
+        }
+    }
+
+    private static boolean validateCardOption(String input) {
+        if ("y".equals(input) || "n".equals(input)) {
+            return "y".equals(input);
+        }
+        throw new IllegalArgumentException("[ERROR] y 또는 n을 입력하셔야합니다.");
     }
 
     public static String inputBettingMoney(String name) {
-        out.printf(NEWLINE + "%s의 베팅 금액은?" + NEWLINE, name);
+        out.printf(BETTING_MONEY_FORMAT, name);
         return SCANNER.nextLine();
     }
 }

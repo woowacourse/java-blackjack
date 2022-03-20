@@ -85,4 +85,8 @@ public class OutputView {
     private static void showPlayerProfit(PlayerProfit playerProfit) {
         System.out.printf(SHOW_PROFIT_FORMAT, playerProfit.getName(), playerProfit.getProfit());
     }
+
+    public static void printBustMessage() {
+        out.println("카드의 합이 21이 넘으므로 패배하였습니다.");
+    }
 }
