@@ -8,7 +8,6 @@ import blackjack.domain.result.Score;
 import java.util.List;
 import java.util.Objects;
 
-import static blackjack.domain.result.Score.ACE_NUMBER;
 import static blackjack.domain.result.Score.BLACKJACK_NUMBER;
 
 public abstract class AbstractParticipant implements Participant {
@@ -91,6 +90,6 @@ public abstract class AbstractParticipant implements Participant {
 
     private boolean hasAceCard() {
         return cards.stream()
-                .anyMatch(card -> card.getNumber() == ACE_NUMBER);
+                .anyMatch(Card::hasAce);
     }
 }

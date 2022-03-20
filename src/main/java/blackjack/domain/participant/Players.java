@@ -37,7 +37,7 @@ public class Players {
             result.put(player, playerResult);
         }
 
-        return BettingResult.of(result);
+        return new BettingResult(result);
     }
 
     private void distributeCards(Deck deck) {

@@ -32,7 +32,7 @@ class BettingResultTest {
         final Map<Player, PlayerResult> playerResults = new HashMap<>();
         playerResults.put(players.getStatuses().get(0), WIN);
 
-        final BettingResult bettingResult = BettingResult.of(playerResults);
+        final BettingResult bettingResult = new BettingResult(playerResults);
 
         assertThat(bettingResult.getPlayerResult()).isEqualTo(expected);
     }
@@ -51,7 +51,7 @@ class BettingResultTest {
         final Map<Player, PlayerResult> playerResults = new HashMap<>();
         playerResults.put(players.getStatuses().get(0), LOSS);
 
-        final BettingResult bettingResult = BettingResult.of(playerResults);
+        final BettingResult bettingResult = new BettingResult(playerResults);
 
         assertThat(bettingResult.getPlayerResult()).isEqualTo(expected);
     }
@@ -70,7 +70,7 @@ class BettingResultTest {
         final Map<Player, PlayerResult> playerResults = new HashMap<>();
         playerResults.put(players.getStatuses().get(0), BLACKJACK_WIN);
 
-        final BettingResult bettingResult = BettingResult.of(playerResults);
+        final BettingResult bettingResult = new BettingResult(playerResults);
 
         assertThat(bettingResult.getPlayerResult()).isEqualTo(expected);
     }
@@ -89,7 +89,7 @@ class BettingResultTest {
         final Map<Player, PlayerResult> playerResults = new HashMap<>();
         playerResults.put(players.getStatuses().get(0), WIN);
         playerResults.put(players.getStatuses().get(1), LOSS);
-        final BettingResult bettingResult = BettingResult.of(playerResults);
+        final BettingResult bettingResult = new BettingResult(playerResults);
 
         double expected = 7000;
 

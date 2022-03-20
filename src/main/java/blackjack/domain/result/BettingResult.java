@@ -7,13 +7,28 @@ import java.util.Map;
 
 public class BettingResult {
 
-    private final Map<String, Double> result;
+    private final Map<Player, PlayerResult> result;
 
-    private BettingResult(Map<String, Double> result) {
+    public BettingResult(Map<Player, PlayerResult> result) {
         this.result = result;
     }
 
-    public static BettingResult of(Map<Player, PlayerResult> result) {
+    public Map<String, Double> getPlayerResult() {
+        return calculateResult();
+    }
+
+    public double getDealerResult() {
+        double total = 0;
+
+        for (double value : calculateResult().values()) {
+            total += (value * -1);
+        }
+
+        return total;
+    }
+
+
+    private Map<String, Double> calculateResult() {
         Map<String, Double> playersProfit = new HashMap<>();
 
         for (Map.Entry<Player, PlayerResult> entry : result.entrySet()) {
@@ -21,20 +36,6 @@ public class BettingResult {
             playersProfit.put(entry.getKey().getName(), profit);
         }
 
-        return new BettingResult(playersProfit);
-    }
-
-    public Map<String, Double> getPlayerResult() {
-        return result;
-    }
-
-    public double getDealerResult() {
-        double total = 0;
-
-        for (Double value : result.values()) {
-            total += value * -1;
-        }
-
-        return total;
+        return playersProfit;
     }
 }

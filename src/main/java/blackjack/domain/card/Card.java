@@ -12,6 +12,10 @@ public class Card {
         this.number = number;
     }
 
+    public static boolean hasAce(Card card) {
+        return CardNumber.isAce(card.number);
+    }
+
     public int getNumber() {
         return number.getNumber();
     }
