@@ -41,7 +41,7 @@ public class BlackJack {
     }
 
     public List<Role> getGamers() {
-        return gamers.getPlayers();
+        return gamers.getRoles();
     }
 
     public Dealer getDealer() {

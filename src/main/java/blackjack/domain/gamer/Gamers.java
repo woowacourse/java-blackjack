@@ -87,10 +87,10 @@ public class Gamers {
         return (int) matches.stream().filter(value -> value == type.getOpposite()).count();
     }
 
-    public List<Role> getPlayers() {
+    public List<Role> getRoles() {
         List<Role> roles = new ArrayList<>();
         roles.add(dealer);
-        playerGroup.addAllTo(roles);
+        roles.addAll(playerGroup.getPlayers());
         return Collections.unmodifiableList(roles);
     }
 

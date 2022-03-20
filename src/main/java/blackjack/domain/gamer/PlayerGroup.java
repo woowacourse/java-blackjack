@@ -8,7 +8,6 @@ import java.util.Map;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.gamer.role.Dealer;
 import blackjack.domain.gamer.role.Player;
-import blackjack.domain.gamer.role.Role;
 import blackjack.domain.result.Match;
 
 public class PlayerGroup {
@@ -56,10 +55,6 @@ public class PlayerGroup {
         for (Player player : players) {
             player.addCard(cardPack.pickOne());
         }
-    }
-
-    public void addAllTo(List<Role> gamers) {
-        gamers.addAll(players);
     }
 
     public Map<Player, Match> getPlayerResult(Dealer dealer) {
