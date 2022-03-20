@@ -21,5 +21,6 @@ public final class Dealer extends Participant {
             throw new IllegalStateException(CANNOT_HIT_MESSAGE);
         }
         state = state.draw(card);
+        state = state.stay();
     }
 }
