@@ -15,11 +15,11 @@ public class Dealer extends Participant {
 	}
 
 	@Override
-	public void getBattingAmountFrom(final Participant player) {
+	public void getBettingAmountFrom(final Participant player) {
 		final Outcome outcome = judgeCompeteResult(calculateFinalScore(), player.calculateFinalScore());
 		if (outcome == Outcome.VICTORY) {
-			final int finalIncome = battingAmount.getTotalValue() + player.getCurrentIncome();
-			battingAmount = new BettingAmount(finalIncome, battingAmount.getInitialValue());
+			final int finalIncome = bettingAmount.getTotalValue() + player.getCurrentIncome();
+			bettingAmount = new BettingAmount(finalIncome, bettingAmount.getInitialValue());
 			player.loseAll();
 		}
 	}

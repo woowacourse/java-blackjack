@@ -12,10 +12,10 @@ public class Player extends Participant {
 	}
 
 	@Override
-	public void getBattingAmountFrom(final Participant dealer) {
+	public void getBettingAmountFrom(final Participant dealer) {
 		final Outcome outcome = judgeCompeteResult(calculateFinalScore(), dealer.calculateFinalScore());
 		if (winWithoutBlackJack(outcome)) {
-			battingAmount.giveTwoTimes();
+			bettingAmount.giveTwoTimes();
 		}
 	}
 

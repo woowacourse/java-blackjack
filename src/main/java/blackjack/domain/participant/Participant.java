@@ -12,14 +12,14 @@ public abstract class Participant {
 
 	protected final String name;
 	protected final Hand hand;
-	protected BettingAmount battingAmount;
+	protected BettingAmount bettingAmount;
 
 	private boolean drawMore;
 
 	public Participant(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		this.name = name;
 		this.hand = hand;
-		this.battingAmount = bettingAmount;
+		this.bettingAmount = bettingAmount;
 		this.drawMore = true;
 	}
 
@@ -33,7 +33,7 @@ public abstract class Participant {
 		if (!isBlackJack()) {
 			return;
 		}
-		battingAmount.giveOneAndHalfTime();
+		bettingAmount.giveOneAndHalfTime();
 	}
 
 	public boolean isBlackJack() {
@@ -45,7 +45,7 @@ public abstract class Participant {
 	}
 
 	public int calculateBettingResult() {
-		return battingAmount.calculateIncome();
+		return bettingAmount.calculateIncome();
 	}
 
 	public void stopDraw() {
@@ -53,7 +53,7 @@ public abstract class Participant {
 	}
 
 	public int getIncome() {
-		return battingAmount.calculateIncome();
+		return bettingAmount.calculateIncome();
 	}
 
 	public List<Card> getCards() {
@@ -76,14 +76,14 @@ public abstract class Participant {
 
 	public abstract int getDrawStandard();
 
-	public abstract void getBattingAmountFrom(final Participant participant);
+	public abstract void getBettingAmountFrom(final Participant participant);
 
 	protected int getCurrentIncome() {
-		return battingAmount.getTotalValue();
+		return bettingAmount.getTotalValue();
 	}
 
 	protected void loseAll() {
-		battingAmount.loseAll();
+		bettingAmount.loseAll();
 	}
 
 	protected Outcome judgeCompeteResult(final int score, final int targetScore) {

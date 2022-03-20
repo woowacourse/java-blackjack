@@ -44,8 +44,8 @@ public class Participants {
 		return dealer;
 	}
 
-	public void joinPlayers(final Map<String, Integer> playersNameAndBattingAmount) {
-		players = playersNameAndBattingAmount.entrySet()
+	public void joinPlayers(final Map<String, Integer> playersNameAndBettingAmount) {
+		players = playersNameAndBettingAmount.entrySet()
 			.stream()
 			.map(player -> new Player(player.getKey(), new Hand(), new BettingAmount(player.getValue())))
 			.collect(Collectors.toList());
@@ -79,8 +79,8 @@ public class Participants {
 	public List<Participant> calculateResult() {
 		calculateBlackJackResult();
 		for (Participant player : players) {
-			player.getBattingAmountFrom(dealer);
-			dealer.getBattingAmountFrom(player);
+			player.getBettingAmountFrom(dealer);
+			dealer.getBettingAmountFrom(player);
 		}
 		return combineResult();
 	}
