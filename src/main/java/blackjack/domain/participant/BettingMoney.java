@@ -11,8 +11,26 @@ public class BettingMoney {
         this.amount = bigDecimal;
     }
 
-    public BettingMoney(int amount) {
-        this(BigDecimal.valueOf(amount));
+    private BettingMoney(String amount) {
+        this(new BigDecimal(amount));
+    }
+
+    public static BettingMoney of(String amount) {
+        validateLength(amount);
+        validateDivide(amount);
+        return new BettingMoney(amount);
+    }
+
+    private static void validateLength(String amount) {
+        if (amount.length() < 4) {
+            throw new IllegalArgumentException("배팅 금액은 1000원 이상입니다.");
+        }
+    }
+
+    private static void validateDivide(String amount) {
+        if (!amount.endsWith("000")) {
+            throw new IllegalArgumentException("배팅 금액은 1000으로 나누어 떨어져야 합니다.");
+        }
     }
 
     public BettingMoney times(double percent) {

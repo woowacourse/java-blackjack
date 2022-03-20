@@ -6,9 +6,9 @@ public class Player extends Participant {
 
     private final BettingMoney bettingMoney;
 
-    public Player(String name, int money) {
+    public Player(String name, String money) {
         super(new Name(name), new Ready());
-        this.bettingMoney = new BettingMoney(money);
+        this.bettingMoney = BettingMoney.of(money);
     }
 
     @Override

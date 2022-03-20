@@ -14,16 +14,18 @@ public class InputView {
     private InputView() {
     }
 
-    public static Map<String, Integer> getNames() {
+    public static Map<String, String> getNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = SCANNER.nextLine();
 
         String[] splitNames = input.split(SPLIT_REGEX, -1);
 
-        Map<String, Integer> names = new HashMap<>();
+        Map<String, String> names = new HashMap<>();
         for (String name : splitNames) {
             System.out.println(NEW_LINE + name + "의 배팅 금액은?");
-            names.put(name, parseInt());
+            String money = SCANNER.nextLine();
+            validateNumeric(money);
+            names.put(name, money);
         }
 
         return names;
@@ -34,10 +36,8 @@ public class InputView {
         return PlayCommand.of(SCANNER.nextLine());
     }
 
-    private static Integer parseInt() {
-        try {
-            return Integer.parseInt(SCANNER.nextLine());
-        } catch (IllegalArgumentException e) {
+    private static void validateNumeric(String input) {
+        if (!input.chars().allMatch(Character::isDigit)) {
             throw new IllegalArgumentException("정수만 가능합니다.");
         }
     }

@@ -13,7 +13,7 @@ public class Players {
 
     private final List<Player> value;
 
-    public Players(Map<String, Integer> names) {
+    public Players(Map<String, String> names) {
         this.value = names.keySet()
                 .stream()
                 .map(name -> new Player(name, names.get(name)))
