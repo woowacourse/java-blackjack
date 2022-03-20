@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BettingAmount;
 import blackjack.domain.Name;
+import blackjack.domain.Profit;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
@@ -98,8 +99,7 @@ public class GameController {
 
     public void endGame() {
         printAllCards();
-        printDealerProfit();
-        printPlayersProfit();
+        printProfit();
     }
 
     private void printAllCards() {
@@ -109,19 +109,12 @@ public class GameController {
         OutputView.printCardsAndScore(players);
     }
 
-    private void printDealerProfit() {
-        double dealerProfit = players.getValue()
-                .stream()
-                .mapToDouble(player -> player.calculateProfit(dealer.getScore(), dealer.isBlackjack()))
-                .sum();
+    private void printProfit() {
+        final Profit profit = Profit.of(dealer, players);
 
-        OutputView.printDealerProfit(dealerProfit * -1);
-    }
-
-    private void printPlayersProfit() {
-        for (Player player : players.getValue()) {
-            final double profit = player.calculateProfit(dealer.getScore(), dealer.isBlackjack());
-            OutputView.printProfit(player.getName(), profit);
+        OutputView.printDealerProfit(profit.findDealerProfit());
+        for (String name : players.getNames()) {
+            OutputView.printProfit(name, profit.findPlayerProfit(name));
         }
     }
 }
