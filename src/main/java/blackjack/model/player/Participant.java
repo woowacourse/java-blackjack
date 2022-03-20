@@ -5,19 +5,20 @@ import blackjack.model.cards.BestScoreCalculator;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
 
-public abstract class Player {
+public abstract class Participant {
 
     private static final BestScoreCalculator BEST_SCORE_CALCULATOR = new BestScoreCalculator();
-    public static final Score BLACKJACK_SCORE = new Score(21);
+    private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final Score BLACKJACK_SCORE = new Score(21);
 
     private final Cards cards;
     private final String name;
 
-    public Player(String name, Card card1, Card card2, Card... cards) {
+    public Participant(String name, Card card1, Card card2, Card... cards) {
         this(name, new Cards(card1, card2, cards));
     }
 
-    protected Player(String name, Cards cards) {
+    protected Participant(String name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -46,14 +47,22 @@ public abstract class Player {
     }
 
     public final boolean isBlackjack() {
-        return cards().isInitialCards() && score().equals(BLACKJACK_SCORE);
+        return isBlackjackCardSize() && isBlackjackScore();
     }
 
-    public final boolean lessScoreThan(Player other) {
+    private boolean isBlackjackCardSize() {
+        return cards().size() == BLACKJACK_CARD_SIZE;
+    }
+
+    private boolean isBlackjackScore() {
+        return score().equals(BLACKJACK_SCORE);
+    }
+
+    public final boolean lessScoreThan(Participant other) {
         return score().lessThan(other.score());
     }
 
-    public final boolean moreScoreThan(Player other) {
+    public final boolean moreScoreThan(Participant other) {
         return score().moreThan(other.score());
     }
 

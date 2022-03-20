@@ -5,7 +5,7 @@ import blackjack.model.cards.Cards;
 import blackjack.model.cards.MaxScoreCalculator;
 import blackjack.model.cards.Score;
 
-public final class Dealer extends Player {
+public final class Dealer extends Participant {
 
     private static final MaxScoreCalculator MAX_SCORE_CALCULATOR = new MaxScoreCalculator();
     private static final String NAME = "딜러";

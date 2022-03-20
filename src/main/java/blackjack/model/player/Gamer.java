@@ -4,7 +4,7 @@ import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
 
-public class Gamer extends Player{
+public class Gamer extends Participant {
 
     private static final Score HIT_BOUNDARY = new Score(21);
     private static final int OPEN_CARD_COUNT = 2;
