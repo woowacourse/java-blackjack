@@ -1,13 +1,18 @@
 package blackJack.domain.participant;
 
+import blackJack.domain.money.Bet;
+
 public class Player extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private static final String ERROR_MESSAGE_PROHIBIT_NAME = "플레이어의 이름은 '딜러'일 수 없습니다.";
-    private static final int BLACK_JACK = 21;
+    private static final int PLAYER_MAXIMUM_RECEIVE_CARD_SCORE = 21;
+
+    private Bet bet;
 
     public Player(String name) {
         super(name);
+        this.bet = Bet.ZERO;
         validateProhibitName(name);
     }
 
@@ -17,8 +22,16 @@ public class Player extends Participant {
         }
     }
 
+    public void betting(int money) {
+        bet = bet.add(money);
+    }
+
     @Override
-    public boolean hasNextTurn() {
-        return this.getScore() <= BLACK_JACK;
+    public boolean isAvailableHit() {
+        return this.getScore() <= PLAYER_MAXIMUM_RECEIVE_CARD_SCORE;
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 }

@@ -8,15 +8,15 @@ import org.junit.jupiter.api.Test;
 class CardTest {
 
     @Test
-    @DisplayName("카드 생성 테스트")
+    @DisplayName("카드 생성을 성공적으로 할 경우 null 값을 반환하지 않는다.")
     void createValidCard() {
-        assertThat(new Card(Symbol.SPADE, Denomination.KING)).isNotNull();
+        assertThat(Card.valueOf(Suit.SPADE, Denomination.KING)).isNotNull();
     }
 
     @Test
-    @DisplayName("카드 숫자에 따라 점수가 반환되는지 테스트")
+    @DisplayName("카드 숫자에 따라 카드의 점수를 반환한다.")
     void checkScoreByDenomination() {
-        Card card = new Card(Symbol.SPADE, Denomination.KING);
+        Card card = Card.valueOf(Suit.SPADE, Denomination.KING);
         assertThat(card.getScore()).isEqualTo(10);
     }
 }

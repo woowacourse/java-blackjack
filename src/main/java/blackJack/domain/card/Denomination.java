@@ -16,7 +16,7 @@ public enum Denomination {
     KING(10, "K")
     ;
 
-    public static final int ACE_BONUS_VALUE = 10;
+    public static final int OTHER_ACE_SCORE = 10;
 
     private final int score;
     private final String denomination;

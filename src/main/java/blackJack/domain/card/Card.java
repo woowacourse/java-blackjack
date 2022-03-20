@@ -1,43 +1,37 @@
 package blackJack.domain.card;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Card {
 
-    private static final List<Card> CARDS = new ArrayList<>();
-    
-    static {
-        for (Symbol value : Symbol.values()) {
-            createSymbolCards(value);
-        }
-    }
+    private static final int INITIAL_CAPACITY = 52;
+    private static final Map<String, Card> CARDS = new HashMap<>(INITIAL_CAPACITY);
 
-    private final Symbol symbol;
+    private final Suit suit;
     private final Denomination denomination;
 
-    public Card(Symbol symbol, Denomination denomination) {
-        this.symbol = symbol;
+    private Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
         this.denomination = denomination;
     }
 
-    private static void createSymbolCards(Symbol value) {
-        for (Denomination denomination : Denomination.values()) {
-            CARDS.add(new Card(value, denomination));
-        }
+    public static Card valueOf(Suit suit, Denomination denomination) {
+        return CARDS.computeIfAbsent(getCardKey(suit, denomination), key ->
+                new Card(suit, denomination));
+    }
+
+    private static String getCardKey(Suit suit, Denomination denomination) {
+        return suit.getName() + denomination.getDenomination();
     }
 
     public boolean isSameDenominationAsAce() {
         return denomination == Denomination.ACE;
     }
 
-    public static List<Card> createNewCards() {
-        return new ArrayList<>(CARDS);
-    }
-
     public String getSymbolName() {
-        return symbol.getName();
+        return suit.getName();
     }
 
     public int getScore() {
@@ -50,16 +44,18 @@ public class Card {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Card))
+        }
+        if (!(o instanceof Card)) {
             return false;
-        Card card = (Card)o;
-        return symbol == card.symbol && denomination == card.denomination;
+        }
+        Card card = (Card) o;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, denomination);
+        return Objects.hash(suit, denomination);
     }
 }

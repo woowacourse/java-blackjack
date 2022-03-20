@@ -1,36 +1,37 @@
 package blackJack.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackJack.domain.card.Deck;
+import blackJack.domain.participant.Participants;
 import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import blackJack.domain.participant.Dealer;
-import blackJack.domain.participant.Participants;
-import blackJack.domain.participant.Player;
 
 class BlackJackGameTest {
 
     @Test
-    @DisplayName("BlackJackGame 생성 테스트")
+    @DisplayName("BlackJackGame 성공적으로 생성될 경우 null 값을 반환하지 않는다.")
     void createValidDealer() {
-        Participants participants = new Participants(new Dealer(), List.of(new Player("rookie")));
+        Participants participants = Participants.fromNames(List.of("rookie"));
 
-        assertThat(new BlackJackGame(participants)).isNotNull();
+        assertThat(new BlackjackGame(Deck.create(), participants)).isNotNull();
     }
 
     @Test
-    @DisplayName("게임 시작시 최초 카드 분배 기능 테스트")
+    @DisplayName("게임 시작시 각 참가자들에게 기본적으로 2장의 카드를 분배한다.")
     void firstCardDispensing() {
-        Player player1 = new Player("kei");
-        Player player2 = new Player("rookie");
-        Participants participants = new Participants(new Dealer(), List.of(player1, player2));
+        Participants participants = Participants.fromNames(List.of("kei", "rookie"));
+        ;
 
-        BlackJackGame blackJackGame = new BlackJackGame(participants);
-        blackJackGame.initDistributeCards();
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.create(), participants);
+        blackjackGame.defaultDistributeCards();
 
-        assertThat(player1.getCards().size()).isEqualTo(2);
+        assertAll(
+                () -> assertThat(participants.getPlayers().get(0).getCards().size()).isEqualTo(2),
+                () -> assertThat(participants.getPlayers().get(1).getCards().size()).isEqualTo(2),
+                () -> assertThat(participants.getDealer().getCards().size()).isEqualTo(2)
+        );
     }
 }

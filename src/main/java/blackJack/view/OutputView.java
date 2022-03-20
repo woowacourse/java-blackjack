@@ -1,23 +1,20 @@
 package blackJack.view;
 
+import blackJack.domain.result.BlackjackGameResult;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackJack.domain.participant.Participants;
-import blackJack.domain.result.WinDrawLose;
 import blackJack.domain.card.Card;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.BlackJackGameResult;
 
 public class OutputView {
 
     private static final String NEWLINE = System.getProperty("line.separator");
 
     private static final String JOINING_DELIMITER_COMMA = ", ";
-    private static final String JOINING_DELIMITER_SPACE = " ";
     private static final int DEFAULT_DEALER_CARD_SIZE = 2;
 
     private static final String OUTPUT_MESSAGE_INIT_CARD_RESULT =
@@ -28,8 +25,8 @@ public class OutputView {
         NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
         "%s 카드: %s - 결과: %d".concat(NEWLINE);
-    private static final String OUTPUT_MESSAGE_WIN_OR_LOSE = "## 최종 승패";
-    private static final String OUTPUT_MESSAGE_WIN_OR_LOSE_INFO = "%s: %s".concat(NEWLINE);
+    private static final String OUTPUT_MESSAGE_EARNING = "## 최종 수익";
+    private static final String OUTPUT_MESSAGE_EARNING_INFO = "%s: %s".concat(NEWLINE);
 
     public static void printErrorMessage(RuntimeException error) {
         System.out.println(error.getMessage());
@@ -52,7 +49,7 @@ public class OutputView {
     }
 
     private static void printInitHoldCardMessage(Dealer dealer, List<Player> players) {
-        Card firstDealerCard = dealer.getCards().get(0);
+        Card firstDealerCard = dealer.getCards().iterator().next();
         String dealerCardInfo = firstDealerCard.getDenominationName() + firstDealerCard.getSymbolName();
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, dealer.getName(), dealerCardInfo);
 
@@ -92,22 +89,12 @@ public class OutputView {
             participant.getScore());
     }
 
-    public static void printWinOrLoseResult(Dealer dealer, BlackJackGameResult blackGameResult) {
-        System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_WIN_OR_LOSE));
-        Map<WinDrawLose, Integer> winOrLoseIntegerMap = blackGameResult.calculateDealerResult();
-        String winOrLoseInfo = getWinOrLoseInfo(winOrLoseIntegerMap);
+    public static void printEarningResult(Dealer dealer, BlackjackGameResult blackJackGameResult) {
+        System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_EARNING));
+        System.out.printf(OUTPUT_MESSAGE_EARNING_INFO, dealer.getName(), blackJackGameResult.getDealerEarning());
 
-        System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), winOrLoseInfo);
-        blackGameResult.getGameResult().forEach((key, value) -> System.out.printf(
-            OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, key.getName(), value.getResult()));
-    }
-
-    private static String getWinOrLoseInfo(Map<WinDrawLose, Integer> winOrLoseInfo) {
-        List<String> winOrLoseEssentialInfo = winOrLoseInfo.entrySet().stream()
-            .filter(resultCount -> resultCount.getValue() > 0)
-            .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
-            .collect(Collectors.toUnmodifiableList());
-        return String.join(JOINING_DELIMITER_SPACE, winOrLoseEssentialInfo);
+        blackJackGameResult.getPlayerEarnings().forEach((key, value)
+                -> System.out.printf(OUTPUT_MESSAGE_EARNING_INFO, key, value));
     }
 
     private static String createStringCardInfo(Card card) {
