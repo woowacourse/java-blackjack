@@ -6,15 +6,15 @@ import blackjack.domain.machine.Score;
 
 public abstract class Player {
 
-    protected Deck cards;
+    protected Deck deck;
     protected String name;
 
     public void addCard(Card card) {
-        cards.addCard(card);
+        deck.addCard(card);
     }
 
     public boolean isOverLimit(int limit) {
-        return cards.sumPoints() > limit;
+        return deck.isOverLimit(limit);
     }
 
     public String getName() {
@@ -22,11 +22,11 @@ public abstract class Player {
     }
 
     public Deck getDeck() {
-        return cards;
+        return deck;
     }
 
     public Score getScore() {
-        return cards.score();
+        return deck.score();
     }
 
     public abstract boolean isDealer();
