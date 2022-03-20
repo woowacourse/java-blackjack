@@ -25,7 +25,7 @@ public class DealerTest {
     @DisplayName("카드를 한 장만 공개한다.")
     void openCard() {
         Dealer dealer = initDealer();
-        assertThat(dealer.openCards()).contains(new Card(Suit.CLOVER, Denomination.FIVE));
+        assertThat(dealer.openCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -34,8 +34,7 @@ public class DealerTest {
         Dealer dealer = initDealer();
         dealer.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
 
-        assertThat(dealer.showCards()).contains(new Card(Suit.CLOVER, Denomination.FIVE),
-            new Card(Suit.CLOVER, Denomination.SIX));
+        assertThat(dealer.showCards().size()).isEqualTo(2);
     }
 
     @Test

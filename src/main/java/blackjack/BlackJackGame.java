@@ -52,7 +52,7 @@ public class BlackJackGame {
         }
     }
 
-    private void startAllPlayer(final Player dealer, final List<Gamer> gamers) {
+    private void startAllPlayer(final Dealer dealer, final List<Gamer> gamers) {
         setInitialCards(dealer);
         for (Gamer gamer : gamers) {
             setInitialCards(gamer);
@@ -66,7 +66,7 @@ public class BlackJackGame {
         }
     }
 
-    private void drawAdditionalCards(final Player dealer, final Gamers gamers) {
+    private void drawAdditionalCards(final Dealer dealer, final Gamers gamers) {
         for (Gamer gamer : gamers.getGamers()) {
             progressGamerAdditionalCard(gamer, deck);
         }
@@ -93,7 +93,7 @@ public class BlackJackGame {
         }
     }
 
-    private void progressDealerAdditionalCard(final Player dealer, final Deck deck) {
+    private void progressDealerAdditionalCard(final Dealer dealer, final Deck deck) {
         boolean receivable = dealer.isReceivable();
         OutputView.printDealerReceive(receivable);
         if (receivable) {

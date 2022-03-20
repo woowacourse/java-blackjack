@@ -1,7 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
-import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,21 +23,21 @@ public enum GameResult {
     );
 
     private final Double multiplePoint;
-    private final BiPredicate<Player, Gamer> predicate;
+    private final BiPredicate<Dealer, Gamer> predicate;
 
-    GameResult(final Double multiplePoint, final BiPredicate<Player, Gamer> predicate) {
+    GameResult(final Double multiplePoint, final BiPredicate<Dealer, Gamer> predicate) {
         this.multiplePoint = multiplePoint;
         this.predicate = predicate;
     }
 
-    private static GameResult findResult(final Player dealer, final Gamer gamer) {
+    private static GameResult findResult(final Dealer dealer, final Gamer gamer) {
         return Arrays.stream(values())
             .filter(result -> result.predicate.test(dealer, gamer))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하는 결과가 없습니다."));
     }
 
-    public static Map<Gamer, Long> calculateGamersProfit(final Player dealer,
+    public static Map<Gamer, Long> calculateGamersProfit(final Dealer dealer,
         final List<Gamer> gamers) {
         return gamers.stream()
             .collect(Collectors.toMap(gamer -> gamer,

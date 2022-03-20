@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,11 +44,8 @@ public class GamerTest {
         Gamer gamer = initGamer();
 
         List<Card> gamerCards = gamer.openCards();
-        assertAll(
-            () -> assertThat(gamerCards).contains(new Card(Suit.CLOVER, Denomination.JACK)
-                , new Card(Suit.DIAMOND, Denomination.QUEEN)),
-            () -> assertThat(gamerCards.size()).isEqualTo(2)
-        );
+        assertThat(gamerCards.size()).isEqualTo(2);
+
     }
 
     @Test

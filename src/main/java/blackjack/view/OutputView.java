@@ -3,8 +3,8 @@ package blackjack.view;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
-import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +25,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printOpenCards(final List<Gamer> gamers, final Player dealer) {
+    public static void printOpenCards(final List<Gamer> gamers, final Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(String.format(PRINT_OPEN_CARD_PREFIX_MESSAGE, DEALER_NAME))
             .append(joinNames(gamers))
@@ -43,7 +43,7 @@ public class OutputView {
             .collect(joining(PRINT_JOINING_DELIMITER));
     }
 
-    private static void appendDealerFormat(final Player dealer, final StringBuilder stringBuilder) {
+    private static void appendDealerFormat(final Dealer dealer, final StringBuilder stringBuilder) {
         List<Card> dealerCards = dealer.openCards();
         stringBuilder.append(
             String.format(PRINT_DEFAULT_FORMAT_MESSAGE, DEALER_NAME, joinCards(dealerCards)));
@@ -78,12 +78,12 @@ public class OutputView {
         System.out.println(PRINT_DEALER_NOT_RECEIVE_CARD);
     }
 
-    public static void printFinalResult(final Player dealer, final List<Gamer> gamers) {
+    public static void printFinalResult(final Dealer dealer, final List<Gamer> gamers) {
         printDealerCardsResult(dealer);
         gamers.forEach(OutputView::printGamerCardsResult);
     }
 
-    private static void printDealerCardsResult(final Player dealer) {
+    private static void printDealerCardsResult(final Dealer dealer) {
         System.out.printf(PRINT_FINAL_CARD_RESULT,
             DEALER_NAME,
             joinCards(dealer.showCards()),
