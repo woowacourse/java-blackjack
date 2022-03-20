@@ -33,13 +33,13 @@ class PlayerTest {
     @DisplayName("참여자는 카드를 뽑을 수 있어야 한다.")
     void drawCardTest(final List<Card> expectedCards) {
         final Deck deck = new Deck(expectedCards);
-        final AbstractParticipant abstractParticipant = new Player("sun", new Bet(100));
+        final Participant participant = new Player("sun", new Bet(100));
 
         for (int i = 0; i < expectedCards.size(); i++) {
-            abstractParticipant.drawCard(deck);
+            participant.drawCard(deck);
         }
 
-        final List<Card> actualCards = abstractParticipant.getCards();
+        final List<Card> actualCards = participant.getCards();
         assertThat(actualCards).isEqualTo(expectedCards);
     }
 
@@ -67,13 +67,13 @@ class PlayerTest {
     @DisplayName("카드의 합계가 21 초과인지 확인할 수 있어야 한다.")
     void cannotContinueDrawTest(final List<Card> expectedCards) {
         final Deck deck = new Deck(expectedCards);
-        final AbstractParticipant abstractParticipant = new Player("sun", new Bet(100));
+        final Participant participant = new Player("sun", new Bet(100));
 
         for (int i = 0; i < expectedCards.size(); i++) {
-            abstractParticipant.drawCard(deck);
+            participant.drawCard(deck);
         }
 
-        assertThat(abstractParticipant.isBust()).isTrue();
+        assertThat(participant.isBust()).isTrue();
     }
 
     private static Stream<Arguments> provideForCannotContinueDrawCardTest() {
@@ -102,13 +102,13 @@ class PlayerTest {
     @DisplayName("카드의 합계가 21 이하인지 확인할 수 있어야 한다.")
     void canContinueDrawTest(final List<Card> expectedCards) {
         final Deck deck = new Deck(expectedCards);
-        final AbstractParticipant abstractParticipant = new Player("sun", new Bet(100));
+        final Participant participant = new Player("sun", new Bet(100));
 
         for (int i = 0; i < expectedCards.size(); i++) {
-            abstractParticipant.drawCard(deck);
+            participant.drawCard(deck);
         }
 
-        assertThat(abstractParticipant.isBust()).isFalse();
+        assertThat(participant.isBust()).isFalse();
     }
 
     private static Stream<Arguments> provideForCanContinueDrawCardTest() {

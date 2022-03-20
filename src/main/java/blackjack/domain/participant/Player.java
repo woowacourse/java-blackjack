@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Player extends AbstractParticipant {
+public class Player extends Participant {
 
     private final Bet bet;
 

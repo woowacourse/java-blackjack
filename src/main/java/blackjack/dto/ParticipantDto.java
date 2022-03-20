@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.AbstractParticipant;
+import blackjack.domain.participant.Participant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +18,18 @@ public class ParticipantDto {
         this.score = score;
     }
 
-    public static ParticipantDto toShowFirstCards(final AbstractParticipant abstractParticipant) {
+    public static ParticipantDto toShowFirstCards(final Participant participant) {
         return new ParticipantDto(
-                abstractParticipant.getName(),
-                abstractParticipant.showFirstCards(),
-                abstractParticipant.calculateScore().getValue());
+                participant.getName(),
+                participant.showFirstCards(),
+                participant.calculateScore().getValue());
     }
 
-    public static ParticipantDto toOpenAllCards(final AbstractParticipant abstractParticipant) {
+    public static ParticipantDto toOpenAllCards(final Participant participant) {
         return new ParticipantDto(
-                abstractParticipant.getName(),
-                abstractParticipant.getCards(),
-                abstractParticipant.calculateScore().getValue());
+                participant.getName(),
+                participant.getCards(),
+                participant.calculateScore().getValue());
     }
 
     public String getName() {

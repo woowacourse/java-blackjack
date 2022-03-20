@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Dealer extends AbstractParticipant {
+public class Dealer extends Participant {
 
     public static final String DEALER_NAME = "딜러";
     public static final int DEALER_MIN_SCORE = 17;
