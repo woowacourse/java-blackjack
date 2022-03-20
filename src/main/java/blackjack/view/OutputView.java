@@ -81,13 +81,13 @@ public class OutputView {
     }
 
     public static void printProfitOfDealer(Money dealerProfit) {
-        System.out.printf(DEALER_PROFIT_MESSAGE_FORMAT, dealerProfit.getValue());
+        System.out.printf(DEALER_PROFIT_MESSAGE_FORMAT, dealerProfit.getIntValue());
     }
 
     private static void printProfitOfPlayers(Players players, Dealer dealer) {
         for (Player player : players.getValue()) {
             System.out.printf(PLAYER_PROFIT_MESSAGE_FORMAT, player.getName(),
-                    player.calculateProfit(dealer).getValue());
+                    player.calculateProfit(dealer).getIntValue());
         }
     }
 

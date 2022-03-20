@@ -43,8 +43,13 @@ public class BlackjackController {
     }
 
     private void addPlayerIntoBlackjackGameByBetMoneyInput(BlackjackGame blackjackGame, String playerName) {
-        int rawBetMoney = InputView.inputBetMoney(playerName);
-        blackjackGame.addPlayer(playerName, rawBetMoney);
+        try {
+            int rawBetMoney = InputView.inputBetMoney(playerName);
+            blackjackGame.addPlayer(playerName, rawBetMoney);
+        } catch (IllegalArgumentException exception) {
+            OutputView.printException(exception);
+            addPlayerIntoBlackjackGameByBetMoneyInput(blackjackGame, playerName);
+        }
     }
 
     private void printInitialHand(BlackjackGame game) {

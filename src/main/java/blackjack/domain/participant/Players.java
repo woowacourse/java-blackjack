@@ -7,6 +7,7 @@ import java.util.List;
 public class Players {
 
     private static final String NOT_FOUND_PLAYER_EXCEPTION_MESSAGE = "플레이어를 찾을 수 없습니다.";
+
     private final List<Player> value = new ArrayList<>();
 
     public void add(Player player) {
