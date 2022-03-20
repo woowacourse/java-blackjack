@@ -22,7 +22,7 @@ public class Users {
         this.dealer = dealer;
     }
 
-    public static Users of(Map<String, String> inputNameAndMoney, Deck deck) {
+    public static Users of(Map<String, String> inputNameAndMoney) {
         List<Player> players = inputNameAndMoney.entrySet()
             .stream()
             .map(nameMoneyEntry -> Player.of(nameMoneyEntry.getKey(), nameMoneyEntry.getValue()))

@@ -28,7 +28,7 @@ public class BlackJackGame {
 
     public static BlackJackGame fromPlayerNames(Map<String, String> inputNameAndMoney) {
         Deck deck = new Deck();
-        Users users = Users.of(inputNameAndMoney, deck);
+        Users users = Users.of(inputNameAndMoney);
         return new BlackJackGame(users, deck);
     }
 

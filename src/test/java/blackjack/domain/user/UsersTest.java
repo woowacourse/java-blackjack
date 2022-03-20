@@ -20,12 +20,11 @@ class UsersTest {
     @Test
     public void testCreateUsers() {
         //given
-        Deck deck = new Deck();
         Map<String, String> inputNameAndMoney = Map.ofEntries(
             Map.entry("pobi", "1000"), Map.entry("jason", "1000")
         );
         //when
-        Users users = Users.of(inputNameAndMoney, deck);
+        Users users = Users.of(inputNameAndMoney);
 
         //then
         Assertions.assertAll(
@@ -42,7 +41,7 @@ class UsersTest {
         Map<String, String> inputNameAndMoney = Map.ofEntries(
             Map.entry("pobi", "1000"), Map.entry("jason", "1000")
         );
-        Users users = Users.of(inputNameAndMoney, deck);
+        Users users = Users.of(inputNameAndMoney);
         users.drawInitialCardsPerUser(deck);
 
         // when
