@@ -16,11 +16,12 @@ public class Player extends Gamer{
         return bet.makeEarning(result);
     }
 
-    public boolean isSameName(String name) {
-        return this.getName().equals(name);
+    @Override
+    public boolean isDrawable() {
+        return !cards.isBust();
     }
 
-    public boolean isBust() {
-        return cards.isBust();
+    public boolean isSameName(String name) {
+        return this.getName().equals(name);
     }
 }

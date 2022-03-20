@@ -33,4 +33,18 @@ class PlayerTest {
         Player player1 = new Player("더즈", 10);
         assertThat(player1.isSameName("더즈")).isTrue();
     }
+
+    @Test
+    @DisplayName("플레이어는 카드 번호합 22 이상이면 더 뽑을 수 없다.")
+    void dealerDrawable() {
+        Player player = new Player("does", 1000);
+        Card card1 = Card.getInstance(CardShape.SPADE, CardNumber.TEN);
+        Card card2 = Card.getInstance(CardShape.SPADE, CardNumber.TEN);
+        Card card3 = Card.getInstance(CardShape.SPADE, CardNumber.TWO);
+
+        player.addCard(card1);
+        player.addCard(card2);
+        player.addCard(card3);
+        assertThat(player.isDrawable()).isFalse();
+    }
 }

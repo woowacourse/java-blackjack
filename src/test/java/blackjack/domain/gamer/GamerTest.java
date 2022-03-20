@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class GamerTest {
 
-    private Gamer gamer = new Gamer("name");
+    private Gamer gamer = new Player("name", 1000);
 
     @Test
     @DisplayName("카드를 추가한다.")

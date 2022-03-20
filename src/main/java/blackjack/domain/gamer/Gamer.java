@@ -6,7 +6,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Gamer {
+public abstract class Gamer {
 
     private final Name name;
     protected final Cards cards;
@@ -20,13 +20,11 @@ public class Gamer {
         cards.add(card);
     }
 
-    public boolean isOverThan(int number) {
-        return sumCardsNumber() > number;
-    }
-
     public int sumCardsNumber() {
         return cards.sum();
     }
+
+    public abstract boolean isDrawable();
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getValues());

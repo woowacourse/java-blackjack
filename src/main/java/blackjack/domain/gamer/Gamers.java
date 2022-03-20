@@ -12,8 +12,6 @@ public class Gamers {
 
 	private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
 
-	private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
-
 	private final Dealer dealer;
 	private final List<Player> players;
 
@@ -39,7 +37,7 @@ public class Gamers {
 	}
 
 	public boolean checkDealerDrawPossible() {
-		return !dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD);
+		return dealer.isDrawable();
 	}
 
 	public List<Card> findCardsOfPlayer(String name) {
@@ -53,8 +51,8 @@ public class Gamers {
 			.orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER_ERROR));
 	}
 
-	public boolean isBust(String name) {
-		return findPlayerByName(name).isBust();
+	public boolean checkPlayerBust(String name) {
+		return !findPlayerByName(name).isDrawable();
 	}
 
 	public List<String> findPlayerNames() {

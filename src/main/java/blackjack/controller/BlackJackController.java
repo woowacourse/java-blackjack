@@ -80,7 +80,7 @@ public class BlackJackController {
 	}
 
 	private void selectHitOrStay(String name) {
-		while (!gamers.isBust(name) && InputView.askIfHit(name)) {
+		while (!gamers.checkPlayerBust(name) && InputView.askIfHit(name)) {
 			gamers.giveCardToPlayer(name, deck);
 			OutputView.printNameAndCards(name, gamers.findCardsOfPlayer(name));
 		}

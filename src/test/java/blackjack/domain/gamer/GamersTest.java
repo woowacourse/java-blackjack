@@ -15,7 +15,7 @@ import blackjack.domain.card.CardShape;
 
 class GamersTest {
 
-	private List<Player> players = List.of(
+	private final List<Player> players = List.of(
 		new Player("pobi", 10), new Player("jason", 10));
 
 	@Test
@@ -45,6 +45,6 @@ class GamersTest {
 		pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 		pobi.addCard(Card.getInstance(CardShape.HEART, CardNumber.valueOf(input)));
 
-		assertThat(pobi.isOverThan(21)).isEqualTo(result);
+		assertThat(!pobi.isDrawable()).isEqualTo(result);
 	}
 }
