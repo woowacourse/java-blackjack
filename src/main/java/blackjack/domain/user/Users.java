@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import blackjack.domain.card.Deck;
 import blackjack.domain.money.Money;
 
-public class Users {
+public final class Users {
 
     private static final int INIT_DRAW_SIZE = 2;
 

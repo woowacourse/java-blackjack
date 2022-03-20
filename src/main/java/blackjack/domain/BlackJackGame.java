@@ -16,7 +16,7 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
-public class BlackJackGame {
+public final class BlackJackGame {
 
     private final Users users;
     private final Deck deck;

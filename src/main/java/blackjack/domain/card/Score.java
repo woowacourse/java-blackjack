@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.List;
 import java.util.Objects;
 
-public class Score {
+public final class Score {
 
     public static final int BLACKJACK = 21;
 
@@ -11,7 +11,7 @@ public class Score {
     private static final int ZERO = 0;
     private static final Score ZERO_SCORE = new Score(ZERO);
 
-    private int score;
+    private final int score;
 
     public Score(int score) {
         validatePositive(score);

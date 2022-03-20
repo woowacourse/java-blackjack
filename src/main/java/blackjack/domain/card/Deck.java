@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Deck {
+public final class Deck {
 
     private static final List<Card> CARDS_CACHE = createAllCards();
 

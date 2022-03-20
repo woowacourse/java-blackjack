@@ -3,9 +3,9 @@ package blackjack.domain.user.state;
 import blackjack.domain.card.Score;
 import blackjack.domain.user.Hand;
 
-public class Stay extends Finished {
+public final class Stay extends Finished {
 
-    public Stay(Hand hand) {
+    protected Stay(Hand hand) {
         super(hand);
     }
 

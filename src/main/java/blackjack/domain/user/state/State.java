@@ -11,7 +11,7 @@ public abstract class State {
 
     protected final Hand hand;
 
-    public State(Hand hand) {
+    protected State(Hand hand) {
         this.hand = hand;
     }
 

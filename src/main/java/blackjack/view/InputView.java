@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 import blackjack.dto.UserDto;
 
-public class InputView {
+public final class InputView {
     private static final String YES = "y";
     private static final String NO = "n";
     private static final String DELIMITER = ",";

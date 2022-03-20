@@ -6,7 +6,7 @@ import blackjack.domain.user.Hand;
 
 public abstract class Finished extends State {
 
-    public Finished(Hand hand) {
+    protected Finished(Hand hand) {
         super(hand);
     }
 

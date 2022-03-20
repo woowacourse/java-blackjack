@@ -7,7 +7,7 @@ import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackController {
+public final class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;

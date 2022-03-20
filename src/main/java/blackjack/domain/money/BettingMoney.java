@@ -2,7 +2,7 @@ package blackjack.domain.money;
 
 import blackjack.utils.IntegerUtils;
 
-public class BettingMoney extends Money {
+public final class BettingMoney extends Money {
 
     public BettingMoney(int amount) {
         super(amount);

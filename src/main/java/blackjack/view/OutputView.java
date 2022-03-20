@@ -6,7 +6,7 @@ import blackjack.dto.UserProfitsDto;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
 
-public class OutputView {
+public final class OutputView {
 
     private static class StringFormatter {
 

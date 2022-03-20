@@ -3,7 +3,7 @@ package blackjack.domain.user.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Hand;
 
-public class Ready extends Running {
+public final class Ready extends Running {
 
     private Ready(Hand hand) {
         super(hand);

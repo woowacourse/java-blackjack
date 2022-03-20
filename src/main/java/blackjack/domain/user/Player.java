@@ -5,10 +5,10 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.money.BettingMoney;
 import blackjack.domain.money.Money;
-import blackjack.domain.user.state.Hit;
+import blackjack.domain.user.state.Ready;
 import blackjack.domain.user.state.State;
 
-public class Player extends User {
+public final class Player extends User {
 
     private static final int INIT_SHOW_COUNT = 2;
 
@@ -20,7 +20,7 @@ public class Player extends User {
     }
 
     public static Player of(String inputName, String inputMoney) {
-        return new Player(inputName, new Hit(new Hand()), inputMoney);
+        return new Player(inputName, new Ready(), inputMoney);
     }
 
     @Override

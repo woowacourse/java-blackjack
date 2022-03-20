@@ -2,9 +2,9 @@ package blackjack.domain.user.state;
 
 import blackjack.domain.user.Hand;
 
-public class BlackJack extends Finished {
+public final class BlackJack extends Finished {
 
-    public BlackJack(Hand hand) {
+    protected BlackJack(Hand hand) {
         super(hand);
     }
 

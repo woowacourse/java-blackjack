@@ -2,7 +2,7 @@ package blackjack.domain.strategy.hit;
 
 import java.util.function.Supplier;
 
-public class PlayerHitStrategy implements HitStrategy {
+public final class PlayerHitStrategy implements HitStrategy {
 
     private Supplier<Boolean> supplier;
 

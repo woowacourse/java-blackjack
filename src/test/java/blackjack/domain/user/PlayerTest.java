@@ -7,19 +7,18 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.CardFixtures;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.strategy.hit.PlayerHitStrategy;
-import blackjack.domain.user.state.Hit;
+import blackjack.domain.user.state.Ready;
 
 public class PlayerTest {
 
-    public static final int MAX_DRAWABLE_COUNT = 11;
-
     private Player createDefaultPlayer() {
-        return new Player("pobi", new Hit(new Hand()), "1000");
+        return new Player("pobi", new Ready(), "1000");
     }
 
     @DisplayName("플레이어 생성 검증")
@@ -29,7 +28,7 @@ public class PlayerTest {
         String name = "pobi";
 
         //when
-        Player player = new Player(name, new Hit(new Hand()),"1000");
+        Player player = new Player(name, new Ready(), "1000");
 
         //then
         assertThat(player).isNotNull();
@@ -57,7 +56,8 @@ public class PlayerTest {
         Player player = createDefaultPlayer();
 
         //when
-        while (player.hit(deck.drawCard()));
+        while (player.hit(deck.drawCard()))
+            ;
 
         //then
         assertThat(player.isFinished()).isTrue();
@@ -92,11 +92,14 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 거짓을 입력받으면 카드를 한장 더 받을 수 없다다.")
+    @DisplayName("플레이어는 거짓을 입력받으면 카드를 한장 더 받을 수 없다.")
     public void testPlayerHitWithInputN() {
         // given
         Deck deck = new Deck();
         Player player = createDefaultPlayer();
+
+        player.hit(CardFixtures.FIVE);
+        player.hit(CardFixtures.SEVEN);
         // when
         boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> false));
         // then

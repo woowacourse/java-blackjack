@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import blackjack.domain.card.Score;
 
-public class DealerHitStrategy implements HitStrategy {
+public final class DealerHitStrategy implements HitStrategy {
 
     private static final Score HIT_THRESHOLD = new Score(16);
 

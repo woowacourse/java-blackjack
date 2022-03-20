@@ -6,7 +6,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 
-public class Hand {
+public final class Hand {
 
     private static final int INIT_SIZE = 2;
 

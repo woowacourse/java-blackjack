@@ -2,6 +2,9 @@ package blackjack.utils;
 
 public class IntegerUtils {
 
+    private IntegerUtils() {
+    }
+
     public static int parseInt(String input) {
         try {
             return Integer.parseInt(input);

@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
-public class UsersDto {
+public final class UsersDto {
 
     private final List<UserDto> playersDto;
     private final UserDto dealerDto;

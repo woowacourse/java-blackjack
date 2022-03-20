@@ -6,7 +6,7 @@ import blackjack.domain.user.Hand;
 
 public abstract class Running extends State {
 
-    public Running(Hand hand) {
+    protected Running(Hand hand) {
         super(hand);
     }
 

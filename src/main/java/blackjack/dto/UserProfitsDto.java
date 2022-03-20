@@ -8,7 +8,7 @@ import blackjack.domain.money.Money;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 
-public class UserProfitsDto {
+public final class UserProfitsDto {
 
     private final Map<String, Integer> nameProfits;
 

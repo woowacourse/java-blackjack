@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-public class Name {
+public final class Name {
 
     private final String name;
 

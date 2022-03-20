@@ -5,7 +5,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.state.Ready;
 
-public class Dealer extends User {
+public final class Dealer extends User {
 
     private static final int INIT_COUNT = 1;
 

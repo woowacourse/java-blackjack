@@ -4,7 +4,7 @@ import static blackjack.domain.card.Denomination.*;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
 
     private final Suit suit;
     private final Denomination denomination;
