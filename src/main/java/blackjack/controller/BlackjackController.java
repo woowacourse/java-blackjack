@@ -62,9 +62,11 @@ public class BlackjackController {
     }
 
     private void printResult(BlackjackGame blackjackGame) {
-        OutputView.printCardsAndPoint(ParticipantsDto.from(blackjackGame.getParticipants()));
-        GameResult gameResult = new GameResult(blackjackGame.getParticipants());
-        OutputView.printProfitResult(ProfitResultDto.from(gameResult.calculateTotalProfitResult()));
+        if (blackjackGame.isPlayersTurnEnd() && blackjackGame.isDealerTurnEnd()) {
+            OutputView.printCardsAndPoint(ParticipantsDto.from(blackjackGame.getParticipants()));
+            GameResult gameResult = new GameResult(blackjackGame.getParticipants());
+            OutputView.printProfitResult(ProfitResultDto.from(gameResult.calculateTotalProfitResult()));
+        }
     }
 }
 
