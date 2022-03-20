@@ -3,7 +3,9 @@ package blackJack.domain.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,9 +43,9 @@ class CardsTest {
     @Test
     @DisplayName("인자로 들어온 카드를 사용자가 소유한 카드목록에 추가한다.")
     void add() {
-        Cards cards = new Cards(Arrays.asList(new Card(Suit.CLOVER, Denomination.TWO)));
-        cards.add(new Card(Suit.CLOVER,Denomination.ACE));
-        int expected = 2;
+        Cards cards = new Cards(new ArrayList<>());
+        cards.add(new Card(Suit.CLOVER, Denomination.ACE));
+        int expected = 1;
         assertThat(cards.getCards().size()).isEqualTo(expected);
     }
 
