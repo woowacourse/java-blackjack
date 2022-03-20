@@ -28,14 +28,4 @@ public enum Match {
     public String getResult() {
         return result;
     }
-
-    public Match getOpposite() {
-        if (this.equals(Match.WIN)) {
-            return Match.LOSE;
-        }
-        if (this.equals(Match.LOSE)) {
-            return Match.WIN;
-        }
-        return this;
-    }
 }
