@@ -1,52 +1,96 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 
 public class PlayerTest {
 
-    @ParameterizedTest(name = "{0}")
-    @MethodSource("provideParameters")
-    @DisplayName("턴 강제 종료 여부")
-    void player(String comment, Cards cards, boolean expect) {
-        Player player = new Player(new Name("name"), cards);
-        assertThat(player.isFinished()).isEqualTo(expect);
-    }
+	@Test
+	@DisplayName("플레이어는 카드의 수가 2장이 아니면 게임을 아직 시작할 수 없다.")
+	void is_not_ready() {
+		Player player = new Player(new Name("pobi"));
 
-    private static Stream<Arguments> provideParameters() {
-        return Stream.of(
-                Arguments.arguments("합계 22인 경우 true",
-                        new Cards(getCardList(Denomination.TWO, Denomination.QUEEN, Denomination.KING)), true),
-                Arguments.arguments("합계 20인 경우 false",
-                        new Cards(getCardList(Denomination.QUEEN, Denomination.KING)), false)
-        );
-    }
+		assertThat(player.isReady()).isFalse();
+	}
 
-    public static List<Card> getCardList(Denomination... arguments) {
-        List<Card> list = new ArrayList<>();
-        for (Denomination denomination : arguments) {
-            list.add(Card.valueOf(denomination, Suit.CLOVER));
-        }
-        return list;
-    }
+	@Test
+	@DisplayName("플레이어는 카드의 수가 2장 이상이면 게임을 시작할 수 있다.")
+	void is_ready() {
+		Player player = new Player(new Name("pobi"));
 
-    @Test
-    void drawCard() {
-        Player player = new Player(new Name("name"), new Cards(getCardList(Denomination.QUEEN)));
-        player.drawCard(Card.valueOf(Denomination.ACE, Suit.CLOVER));
-        assertThat(player.getCards().getValue().size()).isEqualTo(2);
-    }
+		player.draw(Card.valueOf(Denomination.ACE, Suit.CLOVER));
+		player.draw(Card.valueOf(Denomination.JACK, Suit.CLOVER));
+
+		assertThat(player.isReady()).isTrue();
+	}
+
+	@Test
+	@DisplayName("플레이어는 현재 상태를 판단해 턴 종료 여부를 반환한다.")
+	void is_finished() {
+		Player player = new Player(new Name("pobi"));
+
+		player.draw(Card.valueOf(Denomination.ACE, Suit.CLOVER));
+		player.draw(Card.valueOf(Denomination.JACK, Suit.CLOVER));
+
+		assertThat(player.isFinished()).isTrue();
+	}
+	
+	@Test
+	@DisplayName("플레이어는 현재 턴이 종료된 상태가 아니라면 카드를 뽑을 수 있다.")
+	void draw() {
+		Player player = new Player(new Name("pobi"));
+
+		player.draw(Card.valueOf(Denomination.QUEEN, Suit.CLOVER));
+
+		List<Card> cards = player.getCards()
+			.getValue();
+		assertThat(cards.size()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("플레이어가 현재 턴이 종료된 상태에서 카드를 뽑으면 에러가 발생한다.")
+	void can_not_draw() {
+		//given
+		Player player = new Player(new Name("pobi"));
+
+		player.draw(Card.valueOf(Denomination.QUEEN, Suit.CLOVER));
+		player.draw(Card.valueOf(Denomination.ACE, Suit.CLOVER));
+
+		//when, then
+		assertThatThrownBy(() -> player.draw(Card.valueOf(Denomination.JACK, Suit.CLOVER)))
+			.isInstanceOf(IllegalStateException.class)
+			.hasMessageContaining("턴이 종료된 상태입니다.");
+	}
+
+	@Test
+	@DisplayName("카드의 총점을 계산한다.")
+	void score() {
+		Player player = new Player(new Name("pobi"));
+
+		player.draw(Card.valueOf(Denomination.QUEEN, Suit.CLOVER));
+		player.draw(Card.valueOf(Denomination.ACE, Suit.CLOVER));
+
+		assertThat(player.score()).isEqualTo(21);
+	}
+
+	@Test
+	@DisplayName("플레이어가 stay를 진행 하면 턴을 종료한다")
+	void stay() {
+		Player player = new Player(new Name("pobi"));
+
+		player.draw(Card.valueOf(Denomination.JACK, Suit.CLOVER));
+		player.draw(Card.valueOf(Denomination.QUEEN, Suit.CLOVER));
+
+		player.stay();
+
+		assertThat(player.isFinished()).isTrue();
+	}
 }
