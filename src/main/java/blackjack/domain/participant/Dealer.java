@@ -2,42 +2,56 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.card.CardHandState;
-import blackjack.strategy.CardHandStateStrategy;
+import blackjack.domain.hand.CardHand;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Dealer extends Participant {
+public final class Dealer extends BlackjackParticipant {
 
-    public static final String UNIQUE_NAME = "딜러";
-    private static final int INITIAL_DEALER_OPEN_CARDS_COUNT = 1;
+    public static final String NAME = "딜러";
+    private static final int OPEN_CARDS_COUNT = 1;
+    private static final int MAX_HIT_SCORE = 16;
 
-    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY = CardHandState::ofDealer;
-
-    private Dealer(final CardBundle cardBundle) {
-        super(cardBundle, STATE_UPDATE_STRATEGY);
-    }
-
-    public static Dealer of(final CardBundle cardBundle) {
-        return new Dealer(cardBundle);
-    }
-
-    @Override
-    public void receiveCard(final Card card) {
-        cardHand.hit(card, STATE_UPDATE_STRATEGY);
+    public Dealer(final CardHand cardHand) {
+        super(cardHand);
     }
 
     @Override
     public String getName() {
-        return UNIQUE_NAME;
+        return NAME;
     }
 
     @Override
-    public List<Card> getInitialOpenCards() {
-        return cardHand.getCards()
+    public List<Card> openInitialCards() {
+        return cardHand.getCardBundle()
+                .getCards()
                 .stream()
-                .limit(INITIAL_DEALER_OPEN_CARDS_COUNT)
+                .limit(OPEN_CARDS_COUNT)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    protected boolean shouldStay() {
+        CardBundle cardBundle = cardHand.getCardBundle();
+        return cardBundle.hasScoreOver(MAX_HIT_SCORE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Dealer dealer = (Dealer) o;
+        return Objects.equals(getCardBundle(), dealer.getCardBundle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCardBundle());
     }
 
     @Override

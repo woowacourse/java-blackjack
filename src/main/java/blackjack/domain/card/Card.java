@@ -1,8 +1,7 @@
 package blackjack.domain.card;
 
-import blackjack.domain.game.Score;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Card {
 
@@ -36,21 +35,14 @@ public class Card {
     }
 
     private static class CardCache {
-        static Set<Card> cache = new HashSet<>();
+        static Map<String, Card> cache = new HashMap<>(52);
 
-        static Card getCache(CardRank rank, CardSymbol symbol) {
-            return cache.stream()
-                    .filter(card -> card.rank == rank)
-                    .filter(card -> card.symbol == symbol)
-                    .findAny()
-                    .orElseGet(() -> createNewCache(rank, symbol));
+        static Card getCache(final CardRank rank, final CardSymbol symbol) {
+            return cache.computeIfAbsent(toKey(rank, symbol), (s) -> new Card(rank, symbol));
         }
 
-        static Card createNewCache(CardRank rank, CardSymbol symbol) {
-            Card newCard = new Card(rank, symbol);
-            cache.add(newCard);
-
-            return newCard;
+        static String toKey(final CardRank rank, final CardSymbol symbol) {
+            return symbol.getDisplayName() + rank.getDisplayName();
         }
     }
 }

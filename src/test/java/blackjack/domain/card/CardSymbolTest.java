@@ -2,7 +2,9 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,15 +20,15 @@ public class CardSymbolTest {
         assertThat(actual).isEqualTo(SYMBOL_LENGTH);
     }
 
-    @DisplayName("getDisplayName 메서드는 카드 심볼의 이름을 반환한다.")
+    @DisplayName("카드 심볼은 각자 대응되는 이름을 지닌다.")
     @Test
-    void getDisplayName() {
-        List<CardSymbol> symbols = List.of(CardSymbol.values());
-        List<String> names = List.of("♥️", "♣️", "♦️", "♠️");
+    void displayName() {
+        List<String> actual = Arrays.stream(CardSymbol.values())
+                .map(CardSymbol::getDisplayName)
+                .collect(Collectors.toList());
 
-        for (int i = 0; i < SYMBOL_LENGTH; i++) {
-            assertThat(symbols.get(i).getDisplayName())
-                    .isEqualTo(names.get(i));
-        }
+        List<String> expected = List.of("♥️", "♣️", "♦️", "♠️");
+
+        assertThat(actual).containsAll(expected);
     }
 }

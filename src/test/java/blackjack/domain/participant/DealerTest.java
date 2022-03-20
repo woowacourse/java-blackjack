@@ -1,20 +1,19 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
-import static blackjack.fixture.CardRepository.CLOVER5;
-import static blackjack.fixture.CardRepository.CLOVER6;
-import static blackjack.fixture.CardRepository.CLOVER7;
-import static blackjack.fixture.CardRepository.CLOVER8;
-import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.hand.CardHand;
+import blackjack.domain.hand.OneCard;
+import blackjack.fixture.CardSupplierStub;
+import blackjack.strategy.CardsViewStrategy;
+import blackjack.strategy.HitOrStayStrategy;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,102 +22,79 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    private Dealer dealer;
+    private static final HitOrStayStrategy HIT_CHOICE = () -> true;
+    private static final CardsViewStrategy VIEW_STRATEGY = (p) -> {
+    };
+
+    private CardHand cardHand;
 
     @BeforeEach
     void setUp() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
-        dealer = Dealer.of(cardBundle);
+        cardHand = new OneCard(CLOVER4).hit(CLOVER_KING);
     }
 
-    @DisplayName("카드를 전달받아 cardBundle에 추가할 수 있다.")
-    @Test
-    void receiveCard() {
-        dealer.receiveCard(CLOVER6);
-
-        List<Card> actual = dealer.getCards();
-
-        assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
-    }
-
-    @DisplayName("canDraw 메서드 테스트")
+    @DisplayName("딜러 drawAll 메서드 테스트")
     @Nested
-    class CanDrawTest {
+    class DrawAllCardsTest {
 
-        @DisplayName("점수가 16을 넘지 않으면 true를 반환한다.")
+        @DisplayName("계속 드로우하도록 하면 16 이하일 때 계속 드로우를 하고 21을 넘어가면 버스트된다.")
         @Test
-        void canDraw_returnTrueOnLessThan16() {
-            dealer.receiveCard(CLOVER6);
-            boolean actual = dealer.canDraw();
+        void drawAll_bust() {
+            Participant dealer = new Dealer(cardHand);
 
-            assertThat(actual).isTrue();
+            dealer.drawAll(HIT_CHOICE, VIEW_STRATEGY, CardSupplierStub.of(CLOVER2, CLOVER10));
+
+            assertThat(extractCards(dealer))
+                    .containsExactly(CLOVER4, CLOVER_KING, CLOVER2, CLOVER10);
         }
 
-        @DisplayName("점수가 16이면 true를 반환한다.")
+        @DisplayName("계속 드로우하도록 해도 17~21이 되었을 때 카드 뽑기를 중단한다.")
         @Test
-        void canDraw_returnTrueOn16() {
-            dealer.receiveCard(CLOVER7);
+        void drawAll_stayOn17() {
+            Participant dealer = new Dealer(cardHand);
 
-            boolean actual = dealer.canDraw();
+            dealer.drawAll(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER3);
 
-            assertThat(actual).isTrue();
-        }
-
-        @DisplayName("점수가 17 이상이면 false를 반환한다.")
-        @Test
-        void canDraw_returnFalseOnGreaterThan16() {
-            dealer.receiveCard(CLOVER8);
-
-            boolean actual = dealer.canDraw();
-
-            assertThat(actual).isFalse();
+            assertThat(extractCards(dealer)).containsExactly(CLOVER4, CLOVER_KING, CLOVER3);
         }
     }
 
-    @DisplayName("Dealer 인스턴스에는 CardBundle의 isBust 메서드가 구현되어있다.")
+    @DisplayName("openInitialCards 메서드는 딜러 초기에 받은 두 장 카드만을 반환한다.")
     @Test
-    void isBust_implementationTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER6, CLOVER10);
-        dealer = Dealer.of(cardBundle);
-        dealer.receiveCard(CLOVER_KING);
+    void openInitialCards() {
+        Participant dealer = new Dealer(cardHand);
+        dealer.drawAll(HIT_CHOICE, VIEW_STRATEGY, () -> CLOVER10);
 
-        boolean actual = dealer.isBust();
-
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("Dealer 인스턴스에는 Participant의 isBlackjack 메서드가 구현되어있다.")
-    @Test
-    void isBlackjack_implementationTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER10, CLOVER_ACE);
-        Dealer dealer = Dealer.of(cardBundle);
-
-        boolean actual = dealer.isBlackjack();
-
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("딜러의 패가 17이상 21이하인 경우 버스트도, 블랙잭도 아니지만, hit 메서드를 호출하는 경우 예외가 발생한다.")
-    @Test
-    void dealerStayTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER7, CLOVER10);
-        Dealer dealer = Dealer.of(cardBundle);
-
-        assertThat(dealer.canDraw()).isFalse();
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> dealer.receiveCard(CLOVER3))
-                .withMessage("이미 카드 패가 확정된 참여자입니다.");
-
-        assertThat(dealer.isBlackjack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-    }
-
-    @DisplayName("딜러의 getInitialOpenCards 메서드는 초기에 받은 카드 중 한 장이 담긴 컬렉션을 반환한다.")
-    @Test
-    void getInitialOpenCards() {
-        List<Card> actual = dealer.getInitialOpenCards();
+        List<Card> actual = dealer.openInitialCards();
 
         assertThat(actual).containsExactly(CLOVER4);
-        assertThat(actual.size()).isEqualTo(1);
+    }
+
+    @DisplayName("카드 패의 구성이 동일한 딜러는 서로 동일하다고 간주된다.")
+    @Test
+    void equals_trueOnSameCardsComposition() {
+        Dealer dealer1 = new Dealer(generateCardHand());
+        Dealer dealer2 = new Dealer(generateCardHand());
+
+        assertThat(dealer1).isEqualTo(dealer2);
+    }
+
+    @DisplayName("카드 패의 구성이 동일한 딜러의 해쉬 값은 서로 동일하다.")
+    @Test
+    void hashCode_trueOnCardHand() {
+        Dealer dealer1 = new Dealer(generateCardHand());
+        Dealer dealer2 = new Dealer(generateCardHand());
+
+        assertThat(dealer1.hashCode()).isEqualTo(dealer2.hashCode());
+    }
+
+    private List<Card> extractCards(Participant participant) {
+        CardBundle cardBundle = participant.getHand().getCardBundle();
+        return cardBundle.getCards();
+    }
+
+    private CardHand generateCardHand() {
+        return new OneCard(CLOVER4).hit(CLOVER_KING);
     }
 }
+

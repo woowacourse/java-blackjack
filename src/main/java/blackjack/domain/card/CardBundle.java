@@ -1,11 +1,10 @@
 package blackjack.domain.card;
 
-import blackjack.domain.game.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Function;
+import java.util.Objects;
 
 public class CardBundle {
 
@@ -18,68 +17,66 @@ public class CardBundle {
     private CardBundle(final List<Card> cards) {
         validateNoDuplicate(cards);
         this.cards = Collections.unmodifiableList(cards);
-        this.score = getBestScore();
+        this.score = calculateBestScore();
     }
 
-    public static CardBundle of(final Card card1, final Card card2) {
-        return new CardBundle(List.of(card1, card2));
+    public CardBundle(final Card card) {
+        this(List.of(card));
     }
 
-    public CardBundle addAndGenerate(final Card card) {
+    public CardBundle add(final Card card) {
         List<Card> addedCards = new ArrayList<>(cards);
         addedCards.add(card);
         return new CardBundle(addedCards);
     }
 
     private void validateNoDuplicate(final List<Card> cards) {
-        if (cards.size() != new HashSet<>(cards).size()) {
+        int uniqueCardsCount = new HashSet<>(cards).size();
+        if (cards.size() != uniqueCardsCount) {
             throw new IllegalArgumentException(NO_DUPLICATE_CARD_EXCEPTION_MESSAGE);
         }
     }
 
-    private Score getBestScore() {
-        Score defaultScore = calculateScoreBy(Card::getRankValue);
+    private Score calculateBestScore() {
+        Score defaultScore = getDefaultScore();
         if (!containsAce()) {
             return defaultScore;
         }
-        Score maxScore = defaultScore.incrementOneAce();
-        if (!maxScore.isBustScore()) {
-            return maxScore;
-        }
-        return defaultScore;
+        return defaultScore.incrementAceIfNotBust();
     }
 
-    private Score calculateScoreBy(Function<Card, Score> function) {
+    private Score getDefaultScore() {
         return cards.stream()
-                .map(function)
+                .map(Card::getRankValue)
                 .reduce(Score.valueOf(0), Score::add);
     }
 
     private boolean containsAce() {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-
-        return aceCount > 0;
-    }
-
-    public boolean isBlackjackScore() {
-        return score.isBlackjackScore();
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
         if (cards.size() != BLACKJACK_CARD_SIZE) {
             return false;
         }
-        return isBlackjackScore();
+        int scoreValue = getScoreValue();
+        return scoreValue == Score.BLACKJACK;
     }
 
     public boolean isBust() {
-        return score.isBustScore();
+        int scoreValue = getScoreValue();
+        return scoreValue > Score.BLACKJACK;
     }
 
-    public boolean isDealerFinished() {
-        return score.isDealerFinished();
+    public boolean hasScoreOf(int targetValue) {
+        int scoreValue = getScoreValue();
+        return scoreValue == targetValue;
+    }
+
+    public boolean hasScoreOver(int targetValue) {
+        int scoreValue = getScoreValue();
+        return scoreValue > targetValue;
     }
 
     public List<Card> getCards() {
@@ -88,6 +85,27 @@ public class CardBundle {
 
     public Score getScore() {
         return score;
+    }
+
+    private int getScoreValue() {
+        return score.toInt();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CardBundle other = (CardBundle) o;
+        return Objects.equals(cards, other.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 
     @Override

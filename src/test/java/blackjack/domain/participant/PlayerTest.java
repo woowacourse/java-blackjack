@@ -1,25 +1,22 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
-import static blackjack.fixture.CardRepository.CLOVER5;
-import static blackjack.fixture.CardRepository.CLOVER6;
-import static blackjack.fixture.CardRepository.CLOVER7;
-import static blackjack.fixture.CardRepository.CLOVER_ACE;
+import static blackjack.fixture.CardRepository.CLOVER8;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.hand.CardHand;
+import blackjack.domain.hand.OneCard;
+import blackjack.fixture.CardSupplierStub;
+import blackjack.strategy.CardsViewStrategy;
+import blackjack.strategy.HitOrStayStrategy;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,24 +24,24 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    private static final Function<String, Boolean> STAY_CHOICE = (s) -> false;
-    private static final Supplier<Card> CARD_SUPPLIER = () -> CLOVER2;
-    private static final Consumer<Player> VIEW_STRATEGY = player -> {
+    private static final HitOrStayStrategy HIT_CHOICE = () -> true;
+    private static final HitOrStayStrategy STAY_CHOICE = () -> false;
+    private static final CardsViewStrategy VIEW_STRATEGY = (p) -> {
     };
 
-    private Player player;
-    private CardBundle cardBundle;
+    private CardHand cardHand;
+    private Participant player;
 
     @BeforeEach
     void setUp() {
-        cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
-        player = Player.of("hudi", cardBundle);
+        cardHand = new OneCard(CLOVER8).hit(CLOVER_KING);
+        player = new Player("jeong", cardHand);
     }
 
-    @DisplayName("플레이어의 이름을 빈 문자열로 생성하려는 경우 예외가 발생한다.")
+    @DisplayName("공백으로 구성된 이름으로 플레이어를 생성하려는 경우 예외가 발생한다.")
     @Test
     void constructor_throwExceptionOnBlankName() {
-        assertThatThrownBy(() -> Player.of("", cardBundle))
+        assertThatThrownBy(() -> new Player("  ", cardHand))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 이름을 지녀야 합니다.");
     }
@@ -52,101 +49,80 @@ public class PlayerTest {
     @DisplayName("플레이어의 이름을 '딜러'로 생성하려는 경우 예외가 발생한다.")
     @Test
     void constructor_throwExceptionOnDealerName() {
-        assertThatThrownBy(() -> Player.of("딜러", cardBundle))
+        assertThatThrownBy(() -> new Player("딜러", cardHand))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 딜러가 될 수 없습니다.");
     }
 
-    @DisplayName("카드를 전달받아 cardBundle에 추가할 수 있다.")
-    @Test
-    void receiveCard() {
-        player.receiveCard(CLOVER6);
-
-        List<Card> actual = player.getCards();
-
-        assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
-    }
-
-    @DisplayName("canDraw 메서드 테스트")
+    @DisplayName("플레이어 drawAll 메서드 테스트")
     @Nested
-    class CanDrawTest {
+    class DrawAllCardsTest {
 
-        @DisplayName("점수가 21을 넘지 않으면 true를 반환한다.")
+        @DisplayName("계속 드로우하도록 하면 21이상이 될 때까지 카드를 추가한다.")
         @Test
-        void canDraw_returnTrueOnLessThan21() {
-            boolean actual = player.canDraw();
+        void drawAll_keepDrawingUntilBust() {
+            List<Card> cardsToBeAdded = List.of(CLOVER2, CLOVER3, CLOVER4);
 
-            assertThat(actual).isTrue();
+            player.drawAll(HIT_CHOICE, VIEW_STRATEGY, new CardSupplierStub(cardsToBeAdded));
+
+            assertThat(extractCards(player)).containsExactly(CLOVER8, CLOVER_KING, CLOVER2, CLOVER3);
         }
 
-        @DisplayName("점수가 최고 점수인 21이면 false를 반환한다.")
+        @DisplayName("계속 드로우하도록 해도 21이 되었을 때 카드 뽑기를 중단한다.")
         @Test
-        void canDraw_returnFalseOn21() {
-            player.receiveCard(CLOVER2);
-            player.receiveCard(CLOVER10);
+        void drawAll_stayOn21() {
+            List<Card> cardsToBeAdded = List.of(CLOVER3, CLOVER4);
 
-            boolean actual = player.canDraw();
+            player.drawAll(HIT_CHOICE, VIEW_STRATEGY, new CardSupplierStub(cardsToBeAdded));
 
-            assertThat(actual).isFalse();
+            assertThat(extractCards(player)).containsExactly(CLOVER8, CLOVER_KING, CLOVER3);
         }
 
-        @DisplayName("점수가 21을 초과하면 false를 반환한다.")
+        @DisplayName("stay를 선택하는 경우 21이 아니어도 카드를 뽑지 않는다.")
         @Test
-        void canDraw_returnFalseOnGreaterThan21() {
-            player.receiveCard(CLOVER10);
-            player.receiveCard(CLOVER_KING);
+        void drawAll_stopsOnStay() {
+            player.drawAll(STAY_CHOICE, VIEW_STRATEGY, () -> CLOVER10);
 
-            boolean actual = player.canDraw();
-
-            assertThat(actual).isFalse();
+            assertThat(extractCards(player)).containsExactly(CLOVER8, CLOVER_KING);
         }
     }
 
-    @DisplayName("Player 인스턴스에는 CardBundle의 isBust 메서드가 구현되어있다.")
+    @DisplayName("openInitialCards 메서드는 플레이어가 초기에 받은 두 장 카드만을 반환한다.")
     @Test
-    void isBust_implementationTest() {
-        player.receiveCard(CLOVER10);
-        player.receiveCard(CLOVER_KING);
+    void openInitialCards() {
+        player.drawAll(HIT_CHOICE, VIEW_STRATEGY, CardSupplierStub.of(CLOVER2, CLOVER10));
 
-        boolean actual = player.isBust();
+        List<Card> actual = player.openInitialCards();
 
-        assertThat(actual).isTrue();
+        assertThat(actual).containsExactly(CLOVER8, CLOVER_KING);
     }
 
-    @DisplayName("Player 인스턴스에는 Participant의 isBlackjack 메서드가 구현되어있다.")
+    @DisplayName("이름과 카드 패의 구성이 동일한 플레이어는 서로 동일하다고 간주된다.")
     @Test
-    void isBlackjack_implementationTest() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER10, CLOVER_ACE);
-        Player player = Player.of("hudi", cardBundle);
+    void equals_trueOnSameNameAndCardsComposition() {
+        Player player1 = new Player("jeong", generateCardHand());
+        Player player2 = new Player("jeong", generateCardHand());
 
-        boolean actual = player.isBlackjack();
-
-        assertThat(actual).isTrue();
+        assertThat(player1).isEqualTo(player2);
     }
 
-    @DisplayName("플레이어가 stay를 선택하는 경우, 버스트이나 블랙잭이 아니어도, hit 메서드를 호출했을 때 예외가 발생하게 된다.")
+    @DisplayName("이름과 카드 패의 구성이 동일한 딜러의 해쉬 값은 서로 동일하다.")
     @Test
-    void drawAllCards_chooseToStay() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER7, CLOVER10);
-        Player player = Player.of("jeong", cardBundle);
-        assertThat(player.canDraw()).isTrue();
+    void hashCode_trueOnSameNameAndCardsComposition() {
+        Player player1 = new Player("jeong", generateCardHand());
+        Player player2 = new Player("jeong", generateCardHand());
 
-        player.drawAllCards(STAY_CHOICE, CARD_SUPPLIER, VIEW_STRATEGY);
-
-        assertThat(player.canDraw()).isFalse();
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> player.receiveCard(CLOVER3))
-                .withMessage("이미 카드 패가 확정된 참여자입니다.");
-        assertThat(player.isBlackjack()).isFalse();
-        assertThat(player.isBust()).isFalse();
+        assertThat(player1.hashCode())
+                .isEqualTo(player2.hashCode());
     }
 
-    @DisplayName("플레이어의 getInitialOpenCards 메서드는 초기에 받은 두 장의 카드가 담긴 컬렉션을 반환한다.")
-    @Test
-    void getInitialOpenCards() {
-        List<Card> actual = player.getInitialOpenCards();
+    private List<Card> extractCards(Participant participant) {
+        CardHand cardHand = participant.getHand();
+        CardBundle cardBundle = cardHand.getCardBundle();
+        return cardBundle.getCards();
+    }
 
-        assertThat(actual).containsExactly(CLOVER4, CLOVER5);
-        assertThat(actual.size()).isEqualTo(2);
+    private CardHand generateCardHand() {
+        return new OneCard(CLOVER4).hit(CLOVER_KING);
     }
 }

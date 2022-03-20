@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.game.Score;
-
 public enum CardRank {
 
     ACE("A", Score.valueOf(1)),

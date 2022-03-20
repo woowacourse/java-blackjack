@@ -2,8 +2,9 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.game.Score;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,17 +23,17 @@ public class CardRankTest {
         assertThat(actual).isEqualTo(RANK_LENGTH);
     }
 
-    @DisplayName("getDisplayName 메서드는 카드 랭크의 이름을 반환한다.")
+    @DisplayName("카드 랭크는 각자 대응되는 이름을 지닌다.")
     @Test
-    void getDisplayName() {
-        List<CardRank> ranks = List.of(CardRank.values());
-        List<String> names = List.of("A", "2", "3", "4", "5", "6",
+    void displayName() {
+        List<String> actual = Arrays.stream(CardRank.values())
+                .map(CardRank::getDisplayName)
+                .collect(Collectors.toList());
+
+        List<String> expected = List.of("A", "2", "3", "4", "5", "6",
                 "7", "8", "9", "10", "J", "Q", "K");
 
-        for (int i = 0; i < RANK_LENGTH; i++) {
-            assertThat(ranks.get(i).getDisplayName())
-                    .isEqualTo(names.get(i));
-        }
+        assertThat(actual).containsAll(expected);
     }
 
     @DisplayName("ACE는 기본값으로 1의 Score를 지닌다.")

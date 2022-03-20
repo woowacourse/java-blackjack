@@ -1,11 +1,10 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.Score;
-import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.CardBundle;
+import blackjack.domain.card.Score;
 import blackjack.domain.participant.Participant;
 import java.util.List;
-import java.util.Objects;
 
 public class ParticipantCardsDto {
 
@@ -19,22 +18,20 @@ public class ParticipantCardsDto {
 
     public static ParticipantCardsDto of(final Participant participant) {
         String name = participant.getName();
-        List<Card> cards = participant.getCards();
-        Score score = participant.getCurrentScore();
+        CardBundle cardBundle = participant.getHand().getCardBundle();
+        List<Card> cards = cardBundle.getCards();
+        Score score = cardBundle.getScore();
 
         return new ParticipantCardsDto(name, cards, score);
     }
 
     public static ParticipantCardsDto ofInitial(final Participant participant) {
         String name = participant.getName();
-        List<Card> openCardInfo = participant.getInitialOpenCards();
-        Score score = participant.getCurrentScore();
+        List<Card> openCardInfo = participant.openInitialCards();
+        CardBundle cardBundle = participant.getHand().getCardBundle();
+        Score score = cardBundle.getScore();
 
         return new ParticipantCardsDto(name, openCardInfo, score);
-    }
-
-    public boolean isPlayer() {
-        return !Objects.equals(name, Dealer.UNIQUE_NAME);
     }
 
     public String getName() {
@@ -45,8 +42,8 @@ public class ParticipantCardsDto {
         return cardsDto.getCards();
     }
 
-    public Score getScore() {
-        return cardsDto.getScore();
+    public int getScoreValue() {
+        return cardsDto.getScoreValue();
     }
 
     @Override

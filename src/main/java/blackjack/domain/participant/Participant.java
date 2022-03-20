@@ -1,43 +1,21 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardBundle;
-import blackjack.domain.card.CardHand;
-import blackjack.domain.game.Score;
-import blackjack.strategy.CardHandStateStrategy;
+import blackjack.domain.hand.CardHand;
+import blackjack.strategy.CardSupplier;
+import blackjack.strategy.CardsViewStrategy;
+import blackjack.strategy.HitOrStayStrategy;
 import java.util.List;
 
-public abstract class Participant {
+public interface Participant {
 
-    protected CardHand cardHand;
+    List<Card> openInitialCards();
 
-    protected Participant(final CardBundle cardBundle, final CardHandStateStrategy stateStrategy) {
-        this.cardHand = CardHand.of(cardBundle, stateStrategy);
-    }
+    void drawAll(final HitOrStayStrategy hitOrStay,
+                 final CardsViewStrategy viewStrategy,
+                 final CardSupplier supplier);
 
-    public abstract void receiveCard(final Card card);
+    String getName();
 
-    public boolean canDraw() {
-        return !cardHand.isFinished();
-    }
-
-    public Score getCurrentScore() {
-        return cardHand.getScore();
-    }
-
-    public boolean isBlackjack() {
-        return cardHand.isBlackjack();
-    }
-
-    public boolean isBust() {
-        return cardHand.isBust();
-    }
-
-    public abstract String getName();
-
-    public abstract List<Card> getInitialOpenCards();
-
-    public List<Card> getCards() {
-        return cardHand.getCards();
-    }
+    CardHand getHand();
 }

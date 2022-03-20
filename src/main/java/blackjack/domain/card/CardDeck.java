@@ -3,27 +3,34 @@ package blackjack.domain.card;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class CardDeck implements CardStack {
 
-    public static final String EMPTY_CARD_DECK_EXCEPTION_MESSAGE = "카드가 모두 소진되었습니다!";
+    private static final String EMPTY_CARD_DECK_EXCEPTION_MESSAGE = "카드가 모두 소진되었습니다!";
 
-    private final LinkedList<Card> cards = new LinkedList<>();
+    private final LinkedList<Card> cards;
 
     public CardDeck() {
-        initCards();
+        this.cards = getAllCards();
         Collections.shuffle(cards);
     }
 
-    private void initCards() {
+    private LinkedList<Card> getAllCards() {
+        LinkedList<Card> cards = new LinkedList<>();
         Arrays.stream(CardRank.values())
-                .forEach(this::initAndAddAllSymbolsOf);
+                .map(this::initAllCardsOfRank)
+                .forEach(cards::addAll);
+
+        return cards;
     }
 
-    private void initAndAddAllSymbolsOf(final CardRank rank) {
-        Arrays.stream(CardSymbol.values())
-                .forEach((symbol -> cards.add(Card.of(rank, symbol))));
+    private List<Card> initAllCardsOfRank(final CardRank rank) {
+        return Arrays.stream(CardSymbol.values())
+                .map(symbol -> Card.of(rank, symbol))
+                .collect(Collectors.toList());
     }
 
     @Override

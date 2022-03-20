@@ -1,7 +1,8 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.betting.PlayerBettings;
+import blackjack.domain.BlackjackGame;
 
 public class Application {
 
@@ -9,7 +10,9 @@ public class Application {
 
     public static void main(String[] args) {
         final BlackjackGame game = controller.initializeGame();
+        final PlayerBettings bettings = controller.initializeBettings(game);
+
         controller.playGame(game);
-        controller.showGameResult(game);
+        controller.showBettingResults(game, bettings);
     }
 }

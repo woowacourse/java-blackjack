@@ -1,17 +1,18 @@
 package blackjack.controller;
 
 import static blackjack.view.InputView.requestPlayerNamesInput;
-import static blackjack.view.OutputView.printGameResult;
-import static blackjack.view.OutputView.printInitialDistributionAnnouncement;
+import static blackjack.view.OutputView.printBettingResults;
+import static blackjack.view.OutputView.printDealerBlackjack;
+import static blackjack.view.OutputView.printInitialDistribution;
 
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.betting.BettingResults;
+import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
-import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.ResultReferee;
-import blackjack.dto.GameResultDto;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
 import blackjack.dto.InitialDistributionDto;
-import blackjack.strategy.CardBundleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -21,31 +22,38 @@ public class BlackjackController {
     public BlackjackGame initializeGame() {
         final CardStack cardDeck = new CardDeck();
         final List<String> playerNames = requestPlayerNamesInput();
-        final CardBundleStrategy strategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
 
-        return new BlackjackGame(cardDeck, playerNames, strategy);
+        return new BlackjackGame(cardDeck, playerNames);
+    }
+
+    public PlayerBettings initializeBettings(final BlackjackGame game) {
+        Participants participants = game.getParticipants();
+        return PlayerBettings.of(participants, InputView::requestBettingAmountInput);
     }
 
     public void playGame(final BlackjackGame game) {
-        final InitialDistributionDto gameInfoDto = InitialDistributionDto.of(game);
+        final InitialDistributionDto dto = InitialDistributionDto.of(game);
 
-        printInitialDistributionAnnouncement(gameInfoDto);
-        if (!gameInfoDto.getIsGameOver()) {
-            distributeAllCards(game);
+        if (game.isBlackjackDealer()){
+            printDealerBlackjack(dto);
+            return;
         }
+
+        printInitialDistribution(dto);
+        distributeAllCards(game);
     }
 
     private void distributeAllCards(final BlackjackGame game) {
-        game.distributeAllCards(
-                InputView::requestMoreCardInput,
-                OutputView::printPlayerCardDistributionInfo,
-                OutputView::printDealerExtraCardInfo);
+        game.drawAllPlayerCards(
+                InputView::requestMoreCardInput, OutputView::printHitResult);
+        game.drawDealerCards(OutputView::printDealerExtraCardInfo);
     }
 
-    public void showGameResult(final BlackjackGame game) {
-        final ResultReferee referee = new ResultReferee(game.getDealer(), game.getPlayers());
-        final GameResultDto dto = new GameResultDto(referee.getResults());
+    public void showBettingResults(final BlackjackGame game, final PlayerBettings bettings) {
+        final Participants participants = game.getParticipants();
+        final Participant dealer = participants.getDealer();
 
-        printGameResult(dto);
+        final BettingResults results = new BettingResults(dealer, bettings);
+        printBettingResults(results.getValue());
     }
 }
