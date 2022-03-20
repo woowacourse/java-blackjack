@@ -1,13 +1,13 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Denomination.*;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.THREE;
+import static blackjack.domain.card.Denomination.values;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.DenominationArgumentsProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 
 public class DenominationTest {
 
@@ -43,14 +43,5 @@ public class DenominationTest {
         int result = three.addScore(10);
 
         assertThat(result).isEqualTo(13);
-    }
-
-    @DisplayName("현재 점수를 기반으로 계산한다. ACE 는 bust 가 최대한 일어나지 않도록 연산된다.")
-    @ParameterizedTest
-    @ArgumentsSource(DenominationArgumentsProvider.class)
-    void 점수_계산(int beforeScore, Denomination denomination, int afterScore) {
-        int result = denomination.addScore(beforeScore);
-
-        assertThat(result).isEqualTo(afterScore);
     }
 }

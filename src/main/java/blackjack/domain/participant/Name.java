@@ -6,10 +6,10 @@ public class Name {
 
     public Name(String value) {
         this.value = value;
-        validate(this.value);
+        validate();
     }
 
-    private void validate(String value) {
+    private void validate() {
         if (value.isBlank()) {
             throw new IllegalArgumentException("이름은 공백이 아니어야합니다.");
         }

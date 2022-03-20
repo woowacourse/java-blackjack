@@ -7,30 +7,46 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int INIT_CARDS_SIZE = 2;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int READY_SIZE = 2;
 
     private final List<Card> value;
 
     public Cards(List<Card> cards) {
         this.value = new ArrayList<>(cards);
-        validateSize();
     }
 
-    private void validateSize() {
-        if (value.size() != INIT_CARDS_SIZE) {
-            throw new IllegalArgumentException("카드의 개수는 " + INIT_CARDS_SIZE + "장이어야 합니다.");
-        }
+    public Cards() {
+        this(Collections.emptyList());
     }
 
-    public int calculateTotalScore() {
-        value.sort(Comparator.naturalOrder());
+    public int totalScore() {
+        ArrayList<Card> newCards = new ArrayList<>(value);
+        newCards.sort(Comparator.naturalOrder());
 
         int totalScore = 0;
-        for (Card card : value) {
+        for (Card card : newCards) {
             totalScore = card.calculateScore(totalScore);
         }
 
         return totalScore;
+    }
+
+    public boolean isBlackjack() {
+        return isReady() && hasAce() && totalScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isReady() {
+        return value.size() == READY_SIZE;
+    }
+
+    private boolean hasAce() {
+        return value.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    public boolean isBust() {
+        return totalScore() > BLACKJACK_SCORE;
     }
 
     public void append(Card card) {

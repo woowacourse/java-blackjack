@@ -1,152 +1,232 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.CardsTestDataGenerator.generateBlackjack;
-import static blackjack.domain.CardsTestDataGenerator.generateCards;
-import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreGraterThan17Cards;
-import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreNotMoreThan16Cards;
-import static blackjack.domain.GameResult.LOSE;
-import static blackjack.domain.GameResult.WIN;
-import static blackjack.domain.card.Denomination.ACE;
-import static blackjack.domain.card.Denomination.FIVE;
-import static blackjack.domain.card.Denomination.JACK;
-import static blackjack.domain.card.Denomination.KING;
-import static blackjack.domain.card.Suit.HEART;
-import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.domain.CardFixtures.ACE_SPACE;
+import static blackjack.domain.CardFixtures.FIVE_SPACE;
+import static blackjack.domain.CardFixtures.JACK_SPACE;
+import static blackjack.domain.CardFixtures.KING_SPACE;
+import static blackjack.domain.CardFixtures.QUEEN_SPACE;
+import static blackjack.domain.CardFixtures.SIX_SPACE;
+import static blackjack.domain.CardFixtures.THREE_SPACE;
+import static blackjack.domain.CardFixtures.TWO_SPACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import blackjack.domain.CardsArgumentsProvider;
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 
-public class PlayerTest {
+class PlayerTest {
 
-    @DisplayName("이름과 카드 리스트가 주어지면 정상적으로 생성된다.")
+    @DisplayName("이름과 배팅 금액이 주어지면 정상적으로 생성된다.")
     @Test
-    void 플레이어_생성_정상() {
-        assertDoesNotThrow(() -> new Player("mat", generateCards()));
+    void 플레이어_정상_생성() {
+        assertDoesNotThrow(() -> new Player("mat", "10000"));
     }
 
-    @DisplayName("플레이어의 총 점수가 21점 이하인 경우 hit가 가능하다.")
+    @DisplayName("플레이어는 현재 상태를 판단하여 준비가 완료되지 않으면 false를 반환한다.")
     @Test
-    void 플레이어_게임_지속_가능() {
-        String name = "mat";
-        List<Card> cards = generateBlackjack();
-        Player player = new Player(name, cards);
+    void 플레이어_준비_여부() {
+        Player player = new Player("mat", "10000");
 
-        assertThat(player.isDrawable()).isTrue();
+        boolean result = player.isReady();
+
+        assertThat(result).isFalse();
     }
 
-    @DisplayName("플레이어의 총 점수가 21점을 초과하는 경우 hit가 불가능하다.")
+    @DisplayName("플레이어는 현재 상태를 판단하여 준비 완료이면 true를 반환한다.")
     @Test
-    void 플레이어_게임_지속_불가능() {
-        Player player = new Player("sudal", generateBlackjack());
-        player.append(new Card(ACE, SPADE));
+    void 플레이어_준비_완료() {
+        Player player = new Player("mat", "10000");
+
+        player.hit(TWO_SPACE);
+        player.hit(THREE_SPACE);
+
+        boolean result = player.isReady();
+
+        assertThat(result).isTrue();
+    }
+
+    @DisplayName("플레이어는 현재 상태를 판단하여 hit를 진행한다.")
+    @Test
+    void 플레이어_히트() {
+        Player player = new Player("mat", "10000");
+        player.hit(TWO_SPACE);
+
+        List<Card> cards = player.getCards();
+
+        assertThat(cards.size()).isEqualTo(1);
+    }
+
+    @DisplayName("플레이어가 stay를 진행할 경우 더 이상 게임을 진행하지 않는다.")
+    @Test
+    void 플레이어_스테이() {
+        Player player = new Player("mat", "10000");
+        player.hit(KING_SPACE);
+        player.hit(JACK_SPACE);
+
+        player.stay();
 
         assertThat(player.isDrawable()).isFalse();
     }
 
-    @DisplayName("카드를 받아서 합칠 수 있다.")
+    @DisplayName("플레이어는 현재 상태를 판단하여 게임의 종료 여부를 반환한다.")
     @Test
-    void 카드_합침() {
-        String name = "mat";
-        List<Card> cards = generateCards();
-        Player player = new Player(name, cards);
-        Card card = new Card(FIVE, SPADE);
+    void 플레이어_종료_여부() {
+        Player player = new Player("mat", "10000");
+        player.hit(KING_SPACE);
+        player.hit(JACK_SPACE);
+        player.hit(QUEEN_SPACE);
 
-        player.append(card);
+        boolean result = player.isDrawable();
 
-        assertThat(player.getCards().size()).isEqualTo(3);
+        assertThat(result).isFalse();
     }
 
-    @DisplayName("Cards가 주어지면 점수를 계산하면 반환한다.")
-    @ParameterizedTest
-    @ArgumentsSource(CardsArgumentsProvider.class)
-    void 플레이어_카드_점수_계산(Cards cards, int totalScore) {
-        Dealer dealer = new Dealer(cards.getValue());
+    @DisplayName("보유한 카드의 총점을 반환한다.")
+    @Test
+    void 플레이어_총점() {
+        Player player = new Player("mat", "10000");
+        player.hit(KING_SPACE);
+        player.hit(JACK_SPACE);
 
-        assertThat(dealer.getTotalScore()).isEqualTo(totalScore);
+        int result = player.getTotalScore();
+
+        assertThat(result).isEqualTo(20);
     }
 
-    @DisplayName("딜러가 버스트 일 경우 플레이어가 승리한다.")
+    @DisplayName("플레이어가 블랙잭으로 승리한 경우 배팅 금액의 1.5배를 얻는다.")
     @Test
-    void 플레이어_승패_여부_버스트_승() {
-        Dealer dealer = new Dealer(generateBlackjack());
-        dealer.append(new Card(KING, SPADE));
-        dealer.append(new Card(JACK, HEART));
+    void 플레이어_블랙잭_승() {
+        Dealer dealer = new Dealer();
+        dealer.hit(JACK_SPACE);
+        dealer.hit(KING_SPACE);
 
-        Player player = new Player("sudal", generateBlackjack());
+        Player player = new Player("mat", "10000");
+        player.hit(ACE_SPACE);
+        player.hit(KING_SPACE);
 
-        GameResult gameResult = player.decideResult(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(gameResult).isEqualTo(WIN);
+        assertThat(result.getAmount()).isEqualTo("15000");
     }
 
-    @DisplayName("플레이어와 딜러 모두 버스트일 경우 패배한다.")
+    @DisplayName("플레이어가 블랙잭으로 무승부 인경우 배팅 금액의 0배를 얻는다.")
     @Test
-    void 플레이어_승패_여부_둘다_버스트_패() {
-        Dealer dealer = new Dealer(generateBlackjack());
-        dealer.append(new Card(KING, SPADE));
-        dealer.append(new Card(JACK, HEART));
+    void 플레이어_블랙잭_무승부() {
+        Dealer dealer = new Dealer();
+        dealer.hit(ACE_SPACE);
+        dealer.hit(KING_SPACE);
 
-        Player player = new Player("sudal", generateBlackjack());
-        player.append(new Card(KING, HEART));
-        player.append(new Card(JACK, SPADE));
+        Player player = new Player("mat", "10000");
+        player.hit(ACE_SPACE);
+        player.hit(KING_SPACE);
 
-        GameResult gameResult = player.decideResult(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(gameResult).isEqualTo(LOSE);
+        assertThat(result.getAmount()).isEqualTo("0");
     }
 
-    @DisplayName("플레이어만 버스트이면 패배한다.")
+    @DisplayName("플레이어가 블랙잭이고 딜러가 21점일 때 승인 경우 배팅 금액의 1.5배를 얻는다.")
     @Test
-    void 플레이어_승패_여부_버스트_패() {
-        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", generateBlackjack());
-        player.append(new Card(KING, SPADE));
-        player.append(new Card(JACK, SPADE));
+    void 플레이어_블랙잭_딜러_21_승() {
+        Dealer dealer = new Dealer();
+        dealer.hit(FIVE_SPACE);
+        dealer.hit(KING_SPACE);
+        dealer.hit(SIX_SPACE);
 
-        GameResult gameResult = player.decideResult(dealer);
+        Player player = new Player("mat", "10000");
+        player.hit(ACE_SPACE);
+        player.hit(KING_SPACE);
 
-        assertThat(gameResult).isEqualTo(GameResult.LOSE);
+        BettingMoney result = player.calculateProfit(dealer);
+
+        assertThat(result.getAmount()).isEqualTo("15000");
     }
 
-    @DisplayName("플레이어가 딜러보다 점수가 높으면 승리한다.")
+    @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 무승부인 경우 배팅 금액의 0배를 얻는다.")
     @Test
-    void 플레이어_승패_여부_점수_승() {
-        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
-        Player player = new Player("sudal", generateTotalScoreGraterThan17Cards());
+    void 플레이어_무승부() {
+        Dealer dealer = new Dealer();
+        dealer.hit(JACK_SPACE);
+        dealer.hit(KING_SPACE);
 
-        GameResult gameResult = player.decideResult(dealer);
+        Player player = new Player("mat", "10000");
+        player.hit(JACK_SPACE);
+        player.hit(KING_SPACE);
+        player.stay();
 
-        assertThat(gameResult).isEqualTo(GameResult.WIN);
+        BettingMoney result = player.calculateProfit(dealer);
+
+        assertThat(result.getAmount()).isEqualTo("0");
     }
 
-    @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배.")
+    @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 승인 경우 배팅 금액의 1배를 얻는다.")
     @Test
-    void 플레이어_승패_여부_점수_패() {
-        Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
-        Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards());
+    void 플레이어_승() {
+        Dealer dealer = new Dealer();
+        dealer.hit(TWO_SPACE);
+        dealer.hit(KING_SPACE);
 
-        GameResult gameResult = player.decideResult(dealer);
+        Player player = new Player("mat", "10000");
+        player.hit(JACK_SPACE);
+        player.hit(KING_SPACE);
+        player.stay();
 
-        assertThat(gameResult).isEqualTo(GameResult.LOSE);
+        BettingMoney result = player.calculateProfit(dealer);
+
+        assertThat(result.getAmount()).isEqualTo("10000");
     }
 
-    @DisplayName("플레이어와 딜러가 점수가 같으면 무.")
+    @DisplayName("플레이어가 버스트인 경우 무조건 패이므로 배팅 금액의 -1배를 얻는다.")
     @Test
-    void 플레이어_승패_여부_점수_무() {
-        Dealer dealer = new Dealer(generateCards());
-        Player player = new Player("sudal", generateCards());
+    void 플레이어_버스트() {
+        Dealer dealer = new Dealer();
+        dealer.hit(TWO_SPACE);
+        dealer.hit(KING_SPACE);
 
-        GameResult gameResult = player.decideResult(dealer);
+        Player player = new Player("mat", "10000");
+        player.hit(JACK_SPACE);
+        player.hit(QUEEN_SPACE);
+        player.hit(KING_SPACE);
 
-        assertThat(gameResult).isEqualTo(GameResult.TIE);
+        BettingMoney result = player.calculateProfit(dealer);
+
+        assertThat(result.getAmount()).isEqualTo("-10000");
+    }
+
+    @DisplayName("플레이어와 딜러가 모두 버스트인 경우 무조건 플레이어 패이므로 배팅 금액의 -1배를 얻는다.")
+    @Test
+    void 플레이어_딜러_버스트() {
+        Dealer dealer = new Dealer();
+        dealer.hit(JACK_SPACE);
+        dealer.hit(THREE_SPACE);
+        dealer.hit(KING_SPACE);
+
+        Player player = new Player("mat", "10000");
+        player.hit(JACK_SPACE);
+        player.hit(QUEEN_SPACE);
+        player.hit(KING_SPACE);
+
+        BettingMoney result = player.calculateProfit(dealer);
+
+        assertThat(result.getAmount()).isEqualTo("-10000");
+    }
+
+    @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 패인 경우 배팅 금액의 -1배를 얻는다.")
+    @Test
+    void 플레이어_패() {
+        Dealer dealer = new Dealer();
+        dealer.hit(JACK_SPACE);
+        dealer.hit(THREE_SPACE);
+
+        Player player = new Player("mat", "10000");
+        player.hit(JACK_SPACE);
+        player.hit(TWO_SPACE);
+        player.stay();
+
+        BettingMoney result = player.calculateProfit(dealer);
+
+        assertThat(result.getAmount()).isEqualTo("-10000");
     }
 }

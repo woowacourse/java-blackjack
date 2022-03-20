@@ -1,30 +1,28 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
-import blackjack.domain.card.Card;
-import java.util.List;
+import blackjack.domain.state.Ready;
 
 public class Player extends Participant {
 
-    public Player(String name, List<Card> cards) {
-        super(name, cards);
+    private final BettingMoney bettingMoney;
+
+    public Player(String name, String money) {
+        super(new Name(name), new Ready());
+        this.bettingMoney = BettingMoney.of(money);
     }
 
     @Override
     public boolean isDrawable() {
-        return cards.calculateTotalScore() <= BLACKJACK_SCORE;
+        return !state.isFinished();
     }
 
-    @Override
-    public GameResult decideResult(Participant participant) {
-        if (isBust()) {
-            return GameResult.LOSE;
-        }
+    public void stay() {
+        state = state.stay();
+    }
 
-        if (participant.isBust()) {
-            return GameResult.WIN;
-        }
-
-        return GameResult.of(getTotalScore(), participant.getTotalScore());
+    public BettingMoney calculateProfit(Participant dealer) {
+        double earningRate = state.earningRate(dealer.state);
+        BettingMoney profit = bettingMoney.times(earningRate);
+        return profit;
     }
 }

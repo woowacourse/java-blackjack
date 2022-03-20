@@ -2,9 +2,10 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class Players {
 
@@ -12,9 +13,10 @@ public class Players {
 
     private final List<Player> value;
 
-    public Players(Deck deck, List<String> names) {
-        this.value = names.stream()
-                .map(name -> new Player(name, deck.getInitCards()))
+    public Players(Map<String, String> names) {
+        this.value = names.keySet()
+                .stream()
+                .map(name -> new Player(name, names.get(name)))
                 .collect(toList());
         validateSize();
     }
@@ -22,6 +24,12 @@ public class Players {
     private void validateSize() {
         if (value.size() < MINIMUM_PLAYER_SIZE) {
             throw new IllegalArgumentException("플레이어는 최소 1명입니다.");
+        }
+    }
+
+    public void forEach(Consumer<Player> consumer) {
+        for (Player player : value) {
+            consumer.accept(player);
         }
     }
 

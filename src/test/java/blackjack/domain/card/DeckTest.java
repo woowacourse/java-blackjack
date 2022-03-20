@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.CardsTestDataGenerator.*;
-import static blackjack.domain.card.Denomination.*;
-import static blackjack.domain.card.Suit.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Suit.DIAMOND;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import blackjack.domain.card.generator.RandomCardsGenerator;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class DeckTest {
     void 카드_뽑기_예외() {
         Deck deck = new Deck(() -> Collections.emptyList());
 
-        assertThatThrownBy(() -> deck.draw())
+        assertThatThrownBy(() -> deck.pick())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("카드가 모두 소진되었습니다.");
     }
@@ -36,18 +36,8 @@ public class DeckTest {
         Card card = new Card(ACE, DIAMOND);
         Deck deck = new Deck(() -> List.of(card));
 
-        Card drawCard = deck.draw();
+        Card pickCard = deck.pick();
 
-        assertThat(card).isEqualTo(drawCard);
-    }
-
-    @DisplayName("최초에 카드 두장을 뽑는다.")
-    @Test
-    void 카드_두장_뽑기() {
-        Deck deck = new Deck(() -> generateCards());
-
-        List<Card> cards = deck.getInitCards();
-
-        assertThat(cards.size()).isEqualTo(2);
+        assertThat(card).isEqualTo(pickCard);
     }
 }

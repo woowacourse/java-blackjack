@@ -1,43 +1,44 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.State;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
 
-    protected static final int BLACKJACK_SCORE = 21;
+    private final Name name;
+    protected State state;
 
-    protected final Name name;
-    protected final Cards cards;
-
-    public Participant(String name, List<Card> cards) {
-        this.name = new Name(name);
-        this.cards = new Cards(cards);
+    protected Participant(Name name, State state) {
+        this.name = name;
+        this.state = state;
     }
 
-    public int getTotalScore() {
-        return cards.calculateTotalScore();
+    public boolean isReady() {
+        return state.isRunning();
     }
 
-    public void append(Card card) {
-        cards.append(card);
-    }
-
-    protected boolean isBust() {
-        return cards.calculateTotalScore() > BLACKJACK_SCORE;
+    public void hit(Card card) {
+        if (isDrawable()) {
+            state = state.draw(card);
+        }
     }
 
     public abstract boolean isDrawable();
 
-    public abstract GameResult decideResult(Participant participant);
+    public int getTotalScore() {
+        Cards cards = state.cards();
+        return cards.totalScore();
+    }
 
     public String getName() {
         return name.getValue();
     }
 
     public List<Card> getCards() {
-        return cards.getValue();
+        Cards cards = state.cards();
+        return Collections.unmodifiableList(cards.getValue());
     }
 }

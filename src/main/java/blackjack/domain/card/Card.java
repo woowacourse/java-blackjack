@@ -16,12 +16,16 @@ public class Card implements Comparable<Card> {
         return denomination.addScore(score);
     }
 
-    public Denomination getDenomination() {
-        return denomination;
+    public boolean isAce() {
+        return denomination.isAce();
     }
 
-    public Suit getSuit() {
-        return suit;
+    public String getDenomination() {
+        return denomination.getName();
+    }
+
+    public String getSuit() {
+        return suit.getName();
     }
 
     @Override
@@ -44,13 +48,5 @@ public class Card implements Comparable<Card> {
     @Override
     public int hashCode() {
         return Objects.hash(denomination, suit);
-    }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "denomination=" + denomination +
-                ", suit=" + suit +
-                '}';
     }
 }
