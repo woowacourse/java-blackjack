@@ -1,5 +1,9 @@
 package blakjack.view;
 
+import blakjack.domain.Chip;
+import blakjack.domain.PlayerName;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -11,14 +15,15 @@ public class InputView {
     private static final String NAME_DELIMITER = ",";
     private static final String DUPLICATE_NAME_MESSAGE = "중복된 이름은 사용할 수 없습니다.";
     private static final String BLANK_INPUT_MESSAGE = "값을 입력해주세요.";
+    private static final String NOT_NUMBER_MESSAGE = "숫자를 입력하세요.";
 
     private InputView() {
     }
 
-    public static List<String> inputPlayerNames() {
+    public static List<PlayerName> inputPlayerNames() {
         System.out.println(INPUT_NAME_MESSAGE);
         final String rawInput = readLine();
-        return checkDuplication(parseToNames(rawInput));
+        return checkDuplication(convertToPlayerName(rawInput));
     }
 
     private static String readLine() {
@@ -30,13 +35,14 @@ public class InputView {
         return input;
     }
 
-    private static List<String> parseToNames(final String rawInput) {
+    private static List<PlayerName> convertToPlayerName(final String rawInput) {
         return Arrays.stream(rawInput.split(NAME_DELIMITER))
                 .map(String::trim)
+                .map(PlayerName::new)
                 .collect(Collectors.toList());
     }
 
-    private static List<String> checkDuplication(final List<String> names) {
+    private static List<PlayerName> checkDuplication(final List<PlayerName> names) {
         final var before = names.size();
         final var after = (int) names.stream()
                 .distinct()
@@ -46,5 +52,25 @@ public class InputView {
         }
         System.out.println(DUPLICATE_NAME_MESSAGE);
         return inputPlayerNames();
+    }
+
+    public static List<Chip> inputBettingMoney(final List<PlayerName> playerNames) {
+        final List<Chip> chips = new ArrayList<>();
+        for (final PlayerName playerName : playerNames) {
+            System.out.printf("%s의 배팅 금액은?%n", playerName.getValue());
+            chips.add(createChip());
+        }
+        return chips;
+    }
+
+    private static Chip createChip() {
+        final var raw = readLine();
+        try {
+            final var number = Integer.parseInt(raw);
+            return new Chip(number);
+        } catch (NumberFormatException e) {
+            System.out.println(NOT_NUMBER_MESSAGE);
+            return createChip();
+        }
     }
 }
