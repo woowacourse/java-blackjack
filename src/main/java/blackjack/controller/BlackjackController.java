@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.*;
@@ -21,7 +22,7 @@ public class BlackjackController {
         final Map<Player, BettingMoney> playersInfo = getPlayersBettingMoney(participants.getPlayers());
         final Deck deck = Deck.of(Deck.create().getDeck());
         final BlackjackGame blackjackGame = progressGame(participants, deck);
-        
+
         final List<Player> players = playersTurn(blackjackGame, participants);
         final Dealer dealer = dealerTurn(blackjackGame);
         final Map<Player, BlackjackMatch> result = createBlackjackGameResult(players, dealer);
@@ -110,7 +111,12 @@ public class BlackjackController {
 
     private void createBlackjackProfitResult(
             Dealer dealer, Map<Player, BettingMoney> playerInfo, Map<Player, BlackjackMatch> result) {
-        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(dealer, playerInfo);
-        OutputView.printProfitResult(blackjackProfitResult.calculateParticipantsProfit(result));
+        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(playerInfo);
+
+        final Map<Participant, Double> profitResult = new LinkedHashMap<>();
+        final Map<Player, Double> playersProfitResult = blackjackProfitResult.calculatePlayersProfit(result);
+        profitResult.put(dealer, blackjackProfitResult.calculateDealerProfit(playersProfitResult));
+        profitResult.putAll(playersProfitResult);
+        OutputView.printProfitResult(profitResult);
     }
 }
