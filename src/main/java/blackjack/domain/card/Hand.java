@@ -43,8 +43,7 @@ public class Hand {
 
 	public boolean hasAce() {
 		return cards.stream()
-			.mapToInt(Card::getScore)
-			.anyMatch(score -> score == Denomination.ACE.getScore());
+			.anyMatch(Card::isAce);
 	}
 
 	private int calculateScoreWithAce(final int aceAsOneScore, final int aceAsElevenScore) {
