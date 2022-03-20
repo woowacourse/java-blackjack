@@ -95,4 +95,29 @@ public class BlackjackGameResultTest {
         assertThat(blackjackGameResult.getDealerResult().get(WinningResult.DRAW)).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("게임 결과를 반환해준다.")
+    void getResult() {
+        List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.THREE),
+            new Card(Suit.CLOVER, Denomination.NINE),
+            new Card(Suit.DIAMOND, Denomination.EIGHT));
+        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.THREE),
+            new Card(Suit.SPADE, Denomination.NINE),
+            new Card(Suit.CLOVER, Denomination.EIGHT));
+
+        Participants participants = Participants.from(List.of("player"));
+
+        Dealer dealer = participants.getDealer();
+        Player player = participants.getPlayers().get(0);
+
+        dealer.receiveInitCards(dealerCards);
+        player.receiveInitCards(playerCards);
+
+        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(participants);
+        blackjackGameResult.calculatePlayerResult();
+        WinningResult playerWinningResult = blackjackGameResult.getPlayerResult().get(player);
+
+        assertThat(playerWinningResult).isEqualTo(WinningResult.DRAW);
+    }
+
 }
