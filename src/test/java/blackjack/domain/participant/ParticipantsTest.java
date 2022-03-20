@@ -1,9 +1,11 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardGenerator;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.*;
+import blackjack.domain.gameresult.ProfitResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -91,5 +93,71 @@ public class ParticipantsTest {
         participants.addUsers(new String[]{"pokemon", "yugioh"});
 
         assertThat(participants.getUsers().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("2승 0무 0패의 상황에서 최종 딜러의 수익을 계산한다.")
+    public void calculateProfitResultDealerWinTest() {
+        Participants participants = makeParticipants();
+
+        Participant kim = participants.getUserByName("kim");
+        kim.receiveCard(Card.of(CardNumber.TEN, CardType.CLOVER));
+
+        Participant park = participants.getUserByName("park");
+        park.receiveCard(Card.of(CardNumber.FIVE, CardType.SPADE));
+
+        Dealer dealer = participants.getDealer();
+        dealer.receiveCard(Card.of(CardNumber.ACE, CardType.CLOVER));
+
+        ProfitResult dealerProfitResult = participants.calculateProfitResult().get(0);
+        assertThat(dealerProfitResult.getProfit()).isEqualTo(20000);
+    }
+
+    @Test
+    @DisplayName("0승 0무 2패의 상황에서 최종 딜러의 수익을 계산한다.")
+    public void calculateProfitResultDealerLoseTest() {
+        Participants participants = makeParticipants();
+
+        Participant kim = participants.getUserByName("kim");
+        kim.receiveCard(Card.of(CardNumber.TEN, CardType.CLOVER));
+
+        Participant park = participants.getUserByName("park");
+        park.receiveCard(Card.of(CardNumber.FIVE, CardType.SPADE));
+
+        ProfitResult dealerProfitResult = participants.calculateProfitResult().get(0);
+        assertThat(dealerProfitResult.getProfit()).isEqualTo(-20000);
+    }
+
+    @Test
+    @DisplayName("0승 2무 0패의 상황에서 최종 딜러의 수익을 계산한다.")
+    public void calculateProfitResultDealerDrawTest() {
+        Participants participants = makeParticipants();
+        ProfitResult dealerProfitResult = participants.calculateProfitResult().get(0);
+        assertThat(dealerProfitResult.getProfit()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("0승 0무 2패, 한명의 유저가 블랙잭인 경우 최종 딜러의 수익을 계산한다.")
+    public void calculateProfitResultDealerLoseBlackJackTest() {
+        Participants participants = makeParticipants();
+        Participant kim = participants.getUserByName("kim");
+        kim.receiveCard(Card.of(CardNumber.TEN, CardType.CLOVER));
+        kim.receiveCard(Card.of(CardNumber.ACE, CardType.SPADE));
+
+        Participant park = participants.getUserByName("park");
+        park.receiveCard(Card.of(CardNumber.FIVE, CardType.SPADE));
+
+        ProfitResult dealerProfitResult = participants.calculateProfitResult().get(0);
+
+        assertThat(dealerProfitResult.getProfit()).isEqualTo(-25000);
+    }
+
+    private Participants makeParticipants() {
+        Participants participants = new Participants();
+        Map<String, Integer> bettingPriceByName =
+                Map.of("kim", 10000, "park", 10000);
+        participants.addDealer();
+        participants.addUsers(bettingPriceByName);
+        return participants;
     }
 }
