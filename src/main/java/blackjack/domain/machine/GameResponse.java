@@ -9,7 +9,7 @@ public class GameResponse {
 
     private final String name;
     private final List<String> deck;
-    private final int totalPoint;
+    private final int score;
 
     public GameResponse(String name, Deck deck) {
         this.name = name;
@@ -17,7 +17,7 @@ public class GameResponse {
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.toList());
-        this.totalPoint = deck.score().getScore();
+        this.score = deck.score().getScore();
     }
 
     public String getName() {
@@ -28,7 +28,7 @@ public class GameResponse {
         return deck;
     }
 
-    public int getTotalPoint() {
-        return totalPoint;
+    public int getScore() {
+        return score;
     }
 }
