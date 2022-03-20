@@ -7,38 +7,29 @@ import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
 import blackJack.domain.card.Symbol;
 import blackJack.domain.result.BlackJackMatch;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
-    @Test
-    @DisplayName("Player 생성 테스트")
-    void createPlayer() {
-        assertThat(new Player("rookie")).isNotNull();
-    }
-
-    @ParameterizedTest(name = "플레이어의 이름 공백인 경우 검증 테스트")
+    @ParameterizedTest()
     @ValueSource(strings = {" ", ""})
-    void checkPlayerName(String value) {
+    void 플레이어의_이름이_공백인_경우_예외가_발생한다(String value) {
         assertThatThrownBy(() -> new Player(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름이 존재하지 않습니다.");
     }
 
     @Test
-    @DisplayName("플레이어의 이름이 '딜러'인 경우 검증 테스트")
-    void checkProhibitName() {
+    void 플레이어의_이름이_딜러인_경우_예외가_발생한다() {
         assertThatThrownBy(() -> new Player("딜러"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 '딜러'일 수 없습니다.");
     }
 
     @Test
-    @DisplayName("플레이어가 승리하는 경우 승부 결과 반환 테스트")
-    void getMatchResultPlayerWin() {
+    void 플레이어가_승리하는_경우의_승부_결과를_계산한다() {
         Player player = new Player("rookie");
         player.hit(Card.of(Symbol.CLOVER, Denomination.ACE));
         player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
@@ -51,8 +42,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 무승부인 경우 승부 결과 반환 테스트")
-    void getMatchResultPlayerDraw() {
+    void 무승부인_경우의_승부_결과를_계산한다() {
         Player player = new Player("rookie");
         player.hit(Card.of(Symbol.CLOVER, Denomination.ACE));
         player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
@@ -65,8 +55,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 패배하는 경우 승부 결과 반환 테스트")
-    void getMatchResultPlayerLose() {
+    void 플레이어가_패배하는_경우의_승부_결과를_계산한다() {
         Player player = new Player("rookie");
         player.hit(Card.of(Symbol.CLOVER, Denomination.ACE));
         player.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
@@ -79,8 +68,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어와 딜러 모두 버스트로 플레이어가 패배하는 경우 승부 결과 반환 테스트")
-    void getMatchResultAllBurst() {
+    void 플레이어와_딜러가_모두_버스트로_플레이어가_패배하는_경우의_승부_결과를_계산한다() {
         Player player = new Player("rookie");
         player.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
         player.hit(Card.of(Symbol.SPADE, Denomination.JACK));
@@ -95,8 +83,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러가 버스트로 플레이어가 승리하는 경우 승부 결과 반환 테스트")
-    void getMatchResultOnlyDealerBurst() {
+    void 딜러가_버스트로_플레이어가_승리하는_경우의_승부_결과를_계산한다() {
         Player player = new Player("rookie");
         player.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
         player.hit(Card.of(Symbol.SPADE, Denomination.JACK));
@@ -110,8 +97,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("점수는 같지만 플레이어가 블랙잭으로 승리하는 경우 승부 결과 반환 테스트")
-    void getMatchResultPlayerBlackJack() {
+    void 점수는_같지만_플레이어가_블랙잭으로_승리하는_경우의_승부_결과를_계산한다() {
         Player player = new Player("rookie");
         player.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
         player.hit(Card.of(Symbol.SPADE, Denomination.ACE));
@@ -125,8 +111,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("점수는 같지만 딜러가 블랙잭으로 플레이어가 패배하는 경우 승부 결과 반환 테스트")
-    void getMatchResultDealerBlackJack() {
+    void 점수는_같지만_딜러가_블랙잭으로_플레이어가_패배하는_경우의_승부_결과를_계산한다() {
         Player player = new Player("rookie");
         player.hit(Card.of(Symbol.HEART, Denomination.JACK));
         player.hit(Card.of(Symbol.DIAMOND, Denomination.NINE));

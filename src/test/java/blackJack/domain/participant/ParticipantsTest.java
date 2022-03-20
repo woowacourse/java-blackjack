@@ -3,14 +3,12 @@ package blackJack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ParticipantsTest {
 
     @Test
-    @DisplayName("플레이어의 이름이 중복된 경우 테스트")
-    void checkDuplicatePlayerName() {
+    void 플레이어의_이름이_중복되면_예외가_발생한다() {
         List<String> playerNames = List.of("rookie", "rookie");
 
         assertThatThrownBy(() -> new Participants(playerNames))
@@ -19,8 +17,7 @@ public class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("플레이어의 수가 1-7명이 아닌 경우 테스트")
-    void checkPlayerCount() {
+    void 플레이어의_수가_1명에서_7명_사이가_아니라면_예외가_발생한다() {
         List<String> playerNames = List.of("k1", "k2", "k3", "k4", "k5", "k6", "k7", "k8");
 
         assertThatThrownBy(() -> new Participants(playerNames))
