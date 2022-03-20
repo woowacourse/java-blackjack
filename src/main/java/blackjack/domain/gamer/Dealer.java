@@ -3,11 +3,11 @@ package blackjack.domain.gamer;
 import java.util.List;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public class Dealer extends Gamer{
 
     private static final String NAME = "딜러";
-    private static final int BLACKJACK_CARD_COUNT = 2;
     private static final int DEALER_OPEN_COUNT_FIRST = 1;
     private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
 
@@ -21,7 +21,7 @@ public class Dealer extends Gamer{
     }
 
     public int findHitCount() {
-        return getCards().size() - BLACKJACK_CARD_COUNT;
+        return cards.size() - Cards.BLACKJACK_SIZE;
     }
 
     public List<Card> openCardFirst() {

@@ -9,8 +9,8 @@ public class Cards {
 
 	private static final String NOT_ACE = "Ace 카드가 아닙니다.";
 
-	public static final int CARD_SIZE_BLACKJACK = 2;
-	private static final int MAX_CARD_VALUE = 21;
+	public static final int BLACKJACK_SIZE = 2;
+	private static final int BLACKJACK_NUMBER = 21;
 
 	private final List<Card> values;
 
@@ -50,7 +50,7 @@ public class Cards {
 
 	private int selectAceValue(int sum, Card ace) {
 		validateNotAce(ace);
-		if (ace.getValue() + sum > MAX_CARD_VALUE) {
+		if (ace.getValue() + sum > BLACKJACK_NUMBER) {
 			return CardNumber.LOWER_ACE_VALUE;
 		}
 		return ace.getValue();
@@ -63,12 +63,12 @@ public class Cards {
 	}
 
 	public boolean isBlackJack() {
-		return this.size() == CARD_SIZE_BLACKJACK &&
-			this.sum() == MAX_CARD_VALUE;
+		return this.size() == BLACKJACK_SIZE &&
+			this.sum() == BLACKJACK_NUMBER;
 	}
 
 	public boolean isBust() {
-		return this.sum() > MAX_CARD_VALUE;
+		return this.sum() > BLACKJACK_NUMBER;
 	}
 
 	public boolean isGreaterThan(Cards cards) {

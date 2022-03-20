@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 
 public class Gamers {
@@ -20,7 +21,13 @@ public class Gamers {
 		this.players = new ArrayList<>(players);
 	}
 
-	public void giveCardToAllGamers(Deck deck) {
+	public void handOutFirst(Deck deck) {
+		for (int i = 0; i < Cards.BLACKJACK_SIZE; i++) {
+			handOutToAllGamers(deck);
+		}
+	}
+
+	private void handOutToAllGamers(Deck deck) {
 		dealer.addCard(deck.draw());
 		for (Player player : players) {
 			player.addCard(deck.draw());
@@ -63,6 +70,10 @@ public class Gamers {
 
 	public List<Card> findDealerFirstCard() {
 		return dealer.openCardFirst();
+	}
+
+	public int findDealerHitCount() {
+		return dealer.findHitCount();
 	}
 
 	public Dealer getDealer() {

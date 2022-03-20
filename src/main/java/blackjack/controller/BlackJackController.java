@@ -15,8 +15,6 @@ import blackjack.view.OutputView;
 
 public class BlackJackController {
 
-	public static final int INIT_DISTRIBUTION_COUNT = 2;
-
 	private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
 
 	private final Gamers gamers;
@@ -57,15 +55,10 @@ public class BlackJackController {
 	}
 
 	private void checkFirstHandOut(Dealer dealer, List<Player> players) {
-		handOutFirst();
+		gamers.handOutFirst(deck);
 		OutputView.printNameAndCards(dealer.getName(), gamers.findDealerFirstCard());
 		players.forEach(
 			player -> OutputView.printNameAndCards(player.getName(), player.getCards()));
-	}
-
-	private void handOutFirst() {
-		gamers.giveCardToAllGamers(this.deck);
-		gamers.giveCardToAllGamers(this.deck);
 	}
 
 	private void askHitOrStay() {
@@ -93,7 +86,7 @@ public class BlackJackController {
 	}
 
 	private void printFinalMessages(Dealer dealer, List<Player> players, BettingResult result) {
-		OutputView.printAdditionalDrawDealer(dealer.findHitCount());
+		OutputView.printAdditionalDrawDealer(gamers.findDealerHitCount());
 		OutputView.printFinalCards(dealer, players);
 		OutputView.printFinalResult(result);
 	}
