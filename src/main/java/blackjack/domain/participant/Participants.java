@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -15,12 +14,6 @@ public class Participants {
 
     private final List<Player> players;
     private final Dealer dealer;
-
-    public Participants(final List<Player> players, final Dealer dealer) {
-        this.players = Collections.unmodifiableList(players);
-        this.dealer = dealer;
-        validatePlayers(players);
-    }
 
     public Participants(Map<Name, BettingAmount> participantInfos) {
         this.dealer = new Dealer();

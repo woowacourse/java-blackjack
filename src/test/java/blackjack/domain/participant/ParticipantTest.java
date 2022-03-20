@@ -8,12 +8,14 @@ import static utils.TestUtil.getCards;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ParticipantsTest {
+class ParticipantTest {
     private List<Name> names;
     private Participants participants;
 
@@ -21,8 +23,11 @@ class ParticipantsTest {
     void init() {
         names = Arrays.asList(new Name("pobi"), new Name("jason"));
 
-        participants = new Participants(toPlayerList(names),
-                new Dealer(getCards(CLOVER_SEVEN, CLOVER_QUEEN)));
+        Map<Name, BettingAmount> participantInfos = new HashMap<>();
+        for (Name name : names) {
+            participantInfos.put(name, BETTING_1000);
+        }
+        participants = new Participants(participantInfos);
     }
 
     @Test
