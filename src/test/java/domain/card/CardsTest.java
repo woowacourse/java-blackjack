@@ -64,15 +64,4 @@ class CardsTest {
 
         assertThat(handCards.isBlackJack()).isTrue();
     }
-
-    @Test
-    @DisplayName("Cards의 점수가 21점이 넘을 경우, Bust 확인 여부에서 True를 반환한다.")
-    void isBustTest() {
-        handCards.addCards(
-            Arrays.asList(Card.valueOf(Symbol.HEART, Denomination.QUEEN),
-                Card.valueOf(Symbol.CLOVER, Denomination.JACK),
-                Card.valueOf(Symbol.DIAMOND, Denomination.THREE)));
-
-        assertThat(handCards.isBust()).isTrue();
-    }
 }

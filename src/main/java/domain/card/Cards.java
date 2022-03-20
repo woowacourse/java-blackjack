@@ -52,10 +52,6 @@ public final class Cards {
         return score;
     }
 
-    public boolean isBust() {
-        return calculateScore() > MAX_SCORE;
-    }
-
     public boolean isBlackJack() {
         return cards.size() == CARD_COUNT_FOR_BLACKJACK && calculateScore() == MAX_SCORE;
     }

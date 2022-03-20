@@ -27,10 +27,6 @@ public abstract class Participant {
         return cards.calculateScore();
     }
 
-    protected boolean isBust() {
-        return cards.isBust();
-    }
-
     protected boolean isBlackJack() {
         return cards.isBlackJack();
     }

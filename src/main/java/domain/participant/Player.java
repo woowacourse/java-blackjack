@@ -18,22 +18,13 @@ public final class Player extends Participant {
         return new Player(name, money);
     }
 
-    public static Player of(Name name, String money){
+    public static Player of(Name name, String money) {
         return of(name, Integer.parseInt(money));
     }
 
     public Result receiveResult(Dealer dealer) {
-        if (isBlackJack() && !dealer.isBlackJack()) {
-            return Result.BLACKJACK;
-        }
-        if (!isBlackJack() && dealer.isBlackJack() || isBust()) {
-            return Result.LOSE;
-        }
-        if (dealer.isBust()) {
-            return Result.WIN;
-        }
-
-        return Result.judgeResult(calculateScore(), dealer.calculateScore());
+        return Result.judgeResult(calculateScore(), dealer.calculateScore(),
+            isBlackJack(), dealer.isBlackJack());
     }
 
     @Override
