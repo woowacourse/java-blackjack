@@ -14,7 +14,7 @@ public abstract class Running extends Started{
     }
 
     @Override
-    public double profit(Cards cards, double money) {
+    public double profit(State state, double money) {
         throw new IllegalArgumentException("[ERROR] 게임이 끝나야 수익을 계산할 수 있습니다.");
     }
 }

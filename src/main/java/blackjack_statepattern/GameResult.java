@@ -18,7 +18,7 @@ public class GameResult {
     public static GameResult of(Dealer dealer, List<Player> players) {
         Map<Participant, Double> participantsResult = new LinkedHashMap<>();
         for (Player player : players) {
-            double profit = player.profit(dealer.getCards());
+            double profit = player.profit(dealer.getState());
             participantsResult.merge(dealer, reverseProfit(profit), Double::sum);
             participantsResult.put(player, profit);
         }

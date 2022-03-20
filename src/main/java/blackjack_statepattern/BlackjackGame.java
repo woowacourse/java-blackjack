@@ -4,17 +4,16 @@ import blackjack_statepattern.card.CardDeck;
 import blackjack_statepattern.dto.CardsDto;
 import blackjack_statepattern.participant.BetMoney;
 import blackjack_statepattern.participant.Dealer;
-import blackjack_statepattern.participant.Participant;
 import blackjack_statepattern.participant.Player;
 import blackjack_statepattern.participant.Players;
 import blackjack_statepattern.view.InputView;
 import blackjack_statepattern.view.OutputView;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public final class BlackjackGame {
     private BlackjackBoard blackjackBoard;
-    private CardDeck cardDeck;
 
     public void run() {
         initializeGame();
@@ -23,15 +22,12 @@ public final class BlackjackGame {
     }
 
     private void initializeGame() {
-        blackjackBoard = new BlackjackBoard(new Dealer(), initializePlayers());
-        cardDeck = CardDeck.createNewCardDeck();
+        blackjackBoard = new BlackjackBoard(new Dealer(), initializePlayers(), CardDeck.createNewCardDeck());
     }
 
     private Players initializePlayers() {
-        return new Players(InputView.askPlayerNames().stream()
-                .map(String::trim)
-                .map(name -> new Player(name, askBetMoney(name)))
-                .collect(Collectors.toList()));
+        return Players.create(InputView.askPlayerNames().stream().collect(
+                Collectors.toMap(playerName -> playerName, this::askBetMoney, (a, b) -> b, LinkedHashMap::new)));
     }
 
     private BetMoney askBetMoney(String name) {
@@ -50,19 +46,8 @@ public final class BlackjackGame {
     }
 
     private void distributeCards() {
-        Dealer dealer = blackjackBoard.getDealer();
-        List<Player> players = blackjackBoard.getPlayers();
-        distributeCard(dealer);
-        for (Player player : players) {
-            distributeCard(player);
-        }
+        blackjackBoard.distributeCards();
         OutputView.printDistributedCards(blackjackBoard.getInitialCardsDto());
-    }
-
-    private void distributeCard(Participant participant) {
-        while (participant.isReady()) {
-            participant.receiveCard(cardDeck.draw());
-        }
     }
 
     private void playPlayersTurn() {
@@ -73,16 +58,13 @@ public final class BlackjackGame {
     }
 
     private void playPlayerTurn(Player player) {
-        if (player.isFinished()) {
-            return;
+        while (!player.isFinished() && askPlayerResponse(player).isHit()) {
+            blackjackBoard.hitCard(player);
+            OutputView.printPlayerCards(player);
         }
-        if (askPlayerResponse(player).isStay()) {
+        if (!player.isFinished()) {
             player.stay();
-            return;
         }
-        player.receiveCard(cardDeck.draw());
-        OutputView.printPlayerCards(player);
-        playPlayerTurn(player);
     }
 
     private DrawCommand askPlayerResponse(Player player) {
@@ -97,11 +79,8 @@ public final class BlackjackGame {
     private void playDealerTurn() {
         Dealer dealer = blackjackBoard.getDealer();
         while (!dealer.isFinished() && dealer.isRequiredMoreCard()) {
-            dealer.receiveCard(cardDeck.draw());
+            blackjackBoard.hitCard(dealer);
             OutputView.printDealerReceiveCardMessage();
-        }
-        if (dealer.isRequiredMoreCard()) {
-            dealer.stay();
         }
     }
 

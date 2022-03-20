@@ -29,18 +29,18 @@ public class BustTest {
     @ParameterizedTest
     @DisplayName("버스트면 플레이어는 항상 돈을 잃는다.")
     @MethodSource("bustCardProvider")
-    void profit(Cards cards, double earningRate) {
+    void profit(State state, double earningRate) {
         Bust bust = new Bust(new Cards(SPADES_JACK, SPADES_TEN, SPADES_TWO));
         int money = 1000;
-        double profit = bust.profit(cards, money);
+        double profit = bust.profit(state, money);
         assertThat(profit).isEqualTo(money * earningRate);
     }
 
     public static Stream<Arguments> bustCardProvider() {
         return Stream.of(
-                Arguments.arguments(new Cards(SPADES_JACK, SPADES_ACE), -1),
-                Arguments.arguments(new Cards(SPADES_JACK, SPADES_TEN), -1),
-                Arguments.arguments(new Cards(SPADES_JACK, SPADES_TEN, SPADES_TWO), -1)
+                Arguments.arguments(new Blackjack(new Cards(SPADES_JACK, SPADES_ACE)), -1),
+                Arguments.arguments(new Stay(new Cards(SPADES_JACK, SPADES_TEN)), -1),
+                Arguments.arguments(new Bust(new Cards(SPADES_JACK, SPADES_TEN, SPADES_TWO)), -1)
 
         );
     }

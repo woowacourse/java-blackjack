@@ -46,4 +46,8 @@ public abstract class Participant {
     public int getScore() {
         return state.score();
     }
+
+    public State getState() {
+        return state;
+    }
 }

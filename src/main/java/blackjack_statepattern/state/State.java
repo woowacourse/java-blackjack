@@ -16,5 +16,5 @@ public interface State {
 
     int score();
 
-    double profit(Cards cards, double money);
+    double profit(State state, double money);
 }

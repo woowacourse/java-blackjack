@@ -4,6 +4,11 @@ import blackjack_statepattern.card.Card;
 import blackjack_statepattern.card.Cards;
 
 public abstract class Finished extends Started {
+    protected static final int WIN_RATE = 1;
+    protected static final int LOSE_RATE = -1;
+    protected static final int DRAW_RATE = 0;
+    protected static final double BLACKJACK_WIN_RATE = 1.5;
+
 
     public Finished(Cards cards) {
         super(cards);
@@ -30,10 +35,10 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public double profit(Cards cards, final double money) {
-        return money * earningRate(cards);
+    public double profit(State state, final double money) {
+        return money * earningRate(state);
     }
 
-    protected abstract double earningRate(Cards cards);
+    protected abstract double earningRate(State state);
 
 }

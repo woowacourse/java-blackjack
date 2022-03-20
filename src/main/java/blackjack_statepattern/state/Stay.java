@@ -8,13 +8,14 @@ public final class Stay extends Finished {
     }
 
     @Override
-    protected double earningRate(Cards comparedCards) {
+    protected double earningRate(State comparedState) {
+        Cards comparedCards = comparedState.cards();
+        if (comparedCards.isBust() || cards().computeScore() > comparedCards.computeScore()) {
+            return WIN_RATE;
+        }
         if (comparedCards.isBlackjack() || comparedCards.computeScore() > cards().computeScore()) {
-            return -1;
+            return LOSE_RATE;
         }
-        if (comparedCards.computeScore() == cards().computeScore()) {
-            return 0;
-        }
-        return 1;
+        return DRAW_RATE;
     }
 }

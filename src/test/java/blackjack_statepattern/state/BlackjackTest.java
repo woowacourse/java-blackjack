@@ -32,17 +32,17 @@ public class BlackjackTest {
     @ParameterizedTest
     @DisplayName("블랙잭일 때 딜러가 블랙잭이면 수익은 없고, 딜러가 블랙잭이 아니면 1.5배 수익이다.")
     @MethodSource("blackjackProvider")
-    void profit(Cards cards, double earningRate) {
+    void profit(State state, double earningRate) {
         Blackjack blackjack = new Blackjack(new Cards(SPADES_JACK, SPADES_ACE));
         int money = 1000;
-        double profit = blackjack.profit(cards, money);
+        double profit = blackjack.profit(state, money);
         Assertions.assertThat(profit).isEqualTo(money * earningRate);
     }
 
     public static Stream<Arguments> blackjackProvider() {
         return Stream.of(
-                Arguments.arguments(new Cards(SPADES_ACE, SPADES_JACK), 0),
-                Arguments.arguments(new Cards(SPADES_ACE, SPADES_TEN, SPADES_TWO), 1.5)
+                Arguments.arguments(new Blackjack(new Cards(SPADES_ACE, SPADES_JACK)), 0),
+                Arguments.arguments(new Bust(new Cards(SPADES_ACE, SPADES_TEN, SPADES_TWO)), 1.5)
         );
     }
 }
