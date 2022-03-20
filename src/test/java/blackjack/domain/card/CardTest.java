@@ -5,12 +5,23 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class CardTest {
+
+    @Test
+    @DisplayName("카드의 동등성을 비교한다.")
+    void equals() {
+        //given
+        Card actual = new Card(CardSymbol.DIAMOND, CardNumber.JACK);
+
+        //then
+        assertThat(actual).isEqualTo(new Card(CardSymbol.DIAMOND, CardNumber.JACK));
+    }
 
     @ParameterizedTest
     @CsvSource(value = {"DIAMOND", "CLUB", "HEART", "SPADE"})
