@@ -13,7 +13,7 @@ public enum Answer {
         this.answer = answer;
     }
 
-    public static Answer of(final String input) {
+    private static Answer of(final String input) {
         return Arrays.stream(values())
             .filter(value -> value.getAnswer().equals(input.toLowerCase()))
             .findFirst()
@@ -24,7 +24,7 @@ public enum Answer {
         return HIT == of(answer);
     }
 
-    public String getAnswer() {
+    private String getAnswer() {
         return answer;
     }
 }

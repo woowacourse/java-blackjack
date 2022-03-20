@@ -34,7 +34,7 @@ public enum GameResult {
         return player.isBurst();
     }
 
-    public static GameResult findResult(final Player dealer, final Gamer gamer) {
+    private static GameResult findResult(final Player dealer, final Gamer gamer) {
         return Arrays.stream(values())
             .filter(result -> result.predicate.test(dealer, gamer))
             .findFirst()
@@ -56,7 +56,7 @@ public enum GameResult {
             .sum();
     }
 
-    public Double getMultiplePoint() {
+    private Double getMultiplePoint() {
         return multiplePoint;
     }
 }
