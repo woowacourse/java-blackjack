@@ -15,7 +15,7 @@ public class Profits {
 
     private final Map<Name, Double> maps;
 
-    public Profits(Map<Name, Double> maps) {
+    private Profits(Map<Name, Double> maps) {
         this.maps = Map.copyOf(maps);
     }
 

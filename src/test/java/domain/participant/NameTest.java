@@ -13,6 +13,6 @@ public class NameTest {
     @ValueSource(strings = {"", " ", "\t", "\n"})
     void validateName(String name) {
         assertThatThrownBy(() -> new Name(name)).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[Error] 이름은 공백이거나 빈칸일 수 없습니다.");
+                .hasMessage(String.format("[Error] \"%s\" : 이름은 공백이거나 빈칸일 수 없습니다.", name));
     }
 }

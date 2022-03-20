@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Card {
 
-    public static final List<Card> cache = Collections.unmodifiableList(new ArrayList<>());
+    private static final List<Card> cache = new ArrayList<>();
 
     private final Rank rank;
     private final Suit suit;
@@ -34,5 +34,11 @@ public class Card {
 
     public String combineRankAndSuit() {
         return rank.getRank() + suit.getSuit();
+    }
+
+    public static List<Card> getShuffledCards() {
+        ArrayList<Card> cards = new ArrayList<>(cache);
+        Collections.shuffle(cards);
+        return cards;
     }
 }

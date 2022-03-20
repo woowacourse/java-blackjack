@@ -21,7 +21,7 @@ import view.OutputView;
 public class Controller {
 
     public void run() {
-        Deck deck = new Deck(Card.cache);
+        Deck deck = new Deck(Card.getShuffledCards());
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = createPlayers(deck);
         BettingReceipts bettingReceipts = createBettingReceipt(players);
@@ -50,11 +50,11 @@ public class Controller {
     }
 
     private BettingReceipts createBettingReceipt(Players players) {
-        Map<Name, BettingMoney> bettingReceipt = new LinkedHashMap<>();
+        Map<Name, BettingMoney> maps = new LinkedHashMap<>();
         for (Name name : players.getNames()) {
-            bettingReceipt.put(name, new BettingMoney(InputView.inputMoney(name)));
+            maps.put(name, new BettingMoney(InputView.inputMoney(name)));
         }
-        return new BettingReceipts(bettingReceipt);
+        return new BettingReceipts(maps);
     }
 
     private void drawForPlayers(Deck deck, Players players) {
