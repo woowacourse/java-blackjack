@@ -4,18 +4,16 @@ import blackjack.domain.dto.ParticipantDto;
 import blackjack.domain.strategy.RandomCardGenerator;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private final List<Player> players;
     private final Dealer dealer;
     private final CardDeck cardDeck;
 
-    public BlackJackGame(List<String> playersNames) {
+    public BlackJackGame(List<Player> players) {
         this.cardDeck = new CardDeck(RandomCardGenerator.getInstance());
         this.dealer = new Dealer();
-        validateEmptyNames(playersNames);
-        this.players = createPlayers(playersNames);
+        this.players = players;
         giveTwoCardsToAll();
     }
 
@@ -24,34 +22,6 @@ public class BlackJackGame {
         for (Player player : players) {
             player.receiveCards(cardDeck.drawTwoCards());
         }
-    }
-
-    private void validateEmptyNames(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 이름 입력이 비었습니다");
-        }
-    }
-
-    private List<Player> createPlayers(List<String> playersNames) {
-        return playersNames.stream()
-                .map(playerName -> new Player(playerName.trim()))
-                .collect(Collectors.toList());
-    }
-
-    public boolean isAnyPlayerNotBetYet() {
-        return players.stream()
-                .anyMatch(Player::isNeedBettingMoney);
-    }
-
-    public Player findPlayerNeedToBetMoney() {
-        return players.stream()
-                .filter(Player::isNeedBettingMoney)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 이미 모든 플레이어의 배팅 금액이 입력되었습니다."));
-    }
-
-    public void playerSetupBettingMoney(int money) {
-        findPlayerNeedToBetMoney().putBettingMoney(money);
     }
 
     public List<ParticipantDto> getParticipantsDto() {

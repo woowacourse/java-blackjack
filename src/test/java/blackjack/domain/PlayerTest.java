@@ -16,7 +16,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어가 버스트 상태인지 알려준다")
     void isPlayerBust() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         player.receiveCards(
                 List.of(Card.valueOf(CardNumber.JACK, Symbol.SPADE),
                         Card.valueOf(CardNumber.QUEEN, Symbol.SPADE),
@@ -29,8 +29,7 @@ public class PlayerTest {
     @DisplayName("승무패 여부에 따라 수익을 계산한다")
     @MethodSource("gameResultsAndRevenues")
     void calculateRightRevenue(int money, GameResult gameResult, int expectedRevenue) {
-        Player player = new Player("dog");
-        player.putBettingMoney(money);
+        Player player = new Player("dog", money);
         assertThat(player.moneyToExchange(gameResult)).isEqualTo(expectedRevenue);
     }
 
@@ -44,8 +43,7 @@ public class PlayerTest {
     @Test
     @DisplayName("블랙잭으로 이기면 수익은 1.5배이다")
     void winWithBlackJack_getRevenueHalfMore() {
-        Player player = new Player("dog");
-        player.putBettingMoney(10000);
+        Player player = new Player("dog", 10000);
         player.receiveCards(
                 List.of(Card.valueOf(CardNumber.ACE, Symbol.CLOVER),
                         Card.valueOf(CardNumber.JACK, Symbol.DIAMOND)));
@@ -55,8 +53,7 @@ public class PlayerTest {
     @Test
     @DisplayName("블랙잭이어도 무승부면 수익은 없다")
     void drawWithBlackJack_noRevenue() {
-        Player player = new Player("dog");
-        player.putBettingMoney(10000);
+        Player player = new Player("dog", 10000);
         player.receiveCards(
                 List.of(Card.valueOf(CardNumber.ACE, Symbol.CLOVER),
                         Card.valueOf(CardNumber.JACK, Symbol.DIAMOND)));

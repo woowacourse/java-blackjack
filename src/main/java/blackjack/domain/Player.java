@@ -3,21 +3,11 @@ package blackjack.domain;
 public class Player extends Participant {
     private boolean finish = false;
 
-    private BettingMoney bettingMoney;
+    private final BettingMoney bettingMoney;
 
-    public Player(String name) {
+    public Player(String name, int money) {
         super(name);
-    }
-
-    public boolean isNeedBettingMoney() {
-        if (bettingMoney == null) {
-            return true;
-        }
-        return false;
-    }
-
-    public void putBettingMoney(int money) {
-        bettingMoney = new BettingMoney(money);
+        this.bettingMoney = new BettingMoney(money);
     }
 
     public void closeTurn() {
