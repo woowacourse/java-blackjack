@@ -15,12 +15,12 @@ public enum Score {
 
     public static Score compare(int myNumber, int versusNumber) {
         if (myNumber < versusNumber) {
-            return Score.LOSE;
+            return LOSE;
         }
         if (myNumber > versusNumber) {
-            return Score.WIN;
+            return WIN;
         }
-        return Score.DRAW;
+        return DRAW;
     }
 
     public static Score inverse(Score score) {
