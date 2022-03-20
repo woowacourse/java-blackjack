@@ -15,6 +15,10 @@ public class Player extends Participant {
         return !isBust() && !isBlackjack();
     }
 
+    public int isWin(Participant participant) {
+        return Integer.compare(score().getSum(), participant.score().getSum());
+    }
+
     public Betting getBetting() {
         return betting;
     }

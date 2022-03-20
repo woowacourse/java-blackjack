@@ -33,13 +33,9 @@ public enum Record {
     private static Record getOrdinaryRecord(Player player, Dealer dealer) {
         return Objects.requireNonNull(Arrays.stream(Record.values())
                 .filter(record
-                        -> record.recordNumber == compare(player, dealer))
+                        -> record.recordNumber == player.isWin(dealer))
                 .findFirst()
                 .orElse(null));
-    }
-
-    private static int compare(Participant participant1, Participant participant2) {
-        return Integer.compare(participant1.score().getSum(), participant2.score().getSum());
     }
 
     private static Record getRecordForBust(Player player, Dealer dealer) {
