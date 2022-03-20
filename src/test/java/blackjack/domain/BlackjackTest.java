@@ -79,12 +79,20 @@ public class BlackjackTest {
     @DisplayName("최종 승패 기능 테스트")
     @Test
     void result() {
+        dealer = new Dealer();
+        blackjack = new Blackjack();
+        blackjack.dealInitialCards(dealer, players);
+
         assertDoesNotThrow(() -> blackjack.record(dealer, players));
     }
 
     @DisplayName("최종 수익 기능 테스트")
     @Test
     void profitResult() {
+        dealer = new Dealer();
+        blackjack = new Blackjack();
+        blackjack.dealInitialCards(dealer, players);
+
         assertDoesNotThrow(() -> blackjack.profit(dealer, players));
     }
 }
