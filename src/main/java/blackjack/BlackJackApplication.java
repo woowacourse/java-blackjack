@@ -22,13 +22,13 @@ public class BlackJackApplication {
     public static void main(final String... args) {
         Deck deck = new Deck(new RandomCardsGenerateStrategy());
         Dealer dealer = new Dealer();
-
-        runGame(deck, dealer);
-    }
-
-    private static void runGame(Deck deck, Dealer dealer) {
         List<Player> players = createPlayers();
         List<BettingMoney> bettingMonies = receiveBettingMoney(players);
+
+        runGame(deck, dealer, players, bettingMonies);
+    }
+
+    private static void runGame(Deck deck, Dealer dealer, List<Player> players, List<BettingMoney> bettingMonies) {
         initiateParticipantsHand(dealer, players, deck);
         printParticipantsHand(dealer, players);
         takeMoreCard(players, dealer, deck);
