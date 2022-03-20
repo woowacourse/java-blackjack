@@ -4,8 +4,6 @@ import blackjack.domain.card.CardDeck;
 
 public class Gambler extends Player {
 
-    private static final int DEFAULT_INIT_SIZE = 2;
-
     private final double money;
 
     private Gambler(Name name, double money, CardDeck cardDeck) {
@@ -18,7 +16,7 @@ public class Gambler extends Player {
     }
 
     public boolean isFirstQuestion() {
-        return getState().cards().size() <= DEFAULT_INIT_SIZE;
+        return getState().cards().isInitialSize();
     }
 
     public double getMoney() {

@@ -200,8 +200,10 @@
       - `Map`을 통해 값을 가져올 수 있어 `profit()`메서드 제거
 - [x] `Card`
     - [x] 사용하지 않는 코드(주석) 제거
-- [ ] `Gambler`, `Cards`
+- [x] `Gambler`, `Cards`
     - 동일한 이름의 상수가 선언되어 있다. 서로 다른 의미를 가진 상수인지?
+    - `Cards`에서 상수를 사용하여 초기 Cards 사이즈인지 반환하는 `isInitialSize()`라는 함수 작성
+    - `Gambler` 내에서 사용한 상수 제거
 - [ ] `Cards`
     - 불변 객체라면 비어있는 `Cards` 객체를 여러 곳에서 사용해도 안전하다.
     - JDK의 `Optional`이 `empty()`를 어떻게 반환하는지 살펴보기

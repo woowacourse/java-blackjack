@@ -14,25 +14,6 @@ import org.junit.jupiter.api.Test;
 public class CardsTest {
 
     @Test
-    @DisplayName("빈 카드 목록 - 카드 목록 추가 테스트")
-    public void createCardsAddCardTest() {
-        Cards cards = new Cards();
-
-        cards = cards.add(SPADE_TWO);
-        cards = cards.add(SPADE_JACK);
-
-        assertThat(cards.size()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("카드 목록으로 객체 생성 테스트")
-    public void createCardsByListTest() {
-        Cards cards = new Cards(List.of(SPADE_TWO, SPADE_JACK));
-
-        assertThat(cards.size()).isEqualTo(2);
-    }
-
-    @Test
     @DisplayName("카드 목록 합계 테스트")
     public void cardsSumTest() {
         Cards cards = new Cards(List.of(SPADE_TWO, SPADE_JACK));

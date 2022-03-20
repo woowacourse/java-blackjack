@@ -7,7 +7,7 @@ public class Cards {
 
     private static final int BUST = 22;
     private static final int BLACKJACK = 21;
-    private static final int DEFAULT_INIT_SIZE = 2;
+    public static final int DEFAULT_INIT_SIZE = 2;
     private static final int ACE_POINT = 10;
     private static final int MINIMUM_POINT_FOR_ACE = 11;
 
@@ -35,7 +35,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return BLACKJACK == sum() && size() == DEFAULT_INIT_SIZE;
+        return BLACKJACK == sum() && isInitialSize();
     }
 
     public boolean isBust() {
@@ -51,8 +51,8 @@ public class Cards {
             .anyMatch(Card::isAce);
     }
 
-    public int size() {
-        return this.cards.size();
+    public boolean isInitialSize() {
+        return this.cards.size() == DEFAULT_INIT_SIZE;
     }
 
     public List<Card> getCards() {
