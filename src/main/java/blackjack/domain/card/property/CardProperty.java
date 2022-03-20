@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CardProperty {
-    private static final Map<String, CardProperty> cache = new HashMap<>(52);
+    private static final Map<String, CardProperty> CACHE = new HashMap<>(52);
 
     private final CardShape shape;
     private final CardNumber number;
@@ -15,7 +15,7 @@ public class CardProperty {
     }
 
     public static CardProperty of(CardShape shape, CardNumber number) {
-        return cache.computeIfAbsent(toKey(shape, number), ignored -> new CardProperty(shape, number));
+        return CACHE.computeIfAbsent(toKey(shape, number), ignored -> new CardProperty(shape, number));
     }
 
     private static String toKey(CardShape shape, CardNumber number) {
