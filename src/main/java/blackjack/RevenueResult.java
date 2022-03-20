@@ -10,34 +10,37 @@ import java.util.Map;
 
 public class RevenueResult {
 
-    private final Map<String, Integer> playersEarnings = new LinkedHashMap<>();
-    private int dealerEarnings = 0;
+    private final Map<String, Integer> playersEarnings ;
+    private final int dealerEarnings;
 
-    private RevenueResult(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
-        calculatePlayerEarnings(scoreBoard, bettingMonies);
-        calculateDealerEarnings();
+    public RevenueResult(Map<String, Integer> playersEarnings, int dealerEarnings) {
+        this.playersEarnings = playersEarnings;
+        this.dealerEarnings = dealerEarnings;
     }
 
     public static RevenueResult of(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
-        return new RevenueResult(scoreBoard, bettingMonies);
+        Map<String, Integer> playersEarnings = calculatePlayerEarnings(scoreBoard, bettingMonies);
+        int dealerEarnings = calculateDealerEarnings(playersEarnings);
+        return new RevenueResult(playersEarnings, dealerEarnings);
     }
 
-    private void calculatePlayerEarnings(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
+    private static Map<String, Integer> calculatePlayerEarnings(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
+        Map<String, Integer> playersEarnings = new LinkedHashMap<>();
         for (BettingMoney bettingMoney : bettingMonies) {
             String playerName = bettingMoney.getOwnerName();
             MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(playerName);
             int earning = playerMatchResult.getEarnings(bettingMoney.getValue());
             playersEarnings.put(playerName, earning);
         }
+        return playersEarnings;
     }
 
-    private void calculateDealerEarnings() {
-        int playersEarnings = this.playersEarnings.values()
+    private static int calculateDealerEarnings(Map<String, Integer> playersEarnings) {
+
+        return -1 * playersEarnings.values()
                 .stream()
                 .mapToInt(e -> e)
                 .sum();
-
-        dealerEarnings -= playersEarnings;
     }
 
     public int findPlayerEarning(String playerName) {
