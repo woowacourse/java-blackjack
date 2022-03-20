@@ -10,8 +10,8 @@ import blackjack.model.player.matcher.Money;
 import blackjack.view.Answer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Application {
 
@@ -32,21 +32,19 @@ public class Application {
 
     private static List<Gamer> createGamers(CardDeck cardDeck) {
         List<String> names = InputView.inputNames();
-        List<Money> moneys = moneys(names);
-        return IntStream.range(0, names.size())
-            .mapToObj(i -> createGamer(names.get(i), moneys.get(i), cardDeck))
+        return names.stream()
+            .map(name -> createGamer(name, cardDeck))
             .collect(toUnmodifiableList());
     }
 
-    private static Gamer createGamer(String name, Money money, CardDeck cardDeck) {
+    private static Gamer createGamer(String name, CardDeck cardDeck) {
+        Money money = createMoney(name);
         return new Gamer(name, money, cardDeck.next(), cardDeck.next());
     }
 
-    private static List<Money> moneys(List<String> names) {
-        return names.stream()
-            .map(InputView::inputMoneys)
-            .map(Money::new)
-            .collect(toUnmodifiableList());
+    private static Money createMoney(String name) {
+        BigDecimal moneyAmount = InputView.inputMoneys(name);
+        return new Money(moneyAmount);
     }
 
     private static void playBlackjack(CardDeck cardDeck, Dealer dealer, Gamers gamers) {
