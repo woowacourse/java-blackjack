@@ -27,7 +27,7 @@ public class BlackjackTest {
     @BeforeEach
     void setUp() {
         Map<String, Long> playersInfo = new LinkedHashMap<>();
-        playersInfo.put("범블비",1000L);
+        playersInfo.put("범블비", 1000L);
         playersInfo.put("잉", 2000L);
 
         players = new Players(playersInfo);

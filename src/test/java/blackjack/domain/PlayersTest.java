@@ -13,7 +13,7 @@ public class PlayersTest {
     @DisplayName("아무 이름도 들어오지 않는 경우 에러 테스트")
     @Test
     void nothing() {
-        Map<String, Long> playersInfo =  new LinkedHashMap<>();
+        Map<String, Long> playersInfo = new LinkedHashMap<>();
         assertThatThrownBy(() -> new Players(playersInfo)).isInstanceOf(IllegalArgumentException.class);
     }
 }

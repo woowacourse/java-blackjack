@@ -11,24 +11,24 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardPickMachineTest {
-	@DisplayName("카드 뽑기 테스트")
-	@Test
-	void pickCard() {
-		CardPickMachine cards = new CardPickMachine();
-		IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1));
-		Card card = cards.pickCard(new Cards().getCardDeck(),intendedNumberGenerator);
+    @DisplayName("카드 뽑기 테스트")
+    @Test
+    void pickCard() {
+        CardPickMachine cards = new CardPickMachine();
+        IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1));
+        Card card = cards.pickCard(new Cards().getCardDeck(), intendedNumberGenerator);
 
-		assertThat(card.getName()).isEqualTo("2다이아몬드");
-	}
+        assertThat(card.getName()).isEqualTo("2다이아몬드");
+    }
 
-	@DisplayName("이미 뽑힌 카드의 인덱스가 들어가면 ERROR")
-	@Test
-	void duplicate() {
-		CardPickMachine cards = new CardPickMachine();
-		IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1));
-		cards.pickCard(new Cards().getCardDeck(), intendedNumberGenerator);
+    @DisplayName("이미 뽑힌 카드의 인덱스가 들어가면 ERROR")
+    @Test
+    void duplicate() {
+        CardPickMachine cards = new CardPickMachine();
+        IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1));
+        cards.pickCard(new Cards().getCardDeck(), intendedNumberGenerator);
 
-		assertThatThrownBy(() -> cards.pickCard(new Cards().getCardDeck(), intendedNumberGenerator))
-				.isInstanceOf(IndexOutOfBoundsException.class);
-	}
+        assertThatThrownBy(() -> cards.pickCard(new Cards().getCardDeck(), intendedNumberGenerator))
+                .isInstanceOf(IndexOutOfBoundsException.class);
+    }
 }

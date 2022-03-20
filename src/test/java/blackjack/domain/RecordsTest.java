@@ -6,7 +6,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
@@ -25,7 +24,7 @@ public class RecordsTest {
     @BeforeEach
     void setUp() {
         Map<String, Long> playersInfo = new LinkedHashMap<>();
-        playersInfo.put("범블비",1000L);
+        playersInfo.put("범블비", 1000L);
         playersInfo.put("잉", 2000L);
 
         Players players = new Players(playersInfo);

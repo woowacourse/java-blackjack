@@ -11,9 +11,9 @@ public class Player extends Participant {
     }
 
     private void validateMoney(long bettingMoney) {
-       if(bettingMoney <= 0) {
-           throw new IllegalArgumentException(MONEY_ERROR);
-       }
+        if (bettingMoney <= 0) {
+            throw new IllegalArgumentException(MONEY_ERROR);
+        }
     }
 
     @Override
