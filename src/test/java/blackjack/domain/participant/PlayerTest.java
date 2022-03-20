@@ -3,12 +3,12 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,17 +34,17 @@ class PlayerTest {
     void checkProhibitName() {
         assertThatThrownBy(() -> new Player("딜러"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 이름은 '딜러'일 수 없습니다.");
+                .hasMessage("플레이어의 이름은 딜러일 수 없습니다.");
     }
-
 
     @Test
     @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
     void hasFalsePlayerNextTurn() {
-        Card card1 = Card.from(Suit.SPADE, Denomination.JACK);
-        Card card2 = Card.from(Suit.HEART, Denomination.JACK);
-        Card card3 = Card.from(Suit.SPADE, Denomination.TWO);
-        Player player = new Player("kei", Set.of(card1, card2, card3));
+        final Status status = new Ready()
+                .draw(Card.from(Suit.SPADE, Denomination.JACK))
+                .draw(Card.from(Suit.HEART, Denomination.JACK))
+                .draw(Card.from(Suit.SPADE, Denomination.TWO));
+        Player player = new Player("kei", status);
 
         assertThat(player.hasNextTurn()).isFalse();
     }
@@ -52,9 +52,10 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
     void hasTruePlayerNextTurn() {
-        Card card1 = Card.from(Suit.SPADE, Denomination.JACK);
-        Card card2 = Card.from(Suit.HEART, Denomination.JACK);
-        Player player = new Player("kei", Set.of(card1, card2));
+        final Status status = new Ready()
+                .draw(Card.from(Suit.SPADE, Denomination.JACK))
+                .draw(Card.from(Suit.HEART, Denomination.JACK));
+        Player player = new Player("kei", status);
 
         assertThat(player.hasNextTurn()).isTrue();
     }

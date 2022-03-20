@@ -2,27 +2,28 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.BlackjackMatch;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.Status;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
 
     private final String name;
-    private final Cards cards;
+    private Status status;
 
-    protected Participant(String name, Set<Card> cards) {
+    protected Participant(String name, Status status) {
         validateName(name);
         this.name = name;
-        this.cards = new Cards(cards);
+        this.status = status;
     }
 
     protected Participant(String name) {
-        this(name, new HashSet<>());
+        this(name, new Ready());
     }
 
     private void validateName(String name) {
@@ -33,27 +34,38 @@ public abstract class Participant {
 
     abstract boolean hasNextTurn();
 
+    abstract BlackjackMatch isWin(Participant participant);
+
     public void receiveCard(Card card) {
-        cards.receiveCard(card);
+        if (!isFinished()) {
+            status = status.draw(card);
+        }
     }
 
-    public boolean isBlackjack() {
-        return cards.isBlackjack();
+    private boolean isFinished() {
+        return status.isFinished();
     }
 
-    public boolean isBust() {
-        return cards.isBust();
+    public void requestStay() {
+        if (status.isRunning()) {
+            status = getStatus().stay();
+        }
     }
 
     public int getScore() {
-        return cards.calculateScore();
+        return status.getCards().calculateScore();
     }
 
     public String getName() {
         return name;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     public List<Card> getCards() {
+        final Cards cards = status.getCards();
         return cards.getCards();
     }
 
