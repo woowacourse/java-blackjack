@@ -47,63 +47,6 @@ class PlayerTest {
         assertThat(player.calculateBestScore()).isEqualTo(21);
     }
 
-    @DisplayName("플레이어의 점수가 더 높은 경우 승리 테스트")
-    @Test
-    void isWinner_Player20_isWin() {
-        Player player = Player.of("Pobi");
-        player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))));
-
-        assertThat(player.judgeResult(19)).isEqualTo(Result.WIN);
-    }
-
-    @DisplayName("딜러의 점수가 더 높은 경우 패배 테스트")
-    @Test
-    void isWinner_Player20_isLose() {
-        Player player = Player.of("Pobi");
-        player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))));
-
-        assertThat(player.judgeResult(21)).isEqualTo(Result.LOSE);
-    }
-
-    @DisplayName("플레이어만 버스트된 경우 패배 테스트")
-    @Test
-    void isWinner_PlayerBusted_isLose() {
-        Player player = Player.of("Pobi");
-        player.receive(new Cards(List.of(
-                Card.from(Number.NINE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.CLOVER),
-                Card.from(Number.NINE, Kind.HEART))));
-
-        assertThat(player.judgeResult(19)).isEqualTo(Result.LOSE);
-    }
-
-    @DisplayName("딜러만 버스트된 경우 승리 테스트")
-    @Test
-    void isWinner_DealerBusted_isWin() {
-        Player player = Player.of("Pobi");
-        player.receive(new Cards(List.of(
-                Card.from(Number.ACE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.SPADE))));
-
-        assertThat(player.judgeResult(22)).isEqualTo(Result.WIN);
-    }
-
-    @DisplayName("둘 다 버스트된 경우 무승부 테스트")
-    @Test
-    void isWinner_BothBusted_isLose() {
-        Player player = Player.of("Pobi");
-        player.receive(new Cards(List.of(
-                Card.from(Number.NINE, Kind.SPADE),
-                Card.from(Number.NINE, Kind.CLOVER),
-                Card.from(Number.NINE, Kind.HEART))));
-
-        assertThat(player.judgeResult(22)).isEqualTo(Result.TIE);
-    }
-
     @DisplayName("Ace만 있을 시 베스트 점수 계산 테스트")
     @Test
     void calculateBestScore_FourAces_IsBest() {

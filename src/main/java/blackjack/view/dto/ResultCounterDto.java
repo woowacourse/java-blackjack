@@ -2,23 +2,23 @@ package blackjack.view.dto;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
 import blackjack.domain.result.Result;
+import java.util.List;
 import java.util.Map;
 
 public class ResultCounterDto {
 
     private final Map<Player, Result> resultCounter;
     private final Dealer dealer;
-    private final Players players;
+    private final List<Player> players;
 
-    private ResultCounterDto(Map<Player, Result> resultCounter, Dealer dealer, Players players) {
+    private ResultCounterDto(Map<Player, Result> resultCounter, Dealer dealer, List<Player> players) {
         this.resultCounter = resultCounter;
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static ResultCounterDto of(Map<Player, Result> resultCounter, Dealer dealer, Players players) {
+    public static ResultCounterDto of(Map<Player, Result> resultCounter, Dealer dealer, List<Player> players) {
         return new ResultCounterDto(resultCounter, dealer, players);
     }
 

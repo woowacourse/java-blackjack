@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.Result;
-
 public class Player extends Participant {
 
     private static final int BEST_SCORE = 21;
@@ -14,21 +12,7 @@ public class Player extends Participant {
         return new Player(new Name(name));
     }
 
-    public Result judgeResult(int score) {
-        if (isBusted(score) && isBusted(calculateBestScore()) || calculateBestScore() == score) {
-            return Result.TIE;
-        }
-        if (isBusted(calculateBestScore()) || (!isBusted(score) && !isCloserToBestScore(score))) {
-            return Result.LOSE;
-        }
-        return Result.WIN;
-    }
-
-    private boolean isBusted(int score) {
-        return score > BEST_SCORE;
-    }
-
-    private boolean isCloserToBestScore(int score) {
+    public boolean isCloserToBestScore(int score) {
         return calculateBestScore() <= BEST_SCORE && calculateBestScore() > score;
     }
 
