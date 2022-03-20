@@ -84,7 +84,7 @@ public class Participants {
         Participant dealer = getDealer();
         return participants.stream()
                 .filter(Participant::isUser)
-                .map(p -> new UserGameResult(p, dealer))
+                .map(user -> new UserGameResult(user, dealer))
                 .collect(Collectors.toList());
     }
 

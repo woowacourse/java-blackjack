@@ -7,7 +7,7 @@ import java.util.Arrays;
 public enum UserResult {
 
     LOSE("패", (user, dealer) -> user.isBust() || (dealer.isHit() && dealer.isMoreScore(user)) ||
-            dealer.isBlackJack() && !user.isBlackJack()),
+            (dealer.isBlackJack() && !user.isBlackJack())),
     WIN("승", (user, dealer) -> dealer.isBust() || user.isMoreScore(dealer) ||
             (user.isBlackJack() && !dealer.isBlackJack())),
     DRAW("무", (user, dealer) -> user.isSameScore(dealer));
