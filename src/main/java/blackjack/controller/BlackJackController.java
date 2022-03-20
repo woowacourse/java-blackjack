@@ -7,8 +7,6 @@ import blackjack.domain.role.PlayerDrawChoice;
 import blackjack.domain.state.Ready;
 import blackjack.dto.BettingDto;
 import blackjack.dto.DealerTableDto;
-import blackjack.dto.DealerTurnDto;
-import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTableDto;
 import blackjack.dto.PlayerTurnsDto;
@@ -17,10 +15,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 public class BlackJackController {
 
@@ -32,62 +26,59 @@ public class BlackJackController {
 
 	public void run(InputView inputView, OutputView outputView) {
 		initBlackJackGame();
-		addPlayers(inputView::requestPlayerName);
-		betMoney(inputView::requestBetting);
-		distributeCard(outputView::printInitialStatus);
-		takePlayersTurn(inputView::drawOneMoreCard, outputView::printPlayerHand);
-		takeDealerTurn(outputView::printDealerStatus);
-		getFinalResult(outputView::printFinalResult);
+		addPlayers(inputView);
+		betMoney(inputView);
+		distributeCard(outputView);
+		takePlayersTurn(inputView, outputView);
+		takeDealerTurn(outputView);
+		getFinalResult(outputView);
 	}
 
 	private void initBlackJackGame() {
 		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Ready(), DealerDrawChoice::chooseDraw));
 	}
 
-	private void addPlayers(Supplier<List<String>> playerNames) {
-		blackJackService.joinPlayers(playerNames.get());
+	private void addPlayers(InputView inputView) {
+		blackJackService.joinPlayers(inputView.requestPlayerName());
 	}
 
-	private void betMoney(UnaryOperator<String> bettingFunction) {
+	private void betMoney(InputView inputView) {
 		PlayerTurnsDto playerTurns = blackJackService.startBettingPhase();
 		List<BettingDto> betting = new ArrayList<>();
 		for (String player : playerTurns.getNames()) {
-			String money = bettingFunction.apply(player);
+			String money = inputView.drawOneMoreCard(player);
 			betting.add(BettingDto.from(player, Double.parseDouble(money)));
 		}
 		blackJackService.betMoney(betting);
 	}
 
-	private void distributeCard(BiConsumer<DealerTableDto, List<PlayerTableDto>> printerTable) {
+	private void distributeCard(OutputView outputView) {
 		DealerTableDto dealerTable = blackJackService.distributeCardToDealer();
 		List<PlayerTableDto> playersTable = blackJackService.distributeCardToPlayers();
-		printerTable.accept(dealerTable, playersTable);
+		outputView.printInitialStatus(dealerTable, playersTable);
 	}
 
-	private void takePlayersTurn(UnaryOperator<String> answerFunction,
-								 Consumer<PlayerTableDto> printerPlayerStatus) {
+	private void takePlayersTurn(InputView inputView, OutputView outputView) {
 		PlayerTurnsDto playerTurns = blackJackService.startPlayerDrawPhase();
 		for (String player : playerTurns.getNames()) {
-			drawPlayer(answerFunction, printerPlayerStatus, player);
+			drawPlayer(inputView, outputView, player);
 		}
 	}
 
-	private void drawPlayer(UnaryOperator<String> answerFunction,
-							Consumer<PlayerTableDto> printerPlayerStatus,
-							String player) {
-		String answer = answerFunction.apply(player);
+	private void drawPlayer(InputView inputView, OutputView outputView, String player) {
+		String answer = inputView.drawOneMoreCard(player);
 		PlayerStatusDto playerStatus = blackJackService.drawPlayer(PlayerDrawChoice.of(answer), player);
-		printerPlayerStatus.accept(playerStatus.getTableStatusDto());
+		outputView.printPlayerHand(playerStatus.getTableStatusDto());
 		if (playerStatus.isDraw()) {
-			drawPlayer(answerFunction, printerPlayerStatus, player);
+			drawPlayer(inputView, outputView, player);
 		}
 	}
 
-	private void takeDealerTurn(Consumer<DealerTurnDto> printerDealerTurn) {
-		printerDealerTurn.accept(blackJackService.drawDealer());
+	private void takeDealerTurn(OutputView outputView) {
+		outputView.printDealerStatus(blackJackService.drawDealer());
 	}
 
-	private void getFinalResult(Consumer<FinalResultDto> printerFinalResult) {
-		printerFinalResult.accept(blackJackService.calculateFinalResult());
+	private void getFinalResult(OutputView outputView) {
+		outputView.printFinalResult(blackJackService.calculateFinalResult());
 	}
 }
