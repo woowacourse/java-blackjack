@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Players {
@@ -13,10 +14,10 @@ public final class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players of(List<String> playerNames, List<String> bettingMoneys) {
+    public static Players of(Map<String, String> bettingMoneys) {
         List<Player> players = new ArrayList<>();
-        for (int i = 0; i < playerNames.size(); i++) {
-            players.add(Player.of(playerNames.get(i).trim(), bettingMoneys.get(i)));
+        for (String playerName : bettingMoneys.keySet()) {
+            players.add(Player.of(playerName, bettingMoneys.get(playerName)));
         }
         return new Players(players);
     }

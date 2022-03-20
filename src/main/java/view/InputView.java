@@ -1,8 +1,9 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public final class InputView {
@@ -37,10 +38,10 @@ public final class InputView {
         return Arrays.asList(names.split(COMMA));
     }
 
-    public List<String> inputBettings(List<String> playerNames) {
-        List<String> bettingMoneys = new ArrayList<>();
+    public Map<String, String> inputBettings(List<String> playerNames) {
+        Map<String, String> bettingMoneys = new LinkedHashMap<>();
         for (String playerName : playerNames) {
-            bettingMoneys.add(inputBettingMoney(playerName));
+            bettingMoneys.put(playerName, inputBettingMoney(playerName));
         }
         return bettingMoneys;
     }
