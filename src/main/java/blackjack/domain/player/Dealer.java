@@ -14,16 +14,11 @@ public class Dealer extends Participant {
     }
 
     public boolean isRangeScoreToReceive() {
-        return cards.calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
+        return calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
     }
 
     @Override
     public List<Card> openFirstCards() {
-        return cards.getCards().subList(0, FIRST_OPEN_COUNT);
-    }
-
-    @Override
-    public boolean isBust() {
-        return cards.calculateScore() > MAX_BLACKJACK_SCORE;
+        return getCards().subList(0, FIRST_OPEN_COUNT);
     }
 }

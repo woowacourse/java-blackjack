@@ -23,7 +23,7 @@ class CardsTest {
         );
         final int expected = 4;
 
-        cards.addCard(new Card(CardPattern.HEART, CardNumber.TWO));
+        cards = cards.addCard(new Card(CardPattern.HEART, CardNumber.TWO));
         final int actual = cards.getCards().size();
 
         assertThat(actual).isEqualTo(expected);

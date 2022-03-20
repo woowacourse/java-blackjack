@@ -33,7 +33,7 @@ public class BlackjackGame {
     }
 
     public void hit(final Participant participant) {
-        participant.hit(drawCard());
+        participant.receiveCard(drawCard());
     }
 
     private Card drawCard() {

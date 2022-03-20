@@ -59,10 +59,11 @@ public class BlackjackController {
     }
 
     private void processForPlayer(final BlackjackGame blackjackGame, final Player player) {
-        while (player.isPossibleToHit(requestDrawStatus(player.getName()))) {
+        while (player.isRunning() && player.isHit(requestDrawStatus(player.getName()))) {
             blackjackGame.hit(player);
-            outputView.printPlayerCardStatus(player.getName(), player.getCards().getCards());
+            outputView.printPlayerCardStatus(player.getName(), player.getCards());
         }
+        player.stay();
     }
 
     private DrawStatus requestDrawStatus(final String playerName) {

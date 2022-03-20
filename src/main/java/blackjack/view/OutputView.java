@@ -49,9 +49,9 @@ public class OutputView {
     }
 
     public void printAllPlayerCardStatus(final List<Player> players, final Dealer dealer) {
-        printPlayerCardStatusAndScore(dealer.getName(), dealer.getCards().getCards(), dealer.calculateScore());
+        printPlayerCardStatusAndScore(dealer.getName(), dealer.getCards(), dealer.calculateScore());
         for (Player player : players) {
-            printPlayerCardStatusAndScore(player.getName(), player.getCards().getCards(), player.calculateScore());
+            printPlayerCardStatusAndScore(player.getName(), player.getCards(), player.calculateScore());
         }
         printNewLine();
     }

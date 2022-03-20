@@ -27,8 +27,8 @@ public class Player extends Participant {
         return GameResult.findPlayerResult(this, dealer);
     }
 
-    public boolean isPossibleToHit(DrawStatus drawStatus) {
-        return isBust() && isHit(drawStatus);
+    public void stay() {
+        state.stay();
     }
 
     public boolean isHit(DrawStatus drawStatus) {
@@ -37,12 +37,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> openFirstCards() {
-        return cards.getCards().subList(0, FIRST_OPEN_COUNT);
-    }
-
-    @Override
-    public boolean isBust() {
-        return cards.calculateScore() > MAX_BLACKJACK_SCORE;
+        return getCards().subList(0, FIRST_OPEN_COUNT);
     }
 
     public BettingMoney getBettingMoney() {

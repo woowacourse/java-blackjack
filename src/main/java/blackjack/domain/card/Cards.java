@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,8 +15,11 @@ public class Cards {
         this.cards = cards;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public Cards addCard(Card card) {
+        final List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+
+        return new Cards(newCards);
     }
 
     public boolean isBlackjack() {
