@@ -75,7 +75,7 @@ public class BlackJackService {
     }
 
     public boolean canReceiveCard(String name) {
-        if (name.equals(DEALER_NAME)) {
+        if (dealer.isSameName(DEALER_NAME)) {
             return dealer.canReceiveCard();
         }
         return players.canReceiveCard(name);
