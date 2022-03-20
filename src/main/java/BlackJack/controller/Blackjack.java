@@ -1,9 +1,6 @@
 package blackJack.controller;
 
-import blackJack.domain.Card.Card;
 import blackJack.domain.Card.Deck;
-import blackJack.domain.Card.Denomination;
-import blackJack.domain.Card.Suit;
 import blackJack.domain.Result.Result;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
@@ -12,7 +9,10 @@ import blackJack.domain.User.User;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static blackJack.domain.Card.Deck.initDeck;
 
@@ -36,13 +36,13 @@ public class Blackjack {
             playGame(dealer, players, deck);
         }
 
-        Map<String, Integer> playerResult = Result.makePlayerResult(dealer, players);
+        Map<Player, Integer> playerResult = Result.makePlayerResult(dealer, players);
         int dealerResult = Result.calculateDealerProfit(playerResult);
 
         printProfit(dealer, playerResult, dealerResult);
     }
 
-    private void printProfit(Dealer dealer, Map<String, Integer> playerResults, int dealerResult) {
+    private void printProfit(Dealer dealer, Map<Player, Integer> playerResults, int dealerResult) {
         OutputView.printFinalResult(
                 dealer.getName(),
                 playerResults,
@@ -69,7 +69,7 @@ public class Blackjack {
 
     private void playGame(Dealer dealer, Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            addCardPerPlayer(player,deck);
+            addCardPerPlayer(player, deck);
         }
         while (dealer.isPossibleToAdd()) {
             OutputView.printAddDealerCard();

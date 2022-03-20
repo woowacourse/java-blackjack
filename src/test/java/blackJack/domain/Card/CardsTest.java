@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -72,7 +71,7 @@ class CardsTest {
     void getFirst() {
         Cards cards = new Cards(Arrays.asList(new Card(Suit.CLOVER, Denomination.TWO), new Card(Suit.HEART, Denomination.JACK)));
         String actual = cards.getFirst();
-        String expected =  "2클로버";
+        String expected = "2클로버";
         assertThat(actual).isEqualTo(expected);
     }
 }

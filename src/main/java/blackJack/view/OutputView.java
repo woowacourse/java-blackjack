@@ -54,13 +54,13 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(String dealerName, Map<String, Integer> playerResults, int dealerResult) {
+    public static void printFinalResult(String dealerName, Map<Player, Integer> playerResults, int dealerResult) {
         System.out.printf(NEW_LINE);
         System.out.println(FINAL_RESULT_MESSAGE);
 
         System.out.println(String.format(USER_RESULT_FORMAT, dealerName, dealerResult));
-        for (Map.Entry<String, Integer> entry : playerResults.entrySet()) {
-            System.out.println(String.format(USER_RESULT_FORMAT, entry.getKey(), entry.getValue()));
+        for (Map.Entry<Player, Integer> entry : playerResults.entrySet()) {
+            System.out.println(String.format(USER_RESULT_FORMAT, entry.getKey().getName(), entry.getValue()));
         }
     }
 }

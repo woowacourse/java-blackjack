@@ -1,6 +1,9 @@
 package blackJack.domain.Card;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class Cards {
     public static final int BUST_LINE = 21;
@@ -24,10 +27,10 @@ public class Cards {
     public int calculateScore() {
 
         int score = cards.stream()
-                       .mapToInt(card -> card.getNumber().getValue())
-                       .sum();
+                .mapToInt(card -> card.getNumber().getValue())
+                .sum();
 
-        if(cards.stream().anyMatch(Card::isAce) && canAddExtraScore(score)){
+        if (cards.stream().anyMatch(Card::isAce) && canAddExtraScore(score)) {
             return score + EXTRA_SCORE;
         }
 

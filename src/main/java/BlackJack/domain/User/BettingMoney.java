@@ -13,8 +13,8 @@ public class BettingMoney {
         this.money = money;
     }
 
-    private void validatePositive(int money, boolean isDealer){
-        if(money <= NO_MONEY && !isDealer){
+    private void validatePositive(int money, boolean isDealer) {
+        if (money <= NO_MONEY && !isDealer) {
             throw new IllegalArgumentException(ExeptionMessage.NOT_ENOUGH_BETTING_MONEY);
         }
     }
