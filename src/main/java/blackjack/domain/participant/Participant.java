@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import java.util.List;
 
 import blackjack.domain.BettingAmount;
-import blackjack.domain.BlackJack;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -38,7 +37,7 @@ public abstract class Participant {
 	}
 
 	public boolean isBlackJack() {
-		return calculateFinalScore() == BlackJack.OPTIMIZED_WINNING_NUMBER;
+		return hand.isBlackJack();
 	}
 
 	public int calculateFinalScore() {
