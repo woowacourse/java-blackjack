@@ -23,7 +23,7 @@ public class OutputView {
     private static final String OUTPUT_MESSAGE_DEALER_RECEIVE_CARD_COUNT =
             NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
-            "%s 카드: %s - 결과: %d".concat(NEWLINE);
+            "%s 카드: %s - 결과: %s".concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_RESULT_OF_PROFIT_TITLE = NEWLINE.concat("## 최종 수익");
     private static final String OUTPUT_MESSAGE_RESULT_OF_PROFIT = "%s: %d".concat(NEWLINE);
 

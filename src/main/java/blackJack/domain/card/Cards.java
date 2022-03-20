@@ -26,13 +26,18 @@ public class Cards {
         }
     }
 
-    public int calculateScore() {
-        return cards.stream()
+    public Score calculateScore() {
+        Score score = new Score(cards.stream()
                 .mapToInt(Card::getScore)
-                .sum();
+                .sum());
+
+        if (containsAce() && score.isChangeAceScore()) {
+            return score.changeAceScore();
+        }
+        return score;
     }
 
-    public boolean containsAce() {
+    private boolean containsAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }

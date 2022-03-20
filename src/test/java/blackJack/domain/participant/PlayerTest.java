@@ -37,27 +37,6 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
-    void canHitFalse() {
-        Player player = new Player("kei");
-        player.hit(Card.from(Symbol.SPADE, Denomination.JACK));
-        player.hit(Card.from(Symbol.HEART, Denomination.JACK));
-        player.hit(Card.from(Symbol.SPADE, Denomination.TWO));
-
-        assertThat(player.canHit()).isFalse();
-    }
-
-    @Test
-    @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
-    void canHitTrue() {
-        Player player = new Player("kei");
-        player.hit(Card.from(Symbol.SPADE, Denomination.JACK));
-        player.hit(Card.from(Symbol.HEART, Denomination.JACK));
-
-        assertThat(player.canHit()).isTrue();
-    }
-
-    @Test
     @DisplayName("플레이어가 승리하는 경우 승부 결과 반환 테스트")
     void getMatchResultPlayerWin() {
         Player player = new Player("rookie");

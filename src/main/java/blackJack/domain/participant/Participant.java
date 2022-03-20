@@ -2,18 +2,14 @@ package blackJack.domain.participant;
 
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Cards;
-import blackJack.domain.card.Denomination;
-import blackJack.domain.result.MatchResult;
+import blackJack.domain.card.Score;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
 
-    private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
     protected static final String DEALER_NAME = "딜러";
-
-    private static final int STANDARD_SCORE_OF_CHANGE_ACE = 11;
-    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
+    private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
 
     private final String name;
     private final Cards cards;
@@ -36,25 +32,16 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public int getScore() {
-        int score = cards.calculateScore();
-
-        if (cards.containsAce() && isChangeAceScore(score)) {
-            score += OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
-        }
-        return score;
-    }
-
-    private boolean isChangeAceScore(int score) {
-        return score <= STANDARD_SCORE_OF_CHANGE_ACE;
+    public Score getScore() {
+        return cards.calculateScore();
     }
 
     public boolean isBlackJack() {
-        return MatchResult.isBlackJackScore(getScore()) && cards.getCards().size() == 2;
+        return getScore().isBlackJack() && cards.getCards().size() == 2;
     }
 
     public boolean isBurst() {
-        return MatchResult.isBurstScore(getScore());
+        return getScore().isBurst();
     }
 
     public List<Card> getCards() {

@@ -6,8 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class CardsTest {
 
@@ -20,7 +18,7 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("중복된 카드를 받는 경우 예외 발생 테스트")
+    @DisplayName("중복된 카드를 받는 경우 예외가 발생한다.")
     void addDuplicatedCard() {
         assertThatThrownBy(() -> cards.add(Card.from(Symbol.CLOVER, Denomination.EIGHT)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -28,18 +26,37 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("Ace를 고려하지 않은 플레이어의 카드 단순 합계 계산 테스트")
+    @DisplayName("Ace가 없는 경우의 합계를 계산한다.")
     void calculateScore() {
-        cards.add(Card.from(Symbol.CLOVER, Denomination.ACE));
+        cards.add(Card.from(Symbol.CLOVER, Denomination.JACK));
 
-        assertThat(cards.calculateScore()).isEqualTo(9);
+        assertThat(cards.calculateScore()).isEqualTo(new Score(18));
     }
 
-    @ParameterizedTest(name = "카드 리스트에 Ace가 있는지 확인 테스트")
-    @CsvSource(value = {"TWO,false", "ACE,true"})
-    void hasAce(Denomination denomination, boolean expected) {
-        cards.add(Card.from(Symbol.CLOVER, denomination));
+    @Test
+    @DisplayName("Ace가 1로 계산되는 경우의 점수 합계를 계산한다.")
+    void calculateScoreWithAceOne() {
+        cards.add(Card.from(Symbol.CLOVER, Denomination.ACE));
+        cards.add(Card.from(Symbol.CLOVER, Denomination.JACK));
 
-        assertThat(cards.containsAce()).isEqualTo(expected);
+        assertThat(cards.calculateScore()).isEqualTo(new Score(19));
+    }
+
+    @Test
+    @DisplayName("Ace가 11로 계산되는 경우의 점수 합계를 계산한다.")
+    void calculateScoreWithAceEleven() {
+        cards.add(Card.from(Symbol.CLOVER, Denomination.ACE));
+
+        assertThat(cards.calculateScore()).isEqualTo(new Score(19));
+    }
+
+    @Test
+    @DisplayName("Ace가 여러개인 경우의 점수 합계를 계산한다.")
+    void calculateScoreWithAceCountThree() {
+        cards.add(Card.from(Symbol.CLOVER, Denomination.ACE));
+        cards.add(Card.from(Symbol.HEART, Denomination.ACE));
+        cards.add(Card.from(Symbol.DIAMOND, Denomination.ACE));
+
+        assertThat(cards.calculateScore()).isEqualTo(new Score(21));
     }
 }

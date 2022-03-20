@@ -19,7 +19,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return !MatchResult.isBurstScore(this.getScore());
+        return !this.getScore().isBurst();
     }
 
     public MatchResult getMatchResult(Participant dealer) {
@@ -29,7 +29,7 @@ public class Player extends Participant {
         if (this.isBlackJack() && !dealer.isBlackJack()) {
             return MatchResult.BLACK_JACK_WIN;
         }
-        if (this.getScore() == dealer.getScore()) {
+        if (this.getScore().compareTo(dealer.getScore()) == 0) {
             return getResultAtSameScore(dealer);
         }
         return getResultAtDifferentScore(dealer);
@@ -46,7 +46,7 @@ public class Player extends Participant {
         if (dealer.isBurst()) {
             return MatchResult.WIN;
         }
-        if (this.getScore() > dealer.getScore()) {
+        if (this.getScore().compareTo(dealer.getScore()) > 0) {
             return MatchResult.WIN;
         }
         return MatchResult.LOSE;
