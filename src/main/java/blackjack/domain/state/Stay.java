@@ -9,15 +9,15 @@ final class Stay extends Finished {
     }
 
     @Override
-    public long revenue(PlayRecord playRecord, Betting betting) {
+    public long revenue(PlayRecord playRecord, Bet bet) {
         if (playRecord == PlayRecord.WIN) {
-            return betting.multiply(WIN_MULTIPLIER);
+            return bet.multiply(WIN_MULTIPLIER);
         }
 
         if (playRecord == PlayRecord.LOSS) {
-            return betting.multiply(LOSE_MULTIPLIER);
+            return bet.multiply(LOSE_MULTIPLIER);
         }
 
-        return betting.multiply(PUSH_MULTIPLIER);
+        return bet.multiply(PUSH_MULTIPLIER);
     }
 }

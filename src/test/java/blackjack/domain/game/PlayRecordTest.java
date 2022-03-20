@@ -12,10 +12,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import blackjack.domain.Name;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.state.Betting;
+import blackjack.domain.state.Bet;
 
 public class PlayRecordTest {
-    Player player = new Player(Name.of("pobi"), new Betting(1));
+    Player player = new Player(Name.of("pobi"), new Bet(1));
 
     @BeforeEach
     void setUp() {

@@ -1,10 +1,10 @@
 package blackjack.domain.state;
 
-public final class Betting {
+public final class Bet {
 
     private final long money;
 
-    public Betting(long money) {
+    public Bet(long money) {
         validatePositiveMoney(money);
         this.money = money;
     }

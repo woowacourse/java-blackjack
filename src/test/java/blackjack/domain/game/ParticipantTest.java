@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.Name;
 import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
-import blackjack.domain.state.Betting;
+import blackjack.domain.state.Bet;
 import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.Running;
@@ -21,13 +21,13 @@ import blackjack.domain.state.State;
 
 public class ParticipantTest {
 
-    private static final Betting betting = new Betting(1);
+    private static final Bet BET = new Bet(1);
 
     @Test
     @DisplayName("생성한 참여자의 상태가 Started인지 확인")
     void checkStarted() {
         //given
-        Participant participant = new Player(Name.of("pobi"), betting);
+        Participant participant = new Player(Name.of("pobi"), BET);
 
         //when
         State actual = participant.getState();
@@ -40,7 +40,7 @@ public class ParticipantTest {
     @DisplayName("초기화 후 참여자의 상태가 Running인지 확인")
     void checkRunning() {
         //given
-        Participant participant = new Player(Name.of("pobi"), betting);
+        Participant participant = new Player(Name.of("pobi"), BET);
 
         //when
         participant.init(new Card(DIAMOND, JACK),
@@ -55,7 +55,7 @@ public class ParticipantTest {
     @DisplayName("초기화 후 카드 합이 21이면 상태가 Blackjack인지 확인")
     void checkBlackjack() {
         //given
-        Participant participant = new Player(Name.of("pobi"), betting);
+        Participant participant = new Player(Name.of("pobi"), BET);
 
         //when
         participant.init(new Card(DIAMOND, JACK),
@@ -71,7 +71,7 @@ public class ParticipantTest {
     void init() {
         // give
         CardDeck cardDeck = new CardDeck(new TestDeck());
-        Participant player = new Player(Name.of("pobi"), betting);
+        Participant player = new Player(Name.of("pobi"), BET);
 
         // when
         player.init(cardDeck.drawCard(), cardDeck.drawCard());
@@ -85,7 +85,7 @@ public class ParticipantTest {
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
     void returnBust() {
         // give
-        Participant player = new Player(Name.of("pobi"), betting);
+        Participant player = new Player(Name.of("pobi"), BET);
         player.draw(new Card(DIAMOND, JACK));
         player.draw(new Card(DIAMOND, QUEEN));
         player.draw(new Card(DIAMOND, TWO));
@@ -101,7 +101,7 @@ public class ParticipantTest {
     @DisplayName("카드 목록 반환을 검증한다.")
     void getCards() {
         // give
-        Participant player = new Player(Name.of("pobi"), betting);
+        Participant player = new Player(Name.of("pobi"), BET);
         CardDeck cardDeck = new CardDeck(new TestDeck());
 
         // when

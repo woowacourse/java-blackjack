@@ -14,7 +14,7 @@ import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.Game;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Player;
-import blackjack.domain.state.Betting;
+import blackjack.domain.state.Bet;
 import blackjack.view.OutputView;
 
 public final class GameController {
@@ -27,7 +27,7 @@ public final class GameController {
 
     private Game initGame() {
         List<Name> names = getNames();
-        Game game = new Game(new CardDeck(new ShuffleDeck()), getBettings(names));
+        Game game = new Game(new CardDeck(new ShuffleDeck()), getBets(names));
         printInitResult(names);
         firstDrawResult(game.getParticipants());
         return game;
@@ -39,9 +39,9 @@ public final class GameController {
             .collect(toUnmodifiableList());
     }
 
-    private Map<Name, Betting> getBettings(List<Name> names) {
+    private Map<Name, Bet> getBets(List<Name> names) {
         return names.stream()
-            .collect(toMap(name -> name, name -> new Betting(inputBettingMoney(name)),
+            .collect(toMap(name -> name, name -> new Bet(inputBettingMoney(name)),
                 (bettingA, bettingB) -> bettingB, LinkedHashMap::new));
     }
 

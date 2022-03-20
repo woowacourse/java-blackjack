@@ -18,7 +18,7 @@ import blackjack.domain.Name;
 import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.state.Betting;
+import blackjack.domain.state.Bet;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
@@ -30,8 +30,8 @@ public class GameTest {
     void initGame() {
         // given
         Game game = new Game(new CardDeck(new TestDeck()),
-            Map.of(Name.of("pobi"), new Betting(1),
-                Name.of("rick"), new Betting(1)));
+            Map.of(Name.of("pobi"), new Bet(1),
+                Name.of("rick"), new Bet(1)));
 
         // when
         int actual = game.getPlayers().size();
@@ -45,8 +45,8 @@ public class GameTest {
     void initParticipants() {
         // given
         Game game = new Game(new CardDeck(new TestDeck()),
-            Map.of(Name.of("pobi"), new Betting(1),
-                Name.of("rick"), new Betting(1)));
+            Map.of(Name.of("pobi"), new Bet(1),
+                Name.of("rick"), new Bet(1)));
 
         // when
         List<Integer> actual = new ArrayList<>();
@@ -65,7 +65,7 @@ public class GameTest {
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
     void drawCard_HIT(String hitOrStay, int expected) {
         // given
-        Game game = new Game(new CardDeck(new TestDeck()), Map.of(Name.of("pobi"), new Betting(1)));
+        Game game = new Game(new CardDeck(new TestDeck()), Map.of(Name.of("pobi"), new Bet(1)));
         Player player = game.getPlayers().get(0);
 
         // when
@@ -83,7 +83,7 @@ public class GameTest {
         CardDeck cardDeck = new CardDeck(() -> new ArrayDeque<>(List.of(
             new Card(SPADE, QUEEN), new Card(HEART, SEVEN),
             new Card(DIAMOND, QUEEN), new Card(CLUB, SEVEN))));
-        Game game = new Game(cardDeck, Map.of(Name.of("pobi"), new Betting(1)));
+        Game game = new Game(cardDeck, Map.of(Name.of("pobi"), new Bet(1)));
 
         // when
         game.drawDealerCards();
@@ -102,7 +102,7 @@ public class GameTest {
             new Card(DIAMOND, ACE),
             new Card(HEART, QUEEN), new Card(SPADE, SEVEN),
             new Card(DIAMOND, QUEEN), new Card(CLUB, cardNumber))));
-        Game game = new Game(cardDeck, Map.of(Name.of("pobi"), new Betting(1)));
+        Game game = new Game(cardDeck, Map.of(Name.of("pobi"), new Bet(1)));
 
         // when
         boolean actual = game.drawDealerCards().isDraw();
@@ -116,7 +116,7 @@ public class GameTest {
     void drawDealerCard() {
         // given
         Game game = new Game(new CardDeck(new TestDeck()),
-            Map.of(Name.of("pobi"), new Betting(1)));
+            Map.of(Name.of("pobi"), new Bet(1)));
 
         // when
         game.drawDealerCards();

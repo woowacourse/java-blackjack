@@ -3,16 +3,16 @@ package blackjack.domain.game;
 import static blackjack.domain.game.PlayRecord.*;
 
 import blackjack.domain.Name;
-import blackjack.domain.state.Betting;
+import blackjack.domain.state.Bet;
 
 public final class Player extends Participant {
 
     private final Name name;
-    private final Betting betting;
+    private final Bet bet;
 
-    Player(Name name, Betting betting) {
+    Player(Name name, Bet bet) {
         this.name = name;
-        this.betting = betting;
+        this.bet = bet;
     }
 
     @Override
@@ -21,7 +21,7 @@ public final class Player extends Participant {
     }
 
     public long getRevenue(Dealer dealer) {
-        return getState().revenue(getRecord(dealer), betting);
+        return getState().revenue(getRecord(dealer), bet);
     }
 
     @Override

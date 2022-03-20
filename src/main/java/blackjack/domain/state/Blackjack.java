@@ -9,10 +9,10 @@ public final class Blackjack extends Finished {
     }
 
     @Override
-    public long revenue(PlayRecord playRecord, Betting betting) {
+    public long revenue(PlayRecord playRecord, Bet bet) {
         if (playRecord == PlayRecord.BLACKJACK) {
-            return betting.multiply(BLACKJACK_MULTIPLIER);
+            return bet.multiply(BLACKJACK_MULTIPLIER);
         }
-        return betting.multiply(PUSH_MULTIPLIER);
+        return bet.multiply(PUSH_MULTIPLIER);
     }
 }

@@ -13,5 +13,5 @@ public interface State {
 
     boolean isDrawable();
 
-    long revenue(PlayRecord playRecord, Betting betting);
+    long revenue(PlayRecord playRecord, Bet bet);
 }

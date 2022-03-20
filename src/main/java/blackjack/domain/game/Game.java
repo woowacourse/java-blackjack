@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.DrawCount;
 import blackjack.domain.Name;
-import blackjack.domain.state.Betting;
+import blackjack.domain.state.Bet;
 
 public final class Game {
 
@@ -20,15 +20,15 @@ public final class Game {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Game(CardDeck cardDeck, Map<Name, Betting> namesAndBettings) {
+    public Game(CardDeck cardDeck, Map<Name, Bet> namesAndBettings) {
         this.cardDeck = cardDeck;
         this.dealer = new Dealer();
         this.players = createPlayers(new LinkedHashMap<>(namesAndBettings));
         init();
     }
 
-    private List<Player> createPlayers(Map<Name, Betting> namesAndBettings) {
-        return namesAndBettings.entrySet().stream()
+    private List<Player> createPlayers(Map<Name, Bet> namesAndBets) {
+        return namesAndBets.entrySet().stream()
             .map(entry -> new Player(entry.getKey(), entry.getValue()))
             .collect(Collectors.toUnmodifiableList());
     }
