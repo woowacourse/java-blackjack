@@ -1,11 +1,14 @@
 package blackjack.user;
 
-import blackjack.Card;
 import blackjack.Cards;
 import blackjack.Deck;
 import blackjack.State;
 
 public abstract class Participant {
+
+    private static final int INIT_CARD_NUM = 2;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int MAX_SCORE = 21;
     private final String name;
     protected State state;
     protected Cards myCards;
@@ -58,13 +61,13 @@ public abstract class Participant {
     }
 
     protected void setStateBlackjackIfSatisfied() {
-        if (2 == myCards.numberOfCards() && 21 == myCards.scoreSum()) {
+        if (INIT_CARD_NUM == myCards.numberOfCards() && BLACKJACK_SCORE == myCards.scoreSum()) {
             state = State.BLACKJACK;
         }
     }
 
     protected void setStateBustIfSatisfied() {
-        if (myCards.scoreSum() > 21) {
+        if (myCards.scoreSum() > MAX_SCORE) {
             state = State.BUST;
         }
     }

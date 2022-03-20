@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Blackjack {
+
     private final Deck deck;
     private final Map<Player, Receipt> bettingTable;
     private final Map<Participant, Receipt> yieldTable;
-
 
     private Blackjack() {
         deck = Deck.makeRandomShuffledDeck();

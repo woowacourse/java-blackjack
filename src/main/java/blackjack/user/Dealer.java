@@ -4,6 +4,7 @@ import blackjack.Cards;
 import blackjack.State;
 
 public class Dealer extends Participant {
+
     private static final String NAME = "딜러";
     private static final int OPEN_INIT_CARD_LOGIC = 0;
 
@@ -14,7 +15,6 @@ public class Dealer extends Participant {
     public static Dealer generate() {
         return new Dealer();
     }
-
 
     @Override
     protected void setStateStayIfSatisfied(boolean stayFlag) {

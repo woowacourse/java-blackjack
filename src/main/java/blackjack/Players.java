@@ -38,14 +38,14 @@ public class Players implements Iterable {
         }
     }
 
-    @Override
-    public Iterator iterator() {
-        return players.iterator();
-    }
-
     public List<String> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Iterator iterator() {
+        return players.iterator();
     }
 }

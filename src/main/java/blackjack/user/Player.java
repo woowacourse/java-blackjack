@@ -5,6 +5,7 @@ import blackjack.State;
 import java.util.Objects;
 
 public class Player extends Participant {
+
     private static final String BLANK_NAME_EXCEPTION = "[ERROR] 이름이 공백입니다.";
 
     private Player(String name) {
