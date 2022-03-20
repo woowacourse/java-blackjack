@@ -1,13 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
+import static blackjack.domain.Fixtures.JACK_DIAMOND;
+import static blackjack.domain.Fixtures.KING_DIAMOND;
+import static blackjack.domain.Fixtures.SIX_DIAMOND;
+import static blackjack.domain.Fixtures.TWO_DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,30 +21,27 @@ import org.junit.jupiter.api.Test;
 public class GameResultTest {
 
     private GameResult gameResult;
+    private User user1, user2;
 
     @BeforeEach
     void setUpGameResult() {
-        final Dealer dealer = new Dealer(createFirstReceivedCard(CardNumber.KING, CardNumber.FIVE));
-        final User user1 = new User("pobi", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK));
-        final User user2 = new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
+        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(JACK_DIAMOND, SIX_DIAMOND)));
+        user1 = new User("pobi", new ArrayList<>(Arrays.asList(TWO_DIAMOND, KING_DIAMOND)));
+        user2 = new User("jun", new ArrayList<>(Arrays.asList(JACK_DIAMOND, KING_DIAMOND)));
         final Users users = new Users(List.of(user1, user2));
 
         gameResult = GameResult.createPlayerGameResult(dealer, users);
     }
 
-    private List<Card> createFirstReceivedCard(final CardNumber firstCardNumber, final CardNumber secondCardNumber) {
-        return List.of(new Card(CardPattern.DIAMOND, firstCardNumber), new Card(CardPattern.HEART, secondCardNumber));
-    }
-
     @Test
     @DisplayName("유저 게임결과를 확인한다.")
     void checkUserGameResult() {
-        final Map<String, Result> expected = new HashMap<>(Map.ofEntries(
-                Map.entry("pobi", Result.LOSE),
-                Map.entry("jun", Result.WIN)
+        final Map<User, Result> expected = new HashMap<>(Map.ofEntries(
+                Map.entry(user1, Result.LOSE),
+                Map.entry(user2, Result.WIN)
         ));
 
-        final Map<String, Result> actual = gameResult.getUserResult();
+        final Map<User, Result> actual = gameResult.getUserResult();
         assertThat(actual).isEqualTo(expected);
     }
 

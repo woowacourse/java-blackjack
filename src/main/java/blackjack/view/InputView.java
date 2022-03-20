@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.player.Player;
+import blackjack.domain.player.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +15,8 @@ public class InputView {
     private static final String NO = "n";
     private static final String DRAW_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String ANSWER_EXCEPTION_MESSAGE = "잘못된 입력입니다.";
+    private static final String BETTING_MONEY_QUESTION_MESSAGE = "의 배팅금액은?";
+    private static final String NOT_NUMBER_EXCEPTION = "숫자를 입력해주세요.";
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -33,16 +36,32 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Boolean inputDrawCardAnswer(final Player user) {
+    public static boolean inputDrawCardAnswer(final Player user) {
+        System.out.println();
         System.out.println(user.getName() + DRAW_CARD_MESSAGE);
         String answer = scanner.nextLine();
         return validateDrawCardAnswer(answer);
     }
 
-    private static Boolean validateDrawCardAnswer(final String answer) {
-        if (!answer.equals(YES) && !answer.equals(NO)) {
-            throw new IllegalArgumentException(ANSWER_EXCEPTION_MESSAGE);
+    private static boolean validateDrawCardAnswer(final String answer) {
+        if (answer.equals(YES) || answer.equals(NO)) {
+            return answer.equals(YES);
         }
-        return answer.equals(YES);
+        throw new IllegalArgumentException(ANSWER_EXCEPTION_MESSAGE);
+    }
+
+    public static int inputBettingMoney(final User user) {
+        System.out.println();
+        System.out.println(user.getName() + BETTING_MONEY_QUESTION_MESSAGE);
+        String money = scanner.nextLine();
+        return validateNumber(money);
+    }
+
+    private static int validateNumber(final String money) {
+        try {
+            return Integer.parseInt(money);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(NOT_NUMBER_EXCEPTION);
+        }
     }
 }
