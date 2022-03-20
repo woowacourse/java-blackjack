@@ -13,7 +13,7 @@ public abstract class Player {
 
     public Player(Name name, CardDeck cardDeck) {
         this.name = name;
-        this.state = new Ready()
+        State state = new Ready()
             .draw(cardDeck.draw())
             .draw(cardDeck.draw());
     }

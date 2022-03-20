@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public abstract class Running implements State {
@@ -9,6 +10,10 @@ public abstract class Running implements State {
     Running(final Cards cards) {
         this.cards = cards;
     }
+
+    public abstract State draw(Card card);
+
+    public abstract State stay();
 
     @Override
     public Cards cards() {
