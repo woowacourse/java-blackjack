@@ -1,8 +1,13 @@
 package blackjack.domain.machine;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import java.util.Map;
 import java.util.Objects;
 
 public class Profit {
+    private static final double BLACKJACK_RATE = 1.5;
     private static final long INIT_MONEY = 0L;
 
     private final long money;
@@ -11,8 +16,46 @@ public class Profit {
         this.money = money;
     }
 
-    public Profit() {
+    private Profit() {
         money = INIT_MONEY;
+    }
+
+    public static Profit of(Dealer dealer, Player player) {
+        if (player.initScore().isMax()) {
+            return getProfitForBlackjack(dealer, player);
+        }
+
+        return getOrdinaryProfit(dealer, player);
+    }
+
+    private static Profit getOrdinaryProfit(Dealer dealer, Player player) {
+        Record record = Record.getRecord(player, dealer);
+
+        if (record == Record.VICTORY) {
+            return new Profit(player.getBetting().getMoney());
+        }
+
+        if (record == Record.DEFEAT) {
+            return new Profit(-player.getBetting().getMoney());
+        }
+
+        return new Profit();
+    }
+
+    private static Profit getProfitForBlackjack(Dealer dealer, Player player) {
+        if (dealer.initScore().isMax()) {
+            return new Profit(player.getBetting().getMoney());
+        }
+
+        return new Profit((long) (BLACKJACK_RATE * player.getBetting().getMoney()));
+    }
+
+    public static Profit getDealerProfit(Map<Participant, Profit> playersProfit) {
+        long sum = playersProfit.values().stream()
+                .mapToLong(Profit::getMoney)
+                .sum();
+
+        return new Profit(-sum);
     }
 
     @Override

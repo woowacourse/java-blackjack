@@ -46,7 +46,7 @@ public class ProfitsTest {
                 .isEqualTo(new Profit(10000L).getMoney());
     }
 
-    @DisplayName("플레이어의 수익률 결과를 테스트")
+    @DisplayName("딜러의 수익률 결과를 테스트")
     @Test
     void dealerProfit() {
         Player player = players.getPlayers().get(0);
