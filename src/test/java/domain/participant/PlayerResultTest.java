@@ -74,7 +74,7 @@ class PlayerResultTest {
 
 
     @Test
-    @DisplayName("둘다 burst인 경우 draw을 return한다.")
+    @DisplayName("둘다 burst인 경우 lose을 return한다.")
     void judgeALLBurstResult() {
         dealer.hit(Card.of(Symbol.SPADE, Denomination.TEN));
         dealer.hit(Card.of(Symbol.SPADE, Denomination.SIX));
@@ -84,7 +84,7 @@ class PlayerResultTest {
         player.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
         player.hit(Card.of(Symbol.CLOVER, Denomination.QUEEN));
 
-        assertThat(PlayerResult.of(player, dealer)).isEqualTo(PlayerResult.DRAW);
+        assertThat(PlayerResult.of(player, dealer)).isEqualTo(PlayerResult.LOSE);
     }
 
 }

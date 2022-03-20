@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum PlayerResult {
-    BLACKJACK(1.5, ((player, dealer) -> player.isBlackJack() && !dealer.isBlackJack())),
+    BLACKJACK(1.5, ((player, dealer) -> player.isBlackJack() && dealer.isNotBlackJack())),
     DRAW(0, (player, dealer) -> player.isBlackJack() && dealer.isBlackJack()
-        || player.score() == dealer.score() || player.isBurst() && dealer.isBurst()),
+        || player.score() == dealer.score()),
     LOSE(-1, (player, dealer) -> player.isBurst()
         || (player.score() < dealer.score()) && !dealer.isBurst()),
     WIN(1, (player, dealer) -> dealer.isBurst() || player.score() > dealer.score());
