@@ -11,19 +11,20 @@ import java.util.List;
 public class BlackjackGame {
 
     public void start() {
-        // 카드 분배
         BlackjackTable blackjackTable = new BlackjackTable(InputView.inputNameAndBettingMoney());
         OutputView.printAllCards(blackjackTable.getAllPlayers());
 
-        // HIT
+        hitPlayers(blackjackTable);
+        OutputView.printDealerHitCount(blackjackTable.countHitDealer());
+
+        OutputView.printCardResult(blackjackTable.getAllPlayers());
+        OutputView.printGameResult(blackjackTable.getGameResult());
+    }
+
+    private void hitPlayers(BlackjackTable blackjackTable) {
         for (Name name : blackjackTable.getPlayerNames()) {
             hit(blackjackTable, name);
         }
-        OutputView.printDealerHitCount(blackjackTable.countHitDealer());
-
-        // 결과
-        OutputView.printCardResult(blackjackTable.getAllPlayers());
-        OutputView.printGameResult(blackjackTable.getGameResult());
     }
 
     private void hit(BlackjackTable blackjackTable, Name name) {

@@ -43,7 +43,7 @@ public abstract class Finished implements State {
         return holdCards.countBestNumber();
     }
 
-    protected abstract double earningRate(Dealer dealer);
+    abstract double earningRate(Dealer dealer);
 
     @Override
     public final HoldCards getHoldCards() {
