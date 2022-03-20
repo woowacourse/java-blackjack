@@ -37,4 +37,5 @@ class CardsTest {
         assertThat(actual).isEqualTo(expected);
 
     }
+
 }

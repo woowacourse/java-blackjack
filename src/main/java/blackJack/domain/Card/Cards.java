@@ -25,22 +25,14 @@ public class Cards {
         int score = cards.stream()
                 .mapToInt(card -> card.getNumber().getValue())
                 .sum();
-
-        return addAceScore(score);
-    }
-
-    private int addAceScore(int score) {
-        long countAce = cards.stream()
-                .filter(Card::isAce)
-                .count();
-
-        for (int i = 0; i < countAce; i++) {
-            score = calculateAceScore(score);
+        if(cards.stream().anyMatch(Card::isAce)){
+            score = addAceScore(score);
         }
+
         return score;
     }
 
-    private int calculateAceScore(int score) {
+    private int addAceScore(int score) {
         if (score + EXTRA_SCORE <= BUST_LINE) {
             score += EXTRA_SCORE;
         }
