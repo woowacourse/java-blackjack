@@ -17,7 +17,7 @@ public class Cards {
     }
 
     public Cards() {
-        this(new ArrayList<>());
+        this(Collections.emptyList());
     }
 
     public int totalScore() {
