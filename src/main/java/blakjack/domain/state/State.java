@@ -26,4 +26,8 @@ public abstract class State {
     public final boolean isBlackjack() {
         return privateArea.isBlackjack();
     }
+
+    public final int getTotalScore() {
+        return privateArea.getTotalScore();
+    }
 }
