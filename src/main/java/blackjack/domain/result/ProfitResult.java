@@ -2,14 +2,16 @@ package blackjack.domain.result;
 
 import java.util.Map;
 
-public class ProfitResult {
-    private final Map<String, Integer> profits;
+import blackjack.domain.gamer.role.Role;
 
-    public ProfitResult(Map<String, Integer> profits) {
+public class ProfitResult {
+    private final Map<Role, Integer> profits;
+
+    public ProfitResult(Map<Role, Integer> profits) {
         this.profits = profits;
     }
 
-    public Map<String, Integer> get() {
+    public Map<Role, Integer> get() {
         return profits;
     }
 }

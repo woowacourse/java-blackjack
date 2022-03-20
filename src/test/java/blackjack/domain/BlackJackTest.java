@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import blackjack.domain.card.property.CardShape;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.gamer.role.Dealer;
 import blackjack.domain.gamer.role.Player;
+import blackjack.domain.gamer.role.Role;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Match;
@@ -96,10 +98,8 @@ class BlackJackTest {
         dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.EIGHT));
 
         ProfitResult profitResult = blackJack.getProfitResult();
-        Map<String, Integer> profitResults = profitResult.get();
-        List<Integer> results = List.of(profitResults.get(dealer.getName()),
-            profitResults.get("페퍼"),
-            profitResults.get("애쉬"));
+        Map<Role, Integer> profitResults = profitResult.get();
+        List<Integer> results = new ArrayList<>(profitResults.values());
 
         assertThat(results)
             .containsExactly(10000, 10000, -20000);

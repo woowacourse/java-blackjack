@@ -105,15 +105,15 @@ public class Gamers {
     public ProfitResult getProfitResult() {
         int dealerMoney = 0;
 
-        Map<String, Integer> profitResult = new LinkedHashMap<>();
+        Map<Role, Integer> profitResult = new LinkedHashMap<>();
         Map<Player, Match> playerResult = playerGroup.getPlayerResult(dealer);
-        profitResult.put(dealer.getName(), dealerMoney);
+        profitResult.put(dealer, dealerMoney);
         for (Map.Entry<Player, Match> entry : playerResult.entrySet()) {
             int money = money(entry.getKey(), entry.getValue());
-            profitResult.put(entry.getKey().getName(), money);
+            profitResult.put(entry.getKey(), money);
             dealerMoney -= money;
         }
-        profitResult.replace(dealer.getName(), dealerMoney);
+        profitResult.replace(dealer, dealerMoney);
         return new ProfitResult(profitResult);
     }
 }
