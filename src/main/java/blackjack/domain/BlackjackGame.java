@@ -80,12 +80,16 @@ public class BlackjackGame {
         return this.getDealer().isHit();
     }
 
-    public Player getTurnPlayer() {
-        return blackjackPlayers.turnPlayer();
+    public boolean isTurnPlayerStateFinished() {
+        return blackjackPlayers.turnPlayer().isFinished();
     }
 
-    public State getTurnPlayerState() {
-        return blackjackPlayers.turnPlayer().getState();
+    public State makeTurnPlayerStateStay() {
+        return blackjackPlayers.turnPlayer().getState().stay();
+    }
+
+    public Player getTurnPlayer() {
+        return blackjackPlayers.turnPlayer();
     }
 
     public Player getDealer() {
@@ -99,7 +103,7 @@ public class BlackjackGame {
     public List<GameResponse> getPlayersGameResponses() {
         List<GameResponse> gameResponses = new ArrayList<>();
         for (Player player : blackjackPlayers.getPlayers()) {
-            gameResponses.add(new GameResponse(player.getName(), player.getState().playingCards()));
+            gameResponses.add(new GameResponse(player.getName(), player.playingCards()));
         }
         return gameResponses;
     }
@@ -107,7 +111,7 @@ public class BlackjackGame {
     public List<GameResponse> getTurnPlayerGameResponse() {
         List<GameResponse> gameResponses = new ArrayList<>();
         GameResponse gameResponse = new GameResponse(blackjackPlayers.turnPlayer().getName(),
-                blackjackPlayers.turnPlayer().getState().playingCards());
+                blackjackPlayers.turnPlayer().playingCards());
         gameResponses.add(gameResponse);
         return gameResponses;
     }

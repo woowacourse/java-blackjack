@@ -77,8 +77,8 @@ public class BlackjackController {
             blackjackGame.assignCard(blackjackGame.getTurnPlayer());
             OutputView.announcePresentCards(blackjackGame.getTurnPlayerGameResponse());
         }
-        if (!blackjackGame.getTurnPlayerState().isFinished()) {
-            blackjackGame.getTurnPlayer().changeState(blackjackGame.getTurnPlayerState().stay());
+        if (!blackjackGame.isTurnPlayerStateFinished()) {
+            blackjackGame.getTurnPlayer().changeState(blackjackGame.makeTurnPlayerStateStay());
         }
         blackjackGame.nextTurn();
     }

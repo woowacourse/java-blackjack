@@ -21,6 +21,16 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
+    public final boolean isFinished() {
+        return state.isFinished();
+    }
+
+    @Override
+    public final PlayingCards playingCards() {
+        return state.playingCards();
+    }
+
+    @Override
     public final void changeState(State state) {
         this.state = state;
     }

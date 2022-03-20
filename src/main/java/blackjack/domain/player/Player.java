@@ -17,9 +17,13 @@ public interface Player {
 
     boolean isLose(PlayingCards playingCards);
 
+    boolean isFinished();
+
     void changeState(State state);
 
-    String getName();
-
     State getState();
+
+    PlayingCards playingCards();
+
+    String getName();
 }
