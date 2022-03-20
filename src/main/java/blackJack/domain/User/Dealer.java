@@ -7,7 +7,7 @@ public class Dealer extends User {
 
     public Dealer() {
         super("딜러");
-        bettingMoney = new BettingMoney(INIT_BETTING_MONEY);
+        bettingMoney = new BettingMoney(INIT_BETTING_MONEY, true);
     }
 
     public boolean isPossibleToAdd() {

@@ -8,7 +8,7 @@ public class Player extends User {
 
     public Player(String name, Integer money) {
         super(name);
-        bettingMoney = new BettingMoney(money);
+        bettingMoney = new BettingMoney(money, true);
     }
 
     public boolean isPossibleToAdd() {
