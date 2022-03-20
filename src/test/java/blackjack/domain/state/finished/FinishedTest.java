@@ -12,7 +12,7 @@ class FinishedTest {
     Finished finished = new Finished(new Cards()) {
         @Override
         public double computedRate(Finished state) {
-            return 0;
+            return 1.0;
         }
 
         @Override
@@ -22,10 +22,10 @@ class FinishedTest {
     };
 
     @Test
+    @DisplayName("stay 테스트")
     void stay() {
-        assertThatThrownBy(() -> finished.stay())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("이미 멈춰진 상태입니다.");
+        assertThat(finished.stay())
+                .isEqualTo(finished);
 
     }
 
@@ -47,7 +47,7 @@ class FinishedTest {
     @Test
     @DisplayName("이득 출력 테스트")
     void profit() {
-        assertThat(finished.profit(10000, new Blackjack(new Cards())))
+        assertThat(finished.profit(10000, new Stay(new Cards())))
                 .isEqualTo(10000);
     }
 

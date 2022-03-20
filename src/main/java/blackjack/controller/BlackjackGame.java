@@ -12,13 +12,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class BlackjackGame {
-    private static final int INIT_CARD_NUMBER = 2;
+    private static final int INIT_NUMBER = 2;
 
     public void run() {
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer(cardDeck.popCards(INIT_CARD_NUMBER));
+        Dealer dealer = new Dealer(cardDeck.popCards(INIT_NUMBER));
         Players players = initPlayers(cardDeck);
-        OutputView.printInitCards(players, dealer);
+        OutputView.printInitHands(players, dealer);
 
         startGame(players, dealer, cardDeck);
         printGameResult(players, dealer);
@@ -27,25 +27,23 @@ public final class BlackjackGame {
     private Players initPlayers(final CardDeck cardDeck) {
         List<Name> names = InputView.inputPlayerNames();
         return new Players(names.stream()
-                .map(name -> initPlayer(name, cardDeck))
+                .map(name -> createPlayer(name, cardDeck))
                 .collect(Collectors.toList())
         );
     }
 
-    private Player initPlayer(final Name name, final CardDeck cardDeck) {
-        return new Player(name, InputView.inputPlayerBetting(name.get()),
-                cardDeck.popCards(INIT_CARD_NUMBER));
+    private Player createPlayer(final Name name, final CardDeck cardDeck) {
+        return new Player(name, InputView.inputBetting(name.get()), cardDeck.popCards(INIT_NUMBER));
     }
 
     private void startGame(final Players players, final Dealer dealer, final CardDeck cardDeck) {
-        players.get()
-                .forEach(player -> startPlayer(player, cardDeck));
-        startDealer(dealer, cardDeck);
+        players.get().forEach(player -> startPlayer(player, cardDeck));
+        OutputView.printDealerHit(dealer.draw(cardDeck));
     }
 
     private void startPlayer(final Player player, final CardDeck cardDeck) {
         while (!player.getState().isFinished()) {
-            player.draw(cardDeck, InputView.inputOneMoreCard(player.getName()));
+            player.draw(cardDeck, InputView.inputIsDraw(player.getName()));
             printPlayerHand(player);
         }
     }
@@ -56,19 +54,11 @@ public final class BlackjackGame {
         }
     }
 
-    private void startDealer(final Dealer dealer, final CardDeck cardDeck) {
-        if (dealer.isAbleToHit()) {
-            dealer.addCard(cardDeck.pop());
-            OutputView.printDealerHit();
-        }
-        dealer.setStay();
-    }
-
     private void printGameResult(final Players players, final Dealer dealer) {
         OutputView.printHandAndPoint(players, dealer);
 
         Map<Player, Integer> payouts = players.getPayouts(dealer);
-        OutputView.printResult(dealer, dealer.getRemainMoney(payouts));
-        payouts.forEach(OutputView::printHumanResult);
+        OutputView.printDealerProfit(dealer, dealer.getProfit(payouts));
+        payouts.forEach(OutputView::printProfit);
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain.participant.human;
 
+import blackjack.domain.cards.CardDeck;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.participant.human.name.Name;
 import java.util.List;
@@ -13,18 +14,27 @@ public final class Dealer extends Human {
         System.out.println("딜러 : " + state.getClass());
     }
 
-    public int getRemainMoney(final Map<Player, Integer> shouldPayMoneys) {
-        return - shouldPayMoneys.values()
-                .stream()
-                .mapToInt(Integer::valueOf)
-                .sum();
-    }
-
     public Card getFirstCard() {
         return state.cards().getFirstCard();
     }
 
-    public boolean isAbleToHit() {
+    public boolean draw(CardDeck cardDeck) {
+        if (isAbleToHit()) {
+            addCard(cardDeck.pop());
+            return true;
+        }
+        setStay();
+        return false;
+    }
+
+    private boolean isAbleToHit() {
         return getPoint() <= HIT_DEALER_POINT;
+    }
+
+    public int getProfit(final Map<Player, Integer> profits) {
+        return - profits.values()
+                .stream()
+                .mapToInt(Integer::valueOf)
+                .sum();
     }
 }

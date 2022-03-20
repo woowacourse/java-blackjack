@@ -20,6 +20,7 @@ public final class Player extends Human {
         return getCards().size() == size;
     }
 
+
     public int getProfit(Dealer dealer) {
         return state.profit(getBetAmount(), (Finished) dealer.getState());
     }

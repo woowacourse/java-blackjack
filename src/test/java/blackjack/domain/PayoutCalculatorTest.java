@@ -42,7 +42,7 @@ class PayoutCalculatorTest {
             fx.POBI.addCard(ACE);
             fx.POBI.addCard(TEN);
             Dealer dealer = new Dealer(List.of(ACE, TEN));
-
+            dealer.setStay();
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(0);
         }
@@ -60,6 +60,7 @@ class PayoutCalculatorTest {
             fx.POBI.setStay();
             Dealer dealer = new Dealer(
                     List.of(TEN, NINE, EIGHT));
+            dealer.setStay();
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(10000);
         }
@@ -76,6 +77,7 @@ class PayoutCalculatorTest {
             fx.POBI.addCard(TEN);
             fx.POBI.setStay();
             Dealer dealer = new Dealer(List.of(TEN, NINE, ACE));
+            dealer.setStay();
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(-10000);
         }
@@ -92,6 +94,7 @@ class PayoutCalculatorTest {
             fx.POBI.addCard(TEN);
             fx.POBI.setStay();
             Dealer dealer = new Dealer(List.of(ACE, ACE));
+            dealer.setStay();
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(10000);
         }
@@ -108,6 +111,7 @@ class PayoutCalculatorTest {
             fx.POBI.addCard(ACE);
             fx.POBI.setStay();
             Dealer dealer = new Dealer(List.of(ACE, ACE));
+            dealer.setStay();
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(0);
         }
@@ -124,6 +128,7 @@ class PayoutCalculatorTest {
             fx.POBI.addCard(TEN);
             fx.POBI.addCard(TEN);
             Dealer dealer = new Dealer(List.of(ACE, NINE));
+            dealer.setStay();
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(-10000);
         }

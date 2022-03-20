@@ -39,14 +39,14 @@ public final class InputView {
         }
     }
 
-    public static int inputPlayerBetting(final String name) {
+    public static int inputBetting(final String name) {
         System.out.printf(BETTING_INPUT_MESSAGE, name);
         int input = SCANNER.nextInt();
         SCANNER.nextLine();
         return input;
     }
 
-    public static boolean inputOneMoreCard(final String name) {
+    public static boolean inputIsDraw(final String name) {
         System.out.printf(MORE_CARD_INPUT_MESSAGE, name);
         String input = SCANNER.nextLine();
         validateAnswer(input);

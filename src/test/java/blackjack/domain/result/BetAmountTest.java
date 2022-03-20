@@ -32,7 +32,7 @@ class BetAmountTest {
     @Test
     @DisplayName("배율 테스트")
     void multipleTest() {
-        assertThat(new BetAmount(10000).getMultipliedMoney(1.5))
+        assertThat(new BetAmount(10000).getProfit(1.5))
                 .isEqualTo(15000);
     }
 }

@@ -71,6 +71,7 @@ class PlayersTest {
         // given
         Players players = new Players(List.of(fx.POBI));
         Dealer dealer = new Dealer(List.of(TWO, TWO));
+        dealer.setStay();
 
         // when
         fx.POBI.addCard(TEN);

@@ -20,8 +20,12 @@ public final class BetAmount {
         }
     }
 
-    public int getMultipliedMoney(final double percentage) {
-        value *= percentage;
+    public int get() {
+        return value;
+    }
+
+    public int getProfit(final double scale) {
+        value *= scale;
         return value;
     }
 
