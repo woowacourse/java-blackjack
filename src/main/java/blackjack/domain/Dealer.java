@@ -21,10 +21,10 @@ public class Dealer extends Gamer {
         if (player.isTie(this)) {
             return;
         }
-        addMoney(reversBettingMoney((Player) player));
+        addMoney(reverseBettingMoney((Player) player));
     }
 
-    private int reversBettingMoney(Player player) {
+    private int reverseBettingMoney(Player player) {
         return player.reverseBettingMoney();
     }
 }
