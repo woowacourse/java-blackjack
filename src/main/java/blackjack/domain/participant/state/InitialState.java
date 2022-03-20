@@ -22,10 +22,6 @@ public final class InitialState extends PlayState {
         return initialState.considerStateByScore();
     }
 
-    public static State initiallyDrawCards(final Card... cards) {
-        return initiallyDrawCards(List.of(cards));
-    }
-
     private State considerStateByScore() {
         final int score = this.getScore();
         if (BLACKJACK_SCORE.isEquals(score)) {
