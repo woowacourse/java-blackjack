@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.state.FinishState;
+import blackjack.domain.participant.state.FinishedState;
 import blackjack.domain.participant.state.State;
 
 public class MatchCalculator {
@@ -17,8 +17,8 @@ public class MatchCalculator {
     }
 
     private static MatchStatus judgeMatchStatusWithValidatedStates(final Player player, final Dealer dealer) {
-        final FinishState playerState = (FinishState) player.getState();
-        final FinishState dealerState = (FinishState) dealer.getState();
+        final FinishedState playerState = (FinishedState) player.getState();
+        final FinishedState dealerState = (FinishedState) dealer.getState();
         return playerState.judgeMatchStatus(dealerState);
     }
 

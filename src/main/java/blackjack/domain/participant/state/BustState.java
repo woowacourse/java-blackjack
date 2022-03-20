@@ -9,7 +9,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.result.MatchStatus;
 
-public final class BustState extends FinishState {
+public final class BustState extends FinishedState {
 
     private BustState(final List<Card> cards) {
         super(cards);
@@ -24,7 +24,7 @@ public final class BustState extends FinishState {
     }
 
     @Override
-    public MatchStatus judgeMatchStatus(FinishState state) {
+    public MatchStatus judgeMatchStatus(FinishedState state) {
         return MatchStatus.LOSS;
     }
 

@@ -6,17 +6,17 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHands;
 import blackjack.domain.result.MatchStatus;
 
-public abstract class FinishState implements State {
+public abstract class FinishedState implements State {
 
     private final CardHands cards;
 
-    FinishState(final List<Card> cards) {
+    FinishedState(final List<Card> cards) {
         validateCardSizeIsEnough(cards);
         validateScoreIsCompatible(cards);
         this.cards = new CardHands(cards);
     }
 
-    public abstract MatchStatus judgeMatchStatus(final FinishState state);
+    public abstract MatchStatus judgeMatchStatus(final FinishedState state);
 
     @Override
     public final State drawCard(Card card) {

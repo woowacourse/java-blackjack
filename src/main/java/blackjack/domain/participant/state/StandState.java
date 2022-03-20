@@ -9,7 +9,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.result.MatchStatus;
 
-public final class StandState extends FinishState {
+public final class StandState extends FinishedState {
 
     private StandState(final List<Card> cards) {
         super(cards);
@@ -24,7 +24,7 @@ public final class StandState extends FinishState {
     }
 
     @Override
-    public MatchStatus judgeMatchStatus(FinishState otherState) {
+    public MatchStatus judgeMatchStatus(FinishedState otherState) {
         final int thisScore = this.getScore();
         final int otherScore = otherState.getScore();
         if (otherState.isBust() || thisScore > otherScore) {
