@@ -13,12 +13,12 @@ public class Stay extends Finished {
         Hand otherHand = state.hand();
 
         if (otherHand.isBust() || hand.compareScore(otherHand)) {
-            return 1.0;
+            return WIN_RATE;
         }
         if (hand.getScore() == otherHand.getScore()) {
-            return 0;
+            return TIE_RATE;
         }
-        return -1.0;
+        return LOSE_RATE;
     }
 
     @Override

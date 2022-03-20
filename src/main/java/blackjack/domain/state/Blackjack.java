@@ -11,10 +11,9 @@ public class Blackjack extends Finished {
     @Override
     public double earningRate(State state) {
         if (state.hand().isBlackjack()) {
-            return 1;
+            return BLACKJACK_TIE_RATE;
         }
-
-        return 1.5;
+        return BLACKJACK_WIN_RATE;
     }
 
     @Override

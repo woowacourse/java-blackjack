@@ -5,6 +5,12 @@ import blackjack.domain.card.Hand;
 
 public abstract class Finished extends Started {
 
+    protected final static double BLACKJACK_WIN_RATE = 1.5;
+    protected final static double WIN_RATE = 1.0;
+    protected final static double BLACKJACK_TIE_RATE = 1.0;
+    protected final static double TIE_RATE = 0;
+    protected final static double LOSE_RATE = -1.0;
+
     protected Finished(Hand hand) {
         super(hand);
     }
