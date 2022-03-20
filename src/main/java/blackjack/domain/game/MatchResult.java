@@ -1,5 +1,7 @@
 package blackjack.domain.game;
 
+import blackjack.domain.participant.Player;
+
 public enum MatchResult {
 
 	BLACKJACK(1.5),
@@ -21,5 +23,9 @@ public enum MatchResult {
 			return MatchResult.LOSE;
 		}
 		return MatchResult.DRAW;
+	}
+
+	public double calculateRevenue(Player player) {
+		return player.multiplyLeverage(this.leverage);
 	}
 }

@@ -21,4 +21,8 @@ public class Player extends Participant {
 	public void stay() {
 		state = state.stay();
 	}
+
+	public double multiplyLeverage(double leverage) {
+		return betMoney.multiply(leverage);
+	}
 }

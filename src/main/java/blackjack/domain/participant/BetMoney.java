@@ -25,4 +25,8 @@ public class BetMoney {
 			throw new IllegalArgumentException(UNIT_BET_MONEY_ERROR);
 		}
 	}
+
+	public double multiply(double leverage) {
+		return value * leverage;
+	}
 }
