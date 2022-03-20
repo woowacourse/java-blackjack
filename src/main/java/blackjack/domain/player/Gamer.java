@@ -59,7 +59,7 @@ public class Gamer extends Player {
         return name;
     }
 
-    public long BetMoney() {
+    public long getBetMoney() {
         return betMoney.getBetMoney();
     }
 

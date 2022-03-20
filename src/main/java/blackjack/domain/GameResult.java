@@ -42,7 +42,7 @@ public enum GameResult {
         return gamers.stream()
             .collect(Collectors.toMap(gamer -> gamer,
                 gamer -> (long) (GameResult.findResult(dealer, gamer).getMultiplePoint() * gamer
-                    .BetMoney()),
+                    .getBetMoney()),
                 (e1, e2) -> e1, LinkedHashMap::new));
     }
 
