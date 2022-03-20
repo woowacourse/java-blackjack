@@ -25,22 +25,21 @@ public class Hand {
 	}
 
 	public int getScore() {
-		boolean hasAce = hand.stream().filter(Card::isAce).count() > 0;
 		int score = sumPoint();
 
-		if (hasAce && canAddAcePoint(score)) {
+		if (hasAce() && canAddAcePoint(score)) {
 			score += ADDITIONAL_SCORE_ACE;
 		}
 
 		return score;
 	}
 
-	private boolean canAddAcePoint(int score) {
-		if (score + ADDITIONAL_SCORE_ACE <= WINNING_SCORE) {
-			return true;
-		}
+	private boolean hasAce() {
+		return hand.stream().anyMatch(Card::isAce);
+	}
 
-		return false;
+	private boolean canAddAcePoint(int score) {
+		return score + ADDITIONAL_SCORE_ACE <= WINNING_SCORE;
 	}
 
 	public void add(Card card) {
