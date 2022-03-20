@@ -1,32 +1,32 @@
 package blackjack.dto;
 
 import blackjack.domain.game.Revenue;
-import blackjack.domain.role.Players;
 import blackjack.domain.role.Role;
+import blackjack.domain.role.Roles;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalResultDto {
 
-	private final DealerResultDto dealerResult;
-	private final List<PlayerResultDto> playerResults;
+	private final ResultDto dealerResult;
+	private final List<ResultDto> playerResults;
 
 	private FinalResultDto(final Role dealer, final List<Role> players, final Revenue revenue) {
-		this.dealerResult = DealerResultDto.from(dealer, revenue.getDealerRevenueResult());
+		this.dealerResult = ResultDto.from(dealer, revenue.getDealerRevenueResult());
 		this.playerResults = players.stream()
-				.map(player -> PlayerResultDto.from(player, revenue.getPlayerRevenueResult(player)))
+				.map(player -> ResultDto.from(player, revenue.getPlayerRevenueResult(player)))
 				.collect(Collectors.toList());
 	}
 
-	public static FinalResultDto from(final Role dealer, final Players players, Revenue revenue) {
-		return new FinalResultDto(dealer, players.getPlayers(), revenue);
+	public static FinalResultDto from(final Roles roles, Revenue revenue) {
+		return new FinalResultDto(roles.getDealer(), roles.getPlayers(), revenue);
 	}
 
-	public DealerResultDto getDealerResult() {
+	public ResultDto getDealerResult() {
 		return dealerResult;
 	}
 
-	public List<PlayerResultDto> getPlayerResults() {
+	public List<ResultDto> getPlayerResults() {
 		return playerResults;
 	}
 }

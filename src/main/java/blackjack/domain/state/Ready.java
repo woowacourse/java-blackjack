@@ -5,6 +5,8 @@ import blackjack.domain.card.Cards;
 
 public class Ready extends Running {
 
+	public static final int READY_CARD_NUMBER = 2;
+
 	private static final String CAN_NOT_STAY_ERROR = "현재 상태에서는 스테이할 수 없습니다.";
 
 	public Ready() {
@@ -18,7 +20,7 @@ public class Ready extends Running {
 	@Override
 	public final State draw(final Card card) {
 		final Cards cards = this.cards.add(card);
-		if (cards.getSize() < 2) {
+		if (cards.getSize() < READY_CARD_NUMBER) {
 			return new Ready(cards);
 		}
 		if (cards.isBlackjack()) {
@@ -32,3 +34,4 @@ public class Ready extends Running {
 		throw new IllegalStateException(CAN_NOT_STAY_ERROR);
 	}
 }
+

@@ -4,23 +4,23 @@ import blackjack.domain.role.Role;
 
 public class PlayerStatusDto {
 
-	private final boolean draw;
-	private final PlayerTableDto tableStatusDto;
+	private final boolean finished;
+	private final TableDto tableDto;
 
-	private PlayerStatusDto(boolean draw, PlayerTableDto tableStatusDto) {
-		this.draw = draw;
-		this.tableStatusDto = tableStatusDto;
+	private PlayerStatusDto(boolean finished, TableDto tableDto) {
+		this.finished = finished;
+		this.tableDto = tableDto;
 	}
 
-	public static PlayerStatusDto from(boolean draw, Role player) {
-		return new PlayerStatusDto(draw, PlayerTableDto.from(player));
+	public static PlayerStatusDto from(Role player) {
+		return new PlayerStatusDto(player.isFinished(), TableDto.from(player));
 	}
 
-	public boolean isDraw() {
-		return draw;
+	public boolean isFinished() {
+		return finished;
 	}
 
-	public PlayerTableDto getTableStatusDto() {
-		return tableStatusDto;
+	public TableDto getTableStatusDto() {
+		return tableDto;
 	}
 }

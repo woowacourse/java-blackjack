@@ -5,20 +5,20 @@ import blackjack.domain.role.Role;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DealerTableDto {
+public class TableDto {
 
 	private final String roleName;
 	private final List<String> cards;
 
-	private DealerTableDto(final String roleName, final List<Card> cards) {
+	private TableDto(final String roleName, final List<Card> cards) {
 		this.roleName = roleName;
 		this.cards = cards.stream()
 				.map(Card::getDenominationAndSuit)
 				.collect(Collectors.toList());
 	}
 
-	public static DealerTableDto from(final Role dealer) {
-		return new DealerTableDto(dealer.getName(), dealer.openCards());
+	public static TableDto from(final Role role) {
+		return new TableDto(role.getName(), role.openCards());
 	}
 
 	public String getRoleName() {

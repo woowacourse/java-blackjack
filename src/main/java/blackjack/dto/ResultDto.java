@@ -7,7 +7,7 @@ import blackjack.domain.role.Role;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DealerResultDto {
+public class ResultDto {
 
 	private final String name;
 	private final List<String> cards;
@@ -15,18 +15,18 @@ public class DealerResultDto {
 	private final boolean bust;
 	private final double revenueResult;
 
-	private DealerResultDto(final Role dealer, final Cards cards, final Money money) {
-		this.name = dealer.getName();
+	private ResultDto(final Role role, final Cards cards, final Money money) {
+		this.name = role.getName();
 		this.cards = cards.getCards().stream()
 				.map(Card::getDenominationAndSuit)
 				.collect(Collectors.toList());
-		this.totalScore = dealer.getScore();
+		this.totalScore = role.getScore();
 		this.bust = cards.isBust();
 		this.revenueResult = money.getValue();
 	}
 
-	public static DealerResultDto from(final Role dealer, final Money money) {
-		return new DealerResultDto(dealer, dealer.getCards(), money);
+	public static ResultDto from(final Role role, final Money money) {
+		return new ResultDto(role, role.getCards(), money);
 	}
 
 	public String getName() {

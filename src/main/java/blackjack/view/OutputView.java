@@ -1,11 +1,9 @@
 package blackjack.view;
 
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerResultDto;
-import blackjack.dto.PlayerTableDto;
+import blackjack.dto.ResultDto;
+import blackjack.dto.TableDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,36 +23,28 @@ public class OutputView {
 	private static final String BUST_MESSAGE = "\uD83D\uDCA3";
 	private static final String REVENUE_FORMAT = "%.0f";
 
-	public void printInitialStatus(final DealerTableDto dealerTable,
-								   final List<PlayerTableDto> playersTable) {
-		printNames(dealerTable, playersTable);
-		printHand(dealerTable, playersTable);
+	public void printInitialStatus(final List<TableDto> tables) {
+		printNames(tables);
+		printCards(tables);
 	}
 
-	private void printNames(final DealerTableDto dealerTable, final List<PlayerTableDto> playersTable) {
-		final String playerNames = playersTable.stream()
-				.map(PlayerTableDto::getRoleName)
+	private void printNames(final List<TableDto> tables) {
+		final String names = tables.stream()
+				.map(TableDto::getRoleName)
 				.collect(Collectors.joining(OUTPUT_CONTEXT_DISTRIBUTOR));
 
-		final String message = dealerTable.getRoleName() + WITH + playerNames + DISTRIBUTED_TWO_CARDS;
 		System.out.print("\n");
-		System.out.println(message);
+		System.out.println(names + DISTRIBUTED_TWO_CARDS);
 	}
 
-	private void printHand(DealerTableDto dealerTable, List<PlayerTableDto> playersTable) {
-		printDealerHand(dealerTable);
-		playersTable.forEach(this::printPlayerHand);
+	private void printCards(List<TableDto> tables) {
+		tables.forEach(this::printPersonalCards);
 		System.out.print("\n");
 	}
 
-	private void printDealerHand(final DealerTableDto dealerTable) {
-		System.out.print(dealerTable.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, dealerTable.getCards()));
-	}
-
-	public void printPlayerHand(final PlayerTableDto playerTable) {
-		System.out.print(playerTable.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, playerTable.getCards()));
+	public void printPersonalCards(final TableDto table) {
+		System.out.print(table.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
+		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, table.getCards()));
 	}
 
 	public void printDealerStatus(DealerTurnDto dealerTurn) {
@@ -69,8 +59,8 @@ public class OutputView {
 	}
 
 	public void printFinalResult(FinalResultDto finalResult) {
-		final DealerResultDto dealerResult = finalResult.getDealerResult();
-		final List<PlayerResultDto> playerResult = finalResult.getPlayerResults();
+		final ResultDto dealerResult = finalResult.getDealerResult();
+		final List<ResultDto> playerResult = finalResult.getPlayerResults();
 		printDealerFinalResult(dealerResult);
 		playerResult.forEach(this::printPlayerFinalResult);
 		System.out.print("\n");
@@ -79,13 +69,13 @@ public class OutputView {
 		printPlayerRevenue(playerResult);
 	}
 
-	private void printDealerFinalResult(final DealerResultDto result) {
+	private void printDealerFinalResult(final ResultDto result) {
 		System.out.print(result.getName() + SPACE + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCards()));
 		System.out.println(RESULT + printTotalScore(result.getTotalScore(), result.isBust()));
 	}
 
-	private void printPlayerFinalResult(final PlayerResultDto result) {
+	private void printPlayerFinalResult(final ResultDto result) {
 		System.out.print(result.getName() + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCards()));
 		System.out.println(RESULT + printTotalScore(result.getTotalScore(), result.isBust()));
@@ -98,13 +88,13 @@ public class OutputView {
 		return Integer.toString(score);
 	}
 
-	private void printDealerRevenue(final DealerResultDto dealerResult) {
+	private void printDealerRevenue(final ResultDto dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		printRevenue(dealerResult.getRevenueResult());
 	}
 
-	private void printPlayerRevenue(final List<PlayerResultDto> playerResults) {
-		for (PlayerResultDto playerResult : playerResults) {
+	private void printPlayerRevenue(final List<ResultDto> playerResults) {
+		for (ResultDto playerResult : playerResults) {
 			System.out.print(playerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 			printRevenue(playerResult.getRevenueResult());
 		}
@@ -114,3 +104,6 @@ public class OutputView {
 		System.out.printf(REVENUE_FORMAT + "\n", revenue);
 	}
 }
+
+	
+	
