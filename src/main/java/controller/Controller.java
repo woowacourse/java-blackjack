@@ -3,7 +3,6 @@ package controller;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import domain.card.Deck;
 import domain.participant.Dealer;
@@ -59,21 +58,18 @@ public class Controller {
 	public void printInitHands(Dealer dealer, Players players) {
 		OutputView.printInitMessage(players.showNames());
 		OutputView.printOneHandForDealer(dealer.showName(), dealer.showHand());
-
-		IntStream.range(0, players.getNumberOfPlayers())
-			.forEach(idx -> OutputView.printHand(players.showName(idx), players.showHand(idx)));
+		players.forEach(player -> OutputView.printHand(player.showName(), player.showHand()));
 	}
 
 	private void drawForPlayers(Deck deck, Players players) {
-		IntStream.range(0, players.getNumberOfPlayers())
-			.forEach(idx -> askAndDrawForPlayer(deck, players, idx));
+		players.forEach(player -> askAndDrawForPlayer(deck, player));
 	}
 
-	private void askAndDrawForPlayer(Deck deck, Players players, int idx) {
-		while (!players.checkBlackJack(idx) && !players.checkBust(idx)
-			&& InputView.askDraw(players.showName(idx))) {
-			players.addCard(idx, deck.draw());
-			OutputView.printHand(players.showName(idx), players.showHand(idx));
+	private void askAndDrawForPlayer(Deck deck, Player player) {
+		while (!player.isBlackJack() && !player.isBust()
+			&& InputView.askDraw(player.showName())) {
+			player.addCard(deck.draw());
+			OutputView.printHand(player.showName(), player.showHand());
 		}
 	}
 
@@ -86,10 +82,8 @@ public class Controller {
 
 	public void printHandAndScore(Dealer dealer, Players players) {
 		OutputView.printHandAndScore(dealer.showName(), dealer.showHand(), dealer.getScore());
-
-		IntStream.range(0, players.getNumberOfPlayers())
-			.forEach(idx -> OutputView.printHandAndScore(players.showName(idx), players.showHand(idx),
-				players.showScore(idx)));
+		players.forEach(
+			player -> OutputView.printHandAndScore(player.showName(), player.showHand(), player.getScore()));
 	}
 
 	public static void printResult(Dealer dealer, Players players) {

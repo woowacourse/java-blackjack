@@ -1,14 +1,16 @@
 package domain.participant;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import domain.card.Card;
 import domain.result.EarningRate;
 
-public class Players {
+public class Players implements Iterable<Player> {
 	private final List<Player> players;
 
 	public Players(List<Player> players) {
@@ -19,39 +21,36 @@ public class Players {
 		return new ArrayList<>(players.stream().map(Player::showName).collect(Collectors.toList()));
 	}
 
-	public void addCard(int idx, Card card) {
-		players.get(idx).addCard(card);
-	}
-
-	public boolean checkBust(int idx) {
-		return players.get(idx).isBust();
-	}
-
-	public boolean checkBlackJack(int idx) {
-		return players.get(idx).isBlackJack();
-	}
-
 	public LinkedHashMap<Participant, EarningRate> getResult(Dealer other) {
 		LinkedHashMap<Participant, EarningRate> map = new LinkedHashMap<>();
-		players.stream()
-			.forEach(player -> map.put(player, player.getResult(other)));
+		players.forEach(player -> map.put(player, player.getResult(other)));
 		return map;
 	}
 
-	public int getNumberOfPlayers() {
-		return players.size();
+	public class PlayerIterator implements Iterator<Player> {
+		private int current = 0;
+
+		@Override
+		public boolean hasNext() {
+			return current < Players.this.players.size();
+		}
+
+		@Override
+		public Player next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			return players.get(current++);
+		}
 	}
 
-	public String showName(int idx) {
-		return players.get(idx).showName();
+	@Override
+	public Iterator<Player> iterator() {
+		return new PlayerIterator();
 	}
 
-	public List<String> showHand(int idx) {
-		return players.get(idx).showHand();
+	@Override
+	public void forEach(Consumer<? super Player> action) {
+		Iterable.super.forEach(action);
 	}
-
-	public int showScore(int idx) {
-		return players.get(idx).getScore();
-	}
-
 }
