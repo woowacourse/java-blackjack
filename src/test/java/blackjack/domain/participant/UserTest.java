@@ -101,7 +101,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("유저가 버스트인 경우를 체크한다.")
+    @DisplayName("유저가 BUST인 경우를 체크한다.")
     void burstTest() {
         User user = new User("Pobi");
         user.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
@@ -112,7 +112,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("유저가 버스트가 아닌 경우를 체크한다.")
+    @DisplayName("유저가 BUST가 아닌 경우를 체크한다.")
     void notBurstTest() {
         User user = new User("Pobi");
         user.receiveCard(Card.of(CardNumber.ACE, CardType.CLOVER));
@@ -120,5 +120,54 @@ public class UserTest {
         user.receiveCard(Card.of(CardNumber.ACE, CardType.DIAMOND));
 
         assertThat(user.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("유저가 Hit인 경우를 체크한다.")
+    void hitTest() {
+        User user = new User("Pobi");
+        user.receiveCard(Card.of(CardNumber.ACE, CardType.CLOVER));
+
+        assertThat(user.isHit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("유저가 Hit이 아닌 경우를 체크한다.")
+    void notHitTest() {
+        User user = new User("Pobi");
+        user.receiveCard(Card.of(CardNumber.TEN, CardType.CLOVER));
+        user.receiveCard(Card.of(CardNumber.TEN, CardType.SPADE));
+        user.receiveCard(Card.of(CardNumber.TEN, CardType.HEART));
+
+        assertThat(user.isHit()).isFalse();
+    }
+
+    @Test
+    @DisplayName("유저가 블랙잭인 경우를 체크한다.")
+    void blackJackTest() {
+        User user = new User("Pobi");
+        user.receiveCard(Card.of(CardNumber.TEN, CardType.CLOVER));
+        user.receiveCard(Card.of(CardNumber.ACE, CardType.SPADE));
+
+        assertThat(user.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("유저가 합이 21이지만 3장을 가지고 있어 블랙잭이 아닌 경우를 체크한다.")
+    void notBlackjackExceedCardCountTest() {
+        User user = new User("Pobi");
+        user.receiveCard(Card.of(CardNumber.TWO, CardType.CLOVER));
+        user.receiveCard(Card.of(CardNumber.ACE, CardType.SPADE));
+        user.receiveCard(Card.of(CardNumber.EIGHT, CardType.HEART));
+        assertThat(user.isBlackJack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("유저가 합이 21이 아니면 블랙잭이 아니다.")
+    void notBlackjackNotTwentyOneCountTest() {
+        User user = new User("Pobi");
+        user.receiveCard(Card.of(CardNumber.TWO, CardType.CLOVER));
+        user.receiveCard(Card.of(CardNumber.ACE, CardType.SPADE));
+        assertThat(user.isBlackJack()).isFalse();
     }
 }
