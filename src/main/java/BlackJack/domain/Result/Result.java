@@ -41,14 +41,6 @@ public enum Result {
         return calculatePlayersProfit(results);
     }
 
-    public static Map<String, Integer> makeBlackjackResult(Players players) {
-        Map<Player, Result> results = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            results.put(player, player.judgeByBlackjack());
-        }
-        return calculatePlayersProfit(results);
-    }
-
     public static Map<String, Integer> calculatePlayersProfit(Map<Player, Result> results) {
         Map<String, Integer> profits = new HashMap<>();
         for (Map.Entry<Player, Result> entry : results.entrySet()) {
