@@ -21,7 +21,7 @@ public class Result {
 
 	public int getDealerMoney() {
 		return -1 * playerResults.entrySet().stream()
-			.mapToDouble(entry -> entry.getKey().showBetting() * entry.getValue().getEarningRate())
+			.mapToDouble(entry -> entry.getKey().getBettingMoney() * entry.getValue().getEarningRate())
 			.mapToInt(money -> (int)money)
 			.sum();
 	}

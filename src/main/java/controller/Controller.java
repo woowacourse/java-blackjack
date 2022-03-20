@@ -57,8 +57,8 @@ public class Controller {
 
 	public void printInitHands(Dealer dealer, Players players) {
 		OutputView.printInitMessage(players.showNames());
-		OutputView.printOneHandForDealer(dealer.showName(), dealer.showHand());
-		players.forEach(player -> OutputView.printHand(player.showName(), player.showHand()));
+		OutputView.printOneHandForDealer(dealer.getName(), dealer.getCards());
+		players.forEach(player -> OutputView.printHand(player.getName(), player.getCards()));
 	}
 
 	private void drawForPlayers(Deck deck, Players players) {
@@ -67,9 +67,9 @@ public class Controller {
 
 	private void askAndDrawForPlayer(Deck deck, Player player) {
 		while (!player.isBlackJack() && !player.isBust()
-			&& InputView.askDraw(player.showName())) {
+			&& InputView.askDraw(player.getName())) {
 			player.addCard(deck.draw());
-			OutputView.printHand(player.showName(), player.showHand());
+			OutputView.printHand(player.getName(), player.getCards());
 		}
 	}
 
@@ -81,19 +81,19 @@ public class Controller {
 	}
 
 	public void printHandAndScore(Dealer dealer, Players players) {
-		OutputView.printHandAndScore(dealer.showName(), dealer.showHand(), dealer.getScore());
+		OutputView.printHandAndScore(dealer.getName(), dealer.getCards(), dealer.getScore());
 		players.forEach(
-			player -> OutputView.printHandAndScore(player.showName(), player.showHand(), player.getScore()));
+			player -> OutputView.printHandAndScore(player.getName(), player.getCards(), player.getScore()));
 	}
 
 	public static void printResult(Dealer dealer, Players players) {
 		Result result = Result.of(dealer, players);
 		OutputView.printEndMessage();
-		OutputView.printResult(dealer.showName(), result.getDealerMoney());
+		OutputView.printResult(dealer.getName(), result.getDealerMoney());
 
 		LinkedHashMap<Participant, EarningRate> playerResults = result.getPlayerResults();
 		playerResults.entrySet()
-			.forEach(entry -> OutputView.printResult(entry.getKey().showName(),
-				(int)(entry.getKey().showBetting() * entry.getValue().getEarningRate())));
+			.forEach(entry -> OutputView.printResult(entry.getKey().getName(),
+				(int)(entry.getKey().getBettingMoney() * entry.getValue().getEarningRate())));
 	}
 }

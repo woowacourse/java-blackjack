@@ -60,15 +60,15 @@ public class Participant {
 		return totalPoint;
 	}
 
-	public String showName() {
+	public String getName() {
 		return name.getName();
 	}
 
-	public List<String> showHand() {
-		return hand.show();
+	public List<Card> getCards() {
+		return hand.getHand();
 	}
 
-	public int showBetting() {
+	public int getBettingMoney() {
 		return betting.getBettingMoney();
 	}
 }

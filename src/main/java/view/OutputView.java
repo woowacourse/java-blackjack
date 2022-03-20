@@ -1,6 +1,9 @@
 package view;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import domain.card.Card;
 
 public class OutputView {
 
@@ -18,18 +21,19 @@ public class OutputView {
 		System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
 	}
 
-	public static void printOneHandForDealer(String dealerName, List<String> cards) {
-		System.out.println(String.format(SHOW_HAND_FORMAT, dealerName, cards.get(FIRST_CARD_INDEX)));
+	public static void printOneHandForDealer(String dealerName, List<Card> cards) {
+		System.out.println(String.format(SHOW_HAND_FORMAT, dealerName, getCardInfo(cards).get(FIRST_CARD_INDEX)));
 	}
 
-	public static void printHand(String name, List<String> cards) {
-		System.out.println(joinNameAndCard(name, cards));
+	public static void printHand(String name, List<Card> cards) {
+		System.out.println(joinNameAndCard(name, getCardInfo(cards)));
 		System.out.println();
 	}
 
-	public static void printHandAndScore(String name, List<String> cards, int score) {
+	public static void printHandAndScore(String name, List<Card> cards, int score) {
 		System.out.println(
-			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(name, cards), String.valueOf(score)));
+			String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, joinNameAndCard(name, getCardInfo(cards)),
+				String.valueOf(score)));
 	}
 
 	public static void printMessage(String message) {
@@ -44,11 +48,17 @@ public class OutputView {
 		System.out.printf(RESULT_MESSAGE_FORMAT, name, money);
 	}
 
+	public static void printEndMessage() {
+		printMessage(RESULT_TITLE_MESSAGE);
+	}
+
 	private static String joinNameAndCard(String name, List<String> cards) {
 		return String.format(SHOW_HAND_FORMAT, name, String.join(JOINING_DELIMITER, cards));
 	}
 
-	public static void printEndMessage() {
-		printMessage(RESULT_TITLE_MESSAGE);
+	private static List<String> getCardInfo(List<Card> cards) {
+		return cards.stream()
+			.map(card -> card.getDenomination() + card.getSuit())
+			.collect(Collectors.toList());
 	}
 }

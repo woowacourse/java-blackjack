@@ -18,7 +18,7 @@ public class Players implements Iterable<Player> {
 	}
 
 	public List<String> showNames() {
-		return new ArrayList<>(players.stream().map(Player::showName).collect(Collectors.toList()));
+		return new ArrayList<>(players.stream().map(Player::getName).collect(Collectors.toList()));
 	}
 
 	public LinkedHashMap<Participant, EarningRate> getResult(Dealer other) {

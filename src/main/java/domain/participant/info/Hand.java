@@ -1,9 +1,9 @@
 package domain.participant.info;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import domain.card.Card;
 
@@ -22,14 +22,12 @@ public class Hand implements Iterable<Card> {
 		hand.add(card);
 	}
 
-	public List<String> show() {
-		return hand.stream()
-			.map(Card::getInfo)
-			.collect(Collectors.toList());
-	}
-
 	public int size() {
 		return hand.size();
+	}
+
+	public List<Card> getHand() {
+		return new ArrayList<>(hand);
 	}
 
 	private class HandIterator implements Iterator<Card> {

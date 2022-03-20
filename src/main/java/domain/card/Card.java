@@ -20,10 +20,14 @@ public class Card {
 		return denomination.isAce();
 	}
 
-	public String getInfo() {
-		return denomination.getDenomination() + suit.getSuit();
+	public String getDenomination() {
+		return denomination.getDenomination();
 	}
-	
+
+	public String getSuit() {
+		return suit.getSuit();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
