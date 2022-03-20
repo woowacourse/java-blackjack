@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import static blackjack.domain.game.PlayRecord.*;
 
 import blackjack.domain.Name;
+import blackjack.domain.state.Betting;
 
 public final class Player extends Participant {
 

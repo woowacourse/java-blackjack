@@ -1,6 +1,5 @@
 package blackjack.domain.state;
 
-import blackjack.domain.game.Betting;
 import blackjack.domain.game.PlayRecord;
 
 public final class Blackjack extends Finished {

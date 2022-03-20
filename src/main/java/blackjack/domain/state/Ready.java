@@ -10,7 +10,7 @@ public final class Ready extends Started {
         this(new Cards(Set.of()));
     }
 
-    public Ready(Cards cards) {
+    private Ready(Cards cards) {
         super(cards);
     }
 

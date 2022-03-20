@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import blackjack.domain.Name;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
+import blackjack.domain.state.Betting;
 
 public class PlayRecordTest {
     Player player = new Player(Name.of("pobi"), new Betting(1));

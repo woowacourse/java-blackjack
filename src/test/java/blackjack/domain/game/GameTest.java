@@ -18,6 +18,7 @@ import blackjack.domain.Name;
 import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
+import blackjack.domain.state.Betting;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;

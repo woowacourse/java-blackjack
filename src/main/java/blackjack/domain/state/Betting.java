@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain.state;
 
 public final class Betting {
 
@@ -15,11 +15,7 @@ public final class Betting {
         }
     }
 
-    public long multiply(float multiplier) {
+    long multiply(float multiplier) {
         return (long)(money * multiplier);
-    }
-
-    public long getValue() {
-        return money;
     }
 }

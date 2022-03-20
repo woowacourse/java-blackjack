@@ -10,11 +10,11 @@ import java.util.Map;
 
 import blackjack.domain.Name;
 import blackjack.domain.card.deckstrategy.ShuffleDeck;
-import blackjack.domain.game.Betting;
 import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.Game;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Player;
+import blackjack.domain.state.Betting;
 import blackjack.view.OutputView;
 
 public final class GameController {

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.Name;
 import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
+import blackjack.domain.state.Betting;
 import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.Running;

@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain.state;
 
 import static org.assertj.core.api.Assertions.*;
 
