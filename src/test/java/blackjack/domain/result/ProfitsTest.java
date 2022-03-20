@@ -6,17 +6,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.domain.card.PlayingCard;
-import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.*;
 import blackjack.domain.Fixtures;
+import blackjack.domain.state.Ready;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProfitsTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"100:-500:400", "100:100:-200", "-100:100:0"}, delimiter = ':')
+    @CsvSource(value = {"100:200:-300", "100:100:-200"}, delimiter = ':')
     @DisplayName("딜러 수익 확인")
     void checkDealerProfit(int firstMoney, int secondMoney, int expected) {
         //플레이어 목록 초기화
@@ -24,12 +23,10 @@ class ProfitsTest {
         Dealer dealer = new Dealer();
         playerList.add(dealer);
 
-        Set<PlayingCard> playingCards = new HashSet<>();
-        playingCards.add(Fixtures.SPADE_ACE);
-        Guest firstGuest = new Guest("guest", new PlayingCards(playingCards), firstMoney);
-        Set<PlayingCard> secondPlayingCards = new HashSet<>();
-        secondPlayingCards.add(Fixtures.SPADE_TWO);
-        Guest secondGuest = new Guest("guest2", new PlayingCards(secondPlayingCards), secondMoney);
+        Guest firstGuest = new Guest("guest", new Ready(), firstMoney);
+        firstGuest.getState().draw(Fixtures.SPADE_ACE);
+        Guest secondGuest = new Guest("guest2", new Ready(), secondMoney);
+        secondGuest.getState().draw(Fixtures.SPADE_TWO);
         playerList.add(firstGuest);
         playerList.add(secondGuest);
 
@@ -37,7 +34,10 @@ class ProfitsTest {
         Players players = new Players(playerList);
 
         //수익 계산
-        Profits profits = new Profits(players);
+        firstGuest.changeState(firstGuest.getState().stay());
+        secondGuest.changeState(secondGuest.getState().stay());
+        Profits profits = Profits.of();
+        profits.competeDealerWithGuest(players);
 
         assertThat(profits.getPlayersProfit().get(dealer).getValue()).isEqualTo(expected);
     }

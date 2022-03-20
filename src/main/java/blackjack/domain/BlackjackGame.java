@@ -6,13 +6,14 @@ import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.GameResponse;
 import blackjack.domain.result.Profits;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 
 public class BlackjackGame {
 
@@ -32,20 +33,33 @@ public class BlackjackGame {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
         for (String playerName : playerNames) {
-            players.add(new Guest(playerName, new PlayingCards(), playersBetMoney.get(playerName)));
+            players.add(new Guest(playerName, new Ready(), playersBetMoney.get(playerName)));
         }
         return new Players(players);
     }
 
     public void initGames(CardShuffleMachine playingCardShuffleMachine) {
-        initCards(playingCardShuffleMachine);
+        deck.shuffle(playingCardShuffleMachine);
+        initCards();
     }
 
-    private void initCards(CardShuffleMachine playingCardShuffleMachine) {
+    private void initCards() {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
-            blackjackPlayer.addCard(deck.assignCard(playingCardShuffleMachine));
-            blackjackPlayer.addCard(deck.assignCard(playingCardShuffleMachine));
+            blackjackPlayer.getState().draw(deck.assignCard());
+
+            State state = blackjackPlayer.getState().draw(deck.assignCard());
+            blackjackPlayer.changeState(state);
         }
+    }
+
+    public void assignCard(Player player) {
+        player.changeState(player.getState().draw(deck.assignCard()));
+    }
+
+    public Profits calculateProfits() {
+        Profits profits = Profits.of();
+        profits.competeDealerWithGuest(blackjackPlayers);
+        return profits;
     }
 
     public boolean isExistNextPlayer() {
@@ -65,22 +79,29 @@ public class BlackjackGame {
     }
 
     public boolean isTurnDealer() {
-        Player dealer = this.getDealer();
-        return dealer.isHit();
+        return this.getDealer().isHit();
     }
 
-    public void assignCard(Player player, CardShuffleMachine playingCardShuffleMachine) {
-        player.addCard(deck.assignCard(playingCardShuffleMachine));
+    public Player getTurnPlayer() {
+        return blackjackPlayers.turnPlayer();
     }
 
-    public Profits calculateProfits() {
-        return new Profits(blackjackPlayers);
+    public State getTurnPlayerState() {
+        return blackjackPlayers.turnPlayer().getState();
+    }
+
+    public Player getDealer() {
+        return blackjackPlayers.getDealer();
+    }
+
+    public Players getPlayers() {
+        return blackjackPlayers;
     }
 
     public List<GameResponse> getPlayersGameResponses() {
         List<GameResponse> gameResponses = new ArrayList<>();
         for (Player player : blackjackPlayers.getPlayers()) {
-            gameResponses.add(new GameResponse(player.getName(), player.getPlayingCards()));
+            gameResponses.add(new GameResponse(player.getName(), player.getState().playingCards()));
         }
         return gameResponses;
     }
@@ -88,20 +109,8 @@ public class BlackjackGame {
     public List<GameResponse> getTurnPlayerGameResponse() {
         List<GameResponse> gameResponses = new ArrayList<>();
         GameResponse gameResponse = new GameResponse(blackjackPlayers.turnPlayer().getName(),
-                blackjackPlayers.turnPlayer().getPlayingCards());
+                blackjackPlayers.turnPlayer().getState().playingCards());
         gameResponses.add(gameResponse);
         return gameResponses;
-    }
-
-    public Players getPlayers() {
-        return blackjackPlayers;
-    }
-
-    public Player getTurnPlayer() {
-        return blackjackPlayers.turnPlayer();
-    }
-
-    public Player getDealer() {
-        return blackjackPlayers.getDealer();
     }
 }

@@ -2,47 +2,39 @@ package blackjack.domain.result;
 
 import blackjack.domain.player.BetMoney;
 
+import java.util.Objects;
+
 public class Profit {
 
-    private static final int STANDARD_RATE = 1;
-    private static final double BLACKJACK_RATE = 1.5;
-    private static final int DRAW = 0;
+    private static final int INIT_RATIO = 1;
 
-    private final double value;
+    private final double money;
+    private final double ratio;
 
-    public Profit(double value) {
-        this.value = value;
+    public Profit(double money) {
+        this.ratio = INIT_RATIO;
+        this.money = money;
     }
 
-    public static Profit of(Match match, BetMoney betMoney) {
-        return new Profit(calcProfit(match, betMoney));
-    }
-
-    private static double calcProfit(Match match, BetMoney betMoney) {
-        if (match.isMatchBlackjackWin() || match.isMatchWin()) {
-            return winProfit(match, betMoney);
-        }
-        if (match.isMatchBlackjackLose() || match.isMatchLose()) {
-            return loseProfit(match, betMoney);
-        }
-        return DRAW;
-    }
-
-    private static double loseProfit(Match match, BetMoney betMoney) {
-        if (match.isMatchBlackjackLose()) {
-            return -(betMoney.getValue() * BLACKJACK_RATE);
-        }
-        return -(betMoney.getValue() * STANDARD_RATE);
-    }
-
-    private static double winProfit(Match match, BetMoney betMoney) {
-        if (match.isMatchBlackjackWin()) {
-            return betMoney.getValue() * BLACKJACK_RATE;
-        }
-        return betMoney.getValue() * STANDARD_RATE;
+    public Profit(double ratio, BetMoney betMoney) {
+        this.ratio = ratio;
+        this.money = betMoney.getValue();
     }
 
     public double getValue() {
-        return value;
+        return ratio * money;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Profit profit = (Profit) o;
+        return Double.compare(profit.money, money) == 0 && Double.compare(profit.ratio, ratio) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money, ratio);
     }
 }

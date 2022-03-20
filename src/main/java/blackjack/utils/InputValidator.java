@@ -5,6 +5,7 @@ import java.util.List;
 public class InputValidator {
 
     public static final String HIT = "y";
+    public static final String MINIMUM_MONEY_ERROR_MESSAGE = "[Error]: 금액은 양수여야 합니다.";
     private static final String BLANK_ERROR_MESSAGE = "[Error]: 내용을 입력해주세요.";
     private static final String REQUEST_HIT_FORMAT_ERROR_MESSAGE = "[Error]: 대답은 y/n 형식으로 입력해주세요.";
     private static final String STOP_HIT = "n";
@@ -13,7 +14,6 @@ public class InputValidator {
     private static final String LIMIT_NUMBER_OF_PLAYERS_ERROR_MESSAGE = "[Error]: 게임에 참가할 수 있는 인원은 최대 8명입니다.";
     private static final String MONEY_IS_NOT_NUMBER_ERROR_MESSAGE = "[Error]: 배팅 금액은 숫자여야 합니다.";
     private static final String REGEX_NUMBER = "[0-9]+";
-    private static final String MINIMUM_MONEY_ERROR_MESSAGE = "[Error]: 금액은 양수여야 합니다.";
     private static final int MINIMUM_LIMIT_MONEY = 1;
 
     private InputValidator() {

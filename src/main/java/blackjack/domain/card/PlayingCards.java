@@ -1,27 +1,27 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class PlayingCards {
 
-    public static final int BLACKJACK_POINT = 21;
+    private static final int BLACKJACK_POINT = 21;
+    private static final int MAX_POINT = 21;
     private static final int ACE_BONUS = 10;
+    private static final int BLACKJACK_SIZE = 2;
 
-    private final Set<PlayingCard> cards;
+    private final List<PlayingCard> cards;
 
-    public PlayingCards(Set<PlayingCard> cards) {
-        this.cards = new HashSet<>(cards);
+    public PlayingCards(List<PlayingCard> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public PlayingCards() {
-        this(new LinkedHashSet<>());
+        this(new ArrayList<>());
     }
 
-    public void addCard(PlayingCard playingCard) {
+    public PlayingCards addCard(PlayingCard playingCard) {
         cards.add(playingCard);
+        return this;
     }
 
     public int calculatePoints() {
@@ -47,22 +47,36 @@ public class PlayingCards {
                 .sum();
     }
 
-    public Set<PlayingCard> getCards() {
-        return Collections.unmodifiableSet(cards);
+    public boolean isReady() {
+        return cards.size() < BLACKJACK_SIZE;
+    }
+
+    public boolean isBlackjack() {
+        return calculatePoints() == BLACKJACK_POINT && cards.size() == BLACKJACK_SIZE;
+    }
+
+    public boolean isMaxPoint() {
+        return calculatePoints() == MAX_POINT;
+    }
+
+    public boolean isBust() {
+        return calculatePoints() > BLACKJACK_POINT;
+    }
+
+    public List<PlayingCard> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        PlayingCards playingCards = (PlayingCards) o;
-
-        return this.cards != null ? this.cards.equals(playingCards.cards) : playingCards.cards == null;
+        PlayingCards that = (PlayingCards) o;
+        return Objects.equals(cards, that.cards);
     }
 
     @Override
     public int hashCode() {
-        return cards != null ? cards.hashCode() : 0;
+        return Objects.hash(cards);
     }
 }

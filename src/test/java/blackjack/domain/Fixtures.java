@@ -2,9 +2,9 @@ package blackjack.domain;
 
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.PlayingCard;
-import blackjack.domain.card.PlayingCards;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.Guest;
+import blackjack.domain.state.Ready;
 
 public class Fixtures {
 
@@ -18,5 +18,5 @@ public class Fixtures {
     public static final PlayingCard SPADE_EIGHT = new PlayingCard(Suit.SPADE, Denomination.EIGHT);
     public static final PlayingCard SPADE_JACK = new PlayingCard(Suit.SPADE, Denomination.JACK);
 
-    public static final Guest guest = new Guest("guest", new PlayingCards(), 100);
+    public static final Guest guest = new Guest("guest", new Ready(), 100);
 }

@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.PlayingCards;
+import blackjack.domain.state.State;
 
 public class Guest extends AbstractPlayer implements Player {
 
@@ -8,25 +8,14 @@ public class Guest extends AbstractPlayer implements Player {
 
     private final BetMoney betMoney;
 
-    public Guest(String name, PlayingCards playingCards, Integer money) {
-        super(name, playingCards);
+    public Guest(String name, State state, int money) {
+        super(name, state);
         this.betMoney = new BetMoney(money);
     }
 
     @Override
     public boolean isDealer() {
         return false;
-    }
-
-    @Override
-    public boolean isWin(Player player) {
-        if (!player.isDealer()) {
-            return player.isWin(this);
-        }
-        if (player.isBust() && !this.isBust()) {
-            return true;
-        }
-        return player.isLose(this) && !this.isBust();
     }
 
     @Override

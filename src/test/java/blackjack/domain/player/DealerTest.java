@@ -1,9 +1,5 @@
 package blackjack.domain.player;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import blackjack.domain.Fixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +8,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.PlayingCards;
+import blackjack.domain.Fixtures;
+import blackjack.domain.result.Match;
+import blackjack.domain.state.Ready;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,12 +27,13 @@ class DealerTest {
     @Test
     @DisplayName("카드를 할당받았는지 확인")
     public void checkAddCardToPlayingCard() {
-        Dealer dealer = new Dealer();
+        Ready ready = new Ready();
+        Dealer dealer = new Dealer("딜러", ready);
         PlayingCard playingCard = Fixtures.SPADE_ACE;
-        dealer.addCard(playingCard);
+        dealer.getState().draw(playingCard);
 
-        Dealer compareDealer = new Dealer();
-        compareDealer.addCard(playingCard);
+        Dealer compareDealer = new Dealer("딜러", ready);
+        compareDealer.getState().draw(playingCard);
 
         assertThat(dealer).isEqualTo(compareDealer);
     }
@@ -42,10 +41,9 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘는 경우")
     public void checkDealerCantHit() {
-        Set<PlayingCard> dealerCards = new HashSet<>();
-        dealerCards.add(Fixtures.SPADE_JACK);
-        dealerCards.add(Fixtures.SPADE_NINE);
-        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
+        Dealer dealer = new Dealer();
+        dealer.getState().draw(Fixtures.SPADE_JACK);
+        dealer.getState().draw(Fixtures.SPADE_NINE);
 
         assertThat(dealer.isHit()).isFalse();
     }
@@ -53,26 +51,25 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인: 16을 넘지 않는 경우")
     public void checkDealerCanHit() {
-        Set<PlayingCard> dealerCards = new HashSet<>();
-        dealerCards.add(Fixtures.SPADE_EIGHT);
-        dealerCards.add(Fixtures.SPADE_TWO);
-        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
+        Dealer dealer = new Dealer();
+        dealer.getState().draw(Fixtures.SPADE_EIGHT);
+        dealer.getState().draw(Fixtures.SPADE_TWO);
 
         assertThat(dealer.isHit()).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"SPADE:TWO:JACK:true", "SPADE:JACK:TWO:false"}, delimiter = ':')
+    @CsvSource(value = {"SPADE:TWO:JACK:WIN", "SPADE:JACK:TWO:LOSE"}, delimiter = ':')
     @DisplayName("딜러 승패 확인")
-    void checkDealerResult(Suit suit, Denomination denomination, Denomination secondDenomination, boolean expected) {
-        Set<PlayingCard> guestCards = new HashSet<>();
-        guestCards.add(new PlayingCard(suit, denomination));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards), 100);
+    void checkDealerResult(Suit suit, Denomination denomination, Denomination secondDenomination, Match expected) {
+        Guest guest = new Guest("guest", new Ready(), 100);
+        guest.getState().draw(new PlayingCard(suit, denomination));
+        guest.changeState(guest.getState().stay());
 
-        Set<PlayingCard> dealerCards = new HashSet<>();
-        dealerCards.add(new PlayingCard(suit, secondDenomination));
-        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
+        Dealer dealer = new Dealer();
+        dealer.getState().draw(new PlayingCard(suit, secondDenomination));
+        dealer.changeState(dealer.getState().stay());
 
-        assertThat(dealer.isWin(guest)).isEqualTo(expected);
+        assertThat(dealer.getState().matchResult(guest)).isEqualTo(expected);
     }
 }

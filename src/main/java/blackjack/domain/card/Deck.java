@@ -23,8 +23,11 @@ public class Deck {
         return new Deck(PLAYING_CARDS);
     }
 
-    public PlayingCard assignCard(CardShuffleMachine playingCardShuffleMachine) {
+    public void shuffle(CardShuffleMachine playingCardShuffleMachine) {
         playingCardShuffleMachine.shuffle(playingCards);
+    }
+
+    public PlayingCard assignCard() {
         return pickCard();
     }
 
@@ -36,14 +39,12 @@ public class Deck {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Deck deck = (Deck) o;
-
-        return playingCards != null ? playingCards.equals(deck.playingCards) : deck.playingCards == null;
+        return Objects.equals(playingCards, deck.playingCards);
     }
 
     @Override
     public int hashCode() {
-        return playingCards != null ? playingCards.hashCode() : 0;
+        return Objects.hash(playingCards);
     }
 }

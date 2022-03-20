@@ -21,6 +21,7 @@ class DeckTest {
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
         PlayingCard playingCard = new PlayingCard(Suit.CLUB, Denomination.KING);
 
-        assertThat(deck.assignCard(playingCardFixMachine)).isEqualTo(playingCard);
+        deck.shuffle(playingCardFixMachine);
+        assertThat(deck.assignCard()).isEqualTo(playingCard);
     }
 }

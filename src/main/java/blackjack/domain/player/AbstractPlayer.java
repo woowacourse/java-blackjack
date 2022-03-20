@@ -1,79 +1,72 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
+import blackjack.domain.state.State;
+
+import java.util.Objects;
 
 public abstract class AbstractPlayer implements Player {
 
-    private static final int BLACKJACK_SIZE = 2;
-
     protected String name;
-    protected PlayingCards playingCards;
+    protected State state;
 
-    protected AbstractPlayer(String name, PlayingCards playingCards) {
+    protected AbstractPlayer(String name, State state) {
         this.name = name;
-        this.playingCards = playingCards;
+        this.state = state;
     }
 
     @Override
-    public final void addCard(PlayingCard playingCard) {
-        playingCards.addCard(playingCard);
+    public final State getState() {
+        return state;
     }
 
     @Override
-    public final boolean isLose(Player player) {
-        return player.getPlayingCards().calculatePoints() > playingCards.calculatePoints();
+    public final void changeState(State state) {
+        this.state = state;
     }
 
     @Override
-    public final boolean isDraw(Player player) {
-        return playingCards.calculatePoints() == player.getPlayingCards().calculatePoints();
-    }
-
-    @Override
-    public final boolean isBlackJack(Player competitor) {
-        return (playingCards.getCards().size() == BLACKJACK_SIZE &&
-                playingCards.calculatePoints() == PlayingCards.BLACKJACK_POINT)
-                &&
-                !(competitor.getPlayingCards().getCards().size() == BLACKJACK_SIZE &&
-                competitor.getPlayingCards().calculatePoints() == PlayingCards.BLACKJACK_POINT);
+    public final boolean isHit() {
+        return state.playingCards().calculatePoints() < limitHit();
     }
 
     @Override
     public final boolean isBust() {
-        return playingCards.calculatePoints() > PlayingCards.BLACKJACK_POINT;
+        return state.playingCards().isBust();
     }
 
     @Override
-    public boolean isHit() {
-        return playingCards.calculatePoints() < limitHit();
+    public final boolean isBlackjack() {
+        return state.playingCards().isBlackjack();
+    }
+
+    @Override
+    public final boolean isDraw(PlayingCards playingCards) {
+        return state.playingCards().calculatePoints() == playingCards.calculatePoints();
+    }
+
+    @Override
+    public final boolean isLose(PlayingCards playingCards) {
+        return state.playingCards().calculatePoints() < playingCards.calculatePoints();
     }
 
     protected abstract int limitHit();
 
-
     @Override
-    public String getName() {
+    public final String getName() {
         return name;
-    }
-
-    @Override
-    public PlayingCards getPlayingCards() {
-        return playingCards;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AbstractPlayer that = (AbstractPlayer) o;
-
-        return playingCards != null ? playingCards.equals(that.playingCards) : that.playingCards == null;
+        return Objects.equals(name, that.name) && Objects.equals(state, that.state);
     }
 
     @Override
     public int hashCode() {
-        return playingCards != null ? playingCards.hashCode() : 0;
+        return Objects.hash(name, state);
     }
 }

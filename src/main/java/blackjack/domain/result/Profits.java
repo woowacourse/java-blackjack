@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import blackjack.domain.player.Guest;
@@ -12,40 +12,42 @@ public class Profits {
 
     private final Map<Player, Profit> playersProfit;
 
-    public Profits(Players players) {
-        this.playersProfit = competeDealerWithGuest(players);
+    private Profits(Map<Player, Profit> playersProfit) {
+        this.playersProfit = playersProfit;
     }
 
-    private Map<Player, Profit> competeDealerWithGuest(Players players) {
-        Map<Player, Profit> profits = new LinkedHashMap<>();
+    public static Profits of() {
+        return new Profits(new HashMap<>());
+    }
+
+    public void competeDealerWithGuest(Players players) {
         for (Player player : players.getPlayers()) {
-            calcProfitIfGuest(profits, players, player);
+            calcProfitIfGuest(players, player);
         }
-        calcDealer(profits, players);
-        return profits;
+        calcDealer(players);
     }
 
-    private void calcProfitIfGuest(Map<Player, Profit> profits, Players players, Player guest) {
+    private void calcProfitIfGuest(Players players, Player guest) {
         if (guest.isDealer()) {
             return;
         }
-        calcEachGuest(profits, players, (Guest) guest);
+        calcEachGuest(players, (Guest) guest);
     }
 
-    private void calcEachGuest(Map<Player, Profit> profits, Players players, Guest guest) {
+    private void calcEachGuest(Players players, Guest guest) {
         Player dealer = players.getDealer();
-        Match match = Match.findWinner(guest, dealer);
-        Profit profit = Profit.of(match, guest.getBetMoney());
-        profits.put(guest, profit);
+        Match match = guest.getState().matchResult(dealer);
+        Profit profit = new Profit(match.getRatio(), guest.getBetMoney());
+        playersProfit.put(guest, profit);
     }
 
-    private void calcDealer(Map<Player, Profit> profits, Players players) {
+    private void calcDealer(Players players) {
         Player dealer = players.getDealer();
-        double profit = profits.keySet()
+        double profit = playersProfit.keySet()
                 .stream()
-                .mapToDouble(player -> profits.get(player).getValue())
+                .mapToDouble(player -> playersProfit.get(player).getValue())
                 .sum();
-        profits.put(dealer, new Profit(-profit));
+        playersProfit.put(dealer, new Profit(-profit));
     }
 
     public Map<Player, Profit> getPlayersProfit() {

@@ -24,8 +24,8 @@ public class BlackjackController {
         blackjackGame.initGames(playingCardShuffleMachine);
 
         announceStartGame(blackjackGame, blackjackGame.getPlayers());
-        turnPlayers(blackjackGame, playingCardShuffleMachine);
-        turnDealer(blackjackGame, playingCardShuffleMachine);
+        turnPlayers(blackjackGame);
+        turnDealer(blackjackGame);
         announceResult(blackjackGame);
     }
 
@@ -63,16 +63,22 @@ public class BlackjackController {
         OutputView.announcePresentCards(blackjackGame.getPlayersGameResponses());
     }
 
-    private void turnPlayers(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
+    private void turnPlayers(BlackjackGame blackjackGame) {
+        if (blackjackGame.getTurnPlayer().isDealer()) {
+            blackjackGame.nextTurn();
+        }
         while (blackjackGame.isExistNextPlayer()) {
-            turnGuest(blackjackGame, playingCardShuffleMachine);
+            turnGuest(blackjackGame);
         }
     }
 
-    private void turnGuest(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
+    private void turnGuest(BlackjackGame blackjackGame) {
         while (blackjackGame.isTurnGuest() && receiveHit(blackjackGame.getTurnPlayer().getName())) {
-            blackjackGame.assignCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
+            blackjackGame.assignCard(blackjackGame.getTurnPlayer());
             OutputView.announcePresentCards(blackjackGame.getTurnPlayerGameResponse());
+        }
+        if (!blackjackGame.getTurnPlayerState().isFinished()) {
+            blackjackGame.getTurnPlayer().changeState(blackjackGame.getTurnPlayerState().stay());
         }
         blackjackGame.nextTurn();
     }
@@ -86,9 +92,9 @@ public class BlackjackController {
         }
     }
 
-    private void turnDealer(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
+    private void turnDealer(BlackjackGame blackjackGame) {
         while (blackjackGame.isTurnDealer()) {
-            blackjackGame.assignCard(blackjackGame.getDealer(), playingCardShuffleMachine);
+            blackjackGame.assignCard(blackjackGame.getDealer());
             OutputView.announceHit();
         }
     }

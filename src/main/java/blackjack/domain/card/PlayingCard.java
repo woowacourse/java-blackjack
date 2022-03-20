@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import java.util.Objects;
+
 public class PlayingCard {
 
     private final Suit suit;
@@ -30,17 +32,12 @@ public class PlayingCard {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        PlayingCard playingCard = (PlayingCard) o;
-
-        if (suit != playingCard.suit) return false;
-        return denomination == playingCard.denomination;
+        PlayingCard that = (PlayingCard) o;
+        return suit == that.suit && denomination == that.denomination;
     }
 
     @Override
     public int hashCode() {
-        int result = suit != null ? suit.hashCode() : 0;
-        result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
-        return result;
+        return Objects.hash(suit, denomination);
     }
 }

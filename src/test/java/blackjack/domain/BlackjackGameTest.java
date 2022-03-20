@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.*;
 
+import blackjack.domain.state.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,15 +16,16 @@ class BlackjackGameTest {
     @Test
     @DisplayName("카드가 할당되는지 확인")
     void pickCard() {
-        Guest guest = new Guest("guest", new PlayingCards(), 100);
+        Guest guest = new Guest("guest", new Ready(), 100);
         PlayingCardFixMachine playingCardFixMachine = new PlayingCardFixMachine();
         HashMap<String, Integer> playersBetMoney = new HashMap<>();
 
         BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), new ArrayList<>(), playersBetMoney);
-        blackjackGame.assignCard(guest, playingCardFixMachine);
-        blackjackGame.assignCard(guest, playingCardFixMachine);
+        blackjackGame.initGames(playingCardFixMachine);
+        blackjackGame.assignCard(guest);
+        blackjackGame.assignCard(guest);
 
-        assertThat(guest.getPlayingCards().getCards().size()).isEqualTo(2);
+        assertThat(guest.getState().playingCards().getCards().size()).isEqualTo(2);
     }
 
     @Test
