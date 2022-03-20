@@ -61,9 +61,9 @@ class DealerTest {
         dealer.hit(KING_SPACE);
         dealer.hit(JACK_SPACE);
 
-        boolean result = dealer.isFinished();
+        boolean result = dealer.isDrawable();
 
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
     }
 
     @DisplayName("보유한 카드의 총점을 반환한다.")

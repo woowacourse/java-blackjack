@@ -67,7 +67,7 @@ class PlayerTest {
 
         player.stay();
 
-        assertThat(player.isFinished()).isTrue();
+        assertThat(player.isDrawable()).isFalse();
     }
 
     @DisplayName("플레이어는 현재 상태를 판단하여 게임의 종료 여부를 반환한다.")
@@ -78,9 +78,9 @@ class PlayerTest {
         player.hit(JACK_SPACE);
         player.hit(QUEEN_SPACE);
 
-        boolean result = player.isFinished();
+        boolean result = player.isDrawable();
 
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
     }
 
     @DisplayName("보유한 카드의 총점을 반환한다.")

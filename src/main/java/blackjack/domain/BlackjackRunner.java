@@ -55,7 +55,7 @@ public class BlackjackRunner {
     }
 
     private boolean isPlaying(Player player, PlayCommand playCommand) {
-        return !player.isFinished() && playCommand.isYes();
+        return player.isDrawable() && playCommand.isYes();
     }
 
     private void pickCard(Deck deck, Player player, PlayCommand playCommand) {
@@ -70,7 +70,7 @@ public class BlackjackRunner {
     }
 
     private void drawDealer(Deck deck, Dealer dealer) {
-        if (!dealer.isFinished()) {
+        if (dealer.isDrawable()) {
             dealer.hit(deck.pick());
             OutputView.printDealerDrawable();
             drawDealer(deck, dealer);

@@ -11,7 +11,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isFinished() {
-        return getTotalScore() > 16;
+    public boolean isDrawable() {
+        return getTotalScore() <= 16;
     }
 }

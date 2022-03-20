@@ -12,8 +12,8 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean isFinished() {
-        return state.isFinished();
+    public boolean isDrawable() {
+        return !state.isFinished();
     }
 
     public void stay() {

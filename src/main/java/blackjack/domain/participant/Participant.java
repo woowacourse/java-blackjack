@@ -21,12 +21,12 @@ public abstract class Participant {
     }
 
     public void hit(Card card) {
-        if (!isFinished()) {
+        if (isDrawable()) {
             state = state.draw(card);
         }
     }
 
-    public abstract boolean isFinished();
+    public abstract boolean isDrawable();
 
     public int getTotalScore() {
         Cards cards = state.cards();
