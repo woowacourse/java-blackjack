@@ -25,7 +25,7 @@ public class BustTest {
         final Chip myChip = new Chip(1000);
 
         final PrivateArea dealerArea = new PrivateArea("딜러");
-        final Chip dealerChip = new Chip(0);
+        final Chip dealerChip = new Chip(1000);
 
         myBust = new Init(myArea, myChip);
         myBust = myBust.draw(CLUB_TEN);

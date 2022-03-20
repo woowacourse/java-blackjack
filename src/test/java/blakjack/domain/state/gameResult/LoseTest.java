@@ -22,7 +22,7 @@ public class LoseTest {
         final Chip playerChip = new Chip(1000);
         playerState = new Init(playerArea, playerChip);
         final PrivateArea dealerArea = new PrivateArea("딜러");
-        final Chip dealerChip = new Chip(0);
+        final Chip dealerChip = new Chip(1000);
         dealerState = new Init(dealerArea, dealerChip);
     }
 
