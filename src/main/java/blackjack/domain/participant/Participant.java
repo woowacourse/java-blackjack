@@ -5,7 +5,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.playerstatus.Blackjack;
 import blackjack.domain.participant.playerstatus.Hit;
 import blackjack.domain.participant.playerstatus.PlayerStatus;
-import java.util.stream.IntStream;
 
 public abstract class Participant {
 
@@ -20,9 +19,9 @@ public abstract class Participant {
     }
 
     public void initCards(Deck deck) {
-        IntStream.range(0, INITIAL_CARD_COUNT)
-                .mapToObj(i -> deck.drawCard())
-                .forEach(cards::add);
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            cards.add(deck.drawCard());
+        }
     }
 
     public int getScore() {

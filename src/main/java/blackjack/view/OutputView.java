@@ -7,7 +7,6 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
 
@@ -49,8 +48,9 @@ public class OutputView {
             return;
         }
 
-        IntStream.range(0, drawCount)
-                .forEach(i -> printDealerDrawMessage());
+        for (int i = 0; i < drawCount; i++) {
+            printDealerDrawMessage();
+        }
     }
 
     private static void printDealerDrawMessage() {

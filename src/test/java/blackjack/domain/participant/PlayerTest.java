@@ -19,7 +19,6 @@ import blackjack.domain.participant.playerstatus.Hit;
 import blackjack.domain.participant.playerstatus.PlayerStatus;
 import blackjack.domain.participant.playerstatus.Stay;
 import java.util.List;
-import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -39,9 +38,9 @@ class PlayerTest {
         final Deck deck = Deck.from(() -> cards);
 
         final Player player = new Player("pobi");
-        IntStream.range(0, 3)
-                .mapToObj(i -> deck)
-                .forEach(player::hit);
+        for (int i = 0; i < 3; i++) {
+            player.hit(deck);
+        }
 
         // when
         final boolean actual = player.isDrawable();
@@ -61,9 +60,9 @@ class PlayerTest {
         final Deck deck = Deck.from(() -> cards);
 
         final Player player = new Player("rick");
-        IntStream.range(0, 3)
-                .mapToObj(i -> deck)
-                .forEach(player::hit);
+        for (int i = 0; i < 3; i++) {
+            player.hit(deck);
+        }
 
         // when
         final PlayerStatus actual = player.getStatus();
@@ -83,9 +82,9 @@ class PlayerTest {
         final Deck deck = Deck.from(() -> cards);
 
         final Player player = new Player("rick");
-        IntStream.range(0, 3)
-                .mapToObj(i -> deck)
-                .forEach(player::hit);
+        for (int i = 0; i < 3; i++) {
+            player.hit(deck);
+        }
 
         // when
         final PlayerStatus actual = player.getStatus();
@@ -105,9 +104,9 @@ class PlayerTest {
         final Deck deck = Deck.from(() -> cards);
 
         final Player player = new Player("rick");
-        IntStream.range(0, 3)
-                .mapToObj(i -> deck)
-                .forEach(player::hit);
+        for (int i = 0; i < 3; i++) {
+            player.hit(deck);
+        }
 
         // when
         player.stay();
@@ -127,9 +126,9 @@ class PlayerTest {
         final Deck deck = Deck.from(() -> cards);
 
         final Player player = new Player("rick");
-        IntStream.range(0, 2)
-                .mapToObj(i -> deck)
-                .forEach(player::hit);
+        for (int i = 0; i < 3; i++) {
+            player.hit(deck);
+        }
 
         // when
         player.stay();
