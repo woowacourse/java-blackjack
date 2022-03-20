@@ -1,6 +1,9 @@
 package blackjack.utils;
 
-public final class IntegerUtils {
+public class IntegerUtils {
+
+    private IntegerUtils() {
+    }
 
     public static int parse(String input) {
         try {
