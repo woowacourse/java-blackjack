@@ -57,4 +57,11 @@ public class OutputView {
     public static void printDealerCards(final Participant player) {
         System.out.printf("%s카드: %s%n", player.getName(), convertCardsToString(player.getCards()));
     }
+
+    public static void printScore(final Participant dealer, final List<Participant> players) {
+        System.out.printf("%s 카드: %s - 결과: %d%n", dealer.getName(), convertCardsToString(dealer.getCards()), dealer.getTotalScore());
+        for (final Participant player : players) {
+            System.out.printf("%s 카드: %s - 결과: %d%n", player.getName(), convertCardsToString(player.getCards()), player.getTotalScore());
+        }
+    }
 }

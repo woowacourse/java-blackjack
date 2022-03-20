@@ -25,7 +25,7 @@ public class Application {
     private static List<PlayerName> catchPlayerNameException() {
         try {
             return InputView.inputPlayerNames();
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return catchPlayerNameException();
         }
@@ -34,7 +34,7 @@ public class Application {
     private static List<Chip> catchChipException(final List<PlayerName> playerNames) {
         try {
             return InputView.inputBettingMoney(playerNames);
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return catchChipException(playerNames);
         }
@@ -51,6 +51,7 @@ public class Application {
     private static void gameStart(final CardDeck cardDeck, final Participant dealer, final List<Participant> players) {
         initCards(cardDeck, dealer, players);
         hit(cardDeck, dealer, players);
+        showScore(dealer, players);
     }
 
     private static void initCards(final CardDeck cardDeck, final Participant dealer, final List<Participant> players) {
@@ -91,5 +92,9 @@ public class Application {
         } catch (IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
+    }
+
+    private static void showScore(final Participant dealer, final List<Participant> players) {
+        OutputView.printScore(dealer, players);
     }
 }

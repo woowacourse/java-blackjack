@@ -30,4 +30,8 @@ public abstract class Participant {
     public final List<Card> getCards() {
         return state.getCards();
     }
+
+    public final int getTotalScore() {
+        return state.getTotalScore();
+    }
 }
