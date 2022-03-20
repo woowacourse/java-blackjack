@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -70,7 +72,7 @@ public class BlackJackManager {
 	public List<String> findPlayerNames() {
 		return players.stream()
 			.map(Player::getName)
-			.collect(Collectors.toList());
+			.collect(toList());
 	}
 
 	public List<Card> findDealerFirstCard() {
@@ -82,15 +84,13 @@ public class BlackJackManager {
 	}
 
 	public BettingResult createBettingResult() {
-		int dealerEarning = 0;
-		Map<String, Integer> playerEarnings = new LinkedHashMap<>();
+		Map<String, Integer> playerEarnings = players.stream()
+			.collect(toMap(Player::getName, player -> player.match(dealer)));
 
-		for (Player player : players) {
-			int playerEarning = player.match(dealer);
-			playerEarnings.put(player.getName(), playerEarning);
-			dealerEarning += calculateReverseEarning(playerEarning);
-		}
-		return new BettingResult(dealerEarning, playerEarnings);
+		Integer dealerEarning = playerEarnings.values().stream()
+			.reduce(0, Integer::sum);
+
+		return new BettingResult(calculateReverseEarning(dealerEarning), playerEarnings);
 	}
 
 	private static int calculateReverseEarning(int earning) {
