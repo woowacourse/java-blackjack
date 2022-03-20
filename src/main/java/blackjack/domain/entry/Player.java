@@ -20,12 +20,7 @@ public class Player extends Participant {
     }
 
     public PlayerOutcome match(Dealer dealer) {
-        return PlayerOutcome.match(
-                dealer.calculateCardsSum(),
-                calculateCardsSum(),
-                dealer.countCardSize(),
-                countCardSize()
-        );
+        return PlayerOutcome.match(getHoldCards(), dealer.getHoldCards());
     }
 
     public int calculateBettingMoney(PlayerOutcome playerOutcome) {

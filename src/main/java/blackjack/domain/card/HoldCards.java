@@ -1,7 +1,13 @@
 package blackjack.domain.card;
 
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.entry.Participant;
+import blackjack.domain.state.State;
+
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public class HoldCards {
     private static final int FIRST_CARD = 0;
@@ -28,6 +34,26 @@ public class HoldCards {
         return Denomination.sum(cards.stream()
                 .map(Card::getDenomination)
                 .collect(Collectors.toList()));
+    }
+
+    public boolean isBust() {
+        return countBestSum() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isHit() {
+        return countBestSum() < BLACKJACK_NUMBER;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && countBestSum() == BLACKJACK_NUMBER;
+    }
+
+    public boolean isBigger(HoldCards other) {
+        return countBestSum() > other.countBestSum();
+    }
+
+    public boolean isSame(HoldCards other) {
+        return countBestSum() == other.countBestSum();
     }
 
     public Optional<Card> getFirstCard() {
