@@ -47,11 +47,11 @@ public final class PrivateArea {
                 .anyMatch(Card::isAce);
     }
 
-    public int getCardsSize() {
-        return cards.size();
-    }
-
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_CARD_COUNT && getTotalScore() == BLACKJACK_SCORE;
+    }
+
+    public int getCardsSize() {
+        return cards.size();
     }
 }
