@@ -10,10 +10,10 @@ public enum UserResult {
             (dealer.isBlackJack() && !user.isBlackJack())),
     WIN("승", (user, dealer) -> dealer.isBust() || user.isMoreScore(dealer) ||
             (user.isBlackJack() && !dealer.isBlackJack())),
-    DRAW("무", (user, dealer) -> user.isSameScore(dealer));
+    DRAW("무", Participant::isSameScore);
 
-    private String name;
-    private ScoreComparator comparator;
+    private final String name;
+    private final ScoreComparator comparator;
 
     UserResult(String name, ScoreComparator comparator) {
         this.name = name;

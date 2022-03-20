@@ -107,8 +107,8 @@ class ResultTest {
     }
 
     @Test
-    @DisplayName("같은 21인 경우 블랙잭인 경우가 승리한다.")
-    void blackjackTest() {
+    @DisplayName("유저와 딜러가 같은 21이면서, 딜러가 블랙잭인 경우 딜러가 승리한다.")
+    void blackjackDealerTest() {
         Participant user = new User("Kim");
         Participant dealer = new Dealer();
 
@@ -120,6 +120,38 @@ class ResultTest {
         dealer.receiveCard(Card.of(CardNumber.TEN, CardType.HEART));
 
         assertThat(UserResult.checkUserResult(user, dealer)).isEqualTo(UserResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("유저와 딜러가 같은 21이면서, 유저가 블랙잭인 경우 유저가 승리한다.")
+    void blackjackUserTest() {
+        Participant user = new User("Kim");
+        Participant dealer = new Dealer();
+
+        user.receiveCard(Card.of(CardNumber.KING, CardType.SPADE));
+        user.receiveCard(Card.of(CardNumber.ACE, CardType.CLOVER));
+
+        dealer.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.TEN, CardType.HEART));
+        dealer.receiveCard(Card.of(CardNumber.ACE, CardType.SPADE));
+
+        assertThat(UserResult.checkUserResult(user, dealer)).isEqualTo(UserResult.WIN);
+    }
+
+
+    @Test
+    @DisplayName("유저와 딜러가 같은 블랙잭이라면 무승부이다.")
+    void blackjackDrawTest() {
+        Participant user = new User("Kim");
+        Participant dealer = new Dealer();
+
+        user.receiveCard(Card.of(CardNumber.KING, CardType.SPADE));
+        user.receiveCard(Card.of(CardNumber.ACE, CardType.CLOVER));
+
+        dealer.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.ACE, CardType.HEART));
+
+        assertThat(UserResult.checkUserResult(user, dealer)).isEqualTo(UserResult.DRAW);
     }
 
     @Test
