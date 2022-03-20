@@ -10,8 +10,14 @@ public abstract class Finished extends State {
         super(hand);
     }
 
-    public State hit(Card card) {
+    @Override
+    public final State hit(Card card) {
         throw new IllegalStateException("카드를 더이상 뽑을 수 없는 상태입니다.");
+    }
+
+    @Override
+    public final State stay() {
+        throw new IllegalStateException("이미 종료된 상태입니다.");
     }
 
     @Override
@@ -20,13 +26,7 @@ public abstract class Finished extends State {
     }
 
     @Override
-    public State stay() {
-        throw new IllegalStateException("이미 종료된 상태입니다.");
-    }
-
-    public abstract boolean isBlackjack();
-
-    public Money calculateProfit(Money bettingMoney, State opponentState) {
+    public final Money calculateProfit(Money bettingMoney, State opponentState) {
         return bettingMoney.multiply(calculateEarningRate(opponentState).getRate());
     }
 

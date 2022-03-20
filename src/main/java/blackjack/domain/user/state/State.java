@@ -15,15 +15,19 @@ public abstract class State {
         this.hand = hand;
     }
 
-    public Score getScore() {
+    public final Score getScore() {
         return hand.getScore();
     }
 
-    public List<Card> getHandCards() {
+    public final boolean isBlackjack() {
+        return hand.isBlackJack();
+    }
+
+    public final List<Card> getHandCards() {
         return hand.getCards();
     }
 
-    public List<Card> getInitHandCards(int count) {
+    public final List<Card> getInitHandCards(int count) {
         return hand.getCards(count);
     }
 
@@ -32,8 +36,6 @@ public abstract class State {
     public abstract State stay();
 
     public abstract boolean isFinished();
-
-    public abstract boolean isBlackjack();
 
     public abstract Money calculateProfit(Money bettingMoney, State opponentState);
 }

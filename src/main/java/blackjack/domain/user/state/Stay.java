@@ -10,11 +10,6 @@ public final class Stay extends Finished {
     }
 
     @Override
-    public boolean isBlackjack() {
-        return false;
-    }
-
-    @Override
     public EarningRate calculateEarningRate(State opponentState) {
         Score opponentScore = opponentState.getScore();
 

@@ -9,11 +9,6 @@ public final class Bust extends Finished {
     }
 
     @Override
-    public boolean isBlackjack() {
-        return false;
-    }
-
-    @Override
     public EarningRate calculateEarningRate(State opponentState) {
         return EarningRate.LOSS;
     }

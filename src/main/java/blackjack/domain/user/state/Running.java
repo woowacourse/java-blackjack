@@ -16,14 +16,9 @@ public abstract class Running extends State {
     }
 
     @Override
-    public boolean isBlackjack() {
-        return false;
+    public final Money calculateProfit(Money bettingMoney, State opponentState) {
+        throw new IllegalStateException("점수를 계산할 수 없는 상태입니다.");
     }
 
     public abstract State hit(Card card);
-
-    @Override
-    public Money calculateProfit(Money bettingMoney, State opponentState) {
-        throw new IllegalStateException("점수를 계산할 수 없는 상태입니다.");
-    }
 }

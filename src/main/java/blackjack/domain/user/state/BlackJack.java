@@ -15,9 +15,4 @@ public final class BlackJack extends Finished {
         }
         return EarningRate.BLACKJACK_WIN;
     }
-
-    @Override
-    public boolean isBlackjack() {
-        return true;
-    }
 }

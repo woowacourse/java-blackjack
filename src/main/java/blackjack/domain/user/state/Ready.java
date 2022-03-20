@@ -29,5 +29,4 @@ public final class Ready extends Running {
     public State stay() {
         throw new IllegalStateException("준비 상태에서는 스테이를 할 수 없습니다.");
     }
-
 }
