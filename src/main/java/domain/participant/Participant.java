@@ -37,6 +37,10 @@ public abstract class Participant {
         return score() == MAX_SCORE && cards.size() == 2;
     }
 
+    public boolean isNotBlackJack() {
+        return score() != MAX_SCORE;
+    }
+
     public int score() {
         return cards.calculateScore();
     }
