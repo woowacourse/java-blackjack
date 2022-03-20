@@ -14,23 +14,17 @@ public final class Blackjack extends Finished {
 
     @Override
     public State compare(final State other) {
+        if (other.isBlackjack()) {
+            return new Draw(privateArea, chip);
+        }
+        return createWin(other);
+    }
+
+    private State createWin(State other) {
         if (privateArea.isDealer()) {
-            return compareWithPlayer(other);
-        }
-        return compareWithDealer(other);
-    }
-
-    private State compareWithPlayer(final State playerState) {
-        if (playerState.isBlackjack()) {
-            return new Draw(privateArea, chip);
-        }
-        return new Win(privateArea, playerState.getChip());
-    }
-
-    private State compareWithDealer(final State dealerState) {
-        if (dealerState.isBlackjack()) {
-            return new Draw(privateArea, chip);
+            return new Win(privateArea, other.getChip());
         }
         return new BlackjackWin(privateArea, chip);
     }
+
 }
