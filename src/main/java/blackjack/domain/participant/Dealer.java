@@ -15,7 +15,7 @@ public class Dealer extends Participant {
 	}
 
 	@Override
-	public void distributeBattingAmount(final Participant player) {
+	public void getBattingAmountFrom(final Participant player) {
 		final Outcome outcome = judgeCompeteResult(calculateFinalScore(), player.calculateFinalScore());
 		if (outcome == Outcome.VICTORY) {
 			final int finalIncome = battingAmount.getTotalValue() + player.getCurrentIncome();

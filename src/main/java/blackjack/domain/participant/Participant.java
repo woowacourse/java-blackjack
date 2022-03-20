@@ -77,7 +77,7 @@ public abstract class Participant {
 
 	public abstract int getDrawStandard();
 
-	public abstract void distributeBattingAmount(final Participant participant);
+	public abstract void getBattingAmountFrom(final Participant participant);
 
 	protected int getCurrentIncome() {
 		return battingAmount.getTotalValue();

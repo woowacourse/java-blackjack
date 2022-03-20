@@ -79,8 +79,8 @@ public class Participants {
 	public List<Participant> calculateResult() {
 		calculateBlackJackResult();
 		for (Participant player : players) {
-			player.distributeBattingAmount(dealer);
-			dealer.distributeBattingAmount(player);
+			player.getBattingAmountFrom(dealer);
+			dealer.getBattingAmountFrom(player);
 		}
 		return combineResult();
 	}
