@@ -50,7 +50,7 @@ public class GameController {
         OutputView.printInitResult(players.getNames());
         OutputView.printDealerFirstCard(dealer.openFirstCard());
 
-        OutputView.printCards(players.getValue());
+        OutputView.printCards(players);
     }
 
     public void progressPlayerTurns() {
@@ -95,7 +95,7 @@ public class GameController {
         OutputView.breakLine();
 
         OutputView.printCardsAndScore(dealer);
-        OutputView.printCardsAndScore(players.getValue());
+        OutputView.printCardsAndScore(players);
     }
 
     private void printDealerProfit() {

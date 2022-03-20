@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,17 +20,17 @@ public class OutputView {
         System.out.println("딜러: " + card.getNumberName() + card.getSymbolName());
     }
 
-    public static void printCards(final List<Player> players) {
-        players.forEach(OutputView::printCards);
-    }
-
-    public static void printCardsAndScore(final List<Player> players) {
-        players.forEach(OutputView::printCardsAndScore);
+    public static void printCardsAndScore(final Players players) {
+        players.getValue().forEach(OutputView::printCardsAndScore);
     }
 
     public static void printCardsAndScore(Participant participant) {
         System.out.println(participant.getName() + "카드: " + toCardMessage(participant.getCards())
                 + " - 결과: " + participant.getScore());
+    }
+
+    public static void printCards(final Players players) {
+        players.getValue().forEach(OutputView::printCards);
     }
 
     public static void printCards(final Player player) {
