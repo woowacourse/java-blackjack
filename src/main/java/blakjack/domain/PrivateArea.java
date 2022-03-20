@@ -5,11 +5,12 @@ import blakjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
+import static blakjack.domain.participant.Dealer.DEALER_NAME;
+
 public final class PrivateArea {
     private static final int UPPER_ACE_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
-    private static final String DEALER_NAME = "딜러";
 
     private final List<Card> cards = new ArrayList<>();
     private final String name;
