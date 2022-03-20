@@ -1,5 +1,6 @@
 package blackjack.domain.machine;
 
+import blackjack.domain.participant.Players;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,9 +15,9 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public class Records {
-    public static RecordsDto of(Dealer dealer, List<Player> players) {
-        Map<String, String> playerRecords = getPlayerRecords(dealer, players);
-        Map<String, Integer> dealerRecords = getDealerRecords(dealer, players);
+    public static RecordsDto of(Dealer dealer, Players players) {
+        Map<String, String> playerRecords = getPlayerRecords(dealer, players.getPlayers());
+        Map<String, Integer> dealerRecords = getDealerRecords(dealer, players.getPlayers());
 
         PlayerRecordDto playerRecordDto = new PlayerRecordDto(playerRecords);
         DealerRecordDto dealerRecordDto = new DealerRecordDto(dealer.getName(), dealerRecords);

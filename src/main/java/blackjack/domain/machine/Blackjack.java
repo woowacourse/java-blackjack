@@ -32,7 +32,7 @@ public class Blackjack {
     }
 
     public RecordsDto record(Dealer dealer, Players players) {
-        return Records.of(dealer, players.getPlayers());
+        return Records.of(dealer, players);
     }
 
     public Profits profit(Dealer dealer, Players players) {
