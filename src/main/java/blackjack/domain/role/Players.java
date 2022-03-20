@@ -1,6 +1,5 @@
 package blackjack.domain.role;
 
-import blackjack.domain.game.Betting;
 import blackjack.domain.game.Deck;
 import blackjack.domain.game.Money;
 import java.util.ArrayList;
@@ -36,10 +35,10 @@ public class Players {
 		return new ArrayList<>(players);
 	}
 
-	public Map<String, Money> competeToDealer(final Role dealer, final Betting betting) {
+	public Map<String, Money> competeToDealer(final Role dealer) {
 		Map<String, Money> betMonies = new HashMap<>();
 		for (Role player : players) {
-			Money money = player.settle(dealer, betting.getBettingByName(player.getName()));
+			Money money = player.settle(dealer);
 			betMonies.put(player.getName(), money);
 		}
 		return betMonies;

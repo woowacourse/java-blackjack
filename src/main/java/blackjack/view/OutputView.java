@@ -23,6 +23,7 @@ public class OutputView {
 	private static final String RECEIVED_ONE_MORE_CARD = "이하라 한장의 카드를 더 받았습니다.";
 	private static final String FAIL_TO_RECEIVE_ONE_MORE_CARD = "이상이라 카드를 더 받지 않았습니다.";
 	private static final String BUST_MESSAGE = "\uD83D\uDCA3";
+	private static final String REVENUE_FORMAT = "%.0f";
 
 	public void printInitialStatus(final DealerTableDto dealerTable,
 								   final List<PlayerTableDto> playersTable) {
@@ -99,13 +100,17 @@ public class OutputView {
 
 	private void printDealerRevenue(final DealerResultDto dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.println(dealerResult.getRevenueResult());
+		printRevenue(dealerResult.getRevenueResult());
 	}
 
 	private void printPlayerRevenue(final List<PlayerResultDto> playerResults) {
 		for (PlayerResultDto playerResult : playerResults) {
 			System.out.print(playerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-			System.out.println(playerResult.getRevenueResult());
+			printRevenue(playerResult.getRevenueResult());
 		}
+	}
+
+	private void printRevenue(final double revenue) {
+		System.out.printf(REVENUE_FORMAT + "\n", revenue);
 	}
 }

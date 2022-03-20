@@ -8,8 +8,11 @@ import java.util.List;
 
 public final class Player extends Role {
 
-	public Player(final String name, final State state) {
+	private final Money bettingMoney;
+
+	public Player(final String name, final State state, final Money bettingMoney) {
 		super(name, state);
+		this.bettingMoney = bettingMoney;
 	}
 
 	@Override
@@ -23,7 +26,7 @@ public final class Player extends Role {
 	}
 
 	@Override
-	public Money settle(Role dealer, Money bettingMoney) {
+	public Money settle(Role dealer) {
 		return state.profit(dealer.getCards(), bettingMoney);
 	}
 }

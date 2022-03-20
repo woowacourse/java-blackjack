@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.game.Money;
 import blackjack.domain.state.Ready;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,8 +18,8 @@ class PlayerTurnsTest {
 	@Test
 	@DisplayName("순서에 맞게 플레이어의 턴을 가져오는지 확인")
 	void check_Get_Current_Player() {
-		Player player1 = new Player("player1", new Ready());
-		Player player2 = new Player("player2", new Ready());
+		Player player1 = new Player("player1", new Ready(), new Money(1000));
+		Player player2 = new Player("player2", new Ready(), new Money(1000));
 
 		PlayerTurns playerTurns = new PlayerTurns(List.of(player1, player2));
 

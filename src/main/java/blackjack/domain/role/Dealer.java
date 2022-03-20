@@ -47,7 +47,7 @@ public final class Dealer extends Role {
 	}
 
 	@Override
-	public Money settle(Role dealer, Money bettingMoney) {
+	public Money settle(Role dealer) {
 		throw new IllegalStateException(DEALER_SETTLE_ERROR);
 	}
 }

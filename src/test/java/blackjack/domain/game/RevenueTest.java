@@ -17,10 +17,10 @@ class RevenueTest {
 	@Test
 	@DisplayName("주어진 플레이어의 수익을 가져오는 기능 검증")
 	void check_Player_Revenue_Results() {
-		Role blackJackWinner = new Player("blackJackWinner", new Ready());
-		Role winner = new Player("winner", new Ready());
-		Role looser = new Player("looser", new Ready());
-		Role tier = new Player("tier", new Ready());
+		Role blackJackWinner = new Player("blackJackWinner", new Ready(), new Money(1000));
+		Role winner = new Player("winner", new Ready(), new Money(1000));
+		Role looser = new Player("looser", new Ready(), new Money(1000));
+		Role tier = new Player("tier", new Ready(), new Money(1000));
 
 		Map<String, Money> result = new HashMap<>();
 		result.put("blackJackWinner", new Money(1500));

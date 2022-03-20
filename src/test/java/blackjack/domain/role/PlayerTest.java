@@ -7,7 +7,6 @@ import static blackjack.util.Fixtures.CLOVER_NINE;
 import static blackjack.util.Fixtures.CLOVER_QUEEN;
 import static blackjack.util.Fixtures.CLOVER_TWO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Deck;
@@ -28,7 +27,7 @@ class PlayerTest {
 	@Test
 	@DisplayName("플레이어의 드로우 검증")
 	void draw() {
-		Role player = new Player("player", new Ready().draw(CLOVER_ACE).draw(CLOVER_FIVE));
+		Role player = new Player("player", new Ready().draw(CLOVER_ACE).draw(CLOVER_FIVE), new Money(1000));
 		Deck deck = new Deck();
 		player.draw(deck);
 		assertThat(player.getCards().getSize()).isEqualTo(3);
@@ -38,30 +37,19 @@ class PlayerTest {
 	@DisplayName("플레이어의 패 오픈 전략 확인")
 	void check_Open_Cards() {
 		final State state = new Ready().draw(CLOVER_ACE).draw(CLOVER_FIVE);
-		Role player = new Player("player", state);
+		Role player = new Player("player", state, new Money(1000));
 		List<Card> expectedOpenCards = List.of(CLOVER_ACE, CLOVER_FIVE);
 		assertThat(player.openCards()).isEqualTo(expectedOpenCards);
-	}
-
-	@Test
-	@DisplayName("베팅 금액 나누는 메서드 예외 검증")
-	void settle() {
-		final State blackjack = new Ready().draw(CLOVER_ACE).draw(CLOVER_KING);
-		Role dealer = new Dealer(blackjack, DealerDrawChoice::chooseDraw);
-
-		assertThatThrownBy(() -> dealer.settle(dealer, new Money(1000)))
-				.isInstanceOf(IllegalStateException.class)
-				.hasMessageContaining("딜러는 승부를 겨룰 수 없습니다.");
 	}
 
 	@DisplayName("배팅 금액을 결과에 따라서 정산하는 메서드 검증")
 	@ParameterizedTest(name = "{index} {displayName} expectedValue: {2}")
 	@MethodSource("createState")
 	void settle(State playerState, State dealerState, int expectedValue) {
-		Role player = new Player("player", playerState);
+		Role player = new Player("player", playerState, new Money(10000));
 		Role dealer = new Dealer(dealerState, DealerDrawChoice::chooseDraw);
 
-		Money profit = player.settle(dealer, new Money(10000));
+		Money profit = player.settle(dealer);
 		assertThat(profit).isEqualTo(new Money(expectedValue));
 	}
 

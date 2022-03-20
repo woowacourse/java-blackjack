@@ -46,6 +46,5 @@ public abstract class Role {
 
 	public abstract List<Card> openCards();
 
-	public abstract Money settle(Role dealer, Money bettingMoney);
-
+	public abstract Money settle(Role dealer);
 }

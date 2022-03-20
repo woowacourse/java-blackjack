@@ -11,7 +11,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Deck;
-import blackjack.domain.game.Money;
 import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
 import java.util.List;
@@ -67,7 +66,7 @@ class DealerTest {
 		final State blackjack = new Ready().draw(CLOVER_ACE).draw(CLOVER_KING);
 		Role dealer = new Dealer(blackjack, DealerDrawChoice::chooseDraw);
 
-		assertThatThrownBy(() -> dealer.settle(dealer, new Money(1000)))
+		assertThatThrownBy(() -> dealer.settle(dealer))
 				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("딜러는 승부를 겨룰 수 없습니다.");
 	}

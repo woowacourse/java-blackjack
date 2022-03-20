@@ -1,11 +1,13 @@
 package blackjack.controller;
 
 import blackjack.domain.game.Deck;
+import blackjack.domain.game.Money;
 import blackjack.domain.role.Dealer;
 import blackjack.domain.role.DealerDrawChoice;
+import blackjack.domain.role.Player;
 import blackjack.domain.role.PlayerDrawChoice;
+import blackjack.domain.role.Role;
 import blackjack.domain.state.Ready;
-import blackjack.dto.BettingDto;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTableDto;
@@ -13,8 +15,8 @@ import blackjack.dto.PlayerTurnsDto;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -27,7 +29,6 @@ public class BlackJackController {
 	public void run(InputView inputView, OutputView outputView) {
 		initBlackJackGame();
 		addPlayers(inputView);
-		betMoney(inputView);
 		distributeCard(outputView);
 		takePlayersTurn(inputView, outputView);
 		takeDealerTurn(outputView);
@@ -38,18 +39,17 @@ public class BlackJackController {
 		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Ready(), DealerDrawChoice::chooseDraw));
 	}
 
-	private void addPlayers(InputView inputView) {
-		blackJackService.joinPlayers(inputView.requestPlayerName());
+	private void addPlayers(final InputView inputView) {
+		final List<String> playerName = inputView.requestPlayerName();
+		List<Role> players = playerName.stream()
+				.map(name -> new Player(name, new Ready(), getBettingMoney(inputView, name)))
+				.collect(Collectors.toList());
+		blackJackService.joinPlayers(players);
 	}
 
-	private void betMoney(InputView inputView) {
-		PlayerTurnsDto playerTurns = blackJackService.startBettingPhase();
-		List<BettingDto> betting = new ArrayList<>();
-		for (String player : playerTurns.getNames()) {
-			String money = inputView.drawOneMoreCard(player);
-			betting.add(BettingDto.from(player, Double.parseDouble(money)));
-		}
-		blackJackService.betMoney(betting);
+	private Money getBettingMoney(final InputView inputView, final String name) {
+		final String bettingMoney = inputView.requestBetting(name);
+		return new Money(Double.parseDouble(bettingMoney));
 	}
 
 	private void distributeCard(OutputView outputView) {
