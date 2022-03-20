@@ -16,7 +16,11 @@ public class Gamers {
         this.players = List.copyOf(players);
     }
 
-    public List<Record> match(Dealer dealer) {
+    public Records match(Dealer dealer) {
+        return new Records(collectRecord(dealer));
+    }
+
+    private List<Record> collectRecord(Dealer dealer) {
         ResultIdentifier resultIdentifier = new ResultIdentifier();
         return players.stream()
             .map(player -> createRecord(resultIdentifier, dealer, player))

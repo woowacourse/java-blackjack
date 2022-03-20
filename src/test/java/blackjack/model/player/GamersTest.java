@@ -37,10 +37,10 @@ public class GamersTest {
         Gamer player2 = new Gamer(crong, MONEY, ACE, JACK);
         Gamers gamers = new Gamers(List.of(player1, player2));
 
-        List<Record> records = gamers.match(dealer);
+        Records records = gamers.match(dealer);
 
-        assertThat(records).hasSize(2);
-        assertThat(records).contains(new Record(pobi, Result.loss(MONEY)), new Record(crong, Result.blackjack(MONEY)));
+        assertThat(records.values()).hasSize(2);
+        assertThat(records.values()).contains(new Record(pobi, Result.loss(MONEY)), new Record(crong, Result.blackjack(MONEY)));
     }
 
     @Test
@@ -55,9 +55,9 @@ public class GamersTest {
         Gamer player2 = new Gamer(pobi2, MONEY, ACE, JACK);
         Gamers gamers = new Gamers(List.of(player1, player2));
 
-        List<Record> records = gamers.match(dealer);
+        Records records = gamers.match(dealer);
 
-        assertThat(records).hasSize(2);
-        assertThat(records).contains(new Record(pobi1, Result.loss(MONEY)), new Record(pobi2, Result.blackjack(MONEY)));
+        assertThat(records.values()).hasSize(2);
+        assertThat(records.values()).contains(new Record(pobi1, Result.loss(MONEY)), new Record(pobi2, Result.blackjack(MONEY)));
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.player.Records;
 import blackjack.model.player.matcher.Money;
 import blackjack.model.player.matcher.Record;
 import blackjack.model.card.Card;
@@ -51,19 +52,11 @@ public class OutputView {
             score.getValue());
     }
 
-    public static void printRecords(List<Record> records) {
+    public static void printRecords(Records records) {
         System.out.println("## 최종 수익");
-        System.out.printf("딜러: %s%n", dealerProfit(records));
-
-        records.stream().forEach(record -> printEachPlayerRecord(record.name(), record.profit()));
-    }
-
-    private static String dealerProfit(List<Record> records) {
-        return records.stream()
-            .map(Record::profit)
-            .map(Money::negate)
-            .reduce(new Money(BigDecimal.ZERO), Money::add)
-            .amount();
+        System.out.printf("딜러: %s%n", records.dealerProfit());
+        records.values().stream()
+            .forEach(record -> printEachPlayerRecord(record.name(), record.profit()));
     }
 
     private static void printEachPlayerRecord(String name, Money profit) {
