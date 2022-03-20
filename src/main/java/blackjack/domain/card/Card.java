@@ -1,19 +1,12 @@
 package blackjack.domain.card;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Card {
 
-    private static final Map<Type, Map<CardNumber, Card>> cacheCard;
-
-    static {
-        cacheCard = new EnumMap<>(Type.class);
-        for (Type type : Type.values()) {
-            cacheCard.put(type, new EnumMap<>(CardNumber.class));
-        }
-    }
+    private static final Map<String, Card> cacheCard = new HashMap<>(52);
 
     private final CardNumber cardNumber;
     private final Type type;
@@ -24,13 +17,11 @@ public class Card {
     }
 
     public static Card of(CardNumber cardNumber, Type type) {
-        if (!cacheCard.containsKey(type)) {
-            cacheCard.put(type, new EnumMap<>(CardNumber.class));
+        String key = cardNumber.name() + type.name();
+        if (!cacheCard.containsKey(key)) {
+            cacheCard.put(key, new Card(cardNumber, type));
         }
-        if (!cacheCard.get(type).containsKey(cardNumber)) {
-            cacheCard.get(type).put(cardNumber, new Card(cardNumber, type));
-        }
-        return cacheCard.get(type).get(cardNumber);
+        return cacheCard.get(key);
     }
 
     public CardNumber getCardNumber() {
