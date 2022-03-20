@@ -23,4 +23,14 @@ public abstract class Running extends Started {
     public final Status stay() {
         return new Stay(getCards());
     }
+
+    @Override
+    public final boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public final boolean isRunning() {
+        return true;
+    }
 }

@@ -32,4 +32,14 @@ public class Ready extends Started {
     public final Status stay() {
         throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_MOVE_TO_STAY);
     }
+
+    @Override
+    public final boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public final boolean isRunning() {
+        return false;
+    }
 }

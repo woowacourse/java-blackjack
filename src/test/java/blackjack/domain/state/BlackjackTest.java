@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BlackjackTest {
@@ -31,5 +32,21 @@ class BlackjackTest {
         assertThatThrownBy(status::stay)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바르지 않은 결과입니다.");
+    }
+
+    @Test
+    @DisplayName("턴이 끝난 상태로 나타내는지 테스트")
+    void isFinished() {
+        final Status status = new Blackjack(cards);
+
+        assertThat(status.isFinished()).isTrue();
+    }
+
+    @Test
+    @DisplayName("턴이 진행중인 상태로 나타내지 않는지 테스트")
+    void isRunning() {
+        final Status status = new Blackjack(cards);
+
+        assertThat(status.isRunning()).isFalse();
     }
 }

@@ -7,6 +7,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class ReadyTest {
 
     private final Ready ready = new Ready();
@@ -35,5 +37,17 @@ class ReadyTest {
                 .draw(Card.from(Suit.CLOVER, Denomination.JACK));
 
         Assertions.assertThat(status).isInstanceOf(Blackjack.class);
+    }
+
+    @Test
+    @DisplayName("턴이 끝난 상태로 나타내지 않는지 테스트")
+    void isFinished() {
+        assertThat(ready.isFinished()).isFalse();
+    }
+
+    @Test
+    @DisplayName("턴이 진행중인 상태로 나타내지 않는지 테스트")
+    void isRunning() {
+        assertThat(ready.isRunning()).isFalse();
     }
 }

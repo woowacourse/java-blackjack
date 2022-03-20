@@ -9,5 +9,9 @@ public interface Status {
 
     Status stay();
 
+    boolean isFinished();
+
+    boolean isRunning();
+
     Cards getCards();
 }

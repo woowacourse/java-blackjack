@@ -21,4 +21,14 @@ public abstract class Finished extends Started {
     public final Status stay() {
         throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_MOVE_TO_STAY);
     }
+
+    @Override
+    public final boolean isFinished() {
+        return true;
+    }
+
+    @Override
+    public final boolean isRunning() {
+        return false;
+    }
 }
