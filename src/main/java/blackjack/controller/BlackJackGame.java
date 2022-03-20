@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.dto.DistributeResult;
+import blackjack.domain.gameresult.DistributeResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

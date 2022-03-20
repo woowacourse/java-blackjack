@@ -1,4 +1,4 @@
-package blackjack.domain.dto;
+package blackjack.domain.gameresult;
 
 public class ProfitResult {
 

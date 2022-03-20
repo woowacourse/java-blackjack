@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.DistributeResult;
-import blackjack.domain.dto.ProfitResult;
-import blackjack.domain.dto.UserGameResult;
+import blackjack.domain.gameresult.DistributeResult;
+import blackjack.domain.gameresult.ProfitResult;
+import blackjack.domain.gameresult.UserGameResult;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.UserResult;
 
