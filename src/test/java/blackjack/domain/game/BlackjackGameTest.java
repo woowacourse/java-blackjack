@@ -12,11 +12,16 @@ import blackjack.domain.participant.Player;
 public class BlackjackGameTest {
 
     @Test
-    @DisplayName("블랙잭 게임 생성")
-    void createBlackjackGame() {
-        assertThatCode(() -> new BlackjackGame(List.of(
-            new Player("마루"),
-            new Player("엔젤앤지")
-        ))).doesNotThrowAnyException();
+    @DisplayName("플레이어 턴이 끝났는지 체크")
+    void isPlayersTurnEnd() {
+        Player player = new Player("player", 0);
+        Player player2 = new Player("player2", 0);
+        BlackjackGame blackjackGame = new BlackjackGame(List.of(player, player2));
+
+        while (!blackjackGame.getParticipants().isAllPlayerTurnEnd()) {
+            blackjackGame.playPlayerTurn(false);
+        }
+
+        assertThat(blackjackGame.isPlayersTurnEnd()).isTrue();
     }
 }

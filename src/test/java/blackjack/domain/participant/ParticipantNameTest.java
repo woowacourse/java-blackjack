@@ -22,4 +22,12 @@ class ParticipantNameTest {
             new ParticipantName("");
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("이름으로 공백 값을 받았을 경우 오류")
+    void createPlayerBlankNameFail() {
+        assertThatThrownBy(() -> {
+            new ParticipantName("  ");
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
 }

@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
 public class CardTest {
 
     @Test
-    @DisplayName("카드 생성")
-    void createCard() {
-        assertThatCode(() -> new Card(Suit.DIAMOND, Denomination.ACE))
-            .doesNotThrowAnyException();
+    @DisplayName("카드가 에이스인지 확인")
+    void isAce() {
+        assertThat(new Card(Suit.DIAMOND, Denomination.ACE).isAce()).isTrue();
     }
 
     @Test

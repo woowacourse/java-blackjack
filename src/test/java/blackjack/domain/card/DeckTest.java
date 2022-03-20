@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 public class DeckTest {
 
     @Test
-    @DisplayName("Deck에서 카드를 한장 빼서 반환한다.")
+    @DisplayName("Deck에서 뽑는 초기 카드는 2장이어야 한다")
     void pickCardFromDeck() {
         Deck deck = new Deck();
 
-        assertThat(deck.pickCard()).isNotNull();
+        assertThat(deck.pickInitialCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class DeckTest {
             deck.pickCard();
         }
 
-        assertThatThrownBy(()-> {
+        assertThatThrownBy(() -> {
             deck.pickCard();
         }).isInstanceOf(IndexOutOfBoundsException.class);
     }
