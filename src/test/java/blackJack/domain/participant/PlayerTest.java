@@ -47,7 +47,7 @@ class PlayerTest {
         dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE));
         dealer.hit(Card.of(Symbol.CLOVER, Denomination.SEVEN));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(BlackJackMatch.WIN);
+        assertThat(player.calculateMatchResult(dealer)).isEqualTo(BlackJackMatch.WIN);
     }
 
     @Test
@@ -61,7 +61,7 @@ class PlayerTest {
         dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE));
         dealer.hit(Card.of(Symbol.CLOVER, Denomination.EIGHT));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(BlackJackMatch.DRAW);
+        assertThat(player.calculateMatchResult(dealer)).isEqualTo(BlackJackMatch.DRAW);
     }
 
     @Test
@@ -75,7 +75,7 @@ class PlayerTest {
         dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE));
         dealer.hit(Card.of(Symbol.CLOVER, Denomination.EIGHT));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(BlackJackMatch.LOSE);
+        assertThat(player.calculateMatchResult(dealer)).isEqualTo(BlackJackMatch.LOSE);
     }
 
     @Test
@@ -91,7 +91,7 @@ class PlayerTest {
         dealer.hit(Card.of(Symbol.DIAMOND, Denomination.JACK));
         dealer.hit(Card.of(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(BlackJackMatch.LOSE);
+        assertThat(player.calculateMatchResult(dealer)).isEqualTo(BlackJackMatch.LOSE);
     }
 
     @Test
@@ -106,7 +106,7 @@ class PlayerTest {
         dealer.hit(Card.of(Symbol.DIAMOND, Denomination.JACK));
         dealer.hit(Card.of(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(BlackJackMatch.WIN);
+        assertThat(player.calculateMatchResult(dealer)).isEqualTo(BlackJackMatch.WIN);
     }
 
     @Test
@@ -121,7 +121,7 @@ class PlayerTest {
         dealer.hit(Card.of(Symbol.DIAMOND, Denomination.NINE));
         dealer.hit(Card.of(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(BlackJackMatch.BLACK_JACK_WIN);
+        assertThat(player.calculateMatchResult(dealer)).isEqualTo(BlackJackMatch.BLACK_JACK_WIN);
     }
 
     @Test
@@ -136,6 +136,6 @@ class PlayerTest {
         dealer.hit(Card.of(Symbol.CLOVER, Denomination.JACK));
         dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(BlackJackMatch.LOSE);
+        assertThat(player.calculateMatchResult(dealer)).isEqualTo(BlackJackMatch.LOSE);
     }
 }

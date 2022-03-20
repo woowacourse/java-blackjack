@@ -22,7 +22,15 @@ public class Player extends Participant {
         return !this.getScore().isBurst();
     }
 
-    public BlackJackMatch getMatchResult(Participant dealer) {
+    public void betting(int bettingAmount) {
+        this.bettingAmount = this.bettingAmount.startBetting(bettingAmount);
+    }
+
+    public int calculateProfit(BlackJackMatch blackJackMatch) {
+        return bettingAmount.calculateProfit(blackJackMatch);
+    }
+
+    public BlackJackMatch calculateMatchResult(Participant dealer) {
         if (this.isBurst()) {
             return BlackJackMatch.LOSE;
         }
