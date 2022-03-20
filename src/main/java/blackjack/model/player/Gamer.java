@@ -3,6 +3,7 @@ package blackjack.model.player;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
+import blackjack.model.player.matcher.Money;
 
 public class Gamer extends Participant {
 

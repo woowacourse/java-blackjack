@@ -1,6 +1,5 @@
 package blackjack.model.player.matcher;
 
-import blackjack.model.player.Money;
 import java.math.BigDecimal;
 import java.util.Objects;
 

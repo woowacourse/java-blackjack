@@ -1,6 +1,5 @@
 package blackjack.model.player.matcher;
 
-import blackjack.model.player.Money;
 import java.util.Objects;
 
 public class Record {

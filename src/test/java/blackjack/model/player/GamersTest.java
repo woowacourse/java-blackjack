@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
+import blackjack.model.player.matcher.Money;
 import blackjack.model.player.matcher.Record;
 import blackjack.model.player.matcher.Result;
 import java.math.BigDecimal;
