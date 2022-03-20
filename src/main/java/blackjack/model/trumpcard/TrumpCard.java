@@ -11,11 +11,11 @@ public final class TrumpCard {
         this.symbol = symbol;
     }
 
-    public int sumNumberTo(int value) {
+    int sumNumberTo(int value) {
         return number.sumTo(value);
     }
 
-    public boolean isAce() {
+    boolean isAce() {
         return this.number == TrumpNumber.ACE;
     }
 
