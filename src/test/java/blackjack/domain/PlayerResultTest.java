@@ -34,9 +34,9 @@ class PlayerResultTest {
     @DisplayName("플레이어의 카드 합이 21이하이며, 딜러보다 21에 가까울때 플레이어가 승리한다.")
     void PlayerWinTest_WhenUnder21AndOverThanDealer() {
         Cards playerCards = new Cards(Arrays.asList(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.HEART, Number.TEN)));
-        Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN), new Card(Shape.DIAMOND, Number.TWO)));
+                Card.valueOf(Shape.HEART, Number.JACK),
+                Card.valueOf(Shape.HEART, Number.TEN)));
+        Cards cards = new Cards(List.of(Card.valueOf(Shape.DIAMOND, Number.TEN), Card.valueOf(Shape.DIAMOND, Number.TWO)));
         Player player = new Player("test", Money.from(1000), playerCards);
         Dealer dealer = new Dealer(cards);
         PlayerResult actual = PlayerResult.valueOf(dealer, player);
@@ -58,7 +58,7 @@ class PlayerResultTest {
     @Test
     @DisplayName("플레이어가 21이고 딜러가 블랙잭으로 점수가 같다면 플레이어가 진다.")
     void isSameScoreWithBlackjackTest() {
-        Cards playerCards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.CLOVER, Number.TEN), new Card(Shape.CLOVER, Number.ACE)));
+        Cards playerCards = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.JACK), Card.valueOf(Shape.CLOVER, Number.TEN), Card.valueOf(Shape.CLOVER, Number.ACE)));
         Player player = new Player("test", Money.from(1000), playerCards);
         Dealer dealer = new Dealer(JACK_ACE_BLACKJACK);
         PlayerResult actual = PlayerResult.valueOf(dealer, player);

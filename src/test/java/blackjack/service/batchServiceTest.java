@@ -23,8 +23,8 @@ class batchServiceTest {
     @Test
     @DisplayName("블랙잭으로 우승하면 1.5배, 그냥 우승은 1배, 패배는 -1배, 무승부는 0을 얻는다. 딜러의 수익과 플레이어의 수익의 합은 0이다.")
     void calculateTest() {
-        Cards blackJack = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.DIAMOND, Number.ACE)));
-        Cards initCards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.DIAMOND, Number.FIVE)));
+        Cards blackJack = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.JACK), Card.valueOf(Shape.DIAMOND, Number.ACE)));
+        Cards initCards = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.JACK), Card.valueOf(Shape.DIAMOND, Number.FIVE)));
         Map<Player, PlayerResult> statistics = new LinkedHashMap<>();
         statistics.put(new Player("giron", Money.from(1000), blackJack), PlayerResult.BLACKJACK);
         statistics.put(new Player("test1", Money.from(1000), initCards), PlayerResult.WIN);
@@ -45,7 +45,7 @@ class batchServiceTest {
     @Test
     @DisplayName("1원을 배팅했을때 블랙잭으로 우승하면 1.5원의 수익이 생긴다.")
     void calculateBetOneTest() {
-        Cards blackJack = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.DIAMOND, Number.ACE)));
+        Cards blackJack = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.JACK), Card.valueOf(Shape.DIAMOND, Number.ACE)));
         Map<Player, PlayerResult> statistics = new LinkedHashMap<>();
         statistics.put(new Player("giron", Money.from(1), blackJack), PlayerResult.BLACKJACK);
         UserProfitDto calculate = batchService.calculate(statistics);

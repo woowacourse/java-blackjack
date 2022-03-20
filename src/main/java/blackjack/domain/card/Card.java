@@ -23,7 +23,7 @@ public class Card {
         }
     }
 
-    public Card(Shape shape, Number number) {
+    private Card(Shape shape, Number number) {
         this.shape = shape;
         this.number = number;
     }

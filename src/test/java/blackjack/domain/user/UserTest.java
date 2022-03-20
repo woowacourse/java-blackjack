@@ -32,8 +32,8 @@ class UserTest {
     @Test
     @DisplayName("버스트가 안날 때, 플레이어가 딜러보다 점수가 높으면 True")
     void isGreaterScoreThanTest() {
-        Cards playerCards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK)));
-        Cards dealerCards = new Cards(List.of(new Card(Shape.CLOVER, Number.FOUR)));
+        Cards playerCards = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.JACK)));
+        Cards dealerCards = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.FOUR)));
         Player player = new Player("test", Money.from(1000), playerCards);
         Dealer dealer = new Dealer(dealerCards);
         assertThat(player.isGreaterScoreThan(dealer)).isTrue();
@@ -42,7 +42,7 @@ class UserTest {
     @Test
     @DisplayName("ACE와 10의 조합으로 블랙잭이면 True")
     void isBlackJackTest() {
-        Cards cards = new Cards(List.of(new Card(Shape.CLOVER, Number.ACE), new Card(Shape.CLOVER, Number.TEN)));
+        Cards cards = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.ACE), Card.valueOf(Shape.CLOVER, Number.TEN)));
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isBlackJack()).isTrue();
     }
@@ -57,9 +57,9 @@ class UserTest {
     @Test
     @DisplayName("유저가 카드를 받아 유저가 소지한 카드가 증가한다.")
     void addCardTest() {
-        Cards cards = new Cards(List.of(new Card(Shape.DIAMOND, Number.TEN)));
+        Cards cards = new Cards(List.of(Card.valueOf(Shape.DIAMOND, Number.TEN)));
         Dealer dealer = new Dealer(cards);
-        dealer.addCard(new Card(Shape.CLOVER, Number.ACE));
+        dealer.addCard(Card.valueOf(Shape.CLOVER, Number.ACE));
 
         assertThat(dealer.getCards().size()).isEqualTo(2);
     }
