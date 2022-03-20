@@ -32,7 +32,7 @@ public class BlackjackTable {
         return players.hitBy(name, deck.draw());
     }
 
-    public int countHitDealer() {
+    public int countHitByDealer() {
         int hitCount = 0;
         while (!players.isFinishedDealer()) {
             players.hitDealer(deck.draw());

@@ -21,7 +21,7 @@ public class BlackjackGame {
         for (Name name : blackjackTable.getPlayerNames()) {
             hit(blackjackTable, name);
         }
-        OutputView.printDealerHitCount(blackjackTable.countHitDealer());
+        OutputView.printDealerHitCount(blackjackTable.countHitByDealer());
     }
 
     private void hit(BlackjackTable blackjackTable, Name name) {
