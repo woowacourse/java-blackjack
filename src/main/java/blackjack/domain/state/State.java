@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.PlayRecord;
 
 public interface State {
 
@@ -11,4 +12,6 @@ public interface State {
     State stay();
 
     boolean isDrawable();
+
+    long revenue(PlayRecord playRecord, long bettingMoney);
 }

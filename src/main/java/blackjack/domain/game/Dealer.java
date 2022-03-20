@@ -32,6 +32,11 @@ public final class Dealer extends Participant {
         return Name.of(NAME);
     }
 
+    @Override
+    public long getRevenue(PlayRecord playRecord, long bettingMoney) {
+        return getState().revenue(playRecord, bettingMoney);
+    }
+
     public PlayRecord playerRecord(Player player) {
         if (isPlayerLoss(player)) {
             return LOSS;
