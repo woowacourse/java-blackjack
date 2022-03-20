@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Result {
-    LOSE(-1, (playerScore, dealerScore) -> playerScore < dealerScore && !isBust(dealerScore)),
     WIN(1, (playerScore, dealerScore) -> playerScore > dealerScore || isBust(dealerScore)),
+    LOSE(-1, (playerScore, dealerScore) -> playerScore < dealerScore && !isBust(dealerScore)),
     PUSH(0, Integer::equals),
     BLACKJACK(1.5);
 
@@ -27,9 +27,7 @@ public enum Result {
         return score > MAX_SCORE;
     }
 
-    public static Result judgeResult(int playerScore, int dealerScore, boolean isPlayerBlackJack,
-        boolean isDealerBlackJack) {
-
+    public static Result judgeResult(int playerScore, int dealerScore, boolean isPlayerBlackJack, boolean isDealerBlackJack) {
         if (isPlayerBlackJack && !isDealerBlackJack) {
             return Result.BLACKJACK;
         }
