@@ -12,13 +12,12 @@ public class BlackJackResults {
     private final Map<String, Integer> playerResults = new HashMap<>();
 
     public BlackJackResults(List<Player> players, Dealer dealer) {
-        addResults(players, dealer);
+        createResults(players, dealer);
     }
 
-    private void addResults(List<Player> players, Dealer dealer) {
+    private void createResults(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            BlackJackResult result = player.match(dealer);
-            playerResults.put(player.getName(), (int) (player.getBettingMoney() * result.getProfitRate()));
+            playerResults.put(player.getName(), player.getProfit(dealer));
         }
     }
 
