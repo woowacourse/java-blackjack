@@ -13,7 +13,7 @@ public final class Blackjack extends Finished {
     }
 
     @Override
-    public State compare(State other) {
+    public State compare(final State other) {
         if (privateArea.isDealer()) {
             return compareWithPlayer(other);
         }
