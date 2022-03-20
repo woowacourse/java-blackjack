@@ -16,8 +16,8 @@ public enum Outcome {
 		this.competeStander = competeStander;
 	}
 
-	public static Outcome of(int playerScore, int dealerScore) {
-		final int gapScore = playerScore - dealerScore;
+	public static Outcome of(int score, int targetScore) {
+		final int gapScore = score - targetScore;
 		return Arrays.stream(values())
 			.filter(outcome -> outcome.matchThisOutcome(gapScore))
 			.findFirst()
