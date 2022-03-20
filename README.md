@@ -23,70 +23,68 @@
 
 ## UI
 
-- [ ] 참여자 이름을 입력 받는다.
-    - [ ] 중복된 이름을 입력 받으면 다시 입력 받는다.
-    - [ ] 딜러라는 이름을 입력 받으면 다시 입력 받는다.
+- [x] 참여자 이름을 입력 받는다.
+    - [x] 중복된 이름을 입력 받으면 다시 입력 받는다.
+    - [x] 딜러라는 이름을 입력 받으면 다시 입력 받는다.
 
-- [ ] 배팅 금액을 입력 받는다.
-    - [ ] 배팅 금액이 1000 단위가 아니라면 다시 입력 받는다.
+- [x] 배팅 금액을 입력 받는다.
+    - [x] 배팅 금액이 1000 단위가 아니라면 다시 입력 받는다.
 
-- [ ] 카드를 두 장씩 받는다.
-    - [ ] 보유 카드를 출력한다.
-        - [ ] 딜러는 한 장만 오픈한다.
+- [x] 카드를 두 장씩 받는다.
+    - [x] 보유 카드를 출력한다.
+        - [x] 딜러는 한 장만 오픈한다.
 
-- [ ] player 들의 hit 여부를 입력 받는다.
-    - [ ] Y: 카드를 한 장 더 받는다.
-    - [ ] N: 카드를 받지 않는다.
-    - [ ] 보유 카드를 출력한다.
+- [x] player 들의 hit 여부를 입력 받는다.
+    - [x] Y: 카드를 한 장 더 받는다.
+    - [x] N: 카드를 받지 않는다.
+    - [x] 보유 카드를 출력한다.
 
-- [ ] dealer 가 hit 한다.
+- [x] dealer 가 hit 한다.
 
-- [ ] 모든 참가자들의 카드와 총점을 출력한다.
+- [x] 모든 참가자들의 카드와 총점을 출력한다.
 
-- [ ] 최종 수익을 출력한다.
+- [x] 최종 수익을 출력한다.
 
 ## 객체
 
-- [ ] BlackjackApplication 은 Participant dealer 와 List<Participant> players 를 가지고 있다.
+- [x] BlackjackApplication 은 Participant dealer 와 List<Participant> players 를 가지고 있다.
 
-- [ ] Participant 는 State 를 가지고 있다.
-    - [ ] abstract hit (State) void
-    - [ ] stay (State) void
-    - [ ] getCards (State) return List<Card>
-    - [ ] initCards 카드를 두 장 받는다. (State) void
-    - [ ] getTotalScore (State) return int
-    - [ ] getProfit (Participant) return int
-    - [ ] getName (State) return String
+- [x] Participant 는 State 를 가지고 있다.
+    - [x] abstract hit (State) void
+    - [x] stay (State) void
+    - [x] getCards (State) return List<Card>
+    - [x] initCards 카드를 두 장 받는다. (State) void
+    - [x] getTotalScore (State) return int
+    - [x] getProfit (Participant) return int
+    - [x] getName (State) return String
 
-- [ ] State 는 privateArea, Chip 을 가지고 있다.
+- [x] State 는 privateArea, Chip 을 가지고 있다.
     - [x] abstract draw(Card) return State
     - [x] abstract compare(State) return State
     - [x] abstract stay() return State
     - [x] abstract getProfit() return int
-    - [ ] getCards() return List<Card>
-    - [ ] getName() return String
+    - [x] getCards() return List<Card>
+    - [x] getName() return String
     - [x] getTotalScore() return int
 
-- [ ] privateArea 는 List<Card> 와 이름(String)을 가지고 있다.
+- [x] privateArea 는 List<Card> 와 이름(String)을 가지고 있다.
     - [x] addCard return void
     - [x] getTotalScore return int
-    - [ ] getCards() return List<Card>
-    - [ ] getName() return String
+    - [x] getCards() return List<Card>
+    - [x] getName() return String
     - [x] getSize() return int
     - [x] isBust
     - [x] isBlackjack
     - [x] isDealer
 
-- [ ] PlayerName 으로 이름 생성
-    - [ ] 이름이 딜러일 경우 예외 발생
+- [x] PlayerName 으로 이름 생성
+    - [x] 이름이 딜러일 경우 예외 발생
 
-- [ ] Chip 로 배팅금액 생성
-    - [ ] 배팅 금액이 1000 단위가 아니라면 예외 발생
+- [x] Chip 로 배팅금액 생성
+    - [x] 배팅 금액이 1000 단위가 아니라면 예외 발생
 
-- [ ] Player PlayerName 과 Chip 으로 생성된다.
+- [x] Dealer 는 생성 시 파라미터가 필요없다.
+    - [x] hit(overriding, 카드 합이 17이상이면 State.stay() 하고 throw Exception)
 
-- [ ] Dealer 는 생성 시 파라미터가 필요없다.
-    - [ ] hit(overriding, 카드 합이 17이상이면 State.stay() 하고 throw Exception)
-
-- [ ] Player 는 PlayerName, Chip 으로 생성 된다.
-    - [ ] hit(overriding, State.draw())
+- [x] Player 는 PlayerName, Chip 으로 생성 된다.
+    - [x] hit(overriding, State.draw())
