@@ -41,19 +41,21 @@ public final class BlackJackGame {
         return users.isDealerBlackjack();
     }
 
-    public void hitOrStayCardsPlayer(Function<User, Supplier<Boolean>> function, Consumer<User> consumer) {
+    public void hitOrStayCardsPlayer(Function<User, Supplier<Boolean>> playerHitSupplierFunction,
+        Consumer<User> userConsumer) {
+
         for (Player player : users.getPlayers()) {
-            hitOrStayCards(player, new PlayerHitStrategy(function.apply(player)), consumer);
+            hitOrStayCards(player, new PlayerHitStrategy(playerHitSupplierFunction.apply(player)), userConsumer);
         }
     }
 
-    public void hitOrStayCardsDealer(Consumer<User> consumer) {
-        hitOrStayCards(users.getDealer(), new DealerHitStrategy(() -> users.getDealer().getScore()), consumer);
+    public void hitOrStayCardsDealer(Consumer<User> userConsumer) {
+        hitOrStayCards(users.getDealer(), new DealerHitStrategy(() -> users.getDealer().getScore()), userConsumer);
     }
 
-    private void hitOrStayCards(User user, HitStrategy strategy, Consumer<User> consumer) {
+    private void hitOrStayCards(User user, HitStrategy strategy, Consumer<User> userConsumer) {
         while (user.hitOrStay(deck, strategy)) {
-            consumer.accept(user);
+            userConsumer.accept(user);
         }
     }
 
