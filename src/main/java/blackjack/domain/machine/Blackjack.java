@@ -12,16 +12,11 @@ public class Blackjack {
 
     private final CardPickMachine cardPickMachine;
 
-    private Blackjack(NumberGenerator numberGenerator, Dealer dealer, Players players) {
+    public Blackjack() {
         this.cardPickMachine = new CardPickMachine();
-        dealInitialCards(numberGenerator, dealer, players);
     }
 
-    public static Blackjack of(NumberGenerator numberGenerator, Dealer dealer, Players players) {
-        return new Blackjack(numberGenerator, dealer, players);
-    }
-
-    private void dealInitialCards(NumberGenerator numberGenerator, Dealer dealer, Players players) {
+    public void dealInitialCards(NumberGenerator numberGenerator, Dealer dealer, Players players) {
         for (int i = 0; i < NUMBER_OF_INIT_CARD; ++i) {
             dealer.addCard(cardPickMachine.pickCard(numberGenerator));
             players.addCards(cardPickMachine, numberGenerator);

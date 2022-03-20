@@ -29,7 +29,8 @@ public class RecordsTest {
         Players players = new Players(playersInfo);
         Dealer dealer = new Dealer();
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 11, 15, 9));
-        Blackjack blackjack = Blackjack.of(intendedNumberGenerator, dealer, players);
+        Blackjack blackjack = new Blackjack();
+        blackjack.dealInitialCards(intendedNumberGenerator, dealer, players);
 
         //dealer: 12점, player: 7점(범블비), 14점(잉)
         dto = blackjack.record(dealer, players);

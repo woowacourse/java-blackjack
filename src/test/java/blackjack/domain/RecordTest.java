@@ -32,7 +32,8 @@ public class RecordTest {
         dealer = new Dealer();
         IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 8));
 
-        Blackjack.of(intendedNumberGenerator, dealer, players);
+        Blackjack blackjack = new Blackjack();
+        blackjack.dealInitialCards(intendedNumberGenerator, dealer, players);
         cardPickMachine = new CardPickMachine();
 
         //dealer: 12점, player: 12점

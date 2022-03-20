@@ -34,7 +34,8 @@ public class BlackjackTest {
         players = new Players(playersInfo);
         dealer = new Dealer();
         intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6));
-        blackjack = Blackjack.of(intendedNumberGenerator, dealer, players);
+        blackjack = new Blackjack();
+        blackjack.dealInitialCards(intendedNumberGenerator, dealer, players);
     }
 
     @DisplayName("플레이어, 딜러 카드 두장 분배 테스트")

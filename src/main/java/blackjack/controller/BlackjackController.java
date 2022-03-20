@@ -17,7 +17,8 @@ public class BlackjackController {
 
         Dealer dealer = new Dealer();
         Players players = new Players(playerNames);
-        Blackjack blackjack = Blackjack.of(RandomNumberGenerator.getInstance(), dealer, players);
+        Blackjack blackjack = new Blackjack();
+        blackjack.dealInitialCards(RandomNumberGenerator.getInstance(), dealer, players);
 
         OutputView.printInitStatus(dealer, players.getPlayers());
         progressGame(blackjack, players, dealer);
