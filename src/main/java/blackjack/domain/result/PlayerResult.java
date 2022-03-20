@@ -3,50 +3,61 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.function.BiPredicate;
-
 public enum PlayerResult {
 
-    BLACKJACK_WIN(1.5, PlayerResult::isBlackjackWin),
-    WIN(1, PlayerResult::isWin),
-    DRAW(0, PlayerResult::isDraw),
-    LOSS(-1, PlayerResult::isLoss);
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSS(-1);
 
     private final double profitRate;
-    private final BiPredicate<Player, Dealer> predicate;
 
-    PlayerResult(final double profitRate, final BiPredicate<Player, Dealer> predicate) {
+    PlayerResult(final double profitRate) {
         this.profitRate = profitRate;
-        this.predicate = predicate;
     }
 
     public static PlayerResult of(final Player player, final Dealer dealer) {
-        return Arrays.stream(values())
-                .filter(result -> result.predicate.test(player, dealer))
-                .findAny()
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 결과입니다."));
+        if (player.isBust() || dealer.isBust()) {
+            return checkBust(player);
+        }
+
+        if (player.isBlackjack() || dealer.isBlackjack()) {
+            return checkBlackjack(player, dealer);
+        }
+
+        return compareScore(player, dealer);
     }
 
-    private static boolean isBlackjackWin(Player player, Dealer dealer) {
-        return player.isBlackjack() && !dealer.isBlackjack();
+    private static PlayerResult checkBust(final Player player) {
+        if (player.isBust()) {
+            return LOSS;
+        }
+
+        return WIN;
     }
 
-    private static boolean isLoss(Player player, Dealer dealer) {
-        return (player.isBust()) ||
-                (!player.isBlackjack() && dealer.isBlackjack()) ||
-                (dealer.hasHigherScoreThan(player));
+    private static PlayerResult checkBlackjack(final Player player, final Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return DRAW;
+        }
+
+        if (player.isBlackjack()) {
+            return BLACKJACK_WIN;
+        }
+
+        return LOSS;
     }
 
-    private static boolean isDraw(Player player, Dealer dealer) {
-        return (dealer.isBlackjack() && player.isBlackjack()) ||
-                (player.hasSameScoreWith(dealer) && !player.isBust());
-    }
+    private static PlayerResult compareScore(final Player player, final Dealer dealer) {
+        if (player.hasSameScoreWith(dealer)) {
+            return DRAW;
+        }
 
-    private static boolean isWin(Player player, Dealer dealer) {
-        return (dealer.isBust() && !player.isBust()) ||
-                (player.hasHigherScoreThan(dealer) && !player.isBust());
+        if (player.hasHigherScoreThan(dealer)) {
+            return WIN;
+        }
+
+        return LOSS;
     }
 
     public double getProfitRate() {
