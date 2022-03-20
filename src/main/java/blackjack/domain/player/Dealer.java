@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Deck;
 import blackjack.domain.state.Ready;
 
-public class Dealer extends AbstractPlayer implements Player {
+public class Dealer extends AbstractPlayer {
 
     private static final String DEALER_NAME = "딜러";
 

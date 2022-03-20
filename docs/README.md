@@ -156,4 +156,6 @@
 - [ ] Card를 캐시한 부분을 간단하게 변경할 수 없을까?
 - [ ] 내가 생각하는 중요한 도메인만이라도 커버리지 100%를 채워보면 어떤가?
 - [ ] 컨트롤러에서 Player가 hit하는 부분을 더 간결하게 변경할 수 없을까?
-- [ ] AbstractPlayer가 Player를 구현하고 있는데 implements Player를 적은 이유가 무엇일까?
+- [x] AbstractPlayer가 Player를 구현하고 있는데 implements Player를 적은 이유가 무엇일까?
+    - 다른 크루의 코드와 HashMap 등을 보다보니 추상클래스와 인터페이스를 모두 extends, implements가 있어서 적용해봤다.
+    - 이유는 생각해보지 않았는데 그 크루에게 물어보니 해도 되겠지만 하지않아도 된다는 말을 듣고 제거했다.

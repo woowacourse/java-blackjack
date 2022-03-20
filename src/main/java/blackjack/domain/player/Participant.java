@@ -6,7 +6,7 @@ import blackjack.domain.bet.Profit;
 import blackjack.domain.card.Deck;
 import blackjack.domain.state.Ready;
 
-public class Participant extends AbstractPlayer implements Player {
+public class Participant extends AbstractPlayer {
 
     private final BetMoney money;
 
