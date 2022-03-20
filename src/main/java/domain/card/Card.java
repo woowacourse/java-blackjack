@@ -26,8 +26,8 @@ public class Card {
 
     public static Card getCard(Rank rank, Suit suit) {
         return cache.stream()
-                .filter(card -> card.getRank().equals(rank))
-                .filter(card -> card.getSuit().equals(suit))
+                .filter(card -> card.rank.equals(rank))
+                .filter(card -> card.suit.equals(suit))
                 .findFirst()
                 .orElse(new Card(rank, suit));
     }
@@ -48,13 +48,5 @@ public class Card {
 
     public String combineRankAndSuit() {
         return rank.getRank() + suit.getSuit();
-    }
-
-    private Rank getRank() {
-        return rank;
-    }
-
-    private Suit getSuit() {
-        return suit;
     }
 }
