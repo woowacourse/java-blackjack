@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards;
 
 public abstract class Started implements Status {
 
-    private final Cards cards;
+    protected final Cards cards;
 
     protected Started(Cards cards) {
         this.cards = new Cards(cards.getCards());

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.result.BlackjackMatch;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,16 +38,35 @@ class BlackjackTest {
     @Test
     @DisplayName("턴이 끝난 상태로 나타내는지 테스트")
     void isFinished() {
-        final Status status = new Blackjack(cards);
-
         assertThat(status.isFinished()).isTrue();
     }
 
     @Test
     @DisplayName("턴이 진행중인 상태로 나타내지 않는지 테스트")
     void isRunning() {
-        final Status status = new Blackjack(cards);
-
         assertThat(status.isRunning()).isFalse();
+    }
+
+    @Test
+    @DisplayName("상대방이 블랙잭이 아닌 경우 승리하는지 테스트")
+    void showMatchOpponentNotBlackjack() {
+        final Status anotherStatus = new Stay(new Cards(Set.of(Card.from(Suit.CLOVER, Denomination.JACK),
+                Card.from(Suit.DIAMOND, Denomination.THREE))));
+
+        assertThat(status.showMatch(anotherStatus)).isEqualTo(BlackjackMatch.WIN);
+    }
+
+    @Test
+    @DisplayName("상대방이 블랙잭인 경우 무승부하는지 테스트")
+    void showMatchOpponentBlackjack() {
+        final Status anotherStatus = new Blackjack(cards);
+
+        assertThat(status.showMatch(anotherStatus)).isEqualTo(BlackjackMatch.DRAW);
+    }
+
+    @Test
+    @DisplayName("블랙잭으로 이긴 경우 수익률 1.5배 테스트")
+    void profitRatio() {
+        assertThat(status.profitRate(BlackjackMatch.WIN)).isEqualTo(1.5);
     }
 }

@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.BlackjackMatch;
 
 public abstract class Finished extends Started {
 
@@ -11,6 +12,10 @@ public abstract class Finished extends Started {
     protected Finished(Cards cards) {
         super(cards);
     }
+
+    public abstract BlackjackMatch showMatch(Status status);
+    
+    public abstract double profitRate(BlackjackMatch blackjackMatch);
 
     @Override
     public final Status draw(Card card) {
