@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Dealer;
+import blackjack.domain.entry.Participant;
+import blackjack.domain.entry.Players;
 import blackjack.domain.entry.vo.BettingMoney;
 import blackjack.domain.entry.vo.Name;
 import java.util.List;
@@ -46,20 +48,12 @@ public class BlackjackTable {
         return players.getNames();
     }
 
-    public Map<Name, List<Card>> getPlayers() {
-        return players.getPlayerCards();
+    public List<Participant> getAllPlayers() {
+        return players.getAllPlayers();
     }
 
-    public Map<String, Double> getPlayersEarningMoney() {
-        return players.getPlayerEarningMoney();
-    }
-
-    public Dealer getDealer() {
-        return players.getDealer();
-    }
-
-    public Map<Name, HoldCards> getAllPlayers() {
-        return players.getAllPlayersCard();
+    public Map<Participant, Double> getGameResult() {
+        return players.getAllProfit();
     }
 
     private Dealer createDealer() {

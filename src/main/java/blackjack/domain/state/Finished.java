@@ -38,6 +38,11 @@ public abstract class Finished implements State {
         return earningRate(dealer) * money.getAmount();
     }
 
+    @Override
+    public final int score() {
+        return holdCards.countBestNumber();
+    }
+
     protected abstract double earningRate(Dealer dealer);
 
     @Override

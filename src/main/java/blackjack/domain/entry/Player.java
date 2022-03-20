@@ -8,15 +8,14 @@ import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
 import java.util.List;
 
-public class Player {
+public class Player extends Participant {
 
-    private final Name name;
     private final BettingMoney bettingMoney;
     private State state;
 
     public Player(Name name, BettingMoney bettingMoney) {
+        super(name);
         validateName(name);
-        this.name = name;
         this.bettingMoney = bettingMoney;
     }
 
@@ -36,7 +35,7 @@ public class Player {
         return state.isFinished();
     }
 
-    public double profit(BettingMoney bettingMoney, Dealer dealer) {
+    public double profit(Dealer dealer) {
         return state.profit(bettingMoney, dealer);
     }
 
@@ -47,19 +46,26 @@ public class Player {
     }
 
     public boolean equalsName(Name name) {
-        return this.name.equals(name);
+        return getName().equals(name);
     }
 
     public HoldCards getHoldCards() {
         return state.getHoldCards();
     }
 
-    public List<Card> getCards() {
-        return state.getHoldCards().getCards();
+    @Override
+    public int getScore() {
+        return state.score();
     }
 
-    public Name getName() {
-        return name;
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return state.getHoldCards().getCards();
     }
 
     public BettingMoney getBettingMoney() {

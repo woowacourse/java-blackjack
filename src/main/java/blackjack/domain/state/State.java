@@ -17,5 +17,7 @@ public interface State {
 
     double profit(BettingMoney bettingMoney, Dealer dealer);
 
+    int score();
+
     HoldCards getHoldCards();
 }

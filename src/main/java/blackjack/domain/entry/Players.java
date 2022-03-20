@@ -1,12 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.entry;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.Dealer;
-import blackjack.domain.entry.Player;
 import blackjack.domain.entry.vo.BettingMoney;
 import blackjack.domain.entry.vo.Name;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,34 +57,6 @@ public class Players {
             .anyMatch(Player::isFinished);
     }
 
-    public Map<Name, List<Card>> getPlayerCards() {
-        return players.stream()
-            .collect(Collectors.toMap(Player::getName, player -> player.getHoldCards().getCards()));
-    }
-
-    public Map<String, Double> getPlayerEarningMoney() {
-        Map<String, Double> result = new LinkedHashMap<>();
-        for (Player player : players) {
-            BettingMoney bettingMoney = player.getBettingMoney();
-            result.put(player.getName().getValue(), player.profit(bettingMoney, dealer));
-        }
-        return result;
-    }
-
-    public Map<Name, HoldCards> getAllPlayersCard() {
-        Map<Name, HoldCards> allPlayers = new LinkedHashMap<>();
-        allPlayers.put(Name.DEALER, dealer.getHoldCards());
-        allPlayers.putAll(players.stream()
-            .collect(Collectors.toMap(Player::getName, Player::getHoldCards)));
-        return allPlayers;
-    }
-
-    public List<Name> getNames() {
-        return players.stream()
-            .map(Player::getName)
-            .collect(Collectors.toList());
-    }
-
     private void validateSize(Map<Name, BettingMoney> players) {
         if (players.size() > MAXIMUM_PLAYERS_SIZE) {
             throw new IllegalArgumentException("최대 참가자 수는 25명입니다.");
@@ -104,5 +74,33 @@ public class Players {
             .filter(player -> player.equalsName(name))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 플에이어가 존재하지 않습니다."));
+    }
+
+    public List<Name> getNames() {
+        return players.stream()
+            .map(Player::getName)
+            .collect(Collectors.toList());
+    }
+
+    public List<Participant> getAllPlayers() {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(players);
+        return participants;
+    }
+
+    public Map<Participant, Double> getAllProfit() {
+        Map<Participant, Double> playerProfits = new LinkedHashMap<>();
+        playerProfits.put(dealer, sumDealerProfit(dealer));
+        for (Player player : players) {
+            playerProfits.put(player, player.profit(dealer));
+        }
+        return playerProfits;
+    }
+
+    private double sumDealerProfit(Dealer dealer) {
+        return players.stream()
+            .mapToDouble(player -> player.profit(dealer))
+            .sum() * -1;
     }
 }

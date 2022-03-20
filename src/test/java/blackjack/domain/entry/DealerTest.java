@@ -5,6 +5,7 @@ import static blackjack.fixtures.BlackjackFixtures.SPADE_NINE;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_SEVEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.HoldCards;
+import blackjack.domain.entry.vo.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,7 @@ class DealerTest {
     void getDealerName() {
         Dealer dealer = new Dealer(HoldCards.initTwoCards(SPADE_NINE, SPADE_EIGHT));
 
-        assertThat(dealer.getName()).isEqualTo("딜러");
+        assertThat(dealer.getName()).isEqualTo(new Name("딜러"));
     }
 
 }

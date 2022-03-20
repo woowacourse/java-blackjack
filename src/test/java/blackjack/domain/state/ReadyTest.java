@@ -115,6 +115,16 @@ class ReadyTest {
     }
 
     @Test
+    @DisplayName("플레이를 진행중에 점수를 확인하는 경우 예외를 발생한다.")
+    void getScoreRunningState() {
+        State ready = new Ready(new HoldCards());
+
+        assertThatIllegalStateException()
+            .isThrownBy(ready::score)
+            .withMessage("Running 상태에서 점수를 확인할 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("플레이를 진행중에 수익을 확인하는 경우 예외를 발생한다.")
     void profitByRunning() {
         State ready = new Ready(new HoldCards());

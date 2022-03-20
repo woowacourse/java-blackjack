@@ -17,7 +17,7 @@ public final class Stay extends Finished {
         if (dealer.isBust()) {
             return STAY_RATE;
         }
-        if (dealer.countCards() >= getHoldCards().countBestNumber()) {
+        if (dealer.getScore() >= getHoldCards().countBestNumber()) {
             return LOSE_RATE;
         }
         return STAY_RATE;

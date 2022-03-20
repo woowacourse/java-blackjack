@@ -3,12 +3,10 @@ package blackjack;
 import blackjack.domain.BlackjackTable;
 import blackjack.domain.Command;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.vo.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
@@ -16,7 +14,7 @@ public class BlackjackGame {
         // 카드 분배
         BlackjackTable blackjackTable = new BlackjackTable(InputView.inputNameAndBettingMoney());
         blackjackTable.divideCardByAllPlayers();
-        OutputView.printAllCards(blackjackTable.getDealer(), blackjackTable.getPlayers());
+        OutputView.printAllCards(blackjackTable.getAllPlayers());
 
         // HIT
         for (Name name : blackjackTable.getPlayerNames()) {
@@ -25,11 +23,8 @@ public class BlackjackGame {
         OutputView.printDealerHitCount(blackjackTable.countHitDealer());
 
         // 결과
-        Map<Name, HoldCards> players = blackjackTable.getAllPlayers();
-        for (Name name : players.keySet()) {
-            OutputView.printResult(name.getValue(), players.get(name).getCards(), players.get(name).countBestNumber());
-        }
-        OutputView.printGameResult(blackjackTable.getPlayersEarningMoney());
+        OutputView.printCardResult(blackjackTable.getAllPlayers());
+        OutputView.printGameResult(blackjackTable.getGameResult());
     }
 
     private void hit(BlackjackTable blackjackTable, Name name) {

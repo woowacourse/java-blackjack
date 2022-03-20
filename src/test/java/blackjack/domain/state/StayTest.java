@@ -1,6 +1,8 @@
 package blackjack.domain.state;
 
 import static blackjack.fixtures.BlackjackFixtures.SPADE_EIGHT;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_FOUR;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_NINE;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_SEVEN;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_THREE;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_TWO;
@@ -43,7 +45,9 @@ public class StayTest {
         State state = Ready.start(SPADE_SEVEN, SPADE_EIGHT).stay();
 
         Dealer tenDealer = TEN_DEALER;
-        tenDealer.addCard(SPADE_EIGHT);
+        tenDealer.addCard(SPADE_FOUR);
+        tenDealer.addCard(SPADE_NINE);
+
         assertThat(state.profit(new BettingMoney(1000), tenDealer)).isEqualTo(1000);
     }
 
