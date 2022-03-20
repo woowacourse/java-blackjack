@@ -22,4 +22,8 @@ public abstract class State {
     public final boolean isBust() {
         return privateArea.isBust();
     }
+
+    public final boolean isBlackjack() {
+        return privateArea.isBlackjack();
+    }
 }
