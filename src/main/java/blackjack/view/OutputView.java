@@ -44,13 +44,13 @@ public class OutputView {
     }
 
     private static void appendDealerFormat(final Player dealer, final StringBuilder stringBuilder) {
-        List<Card> cards = dealer.openCards();
+        List<Card> dealerCards = dealer.openCards();
         stringBuilder.append(
-            String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, joinCards(cards)));
+            String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, joinCards(dealerCards)));
     }
 
-    private static String joinCards(final List<Card> cards) {
-        return cards.stream()
+    private static String joinCards(final List<Card> playerCards) {
+        return playerCards.stream()
             .map(Card::getName)
             .collect(joining(PRINT_JOINING_DELIMITER));
     }

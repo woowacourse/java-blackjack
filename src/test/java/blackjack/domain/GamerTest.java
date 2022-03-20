@@ -44,11 +44,11 @@ public class GamerTest {
     void openTwoCards() {
         Gamer gamer = initGamer();
 
-        List<Card> cards = gamer.openCards();
+        List<Card> gamerCards = gamer.openCards();
         assertAll(
-            () -> assertThat(cards).contains(new Card(Suit.CLOVER, Denomination.JACK)
+            () -> assertThat(gamerCards).contains(new Card(Suit.CLOVER, Denomination.JACK)
                 , new Card(Suit.DIAMOND, Denomination.QUEEN)),
-            () -> assertThat(cards.size()).isEqualTo(2)
+            () -> assertThat(gamerCards.size()).isEqualTo(2)
         );
     }
 

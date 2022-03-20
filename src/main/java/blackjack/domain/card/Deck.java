@@ -12,19 +12,19 @@ public class Deck {
 
     private static final int EMPTY_DECK_SIZE = 0;
 
-    private final Stack<Card> cards;
+    private final Stack<Card> deck;
 
-    private Deck(final Stack<Card> cards) {
-        this.cards = cards;
+    private Deck(final Stack<Card> playerCards) {
+        this.deck = playerCards;
     }
 
     public static Deck initializeDeck() {
-        Stack<Card> cards = new Stack<>();
+        Stack<Card> deck = new Stack<>();
         for (Suit suit : Suit.values()) {
-            cards.addAll(createCardsByDenominationValue(suit));
+            deck.addAll(createCardsByDenominationValue(suit));
         }
-        Collections.shuffle(cards);
-        return new Deck(cards);
+        Collections.shuffle(deck);
+        return new Deck(deck);
     }
 
     private static List<Card> createCardsByDenominationValue(final Suit suit) {
@@ -35,11 +35,11 @@ public class Deck {
 
     public Card draw() {
         checkCardSize();
-        return cards.pop();
+        return deck.pop();
     }
 
     private void checkCardSize() {
-        if (cards.size() == EMPTY_DECK_SIZE) {
+        if (deck.size() == EMPTY_DECK_SIZE) {
             throw new IllegalStateException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
         }
     }
