@@ -9,10 +9,10 @@ public class Result {
 
     private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
 
-    private final Map<Name, Versus> playerResults;
+    private final Map<Name, Versus> maps;
 
-    private Result(Map<Name, Versus> playerResults) {
-        this.playerResults = Map.copyOf(playerResults);
+    private Result(Map<Name, Versus> maps) {
+        this.maps = Map.copyOf(maps);
     }
 
     public static Result generateResultAtDealerBlackJack(Dealer dealer, Players players) {
@@ -31,24 +31,24 @@ public class Result {
     }
 
     public Versus getVersusOfPlayer(Name name) {
-        return playerResults.get(name);
+        return maps.get(name);
     }
 
     public int countDealerWin() {
-        return (int) playerResults.keySet().stream()
-                .filter(key -> playerResults.get(key) == Versus.LOSE)
+        return (int) maps.keySet().stream()
+                .filter(key -> maps.get(key) == Versus.LOSE)
                 .count();
     }
 
     public int countDealerDraw() {
-        return (int) playerResults.keySet().stream()
-                .filter(key -> playerResults.get(key) == Versus.DRAW)
+        return (int) maps.keySet().stream()
+                .filter(key -> maps.get(key) == Versus.DRAW)
                 .count();
     }
 
     public int countDealerLose() {
-        return (int) playerResults.keySet().stream()
-                .filter(key -> playerResults.get(key) == Versus.WIN)
+        return (int) maps.keySet().stream()
+                .filter(key -> maps.get(key) == Versus.WIN)
                 .count();
     }
 }

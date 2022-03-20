@@ -12,10 +12,10 @@ public class Profit {
     private static final double BLACK_JACK_BONUS_PROFIT_RATE = 1.5;
     private static final int DEFAULT_PROFIT_RATE = 1;
 
-    private final Map<Name, Double> profit;
+    private final Map<Name, Double> maps;
 
-    public Profit(Map<Name, Double> profit) {
-        this.profit = Map.copyOf(profit);
+    public Profit(Map<Name, Double> maps) {
+        this.maps = Map.copyOf(maps);
     }
 
     public static Profit generateProfits(Result result, BettingReceipt bettingReceipt, Players players) {
@@ -48,12 +48,12 @@ public class Profit {
     }
 
     public double getProfit(Name name) {
-        return profit.get(name);
+        return maps.get(name);
     }
 
     public double calculateDealerProfit() {
-        return profit.keySet().stream()
-                .mapToDouble(profit::get)
+        return maps.keySet().stream()
+                .mapToDouble(maps::get)
                 .sum() * (-1);
     }
 }
