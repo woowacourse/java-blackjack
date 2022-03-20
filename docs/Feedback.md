@@ -198,8 +198,8 @@
     - [x] `profit` -> `getProfitOf` 이름 수정
     - [x] `getGameResult`과 `porfit` 메서드는 하나가 불필요한 메서드
       - `Map`을 통해 값을 가져올 수 있어 `profit()`메서드 제거
-- [ ] `Card`
-    - [ ] 사용하지 않는 코드(주석) 제거
+- [x] `Card`
+    - [x] 사용하지 않는 코드(주석) 제거
 - [ ] `Gambler`, `Cards`
     - 동일한 이름의 상수가 선언되어 있다. 서로 다른 의미를 가진 상수인지?
 - [ ] `Cards`
