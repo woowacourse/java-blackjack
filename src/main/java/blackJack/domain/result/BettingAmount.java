@@ -4,13 +4,13 @@ public class BettingAmount {
 
     private final int bettingAmount;
 
+    public BettingAmount(String bettingAmount) {
+        this(toInt(bettingAmount));
+    }
+
     public BettingAmount(int bettingAmount) {
         validatePositiveNumber(bettingAmount);
         this.bettingAmount = bettingAmount;
-    }
-
-    public BettingAmount(String bettingAmount) {
-        this(toInt(bettingAmount));
     }
 
     private static int toInt(String bettingAmount) {

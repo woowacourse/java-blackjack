@@ -15,11 +15,21 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
+    public Participants(List<String> playerNames) {
+        this(new Dealer(), convertToPlayers(playerNames));
+    }
+
     private Participants(Dealer dealer, List<Player> players) {
         validateDuplicatePlayerName(players);
         validatePlayerCount(players);
         this.dealer = dealer;
         this.players = players;
+    }
+
+    private static List<Player> convertToPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void validateDuplicatePlayerName(List<Player> players) {
@@ -32,16 +42,6 @@ public class Participants {
         if (players.size() < MINIMUM_COUNT || players.size() > MAXIMUM_COUNT) {
             throw new IllegalArgumentException(ERROR_MESSAGE_PLAYER_COUNT);
         }
-    }
-
-    public Participants(List<String> playerNames) {
-        this(new Dealer(), convertToPlayers(playerNames));
-    }
-
-    private static List<Player> convertToPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
     }
 
     public Dealer getDealer() {
