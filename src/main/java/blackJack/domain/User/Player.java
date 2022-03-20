@@ -17,12 +17,5 @@ public class Player extends User {
         }
         return false;
     }
-
-    public Result judgeByBlackjack() {
-        if (isBlackJack()) {
-            return Result.DRAW;
-        }
-        return Result.LOSE;
-    }
 }
 
