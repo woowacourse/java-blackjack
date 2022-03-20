@@ -13,27 +13,20 @@ public class BettingResult {
         this.result = result;
     }
 
-    public Map<String, Double> getPlayerResult() {
-        return calculateResult();
+    public Map<Player, Profit> getPlayerResult() {
+        return calculateProfit();
     }
 
-    public double getDealerResult() {
-        double total = 0;
-
-        for (double value : calculateResult().values()) {
-            total += (value * -1);
-        }
-
-        return total;
+    public Profit getDealerResult() {
+        return Profit.calculateDealerProfit(calculateProfit());
     }
 
-
-    private Map<String, Double> calculateResult() {
-        Map<String, Double> playersProfit = new HashMap<>();
+    private Map<Player, Profit> calculateProfit() {
+        Map<Player, Profit> playersProfit = new HashMap<>();
 
         for (Map.Entry<Player, PlayerResult> entry : result.entrySet()) {
-            double profit = entry.getKey().getBettingAmount() * entry.getValue().getProfitRate();
-            playersProfit.put(entry.getKey().getName(), profit);
+            Profit profit = Profit.calculatePlayerProfit(entry.getKey(), entry.getValue());
+            playersProfit.put(entry.getKey(), profit);
         }
 
         return playersProfit;

@@ -6,6 +6,7 @@ import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.dto.BettingResultDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +34,9 @@ class BettingResultTest {
         playerResults.put(players.getStatuses().get(0), WIN);
 
         final BettingResult bettingResult = new BettingResult(playerResults);
+        final BettingResultDto resultDto = BettingResultDto.toDto(bettingResult);
 
-        assertThat(bettingResult.getPlayerResult()).isEqualTo(expected);
+        assertThat(resultDto.getPlayerResult()).isEqualTo(expected);
     }
 
     @Test
@@ -52,8 +54,9 @@ class BettingResultTest {
         playerResults.put(players.getStatuses().get(0), LOSS);
 
         final BettingResult bettingResult = new BettingResult(playerResults);
+        final BettingResultDto resultDto = BettingResultDto.toDto(bettingResult);
 
-        assertThat(bettingResult.getPlayerResult()).isEqualTo(expected);
+        assertThat(resultDto.getPlayerResult()).isEqualTo(expected);
     }
 
     @Test
@@ -71,8 +74,9 @@ class BettingResultTest {
         playerResults.put(players.getStatuses().get(0), BLACKJACK_WIN);
 
         final BettingResult bettingResult = new BettingResult(playerResults);
+        final BettingResultDto resultDto = BettingResultDto.toDto(bettingResult);
 
-        assertThat(bettingResult.getPlayerResult()).isEqualTo(expected);
+        assertThat(resultDto.getPlayerResult()).isEqualTo(expected);
     }
 
     @Test
@@ -93,6 +97,6 @@ class BettingResultTest {
 
         double expected = 7000;
 
-        assertThat(bettingResult.getDealerResult()).isEqualTo(expected);
+        assertThat(bettingResult.getDealerResult().getAmount()).isEqualTo(expected);
     }
 }

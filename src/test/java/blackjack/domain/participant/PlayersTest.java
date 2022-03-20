@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.BettingResult;
+import blackjack.dto.BettingResultDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -91,9 +93,10 @@ public class PlayersTest {
                         final Map<String, Double> expected) {
         final Dealer dealer = Dealer.startWithTwoCards(new Deck(dealerCards));
         final Players players = Players.startWithTwoCards(names, bets, new Deck(playersCards));
-        final Map<String, Double> actual = players.compareScore(dealer).getPlayerResult();
+        final BettingResult actual = players.compareScore(dealer);
+        final BettingResultDto resultDto = BettingResultDto.toDto(actual);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(resultDto.getPlayerResult()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideForCompareCardTotalTest() {
