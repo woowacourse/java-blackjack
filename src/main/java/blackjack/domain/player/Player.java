@@ -29,8 +29,8 @@ public abstract class Player {
         return cards.isBlackJack();
     }
 
-    public boolean isBurst() {
-        return cards.isBurst();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public abstract List<Card> openCards();

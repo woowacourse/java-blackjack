@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 public enum GameResult {
     BLACKJACK(1.5, (dealer, gamer) -> gamer.isBlackJack() && !dealer.isBlackJack()),
 
-    WIN(1.0, (dealer, gamer) -> !isBurst(gamer)
-        && (dealer.calculateResult() < gamer.calculateResult() || isBurst(dealer))
+    WIN(1.0, (dealer, gamer) -> !gamer.isBust()
+        && (dealer.calculateResult() < gamer.calculateResult() || dealer.isBust())
     ),
-    DRAW(0.0, (dealer, gamer) -> !isBurst(gamer)
+    DRAW(0.0, (dealer, gamer) -> !gamer.isBust()
         && dealer.calculateResult() == gamer.calculateResult()
     ),
-    LOSE(-1.0, (dealer, gamer) -> isBurst(gamer)
+    LOSE(-1.0, (dealer, gamer) -> gamer.isBust()
         || dealer.calculateResult() > gamer.calculateResult()
     );
 
@@ -28,10 +28,6 @@ public enum GameResult {
     GameResult(final Double multiplePoint, final BiPredicate<Player, Gamer> predicate) {
         this.multiplePoint = multiplePoint;
         this.predicate = predicate;
-    }
-
-    private static boolean isBurst(Player player) {
-        return player.isBurst();
     }
 
     private static GameResult findResult(final Player dealer, final Gamer gamer) {
