@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 public class BettingMoneyTest {
 
-
     @Test
     @DisplayName("참가자로 부터 배팅금액을 입력받는다.")
     void createBettingMoney() {

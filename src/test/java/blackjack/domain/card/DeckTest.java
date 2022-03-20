@@ -3,8 +3,6 @@ package blackjack.domain.card;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +22,8 @@ public class DeckTest {
     @DisplayName("Deck에 카드가 남아있지 않을 시 오류 발생")
     void pickCardFail() {
         Deck deck = new Deck();
-        for (int i = 0; i <52; i++) {
+
+        for (int i = 0; i < 52; i++) {
             Card card = deck.pickCard();
         }
 

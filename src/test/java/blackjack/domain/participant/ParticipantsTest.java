@@ -50,5 +50,4 @@ public class ParticipantsTest {
         assertThat(playerCardSize).isEqualTo(2);
     }
 
-
 }

@@ -20,7 +20,6 @@ public class ProfitCalculatorTest {
         playerWinningResultMap.putIfAbsent(player, WinningResult.BLACKJACK);
         ProfitCalculator profitCalculator = new ProfitCalculator(playerWinningResultMap);
 
-
         profitCalculator.calculate();
 
         assertThat(profitCalculator.getPlayerProfit().get(player)).isEqualTo(1500);
@@ -35,7 +34,6 @@ public class ProfitCalculatorTest {
         player.createBettingMoney(new BettingMoney(1000));
         playerWinningResultMap.putIfAbsent(player, WinningResult.WIN);
         ProfitCalculator profitCalculator = new ProfitCalculator(playerWinningResultMap);
-
 
         profitCalculator.calculate();
 
@@ -52,7 +50,6 @@ public class ProfitCalculatorTest {
         playerWinningResultMap.putIfAbsent(player, WinningResult.DRAW);
         ProfitCalculator profitCalculator = new ProfitCalculator(playerWinningResultMap);
 
-
         profitCalculator.calculate();
 
         assertThat(profitCalculator.getPlayerProfit().get(player)).isEqualTo(0);
@@ -67,7 +64,6 @@ public class ProfitCalculatorTest {
         player.createBettingMoney(new BettingMoney(1000));
         playerWinningResultMap.putIfAbsent(player, WinningResult.LOSE);
         ProfitCalculator profitCalculator = new ProfitCalculator(playerWinningResultMap);
-
 
         profitCalculator.calculate();
 

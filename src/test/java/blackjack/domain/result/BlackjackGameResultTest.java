@@ -18,7 +18,6 @@ public class BlackjackGameResultTest {
     @Test
     @DisplayName("블랙잭 게임 생성")
     void createBlackjackGame() {
-
         assertThatCode(() -> new BlackjackGameResult(Participants.from(List.of("마루", "엔젤앤지"))))
             .doesNotThrowAnyException();
     }

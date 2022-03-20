@@ -38,7 +38,6 @@ public class PlayerTest {
             new Player(" ");
         }).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 플레이어 이름에 공백만 올 수 없습니다.");
-
     }
 
     @Test
@@ -76,7 +75,6 @@ public class PlayerTest {
 
         player.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.HEART, Denomination.THREE)));
-
         player.receiveCard(new Card(Suit.DIAMOND, Denomination.TWO));
 
         assertThat(player.getCards().size()).isEqualTo(3);
@@ -90,7 +88,6 @@ public class PlayerTest {
         player.createBettingMoney(new BettingMoney(1000));
 
         assertThat(player.getBettingMoney().getBettingMoney()).isEqualTo(1000);
-
     }
 
     @Test
@@ -114,4 +111,5 @@ public class PlayerTest {
 
         assertThat(player.isHittable()).isEqualTo(false);
     }
+
 }

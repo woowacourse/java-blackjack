@@ -107,4 +107,5 @@ public class ParticipantCardsTest {
 
         assertThat(participantCards.isBlackjack()).isEqualTo(false);
     }
+
 }

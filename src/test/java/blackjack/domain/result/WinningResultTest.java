@@ -32,7 +32,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.DRAW);
+        assertThat(WinningResult.of(player, dealer)).isEqualTo(WinningResult.DRAW);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.LOSE);
+        assertThat(WinningResult.of(player, dealer)).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.WIN);
+        assertThat(WinningResult.of(player, dealer)).isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.WIN);
+        assertThat(WinningResult.of(player, dealer)).isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class WinningResultTest {
         List<Card> dealerCards = List.of(new Card(Suit.HEART, Denomination.SIX),
             new Card(Suit.SPADE, Denomination.TWO),
             new Card(Suit.CLOVER, Denomination.NINE));
-        List<Card> playerCards = List.of( new Card(Suit.DIAMOND, Denomination.JACK),
+        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.CLOVER, Denomination.FIVE),
             new Card(Suit.DIAMOND, Denomination.TEN));
 
@@ -116,7 +116,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.LOSE);
+        assertThat(WinningResult.of(player, dealer)).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class WinningResultTest {
         List<Card> dealerCards = List.of(new Card(Suit.HEART, Denomination.SIX),
             new Card(Suit.SPADE, Denomination.TWO),
             new Card(Suit.CLOVER, Denomination.NINE));
-        List<Card> playerCards = List.of( new Card(Suit.DIAMOND, Denomination.JACK),
+        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.CLOVER, Denomination.FOUR),
             new Card(Suit.DIAMOND, Denomination.TWO));
 
@@ -137,7 +137,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.LOSE);
+        assertThat(WinningResult.of(player, dealer)).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -145,7 +145,7 @@ public class WinningResultTest {
     void getBlackjackResult() {
         List<Card> dealerCards = List.of(new Card(Suit.HEART, Denomination.ACE),
             new Card(Suit.SPADE, Denomination.TEN));
-        List<Card> playerCards = List.of( new Card(Suit.DIAMOND, Denomination.JACK),
+        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.CLOVER, Denomination.ACE));
 
         Participants participants = Participants.from(List.of("player"));
@@ -156,7 +156,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.DRAW);
+        assertThat(WinningResult.of(player, dealer)).isEqualTo(WinningResult.DRAW);
     }
 
     @Test
@@ -164,7 +164,7 @@ public class WinningResultTest {
     void getPlayerBlackjackResult() {
         List<Card> dealerCards = List.of(new Card(Suit.HEART, Denomination.FIVE),
             new Card(Suit.SPADE, Denomination.TEN));
-        List<Card> playerCards = List.of( new Card(Suit.DIAMOND, Denomination.JACK),
+        List<Card> playerCards = List.of(new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.CLOVER, Denomination.ACE));
 
         Participants participants = Participants.from(List.of("player"));
@@ -175,7 +175,7 @@ public class WinningResultTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.BLACKJACK);
+        assertThat(WinningResult.of(player, dealer)).isEqualTo(WinningResult.BLACKJACK);
     }
 
     @Test
