@@ -14,15 +14,24 @@ public class CardDeck {
     }
 
     public static CardDeck createNewCardDeck() {
-        List<Card> cardDeck = Card.getAllCard();
-        Collections.shuffle(cardDeck);
-        return new CardDeck(new LinkedList<>(cardDeck));
+        List<Card> cards = createNewCards();
+        return new CardDeck(new LinkedList<>(cards));
+    }
+
+    private static List<Card> createNewCards() {
+        List<Card> cards = Card.getAllCard();
+        Collections.shuffle(cards);
+        return cards;
     }
 
     public Card draw() {
-        if (value.isEmpty()) {
-            value.addAll(createNewCardDeck().value);
-        }
+        checkEmptyDeck();
         return value.poll();
+    }
+
+    private void checkEmptyDeck() {
+        if (value.isEmpty()) {
+            value.addAll(createNewCards());
+        }
     }
 }
