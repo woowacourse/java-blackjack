@@ -12,8 +12,8 @@ public class CardsTest {
     void Calculate_Correct_Summation_Of_K_And_2() {
         Cards cards = new Cards();
 
-        cards.addCard(new Card("K클로버", 10));
-        cards.addCard(new Card("2하트", 2));
+        cards.addCard(Card.of(CardType.CLOVER, CardValue.TEN));
+        cards.addCard(Card.of(CardType.HEART, CardValue.TWO));
 
         assertThat(cards.sum()).isEqualTo(12);
     }
@@ -23,9 +23,9 @@ public class CardsTest {
     void Select_Ace_Value_11() {
         Cards cards = new Cards();
 
-        cards.addCard(new Card("A클로버", 1));
-        cards.addCard(new Card("2하트", 2));
-        cards.addCard(new Card("7스페이드", 7));
+        cards.addCard(Card.of(CardType.CLOVER, CardValue.ACE));
+        cards.addCard(Card.of(CardType.HEART, CardValue.TWO));
+        cards.addCard(Card.of(CardType.SPADE, CardValue.SEVEN));
 
         assertThat(cards.sum()).isEqualTo(20);
     }
@@ -35,9 +35,9 @@ public class CardsTest {
     void Select_Ace_Value_1() {
         Cards cards = new Cards();
 
-        cards.addCard(new Card("A클로버", 1));
-        cards.addCard(new Card("8하트", 8));
-        cards.addCard(new Card("7스페이드", 7));
+        cards.addCard(Card.of(CardType.CLOVER, CardValue.ACE));
+        cards.addCard(Card.of(CardType.HEART, CardValue.EIGHT));
+        cards.addCard(Card.of(CardType.SPADE, CardValue.SEVEN));
 
         assertThat(cards.sum()).isEqualTo(16);
     }

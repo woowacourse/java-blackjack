@@ -66,7 +66,7 @@ public class Participant {
     }
 
     public boolean isBlackJack() {
-        return BlackJack.isMaxScore(getScore()) && getCards().size() == 2;
+        return BlackJack.isMaxScore(getScore()) && cards.hasOnlyTwoCards();
     }
 
     public String getName() {

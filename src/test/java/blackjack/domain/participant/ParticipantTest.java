@@ -2,6 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardType;
+import blackjack.domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -54,10 +56,10 @@ public class ParticipantTest {
     void Is_Over_21() {
         Participant player = Participant.createPlayer("yaho");
 
-        player.receiveCard(new Card("8스페이드", 8));
-        player.receiveCard(new Card("9하트", 9));
-        player.receiveCard(new Card("5다이아몬드", 5));
-        
+        player.receiveCard(Card.of(CardType.SPADE, CardValue.EIGHT));
+        player.receiveCard(Card.of(CardType.HEART, CardValue.NINE));
+        player.receiveCard(Card.of(CardType.DIAMOND, CardValue.FIVE));
+
         assertThat(player.isOverMaxScore()).isEqualTo(true);
     }
 }

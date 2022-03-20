@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardType;
+import blackjack.domain.card.CardValue;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,12 +27,12 @@ public class ResultTest {
 
         players.get(0).bet(1000);
         players.get(1).bet(1200);
-        participants.handOutCardTo(dealer, new Card("하트8", 8));
-        participants.handOutCardTo(dealer, new Card("하트9", 9));
-        participants.handOutCardTo(players.get(0), new Card("클로버8", 8));
-        participants.handOutCardTo(players.get(0), new Card("하트10", 10));
-        participants.handOutCardTo(players.get(1), new Card("클로버7", 7));
-        participants.handOutCardTo(players.get(1), new Card("스페이드9", 9));
+        participants.handOutCardTo(dealer, Card.of(CardType.HEART, CardValue.EIGHT));
+        participants.handOutCardTo(dealer, Card.of(CardType.HEART, CardValue.NINE));
+        participants.handOutCardTo(players.get(0), Card.of(CardType.CLOVER, CardValue.EIGHT));
+        participants.handOutCardTo(players.get(0), Card.of(CardType.HEART, CardValue.TEN));
+        participants.handOutCardTo(players.get(1), Card.of(CardType.CLOVER, CardValue.SEVEN));
+        participants.handOutCardTo(players.get(1), Card.of(CardType.SPADE, CardValue.NINE));
     }
 
     @Test
@@ -59,7 +61,7 @@ public class ResultTest {
         Result result = new Result(participants);
 
         result.calculatePlayersRevenue();
-        
+
         assertThat(result.getPlayerRevenue(participants.getPlayers().get(1))).isEqualTo(-1200);
     }
 }

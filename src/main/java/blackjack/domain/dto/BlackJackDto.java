@@ -25,12 +25,12 @@ public class BlackJackDto {
 
     public String getDealerOpenCard() {
         Participant dealer = participants.getDealer();
-        return String.format("%s: %s", dealer.getName(), dealer.getCards().get(FIRST_CARD).getName());
+        return String.format("%s: %s", dealer.getName(), dealer.getCards().get(FIRST_CARD).toString());
     }
 
     public String getPlayerCardStatus(Participant participant) {
         String[] playerCardStatus = participant.getCards().stream()
-            .map(Card::getName)
+            .map(Card::toString)
             .toArray(String[]::new);
 
         return String.format("%s: %s", participant.getName(), String.join(CARD_DELIMITER, playerCardStatus));

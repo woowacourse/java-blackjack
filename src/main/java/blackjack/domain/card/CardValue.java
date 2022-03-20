@@ -29,6 +29,10 @@ public enum CardValue {
         return name;
     }
 
+    public boolean isAce() {
+        return value == ACE.getValue();
+    }
+
     public int getValue() {
         return value;
     }

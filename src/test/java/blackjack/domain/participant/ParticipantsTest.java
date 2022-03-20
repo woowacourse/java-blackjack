@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.BlackJack;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardType;
+import blackjack.domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,8 +36,8 @@ public class ParticipantsTest {
         Participants participants = blackJack.getParticipants();
         Participant dealer = participants.getDealer();
 
-        dealer.receiveCard(new Card("8스페이드", 8));
-        dealer.receiveCard(new Card("5하트", 5));
+        dealer.receiveCard(Card.of(CardType.SPADE, CardValue.EIGHT));
+        dealer.receiveCard(Card.of(CardType.HEART, CardValue.FIVE));
 
         assertThat(participants.isDealerNeedAdditionalCard()).isEqualTo(true);
     }
@@ -48,9 +50,9 @@ public class ParticipantsTest {
         Participants participants = blackJack.getParticipants();
         Participant dealer = participants.getDealer();
 
-        dealer.receiveCard(new Card("8스페이드", 8));
-        dealer.receiveCard(new Card("J하트", 10));
-        
+        dealer.receiveCard(Card.of(CardType.SPADE, CardValue.EIGHT));
+        dealer.receiveCard(Card.of(CardType.HEART, CardValue.JACK));
+
         assertThat(participants.isDealerNeedAdditionalCard()).isEqualTo(false);
     }
 }

@@ -23,7 +23,7 @@ public class BlackJackDtoTest {
 
         blackJack.handOutStartingCards();
 
-        assertThat(blackJackDto.getDealerOpenCard()).isEqualTo(dealer.getName() + ": " + dealer.getCards().get(0).getName());
+        assertThat(blackJackDto.getDealerOpenCard()).isEqualTo(dealer.getName() + ": " + dealer.getCards().get(0).toString());
     }
 
     @Test
@@ -35,8 +35,8 @@ public class BlackJackDtoTest {
         Participant player = blackJackDto.getParticipants().getPlayers().get(0);
 
         blackJack.handOutStartingCards();
-        String[] playerCardStatus = player.getCards().stream().map(Card::getName).toArray(String[]::new);
-        
+        String[] playerCardStatus = player.getCards().stream().map(Card::toString).toArray(String[]::new);
+
         assertThat(blackJackDto.getPlayerCardStatus(player)).isEqualTo(player.getName() + ": " + String.join(", ", playerCardStatus));
     }
 }

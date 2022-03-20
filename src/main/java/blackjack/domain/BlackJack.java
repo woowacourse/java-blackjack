@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJack {
-    public static final int MAX_SCORE = 21;
+    private static final int MAX_SCORE = 21;
     private static final String ERROR_MESSAGE_PLAYER_NUMBER_EXCEED = "[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.";
     private static final int MAX_PLAYER_NUMBER = 8;
     private static final int STARTING_CARDS_COUNT = 2;
