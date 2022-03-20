@@ -53,10 +53,6 @@ public class Player extends Participant {
                 bettingAmount.getValue());
     }
 
-    public double getBettingAmount() {
-        return bettingAmount.getValue();
-    }
-
     @Override
     public String getName() {
         return name.getValue();

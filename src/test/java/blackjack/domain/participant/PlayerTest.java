@@ -8,6 +8,7 @@ import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardNumber.TWO;
 import static blackjack.domain.card.CardSymbol.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -156,5 +157,17 @@ class PlayerTest {
 
         // then
         assertThat(actual).isEqualTo(2);
+    }
+    
+    @Test
+    @DisplayName("턴이 진행중일 때 상금을 계산하면 예외를 던진다.")
+    void calculateProfit_exception() {
+        // give
+        final Player player = new Player("rick");
+
+        // when
+        // then
+        assertThatThrownBy(() -> player.calculateProfit(19, false))
+                .isInstanceOf(IllegalStateException.class);
     }
 }
