@@ -17,12 +17,8 @@ public class InputView {
     }
 
     public static int askBetMoney(String name) {
-        try {
-            System.out.printf("%s의 베팅 금액은?\n", name);
-            return Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액은 숫자로 입력해주세요.");
-        }
+        System.out.printf("%s의 베팅 금액은?\n", name);
+        return Integer.parseInt(scanner.nextLine());
     }
 
     public static String askDrawCommand(Player player) {
