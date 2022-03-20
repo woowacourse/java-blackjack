@@ -63,9 +63,10 @@ public class BlackjackGame {
 
     private Results scoreResults(Map<Player, Double> bettingBox, Player dealer, List<Player> guests) {
         Results results = new Results(dealer);
-        for (Player player : guests) {
-            MatchResults result = JudgeFactory.matchResult(player.getScore(), dealer.getScore());
-            results.addResult(dealer, bettingBox, result);
+        for (Player guest : guests) {
+            MatchResults result = JudgeFactory.matchResult(guest.getScore(), dealer.getScore());
+            Double money = bettingBox.get(guest);
+            results.addResult(guest, dealer, money, result);
         }
         return results;
     }
@@ -82,7 +83,7 @@ public class BlackjackGame {
         return blackjackPlayers.getTurnPlayer();
     }
 
-    public List<Player> getGuest() {
+    public List<Player> getGuests() {
         return blackjackPlayers.getGuests();
     }
 }

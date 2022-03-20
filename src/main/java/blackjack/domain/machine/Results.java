@@ -15,13 +15,10 @@ public class Results {
         this.results.put(dealer, (double) 0);
     }
 
-    public void addResult(Player dealer, Map<Player, Double> bettingBox, MatchResults result) {
-        for (Player player : bettingBox.keySet()) {
-            Double money = bettingBox.get(player);
-            double profit = result.calculateProfit(money);
-            results.put(player, profit);
-            results.put(dealer, results.get(dealer) + profit * -1);
-        }
+    public void addResult(Player guest, Player dealer, Double money, MatchResults result) {
+        double profit = result.calculateProfit(money);
+        results.put(guest, profit);
+        results.put(dealer, calculateDealerProfit(dealer, profit));
     }
 
     public Set<Player> getPlayers() {
@@ -30,5 +27,9 @@ public class Results {
 
     public Double getProfit(Player player) {
         return results.get(player);
+    }
+
+    private double calculateDealerProfit(Player dealer, double profit) {
+        return results.get(dealer) + profit * -1;
     }
 }
