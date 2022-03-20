@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.dto.CardDto;
-import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
 import blackjack.dto.GamerCardsResultDto;
-import blackjack.dto.PlayerResultDto;
+import blackjack.dto.ProfitDto;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -101,29 +101,15 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    public static void printGameResult(DealerResultDto dealerResult, List<PlayerResultDto> playersResult) {
+    public static void printGameResult(ProfitDto profitResults) {
         StringBuilder stringBuilder = new StringBuilder();
-        appendDealerResultToStringBuilder(dealerResult, stringBuilder);
-
-        for (PlayerResultDto playerResult : playersResult) {
-            appendPlayerResultToStringBuilder(stringBuilder, playerResult);
+        stringBuilder.append("## 최종 수익").append(System.lineSeparator());
+        for (Entry<String, Integer> profitResult : profitResults.getResult().entrySet()) {
+            stringBuilder.append(profitResult.getKey())
+                    .append(": ")
+                    .append(profitResult.getValue())
+                    .append(System.lineSeparator());
         }
         System.out.println(stringBuilder);
-    }
-
-    private static void appendDealerResultToStringBuilder(DealerResultDto dealerResult, StringBuilder stringBuilder) {
-        stringBuilder.append("## 최종 승패").append(System.lineSeparator());
-        stringBuilder.append(dealerResult.getName()).append(": ")
-                .append(dealerResult.getWinCount()).append("승 ")
-                .append(dealerResult.getLoseCount()).append("패 ")
-                .append(dealerResult.getDrawCount()).append("무 ")
-                .append(System.lineSeparator());
-    }
-
-    private static void appendPlayerResultToStringBuilder(StringBuilder stringBuilder, PlayerResultDto playerResult) {
-        stringBuilder.append(playerResult.getName())
-                .append(": ")
-                .append(playerResult.getResult())
-                .append(System.lineSeparator());
     }
 }

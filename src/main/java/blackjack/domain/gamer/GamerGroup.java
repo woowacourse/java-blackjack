@@ -2,16 +2,10 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
-import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Match;
-import blackjack.domain.result.PlayerResult;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class GamerGroup {
     private static final int NUMBER_OF_INITIAL_CARDS = 2;
@@ -53,26 +47,7 @@ public class GamerGroup {
     }
 
     public GameResult getGameResult() {
-        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getScore());
-        PlayerResult playerResult = new PlayerResult(playerResults);
-
-        Collection<Match> playerMatches = playerResults.values();
-        Map<Match, Integer> dealerMatches = initializeDealerResults(playerMatches);
-        DealerResult dealerResult = new DealerResult(dealer, dealerMatches);
-
-        return new GameResult(dealerResult, playerResult);
-    }
-
-    private Map<Match, Integer> initializeDealerResults(Collection<Match> matches) {
-        Map<Match, Integer> matchResults = new EnumMap<>(Match.class);
-        for (Match match : Match.values()) {
-            matchResults.put(match, countMatch(matches, match));
-        }
-        return Collections.unmodifiableMap(matchResults);
-    }
-
-    private int countMatch(Collection<Match> matches, Match type) {
-        return (int) matches.stream().filter(value -> value == type.getOpposite()).count();
+        return GameResult.of(dealer, playerGroup);
     }
 
     public Player findPlayerByName(String name) {

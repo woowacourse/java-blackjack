@@ -7,6 +7,8 @@ import java.util.List;
 public class CardGroup {
     public static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_SPECIAL_SCORE = 10;
+    private static final int FIRST_CARD_INDEX = 0;
+    private static final int SECOND_CARD_INDEX = 1;
 
     private final List<Card> cards;
 
@@ -62,6 +64,11 @@ public class CardGroup {
         for (Card card : cards) {
             card.open();
         }
+    }
+
+    public boolean isInstantBlackJack() {
+        CardGroup initialCardGroup = new CardGroup(cards.subList(FIRST_CARD_INDEX, SECOND_CARD_INDEX + 1));
+        return initialCardGroup.calculateScore() == BLACKJACK_NUMBER;
     }
 
     public int getSize() {

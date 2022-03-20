@@ -40,4 +40,8 @@ public class Player extends Gamer{
     private boolean isBust(int sum) {
         return sum > BLACKJACK_NUMBER;
     }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
+    }
 }

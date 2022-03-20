@@ -6,10 +6,9 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
-import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
 import blackjack.dto.GamerCardsResultDto;
-import blackjack.dto.PlayerResultDto;
+import blackjack.dto.ProfitDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -96,7 +95,6 @@ public class BlackJackController {
 
     private void printResult() {
         GameResult gameResult = blackJack.getGameResult();
-        OutputView.printGameResult(DealerResultDto.of(gameResult.getDealerResult()),
-                PlayerResultDto.of(gameResult.getPlayerResult()));
+        OutputView.printGameResult(ProfitDto.of(gameResult));
     }
 }

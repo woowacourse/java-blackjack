@@ -69,6 +69,10 @@ public class Gamer {
         return cardGroup.isNotBust();
     }
 
+    public boolean isInstantBlackJack() {
+        return cardGroup.isInstantBlackJack();
+    }
+
     public int getScore() {
         return cardGroup.calculateScore();
     }
