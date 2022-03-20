@@ -11,14 +11,14 @@ public class Bet {
         validateNegative(this.amount);
     }
 
-    private void validateNegative(double amount) {
+    private void validateNegative(final double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("베팅 금액 1원 이상이어야 합니다.");
         }
     }
 
-    public double getAmount() {
-        return amount;
+    public double calculateProfit(final double profitRate) {
+        return amount * profitRate;
     }
 
     @Override

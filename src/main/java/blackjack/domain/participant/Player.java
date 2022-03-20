@@ -10,7 +10,7 @@ public class Player extends Participant {
 
     private final Bet bet;
 
-    public Player(final String name, Bet bet) {
+    public Player(final String name, final Bet bet) {
         super(name, new ArrayList<>());
         this.bet = bet;
         validatePlayerName(name);
@@ -22,8 +22,8 @@ public class Player extends Participant {
         }
     }
 
-    public double getBettingAmount() {
-        return bet.getAmount();
+    public double getProfit(final double profitRate) {
+        return bet.calculateProfit(profitRate);
     }
 
     @Override

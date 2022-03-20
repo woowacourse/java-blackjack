@@ -14,7 +14,7 @@ public class Profit {
     }
 
     public static Profit calculatePlayerProfit(final Player player, final PlayerResult result) {
-        final double amount = player.getBettingAmount() * result.getProfitRate();
+        final double amount = player.getProfit(result.getProfitRate());
 
         return new Profit(amount);
     }
