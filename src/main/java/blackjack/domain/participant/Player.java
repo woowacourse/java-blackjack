@@ -12,7 +12,6 @@ public class Player extends Participant {
     private static final String PLAYER_NAME_BLANK_ERROR_MESSAGE = "[ERROR] 플레이어 이름에 공백만 올 수 없습니다.";
     private static final String PLAYER_NAME_DEALER_ERROR_MESSAGE = "[ERROR] 플레이어 이름은 딜러가 될 수 없습니다.";
 
-    private final String name;
     private BettingMoney bettingMoney;
 
     public Player(String name) {
@@ -37,7 +36,7 @@ public class Player extends Participant {
     }
 
     public long calculateProfit(double earningRate) {
-        return (long) (bettingMoney.getBettingMoney()*earningRate);
+        return (long) (bettingMoney.getBettingMoney() * earningRate);
     }
 
     public String getName() {

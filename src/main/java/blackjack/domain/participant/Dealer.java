@@ -8,7 +8,9 @@ public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
 
-    private final String name = DEALER_NAME;
+    public Dealer() {
+        this.name = DEALER_NAME;
+    }
 
     public boolean isHittable() {
         return getScore() <= HIT_THRESHOLD;

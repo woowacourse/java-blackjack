@@ -10,6 +10,7 @@ public abstract class Participant {
 
     private static final int BUST_THRESHOLD_NUMBER = 21;
 
+    protected String name;
     protected ParticipantCards participantCards;
 
     public void receiveInitCards(List<Card> cards) {
