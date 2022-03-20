@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -37,16 +38,13 @@ public class Players {
     }
 
     public Map<Player, Integer> checkResults(Dealer dealer) {
-        Map<Player, Integer> playerResult = new LinkedHashMap<>();
-
-        List<PlayerResult> results = players.stream()
-            .map(player -> PlayerResult.of(player, dealer))
-            .collect(Collectors.toList());
-
-        for (int i = 0; i < players.size(); i++) {
-            playerResult.put(players.get(i), players.get(i).multiply(results.get(i)));
-        }
-        return playerResult;
+        return players.stream()
+            .collect(Collectors.toMap(
+                Function.identity(),
+                player-> player.multiply(PlayerResult.of(player,dealer)),
+                (x,y)-> y,
+                LinkedHashMap::new
+            ));
     }
 
     public List<Player> getPlayers() {
