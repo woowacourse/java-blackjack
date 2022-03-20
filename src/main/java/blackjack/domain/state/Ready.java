@@ -5,11 +5,11 @@ import blackjack.domain.card.Cards;
 
 public final class Ready extends Running {
 
-	Ready(Cards cards) {
+	public Ready(Cards cards) {
 		super(cards);
 	}
 
-	Ready() {
+	public Ready() {
 		this(new Cards());
 	}
 
