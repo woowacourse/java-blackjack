@@ -52,7 +52,7 @@ public class OutputView {
 
     public static void printRecords(Records records) {
         System.out.println("## 최종 수익");
-        System.out.printf("딜러: %s%n", records.dealerProfit());
+        System.out.printf("딜러: %s%n", records.dealerProfit().amount());
         records.values().stream()
             .forEach(record -> printEachPlayerRecord(record.name(), record.profit()));
     }

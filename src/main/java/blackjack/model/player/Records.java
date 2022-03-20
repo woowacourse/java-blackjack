@@ -2,6 +2,7 @@ package blackjack.model.player;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Records {
@@ -13,7 +14,7 @@ public class Records {
     }
 
     public Collection<Record> values() {
-        return records;
+        return Collections.unmodifiableList(records);
     }
 
     public Money dealerProfit() {

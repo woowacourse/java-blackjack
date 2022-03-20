@@ -3,7 +3,7 @@ package blackjack.model.player;
 import java.math.BigDecimal;
 
 public enum Result {
-    WIN(BigDecimal.ONE), LOSS(BigDecimal.ONE.negate()),
+    WIN(BigDecimal.ONE), LOSS(new BigDecimal("-1")),
     DRAW(BigDecimal.ZERO), BLACKJACK(new BigDecimal("1.5"));
 
     private BigDecimal profitRate;
