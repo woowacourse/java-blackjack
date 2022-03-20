@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Result;
 
 public class Dealer extends Gamer {
@@ -20,10 +19,10 @@ public class Dealer extends Gamer {
         return calculateScore() <= DRAWABLE_NUMBER;
     }
 
-    public GameResult judgeResult(final Players players) {
+    public Map<Player, Result> judgeResult(final Players players) {
         Map<Player, Result> result = new LinkedHashMap<>();
         judgePlayersResult(result, players);
-        return new GameResult(result);
+        return result;
     }
 
     private void judgePlayersResult(final Map<Player, Result> gameResult, Players players) {

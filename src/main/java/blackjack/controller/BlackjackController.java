@@ -32,7 +32,7 @@ public class BlackjackController {
         hitOrStandDealer(dealer);
         OutputView.printDrawResult(dealer, players);
 
-        GameResult gameResult = dealer.judgeResult(players);
+        GameResult gameResult = new GameResult(dealer.judgeResult(players));
         BettingResult bettingResult = gameResult.calculateRevenue();
         OutputView.printTotalResult(dealer, bettingResult);
     }

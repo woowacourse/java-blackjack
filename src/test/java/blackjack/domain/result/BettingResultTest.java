@@ -27,7 +27,7 @@ class BettingResultTest {
             player.drawCard(new Card(Denomination.TWO, Suit.CLUBS));
         });
 
-        GameResult gameResult = dealer.judgeResult(players);
+        GameResult gameResult = new GameResult(dealer.judgeResult(players));
         BettingResult bettingResult = gameResult.calculateRevenue();
 
         assertThat(bettingResult.getDealerRevenue()).isEqualTo(2000);
