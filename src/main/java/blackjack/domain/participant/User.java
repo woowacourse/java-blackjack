@@ -6,7 +6,6 @@ import blackjack.domain.result.UserResult;
 public class User extends Participant {
 
     private static final String ERROR_INVALID_NAME = "[ERROR] 유저의 이름은 한 글자 이상이어야 합니다.";
-    private static final int BUST_STANDARD = 21;
     private static final String ERROR_NEGATIVE_PRICE = "[ERROR] 금액으로 음수를 입력할 수 없습니다.";
     private static final int DEFAULT_BETTING_PRICE = 0;
 

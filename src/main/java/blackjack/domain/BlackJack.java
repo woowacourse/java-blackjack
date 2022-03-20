@@ -14,7 +14,6 @@ import java.util.Map;
 public class BlackJack {
 
     private static final int INIT_DISTRIBUTE_COUNT = 2;
-    private static final int SCORE_LIMIT = 21;
     private static final String DEALER_NAME = "딜러";
 
     private final Participants participants;
@@ -59,7 +58,7 @@ public class BlackJack {
 
     public boolean checkLimit(String playerName) {
         Participant participant = participants.getUserByName(playerName);
-        return participant.cardSum() < SCORE_LIMIT;
+        return !participant.isBust();
     }
 
     public boolean checkDealerUnderSumStandard() {
