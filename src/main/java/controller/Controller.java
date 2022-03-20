@@ -80,6 +80,6 @@ public class Controller {
 
     private void printResultAndProfit(Result result, BettingReceipt bettingReceipt, Players players) {
         OutputView.printResult(players.getNames(), result);
-        OutputView.printProfit(players.getNames(), Profit.generateProfits(result,bettingReceipt, players));
+        OutputView.printProfit(players.getNames(), Profit.generateProfits(result, bettingReceipt, players));
     }
 }

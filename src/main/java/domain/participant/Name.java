@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Name {
 
-    private static final String BLANK_NAME_ERROR_MESSAGE = "[Error] 이름은 공백이거나 빈칸일 수 없습니다.";
+    private static final String BLANK_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름은 공백이거나 빈칸일 수 없습니다.";
 
     private final String name;
 
@@ -15,12 +15,19 @@ public class Name {
 
     protected void validateName(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException(BLANK_NAME_ERROR_MESSAGE);
+            throw new IllegalArgumentException(String.format(BLANK_NAME_ERROR_MESSAGE_FORMAT, name));
         }
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Name{" +
+                "name='" + name + '\'' +
+                '}';
     }
 
     @Override

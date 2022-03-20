@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final String CANT_FIND_PLAYER_ERROR_MESSAGE = "[Error] 플레이어를 찾을 수 없습니다.";
+    private static final String CANT_FIND_PLAYER_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 플레이어를 찾을 수 없습니다.";
 
     private final List<Player> players;
 
@@ -21,7 +21,9 @@ public class Players {
         return players.stream()
                 .filter(player -> player.isNameMatch(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(CANT_FIND_PLAYER_ERROR_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format(CANT_FIND_PLAYER_ERROR_MESSAGE_FORMAT, name.getName())
+                ));
     }
 
     public void addCardByName(Name name, Card card) {
