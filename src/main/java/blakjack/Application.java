@@ -83,6 +83,7 @@ public class Application {
             player.hit(cardDeck.draw());
             OutputView.printDealerCards(player);
         }
+        player.stay();
     }
 
     private static void catchDealerHitException(final CardDeck cardDeck, final Participant dealer) {

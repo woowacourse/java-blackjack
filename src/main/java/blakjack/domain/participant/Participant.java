@@ -18,6 +18,10 @@ public abstract class Participant {
 
     abstract public void hit(Card card);
 
+    public final void stay() {
+        state.stay();
+    }
+
     public final void initCards(final CardDeck cardDeck) {
         state = state.draw(cardDeck.draw());
         state = state.draw(cardDeck.draw());
