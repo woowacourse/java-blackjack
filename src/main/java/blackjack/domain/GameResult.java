@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 public enum GameResult {
     BLACKJACK(1.5, (dealer, gamer) -> gamer.isBlackJack() && !dealer.isBlackJack()),
@@ -39,11 +38,13 @@ public enum GameResult {
 
     public static Map<Gamer, Long> calculateGamersProfit(final Dealer dealer,
         final List<Gamer> gamers) {
-        return gamers.stream()
-            .collect(Collectors.toMap(gamer -> gamer,
-                gamer -> (long) (GameResult.findResult(dealer, gamer).getMultiplePoint() * gamer
-                    .getBetMoney()),
-                (e1, e2) -> e1, LinkedHashMap::new));
+        Map<Gamer, Long> gamersProfit = new LinkedHashMap<>();
+        for (Gamer gamer : gamers) {
+            gamersProfit
+                .put(gamer,
+                    (long) (GameResult.findResult(dealer, gamer).getMultiplePoint() * gamer.getBetMoney()));
+        }
+        return gamersProfit;
     }
 
     public static Long calculateDealerProfit(Map<Gamer, Long> gamersProfit) {
