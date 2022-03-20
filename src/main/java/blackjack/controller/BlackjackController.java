@@ -29,7 +29,7 @@ public class BlackjackController {
         Players players = Players.create(playerBets, deck);
 
         OutputView.printDrawMessage(inputPlayerNames);
-        OutputView.printTotalUserCards(CardDto.from(dealer.getOneCard()), converToPlayerDtos(players));
+        OutputView.printTotalUserCards(CardDto.from(dealer.getOneCard()), convertToPlayerDtos(players));
 
         List<UserScoreDto> userScoreDtos = playGame(dealer, players, deck);
         finishGame(dealer, players, userScoreDtos);
@@ -43,7 +43,7 @@ public class BlackjackController {
                         LinkedHashMap::new));
     }
 
-    private List<PlayerDto> converToPlayerDtos(Players players) {
+    private List<PlayerDto> convertToPlayerDtos(Players players) {
         return players.getPlayers().stream()
                 .map(PlayerDto::from)
                 .collect(Collectors.toList());
