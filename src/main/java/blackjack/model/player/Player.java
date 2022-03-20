@@ -10,7 +10,7 @@ public abstract class Player {
     private final String name;
     private final Hand hand;
 
-    public Player(String name) {
+    protected Player(String name) {
         checkNull(name);
         this.name = name.trim();
         this.hand = new Hand();
@@ -22,31 +22,31 @@ public abstract class Player {
         }
     }
 
-    public void initializeHand(Supplier<TrumpCard> cardSupplier) {
+    protected void initializeHand(Supplier<TrumpCard> cardSupplier) {
         this.hand.initialize(cardSupplier);
     }
 
-    public void addCard(TrumpCard card) {
+    protected void addCard(TrumpCard card) {
         this.hand.add(card);
     }
 
-    public boolean canHit(int criteria) {
+    protected boolean canHit(int criteria) {
         return this.hand.isScoreLessThan(criteria);
     }
 
-    public int countAddedCards() {
+    protected int countAddedCards() {
         return this.hand.countAddedCards();
     }
 
-    public boolean isBust() {
+    protected boolean isBust() {
         return this.hand.isBust();
     }
 
-    public boolean isBlackjack() {
+    protected boolean isBlackjack() {
         return this.hand.isBlackjack();
     }
 
-    public boolean isScoreLessThen(Player player) {
+    protected boolean isScoreLessThen(Player player) {
         return this.hand.isScoreLessThan(player.hand);
     }
 

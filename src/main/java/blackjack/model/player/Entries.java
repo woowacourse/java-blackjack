@@ -20,7 +20,7 @@ public final class Entries {
         this.values = List.copyOf(values);
     }
 
-    public static Entries from(List<String> names) {
+    static Entries from(List<String> names) {
         checkDuplicate(names);
         List<Entry> entries = names.stream()
                 .map(Entry::new)
@@ -41,52 +41,52 @@ public final class Entries {
                 .count();
     }
 
-    public void betToCurrent(Bet bet) {
+    void betToCurrent(Bet bet) {
         getCurrentEntry().bet(bet);
     }
 
-    public void initializeHands(Supplier<TrumpCard> cardSupplier) {
+    void initializeHands(Supplier<TrumpCard> cardSupplier) {
         for (Entry entry : values) {
             entry.initializeHand(cardSupplier);
         }
     }
 
-    public void toNextEntry() {
+    void toNextEntry() {
         if (hasNoNext()) {
             throw new RuntimeException(ERROR_NO_ENTRY);
         }
         this.currentIndex++;
     }
 
-    public void resetCursor() {
+    void resetCursor() {
         this.currentIndex = INITIAL_INDEX;
     }
 
-    public boolean hasNoNext() {
+    boolean hasNoNext() {
         return values.size() <= currentIndex + 1;
     }
 
-    public void addToCurrentEntry(TrumpCard card) {
+    void addToCurrentEntry(TrumpCard card) {
         getCurrentEntry().addCard(card);
     }
 
-    public boolean isCurrentEntryBust() {
+    boolean isCurrentEntryBust() {
         return getCurrentEntry().isBust();
     }
 
-    public Entry getCurrentEntry() {
+    Entry getCurrentEntry() {
         return this.values.get(currentIndex);
     }
 
-    public String getCurrentEntryName() {
+    String getCurrentEntryName() {
         return getCurrentEntry().getName();
     }
 
-    public List<Entry> getValues() {
+    List<Entry> getValues() {
         return this.values;
     }
 
-    public Profits compareAllWith(Dealer dealer) {
+    Profits compareAllWith(Dealer dealer) {
         return Profits.of(this.values.stream()
                 .collect(Collectors.toMap(
                         entry -> entry,

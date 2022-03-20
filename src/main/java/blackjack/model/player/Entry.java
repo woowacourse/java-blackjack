@@ -57,14 +57,14 @@ public final class Entry extends Player {
         }
     }
 
-    public void bet(Bet bet) {
+    void bet(Bet bet) {
         if (this.bet != null) {
             throw new IllegalArgumentException(ERROR_ALREADY_BETTED);
         }
         this.bet = bet;
     }
 
-    public Profit winProfit(Result result) {
+    Profit winProfit(Result result) {
         return result.apply(this.bet);
     }
 }
