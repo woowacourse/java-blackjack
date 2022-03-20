@@ -52,6 +52,7 @@ public class Application {
         initCards(cardDeck, dealer, players);
         hit(cardDeck, dealer, players);
         showScore(dealer, players);
+        showProfit(dealer, players);
     }
 
     private static void initCards(final CardDeck cardDeck, final Participant dealer, final List<Participant> players) {
@@ -97,5 +98,9 @@ public class Application {
 
     private static void showScore(final Participant dealer, final List<Participant> players) {
         OutputView.printScore(dealer, players);
+    }
+
+    private static void showProfit(final Participant dealer, final List<Participant> players) {
+        OutputView.printProfit(dealer, players);
     }
 }

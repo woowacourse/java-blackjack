@@ -19,7 +19,7 @@ public abstract class Participant {
     abstract public void hit(Card card);
 
     public final void stay() {
-        state.stay();
+        state = state.stay();
     }
 
     public final void initCards(final CardDeck cardDeck) {
@@ -37,5 +37,11 @@ public abstract class Participant {
 
     public final int getTotalScore() {
         return state.getTotalScore();
+    }
+
+    public final int getProfit(final Participant participant) {
+        //디리미터 법칙에 위배
+        // 설계 단계에서 예상하지 못했던 문제
+        return state.compare(participant.state).getProfit();
     }
 }

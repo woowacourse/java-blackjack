@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한 장의 카드를 더 받았습니다.";
     private static final String DELIMITER = ", ";
+    private static final String PROFIT_INTRO_MESSAGE = "## 최종 수익";
 
     private OutputView() {
     }
@@ -63,5 +64,21 @@ public class OutputView {
         for (final Participant player : players) {
             System.out.printf("%s 카드: %s - 결과: %d%n", player.getName(), convertCardsToString(player.getCards()), player.getTotalScore());
         }
+    }
+
+    public static void printProfit(final Participant dealer, final List<Participant> players) {
+        System.out.println(PROFIT_INTRO_MESSAGE);
+        System.out.printf("%s: %d%n", dealer.getName(), getDealerProfit(dealer, players));
+        for (final Participant player : players) {
+            System.out.printf("%s: %d%n", player.getName(), player.getProfit(dealer));
+        }
+    }
+
+    private static int getDealerProfit(final Participant dealer, final List<Participant> players) {
+        int dealerProfit = 0;
+        for (final Participant player : players) {
+            dealerProfit += dealer.getProfit(player);
+        }
+        return dealerProfit;
     }
 }
