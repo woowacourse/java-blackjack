@@ -10,8 +10,12 @@ public class Card {
         this.rank = rank;
     }
 
-    public Rank getRank() {
-        return rank;
+    public boolean isAce() {
+        return rank.equals(Rank.ACE);
+    }
+
+    public int point() {
+        return rank.getPoint();
     }
 
     @Override
