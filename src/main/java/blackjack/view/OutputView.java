@@ -1,12 +1,10 @@
 package blackjack.view;
 
 import blackjack.model.player.Records;
-import blackjack.model.player.matcher.Money;
-import blackjack.model.player.matcher.Record;
+import blackjack.model.player.Money;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 

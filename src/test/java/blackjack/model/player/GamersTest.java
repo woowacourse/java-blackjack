@@ -3,13 +3,11 @@ package blackjack.model.player;
 import static blackjack.model.card.Suit.CLOVER;
 import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
+import static java.util.stream.Collectors.toUnmodifiableList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
-import blackjack.model.player.matcher.Money;
-import blackjack.model.player.matcher.Record;
-import blackjack.model.player.matcher.Result;
 import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +38,8 @@ public class GamersTest {
         Records records = gamers.match(dealer);
 
         assertThat(records.values()).hasSize(2);
-        assertThat(records.values()).contains(new Record(pobi, Result.loss(MONEY)), new Record(crong, Result.blackjack(MONEY)));
+        assertNameContains(records, pobi, crong);
+        assertResultContains(records, Result.LOSS, Result.BLACKJACK);
     }
 
     @Test
@@ -58,6 +57,21 @@ public class GamersTest {
         Records records = gamers.match(dealer);
 
         assertThat(records.values()).hasSize(2);
-        assertThat(records.values()).contains(new Record(pobi1, Result.loss(MONEY)), new Record(pobi2, Result.blackjack(MONEY)));
+        assertNameContains(records, pobi1, pobi2);
+        assertResultContains(records, Result.LOSS, Result.BLACKJACK);
+    }
+
+    private static void assertNameContains(Records records, String... expectNames) {
+        List<String> names = records.values().stream()
+            .map(Record::name)
+            .collect(toUnmodifiableList());
+        assertThat(names).contains(expectNames);
+    }
+
+    private static void assertResultContains(Records records, Result... expectResults) {
+        List<Result> results = records.values().stream()
+            .map(Record::status)
+            .collect(toUnmodifiableList());
+        assertThat(results).contains(expectResults);
     }
 }

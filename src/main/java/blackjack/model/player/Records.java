@@ -1,7 +1,5 @@
 package blackjack.model.player;
 
-import blackjack.model.player.matcher.Money;
-import blackjack.model.player.matcher.Record;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;

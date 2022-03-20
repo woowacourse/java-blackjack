@@ -1,14 +1,14 @@
-package blackjack.model.player.matcher;
+package blackjack.model.player;
 
 import java.math.BigDecimal;
 
-public enum ResultStatus {
+public enum Result {
     WIN(BigDecimal.ONE), LOSS(BigDecimal.ONE.negate()),
     DRAW(BigDecimal.ZERO), BLACKJACK(new BigDecimal("1.5"));
 
     private BigDecimal profitRate;
 
-    ResultStatus(BigDecimal profitRate) {
+    Result(BigDecimal profitRate) {
         this.profitRate = profitRate;
     }
 

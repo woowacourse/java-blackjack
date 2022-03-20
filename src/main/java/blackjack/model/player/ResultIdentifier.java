@@ -1,7 +1,4 @@
-package blackjack.model.player.matcher;
-
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Gamer;
+package blackjack.model.player;
 
 public class ResultIdentifier {
 
@@ -21,12 +18,12 @@ public class ResultIdentifier {
 
     private Result blackjackCaseResult(Dealer dealer, Gamer gamer) {
         if (dealer.isBlackjack() && gamer.isBlackjack()) {
-            return Result.draw(gamer.bettingMoney());
+            return Result.DRAW;
         }
         if (gamer.isBlackjack()) {
-            return Result.blackjack(gamer.bettingMoney());
+            return Result.BLACKJACK;
         }
-        return Result.loss(gamer.bettingMoney());
+        return Result.LOSS;
     }
 
     private boolean hasBust(Dealer dealer, Gamer gamer) {
@@ -35,18 +32,18 @@ public class ResultIdentifier {
 
     private Result bustCaseResult(Gamer gamer) {
         if (gamer.isBust()) {
-            return Result.loss(gamer.bettingMoney());
+            return Result.LOSS;
         }
-        return Result.win(gamer.bettingMoney());
+        return Result.WIN;
     }
 
     private Result compareWithScore(Dealer dealer, Gamer gamer) {
         if (gamer.lessScoreThan(dealer)) {
-            return Result.loss(gamer.bettingMoney());
+            return Result.LOSS;
         }
         if (gamer.moreScoreThan(dealer)) {
-            return Result.win(gamer.bettingMoney());
+            return Result.WIN;
         }
-        return Result.draw(gamer.bettingMoney());
+        return Result.DRAW;
     }
 }

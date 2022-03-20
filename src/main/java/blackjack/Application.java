@@ -6,7 +6,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamer;
 import blackjack.model.player.Gamers;
-import blackjack.model.player.matcher.Money;
+import blackjack.model.player.Money;
 import blackjack.view.Answer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

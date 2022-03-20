@@ -1,4 +1,4 @@
-package blackjack.model.player.matcher;
+package blackjack.model.player;
 
 import static blackjack.model.card.Suit.CLOVER;
 import static blackjack.model.card.Suit.DIAMOND;
@@ -9,8 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Gamer;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +42,7 @@ public class ResultIdentifierTest {
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY.negate());
+        assertThat(result).isEqualTo(Result.LOSS);
     }
 
     private static Stream<Arguments> providePlayerLosingCaseCards() {
@@ -64,8 +62,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.WIN);
-            assertThat(result.profit()).isEqualTo(MONEY);
+            assertThat(result).isEqualTo(Result.WIN);
         });
     }
 
@@ -87,8 +84,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.DRAW);
-            assertThat(result.profit()).isEqualTo(new Money(BigDecimal.ZERO));
+            assertThat(result).isEqualTo(Result.DRAW);
         });
     }
 
@@ -102,8 +98,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.WIN);
-            assertThat(result.profit()).isEqualTo(MONEY);
+            assertThat(result).isEqualTo(Result.WIN);
         });
 
     }
@@ -118,8 +113,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.LOSS);
-            assertThat(result.profit()).isEqualTo(MONEY.negate());
+            assertThat(result).isEqualTo(Result.LOSS);
         });
     }
 
@@ -133,8 +127,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.LOSS);
-            assertThat(result.profit()).isEqualTo(MONEY.negate());
+            assertThat(result).isEqualTo(Result.LOSS);
         });
     }
 
@@ -148,8 +141,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.BLACKJACK);
-            assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+            assertThat(result).isEqualTo(Result.BLACKJACK);
         });
     }
 
@@ -163,8 +155,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.LOSS);
-            assertThat(result.profit()).isEqualTo(MONEY.negate());
+            assertThat(result).isEqualTo(Result.LOSS);
         });
     }
 
@@ -178,8 +169,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.DRAW);
-            assertThat(result.profit()).isEqualTo(new Money(BigDecimal.ZERO));
+            assertThat(result).isEqualTo(Result.DRAW);
         });
     }
 
@@ -193,8 +183,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.LOSS);
-            assertThat(result.profit()).isEqualTo(MONEY.negate());
+            assertThat(result).isEqualTo(Result.LOSS);
         });
     }
 
@@ -208,8 +197,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.BLACKJACK);
-            assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+            assertThat(result).isEqualTo(Result.BLACKJACK);
         });
     }
 
@@ -223,8 +211,7 @@ public class ResultIdentifierTest {
         Result result = resultIdentifier.identify(dealer, gamer);
 
         assertAll(() -> {
-            assertThat(result.status()).isEqualTo(ResultStatus.BLACKJACK);
-            assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+            assertThat(result).isEqualTo(Result.BLACKJACK);
         });
     }
 

@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.cards.Score;
-import blackjack.model.player.matcher.Money;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
