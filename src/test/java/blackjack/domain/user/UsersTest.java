@@ -28,8 +28,8 @@ class UsersTest {
 
         //then
         Assertions.assertAll(
-                () -> assertThat(users).isNotNull(),
-                () -> assertThat(users.getPlayers().size()).isEqualTo(2)
+            () -> assertThat(users).isNotNull(),
+            () -> assertThat(users.getPlayers().size()).isEqualTo(2)
         );
     }
 
@@ -57,6 +57,32 @@ class UsersTest {
         Assertions.assertAll(
             () -> assertThat(dealerSize).isEqualTo(1),
             () -> assertThat(playerSizes).containsSequence(2, 2)
+        );
+    }
+
+    @Test
+    @DisplayName("플레이어들의 수익률을 계산한다.")
+    public void testProfitCalculationPerPlayers() {
+        // given
+        Map<String, String> inputNameAndMoney = Map.ofEntries(
+            Map.entry("pobi", "1000"), Map.entry("jason", "1000")
+        );
+        Users users = Users.of(inputNameAndMoney);
+        for (Player player : users.getPlayers()) {
+            player.hit(CardFixtures.TEN);
+            player.hit(CardFixtures.SEVEN);
+            player.stay();
+        }
+        users.getDealer().hit(CardFixtures.TEN);
+        users.getDealer().hit(CardFixtures.FIVE);
+
+        // when
+        Map<Player, Money> playerProfit = users.createPlayerProfit();
+
+        // then
+        Assertions.assertAll(
+            () -> assertThat(playerProfit.size()).isEqualTo(2),
+            () -> assertThat(playerProfit.values()).containsSequence(new Money(1000), new Money(1000))
         );
     }
 }

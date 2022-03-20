@@ -12,6 +12,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.money.Money;
 import blackjack.domain.strategy.hit.PlayerHitStrategy;
 import blackjack.domain.user.state.Ready;
 
@@ -104,5 +105,24 @@ public class PlayerTest {
         boolean isHit = player.hitOrStay(deck, new PlayerHitStrategy(() -> false));
         // then
         assertThat(isHit).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러 상대로 수익률을 계산한다.")
+    public void testPlayerProfit() {
+        // given
+        Player player = createDefaultPlayer();
+        Dealer dealer = new Dealer();
+
+        player.hit(CardFixtures.TEN);
+        player.hit(CardFixtures.SEVEN);
+        player.stay();
+
+        dealer.hit(CardFixtures.TEN);
+        dealer.hit(CardFixtures.FIVE);
+        // when
+        Money profit = player.calculateProfit(dealer);
+        // then
+        assertThat(profit.getAmount()).isEqualTo(1000);
     }
 }
