@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Cards {
 
-	private static final int BLACKJACK_COUNT = 21;
+	private static final int BLACKJACK_SCORE = 21;
 	private static final int ACE_ADDITIONAL_VALUE = 10;
-	public static final int STARTED_CARD_SIZE = 2;
+	private static final int STARTED_CARD_SIZE = 2;
 
 	private final List<Card> value;
 
@@ -26,16 +26,16 @@ public class Cards {
 		return new Cards(cards);
 	}
 
-	public boolean isNotStarted() {
-		return value.size() < STARTED_CARD_SIZE;
+	public boolean isReady() {
+		return value.size() == STARTED_CARD_SIZE;
 	}
 
 	public boolean isBust() {
-		return sum() > BLACKJACK_COUNT;
+		return sum() > BLACKJACK_SCORE;
 	}
 
 	public boolean isBlackJack() {
-		return value.size() == STARTED_CARD_SIZE && sum() == BLACKJACK_COUNT;
+		return value.size() == STARTED_CARD_SIZE && sum() == BLACKJACK_SCORE;
 	}
 
 	public int sum() {
@@ -60,7 +60,7 @@ public class Cards {
 	}
 
 	private boolean exceedBust(int sum) {
-		return sum + ACE_ADDITIONAL_VALUE > BLACKJACK_COUNT;
+		return sum + ACE_ADDITIONAL_VALUE > BLACKJACK_SCORE;
 	}
 
 	public List<Card> getValue() {

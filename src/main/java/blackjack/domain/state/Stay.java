@@ -7,5 +7,4 @@ public final class Stay extends Finished {
 	Stay(Cards cards) {
 		super(cards);
 	}
-	
 }

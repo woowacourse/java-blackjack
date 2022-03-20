@@ -16,7 +16,7 @@ public final class Ready extends Running {
 	public State draw(Card card) {
 		Cards drawingCards = cards.add(card);
 
-		if (drawingCards.isNotStarted()) {
+		if (!drawingCards.isReady()) {
 			return new Ready(drawingCards);
 		}
 		if (drawingCards.isBlackJack()) {
