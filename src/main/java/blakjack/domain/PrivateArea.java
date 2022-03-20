@@ -54,15 +54,15 @@ public final class PrivateArea {
         return cards.size() == BLACKJACK_CARD_COUNT && getTotalScore() == BLACKJACK_SCORE;
     }
 
-    public int getCardsSize() {
-        return cards.size();
-    }
-
     public boolean isBust() {
         return getTotalScore() > BLACKJACK_SCORE;
     }
 
     public boolean isDealer() {
         return DEALER_NAME.equals(name);
+    }
+
+    public int getCardsSize() {
+        return cards.size();
     }
 }
