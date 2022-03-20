@@ -2,6 +2,7 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,10 +18,17 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("Deck을 초기화했을 때, 카드 수가 맞게 초기화되는지 테스트")
+    @DisplayName("Deck을 초기화했을 때, 카드가 모두 덱에 저장되는지 테스트")
     public void initDeckTest() {
-        int expected = 52;
-        assertThat(deck.getCards().size()).isEqualTo(expected);
+        Card card1 = Card.valueOf(Symbol.DIAMOND, Denomination.TEN);
+        Card card2 = Card.valueOf(Symbol.DIAMOND, Denomination.NINE);
+        Card card3 = Card.valueOf(Symbol.DIAMOND, Denomination.SEVEN);
+
+        Deck testDeck = Deck.initDeck(Arrays.asList(card1, card2, card3));
+        List<Card> deckCards = testDeck.getCards();
+        assertThat(deckCards).contains(card1);
+        assertThat(deckCards).contains(card2);
+        assertThat(deckCards).contains(card3);
     }
 
     @Test
