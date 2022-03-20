@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.user.UserName;
+import blackjack.domain.user.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,21 +18,21 @@ public class InputView {
 
     public static List<String> inputPlayerNames() {
         System.out.println(INPUT_PLAYER_NAMES_MESSAGE);
-        String input = readLine();
+        String input = readLine().trim();
         System.out.println();
         return Arrays.asList(input.split(PLAYER_NAME_DELIMITER));
     }
 
-    private static String readLine() {
-        return scanner.nextLine();
-    }
-
-    public static String inputHitOrStay(UserName name) {
-        System.out.println(name.get() + INPUT_HIT_OR_STAY_MESSAGE);
-        String answer = toLowerCase(readLine());
+    public static boolean requestIsStay(Player player) {
+        System.out.println(player.getName().get() + INPUT_HIT_OR_STAY_MESSAGE);
+        String answer = toLowerCase(readLine()).trim();
         validateHitOrStayAnswer(answer);
 
-        return answer;
+        return answer.equals(STAY_ANSWER);
+    }
+
+    private static String readLine() {
+        return scanner.nextLine();
     }
 
     private static String toLowerCase(String input) {

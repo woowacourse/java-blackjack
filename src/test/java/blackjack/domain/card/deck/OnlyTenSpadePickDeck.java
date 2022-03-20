@@ -10,14 +10,14 @@ public class OnlyTenSpadePickDeck implements Deck {
 
     @Override
     public Card pick() {
-        return new Card(CardNumber.TEN, CardType.SPADE);
+        return Card.of(CardNumber.TEN, CardType.SPADE);
     }
 
     @Override
     public List<Card> pickTwoCards() {
         List<Card> newCards = new ArrayList<>();
-        newCards.add(new Card(CardNumber.TEN, CardType.SPADE));
-        newCards.add(new Card(CardNumber.TEN, CardType.HEART));
+        newCards.add(Card.of(CardNumber.TEN, CardType.SPADE));
+        newCards.add(Card.of(CardNumber.TEN, CardType.HEART));
 
         return newCards;
     }

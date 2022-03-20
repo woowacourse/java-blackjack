@@ -16,7 +16,7 @@ public class DeckTest {
     void pick_card() {
         Deck deck = new OnlyTenSpadePickDeck();
         Card pickedCard = deck.pick();
-        Card card = new Card(CardNumber.TEN, CardType.SPADE);
+        Card card = Card.of(CardNumber.TEN, CardType.SPADE);
 
         assertThat(pickedCard).isEqualTo(card);
     }

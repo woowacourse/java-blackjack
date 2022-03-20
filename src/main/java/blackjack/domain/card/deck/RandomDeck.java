@@ -6,11 +6,13 @@ import blackjack.domain.card.CardType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class RandomDeck implements Deck {
 
-    private List<Card> cards;
+    private Queue<Card> cards;
 
     public RandomDeck() {
         init();
@@ -21,8 +23,7 @@ public class RandomDeck implements Deck {
         if (cards.isEmpty()) {
             init();
         }
-        Collections.shuffle(cards);
-        return cards.remove(cards.size() - 1);
+        return cards.poll();
     }
 
     @Override
@@ -30,19 +31,21 @@ public class RandomDeck implements Deck {
         if (cards.isEmpty()) {
             init();
         }
-        Collections.shuffle(cards);
         List<Card> newCards = new ArrayList<>();
-        newCards.add(cards.remove(cards.size() - 1));
-        newCards.add(cards.remove(cards.size() - 1));
+
+        newCards.add(cards.poll());
+        newCards.add(cards.poll());
 
         return newCards;
     }
 
     private void init() {
-        cards = new ArrayList<>();
+        List<Card> deck = new LinkedList<>();
         for (CardNumber number : CardNumber.values()) {
             Arrays.stream(CardType.values())
-                    .forEach(type -> cards.add(new Card(number, type)));
+                    .forEach(type -> deck.add(Card.of(number, type)));
         }
+        Collections.shuffle(deck);
+        this.cards = new LinkedList<>(deck);
     }
 }

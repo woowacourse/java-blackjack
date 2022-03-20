@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.deck.Deck;
-import blackjack.domain.result.Outcome;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,8 +26,9 @@ public abstract class User {
         hand.add(newCards.get(1));
     }
 
-    public void hit(Card card) {
+    public Hand hit(Card card) {
         hand.add(card);
+        return hand;
     }
 
     public boolean isBust() {
@@ -59,8 +59,6 @@ public abstract class User {
     }
 
     public abstract boolean isValidRange();
-
-    public abstract Outcome determineWinner(User o);
 
     @Override
     public boolean equals(Object o) {
