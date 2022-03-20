@@ -73,8 +73,8 @@ public class ApplicationInputTest extends NsTest {
     void hitOrStay() {
         assertShuffleTest(() ->
                 assertThatThrownBy(() -> runException("pobi", "100", "c"))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("y, n 이외"),
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("y, n 이외"),
             List.of(new Card(HEART, TWO),
                 new Card(HEART, KING), new Card(HEART, SIX),
                 new Card(SPADE, SEVEN), new Card(HEART, TEN))

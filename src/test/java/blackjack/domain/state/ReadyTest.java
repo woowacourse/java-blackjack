@@ -63,7 +63,7 @@ public class ReadyTest {
 
         //then
         assertThatThrownBy(readyState::stay
-            ).isInstanceOf(IllegalStateException.class)
+        ).isInstanceOf(IllegalStateException.class)
             .hasMessageContaining("Ready");
     }
 
