@@ -8,12 +8,21 @@ import org.junit.jupiter.api.Test;
 public class ParticipantsTest {
 
     @Test
-    void 플레이어의_이름이_중복되면_예외가_발생한다() {
+    void 플레이어의_이름이_서로_중복되는_경우_예외가_발생한다() {
         List<String> playerNames = List.of("rookie", "rookie");
 
         assertThatThrownBy(() -> new Participants(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
+                .hasMessage("딜러를 포함한 참가자들의 이름은 중복될 수 없습니다.");
+    }
+
+    @Test
+    void 플레이어의_이름이_딜러와_중복되는_경우_예외가_발생한다() {
+        List<String> playerNames = List.of("rookie", "딜러");
+
+        assertThatThrownBy(() -> new Participants(playerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("딜러를 포함한 참가자들의 이름은 중복될 수 없습니다.");
     }
 
     @Test

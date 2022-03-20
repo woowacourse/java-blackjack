@@ -22,13 +22,6 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어의_이름이_딜러인_경우_예외가_발생한다() {
-        assertThatThrownBy(() -> new Player("딜러"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 이름은 '딜러'일 수 없습니다.");
-    }
-
-    @Test
     void 플레이어가_승리하는_경우의_승부_결과를_계산한다() {
         Player player = new Player("rookie");
         player.hit(Card.of(Symbol.CLOVER, Denomination.ACE));

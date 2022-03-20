@@ -5,20 +5,11 @@ import blackJack.domain.result.BlackJackMatch;
 
 public class Player extends Participant {
 
-    private static final String ERROR_MESSAGE_PROHIBIT_NAME = "플레이어의 이름은 '딜러'일 수 없습니다.";
-
     private BettingAmount bettingAmount;
 
     public Player(String name) {
         super(name);
-        validateProhibitName(name);
         bettingAmount = BettingAmount.newByDefault();
-    }
-
-    private void validateProhibitName(String name) {
-        if (name.equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_PROHIBIT_NAME);
-        }
     }
 
     @Override

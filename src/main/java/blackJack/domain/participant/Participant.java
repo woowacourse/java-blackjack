@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public abstract class Participant {
 
-    protected static final String DEALER_NAME = "딜러";
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
 
     private final String name;
