@@ -15,6 +15,6 @@ public class Dealer extends Participant {
 	}
 
 	public boolean isEnoughCard() {
-		return hand.getScore() > STANDARD_OF_ENOUGH_CARD;
+		return getScore() > STANDARD_OF_ENOUGH_CARD;
 	}
 }

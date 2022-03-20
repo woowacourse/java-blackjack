@@ -1,5 +1,6 @@
 package domain.participant;
 
+import static domain.card.Cards.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.List;
@@ -38,5 +39,37 @@ public class ParticipantTest {
 		Participant participant = new Participant(new Name("pobi"),
 			new Hand(List.of(card1, card2, card3, card4)), new Betting(0));
 		assertThat(participant.getScore()).isEqualTo(20);
+	}
+
+	@Test
+	@DisplayName("블랙잭 확인 테스트")
+	void isBlackJack() {
+		Hand hand = new Hand(List.of(ACE_CLOVER, QUEEN_CLOVER));
+		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
+		assertThat(participant.isBlackJack()).isTrue();
+	}
+
+	@Test
+	@DisplayName("버스트 확인 테스트")
+	void isBust() {
+		Hand hand = new Hand(List.of(TWO_CLOVER, QUEEN_CLOVER, QUEEN_CLOVER));
+		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
+		assertThat(participant.isBust()).isTrue();
+	}
+
+	@Test
+	@DisplayName("Ace가 있을 경우 계산_ACE가 11로 계산될 경우")
+	void getScoreAceEleven() {
+		Hand hand = new Hand(List.of(ACE_CLOVER, TWO_CLOVER));
+		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
+		assertThat(participant.getScore()).isEqualTo(13);
+	}
+
+	@Test
+	@DisplayName("Ace가 있을 경우 계산_ACE가 1로 계산될 경우")
+	void getScoreAceOne() {
+		Hand hand = new Hand(List.of(ACE_CLOVER, TWO_CLOVER, QUEEN_CLOVER));
+		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
+		assertThat(participant.getScore()).isEqualTo(13);
 	}
 }

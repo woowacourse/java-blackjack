@@ -32,7 +32,7 @@ public class Players implements Iterable<Player> {
 
 		@Override
 		public boolean hasNext() {
-			return current < Players.this.players.size();
+			return current < players.size();
 		}
 
 		@Override
