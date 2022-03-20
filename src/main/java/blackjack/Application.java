@@ -53,15 +53,14 @@ public class Application {
     }
 
     public static void playing(Deck deck, Player player) {
-        PlayCommand playCommand;
-        do {
-            playCommand = toPlayCommand(player);
-            drawCard(deck, player, playCommand);
-        } while (canPlay(player, playCommand));
+        while (isPlayerHit(player)) {
+            player.addCard(deck.draw());
+            OutputView.printPlayerCardInfo(GamerDto.from(player));
+        }
     }
 
-    private static boolean canPlay(Player player, PlayCommand playCommand) {
-        return player.canHit() && playCommand.isContinue();
+    private static boolean isPlayerHit(Player player) {
+        return player.canHit() && toPlayCommand(player).isContinue();
     }
 
     private static PlayCommand toPlayCommand(Player player) {
@@ -71,13 +70,6 @@ public class Application {
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
             return toPlayCommand(player);
-        }
-    }
-
-    private static void drawCard(Deck deck, Player player, PlayCommand playCommand) {
-        if (playCommand.isContinue()) {
-            player.addCard(deck.draw());
-            OutputView.printPlayerCardInfo(GamerDto.from(player));
         }
     }
 
