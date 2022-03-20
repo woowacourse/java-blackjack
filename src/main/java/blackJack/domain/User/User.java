@@ -30,7 +30,6 @@ public abstract class User {
         return this.getScore() > WINNING_SCORE;
     }
 
-
     public void requestCard(Card card) {
         this.cards.add(card);
     }
