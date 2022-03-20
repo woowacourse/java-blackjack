@@ -3,15 +3,11 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.vo.BettingMoney;
 import blackjack.domain.entry.Dealer;
+import blackjack.domain.entry.vo.BettingMoney;
 import blackjack.domain.entry.vo.Name;
-import blackjack.domain.entry.Player;
-import blackjack.domain.state.Ready;
-import blackjack.domain.state.State;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackTable {
 
@@ -19,15 +15,15 @@ public class BlackjackTable {
     private final Players players;
 
     public BlackjackTable(Map<Name, BettingMoney> bettingPlayers) {
-        this.players = new Players(createDealer(), toPlayers(bettingPlayers));
+        this.players = new Players(createDealer(), bettingPlayers);
     }
 
-    private Dealer createDealer() {
-        return new Dealer(HoldCards.initTwoCards(deck.draw(), deck.draw()));
+    public void divideCardByAllPlayers() {
+        players.divideCards(deck);
     }
 
     public boolean isFinishedPlayer(Name name) {
-        return players.isFinished(name);
+        return players.isFinishedBy(name);
     }
 
     public List<Card> hit(Name name, Command command) {
@@ -51,10 +47,10 @@ public class BlackjackTable {
     }
 
     public Map<Name, List<Card>> getPlayers() {
-        return players.getPlayersCard();
+        return players.getPlayerCards();
     }
 
-    public Map<String, Double> getResult() {
+    public Map<String, Double> getPlayersEarningMoney() {
         return players.getPlayerEarningMoney();
     }
 
@@ -62,16 +58,11 @@ public class BlackjackTable {
         return players.getDealer();
     }
 
-    private Map<Player, State> toPlayers(Map<Name, BettingMoney> bettingPlayers) {
-        return bettingPlayers.keySet().stream()
-            .collect(Collectors.toMap(name -> new Player(name, bettingPlayers.get(name)), name -> toReady()));
-    }
-
-    private State toReady() {
-        return Ready.start(deck.draw(), deck.draw());
-    }
-
     public Map<Name, HoldCards> getAllPlayers() {
         return players.getAllPlayersCard();
+    }
+
+    private Dealer createDealer() {
+        return new Dealer(HoldCards.initTwoCards(deck.draw(), deck.draw()));
     }
 }

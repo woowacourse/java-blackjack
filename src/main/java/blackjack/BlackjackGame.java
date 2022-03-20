@@ -15,6 +15,7 @@ public class BlackjackGame {
     public void start() {
         // 카드 분배
         BlackjackTable blackjackTable = new BlackjackTable(InputView.inputNameAndBettingMoney());
+        blackjackTable.divideCardByAllPlayers();
         OutputView.printAllCards(blackjackTable.getDealer(), blackjackTable.getPlayers());
 
         // HIT
@@ -28,7 +29,7 @@ public class BlackjackGame {
         for (Name name : players.keySet()) {
             OutputView.printResult(name.getValue(), players.get(name).getCards(), players.get(name).countBestNumber());
         }
-        OutputView.printGameResult(blackjackTable.getResult());
+        OutputView.printGameResult(blackjackTable.getPlayersEarningMoney());
     }
 
     private void hit(BlackjackTable blackjackTable, Name name) {
