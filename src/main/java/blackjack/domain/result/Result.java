@@ -18,7 +18,7 @@ public enum Result {
 
     public static Result checkUserResult(int userScore, int dealerScore) {
         return Arrays.stream(values())
-                .filter(result -> result.comparator.compare(userScore, dealerScore))
+                .filter(result -> result.compare(userScore, dealerScore))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
@@ -35,6 +35,10 @@ public enum Result {
 
     public boolean isWin() {
         return this == Result.WIN;
+    }
+
+    private boolean compare(int userScore, int dealerScore) {
+        return comparator.compare(userScore, dealerScore);
     }
 
     public String getName() {

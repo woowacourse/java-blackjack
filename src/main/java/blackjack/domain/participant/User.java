@@ -45,7 +45,7 @@ public class User extends Participant {
     }
 
     private boolean checkBlackJack() {
-        return ScoreCalculator.cardSum(cards) == BUST_STANDARD;
+        return cards.size() == 2 && ScoreCalculator.cardSum(cards) == BUST_STANDARD;
     }
 
     public boolean checkBust() {
