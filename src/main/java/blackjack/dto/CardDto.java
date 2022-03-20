@@ -21,16 +21,10 @@ public class CardDto {
     public static List<CardDto> of(List<Card> cards) {
         List<CardDto> cardsDto = new ArrayList<>();
         for (Card card : cards) {
-            addOpenCard(cardsDto, card);
+            cardsDto.add(of(card));
         }
 
         return Collections.unmodifiableList(cardsDto);
-    }
-
-    private static void addOpenCard(List<CardDto> cardsDto, Card card) {
-        if (card.isOpen()) {
-            cardsDto.add(of(card));
-        }
     }
 
     public String getCard() {

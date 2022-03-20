@@ -35,10 +35,6 @@ public class BlackJack {
         return gamerGroup.addCardToDealer(cardPack);
     }
 
-    public void openDealerCards() {
-        gamerGroup.openDealerCards();
-    }
-
     public GameResult getGameResult() {
         return gamerGroup.getGameResult();
     }

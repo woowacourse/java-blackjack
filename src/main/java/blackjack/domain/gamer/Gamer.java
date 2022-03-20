@@ -57,10 +57,6 @@ public class Gamer {
         cardGroup.addCard(card);
     }
 
-    public void openAllCards() {
-        cardGroup.open();
-    }
-
     public boolean isBust() {
         return cardGroup.isBust();
     }

@@ -1,33 +1,21 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.property.CardNumber;
-import blackjack.domain.card.property.CardProperty;
-import blackjack.domain.card.property.CardShape;
-
 public class Card {
-    private final CardProperty cardProperty;
-    private boolean isOpen;
+    private final CardShape shape;
+    private final CardNumber number;
 
-    private Card(CardShape cardShape, CardNumber cardNumber, boolean isOpen) {
-        this.cardProperty = new CardProperty(cardShape, cardNumber);
-        this.isOpen = isOpen;
+    private Card(CardShape cardShape, CardNumber cardNumber) {
+        this.shape = cardShape;
+        this.number = cardNumber;
     }
 
     private Card(Card card) {
-        this.cardProperty = card.cardProperty;
-        this.isOpen = card.isOpen;
+        this.shape = card.shape;
+        this.number = card.number;
     }
 
     public static Card of(CardShape shape, CardNumber number) {
-        return new Card(shape, number, true);
-    }
-
-    public void open() {
-        isOpen = true;
-    }
-
-    public void close() {
-        isOpen = false;
+        return new Card(shape, number);
     }
 
     public Card copy() {
@@ -35,18 +23,14 @@ public class Card {
     }
 
     public boolean isAce() {
-        return cardProperty.isAce();
-    }
-
-    public boolean isOpen() {
-        return isOpen;
+        return number.isAce();
     }
 
     public CardShape getCardShape() {
-        return cardProperty.getShape();
+        return shape;
     }
 
     public CardNumber getCardNumber() {
-        return cardProperty.getNumber();
+        return number;
     }
 }

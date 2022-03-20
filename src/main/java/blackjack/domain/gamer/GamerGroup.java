@@ -27,7 +27,6 @@ public class GamerGroup {
 
     private void addInitialDealerCards(CardPack cardPack) {
         Card card = cardPack.pickOne();
-        card.close();
         dealer.addCard(card);
         dealer.addCard(cardPack.pickOne());
     }
@@ -40,10 +39,6 @@ public class GamerGroup {
         }
 
         return addedCardsCount;
-    }
-
-    public void openDealerCards() {
-        dealer.openAllCards();
     }
 
     public GameResult getGameResult() {

@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.property.CardNumber;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +57,6 @@ public class CardGroup {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-    }
-
-    public void open() {
-        for (Card card : cards) {
-            card.open();
-        }
     }
 
     public boolean isInstantBlackJack() {
