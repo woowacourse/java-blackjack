@@ -17,9 +17,9 @@ public abstract class Role {
         this.name = name;
     }
 
-    abstract public boolean isAddable();
+    public abstract boolean isAddable();
 
-    abstract public void addCard(Card card);
+    public abstract void addCard(Card card);
 
     private void validateName(String name) {
         validateEmpty(name);
