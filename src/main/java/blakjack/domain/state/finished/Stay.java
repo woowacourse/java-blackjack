@@ -14,50 +14,36 @@ public final class Stay extends Finished {
 
     @Override
     public State compare(final State other) {
+        if (other.isBlackjack()) {
+            return createLose(other);
+        }
+        if (other.isBust()) {
+            return createWin(other);
+        }
+        return compareByScore(other);
+    }
+
+    private State createLose(final State other) {
         if (privateArea.isDealer()) {
-            return compareWithPlayer(other);
-        }
-        return compareWithDealer(other);
-    }
-
-    // 이 부분을 어떻게 리펙토링하면 좋을까?
-    private State compareWithPlayer(final State playerState) {
-        if (playerState.isBlackjack()) {
-            return new Lose(privateArea, playerState.getChip());
-        }
-        if (playerState.isBust()) {
-            return new Win(privateArea, playerState.getChip());
-        }
-        return compareByScore(playerState);
-    }
-
-    private State compareByScore(final State playerState) {
-        if (getTotalScore() == playerState.getTotalScore()) {
-            return new Draw(privateArea, chip);
-        }
-        if (getTotalScore() > playerState.getTotalScore()) {
-            return new Win(privateArea, playerState.getChip());
-        }
-        return new Lose(privateArea, playerState.getChip());
-    }
-
-    private State compareWithDealer(final State dealerState) {
-        if (dealerState.isBlackjack()) {
-            return new Lose(privateArea, chip);
-        }
-        if (dealerState.isBust()) {
-            return new Win(privateArea, chip);
-        }
-        return compareByScore(dealerState.getTotalScore());
-    }
-
-    private State compareByScore(final int other) {
-        if (getTotalScore() == other) {
-            return new Draw(privateArea, chip);
-        }
-        if (getTotalScore() > other) {
-            return new Win(privateArea, chip);
+            return new Lose(privateArea, other.getChip());
         }
         return new Lose(privateArea, chip);
+    }
+
+    private State createWin(final State other) {
+        if (privateArea.isDealer()) {
+            return new Win(privateArea, other.getChip());
+        }
+        return new Win(privateArea, chip);
+    }
+
+    private State compareByScore(final State other) {
+        if (getTotalScore() == other.getTotalScore()) {
+            return new Draw(privateArea, chip);
+        }
+        if (getTotalScore() > other.getTotalScore()) {
+            return createWin(other);
+        }
+        return createLose(other);
     }
 }
