@@ -29,7 +29,8 @@ public class GameController {
     public Players initPlayers() {
         final PlayerNames playerNames = initPlayerNames();
 
-        final List<Player> list = playerNames.getNames().stream()
+        final List<Player> list = playerNames.getNames()
+                .stream()
                 .map(name -> new Player(name, createBettingAmount(name)))
                 .collect(Collectors.toList());
         return new Players(list);
@@ -109,7 +110,8 @@ public class GameController {
     }
 
     private void printDealerProfit() {
-        double dealerProfit = players.getValue().stream()
+        double dealerProfit = players.getValue()
+                .stream()
                 .mapToDouble(player -> player.calculateProfit(dealer.getScore(), dealer.isBlackjack()))
                 .sum();
 

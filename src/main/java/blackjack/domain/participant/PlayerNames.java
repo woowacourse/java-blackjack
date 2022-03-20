@@ -13,7 +13,8 @@ public class PlayerNames {
 
     public PlayerNames(final List<String> names) {
         validate(names);
-        this.names = names.stream()
+        this.names = names
+                .stream()
                 .map(Name::new)
                 .collect(Collectors.toList());
     }
@@ -24,7 +25,8 @@ public class PlayerNames {
     }
 
     private void validateDuplicate(final List<String> names) {
-        final long distinctNameCount = names.stream()
+        final long distinctNameCount = names
+                .stream()
                 .distinct()
                 .count();
 

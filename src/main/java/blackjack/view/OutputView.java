@@ -37,7 +37,8 @@ public class OutputView {
     }
 
     private static String toCardMessage(final Cards cards) {
-        return cards.getValue().stream()
+        return cards.getValue()
+                .stream()
                 .map(card -> card.getNumberName() + card.getSymbolName())
                 .collect(Collectors.joining(", "));
     }

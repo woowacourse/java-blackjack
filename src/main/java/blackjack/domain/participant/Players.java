@@ -19,20 +19,23 @@ public class Players {
     }
 
     public Optional<Player> findDrawablePlayer() {
-        return value.stream()
+        return value
+                .stream()
                 .filter(Player::isDrawable)
                 .findFirst();
     }
 
     public Player findByName(final String playerName) {
-        return value.stream()
+        return value
+                .stream()
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()
                 .orElseThrow();
     }
 
     public List<String> getNames() {
-        return value.stream()
+        return value
+                .stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
     }
