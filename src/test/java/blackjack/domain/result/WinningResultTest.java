@@ -159,4 +159,10 @@ public class WinningResultTest {
         assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.DRAW);
     }
 
+    @Test
+    @DisplayName("결과를 문자열로 반환한다.")
+    void getWinningResult() {
+        assertThat(WinningResult.WIN.getResult()).isEqualTo("승");
+    }
+
 }
