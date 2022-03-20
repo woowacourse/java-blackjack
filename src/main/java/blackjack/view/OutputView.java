@@ -61,10 +61,10 @@ public final class OutputView {
             + " - 결과: " + participant.getScore());
     }
 
-    public static void printFinalRevenues(Map<Name, Long> revenues) {
+    public static void printFinalRevenues(Map<Name, Long> revenuesByNames) {
         printEmptyLine();
         System.out.println("## 최종 수익");
-        for (Map.Entry<Name, Long> entry : revenues.entrySet()) {
+        for (Map.Entry<Name, Long> entry : revenuesByNames.entrySet()) {
             System.out.println(entry.getKey().getValue() + ": " + entry.getValue());
         }
     }

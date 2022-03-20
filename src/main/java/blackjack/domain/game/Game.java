@@ -20,15 +20,15 @@ public final class Game {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Game(CardDeck cardDeck, Map<Name, Bet> namesAndBettings) {
+    public Game(CardDeck cardDeck, Map<Name, Bet> betsByNames) {
         this.cardDeck = cardDeck;
         this.dealer = new Dealer();
-        this.players = createPlayers(new LinkedHashMap<>(namesAndBettings));
+        this.players = createPlayers(new LinkedHashMap<>(betsByNames));
         init();
     }
 
-    private List<Player> createPlayers(Map<Name, Bet> namesAndBets) {
-        return namesAndBets.entrySet().stream()
+    private List<Player> createPlayers(Map<Name, Bet> betsByNames) {
+        return betsByNames.entrySet().stream()
             .map(entry -> new Player(entry.getKey(), entry.getValue()))
             .collect(Collectors.toUnmodifiableList());
     }
@@ -57,12 +57,12 @@ public final class Game {
     }
 
     public Map<Name, Long> getRevenues() {
-        Map<Name, Long> revenues = new LinkedHashMap<>();
-        revenues.put(dealer.getName(), dealer.getRevenue(players));
+        Map<Name, Long> revenuesByNames = new LinkedHashMap<>();
+        revenuesByNames.put(dealer.getName(), dealer.getRevenue(players));
         for (Player player : players) {
-            revenues.put(player.getName(), player.getRevenue(dealer));
+            revenuesByNames.put(player.getName(), player.getRevenue(dealer));
         }
-        return revenues;
+        return revenuesByNames;
     }
 
     public List<Player> getPlayers() {

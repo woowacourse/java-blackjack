@@ -27,7 +27,7 @@ public final class GameController {
 
     private Game initGame() {
         List<Name> names = getNames();
-        Game game = new Game(new CardDeck(new ShuffleDeck()), getBets(names));
+        Game game = new Game(new CardDeck(new ShuffleDeck()), getBetsByNames(names));
         printInitResult(names);
         firstDrawResult(game.getParticipants());
         return game;
@@ -39,7 +39,7 @@ public final class GameController {
             .collect(toUnmodifiableList());
     }
 
-    private Map<Name, Bet> getBets(List<Name> names) {
+    private Map<Name, Bet> getBetsByNames(List<Name> names) {
         return names.stream()
             .collect(toMap(name -> name, name -> new Bet(inputBettingMoney(name)),
                 (bettingA, bettingB) -> bettingB, LinkedHashMap::new));
