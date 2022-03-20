@@ -17,10 +17,9 @@ public class ProfitCalculator {
     }
 
     public void calculate() {
-        playerResult.forEach((player, winningResult) -> {
-            playerProfit.put(player,
-                (calculateProfit(player, winningResult)));
-        });
+        for (Map.Entry<Player, WinningResult> entry : playerResult.entrySet()) {
+            playerProfit.put(entry.getKey(), calculateProfit(entry.getKey(), entry.getValue()));
+        }
     }
 
     public Map<Player, Long> getPlayerProfit() {
