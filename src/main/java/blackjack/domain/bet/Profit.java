@@ -10,7 +10,7 @@ public class Profit {
         this.profit = profit;
     }
 
-    public double get() {
+    public int get() {
         return profit;
     }
 
