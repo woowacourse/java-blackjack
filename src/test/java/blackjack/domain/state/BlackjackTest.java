@@ -53,7 +53,7 @@ class BlackjackTest {
         final State anotherState = new Stay(new Cards(Set.of(Card.from(Suit.CLOVER, Denomination.JACK),
                 Card.from(Suit.DIAMOND, Denomination.THREE))));
 
-        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.WIN);
+        assertThat(state.match(anotherState)).isEqualTo(BlackjackMatch.WIN);
     }
 
     @Test
@@ -61,7 +61,7 @@ class BlackjackTest {
     void showMatchOpponentBlackjack() {
         final State anotherState = new Blackjack(cards);
 
-        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.DRAW);
+        assertThat(state.match(anotherState)).isEqualTo(BlackjackMatch.DRAW);
     }
 
     @Test

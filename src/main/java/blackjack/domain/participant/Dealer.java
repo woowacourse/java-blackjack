@@ -27,6 +27,6 @@ public class Dealer extends Participant {
         if (player.getStatus().isBust()) {
             return BlackjackMatch.WIN;
         }
-        return getStatus().showMatch(player.getStatus());
+        return getStatus().match(player.getStatus());
     }
 }

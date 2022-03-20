@@ -54,7 +54,7 @@ class StayTest {
                 Card.from(Suit.HEART, Denomination.JACK), Card.from(Suit.CLOVER, Denomination.FIVE)));
         final State anotherState = new Bust(cards);
 
-        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.WIN);
+        assertThat(state.match(anotherState)).isEqualTo(BlackjackMatch.WIN);
     }
 
     @Test
@@ -64,7 +64,7 @@ class StayTest {
                 Card.from(Suit.CLOVER, Denomination.FIVE)));
         final State anotherState = new Stay(cards);
 
-        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.WIN);
+        assertThat(state.match(anotherState)).isEqualTo(BlackjackMatch.WIN);
     }
 
     @Test
@@ -74,7 +74,7 @@ class StayTest {
                 Card.from(Suit.CLOVER, Denomination.SIX)));
         final State anotherState = new Stay(cards);
 
-        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.DRAW);
+        assertThat(state.match(anotherState)).isEqualTo(BlackjackMatch.DRAW);
     }
 
     @Test
@@ -84,7 +84,7 @@ class StayTest {
                 Card.from(Suit.HEART, Denomination.SEVEN)));
         final State anotherState = new Stay(cards);
 
-        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.LOSE);
+        assertThat(state.match(anotherState)).isEqualTo(BlackjackMatch.LOSE);
     }
 
     @Test

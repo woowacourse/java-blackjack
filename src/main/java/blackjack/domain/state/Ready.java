@@ -37,7 +37,7 @@ public class Ready extends Started {
     }
 
     @Override
-    public BlackjackMatch showMatch(State state) {
+    public BlackjackMatch match(State state) {
         throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_SHOW_MATCH);
     }
 

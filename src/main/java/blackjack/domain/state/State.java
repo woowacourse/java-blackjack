@@ -10,7 +10,7 @@ public interface State {
 
     State stay();
 
-    BlackjackMatch showMatch(State state);
+    BlackjackMatch match(State state);
 
     double profitRate(BlackjackMatch blackjackMatch);
 

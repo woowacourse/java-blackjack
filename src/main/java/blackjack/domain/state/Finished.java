@@ -13,7 +13,7 @@ public abstract class Finished extends Started {
         super(cards);
     }
 
-    public abstract BlackjackMatch showMatch(State state);
+    public abstract BlackjackMatch match(State state);
 
     public abstract double profitRate(BlackjackMatch blackjackMatch);
 

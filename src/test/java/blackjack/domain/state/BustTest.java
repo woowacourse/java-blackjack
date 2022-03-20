@@ -53,7 +53,7 @@ class BustTest {
         final State anotherState = new Stay(new Cards(Set.of(Card.from(Suit.CLOVER, Denomination.JACK),
                 Card.from(Suit.DIAMOND, Denomination.THREE))));
 
-        assertThat(state.showMatch(anotherState)).isEqualTo(BlackjackMatch.LOSE);
+        assertThat(state.match(anotherState)).isEqualTo(BlackjackMatch.LOSE);
     }
 
     @Test

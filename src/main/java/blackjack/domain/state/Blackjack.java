@@ -13,7 +13,7 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    public BlackjackMatch showMatch(State state) {
+    public BlackjackMatch match(State state) {
         final Cards opponentCards = state.getCards();
         if (opponentCards.isBlackjack()) {
             return BlackjackMatch.DRAW;
