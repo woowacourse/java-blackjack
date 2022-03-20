@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.BlackJackReferee;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.BlackJackManager;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BettingResult;
 import blackjack.view.InputView;
@@ -17,13 +17,13 @@ public class BlackJackController {
 
 	private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
 
-	private final Gamers gamers;
+	private final BlackJackManager manager;
 	private final Deck deck;
 
 	public BlackJackController() {
 		List<String> names = InputView.askNames();
 		validateDuplicationNames(names);
-		this.gamers = new Gamers(createPlayers(names));
+		this.manager = new BlackJackManager(createPlayers(names));
 		this.deck = new Deck(Card.getCards());
 	}
 
@@ -43,8 +43,8 @@ public class BlackJackController {
 	}
 
 	public void play() {
-		Dealer dealer = gamers.getDealer();
-		List<Player> players = gamers.getPlayers();
+		Dealer dealer = manager.getDealer();
+		List<Player> players = manager.getPlayers();
 		OutputView.printGamers(dealer, players);
 
 		checkFirstHandOut(dealer, players);
@@ -55,8 +55,8 @@ public class BlackJackController {
 	}
 
 	private void checkFirstHandOut(Dealer dealer, List<Player> players) {
-		gamers.handOutFirst(deck);
-		OutputView.printNameAndCards(dealer.getName(), gamers.findDealerFirstCard());
+		manager.handOutFirst(deck);
+		OutputView.printNameAndCards(dealer.getName(), manager.findDealerFirstCard());
 		players.forEach(
 			player -> OutputView.printNameAndCards(player.getName(), player.getCards()));
 	}
@@ -67,26 +67,26 @@ public class BlackJackController {
 	}
 
 	private void askPlayersHitOrStay() {
-		for (String name : gamers.findPlayerNames()) {
+		for (String name : manager.findPlayerNames()) {
 			selectHitOrStay(name);
 		}
 	}
 
 	private void selectHitOrStay(String name) {
-		while (!gamers.checkPlayerBust(name) && InputView.askIfHit(name)) {
-			gamers.giveCardToPlayer(name, deck);
-			OutputView.printNameAndCards(name, gamers.findCardsOfPlayer(name));
+		while (!manager.checkPlayerBust(name) && InputView.askIfHit(name)) {
+			manager.giveCardToPlayer(name, deck);
+			OutputView.printNameAndCards(name, manager.findCardsOfPlayer(name));
 		}
 	}
 
 	private void askDealerHitOrStay() {
-		while (gamers.checkDealerDrawPossible()) {
-			gamers.giveCardToDealer(deck);
+		while (manager.checkDealerDrawPossible()) {
+			manager.giveCardToDealer(deck);
 		}
 	}
 
 	private void printFinalMessages(Dealer dealer, List<Player> players, BettingResult result) {
-		OutputView.printAdditionalDrawDealer(gamers.findDealerHitCount());
+		OutputView.printAdditionalDrawDealer(manager.findDealerHitCount());
 		OutputView.printFinalCards(dealer, players);
 		OutputView.printFinalResult(result);
 	}

@@ -9,14 +9,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 
-public class Gamers {
+public class BlackJackManager {
 
 	private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
 
 	private final Dealer dealer;
 	private final List<Player> players;
 
-	public Gamers(List<Player> players) {
+	public BlackJackManager(List<Player> players) {
 		this.dealer = new Dealer();
 		this.players = new ArrayList<>(players);
 	}

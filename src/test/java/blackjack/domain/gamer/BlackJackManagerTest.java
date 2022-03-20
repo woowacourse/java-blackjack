@@ -13,7 +13,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 
-class GamersTest {
+class BlackJackManagerTest {
 
 	private final List<Player> players = List.of(
 		new Player("pobi", 10), new Player("jason", 10));
@@ -21,7 +21,7 @@ class GamersTest {
 	@Test
 	@DisplayName("이름으로 플레이어를 찾아낸다.")
 	void findPlayerByName() {
-		Gamers gamers = new Gamers(players);
+		BlackJackManager gamers = new BlackJackManager(players);
 		Player jason = gamers.findPlayerByName("jason");
 		assertThat(jason.isSameName("jason")).isTrue();
 	}
@@ -29,8 +29,8 @@ class GamersTest {
 	@Test
 	@DisplayName("모든 플레이어의 이름을 찾아낸다.")
 	void findPlayerNames() {
-		Gamers gamers = new Gamers(players);
-		List<String> names = gamers.findPlayerNames();
+		BlackJackManager blackJackManager = new BlackJackManager(players);
+		List<String> names = blackJackManager.findPlayerNames();
 		assertThat(names).containsExactly("pobi", "jason");
 	}
 
@@ -38,8 +38,8 @@ class GamersTest {
 	@CsvSource(value = {"TWO:true", "ACE:false"}, delimiter = ':')
 	@DisplayName("이름을 입력 받아, 해당 플레이어가 카드 총 합이 21이 넘는 버스트 상태인지 확인한다.")
 	void isBurst(String input, boolean result) {
-		Gamers gamers = new Gamers(players);
-		Player pobi = gamers.findPlayerByName("pobi");
+		BlackJackManager blackJackManager = new BlackJackManager(players);
+		Player pobi = blackJackManager.findPlayerByName("pobi");
 
 		pobi.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.KING));
 		pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
