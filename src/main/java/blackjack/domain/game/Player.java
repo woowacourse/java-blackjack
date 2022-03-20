@@ -1,5 +1,7 @@
 package blackjack.domain.game;
 
+import static blackjack.domain.game.PlayRecord.*;
+
 import blackjack.domain.Name;
 
 public final class Player extends Participant {
@@ -17,12 +19,33 @@ public final class Player extends Participant {
         return name;
     }
 
-    public long getRevenue(PlayRecord playRecord) {
-        return getState().revenue(playRecord, betting);
+    public long getRevenue(Dealer dealer) {
+        return getState().revenue(getRecord(dealer), betting);
     }
 
     @Override
     public boolean isDrawable() {
         return getState().isDrawable();
+    }
+
+    public PlayRecord getRecord(Dealer dealer) {
+        if (isPlayerLoss(dealer)) {
+            return LOSS;
+        }
+
+        if (getScore() == dealer.getScore()) {
+            return PUSH;
+        }
+
+        if (isBlackjack()) {
+            return BLACKJACK;
+        }
+
+        return WIN;
+    }
+
+    private boolean isPlayerLoss(Dealer dealer) {
+        return isBust() || (!dealer.isBust() && isLowerScoreThan(dealer))
+            || (dealer.isBlackjack() && !isBlackjack());
     }
 }

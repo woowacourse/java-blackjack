@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import camp.nextstep.edu.missionutils.test.NsTest;
 
+@SuppressWarnings("unchecked")
 public class ApplicationOutputTest extends NsTest {
 
     private final String NEXT_LINE = System.lineSeparator();
@@ -80,7 +81,22 @@ public class ApplicationOutputTest extends NsTest {
         );
     }
 
-    //
+    @Test
+    @DisplayName("모두 블랙잭인 경우 수익은 0이다.")
+    void AllBlackjack() {
+        assertShuffleTest(
+            () -> {
+                run("woni", "10000");
+                assertThat(output()).contains("## 최종 수익" + NEXT_LINE
+                    + "딜러: 0" + NEXT_LINE
+                    + "woni: 0");
+            },
+            List.of(
+                new Card(SPADE, ACE), new Card(SPADE, KING),
+                new Card(HEART, ACE), new Card(HEART, KING))
+        );
+    }
+
     @Test
     @DisplayName("같은 21인 경우 블랙잭인 경우 수익을 가져간다.")
     void battleBetween21() {
@@ -97,7 +113,6 @@ public class ApplicationOutputTest extends NsTest {
         );
     }
 
-    //
     @Test
     @DisplayName("모두 BUST 아님 && BLACKJACK 아님 이면 높은 점수가 이긴다.")
     void allNotBustNotBlackjack() {

@@ -60,7 +60,7 @@ public final class Game {
         Map<Name, Long> revenues = new LinkedHashMap<>();
         revenues.put(dealer.getName(), dealer.getRevenue(players));
         for (Player player : players) {
-            revenues.put(player.getName(), player.getRevenue(dealer.playerRecord(player)));
+            revenues.put(player.getName(), player.getRevenue(dealer));
         }
         return revenues;
     }

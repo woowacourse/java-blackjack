@@ -31,9 +31,8 @@ public class PlayRecordTest {
         dealer.init(new Card(DIAMOND, JACK), new Card(DIAMOND, NINE));
         player.draw(new Card(DIAMOND, cardNumber));
 
-        dealer.playerRecord(player);
         // when
-        PlayRecord actual = dealer.playerRecord(player);
+        PlayRecord actual = player.getRecord(dealer);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -50,7 +49,7 @@ public class PlayRecordTest {
         player.draw(new Card(DIAMOND, cardNumber));
 
         // when
-        PlayRecord actual = dealer.playerRecord(player);
+        PlayRecord actual = player.getRecord(dealer);
 
         // then
         assertThat(actual).isEqualTo(expected);

@@ -33,8 +33,8 @@ public abstract class Participant {
         return state;
     }
 
-    final boolean isBiggerThan(Participant other) {
-        return getScore() > other.getScore();
+    final boolean isLowerScoreThan(Participant other) {
+        return getScore() < other.getScore();
     }
 
     final boolean isBlackjack() {

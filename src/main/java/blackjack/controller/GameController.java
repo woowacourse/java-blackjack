@@ -45,6 +45,7 @@ public final class GameController {
     }
 
     private Game initGame(Map<Name, Betting> namesAndBettings) {
+
         return new Game(new CardDeck(new ShuffleDeck()), namesAndBettings);
     }
 
