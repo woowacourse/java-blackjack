@@ -1,10 +1,12 @@
 package blackJack.domain.card;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class Deck {
 
@@ -16,9 +18,16 @@ public class Deck {
     }
 
     public static Deck create() {
-        final List<Card> cards = Card.valuesOf();
+        final List<Card> cards = createDeck();
         Collections.shuffle(cards);
         return new Deck(cards);
+    }
+
+    private static List<Card> createDeck() {
+        return Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Denomination.values())
+                        .map(denomination -> Card.valueOf(suit, denomination)))
+                .collect(Collectors.toList());
     }
 
     public Card getCard() {

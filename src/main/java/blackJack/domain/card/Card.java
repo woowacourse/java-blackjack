@@ -1,22 +1,13 @@
 package blackJack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final Set<Card> CARDS;
-
-    static {
-        CARDS = Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Denomination.values())
-                        .map(denomination -> new Card(suit, denomination)))
-                .collect(Collectors.toSet());
-    }
+    private static final int INITIAL_CAPACITY = 52;
+    private static final Map<String, Card> CARDS = new HashMap<>(INITIAL_CAPACITY);
 
     private final Suit suit;
     private final Denomination denomination;
@@ -26,15 +17,13 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public static List<Card> valuesOf() {
-        return new ArrayList<>(CARDS);
+    public static Card valueOf(Suit suit, Denomination denomination) {
+        return CARDS.computeIfAbsent(getCardKey(suit, denomination), key ->
+                new Card(suit, denomination));
     }
 
-    public static Card valueOf(Suit suit, Denomination denomination) {
-        return CARDS.stream()
-                .filter(card -> card.suit == suit && card.denomination == denomination)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
+    private static String getCardKey(Suit suit, Denomination denomination) {
+        return suit.getName() + denomination.getDenomination();
     }
 
     public boolean isSameDenominationAsAce() {
