@@ -9,10 +9,10 @@ public class InitCards {
 
     public static final int INIT_CARDS_SIZE = 2;
 
-    private final List<Card> intiCards;
+    private final List<Card> cards;
 
     public InitCards(Deck deck) {
-        this.intiCards = drawCards(deck);
+        this.cards = drawCards(deck);
     }
 
     private List<Card> drawCards(Deck deck) {
@@ -22,6 +22,6 @@ public class InitCards {
     }
 
     public List<Card> getInitCards() {
-        return Collections.unmodifiableList(intiCards);
+        return Collections.unmodifiableList(cards);
     }
 }
