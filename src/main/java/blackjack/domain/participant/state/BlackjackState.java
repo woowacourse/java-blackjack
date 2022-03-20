@@ -24,7 +24,7 @@ public final class BlackjackState extends FinishState {
     }
 
     @Override
-    public MatchStatus judgeMatchStatus(State state) {
+    public MatchStatus judgeMatchStatus(FinishState state) {
         if (state.isBlackjack()) {
             return MatchStatus.DRAW;
         }

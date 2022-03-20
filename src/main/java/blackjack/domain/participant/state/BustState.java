@@ -24,7 +24,7 @@ public final class BustState extends FinishState {
     }
 
     @Override
-    public MatchStatus judgeMatchStatus(State state) {
+    public MatchStatus judgeMatchStatus(FinishState state) {
         return MatchStatus.LOSS;
     }
 

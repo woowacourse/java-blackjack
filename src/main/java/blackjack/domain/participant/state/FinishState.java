@@ -16,7 +16,7 @@ public abstract class FinishState implements State {
         this.cards = new CardHands(cards);
     }
 
-    public abstract MatchStatus judgeMatchStatus(final State state);
+    public abstract MatchStatus judgeMatchStatus(final FinishState state);
 
     @Override
     public final State drawCard(Card card) {

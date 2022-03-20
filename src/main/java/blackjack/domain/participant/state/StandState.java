@@ -24,7 +24,7 @@ public final class StandState extends FinishState {
     }
 
     @Override
-    public MatchStatus judgeMatchStatus(State otherState) {
+    public MatchStatus judgeMatchStatus(FinishState otherState) {
         final int thisScore = this.getScore();
         final int otherScore = otherState.getScore();
         if (otherState.isBust() || thisScore > otherScore) {
