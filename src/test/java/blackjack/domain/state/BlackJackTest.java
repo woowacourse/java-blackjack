@@ -26,6 +26,15 @@ public class BlackJackTest {
 	}
 
 	@Test
+	void blackjack_state() {
+		//given
+		//when
+		State state = InitialTurn.createState(cards);
+		//then
+		assertThat(state).isInstanceOf(BlackJack.class);
+	}
+
+	@Test
 	@DisplayName("블랙잭인 상태일 때 수익이 1.5배가 되는지 확인")
 	void blackjack_profit() {
 		//given

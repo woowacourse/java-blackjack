@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
-public class InitialTurn {
+public final class InitialTurn {
 	public static State createState(Cards cards) {
 		if(cards.isBlackJack()) {
 			return new BlackJack(cards);

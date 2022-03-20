@@ -26,6 +26,15 @@ public class HitTest {
 	}
 
 	@Test
+	void hit_state() {
+		//given
+		//when
+		State state = InitialTurn.createState(cards);
+		//then
+		assertThat(state).isInstanceOf(Hit.class);
+	}
+
+	@Test
 	@DisplayName("Hit상태에서 수익을 계산하면 에러 발생")
 	void occur_error_hit_state_profit_() {
 		//given
