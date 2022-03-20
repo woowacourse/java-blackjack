@@ -23,6 +23,10 @@ public class BettingMoney {
         }
     }
 
+    public int getAmount() {
+        return this.amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -38,9 +42,5 @@ public class BettingMoney {
     @Override
     public int hashCode() {
         return Objects.hash(amount);
-    }
-
-    public int getAmount() {
-        return this.amount;
     }
 }

@@ -11,15 +11,15 @@ public final class Hit extends Running {
 
     @Override
     public State draw(Card card) {
-        holdCards().addCard(card);
-        if (holdCards().isBust()) {
-            return new Bust(holdCards());
+        getHoldCards().addCard(card);
+        if (getHoldCards().isBust()) {
+            return new Bust(getHoldCards());
         }
-        return new Hit(holdCards());
+        return new Hit(getHoldCards());
     }
 
     @Override
     public State stay() {
-        return new Stay(holdCards());
+        return new Stay(getHoldCards());
     }
 }

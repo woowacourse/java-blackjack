@@ -12,16 +12,12 @@ public abstract class Running implements State {
         this.holdCards = holdCards;
     }
 
-    public HoldCards holdCards() {
-        return holdCards;
-    }
-
     @Override
-    public final State blackjack() {
-        if (holdCards().isBlackjack()) {
-            return new Blackjack(holdCards());
+    public final State checkBlackjack() {
+        if (holdCards.isBlackjack()) {
+            return new Blackjack(holdCards);
         }
-        return new Hit(holdCards());
+        return new Hit(holdCards);
     }
 
     @Override

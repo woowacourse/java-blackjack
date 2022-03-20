@@ -12,7 +12,7 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public abstract int getScore();
+    public abstract int countScore();
 
     public abstract boolean isDealer();
 

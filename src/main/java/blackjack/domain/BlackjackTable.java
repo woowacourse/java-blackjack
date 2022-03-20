@@ -42,7 +42,7 @@ public class BlackjackTable {
     }
 
     public List<Name> getPlayerNames() {
-        return players.getNames();
+        return players.getPlayersName();
     }
 
     public List<Participant> getAllPlayers() {

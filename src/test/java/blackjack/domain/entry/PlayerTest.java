@@ -50,7 +50,7 @@ class PlayerTest {
         Player player = new Player(new Name("hoho"), new BettingMoney(10000));
         player.ready(SPADE_ACE, SPADE_KING);
 
-        assertThat(player.getScore()).isEqualTo(21);
+        assertThat(player.countScore()).isEqualTo(21);
     }
 
     @Test

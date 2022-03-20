@@ -24,7 +24,7 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public final State blackjack() {
+    public final State checkBlackjack() {
         throw new IllegalStateException("Finish 상태에서 블랙잭을 확인할 수 없습니다.");
     }
 

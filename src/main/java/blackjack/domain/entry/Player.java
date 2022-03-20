@@ -31,31 +31,21 @@ public class Player extends Participant {
         this.state = state.stay();
     }
 
-    public boolean isFinished() {
-        return state.isFinished();
+    @Override
+    public int countScore() {
+        return state.score();
     }
 
     public double profit(Dealer dealer) {
         return state.profit(bettingMoney, dealer);
     }
 
-    private void validateName(Name name) {
-        if (name.getValue().equals(Dealer.NAME)) {
-            throw new IllegalArgumentException("플레이어의 이름은 딜러의 이름이 될 수 없습니다.");
-        }
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     public boolean equalsName(Name name) {
         return getName().equals(name);
-    }
-
-    public HoldCards getHoldCards() {
-        return state.getHoldCards();
-    }
-
-    @Override
-    public int getScore() {
-        return state.score();
     }
 
     @Override
@@ -66,6 +56,12 @@ public class Player extends Participant {
     @Override
     public List<Card> getCards() {
         return state.getHoldCards().getCards();
+    }
+
+    private void validateName(Name name) {
+        if (name.getValue().equals(Dealer.NAME)) {
+            throw new IllegalArgumentException("플레이어의 이름은 딜러의 이름이 될 수 없습니다.");
+        }
     }
 
     public BettingMoney getBettingMoney() {

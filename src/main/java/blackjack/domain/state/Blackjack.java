@@ -19,5 +19,4 @@ public final class Blackjack extends Finished {
         }
         return BLACKJACK_RATE;
     }
-
 }

@@ -32,7 +32,7 @@ class ReadyTest {
     void notBlackjack() {
         State state = Ready.start(SPADE_ACE, SPADE_NINE);
 
-        assertThat(state.blackjack()).isInstanceOf(Hit.class);
+        assertThat(state.checkBlackjack()).isInstanceOf(Hit.class);
     }
 
     @Test

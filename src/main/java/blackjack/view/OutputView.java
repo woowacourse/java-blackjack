@@ -42,21 +42,10 @@ public class OutputView {
             .collect(Collectors.joining(NAME_DELIMITER))));
     }
 
-    public static void printCardResult(List<Participant> participants) {
-        for (Participant participant : participants) {
-            System.out.println(MessageFormat.format("{0}카드: {1} - 결과: {2}",
-                participant.getName().getValue(),
-                cards(participant.getCards()),
-                participant.getScore())
-            );
-        }
-    }
-
     public static void printGameResult(Map<Participant, Double> participants) {
-        System.out.println("## 최종 수익");
-        for (Participant participant : participants.keySet()) {
-            System.out.println(participant.getName().getValue() + ": " + participants.get(participant).intValue());
-        }
+        printCardResult(participants);
+        System.out.println();
+        printProfit(participants);
     }
 
     private static String toNames(List<Participant> participants) {
@@ -69,5 +58,22 @@ public class OutputView {
         return cards.stream()
             .map(card -> card.getNumber().getName() + card.getSuit().getName())
             .collect(Collectors.joining(NAME_DELIMITER));
+    }
+
+    private static void printCardResult(Map<Participant, Double> participants) {
+        for (Participant participant : participants.keySet()) {
+            System.out.println(MessageFormat.format("{0}카드: {1} - 결과: {2}",
+                participant.getName().getValue(),
+                cards(participant.getCards()),
+                participant.countScore())
+            );
+        }
+    }
+
+    private static void printProfit(Map<Participant, Double> participants) {
+        System.out.println("## 최종 수익");
+        for (Participant participant : participants.keySet()) {
+            System.out.println(participant.getName().getValue() + ": " + participants.get(participant).intValue());
+        }
     }
 }

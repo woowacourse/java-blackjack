@@ -14,6 +14,12 @@ public class Name {
         this.value = value;
     }
 
+    private void validateName(String value) {
+        if (value.isBlank()) {
+            throw new IllegalArgumentException("플레이어의 이름은 공백이 될 수 없습니다.");
+        }
+    }
+
     public String getValue() {
         return value;
     }
@@ -28,12 +34,6 @@ public class Name {
         }
         Name name1 = (Name) o;
         return Objects.equals(value, name1.value);
-    }
-
-    private void validateName(String value) {
-        if (value.isBlank()) {
-            throw new IllegalArgumentException("플레이어의 이름은 공백이 될 수 없습니다.");
-        }
     }
 
     @Override

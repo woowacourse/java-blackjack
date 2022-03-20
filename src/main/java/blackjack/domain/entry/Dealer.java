@@ -18,12 +18,21 @@ public class Dealer extends Participant {
         this.holdCards = holdCards;
     }
 
-    public boolean canHit() {
-        return holdCards.countBestNumber() <= MORE_CARD_STANDARD;
-    }
-
     public void addCard(Card card) {
         this.holdCards.addCard(card);
+    }
+
+    @Override
+    public int countScore() {
+        return holdCards.countBestNumber();
+    }
+
+    public double calculateDealerProfit(List<Player> players) {
+        return sumPlayersProfit(players) * -1;
+    }
+
+    public boolean canHit() {
+        return holdCards.countBestNumber() <= MORE_CARD_STANDARD;
     }
 
     public boolean isBust() {
@@ -34,9 +43,8 @@ public class Dealer extends Participant {
         return holdCards.isBlackjack();
     }
 
-    @Override
-    public int getScore() {
-        return holdCards.countBestNumber();
+    public boolean isWin(int playerScore) {
+        return holdCards.countBestNumber() >= playerScore;
     }
 
     @Override
@@ -47,5 +55,11 @@ public class Dealer extends Participant {
     @Override
     public List<Card> getCards() {
         return holdCards.getCards();
+    }
+
+    private double sumPlayersProfit(List<Player> players) {
+        return players.stream()
+            .mapToDouble(player -> player.profit(this))
+            .sum();
     }
 }

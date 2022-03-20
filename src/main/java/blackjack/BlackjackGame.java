@@ -13,11 +13,7 @@ public class BlackjackGame {
     public void start() {
         BlackjackTable blackjackTable = new BlackjackTable(InputView.inputNameAndBettingMoney());
         OutputView.printAllCards(blackjackTable.getAllPlayers());
-
         hitPlayers(blackjackTable);
-        OutputView.printDealerHitCount(blackjackTable.countHitDealer());
-
-        OutputView.printCardResult(blackjackTable.getAllPlayers());
         OutputView.printGameResult(blackjackTable.getGameResult());
     }
 
@@ -25,6 +21,7 @@ public class BlackjackGame {
         for (Name name : blackjackTable.getPlayerNames()) {
             hit(blackjackTable, name);
         }
+        OutputView.printDealerHitCount(blackjackTable.countHitDealer());
     }
 
     private void hit(BlackjackTable blackjackTable, Name name) {

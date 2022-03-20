@@ -9,19 +9,19 @@ public class Ready extends Running {
         super(holdCards);
     }
 
-    public static State start(Card first, Card card2) {
+    public static State start(Card first, Card second) {
         HoldCards holdCards = new HoldCards();
         Ready ready = new Ready(holdCards);
-        return ready.draw(first).draw(card2);
+        return ready.draw(first).draw(second);
     }
 
     @Override
     public State draw(Card card) {
-        holdCards().addCard(card);
-        if (!holdCards().isReady()) {
-            return new Ready(holdCards());
+        getHoldCards().addCard(card);
+        if (!getHoldCards().isReady()) {
+            return new Ready(getHoldCards());
         }
-        return blackjack();
+        return checkBlackjack();
     }
 
     @Override

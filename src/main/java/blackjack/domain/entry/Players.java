@@ -31,10 +31,6 @@ public class Players {
         dealer.addCard(card);
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
     public void divideCards(Deck deck) {
         players.forEach(player -> player.ready(deck.draw(), deck.draw()));
     }
@@ -76,10 +72,19 @@ public class Players {
             .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 플에이어가 존재하지 않습니다."));
     }
 
-    public List<Name> getNames() {
+    public List<Name> getPlayersName() {
         return players.stream()
             .map(Player::getName)
             .collect(Collectors.toList());
+    }
+
+    public Map<Participant, Double> getAllProfit() {
+        Map<Participant, Double> playerProfits = new LinkedHashMap<>();
+        playerProfits.put(dealer, dealer.calculateDealerProfit(players));
+        for (Player player : players) {
+            playerProfits.put(player, player.profit(dealer));
+        }
+        return playerProfits;
     }
 
     public List<Participant> getAllPlayers() {
@@ -89,18 +94,7 @@ public class Players {
         return participants;
     }
 
-    public Map<Participant, Double> getAllProfit() {
-        Map<Participant, Double> playerProfits = new LinkedHashMap<>();
-        playerProfits.put(dealer, sumDealerProfit(dealer));
-        for (Player player : players) {
-            playerProfits.put(player, player.profit(dealer));
-        }
-        return playerProfits;
-    }
-
-    private double sumDealerProfit(Dealer dealer) {
-        return players.stream()
-            .mapToDouble(player -> player.profit(dealer))
-            .sum() * -1;
+    public Dealer getDealer() {
+        return dealer;
     }
 }

@@ -11,7 +11,7 @@ public interface State {
 
     State stay();
 
-    State blackjack();
+    State checkBlackjack();
 
     boolean isFinished();
 
