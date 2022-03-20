@@ -6,8 +6,7 @@ import java.util.stream.Collectors;
 import domain.card.Card;
 
 public class Hand {
-	private static final int LIMIT_TO_NOT_BUST_SCORE = 21;
-	private static final int BLACKJACK_SCORE = 21;
+	private static final int WINNING_SCORE = 21;
 	private static final int ADDITIONAL_SCORE_ACE = 10;
 	private static final int BLACKJACK_SIZE = 2;
 
@@ -18,13 +17,13 @@ public class Hand {
 	}
 
 	public boolean isBlackJack() {
-		return hand.size() == BLACKJACK_SIZE && getScore() == BLACKJACK_SCORE;
+		return hand.size() == BLACKJACK_SIZE && getScore() == WINNING_SCORE;
 	}
 
 	public boolean isBust() {
-		return sumPoint() > LIMIT_TO_NOT_BUST_SCORE;
+		return sumPoint() > WINNING_SCORE;
 	}
-	
+
 	public int getScore() {
 		boolean hasAce = hand.stream().filter(Card::isAce).count() > 0;
 		int score = sumPoint();
@@ -37,7 +36,7 @@ public class Hand {
 	}
 
 	private boolean canAddAcePoint(int score) {
-		if (score + ADDITIONAL_SCORE_ACE <= LIMIT_TO_NOT_BUST_SCORE) {
+		if (score + ADDITIONAL_SCORE_ACE <= WINNING_SCORE) {
 			return true;
 		}
 
