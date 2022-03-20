@@ -3,10 +3,12 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public abstract class Finished extends Started {
+public abstract class Finished implements State {
+
+    private final Cards cards;
 
     protected Finished(final Cards cards) {
-        super(cards);
+        this.cards = cards;
     }
 
     @Override
@@ -17,6 +19,11 @@ public abstract class Finished extends Started {
     @Override
     public final State stay() {
         throw new IllegalStateException();
+    }
+
+    @Override
+    public Cards cards() {
+        return cards;
     }
 
     @Override
