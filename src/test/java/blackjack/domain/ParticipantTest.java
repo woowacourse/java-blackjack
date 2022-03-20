@@ -24,7 +24,7 @@ class ParticipantTest {
     void isBlackjackWhenTrue() {
         participant.addCard(new Card(Symbol.SPADE, Denomination.KING));
         participant.addCard(new Card(Symbol.HEART, Denomination.ACE));
-        participant.computeTotalScore();
+        participant.computeAce();
 
         assertThat(participant.isBlackjack(2)).isTrue();
     }
@@ -35,7 +35,7 @@ class ParticipantTest {
         participant.addCard(new Card(Symbol.SPADE, Denomination.KING));
         participant.addCard(new Card(Symbol.HEART, Denomination.THREE));
         participant.addCard(new Card(Symbol.DIAMOND, Denomination.EIGHT));
-        participant.computeTotalScore();
+        participant.computeAce();
 
         assertThat(participant.isBlackjack(2)).isFalse();
     }
@@ -45,7 +45,7 @@ class ParticipantTest {
     void isBlackjackWhenFalse_NotGoalScore() {
         participant.addCard(new Card(Symbol.SPADE, Denomination.KING));
         participant.addCard(new Card(Symbol.HEART, Denomination.THREE));
-        participant.computeTotalScore();
+        participant.computeAce();
 
         assertThat(participant.isBlackjack(2)).isFalse();
     }
@@ -56,8 +56,9 @@ class ParticipantTest {
         participant.addCard(new Card(Symbol.DIAMOND, Denomination.KING));
         participant.addCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
         participant.addCard(new Card(Symbol.HEART, Denomination.TWO));
+        participant.computeAce();
 
-        assertThat(participant.computeTotalScore().getScore()).isEqualTo(20);
+        assertThat(participant.getScore()).isEqualTo(20);
     }
 
     @Test
@@ -66,8 +67,9 @@ class ParticipantTest {
         participant.addCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
         participant.addCard(new Card(Symbol.HEART, Denomination.TWO));
         participant.addCard(new Card(Symbol.SPADE, Denomination.ACE));
+        participant.computeAce();
 
-        assertThat(participant.computeTotalScore().getScore()).isEqualTo(21);
+        assertThat(participant.getScore()).isEqualTo(21);
     }
 
     @Test
@@ -76,8 +78,9 @@ class ParticipantTest {
         participant.addCard(new Card(Symbol.CLOVER, Denomination.KING));
         participant.addCard(new Card(Symbol.HEART, Denomination.QUEEN));
         participant.addCard(new Card(Symbol.SPADE, Denomination.ACE));
+        participant.computeAce();
 
-        assertThat(participant.computeTotalScore().getScore()).isEqualTo(21);
+        assertThat(participant.getScore()).isEqualTo(21);
     }
 
     class ParticipantForTest extends Participant {

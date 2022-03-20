@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.dto.TotalScoreDto;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,9 +30,10 @@ public abstract class Participant {
         return cards.size() == count && score == TARGET_SCORE_FOR_BLACKJACK;
     }
 
-    public TotalScoreDto computeTotalScore() {
-        this.computeAce();
-        return new TotalScoreDto(this);
+    public void computeAce() {
+        if (isContainAce() && isBetterToGiveMoreForAce()) {
+            score += ADDITIONAL_SCORE_FOR_ACE;
+        }
     }
 
     public int getScore() {
@@ -46,12 +46,6 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    private void computeAce() {
-        if (isContainAce() && isBetterToGiveMoreForAce()) {
-            score += ADDITIONAL_SCORE_FOR_ACE;
-        }
     }
 
     private boolean isContainAce() {

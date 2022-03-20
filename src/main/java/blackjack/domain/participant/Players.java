@@ -1,9 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.dto.CurrentCardsDto;
-import blackjack.dto.ProfitDto;
-import blackjack.dto.TotalScoreDto;
+import blackjack.dto.profit.ProfitDto;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,16 +29,8 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public List<CurrentCardsDto> generateCurrentCardsDTO() {
-        return players.stream()
-                .map(CurrentCardsDto::from)
-                .collect(Collectors.toList());
-    }
-
-    public List<TotalScoreDto> computeTotalScore() {
-        return players.stream()
-                .map(Participant::computeTotalScore)
-                .collect(Collectors.toList());
+    public void computeAceForAllPlayers() {
+        players.forEach(Participant::computeAce);
     }
 
     public List<ProfitDto> computeTotalProfit(Dealer dealer) {

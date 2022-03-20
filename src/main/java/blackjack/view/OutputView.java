@@ -1,10 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.dto.CurrentCardsDto;
-import blackjack.dto.ProfitDto;
-import blackjack.dto.TotalProfitDto;
-import blackjack.dto.TotalScoreDto;
+import blackjack.dto.currentCards.CurrentCardsDto;
+import blackjack.dto.currentCards.TotalCurrentCardsDto;
+import blackjack.dto.profit.ProfitDto;
+import blackjack.dto.profit.TotalProfitDto;
+import blackjack.dto.score.ScoreDto;
+import blackjack.dto.score.TotalScoreDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +22,13 @@ public class OutputView {
         System.out.println(START_ERROR + message);
     }
 
-    public static void printFirstDistribute(CurrentCardsDto dealer, List<CurrentCardsDto> players) {
-        System.out.println(makeFirstDistributeTitleString(dealer, players));
+    public static void printFirstDistribute(TotalCurrentCardsDto totalCurrentCards) {
+        CurrentCardsDto dealer = totalCurrentCards.getCurrentCardsOfDealer();
+        List<CurrentCardsDto> players = totalCurrentCards.getCurrentCardsOfPlayers();
+
+        printFirstDistributeTitle(dealer.getName(), players.stream()
+                .map(CurrentCardsDto::getName)
+                .collect(Collectors.toList()));
 
         printCurrentStatus(dealer);
         for (CurrentCardsDto player : players) {
@@ -40,11 +47,11 @@ public class OutputView {
                 + "이하라 카드를 1장 더 받았습니다.");
     }
 
-    public static void printTotalScore(List<TotalScoreDto> totalScoreDtos) {
+    public static void printTotalScore(TotalScoreDto totalScore) {
         System.out.println();
-        for (TotalScoreDto dto : totalScoreDtos) {
-            System.out.println(makeCurrentCardToString(dto.getName(), dto.getCards())
-                    + " - 결과: " + dto.getScore());
+        for (ScoreDto score : totalScore.getTotalScore()) {
+            System.out.println(makeCurrentCardToString(score.getName(), score.getCards())
+                    + " - 결과: " + score.getScore());
         }
     }
 
@@ -56,15 +63,14 @@ public class OutputView {
         }
     }
 
-    private static String makeFirstDistributeTitleString(CurrentCardsDto dealer, List<CurrentCardsDto> players) {
+    private static void printFirstDistributeTitle(String dealer, List<String> players) {
         StringBuilder title = new StringBuilder("\n");
-        title.append(dealer.getName())
+        title.append(dealer)
                 .append("와 ")
-                .append(players.stream().map(CurrentCardsDto::getName)
-                        .collect(Collectors.joining(", ")))
+                .append(String.join(", ", players))
                 .append("에게 2장을 나누었습니다.\n");
 
-        return title.toString();
+        System.out.println(title);
     }
 
     private static String makeCurrentCardToString(String name, List<Card> cards) {

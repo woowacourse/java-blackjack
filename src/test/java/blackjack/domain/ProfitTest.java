@@ -31,11 +31,11 @@ public class ProfitTest {
     void blackjack() {
         player.addCard(new Card(Symbol.SPADE, Denomination.KING));
         player.addCard(new Card(Symbol.HEART, Denomination.ACE));
-        player.computeTotalScore();
+        player.computeAce();
 
         dealer.addCard(new Card(Symbol.DIAMOND, Denomination.KING));
         dealer.addCard(new Card(Symbol.CLOVER, Denomination.QUEEN));
-        dealer.computeTotalScore();
+        dealer.computeAce();
 
         assertThat(Profit.of(player, dealer).getValue()).isEqualTo(1500);
     }
@@ -45,12 +45,12 @@ public class ProfitTest {
     void dealerBust() {
         player.addCard(new Card(Symbol.SPADE, Denomination.KING));
         player.addCard(new Card(Symbol.HEART, Denomination.QUEEN));
-        player.computeTotalScore();
+        player.computeAce();
 
         dealer.addCard(new Card(Symbol.DIAMOND, Denomination.KING));
         dealer.addCard(new Card(Symbol.CLOVER, Denomination.QUEEN));
         dealer.addCard(new Card(Symbol.SPADE, Denomination.THREE));
-        dealer.computeTotalScore();
+        dealer.computeAce();
 
         assertThat(Profit.of(player, dealer).getValue()).isEqualTo(1000);
     }
@@ -61,11 +61,11 @@ public class ProfitTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.KING));
         player.addCard(new Card(Symbol.HEART, Denomination.QUEEN));
         player.addCard(new Card(Symbol.SPADE, Denomination.THREE));
-        player.computeTotalScore();
+        player.computeAce();
 
         dealer.addCard(new Card(Symbol.DIAMOND, Denomination.KING));
         dealer.addCard(new Card(Symbol.CLOVER, Denomination.QUEEN));
-        dealer.computeTotalScore();
+        dealer.computeAce();
 
         assertThat(Profit.of(player, dealer).getValue()).isEqualTo(-1000);
     }
@@ -75,11 +75,11 @@ public class ProfitTest {
     void bothBlackjack() {
         player.addCard(new Card(Symbol.SPADE, Denomination.KING));
         player.addCard(new Card(Symbol.HEART, Denomination.ACE));
-        player.computeTotalScore();
+        player.computeAce();
 
         dealer.addCard(new Card(Symbol.DIAMOND, Denomination.KING));
         dealer.addCard(new Card(Symbol.CLOVER, Denomination.ACE));
-        dealer.computeTotalScore();
+        dealer.computeAce();
 
         assertThat(Profit.of(player, dealer).getValue()).isEqualTo(1000);
     }
@@ -89,11 +89,11 @@ public class ProfitTest {
     void win() {
         player.addCard(new Card(Symbol.SPADE, Denomination.KING));
         player.addCard(new Card(Symbol.HEART, Denomination.QUEEN));
-        player.computeTotalScore();
+        player.computeAce();
 
         dealer.addCard(new Card(Symbol.DIAMOND, Denomination.EIGHT));
         dealer.addCard(new Card(Symbol.CLOVER, Denomination.NINE));
-        dealer.computeTotalScore();
+        dealer.computeAce();
 
         assertThat(Profit.of(player, dealer).getValue()).isEqualTo(1000);
     }
@@ -103,11 +103,11 @@ public class ProfitTest {
     void lose() {
         player.addCard(new Card(Symbol.SPADE, Denomination.EIGHT));
         player.addCard(new Card(Symbol.HEART, Denomination.NINE));
-        player.computeTotalScore();
+        player.computeAce();
 
         dealer.addCard(new Card(Symbol.DIAMOND, Denomination.KING));
         dealer.addCard(new Card(Symbol.CLOVER, Denomination.QUEEN));
-        dealer.computeTotalScore();
+        dealer.computeAce();
 
         assertThat(Profit.of(player, dealer).getValue()).isEqualTo(-1000);
     }

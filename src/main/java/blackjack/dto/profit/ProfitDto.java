@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.dto.profit;
 
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Profit;

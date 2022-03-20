@@ -1,5 +1,6 @@
-package blackjack.dto;
+package blackjack.dto.profit;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TotalProfitDto {
@@ -16,6 +17,6 @@ public class TotalProfitDto {
     }
 
     public List<ProfitDto> getProfitOfPlayers() {
-        return profitOfPlayers;
+        return Collections.unmodifiableList(profitOfPlayers);
     }
 }

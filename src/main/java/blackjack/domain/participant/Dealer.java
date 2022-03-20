@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.dto.ProfitDto;
+import blackjack.dto.profit.ProfitDto;
 
 import java.util.List;
 
@@ -18,7 +18,9 @@ public class Dealer extends Participant {
     }
 
     public ProfitDto computeProfit(List<ProfitDto> profitOfPlayers) {
-        double totalProfitOfPlayers = profitOfPlayers.stream().mapToDouble(ProfitDto::getProfit).sum();
+        double totalProfitOfPlayers = profitOfPlayers.stream()
+                .mapToDouble(ProfitDto::getProfit)
+                .sum();
         return new ProfitDto(this, totalProfitOfPlayers * (-1));
     }
 

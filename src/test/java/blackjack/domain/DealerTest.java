@@ -5,7 +5,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.ProfitDto;
+import blackjack.dto.profit.ProfitDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,10 @@
-package blackjack.dto;
+package blackjack.dto.currentCards;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CurrentCardsDto {
@@ -29,6 +30,6 @@ public class CurrentCardsDto {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }
