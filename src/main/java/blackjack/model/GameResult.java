@@ -1,45 +1,40 @@
 package blackjack.model;
 
+import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamer;
-import java.util.HashMap;
+import blackjack.model.player.Gamers;
+import blackjack.model.player.Player;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameResult {
 
-    private int dealerResult;
-    private final Map<Gamer, Profit> playersResult;
+    private final Map<Player, Profit> playersResult;
 
-    public GameResult() {
-        playersResult = new HashMap<>();
+    public GameResult(Map<Player, Profit> playersResult) {
+        this.playersResult = playersResult;
     }
 
-    public void updatePlayerBettingResult(Gamer gamer, Result result) {
-        playersResult.put(gamer, calculateProfit(gamer, result));
-    }
-
-    private Profit calculateProfit(Gamer gamer, Result result) {
+    public static Profit calculateProfit(Gamer gamer, Result result) {
         if (isPossibleToGetAdditionalMoney(gamer, result)) {
             return Profit.of(gamer.getBetting(), result, true);
         }
         return Profit.of(gamer.getBetting(), result, false);
     }
 
-    private boolean isPossibleToGetAdditionalMoney(Gamer gamer, Result result) {
+    private static boolean isPossibleToGetAdditionalMoney(Gamer gamer, Result result) {
         return result == Result.WIN && gamer.isBlackjack();
     }
 
-    public void calculateDealerResult() {
-        for (Profit money : playersResult.values()) {
-            dealerResult -= money.getAmount();
-        }
+    public static Profit calculateDealerResult(List<Profit> profits) {
+        return new Profit((int) (profits.stream()
+                .mapToInt(Profit::getAmount)
+                .sum()) * -1);
     }
 
-    public int getDealerResult() {
-        return dealerResult;
-    }
-
-    public Map<Gamer, Profit> getPlayersResult() {
+    public Map<Player, Profit> getPlayersResult() {
         return new LinkedHashMap<>(playersResult);
     }
 }

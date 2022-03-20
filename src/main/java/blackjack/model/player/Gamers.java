@@ -29,6 +29,6 @@ public class Gamers {
         return gamers.stream()
                 .filter(gamer -> gamer.getName().equals(name))
                 .findAny()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

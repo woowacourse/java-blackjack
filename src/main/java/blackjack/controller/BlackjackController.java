@@ -15,7 +15,6 @@ public class BlackjackController {
         createGamers();
         OutputView.printOpenCard(blackjackGame.createDealerDto(), blackjackGame.createPlayersDto());
         takeCards();
-        blackjackGame.matchAndUpdateResult();
         displayResult();
     }
 
@@ -63,6 +62,6 @@ public class BlackjackController {
 
     private void displayResult() {
         OutputView.printTotalScore(blackjackGame.createDealerDto(), blackjackGame.createPlayersDto());
-        OutputView.printResults(blackjackGame.createDealerResult(), blackjackGame.createBettingResult());
+        OutputView.printResults(blackjackGame.matchAndCreateResult());
     }
 }

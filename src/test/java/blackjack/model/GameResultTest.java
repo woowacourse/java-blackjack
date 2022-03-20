@@ -6,7 +6,9 @@ import static blackjack.model.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.player.Gamer;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,30 +21,27 @@ class GameResultTest {
     @Test
     @DisplayName("플레이어가 베팅 금액의 1.5배를 획득하는 경우 테스트")
     void bettingOneAndAHalfTest() {
-        GameResult gameResult = new GameResult();
-        gameResult.updatePlayerBettingResult(
+        Profit profit = GameResult.calculateProfit(
                 new Gamer("player", List.of(new Card(ACE, SPADE), new Card(JACK, HEART)),
                         new Betting(1000)), WIN);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(new Profit(1500));
+        assertThat(profit.getAmount()).isEqualTo(1500);
     }
 
     @Test
     @DisplayName("비기는 경우 테스트")
     void playerDrawBettingTest() {
-        GameResult gameResult = new GameResult();
-        gameResult.updatePlayerBettingResult(
+        Profit profit = GameResult.calculateProfit(
                 new Gamer("player", List.of(new Card(NINE, SPADE), new Card(JACK, HEART)),
                         new Betting(1000)), DRAW);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(new Profit(0));
+        assertThat(profit.getAmount()).isEqualTo(0);
     }
 
     @ParameterizedTest(name = "[{index}] 베팅 금액 1배 테스트")
     @MethodSource("provideWinPlayer")
     @DisplayName("플레이어가 이긴 경우 베팅 금액 1배 획득 테스트")
     void playerWinBettingTest(Gamer gamer, int money) {
-        GameResult gameResult = new GameResult();
-        gameResult.updatePlayerBettingResult(gamer, WIN);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(new Profit(money));
+        Profit profit = GameResult.calculateProfit(gamer, WIN);
+        assertThat(profit.getAmount()).isEqualTo(money);
     }
 
     private static Stream<Arguments> provideWinPlayer() {
@@ -63,9 +62,8 @@ class GameResultTest {
     @MethodSource("provideLosePlayer")
     @DisplayName("플레이어가 진 경우 테스트")
     void playerLoseBettingTest(Gamer gamer, int money) {
-        GameResult gameResult = new GameResult();
-        gameResult.updatePlayerBettingResult(gamer, LOSE);
-        assertThat(gameResult.getPlayersResult().values()).containsExactly(new Profit(money));
+        Profit profit = GameResult.calculateProfit(gamer, LOSE);
+        assertThat(profit.getAmount()).isEqualTo(money);
     }
 
     private static Stream<Arguments> provideLosePlayer() {
@@ -85,14 +83,8 @@ class GameResultTest {
     @Test
     @DisplayName("딜러 수익 계산 테스트")
     void dealerOutcomeTest() {
-        GameResult gameResult = new GameResult();
-        gameResult.updatePlayerBettingResult(
-                new Gamer("player1", List.of(new Card(ACE, SPADE), new Card(JACK, HEART)),
-                        new Betting(20000)), WIN);
-        gameResult.updatePlayerBettingResult(
-                new Gamer("player2", List.of(new Card(SIX, SPADE), new Card(JACK, HEART)),
-                        new Betting(4000)), LOSE);
-        gameResult.calculateDealerResult();
-        assertThat(gameResult.getDealerResult()).isEqualTo(-26000);
+        Profit profit = GameResult.calculateDealerResult(
+                List.of(new Profit(10000), new Profit(20000), new Profit(-4000)));
+        assertThat(profit.getAmount()).isEqualTo(-26000);
     }
 }

@@ -7,6 +7,7 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamer;
 import blackjack.model.player.Gamers;
 import blackjack.model.player.Player;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,10 @@ public class BlackjackGame {
     private final CardDeck cardDeck;
     private final Dealer dealer;
     private Gamers gamers;
-    private final GameResult gameResult;
 
     public BlackjackGame() {
         cardDeck = new CardDeck();
         dealer = new Dealer(List.of(cardDeck.selectCard(), cardDeck.selectCard()));
-        gameResult = new GameResult();
     }
 
     public void createGamers(Map<String, Integer> inputGamerInfo) throws IllegalStateException {
@@ -79,22 +78,20 @@ public class BlackjackGame {
         return false;
     }
 
-    public void matchAndUpdateResult() {
+    public Map<String, Integer> matchAndCreateResult() {
+        Map<Player, Profit> matchResult = new LinkedHashMap<>();
         for (Gamer gamer : gamers.getGamers()) {
             Result result = dealer.match(gamer);
-            gameResult.updatePlayerBettingResult(gamer, result.opposite());
+            matchResult.put(gamer, GameResult.calculateProfit(gamer, result.opposite()));
         }
-        gameResult.calculateDealerResult();
+        matchResult.put(dealer, GameResult.calculateDealerResult(new ArrayList<>(matchResult.values())));
+        return createBettingResult(new GameResult(matchResult));
     }
 
-    public int createDealerResult() {
-        return gameResult.getDealerResult();
-    }
-
-    public Map<String, Integer> createBettingResult() {
+    public Map<String, Integer> createBettingResult(GameResult gameResult) {
         Map<String, Integer> playerBettingResult = new LinkedHashMap<>();
-        Map<Gamer, Profit> temp = gameResult.getPlayersResult();
-        for (Gamer gamer : temp.keySet()) {
+        Map<Player, Profit> temp = gameResult.getPlayersResult();
+        for (Player gamer : temp.keySet()) {
             playerBettingResult.put(gamer.getName(), temp.get(gamer).getAmount());
         }
         return playerBettingResult;
