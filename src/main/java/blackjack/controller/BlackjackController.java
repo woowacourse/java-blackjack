@@ -72,7 +72,7 @@ public class BlackjackController {
     private void turnGuest(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
         while (blackjackGame.isTurnGuest() && receiveHit(blackjackGame.getTurnPlayer().getName())) {
             blackjackGame.assignCard(blackjackGame.getTurnPlayer(), playingCardShuffleMachine);
-            announcePresentCard(blackjackGame);
+            OutputView.announcePresentCards(blackjackGame.getTurnPlayerGameResponse());
         }
         blackjackGame.nextTurn();
     }
@@ -82,8 +82,8 @@ public class BlackjackController {
             return InputView.requestHit(name);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+            return receiveHit(name);
         }
-        return receiveHit(name);
     }
 
     private void turnDealer(BlackjackGame blackjackGame, CardShuffleMachine playingCardShuffleMachine) {
@@ -91,10 +91,6 @@ public class BlackjackController {
             blackjackGame.assignCard(blackjackGame.getDealer(), playingCardShuffleMachine);
             OutputView.announceHit();
         }
-    }
-
-    private void announcePresentCard(BlackjackGame blackjackGame) {
-        OutputView.announcePresentCards(blackjackGame.getTurnPlayerGameResponse());
     }
 
     private void announceResult(BlackjackGame blackjackGame) {
