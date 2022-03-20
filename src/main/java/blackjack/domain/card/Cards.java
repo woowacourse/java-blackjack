@@ -7,7 +7,7 @@ public class Cards {
 
     private static final int BUST = 22;
     private static final int BLACKJACK = 21;
-    public static final int DEFAULT_INIT_SIZE = 2;
+    private static final int DEFAULT_INIT_SIZE = 2;
     private static final int ACE_POINT = 10;
     private static final int MINIMUM_POINT_FOR_ACE = 11;
 
@@ -42,7 +42,7 @@ public class Cards {
         return sum() >= BUST;
     }
 
-    public boolean isReady() {
+    public boolean isNotInitialized() {
         return cards.size() < DEFAULT_INIT_SIZE;
     }
 

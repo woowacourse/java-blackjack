@@ -74,7 +74,7 @@ public class CardsTest {
     public void isReadyTest() {
         Cards cards = new Cards();
         cards = cards.add(SPADE_TWO);
-        assertThat(cards.isReady()).isEqualTo(true);
+        assertThat(cards.isNotInitialized()).isEqualTo(true);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class CardsTest {
         Cards cards = new Cards();
         cards = cards.add(SPADE_TWO);
         cards = cards.add(SPADE_NINE);
-        assertThat(cards.isReady()).isEqualTo(false);
+        assertThat(cards.isNotInitialized()).isEqualTo(false);
     }
 
     @Test

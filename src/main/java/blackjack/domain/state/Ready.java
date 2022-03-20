@@ -16,7 +16,7 @@ public class Ready extends Running {
     @Override
     public State draw(Card card) {
         final Cards cards = cards().add(card);
-        if (cards.isReady()) {
+        if (cards.isNotInitialized()) {
             return new Ready(cards);
         }
         if (cards.isBlackJack()) {
@@ -29,5 +29,4 @@ public class Ready extends Running {
     public State stay() {
         throw new IllegalStateException();
     }
-
 }
