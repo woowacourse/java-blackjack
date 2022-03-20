@@ -16,7 +16,7 @@ public class EarningRateCalculator {
         if (winningResult.isWin()) {
             return WIN_EARNING_RATE;
         }
-        if(winningResult.isLose()) {
+        if (winningResult.isLose()) {
             return LOSE_EARNING_RATE;
         }
         return DRAW_EARNING_RATE;

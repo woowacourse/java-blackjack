@@ -60,5 +60,5 @@ public class ParticipantCards {
     private boolean isNeedToConvertAceValue(int aceCount, int totalScore) {
         return aceCount > NO_COUNT && totalScore > BUST_THRESHOLD;
     }
-    
+
 }
