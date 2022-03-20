@@ -88,4 +88,17 @@ public class StayTest {
         assertThat(playerState.compare(dealerState)).isExactlyInstanceOf(Lose.class);
     }
 
+    @Test
+    @DisplayName("딜러가 스테이, 플레이어가 블랙잭인 경우 패배 반환")
+    void lose2() {
+        dealerState = dealerState.draw(CLUB_TEN);
+        dealerState = dealerState.draw(CLUB_TEN);
+        dealerState = dealerState.stay();
+
+        playerState = playerState.draw(CLUB_TEN);
+        playerState = playerState.draw(HEART_ACE);
+
+        assertThat(dealerState.compare(playerState)).isExactlyInstanceOf(Lose.class);
+    }
+
 }
