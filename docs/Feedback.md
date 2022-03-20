@@ -185,9 +185,9 @@
     - 컨트롤러 or 생성자
       - 테스트를 진행하기 위해 컨트롤러로 분리했음.
       - 카드 2장 지급이 초기 세팅이기 때문에 생성자에서 하는 것이 맞다고 생각하여 수정
-- [ ] `GameController`
-    - [ ] `playTurnGambler`, 직관적인 이름으로 수정 -> `playGamblerTurn`
-    - [ ] Line 17, 불필요한 상수 제거
+- [x] `GameController`
+    - [x] `playTurnGambler`, 직관적인 이름으로 수정 -> `playGamblerTurn`
+    - [x] Line 17, 불필요한 상수 제거
 - [ ] `GameStatistic`
     - [ ] non profit의 의미
     - [ ] `FLAG`, `VALUE`와 같은 단어들은 상수/변수/메서드명에 사용됐을 때 역할을 나타내는 데 도움이 되는 경우가 많지 않다.

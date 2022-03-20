@@ -14,25 +14,17 @@ import java.util.List;
 
 public class GameController {
 
-    private static final int DEFAULT_CARD_AMOUNT = 2;
-
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
         Gamblers gamblers = generatePlayers(cardDeck);
-        Dealer dealer = generateDealer(cardDeck);
+        Dealer dealer = Dealer.of(cardDeck);
         OutputView.printInitGameState(gamblers, dealer);
 
-        playTurnGambler(gamblers, cardDeck);
-        playTurnDealer(dealer, cardDeck);
+        playGamblerTurn(gamblers, cardDeck);
+        playDealerTurn(dealer, cardDeck);
 
         OutputView.printCardAndPoint(gamblers, dealer);
         printGameResult(GameStatistic.of(dealer, gamblers), dealer);
-    }
-
-    private Dealer generateDealer(CardDeck cardDeck) {
-        Dealer dealer = Dealer.of(cardDeck);
-//        dealer.init(cardDeck);
-        return dealer;
     }
 
     private Gamblers generatePlayers(CardDeck cardDeck) {
@@ -47,12 +39,10 @@ public class GameController {
     private Gambler generatePlayer(CardDeck cardDeck, String name) {
         Name gamblerName = Name.of(name);
         double money = InputView.inputGamblerBetMoney(gamblerName);
-        Gambler gambler = Gambler.of(gamblerName, money, cardDeck);
-//        gambler.init(cardDeck);
-        return gambler;
+        return Gambler.of(gamblerName, money, cardDeck);
     }
 
-    private void playTurnGambler(Gamblers gamblers, CardDeck cardDeck) {
+    private void playGamblerTurn(Gamblers gamblers, CardDeck cardDeck) {
         for (Gambler gambler : gamblers.getGamblers()) {
             chooseHitOrStay(cardDeck, gambler);
             printCardStateFirstQuestion(gambler);
@@ -75,7 +65,7 @@ public class GameController {
         }
     }
 
-    private void playTurnDealer(Dealer dealer, CardDeck cardDeck) {
+    private void playDealerTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.isHit()) {
             dealer.addCard(cardDeck.draw());
             OutputView.printDealerCardAdded();
