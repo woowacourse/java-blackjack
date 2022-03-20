@@ -40,7 +40,7 @@ public class BlackjackGame {
     }
 
     public Map<Participant, Integer> getCardResult() {
-        return gameParticipants.getParticipant().stream()
+        return gameParticipants.getAllParticipants().stream()
                 .collect(Collectors.toMap(participant -> participant, Participant::calculateCardsSum));
     }
 
@@ -49,7 +49,7 @@ public class BlackjackGame {
     }
 
     public List<Participant> getParticipant() {
-        return gameParticipants.getParticipant();
+        return gameParticipants.getAllParticipants();
     }
 
     private Dealer createDealer() {

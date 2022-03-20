@@ -36,7 +36,7 @@ public class GameParticipants {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public List<Participant> getParticipant() {
+    public List<Participant> getAllParticipants() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players.getPlayers());
