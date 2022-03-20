@@ -3,11 +3,11 @@ package blackjack.model.player;
 public class Record {
 
     private final Gamer gamer;
-    private final Result status;
+    private final Result result;
 
-    public Record(Gamer gamer, Result status) {
+    public Record(Gamer gamer, Result result) {
         this.gamer = gamer;
-        this.status = status;
+        this.result = result;
     }
 
     public String name() {
@@ -15,10 +15,10 @@ public class Record {
     }
 
     public Money profit() {
-        return status.profit(gamer.bettingMoney());
+        return result.profit(gamer.bettingMoney());
     }
 
     public Result status() {
-        return status;
+        return result;
     }
 }
