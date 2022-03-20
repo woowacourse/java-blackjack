@@ -10,6 +10,7 @@ public class Gamer extends Player {
 
     private static final int LIMIT_GAMER_TOTAL_POINT = 21;
     private static final int GAMER_OPEN_CARDS_SIZE = 2;
+    private static final String BANNED_NAME = "딜러";
 
     private final String name;
     private final BetMoney betMoney;
@@ -40,7 +41,7 @@ public class Gamer extends Player {
     }
 
     private void checkBannedName(final String name) {
-        if (name.equals(Dealer.DEALER_NAME)) {
+        if (name.equals(BANNED_NAME)) {
             throw new IllegalArgumentException("[ERROR] Gamer의 이름은 딜러일 수 없습니다.");
         }
     }

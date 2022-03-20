@@ -3,7 +3,6 @@ package blackjack.view;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String DEALER_NAME = "딜러";
     private static final String PRINT_OPEN_CARD_PREFIX_MESSAGE = "\n%s와 ";
     private static final String PRINT_OPEN_CARD_SUFFIX_MESSAGE = "에게 2장의 카드를 나누었습니다.\n";
     private static final String PRINT_JOINING_DELIMITER = ", ";
@@ -27,7 +27,7 @@ public class OutputView {
 
     public static void printOpenCards(final List<Gamer> gamers, final Player dealer) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format(PRINT_OPEN_CARD_PREFIX_MESSAGE, Dealer.DEALER_NAME))
+        stringBuilder.append(String.format(PRINT_OPEN_CARD_PREFIX_MESSAGE, DEALER_NAME))
             .append(joinNames(gamers))
             .append(PRINT_OPEN_CARD_SUFFIX_MESSAGE);
 
@@ -46,7 +46,7 @@ public class OutputView {
     private static void appendDealerFormat(final Player dealer, final StringBuilder stringBuilder) {
         List<Card> dealerCards = dealer.openCards();
         stringBuilder.append(
-            String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, joinCards(dealerCards)));
+            String.format(PRINT_DEFAULT_FORMAT_MESSAGE, DEALER_NAME, joinCards(dealerCards)));
     }
 
     private static String joinCards(final List<Card> playerCards) {
@@ -85,7 +85,7 @@ public class OutputView {
 
     private static void printDealerCardsResult(final Player dealer) {
         System.out.printf(PRINT_FINAL_CARD_RESULT,
-            Dealer.DEALER_NAME,
+            DEALER_NAME,
             joinCards(dealer.showCards()),
             dealer.calculateResult());
     }
@@ -101,7 +101,7 @@ public class OutputView {
         Long dealerProfit) {
         System.out.println(FINAL_RESULT_MESSAGE);
 
-        System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, dealerProfit);
+        System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, DEALER_NAME, dealerProfit);
         gamersProfit.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
             key.getName(), value));
     }
