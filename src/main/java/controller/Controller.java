@@ -57,6 +57,7 @@ public class Controller {
 		List<String> names = new ArrayList<>();
 		players.forEach(player -> names.add(player.getName()));
 		OutputView.printInitMessage(names);
+		
 		OutputView.printOneHandForDealer(dealer.getName(), dealer.getCards());
 		players.forEach(player -> OutputView.printHand(player.getName(), player.getCards()));
 	}
