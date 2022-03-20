@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardDeckGenerator;
+import blackjack.domain.card.generator.RandomCardDeckGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,7 @@ class PlayersTest {
     @MethodSource("providePlayerNames")
     @DisplayName("플레이어의 수가 1 ~ 8 명이 아니면, 예외를 발생한다.")
     void checkPlayerCountToPlayGame(List<String> playerNames) {
-        final CardDeck cardDeck = new CardDeck(new CardDeckGenerator());
+        final CardDeck cardDeck = new CardDeck(new RandomCardDeckGenerator());
 
         assertThatThrownBy(() -> Players.createByName(playerNames, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -39,7 +39,7 @@ class PlayersTest {
     @Test
     @DisplayName("플레이어의 이름이 중복이면, 예외를 발생한다.")
     void checkDuplicatePlayerNames() {
-        final CardDeck cardDeck = new CardDeck(new CardDeckGenerator());
+        final CardDeck cardDeck = new CardDeck(new RandomCardDeckGenerator());
 
         final List<String> playerNames = new ArrayList<>(List.of("slow", "slow", "pobi"));
 
@@ -51,7 +51,7 @@ class PlayersTest {
     @Test
     @DisplayName("배팅 금액, 이름이 모두 정상 입력된 경우, Players 를 정상 생성한다.")
     void createPlayers() {
-        final CardDeck cardDeck = new CardDeck(new CardDeckGenerator());
+        final CardDeck cardDeck = new CardDeck(new RandomCardDeckGenerator());
         final Map<String, Integer> players = Map.ofEntries(
                 Map.entry("slow", 1000),
                 Map.entry("pobi", 2000)

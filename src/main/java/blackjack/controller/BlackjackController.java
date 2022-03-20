@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.ParticipantProfit;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardDeckGenerator;
+import blackjack.domain.card.generator.RandomCardDeckGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.DrawStatus;
 import blackjack.domain.player.Player;
@@ -31,7 +31,7 @@ public class BlackjackController {
 
     private BlackjackGame setUpBlackjackGame() {
         final BlackjackGame blackjackGame = BlackjackGame.create(setUpPlayers(),
-                new CardDeck(new CardDeckGenerator()));
+                new CardDeck(new RandomCardDeckGenerator()));
 
         outputView.printParticipantInitialCards(blackjackGame.getPlayers(), blackjackGame.getDealer());
         return blackjackGame;
