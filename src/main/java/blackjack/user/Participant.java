@@ -4,7 +4,6 @@ import blackjack.Card;
 import blackjack.Cards;
 import blackjack.Deck;
 import blackjack.State;
-import java.util.List;
 
 public abstract class Participant {
     private final String name;
@@ -52,6 +51,10 @@ public abstract class Participant {
 
     public int score() {
         return myCards.scoreSum();
+    }
+
+    public State state() {
+        return state;
     }
 
     protected void setStateBlackjackIfSatisfied() {

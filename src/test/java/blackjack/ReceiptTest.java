@@ -13,4 +13,23 @@ public class ReceiptTest {
         assertThatThrownBy(() -> Receipt.generate(500)).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void generateEmptyTest() {
+        assertThat(Receipt.empty().money()).isEqualTo(0);
+    }
+
+    @Test
+    void generateOppositeTest() {
+        assertThat(Receipt.opposite(Receipt.generate(1000)).money()).isEqualTo(-1000);
+    }
+
+    @Test
+    void generateMergeTest() {
+        assertThat(Receipt.merge(Receipt.generate(1000), Receipt.generate(3000)).money()).isEqualTo(4000);
+    }
+
+    @Test
+    void generateBlackjackTest() {
+        assertThat(Receipt.blackjack(Receipt.generate(1000)).money()).isEqualTo(1500);
+    }
 }

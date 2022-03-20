@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.Card;
 import blackjack.Cards;
 import blackjack.Denomination;
+import blackjack.Receipt;
 import blackjack.Suit;
 import blackjack.user.Participant;
 import java.util.HashMap;
@@ -20,6 +21,9 @@ public class OutputView {
     private static final String PLAYER_CARDS = "%s카드: %s";
     private static final String DEALER_ADDTIONAL_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_SCORE = " - 결과: %d\n";
+    private static final String RESULT_MESSAGE = "\n## 최종 수익";
+    private static final String PARTICIPANT_YIELD_MESSAGE = "%s: %d\n";
+    private static final String DEALER = "딜러";
 
     static {
         suitToString.put(Suit.CLOVER, "클로버");
@@ -76,5 +80,21 @@ public class OutputView {
 
     private static String cardToString(Card card) {
         return denominationToString.get(card.getDenomination()) + suitToString.get(card.getSuit());
+    }
+
+    public static void result(Map<Participant, Receipt> calculateYield) {
+        System.out.println(RESULT_MESSAGE);
+        dealerResult(calculateYield);
+        for (Map.Entry<Participant, Receipt> entry : calculateYield.entrySet()) {
+            System.out.printf(PARTICIPANT_YIELD_MESSAGE, entry.getKey().getName(), entry.getValue().money());
+        }
+    }
+
+    private static void dealerResult(Map<Participant, Receipt> calculateYield) {
+        int yieldSum = 0;
+        for (Receipt receipt : calculateYield.values()) {
+            yieldSum += receipt.money();
+        }
+        System.out.printf(PARTICIPANT_YIELD_MESSAGE, DEALER, -yieldSum);
     }
 }

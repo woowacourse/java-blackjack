@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.Blackjack;
-import blackjack.Deck;
 import blackjack.Players;
 import blackjack.user.Dealer;
 import blackjack.user.Player;
@@ -23,6 +22,7 @@ public class BlackjackController {
             blackjack.distributeAdditionalCard(player);
             OutputView.printCards(player.getName(), player.getCards(), true);
         }
+        player.setStateStayIfSatisfied(true);
     }
 
     private void distributeAdditionCardsToAllPlayer(Blackjack blackjack, Players players) {
@@ -63,10 +63,15 @@ public class BlackjackController {
 
         blackjack.distributeInitCards(dealer, players);
         openInitialCards(dealer, players);
+        if (blackjack.gameOverByBlackjack(dealer)) {
+            OutputView.result(blackjack.calculateYield(dealer, players));
+            return;
+        }
 
         distributeAdditionCardsToAllPlayer(blackjack, players);
         distributeAdditionCardsToDealer(blackjack, dealer);
 
         openCardsWithScore(dealer, players);
+        OutputView.result(blackjack.calculateYield(dealer, players));
     }
 }

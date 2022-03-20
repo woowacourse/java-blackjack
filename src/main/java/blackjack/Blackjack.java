@@ -9,7 +9,7 @@ import java.util.Map;
 public class Blackjack {
     private final Deck deck;
     private final Map<Player, Receipt> bettingTable;
-    private final Map<Player, Receipt> yieldTable;
+    private final Map<Participant, Receipt> yieldTable;
 
 
     private Blackjack() {
@@ -47,5 +47,17 @@ public class Blackjack {
 
     public void betting(Player player, int money) {
         bettingTable.put(player, Receipt.generate(money));
+    }
+
+    public boolean gameOverByBlackjack(Dealer dealer) {
+        return dealer.isBlackjack();
+    }
+
+    public Map<Participant, Receipt> calculateYield(Dealer dealer, Players players) {
+        for (Object player : players) {
+            yieldTable.put((Player)player, BlackjackResult.of(dealer, (Player)player)
+                    .settle(bettingTable.get((Player)player)));
+        }
+        return yieldTable;
     }
 }
