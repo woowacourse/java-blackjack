@@ -63,27 +63,27 @@ public class BlackjackController {
     }
 
     private void takeParticipantCards(Player player, Deck deck) {
-        if (canHit(player)) {
-            player.hit(deck.pick());
+        while (player.canHit()) {
+            hitOrStayByAnswer(player, deck, readHitOrStay(player));
             ResultView.printPlayerCard(player);
-            takeParticipantCards(player, deck);
-        }
-        if (player.canHit()) {
-            player.stay();
         }
     }
 
-    private boolean canHit(Player player) {
-        if (!player.canHit()) {
-            return false;
+    private void hitOrStayByAnswer(Player player, Deck deck, String hitOrStay) {
+        if (HitOrStayAnswer.isHit(hitOrStay)) {
+            player.hit(deck.pick());
+            return;
         }
+        player.stay();
+    }
 
+    private String readHitOrStay(Player player) {
         String answer;
         do {
             answer = InputView.requestHitOrStay(player.getName());
             printErrorIfNotContainsHitOrStay(answer);
         } while (!HitOrStayAnswer.containsValue(answer));
-        return answer.equals(HitOrStayAnswer.HIT_ANSWER.get());
+        return answer;
     }
 
     private void printErrorIfNotContainsHitOrStay(String answer) {
