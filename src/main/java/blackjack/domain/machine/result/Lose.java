@@ -1,6 +1,6 @@
 package blackjack.domain.machine.result;
 
-public final class Lose extends MatchResults {
+public final class Lose extends MatchCalculator {
 
     public static final int LOSE_RATE = -1;
 

@@ -4,7 +4,7 @@ import blackjack.domain.machine.Score;
 
 public class JudgeFactory {
 
-    public static MatchResults matchResult(Score playerScore, Score dealerScore) {
+    public static MatchCalculator matchResult(Score playerScore, Score dealerScore) {
         if (isBlackjack(playerScore, dealerScore)) {
             return new Blackjack();
         }

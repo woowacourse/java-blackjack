@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.machine.GameResponse;
 import blackjack.domain.machine.Match;
-import blackjack.domain.machine.Results;
+import blackjack.domain.machine.MatchResults;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
@@ -50,9 +50,9 @@ public class OutputView {
         }
     }
 
-    public static void announceResultWinner(Results results) {
-        for (Player player : results.getPlayers()) {
-            double profit = results.getProfit(player);
+    public static void announceResultWinner(MatchResults matchResults) {
+        for (Player player : matchResults.getPlayers()) {
+            double profit = matchResults.getProfit(player);
             System.out.printf("%s: %.1f\n", player.getName(), profit);
         }
     }

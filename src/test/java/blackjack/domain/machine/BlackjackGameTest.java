@@ -50,7 +50,7 @@ class BlackjackGameTest {
         Map<Player, Double> bettingBox = new LinkedHashMap<>();
         Player player = new Guest("eden");
         bettingBox.put(player, (double) 1000);
-        Results results = blackjackGame.calculateResult(bettingBox);
-        assertThat(results.getPlayers().size()).isEqualTo(2);
+        MatchResults matchResults = blackjackGame.calculateResult(bettingBox);
+        assertThat(matchResults.getPlayers().size()).isEqualTo(2);
     }
 }

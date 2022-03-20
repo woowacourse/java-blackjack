@@ -1,6 +1,6 @@
 package blackjack.domain.machine.result;
 
-public abstract class MatchResults {
+public abstract class MatchCalculator {
 
     abstract double profitRate();
 

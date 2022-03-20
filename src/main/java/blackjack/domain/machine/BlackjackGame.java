@@ -3,7 +3,7 @@ package blackjack.domain.machine;
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Cards;
 import blackjack.domain.machine.result.JudgeFactory;
-import blackjack.domain.machine.result.MatchResults;
+import blackjack.domain.machine.result.MatchCalculator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
@@ -55,20 +55,20 @@ public class BlackjackGame {
         dealer.addCard(cards.assignCard());
     }
 
-    public Results calculateResult(Map<Player, Double> bettingBox) {
+    public MatchResults calculateResult(Map<Player, Double> bettingBox) {
         Player dealer = blackjackPlayers.getDealer();
         List<Player> guests = blackjackPlayers.getGuests();
         return scoreResults(bettingBox, dealer, guests);
     }
 
-    private Results scoreResults(Map<Player, Double> bettingBox, Player dealer, List<Player> guests) {
-        Results results = new Results(dealer);
+    private MatchResults scoreResults(Map<Player, Double> bettingBox, Player dealer, List<Player> guests) {
+        MatchResults matchResults = new MatchResults(dealer);
         for (Player guest : guests) {
-            MatchResults result = JudgeFactory.matchResult(guest.getScore(), dealer.getScore());
+            MatchCalculator result = JudgeFactory.matchResult(guest.getScore(), dealer.getScore());
             Double money = bettingBox.get(guest);
-            results.addResult(guest, dealer, money, result);
+            matchResults.addResult(guest, dealer, money, result);
         }
-        return results;
+        return matchResults;
     }
 
     public List<String> getPlayerNames() {
