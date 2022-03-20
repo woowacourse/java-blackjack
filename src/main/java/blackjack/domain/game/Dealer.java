@@ -1,5 +1,7 @@
 package blackjack.domain.game;
 
+import static blackjack.domain.game.PlayRecord.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +30,26 @@ public final class Dealer extends Participant {
 
     public Name getName() {
         return Name.of(NAME);
+    }
+
+    public PlayRecord playerRecord(Player player) {
+        if (isPlayerLoss(player)) {
+            return LOSS;
+        }
+
+        if (getScore() == player.getScore() && !isBlackjack()) {
+            return PUSH;
+        }
+
+        if (player.isBlackjack()) {
+            return BLACKJACK;
+        }
+
+        return WIN;
+    }
+
+    private boolean isPlayerLoss(Player player) {
+        return player.isBust() || (!isBust() && isBiggerThan(player))
+            || (isBlackjack() && !player.isBlackjack());
     }
 }
