@@ -30,10 +30,6 @@ public abstract class Participant {
 		}
 	}
 
-	public int getIncome() {
-		return battingAmount.calculateIncome();
-	}
-
 	public void earnAmountByBlackJack() {
 		if (!isBlackJack()) {
 			return;
@@ -49,10 +45,6 @@ public abstract class Participant {
 		return hand.calculateScore();
 	}
 
-	protected Outcome judgeCompeteResult(final int score, final int targetScore) {
-		return Outcome.of(score, targetScore);
-	}
-
 	public int calculateBettingResult() {
 		return battingAmount.calculateIncome();
 	}
@@ -61,8 +53,8 @@ public abstract class Participant {
 		drawMore = false;
 	}
 
-	public String getName() {
-		return name;
+	public int getIncome() {
+		return battingAmount.calculateIncome();
 	}
 
 	public List<Card> getCards() {
@@ -71,6 +63,10 @@ public abstract class Participant {
 
 	public Hand getHand() {
 		return new Hand(hand.getCards());
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public boolean wantDraw() {
@@ -89,5 +85,9 @@ public abstract class Participant {
 
 	protected void loseAll() {
 		battingAmount.loseAll();
+	}
+
+	protected Outcome judgeCompeteResult(final int score, final int targetScore) {
+		return Outcome.of(score, targetScore);
 	}
 }

@@ -82,10 +82,7 @@ public class Roles {
 			player.distributeBattingAmount(dealer);
 			dealer.distributeBattingAmount(player);
 		}
-		final List<Participant> results = new ArrayList<>();
-		results.add(dealer);
-		results.addAll(players);
-		return results;
+		return combineResult();
 	}
 
 	private void calculateBlackJackResult() {
@@ -95,6 +92,13 @@ public class Roles {
 		for (Participant player : players) {
 			player.earnAmountByBlackJack();
 		}
+	}
+
+	private List<Participant> combineResult() {
+		final List<Participant> results = new ArrayList<>();
+		results.add(dealer);
+		results.addAll(players);
+		return results;
 	}
 
 }
