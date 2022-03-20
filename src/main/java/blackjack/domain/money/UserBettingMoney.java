@@ -1,4 +1,4 @@
-package blackjack.money;
+package blackjack.domain.money;
 
 import blackjack.domain.player.User;
 import blackjack.domain.result.Result;
