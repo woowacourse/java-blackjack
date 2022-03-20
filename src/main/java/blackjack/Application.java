@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public class Application {
 
+    public static final String DELIMITER = ",";
+
     public static void main(final String... args) {
         List<Player> players = inputPlayersByNameAndBettingMoney(InputView.inputParticipantsNames());
         BlackjackGame blackjackGame = BlackjackGame.create(players);
@@ -25,8 +27,8 @@ public class Application {
     }
 
     private static List<Player> inputPlayersByNameAndBettingMoney(String names) {
-        return Arrays.stream(names.split(","))
-            .map(playerName -> Player.from(playerName, getBettingMoney(playerName)))
+        return Arrays.stream(names.split(DELIMITER))
+            .map(playerName -> Player.from(playerName.trim(), getBettingMoney(playerName)))
             .collect(Collectors.toList());
     }
 
@@ -43,19 +45,21 @@ public class Application {
 
     private static void processPlayerTurn(List<Player> players, BlackjackGame blackjackGame) {
         for (Player player : players) {
-            String command = InputView.inputOneMoreCard(player);
-            playerTurn(blackjackGame, player, command);
+            playerTurn(blackjackGame, player);
         }
     }
 
-    private static void playerTurn(BlackjackGame blackjackGame, Player player, String command) {
-        while (!player.isFinished() && command.equals("y")) {
+
+    private static void playerTurn(BlackjackGame blackjackGame, Player player) {
+        while (!player.isFinished() && InputView.inputOneMoreCard(player)) {
             blackjackGame.takeMoreCard(player);
             OutputView.showPlayerHand(player.getParticipant());
         }
-        OutputView.showPlayerHand(player.getParticipant());
-        if (command.equals("n")) {
-            player.stay();
+        if (player.isFinished()) {
+            OutputView.printBustMessage();
+            return;
         }
+        player.stay();
+        OutputView.showPlayerHand(player.getParticipant());
     }
 }

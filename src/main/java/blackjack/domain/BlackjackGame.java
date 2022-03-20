@@ -25,7 +25,9 @@ public class BlackjackGame {
 
     public void drawBaseCards() {
         drawCardsByParticipant(dealer);
-        players.forEach(player -> drawCardsByParticipant(dealer, player));
+        for (Player player : players) {
+            drawCardsByParticipant(dealer, player);
+        }
     }
 
     private void drawCardsByParticipant(Dealer dealer) {
