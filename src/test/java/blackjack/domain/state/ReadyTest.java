@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.PlayRecord;
 
 public class ReadyTest {
 
@@ -55,6 +56,18 @@ public class ReadyTest {
     }
 
     @Test
+    @DisplayName("Ready 상태에서 stay를 호출하면 예외를 던진다.")
+    void stay_error() {
+        //given
+        State readyState = new Ready();
+
+        //then
+        assertThatThrownBy(readyState::stay
+            ).isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining("Ready");
+    }
+
+    @Test
     @DisplayName("Hit 상태에서 draw 로 21이 초과하면 Bust 상태로 바뀐다.")
     void toBust() {
         //given
@@ -77,5 +90,18 @@ public class ReadyTest {
 
         //then
         assertThat(stayState).isInstanceOf(Stay.class);
+    }
+
+    @Test
+    @DisplayName("Finished 상태가 아니면 revenue 호출시 오류를 던진다.")
+    void revenue_error() {
+        //given
+        State notFinishedState = new Hit(new Cards(Set.of(new Card(HEART, JACK), new Card(CLUB, JACK))));
+
+        //then
+        assertThatThrownBy(() ->
+            notFinishedState.revenue(PlayRecord.WIN, new Bet(100))
+        ).isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining("Finished");
     }
 }
