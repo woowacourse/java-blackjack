@@ -25,7 +25,7 @@ public class Score {
         return new Score(scoreWithA(sum));
     }
 
-    public static int calculate(List<Card> hand) {
+    private static int calculate(List<Card> hand) {
         return hand.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
