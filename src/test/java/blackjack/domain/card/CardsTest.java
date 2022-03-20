@@ -22,8 +22,8 @@ class CardsTest {
         final Cards cards = new Cards(ACE_DIAMOND, JACK_DIAMOND);
         final int expected = 3;
 
-        cards.addCard(TWO_DIAMOND);
-        final int actual = cards.getCards().size();
+        final Cards newCards = cards.addCard(TWO_DIAMOND);
+        final int actual = newCards.getCards().size();
         assertThat(actual).isEqualTo(expected);
     }
 

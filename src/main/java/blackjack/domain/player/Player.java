@@ -10,7 +10,7 @@ public abstract class Player {
     private static final String FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE = "처음 제공받는 카드는 2장이어야 합니다.";
 
     private final String name;
-    private final Cards cards;
+    private Cards cards;
 
     public Player(final String name, final List<Card> cards) {
         this.name = name;
@@ -35,7 +35,7 @@ public abstract class Player {
     }
 
     public final void drawCard(final Card card) {
-        cards.addCard(card);
+        this.cards = cards.addCard(card);
     }
 
     public final Result findResult(final Player otherPlayer) {

@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.player.User;
 import blackjack.domain.result.Result;
-import blackjack.money.BettingMoney;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;

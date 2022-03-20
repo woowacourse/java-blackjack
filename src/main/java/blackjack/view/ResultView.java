@@ -66,9 +66,9 @@ public class ResultView {
 
     private static String makeDealerFinalCards(final Dealer dealer) {
         StringBuilder sb = new StringBuilder();
-        String dealerCards = String.join(", ", dealer.getCardsToList().stream()
+        String dealerCards = dealer.getCardsToList().stream()
                 .map(card -> card.getDenominationType() + card.getSuit())
-                .collect(Collectors.toList()));
+                .collect(Collectors.joining(", "));
         sb.append(dealer.getName())
                 .append(CARD_MARK_MESSAGE)
                 .append(dealerCards);

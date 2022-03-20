@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.player.User;
 import blackjack.domain.result.Result;
-import blackjack.money.UserBettingMoney;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

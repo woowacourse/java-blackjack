@@ -24,7 +24,6 @@ public class Card {
         return suit.getValue() + denomination.getValue();
     }
 
-
     public boolean isAceCard() {
         return denomination == Denomination.ACE;
     }
