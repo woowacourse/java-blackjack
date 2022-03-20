@@ -11,7 +11,7 @@ import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 
-public class Roles {
+public class Participants {
 
 	private static final String NO_PLAYER = "";
 

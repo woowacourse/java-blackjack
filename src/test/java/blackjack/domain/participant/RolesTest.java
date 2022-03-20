@@ -23,15 +23,15 @@ import blackjack.domain.factory.CardMockFactory;
 @DisplayName("Roles 테스트")
 class RolesTest {
 
-	final Roles roles = new Roles();
+	final Participants participants = new Participants();
 
 	@Test
 	@DisplayName("딜러에게 카드가 제대로 배분되는지 확인")
 	void distribute_Cards_To_Dealer() {
 		final Deck deck = initDeck();
 
-		roles.initDealer();
-		final Participant dealer = roles.distributeCardToDealer(deck);
+		participants.initDealer();
+		final Participant dealer = participants.distributeCardToDealer(deck);
 
 		assertAll(
 			() -> assertThat(dealer.getCards().size()).isEqualTo(1),
@@ -44,8 +44,8 @@ class RolesTest {
 	void distribute_Cards_to_Player() {
 		final Deck deck = initDeck();
 
-		roles.joinPlayers(Map.of("player", 1000));
-		final List<Participant> players = roles.distributeCardToPlayers(deck);
+		participants.joinPlayers(Map.of("player", 1000));
+		final List<Participant> players = participants.distributeCardToPlayers(deck);
 		final Participant actualPlayer = players.get(0);
 
 		assertThat(actualPlayer.getCards()).isEqualTo(List.of(CardMockFactory.of("A클로버"),
@@ -58,8 +58,8 @@ class RolesTest {
 	@CsvSource(value = {"YES, 1", "NO, 0"})
 	void check_Player_Draw_Card(final RedrawChoice redrawChoice, final int expectedTheNumberOfCard) {
 		final Deck deck = initDeck();
-		roles.joinPlayers(Map.of("player", 1000));
-		final Participant player = roles.drawPlayer(deck, redrawChoice, "player");
+		participants.joinPlayers(Map.of("player", 1000));
+		final Participant player = participants.drawPlayer(deck, redrawChoice, "player");
 
 		assertThat(player.getCards().size()).isEqualTo(expectedTheNumberOfCard);
 	}
@@ -73,9 +73,9 @@ class RolesTest {
 	@ParameterizedTest(name = "{index} {displayName}")
 	@MethodSource("getDealerDeck")
 	void check_dealer_Draw_Card(final Deck deck, final int expectedTheNumberOfCard) {
-		roles.initDealer();
-		roles.distributeCardToDealer(deck);
-		final Participant dealer = roles.drawDealer(deck);
+		participants.initDealer();
+		participants.distributeCardToDealer(deck);
+		final Participant dealer = participants.drawDealer(deck);
 
 		assertThat(dealer.getCards().size()).isEqualTo(expectedTheNumberOfCard);
 	}
@@ -96,10 +96,10 @@ class RolesTest {
 	@ParameterizedTest(name = "{index} {displayName}")
 	@MethodSource("getPlayerStatus")
 	void check_Redrawable_player_name(final Deck deck, final String expectedPlayerName) {
-		roles.joinPlayers(Map.of("player", 1000));
-		roles.distributeCardToPlayers(deck);
-		roles.drawPlayer(deck, RedrawChoice.YES, "player");
-		assertThat(roles.getCurrentPlayerName()).isEqualTo(expectedPlayerName);
+		participants.joinPlayers(Map.of("player", 1000));
+		participants.distributeCardToPlayers(deck);
+		participants.drawPlayer(deck, RedrawChoice.YES, "player");
+		assertThat(participants.getCurrentPlayerName()).isEqualTo(expectedPlayerName);
 	}
 
 	private static Stream<Arguments> getPlayerStatus() {
@@ -117,11 +117,11 @@ class RolesTest {
 	@ParameterizedTest(name = "{index} {displayName}")
 	@MethodSource("getBettingStatus")
 	void check_Betting_Result_According_To_Black_Jack(final Deck deck, final int expectedResult) {
-		roles.initDealer();
-		roles.joinPlayers(Map.of("player", 1000));
-		roles.distributeCardToDealer(deck);
-		roles.distributeCardToPlayers(deck);
-		List<Participant> players = roles.calculateResult();
+		participants.initDealer();
+		participants.joinPlayers(Map.of("player", 1000));
+		participants.distributeCardToDealer(deck);
+		participants.distributeCardToPlayers(deck);
+		List<Participant> players = participants.calculateResult();
 
 		assertThat(players.get(1).calculateBettingResult()).isEqualTo(expectedResult);
 	}
