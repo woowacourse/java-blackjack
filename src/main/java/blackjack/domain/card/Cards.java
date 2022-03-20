@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.game.GameResult.BLACKJACK_VALUE;
+
+import blackjack.domain.game.Status;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,10 +10,12 @@ import java.util.List;
 public class Cards {
 
     private static final int ACE_ADDITIONAL_VALUE = 10;
-    protected static final int BLACKJACK_VALUE = 21;
-    protected static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> value;
+
+    public Cards() {
+        this.value = new ArrayList<>();
+    }
 
     public Cards(List<Card> cards) {
         this.value = new ArrayList<>(cards);
@@ -18,10 +23,6 @@ public class Cards {
 
     public void add(Card card) {
         this.value.add(card);
-    }
-
-    public Status getStatus() {
-        return Status.findStatus(this);
     }
 
     public int getCount() {
@@ -33,14 +34,18 @@ public class Cards {
                 .mapToInt(Card::toInt)
                 .sum();
 
-        if (canAddAddtionalValue(sum)) {
+        if (canAddAdditionalValue(sum)) {
             sum += ACE_ADDITIONAL_VALUE;
         }
 
         return sum;
     }
 
-    private boolean canAddAddtionalValue(int sum) {
+    public Status getStatus() {
+        return Status.findStatus(getCount(), sum());
+    }
+
+    private boolean canAddAdditionalValue(int sum) {
         return hasAce() && !exceedBust(sum);
     }
 

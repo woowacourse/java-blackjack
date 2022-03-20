@@ -1,12 +1,15 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.TestUtil.BETTING_1000;
+import static utils.TestUtil.CLOVER_ACE;
+import static utils.TestUtil.CLOVER_KING;
+import static utils.TestUtil.CLOVER_QUEEN;
+import static utils.TestUtil.CLOVER_TWO;
 import static utils.TestUtil.getCards;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Suit;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +24,7 @@ public class PlayerTest {
     @DisplayName("턴 강제 종료 여부")
     void player(String comment, Cards cards, boolean expect) {
         // given
-        Player player = new Player(new Name("name"), cards);
+        Player player = new Player(new Name("name"), cards, BETTING_1000);
 
         // then
         assertThat(player.isFinished()).isEqualTo(expect);
@@ -29,17 +32,18 @@ public class PlayerTest {
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
-                Arguments.arguments("합계 22인 경우 true", getCards(Number.TWO, Number.QUEEN, Number.KING),
+                Arguments.arguments("합계 22인 경우 true", getCards(CLOVER_TWO, CLOVER_QUEEN, CLOVER_KING),
                         true),
-                Arguments.arguments("합계 20인 경우 false", getCards(Number.QUEEN, Number.KING), false)
+                Arguments.arguments("합계 20인 경우 false", getCards(CLOVER_QUEEN, CLOVER_KING), false)
         );
     }
 
     @Test
+    @DisplayName("드로우 카드")
     void drawCard() {
         // given
-        Player player = new Player(new Name("name"), getCards(Number.QUEEN));
-        Card newCard = new Card(Number.ACE, Suit.CLOVER);
+        Player player = new Player(new Name("name"), getCards(CLOVER_QUEEN), BETTING_1000);
+        Card newCard = CLOVER_ACE;
 
         // when
         player.drawCard(newCard);

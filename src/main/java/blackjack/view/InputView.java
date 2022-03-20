@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Name;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +14,12 @@ public class InputView {
 
     private InputView() {
 
+    }
+
+    public static BettingAmount inputBettingAmount(Name name) {
+        System.out.printf("%s의 배팅 금액은?%n", name.getValue());
+        long bettingAmount = Long.parseLong(scanner.nextLine());
+        return new BettingAmount(bettingAmount);
     }
 
     public static List<Name> inputPlayerNames() {

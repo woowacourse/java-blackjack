@@ -1,46 +1,75 @@
 package blackjack.game;
 
+import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.card.RandomGenerator;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.participant.BettingAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.game.dto.ParticipantsDto;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConsoleGame {
 
-    public void run() {
-        BlackjackGame blackjackGame = createBlackjackGame();
+    private final RandomGenerator randomGenerator;
 
-        Participants participants = blackjackGame.getParticipants();
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
-
-        OutputView.printInitialCards(dealer, players);
-
-        playPlayersTurn(blackjackGame, players);
-        playDealerTurn(blackjackGame, dealer);
-
-        showGameResult(blackjackGame, dealer, players);
+    public ConsoleGame(RandomGenerator randomGenerator) {
+        this.randomGenerator = randomGenerator;
     }
 
-    private BlackjackGame createBlackjackGame() {
+    public void run() {
+        BlackjackGame blackjackGame = createBlackjackGame(randomGenerator);
+        blackjackGame.initCardsAllParticipants();
+
+        Participants participants = blackjackGame.getParticipants();
+        OutputView.printInitialCards(new ParticipantsDto(participants));
+
+        playPlayersTurn(blackjackGame, participants);
+        playDealerTurn(blackjackGame, participants);
+
+        showGameResult(blackjackGame, participants);
+    }
+
+    private BlackjackGame createBlackjackGame(DeckGenerator deckGenerator) {
         try {
             List<Name> playerNames = InputView.inputPlayerNames();
-            return new BlackjackGame(playerNames);
+            Map<Name, BettingAmount> participantInfos = getBettingAmounts(playerNames);
+            return new BlackjackGame(participantInfos, deckGenerator);
+
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
-            return createBlackjackGame();
+            return createBlackjackGame(deckGenerator);
         }
     }
 
-    private void playPlayersTurn(BlackjackGame blackjackGame, List<Player> players) {
-        for (Player player : players) {
+    private Map<Name, BettingAmount> getBettingAmounts(List<Name> names) {
+        Map<Name, BettingAmount> map = new HashMap<>();
+        for (Name name : names) {
+            map.put(name, inputBettingAmounts(name));
+        }
+        return map;
+    }
+
+    private BettingAmount inputBettingAmounts(Name name) {
+        try {
+            return InputView.inputBettingAmount(name);
+        } catch (IllegalArgumentException e) {
+            OutputView.printException(e);
+            return inputBettingAmounts(name);
+        }
+    }
+
+    private void playPlayersTurn(BlackjackGame blackjackGame, Participants participants) {
+        for (Player player : participants.getPlayers()) {
             playPlayerTurn(blackjackGame, player);
         }
     }
@@ -62,16 +91,18 @@ public class ConsoleGame {
         }
     }
 
-    private void playDealerTurn(BlackjackGame blackjackGame, Dealer dealer) {
+    private void playDealerTurn(BlackjackGame blackjackGame, Participants participants) {
+        Dealer dealer = participants.getDealer();
+
         while (!dealer.isFinished()) {
-            OutputView.printDealerDrawInfo();
+            OutputView.printDealerDrawInfo(dealer.getName());
             blackjackGame.drawCard(dealer);
         }
     }
 
-    private void showGameResult(BlackjackGame blackjackGame, Dealer dealer, List<Player> players) {
+    private void showGameResult(BlackjackGame blackjackGame, Participants participants) {
         GameResult gameResult = blackjackGame.createGameResult();
-        OutputView.printCardsResult(dealer, players);
+        OutputView.printCardsResult(new ParticipantsDto(participants));
         OutputView.printGameResult(gameResult);
     }
 }
