@@ -41,11 +41,11 @@ public enum UserResult {
         return this == UserResult.WIN;
     }
 
-    private boolean compare(Participant user, Participant dealer) {
-        return comparator.compare(user, dealer);
-    }
-
     public String getName() {
         return name;
+    }
+
+    private boolean compare(Participant user, Participant dealer) {
+        return comparator.compare(user, dealer);
     }
 }
