@@ -6,14 +6,13 @@ import blackjack.domain.gamer.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-import static blackjack.domain.gamer.Gamer.MAX_CARD_VALUE;
-
 public enum BlackJackResult {
     BLACK_JACK_WIN(1.5, BlackJackResult::isPlayerBlackJackWin),
     WIN(1, BlackJackResult::isPlayerWin),
     LOSE(-1, BlackJackResult::isPlayerLose),
     DRAW(0, BlackJackResult::isPlayerDraw);
 
+    public static final int MAX_CARD_VALUE = 21;
     private static final String NOT_EXIST_ERROR = "옯바른 결과를 찾을 수 없습니다.";
     private static final int REVERSE_VALUE = -1;
 

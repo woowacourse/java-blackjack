@@ -5,6 +5,8 @@ import blackjack.domain.result.BlackJackResult;
 
 import java.util.List;
 
+import static blackjack.domain.result.BlackJackResult.MAX_CARD_VALUE;
+
 public class Player extends Gamer {
     private final BettingMoney bettingMoney;
 

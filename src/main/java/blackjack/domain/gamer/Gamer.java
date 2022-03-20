@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.result.BlackJackResult.MAX_CARD_VALUE;
+
 public abstract class Gamer {
-    public static final int MAX_CARD_VALUE = 21;
     public static final int INIT_DISTRIBUTION_COUNT = 2;
 
     private final Name name;
@@ -31,7 +32,7 @@ public abstract class Gamer {
     public int getCardsNumberSum() {
         int sum = getSumExceptAce();
         List<Card> aces = getAces();
-        return getSumNotBust(sum, aces);
+        return getPlusAceForNotBust(sum, aces);
     }
 
     private int getSumExceptAce() {
@@ -47,7 +48,7 @@ public abstract class Gamer {
                 .collect(Collectors.toList());
     }
 
-    private int getSumNotBust(int sum, List<Card> aces) {
+    private int getPlusAceForNotBust(int sum, List<Card> aces) {
         for (Card ace : aces) {
             sum += ace.getAceValue(sum);
         }
