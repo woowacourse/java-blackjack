@@ -7,8 +7,8 @@ import blakjack.domain.card.Card;
 import java.util.List;
 
 public abstract class State {
-    final protected PrivateArea privateArea;
-    final protected Chip chip;
+    protected final PrivateArea privateArea;
+    protected final Chip chip;
 
     protected State(final PrivateArea privateArea, final Chip chip) {
         this.privateArea = privateArea;
