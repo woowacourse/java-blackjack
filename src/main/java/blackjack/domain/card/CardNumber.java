@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.List;
-
 public enum CardNumber {
     ACE(1, "A"),
     TWO(2, "2"),
@@ -17,9 +15,6 @@ public enum CardNumber {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private static final int BLACKJACK_NUMBER = 21;
-    private static final int SUM_HIDDEN_ACE = 10;
-
     private final int value;
     private final String name;
 
@@ -28,28 +23,8 @@ public enum CardNumber {
         this.name = name;
     }
 
-    public static int getOptimizeTotalNumber(List<CardNumber> cardNumbers) {
-        int totalNumber = getTotalNumber(cardNumbers);
-        boolean containAce = isContainAce(cardNumbers);
-        if (containAce && isBust(totalNumber + SUM_HIDDEN_ACE)) {
-            return totalNumber + SUM_HIDDEN_ACE;
-        }
-        return totalNumber;
-    }
-
-    private static int getTotalNumber(List<CardNumber> cardNumbers) {
-        return cardNumbers.stream()
-            .mapToInt(number -> number.value)
-            .sum();
-    }
-
-    private static boolean isContainAce(List<CardNumber> cardNumbers) {
-        return cardNumbers.stream()
-            .anyMatch(cardNumber -> cardNumber == ACE);
-    }
-
-    public static boolean isBust(int totalNumber) {
-        return totalNumber <= BLACKJACK_NUMBER;
+    public boolean isAce() {
+        return this == ACE;
     }
 
     public int getValue() {

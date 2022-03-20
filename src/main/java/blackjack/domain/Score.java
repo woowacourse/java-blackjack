@@ -1,60 +1,53 @@
 package blackjack.domain;
 
-import java.util.Arrays;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
 
 public enum Score {
-    WIN("승") {
+    BLACKJACK_WIN(1.5) {
         @Override
-        public boolean match(int competeNumber) {
-            return competeNumber > 0;
-        }
-
-        @Override
-        public Score inverse() {
-            return LOSE;
+        public boolean match(Participant participant, Dealer dealer) {
+            return participant.isBlackjack() && !dealer.isBlackjack();
         }
     },
-    DRAW("무") {
+    WIN(1) {
         @Override
-        public boolean match(int competeNumber) {
-            return competeNumber == 0;
-        }
+        public boolean match(Participant participant, Dealer dealer) {
+            if (participant.isBlackjack() && dealer.isBlackjack()) {
+                return true;
+            }
+            if (participant.isBust()) {
+                return false;
+            }
+            if (!dealer.isBust()) {
+                return participant.getTotalNumber() > dealer.getTotalNumber();
+            }
+            return true;
 
-        @Override
-        public Score inverse() {
-            return DRAW;
         }
     },
-    LOSE("패") {
+    LOSE(-1) {
         @Override
-        public boolean match(int competeNumber) {
-            return competeNumber < 0;
-        }
-
-        @Override
-        public Score inverse() {
-            return WIN;
+        public boolean match(Participant participant, Dealer dealer) {
+            if (participant.isBust()) {
+                return true;
+            }
+            if (!participant.isBlackjack() && !dealer.isBust()) {
+                return participant.getTotalNumber() <= dealer.getTotalNumber();
+            }
+            return false;
         }
     };
 
-    private final String value;
+    private final double dividendRate;
 
-    Score(String value) {
-        this.value = value;
+    Score(double dividendRate) {
+        this.dividendRate = dividendRate;
     }
 
-    abstract public boolean match(int competeNumber);
-    abstract public Score inverse();
+    abstract public boolean match(Participant participant, Dealer dealer);
 
-    public static Score compete(int playerTotalNumber, int dealerTotalNumber) {
-        int competeNumber = playerTotalNumber - dealerTotalNumber;
-
-        return Arrays.stream(values())
-            .filter(score -> score.match(competeNumber))
-            .findAny().orElse(Score.LOSE);
-    }
-
-    public String getValue(){
-        return value;
+    public double getDividendRate() {
+        return dividendRate;
     }
 }

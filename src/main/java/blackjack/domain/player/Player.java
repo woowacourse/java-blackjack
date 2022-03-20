@@ -1,64 +1,36 @@
 package blackjack.domain.player;
 
+import java.util.Arrays;
 import java.util.List;
 
-import blackjack.domain.card.Drawable;
-import blackjack.domain.card.HoldCards;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.HoldCards;
 
-public class Player {
-
-    public static final int BLACKJACK_NUMBER = 21;
-
-    private final HoldCards cards;
-    private final Name name;
+public class Player extends Participant {
 
     public Player(Name name, HoldCards holdCards) {
-        this.cards = holdCards;
-        this.name = name;
+        super(name, holdCards);
     }
 
-    public static Player withTwoCards(String text, Drawable deck) {
-        Name name = new Name(text);
-        HoldCards holdCards = HoldCards.drawTwoCards(deck);
-        return new Player(name, holdCards);
+    public Score compete(Dealer dealer) {
+        return Arrays.stream(Score.values())
+            .filter(score -> score.match(this, dealer))
+            .findAny().orElse(Score.LOSE);
     }
 
-    public void drawCard(Drawable drawable) {
-        cards.add(drawable.draw());
+    @Override
+    public boolean canHit() {
+        return holdCards.getOptimizeTotalNumber() <= BLACKJACK_NUMBER;
     }
 
-    public Score compete(Player otherPlayer) {
-        if (!this.isBust() && !otherPlayer.isBust()) {
-            return Score.compete(this.getTotalNumber(), otherPlayer.getTotalNumber());
-        }
-        if (this.isBust() && otherPlayer.isBust()) {
-            return Score.DRAW;
-        }
-        if (otherPlayer.isBust()) {
-            return Score.WIN;
-        }
-        return Score.LOSE;
+    @Override
+    public List<Card> openCards() {
+        return getHoldCards();
     }
 
-    public boolean isBust() {
-        return getTotalNumber() > BLACKJACK_NUMBER;
-    }
-
-    public int getTotalNumber() {
-        return cards.getTotalNumber();
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
-
+    @Override
     public Player copy() {
-        return new Player(name, cards.copy());
+        return new Player(name, holdCards.copy());
     }
 }
