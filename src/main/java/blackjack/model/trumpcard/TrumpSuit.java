@@ -1,6 +1,6 @@
 package blackjack.model.trumpcard;
 
-public enum TrumpSymbol {
+public enum TrumpSuit {
     HEART,
     DIAMOND,
     CLOVER,

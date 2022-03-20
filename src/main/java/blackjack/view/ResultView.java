@@ -51,7 +51,7 @@ public class ResultView {
 
     private String concatFirstCardToString(HandDto hand) {
         TrumpCardDto firstCard = hand.getCards().get(0);
-        return firstCard.getNumber() + firstCard.getSymbol();
+        return firstCard.getDenomination() + firstCard.getSuit();
     }
 
     public void printFullHand(PlayerDto player) {
@@ -107,7 +107,7 @@ public class ResultView {
 
     private String joinCards(List<TrumpCardDto> cards) {
         return joinStrings(cards.stream()
-                .map(card -> card.getNumber() + card.getSymbol())
+                .map(card -> card.getDenomination() + card.getSuit())
                 .collect(Collectors.toList()));
     }
 

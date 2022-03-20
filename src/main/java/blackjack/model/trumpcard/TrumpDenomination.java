@@ -1,6 +1,6 @@
 package blackjack.model.trumpcard;
 
-public enum TrumpNumber {
+public enum TrumpDenomination {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -18,7 +18,7 @@ public enum TrumpNumber {
 
     private final int value;
 
-    TrumpNumber(int value) {
+    TrumpDenomination(int value) {
         this.value = value;
     }
 

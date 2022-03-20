@@ -53,16 +53,16 @@ public final class Hand {
 
     public int sumScore() {
         int score = 0;
-        score = sumCardNumbersTo(score);
+        score = sumCardDenominationTo(score);
         if (hasAce()) {
             return sumAceAdvantageTo(score);
         }
         return score;
     }
 
-    private int sumCardNumbersTo(int score) {
+    private int sumCardDenominationTo(int score) {
         for (TrumpCard card : cards) {
-            score = card.sumNumberTo(score);
+            score = card.sumDenominationTo(score);
         }
         return score;
     }

@@ -20,14 +20,14 @@ public final class TrumpCardPack {
     }
 
     private void stackCards(LinkedList<TrumpCard> cards) {
-        for (TrumpSymbol symbol : TrumpSymbol.values()) {
-            stackCardsOfSymbol(cards, symbol);
+        for (TrumpSuit suit : TrumpSuit.values()) {
+            stackCardsOfSuit(cards, suit);
         }
     }
 
-    private void stackCardsOfSymbol(LinkedList<TrumpCard> cards, TrumpSymbol symbol) {
-        for (TrumpNumber number : TrumpNumber.values()) {
-            cards.add(new TrumpCard(number, symbol));
+    private void stackCardsOfSuit(LinkedList<TrumpCard> cards, TrumpSuit suit) {
+        for (TrumpDenomination denomination : TrumpDenomination.values()) {
+            cards.add(new TrumpCard(denomination, suit));
         }
     }
 
