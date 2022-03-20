@@ -16,7 +16,7 @@ public class BlackjackController {
     public void playGame() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
 
-        Map<Player, Double> bettingBox = betMoney(blackjackGame.getGuest());
+        Map<Player, Double> bettingBox = betMoney(blackjackGame.getGuests());
         OutputView.announceStartGame(blackjackGame.getPlayerNames());
         blackjackGame.initGame();
         OutputView.announcePresentCards(toResponse(blackjackGame.getPlayers()));
