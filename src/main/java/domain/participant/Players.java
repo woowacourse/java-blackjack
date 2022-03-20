@@ -2,32 +2,23 @@ package domain.participant;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import domain.result.WinOrLose;
+public class Players implements Iterable<Participant> {
+	private final List<Participant> players;
 
-public class Players implements Iterable<Player> {
-	private final List<Player> players;
-
-	public Players(List<Player> players) {
+	public Players(List<Participant> players) {
 		this.players = players;
 	}
 
 	public List<String> showNames() {
-		return new ArrayList<>(players.stream().map(Player::getName).collect(Collectors.toList()));
+		return new ArrayList<>(players.stream().map(Participant::getName).collect(Collectors.toList()));
 	}
 
-	public LinkedHashMap<Participant, WinOrLose> getResult(Dealer other) {
-		LinkedHashMap<Participant, WinOrLose> map = new LinkedHashMap<>();
-		players.forEach(player -> map.put(player, player.getResult(other)));
-		return map;
-	}
-
-	private class PlayerIterator implements Iterator<Player> {
+	private class PlayerIterator implements Iterator<Participant> {
 		private int current = 0;
 
 		@Override
@@ -36,7 +27,7 @@ public class Players implements Iterable<Player> {
 		}
 
 		@Override
-		public Player next() {
+		public Participant next() {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
@@ -45,12 +36,12 @@ public class Players implements Iterable<Player> {
 	}
 
 	@Override
-	public Iterator<Player> iterator() {
+	public Iterator<Participant> iterator() {
 		return new PlayerIterator();
 	}
 
 	@Override
-	public void forEach(Consumer<? super Player> action) {
+	public void forEach(Consumer<? super Participant> action) {
 		Iterable.super.forEach(action);
 	}
 }

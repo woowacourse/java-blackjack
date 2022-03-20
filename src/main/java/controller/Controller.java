@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import domain.card.Deck;
 import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.participant.Participant;
 import domain.participant.Players;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
@@ -43,10 +43,10 @@ public class Controller {
 		}
 	}
 
-	private List<Player> makePlayers(List<Name> names, Deck deck) {
-		List<Player> players = names.stream()
+	private List<Participant> makePlayers(List<Name> names, Deck deck) {
+		List<Participant> players = names.stream()
 			.map(
-				name -> new Player(name, new Hand(deck.generateInitCards()),
+				name -> new Participant(name, new Hand(deck.generateInitCards()),
 					new Betting(InputView.inputBetting(name.getName()))))
 			.collect(Collectors.toList());
 		return players;
@@ -62,7 +62,7 @@ public class Controller {
 		players.forEach(player -> askAndDrawForPlayer(deck, player));
 	}
 
-	private void askAndDrawForPlayer(Deck deck, Player player) {
+	private void askAndDrawForPlayer(Deck deck, Participant player) {
 		while (!player.isBlackJack() && !player.isBust()
 			&& InputView.askDraw(player.getName())) {
 			player.addCard(deck.draw());

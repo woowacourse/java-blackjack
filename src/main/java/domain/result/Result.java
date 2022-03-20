@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.Player;
 import domain.participant.Players;
 
 public class Result {
@@ -16,7 +15,8 @@ public class Result {
 	}
 
 	public static Result of(Dealer dealer, Players players) {
-		LinkedHashMap<Participant, WinOrLose> result = players.getResult(dealer);
+		LinkedHashMap<Participant, WinOrLose> result = new LinkedHashMap<>();
+		players.forEach(player -> result.putIfAbsent(player, judgePlayerWinOrLose(dealer, player)));
 		return new Result(result);
 	}
 
@@ -27,7 +27,54 @@ public class Result {
 			.sum();
 	}
 
-	public int getPlayerMoney(Player player) {
+	public int getPlayerMoney(Participant player) {
 		return (int)(player.getBettingMoney() * playerResults.get(player).getEarningRate());
+	}
+
+	private static WinOrLose judgePlayerWinOrLose(Dealer dealer, Participant player) {
+		if (dealer.isBlackJack() || player.isBlackJack()) {
+			return judgeWinOrLoseAtBlackJackExist(dealer, player);
+		}
+
+		if (dealer.isBust() || player.isBust()) {
+			return judgeWinOrLoseAtBustExist(player);
+		}
+		return judgeWinOrLoseByScore(dealer, player);
+	}
+
+	private static WinOrLose judgeWinOrLoseAtBlackJackExist(Dealer dealer, Participant player) {
+		if (dealer.isBlackJack()) {
+			return judgeWinOrLoseAtDealerBlackJack(player);
+		}
+		return WinOrLose.BLACK_JACK_WIN;
+	}
+
+	private static WinOrLose judgeWinOrLoseAtDealerBlackJack(Participant player) {
+		if (player.isBlackJack()) {
+			return WinOrLose.DRAW;
+		}
+		return WinOrLose.LOSE;
+	}
+
+	private static WinOrLose judgeWinOrLoseAtBustExist(Participant player) {
+		if (player.isBust()) {
+			return WinOrLose.LOSE;
+		}
+
+		return WinOrLose.WIN;
+	}
+
+	private static WinOrLose judgeWinOrLoseByScore(Dealer dealer, Participant player) {
+		int playerScore = player.getScore();
+		int dealerScore = dealer.getScore();
+
+		if (playerScore > dealerScore) {
+			return WinOrLose.WIN;
+		}
+
+		if (playerScore < dealerScore) {
+			return WinOrLose.LOSE;
+		}
+		return WinOrLose.DRAW;
 	}
 }
