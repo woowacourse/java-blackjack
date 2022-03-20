@@ -1,14 +1,10 @@
 package blackjack.domain.gamer;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import blackjack.domain.result.Results;
 
 public class Players {
 
@@ -19,37 +15,36 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<Player> players) {
-        validate(players);
-        this.players = new ArrayList<>(players);
+    public Players(final List<String> names) {
+        validate(names);
+        this.players = toPlayer(names);
     }
 
-    private void validate(List<Player> players) {
-        validateNumberOfPlayers(players);
-        validateDuplicate(players);
+    private void validate(final List<String> names) {
+        validateNumberOfPlayers(names);
+        validateDuplicate(names);
     }
 
-    private void validateNumberOfPlayers(List<Player> players) {
-        int number = players.size();
+    private void validateNumberOfPlayers(final List<String> names) {
+        int number = names.size();
 
         if (number < MINIMUM_NUMBER || number > MAXIMUM_NUMBER) {
             throw new IllegalArgumentException(NUMBER_OF_PLAYERS_ERROR_MESSAGE);
         }
     }
 
-    private void validateDuplicate(final List<Player> players) {
-        List<String> names = players.stream()
-            .map(Player::getName)
-            .collect(Collectors.toList());
-        Set<String> duplicateNames = new HashSet<>(names);
+    private void validateDuplicate(final List<String> names) {
+        Set<String> distinctNames = new HashSet<>(names);
 
-        if (names.size() != duplicateNames.size()) {
+        if (names.size() != distinctNames.size()) {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
     }
 
-    public void initGameResult(Map<Gamer, Results> gameResult) {
-        players.forEach(player -> gameResult.put(player, new Results(new ArrayList<>())));
+    private List<Player> toPlayer(final List<String> names) {
+        return names.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {

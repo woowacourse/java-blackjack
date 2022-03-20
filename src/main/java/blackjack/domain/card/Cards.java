@@ -8,26 +8,15 @@ import java.util.Set;
 
 public class Cards {
 
-    private static final int CARD_INIT_SIZE = 2;
     private static final int ACE_GAP = 10;
-    private static final int BLACK_JACK_SCORE = 21;
+    private static final int BLACKJACK_SIZE = 2;
+    private static final int LIMIT_SCORE = 21;
 
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
-        validate(cards);
-        this.cards = new ArrayList<>(cards);
-    }
-
-    private void validate(List<Card> cards) {
-        validateInitSize(cards);
         validateDuplicate(cards);
-    }
-
-    private void validateInitSize(List<Card> cards) {
-        if (cards.size() != CARD_INIT_SIZE) {
-            throw new IllegalArgumentException("게임을 시작하려면 두 장의 카드를 뽑아야 합니다.");
-        }
+        this.cards = new ArrayList<>(cards);
     }
 
     private void validateDuplicate(List<Card> cards) {
@@ -44,7 +33,7 @@ public class Cards {
 
     public int calculateScore() {
         int score = calculateMinimumScore();
-        if (hasAce() && score + ACE_GAP <= BLACK_JACK_SCORE) {
+        if (hasAce() && score + ACE_GAP <= LIMIT_SCORE) {
             return score + ACE_GAP;
         }
         return score;
@@ -59,6 +48,14 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream()
             .anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_SIZE && calculateScore() == LIMIT_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > LIMIT_SCORE;
     }
 
     public List<Card> getCards() {

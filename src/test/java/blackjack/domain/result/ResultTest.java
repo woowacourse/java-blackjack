@@ -2,67 +2,90 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-import java.util.Map;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 
 class ResultTest {
 
-    @Test
-    @DisplayName("딜러가 이긴 경우")
-    void dealerWinTest() {
-        Cards winCards = new Cards(
-            List.of(new Card(Denomination.TWO, Suit.DIAMONDS), new Card(Denomination.EIGHT, Suit.DIAMONDS)));
-        Cards loseCards = new Cards(
-            List.of(new Card(Denomination.TWO, Suit.CLUBS), new Card(Denomination.THREE, Suit.DIAMONDS)));
+    private Dealer dealer;
+    private Player player;
 
-        Dealer dealer = new Dealer(winCards);
-        Player player = new Player("a", loseCards);
-
-        Map<Gamer, Result> map = Result.judge(dealer, player);
-
-        assertThat(map.get(dealer).getValue()).isEqualTo("승");
+    @BeforeEach
+    void init() {
+        dealer = new Dealer();
+        dealer.drawCard(new Card(Denomination.TWO, Suit.DIAMONDS));
+        dealer.drawCard(new Card(Denomination.EIGHT, Suit.DIAMONDS));
+        player = new Player("a");
     }
 
     @Test
-    @DisplayName("플레이어가 이긴 경우")
-    void playerWinTest() {
-        Cards winCards = new Cards(
-            List.of(new Card(Denomination.TWO, Suit.DIAMONDS), new Card(Denomination.EIGHT, Suit.DIAMONDS)));
-        Cards loseCards = new Cards(
-            List.of(new Card(Denomination.TWO, Suit.CLUBS), new Card(Denomination.THREE, Suit.DIAMONDS)));
+    @DisplayName("플레이어가 이긴 경우(플레이어만 블랙잭)")
+    void playerBlackjackTest() {
+        player.drawCard(new Card(Denomination.ACE, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.JACK, Suit.CLUBS));
 
-        Dealer dealer = new Dealer(loseCards);
-        Player player = new Player("a", winCards);
+        Result result = Result.judge(dealer, player);
 
-        Map<Gamer, Result> map = Result.judge(dealer, player);
+        assertThat(result).isEqualTo(Result.BLACKJACK);
+    }
 
-        assertThat(map.get(player).getValue()).isEqualTo("승");
+    @ParameterizedTest
+    @DisplayName("플레이어가 진 경우(1. 플레이어가 버스트 2. 딜러보다 점수 낮음)")
+    @CsvSource(value = {
+        "NINE,TEN,SEVEN",
+        "FOUR,TWO,THREE"
+    })
+    void playerLoseTest(Denomination d1, Denomination d2, Denomination d3) {
+        player.drawCard(new Card(d1, Suit.CLUBS));
+        player.drawCard(new Card(d2, Suit.CLUBS));
+        player.drawCard(new Card(d3, Suit.CLUBS));
+
+        Result result = Result.judge(dealer, player);
+
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
     @Test
     @DisplayName("비긴 경우")
     void drawTest() {
-        Cards drawCards1 = new Cards(
-            List.of(new Card(Denomination.TWO, Suit.DIAMONDS), new Card(Denomination.EIGHT, Suit.DIAMONDS)));
-        Cards drawCards2 = new Cards(
-            List.of(new Card(Denomination.TWO, Suit.CLUBS), new Card(Denomination.EIGHT, Suit.CLUBS)));
+        player.drawCard(new Card(Denomination.TWO, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.EIGHT, Suit.CLUBS));
 
-        Dealer dealer = new Dealer(drawCards1);
-        Player player = new Player("a", drawCards2);
+        Result result = Result.judge(dealer, player);
 
-        Map<Gamer, Result> map = Result.judge(dealer, player);
+        assertThat(result).isEqualTo(Result.DRAW);
+    }
 
-        assertThat(map.get(dealer).getValue()).isEqualTo("무");
+    @Test
+    @DisplayName("플레이어가 이긴 경우")
+    void playerWinTest() {
+        player.drawCard(new Card(Denomination.TWO, Suit.DIAMONDS));
+        player.drawCard(new Card(Denomination.TEN, Suit.DIAMONDS));
+
+        Result result = Result.judge(dealer, player);
+
+        assertThat(result).isEqualTo(Result.WIN);
+    }
+
+    @ParameterizedTest
+    @DisplayName("승무패 결과에 따른 수익 계산이 잘되는지 확인")
+    @CsvSource(value = {
+        "BLACKJACK,1000,1500",
+        "LOSE,1000,-1000",
+        "DRAW,1000,0",
+        "WIN,1000,1000"
+    })
+    void calculateRevenueTest(Result result, int money, int profit) {
+        assertThat(result.calculateRevenue(money))
+            .isEqualTo(profit);
     }
 }

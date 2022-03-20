@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -9,18 +10,17 @@ import blackjack.domain.card.Cards;
 public abstract class Gamer {
 
     private static final String NAME_INPUT_ERROR_MESSAGE = "참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.";
-    private static final int DRAWABLE_NUMBER = 21;
 
     protected final String name;
     protected final Cards cards;
 
-    public Gamer(final String name, final Cards cards) {
+    public Gamer(final String name) {
         validateName(name);
         this.name = name;
-        this.cards = cards;
+        this.cards = new Cards(new LinkedList<>());
     }
 
-    private void validateName(String name) {
+    private void validateName(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(NAME_INPUT_ERROR_MESSAGE);
         }
@@ -36,12 +36,12 @@ public abstract class Gamer {
         return cards.calculateScore();
     }
 
-    public boolean isBust() {
-        return cards.calculateScore() > DRAWABLE_NUMBER;
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 
-    public boolean isDealer() {
-        return this instanceof Dealer;
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public List<Card> getCards() {

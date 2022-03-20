@@ -1,8 +1,6 @@
 package blackjack.domain.result;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.function.BiPredicate;
 
 import blackjack.domain.gamer.Dealer;
@@ -11,42 +9,41 @@ import blackjack.domain.gamer.Player;
 
 public enum Result {
 
-    WIN("승", (dealer, player) -> !player.isBust() && (dealer.isBust() || dealer.calculateScore() < player.calculateScore())),
-    DRAW("무", (dealer, player) -> dealer.calculateScore() == player.calculateScore()),
-    LOSE("패", (dealer, player) -> !dealer.isBust() && (player.isBust() || dealer.calculateScore() > player.calculateScore())),
+    BLACKJACK(1.5,
+        (dealer, player) -> player.isBlackjack() && !dealer.isBlackjack()),
+    LOSE(-1,
+        (dealer, player) -> player.isBust() ||
+            (!player.isBlackjack() && dealer.isBlackjack()) ||
+            (!dealer.isBust() && (player.calculateScore() < dealer.calculateScore()))),
+    DRAW(0,
+        (dealer, player) -> (!player.isBlackjack() && !dealer.isBlackjack()) &&
+            (player.calculateScore() == dealer.calculateScore())),
+    WIN(1,
+        (dealer, player) -> dealer.isBust() ||
+            (player.isBlackjack() && !dealer.isBlackjack()) ||
+            (player.calculateScore() > dealer.calculateScore())),
     ;
 
-    private final String value;
-    private final BiPredicate<Gamer, Gamer> biPredicate;
+    private final double times;
+    private final BiPredicate<Gamer, Gamer> calculateResult;
 
-    Result(String value, BiPredicate<Gamer, Gamer> biPredicate) {
-        this.value = value;
-        this.biPredicate = biPredicate;
+    Result(double times, BiPredicate<Gamer, Gamer> calculateResult) {
+        this.times = times;
+        this.calculateResult = calculateResult;
     }
 
-    public static Map<Gamer, Result> judge(Dealer dealer, Player player) {
-        Map<Gamer, Result> judgeResult = new LinkedHashMap<>();
-        Result judge = Arrays.stream(Result.values())
-            .filter(result -> result.biPredicate.test(dealer, player))
+    public static Result judge(Dealer dealer, Player player) {
+        return Arrays.stream(Result.values())
+            .filter(result -> result.calculateResult.test(dealer, player))
             .findAny()
             .orElseThrow();
-
-        judgeResult.put(dealer, judge.reverse());
-        judgeResult.put(player, judge);
-        return judgeResult;
     }
 
-    private Result reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
+    public double calculateRevenue(int money) {
+        return (times * money);
     }
 
-    public String getValue() {
-        return value;
+    public double calculateReverseRevenue(double money) {
+        return (LOSE.times * money);
     }
 }
