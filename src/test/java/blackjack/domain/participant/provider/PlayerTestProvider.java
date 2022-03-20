@@ -2,6 +2,8 @@ package blackjack.domain.participant.provider;
 
 import static blackjack.Fixture.SPADE_ACE;
 import static blackjack.Fixture.SPADE_EIGHT;
+import static blackjack.Fixture.SPADE_FOUR;
+import static blackjack.Fixture.SPADE_KING;
 import static blackjack.Fixture.SPADE_NINE;
 import static blackjack.Fixture.SPADE_TEN;
 import static blackjack.Fixture.SPADE_TWO;
@@ -37,4 +39,27 @@ public class PlayerTestProvider {
                 )
         );
     }
+
+    public static Stream<Arguments> provideForGetScoreTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(SPADE_TEN, SPADE_KING), SPADE_TWO, 22
+                ),
+                Arguments.of(
+                        List.of(SPADE_TEN, SPADE_NINE), SPADE_FOUR, 23
+                )
+        );
+    }
+
+    public static Stream<Arguments> provideForGetCardsTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(SPADE_TEN, SPADE_KING), SPADE_TWO
+                ),
+                Arguments.of(
+                        List.of(SPADE_TEN, SPADE_NINE), SPADE_FOUR
+                )
+        );
+    }
+
 }

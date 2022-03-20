@@ -75,12 +75,6 @@ class PlayerTest {
         assertThat(actualCards).isEqualTo(expectedCards);
     }
 
-    private List<Card> concatCards(final List<Card> cards1, final Card card) {
-        final List<Card> cards = new ArrayList<>(cards1);
-        cards.add(card);
-        return cards;
-    }
-
     @DisplayName("플레이어는 카드를 뽑지 않고 게임을 마칠 수 있다.")
     @Test
     void stayTest() {
@@ -96,6 +90,35 @@ class PlayerTest {
     void equalsNameTest(final String expectedPlayerName) {
         final Player player = Player.readyToPlay(expectedPlayerName, DEFAULT_CARDS);
         assertThat(player.equalsName(expectedPlayerName)).isTrue();
+    }
+
+    @DisplayName("카드의 합계를 확인할 수 있어야 한다.")
+    @ParameterizedTest(name = "[{index}] 합계 : {1}, 카드 : {0}")
+    @MethodSource("blackjack.domain.participant.provider.PlayerTestProvider#provideForGetScoreTest")
+    void getScoreTest(final List<Card> cards, final Card drewCard, final int expectedScore) {
+        final Player player = Player.readyToPlay(PLAYER_NAME, cards);
+        player.drawCard(drewCard);
+
+        final int actualScore = player.getScore();
+        assertThat(actualScore).isEqualTo(expectedScore);
+    }
+
+    @DisplayName("보유한 카드를 확인할 수 있어야 한다.")
+    @ParameterizedTest(name = "[{index}] 카드 : {0}")
+    @MethodSource("blackjack.domain.participant.provider.PlayerTestProvider#provideForGetCardsTest")
+    void getCardsTest(final List<Card> cards, final Card drewCard) {
+        final Player player = Player.readyToPlay(PLAYER_NAME, cards);
+        player.drawCard(drewCard);
+
+        final List<Card> actualCards = player.getCards();
+        final List<Card> expectedCards = concatCards(cards, drewCard);
+        assertThat(actualCards).isEqualTo(expectedCards);
+    }
+
+    private List<Card> concatCards(final List<Card> cards1, final Card card) {
+        final List<Card> cards = new ArrayList<>(cards1);
+        cards.add(card);
+        return cards;
     }
 
 }
