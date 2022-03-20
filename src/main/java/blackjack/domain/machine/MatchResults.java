@@ -1,6 +1,5 @@
 package blackjack.domain.machine;
 
-import blackjack.domain.machine.result.MatchCalculator;
 import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,8 +14,7 @@ public class MatchResults {
         this.results.put(dealer, (double) 0);
     }
 
-    public void addResult(Player guest, Player dealer, Double money, MatchCalculator calculator) {
-        double profit = calculator.calculateProfit(money);
+    public void addResult(Player guest, Player dealer, double profit) {
         putGuestProfit(guest, profit);
         updateDealerProfit(dealer, profit);
     }

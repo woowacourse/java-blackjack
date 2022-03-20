@@ -2,8 +2,6 @@ package blackjack.domain.machine;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Cards;
-import blackjack.domain.machine.result.JudgeFactory;
-import blackjack.domain.machine.result.MatchCalculator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
@@ -57,16 +55,15 @@ public class BlackjackGame {
 
     public MatchResults calculateResult(Map<Player, Double> bettingBox) {
         Player dealer = blackjackPlayers.getDealer();
-        List<Player> guests = blackjackPlayers.getGuests();
-        return scoreResults(bettingBox, dealer, guests);
+        return scoreResults(bettingBox, dealer);
     }
 
-    private MatchResults scoreResults(Map<Player, Double> bettingBox, Player dealer, List<Player> guests) {
+    private MatchResults scoreResults(Map<Player, Double> bettingBox, Player dealer) {
         MatchResults matchResults = new MatchResults(dealer);
-        for (Player guest : guests) {
-            MatchCalculator result = JudgeFactory.matchResult(guest.getScore(), dealer.getScore());
+        for (Player guest : bettingBox.keySet()) {
             Double money = bettingBox.get(guest);
-            matchResults.addResult(guest, dealer, money, result);
+            MatchJudge result = MatchJudge.judgeMatch(guest.getScore(), dealer.getScore());
+            matchResults.addResult(guest, dealer, result.calculateProfit(money));
         }
         return matchResults;
     }

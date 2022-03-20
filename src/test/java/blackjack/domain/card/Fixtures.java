@@ -1,8 +1,4 @@
-package blackjack.domain.machine.result;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
+package blackjack.domain.card;
 
 public class Fixtures {
 
@@ -13,5 +9,7 @@ public class Fixtures {
     public static final Card SPADE_ACE = new Card(Suit.SPADE, Rank.ACE);
     public static final Card SPADE_NINE = new Card(Suit.SPADE, Rank.NINE);
     public static final Card HEART_ACE = new Card(Suit.HEART, Rank.ACE);
+    public static final Card SPADE_TWO = new Card(Suit.SPADE, Rank.TWO);
+    public static final Card SPADE_FOUR = new Card(Suit.SPADE, Rank.FOUR);
 
 }

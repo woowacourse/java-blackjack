@@ -2,7 +2,7 @@ package blackjack.domain.machine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.machine.result.Fixtures;
+import blackjack.domain.card.Fixtures;
 import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;

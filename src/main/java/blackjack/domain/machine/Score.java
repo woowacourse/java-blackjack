@@ -46,6 +46,10 @@ public class Score {
         return value > limit;
     }
 
+    public boolean isWin(Score score) {
+        return value > score.value && value < BUST_LIMIT;
+    }
+
     private int sumPoints(Set<Card> cards) {
         int total = cards.stream()
                 .mapToInt(Card::point)
