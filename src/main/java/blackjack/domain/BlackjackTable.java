@@ -18,9 +18,6 @@ public class BlackjackTable {
 
     public BlackjackTable(Map<Name, BettingMoney> bettingPlayers) {
         this.players = new Players(createDealer(), bettingPlayers);
-    }
-
-    public void divideCardByAllPlayers() {
         players.divideCards(deck);
     }
 

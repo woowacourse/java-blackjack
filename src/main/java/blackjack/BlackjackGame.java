@@ -13,7 +13,6 @@ public class BlackjackGame {
     public void start() {
         // 카드 분배
         BlackjackTable blackjackTable = new BlackjackTable(InputView.inputNameAndBettingMoney());
-        blackjackTable.divideCardByAllPlayers();
         OutputView.printAllCards(blackjackTable.getAllPlayers());
 
         // HIT
