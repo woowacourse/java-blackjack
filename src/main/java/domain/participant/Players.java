@@ -27,7 +27,7 @@ public class Players implements Iterable<Player> {
 		return map;
 	}
 
-	public class PlayerIterator implements Iterator<Player> {
+	private class PlayerIterator implements Iterator<Player> {
 		private int current = 0;
 
 		@Override
