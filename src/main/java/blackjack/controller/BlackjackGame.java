@@ -32,36 +32,36 @@ public final class BlackjackGame {
         );
     }
 
-    private Player initPlayer(Name name, CardDeck cardDeck) {
+    private Player initPlayer(final Name name, final CardDeck cardDeck) {
         return new Player(name, InputView.inputPlayerBetting(name.get()),
                 cardDeck.popCards(INIT_CARD_NUMBER));
     }
 
     private void startGame(final Players players, final Dealer dealer, final CardDeck cardDeck) {
         players.get()
-                .forEach(player -> hitOrStayPlayer(player, cardDeck));
-        hitOrStayDealer(dealer, cardDeck);
+                .forEach(player -> startPlayer(player, cardDeck));
+        startDealer(dealer, cardDeck);
     }
 
-    private void hitOrStayPlayer2(final Player player, final CardDeck cardDeck) {
-        //player.getState().start(cardDeck.pop())
-    }
-
-    private void hitOrStayPlayer(final Player player, final CardDeck cardDeck) {
-        while (!player.isBust() && !player.isMaxPoint() && InputView.inputOneMoreCard(player.getName())) {
-            player.addCard(cardDeck.pop());
-            OutputView.printHumanHand(player);
-        }
-        if (player.hasCardSizeOf(INIT_CARD_NUMBER)) {
-            OutputView.printHumanHand(player);
+    private void startPlayer(final Player player, final CardDeck cardDeck) {
+        while (!player.getState().isFinished()) {
+            player.draw(cardDeck, InputView.inputOneMoreCard(player.getName()));
+            printPlayerHand(player);
         }
     }
 
-    private void hitOrStayDealer(final Dealer dealer, final CardDeck cardDeck) {
+    private void printPlayerHand(final Player player) {
+        if (player.hasCardSizeOf(2) || !player.getState().isFinished()) {
+            OutputView.printHumanHand(player);
+        }
+    }
+
+    private void startDealer(final Dealer dealer, final CardDeck cardDeck) {
         if (dealer.isAbleToHit()) {
             dealer.addCard(cardDeck.pop());
             OutputView.printDealerHit();
         }
+        dealer.setStay();
     }
 
     private void printGameResult(final Players players, final Dealer dealer) {

@@ -2,6 +2,7 @@ package blackjack.domain.cards;
 
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
+import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.result.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +46,6 @@ public final class Cards {
         return getPoint() == BLACKJACK_NUMBER && size() == 2;
     }
 
-
-    public boolean isMaxPoint() {
-        return getPoint() == BLACKJACK_NUMBER;
-    }
-
     public int getRawPoint() {
         return value.stream()
                 .mapToInt(Card::getPoint)
@@ -60,6 +56,14 @@ public final class Cards {
         return (int) value.stream()
                 .filter(card -> card.isSameDenomination(Denomination.ACE))
                 .count();
+    }
+
+    public boolean hasMorePoint(Cards cards) {
+        return getPoint() > cards.getPoint();
+    }
+
+    public boolean hasSamePoint(final Cards cards) {
+        return this.getPoint() == cards.getPoint();
     }
 
     public List<Card> getCopy() {

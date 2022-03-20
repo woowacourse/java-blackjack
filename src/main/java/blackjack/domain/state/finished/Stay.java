@@ -2,10 +2,21 @@ package blackjack.domain.state.finished;
 
 import blackjack.domain.cards.Cards;
 
-public class Stay extends Finished {
+public final class Stay extends Finished {
 
-    public Stay(Cards cards) {
+    public Stay(final Cards cards) {
         super(cards);
+    }
+
+    @Override
+    public double computedRate(final Finished state) {
+        if (state.earningRate() == LOSE_RATE || cards.hasMorePoint(state.cards())) {
+            return WIN_RATE;
+        }
+        if (cards.hasSamePoint(state.cards())) {
+            return TIE_RATE;
+        }
+        return LOSE_RATE;
     }
 
     @Override

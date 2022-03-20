@@ -6,6 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.state.State;
+import blackjack.domain.state.finished.Blackjack;
 import org.junit.jupiter.api.Test;
 
 class RunningTest {
@@ -29,7 +30,7 @@ class RunningTest {
 
     @Test
     void profit() {
-        assertThatThrownBy(() -> running.profit(10000))
+        assertThatThrownBy(() -> running.profit(10000, new Blackjack(new Cards())))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("아직 수익을 계산할 수 없습니다.");
     }

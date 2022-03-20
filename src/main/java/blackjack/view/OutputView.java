@@ -37,7 +37,7 @@ public final class OutputView {
     }
 
     public static void printInitDealerHand(final Dealer dealer) {
-        System.out.printf(CARD_STATE_MESSAGE, dealer.getName(), getCardsState(List.of(dealer.getInitCard())));
+        System.out.printf(CARD_STATE_MESSAGE, dealer.getName(), getCardsState(List.of(dealer.getFirstCard())));
         System.out.println();
     }
 

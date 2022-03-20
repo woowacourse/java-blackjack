@@ -6,6 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
+import blackjack.domain.state.finished.Finished;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ class InitTest {
         }
 
         @Override
-        public double profit(double money) {
+        public int profit(int money, Finished finished) {
             return 0;
         }
     };

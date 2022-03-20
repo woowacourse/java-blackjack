@@ -2,14 +2,22 @@ package blackjack.domain.state.finished;
 
 import blackjack.domain.cards.Cards;
 
-public class Blackjack extends Finished {
+public final class Blackjack extends Finished {
 
-    public Blackjack(Cards cards) {
+    public Blackjack(final Cards cards) {
         super(cards);
     }
 
     @Override
+    public double computedRate(final Finished state) {
+        if (state.earningRate() == BLACKJACK_RATE) {
+            return TIE_RATE;
+        }
+        return BLACKJACK_RATE;
+    }
+
+    @Override
     public double earningRate() {
-        return 1.5;
+        return BLACKJACK_RATE;
     }
 }

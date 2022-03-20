@@ -7,6 +7,8 @@ import static blackjack.domain.Fixtures.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Fixtures;
+import blackjack.domain.participant.human.Dealer;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,35 +24,14 @@ class HumanTest {
     }
 
     @Test
-    @DisplayName("버스트 여부 확인 기능 true 테스트")
-    public void isBustTest() {
-        fx.POBI.addCard(TEN);
-        fx.POBI.addCard(EIGHT);
-        fx.POBI.addCard(NINE);
-
-        assertThat(fx.POBI.isBust())
-                .isTrue();
-    }
-
-    @Test
     @DisplayName("첫 카드 한장 리턴하는 기능 테스트")
     void getInitCardTest() {
         // when
-        fx.POBI.addCard(TEN);
-        fx.POBI.addCard(NINE);
+        Dealer dealer = new Dealer(List.of(TEN,EIGHT));
 
         // then
-        assertThat(fx.POBI.getInitCard())
+        assertThat(dealer.getFirstCard())
                 .isEqualTo(TEN);
-    }
-
-    @Test
-    @DisplayName("버스트 여부 확인 기능 false 테스트")
-    public void isBustFalseTest() {
-        fx.POBI.addCard(TEN);
-        fx.POBI.addCard(ACE);
-        assertThat(fx.POBI.isBust())
-                .isFalse();
     }
 
     @Test

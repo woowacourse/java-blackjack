@@ -4,28 +4,24 @@ import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.state.State;
 import blackjack.domain.state.finished.Blackjack;
-import blackjack.domain.state.finished.Bust;
-import blackjack.domain.state.finished.Stay;
 
-public final class Hit extends Running {
-    public Hit(final Cards cards) {
-        super(cards);
+public final class Ready extends Running {
+
+    public Ready() {
+        super(new Cards());
     }
 
     @Override
-    public State draw(final Card card) {
+    public State draw(Card card) {
         cards.add(card);
         if (cards.isBlackjack()) {
             return new Blackjack(cards);
-        }
-        if (cards.isBust()) {
-            return new Bust(cards);
         }
         return new Hit(cards);
     }
 
     @Override
     public State stay() {
-        return new Stay(cards);
+        throw new IllegalStateException("아직 카드를 받지 않았습니다.");
     }
 }

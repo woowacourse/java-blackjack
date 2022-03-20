@@ -11,6 +11,11 @@ import org.junit.jupiter.api.Test;
 class FinishedTest {
     Finished finished = new Finished(new Cards()) {
         @Override
+        public double computedRate(Finished state) {
+            return 0;
+        }
+
+        @Override
         public double earningRate() {
             return 1.0;
         }
@@ -42,7 +47,7 @@ class FinishedTest {
     @Test
     @DisplayName("이득 출력 테스트")
     void profit() {
-        assertThat(finished.profit(10000))
+        assertThat(finished.profit(10000, new Blackjack(new Cards())))
                 .isEqualTo(10000);
     }
 

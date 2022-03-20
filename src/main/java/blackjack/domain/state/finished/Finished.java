@@ -6,6 +6,11 @@ import blackjack.domain.state.Init;
 import blackjack.domain.state.State;
 
 public abstract class Finished extends Init {
+    static final float BLACKJACK_RATE = 1.5f;
+    static final int WIN_RATE = 1;
+    static final int LOSE_RATE = -1;
+    static final int TIE_RATE = 0;
+
     public Finished(Cards cards) {
         super(cards);
     }
@@ -17,7 +22,7 @@ public abstract class Finished extends Init {
 
     @Override
     public State stay() {
-        throw new IllegalStateException("이미 멈춰진 상태입니다.");
+        return this;
     }
 
     @Override
@@ -26,9 +31,11 @@ public abstract class Finished extends Init {
     }
 
     @Override
-    public double profit(double money) {
-        return money * earningRate();
+    public int profit(int money, Finished state) {
+        return (int) (money * computedRate(state));
     }
+
+    public abstract double computedRate(Finished state);
 
     public abstract double earningRate();
 }
