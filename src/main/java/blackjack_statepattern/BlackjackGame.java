@@ -96,11 +96,11 @@ public final class BlackjackGame {
 
     private void playDealerTurn() {
         Dealer dealer = blackjackBoard.getDealer();
-        while (!dealer.isFinished() && dealer.isUnder17()) {
+        while (!dealer.isFinished() && dealer.isRequiredMoreCard()) {
             dealer.receiveCard(cardDeck.draw());
             OutputView.printDealerReceiveCardMessage();
         }
-        if (dealer.isUnder17()) {
+        if (dealer.isRequiredMoreCard()) {
             dealer.stay();
         }
     }

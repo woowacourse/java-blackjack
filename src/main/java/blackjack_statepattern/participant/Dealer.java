@@ -4,6 +4,7 @@ import blackjack_statepattern.card.Card;
 
 public final class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
+    private static final int MIN_SCORE = 17;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -13,7 +14,7 @@ public final class Dealer extends Participant {
         return state.cards().getOneCard();
     }
 
-    public boolean isUnder17() {
-        return state.score() < 17;
+    public boolean isRequiredMoreCard() {
+        return state.score() < MIN_SCORE;
     }
 }

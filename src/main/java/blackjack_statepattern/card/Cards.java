@@ -62,7 +62,7 @@ public class Cards {
     }
 
     public boolean isReady() {
-        return value.size() < 2;
+        return value.size() < INIT_CARD_COUNT;
     }
 
     public List<Card> getCards() {
