@@ -15,16 +15,16 @@ public enum Denomination {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private final int score;
+    private final int point;
     private final String denomination;
 
-    Denomination(int score, String denomination) {
-        this.score = score;
+    Denomination(int point, String denomination) {
+        this.point = point;
         this.denomination = denomination;
     }
 
-    public int getScore() {
-        return score;
+    public int getPoint() {
+        return point;
     }
 
     public String getDenomination() {

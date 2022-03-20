@@ -17,6 +17,6 @@ class CardTest {
     @DisplayName("카드 숫자에 따라 점수가 반환되는지 테스트")
     void checkScoreByDenomination() {
         Card card = Card.of(Symbol.SPADE, Denomination.KING);
-        assertThat(card.getScore()).isEqualTo(10);
+        assertThat(card.getPoint()).isEqualTo(10);
     }
 }

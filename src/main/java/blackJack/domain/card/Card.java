@@ -52,8 +52,8 @@ public class Card {
         return denomination.getDenomination() + symbol.getName();
     }
 
-    public int getScore() {
-        return denomination.getScore();
+    public int getPoint() {
+        return denomination.getPoint();
     }
 
     @Override

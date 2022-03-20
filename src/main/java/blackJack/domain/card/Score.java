@@ -7,7 +7,7 @@ public class Score implements Comparable<Score> {
     private static final int BLACK_JACK = 21;
     private static final int DEALER_MAXIMUM_RECEIVE_CARD_SCORE = 16;
     private static final int STANDARD_SCORE_OF_CHANGE_ACE = 11;
-    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
+    private static final int OTHER_POINT_OF_ACE = 11;
 
     private final int score;
 
@@ -32,7 +32,7 @@ public class Score implements Comparable<Score> {
     }
 
     public Score changeAceScore() {
-        return new Score(score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore());
+        return new Score(score + OTHER_POINT_OF_ACE - Denomination.ACE.getPoint());
     }
 
     @Override
