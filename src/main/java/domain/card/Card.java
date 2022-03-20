@@ -14,13 +14,17 @@ public final class Card {
 
     static {
         Arrays.stream(Symbol.values())
-            .forEach(symbol -> Arrays.stream(Denomination.values())
-                .forEach(denomination -> CACHE.add(new Card(symbol, denomination))));
+            .forEach(Card::saveCard);
     }
 
     private Card(Symbol symbol, Denomination denomination) {
         this.symbol = symbol;
         this.denomination = denomination;
+    }
+
+    private static void saveCard(Symbol symbol) {
+        Arrays.stream(Denomination.values())
+            .forEach(denomination -> CACHE.add(new Card(symbol, denomination)));
     }
 
     public boolean isAceCard() {
