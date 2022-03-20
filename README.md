@@ -59,21 +59,23 @@
     - [ ] getName (State) return String
 
 - [ ] State 는 privateArea, Chip 을 가지고 있다.
-    - [ ] abstract draw(Card) return State
-    - [ ] abstract compare(State) return State
-    - [ ] abstract stay() return State
+    - [x] abstract draw(Card) return State
+    - [x] abstract compare(State) return State
+    - [x] abstract stay() return State
+    - [x] abstract getProfit() return int
     - [ ] getCards() return List<Card>
     - [ ] getName() return String
-    - [ ] getTotalScore() return int
+    - [x] getTotalScore() return int
 
 - [ ] privateArea 는 List<Card> 와 이름(String)을 가지고 있다.
-    - [ ] addCard return void
-    - [ ] getTotalScore return int
+    - [x] addCard return void
+    - [x] getTotalScore return int
     - [ ] getCards() return List<Card>
     - [ ] getName() return String
-    - [ ] isBust
-    - [ ] isBlackjack
-    - [ ] isDealer
+    - [x] getSize() return int
+    - [x] isBust
+    - [x] isBlackjack
+    - [x] isDealer
 
 - [ ] PlayerName 으로 이름 생성
     - [ ] 이름이 딜러일 경우 예외 발생
@@ -88,34 +90,3 @@
 
 - [ ] Player 는 PlayerName, Chip 으로 생성 된다.
     - [ ] hit(overriding, State.draw())
-
-State state = new Init();
-
-    state.compare(other);
-
-    State compare(State other) {
-        if (cards.isDealer) {
-            return compareWithPlayer(other.cards, other.chip);
-        }
-        return compareWithDealer(other.cards);
-    }
-
-    private State compareWithDealer(Cards dealerCards) {
-        if (dealerCards.sum() == cards.sum()) {
-            return new draw();
-        }
-        if (dealerCards.sum() > cards.sum()) {
-            return new Lose(chip);
-        }
-        return new Win(chip);
-    }
-
-    private State compareWithPlayer(Cards playerCards, int playerChip) {
-        if (playerCards.sum() == cards.sum()) {
-            return new draw();
-        }
-        if (playerCards.sum() > cards.sum()) {
-            return new Lose(playerChip);
-        }
-        return new Win(playerChip);
-    }
