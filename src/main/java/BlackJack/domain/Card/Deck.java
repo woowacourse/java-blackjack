@@ -9,12 +9,6 @@ import java.util.Objects;
 import static blackJack.utils.ExeptionMessage.NO_MORE_CARD;
 
 public class Deck {
-    public final LinkedList<Card> deck;
-
-    public Deck(LinkedList<Card> deck) {
-        this.deck = deck;
-    }
-
     public static LinkedList<Card> initDeck() {
         LinkedList<Card> allCards = new LinkedList<>();
         for (Suit suit : Suit.values()) {
@@ -23,6 +17,12 @@ public class Deck {
         }
         Collections.shuffle(allCards);
         return allCards;
+    }
+
+    public final LinkedList<Card> deck;
+
+    public Deck(LinkedList<Card> deck) {
+        this.deck = deck;
     }
 
     public Card getCard() {

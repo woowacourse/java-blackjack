@@ -33,5 +33,4 @@ class DeckTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExeptionMessage.NO_MORE_CARD);
     }
-
 }
