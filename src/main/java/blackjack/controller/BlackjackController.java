@@ -29,7 +29,7 @@ public class BlackjackController {
         Players players = Players.create(playerBets, deck);
 
         OutputView.printDrawMessage(inputPlayerNames);
-        OutputView.printTotalUserCards(CardDto.from(dealer.getOneCard()), convertToPlayerDtos(players));
+        OutputView.printTotalUserCards(CardDto.from(dealer.getInitCard()), convertToPlayerDtos(players));
 
         List<UserScoreDto> userScoreDtos = playGame(dealer, players, deck);
         finishGame(dealer, players, userScoreDtos);

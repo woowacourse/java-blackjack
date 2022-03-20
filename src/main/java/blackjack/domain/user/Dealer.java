@@ -9,7 +9,7 @@ public class Dealer extends User {
         super("딜러", cards);
     }
 
-    public Card getOneCard() {
+    public Card getInitCard() {
         return cards.getCards().iterator().next();
     }
 
