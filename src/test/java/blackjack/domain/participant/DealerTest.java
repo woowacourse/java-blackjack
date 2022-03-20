@@ -64,6 +64,6 @@ public class DealerTest {
                 .draw(Card.from(Suit.SPADE, Denomination.KING));
         Dealer dealer = new Dealer(dealerState);
 
-        assertThat(dealer.isWin(new Player("kth", playerState))).isEqualTo(BlackjackMatch.WIN);
+        assertThat(dealer.match(new Player("kth", playerState))).isEqualTo(BlackjackMatch.WIN);
     }
 }

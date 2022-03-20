@@ -20,7 +20,7 @@ public class BlackjackGameResult {
     public Map<String, Integer> calculateDealerResult() {
         final Map<String, Integer> gameResult = initializeDealerResult();
         for (Player player : players) {
-            final BlackjackMatch match = dealer.isWin(player);
+            final BlackjackMatch match = dealer.match(player);
             gameResult.computeIfPresent(match.getResult(), (k, v) -> v + 1);
         }
         return gameResult;
@@ -37,7 +37,7 @@ public class BlackjackGameResult {
     public Map<Player, BlackjackMatch> calculatePlayersResult() {
         final Map<Player, BlackjackMatch> gameResult = new LinkedHashMap<>();
         for (Player player : players) {
-            final BlackjackMatch match = player.isWin(dealer);
+            final BlackjackMatch match = player.match(dealer);
             gameResult.put(player, match);
         }
         return gameResult;

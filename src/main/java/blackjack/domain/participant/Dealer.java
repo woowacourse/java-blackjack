@@ -23,7 +23,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public BlackjackMatch isWin(Participant player) {
+    public BlackjackMatch match(Participant player) {
         if (player.getStatus().isBust()) {
             return BlackjackMatch.WIN;
         }

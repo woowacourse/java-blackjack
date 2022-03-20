@@ -34,7 +34,7 @@ public abstract class Participant {
 
     abstract boolean hasNextTurn();
 
-    abstract BlackjackMatch isWin(Participant participant);
+    abstract BlackjackMatch match(Participant participant);
 
     public void receiveCard(Card card) {
         if (!isFinished()) {
