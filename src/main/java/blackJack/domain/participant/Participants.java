@@ -19,7 +19,7 @@ public class Participants {
         this(new Dealer(), convertToPlayers(playerNames));
     }
 
-    private Participants(Dealer dealer, List<Player> players) {
+    public Participants(Dealer dealer, List<Player> players) {
         validateDuplicatePlayerName(players);
         validatePlayerCount(players);
         this.dealer = dealer;
