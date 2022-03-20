@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.BettingAmount;
 import blackjack.domain.DealerDrawChoice;
-import blackjack.domain.Outcome;
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
@@ -82,9 +81,8 @@ public class Roles {
 	public List<Participant> calculateResult() {
 		calculateBlackJackResult();
 		for (Participant player : players) {
-			final Outcome outcome = judge(player);
-			player.distributeBettingAmount(outcome);
-			dealer.distributeBettingAmount(outcome.getCounterpartRoleOutcome(), player);
+			player.distributeBattingAmount(dealer);
+			dealer.distributeBattingAmount(player);
 		}
 		final List<Participant> results = new ArrayList<>();
 		results.add(dealer);
@@ -101,7 +99,4 @@ public class Roles {
 		}
 	}
 
-	private Outcome judge(final Participant player) {
-		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
-	}
 }

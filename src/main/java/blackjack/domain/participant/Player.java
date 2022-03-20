@@ -12,19 +12,15 @@ public class Player extends Participant {
 	}
 
 	@Override
-	public void distributeBettingAmount(Outcome outcome) {
+	public void distributeBattingAmount(final Participant dealer) {
+		final Outcome outcome = judgeCompeteResult(calculateFinalScore(), dealer.calculateFinalScore());
 		if (winWithoutBlackJack(outcome)) {
-			bettingAmount.giveTwoTimes();
+			battingAmount.giveTwoTimes();
 		}
 	}
 
 	private boolean winWithoutBlackJack(final Outcome outcome) {
 		return outcome == Outcome.VICTORY && !hand.isBlackJack();
-	}
-
-	@Override
-	public void distributeBettingAmount(Outcome outcome, Participant role) {
-		throw new IllegalArgumentException(METHOD_ERROR);
 	}
 
 	@Override

@@ -20,16 +20,12 @@ public class Dealer extends Participant {
 	}
 
 	@Override
-	public void distributeBettingAmount(Outcome outcome) {
-		throw new IllegalArgumentException(METHOD_ERROR);
-	}
-
-	@Override
-	public void distributeBettingAmount(Outcome outcome, Participant role) {
+	public void distributeBattingAmount(final Participant player) {
+		final Outcome outcome = judgeCompeteResult(calculateFinalScore(), player.calculateFinalScore());
 		if (outcome == Outcome.VICTORY) {
-			final int finalIncome = bettingAmount.getTotalValue() + role.getCurrentIncome();
-			bettingAmount = new BettingAmount(finalIncome, bettingAmount.getInitialValue());
-			role.loseAll();
+			final int finalIncome = battingAmount.getTotalValue() + player.getCurrentIncome();
+			battingAmount = new BettingAmount(finalIncome, battingAmount.getInitialValue());
+			player.loseAll();
 		}
 	}
 

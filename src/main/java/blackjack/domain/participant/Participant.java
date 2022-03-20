@@ -15,14 +15,14 @@ public abstract class Participant {
 
 	protected final String name;
 	protected final Hand hand;
-	protected BettingAmount bettingAmount;
+	protected BettingAmount battingAmount;
 
 	private boolean drawMore;
 
 	public Participant(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		this.name = name;
 		this.hand = hand;
-		this.bettingAmount = bettingAmount;
+		this.battingAmount = bettingAmount;
 		this.drawMore = true;
 	}
 
@@ -33,14 +33,14 @@ public abstract class Participant {
 	}
 
 	public int getIncome() {
-		return bettingAmount.calculateIncome();
+		return battingAmount.calculateIncome();
 	}
 
 	public void earnAmountByBlackJack() {
 		if (!isBlackJack()) {
 			return;
 		}
-		bettingAmount.giveOneAndHalfTime();
+		battingAmount.giveOneAndHalfTime();
 	}
 
 	public boolean isBlackJack() {
@@ -51,8 +51,12 @@ public abstract class Participant {
 		return hand.calculateScore();
 	}
 
+	protected Outcome judgeCompeteResult(final int score, final int targetScore) {
+		return Outcome.of(score, targetScore);
+	}
+
 	public int calculateBettingResult() {
-		return bettingAmount.calculateIncome();
+		return battingAmount.calculateIncome();
 	}
 
 	public void stopDraw() {
@@ -79,15 +83,13 @@ public abstract class Participant {
 
 	public abstract int getDrawStandard();
 
-	public abstract void distributeBettingAmount(final Outcome outcome);
-
-	public abstract void distributeBettingAmount(final Outcome outcome, final Participant role);
+	public abstract void distributeBattingAmount(final Participant participant);
 
 	protected int getCurrentIncome() {
-		return bettingAmount.getTotalValue();
+		return battingAmount.getTotalValue();
 	}
 
 	protected void loseAll() {
-		bettingAmount.loseAll();
+		battingAmount.loseAll();
 	}
 }
