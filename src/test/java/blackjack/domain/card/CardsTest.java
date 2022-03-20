@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class CardsTest {
 
@@ -49,6 +52,18 @@ class CardsTest {
 
 		assertThat(cards.isBust()).isFalse();
 		assertThat(cards.isBlackJack()).isFalse();
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"1:1", "2:2", "3:3"}, delimiter = ':')
+	@DisplayName("인자로 받은 개수만큼 카드를 보여준다.")
+	void open(int count, int result) {
+		Cards cards = new Cards();
+		cards.add(getAce());
+		cards.add(getFive());
+		cards.add(getFive());
+
+		assertThat(cards.open(count).size()).isEqualTo(result);
 	}
 
 	private Card getAce() {

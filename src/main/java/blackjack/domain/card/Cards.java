@@ -83,6 +83,10 @@ public class Cards {
 		return this.sum() == dealer.sum();
 	}
 
+	public List<Card> open(int count) {
+		return values.subList(0, count);
+	}
+
 	public List<Card> getValues() {
 		return Collections.unmodifiableList(values);
 	}

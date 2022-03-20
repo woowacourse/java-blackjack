@@ -63,6 +63,10 @@ public class Gamers {
 			.collect(Collectors.toList());
 	}
 
+	public List<Card> findDealerFirstCard() {
+		return dealer.openCardFirst();
+	}
+
 	public Dealer getDealer() {
 		return dealer;
 	}
