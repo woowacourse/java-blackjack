@@ -10,6 +10,7 @@ public class HoldCards {
 
     private static final int FIRST_CARD = 0;
     private static final int INIT_CARD_SIZE = 2;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -45,11 +46,11 @@ public class HoldCards {
     }
 
     public boolean isBust() {
-        return countBestNumber() > 21;
+        return countBestNumber() > CardNumber.BLACK_JACK_NUMBER;
     }
 
     public boolean isReady() {
-        return cards.size() == 2;
+        return cards.size() == BLACKJACK_CARD_SIZE;
     }
 
     private List<CardNumber> toCardNumbers() {
