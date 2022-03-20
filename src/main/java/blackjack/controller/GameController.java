@@ -8,7 +8,6 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerAnswer;
-import java.util.List;
 
 public class GameController {
 
@@ -88,7 +87,7 @@ public class GameController {
 
     public void endGame() {
         printAllCards();
-        printDealerPrize();
+        printDealerProfit();
         printPlayersPrize();
     }
 
@@ -99,13 +98,13 @@ public class GameController {
         OutputView.printCardsAndScore(players.getValue());
     }
 
-    private void printDealerPrize() {
-        double dealerPrize = players.getValue().stream()
+    private void printDealerProfit() {
+        double dealerProfit = players.getValue().stream()
                 .mapToDouble(player -> player.findCalculator()
                         .calculate(player.getScore(), dealer.getScore(), dealer.isBlackjack(),
                                 player.getBettingAmount()))
                 .sum();
-        OutputView.printDealerPrize(dealerPrize * -1);
+        OutputView.printDealerProfit(dealerProfit * -1);
     }
 
     private void printPlayersPrize() {

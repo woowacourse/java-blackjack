@@ -60,7 +60,7 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다.");
     }
 
-    public static void printDealerPrize(final double prize) {
+    public static void printDealerProfit(final double prize) {
         System.out.printf("%n## 최종 수익%n");
         printPrize("딜러", prize);
     }
