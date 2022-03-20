@@ -3,11 +3,11 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DeckTest {
 
@@ -28,8 +28,18 @@ public class DeckTest {
     @Test
     @DisplayName("카드를 정상적으로 나눠주는지 테스트")
     void distributeCard() {
-        final Deck deck = new Deck();
+        final Deck deck = new Deck(List.of(Card.from(Suit.SPADE, Denomination.ACE)));
 
         assertThat(deck.distributeCard()).isEqualTo(Card.from(Suit.SPADE, Denomination.ACE));
+    }
+
+    @Test
+    @DisplayName("카드가 없을 경우 예외 발생 테스트")
+    void emptyDeck() {
+        final Deck deck = new Deck(Collections.emptyList());
+
+        assertThatThrownBy(deck::distributeCard).
+                isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드가 존재하지 않습니다.");
     }
 }

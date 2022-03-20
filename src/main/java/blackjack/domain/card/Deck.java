@@ -6,10 +6,12 @@ import java.util.List;
 
 public class Deck {
 
+    private static final String ERROR_MESSAGE_EMPTY_DECK = "카드가 존재하지 않습니다.";
+
     private final LinkedList<Card> deck;
 
-    private Deck(LinkedList<Card> deck) {
-        this.deck = deck;
+    public Deck(List<Card> deck) {
+        this.deck = new LinkedList<>(deck);
     }
 
     public Deck() {
@@ -23,6 +25,9 @@ public class Deck {
     }
 
     public Card distributeCard() {
+        if (deck.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_EMPTY_DECK);
+        }
         return deck.poll();
     }
 

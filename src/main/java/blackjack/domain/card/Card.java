@@ -1,22 +1,15 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Card {
 
-    private static final String ERROR_MESSAGE_INVALID_CARD = "카드가 존재하지 않습니다.";
-
-    private static final List<Card> CARDS;
+    private static final Map<String, Card> CARDS = new HashMap<>();
 
     static {
-        CARDS = Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Denomination.values())
-                        .map(denomination -> new Card(suit, denomination)))
-                .collect(Collectors.toUnmodifiableList());
+        for (Suit suit : Suit.values()) {
+            addCard(suit);
+        }
     }
 
     private final Suit suit;
@@ -27,15 +20,18 @@ public class Card {
         this.denomination = denomination;
     }
 
+    private static void addCard(Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            CARDS.put(denomination.getDenomination().concat(suit.getName()), new Card(suit, denomination));
+        }
+    }
+
     public static Card from(Suit suit, Denomination denomination) {
-        return CARDS.stream()
-                .filter(card -> card.suit == suit && card.denomination == denomination)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_INVALID_CARD));
+        return CARDS.get(denomination.getDenomination().concat(suit.getName()));
     }
 
     public static List<Card> initializeDeck() {
-        return new ArrayList<>(CARDS);
+        return new ArrayList<>(CARDS.values());
     }
 
     public boolean isAce() {
