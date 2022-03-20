@@ -1,26 +1,54 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Hand.BLACKJACK_SYMBOL_SCORE;
+import blackjack.domain.card.Card;
+import blackjack.domain.state.State;
+import java.util.List;
 
-import blackjack.domain.card.Hand;
+public class Player {
 
-public class Player extends Participant {
+    private final Participant participant;
+    private final Money bettingMoney;
 
-    public Player(String name) {
-        this(new Name(name));
+    private Player(Participant participant, Money bettingMoney) {
+        this.participant = participant;
+        this.bettingMoney = bettingMoney;
     }
 
-    public Player(Name name) {
-        this(name, new Hand());
+    public static Player from(String name, String money) {
+        return new Player(new Participant(name), new Money(money));
     }
 
-    public Player(Name name, Hand cardHand) {
-        super(name, cardHand);
+    public Participant getParticipant() {
+        return participant;
     }
 
-    @Override
-    public boolean shouldReceive() {
-        return !cardHand.isBust() && !cardHand.isBlackjack()
-            && cardHand.getScore() != BLACKJACK_SYMBOL_SCORE;
+    public boolean isFinished() {
+        return participant.isFinished();
+    }
+
+    public void hit(Card card) {
+        participant.hit(card);
+    }
+
+    public void stay() {
+        participant.stay();
+    }
+
+    public int calculateProfit(Dealer dealer) {
+        State state = participant.getState();
+        double earningRate = state.earningRate(dealer.getState());
+        return bettingMoney.multiple(earningRate);
+    }
+
+    public boolean isReady() {
+        return participant.isReady();
+    }
+
+    public String getName() {
+        return participant.getName();
+    }
+
+    public List<Card> getCards() {
+        return participant.getCards();
     }
 }

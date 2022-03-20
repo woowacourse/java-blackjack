@@ -17,4 +17,8 @@ public class Money {
     public int getAmount() {
         return amount;
     }
+
+    public int multiple(double rate) {
+        return (int) (amount * rate);
+    }
 }

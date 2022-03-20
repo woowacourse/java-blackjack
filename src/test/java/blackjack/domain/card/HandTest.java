@@ -87,4 +87,20 @@ class HandTest {
             Arguments.of(createCardHand(aceCard, sevenCard), 18)
         );
     }
+
+    @DisplayName("카드패가 2개로 준비상태가 아니다.")
+    @Test
+    void isReadyTrue() {
+        Hand cardHand = createCardHand(aceCard, tenCard);
+
+        assertThat(cardHand.isReady()).isFalse();
+    }
+
+    @DisplayName("카드패가 1개로 준비상태이다.")
+    @Test
+    void isReadyFalse() {
+        Hand cardHand = createCardHand(aceCard);
+
+        assertThat(cardHand.isReady()).isTrue();
+    }
 }

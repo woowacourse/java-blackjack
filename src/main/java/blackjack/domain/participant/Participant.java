@@ -2,56 +2,66 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 import java.util.List;
 
-public abstract class Participant {
+public class Participant {
 
-    protected final Name name;
-    protected final Hand cardHand;
+    private final Name name;
+    protected State state;
 
-    protected Participant(Name name, Hand cardHand) {
-        validateNull(name, cardHand);
-        this.name = name;
-        this.cardHand = cardHand;
+    public Participant(String name) {
+        this(new Name(name));
     }
 
-    private void validateNull(Name name, Hand cardHand) {
-        if (name == null || cardHand == null) {
-            throw new IllegalArgumentException("[ERROR] 이름과 카드패가 null일 수 없습니다.");
+    private Participant(Name name) {
+        this(name, new Ready());
+    }
+
+    private Participant(Name name, State state) {
+        this.name = name;
+        this.state = state;
+    }
+
+    public void hit(Card card) {
+        if (!isFinished()) {
+            state = state.draw(card);
         }
     }
 
-    public abstract boolean shouldReceive();
-
-    public boolean isWin(Participant participant) {
-        return this.cardHand.compareScore(participant.cardHand);
+    public boolean isReady() {
+        return state.isRunning();
     }
 
-    public void receiveCard(Card card) {
-        cardHand.add(card);
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
-    public boolean isBust() {
-        return cardHand.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return cardHand.isBlackjack();
+    public void stay() {
+        state = state.stay();
     }
 
     public String getName() {
         return name.getName();
     }
 
-    public List<Card> getCards() {
-        return cardHand.getCards();
-    }
-
-    public int getCardTotalScore() {
-        return cardHand.getScore();
+    public State getState() {
+        return state;
     }
 
     public Card getOpenCard() {
+        Hand cardHand = state.hand();
         return cardHand.openCard();
+    }
+
+    public int getCardTotalScore() {
+        Hand cardHand = state.hand();
+        return cardHand.getScore();
+    }
+
+    public List<Card> getCards() {
+        Hand cardHand = state.hand();
+        return cardHand.getCards();
     }
 }

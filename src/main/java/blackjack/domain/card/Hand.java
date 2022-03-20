@@ -65,4 +65,8 @@ public class Hand {
     public Card openCard() {
         return cards.get(0);
     }
+
+    public boolean isReady() {
+        return cards.size() != 2;
+    }
 }
