@@ -2,11 +2,14 @@ package blackjack.domain.cards;
 
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
+import blackjack.domain.result.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public final class Cards {
+    private static final int BLACKJACK_NUMBER = 21;
+
     private final List<Card> value;
 
     public Cards() {
@@ -27,6 +30,23 @@ public final class Cards {
 
     public Card getFirstCard() {
         return value.get(0);
+    }
+
+    public int getPoint() {
+        return new Point(this).get();
+    }
+
+    public boolean isBust() {
+        return getPoint() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isBlackjack() {
+        return getPoint() == BLACKJACK_NUMBER && size() == 2;
+    }
+
+
+    public boolean isMaxPoint() {
+        return getPoint() == BLACKJACK_NUMBER;
     }
 
     public int getRawPoint() {

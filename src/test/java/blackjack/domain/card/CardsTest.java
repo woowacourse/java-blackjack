@@ -1,9 +1,10 @@
 package blackjack.domain.card;
 
 
+import static blackjack.domain.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Fixture;
+import blackjack.domain.Fixtures;
 import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.denomination.Denomination;
 import java.util.List;
@@ -17,8 +18,8 @@ public class CardsTest {
     @BeforeEach
     void setup() {
         cards = new Cards();
-        cards.add(new Fixture().ACE);
-        cards.add(new Fixture().ACE);
+        cards.add(ACE);
+        cards.add(ACE);
     }
 
     @Test
@@ -32,7 +33,7 @@ public class CardsTest {
     @DisplayName("첫 카드 리턴 기능 테스트")
     void getFirstCardTest() {
         assertThat(cards.getFirstCard())
-                .isEqualTo(new Fixture().ACE);
+                .isEqualTo(ACE);
     }
 
     @Test
@@ -53,6 +54,6 @@ public class CardsTest {
     @DisplayName("카드 리스트 리턴 기능 테스트")
     void get() {
         assertThat(cards.getCopy())
-                .isEqualTo(List.of(new Fixture().ACE, new Fixture().ACE));
+                .isEqualTo(List.of(ACE, ACE));
     }
 }

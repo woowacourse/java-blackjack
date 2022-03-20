@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.domain.Fixture;
+import blackjack.domain.Fixtures;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
 import blackjack.domain.cards.card.denomination.Suit;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardTest {
-    private final Card card = new Fixture().ACE;
+    private final Card card = Fixtures.ACE;
 
     @Test
     @DisplayName("같은 숫자인지 확인하는 기능 True 테스트")

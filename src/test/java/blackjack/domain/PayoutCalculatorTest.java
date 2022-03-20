@@ -1,5 +1,10 @@
 package blackjack.domain;
 
+import static blackjack.domain.Fixtures.ACE;
+import static blackjack.domain.Fixtures.EIGHT;
+import static blackjack.domain.Fixtures.NINE;
+import static blackjack.domain.Fixtures.TEN;
+import static blackjack.domain.Fixtures.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.human.Dealer;
@@ -14,13 +19,13 @@ class PayoutCalculatorTest {
     @Nested
     @DisplayName("플레이어 1.5배 우승 결과 테스트")
     class PlayerWinMaxTest {
-        private final Fixture fx = new Fixture();
+        private final Fixtures fx = new Fixtures();
 
         @Test
         void resultTest() {
-            fx.POBI.addCard(fx.ACE);
-            fx.POBI.addCard(fx.TEN);
-            Dealer dealer = new Dealer(List.of(fx.TEN, fx.NINE, fx.TEN));
+            fx.POBI.addCard(ACE);
+            fx.POBI.addCard(TEN);
+            Dealer dealer = new Dealer(List.of(TEN, NINE, TEN));
 
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(15000);
@@ -30,13 +35,13 @@ class PayoutCalculatorTest {
     @Nested
     @DisplayName("플레이어 2장블랙잭/딜러블랙잭 무승부 결과 테스트")
     class PlayerWinMax2Test {
-        private final Fixture fx = new Fixture();
+        private final Fixtures fx = new Fixtures();
 
         @Test
         void resultTest() {
-            fx.POBI.addCard(fx.ACE);
-            fx.POBI.addCard(fx.TEN);
-            Dealer dealer = new Dealer(List.of(fx.ACE, fx.TEN));
+            fx.POBI.addCard(ACE);
+            fx.POBI.addCard(TEN);
+            Dealer dealer = new Dealer(List.of(ACE, TEN));
 
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(0);
@@ -46,14 +51,14 @@ class PayoutCalculatorTest {
     @Nested
     @DisplayName("딜러 버스트 결과 테스트")
     class DealerOverTest {
-        private final Fixture fx = new Fixture();
+        private final Fixtures fx = new Fixtures();
 
         @Test
         void resultTest() {
-            fx.POBI.addCard(fx.TWO);
-            fx.POBI.addCard(fx.TEN);
+            fx.POBI.addCard(TWO);
+            fx.POBI.addCard(TEN);
             Dealer dealer = new Dealer(
-                    List.of(fx.TEN, fx.NINE, fx.EIGHT));
+                    List.of(TEN, NINE, EIGHT));
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(10000);
         }
@@ -62,13 +67,13 @@ class PayoutCalculatorTest {
     @Nested
     @DisplayName("딜러 21이하, 플레이어 21이하 결과 딜러승리 테스트")
     class DealerPlayerUnder1Test {
-        private final Fixture fx = new Fixture();
+        private final Fixtures fx = new Fixtures();
 
         @Test
         void resultTest() {
-            fx.POBI.addCard(fx.TWO);
-            fx.POBI.addCard(fx.TEN);
-            Dealer dealer = new Dealer(List.of(fx.TEN, fx.NINE, fx.ACE));
+            fx.POBI.addCard(TWO);
+            fx.POBI.addCard(TEN);
+            Dealer dealer = new Dealer(List.of(TEN, NINE, ACE));
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(-10000);
         }
@@ -77,13 +82,13 @@ class PayoutCalculatorTest {
     @Nested
     @DisplayName("딜러 21이하, 플레이어 21이하 결과 플레이어 승리 테스트")
     class DealerPlayerUnder2Test {
-        private final Fixture fx = new Fixture();
+        private final Fixtures fx = new Fixtures();
 
         @Test
         void resultTest() {
-            fx.POBI.addCard(fx.TEN);
-            fx.POBI.addCard(fx.TEN);
-            Dealer dealer = new Dealer(List.of(fx.ACE, fx.ACE));
+            fx.POBI.addCard(TEN);
+            fx.POBI.addCard(TEN);
+            Dealer dealer = new Dealer(List.of(ACE, ACE));
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(10000);
         }
@@ -92,14 +97,14 @@ class PayoutCalculatorTest {
     @Nested
     @DisplayName("딜러 21이하, 플레이어 21이하 결과 무승부 테스트")
     class DealerPlayerUnder3Test {
-        private final Fixture fx = new Fixture();
+        private final Fixtures fx = new Fixtures();
 
         @Test
         void resultTest() {
 
-            fx.POBI.addCard(fx.ACE);
-            fx.POBI.addCard(fx.ACE);
-            Dealer dealer = new Dealer(List.of(fx.ACE, fx.ACE));
+            fx.POBI.addCard(ACE);
+            fx.POBI.addCard(ACE);
+            Dealer dealer = new Dealer(List.of(ACE, ACE));
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(0);
         }
@@ -108,14 +113,14 @@ class PayoutCalculatorTest {
     @Nested
     @DisplayName("딜러 21이하, 플레이어 버스트 결과 테스트")
     class DealerUnderPlayerHighTest {
-        private final Fixture fx = new Fixture();
+        private final Fixtures fx = new Fixtures();
 
         @Test
         void resultTest() {
-            fx.POBI.addCard(fx.TWO);
-            fx.POBI.addCard(fx.TEN);
-            fx.POBI.addCard(fx.TEN);
-            Dealer dealer = new Dealer(List.of(fx.ACE, fx.NINE));
+            fx.POBI.addCard(TWO);
+            fx.POBI.addCard(TEN);
+            fx.POBI.addCard(TEN);
+            Dealer dealer = new Dealer(List.of(ACE, NINE));
             assertThat(PayoutCalculator.compute(fx.POBI, dealer))
                     .isEqualTo(-10000);
         }

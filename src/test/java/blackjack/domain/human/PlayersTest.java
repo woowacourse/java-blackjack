@@ -1,10 +1,13 @@
 package blackjack.domain.human;
 
+import static blackjack.domain.Fixtures.ACE;
+import static blackjack.domain.Fixtures.TEN;
+import static blackjack.domain.Fixtures.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.Fixture;
+import blackjack.domain.Fixtures;
 import blackjack.domain.cards.CardDeck;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
@@ -13,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-    private final Fixture fx = new Fixture();
+    private final Fixtures fx = new Fixtures();
 
     @Test
     @DisplayName("플레이어 모음 생성 기능 테스트")
@@ -64,14 +67,14 @@ class PlayersTest {
     @Test
     @DisplayName("페이아웃 반환 테스트")
     public void getPayoutsTest() {
-        Fixture fx = new Fixture();
+        Fixtures fx = new Fixtures();
         // given
         Players players = new Players(List.of(fx.POBI));
-        Dealer dealer = new Dealer(List.of(fx.TWO, fx.TWO));
+        Dealer dealer = new Dealer(List.of(TWO, TWO));
 
         // when
-        fx.POBI.addCard(fx.TEN);
-        fx.POBI.addCard(fx.ACE);
+        fx.POBI.addCard(TEN);
+        fx.POBI.addCard(ACE);
 
         // then
         assertThat(players.getPayouts(dealer))
