@@ -7,4 +7,9 @@ public class Dealer extends Participant {
     public Dealer() {
         super(NAME);
     }
+
+    @Override
+    public boolean canDraw() {
+        return isHit() && !isBlackjack();
+    }
 }

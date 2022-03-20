@@ -28,6 +28,8 @@ public abstract class Participant {
         }
     }
 
+    abstract public boolean canDraw();
+
     public void addCard(Card card) {
         myCards.add(card);
     }

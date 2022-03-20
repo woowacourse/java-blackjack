@@ -10,6 +10,11 @@ public class Player extends Participant {
         betting = new Betting(bettingMoney);
     }
 
+    @Override
+    public boolean canDraw() {
+        return !isBust() && !isBlackjack();
+    }
+
     public Betting getBetting() {
         return betting;
     }
