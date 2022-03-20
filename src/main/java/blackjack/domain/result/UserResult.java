@@ -2,21 +2,50 @@ package blackjack.domain.result;
 
 import blackjack.domain.participant.Participant;
 
-public class UserResult {
+import java.util.Arrays;
 
-    private final String userName;
-    private final Result result;
+public enum UserResult {
 
-    public UserResult(Participant participant, int dealerScore) {
-        this.userName = participant.getName();
-        this.result = Result.checkUserResult(participant.getCardSum(), dealerScore);
+    LOSE("패", (user, dealer) -> user.isBust() || (dealer.isHit() && dealer.isMoreScore(user)) ||
+            dealer.isBlackJack() && !user.isBlackJack()),
+    WIN("승", (user, dealer) -> dealer.isBust() ||
+            user.isMoreScore(dealer) || (user.isBlackJack() && !dealer.isBlackJack())),
+    DRAW("무", (user, dealer) -> user.isSameScore(dealer));
+
+    private String name;
+    private ScoreComparator comparator;
+
+    UserResult(String name, ScoreComparator comparator) {
+        this.name = name;
+        this.comparator = comparator;
     }
 
-    public String getUserName() {
-        return userName;
+    public static UserResult checkUserResult(Participant user, Participant dealer) {
+        return Arrays.stream(values())
+                .filter(result -> result.compare(user, dealer))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
-    public String getResult() {
-        return result.getName();
+    public static UserResult swap(UserResult result) {
+        if (result == WIN) {
+            return LOSE;
+        }
+        if (result == LOSE) {
+            return WIN;
+        }
+        return result;
+    }
+
+    public boolean isWin() {
+        return this == UserResult.WIN;
+    }
+
+    private boolean compare(Participant user, Participant dealer) {
+        return comparator.compare(user, dealer);
+    }
+
+    public String getName() {
+        return name;
     }
 }

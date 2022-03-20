@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.UserResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,7 +38,9 @@ public class UserTest {
         user.receiveCard(Card.of(CardNumber.SEVEN, CardType.CLOVER));
         user.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
 
-        assertThat(user.checkResult(19)).isEqualTo(Result.LOSE);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(Card.of(CardNumber.EIGHT, CardType.CLOVER));
+        assertThat(user.checkResult(dealer)).isEqualTo(UserResult.LOSE);
     }
 
     @Test
@@ -48,7 +50,11 @@ public class UserTest {
         user.receiveCard(Card.of(CardNumber.EIGHT, CardType.CLOVER));
         user.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
 
-        assertThat(user.checkResult(20)).isEqualTo(Result.LOSE);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(Card.of(CardNumber.EIGHT, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.ACE, CardType.CLOVER));
+
+        assertThat(user.checkResult(dealer)).isEqualTo(UserResult.LOSE);
     }
 
     @Test
@@ -58,7 +64,11 @@ public class UserTest {
         user.receiveCard(Card.of(CardNumber.EIGHT, CardType.CLOVER));
         user.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
 
-        assertThat(user.checkResult(17)).isEqualTo(Result.WIN);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(Card.of(CardNumber.TEN, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.SEVEN, CardType.CLOVER));
+
+        assertThat(user.checkResult(dealer)).isEqualTo(UserResult.WIN);
     }
 
     @Test
@@ -68,7 +78,11 @@ public class UserTest {
         user.receiveCard(Card.of(CardNumber.EIGHT, CardType.CLOVER));
         user.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
 
-        assertThat(user.checkResult(18)).isEqualTo(Result.DRAW);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(Card.of(CardNumber.EIGHT, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
+
+        assertThat(user.checkResult(dealer)).isEqualTo(UserResult.DRAW);
     }
 
     @Test
@@ -79,7 +93,11 @@ public class UserTest {
         user.receiveCard(Card.of(CardNumber.ACE, CardType.HEART));
         user.receiveCard(Card.of(CardNumber.ACE, CardType.DIAMOND));
 
-        assertThat(user.checkResult(13)).isEqualTo(Result.DRAW);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(Card.of(CardNumber.TEN, CardType.SPADE));
+        dealer.receiveCard(Card.of(CardNumber.THREE, CardType.SPADE));
+
+        assertThat(user.checkResult(dealer)).isEqualTo(UserResult.DRAW);
     }
 
     @Test
@@ -90,7 +108,7 @@ public class UserTest {
         user.receiveCard(Card.of(CardNumber.QUEEN, CardType.HEART));
         user.receiveCard(Card.of(CardNumber.QUEEN, CardType.DIAMOND));
 
-        assertThat(user.checkBust()).isTrue();
+        assertThat(user.isBust()).isTrue();
     }
 
     @Test
@@ -101,6 +119,6 @@ public class UserTest {
         user.receiveCard(Card.of(CardNumber.ACE, CardType.HEART));
         user.receiveCard(Card.of(CardNumber.ACE, CardType.DIAMOND));
 
-        assertThat(user.checkBust()).isFalse();
+        assertThat(user.isBust()).isFalse();
     }
 }

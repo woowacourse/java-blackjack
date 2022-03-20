@@ -5,8 +5,8 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.result.DistributeResult;
-import blackjack.domain.result.ProfitResult;
+import blackjack.domain.dto.DistributeResult;
+import blackjack.domain.dto.ProfitResult;
 
 import java.util.List;
 import java.util.Map;
@@ -59,7 +59,7 @@ public class BlackJack {
 
     public boolean checkLimit(String playerName) {
         Participant participant = participants.getUserByName(playerName);
-        return participant.getCardSum() < SCORE_LIMIT;
+        return participant.cardSum() < SCORE_LIMIT;
     }
 
     public boolean checkDealerUnderSumStandard() {

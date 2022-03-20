@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
+    private static final int BUST_STANDARD = 21;
 
     protected final List<Card> cards;
     protected final String name;
@@ -37,8 +38,27 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards);
     }
 
-    public int getCardSum() {
+    public int cardSum() {
         return ScoreCalculator.cardSum(cards);
     }
 
+    public boolean isBust() {
+        return cardSum() > BUST_STANDARD;
+    }
+
+    public boolean isHit() {
+        return cardSum() < BUST_STANDARD;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && ScoreCalculator.cardSum(cards) == BUST_STANDARD;
+    }
+
+    public boolean isMoreScore(Participant other) {
+        return cardSum() > other.cardSum();
+    }
+
+    public boolean isSameScore(Participant other) {
+        return cardSum() == other.cardSum();
+    }
 }

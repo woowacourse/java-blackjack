@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.User;
 
@@ -9,26 +10,26 @@ import java.util.Map;
 
 public class DealerResult {
 
-    private final Map<Result, Integer> count;
+    private final Map<UserResult, Integer> count;
 
     public DealerResult(Participants participants) {
-        this.count = new EnumMap<>(Result.class);
+        this.count = new EnumMap<>(UserResult.class);
         calculateFinalCount(participants);
     }
 
     private void calculateFinalCount(Participants participants) {
-        int dealerSum = participants.getDealer().getCardSum();
+        Participant dealer = participants.getDealer();
         for (User user : participants.getUsers()) {
-            Result userResult = user.checkResult(dealerSum);
-            addCount(Result.swap(userResult));
+            UserResult userResult = user.checkResult(dealer);
+            addCount(UserResult.swap(userResult));
         }
     }
 
-    private void addCount(Result result) {
+    private void addCount(UserResult result) {
         count.put(result, count.getOrDefault(result, 0) + 1);
     }
 
-    public Map<Result, Integer> getCount() {
+    public Map<UserResult, Integer> getCount() {
         return Collections.unmodifiableMap(count);
     }
 }

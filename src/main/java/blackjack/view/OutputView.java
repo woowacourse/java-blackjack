@@ -1,6 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.dto.DistributeResult;
+import blackjack.domain.dto.ProfitResult;
+import blackjack.domain.dto.UserGameResult;
 import blackjack.domain.result.*;
 
 import java.text.MessageFormat;
@@ -58,7 +61,7 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(DealerResult dealerResult, List<UserResult> userResults) {
+    public static void printFinalResult(DealerResult dealerResult, List<UserGameResult> userResults) {
         System.out.println(System.lineSeparator());
         System.out.println(FINAL_RESULT_MESSAGE);
         printDealerResult(dealerResult);
@@ -73,17 +76,17 @@ public class OutputView {
         return userNames;
     }
 
-    private static void printUserResult(List<UserResult> userResults) {
-        for (UserResult userResult : userResults) {
+    private static void printUserResult(List<UserGameResult> userResults) {
+        for (UserGameResult userResult : userResults) {
             System.out.println(MessageFormat.format(USER_RESULT_FORMAT,
                     userResult.getUserName(), userResult.getResult()));
         }
     }
 
     private static void printDealerResult(DealerResult dealerResult) {
-        Map<Result, Integer> count = dealerResult.getCount();
-        System.out.println(MessageFormat.format(DEALER_RESULT_FORMAT, count.getOrDefault(Result.WIN, 0),
-                count.getOrDefault(Result.DRAW, 0), count.getOrDefault(Result.LOSE, 0)));
+        Map<UserResult, Integer> count = dealerResult.getCount();
+        System.out.println(MessageFormat.format(DEALER_RESULT_FORMAT, count.getOrDefault(UserResult.WIN, 0),
+                count.getOrDefault(UserResult.DRAW, 0), count.getOrDefault(UserResult.LOSE, 0)));
     }
 
 

@@ -4,25 +4,25 @@ import java.util.Arrays;
 import java.util.function.IntUnaryOperator;
 
 public enum UserProfit {
-    WIN(Result.WIN, money -> money),
-    WIN_WITH_BLACKJACK(Result.WIN, money -> (int) (money * 1.5)),
-    DRAW(Result.DRAW, money -> 0),
-    LOSE(Result.LOSE, money -> -money);
+    WIN(UserResult.WIN, money -> money),
+    WIN_WITH_BLACKJACK(UserResult.WIN, money -> (int) (money * 1.5)),
+    DRAW(UserResult.DRAW, money -> 0),
+    LOSE(UserResult.LOSE, money -> -money);
 
-    private final Result result;
+    private final UserResult result;
     private final IntUnaryOperator profitCalculator;
 
-    UserProfit(Result result, IntUnaryOperator profitCalculator) {
+    UserProfit(UserResult result, IntUnaryOperator profitCalculator) {
         this.result = result;
         this.profitCalculator = profitCalculator;
     }
 
-    public static int calculateMoney(Result result, boolean isBlackJack, int money) {
-        UserProfit target = getTarget(result, isBlackJack);
+    public static int calculateMoney(UserResult result, boolean isBlackJack, int money) {
+        UserProfit target = findProfitType(result, isBlackJack);
         return target.calculate(money);
     }
 
-    private static UserProfit getTarget(Result result, boolean isBlackJack) {
+    private static UserProfit findProfitType(UserResult result, boolean isBlackJack) {
         if (result.isWin()) {
             return checkBlackJack(isBlackJack);
         }

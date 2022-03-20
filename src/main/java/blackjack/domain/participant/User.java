@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.Result;
+import blackjack.domain.result.UserResult;
 import blackjack.domain.result.ScoreCalculator;
 import blackjack.domain.result.UserProfit;
 
@@ -36,20 +36,12 @@ public class User extends Participant {
         }
     }
 
-    public Result checkResult(int otherScore) {
-        return Result.checkUserResult(ScoreCalculator.cardSum(cards), otherScore);
+    public UserResult checkResult(Participant dealer) {
+        return UserResult.checkUserResult(this, dealer);
     }
 
-    public int calculateProfit(int otherScore) {
-        return UserProfit.calculateMoney(checkResult(otherScore), checkBlackJack(), bettingPrice);
-    }
-
-    private boolean checkBlackJack() {
-        return cards.size() == 2 && ScoreCalculator.cardSum(cards) == BUST_STANDARD;
-    }
-
-    public boolean checkBust() {
-        return ScoreCalculator.cardSum(cards) > BUST_STANDARD;
+    public int calculateProfit(Participant dealer) {
+        return UserProfit.calculateMoney(checkResult(dealer), isBlackJack(), bettingPrice);
     }
 
     @Override

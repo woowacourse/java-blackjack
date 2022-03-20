@@ -18,7 +18,7 @@ public class DealerResultTest {
         participants.distributeCard(new Deck(new CardGenerator()));
         participants.addUsers(new String[]{"스폰지밥", "뚱이", "다람이"});
         DealerResult dealerResult = new DealerResult(participants);
-        assertThat(dealerResult.getCount().get(Result.WIN)).isEqualTo(3);
+        assertThat(dealerResult.getCount().get(UserResult.WIN)).isEqualTo(3);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class DealerResultTest {
         participants.distributeCard(new Deck(new CardGenerator()));
         participants.addDealer();
         DealerResult dealerResult = new DealerResult(participants);
-        assertThat(dealerResult.getCount().get(Result.LOSE)).isEqualTo(3);
+        assertThat(dealerResult.getCount().get(UserResult.LOSE)).isEqualTo(3);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class DealerResultTest {
         participants.addDealer();
         participants.addUsers(new String[]{"스폰지밥", "뚱이", "다람이"});
         DealerResult dealerResult = new DealerResult(participants);
-        assertThat(dealerResult.getCount().get(Result.DRAW)).isEqualTo(3);
+        assertThat(dealerResult.getCount().get(UserResult.DRAW)).isEqualTo(3);
     }
 
 }

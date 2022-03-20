@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.DistributeResult;
-import blackjack.domain.result.ProfitResult;
-import blackjack.domain.result.UserResult;
+import blackjack.domain.dto.DistributeResult;
+import blackjack.domain.dto.ProfitResult;
+import blackjack.domain.dto.UserGameResult;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -65,7 +65,7 @@ public class Participants {
         Dealer dealer = getDealer();
         profitResults.add(new ProfitResult(DEALER_NAME, calculateDealerProfit()));
         for (User user : getUsers()) {
-            profitResults.add(new ProfitResult(user.getName(), user.calculateProfit(dealer.getCardSum())));
+            profitResults.add(new ProfitResult(user.getName(), user.calculateProfit(dealer)));
         }
         return profitResults;
     }
@@ -77,18 +77,18 @@ public class Participants {
                 .orElseThrow(RuntimeException::new);
     }
 
-    public List<UserResult> getUserResults() {
-        int dealerScore = getDealer().getCardSum();
+    public List<UserGameResult> getUserResults() {
+        Participant dealer = getDealer();
         return participants.stream()
                 .filter(Participant::isUser)
-                .map(p -> new UserResult(p, dealerScore))
+                .map(p -> new UserGameResult(p, dealer))
                 .collect(Collectors.toList());
     }
 
     public int calculateDealerProfit() {
         int dealerProfit = 0;
         for (User user : getUsers()) {
-            dealerProfit -= (user.calculateProfit(getDealer().getCardSum()));
+            dealerProfit -= (user.calculateProfit(getDealer()));
         }
 
         return dealerProfit;
