@@ -20,33 +20,22 @@ import view.OutputView;
 
 public class Controller {
 
-    public void run() {
-        Deck deck = new Deck(Card.getShuffledCards());
-        Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
-        Players players = createPlayers(deck);
-        BettingReceipts bettingReceipts = createBettingReceipt(players);
+    Deck deck;
+    Dealer dealer;
+    Players players;
+    BettingReceipts bettingReceipts;
 
-        OutputView.printInitHands(dealer, players);
-
-        if (dealer.isBlackJack()) {
-            OutputView.printDealerIsBlackJackMessage();
-            printResultAndProfit(Results.generateResultAtDealerBlackJack(dealer, players), bettingReceipts, players);
-            return;
-        }
-        OutputView.printPlayerIsBlackJackMessage(players);
-
-        drawForPlayers(deck, players);
-        drawForDealer(deck, dealer, players);
-        OutputView.printStatuses(dealer, players);
-        printResultAndProfit(Results.generateResultAtFinal(dealer, players), bettingReceipts, players);
+    public Controller() {
+        this.deck = new Deck(Card.getShuffledCards());
+        this.dealer = new Dealer(new InitCards(deck).getInitCards());
+        this.players = createPlayers(deck);
+        this.bettingReceipts = createBettingReceipt(players);
     }
 
-    private Players createPlayers(Deck deck) {
-        List<Player> players = new ArrayList<>();
-        for (Name name : InputView.inputNames()) {
-            players.add(new Player(name, new InitCards(deck).getInitCards()));
-        }
-        return new Players(players);
+    public void run() {
+        printInit();
+        draw();
+        printResultAndProfit(Results.generateResults(dealer, players), bettingReceipts, players);
     }
 
     private BettingReceipts createBettingReceipt(Players players) {
@@ -57,7 +46,29 @@ public class Controller {
         return new BettingReceipts(maps);
     }
 
-    private void drawForPlayers(Deck deck, Players players) {
+    private Players createPlayers(Deck deck) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : InputView.inputNames()) {
+            players.add(new Player(name, new InitCards(deck).getInitCards()));
+        }
+        return new Players(players);
+    }
+
+    private void printInit() {
+        OutputView.printInitHands(dealer, players);
+        OutputView.printDealerIsBlackJackMessage(dealer);
+        OutputView.printPlayerIsBlackJackMessage(players);
+    }
+
+    private void draw() {
+        drawForPlayers(deck, dealer, players);
+        drawForDealer(deck, dealer, players);
+    }
+
+    private void drawForPlayers(Deck deck, Dealer dealer, Players players) {
+        if (dealer.isBlackJack()) {
+            return;
+        }
         for (Name name : players.getNames()) {
             drawForPlayer(name, deck, players);
         }
@@ -79,6 +90,7 @@ public class Controller {
     }
 
     private void printResultAndProfit(Results results, BettingReceipts bettingReceipts, Players players) {
+        OutputView.printStatuses(dealer, players);
         OutputView.printResult(players.getNames(), results);
         OutputView.printProfit(players.getNames(), Profits.generateProfits(results, bettingReceipts, players));
     }

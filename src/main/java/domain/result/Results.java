@@ -8,7 +8,6 @@ import java.util.Map;
 public class Results {
 
     private static final String ABSENT_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름이 존재하지 않습니다.";
-    private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
 
     private final Map<Name, WinOrLose> maps;
 
@@ -16,19 +15,8 @@ public class Results {
         this.maps = Map.copyOf(maps);
     }
 
-    public static Results generateResultAtDealerBlackJack(Dealer dealer, Players players) {
-        validateDealerIsBlackJack(dealer);
-        return new Results(players.compareAtDealerBlackJack(dealer));
-    }
-
-    private static void validateDealerIsBlackJack(Dealer dealer) {
-        if (!dealer.isBlackJack()) {
-            throw new IllegalStateException(NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE);
-        }
-    }
-
-    public static Results generateResultAtFinal(Dealer dealer, Players players) {
-        return new Results(players.compareResultAtFinal(dealer));
+    public static Results generateResults(Dealer dealer, Players players) {
+        return new Results(players.compareWinOrLose(dealer));
     }
 
     public WinOrLose getVersusOfPlayer(Name name) {

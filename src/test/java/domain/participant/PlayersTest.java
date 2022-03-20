@@ -75,17 +75,9 @@ public class PlayersTest {
     }
 
     @Test
-    @DisplayName("딜러가 블랙잭인 경우 결과 반환")
-    void getResultAtDealerBlackJack() {
-        Results resultMap = Results.generateResultAtDealerBlackJack(dealer_BLACKJACK, players);
-        assertThat(resultMap.getVersusOfPlayer(new Name("player_BLACKJACK"))).isEqualTo(WinOrLose.DRAW);
-        assertThat(resultMap.getVersusOfPlayer(new Name("player_BUST"))).isEqualTo(WinOrLose.LOSE);
-    }
-
-    @Test
     @DisplayName("최종 게임 결과 반환")
     void getResultAtFinal() {
-        Results resultMap = Results.generateResultAtFinal(dealer_17, players);
+        Results resultMap = Results.generateResults(dealer_17, players);
         assertThat(resultMap.getVersusOfPlayer(new Name("player_BLACKJACK"))).isEqualTo(WinOrLose.WIN);
         assertThat(resultMap.getVersusOfPlayer(new Name("player_BUST"))).isEqualTo(WinOrLose.LOSE);
     }

@@ -19,14 +19,10 @@ public class Player extends Participant {
         return this.getName().equals(name);
     }
 
-    public WinOrLose compareAtDealerBlackJack() {
-        if (this.isBlackJack()) {
-            return WinOrLose.DRAW;
+    public WinOrLose compareWinOrLose(Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            return compareAtDealerBlackJack();
         }
-        return WinOrLose.LOSE;
-    }
-
-    public WinOrLose compareAtFinal(Dealer dealer) {
         if (isBust()) {
             return WinOrLose.LOSE;
         }
@@ -34,6 +30,13 @@ public class Player extends Participant {
             return WinOrLose.WIN;
         }
         return judgeVersus(dealer.calculateBestScore());
+    }
+
+    private WinOrLose compareAtDealerBlackJack() {
+        if (this.isBlackJack()) {
+            return WinOrLose.DRAW;
+        }
+        return WinOrLose.LOSE;
     }
 
     private WinOrLose judgeVersus(int otherScore) {

@@ -39,7 +39,7 @@ class ProfitsTest {
         Player player_19 = new Player(name_player_19, cards_19);
         Player player_BUST = new Player(name_player_BUST, cards_BUST);
         players = new Players(List.of(player_19, player_BUST));
-        results = Results.generateResultAtFinal(dealer_15, players);
+        results = Results.generateResults(dealer_15, players);
         Map<Name, BettingMoney> maps = new LinkedHashMap<>();
         maps.put(name_player_19, new BettingMoney(1000));
         maps.put(name_player_BUST, new BettingMoney(2000));

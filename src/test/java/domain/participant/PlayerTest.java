@@ -28,18 +28,12 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러가 블랙잭 발생 시 승패 판단")
-    void compareAtDealerBlackJack() {
-        assertThat(player.compareAtDealerBlackJack()).isEqualTo(WinOrLose.LOSE);
-    }
-
-    @Test
     @DisplayName("최종 결과를 위한 승패 판단")
     void compareAtFinal() {
         List<Card> handForDealer = new ArrayList<>(
                 List.of(Card.getCard(Rank.RANK_J, Suit.CLOVER), Card.getCard(Rank.RANK_A, Suit.CLOVER)));
         Dealer dealer = new Dealer(handForDealer);
-        assertThat(player.compareAtFinal(dealer)).isEqualTo(WinOrLose.LOSE);
+        assertThat(player.compareWinOrLose(dealer)).isEqualTo(WinOrLose.LOSE);
     }
 
     @Test

@@ -65,15 +65,9 @@ public class Players {
         return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
-    public Map<Name, WinOrLose> compareAtDealerBlackJack(Dealer dealer) {
+    public Map<Name, WinOrLose> compareWinOrLose(Dealer dealer) {
         Map<Name, WinOrLose> playerResult = new LinkedHashMap<>();
-        players.forEach(player -> playerResult.put(player.getName(), player.compareAtDealerBlackJack()));
-        return playerResult;
-    }
-
-    public Map<Name, WinOrLose> compareResultAtFinal(Dealer dealer) {
-        Map<Name, WinOrLose> playerResult = new LinkedHashMap<>();
-        players.forEach(player -> playerResult.put(player.getName(), player.compareAtFinal(dealer)));
+        players.forEach(player -> playerResult.put(player.getName(), player.compareWinOrLose(dealer)));
         return playerResult;
     }
 }

@@ -44,8 +44,10 @@ public class OutputView {
         System.out.printf(SHOW_HAND_FORMAT, name.getName(), players.showHandByName(name));
     }
 
-    public static void printDealerIsBlackJackMessage() {
-        System.out.println(DEALER_BLACK_JACK_MESSAGE);
+    public static void printDealerIsBlackJackMessage(Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            System.out.println(DEALER_BLACK_JACK_MESSAGE);
+        }
     }
 
     public static void printPlayerIsBlackJackMessage(Players players) {
@@ -55,7 +57,7 @@ public class OutputView {
     }
 
     private static void printIfPlayerIsBlackJackMessage(Name name, Players players) {
-        if (players.isUpperBoundScoreByName(name)) {
+        if (players.isBlackJackByName(name)) {
             System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, name.getName());
         }
     }
