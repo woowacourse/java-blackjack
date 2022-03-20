@@ -6,6 +6,9 @@ import blackjack.domain.state.State;
 
 public class Dealer {
 
+    private static final int DEALER_UNDER_SCORE = 16;
+    private static final String DEFAULT_NAME = "딜러";
+
     private final Participant participant;
     private final Deck deck;
 
@@ -15,7 +18,7 @@ public class Dealer {
     }
 
     public static Dealer create() {
-        return new Dealer(new Participant("딜러"), Deck.createShuffledCards());
+        return new Dealer(new Participant(DEFAULT_NAME), Deck.createShuffledCards());
     }
 
     public Card draw() {
@@ -23,7 +26,7 @@ public class Dealer {
     }
 
     public boolean shouldReceive() {
-        return participant.getCardTotalScore() <= 16;
+        return participant.getCardTotalScore() <= DEALER_UNDER_SCORE;
     }
 
     public void hit(Card card) {
