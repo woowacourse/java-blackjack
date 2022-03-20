@@ -12,7 +12,7 @@ class BustTest {
     @DisplayName("플레이어가 BUST일 때 상금을 계산한다.")
     @CsvSource(value = {"20:false:100:-100", "21:true:200:-200", "21:false:300:-300",
             "22:false:400:-400"}, delimiter = ':')
-    void calculatePrize_bust(int dealerScore, boolean dealerBlackjack, int bettingAmount, int expected) {
+    void calculateProfit(int dealerScore, boolean dealerBlackjack, int bettingAmount, int expected) {
         // give
         final CalculableStatus status = Bust.getInstance();
 

@@ -61,19 +61,19 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다.");
     }
 
-    public static void printDealerProfit(final double prize) {
+    public static void printDealerProfit(final double profit) {
         System.out.printf("%n## 최종 수익%n");
-        printPrize("딜러", prize);
+        printProfit("딜러", profit);
     }
 
-    public static void printPrize(final String name, final double prize) {
+    public static void printProfit(final String name, final double profit) {
         System.out.print(name + ": ");
 
-        if (prize == (int) prize) {
-            System.out.printf("%d%n", (int) prize);
+        if (profit == (int) profit) {
+            System.out.printf("%d%n", (int) profit);
             return;
         }
-        System.out.printf("%s%n", prize);
+        System.out.printf("%s%n", profit);
     }
 
     public static void printError(final String message) {

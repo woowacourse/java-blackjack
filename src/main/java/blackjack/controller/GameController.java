@@ -88,7 +88,7 @@ public class GameController {
     public void endGame() {
         printAllCards();
         printDealerProfit();
-        printPlayersPrize();
+        printPlayersProfit();
     }
 
     private void printAllCards() {
@@ -106,10 +106,10 @@ public class GameController {
         OutputView.printDealerProfit(dealerProfit * -1);
     }
 
-    private void printPlayersPrize() {
+    private void printPlayersProfit() {
         for (Player player : players.getValue()) {
-            final double prize = player.calculateProfit(dealer.getScore(), dealer.isBlackjack());
-            OutputView.printPrize(player.getName(), prize);
+            final double profit = player.calculateProfit(dealer.getScore(), dealer.isBlackjack());
+            OutputView.printProfit(player.getName(), profit);
         }
     }
 }
