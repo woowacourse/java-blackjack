@@ -1,32 +1,26 @@
 package blackjack.dto;
 
-import blackjack.domain.Role;
+import blackjack.domain.role.Role;
 
 public class PlayerStatusDto {
 
-	private final boolean draw;
-	private final boolean hasNextPlayer;
-	private final PlayerTableDto tableStatusDto;
+	private final boolean finished;
+	private final TableDto tableDto;
 
-	private PlayerStatusDto(boolean draw, boolean hasNextPlayer, PlayerTableDto tableStatusDto) {
-		this.draw = draw;
-		this.hasNextPlayer = hasNextPlayer;
-		this.tableStatusDto = tableStatusDto;
+	private PlayerStatusDto(boolean finished, TableDto tableDto) {
+		this.finished = finished;
+		this.tableDto = tableDto;
 	}
 
-	public static PlayerStatusDto from(boolean draw, boolean hasNextPlayer, Role player) {
-		return new PlayerStatusDto(draw, hasNextPlayer, PlayerTableDto.from(player));
+	public static PlayerStatusDto from(Role player) {
+		return new PlayerStatusDto(player.isFinished(), TableDto.from(player));
 	}
 
-	public boolean isDraw() {
-		return draw;
+	public boolean isFinished() {
+		return finished;
 	}
 
-	public boolean isHasNextPlayer() {
-		return hasNextPlayer;
-	}
-
-	public PlayerTableDto getTableStatusDto() {
-		return tableStatusDto;
+	public TableDto getTableStatusDto() {
+		return tableDto;
 	}
 }
