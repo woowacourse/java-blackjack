@@ -17,28 +17,29 @@ public class BlackjackProfitResult {
         this.playersInfo = playersInfo;
     }
 
-    public Map<Participant, BlackjackProfit> calculateParticipantsProfit() {
-        final Map<Participant, BlackjackProfit> profitResult = new LinkedHashMap<>();
-        final Map<Player, BlackjackProfit> playersProfitResult = calculatePlayersProfit();
+    public Map<Participant, Double> calculateParticipantsProfit(Map<Player, BlackjackMatch> result) {
+        final Map<Participant, Double> profitResult = new LinkedHashMap<>();
+        final Map<Player, Double> playersProfitResult = calculatePlayersProfit(result);
         profitResult.put(dealer, calculateDealerProfit(playersProfitResult));
         profitResult.putAll(playersProfitResult);
         return profitResult;
     }
 
-    private BlackjackProfit calculateDealerProfit(Map<Player, BlackjackProfit> playersProfitResult) {
+    private Double calculateDealerProfit(Map<Player, Double> playersProfitResult) {
         double dealerProfit = 0;
-        for (BlackjackProfit blackjackProfit : playersProfitResult.values()) {
-            dealerProfit -= blackjackProfit.getProfit();
+        for (Double blackjackProfit : playersProfitResult.values()) {
+            dealerProfit -= blackjackProfit;
         }
-        return BlackjackProfit.from(dealerProfit);
+        return dealerProfit;
     }
 
-    private Map<Player, BlackjackProfit> calculatePlayersProfit() {
-        final Map<Player, BlackjackProfit> playersProfitResult = new LinkedHashMap<>();
+    private Map<Player, Double> calculatePlayersProfit(Map<Player, BlackjackMatch> result) {
+        final Map<Player, Double> playersProfitResult = new LinkedHashMap<>();
         for (Map.Entry<Player, BettingMoney> playerInfo : playersInfo.entrySet()) {
             final Player player = playerInfo.getKey();
-            final BlackjackMatch match = BlackjackMatch.of(player, dealer);
-            final BlackjackProfit profit = BlackjackProfit.of(match, playerInfo.getValue());
+            final BlackjackMatch match = result.get(player);
+            final BettingMoney bettingMoney = playerInfo.getValue();
+            final double profit = player.calculateProfit(match, bettingMoney);
             playersProfitResult.put(player, profit);
         }
         return playersProfitResult;

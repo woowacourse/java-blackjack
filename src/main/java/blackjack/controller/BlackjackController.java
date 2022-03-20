@@ -24,8 +24,8 @@ public class BlackjackController {
         
         final List<Player> players = playersTurn(blackjackGame, participants);
         final Dealer dealer = dealerTurn(blackjackGame);
-        createBlackjackGameResult(players, dealer);
-        createBlackjackProfitResult(dealer, playersInfo);
+        final Map<Player, BlackjackMatch> result = createBlackjackGameResult(players, dealer);
+        createBlackjackProfitResult(dealer, playersInfo, result);
     }
 
     private Participants getParticipants() {
@@ -80,6 +80,7 @@ public class BlackjackController {
             Player playerAfterGame = blackjackGame.doPlayerGame(player);
             OutputView.printNowHoldCardInfo(playerAfterGame);
         }
+        player.requestStay();
     }
 
     private boolean getOneMoreCard(Player player) {
@@ -98,16 +99,18 @@ public class BlackjackController {
         return dealer;
     }
 
-    private void createBlackjackGameResult(List<Player> players, Dealer dealer) {
+    private Map<Player, BlackjackMatch> createBlackjackGameResult(List<Player> players, Dealer dealer) {
         final BlackjackGameResult blackjackGameResult = new BlackjackGameResult(dealer, players);
         final Map<String, Integer> dealerResult = blackjackGameResult.calculateDealerResult();
         final Map<Player, BlackjackMatch> playersResult = blackjackGameResult.calculatePlayersResult();
         OutputView.printGameResult(dealer, players);
         OutputView.printMatchResult(dealer, dealerResult, playersResult);
+        return playersResult;
     }
 
-    private void createBlackjackProfitResult(Dealer dealer, Map<Player, BettingMoney> result) {
-        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(dealer, result);
-        OutputView.printProfitResult(blackjackProfitResult.calculateParticipantsProfit());
+    private void createBlackjackProfitResult(
+            Dealer dealer, Map<Player, BettingMoney> playerInfo, Map<Player, BlackjackMatch> result) {
+        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(dealer, playerInfo);
+        OutputView.printProfitResult(blackjackProfitResult.calculateParticipantsProfit(result));
     }
 }

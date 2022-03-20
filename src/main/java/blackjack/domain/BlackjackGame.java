@@ -41,6 +41,7 @@ public class BlackjackGame {
         while (dealer.hasNextTurn()) {
             dealer.receiveCard(deck.distributeCard());
         }
+        dealer.requestStay();
         return dealer;
     }
 
