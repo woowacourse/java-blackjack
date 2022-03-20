@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 
 import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.Player;
 import domain.participant.Players;
 
 public class Result {
@@ -26,7 +27,7 @@ public class Result {
 			.sum();
 	}
 
-	public LinkedHashMap<Participant, WinOrLose> getPlayerResults() {
-		return playerResults;
+	public int getPlayerMoney(Player player) {
+		return (int)(player.getBettingMoney() * playerResults.get(player).getEarningRate());
 	}
 }

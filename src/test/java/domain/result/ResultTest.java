@@ -59,4 +59,24 @@ public class ResultTest {
 		assertThat(result.getDealerMoney()).isEqualTo(-40000);
 	}
 
+	@Test
+	@DisplayName("플레이어의 최종 수익 확인")
+	void getPlayerMoney() {
+		Player pobi = new Player(new Name("pobi"), new Hand(cards_20), new Betting(10000));
+		Dealer dealer = new Dealer(new Hand(cards_BURST));
+		Players players = new Players(Arrays.asList(pobi));
+		Result result = Result.of(dealer, players);
+		assertThat(result.getPlayerMoney(pobi)).isEqualTo(10000);
+	}
+
+	@Test
+	@DisplayName("플레이어의 최종 수익 확인_플레이어가 블랙잭일 때")
+	void getPlayerMoneyAtPlayerBlackJack() {
+		Hand hand = new Hand(List.of(ACE_CLOVER, QUEEN_CLOVER));
+		Player pobi = new Player(new Name("pobi"), hand, new Betting(10000));
+		Dealer dealer = new Dealer(new Hand(cards_17));
+		Players players = new Players(Arrays.asList(pobi));
+		Result result = Result.of(dealer, players);
+		assertThat(result.getPlayerMoney(pobi)).isEqualTo(15000);
+	}
 }

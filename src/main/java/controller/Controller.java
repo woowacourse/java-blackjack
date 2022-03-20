@@ -1,19 +1,16 @@
 package controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Deck;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
 import domain.participant.info.Name;
 import domain.result.Result;
-import domain.result.WinOrLose;
 import view.InputView;
 import view.OutputView;
 
@@ -91,9 +88,6 @@ public class Controller {
 		OutputView.printEndMessage();
 		OutputView.printResult(dealer.getName(), result.getDealerMoney());
 
-		LinkedHashMap<Participant, WinOrLose> playerResults = result.getPlayerResults();
-		playerResults.entrySet()
-			.forEach(entry -> OutputView.printResult(entry.getKey().getName(),
-				(int)(entry.getKey().getBettingMoney() * entry.getValue().getEarningRate())));
+		players.forEach(player -> OutputView.printResult(player.getName(), result.getPlayerMoney(player)));
 	}
 }
