@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import model.card.Card;
 import model.card.CardFace;
+import model.card.cardGettable.FirstCardsGettable;
 import model.participator.Dealer;
 import model.participator.Participator;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ public class DealerTest {
         dealer.receiveCard(firstCard);
         dealer.receiveCard(secondCard);
 
-        assertThat(dealer.getCards()).containsOnly(firstCard);
+        assertThat(dealer.getCards(new FirstCardsGettable())).containsOnly(firstCard);
     }
 
     @ParameterizedTest

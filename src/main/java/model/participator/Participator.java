@@ -27,10 +27,6 @@ public abstract class Participator {
         }
     }
 
-    protected void setCardsGettableStrategy(CardsGettable strategy) {
-        cards.setCardsGettableStrategy(strategy);
-    }
-
     public abstract boolean canReceiveCard();
 
     public void receiveCard(Card card) {
@@ -57,8 +53,8 @@ public abstract class Participator {
         return cards.getSum();
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cards.getCardsByStrategy());
+    public List<Card> getCards(CardsGettable cardsGettable) {
+        return new ArrayList<>(cards.getCardsByStrategy(cardsGettable));
     }
 
     public String getPlayerName() {

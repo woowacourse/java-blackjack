@@ -15,6 +15,7 @@ import java.util.Arrays;
 import model.Result;
 import model.card.Card;
 import model.card.CardFace;
+import model.card.cardGettable.EveryCardsGettable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -49,7 +50,7 @@ public class PlayerTest {
         player.receiveCard(firstCard);
         player.receiveCard(secondCard);
 
-        assertThat(player.getCards()).isEqualTo(Arrays.asList(firstCard, secondCard));
+        assertThat(player.getCards(new EveryCardsGettable())).isEqualTo(Arrays.asList(firstCard, secondCard));
     }
 
     @Test

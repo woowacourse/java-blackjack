@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import model.card.Card;
 import model.card.CardDeck;
+import model.card.cardGettable.CardsGettable;
+import model.card.cardGettable.EveryCardsGettable;
+import model.card.cardGettable.FirstCardsGettable;
 import model.participator.Dealer;
 import model.participator.Participator;
 import model.participator.Players;
@@ -29,7 +32,7 @@ public class BlackJackService {
     public AllParticipatorsDto initGame(final List<String> names, final List<Long> bettingAmounts) {
         initParticipatorsAndCardDeck(names, bettingAmounts);
         drawFirstTurn();
-        return new AllParticipatorsDto(getPlayersDto(), toParticipatorDto(dealer));
+        return new AllParticipatorsDto(getPlayersDto(), toParticipatorDto(dealer, new FirstCardsGettable()));
     }
 
     private void initParticipatorsAndCardDeck(List<String> names, List<Long> bettingAmounts) {
@@ -47,12 +50,12 @@ public class BlackJackService {
 
     private List<ParticipatorDto> getPlayersDto() {
         return players.getPlayers().stream()
-                .map(this::toParticipatorDto)
+                .map(player -> toParticipatorDto(player, new EveryCardsGettable()))
                 .collect(toList());
     }
 
-    private ParticipatorDto toParticipatorDto(Participator participator) {
-        return new ParticipatorDto(participator.getPlayerName(), toCardsDto(participator.getCards()));
+    private ParticipatorDto toParticipatorDto(Participator participator, CardsGettable cardsGettable) {
+        return new ParticipatorDto(participator.getPlayerName(), toCardsDto(participator.getCards(cardsGettable)));
     }
 
     private List<String> toCardsDto(List<Card> cards) {
@@ -82,7 +85,7 @@ public class BlackJackService {
 
     public ParticipatorDto hitPlayerOf(String name) {
         players.receiveCardTo(name, cardDeck);
-        return toParticipatorDto(players.findByName(name));
+        return toParticipatorDto(players.findByName(name), new EveryCardsGettable());
     }
 
     public void hitDealer() {
@@ -101,12 +104,13 @@ public class BlackJackService {
     }
 
     public AllCardsAndSumDto getAllCardsAndSums() {
-        dealer.setEveryCardGettable();
-        return new AllCardsAndSumDto(getPlayerCardsAndSum(), toParticipatorDto(dealer), dealer.getSum());
+        return new AllCardsAndSumDto(getPlayerCardsAndSum(), toParticipatorDto(dealer, new EveryCardsGettable()),
+                dealer.getSum());
     }
 
     private LinkedHashMap<ParticipatorDto, Integer> getPlayerCardsAndSum() {
         return players.getPlayers().stream().collect(
-                toMap(this::toParticipatorDto, Participator::getSum, (participator, sum) -> sum, LinkedHashMap::new));
+                toMap(player -> toParticipatorDto(player, new EveryCardsGettable()), Participator::getSum,
+                        (participator, sum) -> sum, LinkedHashMap::new));
     }
 }

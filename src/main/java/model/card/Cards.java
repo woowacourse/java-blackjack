@@ -3,7 +3,6 @@ package model.card;
 import java.util.List;
 import model.Status;
 import model.card.cardGettable.CardsGettable;
-import model.card.cardGettable.EveryCardsGettable;
 
 public class Cards {
     public static final int BLACK_JACK_SCORE = 21;
@@ -11,18 +10,12 @@ public class Cards {
     private static final String DUPLICATED_CARD_MESSAGE = "중복된 카드를 받을 수 없습니다.";
 
     private final List<Card> cards;
-    private CardsGettable cardsGettableStrategy;
 
-    private Cards(List<Card> cards, CardsGettable cardsGettableStrategy) {
+    public Cards(List<Card> cards) {
         if (isDuplicated(cards)) {
             throw new IllegalArgumentException(DUPLICATED_CARD_MESSAGE);
         }
         this.cards = cards;
-        this.cardsGettableStrategy = cardsGettableStrategy;
-    }
-
-    public Cards(final List<Card> cards) {
-        this(cards, new EveryCardsGettable());
     }
 
     private boolean isDuplicated(final List<Card> cards) {
@@ -63,11 +56,7 @@ public class Cards {
         return Status.of(cards.size(), getSum());
     }
 
-    public List<Card> getCardsByStrategy() {
-        return cardsGettableStrategy.getCards(cards);
-    }
-
-    public void setCardsGettableStrategy(CardsGettable strategy) {
-        this.cardsGettableStrategy = strategy;
+    public List<Card> getCardsByStrategy(CardsGettable strategy) {
+        return strategy.getCards(cards);
     }
 }
