@@ -16,11 +16,9 @@ public class ParticipantResult {
 
     private Map<Participant, Integer> getYields(final Dealer dealer, final Participants participants) {
         Map<Participant, Integer> yields = new LinkedHashMap<>();
-        Score dealerScore = new Score(dealer);
 
         for (Participant participant : participants) {
-            Score participantScore = new Score(participant);
-            Result result = Result.decide(dealerScore, participantScore);
+            Result result = Result.decide(dealer, participant);
             yields.put(participant, participants.getRevenue(participant, result));
         }
         return yields;

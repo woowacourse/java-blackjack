@@ -29,10 +29,7 @@ public class ResultTest {
             participant.addCard(card);
         }
 
-        Score dealerScore = new Score(dealer);
-        Score participantScore = new Score(participant);
-
-        assertThat(Result.decide(dealerScore, participantScore)).isEqualTo(result);
+        assertThat(Result.decide(dealer, participant)).isEqualTo(result);
     }
 
     static Stream<Arguments> parameters1() {
@@ -64,10 +61,7 @@ public class ResultTest {
             participant.addCard(card);
         }
 
-        Score dealerScore = new Score(dealer);
-        Score participantScore = new Score(participant);
-
-        assertThat(Result.decide(dealerScore, participantScore)).isEqualTo(result);
+        assertThat(Result.decide(dealer, participant)).isEqualTo(result);
     }
 
     static Stream<Arguments> parameters2() {
@@ -99,10 +93,7 @@ public class ResultTest {
             participant.addCard(card);
         }
 
-        Score dealerScore = new Score(dealer);
-        Score participantScore = new Score(participant);
-
-        assertThat(Result.decide(dealerScore, participantScore)).isEqualTo(result);
+        assertThat(Result.decide(dealer, participant)).isEqualTo(result);
     }
 
     static Stream<Arguments> parameters3() {
@@ -131,10 +122,7 @@ public class ResultTest {
             participant.addCard(card);
         }
 
-        Score dealerScore = new Score(dealer);
-        Score participantScore = new Score(participant);
-
-        assertThat(Result.decide(dealerScore, participantScore)).isEqualTo(result);
+        assertThat(Result.decide(dealer, participant)).isEqualTo(result);
     }
 
     static Stream<Arguments> parameters4() {
@@ -165,10 +153,7 @@ public class ResultTest {
             dealer.addCard(card);
         }
 
-        Score dealerScore = new Score(dealer);
-        Score participantScore = new Score(participant);
-
-        assertThat(Result.decide(dealerScore, participantScore)).isEqualTo(result);
+        assertThat(Result.decide(dealer, participant)).isEqualTo(result);
     }
 
     static Stream<Arguments> parameters5() {

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public abstract class Player {
 
+    private static final int DIFFERENCE_IN_ACE_SCORE = 10;
+    private static final int BLACK_JACK_TARGET_SCORE = 21;
+
     private final Name name;
     private final Cards cards;
 
@@ -20,12 +23,29 @@ public abstract class Player {
         cards.addCard(card);
     }
 
-    public int getTotalScore() {
-        return cards.getTotalScore();
+    public int getTotal() {
+        int totalScore = cards.getTotalScore();
+
+        for (int i = 0; i < cards.countAce(); i++) {
+            totalScore = changeAceScore(totalScore);
+        }
+
+        return totalScore;
     }
 
-    public boolean hasTwoCards() {
-        return cards.hasTwoCards();
+    private int changeAceScore(int totalScore) {
+        if (totalScore > BLACK_JACK_TARGET_SCORE) {
+            totalScore -= DIFFERENCE_IN_ACE_SCORE;
+        }
+        return totalScore;
+    }
+
+    public boolean isBlackJack() {
+        return getTotal() == BLACK_JACK_TARGET_SCORE && cards.hasTwoCards();
+    }
+
+    public boolean isBust() {
+        return getTotal() > BLACK_JACK_TARGET_SCORE;
     }
 
     public String getName() {
@@ -34,9 +54,5 @@ public abstract class Player {
 
     public Cards getCards() {
         return cards;
-    }
-
-    public int countAce() {
-        return cards.countAce();
     }
 }
