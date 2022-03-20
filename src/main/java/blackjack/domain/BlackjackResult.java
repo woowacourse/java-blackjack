@@ -1,7 +1,7 @@
-package blackjack;
+package blackjack.domain;
 
-import blackjack.user.Dealer;
-import blackjack.user.Player;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;

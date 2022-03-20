@@ -1,6 +1,6 @@
-package blackjack;
+package blackjack.domain;
 
-import blackjack.user.Player;
+import blackjack.domain.user.Player;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;

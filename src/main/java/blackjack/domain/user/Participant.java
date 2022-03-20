@@ -1,8 +1,8 @@
-package blackjack.user;
+package blackjack.domain.user;
 
-import blackjack.Cards;
-import blackjack.Deck;
-import blackjack.State;
+import blackjack.domain.Cards;
+import blackjack.domain.Deck;
+import blackjack.domain.State;
 
 public abstract class Participant {
 

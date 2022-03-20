@@ -1,11 +1,11 @@
 package blackjack.view;
 
-import blackjack.Card;
-import blackjack.Cards;
-import blackjack.Denomination;
-import blackjack.Receipt;
-import blackjack.Suit;
-import blackjack.user.Participant;
+import blackjack.domain.Card;
+import blackjack.domain.Cards;
+import blackjack.domain.Denomination;
+import blackjack.domain.Receipt;
+import blackjack.domain.Suit;
+import blackjack.domain.user.Participant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

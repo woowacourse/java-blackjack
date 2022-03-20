@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 public class Receipt {
     private static final int MINIMUM = 1000;
