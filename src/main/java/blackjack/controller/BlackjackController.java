@@ -51,7 +51,7 @@ public class BlackjackController {
         return inputPlayerNames.stream()
                 .collect(Collectors.toMap(inputPlayerName -> inputPlayerName,
                         inputPlayerName -> Money.from(InputView.askBetAmount(inputPlayerName))
-                        , (a, b) -> b,
+                        , (key, value) -> value,
                         LinkedHashMap::new));
     }
 
