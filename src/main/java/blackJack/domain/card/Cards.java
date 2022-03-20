@@ -27,14 +27,17 @@ public class Cards {
     }
 
     public Score calculateScore() {
-        Score score = new Score(cards.stream()
-                .mapToInt(Card::getScore)
-                .sum());
-
+        Score score = initScore();
         if (containsAce() && score.isChangeAceScore()) {
             return score.changeAceScore();
         }
         return score;
+    }
+
+    private Score initScore() {
+        return new Score(cards.stream()
+                .mapToInt(Card::getPoint)
+                .sum());
     }
 
     private boolean containsAce() {
