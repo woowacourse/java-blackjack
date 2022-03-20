@@ -2,8 +2,9 @@ package blackjack.model.player;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import blackjack.model.player.matcher.Matcher;
+import blackjack.model.player.matcher.ResultIdentifier;
 import blackjack.model.player.matcher.Record;
+import blackjack.model.player.matcher.Result;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,10 +17,15 @@ public class Gamers {
     }
 
     public List<Record> match(Dealer dealer) {
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
         return players.stream()
-            .map(matcher::match)
+            .map(player -> createRecord(resultIdentifier, dealer, player))
             .collect(toUnmodifiableList());
+    }
+
+    private Record createRecord(ResultIdentifier classifier, Dealer dealer, Gamer gamer) {
+        Result result = classifier.identify(dealer, gamer);
+        return new Record(gamer.name(), result);
     }
 
     public Collection<Gamer> values() {

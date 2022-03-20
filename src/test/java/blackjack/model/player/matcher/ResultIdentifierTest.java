@@ -18,7 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class MatcherTest {
+public class ResultIdentifierTest {
 
 
     private static final Card ACE = new Card(Rank.ACE, SPADE);
@@ -39,12 +39,11 @@ public class MatcherTest {
     @MethodSource("providePlayerLosingCaseCards")
     @DisplayName("블랙잭과 버스트 경우를 제외하고 플레이어가 지는 경우")
     void dealerIsWinner(Dealer dealer, Gamer gamer) {
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY.negate());
+        assertThat(result.profit()).isEqualTo(MONEY.negate());
     }
 
     private static Stream<Arguments> providePlayerLosingCaseCards() {
@@ -59,12 +58,11 @@ public class MatcherTest {
     @MethodSource("providePlayerWinningCaseCards")
     @DisplayName("블랙잭과 버스트인 경우를 제외하고 플레이어가 이기는 경우")
     void dealerIsLoser(Dealer dealer, Gamer gamer) {
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY);
+        assertThat(result.profit()).isEqualTo(MONEY);
     }
 
     private static Stream<Arguments> providePlayerWinningCaseCards() {
@@ -81,12 +79,11 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, FOUR);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX);
 
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(new Money(BigDecimal.ZERO));
+        assertThat(result.profit()).isEqualTo(new Money(BigDecimal.ZERO));
     }
 
     @Test
@@ -95,12 +92,11 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, QUEEN, TWO);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX);
 
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY);
+        assertThat(result.profit()).isEqualTo(MONEY);
     }
 
     @Test
@@ -109,12 +105,11 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, JACK, QUEEN, TWO);
 
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY.negate());
+        assertThat(result.profit()).isEqualTo(MONEY.negate());
     }
 
     @Test
@@ -123,12 +118,11 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, KING, SEVEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX, KING);
 
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY.negate());
+        assertThat(result.profit()).isEqualTo(MONEY.negate());
     }
 
     @Test
@@ -137,12 +131,11 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, KING);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, ACE, JACK);
 
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
     }
 
     @Test
@@ -151,12 +144,11 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, ACE);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, JACK);
 
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY.negate());
+        assertThat(result.profit()).isEqualTo(MONEY.negate());
     }
 
     @Test
@@ -165,12 +157,11 @@ public class MatcherTest {
         Dealer dealer = new Dealer(JACK, ACE);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, ACE, JACK);
 
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(new Money(BigDecimal.ZERO));
+        assertThat(result.profit()).isEqualTo(new Money(BigDecimal.ZERO));
     }
 
     @Test
@@ -179,12 +170,11 @@ public class MatcherTest {
         Dealer dealer = new Dealer(ACE, JACK);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, JACK, ACE);
 
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY.negate());
+        assertThat(result.profit()).isEqualTo(MONEY.negate());
     }
 
     @Test
@@ -192,12 +182,11 @@ public class MatcherTest {
     void playerBlackjackByInitialCardsDealerJustBlackjack() {
         Dealer dealer = new Dealer(ACE, JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, ACE);
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
     }
 
     @Test
@@ -205,12 +194,11 @@ public class MatcherTest {
     void playerBlackjackAndDealerBust() {
         Dealer dealer = new Dealer(THREE, JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, ACE);
-        Matcher matcher = Matcher.of(dealer);
+        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
 
-        Record record = matcher.match(gamer);
+        Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(record.name()).isEqualTo(GAMER_NAME);
-        assertThat(record.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
     }
 
 }
