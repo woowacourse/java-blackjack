@@ -21,11 +21,6 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    protected int limitHit() {
-        return HIT_MAX_POINT;
-    }
-
-    @Override
     public boolean isWin(Player player) {
         if (player.isDealer()) {
             return player.isWin(this);
@@ -34,5 +29,10 @@ public class Dealer extends AbstractPlayer implements Player {
             return true;
         }
         return player.isLose(this) && !this.isBust();
+    }
+
+    @Override
+    protected int limitHit() {
+        return HIT_MAX_POINT;
     }
 }

@@ -9,6 +9,8 @@ public interface Player extends State {
 
     boolean isDealer();
 
+    boolean isBlackJack(Player player);
+
     boolean isWin(Player player);
 
     boolean isLose(Player player);

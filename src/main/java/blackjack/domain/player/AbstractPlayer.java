@@ -31,17 +31,17 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public final boolean isBust() {
-        return playingCards.calculatePoints() > PlayingCards.BLACKJACK_POINT;
-    }
-
-    @Override
     public final boolean isBlackJack(Player competitor) {
         return (playingCards.getCards().size() == BLACKJACK_SIZE &&
                 playingCards.calculatePoints() == PlayingCards.BLACKJACK_POINT)
                 &&
                 !(competitor.getPlayingCards().getCards().size() == BLACKJACK_SIZE &&
                 competitor.getPlayingCards().calculatePoints() == PlayingCards.BLACKJACK_POINT);
+    }
+
+    @Override
+    public final boolean isBust() {
+        return playingCards.calculatePoints() > PlayingCards.BLACKJACK_POINT;
     }
 
     @Override
