@@ -8,6 +8,7 @@ import blakjack.domain.state.finished.Blackjack;
 
 public final class Init extends Running {
     private static final int CARD_COUNT_THRESHOLD = 1;
+    private static final String CANNOT_STAY_MESSAGE = "카드가 초기화되지 않았습니다.";
 
     public Init(final PrivateArea privateArea, final Chip chip) {
         super(privateArea, chip);
@@ -28,6 +29,6 @@ public final class Init extends Running {
 
     @Override
     public State stay() {
-        throw new IllegalStateException();
+        throw new IllegalStateException(CANNOT_STAY_MESSAGE);
     }
 }
