@@ -14,14 +14,14 @@ public abstract class Participant {
     protected final List<Card> cards;
     protected final String name;
 
-    public Participant(String name) {
+    protected Participant(String name) {
         this.name = name;
         cards = new ArrayList<>();
     }
 
-    abstract public boolean isDealer();
+    abstract protected boolean isDealer();
 
-    abstract public boolean isUser();
+    abstract protected boolean isUser();
 
     public String getName() {
         return this.name;

@@ -88,10 +88,10 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
-    public int calculateDealerProfit() {
+    private int calculateDealerProfit() {
         int dealerProfit = 0;
         for (User user : getUsers()) {
-            dealerProfit -= (user.calculateProfit(getDealer()));
+            dealerProfit -= user.calculateProfit(getDealer());
         }
 
         return dealerProfit;

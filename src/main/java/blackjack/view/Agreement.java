@@ -15,6 +15,6 @@ enum Agreement {
 
     public static boolean isAgree(String input) {
         return Arrays.stream(values())
-                .anyMatch(item -> input.equalsIgnoreCase("y") && item.name.equalsIgnoreCase(input));
+                .anyMatch(item -> item.name.equalsIgnoreCase(input));
     }
 }
