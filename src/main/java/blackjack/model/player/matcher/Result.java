@@ -16,6 +16,10 @@ public class Result {
         return status.profit(bettingMoney);
     }
 
+    public ResultStatus status() {
+        return status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

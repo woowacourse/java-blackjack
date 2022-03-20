@@ -17,7 +17,7 @@ public class Gamers {
     }
 
     public List<Record> match(Dealer dealer) {
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
         return players.stream()
             .map(player -> createRecord(resultIdentifier, dealer, player))
             .collect(toUnmodifiableList());

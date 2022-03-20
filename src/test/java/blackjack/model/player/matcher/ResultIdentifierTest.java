@@ -5,6 +5,7 @@ import static blackjack.model.card.Suit.DIAMOND;
 import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
@@ -39,7 +40,7 @@ public class ResultIdentifierTest {
     @MethodSource("providePlayerLosingCaseCards")
     @DisplayName("블랙잭과 버스트 경우를 제외하고 플레이어가 지는 경우")
     void dealerIsWinner(Dealer dealer, Gamer gamer) {
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
@@ -58,11 +59,14 @@ public class ResultIdentifierTest {
     @MethodSource("providePlayerWinningCaseCards")
     @DisplayName("블랙잭과 버스트인 경우를 제외하고 플레이어가 이기는 경우")
     void dealerIsLoser(Dealer dealer, Gamer gamer) {
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY);
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.WIN);
+            assertThat(result.profit()).isEqualTo(MONEY);
+        });
     }
 
     private static Stream<Arguments> providePlayerWinningCaseCards() {
@@ -78,12 +82,14 @@ public class ResultIdentifierTest {
     void dealerIsDraw() {
         Dealer dealer = new Dealer(JACK, FOUR);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX);
-
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(new Money(BigDecimal.ZERO));
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.DRAW);
+            assertThat(result.profit()).isEqualTo(new Money(BigDecimal.ZERO));
+        });
     }
 
     @Test
@@ -91,12 +97,15 @@ public class ResultIdentifierTest {
     void dealerIsBust() {
         Dealer dealer = new Dealer(JACK, QUEEN, TWO);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX);
-
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY);
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.WIN);
+            assertThat(result.profit()).isEqualTo(MONEY);
+        });
+
     }
 
     @Test
@@ -104,12 +113,14 @@ public class ResultIdentifierTest {
     void playerIsBust() {
         Dealer dealer = new Dealer(JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, JACK, QUEEN, TWO);
-
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY.negate());
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.LOSS);
+            assertThat(result.profit()).isEqualTo(MONEY.negate());
+        });
     }
 
     @Test
@@ -117,12 +128,14 @@ public class ResultIdentifierTest {
     void bothBust() {
         Dealer dealer = new Dealer(JACK, KING, SEVEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, EIGHT, SIX, KING);
-
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY.negate());
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.LOSS);
+            assertThat(result.profit()).isEqualTo(MONEY.negate());
+        });
     }
 
     @Test
@@ -130,12 +143,14 @@ public class ResultIdentifierTest {
     void playerBlackjackByInitialCards() {
         Dealer dealer = new Dealer(JACK, KING);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, ACE, JACK);
-
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.BLACKJACK);
+            assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        });
     }
 
     @Test
@@ -143,12 +158,14 @@ public class ResultIdentifierTest {
     void dealerBlackjackByInitialCards() {
         Dealer dealer = new Dealer(JACK, ACE);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, JACK);
-
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY.negate());
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.LOSS);
+            assertThat(result.profit()).isEqualTo(MONEY.negate());
+        });
     }
 
     @Test
@@ -156,12 +173,14 @@ public class ResultIdentifierTest {
     void playerAndDealerBlackjackByInitialCards() {
         Dealer dealer = new Dealer(JACK, ACE);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, ACE, JACK);
-
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(new Money(BigDecimal.ZERO));
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.DRAW);
+            assertThat(result.profit()).isEqualTo(new Money(BigDecimal.ZERO));
+        });
     }
 
     @Test
@@ -169,12 +188,14 @@ public class ResultIdentifierTest {
     void dealerBlackjackByInitialCardsPlayerJustBlackjack() {
         Dealer dealer = new Dealer(ACE, JACK);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, JACK, ACE);
-
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY.negate());
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.LOSS);
+            assertThat(result.profit()).isEqualTo(MONEY.negate());
+        });
     }
 
     @Test
@@ -182,11 +203,14 @@ public class ResultIdentifierTest {
     void playerBlackjackByInitialCardsDealerJustBlackjack() {
         Dealer dealer = new Dealer(ACE, JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, ACE);
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.BLACKJACK);
+            assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        });
     }
 
     @Test
@@ -194,11 +218,14 @@ public class ResultIdentifierTest {
     void playerBlackjackAndDealerBust() {
         Dealer dealer = new Dealer(THREE, JACK, QUEEN);
         Gamer gamer = new Gamer(GAMER_NAME, MONEY, QUEEN, ACE);
-        ResultIdentifier resultIdentifier = ResultIdentifier.of(dealer);
+        ResultIdentifier resultIdentifier = new ResultIdentifier();
 
         Result result = resultIdentifier.identify(dealer, gamer);
 
-        assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        assertAll(() -> {
+            assertThat(result.status()).isEqualTo(ResultStatus.BLACKJACK);
+            assertThat(result.profit()).isEqualTo(MONEY.multiply(new BigDecimal("1.5")));
+        });
     }
 
 }

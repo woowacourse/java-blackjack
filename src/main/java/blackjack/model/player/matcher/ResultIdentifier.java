@@ -3,61 +3,50 @@ package blackjack.model.player.matcher;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamer;
 
-public enum ResultIdentifier {
+public class ResultIdentifier {
 
-    DEALER_BLACKJACK_CASE{
-        @Override
-        public Result identify(Dealer dealer, Gamer gamer) {
-            if (gamer.isBlackjack()) {
-                return Result.draw(gamer.bettingMoney());
-            }
-            return Result.loss(gamer.bettingMoney());
+    public Result identify(Dealer dealer, Gamer gamer) {
+        if (hasBlackjack(dealer, gamer)) {
+            return blackjackCaseResult(dealer, gamer);
         }
-    },
-    DEALER_BUST_CASE{
-        @Override
-        public Result identify(Dealer dealer, Gamer gamer) {
-            if (gamer.isBust()) {
-                return Result.loss(gamer.bettingMoney());
-            }
-            if (gamer.isBlackjack()) {
-                return Result.blackjack(gamer.bettingMoney());
-            }
-            return Result.win(gamer.bettingMoney());
+        if (hasBust(dealer, gamer)) {
+            return bustCaseResult(gamer);
         }
-    },
-    DEALER_NORMAL_CASE{
-        @Override
-        public Result identify(Dealer dealer, Gamer gamer) {
-            if (gamer.isBust()) {
-                return Result.loss(gamer.bettingMoney());
-            }
-            if (gamer.isBlackjack()) {
-                return Result.blackjack(gamer.bettingMoney());
-            }
-            return compareWithScore(dealer, gamer);
-        }
+        return compareWithScore(dealer, gamer);
+    }
 
-        private Result compareWithScore(Dealer dealer, Gamer gamer) {
-            if (gamer.lessScoreThan(dealer)) {
-                return Result.loss(gamer.bettingMoney());
-            }
-            if (gamer.moreScoreThan(dealer)) {
-                return Result.win(gamer.bettingMoney());
-            }
+    private boolean hasBlackjack(Dealer dealer, Gamer gamer) {
+        return dealer.isBlackjack() || gamer.isBlackjack();
+    }
+
+    private Result blackjackCaseResult(Dealer dealer, Gamer gamer) {
+        if (dealer.isBlackjack() && gamer.isBlackjack()) {
             return Result.draw(gamer.bettingMoney());
         }
-    };
-
-    public abstract Result identify(Dealer dealer, Gamer gamer);
-
-    public static ResultIdentifier of(Dealer dealer) {
-        if (dealer.isBlackjack()) {
-            return DEALER_BLACKJACK_CASE;
+        if (gamer.isBlackjack()) {
+            return Result.blackjack(gamer.bettingMoney());
         }
-        if (dealer.isBust()) {
-            return DEALER_BUST_CASE;
+        return Result.loss(gamer.bettingMoney());
+    }
+
+    private boolean hasBust(Dealer dealer, Gamer gamer) {
+        return dealer.isBust() || gamer.isBust();
+    }
+
+    private Result bustCaseResult(Gamer gamer) {
+        if (gamer.isBust()) {
+            return Result.loss(gamer.bettingMoney());
         }
-        return DEALER_NORMAL_CASE;
+        return Result.win(gamer.bettingMoney());
+    }
+
+    private Result compareWithScore(Dealer dealer, Gamer gamer) {
+        if (gamer.lessScoreThan(dealer)) {
+            return Result.loss(gamer.bettingMoney());
+        }
+        if (gamer.moreScoreThan(dealer)) {
+            return Result.win(gamer.bettingMoney());
+        }
+        return Result.draw(gamer.bettingMoney());
     }
 }

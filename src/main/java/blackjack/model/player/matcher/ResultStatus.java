@@ -2,7 +2,7 @@ package blackjack.model.player.matcher;
 
 import java.math.BigDecimal;
 
-enum ResultStatus {
+public enum ResultStatus {
     WIN(BigDecimal.ONE), LOSS(BigDecimal.ONE.negate()),
     DRAW(BigDecimal.ZERO), BLACKJACK(new BigDecimal("1.5"));
 
