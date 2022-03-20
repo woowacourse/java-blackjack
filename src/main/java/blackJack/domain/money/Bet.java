@@ -16,7 +16,7 @@ public class Bet {
 
     private void validateBettingMoney(int value) {
         if (value < MINIMUM_VALUE) {
-            throw new IllegalArgumentException("배팅금액은 음수일 수 없습니다.");
+            throw new IllegalArgumentException("베팅금액은 음수일 수 없습니다.");
         }
     }
 

@@ -14,7 +14,7 @@ public class InputView {
     private static final String INPUT_DELIMITER_PLAYER_NAMES = ",";
     private static final String INPUT_MESSAGE_ONE_MORE_CARD =
         "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".concat(NEWLINE);
-    private static final String INPUT_MESSAGE_BETTING_MONEY = NEWLINE.concat("%s의 배팅 금액은?").concat(NEWLINE);
+    private static final String INPUT_MESSAGE_BETTING_MONEY = NEWLINE.concat("%s의 베팅 금액은?").concat(NEWLINE);
 
     public static List<String> inputPlayerNames() {
         System.out.println(INPUT_MESSAGE_PLAYER_NAMES);
@@ -42,7 +42,7 @@ public class InputView {
         try {
             return Integer.parseInt(nextLine);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("배팅 금액을 숫자의 형태로 입력하세요");
+            throw new IllegalArgumentException("베팅 금액을 숫자의 형태로 입력하세요");
         }
     }
 
