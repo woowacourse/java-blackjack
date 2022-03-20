@@ -118,7 +118,7 @@ public class BlackjackController {
     private int calculateProfits(Players players, Map<Player, Profit> results, Player dealer) {
         int totalProfit = 0;
         for (Player player : players.getParticipants()) {
-            Outcome playerOutcome = Outcome.matchAboutPlayer((Dealer) dealer, player).not();
+            Outcome playerOutcome = Outcome.matchAboutPlayer((Dealer) dealer, player);
 
             Profit profit = ((Participant) player).getProfit(playerOutcome);
             totalProfit += profit.get();
