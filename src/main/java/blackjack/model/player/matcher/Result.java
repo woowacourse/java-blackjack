@@ -1,32 +1,13 @@
 package blackjack.model.player.matcher;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Result {
-    private enum Status {
-        WIN, LOSS, DRAW, BLACKJACK;
 
-        private static final BigDecimal BLACKJACK_PROFIT_RATE =  new BigDecimal("1.5");
-
-        Money profit(Money money) {
-            if (this == Status.WIN) {
-                return money;
-            }
-            if (this == Status.LOSS) {
-                return money.negate();
-            }
-            if (this == Status.BLACKJACK) {
-                return money.multiply(BLACKJACK_PROFIT_RATE);
-            }
-            return new Money(BigDecimal.ZERO);
-        }
-    }
-
-    private final Status status;
+    private final ResultStatus status;
     private final Money bettingMoney;
 
-    private Result(Status status, Money bettingMoney) {
+    private Result(ResultStatus status, Money bettingMoney) {
         this.status = status;
         this.bettingMoney = bettingMoney;
     }
@@ -53,18 +34,18 @@ public class Result {
     }
 
     public static Result win(Money bettingMoney) {
-        return new Result(Status.WIN, bettingMoney);
+        return new Result(ResultStatus.WIN, bettingMoney);
     }
 
     public static Result loss(Money bettingMoney) {
-        return new Result(Status.LOSS, bettingMoney);
+        return new Result(ResultStatus.LOSS, bettingMoney);
     }
 
     public static Result draw(Money bettingMoney) {
-        return new Result(Status.DRAW, bettingMoney);
+        return new Result(ResultStatus.DRAW, bettingMoney);
     }
 
     public static Result blackjack(Money bettingMoney) {
-        return new Result(Status.BLACKJACK, bettingMoney);
+        return new Result(ResultStatus.BLACKJACK, bettingMoney);
     }
 }
