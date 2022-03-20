@@ -57,8 +57,9 @@ public enum Denomination {
     }
 
     private static int sumUnderBlackJackNumber(int total) {
-        if (total + SPECIAL_ACE - ACE.value <= BLACKJACK_NUMBER) {
-            total = total + SPECIAL_ACE - ACE.value;
+        int totalWithSpecialAce = total + SPECIAL_ACE - ACE.value;
+        if (totalWithSpecialAce <= BLACKJACK_NUMBER) {
+            total = totalWithSpecialAce;
         }
         return total;
     }
