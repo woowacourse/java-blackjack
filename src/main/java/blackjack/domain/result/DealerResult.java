@@ -1,19 +1,20 @@
 package blackjack.domain.result;
 
+import blackjack.domain.gamer.Dealer;
 import java.util.Collections;
 import java.util.Map;
 
 public class DealerResult {
-    private final String name;
+    private final Dealer dealer;
     private final Map<Match, Integer> matchResult;
 
-    public DealerResult(String name, Map<Match, Integer> matchResult) {
-        this.name = name;
+    public DealerResult(Dealer dealer, Map<Match, Integer> matchResult) {
+        this.dealer = dealer;
         this.matchResult = matchResult;
     }
 
     public String getName() {
-        return name;
+        return dealer.getName();
     }
 
     public Map<Match, Integer> getMatchResult() {

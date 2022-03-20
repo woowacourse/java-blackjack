@@ -58,7 +58,7 @@ public class GamerGroup {
 
         Collection<Match> playerMatches = playerResults.values();
         Map<Match, Integer> dealerMatches = initializeDealerResults(playerMatches);
-        DealerResult dealerResult = new DealerResult(dealer.getName(), dealerMatches);
+        DealerResult dealerResult = new DealerResult(dealer, dealerMatches);
 
         return new GameResult(dealerResult, playerResult);
     }
