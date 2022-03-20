@@ -59,6 +59,13 @@ public class Score {
         return sum == MAX_SCORE;
     }
 
+    @Override
+    public String toString() {
+        return "Score{" +
+                "sum=" + sum +
+                '}';
+    }
+
     public int getSum() {
         return sum;
     }

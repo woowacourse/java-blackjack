@@ -3,17 +3,13 @@ package blackjack.domain.card;
 import java.util.HashSet;
 import java.util.Set;
 
-import blackjack.domain.strategy.NumberGenerator;
-
 public class CardPickMachine {
     private final Set<Card> pickedCards = new HashSet<>();
 
-    public Card pickCard(NumberGenerator numberGenerator) {
-        int index = numberGenerator.generateNumber();
+    public Card pickCard(int index) {
         Card card = Card.of(index);
 
         while (pickedCards.contains(card)) {
-            index = numberGenerator.generateNumber();
             card = Card.of(index);
         }
 

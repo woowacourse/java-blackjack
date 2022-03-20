@@ -4,7 +4,6 @@ import blackjack.domain.machine.Blackjack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.strategy.RandomNumberGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
         Players players = new Players(playerNames);
         Blackjack blackjack = new Blackjack();
-        blackjack.dealInitialCards(RandomNumberGenerator.getInstance(), dealer, players);
+        blackjack.dealInitialCards(dealer, players);
 
         OutputView.printInitStatus(dealer, players.getPlayers());
         progressGame(blackjack, players, dealer);
@@ -36,14 +35,14 @@ public class BlackjackController {
 
     private void askDealCardToPlayer(Blackjack blackjack, Player player) {
         while (player.canDraw() && InputView.askAdditionalCard(player)) {
-            blackjack.dealAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
+            blackjack.dealAdditionalCardToPlayer(player);
             OutputView.printCards(player);
         }
     }
 
     private void askDealCardToDealer(Blackjack blackjack, Dealer dealer) {
         while (dealer.canDraw()) {
-            blackjack.dealAdditionalCardToDealer(RandomNumberGenerator.getInstance(), dealer);
+            blackjack.dealAdditionalCardToDealer(dealer);
             OutputView.printDealerAdditionalCard();
         }
     }

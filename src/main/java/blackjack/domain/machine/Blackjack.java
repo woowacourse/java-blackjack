@@ -1,34 +1,36 @@
 package blackjack.domain.machine;
 
 import blackjack.domain.card.CardPickMachine;
+import blackjack.domain.card.Cards;
 import blackjack.domain.dto.RecordsDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.strategy.NumberGenerator;
 
 public class Blackjack {
     private static final int NUMBER_OF_INIT_CARD = 2;
 
     private final CardPickMachine cardPickMachine;
+    private final Cards cards;
 
     public Blackjack() {
         this.cardPickMachine = new CardPickMachine();
+        this.cards = new Cards();
     }
 
-    public void dealInitialCards(NumberGenerator numberGenerator, Dealer dealer, Players players) {
+    public void dealInitialCards(Dealer dealer, Players players) {
         for (int i = 0; i < NUMBER_OF_INIT_CARD; ++i) {
-            dealer.addCard(cardPickMachine.pickCard(numberGenerator));
-            players.addCards(cardPickMachine, numberGenerator);
+            dealer.addCard(cards.draw());
+            players.addCards(cards);
         }
     }
 
-    public void dealAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
-        player.addCard(cardPickMachine.pickCard(numberGenerator));
+    public void dealAdditionalCardToPlayer(Player player) {
+        player.addCard(cards.draw());
     }
 
-    public void dealAdditionalCardToDealer(NumberGenerator numberGenerator, Dealer dealer) {
-        dealer.addCard(cardPickMachine.pickCard(numberGenerator));
+    public void dealAdditionalCardToDealer(Dealer dealer) {
+        dealer.addCard(cards.draw());
     }
 
     public RecordsDto record(Dealer dealer, Players players) {

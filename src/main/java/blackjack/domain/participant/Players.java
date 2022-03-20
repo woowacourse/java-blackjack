@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.CardPickMachine;
+import blackjack.domain.card.Cards;
 import blackjack.domain.strategy.NumberGenerator;
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +31,8 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public void addCards(CardPickMachine cardPickMachine, NumberGenerator numberGenerator) {
+    public void addCards(Cards cards) {
         players.forEach(player ->
-                player.addCard(cardPickMachine.pickCard(numberGenerator)));
+                player.addCard(cards.draw()));
     }
 }

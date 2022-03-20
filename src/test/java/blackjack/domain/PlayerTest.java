@@ -34,4 +34,25 @@ public class PlayerTest {
     void incorrectBettingMoney(int money) {
         assertThatThrownBy(() -> new Player("잉", money)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("플레이어가 카드를 뽑을 상황 테스트_버스트일 때")
+    @Test
+    void canDrawBust() {
+        Player player =  new Player("pobi", 1000);
+        player.addCard(Card.TWO_HEART);
+        player.addCard(Card.J_CLOVER);
+        player.addCard(Card.J_HEART);
+
+        assertThat(player.canDraw()).isFalse();
+    }
+
+    @DisplayName("플레이어가 카드를 뽑을 상황 테스트_블랙잭일 때")
+    @Test
+    void canDrawBlackjack() {
+        Player player =  new Player("pobi", 1000);
+        player.addCard(Card.A_HEART);
+        player.addCard(Card.J_CLOVER);
+
+        assertThat(player.canDraw()).isFalse();
+    }
 }
