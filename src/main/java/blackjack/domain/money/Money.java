@@ -17,7 +17,7 @@ public class Money {
     }
 
     public Money multiply(double rate) {
-        return new Money((int) (this.amount * rate));
+        return new Money((int)(this.amount * rate));
     }
 
     public int getAmount() {

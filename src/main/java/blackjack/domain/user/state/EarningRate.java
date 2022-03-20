@@ -8,7 +8,6 @@ public enum EarningRate {
     TIE(0.0),
     ;
 
-
     private final double rate;
 
     EarningRate(double rate) {

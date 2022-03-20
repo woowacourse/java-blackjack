@@ -38,7 +38,7 @@ public final class Card {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Card card = (Card) o;
+        Card card = (Card)o;
         return suit == card.suit && denomination == card.denomination;
     }
 

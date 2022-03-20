@@ -5,8 +5,6 @@ import blackjack.domain.user.Hand;
 
 public final class Hit extends Running {
 
-    public static final int SIZE = 2;
-
     protected Hit(Hand hand) {
         super(hand);
     }
