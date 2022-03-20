@@ -22,7 +22,7 @@ public class Player extends Participant {
 		state = state.stay();
 	}
 
-	public double multiplyLeverage(double leverage) {
-		return betMoney.multiply(leverage);
+	public int getBetMoney() {
+		return betMoney.getValue();
 	}
 }

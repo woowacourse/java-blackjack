@@ -26,7 +26,7 @@ public class BetMoney {
 		}
 	}
 
-	public double multiply(double leverage) {
-		return value * leverage;
+	public int getValue() {
+		return value;
 	}
 }

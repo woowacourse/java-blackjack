@@ -26,6 +26,6 @@ public enum MatchResult {
 	}
 
 	public double calculateRevenue(Player player) {
-		return player.multiplyLeverage(this.leverage);
+		return this.leverage * player.getBetMoney();
 	}
 }
