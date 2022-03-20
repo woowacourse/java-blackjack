@@ -4,10 +4,7 @@ import static java.util.stream.Collectors.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -84,17 +81,8 @@ public class BlackJackManager {
 	}
 
 	public BettingResult createBettingResult() {
-		Map<String, Integer> playerEarnings = players.stream()
-			.collect(toMap(Player::getName, player -> player.match(dealer)));
-
-		Integer dealerEarning = playerEarnings.values().stream()
-			.reduce(0, Integer::sum);
-
-		return new BettingResult(calculateReverseEarning(dealerEarning), playerEarnings);
-	}
-
-	private static int calculateReverseEarning(int earning) {
-		return earning * -1;
+		return new BettingResult(players.stream()
+			.collect(toMap(Player::getName, player -> player.match(dealer))));
 	}
 
 	public Dealer getDealer() {

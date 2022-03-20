@@ -5,12 +5,13 @@ import java.util.Map;
 
 public class BettingResult {
 
-	private final int dealerEarning;
 	private final Map<String, Integer> playerEarnings;
+	private final int dealerEarning;
 
-	public BettingResult(int dealerEarning, Map<String, Integer> playerEarnings) {
-		this.dealerEarning = dealerEarning;
+	public BettingResult(Map<String, Integer> playerEarnings) {
 		this.playerEarnings = new LinkedHashMap<>(playerEarnings);
+		this.dealerEarning = this.playerEarnings.values().stream()
+			.reduce(0, Integer::sum) * -1;
 	}
 
 	public int getDealerEarning() {
