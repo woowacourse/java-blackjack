@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public class Players {
+
+	private static final String CAN_NOT_FIND_ERROR = "해당 플레이어를 찾을 수 없습니다.";
 
 	private final List<Role> players;
 
@@ -21,7 +22,7 @@ public class Players {
 		return players.stream()
 				.filter(player -> player.getName().equals(name))
 				.findFirst()
-				.orElseThrow(NoSuchElementException::new);
+				.orElseThrow(() -> new IllegalArgumentException(CAN_NOT_FIND_ERROR));
 	}
 
 	public PlayerTurns getPlayerTurn() {
@@ -32,10 +33,6 @@ public class Players {
 		for (Role player : players) {
 			player.ready(deck);
 		}
-		return players;
-	}
-
-	public List<Role> getPlayers() {
 		return new ArrayList<>(players);
 	}
 
@@ -46,5 +43,9 @@ public class Players {
 			betMonies.put(player.getName(), money);
 		}
 		return betMonies;
+	}
+
+	public List<Role> getPlayers() {
+		return new ArrayList<>(players);
 	}
 }
