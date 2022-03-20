@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class BlackJackGameTest {
 
     @Test
-    @DisplayName("BlackJackGame 생성 테스트")
+    @DisplayName("BlackJackGame 성공적으로 생성될 경우 null 값을 반환하지 않는다.")
     void createValidDealer() {
         Participants participants = Participants.fromNames(List.of("rookie"));
 
@@ -20,7 +20,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("게임 시작시 최초 카드 분배 기능 테스트")
+    @DisplayName("게임 시작시 각 참가자들에게 기본적으로 2장의 카드를 분배한다.")
     void firstCardDispensing() {
         Participants participants = Participants.fromNames(List.of("kei", "rookie"));
         ;

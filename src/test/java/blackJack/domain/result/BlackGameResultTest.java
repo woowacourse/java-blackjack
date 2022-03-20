@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class BlackGameResultTest {
 
     @Test
-    @DisplayName("게임의 수익률을 계산하는 결과 테스트")
+    @DisplayName("블랙잭 게임은 게임종료 후 각 참가자들의 수익률을 계산할 수 있다.")
     void calculateEarningResult() {
         Map<Player, OutCome> outComes = createOutComes();
 
