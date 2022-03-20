@@ -21,7 +21,7 @@ public final class Cards {
         return new Cards(cards);
     }
 
-    public static Cards getEmptyList() {
+    public static Cards getEmptyCardsPack() {
         return new Cards(EMPTY_LIST);
     }
 

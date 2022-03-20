@@ -11,7 +11,7 @@ public abstract class Participant {
     protected final Name name;
 
     public Participant(String name) {
-        this.cards = Cards.getEmptyList();
+        this.cards = Cards.getEmptyCardsPack();
         this.name = new Name(name);
     }
 
