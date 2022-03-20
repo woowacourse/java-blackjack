@@ -32,7 +32,11 @@ public class RevenueResult {
     }
 
     private void calculateDealerEarnings() {
-        int playersEarnings = this.playersEarnings.values().stream().mapToInt(e -> e).sum();
+        int playersEarnings = this.playersEarnings.values()
+                .stream()
+                .mapToInt(e -> e)
+                .sum();
+
         dealerEarnings -= playersEarnings;
     }
 
