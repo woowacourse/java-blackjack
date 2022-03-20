@@ -26,11 +26,11 @@ class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        players = new Players();
-        players.add(Player.of("winPlayer", Hand.of(CLOVER6, CLOVER7), Money.from(10000)));
-        players.add(Player.of("blackjackWinPlayer", Hand.of(CLOVER_ACE, CLOVER10), Money.from(10000)));
-        players.add(Player.of("losePlayer", Hand.of(CLOVER2, CLOVER3), Money.from(10000)));
-
+        players = Players.of(List.of(
+                Player.of("winPlayer", Hand.of(CLOVER6, CLOVER7), Money.from(10000)),
+                Player.of("blackjackWinPlayer", Hand.of(CLOVER_ACE, CLOVER10), Money.from(10000)),
+                Player.of("losePlayer", Hand.of(CLOVER2, CLOVER3), Money.from(10000))
+        ));
         dealer = Dealer.of(Hand.of(CLOVER4, CLOVER5));
     }
 
@@ -42,11 +42,9 @@ class PlayersTest {
         Hand hand = Hand.of(CLOVER2, CLOVER3);
         Money betMoney = Money.from(10000);
         Player player = Player.of(playerName, hand, betMoney);
+        Players players = Players.of(List.of(player));
 
         // when
-        Players players = new Players();
-        players.add(player);
-
         List<Player> actual = players.getValue();
         List<Player> expected = List.of(player);
 

@@ -1,14 +1,21 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.money.Money;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
 
     private static final String NOT_FOUND_PLAYER_EXCEPTION_MESSAGE = "플레이어를 찾을 수 없습니다.";
 
-    private final List<Player> value = new ArrayList<>();
+    private final List<Player> value;
+
+    private Players(List<Player> value) {
+        this.value = value;
+    }
+
+    public static Players of(List<Player> players) {
+        return new Players(players);
+    }
 
     public void add(Player player) {
         validateNotDuplicateName(player.getName());

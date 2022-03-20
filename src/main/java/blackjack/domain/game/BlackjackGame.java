@@ -8,6 +8,9 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.ParticipantGroup;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.dto.PlayerCreateDto;
+import java.util.List;
+import java.util.stream.Collectors;
 
 // TODO: 플레이어가 등록되지 않을 경우 동작하지 않아야함
 public class BlackjackGame {
@@ -15,14 +18,22 @@ public class BlackjackGame {
     private final CardStack cardDeck;
     private final ParticipantGroup participantGroup;
 
-    public BlackjackGame(CardStack cardDeck) {
+    public BlackjackGame(CardStack cardDeck, List<PlayerCreateDto> playerCreateDtos) {
         this.cardDeck = cardDeck;
-        this.participantGroup = ParticipantGroup.of(Dealer.of(generateInitialHand()));
+        this.participantGroup = ParticipantGroup.of(Dealer.of(generateInitialHand()),
+                generatePlayers(playerCreateDtos));
     }
 
-    public void addPlayer(String playerName, int money) {
-        Player player = Player.of(playerName, generateInitialHand(), Money.from(money));
-        participantGroup.addPlayer(player);
+    private Players generatePlayers(List<PlayerCreateDto> playerCreateDtos) {
+        List<Player> rawPlayers = playerCreateDtos.stream()
+                .map(dto -> generatePlayer(dto.getPlayerName(), dto.getBetMoney()))
+                .collect(Collectors.toList());
+
+        return Players.of(rawPlayers);
+    }
+
+    public Player generatePlayer(String playerName, int betMoney) {
+        return Player.of(playerName, generateInitialHand(), Money.from(betMoney));
     }
 
     private Hand generateInitialHand() {

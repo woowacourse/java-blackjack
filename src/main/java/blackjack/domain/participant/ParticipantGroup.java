@@ -7,13 +7,13 @@ public class ParticipantGroup {
     private final Dealer dealer;
     private final Players players;
 
-    public ParticipantGroup(Dealer dealer) {
+    public ParticipantGroup(Dealer dealer, Players players) {
         this.dealer = dealer;
-        this.players = new Players();
+        this.players = players;
     }
 
-    public static ParticipantGroup of(Dealer dealer) {
-        return new ParticipantGroup(dealer);
+    public static ParticipantGroup of(Dealer dealer, Players players) {
+        return new ParticipantGroup(dealer, players);
     }
 
     public void addPlayer(Player player) {

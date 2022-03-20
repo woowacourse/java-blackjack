@@ -12,39 +12,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Hand;
 import blackjack.domain.money.Money;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantGroupTest {
 
-    private Dealer dealer;
+
     private ParticipantGroup participantGroup;
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.of(Hand.of(CLOVER4, CLOVER5));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER4, CLOVER5));
+        Players players = Players.of(List.of(
+                Player.of("winPlayer", Hand.of(CLOVER6, CLOVER7), Money.from(10000)),
+                Player.of("blackjackWinPlayer", Hand.of(CLOVER_ACE, CLOVER10), Money.from(10000)),
+                Player.of("losePlayer", Hand.of(CLOVER2, CLOVER3), Money.from(10000))
+        ));
 
-        participantGroup = new ParticipantGroup(dealer);
-        participantGroup.addPlayer(Player.of("winPlayer", Hand.of(CLOVER6, CLOVER7), Money.from(10000)));
-        participantGroup.addPlayer(Player.of("blackjackWinPlayer", Hand.of(CLOVER_ACE, CLOVER10), Money.from(10000)));
-        participantGroup.addPlayer(Player.of("losePlayer", Hand.of(CLOVER2, CLOVER3), Money.from(10000)));
-    }
-
-    @DisplayName("addPlayer 는 Player 인스턴스를 전달받고 Players 필드에 추가한다.")
-    @Test
-    void addPlayer_addsPlayerIntoPlayersAndReturnsPlayerCount() {
-        // given
-        ParticipantGroup participantGroup = ParticipantGroup.of(dealer);
-        Player player = Player.of("hudi", Hand.of(CLOVER2, CLOVER3), Money.from(10000));
-
-        // when
-        participantGroup.addPlayer(player);
-        int actual = participantGroup.getPlayers().getValue().size();
-        int expected = 1;
-
-        // then
-        assertThat(actual).isEqualTo(expected);
+        participantGroup = new ParticipantGroup(dealer, players);
     }
 
     @DisplayName("calculateDealerProfit 는 딜러의 수익을 Money 로 반환한다.")

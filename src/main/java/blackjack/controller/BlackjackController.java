@@ -6,11 +6,13 @@ import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DealerDto;
 import blackjack.dto.ParticipantDto;
+import blackjack.dto.PlayerCreateDto;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
     public void run() {
@@ -24,31 +26,29 @@ public class BlackjackController {
 
     private BlackjackGame initializeGame() {
         try {
-            BlackjackGame blackjackGame = new BlackjackGame(new CardDeck());
-
-            requestPlayerNames(blackjackGame);
-
-            return blackjackGame;
+            List<PlayerCreateDto> playerCreateDtos = requestPlayerNames();
+            return new BlackjackGame(new CardDeck(), playerCreateDtos);
         } catch (IllegalArgumentException exception) {
             OutputView.printException(exception);
             return initializeGame();
         }
     }
 
-    private void requestPlayerNames(BlackjackGame blackjackGame) {
+    private List<PlayerCreateDto> requestPlayerNames() {
         List<String> playerNames = InputView.inputPlayerNames();
-        for (String playerName : playerNames) {
-            addPlayerIntoBlackjackGameByBetMoneyInput(blackjackGame, playerName);
-        }
+
+        return playerNames.stream()
+                .map(this::requestPlayerBetMoney)
+                .collect(Collectors.toList());
     }
 
-    private void addPlayerIntoBlackjackGameByBetMoneyInput(BlackjackGame blackjackGame, String playerName) {
+    private PlayerCreateDto requestPlayerBetMoney(String playerName) {
         try {
             int rawBetMoney = InputView.inputBetMoney(playerName);
-            blackjackGame.addPlayer(playerName, rawBetMoney);
+            return new PlayerCreateDto(playerName, rawBetMoney);
         } catch (IllegalArgumentException exception) {
             OutputView.printException(exception);
-            addPlayerIntoBlackjackGameByBetMoneyInput(blackjackGame, playerName);
+            return requestPlayerBetMoney(playerName);
         }
     }
 

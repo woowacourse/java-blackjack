@@ -16,6 +16,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.fixture.CardStackGenerator;
 import blackjack.domain.participant.Player;
+import blackjack.dto.PlayerCreateDto;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,24 +25,6 @@ public class BlackjackGameTest {
 
     private static final List<String> playerNames = List.of("hudi", "jeong");
 
-    @DisplayName("addPlayer 메소드에 이름과 베팅금액을 전달하여 ParticipantGroup 의 Players 에 플레이어를 추가할 수 있다.")
-    @Test
-    void addPlayer() {
-        // given
-        CardStack cards = CardStackGenerator.ofReverse(
-                CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER6, CLOVER7, CLOVER8);
-        BlackjackGame blackjackGame = new BlackjackGame(cards);
-        String playerName = "hudi";
-        int money = 10000;
-
-        // when
-        blackjackGame.addPlayer(playerName, money);
-        int actual = blackjackGame.getPlayers().getValue().size();
-        int expected = 1;
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
 
     @DisplayName("giveExtraCardToPlayer 는 전달받은 플레이어에 카드를 추가하고, 카드를 더 받을 수 있다면 true 를 반환한다.")
     @Test
@@ -49,8 +32,8 @@ public class BlackjackGameTest {
         // given
         CardStack cardDeck = CardStackGenerator.ofReverse(
                 CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER6, CLOVER7, CLOVER8);
-        BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
-        blackjackGame.addPlayer("hudi", 10000);
+        List<PlayerCreateDto> playerCreateDtos = List.of(new PlayerCreateDto("hudi", 10000));
+        BlackjackGame blackjackGame = new BlackjackGame(cardDeck, playerCreateDtos);
 
         // when
         Player player = blackjackGame.getPlayers().getValue().get(0);
@@ -66,8 +49,8 @@ public class BlackjackGameTest {
         // given
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER2, CLOVER3, CLOVER10, CLOVER5, CLOVER7);
-        BlackjackGame blackjackGame = new BlackjackGame(cards);
-        blackjackGame.addPlayer("hudi", 10000);
+        List<PlayerCreateDto> playerCreateDtos = List.of(new PlayerCreateDto("hudi", 10000));
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerCreateDtos);
 
         // when
         Player player = blackjackGame.getPlayers().getValue().get(0);
@@ -83,9 +66,11 @@ public class BlackjackGameTest {
         // given
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER2, CLOVER3, CLOVER7, CLOVER8, CLOVER9, CLOVER10, CLOVER4, CLOVER5, CLOVER6);
-        BlackjackGame blackjackGame = new BlackjackGame(cards);
-        blackjackGame.addPlayer("player1", 10000);
-        blackjackGame.addPlayer("player2", 10000);
+        List<PlayerCreateDto> playerCreateDtos = List.of(
+                new PlayerCreateDto("player1", 10000),
+                new PlayerCreateDto("player2", 10000)
+        );
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerCreateDtos);
 
         // when
         int actual = blackjackGame.giveExtraCardsToDealer();
@@ -101,9 +86,11 @@ public class BlackjackGameTest {
         // given
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER_KING, CLOVER10, CLOVER7, CLOVER8, CLOVER9, CLOVER4, CLOVER5, CLOVER6);
-        BlackjackGame blackjackGame = new BlackjackGame(cards);
-        blackjackGame.addPlayer("player1", 10000);
-        blackjackGame.addPlayer("player2", 10000);
+        List<PlayerCreateDto> playerCreateDtos = List.of(
+                new PlayerCreateDto("player1", 10000),
+                new PlayerCreateDto("player2", 10000)
+        );
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerCreateDtos);
 
         // when
         int actual = blackjackGame.giveExtraCardsToDealer();
@@ -118,9 +105,11 @@ public class BlackjackGameTest {
     void popCard_returnPoppedCard() {
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER6, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
-        BlackjackGame blackjackGame = new BlackjackGame(cards);
-        blackjackGame.addPlayer("player1", 10000);
-        blackjackGame.addPlayer("player2", 10000);
+        List<PlayerCreateDto> playerCreateDtos = List.of(
+                new PlayerCreateDto("player1", 10000),
+                new PlayerCreateDto("player2", 10000)
+        );
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerCreateDtos);
 
         Card actual = blackjackGame.popCard();
 
