@@ -1,37 +1,56 @@
 package blackjack.domain.game;
 
-import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Objects;
 
-public class Money {
+public final class Money {
 
-	private final BigDecimal value;
+	private static final int NEGATIVE = -1;
+	private static final int ZERO = 0;
 
-	public Money(final String money) {
-		this.value = new BigDecimal(money);
-	}
+	private final double value;
 
-	private Money(final BigDecimal money) {
+	public Money(final double money) {
 		this.value = money;
 	}
 
 	public static Money sumOf(final Collection<Money> monies) {
-		BigDecimal value = monies.stream()
-				.map(Money::getValue)
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
-		return new Money(value);
+		return new Money(sum(monies));
 	}
 
-	public Money multiply(final BigDecimal value) {
-		BigDecimal afterMultiply = this.value.multiply(value);
+	private static double sum(Collection<Money> monies) {
+		return monies.stream()
+				.mapToDouble(Money::getValue)
+				.sum();
+	}
+
+	public Money multiply(final double value) {
+		double afterMultiply = this.value * (value);
 		return new Money(afterMultiply);
 	}
 
-	public Money getMinusValue() {
-		return new Money(value.negate());
+	public double getMinusValue() {
+		return value * NEGATIVE;
 	}
 
-	public BigDecimal getValue() {
+	public double getValue() {
 		return value;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Money money = (Money) o;
+		return Double.compare(money.value, value) == ZERO;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(value);
 	}
 }

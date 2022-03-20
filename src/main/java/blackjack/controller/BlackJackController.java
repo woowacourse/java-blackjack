@@ -3,8 +3,8 @@ package blackjack.controller;
 import blackjack.domain.game.Deck;
 import blackjack.domain.role.Dealer;
 import blackjack.domain.role.DealerDrawChoice;
-import blackjack.domain.role.Hand;
 import blackjack.domain.role.PlayerDrawChoice;
+import blackjack.domain.state.Ready;
 import blackjack.dto.BettingDto;
 import blackjack.dto.DealerTableDto;
 import blackjack.dto.DealerTurnDto;
@@ -41,7 +41,7 @@ public class BlackJackController {
 	}
 
 	private void initBlackJackGame() {
-		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Hand(), DealerDrawChoice::chooseDraw));
+		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Ready(), DealerDrawChoice::chooseDraw));
 	}
 
 	private void addPlayers(Supplier<List<String>> playerNames) {
@@ -53,7 +53,7 @@ public class BlackJackController {
 		List<BettingDto> betting = new ArrayList<>();
 		for (String player : playerTurns.getNames()) {
 			String money = bettingFunction.apply(player);
-			betting.add(BettingDto.from(player, money));
+			betting.add(BettingDto.from(player, Double.parseDouble(money)));
 		}
 		blackJackService.betMoney(betting);
 	}

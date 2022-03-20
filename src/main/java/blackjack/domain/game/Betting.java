@@ -1,27 +1,17 @@
 package blackjack.domain.game;
 
-import blackjack.domain.role.Role;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Betting {
 
-	private final Map<Role, Money> betting;
+	private final Map<String, Money> betting;
 
-	public Betting(final Map<Role, Money> bettingMoney) {
+	public Betting(final Map<String, Money> bettingMoney) {
 		this.betting = new HashMap<>(bettingMoney);
 	}
 
-	public Map<Role, Money> settle(final Compete compete) {
-		Map<Role, Money> revenue = new HashMap<>();
-		for (Role player : betting.keySet()) {
-			Outcome outcome = compete.getPlayerCompeteResults(player);
-			revenue.put(player, getBettingResult(outcome, betting.get(player)));
-		}
-		return revenue;
-	}
-
-	private Money getBettingResult(final Outcome outcome, final Money bettingMoney) {
-		return outcome.applyBettingMultiplier(bettingMoney);
+	public Money getBettingByName(String name) {
+		return betting.get(name);
 	}
 }

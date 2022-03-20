@@ -1,22 +1,29 @@
 package blackjack.domain.role;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Deck;
+import blackjack.domain.game.Money;
+import blackjack.domain.state.State;
 import java.util.List;
 
-public class Player extends Role {
+public final class Player extends Role {
 
-	public Player(String name, Hand hand) {
-		super(name, hand);
+	public Player(final String name, final State state) {
+		super(name, state);
 	}
 
 	@Override
-	public boolean canDraw() {
-		final int score = hand.calculateOptimalScore();
-		return Hand.BUST < score && score <= Hand.OPTIMIZED_WINNING_NUMBER;
+	public void draw(final Deck deck) {
+		state = state.draw(deck.draw());
 	}
 
 	@Override
-	public List<Card> openHand() {
-		return hand.getCards();
+	public List<Card> openCards() {
+		return state.getCards().getCards();
+	}
+
+	@Override
+	public Money settle(Role dealer, Money bettingMoney) {
+		return state.profit(dealer.getCards(), bettingMoney);
 	}
 }

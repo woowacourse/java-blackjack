@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
+import static blackjack.util.Fixtures.CLOVER_ACE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.factory.CardMockFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,13 +11,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayName("Card 테스트")
 class CardTest {
 
-	private final Card card = CardMockFactory.of(Denomination.ACE);
+	private final Card card = CLOVER_ACE;
 
 	@DisplayName("카드가 Ace인지 확인")
 	@ParameterizedTest(name = "{index} {displayName} card={0} expected={1}")
 	@CsvSource(value = {"ACE, true", "KING, false"})
 	void check_Has_Ace(Denomination cardInfo, boolean expectedIsAce) {
-		final Card card = CardMockFactory.of(cardInfo);
+		final Card card = new Card(Suit.CLOVER, cardInfo);
 
 		assertThat(card.isAce()).isEqualTo(expectedIsAce);
 	}

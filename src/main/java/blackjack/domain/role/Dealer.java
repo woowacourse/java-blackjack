@@ -1,41 +1,53 @@
 package blackjack.domain.role;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Deck;
+import blackjack.domain.game.Money;
+import blackjack.domain.state.State;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class Dealer extends Role {
+public final class Dealer extends Role {
 
 	public static final int CAN_NOT_DRAW_STANDARD = 17;
 	public static final int CAN_DRAW_STANDARD = 16;
 
 	private static final int openCard = 0;
 	private static final String DEALER_NAME = "딜러";
+	private static final String DEALER_SETTLE_ERROR = "딜러는 승부를 겨룰 수 없습니다.";
 
-	private final Supplier<Boolean> drawable;
+	private final Supplier<Boolean> drawChoice;
 
-	public Dealer(Hand hand, Supplier<Boolean> drawable) {
-		super(DEALER_NAME, hand);
-		this.drawable = drawable;
+	public Dealer(final State state, final Supplier<Boolean> drawChoice) {
+		super(DEALER_NAME, state);
+		this.drawChoice = drawChoice;
 	}
 
 	@Override
-	public boolean canDraw() {
-		if (hand.calculateOptimalScore() >= Hand.OPTIMIZED_WINNING_NUMBER) {
-			return false;
+	public void draw(final Deck deck) {
+		if (state.isFinished()) {
+			return;
 		}
-		if (hand.calculateOptimalScore() <= CAN_DRAW_STANDARD) {
-			return true;
+		int score = state.getScore();
+		if (score <= CAN_DRAW_STANDARD) {
+			state = state.draw(deck.draw());
 		}
-		if (!hand.hasAce()) {
-			return false;
+		if (!getCards().hasAce()) {
+			return;
 		}
-		return drawable.get();
+		if (drawChoice.get()) {
+			state = state.draw(deck.draw());
+		}
 	}
 
 	@Override
-	public List<Card> openHand() {
-		List<Card> cards = hand.getCards();
+	public List<Card> openCards() {
+		List<Card> cards = state.getCards().getCards();
 		return List.of(cards.get(openCard));
+	}
+
+	@Override
+	public Money settle(Role dealer, Money bettingMoney) {
+		throw new IllegalStateException(DEALER_SETTLE_ERROR);
 	}
 }

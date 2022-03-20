@@ -1,43 +1,51 @@
 package blackjack.domain.role;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.game.Deck;
+import blackjack.domain.game.Money;
+import blackjack.domain.state.State;
 import java.util.List;
 
 public abstract class Role {
 
 	protected final String name;
-	protected final Hand hand;
+	protected State state;
 
-	public Role(final String name, final Hand hand) {
+	public Role(final String name, final State state) {
 		this.name = name;
-		this.hand = hand;
+		this.state = state;
 	}
 
-	public void draw(final Card card) {
-		hand.addCard(card);
+	public final void ready(final Deck deck) {
+		state = state.draw(deck.draw())
+				.draw(deck.draw());
 	}
 
-	public boolean isBlackJack() {
-		return hand.isBlackJack();
+	public final void stay() {
+		state = state.stay();
 	}
 
-	public boolean isBust() {
-		return hand.isBust(hand.calculateOptimalScore());
+	public final boolean isFinished() {
+		return state.isFinished();
 	}
 
-	public int calculateFinalScore() {
-		return hand.calculateOptimalScore();
+	public final int getScore() {
+		return state.getScore();
 	}
 
-	public abstract boolean canDraw();
+	public final Cards getCards() {
+		return state.getCards();
+	}
 
-	public abstract List<Card> openHand();
-
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public Hand getHand() {
-		return hand;
-	}
+	public abstract void draw(final Deck deck);
+
+	public abstract List<Card> openCards();
+
+	public abstract Money settle(Role dealer, Money bettingMoney);
+
 }

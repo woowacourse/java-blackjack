@@ -18,7 +18,7 @@ public class DealerTableDto {
 	}
 
 	public static DealerTableDto from(final Role dealer) {
-		return new DealerTableDto(dealer.getName(), dealer.openHand());
+		return new DealerTableDto(dealer.getName(), dealer.openCards());
 	}
 
 	public String getRoleName() {

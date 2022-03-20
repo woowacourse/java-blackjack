@@ -18,7 +18,7 @@ public class PlayerTableDto {
 	}
 
 	public static PlayerTableDto from(final Role role) {
-		return new PlayerTableDto(role.getName(), role.openHand());
+		return new PlayerTableDto(role.getName(), role.openCards());
 	}
 
 	public String getRoleName() {

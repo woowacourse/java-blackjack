@@ -1,8 +1,8 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.game.Money;
-import blackjack.domain.role.Hand;
 import blackjack.domain.role.Role;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,20 +13,20 @@ public class PlayerResultDto {
 	private final List<String> cards;
 	private final int totalScore;
 	private final boolean bust;
-	private final int revenueResult;
+	private final double revenueResult;
 
-	private PlayerResultDto(final String name, final Hand hand, final Money money) {
-		this.name = name;
-		this.cards = hand.getCards().stream()
+	private PlayerResultDto(final Role player, final Cards cards, final Money money) {
+		this.name = player.getName();
+		this.cards = cards.getCards().stream()
 				.map(Card::getDenominationAndSuit)
 				.collect(Collectors.toList());
-		this.totalScore = hand.calculateOptimalScore();
-		this.bust = hand.isBust(totalScore);
-		this.revenueResult = money.getValue().intValue();
+		this.totalScore = player.getScore();
+		this.bust = cards.isBust();
+		this.revenueResult = money.getValue();
 	}
 
 	public static PlayerResultDto from(final Role player, final Money money) {
-		return new PlayerResultDto(player.getName(), player.getHand(), money);
+		return new PlayerResultDto(player, player.getCards(), money);
 	}
 
 	public String getName() {
@@ -41,11 +41,11 @@ public class PlayerResultDto {
 		return totalScore;
 	}
 
-	public boolean isBust() {
-		return bust;
+	public double getRevenueResult() {
+		return revenueResult;
 	}
 
-	public int getRevenueResult() {
-		return revenueResult;
+	public boolean isBust() {
+		return bust;
 	}
 }
