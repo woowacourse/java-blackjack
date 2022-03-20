@@ -9,12 +9,12 @@ import java.util.Objects;
 
 public final class Card {
 
-    private static final Map<String, Card> cache = new HashMap<>(52);
+    private static final Map<String, Card> CACHE = new HashMap<>(52);
 
     static {
         Arrays.stream(Suit.values())
                 .forEach(suit -> Arrays.stream(Denomination.values())
-                .forEach(denomination -> cache.put(toKey(suit, denomination), new Card(suit, denomination))));
+                        .forEach(denomination -> CACHE.put(toKey(suit, denomination), new Card(suit, denomination))));
     }
 
     private final Suit suit;
@@ -26,7 +26,7 @@ public final class Card {
     }
 
     public static Card of(final Suit suit, final Denomination denomination) {
-        return cache.computeIfAbsent(toKey(suit, denomination), ignored -> new Card(suit, denomination));
+        return CACHE.get(toKey(suit, denomination));
     }
 
     private static String toKey(final Suit suit, final Denomination denomination) {
@@ -34,7 +34,7 @@ public final class Card {
     }
 
     public static List<Card> getAllCard() {
-        return new ArrayList<>(cache.values());
+        return new ArrayList<>(CACHE.values());
     }
 
     public int score() {
