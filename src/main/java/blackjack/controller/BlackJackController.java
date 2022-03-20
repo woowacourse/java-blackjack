@@ -13,7 +13,7 @@ import blackjack.domain.result.BettingResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackGame {
+public class BlackJackController {
 
 	public static final int INIT_DISTRIBUTION_COUNT = 2;
 	private static final int DEALER_OPEN_COUNT_FIRST = 1;
@@ -23,7 +23,7 @@ public class BlackJackGame {
 	private final Gamers gamers;
 	private final Deck deck;
 
-	public BlackJackGame() {
+	public BlackJackController() {
 		List<String> names = InputView.askNames();
 		validateDuplicationNames(names);
 		this.gamers = new Gamers(createPlayers(names));

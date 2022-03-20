@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
-import blackjack.controller.BlackJackGame;
+import blackjack.controller.BlackJackController;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BettingResult;
@@ -16,7 +16,7 @@ public class OutputView {
 			.map(Player::getName)
 			.collect(Collectors.joining(", "));
 		System.out.printf("%s와 %s에게 %d장을 나누었습니다.\n",
-			dealer.getName(), names, BlackJackGame.INIT_DISTRIBUTION_COUNT);
+			dealer.getName(), names, BlackJackController.INIT_DISTRIBUTION_COUNT);
 	}
 
 	public static void printNameAndCards(String name, List<Card> cards) {
