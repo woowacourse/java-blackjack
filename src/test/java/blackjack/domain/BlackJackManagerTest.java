@@ -1,4 +1,4 @@
-package blackjack.domain.gamer;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.domain.BlackJackManager;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.gamer.Player;
 
 class BlackJackManagerTest {
 

@@ -2,7 +2,9 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
@@ -10,6 +12,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.result.BettingResult;
 
 public class BlackJackManager {
 
@@ -84,5 +87,21 @@ public class BlackJackManager {
 
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
+	}
+
+	public BettingResult createBettingResult() {
+		int dealerEarning = 0;
+		Map<String, Integer> playerEarnings = new LinkedHashMap<>();
+
+		for (Player player : players) {
+			int playerEarning = player.match(dealer);
+			playerEarnings.put(player.getName(), playerEarning);
+			dealerEarning += calculateReverseEarning(playerEarning);
+		}
+		return new BettingResult(dealerEarning, playerEarnings);
+	}
+
+	private static int calculateReverseEarning(int earning) {
+		return earning * -1;
 	}
 }

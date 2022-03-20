@@ -3,13 +3,11 @@ package blackjack.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.BlackJackManager;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.BlackJackReferee;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.BlackJackManager;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.result.BettingResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -18,13 +16,11 @@ public class BlackJackController {
 	private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
 
 	private final BlackJackManager manager;
-	private final Deck deck;
 
 	public BlackJackController() {
 		List<String> names = InputView.askNames();
 		validateDuplicationNames(names);
 		this.manager = new BlackJackManager(createPlayers(names));
-		this.deck = new Deck(Card.getCards());
 	}
 
 	private void validateDuplicationNames(List<String> names) {
@@ -47,47 +43,47 @@ public class BlackJackController {
 		List<Player> players = manager.getPlayers();
 		OutputView.printGamers(dealer, players);
 
-		checkFirstHandOut(dealer, players);
-		askHitOrStay();
+		Deck deck = new Deck(Card.getCards());
+		checkFirstHandOut(dealer, players, deck);
+		askHitOrStay(deck);
 
-		BettingResult result = BlackJackReferee.create(dealer, players);
-		printFinalMessages(dealer, players, result);
+		printFinalMessages(dealer, players);
 	}
 
-	private void checkFirstHandOut(Dealer dealer, List<Player> players) {
+	private void checkFirstHandOut(Dealer dealer, List<Player> players, Deck deck) {
 		manager.handOutFirst(deck);
 		OutputView.printNameAndCards(dealer.getName(), manager.findDealerFirstCard());
 		players.forEach(
 			player -> OutputView.printNameAndCards(player.getName(), player.getCards()));
 	}
 
-	private void askHitOrStay() {
-		askPlayersHitOrStay();
-		askDealerHitOrStay();
+	private void askHitOrStay(Deck deck) {
+		askPlayersHitOrStay(deck);
+		askDealerHitOrStay(deck);
 	}
 
-	private void askPlayersHitOrStay() {
+	private void askPlayersHitOrStay(Deck deck) {
 		for (String name : manager.findPlayerNames()) {
-			selectHitOrStay(name);
+			selectHitOrStay(name, deck);
 		}
 	}
 
-	private void selectHitOrStay(String name) {
+	private void selectHitOrStay(String name, Deck deck) {
 		while (!manager.checkPlayerBust(name) && InputView.askIfHit(name)) {
 			manager.giveCardToPlayer(name, deck);
 			OutputView.printNameAndCards(name, manager.findCardsOfPlayer(name));
 		}
 	}
 
-	private void askDealerHitOrStay() {
+	private void askDealerHitOrStay(Deck deck) {
 		while (manager.checkDealerDrawPossible()) {
 			manager.giveCardToDealer(deck);
 		}
 	}
 
-	private void printFinalMessages(Dealer dealer, List<Player> players, BettingResult result) {
+	private void printFinalMessages(Dealer dealer, List<Player> players) {
 		OutputView.printAdditionalDrawDealer(manager.findDealerHitCount());
 		OutputView.printFinalCards(dealer, players);
-		OutputView.printFinalResult(result);
+		OutputView.printFinalResult(manager.createBettingResult());
 	}
 }
