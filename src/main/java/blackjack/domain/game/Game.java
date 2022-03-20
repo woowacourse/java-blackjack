@@ -1,10 +1,11 @@
 package blackjack.domain.game;
 
+import static java.util.Collections.*;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import blackjack.domain.DrawCount;
@@ -21,21 +22,19 @@ public final class Game {
     public Game(CardDeck cardDeck, Map<Name, Betting> namesAndBettings) {
         this.cardDeck = cardDeck;
         this.dealer = new Dealer();
-        this.players = namesAndBettings.entrySet().stream()
+        this.players = createPlayers(new LinkedHashMap<>(namesAndBettings));
+        init();
+    }
+
+    private List<Player> createPlayers(Map<Name, Betting> namesAndBettings) {
+        return namesAndBettings.entrySet().stream()
             .map(entry -> new Player(entry.getKey(), entry.getValue()))
             .collect(Collectors.toUnmodifiableList());
-        init();
     }
 
     private void init() {
         dealer.init(cardDeck.drawCard(), cardDeck.drawCard());
         players.forEach(player -> player.init(cardDeck.drawCard(), cardDeck.drawCard()));
-    }
-
-    public Optional<Player> RunningPlayer() {
-        return players.stream()
-            .filter(Player::isDrawable)
-            .findFirst();
     }
 
     public void drawPlayerCard(Player player, String hitOrStay) {
@@ -72,6 +71,6 @@ public final class Game {
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>(List.of(dealer));
         participants.addAll(players);
-        return participants;
+        return unmodifiableList(participants);
     }
 }
