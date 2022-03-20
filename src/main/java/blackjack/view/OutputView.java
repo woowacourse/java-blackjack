@@ -13,15 +13,16 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printGamersCards(List<GamerCardsDto> gamersCardsDto) {
-        printGamerCardsHeader(gamersCardsDto);
-        printGamerCardsBody(gamersCardsDto);
+    public static void printInitialGamerCards(GamerCardsDto dealerCardsDto, List<GamerCardsDto> playersCardsDto) {
+        printGamerCardsHeader(playersCardsDto);
+        printGamerCardsBody(dealerCardsDto, playersCardsDto);
     }
 
     private static void printGamerCardsHeader(List<GamerCardsDto> gamersCardsDto) {
         StringBuilder stringBuilder = new StringBuilder();
         List<String> gamerNames = getGamerNames(gamersCardsDto);
-        stringBuilder.append(String.join(", ", gamerNames))
+        stringBuilder.append("딜러와 ")
+                .append(String.join(", ", gamerNames))
                 .append("에게 2장씩 나누었습니다.");
         System.out.println(stringBuilder);
     }
@@ -32,8 +33,9 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static void printGamerCardsBody(List<GamerCardsDto> gamersCardsDto) {
+    private static void printGamerCardsBody(GamerCardsDto dealerCardsDto, List<GamerCardsDto> gamersCardsDto) {
         StringBuilder stringBuilder = new StringBuilder();
+        printGamerCard(dealerCardsDto);
         for (GamerCardsDto gamerCardsDto : gamersCardsDto) {
             printGamerCard(gamerCardsDto);
         }
@@ -112,4 +114,5 @@ public class OutputView {
         }
         System.out.println(stringBuilder);
     }
+
 }

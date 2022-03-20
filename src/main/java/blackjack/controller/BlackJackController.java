@@ -26,13 +26,14 @@ public class BlackJackController {
     private void initialize() {
         blackJack = new BlackJack(initializePlayerGroup(), new Dealer());
         blackJack.divideCards();
-        OutputView.printGamersCards(GamerCardsDto.of(blackJack.getGamers()));
+        OutputView.printInitialGamerCards(GamerCardsDto.valueOf(blackJack.getDealer()),
+                GamerCardsDto.valueOf(blackJack.getPlayers()));
     }
 
     private PlayerGroup initializePlayerGroup() {
         List<String> playerNames = getPlayerNames();
         List<Player> players = new ArrayList<>();
-        for (String playerName: playerNames) {
+        for (String playerName : playerNames) {
             BettingMoney bettingMoney = getBettingMoney(playerName);
             players.add(Player.of(playerName, bettingMoney));
         }

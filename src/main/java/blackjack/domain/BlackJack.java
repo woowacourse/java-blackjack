@@ -53,4 +53,8 @@ public class BlackJack {
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public List<Player> getPlayers() {
+        return gamerGroup.getPlayers();
+    }
 }

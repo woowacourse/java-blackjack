@@ -11,6 +11,10 @@ public class Dealer extends Gamer {
         super(NAME);
     }
 
+    public Card getInitialOpenedCard() {
+        return getCards().get(INITIAL_OPEN_CARD_INDEX);
+    }
+
     @Override
     public void addCard(Card card) {
         if (getScore() > DEALER_STAND_CONDITION) {
@@ -23,9 +27,5 @@ public class Dealer extends Gamer {
     @Override
     public boolean isNotBust() {
         return getScore() <= DEALER_STAND_CONDITION;
-    }
-
-    public Card getInitialOpenedCard() {
-        return getCards().get(INITIAL_OPEN_CARD_INDEX);
     }
 }
