@@ -32,11 +32,11 @@ public class Profit {
         Record record = Record.getRecord(player, dealer);
 
         if (record == Record.VICTORY) {
-            return new Profit(player.getBetting().getMoney());
+            return new Profit(player.getBettingMoney());
         }
 
         if (record == Record.DEFEAT) {
-            return new Profit(-player.getBetting().getMoney());
+            return new Profit(-player.getBettingMoney());
         }
 
         return new Profit();
@@ -44,10 +44,10 @@ public class Profit {
 
     private static Profit getProfitForBlackjack(Dealer dealer, Player player) {
         if (dealer.isBlackjack()) {
-            return new Profit(player.getBetting().getMoney());
+            return new Profit(player.getBettingMoney());
         }
 
-        return new Profit((long) (BLACKJACK_RATE * player.getBetting().getMoney()));
+        return new Profit((long) (BLACKJACK_RATE * player.getBettingMoney()));
     }
 
     public static Profit getDealerProfit(Map<Participant, Profit> playersProfit) {

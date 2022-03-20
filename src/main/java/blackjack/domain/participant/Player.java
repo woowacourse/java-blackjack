@@ -1,13 +1,19 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.machine.Betting;
-
 public class Player extends Participant {
-    private final Betting betting;
+    private static final String MONEY_ERROR = "[ERROR] 베팅 금액은 0원 보다 커야 됩니다.";
+    private final long bettingMoney;
 
     public Player(String name, long bettingMoney) {
         super(name);
-        betting = new Betting(bettingMoney);
+        validateMoney(bettingMoney);
+        this.bettingMoney = bettingMoney;
+    }
+
+    private void validateMoney(long bettingMoney) {
+       if(bettingMoney <= 0) {
+           throw new IllegalArgumentException(MONEY_ERROR);
+       }
     }
 
     @Override
@@ -19,7 +25,7 @@ public class Player extends Participant {
         return Integer.compare(score().getSum(), participant.score().getSum());
     }
 
-    public Betting getBetting() {
-        return betting;
+    public long getBettingMoney() {
+        return bettingMoney;
     }
 }
