@@ -62,4 +62,21 @@ class MatchResultTest {
         assertThat(actualOutcome).isEqualTo(expectedOutcome);
     }
 
+    @DisplayName("딜러는 전체 수익금을 계산할 수 있어야 한다.")
+    @Test
+    void calculateDealerOutcomeTest() {
+        final Player player1 = Player.readyToPlay("name1", List.of(SPADE_ACE, SPADE_TEN));
+        player1.betAmount(10000);
+        final Player player2 = Player.readyToPlay("name2", List.of(SPADE_ACE, SPADE_TEN));
+        player2.betAmount(1000);
+
+        final MatchResult matchResult = new MatchResult(Map.of(
+                player1, MatchStatus.LOSS,
+                player2, MatchStatus.WIN
+        ));
+        final int actualOutcome = matchResult.getDealerOutcome();
+        final int expectedOutcome = 9000;
+        assertThat(actualOutcome).isEqualTo(expectedOutcome);
+    }
+
 }
