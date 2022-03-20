@@ -51,4 +51,9 @@ class PlayersTest {
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어의 인원은 최소 2인 ~ 최대 8인 입니다.");
     }
+
+    @Test
+    @DisplayName("")
+    void getResults() {
+    }
 }

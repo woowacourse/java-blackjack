@@ -60,4 +60,8 @@ public enum BlackJackResult {
     public static int getReverse(int value) {
         return value * REVERSE_VALUE;
     }
+
+    public int getProfit(int value) {
+        return (int) this.profitRate * value;
+    }
 }

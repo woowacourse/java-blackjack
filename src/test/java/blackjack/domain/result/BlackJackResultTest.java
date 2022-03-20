@@ -68,4 +68,11 @@ class BlackJackResultTest {
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("BLACK_JACK_WIN"));
     }
+
+    @Test
+    @DisplayName("금액을 입력 받아 수익을 반환한다.")
+    void getProfit() {
+        BlackJackResult blackJackResult = BlackJackResult.WIN;
+        assertThat(blackJackResult.getProfit(1000)).isEqualTo(1000);
+    }
 }
