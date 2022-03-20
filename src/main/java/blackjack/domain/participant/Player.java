@@ -15,7 +15,7 @@ public class Player extends Participant {
 	public void getBettingAmountFrom(final Participant dealer) {
 		final Outcome outcome = judgeCompeteResult(calculateFinalScore(), dealer.calculateFinalScore());
 		if (winWithoutBlackJack(outcome)) {
-			bettingAmount.giveOneTimes();
+			bettingAmount.giveOneTime();
 		}
 	}
 
