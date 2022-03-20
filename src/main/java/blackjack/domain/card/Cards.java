@@ -19,6 +19,10 @@ public class Cards {
         this.cards = new HashSet<>(cards);
     }
 
+    public Cards(Card... cards) {
+        this(List.of(cards));
+    }
+
     public Cards() {
         this(new HashSet<>());
     }
