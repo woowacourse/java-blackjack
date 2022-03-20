@@ -8,6 +8,7 @@ import blackjack.domain.card.pattern.Suit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -161,6 +162,27 @@ public class GameResultTest {
             .calculateGamersProfit(dealer, List.of(gamer));
         //then
         assertThat(GameResult.calculateDealerProfit(finalResultBoard)).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("여러 플레이어들의 수익을 계산할 때, 입력 순서대로 정렬되어 있는지 확인한다.")
+    void calculateGamersAndDealerProfit() {
+        //given
+        Dealer dealer = new Dealer();
+        get_20_Point(dealer);
+
+        Gamer gamer1 = settingGamer();
+        get_19_Point(gamer1);
+        Gamer gamer2 = settingGamer();
+        get_20_Point(gamer2);
+        Gamer gamer3 = settingGamer();
+        get_21_Point(gamer3);
+        //when
+        Map<Gamer, Long> gamersProfit = GameResult
+            .calculateGamersProfit(dealer, List.of(gamer1, gamer2, gamer3));
+        //then
+        assertThat(new ArrayList<>(gamersProfit.keySet()))
+            .isEqualTo(List.of(gamer1, gamer2, gamer3));
     }
 
     private Gamer settingGamer() {
