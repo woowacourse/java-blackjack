@@ -4,11 +4,13 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
 
-public abstract class Running extends Started{
+public abstract class Running implements State {
 	private static final String RUNNING_PROFIT_EXCEPTION = "게임 진행중에는 profit 계산을 할 수 없습니다";
 
+	protected final Cards cards;
+
 	protected Running(Cards cards) {
-		super(cards);
+		this.cards = cards;
 	}
 
 	@Override
@@ -19,5 +21,10 @@ public abstract class Running extends Started{
 	@Override
 	public boolean isRunning() {
 		return true;
+	}
+
+	@Override
+	public Cards getCards() {
+		return this.cards;
 	}
 }

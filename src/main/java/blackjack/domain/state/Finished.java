@@ -5,12 +5,14 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
 
-public abstract class Finished extends Started {
+public abstract class Finished implements State {
 	private static final String FINISHED_DRAW_EXCEPTION = "끝난 상태에서는 패를 받을 수 없습니다.";
 	private static final String FINISHED_STAY_EXCEPTION = "끝난 상태에서는 stay를 할 수 없습니다.";
 
+	protected final Cards cards;
+
 	protected Finished(Cards cards) {
-		super(cards);
+		this.cards = cards;
 	}
 
 	@Override
@@ -26,6 +28,11 @@ public abstract class Finished extends Started {
 	@Override
 	public boolean isRunning() {
 		return false;
+	}
+
+	@Override
+	public Cards getCards() {
+		return this.cards;
 	}
 
 	@Override
