@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Result {
 
+    private static final String ABSENT_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름이 존재하지 않습니다.";
     private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
 
     private final Map<Name, Versus> maps;
@@ -31,6 +32,9 @@ public class Result {
     }
 
     public Versus getVersusOfPlayer(Name name) {
+        if (!maps.containsKey(name)) {
+            throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getName()));
+        }
         return maps.get(name);
     }
 

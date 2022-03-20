@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Profit {
 
+    private static final String ABSENT_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름이 존재하지 않습니다.";
     private static final double BLACK_JACK_BONUS_PROFIT_RATE = 1.5;
     private static final int DEFAULT_PROFIT_RATE = 1;
 
@@ -48,6 +49,9 @@ public class Profit {
     }
 
     public double getProfit(Name name) {
+        if (!maps.containsKey(name)) {
+            throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getName()));
+        }
         return maps.get(name);
     }
 
