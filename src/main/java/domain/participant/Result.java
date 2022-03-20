@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 public enum Result {
     WIN(1, (playerScore, dealerScore) -> playerScore > dealerScore),
     LOSE(-1, (playerScore, dealerScore) -> playerScore < dealerScore),
-    PUSH(0, (playerScore, dealerScore) -> playerScore == dealerScore),
+    PUSH(0, Integer::equals),
     BLACKJACK(1.5);
 
     private final double dividendRate;
