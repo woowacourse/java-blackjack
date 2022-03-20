@@ -35,9 +35,8 @@ public class Score implements Comparable<Score> {
         return new Score(score + OTHER_POINT_OF_ACE - Denomination.ACE.getPoint());
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(score);
+    public int getScore() {
+        return score;
     }
 
     @Override

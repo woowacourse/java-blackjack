@@ -1,6 +1,7 @@
 package blackJack.view;
 
 import blackJack.domain.card.Card;
+import blackJack.domain.card.Score;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
@@ -23,7 +24,7 @@ public class OutputView {
     private static final String OUTPUT_MESSAGE_DEALER_RECEIVE_CARD_COUNT =
             NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
-            "%s 카드: %s - 결과: %s".concat(NEWLINE);
+            "%s 카드: %s - 결과: %d".concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_RESULT_OF_PROFIT_TITLE = NEWLINE.concat("## 최종 수익");
     private static final String OUTPUT_MESSAGE_RESULT_OF_PROFIT = "%s: %d".concat(NEWLINE);
 
@@ -84,9 +85,10 @@ public class OutputView {
     }
 
     private static void printParticipantGameResult(Participant participant) {
-        String playerCardsInfo = String.join(JOINING_DELIMITER_COMMA, getCardsInfo(participant));
-        System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), playerCardsInfo,
-                participant.getScore());
+        String participantCardsInfo = String.join(JOINING_DELIMITER_COMMA, getCardsInfo(participant));
+        Score score = participant.getScore();
+        System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), participantCardsInfo,
+                score.getScore());
     }
 
     public static void printResultOfProfit(Map<Participant, Integer> dealerProfit,
