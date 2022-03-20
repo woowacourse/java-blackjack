@@ -10,6 +10,6 @@ public final class Bust extends Finished {
 
     @Override
     public long revenue(PlayRecord playRecord, long bettingMoney) {
-        return -bettingMoney;
+        return bettingMoney * LOSE_MULTIPLIER;
     }
 }

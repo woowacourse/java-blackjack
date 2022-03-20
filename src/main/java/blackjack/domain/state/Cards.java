@@ -62,10 +62,6 @@ public final class Cards {
             .anyMatch(Card::isAce);
     }
 
-    /**
-     * test java doc
-     * @return Card
-     */
     public Card findFirst() {
         return value.stream()
             .findFirst()
