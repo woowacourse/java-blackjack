@@ -20,6 +20,10 @@ public class InputView {
 
         String[] splitNames = input.split(SPLIT_REGEX, -1);
 
+        return generateNames(splitNames);
+    }
+
+    private static Map<String, String> generateNames(String[] splitNames) {
         Map<String, String> names = new HashMap<>();
         for (String name : splitNames) {
             System.out.println(NEW_LINE + name + "의 배팅 금액은?");
@@ -31,14 +35,14 @@ public class InputView {
         return names;
     }
 
-    public static PlayCommand getPlayCommand(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return PlayCommand.of(SCANNER.nextLine());
-    }
-
     private static void validateNumeric(String input) {
         if (!input.chars().allMatch(Character::isDigit)) {
             throw new IllegalArgumentException("정수만 가능합니다.");
         }
+    }
+
+    public static PlayCommand getPlayCommand(Player player) {
+        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        return PlayCommand.of(SCANNER.nextLine());
     }
 }
