@@ -4,6 +4,8 @@ import blakjack.domain.Chip;
 import blakjack.domain.PrivateArea;
 import blakjack.domain.card.Card;
 
+import java.util.List;
+
 public abstract class State {
     final protected PrivateArea privateArea;
     final protected Chip chip;
@@ -35,5 +37,13 @@ public abstract class State {
 
     public final Chip getChip() {
         return chip;
+    }
+
+    public final String getName() {
+        return privateArea.getName();
+    }
+
+    public final List<Card> getCards() {
+        return privateArea.getCards();
     }
 }

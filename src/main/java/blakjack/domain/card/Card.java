@@ -9,11 +9,19 @@ public final class Card {
         this.face = face;
     }
 
+    public boolean isAce() {
+        return face.isAce();
+    }
+
     public int getScore() {
         return face.getScore();
     }
 
-    public boolean isAce() {
-        return face.isAce();
+    public String getSuit() {
+        return suit.getValue();
+    }
+
+    public String getFace() {
+        return face.getValue();
     }
 }

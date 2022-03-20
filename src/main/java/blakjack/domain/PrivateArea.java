@@ -66,4 +66,12 @@ public final class PrivateArea {
     public int getCardsSize() {
         return cards.size();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
+    }
 }
