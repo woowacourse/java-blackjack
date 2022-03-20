@@ -81,14 +81,6 @@ public class BlackJackManager {
 		return dealer.findHitCount();
 	}
 
-	public Dealer getDealer() {
-		return dealer;
-	}
-
-	public List<Player> getPlayers() {
-		return Collections.unmodifiableList(players);
-	}
-
 	public BettingResult createBettingResult() {
 		int dealerEarning = 0;
 		Map<String, Integer> playerEarnings = new LinkedHashMap<>();
@@ -103,5 +95,13 @@ public class BlackJackManager {
 
 	private static int calculateReverseEarning(int earning) {
 		return earning * -1;
+	}
+
+	public Dealer getDealer() {
+		return dealer;
+	}
+
+	public List<Player> getPlayers() {
+		return Collections.unmodifiableList(players);
 	}
 }
