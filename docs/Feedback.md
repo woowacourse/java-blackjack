@@ -183,17 +183,21 @@
 
 - [x] `dealer`의 초기 2장 지급 하는 메서드 호출 위치
     - 컨트롤러 or 생성자
-      - 테스트를 진행하기 위해 컨트롤러로 분리했음.
-      - 카드 2장 지급이 초기 세팅이기 때문에 생성자에서 하는 것이 맞다고 생각하여 수정
+        - 테스트를 진행하기 위해 컨트롤러로 분리했음.
+        - 카드 2장 지급이 초기 세팅이기 때문에 생성자에서 하는 것이 맞다고 생각하여 수정
 - [x] `GameController`
     - [x] `playTurnGambler`, 직관적인 이름으로 수정 -> `playGamblerTurn`
     - [x] Line 17, 불필요한 상수 제거
-- [ ] `GameStatistic`
-    - [ ] non profit의 의미
-    - [ ] `FLAG`, `VALUE`와 같은 단어들은 상수/변수/메서드명에 사용됐을 때 역할을 나타내는 데 도움이 되는 경우가 많지 않다.
-    - [ ] `profit` -> `getProfitOf` 이름 수정
+- [x] `GameStatistic`
+    - [x] non profit의 의미
+        - `profit`이 상대방에게는 손해라는 의미로 nonProfit을 사용
+        - 손해라는 의미를 나타낼 수 있도록 `loss`로 수정
+    - [x] `FLAG`, `VALUE`와 같은 단어들은 상수/변수/메서드명에 사용됐을 때 역할을 나타내는 데 도움이 되는 경우가 많지 않다.
         - 더 잘 나타내는 이름으로 수정하거나 상수를 만들지 않고 처리하는 방법
-    - [ ] `getGameResult`과 `porfit` 메서드는 하나가 불필요한 메서드
+        - `Math.negateExact`함수를 이용하여 변환
+    - [x] `profit` -> `getProfitOf` 이름 수정
+    - [x] `getGameResult`과 `porfit` 메서드는 하나가 불필요한 메서드
+      - `Map`을 통해 값을 가져올 수 있어 `profit()`메서드 제거
 - [ ] `Card`
     - [ ] 사용하지 않는 코드(주석) 제거
 - [ ] `Gambler`, `Cards`
@@ -211,4 +215,5 @@
     - `딜러가 Hit이면 isHit()가 참을 반환한다.`와 같이 설명이 잘될 수 있도록 수정
 
 ### 피드백 참조
+
 - [인터페이스 분리 원칙](https://ko.wikipedia.org/wiki/%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4_%EB%B6%84%EB%A6%AC_%EC%9B%90%EC%B9%99)

@@ -67,11 +67,19 @@ public class OutputView {
     public static void printGameResult(GameStatistic gameStatistic, Dealer dealer) {
         System.out.println();
         System.out.println(TOTAL_PROFIT_MESSAGE);
+        printLossOf(dealer, gameStatistic);
+        printProfitOf(gameStatistic);
+    }
+
+    private static void printLossOf(Dealer dealer, GameStatistic gameStatistic) {
         System.out.printf(PLAYER_RESULT_MESSAGE, dealer.getName(),
-            gameStatistic.getTotalNonProfit());
+            gameStatistic.calculateTotalLoss());
+    }
+
+    private static void printProfitOf(GameStatistic gameStatistic) {
         for (Player player : gameStatistic.getGameResult().keySet()) {
             System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(),
-                gameStatistic.profit(player));
+                gameStatistic.getGameResult().get(player));
         }
     }
 }
