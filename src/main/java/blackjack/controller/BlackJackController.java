@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.BlackJackReferee;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.BlackJackManager;
+import blackjack.domain.BlackJackManager;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BettingResult;
 import blackjack.view.InputView;
