@@ -7,7 +7,8 @@ import java.util.List;
 
 public final class PrivateArea {
     private static final int UPPER_ACE_SCORE = 10;
-    private static final int SCORE_THRESHOLD = 21;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -22,7 +23,7 @@ public final class PrivateArea {
         final var minScore = calculateMinScore();
         final var maxScore = calculateMaxScore(minScore);
 
-        if (maxScore > SCORE_THRESHOLD) {
+        if (maxScore > BLACKJACK_SCORE) {
             return minScore;
         }
         return maxScore;
@@ -44,5 +45,13 @@ public final class PrivateArea {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public int getCardsSize() {
+        return cards.size();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_COUNT && getTotalScore() == BLACKJACK_SCORE;
     }
 }

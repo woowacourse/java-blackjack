@@ -29,4 +29,25 @@ public final class PrivateAreaTest {
 
         assertThat(privateArea.getTotalScore()).isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("보유한 카드가 블랙잭일 경우 true 반환")
+    void blackjack() {
+        final PrivateArea privateArea = new PrivateArea("칙촉");
+        privateArea.addCard(CLUB_TEN);
+        privateArea.addCard(HEART_ACE);
+
+        assertThat(privateArea.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("보유한 카드가 블랙잭이 아닌경우 false 반환")
+    void notBlackJack() {
+        final PrivateArea privateArea = new PrivateArea("칙촉");
+        privateArea.addCard(CLUB_TEN);
+        privateArea.addCard(CLUB_TEN);
+        privateArea.addCard(HEART_ACE);
+
+        assertThat(privateArea.isBlackjack()).isFalse();
+    }
 }
