@@ -2,7 +2,7 @@ package domain.participant;
 
 import java.math.BigDecimal;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
     private final Money money;
 

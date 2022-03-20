@@ -2,7 +2,7 @@ package domain.participant;
 
 import java.util.List;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
     private static final int MAX_CARD_SUM = 16;
     private static final String NAME = "딜러";

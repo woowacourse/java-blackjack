@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Cards {
+public final class Cards {
 
     private static final String ACE_LETTER = "A";
     private static final int ACE_ADDITIONAL_VALUE = 10;

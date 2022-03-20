@@ -20,7 +20,7 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
-    public void hit(Card card) {
+    public final void hit(Card card) {
         if (!canDrawCard()) {
             throw new IllegalStateException(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
         }
@@ -29,31 +29,31 @@ public abstract class Participant {
 
     public abstract boolean canDrawCard();
 
-    public boolean isBurst() {
+    public final boolean isBurst() {
         return score() > MAX_SCORE;
     }
 
-    public boolean isBlackJack() {
+    public final boolean isBlackJack() {
         return score() == MAX_SCORE && cards.size() == 2;
     }
 
-    public boolean isNotBlackJack() {
+    public final boolean isNotBlackJack() {
         return score() != MAX_SCORE;
     }
 
-    public int score() {
+    public final int score() {
         return cards.calculateScore();
     }
 
-    public void hitInitialTurn(Deck deck) {
+    public final void hitInitialTurn(Deck deck) {
         cards.addCards(deck.handOutInitialTurn());
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
 }

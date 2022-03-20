@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class Card {
+public final class Card {
 
     private static final HashMap<String, Card> CACHE = new HashMap<>();
 

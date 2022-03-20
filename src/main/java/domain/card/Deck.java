@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Deck {
+public final class Deck {
 
     private final LinkedList<Card> deck;
 
