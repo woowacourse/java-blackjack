@@ -34,7 +34,7 @@ public class Score {
         return totalScore;
     }
 
-    public boolean CanAddDealerCard() {
+    public boolean canAddDealerCard() {
         return getTotal() <= DEALER_ADD_CARD_LIMIT_SCORE;
     }
 

@@ -4,7 +4,7 @@ import blackjack.domain.result.Result;
 
 public class Money {
 
-    public static final int MIN_BET = 1000;
+    private static final int MIN_BET = 1000;
     private final int bet;
 
     public Money(int bet) {

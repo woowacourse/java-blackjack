@@ -12,6 +12,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean canAddCard() {
-        return new Score(this).CanAddDealerCard();
+        return new Score(this).canAddDealerCard();
     }
 }

@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class Participants implements Iterable<Participant> {
 
-    public static final int MIN_PLAYER_NUMBER = 1;
-    public static final int MAX_PLAYER_NUMBER = 8;
+    private static final int MIN_PLAYER_NUMBER = 1;
+    private static final int MAX_PLAYER_NUMBER = 8;
     private final Map<Participant, Money> participants;
 
     public Participants(final List<String> names) {

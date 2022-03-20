@@ -50,7 +50,7 @@ public class ScoreTest {
 
         Score score = new Score(dealer);
 
-        assertThat(score.CanAddDealerCard()).isTrue();
+        assertThat(score.canAddDealerCard()).isTrue();
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ScoreTest {
 
         Score score = new Score(dealer);
 
-        assertThat(score.CanAddDealerCard()).isFalse();
+        assertThat(score.canAddDealerCard()).isFalse();
     }
 
     @Test
