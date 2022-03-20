@@ -15,7 +15,6 @@ public final class Init extends Running {
     }
 
     @Override
-    //순서 의존적임
     public State draw(final Card card) {
         privateArea.addCard(card);
         if (privateArea.isBlackjack()) {

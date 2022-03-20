@@ -40,8 +40,6 @@ public abstract class Participant {
     }
 
     public final int getProfit(final Participant participant) {
-        //디리미터 법칙에 위배
-        // 설계 단계에서 예상하지 못했던 문제
         return state.compare(participant.state).getProfit();
     }
 }
