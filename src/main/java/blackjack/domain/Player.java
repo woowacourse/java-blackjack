@@ -18,7 +18,7 @@ public class Player extends Gamer {
     }
 
     public GameResult createResult(Gamer dealer) {
-        if (isBust()|| !isBlackJack() && dealer.isBlackJack()) {
+        if (isBust() || !isBlackJack() && dealer.isBlackJack()) {
             return GameResult.LOSE;
         }
         if (dealer.isBust()) {
@@ -33,8 +33,8 @@ public class Player extends Gamer {
     @Override
     public void changeByBettingMoneyResult(Gamer dealer) {
         GameResult gameResult = createResult(dealer);
-        double result = gameResult.getBettingMoneyResult() * getBettingMoney();
-        addMoney((int) result);
+        Long result = Math.round(gameResult.getBettingMoneyResult() * getBettingMoney());
+        addMoney(Math.toIntExact(result));
     }
 
     public int reverseBettingMoney() {
