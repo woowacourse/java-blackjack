@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class RentCompany {
 
+    private static final String NEW_LINE = System.lineSeparator();
+
     private final List<Car> rentCars;
 
     private RentCompany() {
@@ -27,6 +29,6 @@ public class RentCompany {
     }
 
     private String getCarInfo(Car car) {
-        return car.getName() + " : " + (int) car.getChargeQuantity() + "리터" + "\n";
+        return car.getName() + " : " + (int) car.getChargeQuantity() + "리터" + NEW_LINE;
     }
 }
