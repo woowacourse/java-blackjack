@@ -19,7 +19,10 @@ public class Players {
 
     public static Players create(Map<String, Money> playerBets, Map<String, Cards> playerCards) {
         return playerBets.entrySet().stream()
-                .map(entry -> new Player(entry.getKey(), entry.getValue(), playerCards.get(entry.getKey())))
+                .map(entry -> {
+                    String name = entry.getKey();
+                    return new Player(name, entry.getValue(), playerCards.get(name));
+                })
                 .collect(Collectors.collectingAndThen(
                         Collectors.toList(),
                         Players::new
