@@ -57,4 +57,20 @@ class HitTest {
 
 		assertThat(hit.isFinished()).isFalse();
 	}
+
+	@Test
+	@DisplayName("Hit 상태는 결과를 비교하면 에러가 발생한다.")
+	void match() {
+		Cards standardCards = new Cards(Arrays.asList(Card.valueOf(Denomination.ACE, Suit.CLOVER),
+			Card.valueOf(Denomination.NINE, Suit.CLOVER)));
+		Hit standard = new Hit(standardCards);
+
+		Cards oppositeCards = new Cards(Arrays.asList(Card.valueOf(Denomination.ACE, Suit.SPADE),
+			Card.valueOf(Denomination.NINE, Suit.SPADE)));
+		Stay opposite = new Stay(oppositeCards);
+
+		assertThatThrownBy(() -> standard.match(opposite))
+			.isInstanceOf(IllegalStateException.class)
+			.hasMessageContaining("턴이 종료되지 않았습니다.");
+	}
 }

@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.game.MatchResult;
 
 public abstract class Finished extends Started {
 
@@ -25,4 +26,6 @@ public abstract class Finished extends Started {
 	public boolean isFinished() {
 		return true;
 	}
+
+	public abstract MatchResult match(State state);
 }

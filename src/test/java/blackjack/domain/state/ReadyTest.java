@@ -2,10 +2,13 @@ package blackjack.domain.state;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 
@@ -54,5 +57,19 @@ class ReadyTest {
 		Ready ready = new Ready();
 
 		assertThat(ready.isFinished()).isFalse();
+	}
+
+	@Test
+	@DisplayName("Ready 상태는 결과를 비교하면 에러가 발생한다.")
+	void match() {
+		Ready standard = new Ready();
+
+		Cards oppositeCards = new Cards(Arrays.asList(Card.valueOf(Denomination.ACE, Suit.SPADE),
+			Card.valueOf(Denomination.NINE, Suit.SPADE)));
+		Stay opposite = new Stay(oppositeCards);
+
+		assertThatThrownBy(() -> standard.match(opposite))
+			.isInstanceOf(IllegalStateException.class)
+			.hasMessageContaining("턴이 종료되지 않았습니다.");
 	}
 }
