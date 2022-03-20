@@ -6,9 +6,7 @@ import static blackjack.model.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.player.Gamer;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +15,34 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultTest {
+
+    private static Stream<Arguments> provideWinPlayer() {
+        return Stream.of(
+                Arguments.of(new Gamer("player",
+                        List.of(new Card(ACE, SPADE), new Card(JACK, HEART), new Card(JACK, DIAMOND)),
+                        new Betting(1000)), 1000),
+                Arguments.of(new Gamer("player",
+                        List.of(new Card(EIGHT, SPADE), new Card(JACK, HEART)),
+                        new Betting(30000)), 30000),
+                Arguments.of(new Gamer("player",
+                        List.of(new Card(ACE, SPADE), new Card(FIVE, HEART), new Card(JACK, DIAMOND)),
+                        new Betting(5500)), 5500)
+        );
+    }
+
+    private static Stream<Arguments> provideLosePlayer() {
+        return Stream.of(
+                Arguments.of(new Gamer("player",
+                        List.of(new Card(ACE, SPADE), new Card(ACE, HEART), new Card(JACK, DIAMOND)),
+                        new Betting(1000)), -1000),
+                Arguments.of(new Gamer("player",
+                        List.of(new Card(TWO, SPADE), new Card(JACK, HEART)),
+                        new Betting(30000)), -30000),
+                Arguments.of(new Gamer("player",
+                        List.of(new Card(SEVEN, SPADE), new Card(FIVE, HEART), new Card(JACK, DIAMOND)),
+                        new Betting(5500)), -5500)
+        );
+    }
 
     @Test
     @DisplayName("플레이어가 베팅 금액의 1.5배를 획득하는 경우 테스트")
@@ -44,40 +70,12 @@ class GameResultTest {
         assertThat(profit.getAmount()).isEqualTo(money);
     }
 
-    private static Stream<Arguments> provideWinPlayer() {
-        return Stream.of(
-                Arguments.of(new Gamer("player",
-                        List.of(new Card(ACE, SPADE), new Card(JACK, HEART), new Card(JACK, DIAMOND)),
-                        new Betting(1000)), 1000),
-                Arguments.of(new Gamer("player",
-                        List.of(new Card(EIGHT, SPADE), new Card(JACK, HEART)),
-                        new Betting(30000)), 30000),
-                Arguments.of(new Gamer("player",
-                        List.of(new Card(ACE, SPADE), new Card(FIVE, HEART), new Card(JACK, DIAMOND)),
-                        new Betting(5500)), 5500)
-        );
-    }
-
     @ParameterizedTest(name = "[{index}] 베팅 금액 -1배 테스트")
     @MethodSource("provideLosePlayer")
     @DisplayName("플레이어가 진 경우 테스트")
     void playerLoseBettingTest(Gamer gamer, int money) {
         Profit profit = GameResult.calculateProfit(gamer, LOSE);
         assertThat(profit.getAmount()).isEqualTo(money);
-    }
-
-    private static Stream<Arguments> provideLosePlayer() {
-        return Stream.of(
-                Arguments.of(new Gamer("player",
-                        List.of(new Card(ACE, SPADE), new Card(ACE, HEART), new Card(JACK, DIAMOND)),
-                        new Betting(1000)), -1000),
-                Arguments.of(new Gamer("player",
-                        List.of(new Card(TWO, SPADE), new Card(JACK, HEART)),
-                        new Betting(30000)), -30000),
-                Arguments.of(new Gamer("player",
-                        List.of(new Card(SEVEN, SPADE), new Card(FIVE, HEART), new Card(JACK, DIAMOND)),
-                        new Betting(5500)), -5500)
-        );
     }
 
     @Test

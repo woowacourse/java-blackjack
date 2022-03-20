@@ -19,14 +19,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class DealerTest {
 
-    @ParameterizedTest(name = "[{index}] 딜러가 이기는 경우")
-    @MethodSource("provideDealerWinningCaseCards")
-    @DisplayName("딜러가 이기는 경우 판별 테스트")
-    void dealerIsWinner(Dealer dealer, Cards cards) {
-        assertThat(dealer.match(new Gamer("player", cards.getEachCard(), new Betting(1000))))
-                .isEqualTo(WIN);
-    }
-
     private static Stream<Arguments> provideDealerWinningCaseCards() {
         return Stream.of(
                 Arguments.of(
@@ -44,14 +36,6 @@ public class DealerTest {
         );
     }
 
-    @ParameterizedTest(name = "[{index}] 딜러가 지는 경우")
-    @MethodSource("provideDealerLosingCaseCards")
-    @DisplayName("딜러가 지는 경우 판별 테스트")
-    void dealerIsLoser(Dealer dealer, Cards cards) {
-        assertThat(dealer.match(new Gamer("player", cards.getEachCard(), new Betting(1000))))
-                .isEqualTo(LOSE);
-    }
-
     private static Stream<Arguments> provideDealerLosingCaseCards() {
         return Stream.of(
                 Arguments.of(
@@ -63,13 +47,6 @@ public class DealerTest {
         );
     }
 
-    @ParameterizedTest(name = "[{index}] 카드 발급 가능 여부")
-    @MethodSource("provideCardsForDealer")
-    @DisplayName("딜러 카드 발급 가능 여부 확인 테스트")
-    void dealerPossibleTakeCard(Dealer dealer, boolean expect) {
-        assertThat(dealer.isHittable()).isEqualTo(expect);
-    }
-
     private static Stream<Arguments> provideCardsForDealer() {
         return Stream.of(
                 Arguments.of(new Dealer(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER))), true),
@@ -77,6 +54,40 @@ public class DealerTest {
                 Arguments.of(new Dealer(List.of(new Card(ACE, DIAMOND), new Card(SIX, CLOVER))), false),
                 Arguments.of(new Dealer(List.of(new Card(ACE, DIAMOND), new Card(ACE, CLOVER))), true)
         );
+    }
+
+    private static Stream<Arguments> provideBlackjackVersus21CaseCards() {
+        return Stream.of(
+                Arguments.of(
+                        new Dealer(List.of(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART), new Card(SIX, HEART))),
+                        new Cards(List.of(new Card(QUEEN, CLOVER), new Card(ACE, HEART))), LOSE),
+                Arguments.of(
+                        new Dealer(List.of(new Card(ACE, HEART), new Card(QUEEN, HEART))),
+                        new Cards(List.of(new Card(QUEEN, CLOVER), new Card(JACK, HEART), new Card(ACE, SPADE))), WIN)
+        );
+    }
+
+    @ParameterizedTest(name = "[{index}] 딜러가 이기는 경우")
+    @MethodSource("provideDealerWinningCaseCards")
+    @DisplayName("딜러가 이기는 경우 판별 테스트")
+    void dealerIsWinner(Dealer dealer, Cards cards) {
+        assertThat(dealer.match(new Gamer("player", cards.getEachCard(), new Betting(1000))))
+                .isEqualTo(WIN);
+    }
+
+    @ParameterizedTest(name = "[{index}] 딜러가 지는 경우")
+    @MethodSource("provideDealerLosingCaseCards")
+    @DisplayName("딜러가 지는 경우 판별 테스트")
+    void dealerIsLoser(Dealer dealer, Cards cards) {
+        assertThat(dealer.match(new Gamer("player", cards.getEachCard(), new Betting(1000))))
+                .isEqualTo(LOSE);
+    }
+
+    @ParameterizedTest(name = "[{index}] 카드 발급 가능 여부")
+    @MethodSource("provideCardsForDealer")
+    @DisplayName("딜러 카드 발급 가능 여부 확인 테스트")
+    void dealerPossibleTakeCard(Dealer dealer, boolean expect) {
+        assertThat(dealer.isHittable()).isEqualTo(expect);
     }
 
     @Test
@@ -106,17 +117,6 @@ public class DealerTest {
     void blackVersus21(Dealer dealer, Cards cards, Result expect) {
         assertThat(dealer.match(new Gamer("player", cards.getEachCard(), new Betting(1000))))
                 .isEqualTo(expect);
-    }
-
-    private static Stream<Arguments> provideBlackjackVersus21CaseCards() {
-        return Stream.of(
-                Arguments.of(
-                        new Dealer(List.of(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART), new Card(SIX, HEART))),
-                        new Cards(List.of(new Card(QUEEN, CLOVER), new Card(ACE, HEART))), LOSE),
-                Arguments.of(
-                        new Dealer(List.of(new Card(ACE, HEART), new Card(QUEEN, HEART))),
-                        new Cards(List.of(new Card(QUEEN, CLOVER), new Card(JACK, HEART), new Card(ACE, SPADE))), WIN)
-        );
     }
 
     @Test

@@ -1,10 +1,7 @@
 package blackjack.model;
 
-import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamer;
-import blackjack.model.player.Gamers;
 import blackjack.model.player.Player;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

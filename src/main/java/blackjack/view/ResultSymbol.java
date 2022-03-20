@@ -11,10 +11,6 @@ public enum ResultSymbol {
         this.symbol = symbol;
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
     public static String getMappingSymbol(String result) {
         return ResultSymbol.valueOf(result).symbol;
     }
@@ -27,5 +23,9 @@ public enum ResultSymbol {
             return WIN;
         }
         return DRAW;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 }

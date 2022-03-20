@@ -12,16 +12,16 @@ public class Profit {
         this.amount = amount;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
     public static boolean isDivisibleByTen(int money) {
         return money * BLACKJACK_WIN_PROFIT_RATE % 10 != 0;
     }
 
     public static Profit of(Betting bettingMoney, Result result, boolean isBlackjackWin) {
         return new Profit(bettingMoney.calculateResult(result, isBlackjackWin));
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     @Override

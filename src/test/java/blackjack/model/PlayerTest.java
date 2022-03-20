@@ -16,13 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
 
-    @ParameterizedTest(name = "[{index}] 점수 반환 테스트")
-    @MethodSource("providePlayers")
-    @DisplayName("플레이어 점수 반환 테스트")
-    void gamerScore(Player player, int expect) {
-        assertThat(player.score().getValue()).isEqualTo(expect);
-    }
-
     protected static Stream<Arguments> providePlayers() {
         return Stream.of(
                 Arguments.of(new Gamer("player",
@@ -32,9 +25,17 @@ public class PlayerTest {
                 Arguments.of(new Dealer(
                         List.of(new Card(ACE, DIAMOND), new Card(ACE, SPADE), new Card(NINE, CLOVER))), 21),
                 Arguments.of(new Gamer("player",
-                        List.of(new Card(QUEEN, CLOVER), new Card(JACK, HEART), new Card(KING, DIAMOND)), new Betting(1000)), 30),
+                        List.of(new Card(QUEEN, CLOVER), new Card(JACK, HEART), new Card(KING, DIAMOND)),
+                        new Betting(1000)), 30),
                 Arguments.of(new Gamer("player",
                         List.of(new Card(THREE, DIAMOND), new Card(TWO, DIAMOND)), new Betting(1000)), 5)
         );
+    }
+
+    @ParameterizedTest(name = "[{index}] 점수 반환 테스트")
+    @MethodSource("providePlayers")
+    @DisplayName("플레이어 점수 반환 테스트")
+    void gamerScore(Player player, int expect) {
+        assertThat(player.score().getValue()).isEqualTo(expect);
     }
 }

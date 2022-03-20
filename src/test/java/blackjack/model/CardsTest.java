@@ -15,13 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardsTest {
 
-    @ParameterizedTest(name = "[{index}] Best Score 계산")
-    @MethodSource("provideCards")
-    @DisplayName("최고의 카드 점수 계산")
-    void bestScore(Cards cards, int expect) {
-        assertThat(cards.bestScore()).isEqualTo(new Score(expect));
-    }
-
     protected static Stream<Arguments> provideCards() {
         return Stream.of(
                 Arguments.of(new Cards(
@@ -38,6 +31,13 @@ public class CardsTest {
                 Arguments.of(new Cards(
                         List.of(new Card(ACE, DIAMOND), new Card(ACE, SPADE))), 12)
         );
+    }
+
+    @ParameterizedTest(name = "[{index}] Best Score 계산")
+    @MethodSource("provideCards")
+    @DisplayName("최고의 카드 점수 계산")
+    void bestScore(Cards cards, int expect) {
+        assertThat(cards.bestScore()).isEqualTo(new Score(expect));
     }
 
     @Test
