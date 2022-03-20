@@ -67,7 +67,7 @@ public class Gamers {
     }
 
     private Map<String, Match> getPlayerResults() {
-        Map<Player, Match> playerResult = playerGroup.getPlayerResult(dealer.getScore());
+        Map<Player, Match> playerResult = playerGroup.getPlayerResult(dealer);
         Map<String, Match> playerResults = new LinkedHashMap<>();
         for (Map.Entry<Player, Match> entry : playerResult.entrySet()) {
             playerResults.put(entry.getKey().getName(), entry.getValue());
@@ -106,7 +106,7 @@ public class Gamers {
         int dealerMoney = 0;
 
         Map<String, Integer> profitResult = new LinkedHashMap<>();
-        Map<Player, Match> playerResult = playerGroup.getPlayerResult(dealer.getScore());
+        Map<Player, Match> playerResult = playerGroup.getPlayerResult(dealer);
         profitResult.put(dealer.getName(), dealerMoney);
         for (Map.Entry<Player, Match> entry : playerResult.entrySet()) {
             int money = money(entry.getKey(), entry.getValue());

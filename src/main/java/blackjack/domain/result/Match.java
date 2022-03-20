@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import java.util.Arrays;
 import java.util.Optional;
 
+import blackjack.domain.gamer.role.Dealer;
 import blackjack.domain.gamer.role.Player;
 
 public enum Match {
@@ -25,20 +26,20 @@ public enum Match {
                 .findFirst();
     }
 
-    public static Match compare(Player player, int sum) {
+    public static Match compare(Player player, Dealer dealer) {
         if (player.isBust()) {
             return Match.LOSE;
         }
 
-        if (player.isBust(sum)) {
+        if (dealer.isBust()) {
             return Match.WIN;
         }
 
-        return Match.of(match(player, sum)).get();
+        return Match.of(match(player, dealer)).get();
     }
 
-    private static int match(Player player, int sum) {
-        return Integer.compare(player.getScore(), sum);
+    private static int match(Player player, Dealer dealer) {
+        return Integer.compare(player.getScore(), dealer.getScore());
     }
 
     public String getResult() {

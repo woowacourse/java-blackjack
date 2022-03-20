@@ -46,10 +46,6 @@ public abstract class Role {
         return cardGroup.isBust();
     }
 
-    public boolean isBust(int sum) {
-        return cardGroup.isBust(sum);
-    }
-
     public int getScore() {
         return cardGroup.getScore();
     }
