@@ -1,11 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.entry.Player;
+import blackjack.domain.PlayerName;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -27,15 +26,15 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static int inputBettingMoney(String name) {
-        System.out.println(MessageFormat.format("{0}의 베팅 금액은?", name));
+    public static int inputBettingMoney(PlayerName name) {
+        System.out.println(MessageFormat.format("{0}의 베팅 금액은?", name.getValue()));
         int money = SCANNER.nextInt();
         SCANNER.nextLine();
         return money;
     }
 
-    public static String inputCommand(String name) {
-        System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
+    public static String inputCommand(PlayerName name) {
+        System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name.getValue()));
         return validateCommand(SCANNER.nextLine().trim().toLowerCase());
     }
 

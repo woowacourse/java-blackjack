@@ -1,5 +1,6 @@
 package blackjack.domain.entry;
 
+import blackjack.domain.PlayerName;
 import blackjack.domain.result.PlayerOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
@@ -9,10 +10,10 @@ import java.util.List;
 import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public class Player extends Participant {
-    private final String name;
+    private final PlayerName name;
     private int bettingMoney;
 
-    public Player(String name, int bettingMoney, HoldCards holdCards) {
+    public Player(PlayerName name, int bettingMoney, HoldCards holdCards) {
         super(holdCards);
         this.bettingMoney = bettingMoney;
         this.name = name;
@@ -33,7 +34,7 @@ public class Player extends Participant {
 
     @Override
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     @Override
@@ -45,9 +46,5 @@ public class Player extends Participant {
     @Override
     public boolean canHit() {
         return calculateCardsSum() < BLACKJACK_NUMBER;
-    }
-
-    public int getBettingMoney() {
-        return this.bettingMoney;
     }
 }

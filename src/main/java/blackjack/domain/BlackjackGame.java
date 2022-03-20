@@ -17,25 +17,25 @@ public class BlackjackGame {
     private final Deck deck;
     private final GameParticipants gameParticipants;
 
-    public BlackjackGame(Map<String, Integer> names) {
+    public BlackjackGame(Map<PlayerName, Integer> names) {
         this.deck = Deck.of(Card.createDeck());
         this.gameParticipants = new GameParticipants(createDealer(), toPlayers(names));
     }
 
-    public void hit(String name) {
-        Participant participant = gameParticipants.find(name);
+    public void hit(PlayerName name) {
+        Participant participant = find(name);
         participant.putCard(deck.draw());
     }
 
-    public Participant find(String playerName) {
-        return gameParticipants.find(playerName);
+    public Participant find(PlayerName playerName) {
+        return gameParticipants.find(playerName.getValue());
     }
 
     public boolean canDealerHit() {
         return gameParticipants.getDealer().canHit();
     }
 
-    public boolean canHit(Command command, String playerName) {
+    public boolean canHit(Command command, PlayerName playerName) {
         return command.isHit() && find(playerName).canHit();
     }
 
@@ -56,7 +56,7 @@ public class BlackjackGame {
         return new Dealer(HoldCards.init(deck.drawCards(INIT_CARD_SIZE)));
     }
 
-    private Players toPlayers(Map<String, Integer> names) {
+    private Players toPlayers(Map<PlayerName, Integer> names) {
         return new Players(names.entrySet().stream()
                 .map(entry -> new Player(entry.getKey(), entry.getValue(), HoldCards.init(deck.drawCards(INIT_CARD_SIZE))))
                 .collect(Collectors.toList()));

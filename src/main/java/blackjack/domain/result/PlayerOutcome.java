@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.HoldCards;
+
 import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public enum PlayerOutcome {
@@ -15,6 +17,27 @@ public enum PlayerOutcome {
         this.value = value;
         this.dividendRate = dividendRate;
     }
+
+//    public static PlayerOutcome match(HoldCards playerCard, HoldCards dealerCard) {
+//        if (playerCard.isBlackjack() && dealerCard.isBlackjack()) {
+//            return DRAW;
+//        }
+//        if (playerCard.isBlackjack()) {
+//            return BLACKJACK_WIN;
+//        }
+//        if (dealerCard.isBust() && playerCard.isBust()) {
+//            return LOSE;
+//        }
+//        if (dealerCard.isBust()) {
+//            return WIN;
+//        }
+//        if (playerCard.isBust()) {
+//            return LOSE;
+//        }
+//        if (playerCard.countBestSum() > dealerCard.countBestSum()) {
+//
+//        }
+//    }
 
     // TODO 더 좋은 방법 찾기
     public static PlayerOutcome match(int dealerTotal, int playerTotal, int dealerCount, int playerCount) {

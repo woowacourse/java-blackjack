@@ -1,5 +1,6 @@
 package blackjack.domain.entry;
 
+import blackjack.domain.PlayerName;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 
@@ -9,7 +10,7 @@ import java.util.Map;
 
 public class Dealer extends Participant {
     private static final int MORE_CARD_STANDARD = 16;
-    public static final String NAME = "딜러";
+    public static final PlayerName NAME = new PlayerName("딜러");
 
     public Dealer(HoldCards holdCards) {
         super(holdCards);
@@ -17,7 +18,7 @@ public class Dealer extends Participant {
 
     @Override
     public String getName() {
-        return NAME;
+        return NAME.getValue();
     }
 
     @Override
