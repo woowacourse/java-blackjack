@@ -21,8 +21,8 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isHit() {
-        return playingCards.calculatePoints() < HIT_MAX_POINT;
+    protected int limitHit() {
+        return HIT_MAX_POINT;
     }
 
     @Override

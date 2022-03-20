@@ -5,6 +5,8 @@ import blackjack.domain.card.PlayingCards;
 
 public abstract class AbstractPlayer implements Player {
 
+    private static final int BLACKJACK_SIZE = 2;
+
     protected String name;
     protected PlayingCards playingCards;
 
@@ -30,13 +32,25 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public final boolean isBust() {
-        return playingCards.isBust();
+        return playingCards.calculatePoints() > PlayingCards.BLACKJACK_POINT;
     }
 
     @Override
     public final boolean isBlackJack(Player competitor) {
-        return playingCards.isBlackJack() && !competitor.getPlayingCards().isBlackJack();
+        return (playingCards.getCards().size() == BLACKJACK_SIZE &&
+                playingCards.calculatePoints() == PlayingCards.BLACKJACK_POINT)
+                &&
+                !(competitor.getPlayingCards().getCards().size() == BLACKJACK_SIZE &&
+                competitor.getPlayingCards().calculatePoints() == PlayingCards.BLACKJACK_POINT);
     }
+
+    @Override
+    public boolean isHit() {
+        return playingCards.calculatePoints() < limitHit();
+    }
+
+    protected abstract int limitHit();
+
 
     @Override
     public String getName() {

@@ -1,9 +1,10 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Fixtures;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import blackjack.domain.Fixtures;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -97,34 +98,5 @@ class PlayingCardsTest {
         int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(12);
-    }
-
-    @Test
-    @DisplayName("Bust인지 확인")
-    void checkIsBust() {
-        playingCards.addCard(Fixtures.SPADE_JACK);
-        playingCards.addCard(Fixtures.SPADE_NINE);
-        playingCards.addCard(Fixtures.SPADE_EIGHT);
-
-        assertThat(playingCards.isBust()).isTrue();
-    }
-
-    @Test
-    @DisplayName("블랙잭인 경우")
-    void checkBlackJack() {
-        playingCards.addCard(Fixtures.SPADE_ACE);
-        playingCards.addCard(Fixtures.SPADE_JACK);
-
-        assertThat(playingCards.isBlackJack()).isTrue();
-    }
-
-    @Test
-    @DisplayName("점수가 21점이지만, 블랙잭이 아닌 경우")
-    void checkNotBlackJack() {
-        playingCards.addCard(Fixtures.SPADE_ACE);
-        playingCards.addCard(Fixtures.SPADE_NINE);
-        playingCards.addCard(Fixtures.SPADE_TWO);
-
-        assertThat(playingCards.isBlackJack()).isFalse();
     }
 }

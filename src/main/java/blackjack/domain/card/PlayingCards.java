@@ -9,7 +9,6 @@ public class PlayingCards {
 
     public static final int BLACKJACK_POINT = 21;
     private static final int ACE_BONUS = 10;
-    private static final int BLACKJACK_SIZE = 2;
 
     private final Set<PlayingCard> cards;
 
@@ -46,18 +45,6 @@ public class PlayingCards {
         return cards.stream()
                 .mapToInt(PlayingCard::getPoint)
                 .sum();
-    }
-
-    public boolean isBust() {
-        return calculatePoints() > BLACKJACK_POINT;
-    }
-
-    public boolean isHit() {
-        return calculatePoints() < BLACKJACK_POINT;
-    }
-
-    public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_SIZE && calculatePoints() == BLACKJACK_POINT;
     }
 
     public Set<PlayingCard> getCards() {

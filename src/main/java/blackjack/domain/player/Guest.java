@@ -4,6 +4,8 @@ import blackjack.domain.card.PlayingCards;
 
 public class Guest extends AbstractPlayer implements Player {
 
+    private static final int HIT_MAX_POINT = 21;
+
     private final BetMoney betMoney;
 
     public Guest(String name, PlayingCards playingCards, Integer money) {
@@ -28,8 +30,8 @@ public class Guest extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isHit() {
-        return playingCards.isHit();
+    protected int limitHit() {
+        return HIT_MAX_POINT;
     }
 
     public BetMoney getBetMoney() {
