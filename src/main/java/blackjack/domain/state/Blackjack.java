@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.game.Betting;
 import blackjack.domain.game.PlayRecord;
 
 public final class Blackjack extends Finished {
@@ -9,10 +10,10 @@ public final class Blackjack extends Finished {
     }
 
     @Override
-    public long revenue(PlayRecord playRecord, long bettingMoney) {
+    public long revenue(PlayRecord playRecord, Betting betting) {
         if (playRecord == PlayRecord.BLACKJACK) {
-            return (long)(bettingMoney * BLACKJACK_MULTIPLIER);
+            return betting.multiply(BLACKJACK_MULTIPLIER);
         }
-        return PUSH_REVENUE;
+        return betting.multiply(PUSH_MULTIPLIER);
     }
 }

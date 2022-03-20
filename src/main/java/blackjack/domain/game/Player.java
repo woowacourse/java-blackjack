@@ -1,14 +1,15 @@
 package blackjack.domain.game;
 
 import blackjack.domain.Name;
-import blackjack.domain.state.Ready;
 
 public final class Player extends Participant {
 
     private final Name name;
+    private final Betting betting;
 
-    Player(Name name) {
+    Player(Name name, Betting betting) {
         this.name = name;
+        this.betting = betting;
     }
 
     @Override
@@ -16,19 +17,12 @@ public final class Player extends Participant {
         return name;
     }
 
-    @Override
-    public long getRevenue(PlayRecord playRecord, long bettingMoney) {
-        return getState().revenue(playRecord, bettingMoney);
+    public long getRevenue(PlayRecord playRecord) {
+        return getState().revenue(playRecord, betting);
     }
 
     @Override
     public boolean isDrawable() {
         return getState().isDrawable();
-    }
-
-    public static void main(String[] args) {
-        Ready ready = new Ready();
-        long revenue = ready.revenue(PlayRecord.BLACKJACK, 10000);
-        System.out.println(revenue);
     }
 }

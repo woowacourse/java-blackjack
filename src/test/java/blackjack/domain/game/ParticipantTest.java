@@ -20,11 +20,13 @@ import blackjack.domain.state.State;
 
 public class ParticipantTest {
 
+    private static final Betting betting = new Betting(1);
+
     @Test
     @DisplayName("생성한 참여자의 상태가 Started인지 확인")
     void checkStarted() {
         //given
-        Participant participant = new Player(Name.of("pobi"));
+        Participant participant = new Player(Name.of("pobi"), betting);
 
         //when
         State actual = participant.getState();
@@ -37,7 +39,7 @@ public class ParticipantTest {
     @DisplayName("초기화 후 참여자의 상태가 Running인지 확인")
     void checkRunning() {
         //given
-        Participant participant = new Player(Name.of("pobi"));
+        Participant participant = new Player(Name.of("pobi"), betting);
 
         //when
         participant.init(new Card(DIAMOND, JACK),
@@ -52,7 +54,7 @@ public class ParticipantTest {
     @DisplayName("초기화 후 카드 합이 21이면 상태가 Blackjack인지 확인")
     void checkBlackjack() {
         //given
-        Participant participant = new Player(Name.of("pobi"));
+        Participant participant = new Player(Name.of("pobi"), betting);
 
         //when
         participant.init(new Card(DIAMOND, JACK),
@@ -68,7 +70,7 @@ public class ParticipantTest {
     void init() {
         // give
         CardDeck cardDeck = new CardDeck(new TestDeck());
-        Participant player = new Player(Name.of("pobi"));
+        Participant player = new Player(Name.of("pobi"), betting);
 
         // when
         player.init(cardDeck.drawCard(), cardDeck.drawCard());
@@ -82,7 +84,7 @@ public class ParticipantTest {
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
     void returnBust() {
         // give
-        Participant player = new Player(Name.of("pobi"));
+        Participant player = new Player(Name.of("pobi"), betting);
         player.draw(new Card(DIAMOND, JACK));
         player.draw(new Card(DIAMOND, QUEEN));
         player.draw(new Card(DIAMOND, TWO));
@@ -98,7 +100,7 @@ public class ParticipantTest {
     @DisplayName("카드 목록 반환을 검증한다.")
     void getCards() {
         // give
-        Participant player = new Player(Name.of("pobi"));
+        Participant player = new Player(Name.of("pobi"), betting);
         CardDeck cardDeck = new CardDeck(new TestDeck());
 
         // when

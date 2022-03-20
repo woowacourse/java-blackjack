@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,11 +18,11 @@ public final class Game {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Game(CardDeck cardDeck, List<Name> playerNames, List<Betting> bettings) {
+    public Game(CardDeck cardDeck, Map<Name, Betting> namesAndBettings) {
         this.cardDeck = cardDeck;
-        this.dealer = new Dealer(bettings);
-        this.players = List.copyOf(playerNames).stream()
-            .map(Player::new)
+        this.dealer = new Dealer();
+        this.players = namesAndBettings.entrySet().stream()
+            .map(entry -> new Player(entry.getKey(), entry.getValue()))
             .collect(Collectors.toUnmodifiableList());
         init();
     }
@@ -55,12 +56,17 @@ public final class Game {
         return DrawCount.of(count);
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
+    public Map<Name, Long> getRevenues() {
+        Map<Name, Long> revenues = new LinkedHashMap<>();
+        revenues.put(dealer.getName(), dealer.getRevenue(players));
+        for (Player player : players) {
+            revenues.put(player.getName(), player.getRevenue(dealer.playerRecord(player)));
+        }
+        return revenues;
     }
 
-    public Map<Name, Long> getRevenues() {
-        return dealer.getRevenues(PlayRecord.createPlayRecords(players, dealer));
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 
     public List<Participant> getParticipants() {

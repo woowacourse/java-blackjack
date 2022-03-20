@@ -54,6 +54,4 @@ public abstract class Participant {
     public final int getScore() {
         return getCards().sum();
     }
-
-    public abstract long getRevenue(PlayRecord playRecord, long bettingMoney);
 }

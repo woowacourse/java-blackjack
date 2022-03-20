@@ -4,7 +4,9 @@ import static blackjack.view.InputView.*;
 import static blackjack.view.OutputView.*;
 import static java.util.stream.Collectors.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import blackjack.domain.Name;
 import blackjack.domain.card.deckstrategy.ShuffleDeck;
@@ -19,7 +21,8 @@ public final class GameController {
 
     public void play() {
         List<Name> names = getNames();
-        Game game = initGame(names, getBettings(names));
+        Game game = initGame(getBettings(names));
+        printInitResult(names);
         printDrawResult(game.getParticipants());
 
         drawPlayerCards(game);
@@ -35,15 +38,14 @@ public final class GameController {
             .collect(toUnmodifiableList());
     }
 
-    private List<Betting> getBettings(List<Name> names) {
+    private Map<Name, Betting> getBettings(List<Name> names) {
         return names.stream()
-            .map(name -> new Betting(name, inputBettingMoney(name)))
-            .collect(toUnmodifiableList());
+            .collect(toMap(name -> name, name -> new Betting(inputBettingMoney(name)),
+                (bettingA, bettingB) -> bettingB, LinkedHashMap::new));
     }
 
-    private Game initGame(List<Name> names, List<Betting> bettings) {
-        printInitResult(names);
-        return new Game(new CardDeck(new ShuffleDeck()), names, bettings);
+    private Game initGame(Map<Name, Betting> namesAndBettings) {
+        return new Game(new CardDeck(new ShuffleDeck()), namesAndBettings);
     }
 
     private void printDrawResult(List<Participant> participants) {
@@ -54,8 +56,9 @@ public final class GameController {
     }
 
     private void drawPlayerCards(Game game) {
-        if (game.RunningPlayer().isPresent()) {
-            keepDrawing(game, game.RunningPlayer().get());
+        List<Player> players = game.getPlayers();
+        for (Player player : players) {
+            keepDrawing(game, player);
         }
     }
 

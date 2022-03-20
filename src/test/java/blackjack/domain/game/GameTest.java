@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,9 @@ public class GameTest {
     @DisplayName("게임을 초기화 한다.")
     void initGame() {
         // given
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi"), Name.of("rick")), List.of());
+        Game game = new Game(new CardDeck(new TestDeck()),
+            Map.of(Name.of("pobi"), new Betting(1),
+                Name.of("rick"), new Betting(1)));
 
         // when
         int actual = game.getPlayers().size();
@@ -41,7 +43,9 @@ public class GameTest {
     @DisplayName("모든 참가자에게 카드를 2장씩 분배한다.")
     void initParticipants() {
         // given
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi"), Name.of("rick")), List.of());
+        Game game = new Game(new CardDeck(new TestDeck()),
+            Map.of(Name.of("pobi"), new Betting(1),
+                Name.of("rick"), new Betting(1)));
 
         // when
         List<Integer> actual = new ArrayList<>();
@@ -55,27 +59,12 @@ public class GameTest {
         assertThat(actual).isEqualTo(List.of(15, 20, 20));
     }
 
-    @Test
-    @DisplayName("상태가 HIT인 플레이어를 Optional로 반환한다.")
-    void findHitPlayer() {
-        // given
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
-
-        // when
-        Optional<Player> hitPlayer = game.RunningPlayer();
-        if (hitPlayer.isPresent()) {
-            State actual = hitPlayer.get().getState();
-            // then
-            assertThat(actual).isInstanceOf(Hit.class);
-        }
-    }
-
     @ParameterizedTest
     @CsvSource(value = {"y:30", "n:20"}, delimiter = ':')
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
     void drawCard_HIT(String hitOrStay, int expected) {
         // given
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
+        Game game = new Game(new CardDeck(new TestDeck()), Map.of(Name.of("pobi"), new Betting(1)));
         Player player = game.getPlayers().get(0);
 
         // when
@@ -93,7 +82,7 @@ public class GameTest {
         CardDeck cardDeck = new CardDeck(() -> new ArrayDeque<>(List.of(
             new Card(SPADE, QUEEN), new Card(HEART, SEVEN),
             new Card(DIAMOND, QUEEN), new Card(CLUB, SEVEN))));
-        Game game = new Game(cardDeck, List.of(Name.of("pobi")), List.of());
+        Game game = new Game(cardDeck, Map.of(Name.of("pobi"), new Betting(1)));
 
         // when
         game.drawDealerCards();
@@ -112,7 +101,7 @@ public class GameTest {
             new Card(DIAMOND, ACE),
             new Card(HEART, QUEEN), new Card(SPADE, SEVEN),
             new Card(DIAMOND, QUEEN), new Card(CLUB, cardNumber))));
-        Game game = new Game(cardDeck, List.of(Name.of("pobi")), List.of());
+        Game game = new Game(cardDeck, Map.of(Name.of("pobi"), new Betting(1)));
 
         // when
         boolean actual = game.drawDealerCards().isDraw();
@@ -125,7 +114,8 @@ public class GameTest {
     @DisplayName("딜러의 턴을 진행한다, 16 초과할 때까지 카드를 뽑는다. (Bust)")
     void drawDealerCard() {
         // given
-        Game game = new Game(new CardDeck(new TestDeck()), List.of(Name.of("pobi")), List.of());
+        Game game = new Game(new CardDeck(new TestDeck()),
+            Map.of(Name.of("pobi"), new Betting(1)));
 
         // when
         game.drawDealerCards();
