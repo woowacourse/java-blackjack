@@ -1,6 +1,6 @@
 package blackJack.domain.card;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,7 +12,7 @@ public class Cards {
     private final Set<Card> cards;
 
     public Cards() {
-        this.cards = new HashSet<>();
+        this.cards = new LinkedHashSet<>();
     }
 
     public void add(Card card) {
