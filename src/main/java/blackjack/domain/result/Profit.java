@@ -11,14 +11,22 @@ public class Profit {
     private final double money;
     private final double ratio;
 
-    public Profit(double money) {
+    private Profit(double money) {
         this.ratio = INIT_RATIO;
         this.money = money;
     }
 
-    public Profit(double ratio, BetMoney betMoney) {
+    private Profit(double ratio, BetMoney betMoney) {
         this.ratio = ratio;
         this.money = betMoney.getValue();
+    }
+
+    public static Profit of(double money) {
+        return new Profit(money);
+    }
+
+    public static Profit of(double ratio, BetMoney betMoney) {
+        return new Profit(ratio, betMoney);
     }
 
     public double getValue() {

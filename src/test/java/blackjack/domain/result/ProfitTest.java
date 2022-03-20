@@ -14,7 +14,7 @@ class ProfitTest {
             delimiter = ':')
     @DisplayName("플레이어 수익 계산 확인")
     void checkGuestProfit(Match match, double betMoney, int expected) {
-        Profit profit = new Profit(match.getRatio(), new BetMoney(betMoney));
+        Profit profit = Profit.of(match.getRatio(), new BetMoney(betMoney));
 
         assertThat(profit.getValue()).isEqualTo(expected);
     }

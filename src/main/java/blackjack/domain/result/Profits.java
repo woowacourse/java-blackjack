@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjack.domain.player.Guest;
@@ -17,7 +18,7 @@ public class Profits {
     }
 
     public static Profits of() {
-        return new Profits(new HashMap<>());
+        return new Profits(new LinkedHashMap<>());
     }
 
     public void competeDealerWithGuest(Players players) {
@@ -37,7 +38,7 @@ public class Profits {
     private void calcEachGuest(Players players, Guest guest) {
         Player dealer = players.getDealer();
         Match match = guest.getState().matchResult(dealer);
-        Profit profit = new Profit(match.getRatio(), guest.getBetMoney());
+        Profit profit = Profit.of(match.getRatio(), guest.getBetMoney());
         playersProfit.put(guest, profit);
     }
 
@@ -47,7 +48,7 @@ public class Profits {
                 .stream()
                 .mapToDouble(player -> playersProfit.get(player).getValue())
                 .sum();
-        playersProfit.put(dealer, new Profit(-profit));
+        playersProfit.put(dealer, Profit.of(-profit));
     }
 
     public Map<Player, Profit> getPlayersProfit() {
