@@ -30,4 +30,16 @@ class PlayerTest {
         Player player2 = new Player("범고래", List.of(card), 2000);
         assertThat(player1).isEqualTo(player2);
     }
+
+    @Test
+    @DisplayName("플레이어가 Dealer를 입력 받아, BlackJackResult를 통해 결과를 반환한다.")
+    void getResult() {
+        Card card = new Card(CardShape.CLOVER, CardNumber.FIVE);
+        Player player = new Player("범고래", List.of(card), 1000);
+        Card card1 = new Card(CardShape.SPADE, CardNumber.TEN);
+        Card card2 = new Card(CardShape.SPADE, CardNumber.FIVE);
+        Dealer dealer = new Dealer(List.of(card1, card2));
+
+        assertThat(player.getResult(dealer)).isEqualTo(BlackJackResult.LOSE);
+    }
 }

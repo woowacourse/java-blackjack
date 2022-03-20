@@ -30,4 +30,8 @@ public class Player extends Gamer {
     public boolean canDraw() {
         return getCardsNumberSum() <= MAX_CARD_VALUE;
     }
+
+    public BlackJackResult getResult(Dealer dealer) {
+        return BlackJackResult.of(this, dealer);
+    }
 }
