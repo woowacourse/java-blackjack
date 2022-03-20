@@ -19,7 +19,7 @@ public class BlackjackController {
 
     public void playGame() {
         List<String> playerNames = receivePlayerNames();
-        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), playerNames, receivePlayersBetMoney(playerNames));
+        BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), receivePlayersBetMoney(playerNames));
         CardShuffleMachine playingCardShuffleMachine = new PlayingCardShuffleMachine();
         blackjackGame.initGames(playingCardShuffleMachine);
 

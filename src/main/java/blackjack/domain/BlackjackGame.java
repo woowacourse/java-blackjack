@@ -20,19 +20,19 @@ public class BlackjackGame {
     private final Deck deck;
     private final Players blackjackPlayers;
 
-    public BlackjackGame(Deck deck, Players players) {
+    private BlackjackGame(Deck deck, Players players) {
         this.deck = deck;
         this.blackjackPlayers = players;
     }
 
-    public static BlackjackGame of(Deck deck, List<String> playerNames, HashMap<String, Integer> playersBetMoney) {
-        return new BlackjackGame(deck, initPlayers(playerNames, playersBetMoney));
+    public static BlackjackGame of(Deck deck, HashMap<String, Integer> playersBetMoney) {
+        return new BlackjackGame(deck, initPlayers(playersBetMoney));
     }
 
-    private static Players initPlayers(List<String> playerNames, HashMap<String, Integer> playersBetMoney) {
+    private static Players initPlayers(HashMap<String, Integer> playersBetMoney) {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
-        for (String playerName : playerNames) {
+        for (String playerName : playersBetMoney.keySet()) {
             players.add(new Guest(playerName, new Ready(), playersBetMoney.get(playerName)));
         }
         return new Players(players);
