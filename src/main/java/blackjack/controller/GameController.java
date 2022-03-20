@@ -20,16 +20,17 @@ import blackjack.view.OutputView;
 public final class GameController {
 
     public void play() {
+        Game game = createGame();
+        drawCards(game);
+        endGame(game);
+    }
+
+    private Game createGame() {
         List<Name> names = getNames();
-        Game game = initGame(getBettings(names));
+        Game game = new Game(new CardDeck(new ShuffleDeck()), getBettings(names));
         printInitResult(names);
-        printDrawResult(game.getParticipants());
-
-        drawPlayerCards(game);
-        printDealerDrawCardCount(game.drawDealerCards());
-
-        finalParticipantsCards(game.getParticipants());
-        printFinalRevenues(game.getRevenues());
+        firstDrawResult(game.getParticipants());
+        return game;
     }
 
     private List<Name> getNames() {
@@ -44,21 +45,20 @@ public final class GameController {
                 (bettingA, bettingB) -> bettingB, LinkedHashMap::new));
     }
 
-    private Game initGame(Map<Name, Betting> namesAndBettings) {
-
-        return new Game(new CardDeck(new ShuffleDeck()), namesAndBettings);
-    }
-
-    private void printDrawResult(List<Participant> participants) {
+    private void firstDrawResult(List<Participant> participants) {
         for (Participant participant : participants) {
             OutputView.printParticipantCards(participant);
         }
         printEmptyLine();
     }
 
+    private void drawCards(Game game) {
+        drawPlayerCards(game);
+        printDealerDrawCardCount(game.drawDealerCards());
+    }
+
     private void drawPlayerCards(Game game) {
-        List<Player> players = game.getPlayers();
-        for (Player player : players) {
+        for (Player player : game.getPlayers()) {
             keepDrawing(game, player);
         }
     }
@@ -68,6 +68,11 @@ public final class GameController {
             game.drawPlayerCard(player, requestHitOrStay(player.getName()));
             printParticipantCards(player);
         }
+    }
+
+    private void endGame(Game game) {
+        finalParticipantsCards(game.getParticipants());
+        printFinalRevenues(game.getRevenues());
     }
 
     private void finalParticipantsCards(List<Participant> participants) {
