@@ -44,6 +44,10 @@ public abstract class Participant {
         return cards.isBlackJack();
     }
 
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public Cards getCardsInfo() {
         return cards;
     }

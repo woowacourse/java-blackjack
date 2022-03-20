@@ -23,7 +23,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.ACE));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.THREE));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.BLACKJACK);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.BLACKJACK);
     }
 
     @Test
@@ -34,7 +34,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.ACE));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.THREE));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.WIN);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.WIN);
     }
 
     @Test
@@ -45,7 +45,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.ACE));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.JACK));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.LOSE);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.LOSE);
     }
 
     @Test
@@ -56,7 +56,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.TEN));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.JACK));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.LOSE);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.LOSE);
     }
 
     @Test
@@ -67,7 +67,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.HEART, Denomination.ACE));
         dealer.receiveCard(Card.valueOf(Suit.HEART, Denomination.JACK));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.DRAW);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.DRAW);
     }
 
     @Test
@@ -79,7 +79,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.HEART, Denomination.EIGHT));
         dealer.receiveCard(Card.valueOf(Suit.HEART, Denomination.JACK));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.BLACKJACK);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.BLACKJACK);
     }
 
     @Test
@@ -91,7 +91,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.ACE));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.JACK));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.LOSE);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.LOSE);
     }
 
     @Test
@@ -103,7 +103,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.TEN));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.JACK));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.LOSE);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.LOSE);
     }
 
     @Test
@@ -115,7 +115,7 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.SIX));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.KING));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.WIN);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.WIN);
     }
 
     @Test
@@ -128,6 +128,6 @@ class WinOrLoseTest {
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.SIX));
         dealer.receiveCard(Card.valueOf(Suit.SPADE, Denomination.KING));
 
-        assertThat(OutCome.of(dealer, player)).isEqualTo(OutCome.LOSE);
+        assertThat(OutCome.ofJudge(dealer, player)).isEqualTo(OutCome.LOSE);
     }
 }

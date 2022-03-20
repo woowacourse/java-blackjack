@@ -1,44 +1,56 @@
 package blackJack.domain.result;
 
-import blackJack.domain.card.Cards;
 import blackJack.domain.money.Bet;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
-import java.util.Arrays;
-import java.util.function.BiPredicate;
 
 public enum OutCome {
-    BLACKJACK(1.5, (dealer, player) ->
-            (!dealer.isBlackJack() && player.isBlackJack())
-    ),
-    WIN(1, (dealer, player) ->
-            (!player.isBust() && dealer.isBust()) ||
-                    (!player.isBust() && (dealer.addScore() < player.addScore()))
-    ),
-    DRAW(0, (dealer, player) ->
-            (dealer.isBlackJack() && player.isBlackJack()) ||
-                    (!dealer.isBlackJack() && !player.isBlackJack() && dealer.addScore() == player.addScore())
-    ),
-    LOSE(-1, (dealer, player) ->
-            (dealer.isBlackJack() && !player.isBlackJack()) ||
-                    (dealer.isBust() && player.isBust()) ||
-                    (!dealer.isBust() && player.isBust()) ||
-                    (!dealer.isBust() && (dealer.addScore() > player.addScore()))
-    );
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
     private final double profit;
-    private final BiPredicate<Cards, Cards> predicate;
 
-    OutCome(double profit, BiPredicate<Cards, Cards> predicate) {
+    OutCome(double profit) {
         this.profit = profit;
-        this.predicate = predicate;
     }
 
-    public static OutCome of(Dealer dealer, Player player) {
-        return Arrays.stream(values())
-                .filter(result -> result.predicate.test(dealer.getCardsInfo(), player.getCardsInfo()))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
+    public static OutCome ofJudge(Dealer dealer, Player player) {
+        if (dealer.isBust() || player.isBust()) {
+            return getOutComeOfBust(player);
+        }
+        if (dealer.isBlackJack() || player.isBlackJack()) {
+            return getOutComeOfBlackjack(dealer, player);
+        }
+        return getOutComeOfScore(dealer, player);
+    }
+
+    private static OutCome getOutComeOfBust(Player player) {
+        if (player.isBust()) {
+            return LOSE;
+        }
+        return WIN;
+    }
+
+    private static OutCome getOutComeOfBlackjack(Dealer dealer, Player player) {
+        if (!dealer.isBlackJack() && player.isBlackJack()) {
+            return BLACKJACK;
+        }
+        if (dealer.isBlackJack() && player.isBlackJack()) {
+            return DRAW;
+        }
+        return LOSE;
+    }
+
+    private static OutCome getOutComeOfScore(Dealer dealer, Player player) {
+        if (dealer.getScore() < player.getScore()) {
+            return WIN;
+        }
+        if (dealer.getScore() == player.getScore()) {
+            return DRAW;
+        }
+        return LOSE;
     }
 
     public int calculateEarning(Bet bet) {
