@@ -67,7 +67,7 @@ public class OutputView {
         System.out.println(player.getName() + ": " + cardsInfo + " - 결과: " + player.getTotalScore());
     }
 
-    public static void printProfit(int dealerProfit, List<PlayerResult> players) {
+    public static void printProfit(String dealerProfit, List<PlayerResult> players) {
         System.out.println(NEW_LINE + "## 최종 수익");
         System.out.println("딜러: " + dealerProfit);
         players.forEach(player -> System.out.println(player.getName() + ": " + player.getProfit()));

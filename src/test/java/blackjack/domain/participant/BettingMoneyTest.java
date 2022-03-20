@@ -38,7 +38,7 @@ class BettingMoneyTest {
 
         BettingMoney result = bettingMoney.times(1.5);
 
-        assertThat(result.getAmount()).isEqualTo(15000);
+        assertThat(result.getAmount()).isEqualTo("15000");
     }
 
     @DisplayName("두 Money에 음수를 곱할 수 있다.")
@@ -48,6 +48,16 @@ class BettingMoneyTest {
 
         BettingMoney result = bettingMoney.times(-1);
 
-        assertThat(result.getAmount()).isEqualTo(-10000);
+        assertThat(result.getAmount()).isEqualTo("-10000");
+    }
+
+    @DisplayName("두 Money에 음수를 곱할 수 있다.")
+    @Test
+    void 머니_더하기() {
+        BettingMoney bettingMoney = BettingMoney.of("10000");
+
+        BettingMoney result = bettingMoney.add(BettingMoney.of("20000"));
+
+        assertThat(result.getAmount()).isEqualTo("30000");
     }
 }

@@ -106,9 +106,9 @@ class PlayerTest {
         player.hit(ACE_SPACE);
         player.hit(KING_SPACE);
 
-        int result = player.calculateProfit(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(result).isEqualTo(15000);
+        assertThat(result.getAmount()).isEqualTo("15000");
     }
 
     @DisplayName("플레이어가 블랙잭으로 무승부 인경우 배팅 금액의 0배를 얻는다.")
@@ -122,9 +122,9 @@ class PlayerTest {
         player.hit(ACE_SPACE);
         player.hit(KING_SPACE);
 
-        int result = player.calculateProfit(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(result).isZero();
+        assertThat(result.getAmount()).isEqualTo("0");
     }
 
     @DisplayName("플레이어가 블랙잭이고 딜러가 21점일 때 승인 경우 배팅 금액의 1.5배를 얻는다.")
@@ -139,9 +139,9 @@ class PlayerTest {
         player.hit(ACE_SPACE);
         player.hit(KING_SPACE);
 
-        int result = player.calculateProfit(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(result).isEqualTo(15000);
+        assertThat(result.getAmount()).isEqualTo("15000");
     }
 
     @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 무승부인 경우 배팅 금액의 0배를 얻는다.")
@@ -156,9 +156,9 @@ class PlayerTest {
         player.hit(KING_SPACE);
         player.stay();
 
-        int result = player.calculateProfit(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(result).isZero();
+        assertThat(result.getAmount()).isEqualTo("0");
     }
 
     @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 승인 경우 배팅 금액의 1배를 얻는다.")
@@ -173,9 +173,9 @@ class PlayerTest {
         player.hit(KING_SPACE);
         player.stay();
 
-        int result = player.calculateProfit(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(result).isEqualTo(10000);
+        assertThat(result.getAmount()).isEqualTo("10000");
     }
 
     @DisplayName("플레이어가 버스트인 경우 무조건 패이므로 배팅 금액의 -1배를 얻는다.")
@@ -190,9 +190,9 @@ class PlayerTest {
         player.hit(QUEEN_SPACE);
         player.hit(KING_SPACE);
 
-        int result = player.calculateProfit(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(result).isEqualTo(-10000);
+        assertThat(result.getAmount()).isEqualTo("-10000");
     }
 
     @DisplayName("플레이어와 딜러가 모두 버스트인 경우 무조건 플레이어 패이므로 배팅 금액의 -1배를 얻는다.")
@@ -208,9 +208,9 @@ class PlayerTest {
         player.hit(QUEEN_SPACE);
         player.hit(KING_SPACE);
 
-        int result = player.calculateProfit(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(result).isEqualTo(-10000);
+        assertThat(result.getAmount()).isEqualTo("-10000");
     }
 
     @DisplayName("플레이어가 블랙잭과 버스트가 아니고 점수를 비교하여 패인 경우 배팅 금액의 -1배를 얻는다.")
@@ -225,8 +225,8 @@ class PlayerTest {
         player.hit(TWO_SPACE);
         player.stay();
 
-        int result = player.calculateProfit(dealer);
+        BettingMoney result = player.calculateProfit(dealer);
 
-        assertThat(result).isEqualTo(-10000);
+        assertThat(result.getAmount()).isEqualTo("-10000");
     }
 }

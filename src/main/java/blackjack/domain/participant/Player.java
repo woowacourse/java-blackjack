@@ -20,9 +20,9 @@ public class Player extends Participant {
         state = state.stay();
     }
 
-    public int calculateProfit(Participant dealer) {
+    public BettingMoney calculateProfit(Participant dealer) {
         double earningRate = state.earningRate(dealer.state);
         BettingMoney profit = bettingMoney.times(earningRate);
-        return profit.getAmount();
+        return profit;
     }
 }

@@ -1,14 +1,21 @@
 package blackjack.domain.participant;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class BettingMoney {
 
+    private static final int MONEY_SCALE = 0;
+    private static final int MONEY_LENGTH = 4;
+    private static final String MONEY_DIVIDE_STANDARD = "000";
+
+    public static final BettingMoney ZERO = new BettingMoney("0");
+
     private final BigDecimal amount;
 
     private BettingMoney(BigDecimal bigDecimal) {
-        this.amount = bigDecimal;
+        this.amount = bigDecimal.setScale(MONEY_SCALE, RoundingMode.FLOOR);
     }
 
     private BettingMoney(String amount) {
@@ -22,13 +29,13 @@ public class BettingMoney {
     }
 
     private static void validateLength(String amount) {
-        if (amount.length() < 4) {
+        if (amount.length() < MONEY_LENGTH) {
             throw new IllegalArgumentException("배팅 금액은 1000원 이상입니다.");
         }
     }
 
     private static void validateDivide(String amount) {
-        if (!amount.endsWith("000")) {
+        if (!amount.endsWith(MONEY_DIVIDE_STANDARD)) {
             throw new IllegalArgumentException("배팅 금액은 1000으로 나누어 떨어져야 합니다.");
         }
     }
@@ -39,8 +46,13 @@ public class BettingMoney {
         return new BettingMoney(result);
     }
 
-    public int getAmount() {
-        return amount.intValue();
+    public BettingMoney add(BettingMoney otherBettingMoney) {
+        BigDecimal add = amount.add(otherBettingMoney.amount);
+        return new BettingMoney(add);
+    }
+
+    public String getAmount() {
+        return amount.toString();
     }
 
     @Override

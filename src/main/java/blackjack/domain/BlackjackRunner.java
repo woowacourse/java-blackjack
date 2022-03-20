@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.RandomCardsGenerator;
+import blackjack.domain.participant.BettingMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class BlackjackRunner {
 
-    private static final int REVERSE_MONEY = -1;
+    private static final double REVERSE_MONEY = -1;
 
     public void run() {
         Deck deck = new Deck(new RandomCardsGenerator());
@@ -77,15 +78,19 @@ public class BlackjackRunner {
         }
     }
 
-    private int getDealerProfit(Dealer dealer, List<Player> players) {
-        return players.stream()
-                .mapToInt(player -> player.calculateProfit(dealer) * REVERSE_MONEY)
-                .sum();
+    private String getDealerProfit(Dealer dealer, List<Player> players) {
+        BettingMoney totalProfit = BettingMoney.ZERO;
+        for (Player player : players) {
+            BettingMoney profit = player.calculateProfit(dealer);
+            totalProfit = totalProfit.add(profit.times(REVERSE_MONEY));
+        }
+
+        return totalProfit.getAmount();
     }
 
     private List<PlayerResult> createPlayerResults(Dealer dealer, List<Player> players) {
         return players.stream()
-                .map(player -> new PlayerResult(player.getName(), player.calculateProfit(dealer)))
+                .map(player -> new PlayerResult(player.getName(), player.calculateProfit(dealer).getAmount()))
                 .collect(toList());
     }
 }
