@@ -49,7 +49,7 @@ public final class BlackjackGame {
     }
 
     private void printPlayerHand(final Player player) {
-        if (player.hasCardSizeOf(2) || !player.getState().isFinished()) {
+        if (player.hasCardSizeOf(INIT_NUMBER) || !player.getState().isFinished()) {
             OutputView.printHumanHand(player);
         }
     }

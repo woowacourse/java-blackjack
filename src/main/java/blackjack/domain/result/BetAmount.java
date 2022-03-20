@@ -7,7 +7,7 @@ public final class BetAmount {
 
     private static final int MIN_ACE_COUNT = 0;
 
-    private int value;
+    private final int value;
 
     public BetAmount(final int money) {
         this.value = money;
@@ -21,11 +21,6 @@ public final class BetAmount {
     }
 
     public int get() {
-        return value;
-    }
-
-    public int getProfit(final double scale) {
-        value *= scale;
         return value;
     }
 

@@ -22,7 +22,7 @@ public final class Player extends Human {
 
 
     public int getProfit(Dealer dealer) {
-        return state.profit(getBetAmount(), (Finished) dealer.getState());
+        return state.profit(betAmount.get(), (Finished) dealer.getState());
     }
 
     public void draw(CardDeck cardDeck, boolean isHit) {
@@ -31,9 +31,5 @@ public final class Player extends Human {
             return;
         }
         setStay();
-    }
-
-    public int getBetAmount() {
-        return betAmount.get();
     }
 }

@@ -28,11 +28,4 @@ class BetAmountTest {
                         .hasMessage("1 이상의 정수를 입력해주세요.")
         );
     }
-
-    @Test
-    @DisplayName("배율 테스트")
-    void multipleTest() {
-        assertThat(new BetAmount(10000).getProfit(1.5))
-                .isEqualTo(15000);
-    }
 }

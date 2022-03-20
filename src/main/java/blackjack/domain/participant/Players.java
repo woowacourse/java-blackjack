@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.cards.CardDeck;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Player;
-import blackjack.domain.result.PayoutCalculator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,7 @@ public final class Players {
         return value.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> PayoutCalculator.compute(player, dealer)));
+                        player -> player.getProfit(dealer)));
     }
 
     public List<String> getNames() {
