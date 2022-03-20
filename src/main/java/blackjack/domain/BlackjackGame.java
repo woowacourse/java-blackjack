@@ -57,9 +57,7 @@ public class BlackjackGame {
     }
 
     public Profits calculateProfits() {
-        Profits profits = Profits.of();
-        profits.competeDealerWithGuest(blackjackPlayers);
-        return profits;
+        return Profits.of(blackjackPlayers);
     }
 
     public boolean isExistNextPlayer() {

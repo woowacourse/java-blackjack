@@ -40,7 +40,6 @@ class MatchTest {
         assertThat(guest.getState().matchResult(dealer)).isEqualTo(result);
     }
 
-
     @ParameterizedTest
     @CsvSource(value = {"SPADE:CLUB:ACE:JACK:FIVE:LOSE_BLACKJACK"}, delimiter = ':')
     @DisplayName("처음 2장의 카드 이후(플레이어는 블랙잭이 아닌 21, 딜러는 블랙잭인 경우): 승무패 결정 로직 확인")

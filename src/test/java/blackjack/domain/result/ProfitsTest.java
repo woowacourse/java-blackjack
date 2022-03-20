@@ -36,8 +36,7 @@ class ProfitsTest {
         //수익 계산
         firstGuest.changeState(firstGuest.getState().stay());
         secondGuest.changeState(secondGuest.getState().stay());
-        Profits profits = Profits.of();
-        profits.competeDealerWithGuest(players);
+        Profits profits = Profits.of(players);
 
         assertThat(profits.getPlayersProfit().get(dealer).getValue()).isEqualTo(expected);
     }
