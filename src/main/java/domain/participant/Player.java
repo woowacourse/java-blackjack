@@ -1,5 +1,7 @@
 package domain.participant;
 
+import java.math.BigDecimal;
+
 public class Player extends Participant {
 
     private final Money money;
@@ -14,7 +16,10 @@ public class Player extends Participant {
         return cards.calculateScore() < MAX_SCORE;
     }
 
-    public int getMoney() {
-        return money.getValue();
+    public int multiply(PlayerResult playerResult) {
+        BigDecimal profitRate = BigDecimal.valueOf(playerResult.getProfitRate());
+        BigDecimal result = money.getValue().multiply(profitRate);
+
+        return result.intValue();
     }
 }

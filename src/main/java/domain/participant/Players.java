@@ -44,8 +44,7 @@ public class Players {
             .collect(Collectors.toList());
 
         for (int i = 0; i < players.size(); i++) {
-            playerResult.put(players.get(i),
-                (int) (results.get(i).getProfitRate() * players.get(i).getMoney()));
+            playerResult.put(players.get(i), players.get(i).multiply(results.get(i)));
         }
         return playerResult;
     }

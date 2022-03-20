@@ -1,13 +1,15 @@
 package domain.participant;
 
+import java.math.BigDecimal;
+
 public class Money {
-    private final int value;
+    private final BigDecimal value;
 
     public Money(int value) {
-        this.value = value;
+        this.value = new BigDecimal(value);
     }
 
-    public int getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 }
