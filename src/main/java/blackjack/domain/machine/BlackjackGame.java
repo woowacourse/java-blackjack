@@ -45,7 +45,7 @@ public class BlackjackGame {
 
     public boolean canGetMoreCardToDealer() {
         Player dealer = blackjackPlayers.getDealer();
-        return !dealer.isOverLimit(Dealer.LIMIT_POINT);
+        return dealer.isUnderLimit(Dealer.LIMIT_POINT);
     }
 
     public void addCardToDealer() {

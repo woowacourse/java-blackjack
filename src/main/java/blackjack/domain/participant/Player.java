@@ -17,6 +17,10 @@ public abstract class Player {
         return deck.isOverLimit(limit);
     }
 
+    public boolean isUnderLimit(int limit) {
+        return deck.isUnderLimit(limit);
+    }
+
     public String getName() {
         return name;
     }
@@ -30,6 +34,8 @@ public abstract class Player {
     }
 
     public abstract boolean isDealer();
+
+    public abstract boolean isGuest();
 
     @Override
     public boolean equals(Object o) {

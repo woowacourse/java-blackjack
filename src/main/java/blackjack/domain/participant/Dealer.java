@@ -16,4 +16,9 @@ public class Dealer extends Player {
     public boolean isDealer() {
         return true;
     }
+
+    @Override
+    public boolean isGuest() {
+        return false;
+    }
 }

@@ -20,6 +20,14 @@ public class Deck {
         return new Score(cards);
     }
 
+    public boolean isOverLimit(int limit) {
+        return score().isOverLimit(limit);
+    }
+
+    public boolean isUnderLimit(int limit) {
+        return score().isUnderLimit(limit);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -37,9 +45,5 @@ public class Deck {
     @Override
     public int hashCode() {
         return cards != null ? cards.hashCode() : 0;
-    }
-
-    public boolean isOverLimit(int limit) {
-        return score().isOverLimit(limit);
     }
 }

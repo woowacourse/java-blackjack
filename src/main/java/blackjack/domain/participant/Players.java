@@ -39,7 +39,7 @@ public class Players {
 
     public List<Player> getGuests() {
         return blackjackPlayers.stream()
-                .filter(player -> !player.isDealer())
+                .filter(Player::isGuest)
                 .collect(Collectors.toList());
     }
 
