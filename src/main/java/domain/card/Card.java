@@ -1,13 +1,14 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class Card {
 
     private static final String NOT_FOUND_CARD = "해당하는 카드가 존재하지 않습니다.";
-    private static final List<Card> CACHE = new ArrayList<>();
+    private static final Map<String, Card> CACHE = new HashMap<>();
 
     private final Symbol symbol;
     private final Denomination denomination;
@@ -24,7 +25,11 @@ public final class Card {
 
     private static void saveCard(Symbol symbol) {
         Arrays.stream(Denomination.values())
-            .forEach(denomination -> CACHE.add(new Card(symbol, denomination)));
+            .forEach(denomination -> CACHE.put(makeMapKey(symbol, denomination), new Card(symbol, denomination)));
+    }
+
+    private static String makeMapKey(Symbol symbol, Denomination denomination) {
+        return denomination.getLetter() + symbol.getLetter();
     }
 
     public boolean isAceCard() {
@@ -32,14 +37,15 @@ public final class Card {
     }
 
     public static List<Card> values() {
-        return List.copyOf(CACHE);
+        return List.copyOf(CACHE.values());
     }
 
     public static Card valueOf(Symbol symbol, Denomination denomination) {
-        return CACHE.stream()
-            .filter(card -> card.symbol == symbol && card.denomination == denomination)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_CARD));
+        Card card = CACHE.get(makeMapKey(symbol, denomination));
+        if (card == null) {
+            throw new IllegalArgumentException(NOT_FOUND_CARD);
+        }
+        return card;
     }
 
     public int getScore() {
