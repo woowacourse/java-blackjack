@@ -1,13 +1,18 @@
 package blackjack.controller;
 
+import blackjack.domain.BettingAmount;
+import blackjack.domain.Name;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerNames;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerAnswer;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameController {
 
@@ -21,25 +26,30 @@ public class GameController {
         this.dealer = new Dealer();
     }
 
-    private Players initPlayers() {
+    public Players initPlayers() {
+        final PlayerNames playerNames = initPlayerNames();
+
+        final List<Player> list = playerNames.getNames().stream()
+                .map(name -> new Player(name, createBettingAmount(name)))
+                .collect(Collectors.toList());
+        return new Players(list);
+    }
+
+    private PlayerNames initPlayerNames() {
         try {
-            return new Players(InputView.getPlayerNames());
+            return new PlayerNames(InputView.getPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return initPlayers();
+            return initPlayerNames();
         }
     }
 
-    public void betMoney() {
-        players.getValue().forEach(this::initMoney);
-    }
-
-    private void initMoney(final Player player) {
+    private BettingAmount createBettingAmount(final Name name) {
         try {
-            player.initMoney(InputView.getBettingAmount(player.getName()));
+            return new BettingAmount(InputView.getBettingAmount(name.getValue()));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            initMoney(player);
+            return createBettingAmount(name);
         }
     }
 

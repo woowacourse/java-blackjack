@@ -5,13 +5,9 @@ public class BettingAmount {
     private static final int VALUE_LOWER_BOUND = 1;
     private static final int VALUE_UPPER_BOUND = 1_000_000_000;
 
-    private double value;
+    private final double value;
 
-    public BettingAmount() {
-        this.value = 0;
-    }
-
-    public void init(final int value) {
+    public BettingAmount(final int value) {
         validate(value);
         this.value = value;
     }

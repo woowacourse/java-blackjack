@@ -37,8 +37,8 @@ class PlayerTest {
                 Card.of(DIAMOND, JACK));
         final Deck deck = Deck.from(() -> cards);
 
-        final Player player = new Player("pobi");
-        for (int i = 0; i < 3; i++) {
+        final Player player = new Player("pobi", 1000);
+        for (int i = 0; i < cards.size(); i++) {
             player.hit(deck);
         }
 
@@ -59,8 +59,8 @@ class PlayerTest {
                 Card.of(DIAMOND, JACK));
         final Deck deck = Deck.from(() -> cards);
 
-        final Player player = new Player("rick");
-        for (int i = 0; i < 3; i++) {
+        final Player player = new Player("rick", 1000);
+        for (int i = 0; i < cards.size(); i++) {
             player.hit(deck);
         }
 
@@ -81,8 +81,8 @@ class PlayerTest {
                 Card.of(DIAMOND, JACK));
         final Deck deck = Deck.from(() -> cards);
 
-        final Player player = new Player("rick");
-        for (int i = 0; i < 3; i++) {
+        final Player player = new Player("rick", 1000);
+        for (int i = 0; i < cards.size(); i++) {
             player.hit(deck);
         }
 
@@ -103,8 +103,8 @@ class PlayerTest {
                 Card.of(DIAMOND, JACK));
         final Deck deck = Deck.from(() -> cards);
 
-        final Player player = new Player("rick");
-        for (int i = 0; i < 3; i++) {
+        final Player player = new Player("rick", 1000);
+        for (int i = 0; i < cards.size(); i++) {
             player.hit(deck);
         }
 
@@ -125,8 +125,8 @@ class PlayerTest {
                 Card.of(DIAMOND, JACK));
         final Deck deck = Deck.from(() -> cards);
 
-        final Player player = new Player("rick");
-        for (int i = 0; i < 3; i++) {
+        final Player player = new Player("rick", 100);
+        for (int i = 0; i < cards.size(); i++) {
             player.hit(deck);
         }
 
@@ -148,7 +148,7 @@ class PlayerTest {
                 Card.of(DIAMOND, JACK));
         final Deck deck = Deck.from(() -> cards);
 
-        final Player player = new Player("pobi");
+        final Player player = new Player("pobi", 1000);
 
         // when
         player.initCards(deck);
@@ -162,7 +162,7 @@ class PlayerTest {
     @DisplayName("턴이 진행중일 때 상금을 계산하면 예외를 던진다.")
     void calculateProfit_exception() {
         // give
-        final Player player = new Player("rick");
+        final Player player = new Player("rick", 1000);
 
         // when
         // then

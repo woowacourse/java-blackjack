@@ -10,17 +10,19 @@ import blackjack.domain.participant.playerstatus.Stay;
 
 public class Player extends Participant {
 
-    private final BettingAmount bettingAmount;
     private final Name name;
+    private final BettingAmount bettingAmount;
 
-    public Player(final String name) {
+    public Player(final Name name, final BettingAmount bettingAmount) {
         super();
-        this.bettingAmount = new BettingAmount();
-        this.name = new Name(name);
+        this.name = name;
+        this.bettingAmount = bettingAmount;
     }
 
-    public void initMoney(final int bettingAmount) {
-        this.bettingAmount.init(bettingAmount);
+    Player(final String name, final int bettingAmount) {
+        super();
+        this.name = new Name(name);
+        this.bettingAmount = new BettingAmount(bettingAmount);
     }
 
     @Override
