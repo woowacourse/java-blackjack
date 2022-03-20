@@ -24,4 +24,11 @@ public class Gamers {
     public List<Gamer> getGamers() {
         return new ArrayList<>(gamers);
     }
+
+    public Gamer findGamerByName(String name) {
+        return gamers.stream()
+                .filter(gamer -> gamer.getName().equals(name))
+                .findAny()
+                .orElseThrow(IllegalStateException::new);
+    }
 }

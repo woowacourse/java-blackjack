@@ -17,8 +17,8 @@ public class GamerTest {
     void gamerOpenCards() {
         Gamer gamer = new Gamer("pobi",
                 List.of(new Card(QUEEN, CLOVER), new Card(FIVE, HEART)), new Betting(1000));
-        assertThat(gamer.openCards()).hasSize(2);
-        assertThat(gamer.openCards()).contains(new Card(QUEEN, CLOVER), new Card(FIVE, HEART));
+        assertThat(gamer.openCards().getEachCard()).hasSize(2);
+        assertThat(gamer.openCards().getEachCard()).contains(new Card(QUEEN, CLOVER), new Card(FIVE, HEART));
     }
 
     @Test

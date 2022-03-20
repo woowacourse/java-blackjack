@@ -20,8 +20,8 @@ public class Gamer extends Player {
     }
 
     @Override
-    public List<Card> openCards() {
-        return List.of(cards.getEachCard().get(0), cards.getEachCard().get(1));
+    public Cards openCards() {
+        return new Cards(List.of(cards.getEachCard().get(0), cards.getEachCard().get(1)));
     }
 
     public boolean isHittable() {

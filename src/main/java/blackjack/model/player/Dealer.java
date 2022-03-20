@@ -41,8 +41,8 @@ public class Dealer extends Player {
     }
 
     @Override
-    public List<Card> openCards() {
-        return List.of(cards.getEachCard().get(0));
+    public Cards openCards() {
+        return new Cards(List.of(cards.getEachCard().get(0)));
     }
 
     public boolean isHittable() {

@@ -139,7 +139,7 @@ public class DealerTest {
     @DisplayName("딜러 카드 공개")
     void dealerOpenCard() {
         Dealer dealer = new Dealer(List.of(new Card(JACK, DIAMOND), new Card(QUEEN, HEART)));
-        assertThat(dealer.openCards()).hasSize(1);
-        assertThat(dealer.openCards()).contains(new Card(JACK, DIAMOND));
+        assertThat(dealer.openCards().getEachCard()).hasSize(1);
+        assertThat(dealer.openCards().getEachCard()).contains(new Card(JACK, DIAMOND));
     }
 }
