@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards;
 
 public class Bust extends Finished {
 
-    public Bust(Cards cards) {
+    Bust(Cards cards) {
         super(cards);
     }
 }

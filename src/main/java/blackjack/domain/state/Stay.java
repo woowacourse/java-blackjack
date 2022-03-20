@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards;
 
 public class Stay extends Finished {
 
-    public Stay(Cards cards) {
+    Stay(Cards cards) {
         super(cards);
     }
 }

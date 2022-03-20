@@ -7,7 +7,7 @@ public class Hit implements Status {
 
     private final Cards cards;
 
-    public Hit(Cards cards) {
+    Hit(Cards cards) {
         this.cards = new Cards(cards.getCards());
     }
 
