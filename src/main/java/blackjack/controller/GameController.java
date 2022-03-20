@@ -20,12 +20,12 @@ import blackjack.view.OutputView;
 public final class GameController {
 
     public void play() {
-        Game game = createGame();
+        Game game = initGame();
         drawCards(game);
         endGame(game);
     }
 
-    private Game createGame() {
+    private Game initGame() {
         List<Name> names = getNames();
         Game game = new Game(new CardDeck(new ShuffleDeck()), getBettings(names));
         printInitResult(names);
