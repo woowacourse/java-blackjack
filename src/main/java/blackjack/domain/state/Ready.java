@@ -3,14 +3,12 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Ready implements Status {
+public class Ready extends Started {
 
     private static final String ERROR_MESSAGE_CANNOT_MOVE_TO_STAY = "올바르지 않은 결과입니다.";
 
-    private final Cards cards;
-
     public Ready(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     public Ready() {
@@ -18,7 +16,8 @@ public class Ready implements Status {
     }
 
     @Override
-    public Status draw(Card card) {
+    public final Status draw(Card card) {
+        final Cards cards = getCards();
         cards.receiveCard(card);
         if (cards.isReady()) {
             return new Ready(cards);
@@ -30,7 +29,7 @@ public class Ready implements Status {
     }
 
     @Override
-    public Status stay() {
+    public final Status stay() {
         throw new IllegalArgumentException(ERROR_MESSAGE_CANNOT_MOVE_TO_STAY);
     }
 }
