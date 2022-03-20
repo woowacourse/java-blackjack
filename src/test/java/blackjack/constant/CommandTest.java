@@ -11,20 +11,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class CommandTest {
 
-        @Test
-        @DisplayName("존재하지 않는 명령어를 입력하였을 경우")
-        void not_exist_command() {
+    @Test
+    @DisplayName("존재하지 않는 명령어를 입력하였을 경우")
+    void not_exist_command() {
 
-                assertThatThrownBy(() -> Command.of("x"))
-                                .isInstanceOf(NoSuchElementException.class);
-        }
+        assertThatThrownBy(() -> Command.of("x"))
+                .isInstanceOf(NoSuchElementException.class);
+    }
 
-        @ParameterizedTest
-        @ValueSource(strings = { "n", "N", "y", "Y" })
-        @DisplayName("존재하는 명령어를 입력하였을 경우")
-        void exist_command(String input) {
+    @ParameterizedTest
+    @ValueSource(strings = {"n", "N", "y", "Y"})
+    @DisplayName("존재하는 명령어를 입력하였을 경우")
+    void exist_command(String input) {
 
-                Assertions.assertDoesNotThrow(() -> Command.of(input));
-        }
+        Assertions.assertDoesNotThrow(() -> Command.of(input));
+    }
 
 }

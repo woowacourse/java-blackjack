@@ -14,6 +14,7 @@ import static blackjack.utils.ParticipantsCreationUtils.createDealerWithDenomina
 import static blackjack.utils.ParticipantsCreationUtils.createPlayerWithDenominations;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.BettingMoney;
 import blackjack.domain.ScoreBoard;
@@ -26,7 +27,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class RevenueResultTest {
-    
+
     @Test
     @DisplayName("RevenueResult 는 불변 객체다")
     void revenueResult_is_immutable() {
@@ -37,17 +38,16 @@ class RevenueResultTest {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-        // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-        // then
+        // when & then
         assertThatThrownBy(() -> revenueResult.getPlayersEarnings().remove(player.getName()))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭이고 딜러는 아닐 때 플레이어의 수익률은 1.5 배이다")
+    @DisplayName("플레이어가 블랙잭이고 딜러는 아닐 때 플레이어의 수익은 1.5 배이다")
     void player_blackjack_when_player_blackjack_and_dealer_is_not() {
         // given
         Player player = createPlayerWithDenominations("user a", ACE, JACK);
@@ -56,13 +56,17 @@ class RevenueResultTest {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-        // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-        // then
-        assertThat(revenueResult.findPlayerEarning(player.getName())).isEqualTo(15_000);
-        assertThat(revenueResult.getDealerEarnings()).isEqualTo(-15_000);
+        int playerReturn = revenueResult.findPlayerEarning(player.getName());
+        int dealerReturn = revenueResult.getDealerEarnings();
+
+        // when & then
+        assertAll(
+                () -> assertThat(playerReturn).isEqualTo(15_000),
+                () -> assertThat(dealerReturn).isEqualTo(-15_000)
+        );
     }
 
     @Test
@@ -75,13 +79,17 @@ class RevenueResultTest {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-        // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-        // then
-        assertThat(revenueResult.findPlayerEarning(player.getName())).isEqualTo(0);
-        assertThat(revenueResult.getDealerEarnings()).isEqualTo(0);
+        int playerReturn = revenueResult.findPlayerEarning(player.getName());
+        int dealerReturn = revenueResult.getDealerEarnings();
+
+        // when & then
+        assertAll(
+                () -> assertThat(playerReturn).isEqualTo(0),
+                () -> assertThat(dealerReturn).isEqualTo(0)
+        );
     }
 
     @Test
@@ -94,13 +102,17 @@ class RevenueResultTest {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-        // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-        // then
-        assertThat(revenueResult.findPlayerEarning(player.getName())).isEqualTo(10_000);
-        assertThat(revenueResult.getDealerEarnings()).isEqualTo(-10_000);
+        int playerReturn = revenueResult.findPlayerEarning(player.getName());
+        int dealerReturn = revenueResult.getDealerEarnings();
+
+        // when & then
+        assertAll(
+                () -> assertThat(playerReturn).isEqualTo(10_000),
+                () -> assertThat(dealerReturn).isEqualTo(-10_000)
+        );
     }
 
     @Test
@@ -113,13 +125,17 @@ class RevenueResultTest {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-        // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-        // then
-        assertThat(revenueResult.findPlayerEarning(player.getName())).isEqualTo(-10_000);
-        assertThat(revenueResult.getDealerEarnings()).isEqualTo(10_000);
+        int playerReturn = revenueResult.findPlayerEarning(player.getName());
+        int dealerReturn = revenueResult.getDealerEarnings();
+
+        // when & then
+        assertAll(
+                () -> assertThat(playerReturn).isEqualTo(-10_000),
+                () -> assertThat(dealerReturn).isEqualTo(10_000)
+        );
     }
 
     @Test
@@ -132,13 +148,17 @@ class RevenueResultTest {
         List<BettingMoney> bettingMonies = new ArrayList<>();
         bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-        // when
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-        // then
-        assertThat(revenueResult.findPlayerEarning(player.getName())).isEqualTo(0);
-        assertThat(revenueResult.getDealerEarnings()).isEqualTo(0);
+        int playerReturn = revenueResult.findPlayerEarning(player.getName());
+        int dealerReturn = revenueResult.getDealerEarnings();
+
+        // when & then
+        assertAll(
+                () -> assertThat(playerReturn).isEqualTo(0),
+                () -> assertThat(dealerReturn).isEqualTo(0)
+        );
     }
 
     @Nested
@@ -150,18 +170,22 @@ class RevenueResultTest {
         @Test
         @DisplayName("플레이어가 블랙잭 플레이어의 수익률은 1.5이다")
         void player_21_then_1() {
-        	// given
+            // given
             List<BettingMoney> bettingMonies = new ArrayList<>();
             Player player = createPlayerWithDenominations("user a", ACE, JACK);
             bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-        	// when
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
             RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-        	// then
-            assertThat(revenueResult.findPlayerEarning(player.getName())).isEqualTo(15_000);
-            assertThat(revenueResult.getDealerEarnings()).isEqualTo(-15_000);
+            int playerReturn = revenueResult.findPlayerEarning(player.getName());
+            int dealerReturn = revenueResult.getDealerEarnings();
+
+            // when & then
+            assertAll(
+                    () -> assertThat(playerReturn).isEqualTo(15_000),
+                    () -> assertThat(dealerReturn).isEqualTo(-15_000)
+            );
         }
 
         @Test
@@ -172,30 +196,39 @@ class RevenueResultTest {
             Player player = createPlayerWithDenominations("user a", JACK, EIGHT, TWO);
             bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-            // when
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
             RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-            // then
-            assertThat(revenueResult.findPlayerEarning(player.getName())).isEqualTo(10_000);
-            assertThat(revenueResult.getDealerEarnings()).isEqualTo(-10_000);
+            int playerReturn = revenueResult.findPlayerEarning(player.getName());
+            int dealerReturn = revenueResult.getDealerEarnings();
+
+            // when & then
+            assertAll(
+                    () -> assertThat(playerReturn).isEqualTo(10_000),
+                    () -> assertThat(dealerReturn).isEqualTo(-10_000)
+            );
         }
 
         @Test
         @DisplayName("플레이어 또한 버스트라면 플레이어의 수익률은 -1이다")
         void also_player_bust_then_1() {
+
             // given
             List<BettingMoney> bettingMonies = new ArrayList<>();
             Player player = createPlayerWithDenominations("user a", JACK, QUEEN, TWO);
             bettingMonies.add(new BettingMoney(player.getName(), "10000"));
 
-            // when
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
             RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
 
-            // then
-            assertThat(revenueResult.findPlayerEarning(player.getName())).isEqualTo(-10_000);
-            assertThat(revenueResult.getDealerEarnings()).isEqualTo(10_000);
+            int playerReturn = revenueResult.findPlayerEarning(player.getName());
+            int dealerReturn = revenueResult.getDealerEarnings();
+
+            // when & then
+            assertAll(
+                    () -> assertThat(playerReturn).isEqualTo(-10_000),
+                    () -> assertThat(dealerReturn).isEqualTo(10_000)
+            );
         }
     }
 
