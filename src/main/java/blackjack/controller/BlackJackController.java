@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import static blackjack.constant.Command.HIT;
+import static blackjack.dto.Command.HIT;
 
 import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Deck;

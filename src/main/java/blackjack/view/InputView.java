@@ -2,9 +2,9 @@ package blackjack.view;
 
 import static java.lang.System.out;
 
-import blackjack.constant.Command;
 import blackjack.domain.BettingMoney;
 import blackjack.domain.participant.Player;
+import blackjack.dto.Command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

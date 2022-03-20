@@ -1,4 +1,4 @@
-package blackjack.constant;
+package blackjack.dto;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
