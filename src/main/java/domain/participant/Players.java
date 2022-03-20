@@ -1,21 +1,15 @@
 package domain.participant;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class Players implements Iterable<Participant> {
 	private final List<Participant> players;
 
 	public Players(List<Participant> players) {
 		this.players = players;
-	}
-
-	public List<String> showNames() {
-		return new ArrayList<>(players.stream().map(Participant::getName).collect(Collectors.toList()));
 	}
 
 	private class PlayerIterator implements Iterator<Participant> {

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,9 @@ public class Controller {
 	}
 
 	public void printInitHands(Dealer dealer, Players players) {
-		OutputView.printInitMessage(players.showNames());
+		List<String> names = new ArrayList<>();
+		players.forEach(player -> names.add(player.getName()));
+		OutputView.printInitMessage(names);
 		OutputView.printOneHandForDealer(dealer.getName(), dealer.getCards());
 		players.forEach(player -> OutputView.printHand(player.getName(), player.getCards()));
 	}

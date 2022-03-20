@@ -3,6 +3,7 @@ package domain.participant;
 import static domain.card.Cards.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -71,5 +72,14 @@ public class ParticipantTest {
 		Hand hand = new Hand(List.of(ACE_CLOVER, TWO_CLOVER, QUEEN_CLOVER));
 		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
 		assertThat(participant.getScore()).isEqualTo(13);
+	}
+
+	@Test
+	@DisplayName("카드가 정상적으로 추가가 되는지 확인")
+	void addCard() {
+		Hand hand = new Hand(new ArrayList<>(List.of(ACE_CLOVER, TWO_CLOVER)));
+		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
+		participant.addCard(QUEEN_CLOVER);
+		assertThat(participant.getCards()).isEqualTo(List.of(ACE_CLOVER, TWO_CLOVER, QUEEN_CLOVER));
 	}
 }
