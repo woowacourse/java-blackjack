@@ -11,7 +11,6 @@ import dto.TotalProfitDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import model.Status;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participator.Dealer;
@@ -70,7 +69,7 @@ public class BlackJackService {
     }
 
     public void matchFirstTurn() {
-        if (dealer.getStatus().equals(Status.BLACKJACK) || players.anyHasBlackJack()) {
+        if (dealer.isBlackJack() || players.anyHasBlackJack()) {
             players.matchWith(dealer, new SelectBlackJackAndNotMatchedPlayerStrategy());
         }
     }

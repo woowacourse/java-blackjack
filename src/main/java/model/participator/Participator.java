@@ -49,6 +49,10 @@ public abstract class Participator {
         return cards.getStatus();
     }
 
+    public boolean isBlackJack() {
+        return getStatus().equals(Status.BLACKJACK);
+    }
+
     public int getSum() {
         return cards.getSum();
     }

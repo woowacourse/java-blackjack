@@ -8,7 +8,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import model.Result;
-import model.Status;
 import model.card.CardDeck;
 import model.participator.matchplayerselect.MatchPlayerSelectStrategy;
 
@@ -74,7 +73,7 @@ public class Players {
 
     public boolean anyHasBlackJack() {
         return players.stream()
-                .anyMatch(player -> player.getStatus().equals(Status.BLACKJACK));
+                .anyMatch(Participator::isBlackJack);
     }
 
     public List<Player> getPlayers() {
