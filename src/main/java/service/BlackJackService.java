@@ -2,7 +2,6 @@ package service;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
-import static model.participator.Dealer.DEALER_NAME;
 
 import dto.AllCardsAndSumDto;
 import dto.AllParticipatorsDto;
@@ -75,7 +74,7 @@ public class BlackJackService {
     }
 
     public boolean canReceiveCard(String name) {
-        if (dealer.isSameName(DEALER_NAME)) {
+        if (dealer.isSameName(name)) {
             return dealer.canReceiveCard();
         }
         return players.canReceiveCard(name);
