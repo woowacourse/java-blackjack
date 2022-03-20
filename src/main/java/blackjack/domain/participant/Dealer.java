@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.function.Supplier;
-
 import blackjack.domain.BettingAmount;
 import blackjack.domain.BlackJack;
 import blackjack.domain.Outcome;
@@ -12,11 +10,8 @@ public class Dealer extends Participant {
 	private static final int CAN_DRAW_STANDARD = 16;
 	private static final String DEALER_NAME = "딜러";
 
-	private final Supplier<Boolean> drawable;
-
-	public Dealer(final Hand hand, final Supplier<Boolean> drawable) {
+	public Dealer(final Hand hand) {
 		super(DEALER_NAME, hand, new BettingAmount(10));
-		this.drawable = drawable;
 	}
 
 	@Override
@@ -31,16 +26,8 @@ public class Dealer extends Participant {
 
 	@Override
 	public boolean canDraw() {
-		if (hand.calculateScore() >= BlackJack.OPTIMIZED_WINNING_NUMBER) {
-			return false;
-		}
-		if (hand.calculateScore() <= CAN_DRAW_STANDARD) {
-			return true;
-		}
-		if (!hand.hasAce()) {
-			return false;
-		}
-		return drawable.get();
+		final int score = hand.calculateScore();
+		return BlackJack.BUST_SCORE < score && score <= CAN_DRAW_STANDARD;
 	}
 
 	@Override

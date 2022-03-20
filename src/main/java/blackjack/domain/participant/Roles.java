@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import blackjack.domain.BettingAmount;
-import blackjack.domain.DealerDrawChoice;
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
@@ -20,12 +19,12 @@ public class Roles {
 	private Participant dealer;
 
 	public void initDealer() {
-		dealer = new Dealer(new Hand(), DealerDrawChoice::chooseDraw);
+		dealer = new Dealer(new Hand());
 	}
 
 	public Participant distributeCardToDealer(final Deck deck) {
 		dealer.draw(deck, 1);
-		final Participant dealerStatus = new Dealer(dealer.getHand(), DealerDrawChoice::chooseDraw);
+		final Participant dealerStatus = new Dealer(dealer.getHand());
 		dealer.draw(deck, 1);
 		return dealerStatus;
 	}
@@ -38,11 +37,10 @@ public class Roles {
 	}
 
 	public Participant drawDealer(final Deck deck) {
-		if (!dealer.canDraw()) {
-			dealer.stopDraw();
-			return dealer;
+		while (dealer.canDraw()) {
+			dealer.draw(deck, 1);
 		}
-		dealer.draw(deck, 1);
+		dealer.stopDraw();
 		return dealer;
 	}
 

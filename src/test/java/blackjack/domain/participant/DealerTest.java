@@ -19,8 +19,8 @@ class DealerTest {
 	@DisplayName("딜러가 현재 가지고 있는 패에 따라 한 장을 더 드로우 할지 말지를 결정한다")
 	@ParameterizedTest(name = "{index} {displayName} hand={0} expectedResult={1} drawSelect={2}")
 	@MethodSource("createHand")
-	void drawableTest(final Hand hand, final boolean expectedResult, final boolean drawSelect) {
-		Participant dealer = new Dealer(hand, () -> drawSelect);
+	void drawableTest(final Hand hand, final boolean expectedResult) {
+		Participant dealer = new Dealer(hand);
 		assertThat(dealer.canDraw()).isEqualTo(expectedResult);
 	}
 
@@ -28,16 +28,11 @@ class DealerTest {
 		final Hand matchOptimalCase = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
 		final Hand randomDrawWithAce = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("8클로버"));
 		final Hand drawWithAce = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("5클로버"));
-		final Hand notDrawWithoutAce = CreateHand.create(CardMockFactory.of("7클로버"), CardMockFactory.of("K클로버"));
-		final Hand drawWithoutAce = CreateHand.create(CardMockFactory.of("6클로버"), CardMockFactory.of("K클로버"));
 
 		return Stream.of(
-			Arguments.of(matchOptimalCase, false, true),
-			Arguments.of(randomDrawWithAce, false, false),
-			Arguments.of(randomDrawWithAce, true, true),
-			Arguments.of(drawWithAce, true, false),
-			Arguments.of(notDrawWithoutAce, false, true),
-			Arguments.of(drawWithoutAce, true, false)
+			Arguments.of(matchOptimalCase, false),
+			Arguments.of(randomDrawWithAce, false),
+			Arguments.of(drawWithAce, true)
 		);
 	}
 
