@@ -19,7 +19,7 @@ public final class Ready extends Running {
         if (hand.isBlackJack()) {
             return new BlackJack(hand);
         }
-        if (hand.size() == Hit.SIZE) {
+        if (hand.isHit()) {
             return new Hit(hand);
         }
         return new Ready(hand);

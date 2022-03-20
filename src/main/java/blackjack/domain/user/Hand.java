@@ -36,12 +36,12 @@ public final class Hand {
         return cards.size() == INIT_SIZE && score.isBlackJackScore();
     }
 
-    public int size() {
-        return cards.size();
+    public boolean isHit() {
+        return cards.size() >= INIT_SIZE && !isBust() && !isBlackJack();
     }
 
     public List<Card> getCards() {
-        return getCards(size());
+        return List.copyOf(cards);
     }
 
     public List<Card> getCards(int count) {
@@ -50,8 +50,8 @@ public final class Hand {
     }
 
     private void validateCount(int count) {
-        if (count > size()) {
-            throw new IllegalArgumentException(
+        if (count > cards.size()) {
+            throw new IllegalStateException(
                 String.format("보유한 카드의 개수(%d)가 %d보다 작습니다.", cards.size(), count)
             );
         }
