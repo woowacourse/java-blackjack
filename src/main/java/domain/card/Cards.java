@@ -26,50 +26,37 @@ public final class Cards {
     }
 
     public int calculateScore() {
-        int aceAmount = countAceAmount();
-        if (aceAmount != 0) {
-            return judgeAdvantageResult(aceAmount);
+        int score = calculateSum();
+
+        if (isContainAce()) {
+            return calculateScoreWithAce(score);
         }
-        return calculateSum();
-    }
-
-    private int countAceAmount() {
-        return (int) cards.stream()
-                .filter(Card::isAceCard)
-                .count();
-    }
-
-    private int judgeAdvantageResult(int aceAmount) {
-        List<Integer> sumOfCases = new ArrayList<>();
-        for (int aceCount = 1; aceCount <= aceAmount; aceCount++) {
-            sumOfCases.add(sumAceAddition(calculateSum(), aceCount));
-        }
-
-        return sumOfCases.stream()
-                .mapToInt(x -> x)
-                .max()
-                .orElse(calculateSum());
-    }
-
-    private int sumAceAddition(int sum, int aceCount) {
-        int sumWithElevenAce = sum + aceCount * ACE_ADDITION;
-        if (sumWithElevenAce > MAX_SCORE) {
-            return sum;
-        }
-        return sumWithElevenAce;
+        return score;
     }
 
     public int calculateSum() {
         return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+            .mapToInt(Card::getScore)
+            .sum();
+    }
+
+    private boolean isContainAce() {
+        return cards.stream()
+            .anyMatch(Card::isAceCard);
+    }
+
+    private int calculateScoreWithAce(int score) {
+        if (score + ACE_ADDITION <= MAX_SCORE) {
+            return score + ACE_ADDITION;
+        }
+        return score;
     }
 
     public boolean isBust() {
         return calculateScore() > MAX_SCORE;
     }
 
-    public boolean isBlackJack(){
+    public boolean isBlackJack() {
         return cards.size() == CARD_COUNT_FOR_BLACKJACK && calculateScore() == MAX_SCORE;
     }
 
