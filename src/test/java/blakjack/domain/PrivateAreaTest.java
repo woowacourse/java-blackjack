@@ -72,4 +72,21 @@ public final class PrivateAreaTest {
 
         assertThat(privateArea.isBust()).isFalse();
     }
+
+    @Test
+    @DisplayName("이름이 딜러인 경우 true 반환")
+    void dealer() {
+        final PrivateArea privateArea = new PrivateArea("딜러");
+
+
+        assertThat(privateArea.isDealer()).isTrue();
+    }
+
+    @Test
+    @DisplayName("이름이 딜러가 아닌 경우 false 반환")
+    void notDealer() {
+        final PrivateArea privateArea = new PrivateArea("칙촉");
+
+        assertThat(privateArea.isDealer()).isFalse();
+    }
 }
