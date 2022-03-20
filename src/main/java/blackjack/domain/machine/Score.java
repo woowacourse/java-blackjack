@@ -10,33 +10,31 @@ public class Score {
 
     private static final int BONUS_ACE_POINT = 10;
 
-    private final Integer point;
+    private final int value;
     private boolean blackjack;
 
     public Score(Set<Card> cards) {
-        this.point = sumPoints(cards);
+        this.value = sumPoints(cards);
         checkBlackjack(cards);
-
     }
 
     public int getScore() {
-        return point;
+        return value;
     }
-
 
     public boolean isBlackjackWin(Score score) {
         return blackjack && score.nonBlackjack();
     }
 
     public boolean isDraw(Score score) {
-        return Objects.equals(this.point, score.point);
+        return Objects.equals(this.value, score.value);
     }
 
     public boolean isLose(Score score) {
         if (isBust()) {
             return true;
         }
-        return point < score.point && score.nonBust();
+        return value < score.value && score.nonBust();
     }
 
 
@@ -53,18 +51,14 @@ public class Score {
     }
 
     private void checkBlackjack(Set<Card> cards) {
-        if (isNotTwoCards(cards) || isNotTwentyOnePoint()) {
+        if (isNotTwoCards(cards) || nonBlackjack()) {
             return;
         }
         blackjack = true;
     }
 
     private boolean nonBlackjack() {
-        return point != 21;
-    }
-
-    private boolean isNotTwentyOnePoint() {
-        return point != 21;
+        return value != 21;
     }
 
     private boolean isNotTwoCards(Set<Card> cards) {
@@ -93,10 +87,10 @@ public class Score {
     }
 
     private boolean isBust() {
-        return point > Guest.LIMIT_POINT;
+        return value > Guest.LIMIT_POINT;
     }
 
     private boolean nonBust() {
-        return point <= 21;
+        return value <= 21;
     }
 }
