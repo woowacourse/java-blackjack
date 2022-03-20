@@ -4,21 +4,22 @@ import static model.card.Cards.BLACK_JACK_SCORE;
 import static model.participator.Dealer.DEALER_NAME;
 
 import model.Result;
+import model.betting.Bettable;
 import model.betting.Betting;
 
 public class Player extends Participator {
-    private Betting betting;
+    private Bettable bettableAmount;
     private boolean hasMatched;
 
-    private Player(String playerName, Betting betting) {
+    public Player(String playerName) {
         super(playerName);
         checkNameIsDealer(playerName);
-        this.betting = betting;
+        this.bettableAmount = Betting.INIT_BETTING;
         this.hasMatched = false;
     }
 
-    public Player(String playerName, long bettingAmount) {
-        this(playerName, new Betting(bettingAmount));
+    public void bet(Bettable bettableAmount) {
+        this.bettableAmount = bettableAmount;
     }
 
     private void checkNameIsDealer(String name) {
@@ -38,7 +39,7 @@ public class Player extends Participator {
     }
 
     public long calculateBettingAmount() {
-        return betting.calculateBetting(getStatus());
+        return bettableAmount.calculateBetting(getStatus());
     }
 
     public boolean hasMatched() {

@@ -10,6 +10,7 @@ import dto.TotalProfitDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import model.betting.Betting;
 import model.card.Card;
 import model.card.CardDeck;
 import model.card.cardGettable.CardsGettable;
@@ -29,23 +30,22 @@ public class BlackJackService {
     private Players players;
     private CardDeck cardDeck;
 
-    public AllParticipatorsDto initGame(final List<String> names, final List<Long> bettingAmounts) {
-        initParticipatorsAndCardDeck(names, bettingAmounts);
-        drawFirstTurn();
-        return new AllParticipatorsDto(getPlayersDto(), toParticipatorDto(dealer, new FirstCardsGettable()));
+    public void initGame(final List<String> names) {
+        initParticipatorsAndCardDeck(names);
     }
 
-    private void initParticipatorsAndCardDeck(List<String> names, List<Long> bettingAmounts) {
+    private void initParticipatorsAndCardDeck(List<String> names) {
         cardDeck = new CardDeck();
-        players = Players.of(names, bettingAmounts);
+        players = Players.of(names);
         dealer = new Dealer();
     }
 
-    private void drawFirstTurn() {
+    public AllParticipatorsDto drawFirstTurn() {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             players.receiveCardsAll(cardDeck);
             dealer.receiveCard(cardDeck.drawCard());
         }
+        return new AllParticipatorsDto(getPlayersDto(), toParticipatorDto(dealer, new FirstCardsGettable()));
     }
 
     private List<ParticipatorDto> getPlayersDto() {
@@ -112,5 +112,9 @@ public class BlackJackService {
         return players.getPlayers().stream().collect(
                 toMap(player -> toParticipatorDto(player, new EveryCardsGettable()), Participator::getSum,
                         (participator, sum) -> sum, LinkedHashMap::new));
+    }
+
+    public void betByPlayerName(String name, long inputBetting) {
+        players.findByName(name).bet(Betting.of(inputBetting));
     }
 }

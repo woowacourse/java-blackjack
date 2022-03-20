@@ -51,7 +51,7 @@ public class ResultTest {
     }
 
     private void initPlayer(Cards playerCards) {
-        player = new Player("player", 1);
+        player = new Player("player");
         for (Card card : playerCards.getCardsByStrategy(new EveryCardsGettable())) {
             player.receiveCard(card);
         }
