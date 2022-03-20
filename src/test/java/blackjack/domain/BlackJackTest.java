@@ -91,9 +91,9 @@ class BlackJackTest {
         BlackJack blackJack = initializeBlackJack();
 
         Dealer dealer = blackJack.getDealer();
-        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
-        dealer.addCard(new Card(CardShape.CLUB, CardNumber.NINE));
-        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+        dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(Card.of(CardShape.CLUB, CardNumber.NINE));
+        dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.EIGHT));
 
         ProfitResult profitResult = blackJack.getProfitResult();
         Map<String, Integer> profitResults = profitResult.get();
@@ -107,44 +107,44 @@ class BlackJackTest {
 
     private BlackJack initializeBlackJack() {
         Player pepper = new Player("페퍼");
-        pepper.addCard(new Card(CardShape.HEART, CardNumber.THREE));
-        pepper.addCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
-        pepper.addCard(new Card(CardShape.CLUB, CardNumber.Q));
+        pepper.addCard(Card.of(CardShape.HEART, CardNumber.THREE));
+        pepper.addCard(Card.of(CardShape.SPADE, CardNumber.EIGHT));
+        pepper.addCard(Card.of(CardShape.CLUB, CardNumber.Q));
         pepper.addMoney(10000);
 
         Player ash = new Player("애쉬");
-        ash.addCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
-        ash.addCard(new Card(CardShape.SPADE, CardNumber.K));
+        ash.addCard(Card.of(CardShape.CLUB, CardNumber.SEVEN));
+        ash.addCard(Card.of(CardShape.SPADE, CardNumber.K));
         ash.addMoney(20000);
 
         PlayerGroup playerGroup = new PlayerGroup(List.of(pepper, ash));
         BlackJack blackJack = new BlackJack(playerGroup);
 
         Dealer dealer = blackJack.getDealer();
-        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
-        dealer.addCard(new Card(CardShape.CLUB, CardNumber.NINE));
-        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+        dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(Card.of(CardShape.CLUB, CardNumber.NINE));
+        dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.EIGHT));
 
         return blackJack;
     }
 
     private GameResult initializeBustGameResult() {
         Player pepper = new Player("페퍼");
-        pepper.addCard(new Card(CardShape.CLUB, CardNumber.K));
-        pepper.addCard(new Card(CardShape.SPADE, CardNumber.J));
-        pepper.addCard(new Card(CardShape.DIAMOND, CardNumber.J));
+        pepper.addCard(Card.of(CardShape.CLUB, CardNumber.K));
+        pepper.addCard(Card.of(CardShape.SPADE, CardNumber.J));
+        pepper.addCard(Card.of(CardShape.DIAMOND, CardNumber.J));
 
         Player ash = new Player("애쉬");
-        ash.addCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
-        ash.addCard(new Card(CardShape.SPADE, CardNumber.K));
+        ash.addCard(Card.of(CardShape.CLUB, CardNumber.SEVEN));
+        ash.addCard(Card.of(CardShape.SPADE, CardNumber.K));
 
         PlayerGroup playerGroup = new PlayerGroup(List.of(pepper, ash));
         BlackJack blackJack = new BlackJack(playerGroup);
 
         Dealer dealer = blackJack.getDealer();
-        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
-        dealer.addCard(new Card(CardShape.CLUB, CardNumber.NINE));
-        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+        dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(Card.of(CardShape.CLUB, CardNumber.NINE));
+        dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.EIGHT));
 
         return blackJack.getGameResult();
     }

@@ -22,9 +22,9 @@ class CardsTest {
                 CardNumber number3,
                 boolean result,
                 String testName) {
-        Card heart = new Card(CardShape.HEART, number1);
-        Card spade = new Card(CardShape.SPADE, number2);
-        Card club = new Card(CardShape.CLUB, number3);
+        Card heart = Card.of(CardShape.HEART, number1);
+        Card spade = Card.of(CardShape.SPADE, number2);
+        Card club = Card.of(CardShape.CLUB, number3);
         
         CardGroup playerCardGroup = new CardGroup();
         playerCardGroup.addCard(heart);

@@ -27,7 +27,7 @@ public class CardPack {
 
     private static void addCards(List<Card> cards, CardShape cardShape) {
         for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(cardShape, cardNumber));
+            cards.add(Card.of(cardShape, cardNumber));
         }
     }
 
