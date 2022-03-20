@@ -3,8 +3,8 @@ package blakjack.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blakjack.domain.MockCard.CLUB_TEN;
-import static blakjack.domain.MockCard.HEART_ACE;
+import static blakjack.domain.Fixture.CLUB_TEN;
+import static blakjack.domain.Fixture.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class PrivateAreaTest {
@@ -49,5 +49,27 @@ public final class PrivateAreaTest {
         privateArea.addCard(HEART_ACE);
 
         assertThat(privateArea.isBlackjack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("보유한 카드가 버스트인 경우 true 반환")
+    void bust() {
+        final PrivateArea privateArea = new PrivateArea("칙촉");
+        privateArea.addCard(CLUB_TEN);
+        privateArea.addCard(CLUB_TEN);
+        privateArea.addCard(HEART_ACE);
+        privateArea.addCard(HEART_ACE);
+
+        assertThat(privateArea.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("보유한 카드가 버스트가 아닌 경우 false 반환")
+    void notBust() {
+        final PrivateArea privateArea = new PrivateArea("칙촉");
+        privateArea.addCard(CLUB_TEN);
+        privateArea.addCard(CLUB_TEN);
+
+        assertThat(privateArea.isBust()).isFalse();
     }
 }

@@ -54,4 +54,8 @@ public final class PrivateArea {
     public int getCardsSize() {
         return cards.size();
     }
+
+    public boolean isBust() {
+        return getTotalScore() > BLACKJACK_SCORE;
+    }
 }
