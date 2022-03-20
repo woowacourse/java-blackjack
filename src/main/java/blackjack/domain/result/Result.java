@@ -14,12 +14,12 @@ public enum Result {
     LOSE(-1, isLose());
 
     private static BiPredicate<Score, Score> isBlackJackWin() {
-        return (dealer, participant) -> participant.isBlackJack() && !dealer.isBlackJack();
+        return (dealer, participant) -> compareBlackJack(participant, dealer);
     }
 
     private static BiPredicate<Score, Score> isWin() {
         return (dealer, participant) ->
-                (dealer.getTotal() < participant.getTotal() && !participant.isBust())
+                compareTotalScore(participant, dealer)
                         || (dealer.isBust() && !participant.isBust());
     }
 
@@ -31,10 +31,17 @@ public enum Result {
 
     private static BiPredicate<Score, Score> isLose() {
         return (dealer, participant) ->
-                (dealer.getTotal() > participant.getTotal() && !dealer.isBust())
-                        || participant.isBust()
-                        || (dealer.isBust() && !participant.isBlackJack())
-                        || dealer.isBlackJack() && !participant.isBlackJack();
+                participant.isBust()
+                        || compareTotalScore(dealer, participant)
+                        || compareBlackJack(dealer, participant);
+    }
+
+    private static boolean compareBlackJack(Score s1, Score s2) {
+        return s1.isBlackJack() && !s2.isBlackJack();
+    }
+
+    private static boolean compareTotalScore(Score s1, Score s2) {
+        return (s1.getTotal() > s2.getTotal()) && !s1.isBust();
     }
 
     private final double yield;
