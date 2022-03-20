@@ -1,48 +1,36 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameOutcome;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.BlackjackGameState;
+import blackjack.domain.state.running.PlayerRunning;
 import java.util.List;
-import java.util.Objects;
 
-public class Player extends AbstractParticipant {
+public final class Player extends AbstractParticipant {
 
-    private static final int FIRST_HIT_CARD_SIZE = 2;
+    private final int betMoney;
 
-    private Player(final String name, final Cards cards, final ParticipantStatus participantStatus) {
-        super(name, cards, participantStatus);
+    private Player(final Name name, final int betMoney, final BlackjackGameState gameState) {
+        super(name, gameState);
+        checkNotPositiveBetMoney(betMoney);
+        this.betMoney = betMoney;
     }
 
-    public static Player createNewPlayer(final String name, final Cards cards) {
-        Objects.requireNonNull(cards, "cards는 null이 들어올 수 없습니다.");
-        return new Player(name, cards, ParticipantStatus.RUNNING);
+    public Player(final Name name, final int betMoney, final Cards cards) {
+        this(name, betMoney, new PlayerRunning(cards));
     }
 
-    @Override
-    public List<Card> firstCards() {
-        return List.copyOf(cards().subList(0, FIRST_HIT_CARD_SIZE));
+    public Player(final Name name, final int betMoney, final CardDeck cardDeck) {
+        this(name, betMoney, new Cards(List.of(cardDeck.provideCard(), cardDeck.provideCard())));
     }
 
-    @Override
-    public boolean isDealer() {
-        return false;
-    }
-
-    @Override
-    boolean isEnd() {
-        return super.calculateScore() > Cards.BLACKJACK_TARGET_NUMBER;
-    }
-
-
-    public GameOutcome fight(final Dealer dealer) {
-        validateFightGame(dealer);
-        return GameOutcome.calculateOutcome(this, dealer);
-    }
-
-    private void validateFightGame(final Dealer dealer) {
-        if (canHit() || dealer.canHit()) {
-            throw new IllegalStateException("턴이 종료되지 않아 비교할 수 없습니다.");
+    private void checkNotPositiveBetMoney(final int betMoney) {
+        if (betMoney <= 0) {
+            throw new IllegalArgumentException("배팅금액은 0이하의 값이 들어올 수 없습니다.");
         }
+    }
+
+    public int profit(final Dealer dealer) {
+        return blackjackGameState.profit(betMoney, dealer.blackjackGameState);
     }
 }

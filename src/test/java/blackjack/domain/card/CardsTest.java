@@ -1,71 +1,71 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.CardNumber.A;
-import static blackjack.domain.card.CardNumber.NINE;
-import static blackjack.domain.card.CardNumber.TEN;
-import static blackjack.domain.card.CardNumber.THREE;
-import static blackjack.domain.card.CardNumber.TWO;
-import static blackjack.domain.card.CardPattern.SPADE;
-import static blackjack.testutil.CardFixtureGenerator.createCards;
+import static blackjack.domain.card.Denomination.A;
+import static blackjack.domain.card.Denomination.EIGHT;
+import static blackjack.domain.card.Denomination.FOUR;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.SEVEN;
+import static blackjack.domain.card.Denomination.TEN;
+import static blackjack.domain.card.Suit.SPADES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.CardDeck;
-import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CardsTest {
 
     @Test
-    @DisplayName("카드의 합을 계산할 수 있다.")
-    void calculateScore() {
-        final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, TWO), Card.of(SPADE, THREE)));
-        assertThat(cards.calculateScore()).isEqualTo(5);
-    }
-
-    @Test
-    @DisplayName("생성 시 카드에는 null이 들어올 경우 예외를 발생해야 한다.")
-    void createNullException() {
+    void 생성_시_null이_들어오는_경우_예외발생() {
         assertThatThrownBy(() -> new Cards(null))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("카드에는 null이 들어올 수 없습니다.");
+                .hasMessage("cards는 null이 들어올 수 없습니다.");
     }
 
     @Test
-    @DisplayName("생성 시 카드에는 2장의 카드가 들어오지 않을 경우 예외를 발생해야 한다.")
-    void createExceptionBySize() {
-        final List<Card> cards = Arrays.asList(Card.of(SPADE, A));
-        assertThatThrownBy(() -> new Cards(cards))
+    void 생성_시_cards크기가_2미만인_경우_예외발생() {
+        assertThatThrownBy(() -> new Cards(List.of(new Card(SPADES, A))))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드 2장으로 생성해야 합니다.");
+                .hasMessage("cards는 2장이상이 들어와야 합니다.");
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateIsBustValues")
+    void 카드상태가_버스트인지_확인(final List<Card> inputCards, final boolean expected) {
+        final Cards cards = new Cards(inputCards);
+        assertThat(cards.isBust()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> generateIsBustValues() {
+        return Stream.of(
+                Arguments.of(List.of(new Card(SPADES, KING), new Card(SPADES, SEVEN), new Card(SPADES, TEN)), true),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, TEN)), false),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, EIGHT)), false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateIsBlackjackValues")
+    void 카드상태가_블랙잭인지_확인(final List<Card> inputCards, final boolean expected) {
+        final Cards cards = new Cards(inputCards);
+        assertThat(cards.isBlackjack()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> generateIsBlackjackValues() {
+        return Stream.of(
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, TEN)), true),
+                Arguments.of(List.of(new Card(SPADES, KING), new Card(SPADES, SEVEN), new Card(SPADES, FOUR)), false),
+                Arguments.of(List.of(new Card(SPADES, A), new Card(SPADES, EIGHT)), false)
+        );
     }
 
     @Test
-    @DisplayName("중복된 카드를 더할 경우 예외가 발생해야 한다.")
-    void addExceptionBySumIsLargerThanBlackJack() {
-        final Cards cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, NINE));
-        assertThatThrownBy(() -> cards.addCard(Card.of(SPADE, TEN)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("중복된 카드를 추가할 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("null인 카드를 더할 경우 예외가 발생해야 한다.")
-    void addCardExceptionByNullCard() {
-        final Cards cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, NINE));
-        assertThatThrownBy(() -> cards.addCard(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("null인 카드는 들어올 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("카드덱을 받아서 Cards를 생성할 수 있다.")
-    void createCardsByCardDeck() {
-        final CardDeck cardDeck = CardDeck.createNewCardDek();
-        final Cards cards = Cards.createByCardDeck(cardDeck);
-
-        assertThat(cards.cards()).hasSize(2);
+    void 최대_스코어가_버스트인지_확인() {
+        final Cards cards = new Cards(List.of(new Card(SPADES, SEVEN), new Card(SPADES, EIGHT), new Card(SPADES, A)));
+        assertThat(cards.isMaxScoreBust()).isTrue();
     }
 }

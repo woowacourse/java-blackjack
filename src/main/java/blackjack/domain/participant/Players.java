@@ -1,130 +1,122 @@
 package blackjack.domain.participant;
 
-import static java.util.Map.entry;
-
-import blackjack.domain.CardDeck;
-import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.dto.OutComeResult;
-import blackjack.dto.ParticipantCards;
-import blackjack.dto.ParticipantScoreResult;
+import blackjack.domain.card.CardDeck;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
 
+    private static final int MIN_PLAYERS_SIZE = 2;
+    private static final int MAX_PLAYERS_SIZE = 8;
+
     private final List<Player> players;
-    private int currentTurnIndex;
+    private int currentPlayerTurnIndex;
 
     public Players(final List<Player> players) {
-        Objects.requireNonNull(players, "players는 null로 생성할 수 없습니다.");
+        Objects.requireNonNull(players, "players는 null이 들어올 수 없습니다.");
         this.players = new ArrayList<>(players);
-        validatePlayersSize(players);
-        validateDuplicationPlayers(this.players);
+        checkPlayersSize(this.players);
     }
 
-    private void validatePlayersSize(final List<Player> players) {
+    private void checkPlayersSize(final List<Player> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("플레이어는 0명이 될 수 없습니다.");
         }
     }
 
-    private void validateDuplicationPlayers(final List<Player> players) {
-        if (calculateDistinctCount(players) != players.size()) {
+    public static Players createPlayers(final List<String> names, final Function<String, Integer> betMoney,
+                                        final CardDeck cardDeck) {
+        checkDuplicationNames(names);
+        checkPlayerNamesSize(names);
+        return new Players(createPlayersByBettingAndDrawCards(toNames(names), betMoney, cardDeck));
+    }
+
+    private static void checkDuplicationNames(final List<String> names) {
+        if (calculateDistinctCount(names) != names.size()) {
             throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
         }
     }
 
-    private int calculateDistinctCount(final List<Player> players) {
-        return (int) players.stream()
-                .map(Player::getName)
+    private static int calculateDistinctCount(final List<String> names) {
+        return (int) names.stream()
                 .distinct()
                 .count();
     }
 
-    public static Players createByPlayerNames(final List<String> playerNames, final CardDeck cardDeck) {
-        final List<Player> players = createPlayers(playerNames, cardDeck);
-        return new Players(players);
-    }
-
-    private static List<Player> createPlayers(final List<String> playerNames, final CardDeck cardDeck) {
-        return playerNames.stream()
-                .map(name -> createPlayer(name, cardDeck))
+    private static List<Name> toNames(final List<String> names) {
+        return names.stream()
+                .map(Name::new)
                 .collect(Collectors.toList());
     }
 
-    private static Player createPlayer(final String name, final CardDeck cardDeck) {
-        return Player.createNewPlayer(name, Cards.createByCardDeck(cardDeck));
+    private static void checkPlayerNamesSize(final List<String> names) {
+        if (names.size() < MIN_PLAYERS_SIZE || names.size() > MAX_PLAYERS_SIZE) {
+            throw new IllegalArgumentException(String.format("플레이어는 %s명 이상 %s명 이하만 들어올 수 있습니다.",
+                    MIN_PLAYERS_SIZE, MAX_PLAYERS_SIZE));
+        }
     }
 
-    public List<ParticipantCards> getFirstCards() {
-        return players.stream()
-                .map(ParticipantCards::toParticipantFirstCards)
-                .collect(Collectors.toUnmodifiableList());
+    private static List<Player> createPlayersByBettingAndDrawCards(final List<Name> names,
+                                                                   final Function<String, Integer> betMoney,
+                                                                   final CardDeck cardDeck) {
+        return names.stream()
+                .map(name -> new Player(name, betMoney.apply(name.getName()), cardDeck))
+                .collect(Collectors.toList());
     }
 
-    public void turnToNextParticipant() {
-        validateAllTurnEnd();
-        currentTurnPlayer().changeFinishStatus();
-        currentTurnIndex++;
+    public Player hitCurrentTurnPlayer(final Card card) {
+        final Player currentTurnPlayer = currentTurnPlayer();
+        currentTurnPlayer.hit(card);
+        checkCanTurnNextAndTurnNext(currentTurnPlayer);
+        return currentTurnPlayer;
     }
 
-    private void validateAllTurnEnd() {
+    public Player currentTurnPlayer() {
+        checkAllTurnEnd();
+        return players.get(currentPlayerTurnIndex);
+    }
+
+    private void checkAllTurnEnd() {
         if (isAllTurnEnd()) {
             throw new IllegalStateException("모든 턴이 종료되었습니다.");
         }
     }
 
     public boolean isAllTurnEnd() {
-        return players.size() <= currentTurnIndex;
+        return players.size() <= currentPlayerTurnIndex;
     }
 
-    public ParticipantCards hitCurrentParticipant(final Card card) {
-        final Player currentTurnPlayer = currentTurnPlayer();
-        currentTurnPlayer.hit(card);
-        checkCanTurnNext(currentTurnPlayer);
-        return ParticipantCards.toParticipantCards(currentTurnPlayer);
-    }
-
-    private void checkCanTurnNext(final Player currentPlayer) {
-        if (!currentPlayer.canHit()) {
-            currentTurnIndex++;
+    private void checkCanTurnNextAndTurnNext(final Player currentTurnPlayer) {
+        if (currentTurnPlayer.isFinished()) {
+            currentPlayerTurnIndex++;
         }
     }
 
-    private Player currentTurnPlayer() {
-        validateAllTurnEnd();
-        return players.get(currentTurnIndex);
+    public void stayCurrentTurnPlayer() {
+        checkAllTurnEnd();
+        currentTurnPlayer().stay();
+        currentPlayerTurnIndex++;
     }
 
-    public String getCurrentParticipantName() {
-        validateAllTurnEnd();
-        return players.get(currentTurnIndex).getName();
+    public int dealerProfit(final Dealer dealer) {
+        return calculateAllPlayersProfit(dealer) * -1;
     }
 
-    public ParticipantCards getCurrentParticipantCards() {
-        return ParticipantCards.toParticipantCards(currentTurnPlayer());
-    }
-
-    public List<ParticipantScoreResult> getParticipantScoreResults() {
+    private int calculateAllPlayersProfit(final Dealer dealer) {
         return players.stream()
-                .map(ParticipantScoreResult::from)
-                .collect(Collectors.toUnmodifiableList());
+                .mapToInt(player -> player.profit(dealer))
+                .sum();
     }
 
-    public OutComeResult outcomeResult(Dealer dealer) {
-        return OutComeResult.from(calculateOutcomeResultWithDealer(dealer));
+    public List<Player> players() {
+        return List.copyOf(players);
     }
 
-    private Map<String, GameOutcome> calculateOutcomeResultWithDealer(final Dealer dealer) {
-        return players.stream()
-                .map(player -> entry(player.getName(), player.fight(dealer)))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
+    public String currentTurnPlayerName() {
+        return currentTurnPlayer().getName();
     }
 }

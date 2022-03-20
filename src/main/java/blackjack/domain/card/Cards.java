@@ -1,72 +1,62 @@
 package blackjack.domain.card;
 
-import blackjack.domain.CardDeck;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Cards {
 
-    public static final int BLACKJACK_TARGET_NUMBER = 21;
-    private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final int FIRST_DRAW_CARDS_SIZE = 2;
 
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
-        Objects.requireNonNull(cards, "카드에는 null이 들어올 수 없습니다.");
+        Objects.requireNonNull(cards, "cards는 null이 들어올 수 없습니다.");
+        checkCardsSize(cards);
         this.cards = new ArrayList<>(cards);
-        validateCardsSize(this.cards);
     }
 
-    private void validateCardsSize(final List<Card> cards) {
-        if (cards.size() != BLACKJACK_CARD_SIZE) {
-            throw new IllegalArgumentException("카드 2장으로 생성해야 합니다.");
+    private void checkCardsSize(final List<Card> cards) {
+        if (cardsDistinctCount(cards) < FIRST_DRAW_CARDS_SIZE) {
+            throw new IllegalArgumentException("cards는 2장이상이 들어와야 합니다.");
         }
     }
 
-    public static Cards createByCardDeck(final CardDeck cardDeck) {
-        return new Cards(Arrays.asList(cardDeck.provideCard(), cardDeck.provideCard()));
+    private int cardsDistinctCount(final List<Card> cards) {
+        return (int) cards.stream()
+                .distinct()
+                .count();
     }
 
-    public int calculateScore() {
-        final List<CardNumber> cardNumbers = cardNumbers();
-        return CardNumber.calculateScore(cardNumbers);
+    public Score score() {
+        return Denomination.calculateCardScore(cards);
     }
 
-    public int calculateMaxScore() {
-        final List<CardNumber> cardNumbers = cardNumbers();
-        return CardNumber.calculateMaxScore(cardNumbers);
+    public boolean isBust() {
+        return score().isBust();
     }
 
-    private List<CardNumber> cardNumbers() {
-        return cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toUnmodifiableList());
+    public boolean isBlackjack() {
+        return score().isBlackjack() && cards.size() == FIRST_DRAW_CARDS_SIZE;
+    }
+
+    public Score maxScore() {
+        return Denomination.calculateCardMaxScore(cards);
+    }
+
+    public boolean isMaxScoreBust() {
+        return maxScore().isBust();
+    }
+
+    public boolean isDealerStandScore() {
+        return maxScore().isDealerStand();
     }
 
     public void addCard(final Card card) {
-        Objects.requireNonNull(card, "null인 카드는 들어올 수 없습니다.");
-        validateDuplicateCard(card);
         cards.add(card);
-    }
-
-    private void validateDuplicateCard(final Card card) {
-        if (cards.contains(card)) {
-            throw new IllegalArgumentException("중복된 카드를 추가할 수 없습니다.");
-        }
     }
 
     public List<Card> cards() {
         return List.copyOf(cards);
-    }
-
-    public boolean isBust() {
-        return calculateScore() > BLACKJACK_TARGET_NUMBER;
-    }
-
-    public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_TARGET_NUMBER;
     }
 }

@@ -1,55 +1,41 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class Card {
 
-    private static final List<Card> CARDS_CACHE = createCards();
+    private final Suit suit;
+    private final Denomination denomination;
 
-    private final CardPattern pattern;
-    private final CardNumber number;
-
-    private Card(final CardPattern pattern, final CardNumber number) {
-        this.pattern = pattern;
-        this.number = number;
+    public Card(final Suit suit, final Denomination denomination) {
+        Objects.requireNonNull(suit, "suit은 null이 들어올 수 없습니다.");
+        Objects.requireNonNull(denomination, "denomination은 null이 들어올 수 없습니다.");
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
-    public static Card of(final CardPattern pattern, final CardNumber number) {
-        return CARDS_CACHE.stream()
-                .filter(card -> isEqualCard(pattern, number, card))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
+    public Suit getSuit() {
+        return suit;
     }
 
-    private static boolean isEqualCard(final CardPattern pattern, final CardNumber number, final Card card) {
-        return card.pattern == pattern && card.number == number;
+    public Denomination getDenomination() {
+        return denomination;
     }
 
-    private static List<Card> createCards() {
-        final List<CardPattern> patterns = CardPattern.cardPatterns();
-        return patterns.stream()
-                .map(Card::createPatternCards)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Card card = (Card) o;
+        return suit == card.suit && denomination == card.denomination;
     }
 
-    private static List<Card> createPatternCards(final CardPattern pattern) {
-        return CardNumber.cardNumbers().stream()
-                .map(number -> new Card(pattern, number))
-                .collect(Collectors.toList());
-    }
-
-    public static List<Card> createNewCards() {
-        return new ArrayList<>(CARDS_CACHE);
-    }
-
-    public CardPattern getPattern() {
-        return pattern;
-    }
-
-    public CardNumber getNumber() {
-        return number;
+    @Override
+    public int hashCode() {
+        return Objects.hash(suit, denomination);
     }
 }

@@ -1,101 +1,43 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.state.BlackjackGameState;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractParticipant implements Participant {
 
-    private final String name;
-    private final Cards cards;
-    private ParticipantStatus participantStatus;
+    private final Name name;
+    protected BlackjackGameState blackjackGameState;
 
-    AbstractParticipant(final String name, final Cards cards, final ParticipantStatus participantStatus) {
-        Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
-        Objects.requireNonNull(cards, "보유 카드에는 null이 들어올 수 없습니다.");
-        validateEmptyName(name);
+    AbstractParticipant(final Name name, final BlackjackGameState blackjackGameState) {
+        Objects.requireNonNull(name, "이름은 null이 들어올 수 없습니다.");
+        Objects.requireNonNull(blackjackGameState, "게임 상태는 null이 들어올 수 없습니다.");
         this.name = name;
-        this.cards = cards;
-        this.participantStatus = participantStatus;
+        this.blackjackGameState = blackjackGameState;
     }
 
-    private void validateEmptyName(final String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("플레이어의 이름은 공백이 들어올 수 없습니다.");
-        }
-    }
-
-    @Override
     public void hit(final Card card) {
-        validateCanHit();
-        cards.addCard(card);
-        refreshParticipantStatus();
+        blackjackGameState = blackjackGameState.hit(card);
     }
 
-    private void validateCanHit() {
-        if (!canHit()) {
-            throw new IllegalStateException("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
-        }
+    public void stay() {
+        blackjackGameState = blackjackGameState.stay();
     }
 
-    private void refreshParticipantStatus() {
-        participantStatus = participantStatus.refreshStatus(cards);
-        if (isDealer() && isEnd()) {
-            participantStatus = ParticipantStatus.STAND;
-        }
+    public boolean isFinished() {
+        return blackjackGameState.isFinished();
     }
 
-    @Override
-    public boolean canHit() {
-        return !participantStatus.isFinishedGame();
+    public int score() {
+        return blackjackGameState.score();
     }
 
-    @Override
-    public void changeFinishStatus() {
-        if (canHit()) {
-            participantStatus = ParticipantStatus.STAND;
-        }
-    }
-
-    @Override
-    public int calculateResultScore() {
-        validateCanCalculateResultScore();
-        return calculateScore();
-    }
-
-    private void validateCanCalculateResultScore() {
-        if (canHit()) {
-            throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
-        }
-    }
-
-    int calculateScore() {
-        if (isDealer()) {
-            return cards.calculateMaxScore();
-        }
-        return cards.calculateScore();
-    }
-
-    @Override
-    public boolean isBlackJack() {
-        return cards.isBlackJack();
-    }
-
-    @Override
-    public boolean isBust() {
-        return cards.isBust();
-    }
-
-    @Override
     public List<Card> cards() {
-        return List.copyOf(cards.cards());
+        return blackjackGameState.cards();
     }
 
-    @Override
     public String getName() {
-        return name;
+        return name.getName();
     }
-
-    abstract boolean isEnd();
 }

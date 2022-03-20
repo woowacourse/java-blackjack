@@ -1,21 +1,30 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardTest {
+class CardTest {
 
     @Test
-    @DisplayName("카드 52장을 반환할 수 있다.")
-    void cards() {
-        final List<Card> cards = Card.createNewCards();
-        final int distinctCount = (int) cards.stream()
-                .distinct()
-                .count();
+    void suit이_null이_들어올_경우_예외발생() {
+        assertThatThrownBy(() -> new Card(null, Denomination.EIGHT))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("suit은 null이 들어올 수 없습니다.");
+    }
 
-        assertThat(distinctCount).isEqualTo(52);
+    @Test
+    void denomination이_null이_들어올_경우_예외발생() {
+        assertThatThrownBy(() -> new Card(Suit.SPADES, null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("denomination은 null이 들어올 수 없습니다.");
+    }
+
+    @Test
+    void 문양과_숫자를_가진_카드_생성() {
+        final Suit suit = Suit.SPADES;
+        final Denomination denomination = Denomination.EIGHT;
+        assertThat(new Card(suit, denomination)).isInstanceOf(Card.class);
     }
 }

@@ -10,16 +10,14 @@ public class ParticipantScoreResult {
     private final List<Card> cards;
     private final int score;
 
-    private ParticipantScoreResult(final String name, final List<Card> cards, final int score) {
+    public ParticipantScoreResult(final String name, final List<Card> cards, final int score) {
         this.name = name;
         this.cards = cards;
         this.score = score;
     }
 
     public static ParticipantScoreResult from(final Participant participant) {
-        return new ParticipantScoreResult(
-                participant.getName(), participant.cards(), participant.calculateResultScore()
-        );
+        return new ParticipantScoreResult(participant.getName(), participant.cards(), participant.score());
     }
 
     public String getName() {

@@ -1,16 +1,21 @@
 package blackjack;
 
-import static blackjack.domain.card.CardNumber.A;
-import static blackjack.domain.card.CardNumber.FIVE;
-import static blackjack.domain.card.CardNumber.FOUR;
-import static blackjack.domain.card.CardNumber.JACK;
-import static blackjack.domain.card.CardNumber.KING;
-import static blackjack.domain.card.CardNumber.QUEEN;
-import static blackjack.domain.card.CardNumber.SEVEN;
-import static blackjack.domain.card.CardNumber.SIX;
-import static blackjack.domain.card.CardNumber.TWO;
-import static blackjack.domain.card.CardPattern.HEART;
-import static blackjack.domain.card.CardPattern.SPADE;
+import static blackjack.domain.card.Denomination.A;
+import static blackjack.domain.card.Denomination.EIGHT;
+import static blackjack.domain.card.Denomination.FIVE;
+import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Denomination.NINE;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.SEVEN;
+import static blackjack.domain.card.Denomination.SIX;
+import static blackjack.domain.card.Denomination.TEN;
+import static blackjack.domain.card.Denomination.THREE;
+import static blackjack.domain.card.Denomination.TWO;
+import static blackjack.domain.card.Suit.CLUBS;
+import static blackjack.domain.card.Suit.DIAMONDS;
+import static blackjack.domain.card.Suit.HEARTS;
+import static blackjack.domain.card.Suit.SPADES;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertShuffleTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +26,7 @@ import camp.nextstep.edu.missionutils.test.NsTest;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
-class ApplicationTest extends NsTest {
+public class ApplicationTest extends NsTest {
 
     @Test
     void 잘못된_명령어에_대한_예외_처리() {
@@ -40,80 +45,101 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    void 사람_수가_0에_대한_예외_처리() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException(","))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
     void 딜러는_첫드로우를_한장만_보여준다() {
         assertShuffleTest(
                 () -> {
-                    run("ori", "n");
-                    assertThat(output()).contains(String.format("%s%n%s%n%s",
-                            "딜러와 ori에게 2장을 나누었습니다.", "딜러: K하트", "ori 카드: K스페이드, Q스페이드"));
+                    run("ori, huni", "1000", "1000", "n", "n");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
+                            "딜러와 ori, huni에게 2장을 나누었습니다.", "딜러: K하트", "ori 카드: K스페이드, Q스페이드",
+                            "huni 카드: J스페이드, 10스페이드"));
                 },
-                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN),
-                        Card.of(HEART, KING), Card.of(HEART, SEVEN))
+                Arrays.asList(new Card(HEARTS, KING), new Card(HEARTS, SEVEN),
+                        new Card(SPADES, KING), new Card(SPADES, QUEEN),
+                        new Card(SPADES, JACK), new Card(SPADES, TEN))
         );
     }
 
     @Test
-    void 유저가_버스트면_항상_진다() {
+    void 유저가_버스트면_수익이_마이너스_1이다() {
         assertShuffleTest(
                 () -> {
-                    run("ori", "y");
-                    assertThat(output()).contains(String.format("%s%n%s%n%s", "## 최종 승패", "딜러: 1승", "ori: 패"));
+                    run("ori, huni", "10000", "1000", "y", "y");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
+                            "## 최종 수익", "딜러: 11000", "ori: -10000", "huni: -1000"));
                 },
-                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN),
-                        Card.of(HEART, KING), Card.of(HEART, SIX),
-                        Card.of(SPADE, JACK),
-                        Card.of(HEART, QUEEN))
+                Arrays.asList(new Card(HEARTS, KING), new Card(HEARTS, SIX),
+                        new Card(SPADES, KING), new Card(SPADES, QUEEN),
+                        new Card(CLUBS, KING), new Card(CLUBS, QUEEN),
+                        new Card(SPADES, JACK),
+                        new Card(CLUBS, JACK),
+                        new Card(HEARTS, QUEEN))
         );
     }
 
     @Test
-    void 유저와_딜러_모두_블랙잭이면_무승부한다() {
+    void 유저와_딜러_모두_블랙잭이면_수익이_0이다() {
         assertShuffleTest(
                 () -> {
-                    run("ori", "n");
-                    assertThat(output()).contains(String.format("%s%n%s%n%s", "## 최종 승패", "딜러: 1무", "ori: 무"));
+                    run("ori, huni", "10000", "1000", "n", "n");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
+                            "## 최종 수익", "딜러: 0", "ori: 0", "huni: 0"));
                 },
-                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A),
-                        Card.of(HEART, KING), Card.of(HEART, A))
+                Arrays.asList(new Card(SPADES, KING), new Card(SPADES, A),
+                        new Card(HEARTS, KING), new Card(HEARTS, A),
+                        new Card(CLUBS, KING), new Card(CLUBS, A))
         );
     }
 
     @Test
-    void 유저만_블랙잭이면_유저가_이긴다() {
+    void 유저만_블랙잭이면_유저가_수익이_1_5이다() {
         assertShuffleTest(
                 () -> {
-                    run("ori", "n");
-                    assertThat(output()).contains(String.format("%s%n%s%n%s", "## 최종 승패", "딜러: 1패", "ori: 승"));
+                    run("ori, huni", "10000", "1000", "n", "n");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
+                            "## 최종 수익", "딜러: -16500", "ori: 15000", "huni: 1500"));
                 },
-                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A),
-                        Card.of(HEART, KING), Card.of(HEART, SIX),
-                        Card.of(HEART, FIVE))
+                Arrays.asList(new Card(HEARTS, KING), new Card(HEARTS, SIX),
+                        new Card(SPADES, KING), new Card(SPADES, A),
+                        new Card(CLUBS, KING), new Card(CLUBS, A),
+                        new Card(HEARTS, FIVE))
         );
     }
 
     @Test
-    void 딜러만_버스트면_유저가_이긴다() {
+    void 딜러만_버스트면_유저가_수익이_1이다() {
         assertShuffleTest(
                 () -> {
-                    run("ori", "n");
-                    assertThat(output()).contains(String.format("%s%n%s%n%s", "## 최종 승패", "딜러: 1패", "ori: 승"));
+                    run("ori, huni", "10000", "1000", "n", "n");
+                    assertThat(output()).contains(String.format("%s%n%s%n%s%n%s",
+                            "## 최종 수익", "딜러: -11000", "ori: 10000", "huni: 1000"));
                 },
-                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, SEVEN),
-                        Card.of(HEART, KING), Card.of(HEART, SIX),
-                        Card.of(HEART, JACK))
+                Arrays.asList(new Card(HEARTS, KING), new Card(HEARTS, SIX),
+                        new Card(SPADES, KING), new Card(SPADES, SEVEN),
+                        new Card(SPADES, TWO), new Card(SPADES, THREE),
+                        new Card(HEARTS, JACK))
         );
     }
 
     @Test
-    void 버스트와_블랙잭_모두_아닌_경우_21에_가까운_사람이_이긴다() {
+    void 버스트와_블랙잭_모두_아닌_경우_21에_가까운_사람이_수익이_1이다() {
         assertShuffleTest(
                 () -> {
-                    run("ori", "y", "n");
-                    assertThat(output()).contains(String.format("%s%n%s%n%s", "## 최종 승패", "딜러: 1승", "ori: 패"));
+                    run("pobi, json", "10000", "20000", "y", "n", "n");
+                    assertThat(output()).contains("딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20");
                 },
-                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, SEVEN),
-                        Card.of(HEART, KING), Card.of(HEART, SIX),
-                        Card.of(SPADE, TWO), Card.of(HEART, FOUR))
+                Arrays.asList(new Card(DIAMONDS, THREE), new Card(CLUBS, NINE),
+                        new Card(HEARTS, TWO), new Card(SPADES, EIGHT),
+                        new Card(CLUBS, SEVEN), new Card(SPADES, KING),
+                        new Card(CLUBS, A),
+                        new Card(DIAMONDS, EIGHT))
         );
     }
 
