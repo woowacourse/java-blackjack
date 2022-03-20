@@ -2,12 +2,12 @@ package blackjack.domain.user;
 
 import java.util.Objects;
 
-public class Bet {
+public class Money {
     private static final int MIN_MONEY_VALUE = 0;
 
     private final double amount;
 
-    private Bet(double amount) {
+    private Money(double amount) {
         validateNaturalNumber(amount);
         this.amount = amount;
     }
@@ -18,8 +18,8 @@ public class Bet {
         }
     }
 
-    public static Bet from(double amount) {
-        return new Bet(amount);
+    public static Money from(double amount) {
+        return new Money(amount);
     }
 
     public double calculate(double value) {
@@ -34,8 +34,8 @@ public class Bet {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Bet bet = (Bet) o;
-        return amount == bet.amount;
+        Money money = (Money) o;
+        return amount == money.amount;
     }
 
     @Override

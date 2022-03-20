@@ -16,7 +16,7 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players create(Map<String, Bet> playerBets, Deck deck) {
+    public static Players create(Map<String, Money> playerBets, Deck deck) {
         return playerBets.entrySet().stream()
                 .map(entry -> new Player(entry.getKey(), entry.getValue(), deck.drawInitCards()))
                 .collect(Collectors.collectingAndThen(

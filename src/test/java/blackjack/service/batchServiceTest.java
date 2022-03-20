@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import blackjack.domain.PlayerResult;
-import blackjack.domain.user.Bet;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 import blackjack.dto.UserProfitDto;
 import org.junit.jupiter.api.DisplayName;
@@ -26,10 +26,10 @@ class batchServiceTest {
         Cards blackJack = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.DIAMOND, Number.ACE)));
         Cards initCards = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.DIAMOND, Number.FIVE)));
         Map<Player, PlayerResult> statistics = new LinkedHashMap<>();
-        statistics.put(new Player("giron", Bet.from(1000), blackJack), PlayerResult.BLACKJACK);
-        statistics.put(new Player("test1", Bet.from(1000), initCards), PlayerResult.WIN);
-        statistics.put(new Player("test2", Bet.from(1000), initCards), PlayerResult.LOSE);
-        statistics.put(new Player("test3", Bet.from(1000), initCards), PlayerResult.DRAW);
+        statistics.put(new Player("giron", Money.from(1000), blackJack), PlayerResult.BLACKJACK);
+        statistics.put(new Player("test1", Money.from(1000), initCards), PlayerResult.WIN);
+        statistics.put(new Player("test2", Money.from(1000), initCards), PlayerResult.LOSE);
+        statistics.put(new Player("test3", Money.from(1000), initCards), PlayerResult.DRAW);
         UserProfitDto calculate = batchService.calculate(statistics);
         Map<String, Double> playerProfit = calculate.getPlayerProfit();
         double dealerProfit = calculate.getDealerProfit();
@@ -47,7 +47,7 @@ class batchServiceTest {
     void calculateBetOneTest() {
         Cards blackJack = new Cards(List.of(new Card(Shape.CLOVER, Number.JACK), new Card(Shape.DIAMOND, Number.ACE)));
         Map<Player, PlayerResult> statistics = new LinkedHashMap<>();
-        statistics.put(new Player("giron", Bet.from(1), blackJack), PlayerResult.BLACKJACK);
+        statistics.put(new Player("giron", Money.from(1), blackJack), PlayerResult.BLACKJACK);
         UserProfitDto calculate = batchService.calculate(statistics);
         Map<String, Double> playerProfit = calculate.getPlayerProfit();
         double dealerProfit = calculate.getDealerProfit();

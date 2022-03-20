@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.PlayerResult;
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.Bet;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -24,7 +24,7 @@ public class BlackjackController {
     public void run() {
         Deck deck = new Deck();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        Map<String, Bet> playerBets = startBettings(inputPlayerNames);
+        Map<String, Money> playerBets = startBettings(inputPlayerNames);
         Dealer dealer = new Dealer(deck.drawInitCards());
         Players players = Players.create(playerBets, deck);
 
@@ -47,10 +47,10 @@ public class BlackjackController {
         OutputView.printFinalResult(batchService.calculate(statistics));
     }
 
-    private Map<String, Bet> startBettings(List<String> inputPlayerNames) {
+    private Map<String, Money> startBettings(List<String> inputPlayerNames) {
         return inputPlayerNames.stream()
                 .collect(Collectors.toMap(inputPlayerName -> inputPlayerName,
-                        inputPlayerName -> Bet.from(InputView.askBetAmount(inputPlayerName))
+                        inputPlayerName -> Money.from(InputView.askBetAmount(inputPlayerName))
                         , (a, b) -> b,
                         LinkedHashMap::new));
     }

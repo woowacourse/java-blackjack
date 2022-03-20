@@ -1,7 +1,7 @@
 package blackjack.service;
 
 import blackjack.domain.PlayerResult;
-import blackjack.domain.user.Bet;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 import blackjack.dto.UserProfitDto;
 
@@ -15,9 +15,9 @@ public class batchService {
         Map<String, Double> playerProfit = new LinkedHashMap<>();
         for (Map.Entry<Player, PlayerResult> entry : statistics.entrySet()) {
             Player player = entry.getKey();
-            Bet bet = player.getBet();
+            Money money = player.getBet();
             PlayerResult result = entry.getValue();
-            double calculate = bet.calculate(result.getProfit());
+            double calculate = money.calculate(result.getProfit());
             dealerProfit+=calculate;
             playerProfit.put(player.getName(), calculate);
         }
