@@ -6,4 +6,8 @@ public final class Chip {
     public Chip(final int money) {
         this.value = money;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

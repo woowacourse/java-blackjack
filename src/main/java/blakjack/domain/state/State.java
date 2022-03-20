@@ -19,6 +19,8 @@ public abstract class State {
 
     public abstract State compare(State dealerState);
 
+    public abstract int getProfit();
+
     public final boolean isBust() {
         return privateArea.isBust();
     }
@@ -29,5 +31,9 @@ public abstract class State {
 
     public final int getTotalScore() {
         return privateArea.getTotalScore();
+    }
+
+    public final Chip getChip() {
+        return chip;
     }
 }

@@ -19,4 +19,9 @@ public abstract class Finished extends State {
     final public State stay() {
         throw new IllegalStateException();
     }
+
+    @Override
+    public int getProfit() {
+        throw new IllegalStateException();
+    }
 }

@@ -21,9 +21,9 @@ public final class Bust extends Finished {
 
     private State compareWithPlayer(final State playerState) {
         if (playerState.isBust()) {
-            return new Win(privateArea, chip);
+            return new Win(privateArea, playerState.getChip());
         }
-        return new Lose(privateArea, chip);
+        return new Lose(privateArea, playerState.getChip());
     }
 
     private State compareWithDealer() {

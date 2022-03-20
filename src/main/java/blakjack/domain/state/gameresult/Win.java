@@ -7,4 +7,9 @@ public final class Win extends GameResult {
     public Win(final PrivateArea privateArea, final Chip chip) {
         super(privateArea, chip);
     }
+
+    @Override
+    public int getProfit() {
+        return chip.getValue();
+    }
 }

@@ -24,7 +24,7 @@ public final class Blackjack extends Finished {
         if (playerState.isBlackjack()) {
             return new Draw(privateArea, chip);
         }
-        return new Win(privateArea, chip);
+        return new Win(privateArea, playerState.getChip());
     }
 
     private State compareWithDealer(final State dealerState) {

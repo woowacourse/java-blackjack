@@ -13,4 +13,9 @@ public abstract class Running extends State {
     public final State compare(State dealerState) {
         throw new IllegalStateException();
     }
+
+    @Override
+    public int getProfit() {
+        throw new IllegalStateException();
+    }
 }
