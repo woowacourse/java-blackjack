@@ -1,9 +1,11 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,9 +22,9 @@ import blackjack.domain.result.BettingResult;
 
 class BlackJackManagerTest {
 
-	private final List<Player> players = List.of(
-		new Player("pobi", 10), new Player("jason", 10));
-	private final BlackJackManager manager = new BlackJackManager(players);
+	private final Map<String, Integer> nameAndBet = Stream.of("pobi", "jason")
+		.collect(toMap(name -> name, name -> 10));
+	private final BlackJackManager manager = new BlackJackManager(nameAndBet);
 
 	@Test
 	@DisplayName("처음에 카드를 2장씩 나눠준다.")

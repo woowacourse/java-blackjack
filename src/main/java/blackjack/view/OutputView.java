@@ -5,18 +5,14 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BettingResult;
+import blackjack.domain.result.CardResult;
 
 public class OutputView {
 
-	public static void printGamers(Dealer dealer, List<Player> players) {
-		String names = players.stream()
-			.map(Player::getName)
-			.collect(Collectors.joining(", "));
+	public static void printGamers(String dealer, List<String> players) {
 		System.out.printf("%s와 %s에게 %d장을 나누었습니다.\n",
-			dealer.getName(), names, Cards.BLACKJACK_SIZE);
+			dealer, String.join(", ", players), Cards.BLACKJACK_SIZE);
 	}
 
 	public static void printNameAndCards(String name, List<Card> cards) {
@@ -32,20 +28,20 @@ public class OutputView {
 		System.out.println("딜러는 17이상이라 카드를 더 받지 않았습니다.\n");
 	}
 
-	public static void printFinalCards(Dealer dealer, List<Player> players) {
+	public static void printFinalCards(CardResult dealer, List<CardResult> players) {
 		printDealerFinalCards(dealer);
 		printPlayerFinalCards(players);
 	}
 
-	private static void printDealerFinalCards(Dealer dealer) {
+	private static void printDealerFinalCards(CardResult dealer) {
 		System.out.printf("%s카드: %s- 결과: %d\n",
-			dealer.getName(), connectCardsWithName(dealer.getCards()), dealer.sumCardsNumber());
+			dealer.getName(), connectCardsWithName(dealer.getCards()), dealer.getSumOfCards());
 	}
 
-	private static void printPlayerFinalCards(List<Player> players) {
-		for (Player player : players) {
+	private static void printPlayerFinalCards(List<CardResult> players) {
+		for (CardResult player : players) {
 			System.out.printf("%s카드: %s- 결과: %d\n",
-				player.getName(), connectCardsWithName(player.getCards()), player.sumCardsNumber());
+				player.getName(), connectCardsWithName(player.getCards()), player.getSumOfCards());
 		}
 		System.out.println();
 	}

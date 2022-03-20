@@ -5,6 +5,9 @@ import static java.util.stream.Collectors.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -12,6 +15,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BettingResult;
+import blackjack.domain.result.CardResult;
 
 public class BlackJackManager {
 
@@ -20,9 +24,11 @@ public class BlackJackManager {
 	private final Dealer dealer;
 	private final List<Player> players;
 
-	public BlackJackManager(List<Player> players) {
+	public BlackJackManager(Map<String, Integer> players) {
 		this.dealer = new Dealer();
-		this.players = new ArrayList<>(players);
+		this.players = players.entrySet().stream()
+			.map(entry -> new Player(entry.getKey(), entry.getValue()))
+			.collect(toList());
 	}
 
 	public void handOutFirst(Deck deck) {
@@ -78,6 +84,20 @@ public class BlackJackManager {
 
 	public int findDealerHitCount() {
 		return dealer.findHitCount();
+	}
+
+	public String findDealerName() {
+		return dealer.getName();
+	}
+
+	public CardResult createDealerResult() {
+		return new CardResult(dealer);
+	}
+
+	public List<CardResult> createPlayerResults() {
+		return players.stream()
+			.map(CardResult::new)
+			.collect(Collectors.toList());
 	}
 
 	public BettingResult createBettingResult() {
