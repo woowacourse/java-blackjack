@@ -16,13 +16,13 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isCanHit() {
-        return playingCards.calculatePoints() < HIT_MAX_POINT;
+    public boolean isDealer() {
+        return true;
     }
 
     @Override
-    public boolean isDealer() {
-        return true;
+    public boolean isHit() {
+        return playingCards.calculatePoints() < HIT_MAX_POINT;
     }
 
     @Override

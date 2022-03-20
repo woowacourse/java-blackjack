@@ -12,11 +12,6 @@ public class Guest extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isCanHit() {
-        return playingCards.isHit();
-    }
-
-    @Override
     public boolean isDealer() {
         return false;
     }
@@ -30,6 +25,11 @@ public class Guest extends AbstractPlayer implements Player {
             return true;
         }
         return player.isLose(this) && !this.isBust();
+    }
+
+    @Override
+    public boolean isHit() {
+        return playingCards.isHit();
     }
 
     public BetMoney getBetMoney() {

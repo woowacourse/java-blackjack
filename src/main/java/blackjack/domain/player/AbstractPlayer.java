@@ -19,13 +19,13 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public final boolean isBlackJack(Player competitor) {
-        return playingCards.isBlackJack() && !competitor.getPlayingCards().isBlackJack();
+    public final boolean isLose(Player player) {
+        return player.getPlayingCards().calculatePoints() > playingCards.calculatePoints();
     }
 
     @Override
-    public final boolean isLose(Player player) {
-        return player.getPlayingCards().calculatePoints() > playingCards.calculatePoints();
+    public final boolean isDraw(Player player) {
+        return playingCards.calculatePoints() == player.getPlayingCards().calculatePoints();
     }
 
     @Override
@@ -34,8 +34,8 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public final boolean isDraw(Player player) {
-        return playingCards.calculatePoints() == player.getPlayingCards().calculatePoints();
+    public final boolean isBlackJack(Player competitor) {
+        return playingCards.isBlackJack() && !competitor.getPlayingCards().isBlackJack();
     }
 
     @Override

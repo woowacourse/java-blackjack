@@ -87,7 +87,7 @@ class GuestTest {
         guestCards.add(Fixtures.SPADE_ACE);
         Guest guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
-        assertThat(guest.isCanHit()).isTrue();
+        assertThat(guest.isHit()).isTrue();
     }
 
     @Test
@@ -99,6 +99,6 @@ class GuestTest {
         guestCards.add(Fixtures.SPADE_JACK);
         Guest guest = new Guest("guest", new PlayingCards(guestCards), 100);
 
-        assertThat(guest.isCanHit()).isFalse();
+        assertThat(guest.isHit()).isFalse();
     }
 }

@@ -47,7 +47,7 @@ class DealerTest {
         dealerCards.add(Fixtures.SPADE_NINE);
         Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
 
-        assertThat(dealer.isCanHit()).isFalse();
+        assertThat(dealer.isHit()).isFalse();
     }
 
     @Test
@@ -58,7 +58,7 @@ class DealerTest {
         dealerCards.add(Fixtures.SPADE_TWO);
         Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
 
-        assertThat(dealer.isCanHit()).isTrue();
+        assertThat(dealer.isHit()).isTrue();
     }
 
     @ParameterizedTest
