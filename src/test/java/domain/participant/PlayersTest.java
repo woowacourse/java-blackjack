@@ -1,7 +1,6 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Deck;
@@ -13,7 +12,6 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import utils.ExceptionMessages;
 
 class PlayersTest {
     private Map<Name, String> nameAndMoneys;
@@ -31,17 +29,6 @@ class PlayersTest {
         Players players = Players.of(nameAndMoneys);
 
         assertThat(players.getPlayers().size()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("입력 받은 플레이어 이름이 쉼표만 있을 경우 에러를 발생시킨다.")
-    void playersCommaErrorTest() {
-        nameAndMoneys.put(Name.from(""), "3000");
-        nameAndMoneys.put(Name.from("   "), "4300");
-
-        assertThatThrownBy(() -> Players.of(nameAndMoneys))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }
 
     @Test
