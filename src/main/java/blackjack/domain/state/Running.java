@@ -2,7 +2,6 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Money;
 
 public abstract class Running implements State {
 	private static final String RUNNING_PROFIT_EXCEPTION = "게임 진행중에는 profit 계산을 할 수 없습니다";
@@ -14,7 +13,7 @@ public abstract class Running implements State {
 	}
 
 	@Override
-	public Money calculateProfit(Money money, Dealer dealer) {
+	public double profitRate(Dealer dealer) {
 		throw new IllegalStateException(RUNNING_PROFIT_EXCEPTION);
 	}
 

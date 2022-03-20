@@ -9,7 +9,8 @@ public final class Stay extends Finished {
 		super(cards);
 	}
 
-	protected double profitRate(Dealer dealer) {
+	@Override
+	public double profitRate(Dealer dealer) {
 		if (dealer.compare(this.cards) > 0) {
 			return -1;
 		}

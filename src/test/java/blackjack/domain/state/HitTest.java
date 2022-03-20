@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.RealDeck;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.RealDeck;
 import blackjack.domain.card.Suit;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Money;
 
 public class HitTest {
 
@@ -38,12 +37,11 @@ public class HitTest {
 	@DisplayName("Hit상태에서 수익을 계산하면 에러 발생")
 	void occur_error_hit_state_profit_() {
 		//given
-		Money money = new Money(10000);
 		State state = InitialTurn.createState(cards);
 		Dealer dealer = new Dealer(new RealDeck());
 		//when
 		//then
-		assertThatThrownBy(() -> state.calculateProfit(money, dealer))
+		assertThatThrownBy(() -> state.profitRate(dealer))
 			.isInstanceOf(IllegalStateException.class);
 	}
 

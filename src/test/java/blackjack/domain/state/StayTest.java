@@ -57,9 +57,9 @@ public class StayTest {
 			State playerState = InitialTurn.createState(cards)
 				.stay();
 			//when
-			Money profit = playerState.calculateProfit(money, dealer);
+			double profitRate = playerState.profitRate(dealer);
 			//then
-			assertThat(profit).isEqualTo(new Money(-10000));
+			assertThat(profitRate).isEqualTo(-1);
 		}
 
 		@Test
@@ -70,9 +70,9 @@ public class StayTest {
 			playerState = playerState.draw(Card.of(Denomination.THREE, Suit.DIAMOND))
 				.stay();
 			//when
-			Money profit = playerState.calculateProfit(money, dealer);
+			double profitRate = playerState.profitRate(dealer);
 			//then
-			assertThat(profit).isEqualTo(new Money(10000));
+			assertThat(profitRate).isEqualTo(1);
 		}
 
 		@Test
@@ -83,9 +83,9 @@ public class StayTest {
 			playerState = playerState.draw(Card.of(Denomination.TWO, Suit.DIAMOND))
 				.stay();
 			//when
-			Money profit = playerState.calculateProfit(money, dealer);
+			double profitRate = playerState.profitRate(dealer);
 			//then
-			assertThat(profit).isEqualTo(new Money(0));
+			assertThat(profitRate).isEqualTo(0);
 		}
 	}
 

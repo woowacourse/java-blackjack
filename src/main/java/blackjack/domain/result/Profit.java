@@ -24,7 +24,8 @@ public class Profit {
 	}
 
 	private Money calculateProfit(Dealer dealer, Player player) {
-		return player.state().calculateProfit(player.getMoney(), dealer);
+		final double profitRate = player.state().profitRate(dealer);
+		return player.calculateProfit(profitRate);
 	}
 
 	public Map<Player, Money> playerProfit() {

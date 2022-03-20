@@ -2,8 +2,6 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Money;
 
 public abstract class Finished implements State {
 	private static final String FINISHED_DRAW_EXCEPTION = "끝난 상태에서는 패를 받을 수 없습니다.";
@@ -34,11 +32,4 @@ public abstract class Finished implements State {
 	public Cards getCards() {
 		return this.cards;
 	}
-
-	@Override
-	public Money calculateProfit(Money money, Dealer dealer) {
-		return money.multiply(profitRate(dealer));
-	}
-
-	protected abstract double profitRate(Dealer dealer);
 }

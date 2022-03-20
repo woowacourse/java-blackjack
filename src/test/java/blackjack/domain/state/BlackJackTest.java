@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.RealDeck;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.RealDeck;
 import blackjack.domain.card.Suit;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Money;
 
 public class BlackJackTest {
 
@@ -39,11 +38,10 @@ public class BlackJackTest {
 	void blackjack_profit() {
 		//given
 		State state = InitialTurn.createState(cards);
-		Money money = new Money(10000);
 		//when
-		Money profit = state.calculateProfit(money, new Dealer(new RealDeck()));
+		double profitRate = state.profitRate(new Dealer(new RealDeck()));
 		//then
-		assertThat(profit).isEqualTo(new Money(15000));
+		assertThat(profitRate).isEqualTo(1.5);
 	}
 
 	@Test

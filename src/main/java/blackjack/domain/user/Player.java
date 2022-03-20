@@ -41,4 +41,8 @@ public class Player extends Gamer {
 	public int hashCode() {
 		return Objects.hash(name);
 	}
+
+	public Money calculateProfit(double profitRate) {
+		return this.money.multiply(profitRate);
+	}
 }

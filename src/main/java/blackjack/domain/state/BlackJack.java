@@ -10,7 +10,7 @@ public final class BlackJack extends Finished{
 	}
 
 	@Override
-	protected double profitRate(Dealer dealer) {
+	public double profitRate(Dealer dealer) {
 		if (dealer.isBlackJack()) {
 			return 0;
 		}
