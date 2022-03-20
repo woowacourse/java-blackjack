@@ -40,7 +40,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public HoldCards getHoldCards() {
+    public final HoldCards getHoldCards() {
         return holdCards;
     }
 }

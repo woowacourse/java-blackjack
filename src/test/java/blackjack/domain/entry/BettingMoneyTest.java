@@ -1,5 +1,6 @@
 package blackjack.domain.entry;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import blackjack.domain.entry.vo.BettingMoney;
@@ -33,5 +34,11 @@ class BettingMoneyTest {
         assertThatIllegalArgumentException()
             .isThrownBy(() -> new BettingMoney(5_001_000))
             .withMessage("배팅 금액은 500만을 넘을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 같은 객체는 동등하다.")
+    void equalToBettingMoney() {
+        assertThat(new BettingMoney(1000)).isEqualTo(new BettingMoney(1000));
     }
 }

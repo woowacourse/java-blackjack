@@ -7,6 +7,7 @@ import static blackjack.fixtures.BlackjackFixtures.SPADE_ACE;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_EIGHT;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_FOUR;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_KING;
+import static blackjack.fixtures.BlackjackFixtures.SPADE_NINE;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_SEVEN;
 import static blackjack.fixtures.BlackjackFixtures.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -73,10 +74,11 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어 모두 블랙잭이 경우 배팅금액을 돌려받는다.")
+    @DisplayName("딜러와 플레이어 모두 블랙잭이 경우 배팅금액을 얻는다.")
     void allBlackjack() {
         Player player = new Player(new Name("hoho"), new BettingMoney(10000));
-        player.ready(SPADE_ACE, SPADE_FOUR);
+        player.ready(SPADE_ACE, SPADE_KING);
+
         Dealer dealer = new Dealer(HoldCards.initTwoCards(CLUB_ACE, CLUB_KING));
 
         assertThat(player.profit(dealer)).isEqualTo(10000);
@@ -101,6 +103,44 @@ class PlayerTest {
         player.draw(SPADE_KING);
 
         Dealer dealer = new Dealer(HoldCards.initTwoCards(CLUB_ACE, CLUB_EIGHT));
+
+        assertThat(player.profit(dealer)).isEqualTo(-10000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 딜러의 점수보다 높은 경우 배팅 금액을 얻는다.")
+    void isWin() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_FOUR, SPADE_EIGHT);
+        player.draw(SPADE_NINE);
+        player.stay();
+
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(CLUB_ACE, CLUB_EIGHT));
+
+        assertThat(player.profit(dealer)).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 stay 상태고, 딜러가 bust 된 경우 배팅 금액을 돌려받는다.")
+    void dealerBust() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_FOUR, SPADE_EIGHT);
+        player.stay();
+
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(SPADE_NINE, SPADE_EIGHT));
+        dealer.addCard(SPADE_KING);
+
+        assertThat(player.profit(dealer)).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("플레이어보다 딜러의 점수가 높을 경우 배팅 금액을 잃는다.")
+    void isLose() {
+        Player player = new Player(new Name("hoho"), new BettingMoney(10000));
+        player.ready(SPADE_FOUR, SPADE_EIGHT);
+        player.stay();
+
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(SPADE_NINE, SPADE_EIGHT));
 
         assertThat(player.profit(dealer)).isEqualTo(-10000);
     }

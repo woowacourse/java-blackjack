@@ -133,4 +133,13 @@ class ReadyTest {
             .isThrownBy(() -> ready.profit(new BettingMoney(1000), TEN_DEALER))
             .withMessage("Running 상태에서 수입을 확인할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("준비 상태의 카드를 확인할 수 있다.")
+    void getReadyHoldsCard() {
+        State ready = Ready.start(SPADE_EIGHT, SPADE_SEVEN);
+
+        assertThat(ready.getHoldCards().countBestNumber()).isEqualTo(15);
+    }
+
 }

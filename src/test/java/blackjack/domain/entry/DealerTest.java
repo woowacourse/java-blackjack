@@ -35,4 +35,12 @@ class DealerTest {
         assertThat(dealer.getName()).isEqualTo(new Name("딜러"));
     }
 
+    @Test
+    @DisplayName("딜러는 자신이 딜러인지 판단할 수 있다.")
+    void isDealer() {
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(SPADE_NINE, SPADE_EIGHT));
+
+        assertThat(dealer.isDealer()).isTrue();
+    }
+
 }
