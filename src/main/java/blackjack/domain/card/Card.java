@@ -20,12 +20,12 @@ public class Card implements Comparable<Card> {
         return denomination.isAce();
     }
 
-    public Denomination getDenomination() {
-        return denomination;
+    public String getDenomination() {
+        return denomination.getName();
     }
 
-    public Suit getSuit() {
-        return suit;
+    public String getSuit() {
+        return suit.getName();
     }
 
     @Override

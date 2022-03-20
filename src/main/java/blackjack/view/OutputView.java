@@ -11,6 +11,7 @@ import java.util.List;
 public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
+    private static final String DELIMITER = ", ";
 
     private OutputView() {
     }
@@ -40,11 +41,11 @@ public class OutputView {
     private static String generateCardsMessage(List<Card> cards) {
         return cards.stream()
                 .map(OutputView::generateCardMessage)
-                .collect(joining(", "));
+                .collect(joining(DELIMITER));
     }
 
     private static String generateCardMessage(Card card) {
-        return card.getDenomination().getName() + card.getSuit().getName();
+        return card.getDenomination() + card.getSuit();
     }
 
     public static void printDealerDrawable() {
