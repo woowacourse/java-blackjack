@@ -24,13 +24,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class PlayerTest {
 
     private Player player;
-    private Player thousandBettedPlayer;
     private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         player = new Player("클레이", 1);
-        thousandBettedPlayer = new Player("베팅한 플레이어", 1000);
         dealer = new Dealer();
     }
 
