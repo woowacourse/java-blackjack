@@ -26,7 +26,7 @@ public class GameController {
         this.dealer = new Dealer();
     }
 
-    public Players initPlayers() {
+    private Players initPlayers() {
         final PlayerNames playerNames = initPlayerNames();
 
         final List<Player> list = playerNames.getNames()
