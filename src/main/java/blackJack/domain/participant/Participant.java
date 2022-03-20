@@ -39,10 +39,14 @@ public abstract class Participant {
     public int getScore() {
         int score = cards.calculateScore();
 
-        if (cards.containsAce() && score <= STANDARD_SCORE_OF_CHANGE_ACE) {
+        if (cards.containsAce() && isChangeAceScore(score)) {
             score += OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
         }
         return score;
+    }
+
+    private boolean isChangeAceScore(int score) {
+        return score <= STANDARD_SCORE_OF_CHANGE_ACE;
     }
 
     public boolean isBlackJack() {
