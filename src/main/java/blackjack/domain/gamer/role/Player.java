@@ -39,18 +39,6 @@ public final class Player extends Role{
         return cardGroup.isAddable();
     }
 
-    public int compareCardsSumTo(int sum) {
-        if (isBust()) {
-            return -1;
-        }
-
-        if (isBust(sum)) {
-            return 1;
-        }
-
-        return Integer.compare(getScore(), sum);
-    }
-
     public void addMoney(int amount) {
         betMoney.add(amount);
     }

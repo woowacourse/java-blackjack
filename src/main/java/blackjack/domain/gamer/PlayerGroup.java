@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import blackjack.domain.card.CardPack;
 import blackjack.domain.gamer.role.Player;
@@ -65,8 +64,7 @@ public class PlayerGroup {
     public Map<Player, Match> getPlayerResult(int sum) {
         Map<Player, Match> result = new LinkedHashMap<>();
         for (Player player : players) {
-            Optional<Match> matchResult = Match.of(player.compareCardsSumTo(sum));
-            matchResult.ifPresent(match -> result.put(player, match));
+            result.put(player, Match.compare(player, sum));
         }
         return Collections.unmodifiableMap(result);
     }
