@@ -17,7 +17,7 @@ public class GameResponse {
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.toList());
-        this.totalPoint = deck.sumPoints();
+        this.totalPoint = deck.score().getScore();
     }
 
     public String getName() {

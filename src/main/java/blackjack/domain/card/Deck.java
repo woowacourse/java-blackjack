@@ -6,16 +6,10 @@ import java.util.Set;
 
 public class Deck {
 
-    private static final int BONUS_ACE_POINT = 10;
-
     private final Set<Card> cards = new LinkedHashSet<>();
 
     public void addCard(Card card) {
         cards.add(card);
-    }
-
-    public int sumPoints() {
-        return new Score(cards).getScore();
     }
 
     public Set<Card> getCards() {
@@ -43,5 +37,9 @@ public class Deck {
     @Override
     public int hashCode() {
         return cards != null ? cards.hashCode() : 0;
+    }
+
+    public boolean isOverLimit(int limit) {
+        return score().isOverLimit(limit);
     }
 }

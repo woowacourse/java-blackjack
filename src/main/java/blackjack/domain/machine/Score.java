@@ -22,6 +22,10 @@ public class Score {
         return value;
     }
 
+    public boolean isBlackjack() {
+        return blackjack;
+    }
+
     public boolean isBlackjackWin(Score score) {
         return blackjack && score.nonBlackjack();
     }
@@ -92,5 +96,33 @@ public class Score {
 
     private boolean nonBust() {
         return value <= 21;
+    }
+
+    public boolean isOverLimit(int limit) {
+        return value > limit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Score score = (Score) o;
+
+        if (value != score.value) {
+            return false;
+        }
+        return blackjack == score.blackjack;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = value;
+        result = 31 * result + (blackjack ? 1 : 0);
+        return result;
     }
 }
