@@ -17,6 +17,7 @@ public class OutputView {
     private static final String CARD_HAND_FORMAT = "%s: 카드: %s" + NEWLINE;
     private static final String CARD_HAND_RESULT_FORMAT = NEWLINE + "%s 카드: %s - 결과: %d";
     private static final String SHOW_PROFIT_FORMAT = "%s: %d" + NEWLINE;
+    private static final String DEALER_NAME = "딜러";
 
     private OutputView() {
     }
@@ -74,7 +75,7 @@ public class OutputView {
 
     public static void printDealerProfit(final int dealerProfit) {
         System.out.println(NEWLINE + "## 최종 수익");
-        System.out.printf(SHOW_PROFIT_FORMAT + NEWLINE, "딜러", dealerProfit);
+        System.out.printf(SHOW_PROFIT_FORMAT, DEALER_NAME, dealerProfit);
     }
 
     public static void printPlayersProfit(List<PlayerProfit> playersProfit) {
