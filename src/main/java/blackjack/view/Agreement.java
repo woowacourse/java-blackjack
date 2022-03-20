@@ -3,6 +3,7 @@ package blackjack.view;
 import java.util.Arrays;
 
 enum Agreement {
+
     AGREE("y"),
     DISAGREE("n");
 

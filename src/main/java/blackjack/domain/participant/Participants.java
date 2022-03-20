@@ -5,7 +5,10 @@ import blackjack.domain.dto.DistributeResult;
 import blackjack.domain.dto.ProfitResult;
 import blackjack.domain.dto.UserGameResult;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {

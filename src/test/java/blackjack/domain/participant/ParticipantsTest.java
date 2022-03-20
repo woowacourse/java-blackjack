@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class ParticipantsTest {
+
     @Test
     @DisplayName("참가자의 이름으로 참가자를 찾는다.")
     public void findParticipantsByNameTest() {

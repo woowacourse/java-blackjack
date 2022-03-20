@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
+
     private static final int BUST_STANDARD = 21;
 
     protected final List<Card> cards;

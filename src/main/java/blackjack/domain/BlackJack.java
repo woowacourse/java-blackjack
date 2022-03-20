@@ -2,11 +2,11 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardGenerator;
 import blackjack.domain.card.Deck;
+import blackjack.domain.dto.DistributeResult;
+import blackjack.domain.dto.ProfitResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.dto.DistributeResult;
-import blackjack.domain.dto.ProfitResult;
 
 import java.util.List;
 import java.util.Map;

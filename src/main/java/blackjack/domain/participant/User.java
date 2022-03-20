@@ -1,8 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.UserResult;
-import blackjack.domain.result.ScoreCalculator;
 import blackjack.domain.result.UserProfit;
+import blackjack.domain.result.UserResult;
 
 public class User extends Participant {
 
