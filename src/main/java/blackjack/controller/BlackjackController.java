@@ -2,8 +2,8 @@ package blackjack.controller;
 
 import blackjack.domain.PlayerResult;
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.Money;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.dto.CardDto;
@@ -35,24 +35,18 @@ public class BlackjackController {
         finishGame(dealer, players, userScoreDtos);
     }
 
-    private List<PlayerDto> converToPlayerDtos(Players players) {
-        return players.getPlayers().stream()
-                .map(PlayerDto::from)
-                .collect(Collectors.toList());
-    }
-
-    private void finishGame(Dealer dealer, Players players, List<UserScoreDto> userScoreDtos) {
-        OutputView.printTotalResult(userScoreDtos);
-        Map<Player, PlayerResult> statistics = players.getStatistics(dealer);
-        OutputView.printFinalResult(batchService.calculate(statistics));
-    }
-
     private Map<String, Money> startBettings(List<String> inputPlayerNames) {
         return inputPlayerNames.stream()
                 .collect(Collectors.toMap(inputPlayerName -> inputPlayerName,
                         inputPlayerName -> Money.from(InputView.askBetAmount(inputPlayerName))
                         , (key, value) -> value,
                         LinkedHashMap::new));
+    }
+
+    private List<PlayerDto> converToPlayerDtos(Players players) {
+        return players.getPlayers().stream()
+                .map(PlayerDto::from)
+                .collect(Collectors.toList());
     }
 
     private List<UserScoreDto> playGame(Dealer dealer, Players players, Deck deck) {
@@ -82,4 +76,11 @@ public class BlackjackController {
         }
         return userScoreDtos;
     }
+
+    private void finishGame(Dealer dealer, Players players, List<UserScoreDto> userScoreDtos) {
+        OutputView.printTotalResult(userScoreDtos);
+        Map<Player, PlayerResult> statistics = players.getStatistics(dealer);
+        OutputView.printFinalResult(batchService.calculate(statistics));
+    }
+
 }
