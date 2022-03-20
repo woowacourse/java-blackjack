@@ -14,7 +14,7 @@ import blackjack.domain.participant.Player;
 
 class MatchResultTest {
 
-    @DisplayName("블랙잭으로 승리한 경우, 베팅 금액의 1.5배의 수익을 받는다.")
+    @DisplayName("플레이어는 블랙잭으로 승리한 경우, 베팅 금액의 1.5배의 수익을 받는다.")
     @Test
     void calculatePlayerOutcomeAboutBlackjackTest() {
         final Player player = Player.readyToPlay("name", List.of(SPADE_ACE, SPADE_TEN));
@@ -26,7 +26,7 @@ class MatchResultTest {
         assertThat(actualOutcome).isEqualTo(expectedOutcome);
     }
 
-    @DisplayName("승리한 경우, 베팅 금액의 1배의 수익을 받는다.")
+    @DisplayName("플레이어는 승리한 경우, 베팅 금액의 1배의 수익을 받는다.")
     @Test
     void calculatePlayerOutcomeAboutWinTest() {
         final Player player = Player.readyToPlay("name", List.of(SPADE_ACE, SPADE_TEN));
@@ -38,7 +38,7 @@ class MatchResultTest {
         assertThat(actualOutcome).isEqualTo(expectedOutcome);
     }
 
-    @DisplayName("무승부인 경우, 베팅 금액을 그대로 돌려받는다.")
+    @DisplayName("플레이어는 무승부인 경우, 베팅 금액을 그대로 돌려받는다.")
     @Test
     void calculatePlayerOutcomeAboutDrawTest() {
         final Player player = Player.readyToPlay("name", List.of(SPADE_ACE, SPADE_TEN));
@@ -50,9 +50,9 @@ class MatchResultTest {
         assertThat(actualOutcome).isEqualTo(expectedOutcome);
     }
 
-    @DisplayName("패배한 경우, 베팅 금액을 잃는다.")
+    @DisplayName("플레이어는 패배한 경우, 베팅 금액을 잃는다.")
     @Test
-    void calculatePlayerOutcomeAboutLOSSTest() {
+    void calculatePlayerOutcomeAboutLossTest() {
         final Player player = Player.readyToPlay("name", List.of(SPADE_ACE, SPADE_TEN));
         player.betAmount(1000);
 
