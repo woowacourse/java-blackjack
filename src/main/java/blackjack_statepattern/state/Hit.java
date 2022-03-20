@@ -3,7 +3,7 @@ package blackjack_statepattern.state;
 import blackjack_statepattern.card.Card;
 import blackjack_statepattern.card.Cards;
 
-public final class Hit extends Running {
+public final class Hit extends Started {
 
     Hit(Cards cards) {
         super(cards);
