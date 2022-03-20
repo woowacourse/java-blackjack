@@ -39,12 +39,6 @@ class DealerTest {
         assertThat(actualCards).isEqualTo(expectedCards);
     }
 
-    private List<Card> concatCards(final List<Card> cards1, final Card card) {
-        final List<Card> cards = new ArrayList<>(cards1);
-        cards.add(card);
-        return cards;
-    }
-
     @DisplayName("딜러의 초기 카드의 합이 17 이상 21 미만이면 Stand 상태로 변해야 한다.")
     @ParameterizedTest(name = "[{index}] 초기 카드 : {0}")
     @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForChangeToStandWhenInitializedTest")
@@ -77,5 +71,34 @@ class DealerTest {
         final Dealer dealer = Dealer.readyToPlay(List.of(SPADE_TEN, SPADE_FIVE));
         assertThat(dealer.getFirstCard()).isEqualTo(SPADE_TEN);
     }
+    @DisplayName("카드의 합계를 확인할 수 있어야 한다.")
+    @ParameterizedTest(name = "[{index}] 합계 : {1}, 카드 : {0}")
+    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForGetScoreTest")
+    void getScoreTest(final List<Card> cards, final Card drewCard, final int expectedScore) {
+        final Dealer dealer = Dealer.readyToPlay(cards);
+        dealer.drawCard(drewCard);
+
+        final int actualScore = dealer.getScore();
+        assertThat(actualScore).isEqualTo(expectedScore);
+    }
+
+    @DisplayName("보유한 카드를 확인할 수 있어야 한다.")
+    @ParameterizedTest(name = "[{index}] 카드 : {0}")
+    @MethodSource("blackjack.domain.participant.provider.DealerTestProvider#provideForGetCardsTest")
+    void getCardsTest(final List<Card> cards, final Card drewCard) {
+        final Dealer dealer = Dealer.readyToPlay(cards);
+        dealer.drawCard(drewCard);
+
+        final List<Card> actualCards = dealer.getCards();
+        final List<Card> expectedCards = concatCards(cards, drewCard);
+        assertThat(actualCards).isEqualTo(expectedCards);
+    }
+
+    private List<Card> concatCards(final List<Card> cards1, final Card card) {
+        final List<Card> cards = new ArrayList<>(cards1);
+        cards.add(card);
+        return cards;
+    }
+
 
 }

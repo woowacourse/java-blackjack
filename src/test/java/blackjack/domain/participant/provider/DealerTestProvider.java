@@ -5,6 +5,7 @@ import static blackjack.Fixture.SPADE_EIGHT;
 import static blackjack.Fixture.SPADE_FIVE;
 import static blackjack.Fixture.SPADE_FOUR;
 import static blackjack.Fixture.SPADE_KING;
+import static blackjack.Fixture.SPADE_NINE;
 import static blackjack.Fixture.SPADE_SEVEN;
 import static blackjack.Fixture.SPADE_SIX;
 import static blackjack.Fixture.SPADE_TEN;
@@ -81,6 +82,28 @@ public class DealerTestProvider {
                 ),
                 Arguments.of(
                         List.of(SPADE_TEN, SPADE_FOUR), SPADE_ACE
+                )
+        );
+    }
+
+    public static Stream<Arguments> provideForGetScoreTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(SPADE_TEN, SPADE_FIVE), SPADE_TWO, 17
+                ),
+                Arguments.of(
+                        List.of(SPADE_TEN, SPADE_THREE), SPADE_KING, 23
+                )
+        );
+    }
+
+    public static Stream<Arguments> provideForGetCardsTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(SPADE_TEN, SPADE_FIVE), SPADE_TWO
+                ),
+                Arguments.of(
+                        List.of(SPADE_TEN, SPADE_THREE), SPADE_FOUR
                 )
         );
     }
