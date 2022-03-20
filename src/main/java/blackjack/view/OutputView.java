@@ -41,6 +41,12 @@ public final class OutputView {
         System.out.println();
     }
 
+    public static void printHand(final Player player) {
+        if (player.isInitSize() || !player.getState().isFinished()) {
+            printHumanHand(player);
+        }
+    }
+
     public static void printHumanHand(final Human human) {
         System.out.printf(CARD_STATE_MESSAGE, human.getName(), getCardsState(human.getRawCards()));
         System.out.println();

@@ -81,7 +81,7 @@
     - [x] calculateResult() -> 삭제
     - [x] Player.is.... -> 문법적으로 어색
 - [x] Result 삭제
-- [ ] BlackjackGame 로작 다른 곳으로 이동
+- [x] BlackjackGame 로직 다른 곳으로 이동
 - [x] PrideCalculator ->
     - [x] hashCode() 메서드 용도 공부 : 해시코드는 객체의 아이디-> 클라이언트 전달 용도로는 부적절
     - [x] hashCode() 대신 다른 방식으로 사용
