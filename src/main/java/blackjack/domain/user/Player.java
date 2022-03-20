@@ -23,10 +23,6 @@ public class Player extends Gamer {
 		return new Player(player);
 	}
 
-	public Money getMoney() {
-		return this.money;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
