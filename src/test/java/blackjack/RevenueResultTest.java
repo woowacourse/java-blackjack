@@ -36,7 +36,7 @@ class RevenueResultTest {
         Dealer dealer = createDealerWithDenominations(TEN, QUEEN);
 
         List<BettingMoney> bettingMonies = new ArrayList<>();
-        bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+        bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
@@ -54,7 +54,7 @@ class RevenueResultTest {
         Dealer dealer = createDealerWithDenominations(TEN, QUEEN);
 
         List<BettingMoney> bettingMonies = new ArrayList<>();
-        bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+        bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
@@ -77,7 +77,7 @@ class RevenueResultTest {
         Dealer dealer = createDealerWithDenominations(ACE, TEN);
 
         List<BettingMoney> bettingMonies = new ArrayList<>();
-        bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+        bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
@@ -100,7 +100,7 @@ class RevenueResultTest {
         Dealer dealer = createDealerWithDenominations(FIVE, EIGHT);
 
         List<BettingMoney> bettingMonies = new ArrayList<>();
-        bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+        bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
@@ -123,7 +123,7 @@ class RevenueResultTest {
         Dealer dealer = createDealerWithDenominations(NINE, TEN);
 
         List<BettingMoney> bettingMonies = new ArrayList<>();
-        bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+        bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
@@ -146,7 +146,7 @@ class RevenueResultTest {
         Dealer dealer = createDealerWithDenominations(THREE, NINE);
 
         List<BettingMoney> bettingMonies = new ArrayList<>();
-        bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+        bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
         ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
         RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
@@ -173,7 +173,7 @@ class RevenueResultTest {
             // given
             List<BettingMoney> bettingMonies = new ArrayList<>();
             Player player = createPlayerWithDenominations("user a", ACE, JACK);
-            bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+            bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
             RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
@@ -194,7 +194,7 @@ class RevenueResultTest {
             // given
             List<BettingMoney> bettingMonies = new ArrayList<>();
             Player player = createPlayerWithDenominations("user a", JACK, EIGHT, TWO);
-            bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+            bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
             RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);
@@ -216,7 +216,7 @@ class RevenueResultTest {
             // given
             List<BettingMoney> bettingMonies = new ArrayList<>();
             Player player = createPlayerWithDenominations("user a", JACK, QUEEN, TWO);
-            bettingMonies.add(new BettingMoney(player.getName(), "10000"));
+            bettingMonies.add(new BettingMoney(player.getName(), 10_000));
 
             ScoreBoard scoreBoard = ScoreBoard.of(dealer, List.of(player));
             RevenueResult revenueResult = RevenueResult.of(scoreBoard, bettingMonies);

@@ -29,7 +29,12 @@ public class BlackJackController {
     }
 
     public static List<BettingMoney> receiveBettingMoney(List<Player> players) {
-        return InputView.inputBettingMoney(players);
+        List<BettingMoney> bettingMonies = new ArrayList<>();
+        for (Player player : players) {
+            BettingMoney bettingMoney = InputView.inputBettingMoney(player);
+            bettingMonies.add(bettingMoney);
+        }
+        return bettingMonies;
     }
 
     public static void initiateParticipantsHand(Dealer dealer, List<Player> players, Deck deck) {

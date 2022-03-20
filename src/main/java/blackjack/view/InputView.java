@@ -1,12 +1,11 @@
 package blackjack.view;
 
+import static blackjack.utils.InputFormatter.parseBettingMoney;
 import static java.lang.System.out;
 
 import blackjack.domain.BettingMoney;
 import blackjack.domain.participant.Player;
 import blackjack.dto.Command;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -25,15 +24,10 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static List<BettingMoney> inputBettingMoney(List<Player> players) {
-        List<BettingMoney> bettingMonies = new ArrayList<>();
-        for (Player player : players) {
-            out.printf("%s의 배팅 금액은?" + NEW_LINE, player.getName());
-            String input = SCANNER.nextLine();
-            BettingMoney bettingMoney = new BettingMoney(player.getName(), input);
-            bettingMonies.add(bettingMoney);
-        }
-        return bettingMonies;
+    public static BettingMoney inputBettingMoney(Player player) {
+        out.printf("%s의 배팅 금액은?" + NEW_LINE, player.getName());
+        String input = SCANNER.nextLine();
+        return parseBettingMoney(player.getName(), input);
     }
 
     public static Command inputOneMoreCard(Player player) {
