@@ -22,21 +22,20 @@ public class Cards {
     }
 
     public int calculateScore() {
+
         int score = cards.stream()
-                .mapToInt(card -> card.getNumber().getValue())
-                .sum();
-        if(cards.stream().anyMatch(Card::isAce)){
-            score = addAceScore(score);
+                       .mapToInt(card -> card.getNumber().getValue())
+                       .sum();
+
+        if(cards.stream().anyMatch(Card::isAce) && canAddExtraScore(score)){
+            return score + EXTRA_SCORE;
         }
 
         return score;
     }
 
-    private int addAceScore(int score) {
-        if (score + EXTRA_SCORE <= BUST_LINE) {
-            score += EXTRA_SCORE;
-        }
-        return score;
+    private boolean canAddExtraScore(int score) {
+        return score + EXTRA_SCORE <= BUST_LINE;
     }
 
     public boolean isOnlyTwoCards() {
