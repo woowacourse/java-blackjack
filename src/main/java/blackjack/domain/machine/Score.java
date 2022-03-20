@@ -3,6 +3,7 @@ package blackjack.domain.machine;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.participant.Guest;
+import java.util.Objects;
 import java.util.Set;
 
 public class Score {
@@ -23,9 +24,21 @@ public class Score {
     }
 
 
-    public boolean isBlackjack() {
-        return blackjack;
+    public boolean isBlackjackWin(Score score) {
+        return blackjack && score.nonBlackjack();
     }
+
+    public boolean isDraw(Score score) {
+        return Objects.equals(this.point, score.point);
+    }
+
+    public boolean isLose(Score score) {
+        if (isBust()) {
+            return true;
+        }
+        return point < score.point && score.nonBust();
+    }
+
 
     private int sumPoints(Set<Card> cards) {
         int sumWithoutAce = cards.stream()
@@ -44,6 +57,10 @@ public class Score {
             return;
         }
         blackjack = true;
+    }
+
+    private boolean nonBlackjack() {
+        return point != 21;
     }
 
     private boolean isNotTwentyOnePoint() {
@@ -75,7 +92,11 @@ public class Score {
         return card.getRank().getPoint();
     }
 
-    public boolean isBust() {
+    private boolean isBust() {
         return point > Guest.LIMIT_POINT;
+    }
+
+    private boolean nonBust() {
+        return point <= 21;
     }
 }

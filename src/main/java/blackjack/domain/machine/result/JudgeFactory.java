@@ -5,15 +5,27 @@ import blackjack.domain.machine.Score;
 public class JudgeFactory {
 
     public static MatchResults matchResult(Score playerScore, Score dealerScore) {
-        if (playerScore.isBlackjack() && !dealerScore.isBlackjack()) {
+        if (isBlackjack(playerScore, dealerScore)) {
             return new Blackjack();
         }
-        if (playerScore.isBust() || (playerScore.getScore() < dealerScore.getScore()) && !dealerScore.isBust()) {
+        if (isLose(playerScore, dealerScore)) {
             return new Lose();
         }
-        if (playerScore.getScore() == dealerScore.getScore()) {
+        if (isDraw(playerScore, dealerScore)) {
             return new Draw();
         }
         return new Win();
+    }
+
+    private static boolean isBlackjack(Score playerScore, Score dealerScore) {
+        return playerScore.isBlackjackWin(dealerScore);
+    }
+
+    private static boolean isLose(Score playerScore, Score dealerScore) {
+        return playerScore.isLose(dealerScore);
+    }
+
+    private static boolean isDraw(Score playerScore, Score dealerScore) {
+        return playerScore.isDraw(dealerScore);
     }
 }
