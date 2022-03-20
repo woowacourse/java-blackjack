@@ -18,7 +18,7 @@ class CardsTest {
 
     @BeforeEach
     void setUp() {
-        handCards = Cards.of(Cards.getEmptyList());
+        handCards = Cards.getEmptyList();
     }
 
     @ParameterizedTest

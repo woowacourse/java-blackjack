@@ -21,8 +21,8 @@ public final class Cards {
         return new Cards(cards);
     }
 
-    public static List<Card> getEmptyList() {
-        return EMPTY_LIST;
+    public static Cards getEmptyList() {
+        return new Cards(EMPTY_LIST);
     }
 
     public int calculateScore() {
