@@ -1,11 +1,7 @@
 package view;
 
 import domain.card.PlayingCard;
-import domain.player.Dealer;
-import domain.player.Gambler;
-import domain.player.Gamblers;
 import domain.player.Player;
-import domain.player.Players;
 import domain.service.HitService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,42 +16,6 @@ public class ConsoleHitServiceImpl implements HitService {
     private static final String GAMBLER_NAME_DELIMITER = ", ";
     private static final String HIT_CHARACTER = "y";
     private static final String INPUT_NEED_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
-
-    @Override
-    public void showInitCards(Players players) {
-        showSpreadAnnouncement(players);
-        showInitialOpenCards(players);
-    }
-
-    private void showSpreadAnnouncement(Players players) {
-        System.out.println();
-        Dealer dealer = players.getDealer();
-        Gamblers gamblers = players.getGamblers();
-
-        System.out.printf(INFO_FOR_INITIAL_SPREAD,
-                dealer.getName(),
-                String.join(GAMBLER_NAME_DELIMITER, joinGamblerNames(gamblers)));
-    }
-
-    private String joinGamblerNames(Gamblers gamblers) {
-        return gamblers.getGamblers()
-                .stream()
-                .map(Gambler::getName)
-                .collect(Collectors.joining(GAMBLER_NAME_DELIMITER));
-    }
-
-    private void showInitialOpenCards(Players players) {
-        Dealer dealer = players.getDealer();
-        Gamblers gamblers = players.getGamblers();
-
-        printInitOpenCards(dealer);
-        gamblers.getGamblers()
-                .forEach(this::printInitOpenCards);
-    }
-
-    private void printInitOpenCards(Player player) {
-        System.out.println(player.getName() + "카드: " + player.getOpenCards());
-    }
 
     @Override
     public boolean isHit(String name) {
