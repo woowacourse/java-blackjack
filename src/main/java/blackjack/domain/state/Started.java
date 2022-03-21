@@ -5,8 +5,6 @@ import blackjack.domain.game.PlayingCards;
 
 public abstract class Started implements State {
 
-    protected static final double DEFAULT_RATE = 1;
-
     protected final PlayingCards playingCards;
     protected Betting betting = new Betting(0);
 

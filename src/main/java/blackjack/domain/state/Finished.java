@@ -5,6 +5,8 @@ import blackjack.domain.game.PlayingCards;
 
 public abstract class Finished extends Started {
 
+    protected static final double DEFAULT_RATE = 1;
+
     Finished(final PlayingCards playingCards) {
         super(playingCards);
     }
