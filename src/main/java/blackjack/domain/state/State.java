@@ -12,10 +12,6 @@ public interface State {
 
     boolean isFinished();
 
-    boolean isBlackjack();
-
-    boolean isBust();
-
     List<Card> getCards();
 
     Score calculateScore();

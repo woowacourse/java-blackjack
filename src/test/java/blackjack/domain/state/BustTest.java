@@ -53,34 +53,4 @@ class BustTest {
         // then
         assertThat(actual).isTrue();
     }
-
-    @Test
-    @DisplayName("Blackjack인지 물어보면 false를 반환한다.")
-    void blackjackFalse() {
-        // given
-        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        cards = cards.add(Card.of(Pattern.CLOVER, Denomination.TWO));
-        State bust = new Bust(cards);
-
-        // when
-        boolean actual = bust.isBlackjack();
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @Test
-    @DisplayName("Bust인지 물어보면 true를 반환한다.")
-    void bustTrue() {
-        // given
-        Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        cards = cards.add(Card.of(Pattern.CLOVER, Denomination.TWO));
-        State bust = new Bust(cards);
-
-        // when
-        boolean actual = bust.isBust();
-
-        // then
-        assertThat(actual).isTrue();
-    }
 }

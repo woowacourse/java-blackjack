@@ -36,14 +36,4 @@ public class Running extends AbstractState {
     public boolean isFinished() {
         return false;
     }
-
-    @Override
-    public boolean isBlackjack() {
-        return false;
-    }
-
-    @Override
-    public boolean isBust() {
-        return false;
-    }
 }

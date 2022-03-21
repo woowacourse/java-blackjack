@@ -50,32 +50,4 @@ class BlackjackTest {
         // then
         assertThat(actual).isTrue();
     }
-
-    @Test
-    @DisplayName("Blackjack인지 물어보면 true를 반환한다.")
-    void blackjackTrue() {
-        // given
-        Cards cards = new Cards(BlackjackTestUtil.createCards(21));
-        State blackjack = new Blackjack(cards);
-
-        // when
-        boolean actual = blackjack.isBlackjack();
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
-    @Test
-    @DisplayName("Bust인지 물어보면 true를 반환한다.")
-    void bustFalse() {
-        // given
-        Cards cards = new Cards(BlackjackTestUtil.createCards(21));
-        State blackjack = new Blackjack(cards);
-
-        // when
-        boolean actual = blackjack.isBust();
-
-        // then
-        assertThat(actual).isFalse();
-    }
 }

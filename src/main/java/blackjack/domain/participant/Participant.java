@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Bust;
 import blackjack.domain.state.Running;
 import blackjack.domain.state.State;
 import java.util.List;
@@ -29,16 +31,16 @@ public abstract class Participant {
         state = state.stand();
     }
 
-    public boolean isBust() {
-        return state.isBust();
-    }
-
     public boolean isFinished() {
         return state.isFinished();
     }
 
+    public boolean isBust() {
+        return state instanceof Bust;
+    }
+
     public boolean isBlackjack() {
-        return state.isBlackjack();
+        return state instanceof Blackjack;
     }
 
     public Score getScore() {
