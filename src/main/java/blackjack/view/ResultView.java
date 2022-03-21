@@ -6,6 +6,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.view.card.CardNumberOutput;
+import blackjack.view.card.SuitOutput;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -63,7 +65,10 @@ public class ResultView {
     }
 
     private static String getNumberAndSuit(Card card) {
-        return card.getCardNumber().getNumber() + card.getSuit().getName();
+        String cardNumber = CardNumberOutput.getOutput(card.getCardNumber());
+        String suit = SuitOutput.getOutput(card.getSuit());
+
+        return cardNumber + suit;
     }
 
     public static void printDealerHitMessage() {

@@ -18,7 +18,7 @@ public class CardTest {
     @DisplayName("카드의 번호를 반환한다.")
     void get_card_number() {
         Card card = Card.of(CardNumber.TEN, Suit.SPADE);
-        assertThat(card.getCardNumber().getNumber()).isEqualTo("10");
+        assertThat(card.getCardNumber()).isEqualTo(CardNumber.TEN);
     }
 
     @Test
@@ -33,14 +33,14 @@ public class CardTest {
     @DisplayName("카드가 가진 점수를 반환한다")
     void get_value() {
         Card card = Card.of(CardNumber.TEN, Suit.SPADE);
-        assertThat(card.getCardNumber().getValue()).isEqualTo(10);
+        assertThat(card.getCardNumber()).isEqualTo(CardNumber.TEN);
     }
 
     @Test
     @DisplayName("카드의 종류를 반환한다")
     void get_Suit() {
         Card card = Card.of(CardNumber.TEN, Suit.SPADE);
-        assertThat(card.getSuit().getName()).isEqualTo("스페이드");
+        assertThat(card.getSuit()).isEqualTo(Suit.SPADE);
     }
 
     @Test

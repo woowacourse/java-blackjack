@@ -165,3 +165,5 @@
 - [x] AbstractPlayer가 Player를 구현하고 있는데 implements Player를 적은 이유가 무엇일까?
     - 다른 크루의 코드와 HashMap 등을 보다보니 추상클래스와 인터페이스를 모두 extends, implements가 있어서 적용해봤다.
     - 이유는 생각해보지 않았는데 그 크루에게 물어보니 해도 되겠지만 하지않아도 된다는 말을 듣고 제거했다.
+- [x] CardNumber, Suit의 symbol이 view에 종속되어있는게 아닌가?
+    - CardNumber, Suit가 가진 정보 중 view에서 사용하는 것을 제거하고 view에 매핑용 enum을 만들었다.
