@@ -1,16 +1,26 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Name;
+import blackjack.domain.Betting;
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.state.PlayerRunning;
+import blackjack.dto.HitRequest;
 import java.util.List;
 
 public class Player extends Participant {
 
-    private static final int HIT_STANDARD = 21;
+    private final Betting betting;
 
-    public Player(Name name, List<Card> cards) {
-        super(name, new Cards(cards));
+    public Player(Name name, List<Card> cards, Betting betting) {
+        super(name, PlayerRunning.start(cards));
+        this.betting = betting;
+    }
+
+    public void proceed(CardDeck deck, HitRequest hitRequest) {
+        while (!isFinished() && hitRequest == HitRequest.YES) {
+            hit(deck);
+        }
     }
 
     @Override
@@ -18,7 +28,7 @@ public class Player extends Participant {
         return List.copyOf(getCards());
     }
 
-    public boolean isHittable() {
-        return getScore() < HIT_STANDARD;
+    public int calculateProfit(Outcome outcome) {
+        return (int) (betting.getBetMoney() * outcome.getProfitRate());
     }
 }

@@ -1,9 +1,14 @@
 package blackjack.view;
 
+import blackjack.dto.HitRequest;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
+
+    private InputView() {
+
+    }
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -13,9 +18,18 @@ public class InputView {
                 .split(",", -1));
     }
 
-    public static String inputHitRequest(String playerName) {
-        System.out.printf("%s는(은) 한 장의 카드를 더 받으시겠습니까? (예는 y, 아니오는 n)", playerName);
-        System.out.println();
-        return scanner.nextLine().toLowerCase();
+    public static HitRequest inputHitRequest(String playerName) {
+        System.out.printf("%n%s는(은) 한 장의 카드를 더 받으시겠습니까? (예는 y, 아니오는 n)%n", playerName);
+        return HitRequest.find(scanner.nextLine());
+    }
+
+    public static int inputBetMoney(String name) {
+        try {
+            System.out.printf("%s의 베팅 금액은?%n", name);
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("[ERROR] 베팅 금액은 숫자여야 합니다.");
+            return inputBetMoney(name);
+        }
     }
 }

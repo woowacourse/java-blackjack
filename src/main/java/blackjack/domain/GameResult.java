@@ -2,47 +2,38 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.Arrays;
+import blackjack.domain.participant.Players;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameResult {
 
-    private final Map<Outcome, Integer> dealerResult;
-    private final Map<String, Outcome> playersResult;
+    private final Map<String, Integer> profits;
 
-    private GameResult(Map<Outcome, Integer> dealerResult, Map<String, Outcome> playersResult) {
-        this.dealerResult = Collections.unmodifiableMap(new EnumMap<>(dealerResult));
-        this.playersResult = Collections.unmodifiableMap(new LinkedHashMap<>(playersResult));
+    public GameResult(Map<String, Integer> profits) {
+        this.profits = Collections.unmodifiableMap(new LinkedHashMap<>(profits));
     }
 
-    public static GameResult of(Dealer dealer, List<Player> players) {
-        Map<Outcome, Integer> dealerResult = new EnumMap<>(Outcome.class);
-        Map<String, Outcome> playersResult = new LinkedHashMap<>();
+    public static GameResult of(Dealer dealer, Players players) {
+        Map<String, Integer> playersProfits = new LinkedHashMap<>();
 
-        initDealerResult(dealerResult);
         for (Player player : players) {
-            Outcome playerOutcome = Outcome.judge(player, dealer);
-            playersResult.put(player.getName(), playerOutcome);
-            dealerResult.merge(playerOutcome.getOpposite(), 1, Integer::sum);
+            Outcome outcome = Outcome.judge(player, dealer);
+            playersProfits.put(player.getName(), player.calculateProfit(outcome));
         }
 
-        return new GameResult(dealerResult, playersResult);
+        return new GameResult(playersProfits);
     }
 
-    private static void initDealerResult(Map<Outcome, Integer> dealerResult) {
-        Arrays.stream(Outcome.values())
-                .forEach(value -> dealerResult.put(value, 0));
+    public int getDealerProfit() {
+        return profits.values()
+                .stream()
+                .mapToInt(profit -> profit * (-1))
+                .sum();
     }
 
-    public Map<Outcome, Integer> getDealerResult() {
-        return dealerResult;
-    }
-
-    public Map<String, Outcome> getPlayersResult() {
-        return playersResult;
+    public Map<String, Integer> getProfits() {
+        return profits;
     }
 }

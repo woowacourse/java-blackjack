@@ -11,25 +11,25 @@ import org.junit.jupiter.api.Test;
 public class CardDeckTest {
 
     @Test
-    @DisplayName("카드 뭉치에서 카드를 한 장 뽑아서 준다.")
+    @DisplayName("카드 뭉치의 맨 위의 카드 한 장을 뽑아서 준다.")
     void drawCard() {
         // given
-        Card card = new Card(Pattern.DIAMOND, Denomination.TWO);
-        List<Card> cards = List.of(card);
-        CardDeck deck = new CardDeck(cards);
+        Card firstCard = Card.of(Pattern.DIAMOND, Denomination.ACE);
+        Card secondCard = Card.of(Pattern.DIAMOND, Denomination.TWO);
+        CardDeck deck = new CardDeck(List.of(firstCard, secondCard));
 
         // when
         Card actual = deck.draw();
 
         // then
-        assertThat(actual).isEqualTo(card);
+        assertThat(actual).isEqualTo(firstCard).isNotEqualTo(secondCard);
     }
 
     @Test
     @DisplayName("두 장의 카드를 한번에 뽑을 수 있다.")
     void drawDouble() {
         // given
-        CardDeck deck = new CardDeck();
+        CardDeck deck = CardDeck.createGameDeck();
 
         // when
         List<Card> actual = deck.drawDouble();

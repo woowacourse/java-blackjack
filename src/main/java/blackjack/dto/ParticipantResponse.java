@@ -13,7 +13,7 @@ public class ParticipantResponse {
     public ParticipantResponse(Participant participant) {
         this.name = participant.getName();
         this.cards = List.copyOf(participant.getCards());
-        this.score = participant.getScore();
+        this.score = participant.getScore().getValue();
     }
 
     public String getName() {

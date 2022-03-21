@@ -1,46 +1,34 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Queue;
 
 public class CardDeck {
 
-    private final List<Card> cards;
+    private final Queue<Card> cards;
 
     public CardDeck(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.cards = new ArrayDeque<>(cards);
     }
 
-    public CardDeck() {
-        this(initCards());
-    }
-
-    private static List<Card> initCards() {
-        List<Card> cards = Arrays.stream(Pattern.values())
-                .map(CardDeck::createCardsBy)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        Collections.shuffle(cards);
-        return cards;
-    }
-
-    private static List<Card> createCardsBy(Pattern pattern) {
-        return Arrays.stream(Denomination.values())
-                .map(denomination -> new Card(pattern, denomination))
-                .collect(Collectors.toList());
+    public static CardDeck createGameDeck() {
+        List<Card> pool = Card.getPool();
+        Collections.shuffle(pool);
+        return new CardDeck(pool);
     }
 
     public Card draw() {
+        validateNotEmpty();
+        return cards.poll();
+    }
+
+    private void validateNotEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 카드 덱이 비어 있습니다.");
         }
-        Card card = cards.get(0);
-        cards.remove(0);
-        return card;
     }
 
     public List<Card> drawDouble() {

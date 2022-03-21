@@ -12,6 +12,18 @@ public class Score {
         return value;
     }
 
+    public boolean isLessThan(int value) {
+        return this.value < value;
+    }
+
+    public boolean isGreaterThan(int value) {
+        return this.value > value;
+    }
+
+    public boolean isGreaterThan(Score target) {
+        return target.isLessThan(value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

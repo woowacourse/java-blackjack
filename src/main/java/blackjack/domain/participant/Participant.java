@@ -1,47 +1,55 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Name;
-import blackjack.domain.State;
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Cards;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Bust;
+import blackjack.domain.state.State;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
 
     private final Name name;
-    private final Cards cards;
+    private State state;
 
-    protected Participant(Name name, Cards cards) {
+    protected Participant(Name name, State state) {
         Objects.requireNonNull(name, "[ERROR] 이름은 null일 수 없습니다.");
-        Objects.requireNonNull(cards, "[ERROR] 카드들은 null일 수 없습니다.");
+        Objects.requireNonNull(state, "[ERROR] 상태는 null일 수 없습니다.");
 
         this.name = name;
-        this.cards = cards;
+        this.state = state;
     }
 
     public void hit(CardDeck deck) {
-        cards.add(deck.draw());
+        state = state.hit(deck.draw());
+    }
+
+    public void stand() {
+        state = state.stand();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     public boolean isBust() {
-        return State.from(cards) == State.BUST;
+        return state instanceof Bust;
     }
 
-    public boolean isBlackJack() {
-        return State.from(cards) == State.BLACKJACK;
+    public boolean isBlackjack() {
+        return state instanceof Blackjack;
     }
 
-    public int getScore() {
-        return cards.calculateScore()
-                .getValue();
+    public Score getScore() {
+        return state.calculateScore();
     }
 
-    abstract public List<Card> showInitialCards();
+    public abstract List<Card> showInitialCards();
 
     public List<Card> getCards() {
-        return List.copyOf(cards.getCards());
+        return List.copyOf(state.getCards());
     }
 
     public String getName() {

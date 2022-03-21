@@ -4,50 +4,41 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public enum Outcome {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN(1),
+    DRAW(0),
+    LOSE(-1),
+    WIN_BLACKJACK(1.5);
 
-    private final String name;
+    private final double profitRate;
 
-    Outcome(String name) {
-        this.name = name;
+    Outcome(double profitRate) {
+        this.profitRate = profitRate;
     }
 
     public static Outcome judge(Player player, Dealer dealer) {
-        if (player.isBust() || !player.isBlackJack() && dealer.isBlackJack()) {
-            return Outcome.LOSE;
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return WIN_BLACKJACK;
         }
-        if (dealer.isBust() || player.isBlackJack() && !dealer.isBlackJack()) {
-            return Outcome.WIN;
+        if (player.isBust() || !player.isBlackjack() && dealer.isBlackjack()) {
+            return LOSE;
         }
-        if (player.isBlackJack() && dealer.isBlackJack()) {
-            return Outcome.DRAW;
+        if (dealer.isBust()) {
+            return WIN;
         }
         return judgeByScore(player.getScore(), dealer.getScore());
     }
 
-    private static Outcome judgeByScore(int score, int target) {
-        if (score > target) {
-            return Outcome.WIN;
-        }
-        if (score == target) {
-            return Outcome.DRAW;
-        }
-        return Outcome.LOSE;
-    }
-
-    public Outcome getOpposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
+    private static Outcome judgeByScore(Score score, Score target) {
+        if (score.isGreaterThan(target)) {
             return WIN;
         }
-        return DRAW;
+        if (score.equals(target)) {
+            return DRAW;
+        }
+        return LOSE;
     }
 
-    public String getName() {
-        return name;
+    public double getProfitRate() {
+        return profitRate;
     }
 }
