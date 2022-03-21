@@ -16,8 +16,8 @@ public class BettingMoney {
     }
 
     private void checkNegative(int money) {
-        if (money <= EMPTY_MONEY) {
-            throw new IllegalArgumentException("베팅 금액은 0보다 큰 양수로 입력해주세요.");
+        if (money < EMPTY_MONEY) {
+            throw new IllegalArgumentException("베팅 금액은 양수로 입력해주세요.");
         }
     }
 

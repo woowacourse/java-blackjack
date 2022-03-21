@@ -13,7 +13,7 @@ public class BettingMoneyTest {
     void bettingMoneyException() {
         assertThatThrownBy(() -> new BettingMoney(-1))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅 금액은 0보다 큰 양수로 입력해주세요.");
+                .hasMessage("베팅 금액은 양수로 입력해주세요.");
     }
 
     @Test
