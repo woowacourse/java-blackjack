@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
-    private static final int MAX_RECEIVABLE_SCORE = 17;
 
     public Dealer() {
         super(new Name(DEALER_NAME));
@@ -11,14 +10,14 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return calculateBestScore() < MAX_RECEIVABLE_SCORE;
+        return calculateBestScore().isDealerReceivable();
     }
 
     public boolean isWinner(Player player) {
-        return calculateBestScore() > player.calculateBestScore() && !isBusted();
+        return calculateBestScore().isBiggerThan(player.calculateBestScore()) && !isBusted();
     }
 
     public boolean hasSameScore(Player player) {
-        return calculateBestScore() == player.calculateBestScore();
+        return calculateBestScore().equals(player.calculateBestScore());
     }
 }

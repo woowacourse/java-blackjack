@@ -19,7 +19,7 @@ public abstract class Participant {
         this.cards.concat(cards);
     }
 
-    public int calculateBestScore() {
+    public Score calculateBestScore() {
         return cards.getBestPossible();
     }
 

@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,7 +60,7 @@ class CardsTest {
                 new Card(Number.ACE, Kind.CLOVER),
                 new Card(Number.ACE, Kind.HEART)));
 
-        assertThat(cards.getBestPossible()).isEqualTo(14);
+        assertThat(cards.getBestPossible().getScore()).isEqualTo(14);
     }
 
     @DisplayName("Ace 를 11점으로 판단하여 베스트 점수 계산")
@@ -71,7 +70,7 @@ class CardsTest {
                 new Card(Number.ACE, Kind.SPADE),
                 new Card(Number.KING, Kind.SPADE)));
 
-        assertThat(cards.getBestPossible()).isEqualTo(21);
+        assertThat(cards.getBestPossible().getScore()).isEqualTo(21);
     }
 
     @DisplayName("Ace 를 1점으로 판단하여 베스트 점수 계산")
@@ -83,7 +82,7 @@ class CardsTest {
                 new Card(Number.SEVEN, Kind.SPADE),
                 new Card(Number.EIGHT, Kind.SPADE)));
 
-        assertThat(cards.getBestPossible()).isEqualTo(21);
+        assertThat(cards.getBestPossible().getScore()).isEqualTo(21);
     }
 
     @DisplayName("21점 초과 시 Busted")

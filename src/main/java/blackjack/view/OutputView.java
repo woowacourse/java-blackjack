@@ -49,9 +49,9 @@ public class OutputView {
 
     public static void printFinalStatus(Dealer dealer, Players players) {
         printEmptyLine();
-        System.out.println(showCardHandStatus(dealer) + " 결과 - " + dealer.calculateBestScore());
+        System.out.println(showCardHandStatus(dealer) + " 결과 - " + dealer.calculateBestScore().getScore());
         for (Player readPlayer : players.getPlayers()) {
-            System.out.println(showCardHandStatus(readPlayer) + " 결과 - " + readPlayer.calculateBestScore());
+            System.out.println(showCardHandStatus(readPlayer) + " 결과 - " + readPlayer.calculateBestScore().getScore());
         }
     }
 

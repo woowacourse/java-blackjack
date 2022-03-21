@@ -1,50 +1,67 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Score {
 
     private static final int ACE_ADDITIONAL_NUMBER = 10;
-    private static final int BLACKJACK_CARD_HAND_COUNT = 2;
+    private static final int DEALER_RECEIVABLE_SCORE = 17;
     private static final int BLACKJACK_SCORE = 21;
     private static final int BUST_THRESHOLD = 21;
 
-    private int score;
+    private final int score;
 
     private Score(int score) {
         this.score = score;
     }
 
-    public static Score calculate(List<Card> cards) {
-        Score score = new Score(calculateWorst(cards));
-        cards.forEach(score::calculateBest);
-        return score;
-    }
-
-    private static int calculateWorst(List<Card> cards) {
-        return cards.stream()
-                .map(Card::getNumber)
-                .mapToInt(Number::getScore)
-                .sum();
-    }
-
-    private void calculateBest(Card card) {
-        if (card.isAce() && score + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
-            score += 10;
+    public static Score soft(IntStream scores) {
+        int best = scores.sum();
+        if (best + ACE_ADDITIONAL_NUMBER > BUST_THRESHOLD) {
+            return new Score(best);
         }
+        return new Score(best + ACE_ADDITIONAL_NUMBER);
+    }
+
+    public static Score hard(IntStream scores) {
+        return new Score(scores.sum());
     }
 
     public boolean isBusted() {
         return score > BUST_THRESHOLD;
     }
 
-    public boolean isBlackJack(List<Card> cards) {
-        return cards.size() == BLACKJACK_CARD_HAND_COUNT && score == BLACKJACK_SCORE;
+    public boolean isBlackJack() {
+        return score == BLACKJACK_SCORE;
+    }
+
+    public boolean isDealerReceivable() {
+        return score < DEALER_RECEIVABLE_SCORE;
+    }
+
+    public boolean isBiggerThan(Score score) {
+        return this.score > score.getScore();
     }
 
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

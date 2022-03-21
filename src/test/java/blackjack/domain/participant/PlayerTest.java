@@ -54,7 +54,7 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.CLOVER),
                 new Card(Number.ACE, Kind.HEART))));
 
-        assertThat(player.calculateBestScore()).isEqualTo(14);
+        assertThat(player.calculateBestScore().getScore()).isEqualTo(14);
     }
 
     @DisplayName("Ace 를 11점으로 판단하여 베스트 점수 계산")
@@ -65,7 +65,7 @@ class PlayerTest {
                 new Card(Number.ACE, Kind.SPADE),
                 new Card(Number.KING, Kind.SPADE))));
 
-        assertThat(player.calculateBestScore()).isEqualTo(21);
+        assertThat(player.calculateBestScore().getScore()).isEqualTo(21);
     }
 
     @DisplayName("Ace 를 1점으로 판단하여 베스트 점수 계산")
@@ -78,7 +78,7 @@ class PlayerTest {
                 new Card(Number.SEVEN, Kind.SPADE),
                 new Card(Number.EIGHT, Kind.SPADE))));
 
-        assertThat(player.calculateBestScore()).isEqualTo(21);
+        assertThat(player.calculateBestScore().getScore()).isEqualTo(21);
     }
 
     @DisplayName("플레이어의 점수가 더 높은 경우 승리")
