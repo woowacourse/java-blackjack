@@ -1,14 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.TestCardFixture.aceCard;
-import static blackjack.domain.TestCardFixture.fiveCard;
-import static blackjack.domain.TestCardFixture.jackCard;
-import static blackjack.domain.TestCardFixture.kingCard;
-import static blackjack.domain.TestCardFixture.sevenCard;
-import static blackjack.domain.TestCardFixture.sixCard;
-import static blackjack.domain.TestCardFixture.tenCard;
-import static blackjack.domain.TestCardFixture.threeCard;
-import static blackjack.domain.TestCardFixture.twoCard;
+import static blackjack.domain.TestCardFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.state.Stay;
@@ -22,7 +14,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.from("seung", "10000");
+        player = new Player("seung");
     }
 
     @Test
@@ -64,46 +56,35 @@ class PlayerTest {
         player.hit(aceCard);
         player.hit(fiveCard);
         player.stay();
-        Participant participant = player.getParticipant();
+        Participant participant = player;
 
         assertThat(participant.getState()).isInstanceOf(Stay.class);
     }
 
     @Test
-    @DisplayName("준비 상태가 아닌지 확인")
-    void doesNotReady() {
-        assertThat(player.isReady()).isFalse();
+    @DisplayName("준비 상태인지 확인")
+    void isReady() {
+        assertThat(player.isReady()).isTrue();
     }
 
     @Test
-    @DisplayName("준비 상태인지 확인")
-    void isReady() {
+    @DisplayName("준비 상태가 아닌지 확인")
+    void doesNotReady() {
         player.hit(kingCard);
         player.hit(tenCard);
 
-        assertThat(player.isReady()).isTrue();
+        assertThat(player.isReady()).isFalse();
     }
 
     @Test
     @DisplayName("플레이어가 finished 상태이면 hit해도 카드를 더이상 받을 수 없다.")
     void doesNotHit() {
-        player.hit(aceCard);
+        player.hit(kingCard);
         player.hit(tenCard);
         player.hit(threeCard);
-        Participant participant = player.getParticipant();
 
-        assertThat(participant.getCards()).hasSize(2);
-    }
-
-    @Test
-    @DisplayName("이익을 계산한다.")
-    void calculateProfit() {
-        player.hit(kingCard);
-        player.hit(aceCard);
-        Dealer dealer = Dealer.create();
-        dealer.hit(sixCard);
-        dealer.hit(sevenCard);
-
-        assertThat(player.calculateProfit(dealer)).isEqualTo(15000);
+        assertThatThrownBy(() -> player.hit(fourCard))
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessageContaining("[ERROR] 카드뽑는걸 지원하지 않습니다.");
     }
 }

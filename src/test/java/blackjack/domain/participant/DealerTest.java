@@ -4,7 +4,6 @@ import static blackjack.domain.TestCardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.state.State;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +15,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.create();
+        dealer = new Dealer();
     }
 
     @Test
@@ -29,7 +28,7 @@ class DealerTest {
     @DisplayName("딜러가 카드를 정상적으로 받는지 확인")
     void receiveCard() {
         dealer.hit(jackCard);
-        Participant participant = dealer.getParticipant();
+        Participant participant = dealer;
         Card openCard = participant.getOpenCard();
 
         assertThat(openCard.getDenomination()).isEqualTo("J");
@@ -54,22 +53,11 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 카드의 수가 17이상일 떄 hit을 해도 카드를 받을 수 없다.")
-    void doesNotHit() {
-        dealer.hit(tenCard);
-        dealer.hit(sevenCard);
-        dealer.hit(threeCard);
-        State dealerState = dealer.getState();
-
-        Assertions.assertThat(dealerState.hand().getCards()).hasSize(2);
-    }
-
-    @Test
     @DisplayName("딜러는 자신의 카드 한장을 정상적으로 오픈 하는지 확인")
     void openDealerCard() {
         dealer.hit(jackCard);
         dealer.hit(fiveCard);
-        Participant participant = dealer.getParticipant();
+        Participant participant = dealer;
 
         assertThat(participant.getOpenCard()).isEqualTo(jackCard);
     }
@@ -79,7 +67,7 @@ class DealerTest {
     void getCardTotalScore() {
         dealer.hit(aceCard);
         dealer.hit(jackCard);
-        Participant participant = dealer.getParticipant();
+        Participant participant = dealer;
 
         assertThat(participant.getCardTotalScore()).isEqualTo(21);
     }
