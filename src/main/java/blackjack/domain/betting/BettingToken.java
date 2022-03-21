@@ -16,7 +16,7 @@ public class BettingToken {
 	}
 
 	public BettingToken() {
-		this.money = 0;
+		this(UNIT_PRICE);
 	}
 
 	public int getMoney() {
