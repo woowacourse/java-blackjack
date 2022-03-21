@@ -16,10 +16,6 @@ public class BlackjackGame {
     public BlackjackGame(List<String> playerNames) {
         this.deck = new Deck(new CardShuffleMachine());
         this.blackjackPlayers = new Players(playerNames);
-
-    }
-
-    public void initGame() {
         blackjackPlayers.startWithTwoCards(deck);
     }
 

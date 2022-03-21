@@ -20,7 +20,6 @@ public class BlackjackController {
 
         Map<Name, Double> bettingBox = betMoney(blackjackGame.getGuests());
         announceStartGame(blackjackGame);
-        blackjackGame.initGame();
         OutputView.announcePresentCards(toResponse(blackjackGame.getPlayers()));
 
         decideGuestsToGetMoreCards(blackjackGame);
