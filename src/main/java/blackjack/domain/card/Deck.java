@@ -1,25 +1,19 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
 public class Deck {
+
     private static final int CARDS_SIZE = 52;
 
     private final Queue<Card> cards;
 
-    private Deck(Queue<Card> cards) {
-        validateDuplicate(cards);
-        validateCardSize(cards);
-        this.cards = cards;
-    }
-
-    public static Deck of(List<Card> cards) {
-        Collections.shuffle(cards);
-        return new Deck(new LinkedList<>(cards));
+    public Deck() {
+        this.cards = new LinkedList<>(Card.createDeck());
+        validateDuplicate(this.cards);
+        validateCardSize(this.cards);
     }
 
     public Card draw() {

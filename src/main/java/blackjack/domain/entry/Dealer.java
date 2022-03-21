@@ -1,36 +1,65 @@
 package blackjack.domain.entry;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.HoldCards;
-
-import java.util.Collections;
+import blackjack.domain.entry.vo.Name;
 import java.util.List;
 
 public class Dealer extends Participant {
+
+    public static final String NAME = "딜러";
     private static final int MORE_CARD_STANDARD = 16;
-    protected static final String NAME = "딜러";
+
+    private final HoldCards holdCards;
 
     public Dealer(HoldCards holdCards) {
-        super(holdCards);
+        super(Name.DEALER);
+        this.holdCards = holdCards;
+    }
+
+    public void addCard(Card card) {
+        this.holdCards.addCard(card);
     }
 
     @Override
+    public int countScore() {
+        return holdCards.countBestNumber();
+    }
+
+    public double calculateDealerProfit(List<Player> players) {
+        return sumPlayersProfit(players) * -1;
+    }
+
     public boolean canHit() {
-        return countCards() <= MORE_CARD_STANDARD;
+        return holdCards.countBestNumber() <= MORE_CARD_STANDARD;
+    }
+
+    public boolean isBust() {
+        return holdCards.countBestNumber() > CardNumber.BLACK_JACK_NUMBER;
+    }
+
+    public boolean isBlackjack() {
+        return holdCards.isBlackjack();
+    }
+
+    public boolean isWin(int playerScore) {
+        return holdCards.countBestNumber() >= playerScore;
     }
 
     @Override
-    public List<Card> openCard() {
-        return Collections.singletonList(findFirstCard(getHoldCards()));
+    public boolean isDealer() {
+        return true;
     }
 
     @Override
-    public String getName() {
-        return NAME;
+    public List<Card> getCards() {
+        return holdCards.getCards();
     }
 
-    private Card findFirstCard(HoldCards holdCards) {
-        return holdCards.getFirstCard()
-                .orElseThrow(() -> new IllegalArgumentException("카드가 존재하지 않습니다."));
+    private double sumPlayersProfit(List<Player> players) {
+        return players.stream()
+            .mapToDouble(player -> player.profit(this))
+            .sum();
     }
 }

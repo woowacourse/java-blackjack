@@ -5,52 +5,55 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Dealer;
 import blackjack.domain.entry.Participant;
-import blackjack.domain.entry.Player;
-import blackjack.domain.entry.Participants;
+import blackjack.domain.entry.Players;
+import blackjack.domain.entry.vo.BettingMoney;
+import blackjack.domain.entry.vo.Name;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackTable {
-    private final Deck deck;
-    private final Participants participants;
 
-    public BlackjackTable(List<String> names) {
-        this.deck = Deck.of(Card.createDeck());
-        this.participants = new Participants(createDealer(), toPlayers(names));
+    private final Deck deck = new Deck();
+    private final Players players;
+
+    public BlackjackTable(Map<Name, BettingMoney> bettingPlayers) {
+        this.players = new Players(createDealer(), bettingPlayers);
+        players.divideCards(deck);
     }
 
-    public void hit(Participant participant) {
-        participant.addCard(deck.draw());
+    public boolean isFinishedPlayer(Name name) {
+        return players.isFinishedBy(name);
     }
 
-    public boolean needMoreCardByDealer() {
-        return participants.isHitDealer();
+    public List<Card> hit(Name name, Command command) {
+        if (command.isStay()) {
+            return players.stayBy(name);
+        }
+        return players.hitBy(name, deck.draw());
     }
 
-    public void hitDealer() {
-        participants.hitDealer(deck.draw());
+    public int countHitByDealer() {
+        int hitCount = 0;
+        while (!players.isFinishedDealer()) {
+            players.hitDealer(deck.draw());
+            hitCount++;
+        }
+        return hitCount;
     }
 
-    public boolean canHit(Participant participant) {
-        return participant.canHit();
+    public List<Name> getPlayerNames() {
+        return players.getPlayersName();
     }
 
-    public List<Participant> getParticipants() {
-        return participants.getParticipants();
+    public List<Participant> getAllPlayers() {
+        return players.getAllPlayers();
     }
 
-    public Map<PlayerOutcome, List<Player>> countGameResult() {
-        return participants.getGameResults();
+    public Map<Participant, Double> getGameResult() {
+        return players.getAllProfit();
     }
 
     private Dealer createDealer() {
         return new Dealer(HoldCards.initTwoCards(deck.draw(), deck.draw()));
-    }
-
-    private List<Player> toPlayers(List<String> names) {
-        return names.stream()
-            .map(name -> new Player(name, HoldCards.initTwoCards(deck.draw(), deck.draw())))
-            .collect(Collectors.toList());
     }
 }

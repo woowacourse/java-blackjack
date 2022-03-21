@@ -7,10 +7,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HoldCards {
+
     private static final int FIRST_CARD = 0;
     private static final int INIT_CARD_SIZE = 2;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards;
+
+    public HoldCards() {
+        this.cards = new ArrayList<>();
+    }
 
     public HoldCards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
@@ -28,13 +34,29 @@ public class HoldCards {
     }
 
     public int countBestNumber() {
-        return CardNumber.sum(cards.stream()
-            .map(Card::getNumber)
-            .collect(Collectors.toList()));
+        return CardNumber.sum(toCardNumbers());
     }
 
     public Optional<Card> getFirstCard() {
         return Optional.ofNullable(cards.get(FIRST_CARD));
+    }
+
+    public boolean isBlackjack() {
+        return CardNumber.isBlackjack(toCardNumbers());
+    }
+
+    public boolean isBust() {
+        return countBestNumber() > CardNumber.BLACK_JACK_NUMBER;
+    }
+
+    public boolean isReady() {
+        return cards.size() == BLACKJACK_CARD_SIZE;
+    }
+
+    private List<CardNumber> toCardNumbers() {
+        return cards.stream()
+            .map(Card::getNumber)
+            .collect(Collectors.toList());
     }
 
     private void validateSize(List<Card> cards) {
