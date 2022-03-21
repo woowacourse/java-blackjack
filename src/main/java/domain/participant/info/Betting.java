@@ -5,6 +5,10 @@ public class Betting {
 	private static final int LOWER_BOUND_OF_BETTING = 0;
 	private final int bettingMoney;
 
+	public Betting() {
+		this.bettingMoney = 0;
+	}
+
 	public Betting(int money) {
 		validatePositiveNumber(money);
 		bettingMoney = money;
