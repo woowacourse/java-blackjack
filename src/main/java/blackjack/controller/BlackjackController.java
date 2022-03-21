@@ -12,30 +12,31 @@ public class BlackjackController {
     BlackjackGame blackjackGame = new BlackjackGame();
 
     public void play() {
-        createGamers();
+        blackjackGame.createGamers(requestGamerInfo());
         OutputView.printOpenCard(blackjackGame.createDealerDto(), blackjackGame.createPlayersDto());
         takeCards();
         displayResult();
-    }
-
-    private void createGamers() {
-        try {
-            blackjackGame.createGamers(requestGamerInfo());
-        } catch (IllegalStateException exception) {
-            System.out.println("[ERROR] " + exception.getMessage());
-            createGamers();
-        }
     }
 
     private Map<String, Integer> requestGamerInfo() {
         List<String> GamerNames = InputView.inputNames();
         Map<String, Integer> gamerInfo = new LinkedHashMap<>();
         for (String name : GamerNames) {
-            gamerInfo.put(name, InputView.inputBettingMoney(name));
+            gamerInfo.put(name, requestBettingMoney(name));
         }
         return gamerInfo;
     }
 
+    private int requestBettingMoney(String name) {
+        int money = InputView.inputBettingMoney(name);
+        try {
+            blackjackGame.validateBettingMoney(money);
+        } catch (IllegalStateException exception) {
+            OutputView.displayErrorMessage(exception.getMessage());
+            return requestBettingMoney(name);
+        }
+        return money;
+    }
 
     private void takeCards() {
         for (String gamerNames : blackjackGame.getGamerNames()) {

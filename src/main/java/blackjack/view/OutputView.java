@@ -19,6 +19,10 @@ public class OutputView {
     private OutputView() {
     }
 
+    public static void displayErrorMessage(String errorMsg) {
+        System.out.println("[ERROR] " + errorMsg);
+    }
+
     public static void printOpenCard(PlayerDTO dealer, PlayersDTO gamers) {
         System.out.printf("\n" + DISTRIBUTE_CARD_MSG, dealer.getName(), printGamerNames(gamers));
         System.out.printf(PLAYER_STATUS_DISPLAY_MSG, dealer.getName(), printOpenCards(dealer.getCards()));

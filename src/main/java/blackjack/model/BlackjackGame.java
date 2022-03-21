@@ -24,14 +24,17 @@ public class BlackjackGame {
         dealer = new Dealer(List.of(cardDeck.selectCard(), cardDeck.selectCard()));
     }
 
-    public void createGamers(Map<String, Integer> inputGamerInfo) throws IllegalStateException {
+    public void validateBettingMoney(int money) throws IllegalStateException {
+        new Betting(money);
+    }
+
+    public void createGamers(Map<String, Integer> inputGamerInfo) {
         Map<String, Betting> gamerInfo = new LinkedHashMap<>();
         for (String money : inputGamerInfo.keySet()) {
-            gamerInfo.put(money, new Betting(inputGamerInfo.get(money)));
+            gamerInfo.put(money,  new Betting(inputGamerInfo.get(money)));
         }
         gamers = new Gamers(gamerInfo, cardDeck);
     }
-
 
     public PlayerDTO createDealerDto() {
         return createPlayerDto(dealer, dealer.openCards());
