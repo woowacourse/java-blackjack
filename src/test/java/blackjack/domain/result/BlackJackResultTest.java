@@ -5,23 +5,21 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Cards;
 
 class BlackJackResultTest {
 
-	private final Cards playerCards = new Cards();
-	private final Cards dealerCards = new Cards();
-
 	@Test
 	@DisplayName("플레이어가 블랙잭이고 딜러가 블랙잭이 아니면 승리")
 	void playerBlackJackAndDealerNotBlackJAck() {
-		playerCards.add(CLOVER_ACE);
-		playerCards.add(CLOVER_TEN);
-		dealerCards.add(CLOVER_FIVE);
-
-		dealerCards.add(CLOVER_FIVE);
-		dealerCards.add(CLOVER_ACE);
+		Cards playerCards = new Cards(CLOVER_ACE, CLOVER_TEN);
+		Cards dealerCards = new Cards(CLOVER_FIVE, CLOVER_FIVE, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result).isEqualTo(BlackJackResult.BLACKJACK_WIN);
@@ -30,42 +28,30 @@ class BlackJackResultTest {
 	@Test
 	@DisplayName("플레이어가 버스트 아닌데 딜러가 버스트면 승리")
 	void playerNotBustAndDealerBust() {
-		playerCards.add(CLOVER_ACE);
-		playerCards.add(CLOVER_ACE);
-
-		dealerCards.add(CLOVER_TEN);
-		dealerCards.add(CLOVER_ACE);
-		dealerCards.add(CLOVER_ACE);
+		Cards playerCards = new Cards(CLOVER_ACE, CLOVER_ACE);
+		Cards dealerCards = new Cards(CLOVER_TEN, CLOVER_ACE, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result).isEqualTo(BlackJackResult.WIN);
 	}
 
-	@Test
-	@DisplayName("둘 다 버스트가 아닐 때 숫자가 높으면 승리")
-	void notBustCompareWin() {
-		playerCards.add(CLOVER_TEN);
-		playerCards.add(CLOVER_TEN);
+	@ParameterizedTest
+	@CsvSource(value = {"TEN:WIN", "EIGHT:LOSE", "NINE:DRAW"}, delimiter = ':')
+	@DisplayName("둘 다 버스트가 아닐 때 숫자 합에 따라 승패가 갈린다.")
+	void notBustCompareWin(String cardNumber, String result) {
+		Cards playerCards = new Cards(CLOVER_TEN,
+			Card.getInstance(CardShape.CLOVER, CardNumber.valueOf(cardNumber)));
+		Cards dealerCards = new Cards(CLOVER_TEN, CLOVER_NINE);
 
-		dealerCards.add(CLOVER_TEN);
-		dealerCards.add(CLOVER_FIVE);
-		dealerCards.add(CLOVER_ACE);
-		dealerCards.add(CLOVER_ACE);
-
-		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		assertThat(result).isEqualTo(BlackJackResult.WIN);
+		BlackJackResult blackJackResult = BlackJackResult.of(playerCards, dealerCards);
+		assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf(result));
 	}
 
 	@Test
 	@DisplayName("둘 다 버스트이면 플레이어 패배")
 	void bothBust() {
-		playerCards.add(CLOVER_TEN);
-		playerCards.add(CLOVER_ACE);
-		playerCards.add(CLOVER_ACE);
-
-		dealerCards.add(CLOVER_TEN);
-		dealerCards.add(CLOVER_ACE);
-		dealerCards.add(CLOVER_ACE);
+		Cards playerCards = new Cards(CLOVER_TEN, CLOVER_ACE, CLOVER_ACE);
+		Cards dealerCards = new Cards(CLOVER_TEN, CLOVER_ACE, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result).isEqualTo(BlackJackResult.LOSE);
@@ -74,27 +60,8 @@ class BlackJackResultTest {
 	@Test
 	@DisplayName("딜러만 블랙잭이면 플레이어 패배")
 	void playerNotBlackJackAndDealerBlackJack() {
-		playerCards.add(CLOVER_FIVE);
-		playerCards.add(CLOVER_FIVE);
-		playerCards.add(CLOVER_ACE);
-
-		dealerCards.add(CLOVER_TEN);
-		dealerCards.add(CLOVER_ACE);
-
-		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		assertThat(result).isEqualTo(BlackJackResult.LOSE);
-	}
-
-	@Test
-	@DisplayName("둘 다 버스트가 아닐 때 숫자가 낮으면 패배")
-	void notBustCompareLose() {
-		playerCards.add(CLOVER_TEN);
-		playerCards.add(CLOVER_FIVE);
-
-		dealerCards.add(CLOVER_TEN);
-		dealerCards.add(CLOVER_FIVE);
-		dealerCards.add(CLOVER_ACE);
-		dealerCards.add(CLOVER_ACE);
+		Cards playerCards = new Cards(CLOVER_FIVE, CLOVER_FIVE, CLOVER_ACE);
+		Cards dealerCards = new Cards(CLOVER_TEN, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result).isEqualTo(BlackJackResult.LOSE);
@@ -103,24 +70,8 @@ class BlackJackResultTest {
 	@Test
 	@DisplayName("둘 다 블랙잭이면 무승부")
 	void bothBlackJack() {
-		playerCards.add(CLOVER_TEN);
-		playerCards.add(CLOVER_ACE);
-
-		dealerCards.add(CLOVER_TEN);
-		dealerCards.add(CLOVER_ACE);
-
-		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
-		assertThat(result).isEqualTo(BlackJackResult.DRAW);
-	}
-
-	@Test
-	@DisplayName("둘 다 버스트 아니고 숫자 같으면 무승부")
-	void compareDraw() {
-		playerCards.add(CLOVER_TEN);
-		playerCards.add(CLOVER_FIVE);
-
-		dealerCards.add(CLOVER_TEN);
-		dealerCards.add(CLOVER_FIVE);
+		Cards playerCards = new Cards(CLOVER_TEN, CLOVER_ACE);
+		Cards dealerCards = new Cards(CLOVER_TEN, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result).isEqualTo(BlackJackResult.DRAW);
@@ -129,12 +80,8 @@ class BlackJackResultTest {
 	@Test
 	@DisplayName("블랙잭으로 이기면 수익률 1.5")
 	void blackJackWinProfit() {
-		playerCards.add(CLOVER_TEN);
-		playerCards.add(CLOVER_ACE);
-
-		dealerCards.add(CLOVER_FIVE);
-		dealerCards.add(CLOVER_FIVE);
-		dealerCards.add(CLOVER_ACE);
+		Cards playerCards = new Cards(CLOVER_ACE, CLOVER_TEN);
+		Cards dealerCards = new Cards(CLOVER_FIVE, CLOVER_FIVE, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result.getProfit()).isEqualTo(1.5);
@@ -143,12 +90,8 @@ class BlackJackResultTest {
 	@Test
 	@DisplayName("블랙잭이 아니게 이기면 수익률 1")
 	void normalWinProfit() {
-		playerCards.add(CLOVER_FIVE);
-		playerCards.add(CLOVER_FIVE);
-		playerCards.add(CLOVER_ACE);
-
-		dealerCards.add(CLOVER_FIVE);
-		dealerCards.add(CLOVER_FIVE);
+		Cards playerCards = new Cards(CLOVER_ACE, CLOVER_ACE);
+		Cards dealerCards = new Cards(CLOVER_TEN, CLOVER_ACE, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result.getProfit()).isEqualTo(1);
@@ -157,12 +100,8 @@ class BlackJackResultTest {
 	@Test
 	@DisplayName("패배하면 수익률 -1")
 	void loseProfit() {
-		playerCards.add(CLOVER_FIVE);
-		playerCards.add(CLOVER_FIVE);
-		playerCards.add(CLOVER_ACE);
-
-		dealerCards.add(CLOVER_ACE);
-		dealerCards.add(CLOVER_TEN);
+		Cards playerCards = new Cards(CLOVER_TEN, CLOVER_ACE, CLOVER_ACE);
+		Cards dealerCards = new Cards(CLOVER_TEN, CLOVER_ACE, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result.getProfit()).isEqualTo(-1);
@@ -171,11 +110,8 @@ class BlackJackResultTest {
 	@Test
 	@DisplayName("무승부이면 수익률 0")
 	void drawProfit() {
-		playerCards.add(CLOVER_ACE);
-		playerCards.add(CLOVER_TEN);
-
-		dealerCards.add(CLOVER_ACE);
-		dealerCards.add(CLOVER_TEN);
+		Cards playerCards = new Cards(CLOVER_TEN, CLOVER_ACE);
+		Cards dealerCards = new Cards(CLOVER_TEN, CLOVER_ACE);
 
 		BlackJackResult result = BlackJackResult.of(playerCards, dealerCards);
 		assertThat(result.getProfit()).isEqualTo(0);
