@@ -29,7 +29,8 @@ class DealerTest {
     @DisplayName("딜러가 카드를 정상적으로 받는지 확인")
     void receiveCard() {
         dealer.hit(jackCard);
-        Card openCard = dealer.getOpenCard();
+        Participant participant = dealer.getParticipant();
+        Card openCard = participant.getOpenCard();
 
         assertThat(openCard.getDenomination()).isEqualTo("J");
     }
@@ -68,8 +69,9 @@ class DealerTest {
     void openDealerCard() {
         dealer.hit(jackCard);
         dealer.hit(fiveCard);
+        Participant participant = dealer.getParticipant();
 
-        assertThat(dealer.getOpenCard()).isEqualTo(jackCard);
+        assertThat(participant.getOpenCard()).isEqualTo(jackCard);
     }
 
     @Test

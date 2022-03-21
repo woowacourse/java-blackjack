@@ -12,7 +12,7 @@ public class Dealer {
     private final Participant participant;
     private final Deck deck;
 
-    public Dealer(Participant participant, Deck deck) {
+    private Dealer(Participant participant, Deck deck) {
         this.participant = participant;
         this.deck = deck;
     }
@@ -45,9 +45,5 @@ public class Dealer {
 
     public State getState() {
         return participant.getState();
-    }
-
-    public Card getOpenCard() {
-        return participant.getOpenCard();
     }
 }
