@@ -38,8 +38,6 @@ public abstract class Player {
 
     public abstract MatchResult match(Player another);
 
-    public abstract boolean isDealer();
-
     public void addCard(PlayingCard playingCard) {
         playingCards.addCard(playingCard);
     }

@@ -50,9 +50,4 @@ public final class Gambler extends Player {
         }
         return getMatchResultAfterBustCheck(dealer);
     }
-
-    @Override
-    public boolean isDealer() {
-        return false;
-    }
 }
