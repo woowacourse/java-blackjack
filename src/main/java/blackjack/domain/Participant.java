@@ -19,7 +19,19 @@ public abstract class Participant {
 
     void receiveCard(Card card){
         holdingCards.add(card);
-    };
+    }
+
+    boolean isBust() {
+        return holdingCards.isBust();
+    }
+
+    boolean hasBlackJack() {
+        return holdingCards.isBlackJack();
+    }
+
+    int calculateTotal() {
+        return holdingCards.calculateTotal();
+    }
 
     List<Card> showCards(){
         return holdingCards.getCards();

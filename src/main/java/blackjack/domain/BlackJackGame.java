@@ -77,10 +77,11 @@ public class BlackJackGame {
     }
 
     public void calculateGameResults() {
+        int dealerRevenue = 0;
         for (Player player : players) {
-            GameResult dealerResult = dealer.judgeResult(player);
-            GameResult playerResult = GameResult.getPairResult(dealerResult);
-            dealer.exchangeBettingMoney(player.moneyToExchange(playerResult));
+            GameResult gameResult = player.judgeResult(dealer);
+            int playerRevenue = (int)(player.getBettingMoney() * gameResult.getPrizeRate());
+            dealerRevenue -= playerRevenue;
         }
     }
 

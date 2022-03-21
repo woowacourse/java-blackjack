@@ -18,54 +18,6 @@ public class Dealer extends Participant {
         return super.getHoldingCard().calculateTotal() >= DEALER_MIN_TOTAL;
     }
 
-    public GameResult judgeResult(Player player) {
-        if(playerBust(player) || bothNotBustAndDealerTotalLarger(player) || onlyDealerBlackJack(player)) {
-            return GameResult.WIN;
-        }
-        if(onlyDealerBust(player) || bothNotBustAndPlayerTotalLarger(player)) {
-            return GameResult.LOSE;
-        }
-        return GameResult.DRAW;
-    }
-
-    public void exchangeBettingMoney(int money) {
-        bettingMoney.exchangeMoney(money);
-    }
-
-    public int getRevenue() {
-        return bettingMoney.money;
-    }
-
-    private boolean playerBust(Player player) {
-        return player.getHoldingCard().isBust();
-    }
-
-    private boolean dealerBust() {
-        return super.getHoldingCard().isBust();
-    }
-
-    private boolean bothNotBustAndDealerTotalLarger(Player player) {
-        if (dealerBust() || playerBust(player)) {
-            return false;
-        }
-        return super.getHoldingCard().calculateTotal() > player.getHoldingCard().calculateTotal();
-    }
-
-    private boolean onlyDealerBust(Player player) {
-        return dealerBust() && !playerBust(player);
-    }
-
-    private boolean bothNotBustAndPlayerTotalLarger(Player player) {
-        if (dealerBust() || playerBust(player)) {
-            return false;
-        }
-        return super.getHoldingCard().calculateTotal() < player.getHoldingCard().calculateTotal();
-    }
-
-    private boolean onlyDealerBlackJack(Player player) {
-        return super.getHoldingCard().isBlackJack() && !player.getHoldingCard().isBlackJack();
-    }
-
     private static class BettingMoney {
         private int money;
 

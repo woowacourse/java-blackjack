@@ -59,7 +59,7 @@ public class OutputView {
 
     public static void showDealerRevenue(Dealer dealer) {
         System.out.printf("%n## 최종 수익%n");
-        System.out.printf(dealer.getName() + ": " + dealer.getRevenue() + "%n");
+//        System.out.printf(dealer.getName() + ": " + dealer.getRevenue() + "%n");
     }
 
     public static void showPlayersResult(List<Player> players) {
