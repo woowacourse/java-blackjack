@@ -46,7 +46,7 @@ public class Player extends Gamer {
     }
 
     private void validateEqualsDealerName(final String name) {
-        if (name.equals(Dealer.NAME)) {
+        if (name.equals(DEALER_NAME)) {
             throw new IllegalArgumentException("딜러와 동일한 이름은 사용할 수 없습니다.");
         }
     }

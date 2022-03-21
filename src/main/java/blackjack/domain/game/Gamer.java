@@ -10,6 +10,8 @@ import java.util.List;
 
 public abstract class Gamer {
 
+    static final String DEALER_NAME = "딜러";
+
     protected final String name;
     protected State state = new Ready();
 

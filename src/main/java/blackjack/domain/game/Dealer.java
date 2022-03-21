@@ -4,11 +4,10 @@ import java.util.function.BiConsumer;
 
 public class Dealer extends Gamer {
 
-    public static final int DRAWING_MAXIMUM = 16;
-    public static final String NAME = "딜러";
+    private static final int DRAWING_MAXIMUM = 16;
 
     public Dealer() {
-        super(NAME);
+        super(DEALER_NAME);
     }
 
     public void draw(final Deck deck, final BiConsumer<String, Integer> drawing) {
