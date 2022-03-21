@@ -37,6 +37,10 @@ public class ParticipantsCreationUtils {
         return new PlayerBuilder();
     }
 
+    public static DealerBuilder dealerBuilder() {
+        return new DealerBuilder();
+    }
+
     public static class PlayerBuilder {
 
         private String name = "default empty name";
@@ -68,6 +72,27 @@ public class ParticipantsCreationUtils {
             }
             player.placeBet(bettingAmount);
             return player;
+        }
+    }
+
+    public static class DealerBuilder {
+
+        private Denomination[] denominations;
+        private List<Card> cards = new LinkedList<>();
+
+        public DealerBuilder denominations(Denomination... denominations) {
+            for (Denomination denomination : denominations) {
+                cards.add(new Card(denomination, SPADE));
+            }
+            return this;
+        }
+
+        public Dealer build() {
+            Dealer dealer = new Dealer();
+            for (Card card : cards) {
+                dealer.receiveCard(card);
+            }
+            return dealer;
         }
     }
 }
