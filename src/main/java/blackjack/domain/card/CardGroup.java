@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardGroup {
@@ -65,10 +66,6 @@ public class CardGroup {
     }
 
     public List<Card> getCards() {
-        List<Card> copiedCards = new ArrayList<>();
-        for (Card card: cards) {
-            copiedCards.add(card.copy());
-        }
-        return copiedCards;
+        return Collections.unmodifiableList(cards);
     }
 }

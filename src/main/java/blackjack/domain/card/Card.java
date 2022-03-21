@@ -9,17 +9,8 @@ public class Card {
         this.number = cardNumber;
     }
 
-    private Card(Card card) {
-        this.shape = card.shape;
-        this.number = card.number;
-    }
-
     public static Card of(CardShape shape, CardNumber number) {
         return new Card(shape, number);
-    }
-
-    public Card copy() {
-        return new Card(this);
     }
 
     public boolean isAce() {
