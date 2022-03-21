@@ -20,8 +20,8 @@ class BlackJackTest {
     @Test
     @DisplayName("카드를 2장씩 나눈다.")
     void divideCard() {
-        Player pepper = new Player("페퍼", initializeBettingMoney());
-        Player ash = new Player("애쉬", initializeBettingMoney());
+        Player pepper = Player.of("페퍼", initializeBettingMoney());
+        Player ash = Player.of("애쉬", initializeBettingMoney());
         PlayerGroup playerGroup = new PlayerGroup(Arrays.asList(pepper, ash));
         BlackJack blackJack = new BlackJack(playerGroup, new Dealer());
         blackJack.divideCards();
@@ -38,7 +38,7 @@ class BlackJackTest {
     @Test
     @DisplayName("카드가 1장 더 추가되는지 테스트 한다.")
     void addCard() {
-        Player pepper = new Player("페퍼", initializeBettingMoney());
+        Player pepper = Player.of("페퍼", initializeBettingMoney());
         PlayerGroup playerGroup = new PlayerGroup(List.of(pepper));
         BlackJack blackJack = new BlackJack(playerGroup, new Dealer());
         int pepperCardsSize = pepper.getCards().size();
@@ -68,20 +68,20 @@ class BlackJackTest {
     }
 
     private GameResult initializeGameResult() {
-        Player pepper = new Player("페퍼", initializeBettingMoney());
+        Player pepper = Player.of("페퍼", initializeBettingMoney());
         pepper.addCard(Card.of(CardShape.HEART, CardNumber.QUEEN));
         pepper.addCard(Card.of(CardShape.SPADE, CardNumber.ACE));
 
-        Player ash = new Player("애쉬", initializeBettingMoney());
+        Player ash = Player.of("애쉬", initializeBettingMoney());
         ash.addCard(Card.of(CardShape.CLUB, CardNumber.JACK));
         ash.addCard(Card.of(CardShape.SPADE, CardNumber.KING));
         ash.addCard(Card.of(CardShape.SPADE, CardNumber.ACE));
 
-        Player pobi = new Player("포비", initializeBettingMoney());
+        Player pobi = Player.of("포비", initializeBettingMoney());
         pobi.addCard(Card.of(CardShape.CLUB, CardNumber.SEVEN));
         pobi.addCard(Card.of(CardShape.SPADE, CardNumber.KING));
 
-        Player jason = new Player("제이슨", initializeBettingMoney());
+        Player jason = Player.of("제이슨", initializeBettingMoney());
         jason.addCard(Card.of(CardShape.CLUB, CardNumber.SEVEN));
         jason.addCard(Card.of(CardShape.SPADE, CardNumber.KING));
         jason.addCard(Card.of(CardShape.SPADE, CardNumber.JACK));
@@ -97,12 +97,12 @@ class BlackJackTest {
     }
 
     private GameResult initializeDealerBustGameResult() {
-        Player pepper = new Player("페퍼", initializeBettingMoney());
+        Player pepper = Player.of("페퍼", initializeBettingMoney());
         pepper.addCard(Card.of(CardShape.CLUB, CardNumber.KING));
         pepper.addCard(Card.of(CardShape.SPADE, CardNumber.JACK));
         pepper.addCard(Card.of(CardShape.DIAMOND, CardNumber.JACK));
 
-        Player ash = new Player("애쉬", initializeBettingMoney());
+        Player ash = Player.of("애쉬", initializeBettingMoney());
         ash.addCard(Card.of(CardShape.CLUB, CardNumber.SEVEN));
         ash.addCard(Card.of(CardShape.SPADE, CardNumber.KING));
 
