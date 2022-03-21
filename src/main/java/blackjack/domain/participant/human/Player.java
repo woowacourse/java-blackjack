@@ -12,9 +12,9 @@ public final class Player extends Human {
 
     private final BetAmount betAmount;
 
-    public Player(final String name, final int betting, final List<Card> cards) {
+    public Player(final String name, final int money, final List<Card> cards) {
         super(cards, new Name(name));
-        this.betAmount = new BetAmount(betting);
+        this.betAmount = new BetAmount(money);
     }
 
     public boolean isInitSize() {

@@ -11,7 +11,6 @@ public final class Dealer extends Human {
 
     public Dealer(final List<Card> cards) {
         super(cards, new Name("딜러"));
-        System.out.println("딜러 : " + state.getClass());
     }
 
     public Card getFirstCard() {

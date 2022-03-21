@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 
-import static blackjack.view.InputView.inputBetting;
+import static blackjack.view.InputView.inputBetAmount;
 import static blackjack.view.InputView.inputIsDraw;
 import static blackjack.view.InputView.inputPlayerNames;
 import static blackjack.view.OutputView.printDealerHit;
@@ -33,7 +33,7 @@ public final class BlackjackGame {
 
     private Players initPlayers(final CardDeck cardDeck) {
         return new Players(inputPlayerNames().stream()
-                .map(name -> new Player(name, inputBetting(name), cardDeck.popCards(INIT_NUMBER)))
+                .map(name -> new Player(name, inputBetAmount(name), cardDeck.popCards(INIT_NUMBER)))
                 .collect(Collectors.toList())
         );
     }

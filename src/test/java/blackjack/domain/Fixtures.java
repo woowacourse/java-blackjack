@@ -12,8 +12,8 @@ public class Fixtures {
     public static final Card TEN = Card.of(Denomination.TEN, Suit.CLOVER);
     public static final Card EIGHT = Card.of(Denomination.EIGHT, Suit.CLOVER);
     public static final Card TWO = Card.of(Denomination.TWO, Suit.CLOVER);
+
     public final Player POBI = new Player("pobi", 10000, new ArrayList<>());
     public final Player JASON = new Player("jason", 10000, new ArrayList<>());
     public final Player HUNCH = new Player("hunch", 10000, new ArrayList<>());
-
 }
