@@ -1,49 +1,27 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
+import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
 
-public class Dealer {
+public class Dealer extends Participant {
 
     private static final int DEALER_UNDER_SCORE = 16;
     private static final String DEFAULT_NAME = "딜러";
 
-    private final Participant participant;
-    private final Deck deck;
-
-    private Dealer(Participant participant, Deck deck) {
-        this.participant = participant;
-        this.deck = deck;
+    public Dealer() {
+        this(new Ready());
     }
 
-    public static Dealer create() {
-        return new Dealer(new Participant(DEFAULT_NAME), Deck.createShuffledCards());
+    private Dealer(State state) {
+        this(new Name(DEFAULT_NAME), state);
     }
 
-    public Card draw() {
-        return deck.draw();
+    private Dealer(Name name, State state) {
+        super(name, state);
     }
 
+    @Override
     public boolean shouldReceive() {
-        return participant.getCardTotalScore() <= DEALER_UNDER_SCORE;
-    }
-
-    public void hit(Card card) {
-        if (shouldReceive()) {
-            participant.hit(card);
-        }
-    }
-
-    public boolean isReady() {
-        return participant.isReady();
-    }
-
-    public Participant getParticipant() {
-        return participant;
-    }
-
-    public State getState() {
-        return participant.getState();
+        return getCardTotalScore() <= DEALER_UNDER_SCORE && !isFinished();
     }
 }

@@ -2,36 +2,27 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
-    private final Name name;
+    protected final Name name;
     protected State state;
 
-    public Participant(String name) {
-        this(new Name(name));
-    }
-
-    private Participant(Name name) {
-        this(name, new Ready());
-    }
-
-    private Participant(Name name, State state) {
+    protected Participant(Name name, State state) {
         this.name = name;
         this.state = state;
     }
 
+    public abstract boolean shouldReceive();
+
     public void hit(Card card) {
-        if (!isFinished()) {
-            state = state.draw(card);
-        }
+        state = state.draw(card);
     }
 
     public boolean isReady() {
-        return state.isRunning();
+        return !state.isRunning();
     }
 
     public boolean isFinished() {
