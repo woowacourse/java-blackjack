@@ -1,12 +1,17 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class Score implements Comparable<Score> {
-    public static final int DEALER_EXTRA_CARD_LIMIT = 16;
-    public static final int BLACKJACK = 21;
+    public static final int DEALER_HIT_THRESHOLD = 16;
+    public static final int MAXIMUM_SCORE = 21;
+
+    private static final int VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL = 10;
 
     private final int value;
 
@@ -19,18 +24,61 @@ public class Score implements Comparable<Score> {
         return ScoreCache.getCache(value);
     }
 
+    public static Score calculateSumFrom(Hand hand) {
+        List<Card> cards = hand.getCards();
+        return calculateCardsSum(cards);
+    }
+
+    public static Score calculateSumFrom(List<Card> cards) {
+        return calculateCardsSum(cards);
+    }
+
+    private static Score calculateCardsSum(List<Card> cards) {
+        int maximumScore = cards.stream()
+                .mapToInt(card -> card.getRankValue().getValue())
+                .sum();
+
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+
+        return calculateScoreIncludingAce(maximumScore, aceCount);
+    }
+
+    private static Score calculateScoreIncludingAce(int maximumScore, int aceCount) {
+        int adjustedScore = maximumScore;
+
+        for (int i = 0; i < aceCount; i++) {
+            if (adjustedScore <= Score.MAXIMUM_SCORE) {
+                break; // TODO: 2 depth 수정하기
+            }
+            adjustedScore -= VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL;
+        }
+
+        return Score.valueOf(adjustedScore);
+    }
+
     public Score add(Score anotherScore) {
         int addedValue = this.value + anotherScore.value;
         return ScoreCache.getCache(addedValue);
     }
 
-    public boolean isGreaterThan(int score) {
-        return this.value > score;
+    public boolean isGreaterThan(Score other) {
+        return this.value > other.value;
     }
 
-    public boolean isLessOrEqualThan(int score) {
-        return this.value <= score;
+    public boolean isLessThan(Score other) {
+        return this.value < other.value;
     }
+
+    public boolean isBusted() {
+        return this.value > MAXIMUM_SCORE;
+    }
+
+    public boolean isOverDealerHitThreshold() {
+        return this.value > DEALER_HIT_THRESHOLD;
+    }
+
 
     public int getValue() {
         return value;
@@ -46,6 +94,7 @@ public class Score implements Comparable<Score> {
         return "Score{" + "value=" + value + '}';
     }
 
+    // 메모: (앨런 리뷰) 멀티쓰레드 환경에서는 한번에 N건의 put이 일어날 수도 있습니다.
     private static class ScoreCache {
         static Map<Integer, Score> cache = new HashMap<>();
 

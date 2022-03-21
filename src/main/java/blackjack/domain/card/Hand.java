@@ -1,22 +1,26 @@
 package blackjack.domain.card;
 
-import blackjack.domain.game.Score;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hand {
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
-    private static final int VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL = 10;
+    private static final int INITIAL_CARDS_COUNT = 2;
 
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
-    private Hand(Set<Card> cards) {
+    private Hand(List<Card> cards) {
         this.cards = cards;
     }
 
     public static Hand of(Card card1, Card card2) {
-        Set<Card> initialCards = new HashSet<>(Set.of(card1, card2));
+        List<Card> initialCards = new ArrayList<>(List.of(card1, card2));
         return new Hand(initialCards);
+    }
+
+    public List<Card> getInitialCards() {
+        return cards.subList(0, INITIAL_CARDS_COUNT);
     }
 
     public void add(Card card) {
@@ -30,34 +34,14 @@ public class Hand {
         }
     }
 
-    public Set<Card> getCards() {
-        return Set.copyOf(cards);
+    public List<String> generateCardNames() {
+        return cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
     }
 
-    public Score getScore() {
-        int maximumScore = cards.stream()
-                .map(Card::getRankValue)
-                .reduce(Score.valueOf(0), Score::add)
-                .getValue();
-
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-
-        return calculateScoreIncludingAce(maximumScore, aceCount);
-    }
-
-    private Score calculateScoreIncludingAce(int maximumScore, int aceCount) {
-        int adjustedScore = maximumScore;
-
-        for (int i = 0; i < aceCount; i++) {
-            if (adjustedScore <= Score.BLACKJACK) {
-                break; // TODO: 2 depth 수정하기
-            }
-            adjustedScore -= VALUE_FOR_ADJUST_ACE_VALUE_TO_SMALL;
-        }
-
-        return Score.valueOf(adjustedScore);
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
     @Override
@@ -65,5 +49,24 @@ public class Hand {
         return "Hand{" +
                 "cards=" + cards +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Hand hand = (Hand) o;
+
+        return cards.equals(hand.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return cards.hashCode();
     }
 }

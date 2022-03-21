@@ -1,18 +1,17 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.fixture.CardRepository.CLOVER2;
-import static blackjack.domain.fixture.CardRepository.CLOVER3;
+import static blackjack.domain.fixture.CardRepository.CLOVER10;
 import static blackjack.domain.fixture.CardRepository.CLOVER4;
 import static blackjack.domain.fixture.CardRepository.CLOVER5;
 import static blackjack.domain.fixture.CardRepository.CLOVER6;
 import static blackjack.domain.fixture.CardRepository.CLOVER7;
 import static blackjack.domain.fixture.CardRepository.CLOVER8;
+import static blackjack.domain.fixture.CardRepository.CLOVER_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.game.ResultType;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +37,7 @@ public class DealerTest {
     void receiveCard() {
         dealer.receiveCard(CLOVER6);
 
-        Set<Card> actual = dealer.getHand().getCards();
+        List<Card> actual = dealer.getHand().getCards();
 
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }
@@ -72,47 +71,30 @@ public class DealerTest {
         assertThat(actual).isFalse();
     }
 
-    // TODO: Nested 사용하여 정리
-
-    @DisplayName("compareWith 메소드는 딜러 자신보다 패가 나쁜 Participant 를 전달받으면 ResultType.WIN 를 반환한다.")
+    @DisplayName("isBlackjack 은 딜러가 받은 첫 두장의 카드의 합이 21일 경우 true 를 반환한다.")
     @Test
-    void compareWith_returnsResultTypeWin() {
+    void isBlackjack_returnsTrueOnBlackjack() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER2, CLOVER3));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER_ACE, CLOVER10));
 
         // when
-        ResultType actual = dealer.compareWith(winPlayer);
-        ResultType expected = ResultType.WIN;
+        boolean actual = dealer.isBlackjack();
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
-    @DisplayName("compareWith 메소드는 딜러 자신보다 패가 좋은 Participant 를 전달받으면 ResultType.LOSE 를 반환한다.")
+    @DisplayName("isBlackjack 은 딜러의 점수가 21이더라도 받은 첫 두장의 카드의 합이 21이 아닐 경우 false 를 반환한다.")
     @Test
-    void compareWith_returnsResultTypeLose() {
+    void isBlackjack_returnsFalseIfTotalScoreIs21ButNotBlackjack() {
         // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER5, CLOVER6));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER_ACE, CLOVER4));
+        dealer.receiveCard(CLOVER6);
 
         // when
-        ResultType actual = dealer.compareWith(winPlayer);
-        ResultType expected = ResultType.LOSE;
+        boolean actual = dealer.isBlackjack();
 
         // then
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("compareWith 메소드는 딜러 자신과 대등한 패를 가진 Participant 를 전달받으면 ResultType.DRAW 를 반환한다.")
-    @Test
-    void compareWith_returnsResultTypeDraw() {
-        // given
-        Player winPlayer = Player.of("hudi", Hand.of(CLOVER3, CLOVER6));
-
-        // when
-        ResultType actual = dealer.compareWith(winPlayer);
-        ResultType expected = ResultType.DRAW;
-
-        // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 }

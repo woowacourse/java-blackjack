@@ -2,8 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
+import java.util.List;
 
 public abstract class Participant {
 
@@ -20,7 +20,7 @@ public abstract class Participant {
     public abstract boolean canReceive();
 
     public Score getCurrentScore() {
-        return hand.getScore();
+        return Score.calculateSumFrom(hand);
     }
 
     public String getName() {
@@ -33,20 +33,37 @@ public abstract class Participant {
 
     // TODO: 구현체의 canReceive 메소드와 상당히 겹침. 해결 필요.
     public boolean isBusted() {
-        return hand.getScore().isGreaterThan(Score.BLACKJACK);
+        return Score.calculateSumFrom(hand).isBusted();
     }
 
-    // TODO: 조건식 단순화
-    public ResultType compareWith(Participant other) {
-        int playerScore = getCurrentScore().getValue();
-        int otherScore = other.getCurrentScore().getValue();
+    public boolean isBlackjack() {
+        List<Card> initialCards = hand.getInitialCards();
+        Score initialScore = Score.calculateSumFrom(initialCards);
 
-        if ((playerScore > otherScore && !isBusted()) || (!isBusted() && other.isBusted())) {
-            return ResultType.WIN;
+        return initialScore.equals(Score.valueOf(Score.MAXIMUM_SCORE));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        if ((playerScore < otherScore && !other.isBusted()) || (isBusted() && !other.isBusted())) {
-            return ResultType.LOSE;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
         }
-        return ResultType.DRAW;
+
+        Participant that = (Participant) o;
+
+        if (!name.equals(that.name)) {
+            return false;
+        }
+        return hand.equals(that.hand);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + hand.hashCode();
+        return result;
     }
 }

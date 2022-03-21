@@ -21,8 +21,8 @@ public class Dealer extends Participant {
     }
 
     public boolean canReceive() {
-        Score score = getHand().getScore();
-        return score.isLessOrEqualThan(Score.DEALER_EXTRA_CARD_LIMIT);
+        Score score = Score.calculateSumFrom(getHand());
+        return !score.isOverDealerHitThreshold();
     }
 
     @Override

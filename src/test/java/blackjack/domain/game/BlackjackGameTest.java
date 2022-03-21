@@ -11,13 +11,12 @@ import static blackjack.domain.fixture.CardRepository.CLOVER8;
 import static blackjack.domain.fixture.CardRepository.CLOVER9;
 import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.fixture.CardStackGenerator;
 import blackjack.domain.participant.Player;
+import blackjack.dto.PlayerCreateDto;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,44 +25,18 @@ public class BlackjackGameTest {
 
     private static final List<String> playerNames = List.of("hudi", "jeong");
 
-    @DisplayName("생성자는 1명 이상의 플레이어명을 가변 인자로 받아 게임을 생성한다.")
-    @Test
-    void constructor_initsGameWithPlayerNames() {
-        BlackjackGame blackjackGame = new BlackjackGame(new CardDeck(), playerNames);
-
-        List<Player> players = blackjackGame.getPlayers();
-
-        assertThat(players.size()).isEqualTo(2);
-        assertThat(players.get(0).getName()).isEqualTo("hudi");
-        assertThat(players.get(1).getName()).isEqualTo("jeong");
-    }
-
-    @DisplayName("생성자에 플레이어명이 입력되지 않으면 예외가 발생한다.")
-    @Test
-    void constructor_throwsExceptionOnNoPlayerNameInput() {
-        assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of()))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어가 없는 게임은 존재할 수 없습니다.");
-    }
-
-    @DisplayName("생성자에 중복된 플레이어명이 전달되면 예외가 발생한다.")
-    @Test
-    void constructor_throwsExceptionOnDuplicateNameInput() {
-        assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of("hudi", "jeong", "hudi")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
-    }
 
     @DisplayName("giveExtraCardToPlayer 는 전달받은 플레이어에 카드를 추가하고, 카드를 더 받을 수 있다면 true 를 반환한다.")
     @Test
     void giveExtraCardToPlayer_addCardToHandOfPlayerAndReturnTrueIfPlayerCanReceiveMore() {
         // given
-        CardStack cards = CardStackGenerator.ofReverse(
+        CardStack cardDeck = CardStackGenerator.ofReverse(
                 CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER6, CLOVER7, CLOVER8);
-        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
-        Player player = blackjackGame.getPlayers().get(0);
+        List<PlayerCreateDto> playerCreateDtos = List.of(new PlayerCreateDto("hudi", 10000));
+        BlackjackGame blackjackGame = new BlackjackGame(cardDeck, playerCreateDtos);
 
         // when
+        Player player = blackjackGame.getPlayers().getValue().get(0);
         boolean actual = blackjackGame.giveExtraCardToPlayer(player);
 
         // then
@@ -75,11 +48,12 @@ public class BlackjackGameTest {
     void giveExtraCardToPlayer_addCardToHandOfPlayerAndReturnFalseIfPlayerCanNotReceiveMore() {
         // given
         CardStack cards = CardStackGenerator.ofReverse(
-                CLOVER2, CLOVER3, CLOVER10, CLOVER5, CLOVER6, CLOVER7, CLOVER8);
-        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
-        Player player = blackjackGame.getPlayers().get(0);
+                CLOVER2, CLOVER3, CLOVER10, CLOVER5, CLOVER7);
+        List<PlayerCreateDto> playerCreateDtos = List.of(new PlayerCreateDto("hudi", 10000));
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerCreateDtos);
 
         // when
+        Player player = blackjackGame.getPlayers().getValue().get(0);
         boolean actual = blackjackGame.giveExtraCardToPlayer(player);
 
         // then
@@ -92,7 +66,11 @@ public class BlackjackGameTest {
         // given
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER2, CLOVER3, CLOVER7, CLOVER8, CLOVER9, CLOVER10, CLOVER4, CLOVER5, CLOVER6);
-        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
+        List<PlayerCreateDto> playerCreateDtos = List.of(
+                new PlayerCreateDto("player1", 10000),
+                new PlayerCreateDto("player2", 10000)
+        );
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerCreateDtos);
 
         // when
         int actual = blackjackGame.giveExtraCardsToDealer();
@@ -108,7 +86,11 @@ public class BlackjackGameTest {
         // given
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER_KING, CLOVER10, CLOVER7, CLOVER8, CLOVER9, CLOVER4, CLOVER5, CLOVER6);
-        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
+        List<PlayerCreateDto> playerCreateDtos = List.of(
+                new PlayerCreateDto("player1", 10000),
+                new PlayerCreateDto("player2", 10000)
+        );
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerCreateDtos);
 
         // when
         int actual = blackjackGame.giveExtraCardsToDealer();
@@ -123,10 +105,16 @@ public class BlackjackGameTest {
     void popCard_returnPoppedCard() {
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER6, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
-        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
+        List<PlayerCreateDto> playerCreateDtos = List.of(
+                new PlayerCreateDto("player1", 10000),
+                new PlayerCreateDto("player2", 10000)
+        );
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerCreateDtos);
 
         Card actual = blackjackGame.popCard();
 
         assertThat(actual).isEqualTo(CLOVER_KING);
     }
+
+
 }
