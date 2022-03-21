@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,27 +23,17 @@ class BlackjackProfitResultTest {
     private final Dealer dealer = new Dealer();
 
     @Test
-    @DisplayName("딜러 수익 테스트")
+    @DisplayName("수익 테스트")
     void calculateDealerProfit() {
         game();
 
-        BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(List.of(player1, player2, player3));
-        Map<Player, Double> playersInfo = blackjackProfitResult.calculatePlayersProfit(initializeResult());
-        Double dealerProfit = blackjackProfitResult.calculateDealerProfit(playersInfo);
+        BlackjackProfitResult blackjackProfitResult =
+                new BlackjackProfitResult(dealer, List.of(player1, player2, player3));
+        Map<Participant, Double> result = blackjackProfitResult.calculateProfitResult(initializeResult());
 
-        assertThat(dealerProfit).isEqualTo(-17500.0);
-    }
-
-    @Test
-    @DisplayName("플레이어 수익 테스트")
-    void calculatePlayersProfit() {
-        game();
-
-        BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(List.of(player1, player2, player3));
-        Map<Player, Double> playersInfo = blackjackProfitResult.calculatePlayersProfit(initializeResult());
-
-        assertThat(playersInfo).containsExactly(
-                Map.entry(player1, -10000.0), Map.entry(player2, 7500.0), Map.entry(player3, 20000.0)
+        assertThat(result).containsExactly(
+                Map.entry(dealer, -17500.0), Map.entry(player1, -10000.0),
+                Map.entry(player2, 7500.0), Map.entry(player3, 20000.0)
         );
     }
 

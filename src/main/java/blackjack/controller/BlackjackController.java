@@ -101,12 +101,8 @@ public class BlackjackController {
     }
 
     private void createBlackjackProfitResult(Dealer dealer, List<Player> players, Map<Player, BlackjackMatch> result) {
-        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(players);
-
-        final Map<Participant, Double> profitResult = new LinkedHashMap<>();
-        final Map<Player, Double> playersProfitResult = blackjackProfitResult.calculatePlayersProfit(result);
-        profitResult.put(dealer, blackjackProfitResult.calculateDealerProfit(playersProfitResult));
-        profitResult.putAll(playersProfitResult);
+        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(dealer, players);
+        Map<Participant, Double> profitResult = blackjackProfitResult.calculateProfitResult(result);
         OutputView.printProfitResult(profitResult);
     }
 }
