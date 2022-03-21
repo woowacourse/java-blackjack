@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.machine.GameResponse;
 import blackjack.domain.machine.MatchResults;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
 
@@ -15,6 +14,7 @@ public class OutputView {
     private static final String SCORE_OUTPUT_FORMAT = " - 결과: %d";
     private static final String DEALER_GIVEN_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_GIVEN_NO_MORE_CARD_MESSAGE = "딜러는 17이상이라 카드를 더 받지 않습니다.";
+    private static final String DEALER_NAME = "딜러";
 
     public static void announceStartGame(List<String> playerNames) {
         System.out.println(String.join(COMMA_DELIMITER, playerNames) + DISTRIBUTE_TWO_CARDS_MESSAGE);
@@ -61,7 +61,7 @@ public class OutputView {
 
     private static void printFirstStartCards(GameResponse gameResponse) {
         String playerName = gameResponse.getName();
-        if (playerName.equals(Dealer.NAME)) {
+        if (playerName.equals(DEALER_NAME)) {
             String cardOutputFormat = hideOneCard(gameResponse);
             System.out.printf(CARD_OUTPUT_FORMAT + NEW_LINE, playerName, cardOutputFormat);
             return;

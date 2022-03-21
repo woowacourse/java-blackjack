@@ -6,8 +6,19 @@ import blackjack.domain.machine.Score;
 
 public abstract class Player {
 
+    private static final String DEALER_NAME = "딜러";
+
     protected Deck deck;
     protected String name;
+
+    Player() {
+        this(DEALER_NAME);
+    }
+
+    Player(String name) {
+        this.deck = new Deck();
+        this.name = name;
+    }
 
     public void addCard(Card card) {
         deck.addCard(card);

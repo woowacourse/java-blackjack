@@ -54,7 +54,7 @@ class PlayersTest {
     void checkDealer() {
         Player dealer = players.getDealer();
 
-        assertThat(dealer.getName()).isEqualTo(Dealer.NAME);
+        assertThat(dealer.getName()).isEqualTo("딜러");
     }
 
     @Test
