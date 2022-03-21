@@ -50,7 +50,7 @@ public class OutputView {
     }
 
     public static void printPlayerIsBlackJackMessage(Players players) {
-        players.forEach(player -> OutputView.printIfPlayerIsBlackJackMessage(player));
+        players.forEach(OutputView::printIfPlayerIsBlackJackMessage);
     }
 
     private static void printIfPlayerIsBlackJackMessage(Player player) {
@@ -59,15 +59,13 @@ public class OutputView {
         }
     }
 
-    public static void printIfMaxScoreOrBust(Players players) {
-        players.forEach(player -> {
-            if (player.isUpperBoundScore()) {
-                System.out.println(MAX_SCORE_MESSAGE);
-            }
-            if (player.isBust()) {
-                System.out.println(BUST_MESSAGE);
-            }
-        });
+    public static void printIfMaxScoreOrBust(Player player) {
+        if (player.isUpperBoundScore()) {
+            System.out.println(MAX_SCORE_MESSAGE);
+        }
+        if (player.isBust()) {
+            System.out.println(BUST_MESSAGE);
+        }
     }
 
     public static void printDealerDrawMessage() {
@@ -77,14 +75,12 @@ public class OutputView {
     public static void printStatuses(Dealer dealer, Players players) {
         printNewLine();
         System.out.printf(STATUS_FORMAT, "딜러", dealer.showHand(), dealer.calculateBestScore());
-        players.forEach(player -> {
-            System.out.printf(
-                    STATUS_FORMAT,
-                    player.getName().getValue(),
-                    player.showHand(),
-                    player.calculateBestScore()
-            );
-        });
+        players.forEach(player -> System.out.printf(
+                STATUS_FORMAT,
+                player.getName().getValue(),
+                player.showHand(),
+                player.calculateBestScore()
+        ));
     }
 
     public static void printResult(List<Name> names, Results results) {

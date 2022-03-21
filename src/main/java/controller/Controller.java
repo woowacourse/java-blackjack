@@ -71,7 +71,7 @@ public class Controller {
             while (player.isNeedToDraw() && InputView.inputAskDraw(player.getName().getValue())) {
                 player.addCard(deck.draw());
                 OutputView.printPlayerHand(player.getName().getValue(), player.showHand());
-                OutputView.printIfMaxScoreOrBust(players);
+                OutputView.printIfMaxScoreOrBust(player);
             }
         });
     }
