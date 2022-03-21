@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.deck.Deck;
 import blackjack.domain.card.deck.RandomDeck;
 import blackjack.domain.user.Player;
@@ -8,11 +9,13 @@ import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
     public void run() {
         List<String> names = InputView.inputPlayerNames();
+        Map<String, BetMoney> playerNameAndBets = InputView.inputBettingMoney(names);
         BlackjackGame blackjackGame = new BlackjackGame();
         Deck deck = new RandomDeck();
 
@@ -22,7 +25,8 @@ public class BlackjackController {
         takeTurns(blackjackGame, players, deck);
         takeDealerTurn(blackjackGame, deck);
 
-        printResults(blackjackGame);
+        ResultView.printCardsResults(blackjackGame.calculateCardResult());
+        ResultView.printProfit(blackjackGame.calculateProfit(playerNameAndBets));
     }
 
     private void takeTurns(BlackjackGame blackjackGame, Players players, Deck deck) {
@@ -45,10 +49,5 @@ public class BlackjackController {
             ResultView.printDealerHitMessage();
             blackjackGame.takeDealerCard(deck);
         }
-    }
-
-    private void printResults(BlackjackGame blackjackGame) {
-        ResultView.printCardsResults(blackjackGame.calculateCardResult());
-        ResultView.printOutcomes(blackjackGame.calculateOutcome());
     }
 }

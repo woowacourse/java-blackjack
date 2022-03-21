@@ -1,11 +1,12 @@
 package blackjack.domain;
 
+import blackjack.domain.bet.BetMoney;
+import blackjack.domain.bet.Bets;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.deck.Deck;
 import blackjack.domain.dto.ResponseCardResultDto;
 import blackjack.domain.dto.ResponseInitHandDto;
-import blackjack.domain.dto.ResponseOutcomeDto;
-import blackjack.domain.outcome.Outcome;
+import blackjack.domain.dto.ResponseProfitDto;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -58,15 +59,16 @@ public class BlackjackGame {
         return new ResponseCardResultDto(results);
     }
 
-    public ResponseOutcomeDto calculateOutcome() {
-        Map<Player, Outcome> playerOutcomes = new LinkedHashMap<>();
+    public ResponseProfitDto calculateProfit(Map<String, BetMoney> playerNameAndBets) {
+        Map<String, Integer> playersProfit = new LinkedHashMap<>();
+        Bets bets = new Bets(playerNameAndBets);
         for (Player player : players.get()) {
-            Outcome outcome = Outcome.determinePlayerOutcome(dealer, player);
-            playerOutcomes.put(player, outcome);
+            double profit = bets.calculatePlayerProfit(dealer, player);
+            playersProfit.put(player.getName().get(), (int) profit);
         }
-        Map<Outcome, Integer> dealerOutcome = Outcome.determineDealerOutcome(playerOutcomes);
+        int dealerProfit = bets.calculateDealerProfit(playersProfit);
 
-        return new ResponseOutcomeDto(dealerOutcome, playerOutcomes);
+        return new ResponseProfitDto(dealerProfit, playersProfit);
     }
 
     public boolean isPlayerFinished(Player player) {

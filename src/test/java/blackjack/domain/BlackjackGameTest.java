@@ -2,18 +2,19 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.deck.OnlyTenSpadePickDeck;
 import blackjack.domain.dto.ResponseCardResultDto;
 import blackjack.domain.dto.ResponseInitHandDto;
-import blackjack.domain.dto.ResponseOutcomeDto;
-import blackjack.domain.outcome.Outcome;
+import blackjack.domain.dto.ResponseProfitDto;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.UserName;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -77,17 +78,19 @@ public class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("calculateOutcome 메서드는 경기 결과를 계산한다.")
-    void calculate_outcome() {
+    @DisplayName("calculateProfit 메서드는 최종 수익을 계산한다.")
+    void calculate_profit() {
         BlackjackGame blackjackGame = new BlackjackGame();
         Players players = blackjackGame.start(List.of("pobi"));
         players.get()
                 .stream()
                 .forEach(player -> blackjackGame.takePlayerCard(player, new OnlyTenSpadePickDeck()));
-        ResponseOutcomeDto outcomeDto = blackjackGame.calculateOutcome();
-        Map<Player, Outcome> playerOutcomes = outcomeDto.getPlayerOutcomes();
+        Map<String, BetMoney> playerNameAndBets = new LinkedHashMap<>();
+        playerNameAndBets.put("pobi", new BetMoney("10000"));
+        ResponseProfitDto profitDto = blackjackGame.calculateProfit(playerNameAndBets);
 
-        assertThat(playerOutcomes.values()).contains(Outcome.WIN);
+        assertThat(profitDto.getDealerProfit()).isEqualTo(-10000);
+        assertThat(profitDto.getPlayersProfit().get("pobi")).isEqualTo(10000);
     }
 
     @Test
