@@ -19,12 +19,12 @@ public final class Stay extends Finished {
     }
 
     @Override
-    public double earningRate(final Finished state) {
-        if (state.isBust() || cards.hasMorePoint(state.cards())) {
+    public double earningRate(final Finished other) {
+        if (other.isBust() || cards.hasMorePoint(other.cards())) {
             return WIN_RATE;
         }
-        if (cards.hasSamePoint(state.cards())) {
-            return TIE_RATE;
+        if (cards.hasSamePoint(other.cards())) {
+            return PUSH_RATE;
         }
         return LOSE_RATE;
     }

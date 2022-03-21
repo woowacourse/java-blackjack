@@ -21,7 +21,7 @@ class FinishedTest {
         }
 
         @Override
-        public double earningRate(Finished state) {
+        public double earningRate(Finished other) {
             return 1.0;
         }
     };

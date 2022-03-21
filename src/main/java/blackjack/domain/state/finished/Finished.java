@@ -9,7 +9,7 @@ public abstract class Finished extends Init {
     static final float BLACKJACK_RATE = 1.5f;
     static final int WIN_RATE = 1;
     static final int LOSE_RATE = -1;
-    static final int TIE_RATE = 0;
+    static final int PUSH_RATE = 0;
 
     public Finished(Cards cards) {
         super(cards);
@@ -35,9 +35,9 @@ public abstract class Finished extends Init {
     public abstract boolean isBlackjack();
 
     @Override
-    public int profit(int money, Finished state) {
-        return (int) (money * earningRate(state));
+    public int profit(int money, Finished other) {
+        return (int) (money * earningRate(other));
     }
 
-    public abstract double earningRate(Finished state);
+    public abstract double earningRate(Finished other);
 }

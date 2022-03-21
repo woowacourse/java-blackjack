@@ -19,8 +19,8 @@ public final class Bust extends Finished {
     }
 
     @Override
-    public double earningRate(final Finished state) {
-        if (state.isBust()) {
+    public double earningRate(final Finished other) {
+        if (other.isBust()) {
             return WIN_RATE;
         }
         return LOSE_RATE;
