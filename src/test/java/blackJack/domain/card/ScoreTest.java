@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class ScoreTest {
 
-    Score score;
+    private Score score;
 
     @ParameterizedTest()
     @CsvSource(value = {"20,false", "21,false", "22,true"})

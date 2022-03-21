@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class CardsTest {
 
-    Cards cards;
+    private Cards cards;
 
     @BeforeEach
     void setUp() {
