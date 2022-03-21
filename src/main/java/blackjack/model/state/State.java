@@ -1,6 +1,6 @@
 package blackjack.model.state;
 
-import blackjack.model.Profits;
+import blackjack.model.BettingRate;
 import blackjack.model.card.Card;
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface State {
 
     State stay();
 
-    Profits calculateProfit(State otherState);
+    BettingRate calculateBettingRate(State otherState);
 
     List<String> getCards();
 

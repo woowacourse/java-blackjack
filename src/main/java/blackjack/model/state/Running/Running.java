@@ -1,6 +1,6 @@
 package blackjack.model.state.Running;
 
-import blackjack.model.Profits;
+import blackjack.model.BettingRate;
 import blackjack.model.card.Cards;
 import blackjack.model.state.Started.Started;
 import blackjack.model.state.State;
@@ -26,7 +26,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public Profits calculateProfit(State otherState) {
+    public BettingRate calculateBettingRate(State otherState) {
         throw new IllegalArgumentException("[ERROR] 아직 카드 분배가 끝나지 않아 수익률을 계산 할 수 없습니다.");
     }
 }

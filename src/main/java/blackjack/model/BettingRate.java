@@ -2,7 +2,7 @@ package blackjack.model;
 
 import blackjack.model.state.State;
 
-public enum Profits {
+public enum BettingRate {
 
     BLACKJACK(1.5),
     WIN(1.0),
@@ -12,11 +12,11 @@ public enum Profits {
 
     private final double profit;
 
-    Profits(double profit) {
+    BettingRate(double profit) {
         this.profit = profit;
     }
 
-    public static Profits compareTo(State dealerState, State playerState) {
+    public static BettingRate compareTo(State dealerState, State playerState) {
         if (dealerState.getScore() > playerState.getScore()) {
             return WIN;
         }

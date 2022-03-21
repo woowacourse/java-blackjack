@@ -23,7 +23,7 @@ public class Player extends Participant {
 
     public double getProfit(Participant otherPlayer) {
         return (int) (bet * this.state
-                .calculateProfit(otherPlayer.state)
+                .calculateBettingRate(otherPlayer.state)
                 .getProfit());
     }
 

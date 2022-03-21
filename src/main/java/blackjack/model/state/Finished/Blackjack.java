@@ -1,9 +1,9 @@
 package blackjack.model.state.Finished;
 
-import static blackjack.model.Profits.DRAW;
-import static blackjack.model.Profits.WIN;
+import static blackjack.model.BettingRate.BLACKJACK;
+import static blackjack.model.BettingRate.DRAW;
 
-import blackjack.model.Profits;
+import blackjack.model.BettingRate;
 import blackjack.model.card.Cards;
 import blackjack.model.state.State;
 
@@ -24,10 +24,10 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    public Profits calculateProfit(State otherState) {
+    public BettingRate calculateBettingRate(State otherState) {
         if (otherState.isBlackjack()) {
             return DRAW;
         }
-        return WIN;
+        return BLACKJACK;
     }
 }

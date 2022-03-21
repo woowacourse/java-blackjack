@@ -1,9 +1,9 @@
 package blackjack.model.state.Finished;
 
-import static blackjack.model.Profits.LOSE;
-import static blackjack.model.Profits.WIN;
+import static blackjack.model.BettingRate.LOSE;
+import static blackjack.model.BettingRate.WIN;
 
-import blackjack.model.Profits;
+import blackjack.model.BettingRate;
 import blackjack.model.card.Cards;
 import blackjack.model.state.State;
 
@@ -24,13 +24,13 @@ public class Stay extends Finished {
     }
 
     @Override
-    public Profits calculateProfit(State otherState) {
+    public BettingRate calculateBettingRate(State otherState) {
         if (otherState.isBlackjack()) {
             return LOSE;
         }
         if (otherState.isBust()) {
             return WIN;
         }
-        return Profits.compareTo(this, otherState);
+        return BettingRate.compareTo(this, otherState);
     }
 }
