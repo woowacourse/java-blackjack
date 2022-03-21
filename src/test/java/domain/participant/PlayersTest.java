@@ -28,7 +28,7 @@ class PlayersTest {
     void playersCreateTest() {
         Players players = Players.of(nameAndMoneys);
 
-        assertThat(players.getPlayers().size()).isEqualTo(2);
+        assertThat(players.getPlayers().size()).isEqualTo(nameAndMoneys.size());
     }
 
     @Test
