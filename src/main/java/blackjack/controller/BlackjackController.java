@@ -60,7 +60,7 @@ public class BlackjackController {
 
     private void processForPlayer(final BlackjackGame blackjackGame, final Player player) {
         while (!player.isFinish() && player.isHit(requestDrawStatus(player.getName()))) {
-            blackjackGame.hit(player);
+            blackjackGame.hitByPlayer(player);
             outputView.printPlayerCardStatus(player.getName(), player.getCards());
         }
         if (!player.isBust()) {
@@ -80,7 +80,7 @@ public class BlackjackController {
     private void turnOfDealer(final BlackjackGame blackjackGame, Dealer dealer) {
         while (dealer.isRangeScoreToReceive()) {
             outputView.printDealerDrawOneMoreCard();
-            blackjackGame.hit(dealer);
+            blackjackGame.hitByDealer();
         }
         if (!dealer.isBust()) {
             dealer.stay();
