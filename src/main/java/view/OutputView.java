@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.participant.PlayerResult;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -76,15 +76,15 @@ public class OutputView {
         System.out.println(DEALER_HIT_CARD_MESSAGE);
     }
 
-    public void showResult(String dealerName, int dealerMoney, Map<Player, Integer> playerResult) {
+    public void showResult(String dealerName, BigDecimal dealerMoney, Map<Player, BigDecimal> playerResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
-        System.out.println(dealerName + DELIMITER + dealerMoney);
+        System.out.println(dealerName + DELIMITER + dealerMoney.intValue());
         showPlayersResult(playerResult);
     }
 
-    private void showPlayersResult(Map<Player, Integer> playerResult) {
-        for (Entry<Player, Integer> result : playerResult.entrySet()) {
-            System.out.println(result.getKey().getName() + DELIMITER + result.getValue());
+    private void showPlayersResult(Map<Player, BigDecimal> playerResult) {
+        for (Entry<Player, BigDecimal> result : playerResult.entrySet()) {
+            System.out.println(result.getKey().getName() + DELIMITER + result.getValue().intValue());
         }
     }
 

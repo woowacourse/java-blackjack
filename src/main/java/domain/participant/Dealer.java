@@ -1,19 +1,24 @@
 package domain.participant;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public final class Dealer extends Participant {
 
     private static final int MAX_CARD_SUM = 16;
     private static final String NAME = "딜러";
-    private final int SHIFT_NUM = -1;
+    private static final int SHIFT_NUM = -1;
 
     public Dealer() {
         super(NAME);
     }
 
-    public int getResultMoney(List<Integer> playersResult) {
-        return playersResult.stream().mapToInt(i -> i * SHIFT_NUM).sum();
+    public BigDecimal getResultMoney(List<BigDecimal> playersResult) {
+        BigDecimal dealerResult = BigDecimal.ZERO;
+        for (BigDecimal bigDecimal : playersResult) {
+            dealerResult = dealerResult.add(bigDecimal.multiply(BigDecimal.valueOf(SHIFT_NUM)));
+        }
+        return dealerResult;
     }
 
     @Override

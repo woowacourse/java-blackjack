@@ -5,6 +5,7 @@ import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +76,8 @@ public class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        Map<Player, Integer> playerResult = players.checkResults(dealer);
-        List<Integer> playerMoney = new ArrayList<>(playerResult.values());
+        Map<Player, BigDecimal> playerResult = players.checkResults(dealer);
+        List<BigDecimal> playerMoney = new ArrayList<>(playerResult.values());
         outputView.showResult(dealer.getName(), dealer.getResultMoney(playerMoney), playerResult);
     }
 }

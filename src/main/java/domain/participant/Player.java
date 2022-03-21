@@ -16,10 +16,9 @@ public final class Player extends Participant {
         return cards.calculateScore() < MAX_SCORE;
     }
 
-    public int multiply(PlayerResult playerResult) {
+    public BigDecimal multiply(PlayerResult playerResult) {
         BigDecimal profitRate = BigDecimal.valueOf(playerResult.getProfitRate());
-        BigDecimal result = money.getValue().multiply(profitRate);
 
-        return result.intValue();
+        return money.getValue().multiply(profitRate);
     }
 }

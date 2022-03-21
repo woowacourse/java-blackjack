@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Deck;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -37,7 +38,7 @@ public final class Players {
             .collect(Collectors.toList());
     }
 
-    public Map<Player, Integer> checkResults(Dealer dealer) {
+    public Map<Player, BigDecimal> checkResults(Dealer dealer) {
         return players.stream()
             .collect(Collectors.toMap(
                 Function.identity(),

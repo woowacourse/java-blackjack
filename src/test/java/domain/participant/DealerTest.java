@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ class DealerTest {
     private Dealer dealer;
 
     @BeforeEach
-    void makePlayer(){
+    void makePlayer() {
         dealer = new Dealer();
     }
 
@@ -29,7 +30,7 @@ class DealerTest {
         dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
         dealer.hit(Card.of(Symbol.SPADE, Denomination.NINE));
 
-        assertThatThrownBy(() ->  dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE)))
+        assertThatThrownBy(() -> dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE)))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
     }
@@ -55,6 +56,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 결과값을 받는다.")
     void checkResultTest() {
-        assertThat(dealer.getResultMoney(List.of(1000,3000,4000))).isEqualTo(-8000);
+        assertThat(dealer.getResultMoney(List.of(BigDecimal.valueOf(1000), BigDecimal.valueOf(3000),
+            BigDecimal.valueOf(4000)))).isEqualTo(BigDecimal.valueOf(-8000));
     }
 }
