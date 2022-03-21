@@ -2,10 +2,25 @@ package blackjack.domain.user;
 
 import java.util.Objects;
 
+import blackjack.domain.card.Deck;
+
 public class Player extends Gamer {
 
-	public Player(final String name) {
-		super(name);
+	private final Money money;
+
+	public Player(final String name, final double money, final Deck deck) {
+		super(name, deck);
+		this.money = new Money(money);
+	}
+
+	private Player(Player player) {
+		super(player.name);
+		this.money = player.money;
+		this.state = player.state;
+	}
+
+	public static Player newInstance(Player player) {
+		return new Player(player);
 	}
 
 	@Override
@@ -21,5 +36,9 @@ public class Player extends Gamer {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);
+	}
+
+	public Money calculateProfit(double profitRate) {
+		return this.money.multiply(profitRate);
 	}
 }

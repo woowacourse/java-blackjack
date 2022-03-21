@@ -10,6 +10,7 @@ public class InputView {
 	private static final String DECISION_INPUT_EXCEPTION = "입력은 Y,N(소문자 가능)만 입력해주세요.";
 	private static final Scanner scanner = new Scanner(System.in);
 	private static final Pattern YES_OR_NO = Pattern.compile("^[ynYN]$");
+	private static final Pattern NUMBER = Pattern.compile("[0-9]+");
 
 	public List<String> inputPlayerNames() {
 		final String names = inputNames();
@@ -56,6 +57,24 @@ public class InputView {
 	private void validateDecisionInput(String decision) {
 		if (!YES_OR_NO.matcher(decision).matches()) {
 			throw new IllegalArgumentException(DECISION_INPUT_EXCEPTION);
+		}
+	}
+
+	public double inputMoney(String playerName) {
+		System.out.println(playerName + "의 배팅 금액은?");
+		String money = scanner.nextLine();
+		try {
+			validateNumber(money);
+			return Double.parseDouble(money);
+		} catch (IllegalArgumentException exception) {
+			System.out.println(exception.getMessage());
+			return inputMoney(playerName);
+		}
+	}
+
+	private void validateNumber(String money) {
+		if (!NUMBER.matcher(money).matches()) {
+			throw new IllegalArgumentException("숫자만 입력 가능합니다.");
 		}
 	}
 }

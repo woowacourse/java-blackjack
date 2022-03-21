@@ -6,9 +6,8 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Score implements Comparable<Score> {
-	public static final int INITIAL_SCORE = 0;
-	public static final int ELEVEN_ACE_SCORE = 11;
-	public static final int BUST_THRESHOLD = 21;
+	private static final int INITIAL_SCORE = 0;
+	private static final int BUST_THRESHOLD = 21;
 
 	private static final int HIT_THRESHOLD = 17;
 	private static final Score BUST_SCORE = new Score(-1);
