@@ -18,7 +18,7 @@ public class Ready extends Started {
         final Cards cards = getCards();
         cards.receiveCard(card);
         if (cards.isReady()) {
-            return new Ready(cards);
+            return this;
         }
         if (cards.isBlackjack()) {
             return new Blackjack(cards);
