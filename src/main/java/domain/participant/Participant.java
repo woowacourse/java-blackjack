@@ -38,7 +38,7 @@ public abstract class Participant {
     }
 
     public final boolean isNotBlackJack() {
-        return score() != MAX_SCORE;
+        return !isBlackJack();
     }
 
     public final int score() {
