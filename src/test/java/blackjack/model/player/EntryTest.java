@@ -1,8 +1,8 @@
 package blackjack.model.player;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.model.bet.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,11 +42,14 @@ public class EntryTest {
                 .hasMessage("[ERROR] 이름에 기호는 포함될 수 없습니다.");
     }
 
-    @DisplayName("Builder를 통해 Entry를 생성한다")
+    @DisplayName("이미 배팅한 상태에서 또 배팅하면 예외가 발생한다")
     @Test
-    void build_entry() {
-        Player liver = new Entry("아차산메이웨더미래의챔피언리버");
+    void bet_exception_already_betted() {
+        Entry entry = new Entry("entry");
+        entry.bet(Bet.from(10000));
 
-        assertThat(liver).isInstanceOf(Entry.class);
+        assertThatThrownBy(() -> entry.bet(Bet.from(20000)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이미 배팅하였습니다.");
     }
 }

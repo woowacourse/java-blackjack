@@ -1,15 +1,14 @@
 package blackjack.model;
 
+import blackjack.model.bet.Bet;
+import blackjack.model.bet.Profits;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Entry;
-import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
 
 public final class Game {
-    private static final int FIRST_DECK_SIZE = 2;
-
     private final Players players;
     private final TrumpCardPack trumpCardPack;
 
@@ -18,40 +17,49 @@ public final class Game {
         this.players = Players.from(names);
     }
 
-    public void start() {
-        for (int i = 0; i < FIRST_DECK_SIZE; i++) {
-            this.players.operateToEach(this::giveCardTo);
-        }
-    }
-
-    public void giveCardTo(Player player) {
-        player.addCard(trumpCardPack.draw());
+    public void toNextEntry() {
+        this.players.toNextEntry();
     }
 
     public boolean hasNextEntry() {
         return this.players.hasNextEntry();
     }
 
-    public void toNextEntry() {
-        this.players.toNextEntry();
+    public void betToCurrentEntry(int amount) {
+        this.players.betToCurrent(Bet.from(amount));
+    }
+
+    public void toFirstEntry() {
+        this.players.resetEntriesCursor();
+    }
+
+    public void giveFirstHands() {
+        this.players.initializeHands(trumpCardPack::draw);
     }
 
     public void hitCurrentEntry() {
         this.players.addToCurrentEntry(trumpCardPack.draw());
     }
 
-    public boolean isCurrentEntryBust() {
-        return this.players.isCurrentEntryBust();
+    public boolean canCurrentEntryHit() {
+        return !this.players.isCurrentEntryBust();
     }
 
-    public void hitDealer() {
+    public boolean hitDealer() {
+        boolean dealerHit = false;
         while (this.players.canDealerHit()) {
             this.players.hitDealer(trumpCardPack.draw());
+            dealerHit = true;
         }
+        return dealerHit;
+    }
+
+    public Profits calculateProfits() {
+        return this.players.calculateProfits();
     }
 
     public int countCardsAddedToDealer() {
-        return this.players.getDealerDeckSize() - FIRST_DECK_SIZE;
+        return this.players.countCardsAddedToDealer();
     }
 
     public List<Entry> getEntries() {
@@ -64,9 +72,5 @@ public final class Game {
 
     public Entry getCurrentEntry() {
         return this.players.getCurrentEntry();
-    }
-
-    public Results getResults() {
-        return this.players.getResults();
     }
 }

@@ -1,9 +1,10 @@
 package blackjack.model.player;
 
-import blackjack.model.Results;
+import blackjack.model.bet.Bet;
+import blackjack.model.bet.Profits;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class Players {
     private final Entries entries;
@@ -18,9 +19,13 @@ public final class Players {
         return new Players(Entries.from(names), new Dealer());
     }
 
-    public void operateToEach(Consumer<Player> consumer) {
-        consumer.accept(dealer);
-        this.entries.operateToEach(consumer);
+    public void betToCurrent(Bet bet) {
+        this.entries.betToCurrent(bet);
+    }
+
+    public void initializeHands(Supplier<TrumpCard> cardSupplier) {
+        this.dealer.initializeHand(cardSupplier);
+        this.entries.initializeHands(cardSupplier);
     }
 
     public boolean hasNextEntry() {
@@ -29,6 +34,10 @@ public final class Players {
 
     public void toNextEntry() {
         this.entries.toNextEntry();
+    }
+
+    public void resetEntriesCursor() {
+        this.entries.resetCursor();
     }
 
     public void addToCurrentEntry(TrumpCard card) {
@@ -47,6 +56,14 @@ public final class Players {
         return this.dealer.canHit();
     }
 
+    public int countCardsAddedToDealer() {
+        return this.dealer.countAddedCards();
+    }
+
+    public Profits calculateProfits() {
+        return this.entries.compareAllWith(dealer);
+    }
+
     public List<Entry> getEntries() {
         return this.entries.getValues();
     }
@@ -55,15 +72,7 @@ public final class Players {
         return this.dealer;
     }
 
-    public int getDealerDeckSize() {
-        return this.dealer.getDeckSize();
-    }
-
     public Entry getCurrentEntry() {
         return this.entries.getCurrentEntry();
-    }
-
-    public Results getResults() {
-        return this.entries.compareAllWith(dealer);
     }
 }

@@ -1,13 +1,12 @@
 package blackjack;
 
-import blackjack.dto.DealerDTO;
-import blackjack.dto.EntryDTO;
-import blackjack.dto.PlayersDTO;
-import blackjack.dto.ResultsDTO;
+import blackjack.dto.DealerDto;
+import blackjack.dto.EntryDto;
+import blackjack.dto.PlayersDto;
+import blackjack.dto.ProfitsDto;
 import blackjack.model.Game;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
-import java.util.List;
 
 public class Application {
 
@@ -15,59 +14,54 @@ public class Application {
         final InputView inputView = new InputView();
         final ResultView resultView = new ResultView();
 
-        Game game = startGame(inputView, resultView);
+        Game game = new Game(inputView.askEntryNames());
+        betMoney(game, inputView);
+        giveFirstHands(resultView, game);
         playEntries(inputView, resultView, game);
         inputView.closeInput();
-        playDealer(resultView, game);
-        showResults(resultView, game);
+        hitDealer(game, resultView);
+        resultView.printProfits(PlayersDto.from(game), ProfitsDto.from(game.calculateProfits()));
     }
 
-    private static Game startGame(InputView inputView, ResultView resultView) {
-        List<String> names = inputView.askEntryNames();
-        Game game = new Game(names);
-        game.start();
+    private static void betMoney(Game game, InputView inputView) {
+        do {
+            game.toNextEntry();
+            game.betToCurrentEntry(inputView.askBetAmount(EntryDto.fromCurrentEntryOf(game)));
+        } while (game.hasNextEntry());
+        game.toFirstEntry();
+    }
 
-        PlayersDTO playersDTO = PlayersDTO.from(game);
-        resultView.printDeckInitialized(playersDTO);
-        resultView.printInitializedDecks(playersDTO);
-        return game;
+    private static void giveFirstHands(ResultView resultView, Game game) {
+        game.giveFirstHands();
+        resultView.printFirstHands(PlayersDto.from(game));
     }
 
     private static void playEntries(InputView inputView, ResultView resultView, Game game) {
         do {
             game.toNextEntry();
-            playTurn(inputView, game, resultView);
+            playTurn(game, inputView, resultView);
         } while (game.hasNextEntry());
     }
 
-    private static void playTurn(InputView inputView, Game game, ResultView resultView) {
-        EntryDTO entryDTO = EntryDTO.fromCurrent(game);
-        if (game.isCurrentEntryBust()) {
-            resultView.printBustMessage(entryDTO);
+    private static void playTurn(Game game, InputView inputView, ResultView resultView) {
+        if (!game.canCurrentEntryHit()) {
+            resultView.printBustMessage(EntryDto.fromCurrentEntryOf(game));
             return;
         }
-        if (!inputView.askForHit(entryDTO)) {
-            resultView.printDeck(entryDTO);
-            return;
-        }
-        hitCurrentEntry(inputView, game, resultView);
+        hitCurrentEntry(game, inputView, resultView);
     }
 
-    private static void hitCurrentEntry(InputView inputView, Game game, ResultView resultView) {
-        game.hitCurrentEntry();
-        resultView.printDeck(EntryDTO.fromCurrent(game));
-        playTurn(inputView, game, resultView);
-    }
-
-    private static void playDealer(ResultView resultView, Game game) {
-        game.hitDealer();
-        if (game.countCardsAddedToDealer() > 0) {
-            resultView.printDealerHitCount(DealerDTO.from(game));
+    private static void hitCurrentEntry(Game game, InputView inputView, ResultView resultView) {
+        if (inputView.askForHit(EntryDto.fromCurrentEntryOf(game))) {
+            game.hitCurrentEntry();
+            resultView.printFullHand(EntryDto.fromCurrentEntryOf(game));
+            playTurn(game, inputView, resultView);
         }
     }
 
-    private static void showResults(ResultView resultView, Game game) {
-        resultView.printScores(PlayersDTO.from(game));
-        resultView.printResults(ResultsDTO.from(game.getResults()), DealerDTO.from(game));
+    private static void hitDealer(Game game, ResultView resultView) {
+        if (game.hitDealer()) {
+            resultView.printDealerAddedCount(DealerDto.from(game));
+        }
     }
 }

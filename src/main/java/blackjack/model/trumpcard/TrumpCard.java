@@ -3,28 +3,28 @@ package blackjack.model.trumpcard;
 import java.util.Objects;
 
 public final class TrumpCard {
-    private final TrumpNumber number;
-    private final TrumpSymbol symbol;
+    private final TrumpDenomination denomination;
+    private final TrumpSuit suit;
 
-    public TrumpCard(TrumpNumber number, TrumpSymbol symbol) {
-        this.number = number;
-        this.symbol = symbol;
+    public TrumpCard(TrumpDenomination denomination, TrumpSuit suit) {
+        this.denomination = denomination;
+        this.suit = suit;
     }
 
-    public int sumNumberTo(int value) {
-        return number.sumTo(value);
+    int sumDenominationTo(int value) {
+        return denomination.sumTo(value);
     }
 
-    public boolean isNumber(TrumpNumber trumpNumber) {
-        return this.number == trumpNumber;
+    boolean isAce() {
+        return this.denomination == TrumpDenomination.ACE;
     }
 
-    public TrumpNumber getNumber() {
-        return number;
+    public TrumpDenomination getDenomination() {
+        return denomination;
     }
 
-    public TrumpSymbol getSymbol() {
-        return symbol;
+    public TrumpSuit getSuit() {
+        return suit;
     }
 
     @Override
@@ -36,11 +36,11 @@ public final class TrumpCard {
             return false;
         }
         TrumpCard trumpCard = (TrumpCard) o;
-        return number == trumpCard.number && symbol == trumpCard.symbol;
+        return denomination == trumpCard.denomination && suit == trumpCard.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, symbol);
+        return Objects.hash(denomination, suit);
     }
 }

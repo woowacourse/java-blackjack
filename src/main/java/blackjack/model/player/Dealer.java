@@ -1,6 +1,6 @@
 package blackjack.model.player;
 
-import blackjack.model.Result;
+import blackjack.model.bet.Result;
 import blackjack.model.trumpcard.TrumpCard;
 
 public final class Dealer extends Player {
@@ -16,17 +16,45 @@ public final class Dealer extends Player {
     }
 
     public Result compareWith(Entry entry) {
-        return new Result(entry, !isWinTo(entry));
+        Result result = compareByBlackjackWith(entry);
+        if (result != null) {
+            return result;
+        }
+        result = compareByBustWith(entry);
+        if (result != null) {
+            return result;
+        }
+        return compareScoreWith(entry);
     }
 
-    private boolean isWinTo(Entry entry) {
+    private Result compareByBlackjackWith(Entry entry) {
+        if (entry.isBlackjack() && this.isBlackjack()) {
+            return Result.TIE;
+        }
+        if (entry.isBlackjack()) {
+            return Result.BLACKJACK;
+        }
+        return null;
+    }
+
+    private Result compareByBustWith(Entry entry) {
         if (entry.isBust()) {
-            return true;
+            return Result.LOSE;
         }
         if (this.isBust()) {
-            return false;
+            return Result.WIN;
         }
-        return entry.getScore() < this.getScore();
+        return null;
+    }
+
+    private Result compareScoreWith(Entry entry) {
+        if (this.isScoreLessThen(entry)) {
+            return Result.WIN;
+        }
+        if (entry.isScoreLessThen(this)) {
+            return Result.LOSE;
+        }
+        return Result.TIE;
     }
 
     public void hit(TrumpCard card) {
