@@ -1,72 +1,60 @@
 package blackjack.domain.dto;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import blackjack.domain.BlackJack;
-import blackjack.domain.Participant;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackDto {
-	private static final String NAME_DELIMITER = ": ";
-	private static final String CARD_DELIMITER = ", ";
-	private static final String MESSAGE_WIN = "승 ";
-	private static final String MESSAGE_LOSE = "패 ";
-	private static final int FIRST_CARD = 0;
+    private static final String CARD_DELIMITER = ", ";
+    private static final int FIRST_CARD = 0;
 
-	private final Participant dealer;
-	private final List<Participant> players;
-	private final Map<Participant, Result> result;
+    private final Participants participants;
 
-	public BlackJackDto(Participant dealer, List<Participant> players, Map<Participant, Result> result) {
-		this.dealer = dealer;
-		this.players = players;
-		this.result = result;
-	}
+    public BlackJackDto(Participants participants) {
+        this.participants = participants;
+    }
 
-	public static BlackJackDto from(BlackJack blackJack) {
-		return new BlackJackDto(blackJack.getDealer(), blackJack.getPlayers(), blackJack.getResult());
-	}
+    public static BlackJackDto from(BlackJack blackJack) {
+        return new BlackJackDto(blackJack.getParticipants());
+    }
 
-	public String getDealerOpenCard() {
-		return dealer.getName() + NAME_DELIMITER + dealer.getCards().get(FIRST_CARD).getName();
-	}
+    public String getDealerOpenCard() {
+        Participant dealer = participants.getDealer();
+        return String.format("%s: %s", dealer.getName(), dealer.getCards().get(FIRST_CARD).toString());
+    }
 
-	public String getPlayerCardStatus(Participant participant) {
-		String[] playerCardStatus = participant.getCards().stream()
-			.map(Card::getName)
-			.toArray(String[]::new);
+    public String getPlayerCardStatus(Participant participant) {
+        String[] playerCardStatus = participant.getCards().stream()
+            .map(Card::toString)
+            .toArray(String[]::new);
 
-		return participant.getName() + NAME_DELIMITER + String.join(CARD_DELIMITER, playerCardStatus);
-	}
+        return String.format("%s: %s", participant.getName(), String.join(CARD_DELIMITER, playerCardStatus));
+    }
 
-	public String getDealerResult() {
-		long loseCount = result.values().stream().filter(Result::getIsWin).count();
-		long winCount = result.size() - loseCount;
+    public String getDealerRevenue(Result result) {
+        return String.format("%s: %d", participants.getDealer().getName(), result.getDealerRevenue());
+    }
 
-		return dealer.getName() + NAME_DELIMITER + winCount + MESSAGE_WIN + loseCount + MESSAGE_LOSE;
-	}
+    public List<String> getPlayersRevenue(Result result) {
+        return participants.getPlayers().stream()
+            .map(player -> String.format("%s: %d", player.getName(), result.getPlayerRevenue(player)))
+            .collect(Collectors.toList());
+    }
 
-	public List<String> getPlayersResult() {
-		return result.keySet().stream()
-			.map(key -> key.getName() + NAME_DELIMITER + decodeResult(result.get(key).getIsWin()))
-			.collect(Collectors.toList());
-	}
+    public Participants getParticipants() {
+        return participants;
+    }
 
-	private String decodeResult(Boolean isWin) {
-		if (isWin) {
-			return MESSAGE_WIN;
-		}
-		return MESSAGE_LOSE;
-	}
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
+    }
 
-	public Participant getDealer() {
-		return dealer;
-	}
-
-	public List<Participant> getPlayers() {
-		return players;
-	}
+    public Participant getDealer() {
+        return participants.getDealer();
+    }
 }

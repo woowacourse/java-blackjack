@@ -1,10 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.BlackJack;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 import java.util.List;
 import java.util.regex.Pattern;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 
 public class Participant {
     private static final String DEALER_NAME = "딜러";
@@ -12,10 +13,10 @@ public class Participant {
     private static final String ERROR_MESSAGE_EMPTY_NAME = "[ERROR] 이름은 공백일 수 없습니다.";
     private static final Pattern ALLOWED_CHARACTERS = Pattern.compile(".*[^0-9a-zA-Zㄱ-ㅎ가-힣_]+.*");
     private static final String ERROR_MESSAGE_UNAVAILABLE_CHARACTER = "[ERROR] 이름에 특수문자가 포함될 수 없습니다.";
-    private static final int MAX_SCORE = 21;
 
     private final String name;
     private final Cards cards;
+    private int betting;
 
     private Participant(String name) {
         this.name = name;
@@ -48,16 +49,24 @@ public class Participant {
         }
     }
 
+    public void bet(int betting) {
+        this.betting = betting;
+    }
+
     public void receiveCard(Card card) {
         cards.addCard(card);
     }
 
     public Boolean isOverMaxScore() {
-        return getScore() > MAX_SCORE;
+        return BlackJack.isOverMaxScore(getScore());
     }
 
     public int getScore() {
         return cards.sum();
+    }
+
+    public boolean isBlackJack() {
+        return BlackJack.isMaxScore(getScore()) && cards.hasOnlyTwoCards();
     }
 
     public String getName() {
@@ -66,5 +75,9 @@ public class Participant {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public int getBetting() {
+        return betting;
     }
 }

@@ -1,8 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.Participant;
+import blackjack.domain.Result;
 import blackjack.domain.dto.BlackJackDto;
+import blackjack.domain.participant.Participant;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
@@ -20,9 +21,11 @@ public class BlackJackController {
         BlackJackDto blackJackDto = BlackJackDto.from(blackJack);
 
         startGame(blackJack, blackJackDto);
+        betMoney(blackJackDto);
         decidePlayersReceivingAdditionalCard(blackJack, blackJackDto);
         decideDealerReceivingAdditionalCard(blackJack, blackJackDto);
-        finishGame(blackJack, blackJackDto);
+        finishGame(blackJackDto);
+
         inputView.terminate();
     }
 
@@ -31,8 +34,14 @@ public class BlackJackController {
         resultView.showStartingStatus(blackJackDto);
     }
 
+    private void betMoney(BlackJackDto blackJackDto) {
+        for (Participant player : blackJackDto.getPlayers()) {
+            player.bet(inputView.askBettingAmount(player.getName()));
+        }
+    }
+
     private void decidePlayersReceivingAdditionalCard(BlackJack blackJack, BlackJackDto blackJackDto) {
-        for (Participant player : blackJack.getPlayers()) {
+        for (Participant player : blackJackDto.getPlayers()) {
             decidePlayerReceivingAdditionalCard(blackJack, blackJackDto, player);
         }
     }
@@ -47,16 +56,17 @@ public class BlackJackController {
     }
 
     private void decideDealerReceivingAdditionalCard(BlackJack blackJack, BlackJackDto blackJackDto) {
-        boolean dealerNeedAdditionalCard = blackJack.isDealerNeedAdditionalCard();
+        boolean dealerNeedAdditionalCard = blackJackDto.getParticipants().isDealerNeedAdditionalCard();
         if (dealerNeedAdditionalCard) {
             blackJack.handOutCardTo(blackJackDto.getDealer());
         }
         resultView.showWhetherDealerReceivedOrNot(dealerNeedAdditionalCard);
     }
 
-    private void finishGame(BlackJack blackJack, BlackJackDto blackJackDto) {
+    private void finishGame(BlackJackDto blackJackDto) {
         resultView.showFinalStatus(blackJackDto);
-        blackJack.calculateResult();
-        resultView.showResult(blackJackDto);
+        Result result = new Result(blackJackDto.getParticipants());
+        result.calculatePlayersRevenue();
+        resultView.showResult(blackJackDto, result);
     }
 }

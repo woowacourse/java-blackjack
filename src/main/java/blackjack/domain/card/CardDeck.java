@@ -16,8 +16,7 @@ public class CardDeck {
 
     private void generateCardWith(CardType type) {
         for (CardValue value : CardValue.values()) {
-            String key = value.getName().concat(type.getName());
-            deck.push(new Card(key, value.getValue()));
+            deck.push(Card.of(type, value));
         }
     }
 

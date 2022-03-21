@@ -1,48 +1,50 @@
 package blackjack.domain.card;
 
+import blackjack.domain.BlackJack;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-	private static final int SELECT_ACE_VALUE_STANDARD = 11;
-	private static final int ADD_BENEFICIAL_VALUE = 10;
+    private static final int STARTING_CARDS_NUMBER = 2;
 
-	private final List<Card> cards;
+    private final List<Card> cards;
 
-	public Cards() {
-		this.cards = new ArrayList<>();
-	}
+    public Cards() {
+        this.cards = new ArrayList<>();
+    }
 
-	public void addCard(Card card) {
-		cards.add(card);
-	}
+    public void addCard(Card card) {
+        cards.add(card);
+    }
 
-	public int sum() {
-        return getCalibratedSum(cards.stream()
+    public int sum() {
+        return calibratedScore(cards.stream()
             .mapToInt(Card::getValue)
             .sum());
-	}
+    }
 
-    private int getCalibratedSum(int sum) {
-        if (hasAce()) {
-            return selectAceValue(sum);
+    private int calibratedScore(int sum) {
+        if (hasAce() && isAceConsiderableAs11(sum)) {
+            return sum + CardValue.ACE_CAlIBRATION_SCORE;
         }
         return sum;
     }
 
     private boolean hasAce() {
-		return cards.stream()
+        return cards.stream()
             .anyMatch(Card::isAce);
-	}
+    }
 
-	private int selectAceValue(int sum) {
-		if (sum <= SELECT_ACE_VALUE_STANDARD) {
-			sum += ADD_BENEFICIAL_VALUE;
-		}
-		return sum;
-	}
+    private boolean isAceConsiderableAs11(int sum) {
+        return !BlackJack.isOverMaxScore(sum + CardValue.ACE_CAlIBRATION_SCORE);
+    }
 
-	public List<Card> getCards() {
-		return cards;
-	}
+    public boolean hasOnlyTwoCards() {
+        return cards.size() == STARTING_CARDS_NUMBER;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }
