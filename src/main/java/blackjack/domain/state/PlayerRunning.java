@@ -4,9 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
 
-public class PlayerRunning extends Running {
+public final class PlayerRunning extends Running {
 
-    public PlayerRunning(Cards cards) {
+    PlayerRunning(Cards cards) {
         super(cards);
     }
 
