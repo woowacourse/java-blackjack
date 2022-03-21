@@ -85,8 +85,8 @@ public class BlackJackController {
     }
 
     private void finish() {
-        OutputView.printGamerCardAndSum(GamerCardsResultDto.of(blackJack.getDealer()));
-        OutputView.printGamersCardAndSum(GamerCardsResultDto.of(blackJack.getPlayers()));
+        OutputView.printGamerCardAndSum(GamerCardsResultDto.valueOf(blackJack.getDealer()));
+        OutputView.printGamersCardAndSum(GamerCardsResultDto.valueOf(blackJack.getPlayers()));
 
         GameResult gameResult = blackJack.getGameResult();
         OutputView.printGameResult(ProfitDto.of(gameResult));

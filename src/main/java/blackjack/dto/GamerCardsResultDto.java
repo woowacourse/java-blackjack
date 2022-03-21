@@ -20,7 +20,7 @@ public class GamerCardsResultDto {
         return new GamerCardsResultDto(GamerCardsDto.of(name, cards), sum);
     }
 
-    public static List<GamerCardsResultDto> of(List<Player> players) {
+    public static List<GamerCardsResultDto> valueOf(List<Player> players) {
         List<GamerCardsResultDto> gamersCardsResultDto = new ArrayList<>();
         for (Player player : players) {
             gamersCardsResultDto.add(of(player.getName(), player.getCards(), player.getScore()));
@@ -28,7 +28,7 @@ public class GamerCardsResultDto {
         return Collections.unmodifiableList(gamersCardsResultDto);
     }
 
-    public static GamerCardsResultDto of(Dealer dealer) {
+    public static GamerCardsResultDto valueOf(Dealer dealer) {
         return of(dealer.getName(), dealer.getCards(), dealer.getScore());
     }
 
