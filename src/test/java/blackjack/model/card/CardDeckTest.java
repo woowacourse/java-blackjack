@@ -14,5 +14,4 @@ class CardDeckTest {
 
         assertThat(cardDeck).isInstanceOf(CardDeck.class);
     }
-
 }
