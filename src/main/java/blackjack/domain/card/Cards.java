@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class Cards {
 
-    private static final int ACE_ADDITIONAL_NUMBER = 10;
-    private static final int BUST_THRESHOLD = 21;
     private static final String DUPLICATE_EXCEPTION_MESSAGE = "카드 패에 중복된 카드가 존재할 수 없습니다.";
+    private static final int BLACKJACK_CARD_HAND_COUNT = 2;
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cardHand) {
-        validateDuplicate(cardHand);
-        this.cards = new ArrayList<>(cardHand);
+    public Cards(List<Card> cards) {
+        validateDuplicate(cards);
+        this.cards = new ArrayList<>(cards);
     }
 
     private void validateDuplicate(List<Card> cards) {
@@ -26,51 +26,39 @@ public class Cards {
     }
 
     public void concat(Cards cards) {
+        List<Card> tempCards = new ArrayList<>(this.cards);
+        tempCards.addAll(cards.getCards());
+        validateDuplicate(tempCards);
         this.cards.addAll(cards.getCards());
-        new Cards(this.cards);
     }
 
-    public int getBestPossible() {
-        int sum = getLowestSum();
-
-        for (Card card : cards) {
-            sum = updateSum(sum, card);
+    public Score getBestPossible() {
+        if (hasAce()) {
+            return Score.soft(extractedScores());
         }
-
-        return sum;
+        return Score.hard(extractedScores());
     }
 
-    private int updateSum(int sum, Card card) {
-        if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
-            sum += ACE_ADDITIONAL_NUMBER;
-        }
-        return sum;
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
-    private int getLowestSum() {
+    private IntStream extractedScores() {
         return cards.stream()
                 .map(Card::getNumber)
-                .map(Number::getScore)
-                .reduce(0, Integer::sum);
+                .mapToInt(Number::getScore);
     }
 
     public boolean isBusted() {
-        return getBestPossible() > BUST_THRESHOLD;
+        return getBestPossible().isBusted();
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && containsAce() && containsJQK();
-    }
-
-    private boolean containsAce() {
-        return cards.stream().anyMatch(Card::isAce);
-    }
-
-    private boolean containsJQK() {
-        return cards.stream().anyMatch(Card::isJQK);
+        return cards.size() == BLACKJACK_CARD_HAND_COUNT && getBestPossible().isMaxScore();
     }
 
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 }

@@ -53,7 +53,7 @@ class DealerTest {
                 new Card(Number.ACE, Kind.CLOVER),
                 new Card(Number.ACE, Kind.HEART))));
 
-        assertThat(dealer.calculateBestScore()).isEqualTo(14);
+        assertThat(dealer.calculateBestScore().getScore()).isEqualTo(14);
     }
 
     @DisplayName("Ace 를 11점으로 판단하여 베스트 점수 계산")
@@ -64,7 +64,7 @@ class DealerTest {
                 new Card(Number.ACE, Kind.SPADE),
                 new Card(Number.KING, Kind.SPADE))));
 
-        assertThat(dealer.calculateBestScore()).isEqualTo(21);
+        assertThat(dealer.calculateBestScore().getScore()).isEqualTo(21);
     }
 
     @DisplayName("Ace 를 1점으로 판단하여 베스트 점수 계산")
@@ -77,6 +77,6 @@ class DealerTest {
                 new Card(Number.SEVEN, Kind.SPADE),
                 new Card(Number.EIGHT, Kind.SPADE))));
 
-        assertThat(dealer.calculateBestScore()).isEqualTo(21);
+        assertThat(dealer.calculateBestScore().getScore()).isEqualTo(21);
     }
 }

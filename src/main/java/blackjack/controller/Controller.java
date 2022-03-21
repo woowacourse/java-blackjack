@@ -6,6 +6,8 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -15,7 +17,11 @@ public class Controller {
     public void run() {
         CardDeck cardDeck = CardDeck.initShuffled();
         Dealer dealer = new Dealer();
-        Players players = Players.of(InputView.requestPlayerNames());
+        List<String> playerNames = InputView.requestPlayerNames();
+        List<Player> participatingPlayers = playerNames.stream()
+                .map(playerName -> Player.of(playerName, InputView.requestBet(playerName)))
+                .collect(Collectors.toList());
+        Players players = new Players(participatingPlayers);
 
         initCardHand(cardDeck, dealer, players);
         playBlackJack(cardDeck, dealer, players);

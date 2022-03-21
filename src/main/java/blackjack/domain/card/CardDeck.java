@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CardDeck {
 
@@ -18,16 +20,16 @@ public class CardDeck {
 
     public static CardDeck initShuffled() {
         List<Card> cardDeck = Arrays.stream(Number.values())
-                .flatMap(number -> Arrays.stream(Kind.values())
-                        .map(kind -> new Card(number, kind)))
+                .flatMap(createCards())
                 .collect(Collectors.toList());
         Collections.shuffle(cardDeck);
 
         return new CardDeck(cardDeck);
     }
 
-    public int leftSize() {
-        return cardDeck.size();
+    private static Function<Number, Stream<? extends Card>> createCards() {
+        return number -> Arrays.stream(Kind.values())
+                .map(kind -> new Card(number, kind));
     }
 
     public Cards distribute(int count) {
@@ -43,5 +45,9 @@ public class CardDeck {
         if (cardDeck.size() < count) {
             throw new IllegalArgumentException(OVER_CAPACITY_EXCEPTION_MESSAGE);
         }
+    }
+
+    public int size() {
+        return cardDeck.size();
     }
 }

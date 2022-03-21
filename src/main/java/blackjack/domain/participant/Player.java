@@ -2,12 +2,15 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
 
-    private Player(Name name) {
+    private final Bet bet;
+
+    private Player(Name name, Bet bet) {
         super(name);
+        this.bet = bet;
     }
 
-    public static Player of(String name) {
-        return new Player(new Name(name));
+    public static Player of(String name, int bet) {
+        return new Player(new Name(name), new Bet(bet));
     }
 
     @Override
@@ -15,14 +18,17 @@ public class Player extends Participant {
         return !cards.isBusted();
     }
 
-    public Result isWinner(Dealer dealer) {
-        if (isBusted() || dealer.hasHigherScore(this) || (!isBlackJack() && dealer.isBlackJack())) {
-            return Result.LOSE;
+    public int calculatePrize(Dealer dealer) {
+        if (isBusted() || dealer.isWinner(this) || (!isBlackJack() && dealer.isBlackJack())) {
+            return bet.calculateLosingPrize();
         }
         if (dealer.hasSameScore(this) && (bothBlackJack(dealer) || bothNotBlackJack(dealer))) {
-            return Result.DRAW;
+            return bet.calculateDrawPrize();
         }
-        return Result.WIN;
+        if (cards.isBlackJack()) {
+            return bet.calculateBlackJackPrize();
+        }
+        return bet.calculateWinningPrize();
     }
 
     private boolean bothBlackJack(Dealer dealer) {
@@ -31,5 +37,9 @@ public class Player extends Participant {
 
     private boolean bothNotBlackJack(Dealer dealer) {
         return !isBlackJack() && !dealer.isBlackJack();
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 }

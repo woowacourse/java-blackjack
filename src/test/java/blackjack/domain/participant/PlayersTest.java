@@ -13,7 +13,10 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 
-    static final Players players = Players.of(List.of("쿼리치", "토르", "우테코"));
+    static final Players players = new Players(List.of(
+            Player.of("쿼리치", 10000),
+            Player.of("토르", 20000),
+            Player.of("우테코", 30000)));
     static final Dealer dealer = new Dealer();
 
     @BeforeAll
@@ -51,20 +54,23 @@ public class PlayersTest {
     @Test
     void judgeResult_WinningPlayer_ReturnsWin() {
 
-        assertThat(players.judgeResult(dealer).get(players.getPlayers().get(0))).isEqualTo(Result.WIN);
+        assertThat(players.judgeResult(dealer).get(players.getPlayers().get(0)))
+                .isEqualTo(players.getPlayers().get(0).getBet().calculateBlackJackPrize());
     }
 
     @DisplayName("플레이어 무승부 테스트")
     @Test
     void judgeResult_DrawPlayer_ReturnsDraw() {
 
-        assertThat(players.judgeResult(dealer).get(players.getPlayers().get(1))).isEqualTo(Result.DRAW);
+        assertThat(players.judgeResult(dealer).get(players.getPlayers().get(1)))
+                .isEqualTo(players.getPlayers().get(1).getBet().calculateDrawPrize());
     }
 
     @DisplayName("플레이어 패배 테스트")
     @Test
     void judgeResult_LosingPlayer_ReturnsLose() {
 
-        assertThat(players.judgeResult(dealer).get(players.getPlayers().get(2))).isEqualTo(Result.LOSE);
+        assertThat(players.judgeResult(dealer).get(players.getPlayers().get(2)))
+                .isEqualTo(players.getPlayers().get(2).getBet().calculateLosingPrize());
     }
 }
