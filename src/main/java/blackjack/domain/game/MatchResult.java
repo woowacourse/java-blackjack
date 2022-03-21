@@ -1,18 +1,31 @@
 package blackjack.domain.game;
 
+import blackjack.domain.participant.Player;
+
 public enum MatchResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+	BLACKJACK(1.5),
+	WIN(1),
+	LOSE(-1),
+	DRAW(0);
 
-    private final String value;
+	private final double leverage;
 
-    MatchResult(String value) {
-        this.value = value;
-    }
+	MatchResult(double leverage) {
+		this.leverage = leverage;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public static MatchResult compare(int standard, int opposite) {
+		if (standard > opposite) {
+			return MatchResult.WIN;
+		}
+		if (standard < opposite) {
+			return MatchResult.LOSE;
+		}
+		return MatchResult.DRAW;
+	}
+
+	public double calculateRevenue(Player player) {
+		return this.leverage * player.getBetMoney();
+	}
 }

@@ -2,43 +2,43 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-
-import java.util.Objects;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 
 public abstract class Participant {
 
-    protected final Name name;
-    protected final Cards cards;
+	protected final Name name;
+	protected State state = new Ready();
 
-    public Participant(Name name, Cards cards) {
-        this.name = name;
-        this.cards = cards;
-    }
+	protected Participant(Name name) {
+		this.name = name;
+	}
 
-    public abstract boolean isFinished();
+	public abstract boolean isFinished();
 
-    public void drawCard(Card card) {
-        cards.add(card);
-    }
+	public boolean isReady() {
+		return getCards().isReady();
+	}
 
-    public String getName() {
-        return name.getValue();
-    }
+	public boolean isBlackJack() {
+		return getCards().isBlackJack();
+	}
 
-    public Cards getCards() {
-        return cards;
-    }
+	public void draw(Card card) {
+		state = state.draw(card);
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Participant that = (Participant) o;
-        return name.equals(that.name);
-    }
+	public abstract void stay();
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
+	public int score() {
+		return getCards().sum();
+	}
+
+	public String getName() {
+		return name.getValue();
+	}
+
+	public Cards getCards() {
+		return state.getCards();
+	}
 }

@@ -1,54 +1,30 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.game.MatchResult;
-
 public class Player extends Participant {
 
-    private boolean isStay = false;
+	private final BetMoney betMoney;
 
-    public Player(Name name, Cards cards) {
-        super(name, cards);
-    }
+	public Player(Name name, BetMoney betMoney) {
+		super(name);
+		this.betMoney = betMoney;
+	}
 
-    public void stay() {
-        isStay = true;
-    }
+	public Player(Name name) {
+		this(name, new BetMoney());
+	}
 
-    public MatchResult match(Dealer dealer) {
-        if (isWin(dealer)) {
-            return MatchResult.WIN;
-        }
-        if (isLose(dealer)) {
-            return MatchResult.LOSE;
-        }
-        return MatchResult.DRAW;
-    }
+	@Override
+	public boolean isFinished() {
+		return state.isFinished();
+	}
 
-    private boolean isWin(Dealer dealer) {
-        return (this.cards.isBlackJack() && !dealer.cards.isBlackJack())
-                || (!this.cards.isBust() && (dealer.cards.isBust() || dealer.cards.sum() < this.cards.sum()));
-    }
+	public void stay() {
+		if (!isFinished()) {
+			state = state.stay();
+		}
+	}
 
-    private boolean isLose(Dealer dealer) {
-        return (dealer.cards.isBlackJack() && !this.cards.isBlackJack())
-                || (!dealer.cards.isBust() && (this.cards.isBust() || dealer.cards.sum() > this.cards.sum()));
-    }
-
-    @Override
-    public boolean isFinished() {
-        return cards.isBust() || cards.isBlackJack() || isStay;
-    }
-
-    public boolean isStay() {
-        return isStay;
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "name=" + name +
-                ", cards=" + cards +
-                '}';
-    }
+	public int getBetMoney() {
+		return betMoney.getValue();
+	}
 }
