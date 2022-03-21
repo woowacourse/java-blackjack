@@ -19,6 +19,7 @@ public class Player extends Participant {
         this.name = name;
     }
 
+    @Override
     public boolean isHittable() {
         return getScore() < HIT_THRESHOLD_NUMBER;
     }
@@ -27,16 +28,17 @@ public class Player extends Participant {
         this.bettingMoney = bettingMoney;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
-    public BettingMoney getBettingMoney() {
-        return bettingMoney;
-    }
-
     public long getProfit(Dealer dealer) {
         return (long) state.profit((bettingMoney.getBettingMoney()), dealer.state);
+    }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 
     private void validateName(String name) {

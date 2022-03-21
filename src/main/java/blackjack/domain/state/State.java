@@ -5,7 +5,7 @@ import blackjack.domain.card.ParticipantCards;
 
 public interface State {
 
-    ParticipantCards participantCards();
+    ParticipantCards getParticipantCards();
 
     State draw(Card card);
 

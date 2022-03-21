@@ -14,14 +14,14 @@ import org.junit.jupiter.api.Test;
 public class BlackjackTest {
 
     ParticipantCards blackjackCardsSet;
-    ParticipantCards HittableCardsSet;
+    ParticipantCards hittableCardsSet;
 
     @BeforeEach
     void setupCards() {
         blackjackCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.JACK)));
 
-        HittableCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
+        hittableCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.FIVE),
             new Card(Suit.HEART, Denomination.TWO)));
     }
@@ -30,7 +30,7 @@ public class BlackjackTest {
     @DisplayName("플레이어만 블랙잭인 경우 earningRate는 1이다.")
     void earningRatePlayerBlackjack() {
         Blackjack playerState = new Blackjack(blackjackCardsSet);
-        Stay dealerState = new Stay(HittableCardsSet);
+        Stay dealerState = new Stay(hittableCardsSet);
 
         assertThat(playerState.earningRate(dealerState)).isEqualTo(1.5);
     }

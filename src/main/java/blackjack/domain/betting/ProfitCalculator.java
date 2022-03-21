@@ -20,15 +20,15 @@ public class ProfitCalculator {
         }
     }
 
-    public Map<Player, Long> getPlayerProfit() {
-        return playerProfit;
-    }
-
     public long calculateDealerProfit() {
         return -playerProfit.values()
             .stream()
             .mapToLong(profit -> profit)
             .sum();
+    }
+
+    public Map<Player, Long> getPlayerProfit() {
+        return playerProfit;
     }
 
 }

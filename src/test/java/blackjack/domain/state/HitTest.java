@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 public class HitTest {
 
     ParticipantCards hittableCardsSet;
-    ParticipantCards notHittableCardsSet;
+    ParticipantCards nothittableCardsSet;
 
     Card card = new Card(Suit.SPADE, Denomination.TWO);
     Card notHittableCard = new Card(Suit.SPADE, Denomination.TEN);
@@ -25,7 +25,7 @@ public class HitTest {
             new Card(Suit.DIAMOND, Denomination.FIVE),
             new Card(Suit.HEART, Denomination.TWO)));
 
-        notHittableCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
+        nothittableCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.FIVE),
             new Card(Suit.HEART, Denomination.TWO),
             new Card(Suit.CLOVER, Denomination.TEN)));
@@ -34,7 +34,7 @@ public class HitTest {
     @Test
     @DisplayName("카드를 더 뽑았을 때 Bust일 시 Bust를 반환한다.")
     void hitToBust() {
-        Hit hit = new Hit(notHittableCardsSet);
+        Hit hit = new Hit(nothittableCardsSet);
 
         assertThat(hit.draw(notHittableCard)).isInstanceOf(Bust.class);
     }

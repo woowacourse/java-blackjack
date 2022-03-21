@@ -1,88 +1,70 @@
-//package blackjack.domain.betting;
-//
-//import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-//
-//import blackjack.domain.participant.Player;
-//import blackjack.domain.result.WinningResult;
-//import java.util.LinkedHashMap;
-//import java.util.Map;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//
-//public class ProfitCalculatorTest {
-//
-//    @Test
-//    @DisplayName("블랙잭일 때 수익을 계산한다.")
-//    void calculatePlayerBlackjackProfit() {
-//        Map<Player, WinningResult> playerWinningResultMap = new LinkedHashMap<>();
-//        Player player = new Player("앤지");
-//        player.createBettingMoney(new BettingMoney(1000));
-//        playerWinningResultMap.putIfAbsent(player, WinningResult.BLACKJACK);
-//        ProfitCalculator profitCalculator = new ProfitCalculator(playerWinningResultMap);
-//
-//        profitCalculator.calculate();
-//
-//        assertThat(profitCalculator.getPlayerProfit().get(player)).isEqualTo(1500);
-//
-//    }
-//
-//    @Test
-//    @DisplayName("WIN일 때 수익을 계산한다.")
-//    void calculatePlayerWinProfit() {
-//        Map<Player, WinningResult> playerWinningResultMap = new LinkedHashMap<>();
-//        Player player = new Player("앤지");
-//        player.createBettingMoney(new BettingMoney(1000));
-//        playerWinningResultMap.putIfAbsent(player, WinningResult.WIN);
-//        profitCalculator profitCalculator = new profitCalculator(playerWinningResultMap);
-//
-//        profitCalculator.calculate();
-//
-//        assertThat(profitCalculator.getPlayerProfit().get(player)).isEqualTo(1000);
-//
-//    }
-//
-//    @Test
-//    @DisplayName("DRAW일 때 수익을 계산한다.")
-//    void calculatePlayerDrawProfit() {
-//        Map<Player, WinningResult> playerWinningResultMap = new LinkedHashMap<>();
-//        Player player = new Player("앤지");
-//        player.createBettingMoney(new BettingMoney(1000));
-//        playerWinningResultMap.putIfAbsent(player, WinningResult.DRAW);
-//        profitCalculator profitCalculator = new profitCalculator(playerWinningResultMap);
-//
-//        profitCalculator.calculate();
-//
-//        assertThat(profitCalculator.getPlayerProfit().get(player)).isEqualTo(0);
-//
-//    }
-//
-//    @Test
-//    @DisplayName("LOSE일 때 수익을 계산한다.")
-//    void calculatePlayerLoseProfit() {
-//        Map<Player, WinningResult> playerWinningResultMap = new LinkedHashMap<>();
-//        Player player = new Player("앤지");
-//        player.createBettingMoney(new BettingMoney(1000));
-//        playerWinningResultMap.putIfAbsent(player, WinningResult.LOSE);
-//        profitCalculator profitCalculator = new profitCalculator(playerWinningResultMap);
-//
-//        profitCalculator.calculate();
-//
-//        assertThat(profitCalculator.getPlayerProfit().get(player)).isEqualTo(-1000);
-//
-//    }
-//
-//    @Test
-//    @DisplayName("딜러의 수익을 계산한다.")
-//    void calculateDealerProfit() {
-//        Map<Player, WinningResult> playerWinningResultMap = new LinkedHashMap<>();
-//        Player player = new Player("앤지");
-//        player.createBettingMoney(new BettingMoney(1000));
-//        playerWinningResultMap.putIfAbsent(player, WinningResult.LOSE);
-//        ProfitCalculator profitCalculator = new ProfitCalculator(playerWinningResultMap);
-//
-//        profitCalculator.calculate();
-//
-//        assertThat(profitCalculator.calculateDealerProfit()).isEqualTo(1000);
-//    }
-//
-//}
+package blackjack.domain.betting;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.card.Suit;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class ProfitCalculatorTest {
+
+    ParticipantCards blackjackCardsSet;
+    ParticipantCards hittableCardsLoserSet;
+
+    @BeforeEach
+    void setupCards() {
+        blackjackCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
+            new Card(Suit.DIAMOND, Denomination.JACK)));
+        hittableCardsLoserSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
+            new Card(Suit.DIAMOND, Denomination.FIVE)));
+    }
+
+
+    @Test
+    @DisplayName("딜러의 수익을 계산한다.")
+    void calculateDealerProfit() {
+        Participants participants = Participants.from(List.of("앤지"));
+
+        Player player = participants.getPlayers().get(0);
+        Dealer dealer = participants.getDealer();
+
+        player.createBettingMoney(new BettingMoney(1000));
+        player.receiveInitCards(blackjackCardsSet.getCards());
+        dealer.receiveInitCards(hittableCardsLoserSet.getCards());
+
+        ProfitCalculator profitCalculator = new ProfitCalculator(participants);
+
+        profitCalculator.calculate();
+
+        assertThat(profitCalculator.calculateDealerProfit()).isEqualTo(-1500L);
+    }
+
+    @Test
+    @DisplayName("플레이어의 수익을 반환한다.")
+    void calculatePlayerProfit() {
+        Participants participants = Participants.from(List.of("앤지"));
+
+        Player player = participants.getPlayers().get(0);
+        Dealer dealer = participants.getDealer();
+
+        player.createBettingMoney(new BettingMoney(1000));
+        player.receiveInitCards(blackjackCardsSet.getCards());
+        dealer.receiveInitCards(hittableCardsLoserSet.getCards());
+
+        ProfitCalculator profitCalculator = new ProfitCalculator(participants);
+
+        profitCalculator.calculate();
+        long playerProfit = profitCalculator.getPlayerProfit().get(player);
+
+        assertThat(playerProfit).isEqualTo(1500L);
+    }
+
+}

@@ -10,13 +10,13 @@ public class Hit extends Running {
     }
 
     @Override
-    public ParticipantCards participantCards() {
+    public ParticipantCards getParticipantCards() {
         return participantCards;
     }
 
     @Override
     public State draw(Card card) {
-        ParticipantCards participantCards = this.participantCards.addCard2(card);
+        ParticipantCards participantCards = this.participantCards.addCard(card);
 
         if (participantCards.isBust()) {
             return new Bust(participantCards);

@@ -60,10 +60,10 @@ public class RunningTest {
 
     @Test
     @DisplayName("참가자 카드를 반환해준다.")
-    void participantCards() {
+    void getParticipantCards() {
         Running running = new Hit(cardsSet);
 
-        assertThat(running.participantCards()).isSameAs(cardsSet);
+        assertThat(running.getParticipantCards()).isSameAs(cardsSet);
     }
 
 }

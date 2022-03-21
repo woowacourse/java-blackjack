@@ -7,17 +7,17 @@ public class Ready extends Running {
 
     private static final String READY_STAY_ERROR_MESSAGE = "[ERROR] 처음 카드는 두장 미만으로 받을 수 없습니다.";
 
-    public Ready(final ParticipantCards participantCards) {
+    public Ready(ParticipantCards participantCards) {
         super(participantCards);
     }
 
     @Override
-    public ParticipantCards participantCards() {
+    public ParticipantCards getParticipantCards() {
         return participantCards;
     }
 
     public State draw(final Card card) {
-        ParticipantCards participantCards = this.participantCards.addCard2(card);
+        ParticipantCards participantCards = this.participantCards.addCard(card);
 
         if (participantCards.isReady()) {
             return new Ready(participantCards);

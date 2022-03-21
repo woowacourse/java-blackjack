@@ -10,6 +10,7 @@ public class ParticipantCards {
     private static final int BUST_THRESHOLD = 21;
     private static final int CONVERT_ACE_AMOUNT = 10;
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int READY_SIZE_THRESHOLD = 2;
     private static final int BLACKJACK_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
 
@@ -32,18 +33,14 @@ public class ParticipantCards {
         }
         return totalScore;
     }
-
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    public ParticipantCards addCard2(Card card) {
+    
+    public ParticipantCards addCard(Card card) {
         cards.add(card);
         return new ParticipantCards(cards);
     }
 
     public boolean isReady() {
-        return cards.size() < 2;
+        return cards.size() < READY_SIZE_THRESHOLD;
     }
 
     public boolean isBlackjack() {

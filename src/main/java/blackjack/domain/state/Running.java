@@ -12,7 +12,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public ParticipantCards participantCards() {
+    public ParticipantCards getParticipantCards() {
         return participantCards;
     }
 

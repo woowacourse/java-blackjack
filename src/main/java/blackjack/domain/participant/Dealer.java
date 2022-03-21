@@ -12,16 +12,18 @@ public class Dealer extends Participant {
         this.name = DEALER_NAME;
     }
 
+    @Override
     public boolean isHittable() {
         return getScore() <= HIT_THRESHOLD;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
     public Card getFirstCard() {
-        return state.participantCards().getFirstCard();
+        return state.getParticipantCards().getFirstCard();
     }
 
 }

@@ -108,4 +108,16 @@ public class ParticipantCardsTest {
         assertThat(participantCards.isBlackjack()).isEqualTo(false);
     }
 
+    @Test
+    @DisplayName("카드가 잘 추가되었나 확인")
+    void addCard() {
+        ParticipantCards participantCards = new ParticipantCards(
+            List.of(new Card(Suit.DIAMOND, Denomination.TEN),
+                new Card(Suit.CLOVER, Denomination.TWO)));
+
+        participantCards.addCard(new Card(Suit.SPADE, Denomination.FIVE));
+
+        assertThat(participantCards.getCards().size()).isEqualTo(3);
+    }
+
 }

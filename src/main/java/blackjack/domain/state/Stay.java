@@ -13,7 +13,7 @@ public class Stay extends Finished {
     }
 
     @Override
-    public ParticipantCards participantCards() {
+    public ParticipantCards getParticipantCards() {
         return participantCards;
     }
 

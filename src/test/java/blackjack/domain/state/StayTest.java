@@ -15,8 +15,8 @@ public class StayTest {
 
     ParticipantCards blackjackCardsSet;
     ParticipantCards BustCardsSet;
-    ParticipantCards HittableCardsWinnerSet;
-    ParticipantCards HittableCardsLoserSet;
+    ParticipantCards hittableCardsWinnerSet;
+    ParticipantCards hittableCardsLoserSet;
 
     @BeforeEach
     void setupCards() {
@@ -27,11 +27,11 @@ public class StayTest {
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.HEART, Denomination.JACK)));
 
-        HittableCardsWinnerSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
+        hittableCardsWinnerSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.FIVE),
             new Card(Suit.HEART, Denomination.TWO)));
 
-        HittableCardsLoserSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
+        hittableCardsLoserSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.FIVE)));
     }
 
@@ -40,7 +40,7 @@ public class StayTest {
     @DisplayName("딜러가 블랙잭이면 플레이어는 -1의 earningRate를 가진다.")
     void getEarningRateLose() {
         State blackjackDealerState = new Blackjack(blackjackCardsSet);
-        Stay playerState = new Stay(HittableCardsWinnerSet);
+        Stay playerState = new Stay(hittableCardsWinnerSet);
 
         assertThat(playerState.earningRate(blackjackDealerState)).isEqualTo(-1);
     }
@@ -48,8 +48,8 @@ public class StayTest {
     @Test
     @DisplayName("딜러와 플레이어 모두 버스트가 아니며 동점이면 0의 earningRate를 가진다.")
     void getEarningRateDraw() {
-        Stay dealerState = new Stay(HittableCardsWinnerSet);
-        Stay playerState = new Stay(HittableCardsWinnerSet);
+        Stay dealerState = new Stay(hittableCardsWinnerSet);
+        Stay playerState = new Stay(hittableCardsWinnerSet);
 
         assertThat(playerState.earningRate(dealerState)).isEqualTo(0);
     }
@@ -57,8 +57,8 @@ public class StayTest {
     @Test
     @DisplayName("Stay상태에서 플레이어의 점수가 딜러보다 높으면 1의 earningRate을 가진다.")
     void getEarningRateWin1() {
-        Stay dealerState = new Stay(HittableCardsLoserSet);
-        Stay playerState = new Stay(HittableCardsWinnerSet);
+        Stay dealerState = new Stay(hittableCardsLoserSet);
+        Stay playerState = new Stay(hittableCardsWinnerSet);
 
         assertThat(playerState.earningRate(dealerState)).isEqualTo(1);
     }
@@ -67,17 +67,17 @@ public class StayTest {
     @DisplayName("딜러는 버스트, 플레이어는 버스트가 아닐 시 1의 earningRate를 가진다.")
     void getEarningRateWin2() {
         Bust dealerState = new Bust(BustCardsSet);
-        Stay playerState = new Stay(HittableCardsWinnerSet);
+        Stay playerState = new Stay(hittableCardsWinnerSet);
 
         assertThat(playerState.earningRate(dealerState)).isEqualTo(1);
     }
 
     @Test
     @DisplayName("참가자 카드를 반환해준다.")
-    void participantCards() {
-        Stay playerState = new Stay(HittableCardsWinnerSet);
+    void getParticipantCards() {
+        Stay playerState = new Stay(hittableCardsWinnerSet);
 
-        assertThat(playerState.participantCards()).isSameAs(HittableCardsWinnerSet);
+        assertThat(playerState.getParticipantCards()).isSameAs(hittableCardsWinnerSet);
     }
 
 }

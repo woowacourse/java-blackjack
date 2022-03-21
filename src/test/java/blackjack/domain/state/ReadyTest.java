@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class ReadyTest {
 
     ParticipantCards blackjackCardsSet;
-    ParticipantCards HittableCardsSet;
+    ParticipantCards hittableCardsSet;
     ParticipantCards readyCardsSet;
     ParticipantCards emptyCardsSet;
 
@@ -27,7 +27,7 @@ public class ReadyTest {
         blackjackCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.JACK)));
 
-        HittableCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
+        hittableCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.FIVE),
             new Card(Suit.HEART, Denomination.TWO)));
 
@@ -72,10 +72,10 @@ public class ReadyTest {
 
     @Test
     @DisplayName("참가자 카드를 반환해준다.")
-    void participantCards() {
+    void getParticipantCards() {
         Ready ready = new Ready(readyCardsSet);
 
-        assertThat(ready.participantCards()).isSameAs(readyCardsSet);
+        assertThat(ready.getParticipantCards()).isSameAs(readyCardsSet);
     }
 
 }

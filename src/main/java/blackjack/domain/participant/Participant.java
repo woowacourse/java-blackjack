@@ -38,16 +38,14 @@ public abstract class Participant {
         return state.isFinished();
     }
 
-    public int getScore() {
-        return state.participantCards().calculateScore();
-    }
+    public abstract boolean isHittable();
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(state.participantCards().getCards());
+        return Collections.unmodifiableList(state.getParticipantCards().getCards());
     }
 
-    public boolean isHittable() {
-        return state.isFinished();
+    public int getScore() {
+        return state.getParticipantCards().calculateScore();
     }
 
     public abstract String getName();
