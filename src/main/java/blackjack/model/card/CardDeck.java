@@ -1,11 +1,12 @@
 package blackjack.model.card;
 
+import blackjack.model.game.DrawStrategy;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CardDeck {
+public class CardDeck implements DrawStrategy {
     private final Deque<Card> cards;
 
     public CardDeck() {
@@ -27,6 +28,7 @@ public class CardDeck {
         }
     }
 
+    @Override
     public Card draw() {
         if (isNotEmpty()) {
             return cards.pop();

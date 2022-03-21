@@ -1,7 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.CardDeck;
+import blackjack.model.game.DrawStrategy;
 import blackjack.model.game.GameSign;
 import blackjack.model.game.TurnProgress;
 import blackjack.model.state.State;
@@ -17,13 +17,14 @@ public abstract class Participant {
         this.state = new Ready();
     }
 
-    public void drawFrom(final CardDeck cardDeck) {
+    public void drawFrom(final DrawStrategy drawStrategy) {
         while (this.state.isReady()) {
-            this.state = this.state.add(cardDeck.draw());
+            this.state = this.state.add(drawStrategy.draw());
         }
     }
 
-    public abstract void hitFrom(final CardDeck cardDeck, final GameSign gameSign, final TurnProgress turnProgress);
+    public abstract void hitFrom(final DrawStrategy drawStrategy, final GameSign gameSign,
+                                 final TurnProgress turnProgress);
 
     public abstract double getProfit(final Participant otherParticipant);
 

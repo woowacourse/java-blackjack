@@ -1,7 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.model.betting.BettingResult;
-import blackjack.model.card.CardDeck;
+import blackjack.model.game.DrawStrategy;
 import blackjack.model.game.GameSign;
 import blackjack.model.game.MoneyBetter;
 import blackjack.model.game.TurnProgress;
@@ -42,9 +42,9 @@ public class Participants {
                 .count();
     }
 
-    public void drawFrom(final CardDeck cardDeck) {
-        players.forEach(player -> player.drawFrom(cardDeck));
-        dealer.drawFrom(cardDeck);
+    public void drawFrom(final DrawStrategy drawStrategy) {
+        players.forEach(player -> player.drawFrom(drawStrategy));
+        dealer.drawFrom(drawStrategy);
     }
 
     public List<Participant> getParticipants() {
@@ -55,9 +55,9 @@ public class Participants {
         return participants;
     }
 
-    public void hitFrom(final CardDeck cardDeck, final GameSign gameSign, final TurnProgress turnProgress) {
-        players.forEach(player -> player.hitFrom(cardDeck, gameSign, turnProgress));
-        dealer.hitFrom(cardDeck, gameSign, turnProgress);
+    public void hitFrom(final DrawStrategy drawStrategy, final GameSign gameSign, final TurnProgress turnProgress) {
+        players.forEach(player -> player.hitFrom(drawStrategy, gameSign, turnProgress));
+        dealer.hitFrom(drawStrategy, gameSign, turnProgress);
     }
 
     public BettingResult createBettingResult() {

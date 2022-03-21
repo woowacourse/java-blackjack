@@ -1,6 +1,6 @@
 package blackjack.model.participant;
 
-import blackjack.model.card.CardDeck;
+import blackjack.model.game.DrawStrategy;
 import blackjack.model.game.GameSign;
 import blackjack.model.game.TurnProgress;
 
@@ -28,9 +28,9 @@ public class Player extends Participant {
     }
 
     @Override
-    public void hitFrom(CardDeck cardDeck, GameSign gameSign, TurnProgress turnProgress) {
+    public void hitFrom(DrawStrategy drawStrategy, GameSign gameSign, TurnProgress turnProgress) {
         while (this.state.isHitAble() && isNotStay(gameSign)) {
-            this.state = this.state.add(cardDeck.draw());
+            this.state = this.state.add(drawStrategy.draw());
             turnProgress.show(this);
         }
     }
