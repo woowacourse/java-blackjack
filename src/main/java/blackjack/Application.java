@@ -28,7 +28,7 @@ public class Application {
 
     private static List<Player> inputPlayersByNameAndBettingMoney(String names) {
         return Arrays.stream(names.split(DELIMITER))
-            .map(playerName -> Player.from(playerName.trim(), getBettingMoney(playerName)))
+            .map(playerName -> Player.from(playerName.trim(), getBettingMoney(playerName.trim())))
             .collect(Collectors.toList());
     }
 
