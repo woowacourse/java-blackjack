@@ -1,24 +1,21 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDenomination;
-import blackjack.domain.card.CardSuit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Stream;
 
 public class Deck {
 	private static final String EMPTY_MESSAGE = "[ERROR] 덱의 카드가 다 소진되었습니다.";
+    private static final int REMOVE_INDEX = 0;
 
-	private final Stack<Card> cards;
+	private final List<Card> cards;
 
 	public Deck() {
-		cards = new Stack<>();
+		cards = new ArrayList<>();
 		Stream.of(CardDenomination.values())
 			.forEach(cardLetter -> Stream.of(CardSuit.values())
-				.forEach(type -> cards.push(new Card(cardLetter, type)))
+				.forEach(type -> cards.add(new Card(cardLetter, type)))
 			);
 	}
 
@@ -26,7 +23,7 @@ public class Deck {
 		if (cards.isEmpty()) {
 			throw new IllegalStateException(EMPTY_MESSAGE);
 		}
-		return cards.pop();
+		return cards.remove(REMOVE_INDEX);
 	}
 
 	public int getCardsSize() {
