@@ -2,8 +2,8 @@ package blackjack.model.state.finished;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
-import blackjack.model.state.created.Created;
 import blackjack.model.state.State;
+import blackjack.model.state.created.Created;
 
 public abstract class Finished extends Created {
 

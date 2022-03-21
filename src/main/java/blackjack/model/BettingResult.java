@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BettingResult {
-    public static final double DEALER_BET_MONEY = 0.0;
+    private static final double DEALER_BET_MONEY = 0.0;
     private final Map<String, Double> result;
 
     public BettingResult(Participant dealer, List<Participant> players) {

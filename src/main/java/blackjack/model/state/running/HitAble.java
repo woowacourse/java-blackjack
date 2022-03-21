@@ -2,9 +2,9 @@ package blackjack.model.state.running;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
+import blackjack.model.state.State;
 import blackjack.model.state.finished.Bust;
 import blackjack.model.state.finished.Stay;
-import blackjack.model.state.State;
 
 public class HitAble extends Running {
 
