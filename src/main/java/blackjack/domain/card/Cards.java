@@ -27,8 +27,10 @@ public class Cards {
     }
 
     public void concat(Cards cards) {
+        List<Card> tempCards = new ArrayList<>(this.cards);
+        tempCards.addAll(cards.getCards());
+        validateDuplicate(tempCards);
         this.cards.addAll(cards.getCards());
-        validateDuplicate(this.cards);
     }
 
     public Score getBestPossible() {
