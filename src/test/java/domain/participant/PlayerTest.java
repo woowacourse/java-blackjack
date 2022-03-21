@@ -18,7 +18,7 @@ public class PlayerTest {
 	@DisplayName("드로우할 수 있는 경우 할 수 있는지 테스트")
 	void canDraw() {
 		Hand hand = new Hand(List.of(ACE_CLOVER, TWO_CLOVER));
-		Player player = new Player(new Name("pobi"), hand, new Betting(0));
+		Player player = new Player(new Name("pobi"), hand, new Betting());
 		assertThat(player.canDraw()).isTrue();
 	}
 
@@ -26,7 +26,7 @@ public class PlayerTest {
 	@DisplayName("버스트 일 경우 드로우할 수 있는지 테스트")
 	void cantDrawBust() {
 		Hand hand = new Hand(List.of(QUEEN_CLOVER, QUEEN_CLOVER, TWO_CLOVER));
-		Player player = new Player(new Name("pobi"), hand, new Betting(0));
+		Player player = new Player(new Name("pobi"), hand, new Betting());
 		assertThat(player.canDraw()).isFalse();
 	}
 
@@ -34,7 +34,7 @@ public class PlayerTest {
 	@DisplayName("블랙잭일 경우 드로우할 수 있는지 테스트")
 	void cantDrawBlackJack() {
 		Hand hand = new Hand(List.of(QUEEN_CLOVER, ACE_CLOVER));
-		Player player = new Player(new Name("pobi"), hand, new Betting(0));
+		Player player = new Player(new Name("pobi"), hand, new Betting());
 		assertThat(player.canDraw()).isFalse();
 	}
 }
