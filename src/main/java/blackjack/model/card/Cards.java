@@ -14,8 +14,8 @@ public class Cards {
         this.values = new ArrayList<>();
     }
 
-    public Cards(final List<Card> cardGroup) {
-        this.values = new ArrayList<>(cardGroup);
+    public Cards(final List<Card> values) {
+        this.values = new ArrayList<>(values);
     }
 
     public Cards add(final Card card) {
@@ -28,7 +28,7 @@ public class Cards {
     }
 
     public boolean canHit() {
-        return values.size() == START_CARD_COUNT;
+        return values.size() >= START_CARD_COUNT;
     }
 
     public boolean isFinishScore() {
