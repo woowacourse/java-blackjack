@@ -5,6 +5,7 @@ import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import blackjack.domain.participant.human.Human;
 import blackjack.domain.participant.human.Player;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,8 @@ public final class OutputView {
     }
 
     public static void printInitDealerHand(final Dealer dealer) {
-        System.out.printf(CARD_STATE_MESSAGE, dealer.getName(), dealer.getRawCards());
+        System.out.printf(CARD_STATE_MESSAGE, dealer.getName(),
+                getCardsState(List.of(dealer.getFirstCard())));
         System.out.println();
     }
 

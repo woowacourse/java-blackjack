@@ -20,6 +20,7 @@ public final class Dealer extends Human {
     public boolean draw(CardDeck cardDeck) {
         if (isAbleToHit()) {
             addCard(cardDeck.pop());
+            stay();
             return true;
         }
         stay();
