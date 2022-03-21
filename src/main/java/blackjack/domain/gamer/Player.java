@@ -18,7 +18,7 @@ public class Player {
     }
 
     private Player(Player player) {
-        this.gamer = new Gamer(name, cards);
+        this.gamer = player.gamer.copy();
         this.bettingMoney = player.bettingMoney;
     }
 
