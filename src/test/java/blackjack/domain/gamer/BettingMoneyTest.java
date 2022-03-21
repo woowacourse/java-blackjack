@@ -3,6 +3,7 @@ package blackjack.domain.gamer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BettingMoneyTest {
@@ -15,4 +16,11 @@ class BettingMoneyTest {
                 .hasMessageContaining("베팅 금액은 100단위만 가능합니다.");
     }
 
+    @Test
+    @DisplayName("입력 값이 100단위로 생성한다.")
+    void validateMoneySuccess() {
+        BettingMoney bettingMoney = new BettingMoney(100);
+        int value = bettingMoney.getValue();
+        assertThat(value).isEqualTo(100);
+    }
 }
