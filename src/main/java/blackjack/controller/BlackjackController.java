@@ -19,14 +19,14 @@ public class BlackjackController {
 
     public void run() {
         final Participants participants = getParticipants();
-        final Map<Player, BettingMoney> playersInfo = getPlayersBettingMoney(participants.getPlayers());
+        betting(participants.getPlayers());
         final Deck deck = Deck.create();
         final BlackjackGame blackjackGame = progressGame(participants, deck);
 
         final List<Player> players = playersTurn(blackjackGame, participants);
         final Dealer dealer = dealerTurn(blackjackGame);
         final Map<Player, BlackjackMatch> result = createBlackjackGameResult(players, dealer);
-        createBlackjackProfitResult(dealer, playersInfo, result);
+        createBlackjackProfitResult(dealer, players, result);
     }
 
     private Participants getParticipants() {
@@ -42,19 +42,17 @@ public class BlackjackController {
         }
     }
 
-    private Map<Player, BettingMoney> getPlayersBettingMoney(List<Player> players) {
-        final Map<Player, BettingMoney> playersInfo = new LinkedHashMap<>();
+    private void betting(List<Player> players) {
         for (Player player : players) {
             final BettingMoney money = getPlayerBettingMoney(player.getName());
-            playersInfo.put(player, money);
+            player.betting(money);
         }
-        return playersInfo;
     }
 
     private BettingMoney getPlayerBettingMoney(String playerName) {
         try {
             final int money = InputView.inputPlayerMoney(playerName);
-            return new BettingMoney(money);
+            return new PlayerBettingMoney(money);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getPlayerBettingMoney(playerName);
@@ -109,9 +107,8 @@ public class BlackjackController {
         return playersResult;
     }
 
-    private void createBlackjackProfitResult(
-            Dealer dealer, Map<Player, BettingMoney> playerInfo, Map<Player, BlackjackMatch> result) {
-        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(playerInfo);
+    private void createBlackjackProfitResult(Dealer dealer, List<Player> players, Map<Player, BlackjackMatch> result) {
+        final BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(players);
 
         final Map<Participant, Double> profitResult = new LinkedHashMap<>();
         final Map<Player, Double> playersProfitResult = blackjackProfitResult.calculatePlayersProfit(result);

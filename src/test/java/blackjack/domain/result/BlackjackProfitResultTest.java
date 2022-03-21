@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,7 @@ class BlackjackProfitResultTest {
     void calculateDealerProfit() {
         game();
 
-        BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(initializePlayers());
+        BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(List.of(player1, player2, player3));
         Map<Player, Double> playersInfo = blackjackProfitResult.calculatePlayersProfit(initializeResult());
         Double dealerProfit = blackjackProfitResult.calculateDealerProfit(playersInfo);
 
@@ -37,7 +38,7 @@ class BlackjackProfitResultTest {
     void calculatePlayersProfit() {
         game();
 
-        BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(initializePlayers());
+        BlackjackProfitResult blackjackProfitResult = new BlackjackProfitResult(List.of(player1, player2, player3));
         Map<Player, Double> playersInfo = blackjackProfitResult.calculatePlayersProfit(initializeResult());
 
         assertThat(playersInfo).containsExactly(
@@ -45,26 +46,21 @@ class BlackjackProfitResultTest {
         );
     }
 
-    private Map<Player, BettingMoney> initializePlayers() {
-        final Map<Player, BettingMoney> players = new LinkedHashMap<>();
-        players.put(player1, new BettingMoney(10000));
-        players.put(player2, new BettingMoney(5000));
-        players.put(player3, new BettingMoney(20000));
-        return players;
-    }
-
     private void game() {
         dealer.receiveCard(Card.from(Suit.SPADE, Denomination.NINE));
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
         dealer.requestStay();
 
+        player1.betting(new PlayerBettingMoney(10000));
         player1.receiveCard(Card.from(Suit.SPADE, Denomination.EIGHT));
         player1.receiveCard(Card.from(Suit.HEART, Denomination.TWO));
         player1.requestStay();
 
+        player2.betting(new PlayerBettingMoney(5000));
         player2.receiveCard(Card.from(Suit.DIAMOND, Denomination.ACE));
         player2.receiveCard(Card.from(Suit.DIAMOND, Denomination.KING));
 
+        player3.betting(new PlayerBettingMoney(20000));
         player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
         player3.receiveCard(Card.from(Suit.SPADE, Denomination.TWO));
         player3.requestStay();

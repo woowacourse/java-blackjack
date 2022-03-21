@@ -3,14 +3,15 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Player;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BlackjackProfitResult {
 
-    private final Map<Player, BettingMoney> playersInfo;
+    private final List<Player> players;
 
-    public BlackjackProfitResult(Map<Player, BettingMoney> playersInfo) {
-        this.playersInfo = playersInfo;
+    public BlackjackProfitResult(List<Player> players) {
+        this.players = players;
     }
 
     public Double calculateDealerProfit(Map<Player, Double> playersProfitResult) {
@@ -23,11 +24,9 @@ public class BlackjackProfitResult {
 
     public Map<Player, Double> calculatePlayersProfit(Map<Player, BlackjackMatch> result) {
         final Map<Player, Double> playersProfitResult = new LinkedHashMap<>();
-        for (Map.Entry<Player, BettingMoney> playerInfo : playersInfo.entrySet()) {
-            final Player player = playerInfo.getKey();
+        for (Player player : players) {
             final BlackjackMatch match = result.get(player);
-            final BettingMoney bettingMoney = playerInfo.getValue();
-            final double profit = player.calculateProfit(match, bettingMoney);
+            final double profit = player.calculateProfit(match);
             playersProfitResult.put(player, profit);
         }
         return playersProfitResult;
