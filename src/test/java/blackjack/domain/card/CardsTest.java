@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static blackjack.CardConstant.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +14,8 @@ class CardsTest {
 	@DisplayName("Ace와 TEN을 받으면 합이 21이다.")
 	void sum() {
 		Cards cards = new Cards();
-		cards.add(getAce());
-		cards.add(getTen());
+		cards.add(CLOVER_ACE);
+		cards.add(CLOVER_TEN);
 
 		assertThat(cards.sum()).isEqualTo(21);
 	}
@@ -23,13 +24,13 @@ class CardsTest {
 	@DisplayName("숫자 합이 더 큰 Cards를 판별한다.")
 	void greaterThan() {
 		Cards cards1 = new Cards();
-		cards1.add(getAce());
-		cards1.add(getTen());
+		cards1.add(CLOVER_ACE);
+		cards1.add(CLOVER_TEN);
 
 		Cards cards2 = new Cards();
-		cards2.add(getAce());
-		cards2.add(getAce());
-		cards2.add(getTen());
+		cards2.add(CLOVER_ACE);
+		cards2.add(CLOVER_ACE);
+		cards2.add(CLOVER_TEN);
 
 		assertThat(cards2.isGreaterThan(cards1)).isTrue();
 	}
@@ -38,8 +39,8 @@ class CardsTest {
 	@DisplayName("카드가 2장이고 번호 합이 21이면 블랙잭이다.")
 	void isBlackJack() {
 		Cards cards = new Cards();
-		cards.add(getAce());
-		cards.add(getTen());
+		cards.add(CLOVER_ACE);
+		cards.add(CLOVER_TEN);
 
 		assertThat(cards.isBlackJack()).isTrue();
 	}
@@ -48,9 +49,9 @@ class CardsTest {
 	@DisplayName("번호 합이 21을 초과하면 버스트이다.")
 	void isBust() {
 		Cards cards = new Cards();
-		cards.add(getAce());
-		cards.add(getAce());
-		cards.add(getTen());
+		cards.add(CLOVER_ACE);
+		cards.add(CLOVER_ACE);
+		cards.add(CLOVER_TEN);
 
 		assertThat(cards.isBust()).isTrue();
 	}
@@ -59,8 +60,8 @@ class CardsTest {
 	@DisplayName("번호 합이 21 이하이면 노말이다..")
 	void isNormal() {
 		Cards cards = new Cards();
-		cards.add(getAce());
-		cards.add(getAce());
+		cards.add(CLOVER_ACE);
+		cards.add(CLOVER_ACE);
 
 		assertThat(cards.isBust()).isFalse();
 		assertThat(cards.isBlackJack()).isFalse();
@@ -70,9 +71,9 @@ class CardsTest {
 	@DisplayName("번호 합이 21이어도 3장이면 노말이다.")
 	void isNormalOver2() {
 		Cards cards = new Cards();
-		cards.add(getAce());
-		cards.add(getFive());
-		cards.add(getFive());
+		cards.add(CLOVER_ACE);
+		cards.add(CLOVER_FIVE);
+		cards.add(CLOVER_FIVE);
 
 		assertThat(cards.isBust()).isFalse();
 		assertThat(cards.isBlackJack()).isFalse();
@@ -83,22 +84,10 @@ class CardsTest {
 	@DisplayName("인자로 받은 개수만큼 카드를 보여준다.")
 	void open(int count, int result) {
 		Cards cards = new Cards();
-		cards.add(getAce());
-		cards.add(getFive());
-		cards.add(getFive());
+		cards.add(CLOVER_ACE);
+		cards.add(CLOVER_FIVE);
+		cards.add(CLOVER_FIVE);
 
 		assertThat(cards.open(count).size()).isEqualTo(result);
-	}
-
-	private Card getAce() {
-		return Card.getInstance(CardShape.CLOVER, CardNumber.ACE);
-	}
-
-	private Card getTen() {
-		return Card.getInstance(CardShape.CLOVER, CardNumber.TEN);
-	}
-
-	private Card getFive() {
-		return Card.getInstance(CardShape.CLOVER, CardNumber.FIVE);
 	}
 }

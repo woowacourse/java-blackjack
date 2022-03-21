@@ -1,11 +1,12 @@
 package blackjack.domain.card;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static blackjack.CardConstant.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class CardTest {
 
@@ -22,7 +23,7 @@ class CardTest {
     @Test
     @DisplayName("CarNumber와 CardShape를 입력 후, Card를 가져온다.")
     void getInstance() {
-        Card card = Card.getInstance(CardShape.CLOVER, CardNumber.FIVE);
+        Card card = CLOVER_FIVE;
         assertThat(card.getName()).isEqualTo("5");
         assertThat(card.getSymbol()).isEqualTo("♣");
     }
@@ -30,7 +31,6 @@ class CardTest {
     @Test
     @DisplayName("Card가 Ace카드인지 확인한다.")
     void isAce() {
-        Card card = Card.getInstance(CardShape.CLOVER, CardNumber.ACE);
-        assertThat(card.isAce()).isTrue();
+        assertThat(CLOVER_ACE.isAce()).isTrue();
     }
 }

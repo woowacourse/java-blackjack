@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.CardConstant.*;
 import static java.util.stream.Collectors.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -59,8 +60,8 @@ class BlackJackManagerTest {
 	void isBurst(String input, boolean result) {
 		Player pobi = manager.findPlayerByName("pobi");
 
-		pobi.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.KING));
-		pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
+		pobi.addCard(CLOVER_TEN);
+		pobi.addCard(CLOVER_TEN);
 		pobi.addCard(Card.getInstance(CardShape.HEART, CardNumber.valueOf(input)));
 
 		assertThat(!pobi.isDrawable()).isEqualTo(result);
@@ -69,7 +70,7 @@ class BlackJackManagerTest {
 	@Test
 	@DisplayName("배팅 결과를 반환한다.")
 	void createBettingResult() {
-		Deck deck = new Deck(List.of(getAce(), getTen(), getTen(), getTen()));
+		Deck deck = new Deck(List.of(CLOVER_ACE, CLOVER_TEN, CLOVER_TEN, CLOVER_TEN));
 		manager.giveCardToDealer(deck);
 		manager.giveCardToDealer(deck);
 
@@ -83,13 +84,5 @@ class BlackJackManagerTest {
 		assertThat(dealerEarning).isEqualTo(20);
 		assertThat(playerEarnings.get("pobi")).isEqualTo(-10);
 		assertThat(playerEarnings.get("jason")).isEqualTo(-10);
-	}
-
-	private Card getAce() {
-		return Card.getInstance(CardShape.CLOVER, CardNumber.ACE);
-	}
-
-	private Card getTen() {
-		return Card.getInstance(CardShape.CLOVER, CardNumber.TEN);
 	}
 }
