@@ -8,29 +8,29 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardNumberTest {
+public class DenominationTest {
 
     @DisplayName("블랙잭인지 확인한다.")
     @Test
     void is_blackjack_true() {
-        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.ACE, CardNumber.QUEEN));
+        List<Denomination> denominations = new ArrayList<>(List.of(Denomination.ACE, Denomination.QUEEN));
 
-        assertThat(CardNumber.isBlackjack(cardNumbers)).isTrue();
+        assertThat(Denomination.isBlackjack(denominations)).isTrue();
     }
 
     @DisplayName("블랙잭이 아닌 것을 확인한다.")
     @Test
     void is_blackjack_false() {
-        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.ACE, CardNumber.QUEEN, CardNumber.QUEEN));
+        List<Denomination> denominations = new ArrayList<>(List.of(Denomination.ACE, Denomination.QUEEN, Denomination.QUEEN));
 
-        assertThat(CardNumber.isBlackjack(cardNumbers)).isFalse();
+        assertThat(Denomination.isBlackjack(denominations)).isFalse();
     }
 
     @DisplayName("모든 카드의 합계를 확인한다.")
     @Test
     void total() {
-        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.values()));
-        int total = CardNumber.getTotal(cardNumbers);
+        List<Denomination> denominations = new ArrayList<>(List.of(Denomination.values()));
+        int total = Denomination.getTotal(denominations);
 
         assertThat(total).isEqualTo(85);
     }
@@ -38,7 +38,7 @@ public class CardNumberTest {
     @DisplayName("ACE 가 없는 경우 합계를 확인한다.")
     @Test
     void total_not_contains_ace() {
-        int total = CardNumber.getTotal(List.of(CardNumber.KING, CardNumber.QUEEN));
+        int total = Denomination.getTotal(List.of(Denomination.KING, Denomination.QUEEN));
 
         assertThat(total).isEqualTo(20);
     }
@@ -46,7 +46,7 @@ public class CardNumberTest {
     @DisplayName("ACE 가 1로 사용될 경우 합계를 확인한다.")
     @Test
     void total_ace_1() {
-        int total = CardNumber.getTotal(List.of(CardNumber.ACE, CardNumber.KING, CardNumber.QUEEN));
+        int total = Denomination.getTotal(List.of(Denomination.ACE, Denomination.KING, Denomination.QUEEN));
 
         assertThat(total).isEqualTo(21);
     }
@@ -54,7 +54,7 @@ public class CardNumberTest {
     @DisplayName("ACE 가 11로 사용될 경우 합계를 확인한다.")
     @Test
     void total_ace_11() {
-        int total = CardNumber.getTotal(List.of(CardNumber.ACE, CardNumber.QUEEN));
+        int total = Denomination.getTotal(List.of(Denomination.ACE, Denomination.QUEEN));
 
         assertThat(total).isEqualTo(21);
     }
@@ -62,7 +62,7 @@ public class CardNumberTest {
     @DisplayName("ACE 가 2개일 경우 합계를 확인한다.")
     @Test
     void total_two_ace() {
-        int total = CardNumber.getTotal(List.of(CardNumber.ACE, CardNumber.ACE));
+        int total = Denomination.getTotal(List.of(Denomination.ACE, Denomination.ACE));
 
         assertThat(total).isEqualTo(12);
     }
@@ -70,7 +70,7 @@ public class CardNumberTest {
     @DisplayName("나머지 카드 합계가 11 이며 ACE 가 있을 경우 합계를 확인한다.")
     @Test
     void total_11_and_ace() {
-        int total = CardNumber.getTotal(List.of(CardNumber.TWO, CardNumber.NINE, CardNumber.ACE));
+        int total = Denomination.getTotal(List.of(Denomination.TWO, Denomination.NINE, Denomination.ACE));
 
         assertThat(total).isEqualTo(12);
     }

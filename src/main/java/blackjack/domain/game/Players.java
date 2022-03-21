@@ -2,7 +2,9 @@ package blackjack.domain.game;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -22,17 +24,48 @@ public class Players {
         }
     }
 
-    public void deal(final CardDeck cardDeck) {
+    public void bet(final Consumer<String> inputBetting, final Supplier<String> betting) {
         for (Player player : players) {
-            player.dealCards(cardDeck.pickInit());
+            player.bet(inputBetting, betting);
         }
     }
 
-    public void draw(final CardDeck cardDeck,
-                     final Predicate<Player> predicate, final BiConsumer<String, List<String>> biConsumer) {
+    public void deal(final Deck deck) {
         for (Player player : players) {
-            player.draw(cardDeck, predicate, biConsumer);
+            player.deal(deck.pickInit());
         }
+    }
+
+    public void draw(final Deck deck,
+                     final Predicate<String> drawing, final BiConsumer<String, List<String>> biConsumer) {
+        for (Player player : players) {
+            player.draw(deck.pick(), drawing, biConsumer);
+        }
+    }
+
+    public boolean isKeepPlaying(final Dealer dealer) {
+        if (dealer.isFinished()) {
+            return false;
+        }
+        return players.stream()
+                .map(Gamer::isRunning)
+                .filter(isKeepPlaying -> isKeepPlaying)
+                .findFirst()
+                .orElse(false);
+    }
+
+    public void compareCards(final Dealer dealer) {
+        for (Player player : players) {
+            player.compareCards(dealer);
+        }
+    }
+
+    public double totalEarning() {
+        double totalEarning = 0;
+        for (Player player : players) {
+            totalEarning += player.earning();
+        }
+        return totalEarning;
     }
 
     private List<String> trimNames(final String input) {

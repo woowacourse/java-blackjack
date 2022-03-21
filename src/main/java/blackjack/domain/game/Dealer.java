@@ -1,24 +1,24 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Card;
-
-import java.util.List;
 import java.util.function.BiConsumer;
 
 public class Dealer extends Gamer {
 
-    public static final int DRAWING_MAXIMUM = 16;
-    public static final String NAME = "딜러";
+    private static final int DRAWING_MAXIMUM = 16;
 
     public Dealer() {
-        super(NAME);
+        super(DEALER_NAME);
     }
 
-    public void draw(final CardDeck cardDeck, final BiConsumer<String, Integer> biConsumer) {
+    public void draw(final Deck deck, final BiConsumer<String, Integer> drawing) {
         while (isDrawable()) {
-            drawCard(cardDeck.pick());
-            noticeDrawing(biConsumer);
+            draw(deck.pick());
+            noticeDrawing(drawing);
         }
+    }
+
+    public double earning(final double playersTotalEarning) {
+        return -playersTotalEarning;
     }
 
     public boolean isLowerScore(final Player player) {
@@ -29,16 +29,16 @@ public class Dealer extends Gamer {
         return sumOfCards() > player.sumOfCards();
     }
 
-    private void noticeDrawing(final BiConsumer<String, Integer> biConsumer) {
-        biConsumer.accept(name, DRAWING_MAXIMUM);
+    public PlayingCards openPartOfCards() {
+        return state.getPartOfPlayingCards();
     }
 
-    public List<Card> openPartOfCards() {
-        return playingCards.getPartOfCard();
+    private void noticeDrawing(final BiConsumer<String, Integer> drawing) {
+        drawing.accept(getName(), DRAWING_MAXIMUM);
     }
 
     @Override
     public boolean isDrawable() {
-        return playingCards.calculateTotal() <= DRAWING_MAXIMUM;
+        return state.cardTotal() <= DRAWING_MAXIMUM;
     }
 }

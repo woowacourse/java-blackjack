@@ -1,6 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.game.Answer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,6 +29,6 @@ class AnswerTest {
     void is_draw_exception() {
         assertThatThrownBy(() -> Answer.isDraw("a"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("y, n 중에서 입력해주세요.");
+                .hasMessage("y/Y, n/N 중에서 입력해주세요.");
     }
 }

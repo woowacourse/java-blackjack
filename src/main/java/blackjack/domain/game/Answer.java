@@ -21,7 +21,7 @@ public enum Answer {
                 .filter(answer -> answer.input.equalsIgnoreCase(input))
                 .map(Answer::getAnswer)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("y, n 중에서 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException("y/Y, n/N 중에서 입력해주세요."));
     }
 
     private boolean getAnswer() {

@@ -1,14 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.game.Answer;
-import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 
-public class Converter {
+public class InputConverter {
 
     private static final Enterable enterable = new Enter();
 
-    private Converter() {
+    private InputConverter() {
     }
 
     public static Players createPlayers() {
@@ -20,14 +19,23 @@ public class Converter {
         }
     }
 
-    public static boolean isDrawing(final Player player) {
+    public static String createBetting() {
         try {
-            OutputView.printDrawInstruction(player.getName());
+            return InputView.inputBetting(enterable);
+        } catch (IllegalArgumentException exception) {
+            OutputView.printExceptionMessage(exception.getMessage());
+            return createBetting();
+        }
+    }
+
+    public static boolean isDrawing(final String name) {
+        try {
+            OutputView.printDrawInstruction(name);
             String input = InputView.inputDrawingAnswer(enterable);
             return Answer.isDraw(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
-            return isDrawing(player);
+            return isDrawing(name);
         }
     }
 }
