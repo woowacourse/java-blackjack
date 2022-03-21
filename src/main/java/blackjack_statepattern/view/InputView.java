@@ -16,9 +16,9 @@ public class InputView {
         return Arrays.asList(scanner.nextLine().split(","));
     }
 
-    public static int askBetMoney(String name) {
+    public static String askBetMoney(String name) {
         System.out.printf("%s의 베팅 금액은?\n", name);
-        return Integer.parseInt(scanner.nextLine());
+        return scanner.nextLine();
     }
 
     public static String askDrawCommand(Player player) {
