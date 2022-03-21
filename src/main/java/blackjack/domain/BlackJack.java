@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardPack;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.GamerGroup;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
@@ -37,10 +36,6 @@ public class BlackJack {
 
     public GameResult getGameResult() {
         return gamerGroup.getGameResult();
-    }
-
-    public List<Gamer> getGamers() {
-        return gamerGroup.getGamers();
     }
 
     public Dealer getDealer() {

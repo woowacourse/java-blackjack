@@ -7,17 +7,18 @@ import blackjack.domain.card.Card;
 import blackjack.domain.result.Match;
 import java.util.List;
 
-public class Player extends Gamer{
+public class Player {
 
+    private final Gamer gamer;
     private final BettingMoney bettingMoney;
 
     public Player(String name, BettingMoney bettingMoney) {
-        super(name);
+        this.gamer = new Gamer(name);
         this.bettingMoney = bettingMoney;
     }
 
     public Player(String name, List<Card> cards, BettingMoney bettingMoney) {
-        super(name, cards);
+        this.gamer = new Gamer(name, cards);
         this.bettingMoney = bettingMoney;
     }
 
@@ -25,8 +26,12 @@ public class Player extends Gamer{
         return new Player(playerName, bettingMoney);
     }
 
+    public void addCard(Card card) {
+        gamer.addCard(card);
+    }
+
     public Match compareCardsSumTo(int anotherCardsSum) {
-        if (isBust()) {
+        if (gamer.isBust()) {
             return Match.LOSE;
         }
 
@@ -34,14 +39,34 @@ public class Player extends Gamer{
             return Match.WIN;
         }
 
-        return Match.of(Integer.compare(getScore(), anotherCardsSum));
+        return Match.of(Integer.compare(gamer.getScore(), anotherCardsSum));
     }
 
     private boolean isBust(int sum) {
         return sum > BLACKJACK_NUMBER;
     }
 
+    public boolean isNotBust() {
+        return gamer.isNotBust();
+    }
+
+    public boolean isInstantBlackJack() {
+        return gamer.isInstantBlackJack();
+    }
+
     public BettingMoney getBettingMoney() {
         return bettingMoney;
+    }
+
+    public String getName() {
+        return gamer.getName();
+    }
+
+    public List<Card> getCards() {
+        return gamer.getCards();
+    }
+
+    public int getScore() {
+        return gamer.getScore();
     }
 }

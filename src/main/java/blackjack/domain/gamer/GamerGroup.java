@@ -3,8 +3,6 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.result.GameResult;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GamerGroup {
@@ -47,12 +45,6 @@ public class GamerGroup {
 
     public Player findPlayerByName(String name) {
         return playerGroup.findPlayerByName(name);
-    }
-
-    public List<Gamer> getGamers() {
-        List<Gamer> gamers = new ArrayList<>();
-        gamers.addAll(playerGroup.getPlayers());
-        return Collections.unmodifiableList(gamers);
     }
 
     public Dealer getDealer() {
