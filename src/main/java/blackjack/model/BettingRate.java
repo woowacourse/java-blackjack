@@ -10,10 +10,10 @@ public enum BettingRate {
     LOSE(-1.0),
     ;
 
-    private final double profit;
+    private final double rate;
 
-    BettingRate(double profit) {
-        this.profit = profit;
+    BettingRate(double rate) {
+        this.rate = rate;
     }
 
     public static BettingRate compareTo(State dealerState, State playerState) {
@@ -26,7 +26,7 @@ public enum BettingRate {
         return DRAW;
     }
 
-    public double getProfit() {
-        return profit;
+    public double getBettingRate() {
+        return rate;
     }
 }

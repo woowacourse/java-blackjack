@@ -7,7 +7,7 @@ import blackjack.model.game.TurnProgress;
 public class Player extends Participant {
     private static final int PLAYER_HIT_LIMIT_SCORE = 20;
 
-    protected final int bet;
+    private final int bet;
 
     public Player(final String name, final int bet) {
         super(name);
@@ -21,10 +21,10 @@ public class Player extends Participant {
         }
     }
 
-    public double getProfit(Participant otherPlayer) {
-        return (int) (bet * this.state
-                .calculateBettingRate(otherPlayer.state)
-                .getProfit());
+    public double getProfit(Participant dealer) {
+        return bet * this.state
+                .calculateBettingRate(dealer.state)
+                .getBettingRate();
     }
 
     @Override
