@@ -25,7 +25,7 @@ public class BlackJackGame {
     private final OutputView outputView = new OutputView();
 
     public void start() {
-        final Players players = new Players(getDealer(), getGambler());
+        final Players players = new Players(getDealer(), getGamblers());
         final CardDeck cardDeck = new CardDeck(new RandomCardGenerator());
 
         spreadCards(players, cardDeck);
@@ -39,14 +39,14 @@ public class BlackJackGame {
         return new Dealer();
     }
 
-    private List<Player> getGambler() {
+    private List<Player> getGamblers() {
         final List<String> playerNames = inputView.scanPlayerNames();
         return playerNames.stream()
-            .map(name -> new Gambler(name, getBetMoney(name)))
+            .map(name -> new Gambler(name, scanAndGetBetMoney(name)))
             .collect(toList());
     }
 
-    private BetMoney getBetMoney(final String name) {
+    private BetMoney scanAndGetBetMoney(final String name) {
         return new BetMoney(Integer.valueOf(inputView.scanBetMoney(name)));
     }
 
