@@ -16,7 +16,7 @@ public abstract class Participant {
         this.state = new Init(privateArea, chip);
     }
 
-    abstract public void hit(Card card);
+    public abstract void hit(Card card);
 
     public final void stay() {
         state = state.stay();

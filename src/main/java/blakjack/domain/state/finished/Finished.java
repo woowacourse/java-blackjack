@@ -15,12 +15,12 @@ public abstract class Finished extends State {
     }
 
     @Override
-    final public State draw(Card card) {
+    public final State draw(Card card) {
         throw new IllegalStateException(CANNOT_DRAW_MESSAGE);
     }
 
     @Override
-    final public State stay() {
+    public final State stay() {
         throw new IllegalStateException(CANNOT_STAY_MESSAGE);
     }
 
