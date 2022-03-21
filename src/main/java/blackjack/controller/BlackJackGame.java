@@ -18,9 +18,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackGame {
-
-    private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
-    private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
     private static final int GAMBLER_GET_CARD_UPPER_BOUND = 21;
     private static final int DEALER_GET_CARD_UPPER_BOUND = 17;
 
@@ -32,6 +29,8 @@ public class BlackJackGame {
         final CardDeck cardDeck = new CardDeck(new RandomCardGenerator());
 
         spreadCards(players, cardDeck);
+        printCardsOfPlayers(players);
+
         playGame(players, cardDeck);
         processResult(players);
     }
@@ -52,17 +51,10 @@ public class BlackJackGame {
     }
 
     private void spreadCards(final Players players, final CardDeck cardDeck) {
-        for (int i = DEFAULT_SPREAD_COUNT_START_INDEX; i < DEFAULT_SPREAD_COUNT_END_INDEX; i++) {
-            spreadCard(players, cardDeck);
-        }
-        printSpreadCards(players);
-    }
-
-    private void spreadCard(final Players players, final CardDeck cardDeck) {
         players.receiveCard(cardDeck);
     }
 
-    private void printSpreadCards(final Players players) {
+    private void printCardsOfPlayers(final Players players) {
         outputView.printSpreadInstruction(PlayersDto.from(players));
         outputView.printSingleCardForDealer(PlayerDto.from(players.getDealer()));
         outputView.printCardsForGambler(PlayersDto.from(players.getGamblers()));

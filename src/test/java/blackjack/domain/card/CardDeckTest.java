@@ -49,7 +49,7 @@ public class CardDeckTest {
         final CardDeck cardDeck = new CardDeck(() -> playingCards);
 
         //when
-        cardDeck.drawTo(dealer);
+        cardDeck.drawTo(dealer, 2);
         final int actual = dealer.getSumOfCards();
 
         //then
