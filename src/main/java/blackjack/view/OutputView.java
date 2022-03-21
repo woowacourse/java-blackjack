@@ -5,7 +5,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.WinningResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,12 +16,10 @@ public class OutputView {
     private static final String CARD_INFORMATION_FORMAT = "%s카드: %s";
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private static final String PARTICIPANT_POINT_RESULT = " - 결과: %d";
-    private static final String PARTICIPANT_WINNING_RESULT_MESSAGE = "\n## 최종 승패";
     private static final String PARTICIPANT_PROFIT_RESULT_MESSAGE = "\n## 최종 수익";
     private static final String DEALER_DIRECTION = "딜러:";
     private static final String RESULT_DELIMITER = ": ";
     private static final String PLAYER_HIT_IMPOSSIBLE_MESSAGE = "%s는 가진 카드의 합이 21이상이면 카드를 더 받을 수 없습니다.\n";
-    private static final String BLANK_FORMAT = " ";
 
     public static void printInitialCardInformation(Participants participants) {
         List<String> participantName = participants.getPlayers().stream()
@@ -56,14 +53,6 @@ public class OutputView {
             printCards(participant);
             printPoint(participant);
         }
-    }
-
-    public static void printResult(Map<WinningResult, Integer> dealerResult,
-        Map<Player, WinningResult> playerResult) {
-        System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
-
-        printDealerResult(dealerResult);
-        printPlayerResult(playerResult);
     }
 
     public static void printProfitResult(Map<Player, Long> playerProfitResult, long dealerProfitResult) {
@@ -107,20 +96,6 @@ public class OutputView {
     private static void printPoint(Participant participant) {
         System.out.printf(PARTICIPANT_POINT_RESULT, participant.getScore());
         System.out.println();
-    }
-
-    private static void printDealerResult(Map<WinningResult, Integer> dealerResult) {
-        System.out.print(DEALER_DIRECTION);
-
-        dealerResult.forEach((key, value) -> System.out.print(BLANK_FORMAT + value + key.getResult()));
-
-        System.out.println();
-    }
-
-    private static void printPlayerResult(Map<Player, WinningResult> playerResult) {
-        playerResult.forEach(
-            (key, value) -> System.out.println(
-                key.getName() + RESULT_DELIMITER + value.getResult()));
     }
 
 }

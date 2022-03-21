@@ -22,19 +22,12 @@ public abstract class Participant {
         }
     }
 
-//    public void receiveCard(Card card) {
-//        state = state.draw(card);
-//    }
     public void draw(Card card) {
         state = state.draw(card);
     }
 
     public void stay() {
         state = state.stay();
-    }
-
-    public boolean isBust() {
-        return state.isBust();
     }
 
     public boolean isBlackjack() {

@@ -1,22 +1,22 @@
 package blackjack.domain.betting;
 
+import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.WinningResult;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ProfitCalculator {
 
-    private final Map<Player, WinningResult> playerResult;
+    private final Participants participants;
     private final Map<Player, Long> playerProfit = new LinkedHashMap<>();
 
-    public ProfitCalculator(Map<Player, WinningResult> playerResult) {
-        this.playerResult = playerResult;
+    public ProfitCalculator(Participants participants) {
+        this.participants = participants;
     }
 
     public void calculate() {
-        for (Map.Entry<Player, WinningResult> entry : playerResult.entrySet()) {
-            playerProfit.put(entry.getKey(), calculateProfit(entry.getKey(), entry.getValue()));
+        for (Player player : participants.getPlayers()) {
+            playerProfit.put(player, player.getProfit(participants.getDealer()));
         }
     }
 
@@ -29,14 +29,6 @@ public class ProfitCalculator {
             .stream()
             .mapToLong(profit -> profit)
             .sum();
-    }
-
-    private long calculateProfit(Player player, WinningResult winningResult) {
-        return multiplyMoneyAndRate(player, winningResult.getEarningRate());
-    }
-
-    private long multiplyMoneyAndRate(Player player, double earningRate) {
-        return player.calculateProfit(earningRate);
     }
 
 }

@@ -2,13 +2,10 @@ package blackjack.controller;
 
 import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.betting.ProfitCalculator;
-import blackjack.domain.betting.ProfitCalculator2;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.BlackjackGameResult;
-import blackjack.domain.result.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -93,44 +90,27 @@ public class BlackjackController {
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
         while (dealer.isHittable()) {
             OutputView.printDealerHitMessage();
-            //dealer.receiveCard(deck.pickCard());
             dealer.draw(deck.pickCard());
         }
         if (!dealer.isFinished()) {
             dealer.stay();
         }
-
     }
 
     private void printResult(Participants participants) {
         OutputView.printCardsAndPoint(participants);
 
-        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(participants);
-        blackjackGameResult.calculatePlayerResult();
-
-        Map<Player, WinningResult> playerResult = blackjackGameResult.getPlayerResult();
-        Map<WinningResult, Integer> dealerResult = blackjackGameResult.getDealerResult();
-        OutputView.printResult(dealerResult, playerResult);
-
-//        printProfitResult(playerResult);
-        printProfitResult2(participants);
+        printProfitResult(participants);
     }
 
-    private void printProfitResult(Map<Player, WinningResult> playerResult) {
-        ProfitCalculator profitCalculator = new ProfitCalculator(playerResult);
+    private void printProfitResult(Participants participants) {
+        ProfitCalculator profitCalculator = new ProfitCalculator(participants);
+
         profitCalculator.calculate();
 
         Map<Player, Long> playerProfitResult = profitCalculator.getPlayerProfit();
         long dealerProfitResult = profitCalculator.calculateDealerProfit();
 
-        OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
-    }
-
-    private void printProfitResult2(Participants participants) {
-        ProfitCalculator2 profitCalculator2 = new ProfitCalculator2(participants);
-        profitCalculator2.calculate();
-        Map<Player, Long> playerProfitResult = profitCalculator2.getPlayerProfit();
-        long dealerProfitResult = profitCalculator2.calculateDealerProfit();
         OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
     }
 

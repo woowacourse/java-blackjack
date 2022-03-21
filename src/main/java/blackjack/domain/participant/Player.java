@@ -19,24 +19,12 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public boolean isDraw(Dealer dealer) {
-        return getScore() == dealer.getScore();
-    }
-
-    public boolean isWin(Dealer dealer) {
-        return getScore() > dealer.getScore();
-    }
-
     public boolean isHittable() {
         return getScore() < HIT_THRESHOLD_NUMBER;
     }
 
     public void createBettingMoney(BettingMoney bettingMoney) {
         this.bettingMoney = bettingMoney;
-    }
-
-    public long calculateProfit(double earningRate) {
-        return (long) (bettingMoney.getBettingMoney() * earningRate);
     }
 
     public String getName() {
