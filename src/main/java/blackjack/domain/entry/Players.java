@@ -53,25 +53,6 @@ public class Players {
             .anyMatch(Player::isFinished);
     }
 
-    private void validateSize(Map<Name, BettingMoney> players) {
-        if (players.size() > MAXIMUM_PLAYERS_SIZE) {
-            throw new IllegalArgumentException("최대 참가자 수는 25명입니다.");
-        }
-    }
-
-    private List<Player> toPlayers(Map<Name, BettingMoney> bettingPlayers) {
-        return bettingPlayers.keySet().stream()
-            .map(name -> new Player(name, bettingPlayers.get(name)))
-            .collect(Collectors.toList());
-    }
-
-    private Player findBy(Name name) {
-        return players.stream()
-            .filter(player -> player.equalsName(name))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 플에이어가 존재하지 않습니다."));
-    }
-
     public List<Name> getPlayersName() {
         return players.stream()
             .map(Player::getName)
@@ -92,6 +73,25 @@ public class Players {
         participants.add(dealer);
         participants.addAll(players);
         return participants;
+    }
+
+    private void validateSize(Map<Name, BettingMoney> players) {
+        if (players.size() > MAXIMUM_PLAYERS_SIZE) {
+            throw new IllegalArgumentException("최대 참가자 수는 25명입니다.");
+        }
+    }
+
+    private List<Player> toPlayers(Map<Name, BettingMoney> bettingPlayers) {
+        return bettingPlayers.keySet().stream()
+            .map(name -> new Player(name, bettingPlayers.get(name)))
+            .collect(Collectors.toList());
+    }
+
+    private Player findBy(Name name) {
+        return players.stream()
+            .filter(player -> player.equalsName(name))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 플에이어가 존재하지 않습니다."));
     }
 
     public Dealer getDealer() {

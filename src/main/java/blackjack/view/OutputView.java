@@ -21,15 +21,6 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printParticipantsCard(Participant participant) {
-        if (participant.isDealer()) {
-            printCard(participant.getName().getValue(),
-                Collections.singletonList(participant.getCards().get(FIRST_DEALER_CARD)));
-            return;
-        }
-        printCard(participant.getName().getValue(), participant.getCards());
-    }
-
     public static void printDealerHitCount(int hitCount) {
         System.out.println();
         System.out.println(MessageFormat.format("딜러는 16이하라 {0}장의 카드를 더 받았습니다.", hitCount));
@@ -54,10 +45,20 @@ public class OutputView {
             .collect(Collectors.joining(NAME_DELIMITER));
     }
 
-    private static String cards(List<Card> cards) {
-        return cards.stream()
-            .map(card -> card.getNumber().getName() + card.getSuit().getName())
-            .collect(Collectors.joining(NAME_DELIMITER));
+    private static void printParticipantsCard(Participant participant) {
+        if (participant.isDealer()) {
+            printCard(participant.getName().getValue(),
+                Collections.singletonList(participant.getCards().get(FIRST_DEALER_CARD)));
+            return;
+        }
+        printCard(participant.getName().getValue(), participant.getCards());
+    }
+
+    private static void printProfit(Map<Participant, Double> participants) {
+        System.out.println("## 최종 수익");
+        for (Participant participant : participants.keySet()) {
+            System.out.println(participant.getName().getValue() + ": " + participants.get(participant).intValue());
+        }
     }
 
     private static void printCardResult(Map<Participant, Double> participants) {
@@ -70,10 +71,9 @@ public class OutputView {
         }
     }
 
-    private static void printProfit(Map<Participant, Double> participants) {
-        System.out.println("## 최종 수익");
-        for (Participant participant : participants.keySet()) {
-            System.out.println(participant.getName().getValue() + ": " + participants.get(participant).intValue());
-        }
+    private static String cards(List<Card> cards) {
+        return cards.stream()
+            .map(card -> card.getNumber().getName() + card.getSuit().getName())
+            .collect(Collectors.joining(NAME_DELIMITER));
     }
 }

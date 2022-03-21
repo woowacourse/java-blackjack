@@ -28,15 +28,6 @@ public class InputView {
         }
     }
 
-    private static Map<Name, BettingMoney> inputPlayerBettingMoney(List<String> playerNames) {
-        Map<Name, BettingMoney> players = new LinkedHashMap<>();
-        for (String playerName : playerNames) {
-            System.out.println(MessageFormat.format("{0}의 배팅 금액은? (1000단위, 최대 500만)", playerName));
-            players.put(new Name(playerName), new BettingMoney(validateNaturalNumber(isNumeric(SCANNER.nextLine()))));
-        }
-        return players;
-    }
-
     public static String inputCommand(String name) {
         try {
             System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
@@ -51,6 +42,15 @@ public class InputView {
         return Arrays.stream(names.split(NAME_DELIMITER))
             .map(String::trim)
             .collect(Collectors.toList());
+    }
+
+    private static Map<Name, BettingMoney> inputPlayerBettingMoney(List<String> playerNames) {
+        Map<Name, BettingMoney> players = new LinkedHashMap<>();
+        for (String playerName : playerNames) {
+            System.out.println(MessageFormat.format("{0}의 배팅 금액은? (1000단위, 최대 500만)", playerName));
+            players.put(new Name(playerName), new BettingMoney(validateNaturalNumber(isNumeric(SCANNER.nextLine()))));
+        }
+        return players;
     }
 
     private static int isNumeric(String number) {
