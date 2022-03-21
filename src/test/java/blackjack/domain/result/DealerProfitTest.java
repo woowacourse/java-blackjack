@@ -41,8 +41,8 @@ public class DealerProfitTest {
         void blackjack() {
             takeTwoCards(lisa, ACE_HEART, KING_HEART);
 
-            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(lisa)));
-            DealerProfit dealerProfit = new DealerProfit(guestProfit);
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(lisa)));
+            DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
             assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(-15_000));
         }
@@ -52,8 +52,8 @@ public class DealerProfitTest {
         void win() {
             takeTwoCards(lisa, ACE_HEART, NINE_HEART);
 
-            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(lisa)));
-            DealerProfit dealerProfit = new DealerProfit(guestProfit);
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(lisa)));
+            DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
             assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(-10_000));
         }
@@ -63,8 +63,8 @@ public class DealerProfitTest {
         void draw() {
             takeTwoCards(lisa, ACE_HEART, FIVE_HEART);
 
-            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(lisa)));
-            DealerProfit dealerProfit = new DealerProfit(guestProfit);
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(lisa)));
+            DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
             assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(0));
         }
@@ -74,8 +74,8 @@ public class DealerProfitTest {
         void lose() {
             takeTwoCards(lisa, KING_HEART, FIVE_HEART);
 
-            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(lisa)));
-            DealerProfit dealerProfit = new DealerProfit(guestProfit);
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(lisa)));
+            DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
             assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(10_000));
         }

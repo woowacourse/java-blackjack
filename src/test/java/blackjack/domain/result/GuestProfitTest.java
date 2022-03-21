@@ -43,8 +43,8 @@ public class GuestProfitTest {
         void blackjack() {
             takeTwoCards(jennie, ACE_HEART, KING_HEART);
 
-            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(jennie)));
-            Map<Guest, Money> profits = guestProfit.getProfits();
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(jennie)));
+            Map<Guest, Money> profits = guestProfits.getProfits();
 
             assertThat(profits).contains(entry(jennie, Money.valueOf(15_000)));
         }
@@ -54,8 +54,8 @@ public class GuestProfitTest {
         void win() {
             takeTwoCards(jennie, ACE_HEART, NINE_HEART);
 
-            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(jennie)));
-            Map<Guest, Money> profits = guestProfit.getProfits();
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(jennie)));
+            Map<Guest, Money> profits = guestProfits.getProfits();
 
             assertThat(profits).contains(entry(jennie, Money.valueOf(10_000)));
         }
@@ -65,8 +65,8 @@ public class GuestProfitTest {
         void draw() {
             takeTwoCards(jennie, ACE_HEART, FIVE_HEART);
 
-            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(jennie)));
-            Map<Guest, Money> profits = guestProfit.getProfits();
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(jennie)));
+            Map<Guest, Money> profits = guestProfits.getProfits();
 
             assertThat(profits).contains(entry(jennie, Money.valueOf(0)));
         }
@@ -76,8 +76,8 @@ public class GuestProfitTest {
         void lose() {
             takeTwoCards(jennie, KING_HEART, FIVE_HEART);
 
-            GuestProfit guestProfit = new GuestProfit(dealer, Guests.of(List.of(jennie)));
-            Map<Guest, Money> profits = guestProfit.getProfits();
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(jennie)));
+            Map<Guest, Money> profits = guestProfits.getProfits();
 
             assertThat(profits).contains(entry(jennie, Money.valueOf(-10_000)));
 

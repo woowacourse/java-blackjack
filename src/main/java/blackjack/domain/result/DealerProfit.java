@@ -6,12 +6,12 @@ public class DealerProfit {
 
     private final Money profit;
 
-    public DealerProfit(final GuestProfit guestProfit) {
-        this.profit = calculate(guestProfit);
+    public DealerProfit(final GuestProfits guestProfits) {
+        this.profit = calculate(guestProfits);
     }
 
-    private Money calculate(final GuestProfit guestProfit) {
-        final Long profit = guestProfit.getValues()
+    private Money calculate(final GuestProfits guestProfits) {
+        final Long profit = guestProfits.getValues()
                 .stream()
                 .map(Money::getValue)
                 .reduce(0L, Long::sum);

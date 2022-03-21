@@ -8,11 +8,11 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GuestProfit {
+public class GuestProfits {
 
     private final Map<Guest, Money> profits;
 
-    public GuestProfit(final Dealer dealer, final Guests guests) {
+    public GuestProfits(final Dealer dealer, final Guests guests) {
         this.profits = calculate(dealer, guests);
     }
 

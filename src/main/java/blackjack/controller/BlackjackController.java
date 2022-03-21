@@ -9,7 +9,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Guests;
 import blackjack.domain.result.DealerProfit;
-import blackjack.domain.result.GuestProfit;
+import blackjack.domain.result.GuestProfits;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -103,8 +103,8 @@ public class BlackjackController {
     }
 
     private void calculateTotalProfit(final Dealer dealer, final Guests guests) {
-        final GuestProfit guestProfit = new GuestProfit(dealer, guests);
-        final DealerProfit dealerProfit = new DealerProfit(guestProfit);
-        OutputView.printTotalProfit(guestProfit.getProfits(), dealer.getName(), dealerProfit.getProfit());
+        final GuestProfits guestProfits = new GuestProfits(dealer, guests);
+        final DealerProfit dealerProfit = new DealerProfit(guestProfits);
+        OutputView.printTotalProfit(guestProfits.getProfits(), dealer.getName(), dealerProfit.getProfit());
     }
 }
