@@ -29,7 +29,7 @@ public class Player extends Participant {
         if (this.isBlackJack() || dealer.isBust()) {
             return WinOrLose.WIN;
         }
-        return judgeVersus(dealer.calculateBestScore());
+        return judgeWinOrLose(dealer.calculateBestScore());
     }
 
     private WinOrLose compareAtDealerBlackJack() {
@@ -39,7 +39,7 @@ public class Player extends Participant {
         return WinOrLose.LOSE;
     }
 
-    private WinOrLose judgeVersus(int otherScore) {
+    private WinOrLose judgeWinOrLose(int otherScore) {
         int playerScore = calculateBestScore();
         if (playerScore > otherScore) {
             return WinOrLose.WIN;

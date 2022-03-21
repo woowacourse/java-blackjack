@@ -28,17 +28,17 @@ public class Controller {
     public Controller() {
         this.deck = new Deck(Card.getShuffledCards());
         this.dealer = new Dealer(new InitCards(deck).getInitCards());
-        this.players = createPlayers(deck);
-        this.bettingReceipts = createBettingReceipt(players);
+        this.players = createPlayers();
+        this.bettingReceipts = createBettingReceipt();
     }
 
     public void run() {
         printInit();
         draw();
-        printResultAndProfit(Results.generateResults(dealer, players), bettingReceipts, players);
+        printResultAndProfit(Results.generateResults(dealer, players));
     }
 
-    private BettingReceipts createBettingReceipt(Players players) {
+    private BettingReceipts createBettingReceipt() {
         Map<Name, BettingMoney> maps = new LinkedHashMap<>();
         for (Name name : players.getNames()) {
             maps.put(name, new BettingMoney(InputView.inputMoney(name)));
@@ -46,7 +46,7 @@ public class Controller {
         return new BettingReceipts(maps);
     }
 
-    private Players createPlayers(Deck deck) {
+    private Players createPlayers() {
         List<Player> players = new ArrayList<>();
         for (Name name : InputView.inputNames()) {
             players.add(new Player(name, new InitCards(deck).getInitCards()));
@@ -61,20 +61,20 @@ public class Controller {
     }
 
     private void draw() {
-        drawForPlayers(deck, dealer, players);
-        drawForDealer(deck, dealer, players);
+        drawForPlayers();
+        drawForDealer();
     }
 
-    private void drawForPlayers(Deck deck, Dealer dealer, Players players) {
+    private void drawForPlayers() {
         if (dealer.isBlackJack()) {
             return;
         }
         for (Name name : players.getNames()) {
-            drawForPlayer(name, deck, players);
+            drawForPlayer(name);
         }
     }
 
-    private void drawForPlayer(Name name, Deck deck, Players players) {
+    private void drawForPlayer(Name name) {
         while (players.isNeedToDrawByName(name) && InputView.inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
             OutputView.printPlayerHand(name, players);
@@ -82,14 +82,14 @@ public class Controller {
         }
     }
 
-    private void drawForDealer(Deck deck, Dealer dealer, Players players) {
+    private void drawForDealer() {
         while (players.isNotAllBust() && dealer.isNeedToDraw()) {
             OutputView.printDealerDrawMessage();
             dealer.addCard(deck.draw());
         }
     }
 
-    private void printResultAndProfit(Results results, BettingReceipts bettingReceipts, Players players) {
+    private void printResultAndProfit(Results results) {
         OutputView.printStatuses(dealer, players);
         OutputView.printResult(players.getNames(), results);
         OutputView.printProfit(players.getNames(), Profits.generateProfits(results, bettingReceipts, players));
