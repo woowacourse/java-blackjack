@@ -20,6 +20,14 @@ public class CardGroup {
         this.cards = cards;
     }
 
+    private CardGroup(CardGroup cardGroup) {
+        this.cards = List.copyOf(cardGroup.cards);
+    }
+
+    public CardGroup copy() {
+        return new CardGroup(this);
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

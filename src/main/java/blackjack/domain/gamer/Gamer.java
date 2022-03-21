@@ -21,7 +21,7 @@ public class Gamer {
 
     private Gamer(Gamer gamer) {
         this.name = gamer.name;
-        this.cardGroup = new CardGroup(gamer.getCards());
+        this.cardGroup = gamer.cardGroup.copy();
     }
 
     private void validateName(String name) {
