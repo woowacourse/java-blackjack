@@ -13,8 +13,8 @@ public final class Players {
 
     private final List<Player> value;
 
-    public Players(final List<Player> rawValue) {
-        this.value = rawValue;
+    public Players(final List<Player> value) {
+        this.value = value;
         validateNames(getNames());
     }
 
@@ -22,10 +22,6 @@ public final class Players {
         if (new HashSet<>(names).size() != names.size()) {
             throw new IllegalArgumentException(NAMES_DUPLICATED_ERROR_MESSAGE);
         }
-    }
-
-    public void giveCard(CardDeck cardDeck) {
-        value.forEach(player -> player.addCard(cardDeck.pop()));
     }
 
     public Map<Player, Integer> getPayouts(final Dealer dealer) {

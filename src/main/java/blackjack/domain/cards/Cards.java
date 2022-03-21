@@ -2,13 +2,14 @@ package blackjack.domain.cards;
 
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
-import blackjack.domain.result.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public final class Cards {
     private static final int BLACKJACK_NUMBER = 21;
+    private static final int ACE_MINUS_NUMBER = 10;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> value;
 
@@ -34,7 +35,26 @@ public final class Cards {
     }
 
     public int getPoint() {
-        return new Point(this).get();
+        int point = getRawPoint();
+        int aceCount = getAceCount();
+
+        while (point > BLACKJACK_NUMBER && aceCount > 0) {
+            point -= ACE_MINUS_NUMBER;
+            aceCount--;
+        }
+        return point;
+    }
+
+    private int getRawPoint() {
+        return value.stream()
+                .mapToInt(Card::getPoint)
+                .sum();
+    }
+
+    private int getAceCount() {
+        return (int) value.stream()
+                .filter(card -> card.isSameDenomination(Denomination.ACE))
+                .count();
     }
 
     public boolean isBust() {
@@ -42,22 +62,10 @@ public final class Cards {
     }
 
     public boolean isBlackjack() {
-        return getPoint() == BLACKJACK_NUMBER && size() == 2;
+        return getPoint() == BLACKJACK_NUMBER && size() == BLACKJACK_CARD_COUNT;
     }
 
-    public int getRawPoint() {
-        return value.stream()
-                .mapToInt(Card::getPoint)
-                .sum();
-    }
-
-    public int getAceCount() {
-        return (int) value.stream()
-                .filter(card -> card.isSameDenomination(Denomination.ACE))
-                .count();
-    }
-
-    public boolean hasMorePoint(Cards cards) {
+    public boolean hasMorePoint(final Cards cards) {
         return getPoint() > cards.getPoint();
     }
 

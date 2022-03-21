@@ -45,26 +45,6 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("카드 주는 기능 테스트")
-    public void giveCardTest() {
-        // given
-        Players players = new Players(List.of(fx.POBI, fx.JASON));
-        CardDeck cardDeck = new CardDeck();
-
-        // when
-        players.giveCard(cardDeck);
-        players.giveCard(cardDeck);
-
-        // then
-        assertAll(
-                () -> assertThat(players.get().get(0).getRawCards().size())
-                        .isEqualTo(2),
-                () -> assertThat(players.get().get(1).getRawCards().size())
-                        .isEqualTo(2)
-        );
-    }
-
-    @Test
     @DisplayName("페이아웃 반환 테스트")
     public void getPayoutsTest() {
         Fixtures fx = new Fixtures();

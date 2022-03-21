@@ -28,7 +28,7 @@ public final class BlackjackGame {
         printInitHands(players, dealer);
 
         startGame(players, dealer, cardDeck);
-        printGameResult(players, dealer);
+        calculateResult(players, dealer);
     }
 
     private Players initPlayers(final CardDeck cardDeck) {
@@ -50,7 +50,7 @@ public final class BlackjackGame {
         }
     }
 
-    private void printGameResult(final Players players, final Dealer dealer) {
+    private void calculateResult(final Players players, final Dealer dealer) {
         printHandAndPoint(players, dealer);
 
         Map<Player, Integer> payouts = players.getPayouts(dealer);
