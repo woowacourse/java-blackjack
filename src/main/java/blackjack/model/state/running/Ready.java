@@ -1,8 +1,8 @@
-package blackjack.model.state.Running;
+package blackjack.model.state.running;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
-import blackjack.model.state.Finished.Blackjack;
+import blackjack.model.state.finished.Blackjack;
 import blackjack.model.state.State;
 
 public final class Ready extends Running {

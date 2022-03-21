@@ -1,4 +1,4 @@
-package blackjack.model.state.Started;
+package blackjack.model.state.started;
 
 import blackjack.model.card.Cards;
 import blackjack.model.state.State;

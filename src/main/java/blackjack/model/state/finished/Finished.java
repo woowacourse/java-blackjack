@@ -1,8 +1,8 @@
-package blackjack.model.state.Finished;
+package blackjack.model.state.finished;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
-import blackjack.model.state.Started.Started;
+import blackjack.model.state.started.Started;
 import blackjack.model.state.State;
 
 public abstract class Finished extends Started {

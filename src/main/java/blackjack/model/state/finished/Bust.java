@@ -1,33 +1,33 @@
-package blackjack.model.state.Finished;
+package blackjack.model.state.finished;
 
-import static blackjack.model.BettingRate.BLACKJACK;
 import static blackjack.model.BettingRate.DRAW;
+import static blackjack.model.BettingRate.LOSE;
 
 import blackjack.model.BettingRate;
 import blackjack.model.card.Cards;
 import blackjack.model.state.State;
 
-public class Blackjack extends Finished {
+public class Bust extends Finished {
 
-    public Blackjack(Cards cards) {
+    public Bust(final Cards cards) {
         super(cards);
     }
 
     @Override
     public boolean isBust() {
-        return false;
-    }
-
-    @Override
-    public boolean isBlackjack() {
         return true;
     }
 
     @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
     public BettingRate calculateBettingRate(State otherState) {
-        if (otherState.isBlackjack()) {
+        if (otherState.isBust()) {
             return DRAW;
         }
-        return BLACKJACK;
+        return LOSE;
     }
 }

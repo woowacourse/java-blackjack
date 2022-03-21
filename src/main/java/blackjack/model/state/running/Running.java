@@ -1,8 +1,8 @@
-package blackjack.model.state.Running;
+package blackjack.model.state.running;
 
 import blackjack.model.BettingRate;
 import blackjack.model.card.Cards;
-import blackjack.model.state.Started.Started;
+import blackjack.model.state.started.Started;
 import blackjack.model.state.State;
 
 public abstract class Running extends Started {

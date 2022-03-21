@@ -8,9 +8,9 @@ import static blackjack.model.state.CardFixture.CLOVER_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Cards;
-import blackjack.model.state.Finished.Bust;
-import blackjack.model.state.Finished.Stay;
-import blackjack.model.state.Running.Hit;
+import blackjack.model.state.finished.Bust;
+import blackjack.model.state.finished.Stay;
+import blackjack.model.state.running.Hit;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package blackjack.model.state.Finished;
+package blackjack.model.state.finished;
 
 import static blackjack.model.BettingRate.LOSE;
 import static blackjack.model.BettingRate.WIN;
