@@ -53,6 +53,7 @@ public class OutputView {
     public static void printDealerCardMessage(int cardsCount) {
         System.out.println();
         if (printNonDealerCardMessage(cardsCount)) {
+            System.out.println();
             return;
         }
 
@@ -73,18 +74,17 @@ public class OutputView {
             stringBuilder.append("딜러는 16이하라 한장의 카드를 더 받았습니다.")
                     .append(System.lineSeparator());
         }
-        System.out.print(stringBuilder);
+        System.out.println(stringBuilder);
     }
 
     public static void printGamersCardAndSum(List<GamerCardsResultDto> gamersCardsResults) {
-        System.out.println();
         for (GamerCardsResultDto gamerCardsResult : gamersCardsResults) {
             printGamerCardAndSum(gamerCardsResult);
         }
         System.out.println();
     }
 
-    private static void printGamerCardAndSum(GamerCardsResultDto gamerCardsResultDto) {
+    public static void printGamerCardAndSum(GamerCardsResultDto gamerCardsResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
         String gamerName = gamerCardsResultDto.getGamerCardsDto().getName();
         GamerCardsDto gamerCardsDto = gamerCardsResultDto.getGamerCardsDto();

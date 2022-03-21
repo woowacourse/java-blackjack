@@ -51,7 +51,6 @@ public class GamerGroup {
 
     public List<Gamer> getGamers() {
         List<Gamer> gamers = new ArrayList<>();
-        gamers.add(dealer);
         gamers.addAll(playerGroup.getPlayers());
         return Collections.unmodifiableList(gamers);
     }
