@@ -11,45 +11,15 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackTest {
-    @Test
-    @DisplayName("카드를 2장씩 나눈다.")
-    void divideCard() {
-        Player pepper = Player.of("페퍼", initializeBettingMoney());
-        Player ash = Player.of("애쉬", initializeBettingMoney());
-        PlayerGroup playerGroup = new PlayerGroup(Arrays.asList(pepper, ash));
-        BlackJack blackJack = new BlackJack(playerGroup, new Dealer());
-        blackJack.divideCards();
-
-        List<Integer> cardSizes = List.of(pepper.getCards().size(),
-                ash.getCards().size(),
-                blackJack.getDealer().getCards().size());
-
-        assertThat(cardSizes)
-                .containsExactly(2, 2, 2)
-                .doesNotContain(0);
-    }
-
-    @Test
-    @DisplayName("카드가 1장 더 추가되는지 테스트 한다.")
-    void addCard() {
-        Player pepper = Player.of("페퍼", initializeBettingMoney());
-        PlayerGroup playerGroup = new PlayerGroup(List.of(pepper));
-        BlackJack blackJack = new BlackJack(playerGroup, new Dealer());
-        int pepperCardsSize = pepper.getCards().size();
-        blackJack.addCardTo(pepper);
-
-        assertThat(pepper.getCards().size()).isEqualTo(pepperCardsSize + 1);
-    }
+class GameResultTest {
 
     @Test
     @DisplayName("페퍼는 블랙잭으로 승리, 애쉬는 승리, 포비는 무승부, 제이슨은 패배한다.")
-    void getGameResult() {
+    void getProfitResults() {
         GameResult gameResult = initializeGameResult();
         Map<String, Integer> profitResults = gameResult.getProfitResults();
 
@@ -59,7 +29,7 @@ class BlackJackTest {
 
     @Test
     @DisplayName("딜러가 버스트인 경우, 버스트 되지 않은 플레이어만 베팅 금액을 받는다.")
-    void getDealerBustGameResult() {
+    void getDealerBustProfitResult() {
         GameResult gameResult = initializeDealerBustGameResult();
         Map<String, Integer> profitResults = gameResult.getProfitResults();
 
@@ -92,8 +62,7 @@ class BlackJackTest {
         dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.SEVEN));
         dealer.addCard(Card.of(CardShape.CLUB, CardNumber.KING));
 
-        BlackJack blackJack = new BlackJack(playerGroup, dealer);
-        return blackJack.getGameResult();
+        return GameResult.of(dealer, playerGroup);
     }
 
     private GameResult initializeDealerBustGameResult() {
@@ -113,8 +82,7 @@ class BlackJackTest {
         dealer.addCard(Card.of(CardShape.CLUB, CardNumber.TEN));
         dealer.addCard(Card.of(CardShape.DIAMOND, CardNumber.JACK));
 
-        BlackJack blackJack = new BlackJack(playerGroup, dealer);
-        return blackJack.getGameResult();
+        return GameResult.of(dealer, playerGroup);
     }
 
     private BettingMoney initializeBettingMoney() {

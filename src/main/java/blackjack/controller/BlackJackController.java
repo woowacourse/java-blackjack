@@ -1,8 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.BettingMoney;
-import blackjack.domain.BlackJack;
+import blackjack.domain.card.CardPack;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.GamerGroup;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
@@ -13,59 +14,72 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
-    private BlackJack blackJack;
+    private final GamerGroup gamerGroup;
+    private final CardPack cardPack;
+
+    public BlackJackController() {
+        this.gamerGroup = new GamerGroup(new Dealer(), initializePlayerGroup());
+        this.cardPack = new CardPack();
+    }
 
     public void run() {
-        initialize();
+        divideCards();
         play();
         finish();
     }
 
-    private void initialize() {
-        blackJack = new BlackJack(initializePlayerGroup(), new Dealer());
-        blackJack.divideCards();
-        OutputView.printInitialGamerCards(GamerCardsDto.valueOf(blackJack.getDealer()),
-                GamerCardsDto.valueOf(blackJack.getPlayers()));
-    }
-
     private PlayerGroup initializePlayerGroup() {
-        List<String> playerNames = getPlayerNames();
+        List<String> playerNames = requestPlayerNames();
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            BettingMoney bettingMoney = getBettingMoney(playerName);
+            BettingMoney bettingMoney = requestBettingMoney(playerName);
             players.add(Player.of(playerName, bettingMoney));
         }
         return new PlayerGroup(players);
     }
 
-    private List<String> getPlayerNames() {
+    private List<String> requestPlayerNames() {
         try {
             return InputView.requestPlayerNames();
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
-            return getPlayerNames();
+            return requestPlayerNames();
         }
     }
 
-    private BettingMoney getBettingMoney(String playerName) {
+    private BettingMoney requestBettingMoney(String playerName) {
         try {
             int amount = InputView.requestBettingMoney(playerName);
             return BettingMoney.of(amount);
         } catch (Exception exception) {
             OutputView.printErrorMessage(exception.getMessage());
-            return getBettingMoney(playerName);
+            return requestBettingMoney(playerName);
         }
     }
 
+    private void divideCards() {
+        gamerGroup.addInitialCards(cardPack);
+        OutputView.printInitialGamerCards(GamerCardsDto.valueOf(gamerGroup.getDealer()),
+                GamerCardsDto.valueOf(gamerGroup.getPlayers()));
+    }
+
     private void play() {
-        List<String> playerNames = blackJack.getPlayerNames();
+        List<String> playerNames = getPlayerNames();
         for (String playerName : playerNames) {
-            Player player = blackJack.findPlayerByName(playerName);
+            Player player = gamerGroup.findPlayerByName(playerName);
             requestHitOrStand(player);
         }
-        OutputView.printDealerCardMessage(blackJack.addCardToDealer());
+        OutputView.printDealerCardMessage(gamerGroup.addCardToDealer(cardPack));
+    }
+
+    private List<String> getPlayerNames() {
+        return gamerGroup.getPlayers()
+                .stream()
+                .map(Player::getName)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void requestHitOrStand(Player player) {
@@ -74,7 +88,7 @@ public class BlackJackController {
         }
 
         if (InputView.requestHit(player.getName())) {
-            blackJack.addCardTo(player);
+            player.addCard(cardPack.pickOne());
             OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCards()));
             requestHitOrStand(player);
             return;
@@ -84,10 +98,10 @@ public class BlackJackController {
     }
 
     private void finish() {
-        OutputView.printGamerCardAndSum(GamerCardsResultDto.valueOf(blackJack.getDealer()));
-        OutputView.printGamersCardAndSum(GamerCardsResultDto.valueOf(blackJack.getPlayers()));
+        OutputView.printGamerCardAndSum(GamerCardsResultDto.valueOf(gamerGroup.getDealer()));
+        OutputView.printGamersCardAndSum(GamerCardsResultDto.valueOf(gamerGroup.getPlayers()));
 
-        GameResult gameResult = blackJack.getGameResult();
+        GameResult gameResult = gamerGroup.getGameResult();
         OutputView.printGameResult(ProfitDto.of(gameResult));
     }
 }
