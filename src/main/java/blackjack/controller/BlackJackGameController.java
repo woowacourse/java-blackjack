@@ -112,13 +112,11 @@ public class BlackJackGameController {
 	}
 
 	private void initializeCard(Players players, Dealer dealer, BlackJackGame blackJackGame) {
-		blackJackGame.shuffleDeck();
-		blackJackGame.initDrawTo(dealer);
+		blackJackGame.deal(players, dealer);
 		outputView.displayNewLine();
 		outputView.displayFirstDistribution(players, dealer);
 		outputView.displayDealerOneCard(dealer);
 		for (Player player : players.getPlayers()) {
-			blackJackGame.initDrawTo(player);
 			outputView.displayAllCard(player);
 		}
 		outputView.displayNewLine();
