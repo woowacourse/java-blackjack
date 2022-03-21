@@ -33,14 +33,14 @@ public class GameResult {
     }
 
     private static int calculateProfit(Player player, Dealer dealer) {
-        if (player.isInstantBlackJack()) {
+        if (player.isBlackJack()) {
             return calculateBlackJackProfit(player, dealer);
         }
         return calculateGeneralProfit(player, dealer);
     }
 
     private static int calculateBlackJackProfit(Player player, Dealer dealer) {
-        if (dealer.isInstantBlackJack()) {
+        if (dealer.isBlackJack()) {
             return NO_PROFIT;
         }
         return (int) (player.getBettingMoney().getAmount() * BLACKJACK_PROFIT);

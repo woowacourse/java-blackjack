@@ -30,8 +30,8 @@ public class Dealer {
         return gamer.getScore() <= DEALER_STAND_CONDITION;
     }
 
-    public boolean isInstantBlackJack() {
-        return gamer.isInstantBlackJack();
+    public boolean isBlackJack() {
+        return gamer.isBlackJack();
     }
 
     public String getName() {

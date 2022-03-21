@@ -60,7 +60,7 @@ public class CardGroup {
                 .count();
     }
 
-    public boolean isInstantBlackJack() {
+    public boolean isBlackJack() {
         CardGroup initialCardGroup = new CardGroup(cards.subList(FIRST_CARD_INDEX, SECOND_CARD_INDEX + 1));
         return initialCardGroup.calculateScore() == BLACKJACK_NUMBER;
     }

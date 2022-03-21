@@ -50,8 +50,8 @@ public class Player {
         return gamer.isNotBust();
     }
 
-    public boolean isInstantBlackJack() {
-        return gamer.isInstantBlackJack();
+    public boolean isBlackJack() {
+        return gamer.isBlackJack();
     }
 
     public BettingMoney getBettingMoney() {
