@@ -19,7 +19,7 @@ public class Score {
         checkBlackjack(cards);
     }
 
-    public int getScore() {
+    public int value() {
         return value;
     }
 

@@ -28,14 +28,14 @@ class ScoreTest {
     @Test
     @DisplayName("점수 합산 확인")
     void checkSumPoint() {
-        assertThat(score.getScore()).isEqualTo(7);
+        assertThat(score.value()).isEqualTo(7);
     }
 
     @Test
     @DisplayName("score card 2개일 때 점수 합산")
     public void checkSumScoreCardsPoint() {
         score = new Score(Set.of(new Card(Suit.SPADE, Rank.EIGHT), new Card(Suit.SPADE, Rank.TWO)));
-        int sumPoint = score.getScore();
+        int sumPoint = score.value();
         assertThat(sumPoint).isEqualTo(10);
     }
 
@@ -44,7 +44,7 @@ class ScoreTest {
     public void checkSumScoreThreeCardsPoint() {
         score = new Score(Set.of(new Card(Suit.SPADE, Rank.EIGHT), new Card(Suit.SPADE, Rank.TWO),
                 new Card(Suit.SPADE, Rank.JACK)));
-        int sumPoint = score.getScore();
+        int sumPoint = score.value();
         assertThat(sumPoint).isEqualTo(20);
     }
 
@@ -54,7 +54,7 @@ class ScoreTest {
         score = new Score(
                 Set.of(new Card(Suit.SPADE, Rank.ACE), new Card(Suit.CLUB, Rank.ACE), new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.HEART, Rank.ACE)));
-        int sumPoint = score.getScore();
+        int sumPoint = score.value();
         assertThat(sumPoint).isEqualTo(14);
     }
 
@@ -63,7 +63,7 @@ class ScoreTest {
     public void checkPointsForThreeAces() {
         score = new Score(Set.of(new Card(Suit.SPADE, Rank.ACE), new Card(Suit.CLUB, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.ACE), new Card(Suit.DIAMOND, Rank.TWO)));
-        int sumPoint = score.getScore();
+        int sumPoint = score.value();
         assertThat(sumPoint).isEqualTo(15);
     }
 
@@ -73,7 +73,7 @@ class ScoreTest {
         score = new Score(
                 Set.of(new Card(Suit.SPADE, Rank.ACE), new Card(Suit.CLUB, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.NINE)));
-        int sumPoint = score.getScore();
+        int sumPoint = score.value();
         assertThat(sumPoint).isEqualTo(21);
     }
 
@@ -82,7 +82,7 @@ class ScoreTest {
     public void checkPointsForTwoAcesOverLimit() {
         score = new Score(Set.of(new Card(Suit.SPADE, Rank.ACE), new Card(Suit.CLUB, Rank.ACE),
                 new Card(Suit.DIAMOND, Rank.JACK)));
-        int sumPoint = score.getScore();
+        int sumPoint = score.value();
         assertThat(sumPoint).isEqualTo(12);
     }
 

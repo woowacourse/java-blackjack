@@ -36,7 +36,7 @@ class PlayersTest {
     void checkStartWithTwoCards() {
         Cards cards = new Cards(new AlwaysDescNumberMachine());
         players.startWithTwoCards(cards);
-        int point = players.getPlayers().get(1).getDeck().score().getScore();
+        int point = players.getPlayers().get(1).getDeck().score().value();
 
         assertThat(point).isEqualTo(20);
     }

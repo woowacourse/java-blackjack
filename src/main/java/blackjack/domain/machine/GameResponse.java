@@ -17,7 +17,7 @@ public class GameResponse {
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.toList());
-        this.score = deck.score().getScore();
+        this.score = deck.score().value();
     }
 
     public String getName() {
