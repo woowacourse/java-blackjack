@@ -37,7 +37,7 @@ public class BlackJackGameController {
 	private Players generatePlayers() {
 		try {
 			final List<String> playerNames = inputView.inputPlayerNames();
-			final List<Player> players = addPlayers(playerNames);
+			final List<Player> players = generatePlayer(playerNames);
 			return new Players(players);
 		} catch (IllegalArgumentException exception) {
 			outputView.printException(exception.getMessage());
@@ -45,7 +45,7 @@ public class BlackJackGameController {
 		}
 	}
 
-	private List<Player> addPlayers(List<String> playerNames) {
+	private List<Player> generatePlayer(List<String> playerNames) {
 		final List<Player> players = new ArrayList<>();
 		for (String playerName : playerNames) {
 			final double money = inputView.inputMoney(playerName);
