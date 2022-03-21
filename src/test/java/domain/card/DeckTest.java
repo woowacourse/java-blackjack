@@ -26,9 +26,8 @@ public class DeckTest {
 
         Deck testDeck = Deck.initDeck(Arrays.asList(card1, card2, card3));
         List<Card> deckCards = testDeck.getCards();
-        assertThat(deckCards).contains(card1);
-        assertThat(deckCards).contains(card2);
-        assertThat(deckCards).contains(card3);
+
+        assertThat(deckCards).containsAll(Arrays.asList(card1, card2, card3));
     }
 
     @Test
