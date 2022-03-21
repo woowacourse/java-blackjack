@@ -16,63 +16,95 @@ class BlackJackResultTest {
     @Test
     @DisplayName("플레이어와 딜러의 점수를 입력 받아, 둘 다 버스트가 아니면서 플레이어가 승리")
     void playerWinNotBust() {
+        // given
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
+
+        // when
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
+
+        // then
         assertThat(blackJackResult).isEqualTo(BlackJackResult.WIN);
     }
 
     @Test
     @DisplayName("플레이어가 블랙잭이고, 딜러가 블랙잭이 아닐 경우 플레이어는 블랙잭 승리를 한다.")
     void playerBlackJackWin() {
+        // given
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.ACE), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
+
+        // when
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
+
+        // then
         assertThat(blackJackResult).isEqualTo(BlackJackResult.BLACK_JACK_WIN);
     }
 
     @Test
     @DisplayName("플레이어와 딜러 모두 블랙잭일 경우, 무승부다.")
     void draw() {
+        // given
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.ACE), new Card(CardShape.CLOVER, CardNumber.TEN));
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.ACE), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
+
+        // when
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
+
+        // then
         assertThat(blackJackResult).isEqualTo(BlackJackResult.DRAW);
     }
 
     @Test
     @DisplayName("Result 결과 값의 반대 결과를 반환한다.")
     void getReverse() {
+        // given
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.EIGHT));
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
+
+        // when
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
-        assertThat(blackJackResult.getReverse((int) blackJackResult.getProfitRate() * player.getBettingMoney())).isEqualTo(-1000);
+        int value = blackJackResult.getReverse((int) blackJackResult.getProfitRate() * player.getBettingMoney());
+
+        // then
+        assertThat(value).isEqualTo(-1000);
     }
 
     @Test
     @DisplayName("점수가 21점으로 같아도, 블랙잭이면 승리한다.")
     void blackJack() {
+        // given
         List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.ACE));
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         player.addCard(new Card(CardShape.HEART, CardNumber.ACE));
         Dealer dealer = new Dealer(dealerCards);
+
+        // when
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
+
+        // then
         assertThat(blackJackResult).isEqualTo(BlackJackResult.LOSE);
     }
 
     @Test
     @DisplayName("금액을 입력 받아 수익을 반환한다.")
     void getProfit() {
+        // given
         BlackJackResult blackJackResult = BlackJackResult.WIN;
-        assertThat(blackJackResult.getProfit(1000)).isEqualTo(1000);
+
+        // when
+        int value = blackJackResult.getProfit(1000);
+
+        // then
+        assertThat(value).isEqualTo(1000);
     }
 }

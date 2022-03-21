@@ -16,10 +16,16 @@ class PlayerTest {
     @Test
     @DisplayName("딜러와 카드 점수 결과 반환")
     void match() {
+        // given
         List<Card> cards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.NINE));
         Dealer dealer = new Dealer(cards);
         Player pobi = new Player("pobi", cards, 1000);
-        assertThat(pobi.match(dealer)).isEqualTo(BlackJackResult.DRAW);
+
+        // when
+        BlackJackResult value = pobi.match(dealer);
+
+        // then
+        assertThat(value).isEqualTo(BlackJackResult.DRAW);
     }
 
     @Test
@@ -35,9 +41,15 @@ class PlayerTest {
     @Test
     @DisplayName("딜러를 입력 받아 수익을 반환한다.")
     void getProfit() {
+        // given
         List<Card> cards = List.of(new Card(CardShape.DIAMOND, CardNumber.THREE), new Card(CardShape.CLOVER, CardNumber.NINE));
         Dealer dealer = new Dealer(cards);
         Player pobi = new Player("pobi", cards, 1000);
-        assertThat(pobi.getProfit(dealer)).isEqualTo(0);
+
+        // when
+        int value = pobi.getProfit(dealer);
+
+        // then
+        assertThat(value).isEqualTo(0);
     }
 }
