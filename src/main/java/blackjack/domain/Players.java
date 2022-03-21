@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Players implements Iterable {
+public class Players implements Iterable<Player> {
     private static final String NAME_DUPLICATION_EXCEPTION = "[ERROR] 중복된 플레이어 이름이 있습니다.";
     private final List<Player> players;
 

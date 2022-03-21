@@ -54,9 +54,9 @@ public class Blackjack {
     }
 
     public Map<Participant, Receipt> calculateYield(Dealer dealer, Players players) {
-        for (Object player : players) {
-            yieldTable.put((Player)player, BlackjackResult.of(dealer, (Player)player)
-                    .settle(bettingTable.get((Player)player)));
+        for (Player player : players) {
+            yieldTable.put(player, BlackjackResult.of(dealer, player)
+                    .settle(bettingTable.get(player)));
         }
         return yieldTable;
     }

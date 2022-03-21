@@ -92,8 +92,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
@@ -110,8 +110,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
@@ -128,8 +128,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
@@ -147,8 +147,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
@@ -168,8 +168,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
@@ -189,8 +189,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
@@ -209,8 +209,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
@@ -229,8 +229,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
@@ -249,8 +249,8 @@ class BlackjackTest {
         Players players = Players.generateWithNames(List.of("pobi"));
         Dealer dealer = Dealer.generate();
         Player pobi = null;
-        for (Object player : players) {
-            pobi = (Player) player;
+        for (Player player : players) {
+            pobi = player;
         }
         blackjack.betting(pobi, 10000);
         blackjack.distributeInitCards(dealer, players);
