@@ -12,15 +12,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GamerTest {
-
-    @Test
-    @DisplayName("플레이어를 생성할 때, 카드 2개를 추가한다.")
-    void addCard() {
-        Deck deck = new Deck();
-        Gamer player = new Player("name", List.of(deck.draw(), deck.draw()), 1000);
-        assertThat(player.getCardsSize()).isEqualTo(2);
-    }
-
     @Test
     @DisplayName("보유 카드 번호 합 반환")
     void calculateCardsNumberSum() {
