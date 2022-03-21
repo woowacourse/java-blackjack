@@ -8,6 +8,7 @@ import blackjack.domain.card.Suit;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -54,5 +55,26 @@ public class DealerTest {
                 Arguments.of(
                         List.of(new Card(Denomination.KING, Suit.CLOVER), new Card(Denomination.TEN, Suit.HEART)))
         );
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭일 경우 BLACKJACK 상태를 반환환다.")
+    void isBlackjack() {
+        Dealer dealer = new Dealer();
+        dealer.takeCard(new Card(Denomination.ACE, Suit.HEART));
+        dealer.takeCard(new Card(Denomination.JACK, Suit.SPADE));
+
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트일 경우 BUST 상태를 반환환다.")
+    void isBust() {
+        Dealer dealer = new Dealer();
+        dealer.takeCard(new Card(Denomination.THREE, Suit.HEART));
+        dealer.takeCard(new Card(Denomination.JACK, Suit.SPADE));
+        dealer.takeCard(new Card(Denomination.QUEEN, Suit.CLOVER));
+
+        assertThat(dealer.isBust()).isTrue();
     }
 }

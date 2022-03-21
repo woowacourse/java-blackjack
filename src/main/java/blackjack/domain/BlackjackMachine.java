@@ -3,8 +3,8 @@ package blackjack.domain;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
+import blackjack.domain.player.Guest;
+import blackjack.domain.player.Guests;
 import blackjack.domain.player.Player;
 
 public class BlackjackMachine {
@@ -15,11 +15,11 @@ public class BlackjackMachine {
         this.deck = deck;
     }
 
-    public void giveInitialCards(final Dealer dealer, final Participants participants) {
+    public void giveInitialCards(final Dealer dealer, final Guests guests) {
         addInitialCards(dealer);
 
-        for (Participant participant : participants) {
-            addInitialCards(participant);
+        for (Guest guest : guests) {
+            addInitialCards(guest);
         }
     }
 
@@ -28,9 +28,9 @@ public class BlackjackMachine {
         player.takeCard(deck.pickCard());
     }
 
-    public void giveCardToParticipant(final Participant participant, final Choice choice) {
-        if (choice.isHit() && participant.canTakeCard()) {
-            participant.takeCard(deck.pickCard());
+    public void giveCardToGuest(final Guest guest, final Choice choice) {
+        if (choice.isHit() && guest.canTakeCard()) {
+            guest.takeCard(deck.pickCard());
         }
     }
 

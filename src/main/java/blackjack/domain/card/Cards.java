@@ -1,13 +1,16 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.Rule.DIFFERENCE_IN_ACE_SCORE;
 import static blackjack.domain.Rule.WINNING_SCORE;
 
+import blackjack.domain.Rule;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Cards implements Iterable<Card> {
+
+    private static final int DIFFERENCE_IN_ACE_SCORE = 11 - 1;
+    private static final int BLACKJACK_CARDS_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -35,7 +38,7 @@ public class Cards implements Iterable<Card> {
 
     private int changeAceScore(int totalScore) {
         if (totalScore > WINNING_SCORE.getValue()) {
-            totalScore -= DIFFERENCE_IN_ACE_SCORE.getValue();
+            totalScore -= DIFFERENCE_IN_ACE_SCORE;
         }
         return totalScore;
     }
@@ -44,8 +47,13 @@ public class Cards implements Iterable<Card> {
         cards.add(card);
     }
 
-    public int getSize() {
-        return cards.size();
+    public boolean isBust() {
+        return calculateTotalScore() > Rule.WINNING_SCORE.getValue();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARDS_SIZE &&
+                calculateTotalScore() == Rule.WINNING_SCORE.getValue();
     }
 
     @Override

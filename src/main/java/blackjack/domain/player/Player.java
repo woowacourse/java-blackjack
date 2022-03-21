@@ -43,7 +43,7 @@ public abstract class Player {
     }
 
     public boolean isBust() {
-        return State.from(this) == State.BUST;
+        return cards.isBust();
     }
 
     public boolean isNotBust() {
@@ -51,15 +51,11 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        return State.from(this) == State.BLACKJACK;
+        return cards.isBlackjack();
     }
 
     public boolean isNotBlackjack() {
         return !isBlackjack();
-    }
-
-    public int getCardsSize() {
-        return cards.getSize();
     }
 
     public String getName() {

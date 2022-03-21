@@ -1,49 +1,36 @@
 package blackjack.domain.result;
 
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import java.util.Arrays;
-import java.util.function.BiPredicate;
+import blackjack.domain.player.Guest;
 
 public enum Result {
 
-    WIN("승", (dealer, participant) ->
-            participant.isNotBust() &&
-                    (participant.getTotalScore() > dealer.getTotalScore() || dealer.isBust())),
-    DRAW("무승부", (dealer, participant) ->
-            dealer.isNotBlackjack() &&
-                    participant.isNotBust() && dealer.getTotalScore() == participant.getTotalScore()),
-    LOSE("패", (dealer, participant) ->
-            dealer.isBlackjack() || participant.isBust() ||
-                    (dealer.isNotBust() && dealer.getTotalScore() > participant.getTotalScore())),
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1),
     ;
 
-    private final String name;
-    private final BiPredicate<Dealer, Participant> condition;
+    private final double profitRatio;
 
-    Result(final String name, final BiPredicate<Dealer, Participant> condition) {
-        this.name = name;
-        this.condition = condition;
+    Result(final double profitRatio) {
+        this.profitRatio = profitRatio;
     }
 
-    public static Result of(final Dealer dealer, final Participant participant) {
-        return Arrays.stream(Result.values())
-                .filter(result -> result.condition.test(dealer, participant))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 승패를 가릴 수 없는 경우입니다."));
-    }
-
-    public Result getOpposite() {
-        if (this == WIN) {
+    static Result decide(final Dealer dealer, final Guest guest) {
+        if (guest.isBlackjack() && dealer.isNotBlackjack()) {
+            return BLACKJACK;
+        }
+        if (guest.isBust() || (dealer.isNotBust() && dealer.getTotalScore() > guest.getTotalScore())) {
             return LOSE;
         }
-        if (this == LOSE) {
+        if (dealer.isBust() || guest.getTotalScore() > dealer.getTotalScore()) {
             return WIN;
         }
         return DRAW;
     }
 
-    public String getName() {
-        return this.name;
+    double getProfitRatio() {
+        return profitRatio;
     }
 }
