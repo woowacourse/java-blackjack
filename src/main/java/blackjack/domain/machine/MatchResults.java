@@ -2,7 +2,9 @@ package blackjack.domain.machine;
 
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,9 +12,11 @@ public class MatchResults {
 
     private final Map<Name, Double> results;
 
-    public MatchResults(Player dealer) {
+    public MatchResults(Players players) {
         this.results = new LinkedHashMap<>();
-        this.results.put(dealer.getName(), (double) 0);
+        for (Name playerName : players.getNames()) {
+            this.results.put(playerName, (double) 0);
+        }
     }
 
     public void addResult(Player guest, Player dealer, double profit) {

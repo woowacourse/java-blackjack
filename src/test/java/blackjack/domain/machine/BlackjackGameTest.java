@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Fixtures;
 import blackjack.domain.participant.Guest;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -47,9 +48,9 @@ class BlackjackGameTest {
     @Test
     @DisplayName("두 명이 참가한 상태에서 결과 객체가 딜러와 참가자 1명 총 2명인지 확인")
     void checkCalculateResult() {
-        Map<Player, Double> bettingBox = new LinkedHashMap<>();
+        Map<Name, Double> bettingBox = new LinkedHashMap<>();
         Player player = new Guest("eden");
-        bettingBox.put(player, (double) 1000);
+        bettingBox.put(player.getName(), (double) 1000);
         MatchResults matchResults = blackjackGame.calculateResult(bettingBox);
         assertThat(matchResults.getKeys().size()).isEqualTo(2);
     }

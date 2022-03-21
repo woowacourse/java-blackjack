@@ -52,15 +52,15 @@ public class BlackjackGame {
         dealer.addCard(deck.assignCard());
     }
 
-    public MatchResults calculateResult(Map<Player, Double> bettingBox) {
+    public MatchResults calculateResult(Map<Name, Double> bettingBox) {
+        MatchResults matchResults = new MatchResults(blackjackPlayers);
         Player dealer = blackjackPlayers.getDealer();
-        return scoreResults(bettingBox, dealer);
+        return yieldMatchResults(bettingBox, matchResults, dealer);
     }
 
-    private MatchResults scoreResults(Map<Player, Double> bettingBox, Player dealer) {
-        MatchResults matchResults = new MatchResults(dealer);
-        for (Player guest : bettingBox.keySet()) {
-            Double money = bettingBox.get(guest);
+    private MatchResults yieldMatchResults(Map<Name, Double> bettingBox, MatchResults matchResults, Player dealer) {
+        for (Player guest : blackjackPlayers.getGuests()) {
+            Double money = bettingBox.get(guest.getName());
             MatchJudge result = MatchJudge.judgeMatch(guest.getScore(), dealer.getScore());
             matchResults.addResult(guest, dealer, result.calculateProfit(money));
         }

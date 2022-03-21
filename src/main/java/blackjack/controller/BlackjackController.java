@@ -18,7 +18,7 @@ public class BlackjackController {
     public void playGame() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
 
-        Map<Player, Double> bettingBox = betMoney(blackjackGame.getGuests());
+        Map<Name, Double> bettingBox = betMoney(blackjackGame.getGuests());
         announceStartGame(blackjackGame);
         blackjackGame.initGame();
         OutputView.announcePresentCards(toResponse(blackjackGame.getPlayers()));
@@ -36,10 +36,11 @@ public class BlackjackController {
         OutputView.announceStartGame(playerNames);
     }
 
-    private Map<Player, Double> betMoney(List<Player> players) {
-        Map<Player, Double> bettingBox = new LinkedHashMap<>();
-        for (Player player : players) {
-            bettingBox.put(player, InputView.inputBettingMoney(player.getName().value()));
+    private Map<Name, Double> betMoney(List<Player> guests) {
+        Map<Name, Double> bettingBox = new LinkedHashMap<>();
+        for (Player guest : guests) {
+            Name guestName = guest.getName();
+            bettingBox.put(guestName, InputView.inputBettingMoney(guestName.value()));
         }
         return bettingBox;
     }
@@ -86,7 +87,7 @@ public class BlackjackController {
     }
 
     private void printResult(BlackjackGame blackjackGame,
-                             Map<Player, Double> bettingBox) {
+                             Map<Name, Double> bettingBox) {
         OutputView.announceResultCards(toResponse(blackjackGame.getPlayers()));
         OutputView.announceResultWinner(blackjackGame.calculateResult(bettingBox));
     }
