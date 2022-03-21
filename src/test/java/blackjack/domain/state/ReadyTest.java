@@ -13,7 +13,7 @@ class ReadyTest {
 
     @DisplayName("베팅 금액에 숫자가 아닌 값을 입력했을 경우 예외가 발생하는 것을 확인한다.")
     @Test
-    void betting_not_number() {
+    void betting_not_number_exception() {
         Ready ready = new Ready();
 
         assertThatThrownBy(() -> ready.bet("asdf"))
@@ -82,7 +82,7 @@ class ReadyTest {
 
     @DisplayName("수익률을 변경할 경우 예외가 발생하는 것을 확인한다.")
     @Test
-    void decide_rate() {
+    void decide_rate_exception() {
         Ready ready = new Ready();
 
         assertThatThrownBy(() -> ready.decideRate(1))

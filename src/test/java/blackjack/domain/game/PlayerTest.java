@@ -25,7 +25,7 @@ public class PlayerTest {
 
     @DisplayName("딜러 이름과 동일한 이름을 입력할 경우 예외를 발생시킨다.")
     @Test
-    void equals_dealer_name() {
+    void equals_dealer_name_exception() {
         assertThatThrownBy(() -> new Player("딜러"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("딜러와 동일한 이름은 사용할 수 없습니다.");

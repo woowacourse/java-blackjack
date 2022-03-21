@@ -19,7 +19,7 @@ class HitTest {
 
     @DisplayName("bet 을 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
-    void bet() {
+    void bet_exception() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.ACE, Suit.SPADE), Card.of(Denomination.ACE, Suit.SPADE)));
         Hit hit = new Hit(playingCards, betting);
@@ -87,7 +87,7 @@ class HitTest {
 
     @DisplayName("수익률을 변경할 경우 예외가 발생하는 것을 확인한다.")
     @Test
-    void decide_rate() {
+    void decide_rate_exception() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
         Hit hit = new Hit(playingCards, betting);

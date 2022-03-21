@@ -20,7 +20,7 @@ class BlackjackTest {
 
     @DisplayName("bet 을 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
-    void bet() {
+    void bet_exception() {
         Blackjack blackjack = new Blackjack(playingCards, betting);
 
         assertThatThrownBy(() -> blackjack.bet("1000"))
@@ -30,7 +30,7 @@ class BlackjackTest {
 
     @DisplayName("draw 를 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
-    void draw() {
+    void draw_exception() {
         Blackjack blackjack = new Blackjack(playingCards, betting);
 
         assertThatThrownBy(() -> blackjack.draw(Card.of(Denomination.KING, Suit.SPADE)))
@@ -40,7 +40,7 @@ class BlackjackTest {
 
     @DisplayName("stay 를 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
-    void stay() {
+    void stay_exception() {
         Blackjack blackjack = new Blackjack(playingCards, betting);
 
         assertThatThrownBy(blackjack::stay)

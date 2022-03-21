@@ -20,7 +20,7 @@ class StayTest {
 
     @DisplayName("bet 을 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
-    void bet() {
+    void bet_exception() {
         Stay stay = new Stay(playingCards, betting);
 
         assertThatThrownBy(() -> stay.bet("1000"))
@@ -30,7 +30,7 @@ class StayTest {
 
     @DisplayName("draw 를 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
-    void draw() {
+    void draw_exception() {
         Stay stay = new Stay(playingCards, betting);
 
         assertThatThrownBy(() -> stay.draw(Card.of(Denomination.KING, Suit.SPADE)))
@@ -40,7 +40,7 @@ class StayTest {
 
     @DisplayName("stay 를 실행하여 예외가 발생하는 것을 확인한다.")
     @Test
-    void stay() {
+    void stay_exception() {
         Stay stay = new Stay(playingCards, betting);
 
         assertThatThrownBy(stay::stay)

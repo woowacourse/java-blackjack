@@ -1,8 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.bet.Betting;
 import blackjack.domain.game.Answer;
-import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 
 public class InputConverter {

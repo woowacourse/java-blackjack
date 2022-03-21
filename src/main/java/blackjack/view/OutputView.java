@@ -7,7 +7,7 @@ import java.util.List;
 public class OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR] ";
-    private static final String CARD = "\uD83C\uDCCF";
+    private static final String CARD_EMOJI = "\uD83C\uDCCF";
     private static final String CARDS_FORMAT = "%s%s: %s";
     private static final String DELIMITER = Players.DELIMITER + " ";
 
@@ -39,17 +39,17 @@ public class OutputView {
     }
 
     public static void printCards(final String name, final List<String> playingCards) {
-        System.out.printf(CARDS_FORMAT, name, CARD, String.join(DELIMITER, playingCards));
+        System.out.printf(CARDS_FORMAT, name, CARD_EMOJI, String.join(DELIMITER, playingCards));
         printNewLine();
     }
 
     public static void printDrawInstruction(final String name) {
-        System.out.printf("%s는 한장의 %s를 더 받겠습니까?(예는 y, 아니오는 n)", name, CARD);
+        System.out.printf("%s는 한장의 %s를 더 받겠습니까?(예는 y, 아니오는 n)", name, CARD_EMOJI);
         printNewLine();
     }
 
     public static void printDrawDealer(final String name, final int receivedMaximum) {
-        System.out.printf("%s는 %d이하라 한장의 %s를 더 받았습니다.", name, receivedMaximum, CARD);
+        System.out.printf("%s는 %d이하라 한장의 %s를 더 받았습니다.", name, receivedMaximum, CARD_EMOJI);
         printNewLine();
     }
 
@@ -58,7 +58,7 @@ public class OutputView {
     }
 
     public static void printScore(final String name, final List<String> playingCards, final int total) {
-        System.out.printf(CARDS_FORMAT + " - 결과: %d", name, CARD, String.join(DELIMITER, playingCards), total);
+        System.out.printf(CARDS_FORMAT + " - 결과: %d", name, CARD_EMOJI, String.join(DELIMITER, playingCards), total);
         printNewLine();
     }
 

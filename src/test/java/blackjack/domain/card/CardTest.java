@@ -12,7 +12,7 @@ class CardTest {
 
     @DisplayName("부적절한 카드 정보를 호출할 경우 예외가 발생하는 것을 확인한다.")
     @Test
-    void not_cached_card() {
+    void not_cached_card_exception() {
         assertThatThrownBy(() -> Card.of(null, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("적절하지 않은 카드 정보가 존재합니다.");
