@@ -12,6 +12,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackGameController {
 	private final InputView inputView;
@@ -24,7 +25,7 @@ public class BlackJackGameController {
 
 	public void gameStart() {
 		BlackJackGame blackJackGame = new BlackJackGame(new Deck());
-		Players players = generatePlayers(blackJackGame);
+		Players players = generatePlayers();
 		Dealer dealer = new Dealer();
 		initializeCard(players, dealer, blackJackGame);
 		progressPlayerTurn(players, blackJackGame);
@@ -32,17 +33,24 @@ public class BlackJackGameController {
 		makeResult(players, dealer);
 	}
 
-	private Players generatePlayers(BlackJackGame blackJackGame) {
-		List<Name> names = generateNames(blackJackGame);
-		return blackJackGame.generatePlayers(names, generateBettingMoneys(names));
+	private Players generatePlayers() {
+		List<Name> names = generateNames();
+		List<BettingToken> bettingTokens = generateBettingMoneys(names);
+		List<Player> players = new ArrayList<>();
+		for (int i = 0; i < names.size(); i++) {
+			players.add(new Player(bettingTokens.get(i), names.get(i)));
+		}
+		return new Players(players);
 	}
 
-	private List<Name> generateNames(BlackJackGame blackJackGame) {
+	private List<Name> generateNames() {
 		try {
-			return blackJackGame.generateNames(inputView.inputPlayerNames());
+			return inputView.inputPlayerNames().stream()
+				.map(Name::new)
+				.collect(Collectors.toList());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return generateNames(blackJackGame);
+			return generateNames();
 		}
 	}
 
