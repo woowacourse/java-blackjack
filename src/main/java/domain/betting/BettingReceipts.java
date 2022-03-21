@@ -15,7 +15,7 @@ public class BettingReceipts {
 
     public BettingMoney getBettingMoney(Name name) {
         if (!maps.containsKey(name)) {
-            throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getName()));
+            throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getValue()));
         }
         return maps.get(name);
     }

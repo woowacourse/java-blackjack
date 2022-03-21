@@ -1,20 +1,18 @@
 package domain.participant;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
-
-import domain.result.Results;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.result.Results;
 import domain.result.WinOrLose;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 
@@ -26,7 +24,6 @@ public class PlayersTest {
     List<Card> cards_BLACKJACK = new ArrayList<>(Arrays.asList(card_A, card_Q));
     List<Card> cards_BUST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
     Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
-    Dealer dealer_BLACKJACK = new Dealer(List.of(card_A, card_Q));
 
     Player player_BLACKJACK;
     Player player_BUST;
@@ -40,38 +37,9 @@ public class PlayersTest {
     }
 
     @Test
-    @DisplayName("이름으로 플레이어 손패 반환")
-    void showHandByName() {
-        Name name = new Name("player_BLACKJACK");
-        assertThat(players.showHandByName(name)).isEqualTo("A♣️, Q♣️");
-    }
-
-    @Test
-    @DisplayName("이름으로 플레이어 카드 추가")
-    void addCardByName() {
-        Name name = new Name("player_BLACKJACK");
-        players.addCardByName(name, Card.getCard(Rank.RANK_A, Suit.DIAMOND));
-        assertThat(players.showHandByName(name)).isEqualTo("A♣️, Q♣️, A♦️");
-    }
-
-    @Test
-    @DisplayName("이름으로 플레이어가 Bust 인지 판별")
-    void isBustByName() {
-        Name name = new Name("player_BUST");
-        assertThat(players.isBustByName(name)).isTrue();
-    }
-
-    @Test
     @DisplayName("모든 플레이어가 Bust 인지 판별")
     void isBustAllBust() {
         assertThat(players.isNotAllBust()).isTrue();
-    }
-
-    @Test
-    @DisplayName("이름으로 플레이어가 블랙잭 인지 판별")
-    void isBlackJackByName() {
-        Name name = new Name("player_BLACKJACK");
-        assertThat(players.isUpperBoundScoreByName(name)).isTrue();
     }
 
     @Test

@@ -35,7 +35,7 @@ public class InputView {
     }
 
     public static int inputMoney(Name name) {
-        System.out.printf(INPUT_BETTING_MONEY_FORMAT, name.getName());
+        System.out.printf(INPUT_BETTING_MONEY_FORMAT, name.getValue());
         String input = scanner.nextLine();
         return Integer.parseInt(input);
     }

@@ -3,6 +3,7 @@ package domain.result;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Results {
@@ -16,12 +17,14 @@ public class Results {
     }
 
     public static Results generateResults(Dealer dealer, Players players) {
-        return new Results(players.compareWinOrLose(dealer));
+        Map<Name, WinOrLose> playerResult = new LinkedHashMap<>();
+        players.forEach(player -> playerResult.put(player.getName(), WinOrLose.compareWinOrLose(dealer, player)));
+        return new Results(playerResult);
     }
 
     public WinOrLose getVersusOfPlayer(Name name) {
         if (!maps.containsKey(name)) {
-            throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getName()));
+            throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getValue()));
         }
         return maps.get(name);
     }

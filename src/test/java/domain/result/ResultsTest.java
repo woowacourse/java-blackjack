@@ -111,7 +111,7 @@ public class ResultsTest {
     @DisplayName("딜러가 21인데 플레이어가 21일 경우, 무승부")
     void getVersusOfPlayer_21_21_draw() {
         dealer_17.addCard(card_4);
-        players.addCardByName(new Name("player_15"), card_6);
+        player_15.addCard(card_6);
         Results result = Results.generateResults(dealer_17, players);
         assertThat(result.getVersusOfPlayer(new Name("player_15")).getResult()).isEqualTo("무");
     }

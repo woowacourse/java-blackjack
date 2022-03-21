@@ -3,6 +3,7 @@ package view;
 import domain.betting.Profits;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.Results;
 import java.util.List;
@@ -30,18 +31,16 @@ public class OutputView {
         printInitHandsMessage(players.getNames());
         printNewLine();
         System.out.printf(SHOW_DEALER_FIRST_HAND_FORMAT, dealer.getFirstHand().combineRankAndSuit());
-        for (Name name : players.getNames()) {
-            printPlayerHand(name, players);
-        }
+        players.forEach(player -> printPlayerHand(player.getName().getValue(), player.showHand()));
     }
 
     public static void printInitHandsMessage(List<Name> names) {
-        String namesForPrint = names.stream().map(Name::getName).collect(Collectors.joining(", "));
+        String namesForPrint = names.stream().map(Name::getValue).collect(Collectors.joining(", "));
         System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
     }
 
-    public static void printPlayerHand(Name name, Players players) {
-        System.out.printf(SHOW_HAND_FORMAT, name.getName(), players.showHandByName(name));
+    public static void printPlayerHand(String name, String hand) {
+        System.out.printf(SHOW_HAND_FORMAT, name, hand);
     }
 
     public static void printDealerIsBlackJackMessage(Dealer dealer) {
@@ -51,24 +50,24 @@ public class OutputView {
     }
 
     public static void printPlayerIsBlackJackMessage(Players players) {
-        for (Name name : players.getNames()) {
-            OutputView.printIfPlayerIsBlackJackMessage(name, players);
+        players.forEach(player -> OutputView.printIfPlayerIsBlackJackMessage(player));
+    }
+
+    private static void printIfPlayerIsBlackJackMessage(Player player) {
+        if (player.isBlackJack()) {
+            System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, player.getName().getValue());
         }
     }
 
-    private static void printIfPlayerIsBlackJackMessage(Name name, Players players) {
-        if (players.isBlackJackByName(name)) {
-            System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, name.getName());
-        }
-    }
-
-    public static void printIfMaxScoreOrBust(Name name, Players players) {
-        if (players.isUpperBoundScoreByName(name)) {
-            System.out.println(MAX_SCORE_MESSAGE);
-        }
-        if (players.isBustByName(name)) {
-            System.out.println(BUST_MESSAGE);
-        }
+    public static void printIfMaxScoreOrBust(Players players) {
+        players.forEach(player -> {
+            if (player.isUpperBoundScore()) {
+                System.out.println(MAX_SCORE_MESSAGE);
+            }
+            if (player.isBust()) {
+                System.out.println(BUST_MESSAGE);
+            }
+        });
     }
 
     public static void printDealerDrawMessage() {
@@ -78,21 +77,21 @@ public class OutputView {
     public static void printStatuses(Dealer dealer, Players players) {
         printNewLine();
         System.out.printf(STATUS_FORMAT, "딜러", dealer.showHand(), dealer.calculateBestScore());
-        for (Name name : players.getNames()) {
+        players.forEach(player -> {
             System.out.printf(
                     STATUS_FORMAT,
-                    name.getName(),
-                    players.showHandByName(name),
-                    players.getBestScoreByName(name)
+                    player.getName().getValue(),
+                    player.showHand(),
+                    player.calculateBestScore()
             );
-        }
+        });
     }
 
     public static void printResult(List<Name> names, Results results) {
         OutputView.printResultTitle();
         OutputView.printResultOfDealer(results.countDealerWin(), results.countDealerDraw(), results.countDealerLose());
         for (Name name : names) {
-            OutputView.printResultOfPlayer(name.getName(), results.getVersusOfPlayer(name).getResult());
+            OutputView.printResultOfPlayer(name.getValue(), results.getVersusOfPlayer(name).getResult());
         }
     }
 
@@ -112,7 +111,7 @@ public class OutputView {
         OutputView.printProfitTitle();
         OutputView.printProfitOfDealer(profits.calculateDealerProfit());
         for (Name name : names) {
-            OutputView.printProFitOfPlayer(name.getName(), profits.getProfit(name));
+            OutputView.printProFitOfPlayer(name.getValue(), profits.getProfit(name));
         }
     }
 

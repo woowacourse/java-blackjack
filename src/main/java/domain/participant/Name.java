@@ -6,11 +6,11 @@ public class Name {
 
     private static final String BLANK_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름은 공백이거나 빈칸일 수 없습니다.";
 
-    private final String name;
+    private final String value;
 
-    public Name(String name) {
-        validateName(name);
-        this.name = name;
+    public Name(String value) {
+        validateName(value);
+        this.value = value;
     }
 
     protected void validateName(String name) {
@@ -19,14 +19,14 @@ public class Name {
         }
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
     @Override
     public String toString() {
         return "Name{" +
-                "name='" + name + '\'' +
+                "name='" + value + '\'' +
                 '}';
     }
 
@@ -39,11 +39,11 @@ public class Name {
             return false;
         }
         Name name1 = (Name) o;
-        return name.equals(name1.name);
+        return value.equals(name1.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(value);
     }
 }

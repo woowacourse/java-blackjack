@@ -38,20 +38,18 @@ public class Controller {
         printResultAndProfit(Results.generateResults(dealer, players));
     }
 
-    private BettingReceipts createBettingReceipt() {
-        Map<Name, BettingMoney> maps = new LinkedHashMap<>();
-        for (Name name : players.getNames()) {
-            maps.put(name, new BettingMoney(InputView.inputMoney(name)));
-        }
-        return new BettingReceipts(maps);
-    }
-
     private Players createPlayers() {
         List<Player> players = new ArrayList<>();
         for (Name name : InputView.inputNames()) {
             players.add(new Player(name, new InitCards(deck).getInitCards()));
         }
         return new Players(players);
+    }
+
+    private BettingReceipts createBettingReceipt() {
+        Map<Name, BettingMoney> maps = new LinkedHashMap<>();
+        players.forEach(player -> maps.put(player.getName(), new BettingMoney(InputView.inputMoney(player.getName()))));
+        return new BettingReceipts(maps);
     }
 
     private void printInit() {
@@ -69,17 +67,13 @@ public class Controller {
         if (dealer.isBlackJack()) {
             return;
         }
-        for (Name name : players.getNames()) {
-            drawForPlayer(name);
-        }
-    }
-
-    private void drawForPlayer(Name name) {
-        while (players.isNeedToDrawByName(name) && InputView.inputAskDraw(name.getName())) {
-            players.addCardByName(name, deck.draw());
-            OutputView.printPlayerHand(name, players);
-            OutputView.printIfMaxScoreOrBust(name, players);
-        }
+        players.forEach(player -> {
+            while (player.isNeedToDraw() && InputView.inputAskDraw(player.getName().getValue())) {
+                player.addCard(deck.draw());
+                OutputView.printPlayerHand(player.getName().getValue(), player.showHand());
+                OutputView.printIfMaxScoreOrBust(players);
+            }
+        });
     }
 
     private void drawForDealer() {

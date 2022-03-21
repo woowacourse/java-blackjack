@@ -21,13 +21,14 @@ public class Profits {
 
     public static Profits generateProfits(Results results, BettingReceipts bettingReceipts, Players players) {
         Map<Name, Double> maps = new LinkedHashMap<>();
-        for (Name name : players.getNames()) {
+        players.forEach(player -> {
+            Name name = player.getName();
             maps.put(name, calculatePlayerProfit(
                     results.getVersusOfPlayer(name),
                     bettingReceipts.getBettingMoney(name),
-                    players.isBlackJackByName(name)
+                    player.isBlackJack()
             ));
-        }
+        });
         return new Profits(maps);
     }
 
@@ -55,7 +56,7 @@ public class Profits {
 
     public double getProfit(Name name) {
         if (!maps.containsKey(name)) {
-            throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getName()));
+            throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getValue()));
         }
         return maps.get(name);
     }
