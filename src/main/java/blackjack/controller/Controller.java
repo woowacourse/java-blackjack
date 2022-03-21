@@ -18,9 +18,10 @@ public class Controller {
         CardDeck cardDeck = CardDeck.initShuffled();
         Dealer dealer = new Dealer();
         List<String> playerNames = InputView.requestPlayerNames();
-        Players players = new Players(playerNames.stream()
+        List<Player> participatingPlayers = playerNames.stream()
                 .map(playerName -> Player.of(playerName, InputView.requestBet(playerName)))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+        Players players = new Players(participatingPlayers);
 
         initCardHand(cardDeck, dealer, players);
         playBlackJack(cardDeck, dealer, players);
