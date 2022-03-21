@@ -1,14 +1,12 @@
 package blackjack.domain.player;
 
 
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.generator.RandomCardDeckGenerator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,7 @@ class PlayersTest {
     void checkPlayerCountToPlayGame(List<String> playerNames) {
         final CardDeck cardDeck = new CardDeck(new RandomCardDeckGenerator());
 
-        assertThatThrownBy(() -> Players.createByName(playerNames, cardDeck))
+        assertThatThrownBy(() -> Players.of(playerNames, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임을 하기 위한 플레이어 수는 1명이상 8명이하로 입력해주세요.");
     }
@@ -40,24 +38,10 @@ class PlayersTest {
     @DisplayName("플레이어의 이름이 중복이면, 예외를 발생한다.")
     void checkDuplicatePlayerNames() {
         final CardDeck cardDeck = new CardDeck(new RandomCardDeckGenerator());
-
         final List<String> playerNames = new ArrayList<>(List.of("slow", "slow", "pobi"));
 
-        assertThatThrownBy(() -> Players.createByName(playerNames, cardDeck))
+        assertThatThrownBy(() -> Players.of(playerNames, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 플레이어의 이름이 있습니다.");
-    }
-
-    @Test
-    @DisplayName("배팅 금액, 이름이 모두 정상 입력된 경우, Players 를 정상 생성한다.")
-    void createPlayers() {
-        final CardDeck cardDeck = new CardDeck(new RandomCardDeckGenerator());
-        final Map<String, Integer> players = Map.ofEntries(
-                Map.entry("slow", 1000),
-                Map.entry("pobi", 2000)
-        );
-
-        assertThatCode(() -> Players.createByNameAndBettingMoney(players, cardDeck))
-                .doesNotThrowAnyException();
     }
 }
