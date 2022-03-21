@@ -62,7 +62,7 @@ public class PlayerGroup {
     public List<Player> getPlayers() {
         List<Player> copiedPlayers = new ArrayList<>();
         for (Player player : players) {
-            Player copiedPlayer = new Player(player.getName(), player.getCards(), player.getBettingMoney());
+            Player copiedPlayer = player.copy();
             copiedPlayers.add(copiedPlayer);
         }
         return copiedPlayers;

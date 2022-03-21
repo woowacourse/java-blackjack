@@ -12,18 +12,22 @@ public class Player {
     private final Gamer gamer;
     private final BettingMoney bettingMoney;
 
-    public Player(String name, BettingMoney bettingMoney) {
+    private Player(String name, BettingMoney bettingMoney) {
         this.gamer = new Gamer(name);
         this.bettingMoney = bettingMoney;
     }
 
-    public Player(String name, List<Card> cards, BettingMoney bettingMoney) {
+    private Player(Player player) {
         this.gamer = new Gamer(name, cards);
-        this.bettingMoney = bettingMoney;
+        this.bettingMoney = player.bettingMoney;
     }
 
     public static Player of(String playerName, BettingMoney bettingMoney) {
         return new Player(playerName, bettingMoney);
+    }
+
+    public Player copy() {
+        return new Player(this);
     }
 
     public void addCard(Card card) {
