@@ -1,38 +1,57 @@
 package blackJack.domain.participant;
 
-import blackJack.domain.result.MatchResult;
+import blackJack.domain.result.BettingAmount;
+import blackJack.domain.result.BlackJackMatch;
 
 public class Player extends Participant {
 
-    private static final String ERROR_MESSAGE_PROHIBIT_NAME = "플레이어의 이름은 '딜러'일 수 없습니다.";
+    private BettingAmount bettingAmount;
 
     public Player(String name) {
         super(name);
-        validateProhibitName(name);
-    }
-
-    private void validateProhibitName(String name) {
-        if (name.equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_PROHIBIT_NAME);
-        }
+        bettingAmount = BettingAmount.newByDefault();
     }
 
     @Override
     public boolean canHit() {
-        return !MatchResult.isBurst(this.getScore());
+        return !this.getScore().isBurst();
     }
 
-    public MatchResult getMatchResult(Dealer dealer) {
-        return calculatePlayerMatchResult(dealer.getScore());
+    public void betting(int bettingAmount) {
+        this.bettingAmount = this.bettingAmount.startBetting(bettingAmount);
     }
 
-    private MatchResult calculatePlayerMatchResult(int dealerScore) {
-        if (MatchResult.isBurst(this.getScore())) {
-            return MatchResult.LOSE;
+    public int calculateProfit(BlackJackMatch blackJackMatch) {
+        return bettingAmount.calculateProfit(blackJackMatch);
+    }
+
+    public BlackJackMatch calculateMatchResult(Participant dealer) {
+        if (this.isBurst()) {
+            return BlackJackMatch.LOSE;
         }
-        if (MatchResult.isBurst(dealerScore)) {
-            return MatchResult.WIN;
+        if (this.isBlackJack() && !dealer.isBlackJack()) {
+            return BlackJackMatch.BLACK_JACK_WIN;
         }
-        return getMatchResult(dealerScore);
+        if (this.getScore().compareTo(dealer.getScore()) == 0) {
+            return getResultAtSameScore(dealer);
+        }
+        return getResultAtDifferentScore(dealer);
+    }
+
+    private BlackJackMatch getResultAtSameScore(Participant dealer) {
+        if (!this.isBlackJack() && dealer.isBlackJack()) {
+            return BlackJackMatch.LOSE;
+        }
+        return BlackJackMatch.DRAW;
+    }
+
+    private BlackJackMatch getResultAtDifferentScore(Participant dealer) {
+        if (dealer.isBurst()) {
+            return BlackJackMatch.WIN;
+        }
+        if (this.getScore().compareTo(dealer.getScore()) > 0) {
+            return BlackJackMatch.WIN;
+        }
+        return BlackJackMatch.LOSE;
     }
 }

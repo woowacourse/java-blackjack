@@ -8,7 +8,6 @@ import blackJack.domain.result.YesOrNo;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -16,21 +15,37 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
+        betting(blackJackGame.getPlayers());
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(blackJackGame.getParticipants());
 
         doPlayerGame(blackJackGame);
         doDealerGame(blackJackGame);
         OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printFinalMatchResult(blackJackGame);
+        OutputView.printResultOfProfit(blackJackGame.calculateDealerProfit(), blackJackGame.calculatePlayersProfit());
     }
 
     private Participants getParticipants() {
         try {
-            return Participants.newInstanceByPlayerNames(InputView.inputPlayerNames());
+            return new Participants(InputView.inputPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getParticipants();
+        }
+    }
+
+    private void betting(List<Player> players) {
+        for (Player player : players) {
+            bettingEachPlayer(player);
+        }
+    }
+
+    private void bettingEachPlayer(Player player) {
+        try {
+            player.betting(InputView.inputBettingAmount(player));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            bettingEachPlayer(player);
         }
     }
 

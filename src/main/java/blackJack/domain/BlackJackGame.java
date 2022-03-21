@@ -5,8 +5,7 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.MatchResult;
-import java.util.EnumMap;
+import blackJack.domain.result.BlackJackMatch;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,36 +33,19 @@ public class BlackJackGame {
         }
     }
 
-    public Map<MatchResult, Integer> getDealerGameResult() {
-        final Map<MatchResult, Integer> gameResult = initDealerGameResult();
-
-        for (Player player : getPlayers()) {
-            final MatchResult matchResult = getDealer().getMatchResult(player);
-            gameResult.computeIfPresent(matchResult, (k, v) -> v + 1);
-        }
-
-        return gameResult;
+    public Map<Participant, Integer> calculateDealerProfit() {
+        return Map.of(getDealer(), calculatePlayersProfit().values().stream()
+                .mapToInt(profit -> -profit)
+                .sum());
     }
 
-    private Map<MatchResult, Integer> initDealerGameResult() {
-        final Map<MatchResult, Integer> dealerGameResult = new EnumMap<>(MatchResult.class);
-
-        for (MatchResult value : MatchResult.values()) {
-            dealerGameResult.put(value, 0);
-        }
-
-        return dealerGameResult;
-    }
-
-    public Map<Player, MatchResult> getPlayersGameResult() {
-        final Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
-
+    public Map<Participant, Integer> calculatePlayersProfit() {
+        Map<Participant, Integer> playersProfit = new LinkedHashMap<>();
         for (Player player : getPlayers()) {
-            final MatchResult matchResult = player.getMatchResult(getDealer());
-            gameResult.put(player, matchResult);
+            BlackJackMatch blackJackMatch = player.calculateMatchResult(getDealer());
+            playersProfit.put(player, player.calculateProfit(blackJackMatch));
         }
-
-        return gameResult;
+        return playersProfit;
     }
 
     public Participants getParticipants() {

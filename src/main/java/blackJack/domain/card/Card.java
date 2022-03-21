@@ -33,27 +33,27 @@ public class Card {
         }
     }
 
-    public boolean isAce() {
-        return denomination == Denomination.ACE;
-    }
-
-    public static List<Card> newDeck() {
-        return new LinkedList<>(CARDS);
-    }
-
-    public static Card from(Symbol symbol, Denomination denomination) {
+    public static Card of(Symbol symbol, Denomination denomination) {
         return CARDS.stream()
                 .filter(card -> card.symbol == symbol && card.denomination == denomination)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_NOT_EXIST_CARD));
     }
 
+    public static List<Card> newDeck() {
+        return new LinkedList<>(CARDS);
+    }
+
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
+
     public String getCardInfo() {
         return denomination.getDenomination() + symbol.getName();
     }
 
-    public int getScore() {
-        return denomination.getScore();
+    public int getPoint() {
+        return denomination.getPoint();
     }
 
     @Override
