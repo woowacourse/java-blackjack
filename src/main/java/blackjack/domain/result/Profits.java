@@ -9,6 +9,7 @@ import blackjack.domain.player.Players;
 
 public class Profits {
 
+    public static final int DEALER_RATIO = -1;
     private final Players players;
 
     private Profits(Players players) {
@@ -48,7 +49,7 @@ public class Profits {
                 .stream()
                 .mapToDouble(player -> playersProfit.get(player).getValue())
                 .sum();
-        playersProfit.put(dealer, Profit.of(-profit));
+        playersProfit.put(dealer, Profit.of(DEALER_RATIO * profit));
     }
 
     public Map<Player, Profit> getPlayersProfit() {
