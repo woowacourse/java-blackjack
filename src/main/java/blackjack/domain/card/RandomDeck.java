@@ -31,8 +31,8 @@ public class RandomDeck implements Deck {
     private void init() {
         cards.clear();
         for (CardNumber number : CardNumber.values()) {
-            Arrays.stream(Type.values())
-                    .forEach(type -> cards.add(Card.of(number, type)));
+            Arrays.stream(Suit.values())
+                    .forEach(Suit -> cards.add(Card.of(number, Suit)));
         }
         Collections.shuffle(cards);
     }

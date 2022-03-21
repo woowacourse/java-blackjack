@@ -1,16 +1,16 @@
 package blackjack.domain.card;
 
-public enum Type {
+public enum Suit {
 
     SPADE("스페이드"),
-    CLOVER("클로버"),
+    CLUB("클로버"),
     HEART("하트"),
     DIAMOND("다이아몬드"),
     ;
 
     private final String name;
 
-    Type(String name) {
+    Suit(String name) {
         this.name = name;
     }
 

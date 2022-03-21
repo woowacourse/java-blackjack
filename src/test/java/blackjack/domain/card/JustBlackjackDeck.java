@@ -17,8 +17,8 @@ public class JustBlackjackDeck implements Deck {
 
     private void init() {
         cards.addAll(List.of(
-                Card.of(CardNumber.ACE, Type.SPADE),
-                Card.of(CardNumber.TEN, Type.SPADE)
+                Card.of(CardNumber.ACE, Suit.SPADE),
+                Card.of(CardNumber.TEN, Suit.SPADE)
         ));
     }
 }

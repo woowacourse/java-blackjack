@@ -8,7 +8,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.JustBlackjackDeck;
 import blackjack.domain.card.JustTwoSpadeDeck;
-import blackjack.domain.card.Type;
+import blackjack.domain.card.Suit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Participant;
@@ -31,12 +31,12 @@ public class OutComeTest {
     void compare_all_bust() {
         Deck deck = new JustTwoSpadeDeck();
         Player dealer = new Dealer(deck);
-        dealer.hit(Card.of(CardNumber.TEN, Type.SPADE));
-        dealer.hit(Card.of(CardNumber.TEN, Type.HEART));
+        dealer.hit(Card.of(CardNumber.TEN, Suit.SPADE));
+        dealer.hit(Card.of(CardNumber.TEN, Suit.HEART));
 
         Player player = new Participant(new Name("aki"), deck, new BetMoney(10));
-        player.hit(Card.of(CardNumber.TEN, Type.SPADE));
-        player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
+        player.hit(Card.of(CardNumber.TEN, Suit.SPADE));
+        player.hit(Card.of(CardNumber.TEN, Suit.DIAMOND));
 
         assertThat(Outcome.matchAboutPlayer((Dealer) dealer, player)).isEqualTo(Outcome.LOSE);
     }
@@ -46,11 +46,11 @@ public class OutComeTest {
     void compare_player_bust() {
         Deck deck = new JustTwoSpadeDeck();
         Player dealer = new Dealer(deck);
-        dealer.hit(Card.of(CardNumber.SEVEN, Type.CLOVER));
+        dealer.hit(Card.of(CardNumber.SEVEN, Suit.CLUB));
 
         Player player = new Participant(new Name("aki"), deck, new BetMoney(10));
-        player.hit(Card.of(CardNumber.TEN, Type.SPADE));
-        player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
+        player.hit(Card.of(CardNumber.TEN, Suit.SPADE));
+        player.hit(Card.of(CardNumber.TEN, Suit.DIAMOND));
 
         assertThat(Outcome.matchAboutPlayer((Dealer) dealer, player)).isEqualTo(Outcome.LOSE);
     }
@@ -60,8 +60,8 @@ public class OutComeTest {
     void compare_dealer_bust() {
         Deck deck = new JustTwoSpadeDeck();
         Player dealer = new Dealer(deck);
-        dealer.hit(Card.of(CardNumber.TEN, Type.CLOVER));
-        dealer.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
+        dealer.hit(Card.of(CardNumber.TEN, Suit.CLUB));
+        dealer.hit(Card.of(CardNumber.TEN, Suit.DIAMOND));
 
         Player player = new Participant(new Name("aki"), deck, new BetMoney(10));
 
@@ -109,7 +109,7 @@ public class OutComeTest {
     void compare_player_and_dealer() {
         Deck deck = new JustTwoSpadeDeck();
         Player dealer = new Dealer(deck);
-        dealer.hit(Card.of(CardNumber.FIVE, Type.CLOVER));
+        dealer.hit(Card.of(CardNumber.FIVE, Suit.CLUB));
 
         Player player = new Participant(new Name("aki"), deck, new BetMoney(10));
 

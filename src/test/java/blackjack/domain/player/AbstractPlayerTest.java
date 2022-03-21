@@ -9,7 +9,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.JustBlackjackDeck;
 import blackjack.domain.card.JustTenSpadeDeck;
 import blackjack.domain.card.JustTwoSpadeDeck;
-import blackjack.domain.card.Type;
+import blackjack.domain.card.Suit;
 import blackjack.domain.state.State;
 import blackjack.domain.state.Stay;
 import java.util.List;
@@ -32,20 +32,20 @@ public class AbstractPlayerTest {
     void create() {
         List<Card> playerCards = abstractPlayer.getPlayerCards().get();
 
-        assertThat(playerCards.get(0)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
-        assertThat(playerCards.get(1)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
+        assertThat(playerCards.get(0)).isEqualTo(Card.of(CardNumber.TEN, Suit.SPADE));
+        assertThat(playerCards.get(1)).isEqualTo(Card.of(CardNumber.TEN, Suit.SPADE));
     }
 
     @Test
     @DisplayName("hit 메서드는 입력받은 카드를 카드뭉치에 저장한다.")
     void hit_test() {
-        abstractPlayer.hit(Card.of(CardNumber.TEN, Type.CLOVER));
+        abstractPlayer.hit(Card.of(CardNumber.TEN, Suit.CLUB));
 
         List<Card> playerCards = abstractPlayer.getPlayerCards().get();
 
-        assertThat(playerCards.get(0)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
-        assertThat(playerCards.get(1)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
-        assertThat(playerCards.get(2)).isEqualTo(Card.of(CardNumber.TEN, Type.CLOVER));
+        assertThat(playerCards.get(0)).isEqualTo(Card.of(CardNumber.TEN, Suit.SPADE));
+        assertThat(playerCards.get(1)).isEqualTo(Card.of(CardNumber.TEN, Suit.SPADE));
+        assertThat(playerCards.get(2)).isEqualTo(Card.of(CardNumber.TEN, Suit.CLUB));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class AbstractPlayerTest {
     @Test
     @DisplayName("isBust 메서드는 점수가 21을 초과했으면 참을 반환한다.")
     void check_bust_true() {
-        abstractPlayer.hit(Card.of(CardNumber.TEN, Type.CLOVER));
+        abstractPlayer.hit(Card.of(CardNumber.TEN, Suit.CLUB));
 
         assertThat(abstractPlayer.isBust()).isTrue();
     }
@@ -107,7 +107,7 @@ public class AbstractPlayerTest {
         Deck deck = new JustTwoSpadeDeck();
         BetMoney money = new BetMoney(10);
         AbstractPlayer abstractPlayer = new Participant(new Name("alien"), deck, money);
-        abstractPlayer.hit(Card.of(CardNumber.ACE, Type.HEART));
+        abstractPlayer.hit(Card.of(CardNumber.ACE, Suit.HEART));
 
         assertThat(abstractPlayer.getScore()).isEqualTo(15);
     }
@@ -115,7 +115,7 @@ public class AbstractPlayerTest {
     @Test
     @DisplayName("Ace 가진 카드의 총합이 21을 넘으면 Ace는 1로 계산한다.")
     void ace_calculate_1() {
-        abstractPlayer.hit(Card.of(CardNumber.ACE, Type.SPADE));
+        abstractPlayer.hit(Card.of(CardNumber.ACE, Suit.SPADE));
 
         assertThat(abstractPlayer.getScore()).isEqualTo(21);
     }
