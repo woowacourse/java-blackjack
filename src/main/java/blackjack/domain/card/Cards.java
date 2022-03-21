@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Cards {
 	private static final int BUST_THRESHOLD = 21;
@@ -39,10 +38,6 @@ public class Cards {
 
 	private boolean hasAce() {
 		return cards.stream().anyMatch(Card::isAce);
-	}
-
-	public Card getRandomCard() {
-		return cards.get(new Random().nextInt(cards.size()));
 	}
 
 	public List<Card> getCards() {

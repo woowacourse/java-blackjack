@@ -6,13 +6,14 @@ import blackjack.domain.card.Cards;
 public class Dealer extends Gamer {
 	private static final String DEALER_NAME = "딜러";
 	private static final int HIT_THRESHOLD = 17;
+    private static final int CARD_INDEX = 0;
 
 	public Dealer(Cards cards) {
 		super(cards, new Name(DEALER_NAME));
 	}
 
 	public Dealer() {
-		super(new Cards(), new Name(DEALER_NAME));
+		this(new Cards());
 	}
 
 	@Override
@@ -24,7 +25,7 @@ public class Dealer extends Gamer {
 	}
 
 	public Card getRandomOneCard() {
-		return this.cards.getRandomCard();
+		return this.cards.getCards().get(CARD_INDEX);
 	}
 
 	@Override

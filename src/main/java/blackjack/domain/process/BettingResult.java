@@ -27,12 +27,16 @@ public class BettingResult {
 			.collect(Collectors.toList());
 	}
 
+    private int calculateTotalProfits(List<Profit> profits) {
+        return profits.stream()
+            .mapToInt(Profit::getProfitMoney)
+            .sum();
+    }
+
 	public Map<Gamer, Profit> calculatePlayersBettingResult() {
 		Map<Gamer, Profit> bettingResult = new LinkedHashMap<>();
 		List<Profit> profits = generateProfits();
-		bettingResult.put(this.dealer, Profit.from(NEGATE * profits.stream()
-			.mapToInt(Profit::getProfitMoney)
-			.sum()));
+		bettingResult.put(this.dealer, Profit.from(NEGATE * calculateTotalProfits(profits)));
 		for (int i = 0; i < this.players.size(); i++) {
 			bettingResult.put(this.players.get(i), profits.get(i));
 		}

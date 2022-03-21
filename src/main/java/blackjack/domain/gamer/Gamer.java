@@ -9,7 +9,7 @@ public abstract class Gamer {
 	private final Name name;
 
 	protected Gamer(Cards cards, Name name) {
-		this.cards = cards;
+        this.cards = cards;
 		this.name = name;
 	}
 
