@@ -4,9 +4,8 @@ import blackjack.domain.Betting;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Names;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.dto.HitRequest;
 import blackjack.dto.ParticipantInitialResponse;
 import blackjack.dto.ParticipantResponse;
@@ -20,43 +19,41 @@ public class BlackjackGame {
     public void play() {
         CardDeck deck = CardDeck.createGameDeck();
         Dealer dealer = new Dealer(deck.drawDouble());
-        List<Player> players = createPlayers(inputPlayerNames(), deck);
+        Players players = createPlayers(inputPlayerNames(), deck);
+
         proceed(deck, dealer, players);
     }
 
-    private Names inputPlayerNames() {
+    private List<String> inputPlayerNames() {
         try {
-            return new Names(InputView.inputPlayerNames());
+            return InputView.inputPlayerNames();
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerNames();
         }
     }
 
-    private List<Player> createPlayers(Names playerNames, CardDeck deck) {
-        return playerNames.getNames()
-                .stream()
-                .map(name -> new Player(name, deck.drawDouble(), inputBetting(name)))
-                .collect(Collectors.toUnmodifiableList());
+    private Players createPlayers(List<String> names, CardDeck deck) {
+        return new Players(names, deck, this::inputBetting);
     }
 
-    private Betting inputBetting(Name name) {
+    private Betting inputBetting(String name) {
         try {
-            return new Betting(InputView.inputBetMoney(name.getValue()));
+            return new Betting(InputView.inputBetMoney(name));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputBetting(name);
         }
     }
 
-    private void proceed(CardDeck deck, Dealer dealer, List<Player> players) {
+    private void proceed(CardDeck deck, Dealer dealer, Players players) {
         alertStart(dealer, players);
         proceedPlayers(players, deck);
         proceedDealer(dealer, deck);
         showResult(dealer, players);
     }
 
-    private void alertStart(Dealer dealer, List<Player> players) {
+    private void alertStart(Dealer dealer, Players players) {
         ParticipantInitialResponse dealerResponse = new ParticipantInitialResponse(dealer);
         List<ParticipantResponse> playerResponses = players.stream()
                 .map(ParticipantResponse::new)
@@ -65,7 +62,7 @@ public class BlackjackGame {
         OutputView.printStartMessage(dealerResponse, playerResponses);
     }
 
-    private void proceedPlayers(List<Player> players, CardDeck deck) {
+    private void proceedPlayers(Players players, CardDeck deck) {
         players.forEach(player -> proceedPlayer(player, deck));
     }
 
@@ -112,7 +109,7 @@ public class BlackjackGame {
         }
     }
 
-    private void showResult(Dealer dealer, List<Player> players) {
+    private void showResult(Dealer dealer, Players players) {
         OutputView.printCardResultMessage();
         OutputView.printPlayerCards(new ParticipantResponse(dealer));
         OutputView.printPlayersCards(players.stream()

@@ -2,9 +2,9 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameResult {
@@ -15,7 +15,7 @@ public class GameResult {
         this.profits = Collections.unmodifiableMap(new LinkedHashMap<>(profits));
     }
 
-    public static GameResult of(Dealer dealer, List<Player> players) {
+    public static GameResult of(Dealer dealer, Players players) {
         Map<String, Integer> playersProfits = new LinkedHashMap<>();
 
         for (Player player : players) {

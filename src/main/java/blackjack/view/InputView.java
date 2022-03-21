@@ -24,6 +24,7 @@ public class InputView {
             System.out.printf("%s의 베팅 금액은?%n", name);
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
+            System.out.println("[ERROR] 베팅 금액은 숫자여야 합니다.");
             return inputBetMoney(name);
         }
     }

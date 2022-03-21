@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.util.BlackjackTestUtil;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class GameResultTest {
         Dealer dealer = BlackjackTestUtil.createDealer(19);
 
         Player player = BlackjackTestUtil.createPlayer(playerScore);
-        List<Player> players = List.of(player);
+        Players players = new Players(List.of(player));
 
         // when
         GameResult gameResult = GameResult.of(dealer, players);
@@ -43,7 +44,7 @@ public class GameResultTest {
         List<Card> cards = BlackjackTestUtil.createCards(20);
         Player player1 = new Player(new Name("player1"), cards, new Betting(1000));
         Player player2 = new Player(new Name("player2"), cards, new Betting(1000));
-        List<Player> players = List.of(player1, player2);
+        Players players = new Players(List.of(player1, player2));
 
         // when
         GameResult gameResult = GameResult.of(dealer, players);
