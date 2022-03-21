@@ -40,7 +40,6 @@ public class Participants {
 		while (dealer.canDraw()) {
 			dealer.draw(deck, 1);
 		}
-		dealer.stopDraw();
 		return dealer;
 	}
 

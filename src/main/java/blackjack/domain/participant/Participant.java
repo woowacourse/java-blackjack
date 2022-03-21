@@ -14,13 +14,10 @@ public abstract class Participant {
 	protected final Hand hand;
 	protected BettingAmount bettingAmount;
 
-	private boolean drawMore;
-
 	public Participant(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		this.name = name;
 		this.hand = hand;
 		this.bettingAmount = bettingAmount;
-		this.drawMore = true;
 	}
 
 	public void draw(final Deck deck, final int theNumberOfCars) {
@@ -48,10 +45,6 @@ public abstract class Participant {
 		return bettingAmount.calculateIncome();
 	}
 
-	public void stopDraw() {
-		drawMore = false;
-	}
-
 	public int getIncome() {
 		return bettingAmount.calculateIncome();
 	}
@@ -68,11 +61,11 @@ public abstract class Participant {
 		return name;
 	}
 
-	public boolean selectToDrawMore() {
-		return drawMore;
-	}
-
 	public abstract boolean canDraw();
+
+	public abstract void stopDraw();
+
+	public abstract boolean selectToDrawMore();
 
 	public abstract int getDrawStandard();
 

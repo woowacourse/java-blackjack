@@ -7,8 +7,11 @@ import blackjack.domain.card.Hand;
 
 public class Player extends Participant {
 
+	private boolean drawMore;
+
 	public Player(final String name, final Hand hand, final BettingAmount bettingAmount) {
 		super(name, hand, bettingAmount);
+		this.drawMore = true;
 	}
 
 	@Override
@@ -30,6 +33,16 @@ public class Player extends Participant {
 			return false;
 		}
 		return BlackJack.BUST < score && score <= BlackJack.OPTIMIZED_WINNING_NUMBER;
+	}
+
+	@Override
+	public boolean selectToDrawMore() {
+		return drawMore;
+	}
+
+	@Override
+	public void stopDraw() {
+		drawMore = false;
 	}
 
 	@Override
