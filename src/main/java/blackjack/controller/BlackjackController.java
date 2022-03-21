@@ -20,13 +20,14 @@ public class BlackjackController {
     public void run() {
         final Participants participants = getParticipants();
         betting(participants.getPlayers());
-        final Deck deck = Deck.create();
-        final BlackjackGame blackjackGame = progressGame(participants, deck);
 
+        final BlackjackGame blackjackGame = new BlackjackGame(participants, Deck.create());
+        blackjackGame.firstCardDispensing();
+        OutputView.printInitCardResult(participants);
         final List<Player> players = playersTurn(blackjackGame, participants);
         final Dealer dealer = dealerTurn(blackjackGame);
-        final Map<Player, BlackjackMatch> result = createBlackjackGameResult(players, dealer);
-        createBlackjackProfitResult(dealer, players, result);
+
+        createBlackjackProfitResult(dealer, players, createBlackjackGameResult(players, dealer));
     }
 
     private Participants getParticipants() {
@@ -57,13 +58,6 @@ public class BlackjackController {
             OutputView.printErrorMessage(e);
             return getPlayerBettingMoney(playerName);
         }
-    }
-
-    private BlackjackGame progressGame(Participants participants, Deck deck) {
-        final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
-        blackjackGame.firstCardDispensing();
-        OutputView.printInitCardResult(participants);
-        return blackjackGame;
     }
 
     private List<Player> playersTurn(BlackjackGame blackjackGame, Participants participants) {
