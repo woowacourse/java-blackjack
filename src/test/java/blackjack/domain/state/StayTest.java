@@ -52,6 +52,22 @@ class StayTest {
         assertThat(stay.isFinished()).isTrue();
     }
 
+    @DisplayName("블랙잭인지 확인한다.")
+    @Test
+    void is_blackjack() {
+        Stay stay = new Stay(playingCards);
+
+        assertThat(stay.isBlackjack()).isFalse();
+    }
+
+    @DisplayName("버스트인지 확인한다.")
+    @Test
+    void is_bust() {
+        Stay stay = new Stay(playingCards);
+
+        assertThat(stay.isBust()).isFalse();
+    }
+
     @DisplayName("카드 총합을 확인한다.")
     @Test
     void card_total() {

@@ -52,6 +52,22 @@ class BlackjackTest {
         assertThat(blackjack.isFinished()).isTrue();
     }
 
+    @DisplayName("블랙잭인지 확인한다.")
+    @Test
+    void is_blackjack() {
+        Blackjack blackjack = new Blackjack(playingCards);
+
+        assertThat(blackjack.isBlackjack()).isTrue();
+    }
+
+    @DisplayName("버스트인지 확인한다.")
+    @Test
+    void is_bust() {
+        Blackjack blackjack = new Blackjack(playingCards);
+
+        assertThat(blackjack.isBust()).isFalse();
+    }
+
     @DisplayName("카드 총합을 확인한다.")
     @Test
     void card_total() {

@@ -20,6 +20,14 @@ public abstract class Running extends Started {
         return false;
     }
 
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    public boolean isBust() {
+        return false;
+    }
+
     public void decideRate(final double rate) {
         throw new IllegalStateException("현재 상태는 수익률을 변경할 수 없습니다.");
     }

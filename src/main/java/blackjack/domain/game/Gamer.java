@@ -50,11 +50,11 @@ public abstract class Gamer {
     }
 
     public boolean isBlackjack() {
-        return state instanceof Blackjack;
+        return state.isBlackjack();
     }
 
     public boolean isBust() {
-        return state instanceof Bust;
+        return state.isBust();
     }
 
     public String getName() {

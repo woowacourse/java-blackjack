@@ -52,6 +52,22 @@ class BustTest {
         assertThat(bust.isFinished()).isTrue();
     }
 
+    @DisplayName("블랙잭인지 확인한다.")
+    @Test
+    void is_blackjack() {
+        Bust bust = new Bust(playingCards);
+
+        assertThat(bust.isBlackjack()).isFalse();
+    }
+
+    @DisplayName("버스트인지 확인한다.")
+    @Test
+    void is_bust() {
+        Bust bust = new Bust(playingCards);
+
+        assertThat(bust.isBust()).isTrue();
+    }
+
     @DisplayName("카드 총합을 확인한다.")
     @Test
     void card_total() {

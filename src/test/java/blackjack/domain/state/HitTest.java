@@ -70,6 +70,26 @@ class HitTest {
         assertThat(hit.isFinished()).isFalse();
     }
 
+    @DisplayName("블랙잭인지 확인한다.")
+    @Test
+    void is_blackjack() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards);
+
+        assertThat(hit.isBlackjack()).isFalse();
+    }
+
+    @DisplayName("버스트인지 확인한다.")
+    @Test
+    void is_bust() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards);
+
+        assertThat(hit.isBust()).isFalse();
+    }
+
     @DisplayName("수익률을 구할 경우 예외가 발생하는 것을 확인한다.")
     @Test
     void get_earning_rate_exception() {

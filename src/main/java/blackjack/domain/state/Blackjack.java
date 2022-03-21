@@ -7,4 +7,14 @@ public class Blackjack extends Finished {
     public Blackjack(final PlayingCards playingCards) {
         super(playingCards);
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return true;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
 }

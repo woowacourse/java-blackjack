@@ -13,6 +13,10 @@ public interface State {
 
     boolean isFinished();
 
+    boolean isBlackjack();
+
+    boolean isBust();
+
     void decideRate(final double rate);
 
     double getEarningRate();

@@ -7,4 +7,14 @@ public class Stay extends Finished {
     public Stay(final PlayingCards playingCards) {
         super(playingCards);
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
 }
