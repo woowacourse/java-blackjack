@@ -2,10 +2,10 @@ package blackjack.model.state.finished;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
-import blackjack.model.state.started.Started;
+import blackjack.model.state.created.Created;
 import blackjack.model.state.State;
 
-public abstract class Finished extends Started {
+public abstract class Finished extends Created {
 
     protected Finished(Cards cards) {
         super(cards);

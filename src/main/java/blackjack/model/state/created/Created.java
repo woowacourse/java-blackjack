@@ -1,18 +1,18 @@
-package blackjack.model.state.started;
+package blackjack.model.state.created;
 
 import blackjack.model.card.Cards;
 import blackjack.model.state.State;
 import java.util.List;
 
-public abstract class Started implements State {
+public abstract class Created implements State {
 
     protected final Cards cards;
 
-    protected Started() {
+    protected Created() {
         this.cards = new Cards();
     }
 
-    protected Started(Cards cards) {
+    protected Created(Cards cards) {
         this.cards = cards;
     }
 

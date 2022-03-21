@@ -2,10 +2,10 @@ package blackjack.model.state.running;
 
 import blackjack.model.BettingRate;
 import blackjack.model.card.Cards;
-import blackjack.model.state.started.Started;
+import blackjack.model.state.created.Created;
 import blackjack.model.state.State;
 
-public abstract class Running extends Started {
+public abstract class Running extends Created {
 
     protected Running() {
         super();
