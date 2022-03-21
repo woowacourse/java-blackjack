@@ -12,11 +12,11 @@ public class Score {
     private static final int BLACKJACK_SIZE = 2;
 
     private final int value;
-    private boolean blackjack;
+    private final boolean blackjack;
 
     public Score(Set<Card> cards) {
         this.value = sumPoints(cards);
-        checkBlackjack(cards);
+        blackjack = checkBlackjack(cards);
     }
 
     public int value() {
@@ -69,11 +69,8 @@ public class Score {
                 .anyMatch(Card::isAce);
     }
 
-    private void checkBlackjack(Set<Card> cards) {
-        if (isNotTwoCards(cards) || nonBlackjack()) {
-            return;
-        }
-        blackjack = true;
+    private boolean checkBlackjack(Set<Card> cards) {
+        return !isNotTwoCards(cards) && !nonBlackjack();
     }
 
     private boolean nonBlackjack() {
