@@ -22,7 +22,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("Dealer를 생성할 때, 카드를 2장 이상 입력할 시 에러갑 발생한다.")
+    @DisplayName("Dealer를 생성할 때, 카드를 2장을 초과하여 입력할 시 에러갑 발생한다.")
     void validateInitCardSize() {
         Card card1 = new Card(CardShape.SPADE, CardNumber.TEN);
         Card card2 = new Card(CardShape.SPADE, CardNumber.FIVE);
