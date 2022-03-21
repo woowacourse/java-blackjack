@@ -50,8 +50,8 @@ public class Player {
         return sum > BLACKJACK_NUMBER;
     }
 
-    public boolean isNotBust() {
-        return gamer.isNotBust();
+    public boolean isBust() {
+        return gamer.isBust();
     }
 
     public boolean isBlackJack() {

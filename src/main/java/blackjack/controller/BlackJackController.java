@@ -62,26 +62,25 @@ public class BlackJackController {
     private void play() {
         List<String> playerNames = blackJack.getPlayerNames();
         for (String playerName : playerNames) {
-            requestHitOrStand(playerName);
+            Player player = blackJack.findPlayerByName(playerName);
+            requestHitOrStand(player);
         }
         OutputView.printDealerCardMessage(blackJack.addCardToDealer());
     }
 
-    private void requestHitOrStand(String playerName) {
-        Player player = blackJack.findPlayerByName(playerName);
-        if (InputView.requestHit(playerName)) {
-            blackJack.addCardTo(player);
-            OutputView.printGamerCard(GamerCardsDto.of(playerName, player.getCards()));
-            requestHitOrStandByStatus(player);
+    private void requestHitOrStand(Player player) {
+        if (player.isBust()) {
             return;
         }
-        OutputView.printGamerCard(GamerCardsDto.of(playerName, player.getCards()));
-    }
 
-    private void requestHitOrStandByStatus(Player player) {
-        if (player.isNotBust()) {
-            requestHitOrStand(player.getName());
+        if (InputView.requestHit(player.getName())) {
+            blackJack.addCardTo(player);
+            OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCards()));
+            requestHitOrStand(player);
+            return;
         }
+
+        OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCards()));
     }
 
     private void finish() {
