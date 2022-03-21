@@ -1,4 +1,4 @@
-package blackjack.domain.role;
+package blackjack.domain.participant;
 
 import java.util.LinkedList;
 import java.util.List;

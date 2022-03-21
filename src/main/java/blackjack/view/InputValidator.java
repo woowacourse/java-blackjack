@@ -2,13 +2,17 @@ package blackjack.view;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class InputValidator {
 
+	private static final String NUMBER_PATTERN = "^[0-9]*$";
+	private static final Pattern COMPILED_NUMBER_PATTERN = Pattern.compile(NUMBER_PATTERN);
 	private static final String NO_INPUT_ERROR = "입력 값이 없습니다.";
 	private static final String INPUT_CONTAINS_SPACE_ERROR = "입력 값에 공백을 포함할 수 없습니다.";
 	private static final String NAME_DUPLICATED_ERROR = "중복된 이름을 사용할 수 없습니다.";
 	private static final String PROPER_CHOICE_ERROR = "선택하는 입력 값은 y 또는 n 이어야 합니다.";
+	private static final String BETTING_AMOUNT_NOT_NUMBER_ERROR = "배팅 금액은 자연수여야 합니다.";
 	private static final String SPACE = " ";
 	private static final String NAME_DISTRIBUTOR = ",";
 	private static final String CHOICE_YES = "y";
@@ -51,6 +55,17 @@ public class InputValidator {
 		final String inputLowercase = input.toLowerCase(Locale.ROOT);
 		if (!inputLowercase.equals(CHOICE_YES) && !inputLowercase.equals(CHOICE_NO)) {
 			throw new IllegalArgumentException(PROPER_CHOICE_ERROR);
+		}
+	}
+
+	public static void validateBettingAmount(final String input) {
+		validateEmpty(input);
+		validateNumber(input);
+	}
+
+	private static void validateNumber(String number) {
+		if (!COMPILED_NUMBER_PATTERN.matcher(number).matches()) {
+			throw new IllegalArgumentException(BETTING_AMOUNT_NOT_NUMBER_ERROR);
 		}
 	}
 }

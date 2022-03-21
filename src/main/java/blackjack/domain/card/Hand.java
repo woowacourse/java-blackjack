@@ -2,13 +2,13 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import blackjack.domain.BlackJack;
 
 public class Hand {
 
 	private static final int ACE_AS_ELEVEN = 10;
+	private static final int THE_NUMBER_OF_INITIAL_CARD = 2;
 
 	private final List<Card> cards;
 
@@ -24,23 +24,15 @@ public class Hand {
 		cards.add(card);
 	}
 
-	public String getFinalScore() {
-		int score = calculateOptimalScore();
-		if (score == BlackJack.BUST) {
-			return BlackJack.BUST_MESSAGE;
-		}
-		return Integer.toString(score);
-	}
-
-	public int calculateOptimalScore() {
+	public int calculateScore() {
 		int totalScore = cards.stream()
 			.mapToInt(Card::getScore)
 			.sum();
 		if (isBust(totalScore)) {
-			return BlackJack.BUST;
+			return BlackJack.BUST_SCORE;
 		}
 		if (hasAce()) {
-			return getOptimizedScore(totalScore, totalScore + ACE_AS_ELEVEN);
+			return calculateScoreWithAce(totalScore, totalScore + ACE_AS_ELEVEN);
 		}
 		return totalScore;
 	}
@@ -51,11 +43,10 @@ public class Hand {
 
 	public boolean hasAce() {
 		return cards.stream()
-			.mapToInt(Card::getScore)
-			.anyMatch(score -> score == Denomination.ACE.getScore());
+			.anyMatch(Card::isAce);
 	}
 
-	private int getOptimizedScore(final int aceAsOneScore, final int aceAsElevenScore) {
+	private int calculateScoreWithAce(final int aceAsOneScore, final int aceAsElevenScore) {
 		if (isBust(aceAsElevenScore)) {
 			return aceAsOneScore;
 		}
@@ -66,9 +57,8 @@ public class Hand {
 		return new ArrayList<>(cards);
 	}
 
-	public List<String> getCardsInformation() {
-		return cards.stream()
-			.map(Card::getInformation)
-			.collect(Collectors.toList());
+	public boolean isBlackJack() {
+		return calculateScore() == BlackJack.OPTIMIZED_WINNING_NUMBER
+			&& cards.size() == THE_NUMBER_OF_INITIAL_CARD;
 	}
 }

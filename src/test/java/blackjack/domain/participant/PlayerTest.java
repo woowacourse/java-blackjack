@@ -1,4 +1,4 @@
-package blackjack.domain.role;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import blackjack.domain.BettingAmount;
 import blackjack.domain.card.Hand;
 import blackjack.domain.factory.CardMockFactory;
 import blackjack.domain.util.CreateHand;
@@ -20,7 +21,7 @@ class PlayerTest {
 	@ParameterizedTest(name = "{index} {displayName} hand={0}")
 	@MethodSource("createHand")
 	void drawableTest(final Hand hand, final boolean expectedResult) {
-		Role player = new Player("player", hand);
+		Participant player = new Player("player", hand, new BettingAmount(1000));
 		assertThat(player.canDraw()).isEqualTo(expectedResult);
 	}
 
@@ -32,7 +33,7 @@ class PlayerTest {
 			CardMockFactory.of("J클로버"));
 
 		return Stream.of(
-			Arguments.of(hand1, true),
+			Arguments.of(hand1, false),
 			Arguments.of(hand2, false),
 			Arguments.of(hand3, true)
 		);

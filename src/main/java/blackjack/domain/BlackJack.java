@@ -1,10 +1,11 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.role.Role;
-import blackjack.domain.role.Roles;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -12,44 +13,46 @@ public class BlackJack {
 
 	public static final String BUST_MESSAGE = "파산";
 	public static final int BUST = 0;
+	public static final int BUST_SCORE = 0;
 	public static final int OPTIMIZED_WINNING_NUMBER = 21;
 
 	private Deck deck;
-	private Roles roles;
+	private Participants participants;
 
 	public void startGame() {
 		initBlackJack();
-		joinPlayers(InputView.requestPlayerName());
+		final List<String> playersName = InputView.requestPlayerName();
+		joinPlayers(InputView.betMoney(playersName));
 		distributeCard();
 		redrawCard();
 		calculateFinalResult();
 	}
 
 	private void initBlackJack() {
-		roles = new Roles();
+		participants = new Participants();
 		deck = new Deck();
-		roles.initDealer();
+		participants.initDealer();
 	}
 
-	private void joinPlayers(final List<String> names) {
-		roles.joinPlayers(names);
+	private void joinPlayers(final Map<String, Integer> playersNameAndBettingAmount) {
+		participants.joinPlayers(playersNameAndBettingAmount);
 	}
 
 	private void distributeCard() {
-		final Role dealer = roles.distributeCardToDealer(deck);
-		final List<Role> players = roles.distributeCardToPlayers(deck);
+		final Participant dealer = participants.distributeCardToDealer(deck);
+		final List<Participant> players = participants.distributeCardToPlayers(deck);
 		OutputView.printInitialStatus(dealer, players);
 	}
 
 	private void redrawCard() {
-		String currentPlayer = roles.getCurrentPlayerName();
-		do {
+		String currentPlayer = participants.getCurrentPlayerName();
+		while (!hasMorePlayer(currentPlayer)) {
 			final String answer = InputView.drawOneMoreCard(currentPlayer);
-			final Role playerStatus = roles.drawPlayer(deck, RedrawChoice.of(answer), currentPlayer);
+			final Participant playerStatus = participants.drawPlayer(deck, RedrawChoice.of(answer), currentPlayer);
 			OutputView.printPersonalHand(playerStatus);
-			currentPlayer = roles.getCurrentPlayerName();
-		} while (!hasMorePlayer(currentPlayer));
-		OutputView.printDealerStatus(roles.drawDealer(deck));
+			currentPlayer = participants.getCurrentPlayerName();
+		}
+		OutputView.printDealerStatus(participants.drawDealer(deck));
 	}
 
 	private boolean hasMorePlayer(final String player) {
@@ -57,9 +60,7 @@ public class BlackJack {
 	}
 
 	private void calculateFinalResult() {
-		final List<Role> playersResult = roles.calculatePlayerResult();
-		final Role dealerResult = roles.calculateDealerResult();
-		OutputView.printFinalResult(dealerResult, playersResult);
+		OutputView.printFinalResult(participants.calculateResult());
 	}
 
 }

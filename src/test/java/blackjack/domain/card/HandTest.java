@@ -33,8 +33,8 @@ class HandTest {
 	@DisplayName("현재 까지의 점수를 계산해 파산하면 '파산'을 반환하고 아니면 스코어를 반환")
 	@ParameterizedTest(name = "{index} {displayName} hand={0} expectedResult={1}")
 	@MethodSource("getHandAndResult")
-	void check_Final_Score(final Hand hand, final String expectedResult) {
-		final String actualResult = hand.getFinalScore();
+	void check_Final_Score(final Hand hand, final int expectedResult) {
+		final int actualResult = hand.calculateScore();
 		assertThat(actualResult).isEqualTo(expectedResult);
 	}
 
@@ -43,14 +43,14 @@ class HandTest {
 			CardMockFactory.of("J클로버"));
 		final Hand hand2 = CreateHand.create(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"));
 
-		return Stream.of(Arguments.of(hand1, "파산"), Arguments.of(hand2, "20"));
+		return Stream.of(Arguments.of(hand1, 0), Arguments.of(hand2, 20));
 	}
 
 	@DisplayName("현재 패에 가지고 있는 최적의 점수 계산 확인")
 	@ParameterizedTest(name = "{index} {displayName} cards={0}")
 	@MethodSource("getHandAndScore")
 	void check_Calculated_Score(Hand hand, int expectedScore) {
-		final int actualScore = hand.calculateOptimalScore();
+		final int actualScore = hand.calculateScore();
 		assertThat(actualScore).isEqualTo(expectedScore);
 	}
 
