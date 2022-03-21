@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.Betting;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Pattern;
 import blackjack.util.BlackjackTestUtil;
@@ -32,20 +31,6 @@ public class PlayerTest {
 
         // then
         assertThat(actual).containsOnly(card1, card2);
-    }
-
-    @Test
-    @DisplayName("플레이어가 카드 한 장을 더 받는 경우")
-    void addCard() {
-        // given
-        CardDeck deck = new CardDeck(List.of(Card.of(Pattern.HEART, Denomination.THREE)));
-        Player player = BlackjackTestUtil.createPlayer(20);
-
-        // when
-        player.hit(deck);
-
-        // then
-        assertThat(player.getCards().size()).isEqualTo(3);
     }
 
     @ParameterizedTest

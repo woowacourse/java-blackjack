@@ -16,8 +16,4 @@ public class Dealer extends Participant {
     public List<Card> showInitialCards() {
         return List.of(getCards().get(0));
     }
-
-    public boolean shouldHit() {
-        return getScore().isLessThan(HIT_STANDARD);
-    }
 }
