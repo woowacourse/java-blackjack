@@ -29,14 +29,6 @@ public class Player extends Gamer {
         }
     }
 
-    private void hitOrStay(final Card card, final Predicate<String> drawing) {
-        if (isDrawing(drawing)) {
-            draw(card);
-            return;
-        }
-        stay();
-    }
-
     public void compareCards(final Dealer dealer) {
         state.decideRate(findRate(dealer));
     }
@@ -51,15 +43,23 @@ public class Player extends Gamer {
         }
     }
 
-    private boolean isDrawing(final Predicate<String> drawing) {
-        return drawing.test(name);
-    }
-
     private double findRate(final Dealer dealer) {
         if (dealer.isBlackjack() || isBlackjack()) {
             return ProfitRate.rateBlackjack(dealer, this);
         }
         return ProfitRate.rateStay(dealer, this);
+    }
+
+    private void hitOrStay(final Card card, final Predicate<String> drawing) {
+        if (isDrawing(drawing)) {
+            draw(card);
+            return;
+        }
+        stay();
+    }
+
+    private boolean isDrawing(final Predicate<String> drawing) {
+        return drawing.test(name);
     }
 
     private void openCards(final BiConsumer<String, List<String>> openCards) {

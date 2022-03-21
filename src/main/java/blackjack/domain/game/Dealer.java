@@ -29,12 +29,12 @@ public class Dealer extends Gamer {
         return sumOfCards() > player.sumOfCards();
     }
 
-    private void noticeDrawing(final BiConsumer<String, Integer> drawing) {
-        drawing.accept(name, DRAWING_MAXIMUM);
-    }
-
     public PlayingCards openPartOfCards() {
         return state.partOfPlayingCards();
+    }
+
+    private void noticeDrawing(final BiConsumer<String, Integer> drawing) {
+        drawing.accept(name, DRAWING_MAXIMUM);
     }
 
     @Override

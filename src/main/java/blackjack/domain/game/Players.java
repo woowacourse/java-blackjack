@@ -61,6 +61,14 @@ public class Players {
         }
     }
 
+    public double totalProfit() {
+        double totalProfit = 0;
+        for (Player player : players) {
+            totalProfit += player.profit();
+        }
+        return totalProfit;
+    }
+
     private List<String> trimNames(final String input) {
         return Arrays.stream(input.split(DELIMITER, -1))
                 .map(String::trim)
@@ -93,13 +101,5 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    public double totalProfit() {
-        double totalProfit = 0;
-        for (Player player : players) {
-            totalProfit += player.profit();
-        }
-        return totalProfit;
     }
 }
