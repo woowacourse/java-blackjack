@@ -19,14 +19,13 @@ public class BlackJackController {
         OutputView.showDealerResult(blackJackGame.dealerDrawMoreCard());
         OutputView.showFinalCardsAndScore(blackJackGame.getFinalParticipantsDto());
 
-        blackJackGame.calculateGameResults();
-        OutputView.showDealerRevenue(blackJackGame.getDealer());
-        OutputView.showPlayersResult(blackJackGame.getPlayers());
+        OutputView.showDealerRevenue(blackJackGame.calculateGameResults());
     }
 
     private List<Player> setupAllPlayersBetting(List<String> names) {
         List<Player> players = new ArrayList<>();
         for (String name : names) {
+            name = name.trim();
             players.add(new Player(name, askBettingMoney(name)));
         }
         return players;

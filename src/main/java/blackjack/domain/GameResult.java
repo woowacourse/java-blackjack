@@ -14,21 +14,8 @@ public enum GameResult {
         this.prizeRate = prizeRate;
     }
 
-    public static GameResult getPairResult(GameResult gameResult) {
-        if (gameResult == WIN_BLACKJACK) {
-            return LOSE;
-        }
-        if (gameResult == WIN) {
-            return LOSE;
-        }
-        if (gameResult == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
-    public double getPrizeRate() {
-        return prizeRate;
+    public int calculateRevenue(int bettingMoney) {
+        return (int) (bettingMoney  * prizeRate);
     }
 
 }

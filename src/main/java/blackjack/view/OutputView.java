@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.*;
+import blackjack.domain.dto.BettingResultDto;
 import blackjack.domain.dto.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,14 +58,11 @@ public class OutputView {
 
     }
 
-    public static void showDealerRevenue(Dealer dealer) {
+    public static void showDealerRevenue(List<BettingResultDto> bettingResultDtos) {
         System.out.printf("%n## 최종 수익%n");
-//        System.out.printf(dealer.getName() + ": " + dealer.getRevenue() + "%n");
-    }
-
-    public static void showPlayersResult(List<Player> players) {
-        for (Player player : players) {
-            System.out.printf(player.getName() + ": " + player.getRevenue() + "%n");
+        for (BettingResultDto bettingResultDto : bettingResultDtos) {
+            System.out.printf("%s: %d%n", bettingResultDto.getName(), bettingResultDto.getRevenue());
         }
     }
+
 }
