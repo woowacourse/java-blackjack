@@ -1,7 +1,8 @@
 package blackjack;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.participant.Dealer;
+import blackjack.domain.betting.BettingPlayer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -14,51 +15,58 @@ public class Application {
     public static final String DELIMITER = ",";
 
     public static void main(final String... args) {
-        List<Player> players = inputPlayersByNameAndBettingMoney(InputView.inputParticipantsNames());
+        List<Participant> players = inputPlayersByName(InputView.inputParticipantsNames());
         BlackjackGame blackjackGame = BlackjackGame.create(players);
+        List<BettingPlayer> bettingPlayers = getBettingPlayers(blackjackGame.getPlayers());
         blackjackGame.drawBaseCards();
-        OutputView.showParticipantsHand(blackjackGame.getParticipant(), blackjackGame.getParticipants());
+        OutputView.showParticipantsHand(blackjackGame.getDealer(), blackjackGame.getPlayers());
 
         processPlayerTurn(blackjackGame.getPlayers(), blackjackGame);
         processDealerTurn(blackjackGame, blackjackGame.getDealer());
-        OutputView.printParticipantResult(blackjackGame.getParticipant(), blackjackGame.getParticipants());
-        OutputView.printDealerProfit(blackjackGame.calculateDealerProfit());
-        OutputView.printPlayersProfit(blackjackGame.calculatePlayerProfit());
+        printGameResult(blackjackGame, bettingPlayers);
     }
 
-    private static List<Player> inputPlayersByNameAndBettingMoney(String names) {
-        return Arrays.stream(names.split(DELIMITER))
-            .map(playerName -> Player.from(playerName.trim(), getBettingMoney(playerName.trim())))
+    private static void printGameResult(BlackjackGame blackjackGame, List<BettingPlayer> bettingPlayers) {
+        OutputView.printParticipantResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        OutputView.printDealerProfit(blackjackGame.calculateDealerProfit(bettingPlayers));
+        OutputView.printPlayersProfit(blackjackGame.calculatePlayerProfit(bettingPlayers));
+    }
+
+    private static List<BettingPlayer> getBettingPlayers(List<Participant> players) {
+        return players.stream()
+            .map(player -> BettingPlayer.of(player, InputView.inputBettingMoney(player.getName())))
             .collect(Collectors.toList());
     }
 
-    private static String getBettingMoney(String name) {
-        return InputView.inputBettingMoney(name);
+    private static List<Participant> inputPlayersByName(String names) {
+        return Arrays.stream(names.split(DELIMITER))
+            .map(playerName -> new Player(playerName.trim()))
+            .collect(Collectors.toList());
     }
 
-    private static void processDealerTurn(BlackjackGame blackjackGame, Dealer dealer) {
+    private static void processDealerTurn(BlackjackGame blackjackGame, Participant dealer) {
         while (dealer.shouldReceive()) {
-            blackjackGame.takeMoreCard();
+            blackjackGame.takeMoreCard(dealer);
             OutputView.printDealerHandDrawMessage();
         }
     }
 
-    private static void processPlayerTurn(List<Player> players, BlackjackGame blackjackGame) {
-        for (Player player : players) {
+    private static void processPlayerTurn(List<Participant> players, BlackjackGame blackjackGame) {
+        for (Participant player : players) {
             playerTurn(blackjackGame, player);
         }
     }
 
-    private static void playerTurn(BlackjackGame blackjackGame, Player player) {
+    private static void playerTurn(BlackjackGame blackjackGame, Participant player) {
         while (!player.isFinished() && InputView.inputOneMoreCard(player)) {
             blackjackGame.takeMoreCard(player);
-            OutputView.showPlayerHand(player.getParticipant());
+            OutputView.showPlayerHand(player);
         }
         if (player.isFinished()) {
             OutputView.printBustMessage();
             return;
         }
         player.stay();
-        OutputView.showPlayerHand(player.getParticipant());
+        OutputView.showPlayerHand(player);
     }
 }
