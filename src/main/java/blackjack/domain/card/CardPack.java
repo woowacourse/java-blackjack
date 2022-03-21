@@ -36,11 +36,20 @@ public class CardPack {
         cardPack.addAll(cards);
     }
 
-    public Card pickOne() {
+    public Card pickOne(boolean isClose) {
         if (cardPack.isEmpty()) {
             initializeCards();
         }
 
-        return cardPack.remove(0);
+        return returnCard(isClose);
+    }
+
+    private Card returnCard(boolean isClose) {
+        Card card = cardPack.remove(0);
+        if (isClose) {
+            card.close();
+        }
+
+        return card;
     }
 }

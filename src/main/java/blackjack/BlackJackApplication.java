@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.controller.BlackJackGame;
+import blackjack.domain.BlackJackGame;
 
 public class BlackJackApplication {
     public static void main(String[] args) {

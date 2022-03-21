@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.gamer.role.Dealer;
 import blackjack.domain.gamer.role.Player;
@@ -32,20 +31,14 @@ public class Gamers {
     public void addInitialCards(CardPack cardPack) {
         playerGroup.addCard(cardPack);
         playerGroup.addCard(cardPack);
-        addInitialDealerCards(cardPack);
-    }
-
-    private void addInitialDealerCards(CardPack cardPack) {
-        Card card = cardPack.pickOne();
-        card.close();
-        dealer.addCard(card);
-        dealer.addCard(cardPack.pickOne());
+        dealer.addCard(cardPack.pickOne(true));
+        dealer.addCard(cardPack.pickOne(false));
     }
 
     public int addCardsToDealer(CardPack cardPack) {
         int addedCardsCount = 0;
         while (dealer.isAddable()) {
-            dealer.addCard(cardPack.pickOne());
+            dealer.addCard(cardPack.pickOne(false));
             addedCardsCount++;
         }
 

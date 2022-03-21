@@ -53,7 +53,7 @@ public class PlayerGroup {
 
     public void addCard(CardPack cardPack) {
         for (Player player : players) {
-            player.addCard(cardPack.pickOne());
+            player.addCard(cardPack.pickOne(false));
         }
     }
 
