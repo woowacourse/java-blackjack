@@ -28,6 +28,13 @@ public class CardDeck {
     }
 
     public Card draw() {
-        return cards.pop();
+        if (isNotEmpty()) {
+            return cards.pop();
+        }
+        throw new IllegalArgumentException("[ERROR] 카드 덱에 남은 카드가 없어 카드를 받을수 없습니다.");
+    }
+
+    private boolean isNotEmpty() {
+        return !cards.isEmpty();
     }
 }
