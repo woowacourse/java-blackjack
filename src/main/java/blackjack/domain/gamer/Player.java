@@ -19,7 +19,7 @@ public class Player extends Gamer {
     }
 
     public BlackJackResult match(Dealer dealer) {
-        return BlackJackResult.of(this, dealer);
+        return BlackJackResult.findResult(this, dealer);
     }
 
     public int getBettingMoney() {

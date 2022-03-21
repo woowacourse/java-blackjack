@@ -20,7 +20,7 @@ class BlackJackResultTest {
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
-        BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
+        BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("WIN"));
     }
 
@@ -31,7 +31,7 @@ class BlackJackResultTest {
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.ACE), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
-        BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
+        BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("BLACK_JACK_WIN"));
     }
 
@@ -42,7 +42,7 @@ class BlackJackResultTest {
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.ACE), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
-        BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
+        BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("DRAW"));
     }
 
@@ -53,7 +53,7 @@ class BlackJackResultTest {
         List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TWO), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
-        BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
+        BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
         assertThat(blackJackResult.getReverse((int) blackJackResult.getProfitRate() * player.getBettingMoney())).isEqualTo(-1000);
     }
 
@@ -65,7 +65,7 @@ class BlackJackResultTest {
         Player player = new Player("범고래", playerCards, 1000);
         player.addCard(new Card(CardShape.HEART, CardNumber.ACE));
         Dealer dealer = new Dealer(dealerCards);
-        BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
+        BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("LOSE"));
     }
 

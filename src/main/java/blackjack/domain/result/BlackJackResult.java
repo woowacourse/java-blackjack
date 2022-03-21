@@ -3,35 +3,24 @@ package blackjack.domain.result;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
-import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum BlackJackResult {
-    BLACK_JACK_WIN(1.5, BlackJackResult::isPlayerBlackJackWin),
-    WIN(1, BlackJackResult::isPlayerWin),
-    LOSE(-1, BlackJackResult::isPlayerLose),
-    DRAW(0, BlackJackResult::isPlayerDraw);
+    BLACK_JACK_WIN(1.5),
+    WIN(1),
+    LOSE(-1),
+    DRAW(0);
 
     public static final int MAX_CARD_VALUE = 21;
-    private static final String NOT_EXIST_ERROR = "옯바른 결과를 찾을 수 없습니다.";
     private static final int REVERSE_VALUE = -1;
 
     private final double profitRate;
-    private final BiPredicate<Player, Dealer> determine;
 
-    BlackJackResult(double profitRate, BiPredicate<Player, Dealer> determine) {
+    BlackJackResult(double profitRate) {
         this.profitRate = profitRate;
-        this.determine = determine;
     }
 
-    public static BlackJackResult of(Player player, Dealer dealer) {
-        return Arrays.stream(values())
-                .filter(result -> result.determine.test(player, dealer))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
-    }
-
-    private static BlackJackResult findResult(Player player, Dealer dealer) {
+    public static BlackJackResult findResult(Player player, Dealer dealer) {
         if (isPlayerBlackJackWin(player, dealer)) {
             return BLACK_JACK_WIN;
         }
@@ -58,12 +47,6 @@ public enum BlackJackResult {
         return (!player.isBlackJack() && dealer.isBlackJack())
                 || (player.getCardsNumberSum() > MAX_CARD_VALUE) || (dealer.getCardsNumberSum() <= MAX_CARD_VALUE
                 && player.getCardsNumberSum() < dealer.getCardsNumberSum());
-    }
-
-    private static boolean isPlayerDraw(Player player, Dealer dealer) {
-        return (player.isBlackJack() && dealer.isBlackJack())
-                || player.getCardsNumberSum() <= MAX_CARD_VALUE
-                && dealer.getCardsNumberSum() <= MAX_CARD_VALUE && player.getCardsNumberSum() == dealer.getCardsNumberSum();
     }
 
     public double getProfitRate() {
