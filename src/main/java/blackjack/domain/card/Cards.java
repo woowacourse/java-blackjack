@@ -5,57 +5,64 @@ import java.util.List;
 
 public class Cards {
 
-    private final int BLACKJACK = 21;
-    private final int DIFFERENCE_POINT_OF_ACE = 10;
-    private final int MINIMUM_ACE_AMOUNT = 1;
+    private static final int BUST = 22;
+    private static final int BLACKJACK = 21;
+    private static final int DEFAULT_INIT_SIZE = 2;
+    private static final int ACE_POINT = 10;
+    private static final int MINIMUM_POINT_FOR_ACE = 11;
 
     private final List<Card> cards;
 
-    private Cards() {
+    public Cards() {
         this.cards = new ArrayList<>();
     }
 
-    public static Cards create() {
-        return new Cards();
+    public Cards(List<Card> value) {
+        this.cards = value;
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public int sum() {
+        int sumOfPoint = cards.stream()
+            .mapToInt(Card::point)
+            .sum();
+        return calculateAcePoint(sumOfPoint);
     }
 
-    public int size() {
-        return cards.size();
+    public Cards add(Card card) {
+        final List<Card> newValue = new ArrayList<>(cards);
+        newValue.add(card);
+        return new Cards(newValue);
+    }
+
+    public boolean isBlackJack() {
+        return BLACKJACK == sum() && isInitialSize();
     }
 
     public boolean isBust() {
-        return getPoint() > BLACKJACK;
+        return sum() >= BUST;
     }
 
-    public int getPoint() {
-        int point = 0;
-        for (Card card : cards) {
-            point += card.getDenomination().getPoint();
-        }
-
-        return calculateAcePoint(point);
+    public boolean isNotInitialized() {
+        return cards.size() < DEFAULT_INIT_SIZE;
     }
 
-    private int calculateAcePoint(int sumOfPoint) {
-        int aceCount = countAce();
-        while (sumOfPoint > BLACKJACK && aceCount >= MINIMUM_ACE_AMOUNT) {
-            sumOfPoint -= DIFFERENCE_POINT_OF_ACE;
-            aceCount--;
-        }
-        return sumOfPoint;
+    public boolean hasAce() {
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
-    private int countAce() {
-        return (int) cards.stream()
-            .filter(card -> card.getDenomination().equals(Denomination.ACE))
-            .count();
+    public boolean isInitialSize() {
+        return this.cards.size() == DEFAULT_INIT_SIZE;
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    private int calculateAcePoint(int point) {
+        if (hasAce() && point <= MINIMUM_POINT_FOR_ACE) {
+            point += ACE_POINT;
+        }
+        return point;
     }
 }

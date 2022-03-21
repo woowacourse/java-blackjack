@@ -1,12 +1,12 @@
 package blackjack.controller;
 
-import blackjack.domain.Statistic;
+import blackjack.domain.GameStatistic;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Gamblers;
+import blackjack.domain.player.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -14,78 +14,66 @@ import java.util.List;
 
 public class GameController {
 
-    private static final int DEFAULT_CARD_AMOUNT = 2;
-
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
-        Dealer dealer = initDealer(cardDeck);
-        Gamblers gamblers = initPlayers(cardDeck);
+        Gamblers gamblers = generatePlayers(cardDeck);
+        Dealer dealer = Dealer.of(cardDeck);
         OutputView.printInitGameState(gamblers, dealer);
 
-        hitOrStandGambler(gamblers, cardDeck);
-        hitOrStandDealer(dealer, cardDeck);
+        playGamblerTurn(gamblers, cardDeck);
+        playDealerTurn(dealer, cardDeck);
 
         OutputView.printCardAndPoint(gamblers, dealer);
-        printGameResult(Statistic.of(dealer, gamblers), gamblers);
+        printGameResult(GameStatistic.of(dealer, gamblers), dealer);
     }
 
-    private Dealer initDealer(CardDeck cardDeck) {
-        Dealer dealer = Dealer.of();
-        dealer.addCard(cardDeck.draw());
-        dealer.addCard(cardDeck.draw());
-        return dealer;
-    }
-
-    private Gamblers initPlayers(CardDeck cardDeck) {
-        Gamblers gamblers = generatePlayers();
-        gamblers.distributeCard(cardDeck);
-        gamblers.distributeCard(cardDeck);
-        return gamblers;
-    }
-
-    private Gamblers generatePlayers() {
+    private Gamblers generatePlayers(CardDeck cardDeck) {
         List<Gambler> gamblerList = new ArrayList<>();
         String[] names = InputView.inputGamblerNames();
         for (String name : names) {
-            gamblerList.add(Gambler.of(Name.of(name)));
+            gamblerList.add(generatePlayer(cardDeck, name));
         }
         return Gamblers.of(gamblerList);
     }
 
-    private void hitOrStandGambler(Gamblers gamblers, CardDeck cardDeck) {
-        for (Gambler gambler : gamblers.getCardNeedGamblers()) {
-            askHitOrStand(gambler, cardDeck);
+    private Gambler generatePlayer(CardDeck cardDeck, String name) {
+        Name gamblerName = Name.of(name);
+        double money = InputView.inputGamblerBetMoney(gamblerName);
+        return Gambler.of(gamblerName, money, cardDeck);
+    }
+
+    private void playGamblerTurn(Gamblers gamblers, CardDeck cardDeck) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            chooseHitOrStay(cardDeck, gambler);
+            printCardStateFirstQuestion(gambler);
         }
     }
 
-    private void hitOrStandDealer(Dealer dealer, CardDeck cardDeck) {
-        if (dealer.isHit()) {
+    private void chooseHitOrStay(CardDeck cardDeck, Gambler gambler) {
+        while (gambler.isHit() && InputView.inputOneMoreCard(gambler.getName())) {
+            gambler.addCard(cardDeck.draw());
+            OutputView.printPlayerCardState(gambler);
+        }
+        if (gambler.isHit()) {
+            gambler.stay();
+        }
+    }
+
+    private void printCardStateFirstQuestion(Gambler gambler) {
+        if (gambler.isFirstQuestion()) {
+            OutputView.printPlayerCardState(gambler);
+        }
+    }
+
+    private void playDealerTurn(Dealer dealer, CardDeck cardDeck) {
+        while (dealer.isHit()) {
             dealer.addCard(cardDeck.draw());
             OutputView.printDealerCardAdded();
         }
+        dealer.stay();
     }
 
-    private void askHitOrStand(Gambler gambler, CardDeck cardDeck) {
-        decideHitGambler(gambler, cardDeck);
-        printStateAtFirstQuestion(gambler);
-    }
-
-    private void decideHitGambler(Gambler gambler, CardDeck cardDeck) {
-        if (InputView.inputOneMoreCard(gambler.getName())) {
-            gambler.addCard(cardDeck.draw());
-            OutputView.printPlayerCardState(gambler);
-            askHitOrStand(gambler, cardDeck);
-        }
-    }
-
-    private void printStateAtFirstQuestion(Gambler gambler) {
-        if (gambler.getCards().size() <= DEFAULT_CARD_AMOUNT) {
-            OutputView.printPlayerCardState(gambler);
-        }
-    }
-
-    private void printGameResult(Statistic statistic, Gamblers gamblers) {
-        OutputView.printTotalResult(statistic);
-        OutputView.printTotalResultByGambler(statistic, gamblers);
+    private void printGameResult(GameStatistic gameStatistic, Dealer dealer) {
+        OutputView.printGameResult(gameStatistic, dealer);
     }
 }

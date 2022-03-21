@@ -5,8 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Card {
-
-    private static final String CARD_CACHE_INDEX_ERROR_MESSAGE = "[ERROR] 해당 카드는 카드 목록에 존재하지 않습니다.";
+    
     private static final List<Card> CACHE = new ArrayList<>();
 
     private final Denomination denomination;
@@ -29,7 +28,15 @@ public class Card {
             .filter(card -> card.getDenomination().equals(inputDenomination))
             .filter(card -> card.getSymbol().equals(inputSymbol))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(CARD_CACHE_INDEX_ERROR_MESSAGE));
+            .orElse(new Card(inputDenomination, inputSymbol));
+    }
+
+    public int point() {
+        return denomination.getPoint();
+    }
+
+    public boolean isAce() {
+        return denomination.equals(Denomination.ACE);
     }
 
     public Denomination getDenomination() {
