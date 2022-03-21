@@ -1,24 +1,27 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.entry.Participant;
+import blackjack.domain.state.State;
+
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 
 public class HoldCards {
     private static final int FIRST_CARD = 0;
+    public static final int INIT_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
     private HoldCards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
-    public static HoldCards init(Card first, Card second) {
-        validateDuplicate(first, second);
-        List<Card> cards = new ArrayList<>();
-        cards.add(first);
-        cards.add(second);
+    public static HoldCards init(List<Card> cards) {
+        validateDuplicate(cards);
+        validateInitCardSize(cards);
         return new HoldCards(cards);
     }
 
@@ -27,23 +30,46 @@ public class HoldCards {
         cards.add(card);
     }
 
-    public int countBestNumber() {
-        return Number.sum(cards.stream()
-                .map(Card::getNumber)
+    public int countBestSum() {
+        return Denomination.sum(cards.stream()
+                .map(Card::getDenomination)
                 .collect(Collectors.toList()));
+    }
+
+    public boolean isBust() {
+        return countBestSum() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isHit() {
+        return countBestSum() < BLACKJACK_NUMBER;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && countBestSum() == BLACKJACK_NUMBER;
+    }
+
+    public boolean isBigger(HoldCards other) {
+        return countBestSum() > other.countBestSum();
+    }
+
+    public boolean isSame(HoldCards other) {
+        return countBestSum() == other.countBestSum();
     }
 
     public Optional<Card> getFirstCard() {
         return Optional.ofNullable(cards.get(FIRST_CARD));
     }
 
-    public List<Card> getCards() {
-        return cards;
+    private static void validateDuplicate(List<Card> cards) {
+        Set<Card> distinctCards = new HashSet<>(cards);
+        if (distinctCards.size() != cards.size()) {
+            throw new IllegalArgumentException("카드가 중복될 수 없습니다.");
+        }
     }
 
-    private static void validateDuplicate(Card first, Card second) {
-        if (first.equals(second)) {
-            throw new IllegalArgumentException("카드가 중복될 수 없습니다.");
+    private static void validateInitCardSize(List<Card> cards) {
+        if (cards.size() != INIT_CARD_SIZE) {
+            throw new IllegalArgumentException("초기 카드는 " + INIT_CARD_SIZE + "장씩 나눠져야 합니다.");
         }
     }
 
@@ -51,5 +77,9 @@ public class HoldCards {
         if (cards.contains(card)) {
             throw new IllegalArgumentException("카드가 중복될 수 없습니다.");
         }
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

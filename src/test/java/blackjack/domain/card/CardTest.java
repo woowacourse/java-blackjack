@@ -10,7 +10,7 @@ public class CardTest {
     @Test
     @DisplayName("스페이드 에이스를 생성한다.")
     void createSpadeAce() {
-        Card card = Card.valueOf(Suit.SPADE, Number.ACE);
+        Card card = Card.valueOf(Suit.SPADE, Denomination.ACE);
 
         assertThat(card).isNotNull();
     }
@@ -18,8 +18,8 @@ public class CardTest {
     @Test
     @DisplayName("52장의 카드를 생성한다.")
     void create52Cards() {
-        Card card = Card.valueOf(Suit.SPADE, Number.ACE);
+        Card card = Card.valueOf(Suit.SPADE, Denomination.ACE);
 
-        assertThat(card.hashCode() == Card.valueOf(Suit.SPADE, Number.ACE).hashCode()).isTrue();
+        assertThat(card.hashCode() == Card.valueOf(Suit.SPADE, Denomination.ACE).hashCode()).isTrue();
     }
 }

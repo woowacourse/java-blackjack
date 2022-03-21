@@ -1,6 +1,8 @@
 package blackjack.domain.card;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Deck {
     private static final int CARDS_SIZE = 52;
@@ -16,6 +18,12 @@ public class Deck {
     public static Deck of(List<Card> cards) {
         Collections.shuffle(cards);
         return new Deck(new LinkedList<>(cards));
+    }
+
+    public List<Card> drawCards(int count) {
+        return IntStream.range(0, count)
+                .mapToObj(i -> draw())
+                .collect(Collectors.toList());
     }
 
     public Card draw() {

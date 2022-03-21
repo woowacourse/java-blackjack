@@ -16,8 +16,14 @@ public abstract class Participant {
 
     public abstract List<Card> openCard();
 
-    public int countCards() {
-        return holdCards.countBestNumber();
+    public abstract boolean canHit();
+
+    public int calculateCardsSum() {
+        return holdCards.countBestSum();
+    }
+
+    public int countCardSize() {
+        return holdCards.getCards().size();
     }
 
     public void putCard(Card card) {

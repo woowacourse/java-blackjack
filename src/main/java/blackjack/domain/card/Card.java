@@ -17,30 +17,47 @@ public class Card {
     }
 
     private final Suit suit;
-    private final Number number;
+    private final Denomination denomination;
 
-    private Card(Suit suit, Number number) {
+    private Card(Suit suit, Denomination denomination) {
         this.suit = suit;
-        this.number = number;
+        this.denomination = denomination;
     }
 
     public static List<Card> createDeck() {
         return new ArrayList<>(CACHE_CARDS);
     }
 
-    public static Card valueOf(Suit suit, Number number) {
+    public static Card valueOf(Suit suit, Denomination denomination) {
         return CACHE_CARDS.stream()
-                .filter(card -> card.containSuit(suit) && card.containNumber(number))
+                .filter(card -> card.find(suit, denomination))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
     }
 
-    public Number getNumber() {
-        return this.number;
+    private static Stream<Card> toCard(Suit suit) {
+        return Arrays.stream(Denomination.values())
+                .map(denomination -> new Card(suit, denomination));
+    }
+
+    private boolean find(Suit suit, Denomination denomination) {
+        return containSuit(suit) && containDenomination(denomination);
+    }
+
+    private boolean containSuit(Suit suit) {
+        return this.suit == suit;
+    }
+
+    private boolean containDenomination(Denomination denomination) {
+        return this.denomination == denomination;
     }
 
     public Suit getSuit() {
         return suit;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     @Override
@@ -52,24 +69,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return suit == card.suit && number == card.number;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(suit, number);
-    }
-
-    private static Stream<Card> toCard(Suit suit) {
-        return Arrays.stream(Number.values())
-                .map(number -> new Card(suit, number));
-    }
-
-    private boolean containNumber(Number number) {
-        return this.number == number;
-    }
-
-    private boolean containSuit(Suit suit) {
-        return this.suit == suit;
+        return Objects.hash(suit, denomination);
     }
 }

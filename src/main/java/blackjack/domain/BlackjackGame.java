@@ -3,68 +3,62 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
-import blackjack.domain.entry.Dealer;
-import blackjack.domain.entry.Participant;
-import blackjack.domain.entry.Player;
-import blackjack.domain.entry.Players;
+import blackjack.domain.entry.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.card.HoldCards.INIT_CARD_SIZE;
+
 public class BlackjackGame {
     public static final int BLACKJACK_NUMBER = 21;
 
     private final Deck deck;
-    private final Players players;
+    private final GameParticipants gameParticipants;
 
-    public BlackjackGame(List<String> names) {
+    public BlackjackGame(Map<PlayerName, Integer> names) {
         this.deck = Deck.of(Card.createDeck());
-        this.players = new Players(createDealer(), toPlayers(names));
+        this.gameParticipants = new GameParticipants(createDealer(), toPlayers(names));
     }
 
-    public void isHitThenReceiveCard(Player player, Command command) {
-        if (command == Command.HIT) {
-            receiveOneMoreCard(player);
-        }
+    public void hit(PlayerName name) {
+        Participant participant = find(name);
+        participant.putCard(deck.draw());
     }
 
-    private void receiveOneMoreCard(Player player) {
-        player.putCard(deck.draw());
+    public Participant find(PlayerName playerName) {
+        return gameParticipants.find(playerName.getValue());
     }
 
     public boolean canDealerHit() {
-        return players.isDealerHit(deck);
+        return gameParticipants.getDealer().canHit();
     }
 
-    public boolean canHit(Player player, Command command) {
-        return command == Command.HIT && player.countCards() < BLACKJACK_NUMBER;
+    public boolean canHit(Command command, PlayerName playerName) {
+        return command.isHit() && find(playerName).canHit();
     }
 
-    public Map<Participant, Integer> getCardResult(List<Participant> participants) {
-        return participants.stream()
-                .collect(Collectors.toMap(participant -> participant, Participant::countCards));
+    public Map<Participant, Integer> getCardResult() {
+        return gameParticipants.getAllParticipants().stream()
+                .collect(Collectors.toMap(participant -> participant, Participant::calculateCardsSum));
     }
 
-    public Map<PlayerOutcome, List<Player>> getGameResult() {
-        return players.getGameResult();
-    }
-
-    public List<Player> getPlayers() {
-        return players.getPlayers();
+    public Map<Participant, Integer> getBettingResult() {
+        return gameParticipants.calculateBettingResult();
     }
 
     public List<Participant> getParticipant() {
-        return players.getParticipant();
+        return gameParticipants.getAllParticipants();
     }
 
     private Dealer createDealer() {
-        return new Dealer(HoldCards.init(deck.draw(), deck.draw()));
+        return new Dealer(HoldCards.init(deck.drawCards(INIT_CARD_SIZE)));
     }
 
-    private List<Player> toPlayers(List<String> names) {
-        return names.stream()
-                .map(name -> new Player(name, HoldCards.init(deck.draw(), deck.draw())))
-                .collect(Collectors.toList());
+    private Players toPlayers(Map<PlayerName, Integer> names) {
+        return new Players(names.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue(), HoldCards.init(deck.drawCards(INIT_CARD_SIZE))))
+                .collect(Collectors.toList()));
     }
 }

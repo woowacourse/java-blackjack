@@ -1,13 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.PlayerOutcome;
+import blackjack.domain.result.BettingResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Participant;
-import blackjack.domain.entry.Player;
 
 import java.text.MessageFormat;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,9 +15,7 @@ public class OutputView {
     public static void printPlayersDefaultCard(List<Participant> participants) {
         System.out.println(MessageFormat.format("{0}에게 2장의 카드를 나누었습니다.", concatPlayerName(participants)));
         for (Participant participant : participants) {
-            System.out.println(MessageFormat.format("{0}카드: {1}", participant.getName(), participant.openCard().stream()
-                    .map(OutputView::toCardName)
-                    .collect(Collectors.joining(NAME_DELIMITER))));
+            System.out.println(MessageFormat.format("{0}카드: {1}", participant.getName(), concatCardName(participant.openCard())));
         }
         System.out.println();
     }
@@ -39,20 +34,16 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(Map<PlayerOutcome, List<Player>> gameResult) {
-        System.out.println("## 최종 승패");
+    public static void printGameResult(Map<Participant, Integer> bettingResult) {
+        System.out.println("## 최종 수익");
 
-        System.out.println("딜러: "
-                + gameResult.getOrDefault(PlayerOutcome.LOSE, Collections.emptyList()).size() + "승 "
-                + gameResult.getOrDefault(PlayerOutcome.WIN, Collections.emptyList()).size() + "패 "
-                + gameResult.getOrDefault(PlayerOutcome.DRAW, Collections.emptyList()).size() + "무");
-
-        gameResult.forEach((outcome, players) ->
-                players.forEach(player -> System.out.println(player.getName() + ": " + outcome.getValue())));
+        bettingResult.forEach((participant, money) -> {
+            System.out.println(MessageFormat.format("{0}: {1}", participant.getName(), money));
+        });
     }
 
     private static String getPlayerCard(Participant participant) {
-        return MessageFormat.format("{0}카드: {1}", participant.getName(), concatCardName(participant.getHoldCards()));
+        return MessageFormat.format("{0}카드: {1}", participant.getName(), concatCardName(participant.getHoldCards().getCards()));
     }
 
     private static String concatPlayerName(List<Participant> players) {
@@ -61,14 +52,14 @@ public class OutputView {
                 .collect(Collectors.joining(NAME_DELIMITER));
     }
 
-    private static String concatCardName(HoldCards holdCards) {
-        return holdCards.getCards()
+    private static String concatCardName(List<Card> cards) {
+        return cards
                 .stream()
                 .map(OutputView::toCardName)
                 .collect(Collectors.joining(NAME_DELIMITER));
     }
 
     private static String toCardName(Card card) {
-        return card.getNumber().getName() + card.getSuit().getName();
+        return card.getDenomination().getName() + card.getSuit().getName();
     }
 }
