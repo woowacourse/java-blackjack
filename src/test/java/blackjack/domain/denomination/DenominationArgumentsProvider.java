@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.denomination;
 
 import static blackjack.domain.Denomination.*;
 import static org.junit.jupiter.params.provider.Arguments.*;
@@ -15,9 +15,7 @@ public class DenominationArgumentsProvider implements ArgumentsProvider {
         return Stream.of(
                 arguments(10, ACE, 11),
                 arguments(11, ACE, 12),
-                arguments(10, SEVEN, 17),
-                arguments(22, ACE, 23),
-                arguments(21, ACE, 22)
+                arguments(10, SEVEN, 17)
         );
     }
 }

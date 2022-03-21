@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int BONUS_ACE_ADD_SCORE = 10;
+    private static final int BONUS_ACE_CONVERT_SCORE = 10;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> value;
 
@@ -19,36 +20,36 @@ public class Cards {
         int totalScore = 0;
 
         for (Card card : value) {
-            totalScore = card.getSumScore(totalScore);
+            totalScore = card.addScore(totalScore);
         }
-        return ConvertCloseBlackJack(totalScore);
+        return convertToClosestBlackJackScore(totalScore);
     }
 
-    private int ConvertCloseBlackJack(int totalScore) {
-        int convertScore = totalScore;
-
-        for (int i = 0; i < countAce(); i++) {
-            convertScore = calculateAceScore(convertScore);
+    private int convertToClosestBlackJackScore(int totalScore) {
+        if (isAce()) {
+            return calculateAceScore(totalScore);
         }
-        return convertScore;
+        return totalScore;
     }
 
-    private Long countAce() {
+    private boolean isAce() {
         return value.stream()
-                .map(Card::getDenomination)
-                .filter(card -> ACE.equals(card))
-                .count();
+                .anyMatch(Card::isAceCard);
     }
 
     private int calculateAceScore(int score) {
-        if ((score + BONUS_ACE_ADD_SCORE) > BLACKJACK_SCORE) {
+        if (score + BONUS_ACE_CONVERT_SCORE > BLACKJACK_SCORE) {
             return score;
         }
-        return score + BONUS_ACE_ADD_SCORE;
+        return score + BONUS_ACE_CONVERT_SCORE;
     }
 
     public void add(Card card) {
         value.add(card);
+    }
+
+    public boolean isBlackJack() {
+        return value.size() == BLACKJACK_CARD_SIZE && calculateTotalScore() == BLACKJACK_SCORE;
     }
 
     public List<Card> getValue() {

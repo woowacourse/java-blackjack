@@ -6,35 +6,61 @@ import java.util.List;
 
 public abstract class Gamer {
 
-    private final Name name;
+    private final String name;
+    private final BettingMoney bettingMoney;
     private final Cards cards;
 
-    public Gamer(String name, List<Card> cards) {
-        this.name = new Name(name);
+    public Gamer(String name, BettingMoney bettingMoney, List<Card> cards) {
+        this.name = name.trim();
+        checkName(this.name);
+
+        this.bettingMoney = bettingMoney;
         this.cards = new Cards(cards);
+    }
+
+    private void checkName(String value) {
+        if (value.isBlank()) {
+            throw new IllegalArgumentException("이름은 공백이 아니어야합니다.");
+        }
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     public int getTotalScore() {
         return cards.calculateTotalScore();
     }
 
-    public void add(Card card) {
-        cards.add(card);
-    }
-
     public boolean isBust() {
         return getTotalScore() > BLACKJACK_SCORE;
     }
 
-    abstract GameResult createResult(Gamer gamer);
+    public boolean isTie(Gamer gamer) {
+        return this.getTotalScore() == gamer.getTotalScore();
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
 
     abstract boolean canHit();
 
+    abstract void changeByBettingMoneyResult(Gamer player);
+
+    public boolean addMoney(int value) {
+        return bettingMoney.addMoney(value);
+    }
+
     public String getName() {
-        return name.getValue();
+        return name;
     }
 
     public Cards getCards() {
         return cards;
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
     }
 }

@@ -1,22 +1,24 @@
 package blackjack.dto;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.Gamer;
 import java.util.Objects;
 
 public class GameResultDto {
 
-    private final String value;
+    private final String name;
+    private final int bettingMoney;
 
-    public GameResultDto(String gameResult) {
-        this.value = gameResult;
+    public GameResultDto(String gamerName, int bettingMoney) {
+        this.name = gamerName;
+        this.bettingMoney = bettingMoney;
     }
 
-    public static GameResultDto from(GameResult gameResult) {
-        return new GameResultDto(gameResult.getValue());
+    public static GameResultDto from(Gamer gamer) {
+        return new GameResultDto(gamer.getName(), gamer.getBettingMoney());
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -28,11 +30,15 @@ public class GameResultDto {
             return false;
         }
         GameResultDto that = (GameResultDto) o;
-        return Objects.equals(value, that.value);
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(name);
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import static blackjack.domain.CardsTestDataGenerator.*;
 import static blackjack.domain.Denomination.*;
@@ -7,6 +7,13 @@ import static blackjack.domain.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.BettingMoney;
+import blackjack.domain.Card;
+import blackjack.domain.Cards;
+import blackjack.domain.Dealer;
+import blackjack.domain.GameResult;
+import blackjack.domain.Player;
+import blackjack.domain.cards.CardsArgumentsProvider;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +25,7 @@ public class PlayerTest {
     @DisplayName("이름과 카드 리스트가 주어지면 정상적으로 생성된다.")
     @Test
     void 플레이어_생성_정상() {
-        assertDoesNotThrow(() -> new Player("mat", generateCards()));
+        assertDoesNotThrow(() -> new Player("mat", new BettingMoney(), generateBlackJackCards()));
     }
 
     @DisplayName("플레이어의 총 점수가 21점 이하인 경우 hit가 가능하다.")
@@ -26,7 +33,7 @@ public class PlayerTest {
     void 플레이어_게임_지속_가능() {
         String name = "mat";
         List<Card> cards = generateTotalScoreNotMoreThan21Cards();
-        Player player = new Player(name, cards);
+        Player player = new Player(name, new BettingMoney(), cards);
 
         assertThat(player.canHit()).isTrue();
     }
@@ -36,7 +43,7 @@ public class PlayerTest {
     void 플레이어_게임_지속_불가능() {
         String name = "sudal";
         List<Card> cards = generateTotalScoreGraterThan21Cards();
-        Player player = new Player(name, cards);
+        Player player = new Player(name, new BettingMoney(), cards);
 
         assertThat(player.canHit()).isFalse();
     }
@@ -45,11 +52,11 @@ public class PlayerTest {
     @Test
     void 카드_합침() {
         String name = "mat";
-        List<Card> cards = generateCards();
-        Player player = new Player(name, cards);
+        List<Card> cards = generateBlackJackCards();
+        Player player = new Player(name, new BettingMoney(), cards);
         Card card = Card.of(FIVE, SPADE);
 
-        player.add(card);
+        player.addCard(card);
 
         assertThat(player.getCards().getValue().size()).isEqualTo(3);
     }
@@ -70,7 +77,7 @@ public class PlayerTest {
         List<Card> normalCards = generateTotalScoreNotMoreThan21Cards();
 
         Dealer dealer = new Dealer(bustCards);
-        Player player = new Player("sudal", normalCards);
+        Player player = new Player("sudal", new BettingMoney(), normalCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -85,7 +92,7 @@ public class PlayerTest {
         List<Card> playerByBustValue = generateTotalScoreGraterThan21Cards();
 
         Dealer dealer = new Dealer(dealerByBustValue);
-        Player player = new Player("sudal", playerByBustValue);
+        Player player = new Player("sudal", new BettingMoney(), playerByBustValue);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -100,7 +107,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan21Cards();
 
         Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", maxValueCards);
+        Player player = new Player("sudal", new BettingMoney(), maxValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -116,7 +123,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
 
         Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", maxValueCards);
+        Player player = new Player("sudal", new BettingMoney(), maxValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -132,7 +139,7 @@ public class PlayerTest {
         List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
 
         Dealer dealer = new Dealer(maxValueCards);
-        Player player = new Player("sudal", minValueCards);
+        Player player = new Player("sudal", new BettingMoney(), minValueCards);
 
         GameResult gameResult = player.createResult(dealer);
 
@@ -143,15 +150,91 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_점수_무() {
         //12점
-        List<Card> tieValueByPlayer = generateCards();
+        List<Card> tieValueByPlayer = generate21Cards();
         //12점
-        List<Card> tieValueByDealer = generateCards();
+        List<Card> tieValueByDealer = generate21Cards();
 
         Dealer dealer = new Dealer(tieValueByDealer);
-        Player player = new Player("sudal", tieValueByPlayer);
+        Player player = new Player("sudal", new BettingMoney(), tieValueByPlayer);
 
         GameResult gameResult = player.createResult(dealer);
 
         assertThat(gameResult).isEqualTo(GameResult.TIE);
+    }
+
+    @DisplayName("플레이어 최초 카드 2 장 합이 21이면 블랙잭")
+    @Test
+    void 플레이어_블랙잭() {
+        //12점
+        List<Card> tieValueByPlayer = generateBlackJackCards();
+        //12점
+        List<Card> tieValueByDealer = generate21Cards();
+
+        Dealer dealer = new Dealer(tieValueByDealer);
+        Player player = new Player("sudal", new BettingMoney(), tieValueByPlayer);
+
+        GameResult gameResult = player.createResult(dealer);
+
+        assertThat(gameResult).isEqualTo(BLACKJACK);
+    }
+
+    @DisplayName("딜러가 블랙잭이면 플레이어 패")
+    @Test
+    void 딜러_블랙잭_플레이어_패() {
+        //12점
+        List<Card> loseByPlayer = generate21Cards();
+        //12점
+        List<Card> blackJackByDealer = generateBlackJackCards();
+
+        Dealer dealer = new Dealer(blackJackByDealer);
+        Player player = new Player("sudal", new BettingMoney(), loseByPlayer);
+
+        GameResult gameResult = player.createResult(dealer);
+
+        assertThat(gameResult).isEqualTo(LOSE);
+    }
+
+    @DisplayName("플레이어가 이겼을 때 최종 배팅 머니 계산")
+    @Test
+    void 배팅금액_합계_승리() {
+        Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreGraterThan17Cards());
+        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
+
+        player.changeByBettingMoneyResult(dealer);
+
+        assertThat(player.getBettingMoney()).isEqualTo(1000);
+    }
+
+    @DisplayName("플레이어가 블랙잭이라서 이겼을 때 최종 배팅 머니 계산")
+    @Test
+    void 배팅금액_합계_블랙잭_승리() {
+        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
+
+        player.changeByBettingMoneyResult(dealer);
+
+        assertThat(player.getBettingMoney()).isEqualTo(1500);
+    }
+
+    @DisplayName("플레이어가 졌을 때 최종 배팅 머니 계산")
+    @Test
+    void 배팅금액_합계_패배() {
+        Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateTotalScoreNotMoreThan16Cards());
+
+        player.changeByBettingMoneyResult(dealer);
+
+        assertThat(player.getBettingMoney()).isEqualTo(-1000);
+    }
+
+    @DisplayName("플레이어와 딜러 무승부일 때 배팅 머니 계산")
+    @Test
+    void 배팅금액_합계_무승부() {
+        Dealer dealer = new Dealer(generateBlackJackCards());
+        Player player = new Player("sudal", new BettingMoney(1000), generateBlackJackCards());
+
+        player.changeByBettingMoneyResult(dealer);
+
+        assertThat(player.getBettingMoney()).isEqualTo(1000);
     }
 }

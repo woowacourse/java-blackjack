@@ -1,11 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.cards;
 
-import static blackjack.domain.CardsTestDataGenerator.generateCards;
+import static blackjack.domain.CardsTestDataGenerator.generateBlackJackCards;
 import static blackjack.domain.Denomination.*;
 import static blackjack.domain.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.Card;
+import blackjack.domain.Cards;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,7 @@ public class CardsTest {
     @DisplayName("카드 리스트를 활용하여 Cards 를 생성한다.")
     @Test
     void 카드들_생성() {
-        assertDoesNotThrow(() -> new Cards(generateCards()));
+        assertDoesNotThrow(() -> new Cards(generateBlackJackCards()));
     }
 
     @DisplayName("카드의 총점을 계산한다.")
@@ -33,7 +35,7 @@ public class CardsTest {
     @DisplayName("카드 List에 카드를 추가한다.")
     @Test
     void 카드_추가() {
-        Cards cards = new Cards(generateCards());
+        Cards cards = new Cards(generateBlackJackCards());
 
         cards.add(Card.of(KING, DIAMOND));
 
