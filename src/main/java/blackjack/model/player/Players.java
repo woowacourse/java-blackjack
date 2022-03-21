@@ -60,7 +60,7 @@ public final class Players {
         return this.dealer.countAddedCards();
     }
 
-    public Profits getProfits() {
+    public Profits calculateProfits() {
         return this.entries.compareAllWith(dealer);
     }
 

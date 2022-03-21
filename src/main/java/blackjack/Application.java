@@ -7,9 +7,6 @@ import blackjack.dto.ProfitsDto;
 import blackjack.model.Game;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 public class Application {
 
@@ -18,38 +15,53 @@ public class Application {
         final ResultView resultView = new ResultView();
 
         Game game = new Game(inputView.askEntryNames());
-        game.betMoney(askBetAmount(inputView));
-        game.start(printFirstHands(resultView));
-        game.playEntries(askForHit(inputView), printBustMessage(resultView), printFullHand(resultView));
+        betMoney(game, inputView);
+        giveFirstHands(resultView, game);
+        playEntries(inputView, resultView, game);
         inputView.closeInput();
-        game.showResults(printDealerAddedCount(resultView), printProfits(resultView));
+        hitDealer(game, resultView);
+        resultView.printProfits(PlayersDto.from(game), ProfitsDto.from(game.calculateProfits()));
     }
 
-    private static Function<Game, Integer> askBetAmount(InputView inputView) {
-        return game -> inputView.askBetAmount(EntryDto.fromCurrentEntryOf(game));
+    private static void betMoney(Game game, InputView inputView) {
+        do {
+            game.toNextEntry();
+            game.betToCurrentEntry(inputView.askBetAmount(EntryDto.fromCurrentEntryOf(game)));
+        } while (game.hasNextEntry());
+        game.toFirstEntry();
     }
 
-    private static Consumer<Game> printFirstHands(ResultView resultView) {
-        return game -> resultView.printFirstHands(PlayersDto.from(game));
+    private static void giveFirstHands(ResultView resultView, Game game) {
+        game.giveFirstHands();
+        resultView.printFirstHands(PlayersDto.from(game));
     }
 
-    private static Predicate<Game> askForHit(InputView inputView) {
-        return game -> inputView.askForHit(EntryDto.fromCurrentEntryOf(game));
+    private static void playEntries(InputView inputView, ResultView resultView, Game game) {
+        do {
+            game.toNextEntry();
+            playTurn(game, inputView, resultView);
+        } while (game.hasNextEntry());
     }
 
-    private static Consumer<Game> printBustMessage(ResultView resultView) {
-        return game -> resultView.printBustMessage(EntryDto.fromCurrentEntryOf(game));
+    private static void playTurn(Game game, InputView inputView, ResultView resultView) {
+        if (!game.canCurrentEntryHit()) {
+            resultView.printBustMessage(EntryDto.fromCurrentEntryOf(game));
+            return;
+        }
+        hitCurrentEntry(game, inputView, resultView);
     }
 
-    private static Consumer<Game> printFullHand(ResultView resultView) {
-        return game -> resultView.printFullHand(EntryDto.fromCurrentEntryOf(game));
+    private static void hitCurrentEntry(Game game, InputView inputView, ResultView resultView) {
+        if (inputView.askForHit(EntryDto.fromCurrentEntryOf(game))) {
+            game.hitCurrentEntry();
+            resultView.printFullHand(EntryDto.fromCurrentEntryOf(game));
+            playTurn(game, inputView, resultView);
+        }
     }
 
-    private static Consumer<Game> printDealerAddedCount(ResultView resultView) {
-        return game -> resultView.printDealerAddedCount(DealerDto.from(game));
-    }
-
-    private static Consumer<Game> printProfits(ResultView resultView) {
-        return game -> resultView.printProfits(PlayersDto.from(game), ProfitsDto.from(game.getProfits()));
+    private static void hitDealer(Game game, ResultView resultView) {
+        if (game.hitDealer()) {
+            resultView.printDealerAddedCount(DealerDto.from(game));
+        }
     }
 }
