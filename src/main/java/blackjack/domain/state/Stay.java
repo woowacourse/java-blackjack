@@ -5,6 +5,10 @@ import blackjack.domain.player.Dealer;
 
 public class Stay extends Finished {
 
+    private static final int WIN_RATE = 1;
+    private static final int LOST_RATE = -1;
+    private static final int DRAW_RATE = 0;
+
     public Stay(Cards cards) {
         super(cards);
     }
@@ -12,12 +16,12 @@ public class Stay extends Finished {
     @Override
     protected double earningRate(Dealer dealer) {
         if (dealer.isBust()) {
-            return 1;
+            return WIN_RATE;
         }
         if (dealer.isBlackjack() || isLesserThanDealerScore(dealer)) {
-            return -1;
+            return LOST_RATE;
         }
-        return 0;
+        return DRAW_RATE;
     }
 
     private boolean isLesserThanDealerScore(Dealer dealer) {

@@ -5,6 +5,9 @@ import blackjack.domain.player.Dealer;
 
 public class Blackjack extends Finished {
 
+    private static final int DRAW_RATE = 0;
+    private static final double WIN_RATE = 1.5;
+
     Blackjack(Cards cards) {
         super(cards);
     }
@@ -12,8 +15,8 @@ public class Blackjack extends Finished {
     @Override
     protected double earningRate(Dealer dealer) {
         if (dealer.isBlackjack()) {
-            return 0;
+            return DRAW_RATE;
         }
-        return 1.5;
+        return WIN_RATE;
     }
 }
