@@ -26,15 +26,15 @@ public class Players implements Iterable<Player> {
         return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
+    @Override
+    public void forEach(Consumer<? super Player> action) {
+        Iterable.super.forEach(action);
+    }
+
     @NotNull
     @Override
     public Iterator<Player> iterator() {
         return new PlayersIterator();
-    }
-
-    @Override
-    public void forEach(Consumer<? super Player> action) {
-        Iterable.super.forEach(action);
     }
 
     public class PlayersIterator implements Iterator<Player> {

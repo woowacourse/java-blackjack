@@ -28,35 +28,38 @@ class ProfitsTest {
     Name name_player_19 = new Name("player_19");
     Name name_player_BUST = new Name("player_Bust");
     Dealer dealer_15 = new Dealer(List.of(card_K, card_5));
+    Player player_19 = new Player(name_player_19, cards_19);
+    Player player_BUST = new Player(name_player_BUST, cards_BUST);
+    Players players = new Players(List.of(player_19, player_BUST));
+    Results results = Results.generateResults(dealer_15, players);
 
-    Players players;
-    Results results;
     BettingReceipts bettingReceipts;
     Profits profits;
 
     @BeforeEach
     void setUp() {
-        Player player_19 = new Player(name_player_19, cards_19);
-        Player player_BUST = new Player(name_player_BUST, cards_BUST);
-        players = new Players(List.of(player_19, player_BUST));
-        results = Results.generateResults(dealer_15, players);
+        // given
         Map<Name, BettingMoney> maps = new LinkedHashMap<>();
         maps.put(name_player_19, new BettingMoney(1000));
         maps.put(name_player_BUST, new BettingMoney(2000));
         bettingReceipts = new BettingReceipts(maps);
+
+        // when
         profits = Profits.generateProfits(results, bettingReceipts, players);
     }
 
     @Test
     @DisplayName("플레이어의 수익 반환")
     void getProfit() {
+        // then
         assertThat(profits.getProfit(name_player_19)).isEqualTo(1000);
         assertThat(profits.getProfit(name_player_BUST)).isEqualTo(-2000);
     }
 
     @Test
-    @DisplayName("플레이어의 수익 반환")
+    @DisplayName("딜러의 수익 반환")
     void calculateDealerProfit() {
+        // then
         assertThat(profits.calculateDealerProfit()).isEqualTo(1000);
     }
 }

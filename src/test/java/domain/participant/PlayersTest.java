@@ -24,28 +24,31 @@ public class PlayersTest {
     List<Card> cards_BLACKJACK = new ArrayList<>(Arrays.asList(card_A, card_Q));
     List<Card> cards_BUST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
     Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
+    Player player_BLACKJACK = new Player(new Name("player_BLACKJACK"), cards_BLACKJACK);
+    Player player_BUST = new Player(new Name("player_BUST"), cards_BUST);
 
-    Player player_BLACKJACK;
-    Player player_BUST;
     Players players;
 
     @BeforeEach
     void setUp() {
-        player_BLACKJACK = new Player(new Name("player_BLACKJACK"), cards_BLACKJACK);
-        player_BUST = new Player(new Name("player_BUST"), cards_BUST);
+        // given
         players = new Players(List.of(player_BLACKJACK, player_BUST));
     }
 
     @Test
     @DisplayName("모든 플레이어가 Bust 인지 판별")
     void isBustAllBust() {
+        // then
         assertThat(players.isNotAllBust()).isTrue();
     }
 
     @Test
     @DisplayName("최종 게임 결과 반환")
     void getResultAtFinal() {
+        // when
         Results resultMap = Results.generateResults(dealer_17, players);
+
+        // then
         assertThat(resultMap.getVersusOfPlayer(new Name("player_BLACKJACK"))).isEqualTo(WinOrLose.WIN);
         assertThat(resultMap.getVersusOfPlayer(new Name("player_BUST"))).isEqualTo(WinOrLose.LOSE);
     }

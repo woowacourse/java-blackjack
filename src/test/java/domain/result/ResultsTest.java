@@ -48,6 +48,7 @@ public class ResultsTest {
 
     @BeforeEach
     void setUp() {
+        // when
         player_20 = new Player(new Name("player_20"), cards_20);
         player_15 = new Player(new Name("player_15"), cards_15);
         player_BUST = new Player(new Name("player_BUST"), cards_BUST);
@@ -66,59 +67,72 @@ public class ResultsTest {
     @Test
     @DisplayName("딜러도 safe, 플레이어 safe, 플레이어 승")
     void getVersusOfPlayer_player_20() {
+        // then
         assertThat(result_dealer_17.getVersusOfPlayer(new Name("player_20")).getResult()).isEqualTo("승");
     }
 
     @Test
     @DisplayName("딜러도 safe, 플레이어 safe, 무승부")
     void getVersusOfPlayer_player_17() {
+        // then
         assertThat(result_dealer_17.getVersusOfPlayer(new Name("player_17")).getResult()).isEqualTo("무");
     }
 
     @Test
     @DisplayName("딜러도 safe, 플레이어 safe, 플레이어 패")
     void getVersusOfPlayer_player_15() {
+        // then
         assertThat(result_dealer_17.getVersusOfPlayer(new Name("player_15")).getResult()).isEqualTo("패");
     }
 
     @Test
     @DisplayName("딜러도 safe, 플레이어 burst, 플레이어 패")
     void getVersusOfPlayer_player_BUST() {
+        // then
         assertThat(result_dealer_17.getVersusOfPlayer(new Name("player_BUST")).getResult()).isEqualTo("패");
     }
 
     @Test
     @DisplayName("딜러도 bust, 플레이어 safe, 플레이어 승")
     void getVersusOfPlayer_bust_safe_win() {
+        // then
         assertThat(result_dealer_bust.getVersusOfPlayer(new Name("player_20")).getResult()).isEqualTo("승");
     }
 
     @Test
     @DisplayName("딜러도 bust, 플레이어 bust, 플레이어 패")
     void getVersusOfPlayer_bust_bust_lose() {
+        // then
         assertThat(result_dealer_bust.getVersusOfPlayer(new Name("player_BUST")).getResult()).isEqualTo("패");
     }
 
     @Test
     @DisplayName("딜러가 21인데 플레이어가 블랙잭일 경우, 플레이어 승리")
     void getVersusOfPlayer_21_blackjack_win() {
+        // when
         dealer_17.addCard(card_4);
         Results result = Results.generateResults(dealer_17, players);
+
+        // then
         assertThat(result.getVersusOfPlayer(new Name("player_BLACKJACK")).getResult()).isEqualTo("승");
     }
 
     @Test
     @DisplayName("딜러가 21인데 플레이어가 21일 경우, 무승부")
     void getVersusOfPlayer_21_21_draw() {
+        // given
         dealer_17.addCard(card_4);
         player_15.addCard(card_6);
         Results result = Results.generateResults(dealer_17, players);
+
+        // then
         assertThat(result.getVersusOfPlayer(new Name("player_15")).getResult()).isEqualTo("무");
     }
 
     @Test
     @DisplayName("딜러 결과 확인")
     void getDealerResult() {
+        // then
         assertThat(Arrays.asList(
                 result_dealer_17.countDealerWin(),
                 result_dealer_17.countDealerDraw(),
