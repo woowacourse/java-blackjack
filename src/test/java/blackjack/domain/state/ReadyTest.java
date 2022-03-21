@@ -95,7 +95,7 @@ class ReadyTest {
     void earning_exception() {
         Ready ready = new Ready();
 
-        assertThatThrownBy(ready::earning)
+        assertThatThrownBy(ready::getEarning)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("현재 상태는 수익을 계산할 수 없습니다.");
     }

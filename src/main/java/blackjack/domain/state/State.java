@@ -17,11 +17,11 @@ public interface State {
 
     void decideRate(final double rate);
 
-    double earning();
+    double getEarning();
 
-    PlayingCards playingCards();
+    PlayingCards getPlayingCards();
 
-    PlayingCards partOfPlayingCards();
+    PlayingCards getPartOfPlayingCards();
 
     int cardTotal();
 }

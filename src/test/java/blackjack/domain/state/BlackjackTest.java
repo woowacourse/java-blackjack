@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class BlackjackTest {
 
@@ -71,7 +70,7 @@ class BlackjackTest {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(-1);
 
-        assertThat(blackjack.earning()).isEqualTo(-1000.0);
+        assertThat(blackjack.getEarning()).isEqualTo(-1000.0);
     }
 
     @DisplayName("딜러와 플레이어 모두 블랙잭이어서 무승부일 경우 수익이 없는 것을 확인한다.")
@@ -80,7 +79,7 @@ class BlackjackTest {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(0);
 
-        assertThat(blackjack.earning()).isEqualTo(0.0);
+        assertThat(blackjack.getEarning()).isEqualTo(0.0);
     }
 
     @DisplayName("플레이어가 블랙잭이어서 우승할 경우 베팅 금액의 1.5 배를 얻는 것을 확인한다.")
@@ -89,7 +88,7 @@ class BlackjackTest {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(1.5);
 
-        assertThat(blackjack.earning()).isEqualTo(1500.0);
+        assertThat(blackjack.getEarning()).isEqualTo(1500.0);
     }
 
     @DisplayName("카드 총합을 확인한다.")

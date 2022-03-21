@@ -20,7 +20,7 @@ public abstract class Gamer {
     }
 
     public PlayingCards openCards() {
-        return state.playingCards();
+        return state.getPlayingCards();
     }
 
     public int sumOfCards() {

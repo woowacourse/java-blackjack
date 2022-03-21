@@ -30,7 +30,7 @@ public class Dealer extends Gamer {
     }
 
     public PlayingCards openPartOfCards() {
-        return state.partOfPlayingCards();
+        return state.getPartOfPlayingCards();
     }
 
     private void noticeDrawing(final BiConsumer<String, Integer> drawing) {

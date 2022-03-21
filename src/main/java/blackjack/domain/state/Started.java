@@ -12,11 +12,11 @@ public abstract class Started implements State {
         this.playingCards = playingCards;
     }
 
-    public PlayingCards playingCards() {
+    public PlayingCards getPlayingCards() {
         return playingCards;
     }
 
-    public PlayingCards partOfPlayingCards() {
+    public PlayingCards getPartOfPlayingCards() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(this.playingCards.getPartOfCard());
 

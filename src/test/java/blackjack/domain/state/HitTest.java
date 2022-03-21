@@ -104,7 +104,7 @@ class HitTest {
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
         Hit hit = new Hit(playingCards, betting);
 
-        assertThatThrownBy(hit::earning)
+        assertThatThrownBy(hit::getEarning)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("현재 상태는 수익을 계산할 수 없습니다.");
     }

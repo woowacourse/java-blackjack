@@ -23,7 +23,7 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    double earningRate() {
+    double getEarningRate() {
         return earningRate;
     }
 }

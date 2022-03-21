@@ -12,7 +12,7 @@ public abstract class Running extends Started {
         return new Stay(playingCards, betting);
     }
 
-    public double earning() {
+    public double getEarning() {
         throw new IllegalStateException("현재 상태는 수익을 계산할 수 없습니다.");
     }
 

@@ -15,7 +15,7 @@ public class Betting {
         this.betting = betting;
     }
 
-    public double earning(final double rate) {
+    public double getEarning(final double rate) {
         return betting * rate;
     }
 

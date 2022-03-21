@@ -27,9 +27,9 @@ public abstract class Finished extends Started {
         return true;
     }
 
-    public double earning() {
-        return betting.earning(earningRate());
+    public double getEarning() {
+        return betting.getEarning(getEarningRate());
     }
 
-    abstract double earningRate();
+    abstract double getEarningRate();
 }
