@@ -2,6 +2,8 @@ package blackjack.domain.gamer.role;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
+import blackjack.domain.gamer.BettingMoney;
+import blackjack.domain.result.Match;
 
 public abstract class Role {
     private static final String NAME_LENGTH_ERROR_MESSAGE = "이름은 최소 1글자, 최대 6글자로 입력해야 합니다.";
@@ -10,6 +12,7 @@ public abstract class Role {
     private static final int MAXIMUM_NAME_LENGTH = 6;
 
     protected final CardGroup cardGroup = new CardGroup();
+    protected BettingMoney bettingMoney;
     private final String name;
 
     public Role(String name) {
@@ -36,6 +39,14 @@ public abstract class Role {
         if (name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException(NAME_LENGTH_ERROR_MESSAGE);
         }
+    }
+
+    public void initializeTotalMoney(Match match, int money) {
+        bettingMoney = bettingMoney.initializeTotalMoney(match, money);
+    }
+
+    public int getTotalMoney() {
+        return bettingMoney.getTotalMoney();
     }
 
     public void openAllCards() {

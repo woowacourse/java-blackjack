@@ -1,6 +1,7 @@
 package blackjack.domain.gamer.role;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.gamer.BettingMoney;
 
 public final class Dealer extends Role {
     private static final String NAME = "딜러";
@@ -8,6 +9,7 @@ public final class Dealer extends Role {
 
     public Dealer() {
         super(NAME);
+        bettingMoney = BettingMoney.of(0, 0);
     }
 
     @Override

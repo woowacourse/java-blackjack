@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.gamer.Money;
+import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.result.Match;
 
 public final class Player extends Role{
     private static final double BLACKJACK_RATIO = 1.5;
 
-    private final Money betMoney;
-
     public Player(String name) {
         super(name);
-        this.betMoney = new Money();
     }
 
     public static List<Player> of(List<String> playerNames) {
@@ -39,24 +36,27 @@ public final class Player extends Role{
         return cardGroup.isAddable();
     }
 
-    public void addMoney(int amount) {
-        betMoney.add(amount);
+    public void initializeBettingMoney(int amount) {
+        bettingMoney = BettingMoney.of(amount);
     }
 
-    public int getProfitMoney(Match match) {
-        return (int) (betMoney.getAmount() * profitRatio(match));
+    @Override
+    public void initializeTotalMoney(Match match, int money) {
+        bettingMoney = bettingMoney.initializeTotalMoney(match, (int)(money * profitRatio(match)));
     }
 
     private double profitRatio(Match match) {
         if (match.equals(Match.WIN) && cardGroup.isBlackJack()) {
             return BLACKJACK_RATIO;
         }
-        if (match.equals(Match.WIN)) {
-            return 1;
-        }
-        if (match.equals(Match.LOSE)) {
-            return -1;
-        }
-        return 0;
+        return 1;
+    }
+
+    public int getInitialMoney() {
+        return bettingMoney.getInitialMoney();
+    }
+
+    public int getProfitMoney(Match match) {
+        return (int)(bettingMoney.getInitialMoney() * profitRatio(match));
     }
 }

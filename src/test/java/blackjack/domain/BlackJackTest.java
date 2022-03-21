@@ -88,7 +88,7 @@ class BlackJackTest {
     }
 
     @Test
-    @DisplayName("딜러는 10000, 페퍼는 10000, 애쉬 -20000 의 수익을 얻어야한다.")
+    @DisplayName("딜러는 5000, 페퍼는 15000, 애쉬 -20000 의 수익을 얻어야한다.")
     void finalProfitTest() {
         BlackJack blackJack = initializeBlackJack();
 
@@ -102,20 +102,19 @@ class BlackJackTest {
         List<Integer> results = new ArrayList<>(profitResults.values());
 
         assertThat(results)
-            .containsExactly(10000, 10000, -20000);
+            .containsExactly(5000, 15000, -20000);
     }
 
     private BlackJack initializeBlackJack() {
         Player pepper = new Player("페퍼");
-        pepper.addCard(Card.of(CardShape.HEART, CardNumber.THREE));
-        pepper.addCard(Card.of(CardShape.SPADE, CardNumber.EIGHT));
+        pepper.addCard(Card.of(CardShape.HEART, CardNumber.A));
         pepper.addCard(Card.of(CardShape.CLUB, CardNumber.Q));
-        pepper.addMoney(10000);
+        pepper.initializeBettingMoney(10000);
 
         Player ash = new Player("애쉬");
         ash.addCard(Card.of(CardShape.CLUB, CardNumber.SEVEN));
         ash.addCard(Card.of(CardShape.SPADE, CardNumber.K));
-        ash.addMoney(20000);
+        ash.initializeBettingMoney(20000);
 
         PlayerGroup playerGroup = new PlayerGroup(List.of(pepper, ash));
         BlackJack blackJack = new BlackJack(playerGroup);

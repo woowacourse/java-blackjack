@@ -7,6 +7,7 @@ import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
@@ -98,22 +99,22 @@ public class Gamers {
         return dealer;
     }
 
-    private int money(Player player, Match match) {
-        return player.getProfitMoney(match);
+    public ProfitResult getProfitResult() {
+        Map<Player, Match> playerResult = playerGroup.getPlayerResult(dealer);
+        for (Player player : playerResult.keySet()) {
+            Match match = playerResult.get(player);
+            player.initializeTotalMoney(match, player.getInitialMoney());
+            dealer.initializeTotalMoney(match.getOpposite(), player.getProfitMoney(match));
+        }
+        return initializeProfitResult(playerResult.keySet());
     }
 
-    public ProfitResult getProfitResult() {
-        int dealerMoney = 0;
-
+    private ProfitResult initializeProfitResult(Set<Player> players) {
         Map<Role, Integer> profitResult = new LinkedHashMap<>();
-        Map<Player, Match> playerResult = playerGroup.getPlayerResult(dealer);
-        profitResult.put(dealer, dealerMoney);
-        for (Map.Entry<Player, Match> entry : playerResult.entrySet()) {
-            int money = money(entry.getKey(), entry.getValue());
-            profitResult.put(entry.getKey(), money);
-            dealerMoney -= money;
+        profitResult.put(dealer, dealer.getTotalMoney());
+        for (Player player : players) {
+            profitResult.put(player, player.getTotalMoney());
         }
-        profitResult.replace(dealer, dealerMoney);
         return new ProfitResult(profitResult);
     }
 }

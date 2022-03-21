@@ -53,7 +53,7 @@ public class BlackJackController {
     private void requestAndAddInputMoney() {
         List<Player> players = playerGroup.getPlayers();
         for (Player player : players) {
-            player.addMoney(InputView.requestInputMoney(player.getName()));
+            player.initializeBettingMoney(InputView.requestInputMoney(player.getName()));
         }
     }
 
