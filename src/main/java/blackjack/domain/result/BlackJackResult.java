@@ -24,11 +24,24 @@ public enum BlackJackResult {
         this.determine = determine;
     }
 
-    public static BlackJackResult of(Player point, Dealer otherPoint) {
+    public static BlackJackResult of(Player player, Dealer dealer) {
         return Arrays.stream(values())
-                .filter(result -> result.determine.test(point, otherPoint))
+                .filter(result -> result.determine.test(player, dealer))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
+    }
+
+    private static BlackJackResult findResult(Player player, Dealer dealer) {
+        if (isPlayerBlackJackWin(player, dealer)) {
+            return BLACK_JACK_WIN;
+        }
+        if (isPlayerWin(player, dealer)) {
+            return WIN;
+        }
+        if (isPlayerLose(player, dealer)) {
+            return LOSE;
+        }
+        return DRAW;
     }
 
     private static boolean isPlayerBlackJackWin(Player player, Dealer dealer) {
@@ -62,6 +75,6 @@ public enum BlackJackResult {
     }
 
     public int getProfit(int value) {
-        return (int) this.profitRate * value;
+        return (int) (this.profitRate * value);
     }
 }

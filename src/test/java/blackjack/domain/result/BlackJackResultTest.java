@@ -60,13 +60,13 @@ class BlackJackResultTest {
     @Test
     @DisplayName("점수가 21점으로 같아도, 블랙잭이면 승리한다.")
     void blackJack() {
-        List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.TEN),
-                new Card(CardShape.CLOVER, CardNumber.ACE));
-        List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.ACE), new Card(CardShape.CLOVER, CardNumber.TEN));
+        List<Card> dealerCards = List.of(new Card(CardShape.DIAMOND, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.ACE));
+        List<Card> playerCards = List.of(new Card(CardShape.CLOVER, CardNumber.TEN), new Card(CardShape.CLOVER, CardNumber.TEN));
         Player player = new Player("범고래", playerCards, 1000);
+        player.addCard(new Card(CardShape.HEART, CardNumber.ACE));
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
-        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("BLACK_JACK_WIN"));
+        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("LOSE"));
     }
 
     @Test
