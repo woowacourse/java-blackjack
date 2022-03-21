@@ -11,6 +11,7 @@ public class InputView {
     public static final String NAME_REGEX = "^[a-zA-Z가-힣]+(,[a-zA-Z가-힣]+)*";
     public static final String MONEY_REGEX = "^\\d+0$";
     public static final String OPTION_REGEX = "(y|n)";
+    public static final String OPTION_YES = "y";
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
@@ -53,7 +54,7 @@ public class InputView {
         }
     }
 
-    public static String chooseOptions(String name) {
+    public static Boolean chooseOptions(String name) {
         System.out.printf(REQUEST_CARD_TAKE_OPTION_MSG, name);
         String value = SCANNER.nextLine();
         try {
@@ -62,7 +63,7 @@ public class InputView {
             System.out.println("[ERROR] " + exception.getMessage());
             return chooseOptions(name);
         }
-        return value;
+        return value.equals(OPTION_YES);
     }
 
     private static void validateOption(String value) {

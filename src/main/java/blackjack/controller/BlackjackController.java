@@ -52,7 +52,7 @@ public class BlackjackController {
     }
 
     private boolean isKeepTakeCard(String gamer) {
-        return InputView.chooseOptions(gamer).equals("y");
+        return InputView.chooseOptions(gamer);
     }
 
     private void takeDealerCardAndDisplay() {
