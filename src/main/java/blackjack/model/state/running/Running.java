@@ -1,6 +1,6 @@
 package blackjack.model.state.running;
 
-import blackjack.model.BettingRate;
+import blackjack.model.betting.BettingRate;
 import blackjack.model.card.Cards;
 import blackjack.model.state.State;
 import blackjack.model.state.created.Created;
