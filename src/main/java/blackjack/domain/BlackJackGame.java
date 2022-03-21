@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack.domain;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ import blackjack.dto.ProfitResultsDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackController {
+public class BlackJackGame {
     private PlayerGroup playerGroup;
     private BlackJack blackJack;
 
-    public void run() {
+    public void start() {
         initialize();
         play();
         finish();
