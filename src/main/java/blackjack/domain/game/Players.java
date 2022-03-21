@@ -47,12 +47,11 @@ public class Players {
         if (dealer.isFinished()) {
             return false;
         }
-        for (Player player : players) {
-            if (player.isRunning()) {
-                return true;
-            }
-        }
-        return false;
+        return players.stream()
+                .map(Gamer::isRunning)
+                .filter(isKeepPlaying -> isKeepPlaying)
+                .findFirst()
+                .orElse(false);
     }
 
     public void compareCards(final Dealer dealer) {
