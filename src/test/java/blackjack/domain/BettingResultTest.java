@@ -40,7 +40,7 @@ public class BettingResultTest {
                 new Card(CardDenomination.TWO, CardSuit.SPADE))));
         BettingResult bettingResult = new BettingResult(players, dealer);
         List<Integer> totalResult = bettingResult.calculatePlayersBettingResult().values().stream()
-            .map(Profit::getProfitMoney)
+            .map(Profit::calculateProfit)
             .collect(Collectors.toList());
         assertThat(totalResult).containsSequence(-500, -3000, 1500, 2000);
     }
@@ -51,7 +51,7 @@ public class BettingResultTest {
             new Card(CardDenomination.ACE, CardSuit.SPADE))));
         BettingResult bettingResult = new BettingResult(players, dealer);
         List<Integer> totalResult = bettingResult.calculatePlayersBettingResult().values().stream()
-            .map(Profit::getProfitMoney)
+            .map(Profit::calculateProfit)
             .collect(Collectors.toList());
         assertThat(totalResult).containsSequence(5000, -3000, 0, -2000);
     }
@@ -62,7 +62,7 @@ public class BettingResultTest {
             new Card(CardDenomination.NINE, CardSuit.SPADE))));
         BettingResult bettingResult = new BettingResult(players, dealer);
         List<Integer> totalResult = bettingResult.calculatePlayersBettingResult().values().stream()
-            .map(Profit::getProfitMoney)
+            .map(Profit::calculateProfit)
             .collect(Collectors.toList());
         assertThat(totalResult).containsSequence(3500, -3000, 1500, -2000);
     }

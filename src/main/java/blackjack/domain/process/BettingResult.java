@@ -11,8 +11,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BettingResult {
-    private static final int NEGATE = -1;
-
     private List<Player> players;
     private Dealer dealer;
 
@@ -23,20 +21,20 @@ public class BettingResult {
 
     private List<Profit> generateProfits() {
         return this.players.stream()
-            .map(player -> Profit.from(player.earnMoney(Match.of(player, dealer).getRatio())))
+            .map(player -> Profit.of(Match.of(player, dealer), player.getMoney()))
             .collect(Collectors.toList());
     }
 
     private int calculateTotalProfits(List<Profit> profits) {
         return profits.stream()
-            .mapToInt(Profit::getProfitMoney)
+            .mapToInt(Profit::calculateProfit)
             .sum();
     }
 
     public Map<Gamer, Profit> calculatePlayersBettingResult() {
         Map<Gamer, Profit> bettingResult = new LinkedHashMap<>();
         List<Profit> profits = generateProfits();
-        bettingResult.put(this.dealer, Profit.from(NEGATE * calculateTotalProfits(profits)));
+        bettingResult.put(this.dealer, Profit.from(calculateTotalProfits(profits)));
         for (int i = 0; i < this.players.size(); i++) {
             bettingResult.put(this.players.get(i), profits.get(i));
         }

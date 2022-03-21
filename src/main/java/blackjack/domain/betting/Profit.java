@@ -1,17 +1,25 @@
 package blackjack.domain.betting;
 
+import blackjack.domain.process.Match;
+
 public class Profit {
-    private final int profitMoney;
+    private final Match match;
+    private final int bettingMoney;
 
-    private Profit(int profitMoney) {
-        this.profitMoney = profitMoney;
+    private Profit(Match match, int bettingMoney) {
+        this.match = match;
+        this.bettingMoney = bettingMoney;
     }
 
-    public static Profit from(int profitMoney) {
-        return new Profit(profitMoney);
+    public static Profit of(Match match, int bettingMoney) {
+        return new Profit(match, bettingMoney);
     }
 
-    public int getProfitMoney() {
-        return profitMoney;
+    public static Profit from(int bettingMoney) {
+        return new Profit(Match.LOSE, bettingMoney);
+    }
+
+    public int calculateProfit() {
+        return (int) (this.match.getRatio() * this.bettingMoney);
     }
 }

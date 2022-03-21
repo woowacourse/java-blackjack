@@ -23,8 +23,8 @@ public class Player extends Gamer {
         this(new Cards(), name);
     }
 
-    public int earnMoney(double ratio) {
-        return (int) (this.bettingToken.getMoney() * ratio);
+    public int getMoney() {
+        return this.bettingToken.getMoney();
     }
 
     @Override
