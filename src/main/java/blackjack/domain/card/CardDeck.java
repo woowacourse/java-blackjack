@@ -16,6 +16,14 @@ public class CardDeck {
         this.cardDeck = new LinkedList<>(cardDeckGenerator.generate());
     }
 
+    public Cards drawInitialCards() {
+        List<Card> initialCards = new ArrayList<>(INITIAL_CARD_COUNT);
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            initialCards.add(draw());
+        }
+        return new Cards(initialCards);
+    }
+
     public Card draw() {
         checkEmptyCardDeck();
         return cardDeck.poll();
@@ -23,15 +31,7 @@ public class CardDeck {
 
     private void checkEmptyCardDeck() {
         if (cardDeck.isEmpty()) {
-            throw new IllegalArgumentException("카드덱에 남은 카드가 없습니다.");
+            throw new IllegalStateException("카드덱에 남은 카드가 없습니다.");
         }
-    }
-
-    public Cards drawInitialCards() {
-        List<Card> initialCards = new ArrayList<>(INITIAL_CARD_COUNT);
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            initialCards.add(cardDeck.poll());
-        }
-        return new Cards(initialCards);
     }
 }
