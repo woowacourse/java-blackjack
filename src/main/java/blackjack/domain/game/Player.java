@@ -1,6 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Card;
 import blackjack.dto.GamerDto;
 import blackjack.util.Regex;

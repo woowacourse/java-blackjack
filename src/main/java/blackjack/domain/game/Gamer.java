@@ -1,8 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.state.Blackjack;
-import blackjack.domain.state.Bust;
 import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
 
