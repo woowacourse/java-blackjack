@@ -23,9 +23,9 @@ public class Player extends Gamer {
 		this(new Cards(), name);
 	}
 
-	public BettingToken getBettingToken() {
-		return bettingToken;
-	}
+	public int earnMoney(double ratio) {
+        return (int) (this.bettingToken.getMoney() * ratio);
+    }
 
 	@Override
 	public boolean isWin(Gamer gamer) {

@@ -57,7 +57,7 @@ public class OutputView {
 		System.out.println("## 최종 승패");
 		Map<Gamer, Profit> gamersMoney = bettingResult.calculatePlayersBettingResult();
 		for (Gamer gamer : gamersMoney.keySet()) {
-			System.out.println(gamer.getName() + ": " + gamersMoney.get(gamer).calculateResult());
+			System.out.println(gamer.getName() + ": " + gamersMoney.get(gamer).getProfitMoney());
 		}
 	}
 
