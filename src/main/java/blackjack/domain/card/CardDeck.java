@@ -15,7 +15,7 @@ public class CardDeck {
 
     public void drawTo(Player player, final int count) {
         for (int i = DRAW_CARD_START_INDEX; i < count; i++) {
-            player.receiveCard(playingCards.pop());
+            player.receiveCard(this);
         }
     }
 

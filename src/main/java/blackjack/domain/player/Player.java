@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.BetMoney;
 import blackjack.domain.GameResult;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
 import java.util.List;
@@ -9,15 +10,16 @@ import java.util.List;
 public abstract class Player {
 
     protected String name;
-    private final PlayingCards playingCards;
+    protected final PlayingCards playingCards;
 
     protected Player(final String name) {
         this.name = name;
         this.playingCards = new PlayingCards();
     }
 
-    public void receiveCard(final PlayingCard playingCard) {
-        playingCards.addCard(playingCard);
+    public void receiveCard(final CardDeck cardDeck) {
+        final PlayingCard poppedCard = cardDeck.pop();
+        playingCards.addCard(poppedCard);
     }
 
     public boolean isBlackjack() {
@@ -28,9 +30,7 @@ public abstract class Player {
         return playingCards.isBurst();
     }
 
-    public boolean isNotFinished(final int boundNumber) {
-        return playingCards.isNotFinishedWithBound(boundNumber);
-    }
+    public abstract boolean isNotFinished();
 
     public abstract boolean isDealer();
 

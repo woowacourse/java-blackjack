@@ -41,8 +41,8 @@ class GameResultTest {
         @Test
         void win() {
             //given
-            cardDeck.drawTo(dealer, 2); // six to dealer
-            cardDeck.drawTo(gambler, 2); // five to gambler
+            cardDeck.drawTo(dealer, 1); // six to dealer
+            cardDeck.drawTo(gambler, 1); // five to gambler
 
             //when
             final GameResult result = GameResult.of(dealer, gambler);
@@ -55,8 +55,8 @@ class GameResultTest {
         @Test
         void lose() {
             //given
-            cardDeck.drawTo(gambler, 2); // six to gambler
-            cardDeck.drawTo(dealer, 2); // five to dealer
+            cardDeck.drawTo(gambler, 1); // six to gambler
+            cardDeck.drawTo(dealer, 1); // five to dealer
 
             //when
             final GameResult result = GameResult.of(dealer, gambler);
@@ -76,8 +76,8 @@ class GameResultTest {
             rawCardDeck.push(card4);
             cardDeck = new CardDeck(() -> rawCardDeck);
 
-            cardDeck.drawTo(gambler, 2);
-            cardDeck.drawTo(dealer, 2);
+            cardDeck.drawTo(gambler, 1);
+            cardDeck.drawTo(dealer, 1);
 
             //when
             final GameResult result = GameResult.of(dealer, gambler);
@@ -98,11 +98,11 @@ class GameResultTest {
             new PlayingCard(Suit.HEARTS, Denomination.JACK),
             new PlayingCard(Suit.HEARTS, Denomination.QUEEN)
         );
-        this.cardDeck.drawTo(dealer, 2);
-        this.cardDeck.drawTo(dealer, 2);
-        this.cardDeck.drawTo(dealer, 2);
+        this.cardDeck.drawTo(dealer, 1);
+        this.cardDeck.drawTo(dealer, 1);
+        this.cardDeck.drawTo(dealer, 1);
 
-        this.cardDeck.drawTo(gambler, 2);
+        this.cardDeck.drawTo(gambler, 1);
 
         //when
         final GameResult result = GameResult.of(dealer, gambler);
@@ -122,12 +122,12 @@ class GameResultTest {
             new PlayingCard(Suit.HEARTS, Denomination.JACK),
             new PlayingCard(Suit.HEARTS, Denomination.QUEEN)
         );
-        this.cardDeck.drawTo(dealer, 2);
-        this.cardDeck.drawTo(dealer, 2);
-        this.cardDeck.drawTo(dealer, 2);
+        this.cardDeck.drawTo(dealer, 1);
+        this.cardDeck.drawTo(dealer, 1);
+        this.cardDeck.drawTo(dealer, 1);
 
-        this.cardDeck.drawTo(gambler, 2);
-        this.cardDeck.drawTo(gambler, 2);
+        this.cardDeck.drawTo(gambler, 1);
+        this.cardDeck.drawTo(gambler, 1);
 
         //when
         final GameResult result = GameResult.of(dealer, gambler);
@@ -147,11 +147,11 @@ class GameResultTest {
             new PlayingCard(Suit.HEARTS, Denomination.QUEEN)
         );
 
-        cardDeck.drawTo(gambler, 2);
-        cardDeck.drawTo(gambler, 2);
-        cardDeck.drawTo(gambler, 2);
+        cardDeck.drawTo(gambler, 1);
+        cardDeck.drawTo(gambler, 1);
+        cardDeck.drawTo(gambler, 1);
 
-        cardDeck.drawTo(dealer, 2);
+        cardDeck.drawTo(dealer, 1);
 
         //when
         final GameResult result = GameResult.of(dealer, gambler);
@@ -173,13 +173,13 @@ class GameResultTest {
             new PlayingCard(Suit.HEARTS, Denomination.QUEEN)
         );
 
-        cardDeck.drawTo(gambler, 2);
-        cardDeck.drawTo(gambler, 2);
-        cardDeck.drawTo(gambler, 2);
+        cardDeck.drawTo(gambler, 1);
+        cardDeck.drawTo(gambler, 1);
+        cardDeck.drawTo(gambler, 1);
 
-        cardDeck.drawTo(dealer, 2);
-        cardDeck.drawTo(dealer, 2);
-        cardDeck.drawTo(dealer, 2);
+        cardDeck.drawTo(dealer, 1);
+        cardDeck.drawTo(dealer, 1);
+        cardDeck.drawTo(dealer, 1);
 
         //when
         final GameResult result = GameResult.of(dealer, gambler);
@@ -199,11 +199,11 @@ class GameResultTest {
             new PlayingCard(Suit.CLUBS, Denomination.KING)
         );
 
-        cardDeck.drawTo(gambler, 2);
-        cardDeck.drawTo(gambler, 2);
+        cardDeck.drawTo(gambler, 1);
+        cardDeck.drawTo(gambler, 1);
 
-        cardDeck.drawTo(dealer, 2);
-        cardDeck.drawTo(dealer, 2);
+        cardDeck.drawTo(dealer, 1);
+        cardDeck.drawTo(dealer, 1);
 
         //when
         final GameResult result = GameResult.of(dealer, gambler);
@@ -223,11 +223,11 @@ class GameResultTest {
             new PlayingCard(Suit.CLUBS, Denomination.KING)
         );
 
-        cardDeck.drawTo(gambler, 2);
-        cardDeck.drawTo(gambler, 2);
+        cardDeck.drawTo(gambler, 1);
+        cardDeck.drawTo(gambler, 1);
 
-        cardDeck.drawTo(dealer, 2);
-        cardDeck.drawTo(dealer, 2);
+        cardDeck.drawTo(dealer, 1);
+        cardDeck.drawTo(dealer, 1);
 
         //when
         final GameResult result = GameResult.of(dealer, gambler);

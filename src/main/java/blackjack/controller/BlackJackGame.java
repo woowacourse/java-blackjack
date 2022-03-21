@@ -18,8 +18,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackGame {
-    private static final int GAMBLER_GET_CARD_UPPER_BOUND = 21;
-    private static final int DEALER_GET_CARD_UPPER_BOUND = 17;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -80,25 +78,25 @@ public class BlackJackGame {
     }
 
     private boolean canGamblerReceiveCard(final Player gambler, final CardDeck cardDeck) {
-        return isHitThenReceiveCard(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished(
-            GAMBLER_GET_CARD_UPPER_BOUND);
+        return isHitThenReceiveCard(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished();
     }
 
     private boolean isHitThenReceiveCard(final Player gambler, final CardDeck cardDeck) {
-        if (askHitOrStay(PlayerDto.from(gambler)).isHit()) {
-            gambler.receiveCard(cardDeck.pop());
+        final BlackJackCommand inputCommand = askHitOrStay(gambler);
+        if (inputCommand.isHit()) {
+            gambler.receiveCard(cardDeck);
             return true;
         }
         return false;
     }
 
-    private BlackJackCommand askHitOrStay(final PlayerDto currentGamblerDto) {
-        return BlackJackCommand.from(inputView.scanHitOrStay(currentGamblerDto));
+    private BlackJackCommand askHitOrStay(final Player gambler) {
+        return BlackJackCommand.from(inputView.scanHitOrStay(gambler));
     }
 
     private boolean isNotBurst(final Player player) {
         if (player.isBurst()) {
-            outputView.printBurst(PlayerDto.from(player));
+            outputView.printBurst(player);
             return false;
         }
         return true;
@@ -106,13 +104,13 @@ public class BlackJackGame {
 
     private void playGameForDealer(Dealer dealer, CardDeck cardDeck) {
         while (canDealerReceiveCard(dealer)) {
-            dealer.receiveCard(cardDeck.pop());
+            dealer.receiveCard(cardDeck);
             outputView.printDealerAddCard(PlayerDto.from(dealer));
         }
     }
 
     private boolean canDealerReceiveCard(final Dealer dealer) {
-        return isNotBurst(dealer) && dealer.isNotFinished(DEALER_GET_CARD_UPPER_BOUND);
+        return isNotBurst(dealer) && dealer.isNotFinished();
     }
 
     private void processResult(Players players) {

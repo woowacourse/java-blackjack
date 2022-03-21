@@ -30,7 +30,7 @@ public class Players {
     }
 
     public List<Player> getValue() {
-        return value;
+        return List.copyOf(this.value);
     }
 
     public Dealer getDealer() {

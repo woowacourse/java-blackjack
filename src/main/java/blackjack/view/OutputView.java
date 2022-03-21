@@ -73,8 +73,8 @@ public class OutputView {
         return String.valueOf(playerDto.getScore());
     }
 
-    public void printBurst(final PlayerDto playerDto) {
-        System.out.println(playerDto.getName() + BURST_INSTRUCTION);
+    public void printBurst(final Player player) {
+        System.out.println(player.getName() + BURST_INSTRUCTION);
     }
 
     public void printNewLine() {

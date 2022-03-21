@@ -2,7 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.dto.PlayerDto;
+import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -98,8 +98,8 @@ public class InputView {
         }
     }
 
-    public String scanHitOrStay(final PlayerDto playerDto) {
-        System.out.printf(HIT_OR_STAY_MESSAGE, playerDto.getName());
+    public String scanHitOrStay(final Player gambler) {
+        System.out.printf(HIT_OR_STAY_MESSAGE, gambler.getName());
         return SCANNER.nextLine();
     }
 }
