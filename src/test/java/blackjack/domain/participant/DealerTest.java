@@ -14,8 +14,8 @@ class DealerTest {
     @DisplayName("딜러가 보유한 숫자의 합이 16초과인 경우 false를 반환한다.")
     void checkUpperSumStandardTest() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        dealer.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.EIGHT, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
 
         assertThat(dealer.checkUnderSumStandard()).isFalse();
     }
@@ -24,8 +24,8 @@ class DealerTest {
     @DisplayName("딜러가 보유한 숫자의 합이 16이하인 경우 true를 반환한다.")
     void checkUnderSumStandard() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(CardNumber.SIX, CardType.CLOVER));
-        dealer.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.SIX, CardType.CLOVER));
+        dealer.receiveCard(Card.of(CardNumber.QUEEN, CardType.CLOVER));
 
         assertThat(dealer.checkUnderSumStandard()).isTrue();
     }

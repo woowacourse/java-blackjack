@@ -19,7 +19,4 @@ public class Deck {
         return cards.poll();
     }
 
-    public Queue<Card> getCards() {
-        return cards;
-    }
 }

@@ -1,32 +1,29 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.DistributeResult;
-import blackjack.domain.result.UserResult;
+import blackjack.domain.gameresult.DistributeResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
-public class BlackJackController {
+public class BlackJackGame {
 
-    private static final String DEALER_NAME = "딜러";
     private BlackJack blackJack;
 
     public void play() {
-        String[] userNames = InputView.inputUsersName();
-        blackJack = new BlackJack(userNames);
+        List<String> userNames = InputView.inputUsersName();
+        Map<String, Integer> bettingPriceByName = InputView.inputUserNameAndBettingPrice(userNames);
+        blackJack = new BlackJack(bettingPriceByName);
         initDistribute();
         playGameEachParticipant(userNames);
         printGameScore();
-        printFinalResult();
+        printFinalProfit();
     }
 
-    private void printFinalResult() {
-        DealerResult dealerResult = blackJack.calculateDealerResult();
-        List<UserResult> userResult = blackJack.calculateUserResult();
-        OutputView.printFinalResult(dealerResult, userResult);
+    private void printFinalProfit() {
+        OutputView.printProfitResult(blackJack.calculateProfitResult());
     }
 
     private void printGameScore() {
@@ -38,7 +35,7 @@ public class BlackJackController {
         OutputView.printInitDistribute(distributeResults);
     }
 
-    private void playGameEachParticipant(String[] userNames) {
+    private void playGameEachParticipant(List<String> userNames) {
         for (String userName : userNames) {
             playEachUser(userName);
         }
@@ -46,14 +43,10 @@ public class BlackJackController {
     }
 
     private void playDealer() {
-        while (checkDealerDrawMoreCard()) {
+        while (blackJack.checkDealerDrawMoreCard()) {
             OutputView.printDealerDraw();
-            blackJack.playGameOnePlayer(DEALER_NAME);
+            blackJack.playGameWithDealer();
         }
-    }
-
-    private boolean checkDealerDrawMoreCard() {
-        return blackJack.checkDealerUnderSumStandard() && blackJack.checkLimit(DEALER_NAME);
     }
 
     private void playEachUser(String userName) {

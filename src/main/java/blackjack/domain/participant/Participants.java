@@ -1,17 +1,19 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.DistributeResult;
-import blackjack.domain.result.UserResult;
+import blackjack.domain.gameresult.DistributeResult;
+import blackjack.domain.gameresult.ProfitResult;
+import blackjack.domain.gameresult.UserGameResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
 
+    public static final String DEALER_NAME = "딜러";
     private final List<Participant> participants;
 
     public Participants() {
@@ -27,6 +29,12 @@ public class Participants {
                 .map(User::new)
                 .collect(Collectors.toList());
         this.participants.addAll(users);
+    }
+
+    public void addUsers(Map<String, Integer> priceByName) {
+        for (Map.Entry<String, Integer> entries : priceByName.entrySet()) {
+            participants.add(new User(entries.getKey(), entries.getValue()));
+        }
     }
 
     public List<User> getUsers() {
@@ -55,6 +63,16 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
+    public List<ProfitResult> calculateProfitResult() {
+        List<ProfitResult> profitResults = new ArrayList<>();
+        Dealer dealer = getDealer();
+        profitResults.add(new ProfitResult(DEALER_NAME, calculateDealerProfit()));
+        for (User user : getUsers()) {
+            profitResults.add(new ProfitResult(user.getName(), user.calculateProfit(dealer)));
+        }
+        return profitResults;
+    }
+
     public Participant getUserByName(String name) {
         return participants.stream()
                 .filter(participant -> participant.checkName(name))
@@ -62,11 +80,20 @@ public class Participants {
                 .orElseThrow(RuntimeException::new);
     }
 
-    public List<UserResult> getUserResults() {
-        int dealerScore = getDealer().getCardSum();
+    public List<UserGameResult> getUserResults() {
+        Participant dealer = getDealer();
         return participants.stream()
                 .filter(Participant::isUser)
-                .map(p -> new UserResult(p, dealerScore))
+                .map(user -> new UserGameResult(user, dealer))
                 .collect(Collectors.toList());
+    }
+
+    private int calculateDealerProfit() {
+        int dealerProfit = 0;
+        for (User user : getUsers()) {
+            dealerProfit -= user.calculateProfit(getDealer());
+        }
+
+        return dealerProfit;
     }
 }

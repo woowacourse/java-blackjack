@@ -10,11 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 public class DeckTest {
 
     @Test
-    @DisplayName("52개의 카드를 섞어서 덱에 넣는다.")
-    void deckCreateTest() {
+    @DisplayName("총 52장의 카드가 생성되므로 52번 draw 할 동안 예외가 발생하지 않는다.")
+    void drawDeckTest() {
         Deck deck = new Deck(new CardGenerator());
 
-        assertThat(deck.getCards().size()).isEqualTo(52);
+        assertDoesNotThrow(() -> {
+            for (int i = 0; i < 52; i++) {
+                deck.drawCard();
+            }
+        });
     }
 
     @Test
@@ -28,15 +32,5 @@ public class DeckTest {
             }
         }).isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("[ERROR] 더이상 뽑을 카드가 없습니다.");
-    }
-
-    @Test
-    @DisplayName("정상적으로 카드를 뽑는 경우 예외가 발생하지 않는다.")
-    void drawDeckTest() {
-        Deck deck = new Deck(new CardGenerator());
-
-        assertDoesNotThrow(() -> {
-            deck.drawCard();
-        });
     }
 }

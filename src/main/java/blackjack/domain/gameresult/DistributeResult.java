@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.gameresult;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
@@ -9,13 +9,12 @@ public class DistributeResult {
 
     private String name;
     private List<Card> cards;
-
     private int cardSum;
 
     public DistributeResult(Participant participant) {
         this.name = participant.getName();
         this.cards = List.copyOf(participant.getCards());
-        this.cardSum = participant.getCardSum();
+        this.cardSum = participant.cardSum();
     }
 
     public int getCardSum() {

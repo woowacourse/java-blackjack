@@ -2,29 +2,37 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardGenerator;
 import blackjack.domain.card.Deck;
+import blackjack.domain.gameresult.DistributeResult;
+import blackjack.domain.gameresult.ProfitResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.DistributeResult;
-import blackjack.domain.result.UserResult;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackJack {
 
     private static final int INIT_DISTRIBUTE_COUNT = 2;
-    public static final int SCORE_LIMIT = 21;
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_NAME = "딜러";
 
     private final Participants participants;
     private final Deck deck;
 
-    public BlackJack(String[] userNames) {
+    public BlackJack() {
         deck = new Deck(new CardGenerator());
         participants = new Participants();
         participants.addDealer();
+    }
+
+    public BlackJack(String[] userNames) {
+        this();
         participants.addUsers(userNames);
+    }
+
+    public BlackJack(Map<String, Integer> priceByName) {
+        this();
+        participants.addUsers(priceByName);
     }
 
     public List<DistributeResult> initDistribute() {
@@ -34,15 +42,23 @@ public class BlackJack {
         return participants.getDistributeResult();
     }
 
+    public List<ProfitResult> calculateProfitResult() {
+        return participants.calculateProfitResult();
+    }
+
     public DistributeResult playGameOnePlayer(String playerName) {
         Participant participant = participants.getUserByName(playerName);
         participant.receiveCard(deck.drawCard());
         return new DistributeResult(participant);
     }
 
+    public boolean checkDealerDrawMoreCard() {
+        return checkDealerUnderSumStandard() && checkDealerLimit();
+    }
+
     public boolean checkLimit(String playerName) {
         Participant participant = participants.getUserByName(playerName);
-        return participant.getCardSum() < SCORE_LIMIT;
+        return !participant.isBust();
     }
 
     public boolean checkDealerUnderSumStandard() {
@@ -55,12 +71,12 @@ public class BlackJack {
         return participants.getDistributeResult();
     }
 
-    public DealerResult calculateDealerResult() {
-        return new DealerResult(participants);
+    public void playGameWithDealer() {
+        playGameOnePlayer(DEALER_NAME);
     }
 
-    public List<UserResult> calculateUserResult() {
-        return participants.getUserResults();
+    public boolean checkDealerLimit() {
+        return checkLimit(DEALER_NAME);
     }
 }
 

@@ -1,9 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.gameresult.DistributeResult;
+import blackjack.domain.gameresult.ProfitResult;
+import blackjack.domain.gameresult.UserGameResult;
 import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.DistributeResult;
-import blackjack.domain.result.Result;
 import blackjack.domain.result.UserResult;
 
 import java.text.MessageFormat;
@@ -43,18 +44,25 @@ public class OutputView {
         System.out.println(getConcatNameAndCardNames(distributeResult));
     }
 
+    public static void printProfitResult(List<ProfitResult> profitResults) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        for (ProfitResult profitResult : profitResults) {
+            System.out.printf("%s: %d%n", profitResult.getName(), profitResult.getProfit());
+        }
+    }
+
     public static void printDealerDraw() {
         System.out.println(lineSeparator() + MORE_DEALER_DRAW_CARD);
     }
 
     public static void printFinalCardWithScore(List<DistributeResult> distributeResults) {
-        System.out.println(System.lineSeparator());
         for (DistributeResult distributeResult : distributeResults) {
             System.out.println(getConcatNameAndCardsIncludeSum(distributeResult));
         }
     }
 
-    public static void printFinalResult(DealerResult dealerResult, List<UserResult> userResults) {
+    public static void printFinalResult(DealerResult dealerResult, List<UserGameResult> userResults) {
         System.out.println(System.lineSeparator());
         System.out.println(FINAL_RESULT_MESSAGE);
         printDealerResult(dealerResult);
@@ -69,17 +77,17 @@ public class OutputView {
         return userNames;
     }
 
-    private static void printUserResult(List<UserResult> userResults) {
-        for (UserResult userResult : userResults) {
+    private static void printUserResult(List<UserGameResult> userResults) {
+        for (UserGameResult userResult : userResults) {
             System.out.println(MessageFormat.format(USER_RESULT_FORMAT,
                     userResult.getUserName(), userResult.getResult()));
         }
     }
 
     private static void printDealerResult(DealerResult dealerResult) {
-        Map<Result, Integer> count = dealerResult.getCount();
-        System.out.println(MessageFormat.format(DEALER_RESULT_FORMAT, count.getOrDefault(Result.WIN, 0),
-                count.getOrDefault(Result.DRAW, 0), count.getOrDefault(Result.LOSE, 0)));
+        Map<UserResult, Integer> count = dealerResult.getCount();
+        System.out.println(MessageFormat.format(DEALER_RESULT_FORMAT, count.getOrDefault(UserResult.WIN, 0),
+                count.getOrDefault(UserResult.DRAW, 0), count.getOrDefault(UserResult.LOSE, 0)));
     }
 
 
