@@ -24,10 +24,6 @@ public class Deck {
         return score().isOverLimit(limit);
     }
 
-    public boolean isUnderLimit(int limit) {
-        return score().isUnderLimit(limit);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

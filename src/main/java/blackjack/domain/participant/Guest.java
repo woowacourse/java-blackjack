@@ -12,6 +12,11 @@ public class Guest extends Player {
     }
 
     @Override
+    int limit() {
+        return LIMIT_POINT;
+    }
+
+    @Override
     public boolean isDealer() {
         return false;
     }

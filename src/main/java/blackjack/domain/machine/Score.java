@@ -46,10 +46,6 @@ public class Score {
         return value > limit;
     }
 
-    public boolean isUnderLimit(int limit) {
-        return value <= limit;
-    }
-
     public boolean isWin(Score score) {
         return value > score.value && value < BUST_LIMIT;
     }

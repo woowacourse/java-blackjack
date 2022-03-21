@@ -69,11 +69,11 @@ public class BlackjackController {
 
     private void decideDealerGetMoreCard(BlackjackGame blackjackGame) {
         if (blackjackGame.canGetMoreCardToDealer()) {
-            OutputView.announceDealerGetMoreCard();
-            blackjackGame.addCardToDealer();
+            OutputView.announceDealerStopMoreCard();
             return;
         }
-        OutputView.announceDealerStopMoreCard();
+        OutputView.announceDealerGetMoreCard();
+        blackjackGame.addCardToDealer();
     }
 
     private void printResult(BlackjackGame blackjackGame,

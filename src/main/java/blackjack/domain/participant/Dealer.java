@@ -13,6 +13,11 @@ public class Dealer extends Player {
     }
 
     @Override
+    int limit() {
+        return LIMIT_POINT;
+    }
+
+    @Override
     public boolean isDealer() {
         return true;
     }

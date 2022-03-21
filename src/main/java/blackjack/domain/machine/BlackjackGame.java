@@ -2,8 +2,6 @@ package blackjack.domain.machine;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Cards;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
@@ -40,12 +38,12 @@ public class BlackjackGame {
 
     public boolean checkOverLimit() {
         Player player = blackjackPlayers.getTurnPlayer();
-        return player.isOverLimit(Guest.LIMIT_POINT);
+        return player.canGetMoreCard();
     }
 
     public boolean canGetMoreCardToDealer() {
         Player dealer = blackjackPlayers.getDealer();
-        return dealer.isUnderLimit(Dealer.LIMIT_POINT);
+        return dealer.canGetMoreCard();
     }
 
     public void addCardToDealer() {

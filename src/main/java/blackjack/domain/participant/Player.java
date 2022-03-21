@@ -17,9 +17,11 @@ public abstract class Player {
         return deck.isOverLimit(limit);
     }
 
-    public boolean isUnderLimit(int limit) {
-        return deck.isUnderLimit(limit);
+    public boolean canGetMoreCard() {
+        return deck.isOverLimit(limit());
     }
+
+    abstract int limit();
 
     public String getName() {
         return name;
