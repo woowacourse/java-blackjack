@@ -1,42 +1,44 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Queue;
 
 public class Deck {
-    private static final String NO_AVAILABLE_CARD_EXCEPTION = "[ERROR] 덱이 비었습니다.";
-
-    private final List<Card> cards;
-    private final List<Boolean> isExist;
+    private static final String EMPTY_DECK_EXCEPTION = "[ERROR] 덱이 비었습니다.";
+    private final Queue<Card> deck;
 
     private Deck(List<Card> cards) {
-        this.cards = cards;
-        this.isExist = new ArrayList<>(Collections.nCopies(cards.size(), true));
+        deck = new LinkedList<>(cards);
     }
 
-    public static Deck makeBlackjackDeck() {
-        List<Card> cards = Arrays.stream(BlackjackCardType.values())
-                .map(Card::generateCard)
-                .collect(Collectors.toList());
+    private static List<Card> makeSpecificSuitCards(Suit suit) {
+        List<Card> specificSuitCards = new ArrayList<>();
+        for (Denomination denomination : Denomination.values()) {
+            specificSuitCards.add(Card.generate(suit, denomination));
+        }
+        return specificSuitCards;
+    }
+
+    public static Deck makeRandomShuffledDeck() {
+        List<Card> cards = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            cards.addAll(makeSpecificSuitCards(suit));
+        }
+        Collections.shuffle(cards);
         return new Deck(cards);
     }
 
-    public Card randomPick(NumberGenerator numberGenerator) {
-        validateDeckIsNotEmpty();
-        int cardIndex = numberGenerator.generateNumber();
-        while (Boolean.FALSE.equals(isExist.get(cardIndex))) {
-            cardIndex = numberGenerator.generateNumber();
-        }
-        isExist.set(cardIndex, false);
-        return cards.get(cardIndex);
+    public static Deck makeIntendedShuffledDeck(List<Card> cards) {
+        return new Deck(cards);
     }
 
-    private void validateDeckIsNotEmpty() {
-        if (Boolean.FALSE.equals(isExist.contains(true))) {
-            throw new IllegalStateException(NO_AVAILABLE_CARD_EXCEPTION);
+    public Card pickTopCard() {
+        if (deck.isEmpty()) {
+            throw new IllegalStateException(EMPTY_DECK_EXCEPTION);
         }
+        return deck.poll();
     }
 }

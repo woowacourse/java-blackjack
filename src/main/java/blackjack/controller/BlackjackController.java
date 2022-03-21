@@ -1,36 +1,75 @@
 package blackjack.controller;
 
 import blackjack.domain.Blackjack;
-import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.RandomNumberGenerator;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participant;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
     public void run() {
-        RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
-        List<String> playerNames = InputView.getPlayerNames();
-        Blackjack blackjack = new Blackjack(playerNames);
+        Blackjack blackjack = Blackjack.generate();
+        Players players = Players.generateWithNames(InputView.enterPlayerNames());
+        Dealer dealer = Dealer.generate();
+        betting(blackjack, players);
 
-        blackjack.distributeInitialCards(new RandomNumberGenerator());
-        OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
-
-        while (!blackjack.cycleIsOver()) {
-            Player turnPlayer = blackjack.turnPlayer();
-            blackjack.addtionalCardToPlayer(
-                    new RandomNumberGenerator(), turnPlayer, InputView.askAdditionalCard(turnPlayer.getName()));
-            OutputView.printCards(turnPlayer, true);
+        blackjack.distributeInitCards(dealer, players);
+        openInitialCards(dealer, players);
+        if (blackjack.gameOverByBlackjack(dealer)) {
+            OutputView.result(blackjack.calculateYield(dealer, players));
+            return;
         }
 
-        if (blackjack.additionalCardToDealer(randomNumberGenerator)) {
-            OutputView.printDealerAdditionalCard();
-        }
+        distributeAdditionCardsToAllPlayer(blackjack, players);
+        distributeAdditionCardsToDealer(blackjack, dealer);
 
-        OutputView.printCardsWithScore(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
-        OutputView.printResults(blackjack.results(blackjack.getPlayers().getPlayers()));
+        openCardsWithScore(dealer, players);
+        OutputView.result(blackjack.calculateYield(dealer, players));
+    }
+
+    private void openInitialCards(Participant dealer, Players players) {
+        OutputView.printInitialDistributionEndMessage(dealer.getName(), players.getNames());
+        OutputView.printDealerCards(dealer.getName(), dealer.pickOpenCards());
+        for (Participant player : players) {
+            OutputView.printCards(player.getName(), player.pickOpenCards(), true);
+        }
+    }
+
+    private void distributeAdditionCardsToPlayer(Blackjack blackjack, Participant player) {
+        while (blackjack.isPossibleToGetCard(player) && InputView.askToGetAdditionCard(player.getName())) {
+            blackjack.distributeAdditionalCard(player);
+            OutputView.printCards(player.getName(), player.getCards(), true);
+        }
+        player.setStateStayIfSatisfied(true);
+    }
+
+    private void distributeAdditionCardsToAllPlayer(Blackjack blackjack, Players players) {
+        for (Participant player : players) {
+            distributeAdditionCardsToPlayer(blackjack, player);
+        }
+    }
+
+    private void openCardsWithScore(Participant dealer, Players players) {
+        OutputView.printCards(dealer.getName(), dealer.getCards(), false);
+        OutputView.printScore(dealer.score());
+        for (Participant player : players) {
+            OutputView.printCards(player.getName(), player.getCards(), false);
+            OutputView.printScore(player.score());
+        }
+    }
+
+    private void distributeAdditionCardsToDealer(Blackjack blackjack, Participant dealer) {
+        while (blackjack.isPossibleToGetCard(dealer)) {
+            blackjack.distributeAdditionalCard(dealer);
+            OutputView.printDealerAdditionalCardMessage();
+        }
+    }
+
+    private void betting(Blackjack blackjack, Players players) {
+        for (Participant player : players) {
+            blackjack.betting(player, InputView.askBettingMoney(player.getName()));
+        }
     }
 }

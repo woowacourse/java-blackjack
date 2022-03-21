@@ -1,20 +1,47 @@
 package blackjack.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Card {
-    private final BlackjackCardType type;
+    private static final Map<Suit, Map<Denomination, Card>> CACHE = new HashMap<>();
 
-    private Card(BlackjackCardType type) {
-        this.type = type;
+    static {
+        for (Suit suit : Suit.values()) {
+            CACHE.put(suit, new HashMap<>());
+            for (Denomination denomination : Denomination.values()) {
+                CACHE.get(suit).put(denomination, new Card(suit, denomination));
+            }
+        }
     }
 
-    public static Card generateCard(BlackjackCardType type) {
-        return new Card(type);
+    private final Denomination denomination;
+    private final Suit suit;
+
+    private Card(Suit suit, Denomination denomination) {
+        this.denomination = denomination;
+        this.suit = suit;
     }
 
-    public BlackjackCardType type() {
-        return type;
+    public static Card generate(Suit suit, Denomination denomination) {
+        return CACHE.get(suit).get(denomination);
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
+    public int score() {
+        return denomination.score();
+    }
+
+    public boolean isAce() {
+        return denomination.equals(Denomination.ACE);
     }
 
     @Override
@@ -26,11 +53,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return Objects.equals(type, card.type);
+        return denomination == card.denomination && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type);
+        return Objects.hash(denomination, suit);
     }
 }

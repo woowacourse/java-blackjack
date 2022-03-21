@@ -1,93 +1,61 @@
 package blackjack.domain;
 
-import java.util.List;
+import blackjack.domain.user.Participant;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Blackjack {
-    private static final int INITIAL_CARD_NUMBER = 2;
 
-    private final Dealer dealer;
-    private final Players players;
-    private Player turnPlayer;
+    private final Deck deck;
+    private final Map<Participant, Receipt> bettingTable;
+    private final Map<Participant, Receipt> yieldTable;
 
-    public Blackjack(List<String> playerNames) {
-        this.dealer = new Dealer();
-        this.players = new Players(playerNames);
-        this.turnPlayer = players.firstPlayer();
+    private Blackjack() {
+        deck = Deck.makeRandomShuffledDeck();
+        bettingTable = new HashMap<>();
+        yieldTable = new HashMap<>();
     }
 
-    private void updateTurnPlayer() {
-        turnPlayer = players.nextPlayer(turnPlayer);
+    private Blackjack(Deck deck) {
+        this.deck = deck;
+        bettingTable = new HashMap<>();
+        yieldTable = new HashMap<>();
     }
 
-    public boolean cycleIsOver() {
-        if (Objects.isNull(turnPlayer)) {
-            turnPlayer = players.firstPlayer();
-            return true;
+    public static Blackjack generate() {
+        return new Blackjack();
+    }
+
+    public static Blackjack generateWithDeck(Deck deck) {
+        return new Blackjack(deck);
+    }
+
+    public void distributeInitCards(Participant dealer, Players players) {
+        dealer.drawInitialCards(deck);
+        players.drawInitialCards(deck);
+    }
+
+    public boolean isPossibleToGetCard(Participant player) {
+        return player.isStateSame(State.HIT);
+    }
+
+    public void distributeAdditionalCard(Participant player) {
+        player.drawAdditionalCard(deck);
+    }
+
+    public void betting(Participant player, int money) {
+        bettingTable.put(player, Receipt.generate(money));
+    }
+
+    public boolean gameOverByBlackjack(Participant dealer) {
+        return dealer.isStateSame(State.BLACKJACK);
+    }
+
+    public Map<Participant, Receipt> calculateYield(Participant dealer, Players players) {
+        for (Participant player : players) {
+            yieldTable.put(player, BlackjackResult.of(dealer, player)
+                    .settle(bettingTable.get(player)));
         }
-        return false;
-    }
-
-    public Player turnPlayer() {
-        return turnPlayer;
-    }
-
-    public void addtionalCardToPlayer(NumberGenerator numberGenerator, Player player, boolean addCondition) {
-        if (!addCondition) {
-            updateTurnPlayer();
-            return;
-        }
-        player.addCard(dealer.handOutCard(numberGenerator));
-
-        if (player.isBurst()) {
-            updateTurnPlayer();
-        }
-    }
-
-    public Players getPlayers() {
-        return players;
-    }
-
-    public void distributeInitialCards(NumberGenerator numberGenerator) {
-        for (int i = 0; i < INITIAL_CARD_NUMBER; ++i) {
-            distributeCardToPlayers(numberGenerator);
-            additionalCardToDealer(numberGenerator);
-        }
-    }
-
-    private void distributeCardToPlayers(NumberGenerator numberGenerator) {
-        while (!cycleIsOver()) {
-            addtionalCardToPlayer(numberGenerator, turnPlayer(), true);
-            updateTurnPlayer();
-        }
-    }
-
-    public boolean additionalCardToDealer(NumberGenerator numberGenerator) {
-        if (dealer.isHit()) {
-            dealer.addCard(dealer.handOutCard(numberGenerator));
-            return true;
-        }
-        return false;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public Map<String, Result> results(List<Player> players) {
-        return zipToMap(players.stream()
-                        .map(Player::getName)
-                        .collect(Collectors.toList())
-                , players.stream()
-                        .map(dealer::isWin)
-                        .collect(Collectors.toList()));
-    }
-
-    private <K, V> Map<K, V> zipToMap(List<K> keys, List<V> values) {
-        return IntStream.range(0, keys.size()).boxed()
-                .collect(Collectors.toMap(keys::get, values::get));
+        return yieldTable;
     }
 }

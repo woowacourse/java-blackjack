@@ -1,114 +1,100 @@
 package blackjack.view;
 
-import blackjack.domain.BlackjackCardType;
 import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Result;
-import java.util.ArrayList;
+import blackjack.domain.Cards;
+import blackjack.domain.Denomination;
+import blackjack.domain.Receipt;
+import blackjack.domain.Suit;
+import blackjack.domain.user.Participant;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String NAME_DELIMITER = ", ";
-    private static final String NAME_CARD_DELIMITER = ": ";
-    private static final String SCORE_MESSAGE = " - 결과: %s";
-    private static final String INIT_CARD_DISTRIBUTION_MESSAGE = "%s에게 %d장을 나눠주었습니다.\n";
-    private static final String ADDICTIONAL_CARD_DEALDER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String PLAYER_RESULT_FORMAT = "%s: %s\n";
-    private static final String FINAL_RESULT_MESSAGE = "\n###최종 승패";
-    private static final String DEALER = "딜러:";
-    private static final String WIN_RESULT = " %d승";
-    private static final String DRAW_RESULT = " %d무";
-    private static final String LOSE_RESULT = " %d패";
-    private static final String BURST = "BURST";
-    private static final int MAX_SCORE = 21;
-    private static final int INIT_CARD_NUM = 2;
+    private static final String INITIAL_DISTRIBUTION_END_MESSAGE = "%s와 %s에게 2장을 나눠주었습니다.\n";
+    private static final String BASIC_DELIMITER = ", ";
+    private static final Map<Suit, String> suitToString = new HashMap<>();
+    private static final Map<Denomination, String> denominationToString = new HashMap<>();
+    private static final String DEALER_CARDS = "%s: %s\n";
+    private static final String PLAYER_CARDS = "%s카드: %s";
+    private static final String DEALER_ADDTIONAL_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String RESULT_SCORE = " - 결과: %d\n";
+    private static final String RESULT_MESSAGE = "\n## 최종 수익";
+    private static final String PARTICIPANT_YIELD_MESSAGE = "%s: %d\n";
+    private static final String DEALER = "딜러";
 
+    static {
+        suitToString.put(Suit.CLOVER, "클로버");
+        suitToString.put(Suit.DIAMOND, "다이아몬드");
+        suitToString.put(Suit.SPADE, "스페이드");
+        suitToString.put(Suit.HEART, "하트");
 
-    public static void printInitStatus(Dealer dealer, List<Player> players) {
-        List<String> playerNames = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-        String prefixString = dealer.getName() + String.join(NAME_DELIMITER, playerNames);
-        System.out.printf(INIT_CARD_DISTRIBUTION_MESSAGE, prefixString, INIT_CARD_NUM);
-
-        printCards(dealer, true);
-        for (Player player : players) {
-            printCards(player, true);
-        }
+        denominationToString.put(Denomination.ACE, "A");
+        denominationToString.put(Denomination.TWO, "2");
+        denominationToString.put(Denomination.THREE, "3");
+        denominationToString.put(Denomination.FOUR, "4");
+        denominationToString.put(Denomination.FIVE, "5");
+        denominationToString.put(Denomination.SIX, "6");
+        denominationToString.put(Denomination.SEVEN, "7");
+        denominationToString.put(Denomination.EIGHT, "8");
+        denominationToString.put(Denomination.NINE, "9");
+        denominationToString.put(Denomination.TEN, "10");
+        denominationToString.put(Denomination.J, "J");
+        denominationToString.put(Denomination.Q, "Q");
+        denominationToString.put(Denomination.K, "K");
     }
 
-    private static String makeStatusFormat(String name, List<Card> cards) {
-        List<String> cardNames = cards.stream()
-                .map(Card::type)
-                .map(BlackjackCardType::getName)
-                .collect(Collectors.toList());
-        return name + NAME_CARD_DELIMITER + String.join(NAME_DELIMITER, cardNames);
+    public static void printInitialDistributionEndMessage(String dealerName, List<String> names) {
+        String nameFormat = String.join(BASIC_DELIMITER, names);
+        System.out.printf(INITIAL_DISTRIBUTION_END_MESSAGE, dealerName, nameFormat);
     }
 
-    public static void printCards(Player person, boolean newLine) {
-        System.out.print(makeStatusFormat(person.getName(), person.getMyCards()));
+    public static void printDealerCards(String name, Cards cards) {
+        System.out.printf(DEALER_CARDS, name, makeCardFormat(cards));
+    }
+
+    public static void printCards(String name, Cards cards, boolean newLine) {
+        System.out.printf(PLAYER_CARDS, name, makeCardFormat(cards));
         if (newLine) {
             System.out.println();
         }
     }
 
-    public static void printDealerAdditionalCard() {
-        System.out.println(ADDICTIONAL_CARD_DEALDER_MESSAGE);
+    public static void printScore(int score) {
+        System.out.printf(RESULT_SCORE, score);
     }
 
-    public static void printCardsWithScore(Dealer dealer, List<Player> players) {
-        printCards(dealer, false);
-        printScore(dealer);
-        for (Player player: players) {
-            printCards(player, false);
-            printScore(player);
+    public static void printDealerAdditionalCardMessage() {
+        System.out.println(DEALER_ADDTIONAL_MESSAGE);
+    }
+
+    private static String makeCardFormat(Cards cards) {
+        List<String> stringOfCards = cards.getCards()
+                .stream()
+                .map(OutputView::cardToString)
+                .collect(Collectors.toList());
+        return String.join(BASIC_DELIMITER, stringOfCards);
+    }
+
+    private static String cardToString(Card card) {
+        return denominationToString.get(card.getDenomination()) + suitToString.get(card.getSuit());
+    }
+
+    public static void result(Map<Participant, Receipt> calculateYield) {
+        System.out.println(RESULT_MESSAGE);
+        dealerResult(calculateYield);
+        for (Map.Entry<Participant, Receipt> entry : calculateYield.entrySet()) {
+            System.out.printf(PARTICIPANT_YIELD_MESSAGE, entry.getKey().getName(), entry.getValue().money());
         }
     }
 
-    private static String convertToProperString(int score) {
-        if (score > MAX_SCORE) {
-            return BURST;
+    private static void dealerResult(Map<Participant, Receipt> calculateYield) {
+        int yieldSum = 0;
+        for (Receipt receipt : calculateYield.values()) {
+            yieldSum += receipt.money();
         }
-        return Integer.toString(score);
-    }
-
-    private static void printScore(Player player) {
-        System.out.printf(SCORE_MESSAGE, convertToProperString(player.score()));
-        System.out.println();
-    }
-
-    public static void printResults(Map<String, Result> results) {
-        System.out.println(FINAL_RESULT_MESSAGE);
-        printDealerResult(new ArrayList<>(results.values()));
-        for (Map.Entry<String, Result> entry : results.entrySet()) {
-            System.out.printf(PLAYER_RESULT_FORMAT, entry.getKey(), entry.getValue().getName());
-        }
-    }
-
-    private static void printDealerResult(List<Result> results) {
-        int winCount = countDealerSpecificResult(Result.LOSE, results);
-        int drawCount = countDealerSpecificResult(Result.DRAW, results);
-        int loseCount = countDealerSpecificResult(Result.WIN, results);
-        System.out.printf(DEALER);
-        if (winCount > 0) {
-            System.out.printf(WIN_RESULT, winCount);
-        }
-        if (drawCount > 0) {
-            System.out.printf(DRAW_RESULT, drawCount);
-        }
-        if (loseCount > 0) {
-            System.out.printf(LOSE_RESULT, loseCount);
-        }
-        System.out.println();
-    }
-
-    private static int countDealerSpecificResult(Result specificResult, List<Result> results) {
-        return (int) results.stream()
-                .filter(result -> result.equals(specificResult))
-                .count();
+        System.out.printf(PARTICIPANT_YIELD_MESSAGE, DEALER, -yieldSum);
     }
 }
