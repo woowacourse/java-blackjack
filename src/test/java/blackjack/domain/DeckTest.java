@@ -16,8 +16,8 @@ public class DeckTest {
 	@Test
 	void check_Deck_size() {
 		Deck deck = new Deck();
-		deck.distributeCards(1);
-		assertThat(deck.getCardsSize()).isEqualTo(51);
+		deck.distributeCards(52);
+		assertThat(deck.getCardsSize()).isEqualTo(0);
 	}
 
 	@Test
