@@ -18,20 +18,27 @@ class PlayerTest {
 
     @ParameterizedTest(name = "{index}: {1}")
     @MethodSource("invalidParameters")
-    @DisplayName("플레이어 생성 오류 테스트")
-    void playerInvalidTest(String playerName, int bettingMoney, String testName) {
-        assertThatThrownBy(() -> Player.of(playerName, BettingMoney.of(bettingMoney)))
+    @DisplayName("이름으로 인한 플레이어 생성 오류 테스트")
+    void playerInvalidTest(String playerName, String testName) {
+        BettingMoney bettingMoney = BettingMoney.of(10);
+        assertThatThrownBy(() -> Player.of(playerName, bettingMoney))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-                Arguments.of("", 10, "빈문자 입력"),
-                Arguments.of("pobiash", 10, "6글자 초과 입력"),
-                Arguments.of("pepper", 9, "베팅 최소 금액 미만 입력")
+                Arguments.of("", "빈문자 입력"),
+                Arguments.of("pobiash", "6글자 초과 입력")
         );
     }
 
+    @Test
+    @DisplayName("베팅 금액으로 인한 플레이어 생성 오류 테스트")
+    void invalidBettingMoneyTest() {
+        assertThatThrownBy(() -> BettingMoney.of(9))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("금액은 10원 단위로 입력해야 합니다.");
+    }
 
     @Test
     @DisplayName("플레이어에게 카드가 추가되는지 테스트한다.")
