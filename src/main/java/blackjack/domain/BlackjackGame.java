@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.DrawStatus;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -33,8 +34,12 @@ public class BlackjackGame {
         return new Dealer(cardDeck.drawInitialCards());
     }
 
-    public void hitByPlayer(final Player player) {
-        player.receiveCard(drawCard());
+    public void hitOrStayByPlayer(final Player player, DrawStatus drawStatus) {
+        if (player.isHit(drawStatus)) {
+            player.receiveCard(drawCard());
+            return;
+        }
+        player.stay();
     }
 
     public void hitByDealer() {
