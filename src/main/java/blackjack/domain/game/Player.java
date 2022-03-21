@@ -33,7 +33,7 @@ public class Player extends Gamer {
         state.decideRate(findRate(dealer));
     }
 
-    public double profit() {
+    public double earning() {
         return state.earning();
     }
 
@@ -45,9 +45,9 @@ public class Player extends Gamer {
 
     private double findRate(final Dealer dealer) {
         if (dealer.isBlackjack() || isBlackjack()) {
-            return ProfitRate.rateBlackjack(dealer, this);
+            return EarningRate.rateBlackjack(dealer, this);
         }
-        return ProfitRate.rateStay(dealer, this);
+        return EarningRate.rateStay(dealer, this);
     }
 
     private void hitOrStay(final Card card, final Predicate<String> drawing) {

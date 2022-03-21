@@ -99,7 +99,7 @@ class HitTest {
 
     @DisplayName("수익 계산 시 예외가 발생하는 것을 확인한다.")
     @Test
-    void profit_exception() {
+    void earning_exception() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
         Hit hit = new Hit(playingCards, betting);

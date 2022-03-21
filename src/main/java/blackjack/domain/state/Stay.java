@@ -5,7 +5,7 @@ import blackjack.domain.game.PlayingCards;
 
 public class Stay extends Finished {
 
-    private double profitRate = DEFAULT_RATE;
+    private double earningRate = DEFAULT_RATE;
 
     public Stay(final PlayingCards playingCards, final Betting betting) {
         super(playingCards);
@@ -19,11 +19,11 @@ public class Stay extends Finished {
 
     @Override
     public void decideRate(final double rate) {
-        profitRate = rate;
+        earningRate = rate;
     }
 
     @Override
     double earningRate() {
-        return profitRate;
+        return earningRate;
     }
 }

@@ -19,7 +19,7 @@ public class BlackjackGame {
         bet(players);
 
         drawCards(dealer, players);
-        showProfit(dealer, players);
+        showEarning(dealer, players);
     }
 
     private void bet(final Players players) {
@@ -54,14 +54,14 @@ public class BlackjackGame {
         OutputView.printNewLine();
     }
 
-    private void showProfit(final Dealer dealer, final Players players) {
+    private void showEarning(final Dealer dealer, final Players players) {
         showTotalScore(dealer, players);
 
-        OutputView.printProfitTitle();
+        OutputView.printEarningTitle();
         players.compareCards(dealer);
-        OutputView.printProfit(dealer.getName(), (int) dealer.profit(players.totalProfit()));
+        OutputView.printEarning(dealer.getName(), (int) dealer.earning(players.totalEarning()));
         for (Player player : players.getPlayers()) {
-            OutputView.printProfit(player.getName(), (int) player.profit());
+            OutputView.printEarning(player.getName(), (int) player.earning());
         }
     }
 

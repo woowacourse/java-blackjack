@@ -1,9 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.game.Dealer;
-import blackjack.domain.game.Player;
-
-public enum ProfitRate {
+public enum EarningRate {
 
     BLACKJACK_WIN(1.5),
     WIN(1),
@@ -13,7 +10,7 @@ public enum ProfitRate {
 
     private final double rate;
 
-    ProfitRate(final double rate) {
+    EarningRate(final double rate) {
         this.rate = rate;
     }
 

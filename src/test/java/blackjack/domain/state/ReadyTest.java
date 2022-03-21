@@ -92,10 +92,12 @@ class ReadyTest {
 
     @DisplayName("수익률 계산 시 예외가 발생하는 것을 확인한다.")
     @Test
-    void profit_exception() {
+    void earning_exception() {
         Ready ready = new Ready();
 
-        assertThat(ready.isFinished()).isFalse();
+        assertThatThrownBy(ready::earning)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("현재 상태는 수익을 계산할 수 없습니다.");
     }
 
     @DisplayName("카드를 추가하지 않은 상태에서 카드 총합을 확인한다.")

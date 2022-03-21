@@ -66,7 +66,7 @@ class BustTest {
 
     @DisplayName("패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
     @Test
-    void profit_lose() {
+    void earning_lose() {
         Bust bust = new Bust(playingCards, betting);
         bust.decideRate(-1);
 
@@ -75,7 +75,7 @@ class BustTest {
 
     @DisplayName("무승부일 경우 수익이 없는 것을 확인한다.")
     @Test
-    void profit_tie() {
+    void earning_tie() {
         Bust bust = new Bust(playingCards, betting);
         bust.decideRate(0);
 
@@ -84,7 +84,7 @@ class BustTest {
 
     @DisplayName("승리일 경우 베팅 금액만큼 얻는 것을 확인한다.")
     @Test
-    void profit_win() {
+    void earning_win() {
         Bust bust = new Bust(playingCards, betting);
         bust.decideRate(1);
 

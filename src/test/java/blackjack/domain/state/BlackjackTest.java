@@ -67,7 +67,7 @@ class BlackjackTest {
 
     @DisplayName("딜러가 블랙잭이어서 패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
     @Test
-    void profit_lose() {
+    void earning_lose() {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(-1);
 
@@ -76,7 +76,7 @@ class BlackjackTest {
 
     @DisplayName("딜러와 플레이어 모두 블랙잭이어서 무승부일 경우 수익이 없는 것을 확인한다.")
     @Test
-    void profit_tie() {
+    void earning_tie() {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(0);
 
@@ -85,7 +85,7 @@ class BlackjackTest {
 
     @DisplayName("플레이어가 블랙잭이어서 우승할 경우 베팅 금액의 1.5 배를 얻는 것을 확인한다.")
     @Test
-    void profit_win() {
+    void earning_win() {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(1.5);
 

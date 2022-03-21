@@ -17,8 +17,8 @@ public class Dealer extends Gamer {
         }
     }
 
-    public double profit(final double playersTotalProfit) {
-        return -playersTotalProfit;
+    public double earning(final double playersTotalEarning) {
+        return -playersTotalEarning;
     }
 
     public boolean isLowerScore(final Player player) {

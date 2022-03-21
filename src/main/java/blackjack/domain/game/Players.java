@@ -60,12 +60,12 @@ public class Players {
         }
     }
 
-    public double totalProfit() {
-        double totalProfit = 0;
+    public double totalEarning() {
+        double totalEarning = 0;
         for (Player player : players) {
-            totalProfit += player.profit();
+            totalEarning += player.earning();
         }
-        return totalProfit;
+        return totalEarning;
     }
 
     private List<String> trimNames(final String input) {

@@ -67,7 +67,7 @@ class StayTest {
 
     @DisplayName("플레이어가 버스트여서 패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
     @Test
-    void profit_player_bust() {
+    void earning_player_bust() {
         Stay stay = new Stay(playingCards, betting);
         stay.decideRate(-1);
 
@@ -76,7 +76,7 @@ class StayTest {
 
     @DisplayName("딜러가 버스트여서 승리할 경우 베팅 금액만큼 얻는 것을 확인한다.")
     @Test
-    void profit_dealer_bust() {
+    void earning_dealer_bust() {
         Stay stay = new Stay(playingCards, betting);
         stay.decideRate(1);
 
@@ -85,7 +85,7 @@ class StayTest {
 
     @DisplayName("딜러보다 카드 총 합이 작아 패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
     @Test
-    void profit_lose() {
+    void earning_lose() {
         Stay stay = new Stay(playingCards, betting);
         stay.decideRate(-1);
 
@@ -94,7 +94,7 @@ class StayTest {
 
     @DisplayName("딜러와 플레이어의 카드 총 합이 같아 무승부일 경우 수익이 없는 것을 확인한다.")
     @Test
-    void profit_tie() {
+    void earning_tie() {
         Stay stay = new Stay(playingCards, betting);
         stay.decideRate(0);
 
@@ -103,7 +103,7 @@ class StayTest {
 
     @DisplayName("딜러보다 카드 총 합이 커서 승리할 경우 베팅 금액만큼 얻는 것을 확인한다.")
     @Test
-    void profit_win() {
+    void earning_win() {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(1);
 

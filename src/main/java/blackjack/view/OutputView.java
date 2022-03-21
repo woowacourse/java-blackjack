@@ -53,7 +53,7 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printProfitTitle() {
+    public static void printEarningTitle() {
         System.out.println("## 최종 수익");
     }
 
@@ -62,8 +62,8 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printProfit(final String name, final int profit) {
-        System.out.printf("%s: %d", name, profit);
+    public static void printEarning(final String name, final int earning) {
+        System.out.printf("%s: %d", name, earning);
         printNewLine();
     }
 }
