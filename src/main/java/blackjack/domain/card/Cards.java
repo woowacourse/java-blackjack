@@ -27,11 +27,18 @@ public class Cards {
 		int score = cards.stream()
 			.mapToInt(Card::getScore)
 			.sum();
-		boolean hasAce = cards.stream().anyMatch(Card::isAce);
-		if (hasAce && score + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD) {
+		if (hasAce() && canAddDifference(score)) {
 			return score + ACE_SCORE_DIFFERENCE;
 		}
 		return score;
+	}
+
+	private boolean canAddDifference(int score) {
+		return score + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD;
+	}
+
+	private boolean hasAce() {
+		return cards.stream().anyMatch(Card::isAce);
 	}
 
 	public Card getRandomCard() {
