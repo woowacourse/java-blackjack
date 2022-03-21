@@ -26,7 +26,7 @@ public class BetMoneyTest {
 
         Profit profit = betMoney.getProfit(rate);
 
-        assertThat(profit.get()).isEqualTo(money * rate);
+        assertThat(profit.get()).isEqualTo((int) (money * rate));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class BetMoneyTest {
 
     @Test
     @DisplayName("베팅 금액은 양수로 입력해야한다.")
-    void negitive_zero_number_error() {
+    void negative_zero_number_error() {
         int money = 0;
 
         assertThatThrownBy(() -> new BetMoney(money))
