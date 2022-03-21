@@ -14,6 +14,10 @@ public class BettingMoney {
         this.amount = amount;
     }
 
+    public double profit(double earningRate) {
+        return this.amount * earningRate;
+    }
+
     private void validateRange(int amount) {
         if (Math.floorMod(amount, MINIMUM_AMOUNT_UNIT) != 0) {
             throw new IllegalArgumentException("배팅 금액은 1000단위어야 합니다.");
@@ -21,10 +25,6 @@ public class BettingMoney {
         if (amount > MAXIMUM_AMOUNT) {
             throw new IllegalArgumentException("배팅 금액은 500만을 넘을 수 없습니다.");
         }
-    }
-
-    public int getAmount() {
-        return this.amount;
     }
 
     @Override

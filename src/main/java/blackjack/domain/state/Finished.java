@@ -35,7 +35,7 @@ public abstract class Finished implements State {
 
     @Override
     public final double profit(BettingMoney money, Dealer dealer) {
-        return earningRate(dealer) * money.getAmount();
+        return money.profit(earningRate(dealer));
     }
 
     @Override

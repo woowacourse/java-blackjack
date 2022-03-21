@@ -41,4 +41,12 @@ class BettingMoneyTest {
     void equalToBettingMoney() {
         assertThat(new BettingMoney(1000)).isEqualTo(new BettingMoney(1000));
     }
+
+    @Test
+    @DisplayName("배팅 비율로 배팅 금액을 반환한다.")
+    void profit() {
+        BettingMoney bettingMoney = new BettingMoney(1000);
+
+        assertThat(bettingMoney.profit(1.5)).isEqualTo(1500);
+    }
 }
