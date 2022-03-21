@@ -9,24 +9,29 @@ import org.junit.jupiter.api.Test;
 public class DeckTest {
 
     private Deck deck;
-
     @BeforeEach
     public void setUp() {
-        deck = new Deck();
+        deck = new Deck(new AlwaysDescNumberMachine());
     }
-
     @Test
-    @DisplayName("덱 객체 생성 확인")
-    public void createDeck() {
+    @DisplayName("Cards 객체 생성 확인")
+    public void createCards() {
         assertThat(deck).isInstanceOf(Deck.class);
     }
 
     @Test
-    @DisplayName("deck cards에 card 더하는 로직 확인")
-    public void checkAddCard() {
-        deck.addCard(new Card(Suit.SPADE, Rank.EIGHT));
-        Deck comparedDeck = new Deck();
-        comparedDeck.addCard(new Card(Suit.SPADE, Rank.EIGHT));
-        assertThat(deck).isEqualTo(comparedDeck);
+    @DisplayName("Cards 반환 확인")
+    public void checkCardReturn() {
+        Card card = deck.assignCard();
+        Card compareCard = new Card(Suit.CLUB, Rank.KING);
+        assertThat(card).isEqualTo(compareCard);
+    }
+
+    @Test
+    @DisplayName("차례대로 받아오는 카드 두 개가 다른 카드인지 확인")
+    public void checkTwoDifferentCards() {
+        Card firstCard = deck.assignCard();
+        Card secondCard = deck.assignCard();
+        assertThat(firstCard).isNotEqualTo(secondCard);
     }
 }

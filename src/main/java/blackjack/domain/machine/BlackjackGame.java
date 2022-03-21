@@ -1,7 +1,7 @@
 package blackjack.domain.machine;
 
 import blackjack.domain.card.CardShuffleMachine;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
@@ -9,17 +9,17 @@ import java.util.Map;
 
 public class BlackjackGame {
 
-    private final Cards cards;
+    private final Deck deck;
     private final Players blackjackPlayers;
 
     public BlackjackGame(List<String> playerNames) {
-        this.cards = new Cards(new CardShuffleMachine());
+        this.deck = new Deck(new CardShuffleMachine());
         this.blackjackPlayers = new Players(playerNames);
 
     }
 
     public void initGame() {
-        blackjackPlayers.startWithTwoCards(cards);
+        blackjackPlayers.startWithTwoCards(deck);
     }
 
     public boolean hasNextGuest() {
@@ -32,7 +32,7 @@ public class BlackjackGame {
 
     public GameResponse addCardToPlayer() {
         Player player = blackjackPlayers.getTurnPlayer();
-        player.addCard(cards.assignCard());
+        player.addCard(deck.assignCard());
         return new GameResponse(player.getName(), player.getDeck());
     }
 
@@ -48,7 +48,7 @@ public class BlackjackGame {
 
     public void addCardToDealer() {
         Player dealer = blackjackPlayers.getDealer();
-        dealer.addCard(cards.assignCard());
+        dealer.addCard(deck.assignCard());
     }
 
     public MatchResults calculateResult(Map<Player, Double> bettingBox) {

@@ -14,9 +14,9 @@ public class Score {
     private final int value;
     private final boolean blackjack;
 
-    public Score(Set<Card> cards) {
-        this.value = sumPoints(cards);
-        blackjack = checkBlackjack(cards);
+    public Score(Set<Card> deck) {
+        this.value = sumPoints(deck);
+        blackjack = checkBlackjack(deck);
     }
 
     public int value() {
@@ -50,35 +50,35 @@ public class Score {
         return value > score.value && value < BUST_LIMIT;
     }
 
-    private int sumPoints(Set<Card> cards) {
-        int total = cards.stream()
+    private int sumPoints(Set<Card> deck) {
+        int total = deck.stream()
                 .mapToInt(Card::point)
                 .sum();
-        if (canAddAcePoint(cards, total)) {
+        if (canAddAcePoint(deck, total)) {
             total += ACE_ADDITIONAL_POINT;
         }
         return total;
     }
 
-    private boolean canAddAcePoint(Set<Card> cards, int total) {
-        return hasAce(cards) && total + ACE_ADDITIONAL_POINT <= BUST_LIMIT;
+    private boolean canAddAcePoint(Set<Card> deck, int total) {
+        return hasAce(deck) && total + ACE_ADDITIONAL_POINT <= BUST_LIMIT;
     }
 
-    private boolean hasAce(Set<Card> cards) {
-        return cards.stream()
+    private boolean hasAce(Set<Card> deck) {
+        return deck.stream()
                 .anyMatch(Card::isAce);
     }
 
-    private boolean checkBlackjack(Set<Card> cards) {
-        return !isNotTwoCards(cards) && !nonBlackjack();
+    private boolean checkBlackjack(Set<Card> deck) {
+        return !isNotTwoCards(deck) && !nonBlackjack();
     }
 
     private boolean nonBlackjack() {
         return value != BLACKJACK_NUMBER;
     }
 
-    private boolean isNotTwoCards(Set<Card> cards) {
-        return cards.size() != BLACKJACK_SIZE;
+    private boolean isNotTwoCards(Set<Card> deck) {
+        return deck.size() != BLACKJACK_SIZE;
     }
 
     private boolean isBust() {

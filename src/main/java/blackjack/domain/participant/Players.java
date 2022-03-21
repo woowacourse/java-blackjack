@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,10 +22,10 @@ public class Players {
         }
     }
 
-    public void startWithTwoCards(Cards cards) {
+    public void startWithTwoCards(Deck deck) {
         for (Player blackjackPlayer : blackjackPlayers) {
-            blackjackPlayer.addCard(cards.assignCard());
-            blackjackPlayer.addCard(cards.assignCard());
+            blackjackPlayer.addCard(deck.assignCard());
+            blackjackPlayer.addCard(deck.assignCard());
         }
     }
 

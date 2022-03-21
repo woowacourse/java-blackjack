@@ -1,14 +1,14 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.Cards;
 import blackjack.domain.machine.Score;
 
 public abstract class Player {
 
     private static final String DEALER_NAME = "딜러";
 
-    protected Deck deck;
+    protected Cards cards;
     protected String name;
 
     Player() {
@@ -16,20 +16,20 @@ public abstract class Player {
     }
 
     Player(String name) {
-        this.deck = new Deck();
+        this.cards = new Cards();
         this.name = name;
     }
 
     public void addCard(Card card) {
-        deck.addCard(card);
+        cards.addCard(card);
     }
 
     public boolean isOverLimit(int limit) {
-        return deck.isOverLimit(limit);
+        return cards.isOverLimit(limit);
     }
 
     public boolean canGetMoreCard() {
-        return deck.isOverLimit(limit());
+        return cards.isOverLimit(limit());
     }
 
     abstract int limit();
@@ -38,12 +38,12 @@ public abstract class Player {
         return name;
     }
 
-    public Deck getDeck() {
-        return deck;
+    public Cards getDeck() {
+        return cards;
     }
 
     public Score getScore() {
-        return deck.score();
+        return cards.score();
     }
 
     public abstract boolean isDealer();

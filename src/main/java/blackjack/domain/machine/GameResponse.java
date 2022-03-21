@@ -1,7 +1,7 @@
 package blackjack.domain.machine;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.Cards;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,13 +11,13 @@ public class GameResponse {
     private final List<String> deck;
     private final int score;
 
-    public GameResponse(String name, Deck deck) {
+    public GameResponse(String name, Cards cards) {
         this.name = name;
-        this.deck = deck.getCards()
+        this.deck = cards.getCards()
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.toList());
-        this.score = deck.score().value();
+        this.score = cards.score().value();
     }
 
     public String getName() {

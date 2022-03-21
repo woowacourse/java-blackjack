@@ -6,7 +6,7 @@ import java.util.Stack;
 public class CardShuffleMachine implements CardMachine {
 
     @Override
-    public void shuffleCards(Stack<Card> cards) {
-        Collections.shuffle(cards);
+    public void shuffleCards(Stack<Card> deck) {
+        Collections.shuffle(deck);
     }
 }

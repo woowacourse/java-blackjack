@@ -3,7 +3,11 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.AlwaysDescNumberMachine;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,13 +36,16 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("역순으로 카드를 뽑았을 때 두 장의 카드 합이 20(K, Q) 인지 확인")
+    @DisplayName("받은 카드가 두 장인지 확인")
     void checkStartWithTwoCards() {
-        Cards cards = new Cards(new AlwaysDescNumberMachine());
-        players.startWithTwoCards(cards);
-        int point = players.getPlayers().get(1).getDeck().score().value();
+        Deck deck = new Deck(new AlwaysDescNumberMachine());
+        players.startWithTwoCards(deck);
+        Cards dealerCards = players.getDealer().getDeck();
 
-        assertThat(point).isEqualTo(20);
+        Cards expectedCards = new Cards();
+        expectedCards.addCard(new Card(Suit.CLUB, Rank.KING));
+        expectedCards.addCard(new Card(Suit.CLUB, Rank.QUEEN));
+        assertThat(dealerCards).isEqualTo(expectedCards);
     }
 
     @Test

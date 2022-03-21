@@ -1,45 +1,36 @@
 package blackjack.domain.card;
 
-import blackjack.domain.machine.Score;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Deck {
 
-    private final Set<Card> cards = new LinkedHashSet<>();
+    private final Stack<Card> deck;
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public Deck(CardMachine cardMachine) {
+        this.deck = makeCards();
+        cardMachine.shuffleCards(deck);
     }
 
-    public Set<Card> getCards() {
-        return cards;
+    public Card assignCard() {
+        return deck.pop();
     }
 
-    public Score score() {
-        return new Score(cards);
-    }
-
-    public boolean isOverLimit(int limit) {
-        return score().isOverLimit(limit);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+    private Stack<Card> makeCards() {
+        Stack<Card> deck = new Stack<>();
+        List<Suit> suits = Arrays.stream(Suit.values()).collect(Collectors.toList());
+        for (Suit suit : suits) {
+            addRankForSuit(deck, suit);
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Deck deck = (Deck) o;
-
-        return cards != null ? cards.equals(deck.cards) : deck.cards == null;
+        return deck;
     }
 
-    @Override
-    public int hashCode() {
-        return cards != null ? cards.hashCode() : 0;
+    private void addRankForSuit(Stack<Card> deck, Suit suit) {
+        List<Rank> ranks = Arrays.stream(Rank.values()).collect(Collectors.toList());
+        for (Rank rank : ranks) {
+            deck.add(new Card(suit, rank));
+        }
     }
 }
