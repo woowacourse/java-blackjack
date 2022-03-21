@@ -9,11 +9,7 @@ public abstract class Running extends Started {
     }
 
     public State stay() {
-        return new Stay(playingCards, betting);
-    }
-
-    public double getEarning() {
-        throw new IllegalStateException("현재 상태는 수익을 계산할 수 없습니다.");
+        return new Stay(playingCards);
     }
 
     public boolean isRunning() {
@@ -26,5 +22,9 @@ public abstract class Running extends Started {
 
     public void decideRate(final double rate) {
         throw new IllegalStateException("현재 상태는 수익률을 변경할 수 없습니다.");
+    }
+
+    public double getEarningRate() {
+        throw new IllegalStateException("현재 상태는 수익률을 구할 수 없습니다.");
     }
 }

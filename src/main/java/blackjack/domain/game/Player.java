@@ -1,7 +1,9 @@
 package blackjack.domain.game;
 
+import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Card;
 import blackjack.dto.GamerDto;
+import blackjack.util.Regex;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -11,6 +13,8 @@ import java.util.function.Supplier;
 
 public class Player extends Gamer {
 
+    private Betting betting = new Betting(0);
+
     public Player(final String name) {
         super(name);
         validateEqualsDealerName(name);
@@ -18,7 +22,10 @@ public class Player extends Gamer {
 
     public void bet(final Consumer<String> inputBetting, final Supplier<String> betting) {
         inputBetting.accept(getName());
-        state.bet(betting.get());
+
+        String input = getInputBetting(betting);
+        validateNumber(input);
+        this.betting = new Betting(input);
     }
 
     public void draw(final Card card,
@@ -34,12 +41,22 @@ public class Player extends Gamer {
     }
 
     public double earning() {
-        return state.getEarning();
+        return betting.getEarning(state.getEarningRate());
     }
 
     private void validateEqualsDealerName(final String name) {
         if (name.equals(DEALER_NAME)) {
             throw new IllegalArgumentException("딜러와 동일한 이름은 사용할 수 없습니다.");
+        }
+    }
+
+    private String getInputBetting(final Supplier<String> betting) {
+        return betting.get();
+    }
+
+    private void validateNumber(final String string) {
+        if (!Regex.NUMBER.matcher(string).matches()) {
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
         }
     }
 

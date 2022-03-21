@@ -5,8 +5,6 @@ import blackjack.domain.game.PlayingCards;
 
 public interface State {
 
-    void bet(final String betting);
-
     State draw(final Card card);
 
     State stay();
@@ -17,7 +15,7 @@ public interface State {
 
     void decideRate(final double rate);
 
-    double getEarning();
+    double getEarningRate();
 
     PlayingCards getPlayingCards();
 

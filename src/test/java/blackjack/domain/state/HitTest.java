@@ -1,6 +1,5 @@
 package blackjack.domain.state;
 
-import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
@@ -15,26 +14,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HitTest {
 
-    private static final Betting betting = new Betting(1000);
-
-    @DisplayName("bet 을 실행하여 예외가 발생하는 것을 확인한다.")
-    @Test
-    void bet_exception() {
-        PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.ACE, Suit.SPADE), Card.of(Denomination.ACE, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
-
-        assertThatThrownBy(() -> hit.bet("1000"))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Hit 상태일 때는 bet 을 실행할 수 없습니다.");
-    }
-
     @DisplayName("draw 를 실행하여 Hit 상태가 되는 것을 확인한다.")
     @Test
     void draw_hit() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.ACE, Suit.SPADE), Card.of(Denomination.ACE, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
+        Hit hit = new Hit(playingCards);
 
         State state = hit.draw(Card.of(Denomination.ACE, Suit.SPADE));
 
@@ -46,7 +31,7 @@ class HitTest {
     void draw_bust() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
+        Hit hit = new Hit(playingCards);
 
         State state = hit.draw(Card.of(Denomination.KING, Suit.SPADE));
 
@@ -58,7 +43,7 @@ class HitTest {
     void stay() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
+        Hit hit = new Hit(playingCards);
 
         State state = hit.stay();
 
@@ -70,7 +55,7 @@ class HitTest {
     void is_running() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
+        Hit hit = new Hit(playingCards);
 
         assertThat(hit.isRunning()).isTrue();
     }
@@ -80,9 +65,21 @@ class HitTest {
     void is_finished() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
+        Hit hit = new Hit(playingCards);
 
         assertThat(hit.isFinished()).isFalse();
+    }
+
+    @DisplayName("수익률을 구할 경우 예외가 발생하는 것을 확인한다.")
+    @Test
+    void get_earning_rate_exception() {
+        PlayingCards playingCards = new PlayingCards();
+        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        Hit hit = new Hit(playingCards);
+
+        assertThatThrownBy(hit::getEarningRate)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("현재 상태는 수익률을 구할 수 없습니다.");
     }
 
     @DisplayName("수익률을 변경할 경우 예외가 발생하는 것을 확인한다.")
@@ -90,23 +87,11 @@ class HitTest {
     void decide_rate_exception() {
         PlayingCards playingCards = new PlayingCards();
         playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
+        Hit hit = new Hit(playingCards);
 
         assertThatThrownBy(() -> hit.decideRate(1))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("현재 상태는 수익률을 변경할 수 없습니다.");
-    }
-
-    @DisplayName("수익 계산 시 예외가 발생하는 것을 확인한다.")
-    @Test
-    void earning_exception() {
-        PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
-
-        assertThatThrownBy(hit::getEarning)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("현재 상태는 수익을 계산할 수 없습니다.");
     }
 
     @DisplayName("카드 총합을 확인한다.")
@@ -116,7 +101,7 @@ class HitTest {
         playingCards.add(List.of(
                 Card.of(Denomination.KING, Suit.SPADE),
                 Card.of(Denomination.KING, Suit.SPADE)));
-        Hit hit = new Hit(playingCards, betting);
+        Hit hit = new Hit(playingCards);
 
         assertThat(hit.cardTotal()).isEqualTo(20);
     }

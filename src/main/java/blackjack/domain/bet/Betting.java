@@ -35,8 +35,4 @@ public class Betting {
             throw new IllegalArgumentException("베팅 금액은 " + MONEY_UNIT + "원 단위로 입력해주세요.");
         }
     }
-
-    public int getBetting() {
-        return betting;
-    }
 }
