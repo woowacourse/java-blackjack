@@ -12,11 +12,6 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public ParticipantCards getParticipantCards() {
-        return participantCards;
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
     }

@@ -55,13 +55,13 @@ public class BlackjackController {
 
     private void handOutMoreCardsToPlayer(Player player, Deck deck) {
         boolean cardPrintFlag = isPlayerWantMoreCards(player, deck);
+
         if (!player.isFinished()) {
             player.stay();
         }
         if (!cardPrintFlag) {
             OutputView.printPlayerCardInformation(player);
         }
-
     }
 
     private boolean isPlayerWantMoreCards(Player player, Deck deck) {

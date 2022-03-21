@@ -30,15 +30,9 @@ public abstract class Participant {
         state = state.stay();
     }
 
-    public boolean isBlackjack() {
-        return state.isBlackjack();
-    }
-
     public boolean isFinished() {
         return state.isFinished();
     }
-
-    public abstract boolean isHittable();
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(state.getParticipantCards().getCards());
@@ -47,6 +41,8 @@ public abstract class Participant {
     public int getScore() {
         return state.getParticipantCards().calculateScore();
     }
+
+    public abstract boolean isHittable();
 
     public abstract String getName();
 

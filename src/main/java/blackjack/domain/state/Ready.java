@@ -11,11 +11,6 @@ public class Ready extends Running {
         super(participantCards);
     }
 
-    @Override
-    public ParticipantCards getParticipantCards() {
-        return participantCards;
-    }
-
     public State draw(final Card card) {
         ParticipantCards participantCards = this.participantCards.addCard(card);
 

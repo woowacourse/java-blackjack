@@ -13,12 +13,6 @@ public class Stay extends Finished {
     }
 
     @Override
-    public ParticipantCards getParticipantCards() {
-        return participantCards;
-    }
-
-
-    @Override
     public double earningRate(State dealerState) {
         if (!dealerState.isBust() && this.getScore() == dealerState.getScore()) {
             return DRAW_RATE;
