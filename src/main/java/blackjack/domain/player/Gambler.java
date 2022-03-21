@@ -16,7 +16,7 @@ public class Gambler extends Player {
         return false;
     }
 
-    public int getBetMoney() {
-        return betMoney.getValue();
+    public BetMoney getBetMoney() {
+        return betMoney;
     }
 }

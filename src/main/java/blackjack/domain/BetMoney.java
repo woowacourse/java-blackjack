@@ -18,8 +18,12 @@ public class BetMoney {
         }
     }
 
-    public Integer getValue() {
-        return value;
+    public Double times(final double times) {
+        return this.value * times;
+    }
+
+    public Double toDouble() {
+        return Double.valueOf(this.value);
     }
 
     @Override

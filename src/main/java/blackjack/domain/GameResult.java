@@ -7,18 +7,18 @@ import java.util.function.Function;
 
 public enum GameResult {
 
-    BLACKJACK((dealer, gamblers) -> isGamblerBlackJack(gamblers), betMoney -> betMoney * 1.5),
-    WIN(GameResult::isDealerWin, betMoney -> (double) betMoney * -1),
-    DRAW(GameResult::isDraw, betMoney -> (double) 0),
-    LOSE(GameResult::isDealerLose, Double::valueOf),
+    BLACKJACK((dealer, gamblers) -> isGamblerBlackJack(gamblers),  betMoney -> betMoney.times(1.5)),
+    WIN(GameResult::isDealerWin, betMoney -> betMoney.times(-1)),
+    DRAW(GameResult::isDraw, betMoney -> betMoney.times(0)),
+    LOSE(GameResult::isDealerLose, BetMoney::toDouble),
     ;
 
     private final BiPredicate<Player, Player> condition;
-    private final Function<Integer, Double> calculateProfit;
+    private final Function<BetMoney, Double> calculateProfit;
 
 
     GameResult(final BiPredicate<Player, Player> condition,
-               final Function<Integer, Double> calculateProfit) {
+               final Function<BetMoney, Double> calculateProfit) {
         this.condition = condition;
         this.calculateProfit = calculateProfit;
     }
@@ -66,7 +66,7 @@ public enum GameResult {
         return dealer.isLose(gambler);
     }
 
-    public Double calculateProfit(final int betMoney) {
+    public Double calculateProfit(final BetMoney betMoney) {
         return this.calculateProfit.apply(betMoney);
     }
 }

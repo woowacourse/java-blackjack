@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BetMoney;
+
 public class Dealer extends Player {
 
     private static final String NAME = "딜러";
@@ -15,7 +17,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public int getBetMoney() {
+    public BetMoney getBetMoney() {
         throw new UnsupportedOperationException(NOT_ALLOW_METHOD_MESSAGE);
     }
 }

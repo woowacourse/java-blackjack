@@ -81,6 +81,6 @@ public class BlackJackResultTest {
 
 
         // then
-        assertThat(gamblerProfit).isEqualTo(gambler.getBetMoney()* 1.5);
+        assertThat(gamblerProfit).isEqualTo(gambler.getBetMoney().times(1.5));
     }
 }

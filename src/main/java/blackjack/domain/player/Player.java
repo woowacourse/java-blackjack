@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BetMoney;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
@@ -61,6 +62,6 @@ public abstract class Player {
         return this.getSumOfCards() < otherPlayer.getSumOfCards();
     }
 
-    public abstract int getBetMoney();
+    public abstract BetMoney getBetMoney();
 
 }
