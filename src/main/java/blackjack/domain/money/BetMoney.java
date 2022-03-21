@@ -5,16 +5,17 @@ public class BetMoney {
     private final Money money;
 
     public BetMoney(final String input) {
-        this.money = Money.valueOf(createMoneyValue(input));
+        final long value = toLong(input);
+        checkPositive(value);
+
+        this.money = Money.valueOf(value);
     }
 
-    private long createMoneyValue(final String input) {
+    private long toLong(final String value) {
         try {
-            final long value = Long.parseLong(input);
-            checkPositive(value);
-            return value;
+            return Long.parseLong(value);
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액은 양수여야 합니다.");
+            throw new NumberFormatException("[ERROR] 베팅 금액은 양수여야 합니다.");
         }
     }
 

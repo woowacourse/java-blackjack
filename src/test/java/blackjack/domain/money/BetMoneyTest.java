@@ -20,11 +20,18 @@ public class BetMoneyTest {
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
-    @ValueSource(strings = {"-10000", "0", "lisa"})
-    @DisplayName("입력값이 양수가 아닐 경우 예외를 발생시킨다.")
+    @ValueSource(strings = {"엘리", "lisa"})
+    @DisplayName("입력값이 숫자가 아닐 경우 예외를 발생시킨다.")
+    void throwExceptionWhenNotNumber(String input) {
+        assertThatThrownBy(() -> new BetMoney(input))
+                .isInstanceOf(NumberFormatException.class);
+    }
+
+    @ParameterizedTest(name = "[{index}] {0}")
+    @ValueSource(strings = {"-10000", "0"})
+    @DisplayName("입력값이 0 또는 음수일 경우 예외를 발생시킨다.")
     void throwExceptionWhenNotPositiveNumber(String input) {
         assertThatThrownBy(() -> new BetMoney(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 베팅 금액은 양수여야 합니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
