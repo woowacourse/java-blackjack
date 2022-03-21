@@ -23,11 +23,11 @@ public enum CardDenomination {
 		this.name = name;
 	}
 
-	public int getLetterScore() {
+	public int getScore() {
 		return score;
 	}
 
-	public String getCardName() {
+	public String getName() {
 		return name;
 	}
 }

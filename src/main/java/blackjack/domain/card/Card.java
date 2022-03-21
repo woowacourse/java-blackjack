@@ -12,11 +12,11 @@ public class Card {
 	}
 
 	public int getScore() {
-		return cardDenomination.getLetterScore();
+		return cardDenomination.getScore();
 	}
 
 	public String getCardName() {
-		return cardDenomination.getCardName();
+		return cardDenomination.getName();
 	}
 
 	public CardSuit getType() {
