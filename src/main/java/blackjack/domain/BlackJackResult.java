@@ -1,11 +1,12 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toMap;
+
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class BlackJackResult {
 
@@ -13,19 +14,19 @@ public class BlackJackResult {
 
     private final Map<Player, Double> value;
 
-    public BlackJackResult(final Map<Player, Double> value) {
+    private BlackJackResult(final Map<Player, Double> value) {
         this.value = value;
     }
 
     public static BlackJackResult from(final Players players) {
-        return new BlackJackResult(players.getGamblers()
+        final Map<Player, Double> ProfitsPerPlayer = players.getGamblers()
             .stream()
-            .collect(Collectors.toMap(
-                Function.identity(),
+            .collect(toMap(Function.identity(),
                 gambler -> calculateProfit(players, gambler),
                 (x, y) -> y,
-                LinkedHashMap::new)
-            ));
+                LinkedHashMap::new));
+
+        return new BlackJackResult(ProfitsPerPlayer);
     }
 
     private static Double calculateProfit(final Players players, final Player gambler) {
@@ -34,10 +35,11 @@ public class BlackJackResult {
     }
 
     public double calculateDealerProfit() {
-        return this.value.values()
+        final double dealerTotalProfit = this.value.values()
             .stream()
             .mapToDouble(Double::valueOf)
-            .sum() * DEALER_FLIP_UNIT;
+            .sum();
+        return dealerTotalProfit * DEALER_FLIP_UNIT;
     }
 
     public Map<Player, Double> getValue() {
