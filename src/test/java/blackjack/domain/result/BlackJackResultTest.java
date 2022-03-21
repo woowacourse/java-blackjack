@@ -21,7 +21,7 @@ class BlackJackResultTest {
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
-        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("WIN"));
+        assertThat(blackJackResult).isEqualTo(BlackJackResult.WIN);
     }
 
     @Test
@@ -32,7 +32,7 @@ class BlackJackResultTest {
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
-        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("BLACK_JACK_WIN"));
+        assertThat(blackJackResult).isEqualTo(BlackJackResult.BLACK_JACK_WIN);
     }
 
     @Test
@@ -43,7 +43,7 @@ class BlackJackResultTest {
         Player player = new Player("범고래", playerCards, 1000);
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
-        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("DRAW"));
+        assertThat(blackJackResult).isEqualTo(BlackJackResult.DRAW);
     }
 
     @Test
@@ -66,7 +66,7 @@ class BlackJackResultTest {
         player.addCard(new Card(CardShape.HEART, CardNumber.ACE));
         Dealer dealer = new Dealer(dealerCards);
         BlackJackResult blackJackResult = BlackJackResult.findResult(player, dealer);
-        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("LOSE"));
+        assertThat(blackJackResult).isEqualTo(BlackJackResult.LOSE);
     }
 
     @Test
