@@ -4,7 +4,7 @@ import blackjack.domain.Answer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.PlayersValidator;
 import blackjack.domain.result.BlackJackResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,15 +17,15 @@ import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
 public class BlackJackApplication {
     public static void main(String[] args) {
         Deck deck = new Deck();
-        Players players = new Players(createPlayers(deck));
+        List<Player> players = createPlayers(deck);
         Dealer dealer = new Dealer(List.of(deck.draw(), deck.draw()));
-        OutputView.printFirstCards(dealer, players.getPlayers());
+        OutputView.printFirstCards(dealer, players);
 
         drawAdditionalCard(deck, players);
         printAdditionalDrawDealer(deck, dealer);
-        OutputView.printFinalCards(dealer, players.getPlayers());
+        OutputView.printFinalCards(dealer, players);
 
-        OutputView.printFinalResult(new BlackJackResults(players.getPlayers(), dealer));
+        OutputView.printFinalResult(new BlackJackResults(players, dealer));
     }
 
     private static List<Player> createPlayers(Deck deck) {
@@ -33,6 +33,7 @@ public class BlackJackApplication {
         for (String name : InputView.getNames()) {
             players.add(createPlayer(deck, name));
         }
+        PlayersValidator.validate(players);
         return players;
     }
 
@@ -40,8 +41,8 @@ public class BlackJackApplication {
         return new Player(name, List.of(deck.draw(), deck.draw()), InputView.getBettingMoney(name));
     }
 
-    private static void drawAdditionalCard(Deck deck, Players players) {
-        for (Player player : players.getPlayers()) {
+    private static void drawAdditionalCard(Deck deck, List<Player> players) {
+        for (Player player : players) {
             printPlayerDrawCard(deck, player);
         }
     }
