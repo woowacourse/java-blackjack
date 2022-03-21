@@ -58,10 +58,6 @@ public class Cards {
         return cards.size() == BLACKJACK_SIZE && calculateScore().equals(BLACKJACK_SCORE);
     }
 
-    public int size() {
-        return cards.size();
-    }
-
     public List<Card> getCards() {
         return cards;
     }
