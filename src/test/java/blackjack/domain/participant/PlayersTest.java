@@ -55,7 +55,7 @@ public class PlayersTest {
     void judgeResult_WinningPlayer_ReturnsWin() {
 
         assertThat(players.judgeResult(dealer).get(players.getPlayers().get(0)))
-                .isEqualTo(players.getPlayers().get(0).getBet().getBlackJackPrize());
+                .isEqualTo(players.getPlayers().get(0).getBet().calculateBlackJackPrize());
     }
 
     @DisplayName("플레이어 무승부 테스트")
@@ -63,7 +63,7 @@ public class PlayersTest {
     void judgeResult_DrawPlayer_ReturnsDraw() {
 
         assertThat(players.judgeResult(dealer).get(players.getPlayers().get(1)))
-                .isEqualTo(players.getPlayers().get(1).getBet().getDrawPrize());
+                .isEqualTo(players.getPlayers().get(1).getBet().calculateDrawPrize());
     }
 
     @DisplayName("플레이어 패배 테스트")
@@ -71,6 +71,6 @@ public class PlayersTest {
     void judgeResult_LosingPlayer_ReturnsLose() {
 
         assertThat(players.judgeResult(dealer).get(players.getPlayers().get(2)))
-                .isEqualTo(players.getPlayers().get(2).getBet().getLosingPrize());
+                .isEqualTo(players.getPlayers().get(2).getBet().calculateLosingPrize());
     }
 }

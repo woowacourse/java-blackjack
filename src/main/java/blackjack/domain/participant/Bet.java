@@ -20,19 +20,19 @@ public class Bet {
         }
     }
 
-    public int getLosingPrize() {
+    public int calculateLosingPrize() {
         return -bet;
     }
 
-    public int getDrawPrize() {
+    public int calculateDrawPrize() {
         return DRAW_MONEY;
     }
 
-    public int getWinningPrize() {
+    public int calculateWinningPrize() {
         return bet;
     }
 
-    public int getBlackJackPrize() {
+    public int calculateBlackJackPrize() {
         return (int) (BLACKJACK_DIVIDEND * bet);
     }
 }

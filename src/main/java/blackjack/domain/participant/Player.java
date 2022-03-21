@@ -20,15 +20,15 @@ public class Player extends Participant {
 
     public int calculatePrize(Dealer dealer) {
         if (isBusted() || dealer.isWinner(this) || (!isBlackJack() && dealer.isBlackJack())) {
-            return bet.getLosingPrize();
+            return bet.calculateLosingPrize();
         }
         if (dealer.hasSameScore(this) && (bothBlackJack(dealer) || bothNotBlackJack(dealer))) {
-            return bet.getDrawPrize();
+            return bet.calculateDrawPrize();
         }
         if (cards.isBlackJack()) {
-            return bet.getBlackJackPrize();
+            return bet.calculateBlackJackPrize();
         }
-        return bet.getWinningPrize();
+        return bet.calculateWinningPrize();
     }
 
     private boolean bothBlackJack(Dealer dealer) {

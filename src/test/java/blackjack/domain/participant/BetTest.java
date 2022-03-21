@@ -30,7 +30,7 @@ class BetTest {
     void getLosingMoney_Betting10000_ReturnsNegative10000() {
         Bet bet = new Bet(10000);
 
-        assertThat(bet.getLosingPrize()).isEqualTo(-10000);
+        assertThat(bet.calculateLosingPrize()).isEqualTo(-10000);
     }
 
     @DisplayName("무승부 시 0 반환")
@@ -38,7 +38,7 @@ class BetTest {
     void getDrawMoney_Betting10000_ReturnsZero() {
         Bet bet = new Bet(10000);
 
-        assertThat(bet.getDrawPrize()).isEqualTo(0);
+        assertThat(bet.calculateDrawPrize()).isEqualTo(0);
     }
 
     @DisplayName("승리 시 베팅만큼 수익 발생")
@@ -46,7 +46,7 @@ class BetTest {
     void getWinningPrize_Betting10000_Returns10000() {
         Bet bet = new Bet(10000);
 
-        assertThat(bet.getWinningPrize()).isEqualTo(10000);
+        assertThat(bet.calculateWinningPrize()).isEqualTo(10000);
     }
 
     @DisplayName("블랙잭으로 승리 시 베팅의 1.5배만큼 수익 발생")
@@ -54,6 +54,6 @@ class BetTest {
     void getBlackJackPrize_Betting10000_Returns15000() {
         Bet bet = new Bet(10000);
 
-        assertThat(bet.getBlackJackPrize()).isEqualTo(15000);
+        assertThat(bet.calculateBlackJackPrize()).isEqualTo(15000);
     }
 }
