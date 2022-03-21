@@ -6,7 +6,7 @@ import blackjack.domain.participant.human.name.Name;
 import java.util.List;
 import java.util.Map;
 
-public final class Dealer extends Human {
+public final class Dealer extends Participant {
     private static final int HIT_DEALER_POINT = 16;
 
     public Dealer(final List<Card> cards) {
@@ -22,7 +22,7 @@ public final class Dealer extends Human {
             addCard(cardDeck.pop());
         }
         stay();
-        return !isInitSize();
+        return !isInitState();
     }
 
     private boolean isAbleToHit() {

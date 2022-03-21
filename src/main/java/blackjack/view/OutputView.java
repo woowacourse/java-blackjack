@@ -3,9 +3,8 @@ package blackjack.view;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
-import blackjack.domain.participant.human.Human;
+import blackjack.domain.participant.human.Participant;
 import blackjack.domain.participant.human.Player;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,13 +40,13 @@ public final class OutputView {
     }
 
     public static void printHand(final Player player) {
-        if (player.isInitSize() || !player.getState().isFinished()) {
+        if (player.isInitState() || !player.getState().isFinished()) {
             printHumanHand(player);
         }
     }
 
-    private static void printHumanHand(final Human human) {
-        System.out.printf(CARD_STATE_MESSAGE, human.getName(), getCardsState(human.getRawCards()));
+    private static void printHumanHand(final Participant participant) {
+        System.out.printf(CARD_STATE_MESSAGE, participant.getName(), getCardsState(participant.getRawCards()));
         System.out.println();
     }
 
@@ -63,9 +62,9 @@ public final class OutputView {
         players.printHand(OutputView::printHumanCardPointState);
     }
 
-    private static void printHumanCardPointState(final Human human) {
+    private static void printHumanCardPointState(final Participant participant) {
         System.out.printf(CARD_STATE_MESSAGE + HUMAN_POINT_STATE + System.lineSeparator(),
-                human.getName(), getCardsState(human.getRawCards()), human.getPoint());
+                participant.getName(), getCardsState(participant.getRawCards()), participant.getPoint());
     }
 
     public static void printDealerHit(boolean isPrint) {
@@ -79,7 +78,7 @@ public final class OutputView {
         printProfit(dealer, money);
     }
 
-    public static void printProfit(final Human human, final int money) {
-        System.out.printf(PLAYER_RESULT_MESSAGE, human.getName(), money);
+    public static void printProfit(final Participant participant, final int money) {
+        System.out.printf(PLAYER_RESULT_MESSAGE, participant.getName(), money);
     }
 }

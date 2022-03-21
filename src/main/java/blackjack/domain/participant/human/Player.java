@@ -7,7 +7,7 @@ import blackjack.domain.result.BetAmount;
 import blackjack.domain.state.finished.Finished;
 import java.util.List;
 
-public final class Player extends Human {
+public final class Player extends Participant {
     private final BetAmount betAmount;
 
     public Player(final String name, final int money, final List<Card> cards) {

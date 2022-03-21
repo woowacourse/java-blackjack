@@ -7,14 +7,14 @@ import blackjack.domain.state.State;
 import blackjack.domain.state.running.Ready;
 import java.util.List;
 
-public abstract class Human {
+public abstract class Participant {
     private static final int INIT_NUMBER = 2;
 
     protected final Name name;
     protected State state;
 
 
-    protected Human(List<Card> cards, Name name) {
+    protected Participant(List<Card> cards, Name name) {
         this.name = name;
         this.state = getInitState(cards);
     }
@@ -31,7 +31,7 @@ public abstract class Human {
         state = state.draw(card);
     }
 
-    public boolean isInitSize() {
+    public boolean isInitState() {
         return getCards().size() == INIT_NUMBER;
     }
 
