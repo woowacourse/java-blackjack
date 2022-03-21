@@ -22,7 +22,7 @@ public final class Dealer extends Human {
             addCard(cardDeck.pop());
             return true;
         }
-        setStay();
+        stay();
         return false;
     }
 

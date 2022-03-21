@@ -21,11 +21,9 @@ public final class OutputView {
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 수익";
 
     public static void printInitHands(final Players players, final Dealer dealer) {
-        OutputView.printInitCardState(players, dealer);
-        OutputView.printInitDealerHand(dealer);
-        for (Player player : players.get()) {
-            OutputView.printHumanHand(player);
-        }
+        printInitCardState(players, dealer);
+        printInitDealerHand(dealer);
+        players.printHand(OutputView::printHumanHand);
         System.out.println();
     }
 
@@ -37,7 +35,7 @@ public final class OutputView {
     }
 
     public static void printInitDealerHand(final Dealer dealer) {
-        System.out.printf(CARD_STATE_MESSAGE, dealer.getName(), getCardsState(List.of(dealer.getFirstCard())));
+        System.out.printf(CARD_STATE_MESSAGE, dealer.getName(), dealer.getRawCards());
         System.out.println();
     }
 
@@ -60,10 +58,8 @@ public final class OutputView {
 
     public static void printHandAndPoint(final Players players, final Dealer dealer) {
         System.out.println();
-        OutputView.printHumanCardPointState(dealer);
-        for (Player player : players.get()) {
-            OutputView.printHumanCardPointState(player);
-        }
+        printHumanCardPointState(dealer);
+        players.printHand(OutputView::printHumanCardPointState);
     }
 
     public static void printHumanCardPointState(final Human human) {

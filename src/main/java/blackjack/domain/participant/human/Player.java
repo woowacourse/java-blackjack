@@ -21,7 +21,6 @@ public final class Player extends Human {
         return getCards().size() == INIT_NUMBER;
     }
 
-
     public int getProfit(Dealer dealer) {
         return state.profit(betAmount.get(), (Finished) dealer.getState());
     }
@@ -31,6 +30,6 @@ public final class Player extends Human {
             addCard(cardDeck.pop());
             return;
         }
-        setStay();
+        stay();
     }
 }

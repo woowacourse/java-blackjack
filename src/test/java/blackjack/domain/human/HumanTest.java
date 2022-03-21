@@ -19,8 +19,8 @@ class HumanTest {
     @DisplayName("카드 추가 기능 테스트")
     void addCard() {
         fx.POBI.addCard(TEN);
-        assertThat(fx.POBI.getRawCards().size())
-                .isEqualTo(1);
+        assertThat(fx.POBI.getState().cards().getFirstCard())
+                .isEqualTo(TEN);
     }
 
     @Test
@@ -55,7 +55,7 @@ class HumanTest {
     void getCards() {
         fx.POBI.addCard(ACE);
         fx.POBI.addCard(NINE);
-        assertThat(fx.POBI.getRawCards())
-                .containsOnly(ACE, NINE);
+        assertThat(fx.POBI.getState().cards().getCopy())
+                .contains(ACE, NINE);
     }
 }

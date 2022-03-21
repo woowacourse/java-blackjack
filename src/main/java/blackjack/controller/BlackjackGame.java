@@ -39,15 +39,13 @@ public final class BlackjackGame {
     }
 
     private void startGame(final Players players, final Dealer dealer, final CardDeck cardDeck) {
-        players.get().forEach(player -> startPlayer(player, cardDeck));
+        players.start(cardDeck, (player, deck) -> {
+            while (!player.getState().isFinished()) {
+                player.draw(deck, inputIsDraw(player.getName()));
+                printHand(player);
+            }
+        });
         printDealerHit(dealer.draw(cardDeck));
-    }
-
-    private void startPlayer(final Player player, final CardDeck cardDeck) {
-        while (!player.getState().isFinished()) {
-            player.draw(cardDeck, inputIsDraw(player.getName()));
-            printHand(player);
-        }
     }
 
     private void calculateResult(final Players players, final Dealer dealer) {

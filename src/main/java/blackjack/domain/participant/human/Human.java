@@ -29,12 +29,12 @@ public abstract class Human {
         state = state.draw(card);
     }
 
-    public State getState() {
-        return state;
+    public void stay() {
+        state = state.stay();
     }
 
-    public void setStay() {
-        state = state.stay();
+    public State getState() {
+        return state;
     }
 
     public int getPoint() {

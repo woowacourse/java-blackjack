@@ -5,10 +5,8 @@ import static blackjack.domain.Fixtures.TEN;
 import static blackjack.domain.Fixtures.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Fixtures;
-import blackjack.domain.cards.CardDeck;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.human.Dealer;
 import java.util.List;
@@ -17,14 +15,6 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
     private final Fixtures fx = new Fixtures();
-
-    @Test
-    @DisplayName("플레이어 모음 생성 기능 테스트")
-    public void createTest() {
-        Players players = new Players(List.of(fx.POBI));
-        assertThat(players.get().size())
-                .isEqualTo(1);
-    }
 
     @Test
     @DisplayName("플레이어 모음 생성 기능 예외처리 테스트")
@@ -51,7 +41,7 @@ class PlayersTest {
         // given
         Players players = new Players(List.of(fx.POBI));
         Dealer dealer = new Dealer(List.of(TWO, TWO));
-        dealer.setStay();
+        dealer.stay();
 
         // when
         fx.POBI.addCard(TEN);

@@ -6,6 +6,8 @@ import blackjack.domain.participant.human.Player;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public final class Players {
@@ -24,20 +26,24 @@ public final class Players {
         }
     }
 
-    public Map<Player, Integer> getPayouts(final Dealer dealer) {
-        return value.stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> player.getProfit(dealer)));
-    }
-
     public List<String> getNames() {
         return value.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
     }
 
-    public List<Player> get() {
-        return List.copyOf(value);
+    public void start(CardDeck cardDeck, BiConsumer<Player, CardDeck> startPlayer) {
+        value.forEach(player -> startPlayer.accept(player, cardDeck));
+    }
+
+    public void printHand(Consumer<Player> playerConsumer) {
+        value.forEach(playerConsumer);
+    }
+
+    public Map<Player, Integer> getPayouts(final Dealer dealer) {
+        return value.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> player.getProfit(dealer)));
     }
 }
