@@ -28,9 +28,4 @@ public class Blackjack extends Finished {
         }
         return DRAW_RATE;
     }
-
-    @Override
-    public boolean isBust() {
-        return false;
-    }
 }

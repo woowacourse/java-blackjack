@@ -35,9 +35,4 @@ public class Stay extends Finished {
         }
         return LOSE_RATE;
     }
-
-    @Override
-    public boolean isBust() {
-        return false;
-    }
 }
