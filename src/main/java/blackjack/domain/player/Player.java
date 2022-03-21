@@ -6,7 +6,6 @@ import java.util.List;
 
 public abstract class Player {
 
-
     protected final PlayerCards playerCards;
 
     protected Player(final PlayerCards playerCards) {

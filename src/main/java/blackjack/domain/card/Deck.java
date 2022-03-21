@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 
 public class Deck {
 
-    private static final int EMPTY_DECK_SIZE = 0;
-
     private final Stack<Card> deck;
 
     private Deck(final Stack<Card> playerCards) {
@@ -39,7 +37,7 @@ public class Deck {
     }
 
     private void checkCardSize() {
-        if (deck.size() == EMPTY_DECK_SIZE) {
+        if (deck.isEmpty()) {
             throw new IllegalStateException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
         }
     }
