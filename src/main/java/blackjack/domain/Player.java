@@ -1,37 +1,32 @@
 package blackjack.domain;
 
-import java.util.List;
+public class Player extends Participant {
 
-public class Player {
+    public static final double BLACKJACK_WINNING_PROFIT_RATE = 1.5;
 
-    public static final int BLACKJACK_NUMBER = 21;
+    private final BettingAmount bettingAmount;
 
-    private final Cards cards;
-    private final Name name;
-
-    public Player(String name) {
-        this(new Name(name));
+    public Player(String name, int bettingAmount) {
+        this(new Name(name), new BettingAmount(bettingAmount));
     }
 
-    public Player(Name name) {
-        this.name = name;
-        this.cards = new Cards();
+    public Player(Name name, BettingAmount bettingAmount) {
+        super(name);
+        this.bettingAmount = bettingAmount;
     }
 
-    public void drawCard(Card card) {
-        cards.add(card);
-    }
-
-    public Score compete(Player player) {
-        if (player.isBust()) {
+    @Override
+    public Score compete(Participant dealer) {
+        if (dealer.isBust()) {
             return getScoreWithBust();
         }
-
         if (this.isBust()) {
             return Score.LOSE;
         }
-
-        return Score.compare(this.getTotalNumber(), player.getTotalNumber());
+        if (this.isBlackjack()) {
+            return getScoreWithBlackjack(dealer);
+        }
+        return Score.compare(this.getTotalNumber(), dealer.getTotalNumber());
     }
 
     private Score getScoreWithBust() {
@@ -41,23 +36,15 @@ public class Player {
         return Score.WIN;
     }
 
-    public boolean isBust() {
-        return getTotalNumber() > BLACKJACK_NUMBER;
-    }
-
+    @Override
     public boolean isDrawable() {
         return !isBust();
     }
 
-    public int getTotalNumber() {
-        return cards.getTotalNumber();
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
+    public double getTotalProfit(Score myScore) {
+        if (myScore == Score.WIN && isBlackjack()) {
+            return bettingAmount.getAmount() * BLACKJACK_WINNING_PROFIT_RATE;
+        }
+        return (double) bettingAmount.getAmount() * myScore.getProfitRate();
     }
 }

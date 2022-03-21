@@ -24,4 +24,9 @@ public class InputView {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
         return scanner.nextLine();
     }
+
+    public static int requestBattingAmount(String name) {
+        System.out.printf("%n%s의 배팅 금액은?%n", name);
+        return Integer.parseInt(scanner.nextLine());
+    }
 }

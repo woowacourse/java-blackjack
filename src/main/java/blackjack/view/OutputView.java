@@ -1,45 +1,43 @@
 package blackjack.view;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import blackjack.domain.Score;
-import blackjack.domain.ScoreResult;
 import blackjack.dto.CardDto;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.ParticipantDto;
+import blackjack.dto.ProfitResultDto;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
     private OutputView() {
     }
 
-    public static void printInitGameMessage(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.", dealerDto.getName(),
-                playerDtos.stream().map(PlayerDto::getName).collect(Collectors.joining(", ")));
+    public static void printInitGameMessage(List<ParticipantDto> participantDtos, ParticipantDto dealerDto) {
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.", dealerDto.getName(),
+                participantDtos.stream().map(ParticipantDto::getName).collect(Collectors.joining(", ")));
         System.out.println();
     }
 
-    public static void printOpenCard(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
+    public static void printOpenCard(List<ParticipantDto> participantDtos, ParticipantDto dealerDto) {
         CardDto dealerOpenCard = dealerDto.getCards().get(0);
         System.out.printf("%s: %s%s", dealerDto.getName(), dealerOpenCard.getCardNumber(),
                 dealerOpenCard.getCardPattern());
         System.out.println();
-        for (PlayerDto playerDto : playerDtos) {
-            printPlayerCards(playerDto);
+        for (ParticipantDto participantDto : participantDtos) {
+            printPlayerCards(participantDto);
         }
     }
 
-    public static void printPlayersResult(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
-        System.out.println();
+    public static void printPlayersResult(List<ParticipantDto> participantDtos, ParticipantDto dealerDto) {
+        System.out.printf("%n");
         printPlayerResult(dealerDto);
 
-        for (PlayerDto playerDto : playerDtos) {
-            printPlayerResult(playerDto);
+        for (ParticipantDto participantDto : participantDtos) {
+            printPlayerResult(participantDto);
         }
     }
 
-    private static void printPlayerResult(PlayerDto dealerDto) {
+    private static void printPlayerResult(ParticipantDto dealerDto) {
         System.out.printf("%s: %s - 결과: %d%n",
                 dealerDto.getName(),
                 dealerDto.getCards()
@@ -49,27 +47,23 @@ public class OutputView {
                 dealerDto.getTotalNumber());
     }
 
-    public static void printPlayerCards(PlayerDto playerDto) {
-        System.out.printf("%s: %s%n", playerDto.getName(),
-                playerDto.getCards()
+    public static void printPlayerCards(ParticipantDto participantDto) {
+        System.out.printf("%s: %s%n", participantDto.getName(),
+                participantDto.getCards()
                         .stream()
                         .map(cardDto -> cardDto.getCardNumber() + cardDto.getCardPattern())
                         .collect(Collectors.joining(", ")));
     }
 
     public static void printDealerDrawMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf("%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
     }
 
-    public static void printResult(ScoreResult result) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n",
-                result.getDealerScoreCount(Score.WIN),
-                result.getDealerScoreCount(Score.DRAW),
-                result.getDealerScoreCount(Score.LOSE));
-
-        for (Map.Entry<String, String> entry : result.getPlayerResult().entrySet()) {
-            System.out.printf("%s: %s%n", entry.getKey(), entry.getValue());
+    public static void printProfitResult(ProfitResultDto profitResultDto) {
+        System.out.printf("%n## 최종 수익%n");
+        System.out.printf("딜러: %d%n", Math.round(profitResultDto.getDealerProfit()));
+        for (Entry<ParticipantDto, Double> entry : profitResultDto.getPlayersProfit().entrySet()) {
+            System.out.printf("%s: %d%n", entry.getKey().getName(), Math.round(entry.getValue()));
         }
     }
 

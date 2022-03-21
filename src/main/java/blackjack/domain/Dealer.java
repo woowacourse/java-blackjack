@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
 
     private static final String NAME = "딜러";
     private static final int DRAWABLE_BOUND = 16;
@@ -10,15 +10,16 @@ public class Dealer extends Player {
     }
 
     @Override
-    public Score compete(Player player) {
+    public Score compete(Participant player) {
         if (player.isBust()) {
             return Score.WIN;
         }
-
         if (this.isBust()) {
             return Score.LOSE;
         }
-
+        if (this.isBlackjack()) {
+            return getScoreWithBlackjack(player);
+        }
         return Score.compare(this.getTotalNumber(), player.getTotalNumber());
     }
 

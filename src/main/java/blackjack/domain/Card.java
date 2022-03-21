@@ -1,8 +1,10 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Card {
 
@@ -35,8 +37,10 @@ public class Card {
             .orElse(null);
     }
 
-    public static List<Card> createDeck() {
-        return new LinkedList<>(cachingCard);
+    public static Queue<Card> createDeck() {
+        LinkedList<Card> cards = new LinkedList<>(cachingCard);
+        Collections.shuffle(cards);
+        return cards;
     }
 
     private boolean isContain(CardPattern pattern, CardNumber number) {

@@ -1,24 +1,26 @@
 package blackjack.domain;
 
 public enum Score {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN("승", 1),
+    DRAW("무", 0),
+    LOSE("패", -1);
 
     private final String value;
+    private final int profitRate;
 
-    Score(String value) {
+    Score(String value, int profitRate) {
         this.value = value;
+        this.profitRate = profitRate;
     }
 
     public static Score compare(int myNumber, int versusNumber) {
         if (myNumber < versusNumber) {
-            return Score.LOSE;
+            return LOSE;
         }
         if (myNumber > versusNumber) {
-            return Score.WIN;
+            return WIN;
         }
-        return Score.DRAW;
+        return DRAW;
     }
 
     public static Score inverse(Score score) {
@@ -33,5 +35,9 @@ public enum Score {
 
     public String getValue() {
         return value;
+    }
+
+    public int getProfitRate() {
+        return profitRate;
     }
 }
