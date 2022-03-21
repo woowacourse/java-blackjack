@@ -52,7 +52,7 @@ class CardsTest {
 
         handCards.addCard(card);
 
-        assertThat(handCards.getCardByIndex(0)).isEqualTo(card);
+        assertThat(handCards.getCards()).contains(card);
     }
 
     @Test
