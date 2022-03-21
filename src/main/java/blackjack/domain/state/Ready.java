@@ -3,6 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.bet.Betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayingCards;
+import blackjack.util.Regex;
 
 public class Ready extends Running {
 
@@ -15,7 +16,7 @@ public class Ready extends Running {
     }
 
     private void validateNumber(final String string) {
-        if (!string.matches("-?[0-9]+")) {
+        if (!Regex.NUMBER.matcher(string).matches()) {
             throw new IllegalArgumentException("숫자를 입력해주세요.");
         }
     }

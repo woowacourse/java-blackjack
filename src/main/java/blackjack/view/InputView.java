@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.game.Players;
+import blackjack.util.Regex;
 
 public class InputView {
 
@@ -39,7 +40,7 @@ public class InputView {
     }
 
     private static void validateNumber(final String input) {
-        if (!(input.matches("-?[0-9]+"))) {
+        if (!Regex.NUMBER.matcher(input).matches()) {
             throw new IllegalArgumentException("숫자를 입력해주세요.");
         }
     }
