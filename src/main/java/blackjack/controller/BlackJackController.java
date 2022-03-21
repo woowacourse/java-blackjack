@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,17 +24,12 @@ public class BlackJackController {
 	}
 
 	private Map<String, Integer> createPlayers(List<String> names) {
-		validateDuplicateName(names);
 		return names.stream()
-			.collect(toMap(name -> name, InputView::askBet));
-	}
-
-	private void validateDuplicateName(List<String> names) {
-		if (names.stream()
-			.distinct()
-			.count() != names.size()) {
-			throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
-		}
+			.collect(toMap(name -> name, InputView::askBet,
+				(name, duplicateName) -> {
+					throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
+				},
+				LinkedHashMap::new));
 	}
 
 	public void play() {
