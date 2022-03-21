@@ -5,8 +5,6 @@ import blackjack.domain.game.PlayingCards;
 
 public class Blackjack extends Finished {
 
-    private double earningRate = DEFAULT_RATE;
-
     public Blackjack(final PlayingCards playingCards, final Betting betting) {
         super(playingCards);
         this.betting = betting;

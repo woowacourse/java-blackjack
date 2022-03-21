@@ -7,6 +7,8 @@ public abstract class Finished extends Started {
 
     protected static final double DEFAULT_RATE = 1;
 
+    protected double earningRate = DEFAULT_RATE;
+
     Finished(final PlayingCards playingCards) {
         super(playingCards);
     }
