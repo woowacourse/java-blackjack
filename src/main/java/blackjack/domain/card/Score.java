@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.card;
 
 import java.util.Objects;
 import java.util.stream.IntStream;

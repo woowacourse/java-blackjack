@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.participant.Score;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

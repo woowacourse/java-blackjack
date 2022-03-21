@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Score;
 import java.util.ArrayList;
 
 public abstract class Participant {
