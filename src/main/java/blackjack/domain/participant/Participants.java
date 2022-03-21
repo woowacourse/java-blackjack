@@ -3,15 +3,16 @@ package blackjack.domain.participant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
 public class Participants {
 
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 8;
-    private static final String PLAYER_NUMBER_ERROR_MESSAGE = "[ERROR] 플레이어 수는 1~8명 사이여야 합니다.";
+    private static final String PLAYER_NUMBER_ERROR_MESSAGE = "플레이어 수는 1~8명 사이여야 합니다.";
+    private static final String PLAYER_TURN_ACCESS_ERROR_MESSAGE = "플레이어 턴이 모두 종료되어 접근 할 수 없습니다.";
 
     private final Dealer dealer = new Dealer();
     private final List<Player> players;
@@ -28,10 +29,51 @@ public class Participants {
     }
 
     public void dealInitialCards(Deck deck) {
-        dealer.initCards(List.of(deck.pickCard(), deck.pickCard()));
+        dealer.initCards(deck.pickInitialCards());
         for (Player player : players) {
-            List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
-            player.initCards(cards);
+            player.initCards(deck.pickInitialCards());
+        }
+    }
+
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackjack();
+    }
+
+    public boolean isAllPlayerTurnEnd() {
+        return getCanHitPlayers().count() == 0;
+    }
+
+    private Stream<Player> getCanHitPlayers() {
+        return players.stream()
+            .filter(Player::canHit);
+    }
+
+    public void dealToPlayer(Deck deck) {
+        getCurrentPlayer().addCard(deck.pickCard());
+    }
+
+    public void stayCurrentPlayer() {
+        getCurrentPlayer().stay();
+    }
+
+    public boolean isDealerMustHit() {
+        return dealer.checkMustHit();
+    }
+
+    public void dealToDealer(Deck deck) {
+        dealer.addCard(deck.pickCard());
+    }
+
+    public Player getCurrentPlayer() {
+        validateRemainPlayerTurn();
+        return getCanHitPlayers()
+            .findFirst()
+            .get();
+    }
+
+    private void validateRemainPlayerTurn() {
+        if (isAllPlayerTurnEnd()) {
+            throw new IllegalArgumentException(PLAYER_TURN_ACCESS_ERROR_MESSAGE);
         }
     }
 

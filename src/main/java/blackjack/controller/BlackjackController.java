@@ -1,85 +1,72 @@
 package blackjack.controller;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
-import blackjack.domain.game.TurnManager;
-import blackjack.domain.game.winningstrategy.BlackjackWinningStrategy;
-import blackjack.domain.game.winningstrategy.FinalWinningStrategy;
-import blackjack.domain.game.winningstrategy.PlayingWinningStrategy;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.dto.ParticipantDto;
+import blackjack.dto.ParticipantsDto;
+import blackjack.dto.ProfitResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
 
     public void run() {
-        Participants participants = createParticipants();
-        BlackjackGame blackjackGame = new BlackjackGame(participants);
-        GameResult gameResult = new GameResult(participants);
+        BlackjackGame blackjackGame = new BlackjackGame(createPlayers());
 
-        dealInitialCards(blackjackGame, gameResult);
-        dealMoreCards(blackjackGame, gameResult);
-        printResult(blackjackGame.getParticipants(), gameResult);
+        printInitialCards(blackjackGame);
+        dealMoreCards(blackjackGame);
+        printResult(blackjackGame);
     }
 
-    private Participants createParticipants() {
-        return new Participants(InputView.inputPlayerName().stream()
-            .map(Player::new)
-            .collect(Collectors.toList()));
+    private List<Player> createPlayers() {
+        List<String> names = inputPlayersName();
+        return createPlayersWithBettingMoney(names);
     }
 
-    private void dealInitialCards(BlackjackGame blackjackGame, GameResult gameResult) {
-        blackjackGame.initCards();
-        gameResult.update(new BlackjackWinningStrategy());
-        OutputView.printInitialCardInformation(blackjackGame.getParticipants());
+    private List<String> inputPlayersName() {
+        return InputView.inputPlayersName();
     }
 
-    private void dealMoreCards(BlackjackGame blackjackGame, GameResult gameResult) {
-        dealMoreCardsToPlayers(blackjackGame, gameResult);
-        gameResult.update(new PlayingWinningStrategy());
+    private List<Player> createPlayersWithBettingMoney(List<String> names) {
+        return names.stream()
+            .map(name -> new Player(name, InputView.inputBettingMoney(name)))
+            .collect(Collectors.toList());
+    }
+
+    private void printInitialCards(BlackjackGame blackjackGame) {
+        OutputView.printInitialCardInformation(ParticipantsDto.from(blackjackGame.getParticipants()));
+    }
+
+    private void dealMoreCards(BlackjackGame blackjackGame) {
+        dealMoreCardsToPlayers(blackjackGame);
         dealMoreCardsToDealer(blackjackGame);
-        gameResult.update(new FinalWinningStrategy());
     }
 
-    private void dealMoreCardsToPlayers(BlackjackGame blackjackGame, GameResult gameResult) {
-        TurnManager turnManager = new TurnManager(blackjackGame.getParticipants().getPlayers(),
-            gameResult.isDealerBlackjack());
-        while (!turnManager.isEndAllTurn()) {
-            dealMoreCardsToPlayer(blackjackGame, turnManager);
-            turnManager.turnToNext();
+    private void dealMoreCardsToPlayers(BlackjackGame blackjackGame) {
+        while (!blackjackGame.isPlayersTurnEnd()) {
+            Player player = blackjackGame.getCurrentPlayer();
+            blackjackGame.playPlayerTurn(InputView.inputPlayerHit(player.getName()));
+            OutputView.printPlayerCardInformation(ParticipantDto.from(player));
         }
-    }
-
-    private void dealMoreCardsToPlayer(BlackjackGame blackjackGame, TurnManager turnManager) {
-        boolean printCheck = false;
-        while (checkCanHitAndInputHit(turnManager)) {
-            blackjackGame.playPlayerTurn(turnManager);
-            OutputView.printPlayerCardInformation(turnManager.getCurrentPlayer());
-            printCheck = true;
-        }
-        if (!printCheck) {
-            OutputView.printPlayerCardInformation(turnManager.getCurrentPlayer());
-        }
-    }
-
-    private boolean checkCanHitAndInputHit(TurnManager turnManager) {
-        return turnManager.isCurrentPlayerCanHit()
-            && InputView.inputPlayerHit(turnManager.getCurrentPlayerName());
     }
 
     private void dealMoreCardsToDealer(BlackjackGame blackjackGame) {
-        int count = blackjackGame.playDealerTurnAndReturnTurnCount();
-        while (count-- > 0) {
+        while (!blackjackGame.isDealerTurnEnd()) {
+            blackjackGame.playDealerTurn();
             OutputView.printDealerHitMessage();
         }
     }
 
-    private void printResult(Participants participants, GameResult gameResult) {
-        OutputView.printCardsAndPoint(participants);
-        OutputView.printResult(gameResult.getDealerResult(), gameResult.getPlayerResult());
+    private void printResult(BlackjackGame blackjackGame) {
+        if (blackjackGame.isPlayersTurnEnd() && blackjackGame.isDealerTurnEnd()) {
+            OutputView.printCardsAndPoint(ParticipantsDto.from(blackjackGame.getParticipants()));
+            GameResult gameResult = new GameResult(blackjackGame.getParticipants());
+            OutputView.printProfitResult(ProfitResultDto.from(gameResult.calculateTotalProfitResult()));
+        }
     }
 }
 
