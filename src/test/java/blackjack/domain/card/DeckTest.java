@@ -15,9 +15,9 @@ public class DeckTest {
     void noCardTest() {
         Deck deck = new Deck();
         for (int i = 0; i < 52; i++) {
-            deck.draw();
+            deck.pick();
         }
-        assertThatThrownBy(deck::draw)
+        assertThatThrownBy(deck::pick)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("더 이상 뽑을 수 있는 카드가 없습니다.");
     }
@@ -28,7 +28,7 @@ public class DeckTest {
         Deck deck = new Deck();
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            cards.add(deck.draw());
+            cards.add(deck.pick());
         }
 
         assertThat(cards.size()).isEqualTo(52);

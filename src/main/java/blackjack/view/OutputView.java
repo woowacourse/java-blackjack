@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String PLAYER_BUST_MESSAGE = "- %s은(는) %d 점으로 버스트 됐습니다.";
-    private static final String TOTAL_RESULT_MESSAGE = "## 최종 승패";
+    private static final String TOTAL_RESULT_MESSAGE = "## 최종 수익";
     private static final String WIN_DRAW_LOSE_STATUS_MESSAGE = "%s: %s";
     private static final String HIT_RESULT_MESSAGE = "%s: %s - 결과: %d";
     private static final String CARD_JOINING_DELIMITER = ", ";
@@ -29,9 +29,9 @@ public class OutputView {
         System.out.println(messageBuilder);
     }
 
-    public static void printCardResults(Map<String, Cards> hitResults) {
+    public static void printCardResults(Map<String, Cards> cardResults) {
         System.out.println();
-        hitResults.forEach((playerName, cards) -> System.out.printf(HIT_RESULT_MESSAGE + "\n", playerName,
+        cardResults.forEach((playerName, cards) -> System.out.printf(HIT_RESULT_MESSAGE + "\n", playerName,
                 joinCardString(cards), cards.calculateScore()));
     }
 
@@ -42,11 +42,11 @@ public class OutputView {
                 .collect(Collectors.joining(CARD_JOINING_DELIMITER));
     }
 
-    public static void printResult(Map<String, String> resultStrings) {
+    public static void printResult(Map<Player, Integer> revenueResult) {
         System.out.println();
         System.out.println(TOTAL_RESULT_MESSAGE);
-        resultStrings.forEach((playerName, winDrawLose) -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE + "\n",
-                playerName,
-                winDrawLose));
+        revenueResult.forEach((player, revenue) -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE + "\n",
+                player.getName(),
+                revenue));
     }
 }

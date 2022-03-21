@@ -1,12 +1,13 @@
 package blackjack.domain.card;
 
-import blackjack.BlackjackGame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Cards {
     private static final int ACE_GAP = 10;
+    private static final int MAX_SCORE = 21;
+    private static final int INIT_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -20,7 +21,7 @@ public class Cards {
 
     public int calculateScore() {
         int oneAceScore = calculateOneAceScore();
-        if (hasAce() && oneAceScore + ACE_GAP <= BlackjackGame.MAX_SCORE) {
+        if (hasAce() && oneAceScore + ACE_GAP <= MAX_SCORE) {
             return oneAceScore + ACE_GAP;
         }
         return oneAceScore;
@@ -35,6 +36,18 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream().
                 anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return isMaxScore() && cards.size() == INIT_CARD_SIZE;
+    }
+
+    public boolean isMaxScore() {
+        return calculateScore() == Cards.MAX_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > Cards.MAX_SCORE;
     }
 
     public List<Card> getCardValues() {

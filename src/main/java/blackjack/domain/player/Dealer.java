@@ -2,7 +2,8 @@ package blackjack.domain.player;
 
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
+import blackjack.domain.card.Deck;
+import blackjack.domain.state.Ready;
 import java.util.List;
 
 public class Dealer extends AbstractPlayer {
@@ -10,8 +11,8 @@ public class Dealer extends AbstractPlayer {
     private static final int HIT_FLAG_SCORE = 16;
     private static final int FIRST_CARD_INDEX = 0;
 
-    public Dealer() {
-        super(DEALER_NAME, new Cards(new ArrayList<>()));
+    public Dealer(Deck deck) {
+        super(DEALER_NAME, Ready.start(deck.pick(), deck.pick()));
     }
 
     @Override
@@ -29,6 +30,14 @@ public class Dealer extends AbstractPlayer {
         if (getCards().calculateScore() <= HIT_FLAG_SCORE) {
             return HitFlag.Y;
         }
+        if (!isBust()) {
+            state = state.stand();
+        }
         return HitFlag.N;
+    }
+
+    @Override
+    public void judge(Player dealer) {
+        throw new IllegalStateException("딜러는 참가자처럼 승패를 계산하지 않습니다.");
     }
 }

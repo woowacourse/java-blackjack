@@ -1,20 +1,20 @@
 package blackjack.domain.player;
 
-import blackjack.BlackjackGame;
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.State;
 
 public abstract class AbstractPlayer implements Player {
     private static final String NAME_INPUT_ERROR_MESSAGE = "참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.";
 
     private final String name;
-    private final Cards cards;
+    protected State state;
 
-    public AbstractPlayer(String name, Cards cards) {
+    public AbstractPlayer(String name, State state) {
         validate(name);
         this.name = name;
-        this.cards = cards;
+        this.state = state;
     }
 
     private void validate(String name) {
@@ -25,40 +25,46 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBust() {
-        return cards.calculateScore() > BlackjackGame.MAX_SCORE;
-    }
-
-    @Override
-    public boolean isMaxScore() {
-        return cards.calculateScore() == BlackjackGame.MAX_SCORE;
-    }
-
-    @Override
-    public boolean isBlackjack() {
-        return isMaxScore() && cards.getCardValues().size() == BlackjackGame.INIT_CARD_SIZE;
+        return state.isBust();
     }
 
     @Override
     public boolean isHittable() {
-        return isNotBustOrMaxScore() && checkHitFlag() == HitFlag.Y;
-    }
-
-    private boolean isNotBustOrMaxScore() {
-        return !(isBust() || isMaxScore());
+        return state.isHitTurn() && checkHitFlag() == HitFlag.Y;
     }
 
     @Override
     public void hit(Card card) {
-        cards.add(card);
+        state = state.hit(card);
     }
 
     @Override
     public Cards getCards() {
-        return cards;
+        return state.getCards();
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    @Override
+    public void stand() {
+        state = state.stand();
+    }
+
+    @Override
+    public double getPrizeRate() {
+        return state.prizeRate();
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 }
