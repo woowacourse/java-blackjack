@@ -39,7 +39,7 @@ public class StayTest {
 	@Test
 	void stay_state() {
 		//given
-		State state = InitialTurn.createState(cards);
+		State state = StateFactory.createState(cards);
 		//when
 		final State newState = state.stay();
 		//given
@@ -54,7 +54,7 @@ public class StayTest {
 		@DisplayName("플레이어가 패배했을때 -1배가 되는지 확인")
 		void profit_player_lose() {
 			//given
-			State playerState = InitialTurn.createState(cards)
+			State playerState = StateFactory.createState(cards)
 				.stay();
 			//when
 			double profitRate = playerState.profitRate(dealer);
@@ -66,7 +66,7 @@ public class StayTest {
 		@DisplayName("플레이어가 승리했을때 1배가 되는지 확인")
 		void profit_player_win() {
 			//given
-			State playerState = InitialTurn.createState(cards);
+			State playerState = StateFactory.createState(cards);
 			playerState = playerState.draw(Card.of(Denomination.THREE, Suit.DIAMOND))
 				.stay();
 			//when
@@ -79,7 +79,7 @@ public class StayTest {
 		@DisplayName("무승부일때 0배가 되는지 확인")
 		void profit_push() {
 			//given
-			State playerState = InitialTurn.createState(cards);
+			State playerState = StateFactory.createState(cards);
 			playerState = playerState.draw(Card.of(Denomination.TWO, Suit.DIAMOND))
 				.stay();
 			//when
@@ -93,7 +93,7 @@ public class StayTest {
 	@DisplayName("Running 중이 아닌지 확인")
 	void not_running() {
 		//given
-		State state = InitialTurn.createState(cards)
+		State state = StateFactory.createState(cards)
 			.stay();
 		//when
 		boolean isRunning = state.isRunning();

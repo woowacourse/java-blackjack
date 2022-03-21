@@ -28,7 +28,7 @@ public class BlackJackTest {
 	void blackjack_state() {
 		//given
 		//when
-		State state = InitialTurn.createState(cards);
+		State state = StateFactory.createState(cards);
 		//then
 		assertThat(state).isInstanceOf(BlackJack.class);
 	}
@@ -37,7 +37,7 @@ public class BlackJackTest {
 	@DisplayName("블랙잭인 상태일 때 수익이 1.5배가 되는지 확인")
 	void blackjack_profit() {
 		//given
-		State state = InitialTurn.createState(cards);
+		State state = StateFactory.createState(cards);
 		//when
 		double profitRate = state.profitRate(new Dealer(new RealDeck()));
 		//then
@@ -48,7 +48,7 @@ public class BlackJackTest {
 	@DisplayName("Running 중이 아닌지 확인")
 	void not_running() {
 		//given
-		State state = InitialTurn.createState(cards);
+		State state = StateFactory.createState(cards);
 		//when
 		boolean isRunning = state.isRunning();
 		//given

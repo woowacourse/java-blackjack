@@ -15,8 +15,7 @@ public class Profit {
 
 	public Profit(List<Player> players, Dealer dealer) {
 		this.playersProfit = new HashMap<>();
-		players.stream()
-			.forEach(player -> putProfit(dealer, player));
+		players.forEach(player -> putProfit(dealer, player));
 	}
 
 	private void putProfit(Dealer dealer, Player player) {

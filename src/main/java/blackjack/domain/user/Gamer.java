@@ -6,7 +6,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.state.InitialTurn;
+import blackjack.domain.state.StateFactory;
 import blackjack.domain.state.State;
 
 public abstract class Gamer {
@@ -25,7 +25,7 @@ public abstract class Gamer {
 
 	private State initialState(final Deck deck) {
 		Cards cards = addTwoCards(deck);
-		return InitialTurn.createState(cards);
+		return StateFactory.createState(cards);
 	}
 
 	private Cards addTwoCards(Deck deck) {

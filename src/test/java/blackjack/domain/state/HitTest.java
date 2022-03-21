@@ -28,7 +28,7 @@ public class HitTest {
 	void hit_state() {
 		//given
 		//when
-		State state = InitialTurn.createState(cards);
+		State state = StateFactory.createState(cards);
 		//then
 		assertThat(state).isInstanceOf(Hit.class);
 	}
@@ -37,7 +37,7 @@ public class HitTest {
 	@DisplayName("Hit상태에서 수익을 계산하면 에러 발생")
 	void occur_error_hit_state_profit_() {
 		//given
-		State state = InitialTurn.createState(cards);
+		State state = StateFactory.createState(cards);
 		Dealer dealer = new Dealer(new RealDeck());
 		//when
 		//then
@@ -49,7 +49,7 @@ public class HitTest {
 	@DisplayName("Running 중이 맞는지 확인")
 	void not_running() {
 		//given
-		State state = InitialTurn.createState(cards)
+		State state = StateFactory.createState(cards)
 			.draw(Card.of(Denomination.FOUR, Suit.DIAMOND));
 		//when
 		boolean isRunning = state.isRunning();
