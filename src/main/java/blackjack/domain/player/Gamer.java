@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.BetMoney;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class Gamer extends Player {
     private final BetMoney betMoney;
 
     public Gamer(final String name, final int betMoney) {
-        super(new PlayerCards());
+        super(new Hand());
         checkName(name);
         this.name = name;
         this.betMoney = new BetMoney(betMoney);
@@ -48,7 +48,7 @@ public class Gamer extends Player {
 
     @Override
     public List<Card> openCards() {
-        return new ArrayList<>(playerCards.getCards().subList(0, GAMER_OPEN_CARDS_SIZE));
+        return new ArrayList<>(hand.getHand().subList(0, GAMER_OPEN_CARDS_SIZE));
     }
 
     @Override
