@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.result.WinOrLose;
 import java.util.List;
 
 public class Player extends Participant {
@@ -17,36 +16,5 @@ public class Player extends Participant {
 
     public boolean isNameMatch(Name name) {
         return this.getName().equals(name);
-    }
-
-    public WinOrLose compareWinOrLose(Dealer dealer) {
-        if (dealer.isBlackJack()) {
-            return compareAtDealerBlackJack();
-        }
-        if (isBust()) {
-            return WinOrLose.LOSE;
-        }
-        if (this.isBlackJack() || dealer.isBust()) {
-            return WinOrLose.WIN;
-        }
-        return judgeWinOrLose(dealer.calculateBestScore());
-    }
-
-    private WinOrLose compareAtDealerBlackJack() {
-        if (this.isBlackJack()) {
-            return WinOrLose.DRAW;
-        }
-        return WinOrLose.LOSE;
-    }
-
-    private WinOrLose judgeWinOrLose(int otherScore) {
-        int playerScore = calculateBestScore();
-        if (playerScore > otherScore) {
-            return WinOrLose.WIN;
-        }
-        if (playerScore < otherScore) {
-            return WinOrLose.LOSE;
-        }
-        return WinOrLose.DRAW;
     }
 }

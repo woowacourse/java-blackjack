@@ -33,7 +33,7 @@ public class PlayerTest {
         List<Card> handForDealer = new ArrayList<>(
                 List.of(Card.getCard(Rank.RANK_J, Suit.CLOVER), Card.getCard(Rank.RANK_A, Suit.CLOVER)));
         Dealer dealer = new Dealer(handForDealer);
-        assertThat(player.compareWinOrLose(dealer)).isEqualTo(WinOrLose.LOSE);
+        assertThat(WinOrLose.compareWinOrLose(dealer, player)).isEqualTo(WinOrLose.LOSE);
     }
 
     @Test

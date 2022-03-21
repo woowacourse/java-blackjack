@@ -67,7 +67,7 @@ public class Players {
 
     public Map<Name, WinOrLose> compareWinOrLose(Dealer dealer) {
         Map<Name, WinOrLose> playerResult = new LinkedHashMap<>();
-        players.forEach(player -> playerResult.put(player.getName(), player.compareWinOrLose(dealer)));
+        players.forEach(player -> playerResult.put(player.getName(), WinOrLose.compareWinOrLose(dealer, player)));
         return playerResult;
     }
 }
