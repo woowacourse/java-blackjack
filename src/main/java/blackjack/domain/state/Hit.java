@@ -16,7 +16,7 @@ public class Hit extends Running {
 
     @Override
     public State draw(Card card) {
-        final ParticipantCards participantCards = this.participantCards.addCard2(card);
+        ParticipantCards participantCards = this.participantCards.addCard2(card);
 
         if (participantCards.isBust()) {
             return new Bust(participantCards);

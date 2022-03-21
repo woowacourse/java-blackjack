@@ -17,6 +17,8 @@ public interface State {
 
     boolean isBlackjack();
 
-//    double profit(double money, Finished dealerState);
+    int getScore();
+
+    double profit(double money, State dealerState);
 
 }

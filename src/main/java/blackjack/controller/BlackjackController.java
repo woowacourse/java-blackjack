@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.betting.ProfitCalculator;
+import blackjack.domain.betting.ProfitCalculator2;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
@@ -111,7 +112,8 @@ public class BlackjackController {
         Map<WinningResult, Integer> dealerResult = blackjackGameResult.getDealerResult();
         OutputView.printResult(dealerResult, playerResult);
 
-        printProfitResult(playerResult);
+//        printProfitResult(playerResult);
+        printProfitResult2(participants);
     }
 
     private void printProfitResult(Map<Player, WinningResult> playerResult) {
@@ -124,13 +126,12 @@ public class BlackjackController {
         OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
     }
 
-//    private void printProfitResult2(Participants participants) {
-//        Map<Player, Long> playerProfitResult = new HashMap<>();
-//        for (Player player : participants.getPlayers()) {
-//            playerProfitResult.put(player, player.getProfit(participants.getDealer()));
-//        }
-//        long dealerProfitResult = profitCalculator.calculateDealerProfit();
-//        OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
-//    }
+    private void printProfitResult2(Participants participants) {
+        ProfitCalculator2 profitCalculator2 = new ProfitCalculator2(participants);
+        profitCalculator2.calculate();
+        Map<Player, Long> playerProfitResult = profitCalculator2.getPlayerProfit();
+        long dealerProfitResult = profitCalculator2.calculateDealerProfit();
+        OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
+    }
 
 }

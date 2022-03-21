@@ -4,35 +4,29 @@ import blackjack.domain.card.ParticipantCards;
 
 public class Stay extends Finished {
 
+    private static final int LOSE_RATE = -1;
+    private static final int DRAW_RATE = 0;
+    private static final int WIN_RATE = 1;
 
     public Stay(ParticipantCards participantCards) {
         super(participantCards);
     }
-
-//    @Override
-//    double earningRate(Finished dealerState) {
-//        return 0;
-//    }
 
     @Override
     public ParticipantCards participantCards() {
         return participantCards;
     }
 
-//    @Override
-//    public State stay() {
-//        return null;
-//    }
 
-//    @Override
-//    public double earningRate(Finished dealerState) {
-//        if (dealerState.isBlackjack()) {
-//            return -1;
-//        }
-//        if (!dealerState.isBust() && this.getScore() == dealerState.getScore()) {
-//            return 0;
-//        }
-//        return 1;
-//    }
+    @Override
+    public double earningRate(State dealerState) {
+        if (!dealerState.isBust() && this.getScore() == dealerState.getScore()) {
+            return DRAW_RATE;
+        }
+        if (dealerState.isBust() || !dealerState.isBust() && this.getScore() > dealerState.getScore()) {
+            return WIN_RATE;
+        }
+        return LOSE_RATE;
+    }
 
 }

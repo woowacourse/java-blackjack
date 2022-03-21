@@ -5,6 +5,8 @@ import blackjack.domain.card.ParticipantCards;
 
 public class Ready extends Running {
 
+    private static final String READY_STAY_ERROR_MESSAGE = "[ERROR] 처음 카드는 두장 미만으로 받을 수 없습니다.";
+
     public Ready(final ParticipantCards participantCards) {
         super(participantCards);
     }
@@ -15,7 +17,8 @@ public class Ready extends Running {
     }
 
     public State draw(final Card card) {
-        final ParticipantCards participantCards = this.participantCards.addCard2(card);
+        ParticipantCards participantCards = this.participantCards.addCard2(card);
+
         if (participantCards.isReady()) {
             return new Ready(participantCards);
         }
@@ -27,7 +30,7 @@ public class Ready extends Running {
 
     @Override
     public State stay() {
-        throw new IllegalArgumentException();
+        throw new IllegalStateException(READY_STAY_ERROR_MESSAGE);
     }
 
 }
