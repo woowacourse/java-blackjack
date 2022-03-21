@@ -5,7 +5,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.Bust;
-import blackjack.domain.state.Running;
 import blackjack.domain.state.State;
 import java.util.List;
 import java.util.Objects;
@@ -15,12 +14,12 @@ public abstract class Participant {
     private final Name name;
     private State state;
 
-    protected Participant(Name name, List<Card> cards) {
+    protected Participant(Name name, State state) {
         Objects.requireNonNull(name, "[ERROR] 이름은 null일 수 없습니다.");
-        Objects.requireNonNull(cards, "[ERROR] 카드들은 null일 수 없습니다.");
+        Objects.requireNonNull(state, "[ERROR] 상태는 null일 수 없습니다.");
 
         this.name = name;
-        this.state = Running.start(cards);
+        this.state = state;
     }
 
     public void hit(CardDeck deck) {

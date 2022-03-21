@@ -11,19 +11,19 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RunningTest {
+class PlayerRunningTest {
 
     @Test
-    @DisplayName("처음 카드를 받아서 생성하면 Running 상태")
+    @DisplayName("플레이어가 처음 카드를 받아서 생성하면 Running 상태")
     void started() {
         // given
         List<Card> cards = BlackjackTestUtil.createCards(20);
 
         // when
-        State actual = Running.start(cards);
+        State actual = PlayerRunning.start(cards);
 
         // then
-        assertThat(actual).isInstanceOf(Running.class);
+        assertThat(actual).isInstanceOf(PlayerRunning.class);
     }
 
     @Test
@@ -33,7 +33,7 @@ class RunningTest {
         List<Card> cards = BlackjackTestUtil.createCards(21);
 
         // when
-        State actual = Running.start(cards);
+        State actual = PlayerRunning.start(cards);
 
         // then
         assertThat(actual).isInstanceOf(Blackjack.class);
@@ -44,10 +44,10 @@ class RunningTest {
     void bust() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Running(cards);
+        State running = new PlayerRunning(cards);
 
         // when
-        State actual = hit.hit(Card.of(Pattern.DIAMOND, Denomination.TWO));
+        State actual = running.hit(Card.of(Pattern.DIAMOND, Denomination.TWO));
 
         // then
         assertThat(actual).isInstanceOf(Bust.class);
@@ -58,10 +58,10 @@ class RunningTest {
     void hit() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Running(cards);
+        State running = new PlayerRunning(cards);
 
         // when
-        State actual = hit.hit(Card.of(Pattern.DIAMOND, Denomination.ACE));
+        State actual = running.hit(Card.of(Pattern.DIAMOND, Denomination.ACE));
 
         // then
         assertThat(actual).isInstanceOf(Running.class);
@@ -72,10 +72,10 @@ class RunningTest {
     void stand() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Running(cards);
+        State running = new PlayerRunning(cards);
 
         // when
-        State actual = hit.stand();
+        State actual = running.stand();
 
         // then
         assertThat(actual).isInstanceOf(Stand.class);
@@ -86,10 +86,10 @@ class RunningTest {
     void finishedFalse() {
         // given
         Cards cards = new Cards(BlackjackTestUtil.createCards(20));
-        State hit = new Running(cards);
+        State running = new PlayerRunning(cards);
 
         // when
-        boolean actual = hit.isFinished();
+        boolean actual = running.isFinished();
 
         // then
         assertThat(actual).isFalse();

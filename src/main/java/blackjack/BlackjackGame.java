@@ -106,7 +106,7 @@ public class BlackjackGame {
     }
 
     private void proceedDealer(Dealer dealer, CardDeck deck) {
-        while (dealer.shouldHit()) {
+        while (!dealer.isFinished()) {
             dealer.hit(deck);
             OutputView.printDealerHitMessage(new ParticipantResponse(dealer));
         }
