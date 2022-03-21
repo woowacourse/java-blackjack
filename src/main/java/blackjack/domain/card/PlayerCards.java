@@ -19,13 +19,15 @@ public class PlayerCards {
         playerCards.add(card);
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(playerCards);
-    }
-
     public int calculateTotalPoint() {
         int point = sumDenominationPoint();
         return calculateAcePoint(point);
+    }
+
+    private int sumDenominationPoint() {
+        return playerCards.stream()
+            .mapToInt(Card::denominationPoint)
+            .sum();
     }
 
     private int calculateAcePoint(int point) {
@@ -33,12 +35,6 @@ public class PlayerCards {
             point = calculateAceAsSmallerStandard(point, card);
         }
         return point;
-    }
-
-    private int sumDenominationPoint() {
-        return playerCards.stream()
-            .mapToInt(Card::denominationPoint)
-            .sum();
     }
 
     private int calculateAceAsSmallerStandard(int point, final Card card) {
@@ -54,5 +50,9 @@ public class PlayerCards {
 
     public boolean isBust() {
         return calculateTotalPoint() > BLACK_JACK_POINT;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(playerCards);
     }
 }
