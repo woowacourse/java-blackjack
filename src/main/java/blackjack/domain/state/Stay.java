@@ -14,13 +14,13 @@ public class Stay extends Finished {
         if (dealer.isBust()) {
             return 1;
         }
-        if (dealer.isBlackjack() || compareCardsScore(dealer) < 0) {
+        if (dealer.isBlackjack() || isLesserThanDealerScore(dealer)) {
             return -1;
         }
         return 0;
     }
 
-    private int compareCardsScore(Dealer dealer) {
-        return cards().calculateScore() - dealer.calculateScore();
+    private boolean isLesserThanDealerScore(Dealer dealer) {
+        return cards().calculateScore() < dealer.calculateScore();
     }
 }
