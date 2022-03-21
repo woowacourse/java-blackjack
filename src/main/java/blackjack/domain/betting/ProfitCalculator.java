@@ -27,7 +27,7 @@ public class ProfitCalculator {
     }
 
     public long calculateDealerProfit() {
-        return -(long) playerProfit.values()
+        return -playerProfit.values()
             .stream()
             .mapToLong(profit -> profit)
             .sum();
