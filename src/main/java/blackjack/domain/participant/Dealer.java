@@ -1,37 +1,31 @@
 package blackjack.domain.participant;
 
-import blackjack.dto.CurrentCardsDto;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.PlayerResultDto;
+import blackjack.dto.profit.ProfitDto;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final int BOUND_FOR_ADDITIONAL_CARD = 16;
+    private static final int BOUND_FOR_ADDITIONAL_CARD = 16;
     private static final String NAME_OF_DEALER = "딜러";
 
     public Dealer() {
         super(NAME_OF_DEALER);
     }
 
-    public boolean isAbleToAddCard() {
-        return getScore() <= BOUND_FOR_ADDITIONAL_CARD;
+    public boolean isHittable() {
+        return score <= BOUND_FOR_ADDITIONAL_CARD;
     }
 
-    public DealerResultDto computeResult(List<PlayerResultDto> totalPlayerResult) {
-        int loseCount = (int) totalPlayerResult.stream()
-                .filter(PlayerResultDto::isWin)
-                .count();
-        int winCount = totalPlayerResult.size() - loseCount;
-
-        return new DealerResultDto(getName(), winCount, loseCount);
+    public ProfitDto computeProfit(List<ProfitDto> profitOfPlayers) {
+        double totalProfitOfPlayers = profitOfPlayers.stream()
+                .mapToDouble(ProfitDto::getProfit)
+                .sum();
+        return new ProfitDto(this, totalProfitOfPlayers * (-1));
     }
 
-    @Override
-    public CurrentCardsDto generateCurrentCardsDTO() {
-        return new CurrentCardsDto(getName(), Collections.unmodifiableList(getCards().subList(0, 1)));
+    public int getBound() {
+        return BOUND_FOR_ADDITIONAL_CARD;
     }
 
 }

@@ -1,9 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.dto.CurrentCardsDto;
-import blackjack.dto.PlayerResultDto;
-import blackjack.dto.TotalScoreDto;
+import blackjack.dto.profit.ProfitDto;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,21 +29,13 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public List<CurrentCardsDto> generateCurrentCardsDTO() {
-        return players.stream()
-                .map(Player::generateCurrentCardsDTO)
-                .collect(Collectors.toList());
+    public void computeAceForAllPlayers() {
+        players.forEach(Participant::computeAce);
     }
 
-    public List<TotalScoreDto> computeTotalScore() {
+    public List<ProfitDto> computeTotalProfit(Dealer dealer) {
         return players.stream()
-                .map(Player::computeTotalScore)
-                .collect(Collectors.toList());
-    }
-
-    public List<PlayerResultDto> computeResult(int comparisonScore) {
-        return players.stream()
-                .map(player -> player.computeResult(comparisonScore))
+                .map(player -> new ProfitDto(player, Profit.of(player, dealer)))
                 .collect(Collectors.toList());
     }
 
@@ -66,5 +56,4 @@ public class Players {
             throw new IllegalArgumentException(NAME_DUPLICATED);
         }
     }
-
 }

@@ -1,8 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.CurrentCardsDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,14 +35,15 @@ public class PlayersTest {
         assertThat(players.getPlayers().size()).isEqualTo(3);
     }
 
+
     @Test
     @DisplayName("모든 플레이어에게 카드를 추가하면 모든 플레이어의 카드 개수가 1개 증가한다.")
     void addForAllPlayers() {
         Players players = new Players(new String[]{"a", "b", "c"});
         players.addForAllPlayers(new Deck());
 
-        for (CurrentCardsDto currentCardsDTO : players.generateCurrentCardsDTO()) {
-            assertThat(currentCardsDTO.getCards().size()).isEqualTo(1);
+        for (Player player : players.getPlayers()) {
+            assertThat(player.getCards().size()).isEqualTo(1);
         }
     }
 }

@@ -1,28 +1,32 @@
 package blackjack.domain.participant;
 
-import blackjack.dto.PlayerResultDto;
-
 public class Player extends Participant {
+
+    private int bettingMoney;
 
     public Player(String name) {
         super(name);
     }
 
-    public boolean isAbleToHit() {
-        return getScore() < GOAL_SCORE;
+    public void betMoney(int money) {
+        this.bettingMoney = money;
     }
 
-    public PlayerResultDto computeResult(int comparisonScore) {
-        return new PlayerResultDto(getName(), isWin(comparisonScore));
+    public boolean isHittable() {
+        return score < TARGET_SCORE_FOR_BLACKJACK;
     }
 
-    private boolean isWin(int comparisonScore) {
-        if (getScore() > GOAL_SCORE) {
+    public boolean isWin(int comparisonScore) {
+        if (score > TARGET_SCORE_FOR_BLACKJACK) {
             return false;
         }
-        if (comparisonScore > GOAL_SCORE) {
+        if (comparisonScore > TARGET_SCORE_FOR_BLACKJACK) {
             return true;
         }
-        return getScore() >= comparisonScore;
+        return score >= comparisonScore;
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 }

@@ -4,13 +4,15 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.*;
+import blackjack.dto.currentCards.CurrentCardsDto;
+import blackjack.dto.currentCards.TotalCurrentCardsDto;
+import blackjack.dto.profit.ProfitDto;
+import blackjack.dto.profit.TotalProfitDto;
+import blackjack.dto.score.TotalScoreDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static blackjack.view.InputView.inputNames;
-import static blackjack.view.InputView.isRequestHit;
+import static blackjack.view.InputView.*;
 import static blackjack.view.OutputView.*;
 
 public class BlackjackController {
@@ -22,21 +24,26 @@ public class BlackjackController {
     private final Deck deck;
 
     public BlackjackController() {
-        players = new Players(inputNames());
-        dealer = new Dealer();
-        deck = new Deck();
+        this.players = new Players(inputNames());
+        this.dealer = new Dealer();
+        this.deck = new Deck();
     }
 
     public void run() {
         try {
+            betMoney();
             firstDistribute();
             hitOrStayForAllPlayers();
             addCardForDealerIfNeed();
-            printTotalScore(computeTotalScore());
-            printTotalResult(computeTotalResult());
+            computeTotalScore();
+            computeTotalProfit();
         } catch (IllegalArgumentException e) {
             printErrorMessage(e.getMessage());
         }
+    }
+
+    private void betMoney() {
+        players.getPlayers().forEach(player -> player.betMoney(inputBettingMoney(player.getName())));
     }
 
     private void firstDistribute() {
@@ -44,7 +51,7 @@ public class BlackjackController {
             players.addForAllPlayers(deck);
             dealer.addCard(deck.draw());
         }
-        printFirstDistribute(dealer.generateCurrentCardsDTO(), players.generateCurrentCardsDTO());
+        printFirstDistribute(new TotalCurrentCardsDto(dealer, players));
     }
 
     private void hitOrStayForAllPlayers() {
@@ -52,30 +59,31 @@ public class BlackjackController {
     }
 
     private void hitOrStay(Player player) {
-        while (player.isAbleToHit() && isRequestHit(player.getName())) {
+        while (player.isHittable() && isRequestHit(player.getName())) {
             player.addCard(deck.draw());
-            printCurrentStatus(player.generateCurrentCardsDTO());
+            printCurrentStatus(CurrentCardsDto.from(player));
         }
     }
 
     private void addCardForDealerIfNeed() {
-        while (dealer.isAbleToAddCard()) {
+        while (dealer.isHittable()) {
             dealer.addCard(deck.draw());
-            printDealerAdded(dealer.getName());
+            printDealerAdded(dealer.getName(), dealer.getBound());
         }
     }
 
-    private List<TotalScoreDto> computeTotalScore() {
-        List<TotalScoreDto> totalScoreDtos = new ArrayList<>();
-        totalScoreDtos.add(dealer.computeTotalScore());
-        totalScoreDtos.addAll(players.computeTotalScore());
-        return totalScoreDtos;
+    private void computeTotalScore() {
+        dealer.computeAce();
+        players.computeAceForAllPlayers();
+
+        printTotalScore(new TotalScoreDto(dealer, players));
     }
 
-    private TotalResultDto computeTotalResult() {
-        List<PlayerResultDto> playersResult = players.computeResult(dealer.getScore());
-        DealerResultDto dealerResult = dealer.computeResult(playersResult);
-        return new TotalResultDto(playersResult, dealerResult);
+    private void computeTotalProfit() {
+        List<ProfitDto> profitOfPlayers = players.computeTotalProfit(dealer);
+        ProfitDto profitOfDealer = dealer.computeProfit(profitOfPlayers);
+
+        printTotalProfit(new TotalProfitDto(profitOfDealer, profitOfPlayers));
     }
 
 }

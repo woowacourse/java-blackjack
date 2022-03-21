@@ -1,8 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.dto.*;
+import blackjack.dto.currentCards.CurrentCardsDto;
+import blackjack.dto.currentCards.TotalCurrentCardsDto;
+import blackjack.dto.profit.ProfitDto;
+import blackjack.dto.profit.TotalProfitDto;
+import blackjack.dto.score.ScoreDto;
+import blackjack.dto.score.TotalScoreDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,9 +22,15 @@ public class OutputView {
         System.out.println(START_ERROR + message);
     }
 
-    public static void printFirstDistribute(CurrentCardsDto dealer, List<CurrentCardsDto> players) {
-        System.out.println(makeFirstDistributeTitleString(dealer, players));
+    public static void printFirstDistribute(TotalCurrentCardsDto totalCurrentCards) {
+        CurrentCardsDto dealer = totalCurrentCards.getCurrentCardsOfDealer();
+        List<CurrentCardsDto> players = totalCurrentCards.getCurrentCardsOfPlayers();
 
+        printFirstDistributeTitle(dealer.getName(), players.stream()
+                .map(CurrentCardsDto::getName)
+                .collect(Collectors.toList()));
+
+        printCurrentStatus(dealer);
         for (CurrentCardsDto player : players) {
             printCurrentStatus(player);
         }
@@ -32,36 +42,35 @@ public class OutputView {
         System.out.println(makeCurrentCardToString(dto.getName(), dto.getCards()));
     }
 
-    public static void printDealerAdded(String name) {
-        System.out.println("\n" + name + "는 " + Dealer.BOUND_FOR_ADDITIONAL_CARD
+    public static void printDealerAdded(String name, int bound) {
+        System.out.println("\n" + name + "는 " + bound
                 + "이하라 카드를 1장 더 받았습니다.");
     }
 
-    public static void printTotalScore(List<TotalScoreDto> totalScoreDtos) {
+    public static void printTotalScore(TotalScoreDto totalScore) {
         System.out.println();
-        for (TotalScoreDto dto : totalScoreDtos) {
-            System.out.println(makeCurrentCardToString(dto.getName(), dto.getCards())
-                    + " - 결과: " + dto.getScore());
+        for (ScoreDto score : totalScore.getTotalScore()) {
+            System.out.println(makeCurrentCardToString(score.getName(), score.getCards())
+                    + " - 결과: " + score.getScore());
         }
     }
 
-    public static void printTotalResult(TotalResultDto totalResult) {
-        System.out.println("\n## 최종 승패");
-        printDealerResult(totalResult.getDealerResult());
-        for (PlayerResultDto playerResult : totalResult.getTotalPlayerResult()) {
-            printPlayerResult(playerResult);
+    public static void printTotalProfit(TotalProfitDto totalProfit) {
+        System.out.println("\n## 최종 수익");
+        printProfit(totalProfit.getProfitOfDealer());
+        for (ProfitDto profit : totalProfit.getProfitOfPlayers()) {
+            printProfit(profit);
         }
     }
 
-    private static String makeFirstDistributeTitleString(CurrentCardsDto dealer, List<CurrentCardsDto> players) {
+    private static void printFirstDistributeTitle(String dealer, List<String> players) {
         StringBuilder title = new StringBuilder("\n");
-        title.append(dealer.getName())
+        title.append(dealer)
                 .append("와 ")
-                .append(players.stream().map(CurrentCardsDto::getName)
-                        .collect(Collectors.joining(", ")))
+                .append(String.join(", ", players))
                 .append("에게 2장을 나누었습니다.\n");
 
-        return title.toString();
+        System.out.println(title);
     }
 
     private static String makeCurrentCardToString(String name, List<Card> cards) {
@@ -76,18 +85,8 @@ public class OutputView {
         return result.toString();
     }
 
-    private static void printDealerResult(DealerResultDto dealerResult) {
-        System.out.println(dealerResult.getName() + ": "
-                + dealerResult.getWinCount() + "승 "
-                + dealerResult.getLoseCount() + "패");
+    private static void printProfit(ProfitDto profit) {
+        System.out.println(profit.getName() + ": " + profit.getProfit());
     }
 
-    private static void printPlayerResult(PlayerResultDto playerResult) {
-        System.out.print(playerResult.getName() + ": ");
-        if (playerResult.isWin()) {
-            System.out.print("승\n");
-            return;
-        }
-        System.out.print("패\n");
-    }
 }

@@ -17,7 +17,7 @@ class PlayerTest {
         Player player = new Player("pobi");
         player.addCard(new Card(Symbol.HEART, Denomination.KING));
 
-        assertThat(player.isAbleToHit()).isTrue();
+        assertThat(player.isHittable()).isTrue();
     }
 
     @Test
@@ -28,7 +28,7 @@ class PlayerTest {
         player.addCard(new Card(Symbol.CLOVER, Denomination.QUEEN));
         player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
 
-        assertThat(player.isAbleToHit()).isFalse();
+        assertThat(player.isHittable()).isFalse();
     }
 
     @Test
@@ -38,8 +38,8 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.FIVE));
         player.addCard(new Card(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.computeResult(16).isWin()).isFalse();
-        assertThat(player.computeResult(6).isWin()).isTrue();
+        assertThat(player.isWin(16)).isFalse();
+        assertThat(player.isWin(7)).isTrue();
     }
 
     @Test
@@ -50,7 +50,7 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.QUEEN));
         player.addCard(new Card(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.computeResult(1).isWin()).isFalse();
+        assertThat(player.isWin(1)).isFalse();
     }
 
     @Test
@@ -60,6 +60,6 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
         player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
 
-        assertThat(player.computeResult(22).isWin()).isTrue();
+        assertThat(player.isWin(22)).isTrue();
     }
 }
