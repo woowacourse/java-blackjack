@@ -7,6 +7,7 @@ import static blackjack.domain.card.Denomination.FOUR;
 import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.NINE;
 import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.SEVEN;
 import static blackjack.domain.card.Denomination.TEN;
 import static blackjack.domain.card.Denomination.THREE;
 import static blackjack.domain.card.Denomination.TWO;
@@ -23,7 +24,24 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("[플레이어 수익]")
 class BettingReturnTest {
+
+    private void assertBettingReturn(Dealer dealer,
+                                     int dealerBettingReturnExpected,
+                                     Player player,
+                                     int playerBettingReturnExpected) {
+
+        BettingReturn bettingReturn = BettingReturn.of(dealer, List.of(player));
+        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
+        int dealerReturn = bettingReturn.getDealerReturn();
+
+        // when & then
+        assertAll(
+                () -> assertThat(playerReturn).isEqualTo(playerBettingReturnExpected),
+                () -> assertThat(dealerReturn).isEqualTo(dealerBettingReturnExpected)
+        );
+    }
 
     @Test
     @DisplayName("RevenueResult 는 불변 객체다")
@@ -45,130 +63,157 @@ class BettingReturnTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @Test
-    @DisplayName("플레이어가 블랙잭이고 딜러는 아닐 때 플레이어의 수익은 1.5 배이다")
-    void player_blackjack_when_player_blackjack_and_dealer_is_not() {
-        // given
+    @Nested
+    @DisplayName("딜러가 21점 미만일 때")
+    class DealerUnder21 {
+
         Dealer dealer = dealerBuilder()
-                .denominations(TEN, QUEEN)
-                .build();
-
-        Player player = playerBuilder()
-                .denominations(ACE, JACK)
-                .bettingAmount(10_000)
-                .build();
-
-        BettingReturn bettingReturn = BettingReturn.of(dealer, List.of(player));
-
-        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
-        int dealerReturn = bettingReturn.getDealerReturn();
-
-        // when & then
-        assertAll(
-                () -> assertThat(playerReturn).isEqualTo(15_000),
-                () -> assertThat(dealerReturn).isEqualTo(-15_000)
-        );
-    }
-
-    @Test
-    @DisplayName("플레이어와 플레이어 모두 블랙잭일 때 무승부이기에 플레이어의 수익률은 0 이다")
-    void player_draw_when_player_blackjack_and_dealer_is_not() {
-        // given
-        Dealer dealer = dealerBuilder()
-                .denominations(ACE, TEN)
-                .build();
-
-        Player player = playerBuilder()
-                .denominations(ACE, JACK)
-                .bettingAmount(10_000)
-                .build();
-
-        BettingReturn bettingReturn = BettingReturn.of(dealer, List.of(player));
-
-        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
-        int dealerReturn = bettingReturn.getDealerReturn();
-
-        // when & then
-        assertAll(
-                () -> assertThat(playerReturn).isEqualTo(0),
-                () -> assertThat(dealerReturn).isEqualTo(0)
-        );
-    }
-
-    @Test
-    @DisplayName("플레이어가 딜러를 이겼을 때 플레이어의 수익률은 1 이다")
-    void player_win() {
-        // given
-        Dealer dealer = dealerBuilder()
-                .denominations(TWO, THREE) // 5
-                .build();
-
-        Player player = playerBuilder()
-                .denominations(FOUR, FIVE) // 9
-                .bettingAmount(10_000)
-                .build();
-
-
-        BettingReturn bettingReturn = BettingReturn.of(dealer, player);
-
-        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
-        int dealerReturn = bettingReturn.getDealerReturn();
-
-        // when & then
-        assertAll(
-                () -> assertThat(playerReturn).isEqualTo(10_000),
-                () -> assertThat(dealerReturn).isEqualTo(-10_000)
-        );
-    }
-
-    @Test
-    @DisplayName("플레이어가 딜러에게 졌을 때 플레이어의 수익률은 -1 이다")
-    void player_lose() {
-        // given
-        Dealer dealer = dealerBuilder()
-                .denominations(NINE, TEN)
-                .build();
-
-        Player player = playerBuilder()
-                .denominations(FIVE, EIGHT)
-                .bettingAmount(10_000)
-                .build();
-
-        BettingReturn bettingReturn = BettingReturn.of(dealer, player);
-
-        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
-        int dealerReturn = bettingReturn.getDealerReturn();
-
-        // when & then
-        assertAll(
-                () -> assertThat(playerReturn).isEqualTo(-10_000),
-                () -> assertThat(dealerReturn).isEqualTo(10_000)
-        );
-    }
-
-    @Test
-    @DisplayName("플레이어가 딜러와 비겼을 때 플레이어의 수익률은 0 이다")
-    void player_draw() {
-        // given
-        Dealer dealer = dealerBuilder()
-                .denominations(THREE, NINE) // 12
-                .build();
-
-        Player player = playerBuilder()
                 .denominations(FOUR, EIGHT) // 12
-                .bettingAmount(10_000)
                 .build();
 
-        BettingReturn bettingReturn = BettingReturn.of(dealer, player);
+        @Test
+        @DisplayName("플레이어가 블랙잭이면 수익률은 1.5 이다 (승)")
+        void when_dealer_under_21_player_blackjack_then_1_point_5() {
+            
+            Player player = playerBuilder()
+                    .denominations(ACE, JACK)
+                    .bettingAmount(10_000)
+                    .build();
 
-        int playerReturn = bettingReturn.findPlayerReturn(player.getName());
-        int dealerReturn = bettingReturn.getDealerReturn();
+            assertBettingReturn(
+                    dealer, -15_000,
+                    player, +15_000
+            );
+        }
 
-        // when & then
-        assertAll(
-                () -> assertThat(playerReturn).isEqualTo(0),
-                () -> assertThat(dealerReturn).isEqualTo(0)
-        );
+        @Test
+        @DisplayName("플레이어가 버스트라면 수익률은 -1 이다")
+        void when_dealer_under_21_player_bust_then_minus_1() {
+
+            Player player = playerBuilder()
+                    .denominations(FIVE, NINE, QUEEN) // 22
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, +10_000,
+                    player, -10_000
+            );
+        }
+
+        @Test
+        @DisplayName("플레이어가 딜러보다 점수가 높다면 수익률은 1이다")
+        void when_dealer_under_21_and_player_is_more_high_score_then_1() {
+
+            Player player = playerBuilder()
+                    .denominations(FIVE, TEN) // 22
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, -10_000,
+                    player, +10_000
+            );
+        }
+
+        @Test
+        @DisplayName("딜러가 플레이어보다 점수가 높다면 수익률은 -1이다")
+        void when_dealer_under_21_and_dealer_is_more_high_score_then_1() {
+
+            Player player = playerBuilder()
+                    .denominations(THREE, SEVEN) // 110
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, +10_000,
+                    player, -10_000
+            );
+        }
+
+        @Test
+        @DisplayName("플레이어와 딜러가 동점이라면 무승부이다 (수익률 0)")
+        void when_dealer_under_21_and_same_score_then_0() {
+
+            Player player = playerBuilder()
+                    .denominations(THREE, NINE)
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, 0,
+                    player, 0
+            );
+        }
+
+        @Test
+        @DisplayName("플레이어가 딜러의 점수보다 높으면서 카드합이 21이지만 3장인 경우 블랙잭이 아닌 그냥 승이다 (수익률 1)")
+        void when_dealer_under_21_and_player_score_21_but_3cards_then_not_blackjack_win_but_win() {
+
+            Player player = playerBuilder()
+                    .denominations(ACE, JACK, QUEEN)  // 21
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, -10_000,
+                    player, +10_000
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("딜러가 블랙잭일 때")
+    class DealerIsBlackjack {
+
+        private final Dealer dealer = dealerBuilder()
+                .denominations(ACE, TEN) // 21
+                .build();
+
+        @Test
+        @DisplayName("플레이어 또한 블랙잭이라면 수익률은 0이다 (무승부)")
+        void when_all_blackjack_then_0() {
+
+            Player player = playerBuilder()
+                    .denominations(ACE, JACK) // 21
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, 0,
+                    player, 0
+            );
+        }
+
+        @Test
+        @DisplayName("플레이어 점수가 20 이하면 수익률은 -1 이다 (패)")
+        void when_dealer_blackjack_player_under_21_then_minus_1() {
+
+            Player player = playerBuilder()
+                    .denominations(QUEEN, JACK) // 21
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, +10_000,
+                    player, -10_000
+            );
+        }
+
+        @Test
+        @DisplayName("플레이어가 버스트이면 수익률은 -1 이다 (패)")
+        void when_dealer_blackjack_player_bust_then_minus_1() {
+
+            Player player = playerBuilder()
+                    .denominations(QUEEN, JACK, TWO) // 21
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, +10_000,
+                    player, -10_000
+            );
+        }
     }
 
     @Nested
@@ -188,15 +233,9 @@ class BettingReturnTest {
                     .bettingAmount(10_000)
                     .build();
 
-            BettingReturn bettingReturn = BettingReturn.of(dealer, player);
-
-            int playerReturn = bettingReturn.findPlayerReturn(player.getName());
-            int dealerReturn = bettingReturn.getDealerReturn();
-
-            // when & then
-            assertAll(
-                    () -> assertThat(playerReturn).isEqualTo(15_000),
-                    () -> assertThat(dealerReturn).isEqualTo(-15_000)
+            assertBettingReturn(
+                    dealer, -15_000,
+                    player, +15_000
             );
         }
 
@@ -209,15 +248,9 @@ class BettingReturnTest {
                     .bettingAmount(10_000)
                     .build();
 
-            BettingReturn bettingReturn = BettingReturn.of(dealer, player);
-
-            int playerReturn = bettingReturn.findPlayerReturn(player.getName());
-            int dealerReturn = bettingReturn.getDealerReturn();
-
-            // when & then
-            assertAll(
-                    () -> assertThat(playerReturn).isEqualTo(10_000),
-                    () -> assertThat(dealerReturn).isEqualTo(-10_000)
+            assertBettingReturn(
+                    dealer, -10_000,
+                    player, +10_000
             );
         }
 
@@ -226,19 +259,13 @@ class BettingReturnTest {
         void also_player_bust_then_1() {
             // given
             Player player = playerBuilder()
-                    .denominations(JACK, QUEEN, TWO)
+                    .denominations(JACK, QUEEN, TWO) // 22
                     .bettingAmount(10_000)
                     .build();
 
-            BettingReturn bettingReturn = BettingReturn.of(dealer, player);
-
-            int playerReturn = bettingReturn.findPlayerReturn(player.getName());
-            int dealerReturn = bettingReturn.getDealerReturn();
-
-            // when & then
-            assertAll(
-                    () -> assertThat(playerReturn).isEqualTo(-10_000),
-                    () -> assertThat(dealerReturn).isEqualTo(10_000)
+            assertBettingReturn(
+                    dealer, +10_000,
+                    player, -10_000
             );
         }
     }
