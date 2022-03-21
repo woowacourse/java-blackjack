@@ -34,22 +34,14 @@ public abstract class Participant {
     }
 
     public void drawAdditionalCard(Deck deck) {
-        if (isHit()) {
+        if (isStateSame(State.HIT)) {
             myCards.addCard(deck.pickTopCard());
             updateStateAfterAddCard();
         }
     }
 
-    public boolean isHit() {
-        return state.equals(State.HIT);
-    }
-
-    public boolean isBlackjack() {
-        return state.equals(State.BLACKJACK);
-    }
-
-    public boolean isBust() {
-        return state.equals(State.BUST);
+    public boolean isStateSame(State state) {
+        return this.state.equals(state);
     }
 
     public int score() {

@@ -36,7 +36,7 @@ public class Blackjack {
     }
 
     public boolean isPossibleToGetCard(Participant player) {
-        return player.isHit();
+        return player.isStateSame(State.HIT);
     }
 
     public void distributeAdditionalCard(Participant player) {
@@ -48,7 +48,7 @@ public class Blackjack {
     }
 
     public boolean gameOverByBlackjack(Participant dealer) {
-        return dealer.isBlackjack();
+        return dealer.isStateSame(State.BLACKJACK);
     }
 
     public Map<Participant, Receipt> calculateYield(Participant dealer, Players players) {
