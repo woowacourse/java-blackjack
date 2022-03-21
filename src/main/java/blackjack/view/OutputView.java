@@ -77,6 +77,10 @@ public class OutputView {
         System.out.printf("%s: %d%n", name, money);
     }
 
+    public static void printErrorMessage(final String message) {
+        System.out.println(message);
+    }
+
     public static void printNewLine() {
         System.out.println();
     }

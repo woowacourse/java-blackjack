@@ -35,7 +35,7 @@ public class BlackjackController {
             final List<String> names = InputView.getGuestNames();
             return Guests.namesOf(names);
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            OutputView.printErrorMessage(exception.getMessage());
             return createGuests();
         }
     }
@@ -51,7 +51,7 @@ public class BlackjackController {
             final BetMoney betMoney = new BetMoney(InputView.getMoney(name));
             return betMoney.getMoney();
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            OutputView.printErrorMessage(exception.getMessage());
             return getMoney(name);
         }
     }
@@ -82,7 +82,7 @@ public class BlackjackController {
         try {
             return InputView.getChoice(guest);
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            OutputView.printErrorMessage(exception.getMessage());
             return getChoice(guest);
         }
     }
