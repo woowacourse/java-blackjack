@@ -30,7 +30,7 @@ public class OutputView {
     public static void printInitHands(Dealer dealer, Players players) {
         printInitHandsMessage(players.getNames());
         printNewLine();
-        System.out.printf(SHOW_DEALER_FIRST_HAND_FORMAT, dealer.getFirstHand().combineRankAndSuit());
+        System.out.printf(SHOW_DEALER_FIRST_HAND_FORMAT, dealer.getFirstCardOfHand().combineRankAndSuit());
         players.forEach(player -> printPlayerHand(player.getName().getValue(), player.showHand()));
     }
 
