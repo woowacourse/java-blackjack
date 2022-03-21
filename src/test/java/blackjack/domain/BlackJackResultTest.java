@@ -40,11 +40,11 @@ public class BlackJackResultTest {
     @DisplayName("겜블러들의 총 수익에 -1을 곱한 값이 딜러의 수익이 되는지 확인한다.")
     void opposite_blackjackResult() {
         // given &  when
-        this.cardDeck.drawTo(gambler, 2);
-        this.cardDeck.drawTo(gambler, 2);
+        this.cardDeck.drawTo(gambler, 1);
+        this.cardDeck.drawTo(gambler, 1);
 
-        this.cardDeck.drawTo(dealer, 2);
-        this.cardDeck.drawTo(dealer, 2);
+        this.cardDeck.drawTo(dealer, 1);
+        this.cardDeck.drawTo(dealer, 1);
 
         //when
         final BlackJackResult blackJackResult = BlackJackResult.from(players);
@@ -64,11 +64,11 @@ public class BlackJackResultTest {
     @DisplayName("겜블러가 블랙잭시 배팅 금액의 1.5배를 수익으로 가지는지 확인한다")
     void gambler_blackjack_result() {
         // given &  when
-        this.cardDeck.drawTo(gambler, 2);
-        this.cardDeck.drawTo(gambler, 2);
+        this.cardDeck.drawTo(gambler, 1);
+        this.cardDeck.drawTo(gambler, 1);
 
-        this.cardDeck.drawTo(dealer, 2);
-        this.cardDeck.drawTo(dealer, 2);
+        this.cardDeck.drawTo(dealer, 1);
+        this.cardDeck.drawTo(dealer, 1);
 
         //when
         final BlackJackResult blackJackResult = BlackJackResult.from(players);
