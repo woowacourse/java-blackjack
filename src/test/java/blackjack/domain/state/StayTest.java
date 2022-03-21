@@ -71,7 +71,7 @@ class StayTest {
         Stay stay = new Stay(playingCards, betting);
         stay.decideRate(-1);
 
-        assertThat(stay.profit()).isEqualTo(-1000.0);
+        assertThat(stay.earning()).isEqualTo(-1000.0);
     }
 
     @DisplayName("딜러가 버스트여서 승리할 경우 베팅 금액만큼 얻는 것을 확인한다.")
@@ -80,7 +80,7 @@ class StayTest {
         Stay stay = new Stay(playingCards, betting);
         stay.decideRate(1);
 
-        assertThat(stay.profit()).isEqualTo(1000.0);
+        assertThat(stay.earning()).isEqualTo(1000.0);
     }
 
     @DisplayName("딜러보다 카드 총 합이 작아 패배할 경우 베팅 금액만큼 잃는 것을 확인한다.")
@@ -89,7 +89,7 @@ class StayTest {
         Stay stay = new Stay(playingCards, betting);
         stay.decideRate(-1);
 
-        assertThat(stay.profit()).isEqualTo(-1000.0);
+        assertThat(stay.earning()).isEqualTo(-1000.0);
     }
 
     @DisplayName("딜러와 플레이어의 카드 총 합이 같아 무승부일 경우 수익이 없는 것을 확인한다.")
@@ -98,7 +98,7 @@ class StayTest {
         Stay stay = new Stay(playingCards, betting);
         stay.decideRate(0);
 
-        assertThat(stay.profit()).isEqualTo(0.0);
+        assertThat(stay.earning()).isEqualTo(0.0);
     }
 
     @DisplayName("딜러보다 카드 총 합이 커서 승리할 경우 베팅 금액만큼 얻는 것을 확인한다.")
@@ -107,7 +107,7 @@ class StayTest {
         Blackjack blackjack = new Blackjack(playingCards, betting);
         blackjack.decideRate(1);
 
-        assertThat(blackjack.profit()).isEqualTo(1000.0);
+        assertThat(blackjack.earning()).isEqualTo(1000.0);
     }
 
     @DisplayName("카드 총합을 확인한다.")

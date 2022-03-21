@@ -27,7 +27,7 @@ public abstract class Finished extends Started {
         return true;
     }
 
-    public double profit() {
+    public double earning() {
         return betting.profit(earningRate());
     }
 

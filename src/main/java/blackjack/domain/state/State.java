@@ -17,7 +17,7 @@ public interface State {
 
     void decideRate(final double rate);
 
-    double profit();
+    double earning();
 
     PlayingCards playingCards();
 

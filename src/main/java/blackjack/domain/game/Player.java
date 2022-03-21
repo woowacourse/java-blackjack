@@ -34,7 +34,7 @@ public class Player extends Gamer {
     }
 
     public double profit() {
-        return state.profit();
+        return state.earning();
     }
 
     private void validateEqualsDealerName(final String name) {
