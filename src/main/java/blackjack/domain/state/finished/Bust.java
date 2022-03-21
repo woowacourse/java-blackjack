@@ -9,15 +9,20 @@ public final class Bust extends Finished {
     }
 
     @Override
-    public double computedRate(final Finished state) {
-        if (state.earningRate() == LOSE_RATE) {
-            return WIN_RATE;
-        }
-        return LOSE_RATE;
+    public boolean isBust() {
+        return true;
     }
 
     @Override
-    public double earningRate() {
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public double earningRate(final Finished state) {
+        if (state.isBust()) {
+            return WIN_RATE;
+        }
         return LOSE_RATE;
     }
 }

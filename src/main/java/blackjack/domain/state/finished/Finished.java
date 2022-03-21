@@ -30,12 +30,14 @@ public abstract class Finished extends Init {
         return true;
     }
 
+    public abstract boolean isBust();
+
+    public abstract boolean isBlackjack();
+
     @Override
     public int profit(int money, Finished state) {
-        return (int) (money * computedRate(state));
+        return (int) (money * earningRate(state));
     }
 
-    public abstract double computedRate(Finished state);
-
-    public abstract double earningRate();
+    public abstract double earningRate(Finished state);
 }

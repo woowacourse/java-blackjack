@@ -1,6 +1,7 @@
 package blackjack.domain.state.finished;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.cards.Cards;
 import org.junit.jupiter.api.DisplayName;
@@ -9,10 +10,14 @@ import org.junit.jupiter.api.Test;
 class StayTest {
 
     @Test
-    @DisplayName("수익 배율 값 검증")
+    @DisplayName("블랙잭/버스트 여부 검증")
     void earningRate() {
         Stay stay = new Stay(new Cards());
-        assertThat(stay.earningRate())
-                .isEqualTo(1.0);
+        assertAll(
+                () -> assertThat(stay.isBlackjack())
+                        .isFalse(),
+                () -> assertThat(stay.isBust())
+                        .isFalse()
+        );
     }
 }

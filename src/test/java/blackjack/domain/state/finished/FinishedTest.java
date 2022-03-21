@@ -11,12 +11,17 @@ import org.junit.jupiter.api.Test;
 class FinishedTest {
     Finished finished = new Finished(new Cards()) {
         @Override
-        public double computedRate(Finished state) {
-            return 1.0;
+        public boolean isBust() {
+            return false;
         }
 
         @Override
-        public double earningRate() {
+        public boolean isBlackjack() {
+            return false;
+        }
+
+        @Override
+        public double earningRate(Finished state) {
             return 1.0;
         }
     };
@@ -49,12 +54,5 @@ class FinishedTest {
     void profit() {
         assertThat(finished.profit(10000, new Stay(new Cards())))
                 .isEqualTo(10000);
-    }
-
-    @Test
-    @DisplayName("배율 검증 테스트")
-    void earningRate() {
-        assertThat(finished.earningRate())
-                .isEqualTo(1.0);
     }
 }

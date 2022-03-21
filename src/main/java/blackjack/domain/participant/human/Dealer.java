@@ -13,16 +13,16 @@ public final class Dealer extends Participant {
         super(cards, new Name("딜러"));
     }
 
-    public Card getFirstCard() {
-        return state.cards().getFirstCard();
-    }
-
     public boolean draw(CardDeck cardDeck) {
         if (isAbleToHit()) {
             addCard(cardDeck.pop());
         }
         stay();
         return !isInitState();
+    }
+
+    public Card getFirstCard() {
+        return state.cards().getFirstCard();
     }
 
     private boolean isAbleToHit() {

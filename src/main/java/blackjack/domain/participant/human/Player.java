@@ -15,15 +15,15 @@ public final class Player extends Participant {
         this.betAmount = new BetAmount(money);
     }
 
-    public int getProfit(Dealer dealer) {
-        return state.profit(betAmount.get(), (Finished) dealer.getState());
-    }
-
     public void draw(CardDeck cardDeck, boolean isHit) {
         if (isHit) {
             addCard(cardDeck.pop());
             return;
         }
         stay();
+    }
+
+    public int getProfit(Dealer dealer) {
+        return state.profit(betAmount.get(), (Finished) dealer.getState());
     }
 }

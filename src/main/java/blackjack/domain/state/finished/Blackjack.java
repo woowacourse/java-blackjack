@@ -9,15 +9,20 @@ public final class Blackjack extends Finished {
     }
 
     @Override
-    public double computedRate(final Finished state) {
-        if (state.earningRate() == BLACKJACK_RATE) {
-            return TIE_RATE;
-        }
-        return BLACKJACK_RATE;
+    public boolean isBust() {
+        return false;
     }
 
     @Override
-    public double earningRate() {
+    public boolean isBlackjack() {
+        return true;
+    }
+
+    @Override
+    public double earningRate(final Finished state) {
+        if (state.isBlackjack()) {
+            return TIE_RATE;
+        }
         return BLACKJACK_RATE;
     }
 }

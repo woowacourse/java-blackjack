@@ -9,18 +9,23 @@ public final class Stay extends Finished {
     }
 
     @Override
-    public double computedRate(final Finished state) {
-        if (state.earningRate() == LOSE_RATE || cards.hasMorePoint(state.cards())) {
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public double earningRate(final Finished state) {
+        if (state.isBust() || cards.hasMorePoint(state.cards())) {
             return WIN_RATE;
         }
         if (cards.hasSamePoint(state.cards())) {
             return TIE_RATE;
         }
         return LOSE_RATE;
-    }
-
-    @Override
-    public double earningRate() {
-        return WIN_RATE;
     }
 }
