@@ -5,10 +5,10 @@ import static java.util.Collections.unmodifiableMap;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import domain.vo.Name;
+import domain.vo.Revenue;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import vo.Name;
-import vo.Revenue;
 
 public class BlackJackResult {
     private final Map<Name, Revenue> blackjackResult;

@@ -2,9 +2,9 @@ package domain.player;
 
 import domain.MatchResult;
 import domain.card.PlayingCard;
+import domain.vo.Wallet;
 import java.util.ArrayList;
 import java.util.List;
-import vo.Wallet;
 
 public final class Gambler extends Player {
     private static final int MAXIMUM_VALID_SCORE = 21;

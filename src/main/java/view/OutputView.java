@@ -9,12 +9,12 @@ import domain.player.Gambler;
 import domain.player.Gamblers;
 import domain.player.Player;
 import domain.player.Players;
+import domain.vo.Name;
+import domain.vo.Revenue;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import util.NameMapper;
-import vo.Name;
-import vo.Revenue;
 
 public class OutputView {
     private static final String INFO_FOR_INITIAL_SPREAD = "%s와 %s에게 2장을 나누었습니다.%n";

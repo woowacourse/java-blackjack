@@ -3,9 +3,9 @@ package domain.player;
 import domain.MatchResult;
 import domain.card.PlayingCard;
 import domain.card.PlayingCards;
+import domain.vo.Wallet;
 import java.util.ArrayList;
 import java.util.List;
-import vo.Wallet;
 
 public abstract class Player {
     protected final Wallet wallet;

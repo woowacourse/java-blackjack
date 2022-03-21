@@ -1,4 +1,4 @@
-package vo;
+package domain.vo;
 
 public class Wallet {
     private static final int DEFAULT_ZERO_MONEY = 0;

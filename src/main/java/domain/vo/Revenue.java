@@ -1,4 +1,4 @@
-package vo;
+package domain.vo;
 
 public class Revenue {
     private final double revenue;

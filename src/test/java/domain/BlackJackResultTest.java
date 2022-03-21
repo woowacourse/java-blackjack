@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import domain.vo.Name;
+import domain.vo.Revenue;
+import domain.vo.Wallet;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import vo.Name;
-import vo.Revenue;
-import vo.Wallet;
 
 public class BlackJackResultTest {
     @Test

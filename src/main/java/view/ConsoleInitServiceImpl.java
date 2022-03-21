@@ -8,10 +8,10 @@ import domain.player.Gambler;
 import domain.player.Gamblers;
 import domain.player.Players;
 import domain.service.InitService;
+import domain.vo.Wallet;
 import java.util.Arrays;
 import java.util.List;
 import util.Console;
-import vo.Wallet;
 
 public class ConsoleInitServiceImpl implements InitService {
     private static final int IGNORE_EMPTY_INPUT = -1;
