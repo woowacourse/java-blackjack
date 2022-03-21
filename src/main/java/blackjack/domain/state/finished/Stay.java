@@ -21,6 +21,6 @@ public final class Stay extends Finished {
 
     @Override
     public double earningRate() {
-        return 1.0;
+        return WIN_RATE;
     }
 }
