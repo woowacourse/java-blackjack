@@ -41,18 +41,6 @@ public abstract class Gamer {
 		return !this.isBust() && !gamer.isBust();
 	}
 
-	public List<Card> getCards() {
-		return this.cards.getCards();
-	}
-
-	public int getScore() {
-		return this.cards.getScore();
-	}
-
-	public String getName() {
-		return this.name.getName();
-	}
-
 	public boolean isBust() {
 		return this.cards.isBust();
 	}
@@ -60,4 +48,16 @@ public abstract class Gamer {
 	public boolean isBlackJack() {
 		return this.cards.isBlackJack();
 	}
+
+    public List<Card> getCards() {
+        return this.cards.getCards();
+    }
+
+    public int getScore() {
+        return this.cards.getScore();
+    }
+
+    public String getName() {
+        return this.name.getName();
+    }
 }
