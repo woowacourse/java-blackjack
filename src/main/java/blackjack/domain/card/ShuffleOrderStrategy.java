@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.List;
 
-public class RandomGeneratingStrategy implements CardGeneratingStrategy {
+public class ShuffleOrderStrategy implements CardOrderStrategy {
 
     @Override
     public List<Card> generate() {

@@ -20,7 +20,11 @@ public enum PlayerAnswer {
                 .orElseThrow(() -> new IllegalArgumentException("y, n 이외의 값이 입력되었습니다."));
     }
 
-    public boolean isDraw() {
+    public boolean isHit() {
         return this == YES;
+    }
+
+    public boolean isStay() {
+        return this == NO;
     }
 }

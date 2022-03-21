@@ -4,6 +4,7 @@ import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.FIVE;
 import static blackjack.domain.card.CardNumber.JACK;
 import static blackjack.domain.card.CardNumber.KING;
+import static blackjack.domain.card.CardNumber.NINE;
 import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardNumber.THREE;
@@ -119,4 +120,24 @@ class CardsTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드가 한 장도 없습니다.");
     }
+
+    @ParameterizedTest
+    @DisplayName("블랙잭인지 확인한다.")
+    @MethodSource("provideCard")
+    void isBlackJack(Cards cards, boolean expected) {
+        // when
+        final boolean actual = cards.isBlackjack(2);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> provideCard() {
+        return Stream.of(
+                Arguments.of(new Cards(Set.of(Card.of(CLUB, ACE), Card.of(CLUB, KING))), true),
+                Arguments.of(new Cards(Set.of(Card.of(CLUB, JACK), Card.of(CLUB, KING))), false),
+                Arguments.of(new Cards(Set.of(Card.of(CLUB, TEN), Card.of(CLUB, NINE), Card.of(CLUB, TWO))), false)
+        );
+    }
+
 }

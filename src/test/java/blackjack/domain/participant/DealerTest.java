@@ -32,7 +32,7 @@ class DealerTest {
         dealer.initCards(deck);
 
         // when
-        final boolean actual = dealer.canDrawCard();
+        final boolean actual = dealer.isDrawable();
 
         // then
         assertThat(actual).isEqualTo(expected);

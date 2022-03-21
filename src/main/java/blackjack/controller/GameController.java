@@ -1,17 +1,14 @@
 package blackjack.controller;
 
-import blackjack.domain.Record;
+import blackjack.domain.BettingAmount;
+import blackjack.domain.Name;
+import blackjack.domain.Profit;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.RandomGeneratingStrategy;
+import blackjack.domain.card.ShuffleOrderStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerNames;
 import blackjack.domain.participant.Players;
-import blackjack.dto.CardDto;
-import blackjack.dto.DealerRecordDto;
-import blackjack.dto.DealerTurnResultDto;
-import blackjack.dto.ParticipantDto;
-import blackjack.dto.ParticipantResultDto;
-import blackjack.dto.PlayerRecordDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerAnswer;
@@ -25,17 +22,36 @@ public class GameController {
     private final Dealer dealer;
 
     public GameController() {
-        this.deck = Deck.from(new RandomGeneratingStrategy());
+        this.deck = Deck.from(new ShuffleOrderStrategy());
         this.players = initPlayers();
         this.dealer = new Dealer();
     }
 
     private Players initPlayers() {
+        final PlayerNames playerNames = initPlayerNames();
+
+        final List<Player> list = playerNames.getNames()
+                .stream()
+                .map(name -> new Player(name, createBettingAmount(name)))
+                .collect(Collectors.toList());
+        return new Players(list);
+    }
+
+    private PlayerNames initPlayerNames() {
         try {
-            return new Players(InputView.getPlayerNames());
+            return new PlayerNames(InputView.getPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return initPlayers();
+            return initPlayerNames();
+        }
+    }
+
+    private BettingAmount createBettingAmount(final Name name) {
+        try {
+            return new BettingAmount(InputView.getBettingAmount(name.getValue()));
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return createBettingAmount(name);
         }
     }
 
@@ -44,12 +60,9 @@ public class GameController {
         players.initCards(deck);
 
         OutputView.printInitResult(players.getNames());
-        OutputView.printDealerFirstCard(CardDto.from(dealer.openFirstCard()));
+        OutputView.printDealerFirstCard(dealer.openFirstCard());
 
-        final List<ParticipantDto> allPlayers = players.getValue().stream()
-                .map(ParticipantDto::from)
-                .collect(Collectors.toList());
-        allPlayers.forEach(OutputView::printCards);
+        OutputView.printCards(players);
     }
 
     public void progressPlayerTurns() {
@@ -57,56 +70,51 @@ public class GameController {
             final Player drawablePlayer = players.findDrawablePlayer().get();
             final PlayerAnswer playerAnswer = InputView.getHitOrStay(drawablePlayer.getName());
 
-            final ParticipantDto dto = progressPlayerTurn(drawablePlayer, playerAnswer);
-            OutputView.printCards(dto);
+            final Player player = progressPlayerTurn(drawablePlayer, playerAnswer);
+            OutputView.printCards(player);
         }
     }
 
-    private ParticipantDto progressPlayerTurn(Player player, final PlayerAnswer playerAnswer) {
-        if (playerAnswer.isDraw()) {
+    private Player progressPlayerTurn(Player player, final PlayerAnswer playerAnswer) {
+        if (playerAnswer.isHit()) {
             player.hit(deck);
         }
-        if (!playerAnswer.isDraw()) {
+        if (playerAnswer.isStay()) {
             player.stay();
         }
 
-        return ParticipantDto.from(player);
+        return player;
     }
 
     public void progressDealerTurn() {
         int count = 0;
-        while (dealer.canDrawCard()) {
+        while (dealer.isDrawable()) {
             dealer.hit(deck);
             count++;
         }
 
-        OutputView.printDealerTurnResult(new DealerTurnResultDto(count));
+        dealer.updateStatus();
+        OutputView.printDealerTurnResult(count);
     }
 
     public void endGame() {
         printAllCards();
-        printAllRecords();
+        printProfit();
     }
 
     private void printAllCards() {
-        final List<ParticipantResultDto> dto = players.getValue().stream()
-                .map(ParticipantResultDto::from)
-                .collect(Collectors.toList());
-        dto.add(0, ParticipantResultDto.from(dealer));
-
         OutputView.breakLine();
-        dto.forEach(OutputView::printCardsAndScore);
+
+        OutputView.printCardsAndScore(dealer);
+        OutputView.printCardsAndScore(players);
     }
 
-    private void printAllRecords() {
-        final int dealerScore = dealer.getScore();
+    private void printProfit() {
+        final Profit profit = Profit.of(dealer, players);
 
-        final List<PlayerRecordDto> playerRecordDtos = players.getValue().stream()
-                .map(player -> PlayerRecordDto.of(player.getName(), Record.of(dealerScore, player.getScore())))
-                .collect(Collectors.toList());
-        final DealerRecordDto dealerRecordDto = DealerRecordDto.from(playerRecordDtos);
-
-        OutputView.printDealerRecord(dealerRecordDto);
-        playerRecordDtos.forEach(OutputView::printPlayerRecord);
+        OutputView.printDealerProfit(profit.findDealerProfit());
+        for (String name : players.getNames()) {
+            OutputView.printProfit(name, profit.findPlayerProfit(name));
+        }
     }
 }

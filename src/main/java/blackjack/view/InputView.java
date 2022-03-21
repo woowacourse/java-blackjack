@@ -27,6 +27,21 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public static int getBettingAmount(final String name) {
+        try {
+            return requestBettingAmount(name);
+        } catch (NumberFormatException e) {
+            OutputView.printError("숫자만 허용됩니다.");
+            return getBettingAmount(name);
+        }
+    }
+
+    private static int requestBettingAmount(final String name) {
+        System.out.printf("%n" + name + "의 배팅 금액은?%n");
+
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     public static PlayerAnswer getHitOrStay(final String playerName) {
         try {
             return requestHitOrStay(playerName);

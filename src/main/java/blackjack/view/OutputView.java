@@ -1,52 +1,57 @@
 package blackjack.view;
 
-import blackjack.dto.CardDto;
-import blackjack.dto.DealerRecordDto;
-import blackjack.dto.DealerTurnResultDto;
-import blackjack.dto.ParticipantDto;
-import blackjack.dto.ParticipantResultDto;
-import blackjack.dto.PlayerRecordDto;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
 
-    public static void printInitResult(List<String> names) {
+    public static void printInitResult(final List<String> names) {
         System.out.printf(System.lineSeparator() + "딜러와 %s에게 2장의 카드를 나누어주었습니다." + System.lineSeparator(),
                 String.join(", ", names));
     }
 
-    public static void printDealerFirstCard(CardDto cardDto) {
-        System.out.println("딜러: " + cardDto.getNumberName() + cardDto.getSymbolName());
+    public static void printDealerFirstCard(final Card card) {
+        System.out.println("딜러: " + card.getNumberName() + card.getSymbolName());
     }
 
-    public static void printCards(ParticipantDto dto) {
-        System.out.println(dto.getName() + "카드: " + toCardMessage(dto));
+    public static void printCardsAndScore(final Players players) {
+        players.getValue().forEach(OutputView::printCardsAndScore);
     }
 
-    public static void printCardsAndScore(ParticipantResultDto dto) {
-        final ParticipantDto participantDto = dto.getParticipantDto();
-
-        System.out.println(participantDto.getName() + "카드: " + toCardMessage(participantDto)
-                + " - 결과: " + dto.getScore());
+    public static void printCardsAndScore(Participant participant) {
+        System.out.println(participant.getName() + "카드: " + toCardMessage(participant.getCards())
+                + " - 결과: " + participant.getScore());
     }
 
-    private static String toCardMessage(final ParticipantDto dto) {
-        return dto.getCardDtos().stream()
+    public static void printCards(final Players players) {
+        players.getValue().forEach(OutputView::printCards);
+    }
+
+    public static void printCards(final Player player) {
+        System.out.println(player.getName() + "카드: " + toCardMessage(player.getCards()));
+    }
+
+    private static String toCardMessage(final Cards cards) {
+        return cards.getValue()
+                .stream()
                 .map(card -> card.getNumberName() + card.getSymbolName())
                 .collect(Collectors.joining(", "));
     }
 
-    public static void printDealerTurnResult(final DealerTurnResultDto dealerTurnResultDto) {
-        final int drawCount = dealerTurnResultDto.getCount();
+    public static void printDealerTurnResult(final int drawCount) {
         if (drawCount == 0) {
             printDealerNotDrawMessage();
             return;
         }
 
-        IntStream.range(0, drawCount)
-                .forEach(i -> printDealerDrawMessage());
+        for (int i = 0; i < drawCount; i++) {
+            printDealerDrawMessage();
+        }
     }
 
     private static void printDealerDrawMessage() {
@@ -57,20 +62,19 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다.");
     }
 
-    public static void printDealerRecord(DealerRecordDto dto) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-
-        final String message = dto.getKeys()
-                .stream()
-                .filter(key -> dto.getValue(key) != 0)
-                .map(key -> dto.getValue(key) + key)
-                .collect(Collectors.joining(" "));
-
-        System.out.println("딜러: " + message);
+    public static void printDealerProfit(final double profit) {
+        System.out.printf("%n## 최종 수익%n");
+        printProfit("딜러", profit);
     }
 
-    public static void printPlayerRecord(PlayerRecordDto dto) {
-        System.out.println(dto.getName() + ": " + dto.getRecord());
+    public static void printProfit(final String name, final double profit) {
+        System.out.print(name + ": ");
+
+        if (profit == (int) profit) {
+            System.out.printf("%d%n", (int) profit);
+            return;
+        }
+        System.out.printf("%s%n", profit);
     }
 
     public static void printError(final String message) {

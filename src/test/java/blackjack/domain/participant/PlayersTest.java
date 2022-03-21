@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -11,52 +10,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayersTest {
 
-    @Test
-    @DisplayName("참가자의 이름이 중복되면 예외가 발생한다.")
-    void nameDuplicate() {
-        // give
-        String name = "rick";
-
-        // when
-        final List<String> names = List.of(name, name);
-
-        // then
-        assertThatThrownBy(() -> new Players(names))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름은 중복을 허용하지 않습니다.");
-    }
-
-    @Test
-    @DisplayName("참가자가 2명 미만이면 예외를 던진다.")
-    void playerLowerBound() {
-        // give
-        final List<String> names = List.of("rick");
-
-        // when
-        // then
-        assertThatThrownBy(() -> new Players(names))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("2명 이상의 참가자가 필요합니다.");
-    }
-
-    @Test
-    @DisplayName("참가자가 2명 미만이면 예외를 던진다.")
-    void playerUpperBound() {
-        // give
-        final List<String> names = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9");
-
-        // when
-        // then
-        assertThatThrownBy(() -> new Players(names))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("8명 까지만 참여할 수 있습니다.");
-    }
 
     @Test
     @DisplayName("카드를 뽑을 수 있는 플레이어를 찾는다.")
     void findHitPlayer() {
         // give
-        final Players players = new Players(List.of("rick", "pobi"));
+        final Players players = new Players(List.of(
+                new Player("rick", 1000),
+                new Player("pobi", 1000)));
 
         // when
         final Player actual = players.findDrawablePlayer().get();
@@ -70,7 +31,10 @@ class PlayersTest {
     @DisplayName("이름으로 플레이어를 찾는다.")
     void findByName(String target) {
         // give
-        final Players players = new Players(List.of("rick", "pobi", "jason"));
+        final Players players = new Players(List.of(
+                new Player("rick", 1000),
+                new Player("pobi", 1000),
+                new Player("jason", 1000)));
 
         // when
         final Player actual = players.findByName(target);
@@ -83,8 +47,10 @@ class PlayersTest {
     @DisplayName("모든 플레이어들의 이름을 반환한다.")
     void getNames() {
         // give
-        final List<String> names = List.of("rick", "pobi", "jason");
-        final Players players = new Players(names);
+        final Players players = new Players(List.of(
+                new Player("rick", 1000),
+                new Player("pobi", 1000),
+                new Player("jason", 1000)));
 
         // when
         final List<String> actual = players.getNames();
