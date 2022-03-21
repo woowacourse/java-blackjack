@@ -1,23 +1,19 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.PlayingCards;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 
 public class Dealer extends AbstractPlayer implements Player {
 
-    public static final String NAME = "딜러";
-    public static final int HIT_MAX_POINT = 16;
+    private static final int HIT_MAX_POINT = 16;
+    private static final String NAME = "딜러";
 
-    public Dealer(String name, PlayingCards playingCards) {
-        super(name, playingCards);
+    public Dealer(String name, State state) {
+        super(name, state);
     }
 
     public Dealer() {
-        this(NAME, new PlayingCards());
-    }
-
-    @Override
-    public boolean isCanHit() {
-        return playingCards.sumPoints() < HIT_MAX_POINT;
+        this(NAME, new Ready());
     }
 
     @Override
@@ -26,16 +22,7 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isWin(Player player) {
-        if (player.isDealer()) {
-            return player.isWin(this);
-        }
-        if (player.isBlackJack() && !isBlackJack()) {
-            return false;
-        }
-        if (player.isBust() && !this.isBust()) {
-            return true;
-        }
-        return (player.isLose(playingCards.sumPoints())) && (!this.isBust());
+    protected int limitHit() {
+        return HIT_MAX_POINT;
     }
 }

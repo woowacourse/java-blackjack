@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
-import java.util.List;
+import java.util.Stack;
 
 public interface CardShuffleMachine {
 
-    void shuffle(List<PlayingCard> playingCards);
+    void shuffle(Stack<PlayingCard> playingCards);
 }

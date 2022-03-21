@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import blackjack.domain.card.PlayingCard;
-import blackjack.domain.result.GameResponse;
-import blackjack.domain.result.Match;
-import blackjack.domain.result.MatchResult;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.Results;
+import blackjack.domain.result.GameResponse;
+import blackjack.domain.result.Profit;
+import blackjack.domain.result.Profits;
 
 public class OutputView {
 
@@ -17,11 +16,10 @@ public class OutputView {
     private static final String RESULT_DELIMITER = ", ";
     private static final String DEALER = "딜러";
     private static final String SHARE_TWO_CARDS_GUIDE_MESSAGE = "에게 2장의 카드를 각각 나누었습니다.";
-    private static final String DEALER_MORE_CARD_GUIDE_MESSAGE = "딜러는 %d이하라 카드를 더 받았습니다.";
-    private static final String FINAL_WINNER_GUIDE_MESSAGE = "## 최종 승패";
+    private static final String DEALER_MORE_CARD_GUIDE_MESSAGE = "딜러는 16이하라 카드를 더 받았습니다.";
+    private static final String FINAL_WINNER_PROFIT_GUIDE_MESSAGE = "## 최종 수익";
     private static final String FINAL_POINT_GUIDE_MESSAGE = " - 결과";
     private static final char NEW_LINE = '\n';
-    private static final char FINAL_MATCH_DELIMITER = ' ';
     private static final int DELETE_FINAL_DELIMITER = 2;
 
     private OutputView() {
@@ -71,10 +69,9 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public static void announceHit(int number) {
+    public static void announceHit() {
         System.out.println();
-        System.out.printf(DEALER_MORE_CARD_GUIDE_MESSAGE, number);
-        System.out.println();
+        System.out.println(DEALER_MORE_CARD_GUIDE_MESSAGE);
     }
 
     public static void announceResultCards(List<GameResponse> gameResponses) {
@@ -83,7 +80,7 @@ public class OutputView {
             StringBuilder sb = new StringBuilder();
             accumulateCardResults(gameResponse, sb);
             sb.append(FINAL_POINT_GUIDE_MESSAGE + RESULT_START_DELIMITER)
-                    .append(gameResponse.getDeck().sumPoints());
+                    .append(gameResponse.getDeck().calculatePoints());
             System.out.println(sb);
         }
     }
@@ -100,22 +97,11 @@ public class OutputView {
         sb.deleteCharAt(sb.length() - DELETE_FINAL_DELIMITER);
     }
 
-    public static void announceResultWinner(Results results) {
-        System.out.println(NEW_LINE + FINAL_WINNER_GUIDE_MESSAGE);
-        for (Player player : results.getPlayers()) {
-            MatchResult result = results.getResult(player);
-            String matchResult = accumulateMatchResult(result.getMatch());
-            System.out.println(player.getName() + RESULT_START_DELIMITER + matchResult);
+    public static void announceResultProfit(Profits profits) {
+        System.out.println(NEW_LINE + FINAL_WINNER_PROFIT_GUIDE_MESSAGE);
+        Map<Player, Profit> playersProfit = profits.getPlayersProfit();
+        for (Player player : playersProfit.keySet()) {
+            System.out.println(player.getName() + RESULT_START_DELIMITER + playersProfit.get(player).getValue());
         }
-    }
-
-    private static String accumulateMatchResult(Map<Match, Integer> matchResult) {
-        StringBuilder sb = new StringBuilder();
-        for (Match match : matchResult.keySet()) {
-            sb.append(matchResult.get(match))
-                    .append(match.getResult())
-                    .append(FINAL_MATCH_DELIMITER);
-        }
-        return sb.toString();
     }
 }

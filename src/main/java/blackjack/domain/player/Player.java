@@ -2,26 +2,31 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
+import blackjack.domain.state.State;
 
 public interface Player {
 
-    void addCard(PlayingCard playingCard);
+    boolean isDealer();
 
-    boolean isBlackJack();
+    boolean isHit();
 
-    boolean isCanHit();
+    boolean isBlackjack();
 
     boolean isBust();
 
-    boolean isDealer();
+    boolean isDraw(PlayingCards playingCards);
 
-    boolean isWin(Player player);
+    boolean isLose(PlayingCards playingCards);
 
-    boolean isLose(int point);
+    boolean isRunning();
 
-    boolean isDraw(Player competitor);
+    void draw(PlayingCard playingCard);
+
+    void stay();
+
+    State getState();
+
+    PlayingCards playingCards();
 
     String getName();
-
-    PlayingCards getPlayingCards();
 }

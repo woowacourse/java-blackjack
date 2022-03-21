@@ -13,6 +13,7 @@ public class InputView {
     private static final String START_GAME_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String ASK_MORE_CARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String PLAYER_DELIMITER = ",";
+    private static final String BET_MONEY_GUIDE_MESSAGE = "의 배팅 금액은?";
 
     private InputView() {
     }
@@ -28,11 +29,20 @@ public class InputView {
         return names;
     }
 
-    public static String requestHit(String name) {
+    public static boolean requestHit(String name) {
         System.out.println(name + ASK_MORE_CARD);
         String answer = SCANNER.nextLine();
         InputValidator.inputBlank(answer);
         InputValidator.isAnswerFormat(answer);
-        return answer;
+        return answer.equals(InputValidator.HIT);
+    }
+
+    public static int inputBetMoney(String name) {
+        System.out.println(name + BET_MONEY_GUIDE_MESSAGE);
+        String number = SCANNER.nextLine();
+        InputValidator.inputBlank(number);
+        InputValidator.isDigit(number);
+        InputValidator.isBiggerThanZero(number);
+        return InputValidator.toInteger(number);
     }
 }

@@ -25,14 +25,14 @@ public class Players {
         return this.players.get(turn);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
     public Player getDealer() {
         return players.stream()
                 .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

@@ -1,49 +1,60 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.GameResponse;
-import blackjack.domain.result.Results;
+import blackjack.domain.result.Profits;
+import blackjack.domain.state.Ready;
 
 public class BlackjackGame {
 
     private final Deck deck;
     private final Players blackjackPlayers;
-    public BlackjackGame(Deck deck, Players players) {
+
+    private BlackjackGame(Deck deck, Players players) {
         this.deck = deck;
         this.blackjackPlayers = players;
     }
 
-    public static BlackjackGame of(Deck deck, List<String> playerNames) {
-        return new BlackjackGame(deck, initPlayers(playerNames));
+    public static BlackjackGame of(Deck deck, HashMap<String, Integer> playersBetMoney) {
+        return new BlackjackGame(deck, initPlayers(playersBetMoney));
     }
 
-    public void initGames(CardShuffleMachine playingCardShuffleMachine) {
-        initCards(playingCardShuffleMachine);
-    }
-
-    private static Players initPlayers(List<String> playerNames) {
+    private static Players initPlayers(HashMap<String, Integer> playersBetMoney) {
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
-        for (String playerName : playerNames) {
-            players.add(new Guest(playerName, new PlayingCards()));
+        for (String playerName : playersBetMoney.keySet()) {
+            players.add(new Guest(playerName, new Ready(), playersBetMoney.get(playerName)));
         }
         return new Players(players);
     }
 
-    private void initCards(CardShuffleMachine playingCardShuffleMachine) {
+    public void initGames(CardShuffleMachine playingCardShuffleMachine) {
+        deck.shuffle(playingCardShuffleMachine);
+        initCards();
+    }
+
+    private void initCards() {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
-            blackjackPlayer.addCard(deck.assignCard(playingCardShuffleMachine));
-            blackjackPlayer.addCard(deck.assignCard(playingCardShuffleMachine));
+            blackjackPlayer.draw(deck.assignCard());
+            blackjackPlayer.draw(deck.assignCard());
         }
+    }
+
+    public void assignCard(Player player) {
+        player.draw(deck.assignCard());
+    }
+
+    public Profits calculateProfits() {
+        return Profits.of(blackjackPlayers);
     }
 
     public boolean isExistNextPlayer() {
@@ -59,42 +70,11 @@ public class BlackjackGame {
         if (player.isDealer()) {
             return false;
         }
-        return player.isCanHit();
+        return player.isHit();
     }
 
     public boolean isTurnDealer() {
-        Player dealer = this.getDealer();
-        return dealer.isCanHit();
-    }
-
-    public void assignCard(Player player, CardShuffleMachine playingCardShuffleMachine) {
-        player.addCard(deck.assignCard(playingCardShuffleMachine));
-    }
-
-    public Results calculateResult(Players players) {
-        Results results = Results.from(players);
-        results.competeDealerWithPlayers();
-        return results;
-    }
-
-    public List<GameResponse> getPlayersGameResponses() {
-        List<GameResponse> gameResponses = new ArrayList<>();
-        for (Player player : blackjackPlayers.getPlayers()) {
-            gameResponses.add(new GameResponse(player.getName(), player.getPlayingCards()));
-        }
-        return gameResponses;
-    }
-
-    public List<GameResponse> getTurnPlayerGameResponse() {
-        List<GameResponse> gameResponses = new ArrayList<>();
-        GameResponse gameResponse = new GameResponse(blackjackPlayers.turnPlayer().getName(),
-                blackjackPlayers.turnPlayer().getPlayingCards());
-        gameResponses.add(gameResponse);
-        return gameResponses;
-    }
-
-    public Players getPlayers() {
-        return blackjackPlayers;
+        return this.getDealer().isHit();
     }
 
     public Player getTurnPlayer() {
@@ -103,5 +83,25 @@ public class BlackjackGame {
 
     public Player getDealer() {
         return blackjackPlayers.getDealer();
+    }
+
+    public Players getPlayers() {
+        return blackjackPlayers;
+    }
+
+    public List<GameResponse> getPlayersGameResponses() {
+        List<GameResponse> gameResponses = new ArrayList<>();
+        for (Player player : blackjackPlayers.getPlayers()) {
+            gameResponses.add(new GameResponse(player.getName(), player.playingCards()));
+        }
+        return gameResponses;
+    }
+
+    public List<GameResponse> getTurnPlayerGameResponse() {
+        List<GameResponse> gameResponses = new ArrayList<>();
+        GameResponse gameResponse = new GameResponse(blackjackPlayers.turnPlayer().getName(),
+                blackjackPlayers.turnPlayer().playingCards());
+        gameResponses.add(gameResponse);
+        return gameResponses;
     }
 }

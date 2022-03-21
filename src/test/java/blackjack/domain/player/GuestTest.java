@@ -1,8 +1,5 @@
 package blackjack.domain.player;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +8,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.PlayingCards;
+import blackjack.domain.Fixtures;
+import blackjack.domain.result.Match;
+import blackjack.domain.state.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,99 +19,87 @@ class GuestTest {
     @Test
     @DisplayName("guest 객체 생성 확인")
     void createGuest() {
-        Guest guest = new Guest("guest", new PlayingCards());
+        Guest guest = Fixtures.guest;
 
         assertThat(guest).isInstanceOf(Guest.class);
     }
 
     @Test
-    @DisplayName("카드를 할당 받았는지 확인")
-    void checkAddCardToDeck() {
-        Guest guest = new Guest("guest", new PlayingCards());
-        PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.FOUR);
-        guest.addCard(playingCard);
-
-        Guest compareGuest = new Guest("compare_guest", new PlayingCards());
-        compareGuest.addCard(playingCard);
-
-        assertThat(guest).isEqualTo(compareGuest);
-    }
-
-    @Test
     @DisplayName("게스트가 Bust인 경우")
     void checkGuestIsBust() {
-        Set<PlayingCard> cards = new HashSet<>();
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.TWO));
+        Guest guest = new Guest("guest", new Ready(), 100);
+        guest.draw(Fixtures.SPADE_JACK);
+        guest.draw(Fixtures.SPADE_NINE);
+        guest.draw(Fixtures.SPADE_EIGHT);
 
-        Guest guest = new Guest("guest", new PlayingCards(cards));
-        assertThat(guest.isBust()).isTrue();
+        if (guest.isRunning()) {
+            guest.stay();
+        }
+        assertThat(guest.getState().getClass()).isEqualTo(Bust.class);
+    }
+
+
+    @Test
+    @DisplayName("게스트가 Bust가 아닌 경우: 21인 경우")
+    void checkGuestIsNotBustAndMaxPoint() {
+        Guest guest = new Guest("guest", new Ready(), 100);
+        guest.draw(Fixtures.SPADE_JACK);
+        guest.draw(Fixtures.SPADE_NINE);
+        guest.draw(Fixtures.SPADE_TWO);
+        if (guest.isRunning()) {
+            guest.stay();
+        }
+
+        assertThat(guest.getState().getClass()).isEqualTo(Stay.class);
     }
 
     @Test
-    @DisplayName("게스트가 Bust가 아닌 경우")
+    @DisplayName("게스트가 Bust가 아닌 경우: 21보다 작은 경우")
     void checkGuestIsNotBust() {
-        Set<PlayingCard> cards = new HashSet<>();
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
+        Guest guest = new Guest("guest", new Ready(), 100);
+        guest.draw(Fixtures.SPADE_JACK);
+        guest.draw(Fixtures.SPADE_EIGHT);
+        guest.draw(Fixtures.SPADE_TWO);
+        if (!guest.isRunning()) {
+            guest.stay();
+        }
 
-        Guest guest = new Guest("guest", new PlayingCards(cards));
-        assertThat(guest.isBust()).isFalse();
+        assertThat(guest.getState().getClass()).isEqualTo(Hit.class);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"SPADE:TWO:JACK:false", "SPADE:JACK:TWO:true"}, delimiter = ':')
+    @CsvSource(value = {"SPADE:TWO:JACK:LOSE", "SPADE:JACK:TWO:WIN"}, delimiter = ':')
     @DisplayName("플레이어 승패 확인")
-    void checkPlayerResult(Suit suit, Denomination denomination, Denomination secondDenomination, boolean expected) {
-        Set<PlayingCard> guestCards = new HashSet<>();
-        guestCards.add(new PlayingCard(suit, denomination));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
+    void checkPlayerResult(Suit suit, Denomination denomination, Denomination secondDenomination, Match expected) {
+        Guest guest = new Guest("guest", new Ready(), 100);
+        guest.draw(new PlayingCard(suit, denomination));
+        if (guest.isRunning()) {
+            guest.stay();
+        }
+        Dealer dealer = new Dealer();
+        dealer.draw(new PlayingCard(suit, secondDenomination));
 
-        Set<PlayingCard> dealerCards = new HashSet<>();
-        dealerCards.add(new PlayingCard(suit, secondDenomination));
-        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
-
-        assertThat(guest.isWin(dealer)).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"SPADE:JACK:JACK", "SPADE:ACE:ACE"}, delimiter = ':')
-    @DisplayName("플레이어와 딜러 무승부 확인")
-    void checkPlayerDraw(Suit suit, Denomination denomination, Denomination secondDenomination) {
-        Set<PlayingCard> guestCards = new HashSet<>();
-        guestCards.add(new PlayingCard(suit, denomination));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
-
-        Set<PlayingCard> dealerCards = new HashSet<>();
-        dealerCards.add(new PlayingCard(suit, secondDenomination));
-        Dealer dealer = new Dealer("딜러", new PlayingCards(dealerCards));
-
-        assertThat(dealer.isDraw(guest)).isTrue();
+        assertThat(guest.getState().matchResult(dealer)).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("게스트 Hit 확인: 넘치지 않은 경우")
     void checkGuestCanHit() {
-        Set<PlayingCard> guestCards = new HashSet<>();
-        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
+        Guest guest = Fixtures.guest;
+        guest.draw(Fixtures.SPADE_NINE);
+        guest.draw(Fixtures.SPADE_ACE);
 
-        assertThat(guest.isCanHit()).isTrue();
+        assertThat(guest.isHit()).isTrue();
     }
 
     @Test
     @DisplayName("게스트 Hit 확인: 넘친 경우")
     void checkGuestCantHit() {
-        Set<PlayingCard> guestCards = new HashSet<>();
-        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
-        guestCards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        guestCards.add(new PlayingCard(Suit.CLUB, Denomination.ACE));
-        Guest guest = new Guest("guest", new PlayingCards(guestCards));
+        Guest guest = new Guest("guest", new Ready(), 100);
+        guest.draw(Fixtures.SPADE_NINE);
+        guest.draw(Fixtures.SPADE_EIGHT);
+        guest.draw(Fixtures.SPADE_JACK);
 
-        assertThat(guest.isCanHit()).isFalse();
+        assertThat(guest.isHit()).isFalse();
     }
 }

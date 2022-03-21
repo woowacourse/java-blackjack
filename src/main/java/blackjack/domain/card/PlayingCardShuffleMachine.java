@@ -1,12 +1,12 @@
 package blackjack.domain.card;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class PlayingCardShuffleMachine implements CardShuffleMachine {
 
     @Override
-    public void shuffle(List<PlayingCard> playingCards) {
+    public void shuffle(Stack<PlayingCard> playingCards) {
         Collections.shuffle(playingCards);
     }
 }

@@ -1,32 +1,31 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class PlayingCards {
 
     private static final int BLACKJACK_POINT = 21;
-    private static final int ACE_ELEVEN_POSSIBLE = 10;
+    private static final int MAX_POINT = 21;
+    private static final int ACE_BONUS = 10;
     private static final int BLACKJACK_SIZE = 2;
 
-    private final Set<PlayingCard> cards;
+    private final List<PlayingCard> cards;
 
-    public PlayingCards(Set<PlayingCard> cards) {
-        this.cards = new HashSet<>(cards);
+    public PlayingCards(List<PlayingCard> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public PlayingCards() {
-        this(new LinkedHashSet<>());
+        this(new ArrayList<>());
     }
 
-    public void addCard(PlayingCard playingCard) {
+    public PlayingCards addCard(PlayingCard playingCard) {
         cards.add(playingCard);
+        return this;
     }
 
-    public int sumPoints() {
-        int points = sumCardPointWithAceIsOne();
+    public int calculatePoints() {
+        int points = sumCardPoint();
         boolean aceExist = cards.stream()
                 .anyMatch(PlayingCard::isAce);
         if (!aceExist) {
@@ -36,46 +35,48 @@ public class PlayingCards {
     }
 
     private int calculateAcePoint(int points) {
-        if (points + ACE_ELEVEN_POSSIBLE <= BLACKJACK_POINT) {
-            return points + ACE_ELEVEN_POSSIBLE;
+        if (points + ACE_BONUS <= BLACKJACK_POINT) {
+            return points + ACE_BONUS;
         }
         return points;
     }
 
-    private int sumCardPointWithAceIsOne() {
+    private int sumCardPoint() {
         return cards.stream()
                 .mapToInt(PlayingCard::getPoint)
                 .sum();
     }
 
+    public boolean isReady() {
+        return cards.size() < BLACKJACK_SIZE;
+    }
+
+    public boolean isBlackjack() {
+        return calculatePoints() == BLACKJACK_POINT && cards.size() == BLACKJACK_SIZE;
+    }
+
+    public boolean isMaxPoint() {
+        return calculatePoints() == MAX_POINT;
+    }
+
     public boolean isBust() {
-        return sumPoints() > BLACKJACK_POINT;
+        return calculatePoints() > BLACKJACK_POINT;
     }
 
-    public boolean isHit() {
-        return sumPoints() < BLACKJACK_POINT;
-    }
-
-    public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_SIZE && sumPoints() == BLACKJACK_POINT;
-    }
-
-    public Set<PlayingCard> getCards() {
-        return Collections.unmodifiableSet(cards);
+    public List<PlayingCard> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        PlayingCards playingCards = (PlayingCards) o;
-
-        return this.cards != null ? this.cards.equals(playingCards.cards) : playingCards.cards == null;
+        PlayingCards that = (PlayingCards) o;
+        return Objects.equals(cards, that.cards);
     }
 
     @Override
     public int hashCode() {
-        return cards != null ? cards.hashCode() : 0;
+        return Objects.hash(cards);
     }
 }

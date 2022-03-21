@@ -1,15 +1,12 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Deck {
 
-    private static final List<PlayingCard> PLAYING_CARDS = new ArrayList<>();
-    private static final int POP = 0;
+    private static final Stack<PlayingCard> PLAYING_CARDS = new Stack<>();
 
-    private final List<PlayingCard> playingCards;
+    private final Stack<PlayingCard> playingCards;
 
     static {
         for (Suit suit : Suit.values()) {
@@ -18,31 +15,36 @@ public class Deck {
         }
      }
 
-    public Deck(List<PlayingCard> playingCards) {
-        this.playingCards = new ArrayList<>(playingCards);
+    public Deck(Stack<PlayingCard> playingCards) {
+        this.playingCards = playingCards;
     }
 
     public static Deck create() {
         return new Deck(PLAYING_CARDS);
     }
 
-    public PlayingCard assignCard(CardShuffleMachine playingCardShuffleMachine) {
+    public void shuffle(CardShuffleMachine playingCardShuffleMachine) {
         playingCardShuffleMachine.shuffle(playingCards);
-        return playingCards.remove(POP);
+    }
+
+    public PlayingCard assignCard() {
+        return pickCard();
+    }
+
+    private PlayingCard pickCard() {
+        return playingCards.pop();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Deck deck = (Deck) o;
-
-        return playingCards != null ? playingCards.equals(deck.playingCards) : deck.playingCards == null;
+        return Objects.equals(playingCards, deck.playingCards);
     }
 
     @Override
     public int hashCode() {
-        return playingCards != null ? playingCards.hashCode() : 0;
+        return Objects.hash(playingCards);
     }
 }

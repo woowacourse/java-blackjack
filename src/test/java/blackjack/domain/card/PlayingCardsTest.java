@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.Fixtures;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayingCardsTest {
@@ -24,10 +26,9 @@ class PlayingCardsTest {
     @Test
     @DisplayName("cards에 card 더하는 로직 확인")
     void checkAddCard() {
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
-
+        playingCards.addCard(Fixtures.SPADE_ACE);
         PlayingCards comparedPlayingCards = new PlayingCards();
-        comparedPlayingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
+        comparedPlayingCards.addCard(Fixtures.SPADE_ACE);
 
         assertThat(playingCards).isEqualTo(comparedPlayingCards);
     }
@@ -35,44 +36,44 @@ class PlayingCardsTest {
     @Test
     @DisplayName("보유한 card 2개일 때 점수 합산")
     void checkSumDeckCardsPoint() {
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.TWO));
-        int sumPoint = playingCards.sumPoints();
+        playingCards.addCard(Fixtures.SPADE_ACE);
+        playingCards.addCard(Fixtures.SPADE_TWO);
+        int sumPoint = playingCards.calculatePoints();
 
-        assertThat(sumPoint).isEqualTo(10);
+        assertThat(sumPoint).isEqualTo(13);
     }
 
     @Test
     @DisplayName("보유한 card 3개일 때 점수 합산")
     void checkSumDeckThreeCardsPoint() {
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.TWO));
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        int sumPoint = playingCards.sumPoints();
+        playingCards.addCard(Fixtures.SPADE_ACE);
+        playingCards.addCard(Fixtures.SPADE_TWO);
+        playingCards.addCard(Fixtures.SPADE_JACK);
+        int sumPoint = playingCards.calculatePoints();
 
-        assertThat(sumPoint).isEqualTo(20);
+        assertThat(sumPoint).isEqualTo(13);
     }
 
     @Test
-    @DisplayName("ace 4개 일때 점수 확인")
+    @DisplayName("ace 4개 일때, 점수 확인")
     void checkPointsForFourAces() {
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.HEART, Denomination.ACE));
-        int sumPoint = playingCards.sumPoints();
+        playingCards.addCard(Fixtures.SPADE_ACE);
+        playingCards.addCard(Fixtures.CLUB_ACE);
+        playingCards.addCard(Fixtures.DIAMOND_ACE);
+        playingCards.addCard(Fixtures.HEART_ACE);
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(14);
     }
 
     @Test
-    @DisplayName("ace 3개 일때 13점 점수 확인")
+    @DisplayName("ace 3개 일때, 점수 확인")
     void checkPointsForThreeAces() {
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.TWO));
-        int sumPoint = playingCards.sumPoints();
+        playingCards.addCard(Fixtures.SPADE_ACE);
+        playingCards.addCard(Fixtures.CLUB_ACE);
+        playingCards.addCard(Fixtures.DIAMOND_ACE);
+        playingCards.addCard(Fixtures.SPADE_TWO);
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(15);
     }
@@ -80,10 +81,10 @@ class PlayingCardsTest {
     @Test
     @DisplayName("ace 2개 일때 12점 점수 확인")
     void checkPointsForTwoAces() {
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.NINE));
-        int sumPoint = playingCards.sumPoints();
+        playingCards.addCard(Fixtures.CLUB_ACE);
+        playingCards.addCard(Fixtures.DIAMOND_ACE);
+        playingCards.addCard(Fixtures.SPADE_NINE);
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(21);
     }
@@ -91,40 +92,11 @@ class PlayingCardsTest {
     @Test
     @DisplayName("ace 2개 일때 2점 점수 확인")
     void checkPointsForTwoAcesIfBust() {
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.JACK));
-        int sumPoint = playingCards.sumPoints();
+        playingCards.addCard(Fixtures.DIAMOND_ACE);
+        playingCards.addCard(Fixtures.CLUB_ACE);
+        playingCards.addCard(Fixtures.SPADE_JACK);
+        int sumPoint = playingCards.calculatePoints();
 
         assertThat(sumPoint).isEqualTo(12);
-    }
-
-    @Test
-    @DisplayName("Bust인지 확인")
-    void checkIsBust() {
-        playingCards.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
-        playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.JACK));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.JACK));
-
-        assertThat(playingCards.isBust()).isTrue();
-    }
-
-    @Test
-    @DisplayName("블랙잭인 경우")
-    void checkBlackJack() {
-        playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.JACK));
-
-        assertThat(playingCards.isBlackJack()).isTrue();
-    }
-
-    @Test
-    @DisplayName("점수가 21점이지만, 블랙잭이 아닌 경우")
-    void checkNotBlackJack() {
-        playingCards.addCard(new PlayingCard(Suit.CLUB, Denomination.ACE));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.THREE));
-        playingCards.addCard(new PlayingCard(Suit.DIAMOND, Denomination.SEVEN));
-
-        assertThat(playingCards.isBlackJack()).isFalse();
     }
 }
