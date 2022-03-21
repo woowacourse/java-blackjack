@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.joining;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.RevenueResultResponse;
+import blackjack.dto.BettingReturnResponse;
 import java.util.List;
 
 public class OutputView {
@@ -77,9 +77,9 @@ public class OutputView {
         return card.getDenomination() + card.getSuit();
     }
 
-    public static void printRevenueResultResponse(RevenueResultResponse revenueResultResponse) {
-        String dealerRevenueMessage = revenueResultResponse.getDealerRevenueMessage();
-        List<String> playersRevenueMessage = revenueResultResponse.getPlayersRevenueMessage();
+    public static void printRevenueResultResponse(BettingReturnResponse bettingReturnResponse) {
+        String dealerRevenueMessage = bettingReturnResponse.getDealerRevenueMessage();
+        List<String> playersRevenueMessage = bettingReturnResponse.getPlayersRevenueMessage();
         out.println(OutputView.BLACKJACK_GAME_RESULT_MESSAGE);
         out.println(dealerRevenueMessage);
         for (String playerRevenueMessage : playersRevenueMessage) {

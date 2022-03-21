@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.constant.MatchResult;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,21 +18,25 @@ public class BettingReturn {
         this.dealerReturn = dealerReturn;
     }
 
-    public static BettingReturn of(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
-        Map<String, Integer> playersReturns = calculatePlayerReturn(scoreBoard, bettingMonies);
-        int dealerReturn = calculateDealerReturn(playersReturns);
-        return new BettingReturn(playersReturns, dealerReturn);
+    public static BettingReturn of(Dealer dealer, List<Player> players) {
+        Map<String, Integer> playersReturn = calculatePlayersReturn(dealer, players);
+        int dealerReturn = calculateDealerReturn(playersReturn);
+        return new BettingReturn(playersReturn, dealerReturn);
     }
 
-    private static Map<String, Integer> calculatePlayerReturn(ScoreBoard scoreBoard, List<BettingMoney> bettingMonies) {
-        Map<String, Integer> playersReturns = new LinkedHashMap<>();
-        for (BettingMoney bettingMoney : bettingMonies) {
-            String playerName = bettingMoney.getOwnerName();
-            MatchResult playerMatchResult = scoreBoard.findPlayerMatchResult(playerName);
-            int earning = playerMatchResult.getEarnings(bettingMoney.getValue());
-            playersReturns.put(playerName, earning);
+    public static BettingReturn of(Dealer dealer, Player... players) {
+        return of(dealer, List.of(players));
+    }
+
+    private static Map<String, Integer> calculatePlayersReturn(Dealer dealer, List<Player> players) {
+        Map<String, Integer> playersReturn = new LinkedHashMap<>();
+        for (Player player : players) {
+            int playerBettingAmount = player.bettingAmount();
+            MatchResult matchResult = player.match(dealer);
+            int playerReturn = matchResult.getReturn(playerBettingAmount);
+            playersReturn.put(player.getName(), playerReturn);
         }
-        return playersReturns;
+        return playersReturn;
     }
 
     private static int calculateDealerReturn(Map<String, Integer> playersEarnings) {

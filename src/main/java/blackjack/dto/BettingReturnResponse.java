@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class RevenueResultResponse {
+public class BettingReturnResponse {
 
     private String dealerRevenueMessage;
     private List<String> playersRevenueMessage = new ArrayList<>();
 
-    private RevenueResultResponse(BettingReturn bettingReturn) {
+    private BettingReturnResponse(BettingReturn bettingReturn) {
         makeDealerRevenueMessage(bettingReturn);
         makePlayersRevenueMessage(bettingReturn);
     }
 
-    public static RevenueResultResponse from(BettingReturn bettingReturn) {
-        return new RevenueResultResponse(bettingReturn);
+    public static BettingReturnResponse from(BettingReturn bettingReturn) {
+        return new BettingReturnResponse(bettingReturn);
     }
 
     private void makeDealerRevenueMessage(BettingReturn bettingReturn) {

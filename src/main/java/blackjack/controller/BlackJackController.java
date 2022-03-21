@@ -2,11 +2,10 @@ package blackjack.controller;
 
 import static blackjack.dto.Command.HIT;
 
-import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.RevenueResultResponse;
+import blackjack.dto.BettingReturnResponse;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -28,13 +27,11 @@ public class BlackJackController {
         return players;
     }
 
-    public static List<BettingMoney> receiveBettingMoney(List<Player> players) {
-        List<BettingMoney> bettingMonies = new ArrayList<>();
+    public static void placeBetting(List<Player> players) {
         for (Player player : players) {
-            BettingMoney bettingMoney = InputView.inputBettingMoney(player);
-            bettingMonies.add(bettingMoney);
+            int bettingAmount = InputView.inputBettingAmount(player);
+            player.placeBet(bettingAmount);
         }
-        return bettingMonies;
     }
 
     public static void initiateParticipantsHand(Dealer dealer, List<Player> players, Deck deck) {
@@ -76,7 +73,7 @@ public class BlackJackController {
         }
     }
 
-    public static void printRevenueResultResponse(RevenueResultResponse revenueResultResponse) {
-        OutputView.printRevenueResultResponse(revenueResultResponse);
+    public static void printBettingReturn(BettingReturnResponse bettingReturnResponse) {
+        OutputView.printRevenueResultResponse(bettingReturnResponse);
     }
 }

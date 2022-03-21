@@ -56,7 +56,7 @@ public enum MatchResult {
         return DRAW;
     }
 
-    public int getEarnings(int bettingMoney) {
+    public int getReturn(int bettingMoney) {
         return Double.valueOf(returnRate * bettingMoney)
                 .intValue();
     }
