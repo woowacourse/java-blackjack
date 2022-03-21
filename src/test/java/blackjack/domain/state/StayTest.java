@@ -1,14 +1,12 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import blackjack.domain.game.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.fixture.Fixture.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -21,7 +19,7 @@ class StayTest {
     void draw_exception() {
         Stay stay = new Stay(playingCards);
 
-        assertThatThrownBy(() -> stay.draw(Card.of(Denomination.KING, Suit.SPADE)))
+        assertThatThrownBy(() -> stay.draw(TEN))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("현재 상태는 draw 를 실행할 수 없습니다.");
     }
@@ -72,9 +70,7 @@ class StayTest {
     @Test
     void card_total() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(
-                Card.of(Denomination.KING, Suit.SPADE),
-                Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Stay stay = new Stay(playingCards);
 
         assertThat(stay.cardTotal()).isEqualTo(20);

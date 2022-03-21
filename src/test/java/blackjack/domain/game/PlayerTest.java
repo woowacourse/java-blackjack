@@ -1,27 +1,17 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.fixture.Fixture.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
-    private Player player;
-    private Card queenSpade;
-
-    @BeforeEach
-    void before() {
-        player = new Player("woowahan");
-        queenSpade = Card.of(Denomination.QUEEN, Suit.SPADE);
-    }
+    private Player player = new Player("woowahan");
 
     @DisplayName("딜러 이름과 동일한 이름을 입력할 경우 예외를 발생시킨다.")
     @Test
@@ -44,7 +34,7 @@ public class PlayerTest {
     @DisplayName("플레이어의 카드 합이 21 미만일 경우 카드를 받는 것을 확인한다.")
     @Test
     void is_drawable_true() {
-        player.deal(List.of(queenSpade, queenSpade));
+        player.deal(List.of(TEN, TEN));
 
         assertThat(player.isDrawable()).isTrue();
     }

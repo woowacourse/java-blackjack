@@ -1,25 +1,21 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.fixture.Fixture.ACE;
+import static blackjack.fixture.Fixture.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayingCardsTest {
-
-    private final Card aceSpade = Card.of(Denomination.ACE, Suit.SPADE);
-    private final Card queenSpade = Card.of(Denomination.QUEEN, Suit.SPADE);
 
     @DisplayName("카드들의 총합이 올바르게 계산되는지 확인한다.")
     @Test
     void calculate_total() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(queenSpade, queenSpade));
+        playingCards.add(List.of(TEN, TEN));
 
         assertThat(playingCards.total()).isEqualTo(20);
     }
@@ -28,7 +24,7 @@ public class PlayingCardsTest {
     @Test
     void is_over_blackjack() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(queenSpade, queenSpade, queenSpade));
+        playingCards.add(List.of(TEN, TEN, TEN));
 
         assertThat(playingCards.isBust()).isTrue();
     }
@@ -37,7 +33,7 @@ public class PlayingCardsTest {
     @Test
     void is_under_blackjack() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(queenSpade, queenSpade));
+        playingCards.add(List.of(TEN, TEN));
 
         assertThat(playingCards.isUnderBlackjack()).isTrue();
     }
@@ -46,7 +42,7 @@ public class PlayingCardsTest {
     @Test
     void is_blackjack() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(aceSpade, queenSpade));
+        playingCards.add(List.of(ACE, TEN));
 
         assertThat(playingCards.isBlackjack()).isTrue();
     }

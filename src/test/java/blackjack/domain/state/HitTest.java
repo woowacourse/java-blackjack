@@ -1,14 +1,13 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import blackjack.domain.game.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.fixture.Fixture.ACE;
+import static blackjack.fixture.Fixture.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -18,10 +17,10 @@ class HitTest {
     @Test
     void draw_hit() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.ACE, Suit.SPADE), Card.of(Denomination.ACE, Suit.SPADE)));
+        playingCards.add(List.of(ACE, ACE));
         Hit hit = new Hit(playingCards);
 
-        State state = hit.draw(Card.of(Denomination.ACE, Suit.SPADE));
+        State state = hit.draw(ACE);
 
         assertThat(state).isInstanceOf(Hit.class);
     }
@@ -30,10 +29,10 @@ class HitTest {
     @Test
     void draw_bust() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
-        State state = hit.draw(Card.of(Denomination.KING, Suit.SPADE));
+        State state = hit.draw(TEN);
 
         assertThat(state).isInstanceOf(Bust.class);
     }
@@ -42,7 +41,7 @@ class HitTest {
     @Test
     void stay() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
         State state = hit.stay();
@@ -54,7 +53,7 @@ class HitTest {
     @Test
     void is_running() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
         assertThat(hit.isRunning()).isTrue();
@@ -64,7 +63,7 @@ class HitTest {
     @Test
     void is_finished() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
         assertThat(hit.isFinished()).isFalse();
@@ -74,7 +73,7 @@ class HitTest {
     @Test
     void is_blackjack() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
         assertThat(hit.isBlackjack()).isFalse();
@@ -84,7 +83,7 @@ class HitTest {
     @Test
     void is_bust() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
         assertThat(hit.isBust()).isFalse();
@@ -94,7 +93,7 @@ class HitTest {
     @Test
     void get_earning_rate_exception() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
         assertThatThrownBy(hit::getEarningRate)
@@ -106,7 +105,7 @@ class HitTest {
     @Test
     void decide_rate_exception() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(Card.of(Denomination.KING, Suit.SPADE), Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
         assertThatThrownBy(() -> hit.decideRate(1))
@@ -118,9 +117,7 @@ class HitTest {
     @Test
     void card_total() {
         PlayingCards playingCards = new PlayingCards();
-        playingCards.add(List.of(
-                Card.of(Denomination.KING, Suit.SPADE),
-                Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Hit hit = new Hit(playingCards);
 
         assertThat(hit.cardTotal()).isEqualTo(20);

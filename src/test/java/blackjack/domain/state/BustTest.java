@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.fixture.Fixture.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -21,7 +22,7 @@ class BustTest {
     void draw_exception() {
         Bust bust = new Bust(playingCards);
 
-        assertThatThrownBy(() -> bust.draw(Card.of(Denomination.KING, Suit.SPADE)))
+        assertThatThrownBy(() -> bust.draw(TEN))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("현재 상태는 draw 를 실행할 수 없습니다.");
     }
@@ -71,10 +72,7 @@ class BustTest {
     @DisplayName("카드 총합을 확인한다.")
     @Test
     void card_total() {
-        playingCards.add(List.of(
-                Card.of(Denomination.KING, Suit.SPADE),
-                Card.of(Denomination.KING, Suit.SPADE),
-                Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN, TEN));
         Bust bust = new Bust(playingCards);
 
         assertThat(bust.cardTotal()).isEqualTo(30);

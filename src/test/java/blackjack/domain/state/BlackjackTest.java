@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.fixture.Fixture.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -71,9 +72,7 @@ class BlackjackTest {
     @DisplayName("카드 총합을 확인한다.")
     @Test
     void card_total() {
-        playingCards.add(List.of(
-                Card.of(Denomination.KING, Suit.SPADE),
-                Card.of(Denomination.KING, Suit.SPADE)));
+        playingCards.add(List.of(TEN, TEN));
         Blackjack blackjack = new Blackjack(playingCards);
 
         assertThat(blackjack.cardTotal()).isEqualTo(20);

@@ -1,11 +1,10 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static blackjack.fixture.Fixture.ACE;
+import static blackjack.fixture.Fixture.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -16,7 +15,7 @@ class ReadyTest {
     void draw_ready() {
         Ready ready = new Ready();
 
-        assertThat(ready.draw(Card.of(Denomination.KING, Suit.SPADE)))
+        assertThat(ready.draw(TEN))
                 .isInstanceOf(Ready.class);
     }
 
@@ -25,8 +24,8 @@ class ReadyTest {
     void draw_hit() {
         Ready ready = new Ready();
 
-        assertThat(ready.draw(Card.of(Denomination.KING, Suit.SPADE))
-                .draw(Card.of(Denomination.KING, Suit.SPADE)))
+        assertThat(ready.draw(TEN)
+                .draw(TEN))
                 .isInstanceOf(Hit.class);
     }
 
@@ -35,8 +34,8 @@ class ReadyTest {
     void draw_blackjack() {
         Ready ready = new Ready();
 
-        assertThat(ready.draw(Card.of(Denomination.ACE, Suit.SPADE))
-                .draw(Card.of(Denomination.KING, Suit.SPADE)))
+        assertThat(ready.draw(ACE)
+                .draw(TEN))
                 .isInstanceOf(Blackjack.class);
     }
 
@@ -115,8 +114,8 @@ class ReadyTest {
     void card_total() {
         Ready ready = new Ready();
 
-        ready.draw(Card.of(Denomination.KING, Suit.SPADE));
-        ready.draw(Card.of(Denomination.KING, Suit.SPADE));
+        ready.draw(TEN);
+        ready.draw(TEN);
 
         assertThat(ready.cardTotal()).isEqualTo(20);
     }
