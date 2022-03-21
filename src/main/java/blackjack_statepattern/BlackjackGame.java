@@ -31,7 +31,7 @@ public final class BlackjackGame {
 
     private BetMoney askBetMoney(String name) {
         try {
-            return new BetMoney(InputView.askBetMoney(name));
+            return BetMoney.of(InputView.askBetMoney(name));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return askBetMoney(name);

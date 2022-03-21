@@ -4,23 +4,27 @@ public class BetMoney {
 
     private final int amount;
 
-    public BetMoney(String inputValue) {
+    private BetMoney(int inputValue) {
         validateBetMoney(inputValue);
-        this.amount = Integer.parseInt(inputValue);
+        this.amount = inputValue;
     }
 
-    private void validateBetMoney(String inputValue) {
-        int amount = checkInteger(inputValue);
-        checkNotNegative(amount);
+    public static BetMoney of(int value) {
+        return new BetMoney(value);
     }
 
-    private void checkNotNegative(int amount) {
+    public static BetMoney of(String text) {
+        int value = checkInteger(text);
+        return new BetMoney(value);
+    }
+
+    private void validateBetMoney(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("[ERROR] 베팅 금액은 음수가 될 수 없습니다.");
         }
     }
 
-    private int checkInteger(String amount) {
+    private static int checkInteger(String amount) {
         try {
             return Integer.parseInt(amount);
         } catch (NumberFormatException e) {
