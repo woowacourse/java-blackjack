@@ -49,7 +49,6 @@ public class Application {
         }
     }
 
-
     private static void playerTurn(BlackjackGame blackjackGame, Player player) {
         while (!player.isFinished() && InputView.inputOneMoreCard(player)) {
             blackjackGame.takeMoreCard(player);
