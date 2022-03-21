@@ -1,5 +1,6 @@
 package blackjack.model.state.created;
 
+import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.state.State;
 import java.util.List;
@@ -17,8 +18,8 @@ public abstract class Created implements State {
     }
 
     @Override
-    public List<String> getCards() {
-        return cards.getCardNames();
+    public List<Card> getCards() {
+        return cards.getValues();
     }
 
     @Override

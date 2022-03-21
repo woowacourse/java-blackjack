@@ -13,7 +13,7 @@ public class Card {
         return cardNumber;
     }
 
-    public String getNumberAndSymbol() {
-        return cardNumber.getValueForPrint() + cardSymbol.getValue();
+    public CardSymbol getSymbol() {
+        return cardSymbol;
     }
 }

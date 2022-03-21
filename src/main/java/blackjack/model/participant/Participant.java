@@ -1,10 +1,11 @@
 package blackjack.model.participant;
 
+import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.game.GameSign;
 import blackjack.model.game.TurnProgress;
-import blackjack.model.state.running.Ready;
 import blackjack.model.state.State;
+import blackjack.model.state.running.Ready;
 import java.util.List;
 
 public abstract class Participant {
@@ -30,7 +31,7 @@ public abstract class Participant {
         return name;
     }
 
-    public List<String> getCards() {
+    public List<Card> getCards() {
         return state.getCards();
     }
 

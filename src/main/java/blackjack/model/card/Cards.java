@@ -46,9 +46,8 @@ public class Cards {
         return sumScore() > FINISH_SCORE;
     }
 
-    public List<String> getCardNames() {
+    public List<Card> getValues() {
         return values.stream()
-                .map(Card::getNumberAndSymbol)
                 .collect(Collectors.toUnmodifiableList());
     }
 }

@@ -16,7 +16,7 @@ public interface State {
 
     BettingRate calculateBettingRate(State otherState);
 
-    List<String> getCards();
+    List<Card> getCards();
 
     int getScore();
 

@@ -1,54 +1,80 @@
 package blackjack.view;
 
 import blackjack.model.BettingResult;
+import blackjack.model.card.Card;
 import blackjack.model.participant.Participant;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String PARTICIPANT_START_RESULT_FORMAT = "%s에게 2장의 카드를 나누었습니다.%n";
-    private static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
-    private static final String PARTICIPANT_SCORE_RESULT_FORMAT = "%s: %s - 결과: %d";
+    private static final String PARTICIPANT_NAME_PRINT_FORMAT = "%s";
+    private static final String PARTICIPANT_CARD_PRINT_FORMAT = ": %s ";
+    private static final String PARTICIPANT_SCORE_PRINT_FORMAT = "- 결과: %d";
+    private static final String PARTICIPANT_PROFIT_PRINT_FORMAT = ": %d";
 
     private static final String JOINER = ", ";
 
     public static void printStartResult(List<Participant> participants) {
+        System.out.printf(PARTICIPANT_NAME_PRINT_FORMAT, joinNames(participants) + "에게 2장의 카드를 나누었습니다.");
         System.out.println();
-        System.out.printf(PARTICIPANT_START_RESULT_FORMAT, joinParticipantNames(participants));
-        participants.forEach(OutputView::printParticipantCardsResult);
+        participants.forEach(participant -> {
+            printNameResult(participant.getName());
+            printCardsResult(participant.getCards());
+            System.out.println();
+        });
     }
 
-    private static String joinParticipantNames(List<Participant> participants) {
+    private static String joinNames(List<Participant> participants) {
         return participants.stream()
                 .map(Participant::getName)
                 .collect(Collectors.joining(JOINER));
     }
 
-    public static void printParticipantCardsResult(Participant participant) {
-        System.out.printf(PARTICIPANT_RESULT_FORMAT, participant.getName(),
-                String.join(JOINER, participant.getCards()));
+    public static void printTurnResult(Participant participant) {
+        printNameResult(participant.getName());
+        printCardsResult(participant.getCards());
         System.out.println();
     }
 
-    public static void printParticipantsScoreResult(List<Participant> participants) {
+    public static void printFinishResult(List<Participant> participants) {
         System.out.println();
-        participants.forEach(OutputView::printParticipantScoreResult);
+        participants.forEach(participant -> {
+            printNameResult(participant.getName());
+            printCardsResult(participant.getCards());
+            printScoreResult(participant.getScore());
+            System.out.println();
+        });
     }
 
-    private static void printParticipantScoreResult(Participant participant) {
-        System.out.printf(PARTICIPANT_SCORE_RESULT_FORMAT, participant.getName(),
-                String.join(JOINER, participant.getCards()), participant.getScore());
-        System.out.println();
-    }
-
-    public static void printParticipantsBettingResult(BettingResult bettingResult) {
+    public static void printBettingResult(BettingResult bettingResults) {
         System.out.println();
         System.out.println("## 최종 수익");
-        bettingResult.getResult().forEach(OutputView::printParticipantBettingResult);
+        bettingResults.getResult().forEach((name, profit) -> {
+            printNameResult(name);
+            printProfitResult(profit);
+            System.out.println();
+        });
     }
 
-    private static void printParticipantBettingResult(String name, Double money) {
-        System.out.printf(PARTICIPANT_RESULT_FORMAT, name, money.intValue());
-        System.out.println();
+    private static void printNameResult(String name) {
+        System.out.printf(PARTICIPANT_NAME_PRINT_FORMAT, name);
+    }
+
+    private static void printCardsResult(List<Card> cards) {
+        System.out.printf(PARTICIPANT_CARD_PRINT_FORMAT, joinCards(cards));
+    }
+
+    private static String joinCards(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getNumber().getValueForPrint() + card.getSymbol().getValue())
+                .collect(Collectors.joining(JOINER));
+    }
+
+    private static void printScoreResult(int score) {
+        System.out.printf(PARTICIPANT_SCORE_PRINT_FORMAT, score);
+    }
+
+    private static void printProfitResult(Double profit) {
+        System.out.printf(PARTICIPANT_PROFIT_PRINT_FORMAT, profit.intValue());
     }
 }
