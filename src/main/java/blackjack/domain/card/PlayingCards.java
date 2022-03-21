@@ -21,8 +21,32 @@ public class PlayingCards {
         playingCards.add(playingCard);
     }
 
+    public boolean isBlackjack() {
+        return isCardSumBlackjack() && hasCardJustTwo();
+    }
+
+    private boolean isCardSumBlackjack() {
+        return getCardSum() == BLACKJACK_NUMBER;
+    }
+
+    private boolean hasCardJustTwo() {
+        return playingCards.size() == 2;
+    }
+
+    public boolean isBurst() {
+        return getCardSum() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isNotFinishedWithBound(final int boundNumber) {
+        return getCardSum() < boundNumber;
+    }
+
+    public int getCardSum() {
+        return adjustSumByAce(getCurrentSum());
+    }
+
     private int adjustSumByAce(int currentSum) {
-        int aceCount = aceCount();
+        int aceCount = getAceCount();
         while (currentSum > BLACKJACK_NUMBER && aceCount > NO_COUNT) {
             aceCount -= ACE_DECREASE_UNIT;
             currentSum -= ACE_DIFFERENCE_UNIT;
@@ -34,17 +58,13 @@ public class PlayingCards {
         return Collections.unmodifiableList(playingCards);
     }
 
-    public int getCardSum() {
-        return adjustSumByAce(getCurrentSum());
-    }
-
     private int getCurrentSum() {
         return playingCards.stream()
             .mapToInt(playingCard -> playingCard.getDenomination().getScore())
             .sum();
     }
 
-    private int aceCount() {
+    private int getAceCount() {
         return (int) playingCards.stream()
             .filter(PlayingCard::isAce)
             .count();

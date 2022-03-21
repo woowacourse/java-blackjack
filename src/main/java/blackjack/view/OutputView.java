@@ -2,11 +2,13 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
+import blackjack.domain.BlackJackResult;
 import blackjack.domain.card.PlayingCard;
-import blackjack.dto.BlackJackResultDto;
+import blackjack.domain.player.Player;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
 import java.util.List;
+import java.util.Map.Entry;
 
 public class OutputView {
 
@@ -17,10 +19,8 @@ public class OutputView {
     private static final String PREFIX_CARD = "카드: ";
     private static final String PREFIX_RESULT = " - 결과: ";
     private static final String BURST_INSTRUCTION = "님 버스트로 패배하였습니다.";
-    private static final String FINAL_RESULT_INSTRUCTION = "## 최종 승패";
+    private static final String FINAL_RESULT_INSTRUCTION = "## 최종 수익";
     private static final String DEALER_NAME = "딜러";
-    private static final String BLANK_DELIMITER = " ";
-    private static final String NEWLINE_DELIMITER = "\n";
     private static final String BURST = "BURST";
 
     public String getCardNames(List<PlayingCard> playingCards) {
@@ -73,20 +73,21 @@ public class OutputView {
         return String.valueOf(playerDto.getScore());
     }
 
-    public void printBurst(final PlayerDto playerDto) {
-        System.out.println(playerDto.getName() + BURST_INSTRUCTION);
+    public void printBurst(final Player player) {
+        System.out.println(player.getName() + BURST_INSTRUCTION);
     }
 
     public void printNewLine() {
         System.out.println();
     }
 
-    public void printResult(final BlackJackResultDto blackJackResultDto) {
+    public void printResult(final BlackJackResult blackJackResult) {
         System.out.println();
         System.out.println(FINAL_RESULT_INSTRUCTION);
-        System.out.println(
-            DEALER_NAME + COLON_DELIMITER + String.join(BLANK_DELIMITER, blackJackResultDto.getDealerResult()));
-        System.out.println(String.join(NEWLINE_DELIMITER, blackJackResultDto.getGamblerResult()));
+        final double dealerProfit = blackJackResult.calculateDealerProfit();
+        System.out.printf(DEALER_NAME + COLON_DELIMITER + "%.0f%n", dealerProfit);
+        for (Entry<Player, Double> result : blackJackResult.getValue().entrySet()) {
+            System.out.printf(result.getKey().getName() + COLON_DELIMITER + "%.0f%n", result.getValue());
+        }
     }
-
 }

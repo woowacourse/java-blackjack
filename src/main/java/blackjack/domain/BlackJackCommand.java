@@ -22,4 +22,8 @@ public enum BlackJackCommand {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_INSTRUCTION));
     }
+
+    public boolean isHit() {
+        return this.equals(YES);
+    }
 }

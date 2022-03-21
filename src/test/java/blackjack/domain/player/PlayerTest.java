@@ -1,10 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Player;
+import blackjack.domain.BetMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +13,7 @@ class PlayerTest {
     void gambler_create() {
         // given
         String expected = "pobi";
-        final Player pobi = new Gambler(expected);
+        final Player pobi = new Gambler(expected, new BetMoney(1000));
 
         // when
         String actual = pobi.getName();

@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.BetMoney;
 import blackjack.domain.BlackJackCommand;
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.card.CardDeck;
@@ -10,7 +11,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.dto.BlackJackResultDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
@@ -19,17 +19,16 @@ import java.util.List;
 
 public class BlackJackGame {
 
-    private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
-    private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
-
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void start() {
-        final Players players = new Players(getDealer(), getGambler());
+        final Players players = new Players(getDealer(), getGamblers());
         final CardDeck cardDeck = new CardDeck(new RandomCardGenerator());
 
         spreadCards(players, cardDeck);
+        printCardsOfPlayers(players);
+
         playGame(players, cardDeck);
         processResult(players);
     }
@@ -38,26 +37,22 @@ public class BlackJackGame {
         return new Dealer();
     }
 
-    private List<Player> getGambler() {
+    private List<Player> getGamblers() {
         final List<String> playerNames = inputView.scanPlayerNames();
         return playerNames.stream()
-            .map(Gambler::new)
+            .map(name -> new Gambler(name, scanAndGetBetMoney(name)))
             .collect(toList());
     }
 
-    protected void spreadCards(final Players players, final CardDeck cardDeck) {
-        for (int i = DEFAULT_SPREAD_COUNT_START_INDEX; i < DEFAULT_SPREAD_COUNT_END_INDEX; i++) {
-            spreadCard(players, cardDeck);
-        }
-        printSpreadCards(players);
+    private BetMoney scanAndGetBetMoney(final String name) {
+        return new BetMoney(Integer.valueOf(inputView.scanBetMoney(name)));
     }
 
-
-    private void spreadCard(final Players players, final CardDeck cardDeck) {
+    private void spreadCards(final Players players, final CardDeck cardDeck) {
         players.receiveCard(cardDeck);
     }
 
-    private void printSpreadCards(final Players players) {
+    private void printCardsOfPlayers(final Players players) {
         outputView.printSpreadInstruction(PlayersDto.from(players));
         outputView.printSingleCardForDealer(PlayerDto.from(players.getDealer()));
         outputView.printCardsForGambler(PlayersDto.from(players.getGamblers()));
@@ -83,24 +78,25 @@ public class BlackJackGame {
     }
 
     private boolean canGamblerReceiveCard(final Player gambler, final CardDeck cardDeck) {
-        return isHit(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished();
+        return isHitThenReceiveCard(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished();
     }
 
-    private boolean isHit(final Player gambler, final CardDeck cardDeck) {
-        if (askHitOrStay(PlayerDto.from(gambler)).equals(BlackJackCommand.YES)) {
-            gambler.receiveCard(cardDeck.pop());
+    private boolean isHitThenReceiveCard(final Player gambler, final CardDeck cardDeck) {
+        final BlackJackCommand inputCommand = askHitOrStay(gambler);
+        if (inputCommand.isHit()) {
+            gambler.receiveCard(cardDeck);
             return true;
         }
         return false;
     }
 
-    private BlackJackCommand askHitOrStay(final PlayerDto currentGamblerDto) {
-        return BlackJackCommand.from(inputView.scanHitOrStay(currentGamblerDto));
+    private BlackJackCommand askHitOrStay(final Player gambler) {
+        return BlackJackCommand.from(inputView.scanHitOrStay(gambler));
     }
 
     private boolean isNotBurst(final Player player) {
         if (player.isBurst()) {
-            outputView.printBurst(PlayerDto.from(player));
+            outputView.printBurst(player);
             return false;
         }
         return true;
@@ -108,7 +104,7 @@ public class BlackJackGame {
 
     private void playGameForDealer(Dealer dealer, CardDeck cardDeck) {
         while (canDealerReceiveCard(dealer)) {
-            dealer.receiveCard(cardDeck.pop());
+            dealer.receiveCard(cardDeck);
             outputView.printDealerAddCard(PlayerDto.from(dealer));
         }
     }
@@ -120,7 +116,7 @@ public class BlackJackGame {
     private void processResult(Players players) {
         outputView.printNewLine();
         outputView.printCardAndScore(PlayersDto.from(players));
-        final BlackJackResult result = BlackJackResult.of(players);
-        outputView.printResult(BlackJackResultDto.from(result));
+        final BlackJackResult blackJackResult = BlackJackResult.from(players);
+        outputView.printResult(blackJackResult);
     }
 }
