@@ -27,34 +27,44 @@ class GuestTest {
     @Test
     @DisplayName("게스트가 Bust인 경우")
     void checkGuestIsBust() {
-        Guest guest = Fixtures.guest;
-        guest.getState().draw(Fixtures.SPADE_JACK);
-        guest.changeState(guest.getState().draw(Fixtures.SPADE_NINE));
-        State state = guest.getState().draw(Fixtures.SPADE_EIGHT);
+        Guest guest = new Guest("guest", new Ready(), 100);
+        guest.draw(Fixtures.SPADE_JACK);
+        guest.draw(Fixtures.SPADE_NINE);
+        guest.draw(Fixtures.SPADE_EIGHT);
 
-        assertThat(state.getClass()).isEqualTo(Bust.class);
+        if (guest.isRunning()) {
+            guest.stay();
+        }
+        assertThat(guest.getState().getClass()).isEqualTo(Bust.class);
     }
+
 
     @Test
     @DisplayName("게스트가 Bust가 아닌 경우: 21인 경우")
     void checkGuestIsNotBustAndMaxPoint() {
         Guest guest = new Guest("guest", new Ready(), 100);
-        guest.getState().draw(Fixtures.SPADE_JACK);
-        guest.changeState(guest.getState().draw(Fixtures.SPADE_NINE));
-        State state = guest.getState().draw(Fixtures.SPADE_TWO);
+        guest.draw(Fixtures.SPADE_JACK);
+        guest.draw(Fixtures.SPADE_NINE);
+        guest.draw(Fixtures.SPADE_TWO);
+        if (guest.isRunning()) {
+            guest.stay();
+        }
 
-        assertThat(state.getClass()).isEqualTo(Stay.class);
+        assertThat(guest.getState().getClass()).isEqualTo(Stay.class);
     }
 
     @Test
     @DisplayName("게스트가 Bust가 아닌 경우: 21보다 작은 경우")
     void checkGuestIsNotBust() {
         Guest guest = new Guest("guest", new Ready(), 100);
-        guest.getState().draw(Fixtures.SPADE_JACK);
-        guest.changeState(guest.getState().draw(Fixtures.SPADE_EIGHT));
-        State state = guest.getState().draw(Fixtures.SPADE_TWO);
+        guest.draw(Fixtures.SPADE_JACK);
+        guest.draw(Fixtures.SPADE_EIGHT);
+        guest.draw(Fixtures.SPADE_TWO);
+        if (!guest.isRunning()) {
+            guest.stay();
+        }
 
-        assertThat(state.getClass()).isEqualTo(Hit.class);
+        assertThat(guest.getState().getClass()).isEqualTo(Hit.class);
     }
 
     @ParameterizedTest
@@ -62,12 +72,12 @@ class GuestTest {
     @DisplayName("플레이어 승패 확인")
     void checkPlayerResult(Suit suit, Denomination denomination, Denomination secondDenomination, Match expected) {
         Guest guest = new Guest("guest", new Ready(), 100);
-        guest.getState().draw(new PlayingCard(suit, denomination));
-        guest.changeState(guest.getState().stay());
-
+        guest.draw(new PlayingCard(suit, denomination));
+        if (guest.isRunning()) {
+            guest.stay();
+        }
         Dealer dealer = new Dealer();
-        dealer.getState().draw(new PlayingCard(suit, secondDenomination));
-        dealer.changeState(dealer.getState().stay());
+        dealer.draw(new PlayingCard(suit, secondDenomination));
 
         assertThat(guest.getState().matchResult(dealer)).isEqualTo(expected);
     }
@@ -76,8 +86,8 @@ class GuestTest {
     @DisplayName("게스트 Hit 확인: 넘치지 않은 경우")
     void checkGuestCanHit() {
         Guest guest = Fixtures.guest;
-        guest.getState().draw(Fixtures.SPADE_NINE);
-        guest.getState().draw(Fixtures.SPADE_ACE);
+        guest.draw(Fixtures.SPADE_NINE);
+        guest.draw(Fixtures.SPADE_ACE);
 
         assertThat(guest.isHit()).isTrue();
     }
@@ -85,10 +95,10 @@ class GuestTest {
     @Test
     @DisplayName("게스트 Hit 확인: 넘친 경우")
     void checkGuestCantHit() {
-        Guest guest = Fixtures.guest;
-        guest.getState().draw(Fixtures.SPADE_NINE);
-        guest.getState().draw(Fixtures.SPADE_EIGHT);
-        guest.getState().draw(Fixtures.SPADE_JACK);
+        Guest guest = new Guest("guest", new Ready(), 100);
+        guest.draw(Fixtures.SPADE_NINE);
+        guest.draw(Fixtures.SPADE_EIGHT);
+        guest.draw(Fixtures.SPADE_JACK);
 
         assertThat(guest.isHit()).isFalse();
     }

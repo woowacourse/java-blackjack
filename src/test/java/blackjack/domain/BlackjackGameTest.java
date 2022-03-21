@@ -23,9 +23,8 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.of(Deck.create(), playersBetMoney);
         blackjackGame.initGames(playingCardFixMachine);
         blackjackGame.assignCard(guest);
-        blackjackGame.assignCard(guest);
 
-        assertThat(guest.getState().playingCards().getCards().size()).isEqualTo(2);
+        assertThat(guest.getState().playingCards().getCards().size()).isEqualTo(1);
     }
 
     @Test

@@ -29,4 +29,9 @@ public class Ready extends Running {
     public State stay() {
         return new Stay(playingCards());
     }
+
+    @Override
+    public boolean isRunning() {
+        return true;
+    }
 }

@@ -5,7 +5,7 @@ import blackjack.domain.card.PlayingCards;
 
 public class Hit extends Running {
 
-    public Hit(final PlayingCards playingCards) {
+    Hit(final PlayingCards playingCards) {
         super(playingCards);
     }
 
@@ -24,5 +24,10 @@ public class Hit extends Running {
     @Override
     public State stay() {
         return new Stay(playingCards());
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
     }
 }

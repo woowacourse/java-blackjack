@@ -8,13 +8,8 @@ public abstract class Running extends Started {
 
     private static final String PROFIT_ERROR_GUID_MESSAGE = "[Error]: 수익 결과는 게임이 종료된 후에 안내됩니다.";
 
-    public Running(PlayingCards playingCards) {
+    protected Running(PlayingCards playingCards) {
         super(playingCards);
-    }
-
-    @Override
-    public final boolean isFinished() {
-        return false;
     }
 
     @Override

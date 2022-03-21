@@ -9,7 +9,7 @@ public abstract class Finished implements State {
 
     private final PlayingCards playingCards;
 
-    public Finished(final PlayingCards playingCards) {
+    protected Finished(final PlayingCards playingCards) {
         this.playingCards = playingCards;
     }
 
@@ -24,12 +24,12 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public final State stay() {
-        throw new IllegalStateException(ALREADY_FINISH_ERROR_MASSAGE);
+    public final boolean isRunning() {
+        return false;
     }
 
     @Override
-    public final boolean isFinished() {
-        return true;
+    public final State stay() {
+        throw new IllegalStateException(ALREADY_FINISH_ERROR_MASSAGE);
     }
 }

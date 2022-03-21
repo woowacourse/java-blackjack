@@ -6,7 +6,7 @@ import blackjack.domain.result.Match;
 
 public class Blackjack extends Finished {
 
-    public Blackjack(final PlayingCards playingCards) {
+    Blackjack(final PlayingCards playingCards) {
         super(playingCards);
     }
 

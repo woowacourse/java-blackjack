@@ -1,12 +1,13 @@
 package blackjack.domain.state;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import blackjack.domain.Fixtures;
 import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.Match;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

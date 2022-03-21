@@ -24,9 +24,9 @@ class ProfitsTest {
         playerList.add(dealer);
 
         Guest firstGuest = new Guest("guest", new Ready(), firstMoney);
-        firstGuest.getState().draw(Fixtures.SPADE_ACE);
+        firstGuest.draw(Fixtures.SPADE_JACK);
         Guest secondGuest = new Guest("guest2", new Ready(), secondMoney);
-        secondGuest.getState().draw(Fixtures.SPADE_TWO);
+        secondGuest.draw(Fixtures.SPADE_JACK);
         playerList.add(firstGuest);
         playerList.add(secondGuest);
 
@@ -34,8 +34,12 @@ class ProfitsTest {
         Players players = new Players(playerList);
 
         //수익 계산
-        firstGuest.changeState(firstGuest.getState().stay());
-        secondGuest.changeState(secondGuest.getState().stay());
+        if (firstGuest.isRunning()) {
+            firstGuest.stay();
+        }
+        if (secondGuest.isRunning()) {
+            secondGuest.stay();
+        }
         Profits profits = Profits.of(players);
 
         assertThat(profits.getPlayersProfit().get(dealer).getValue()).isEqualTo(expected);

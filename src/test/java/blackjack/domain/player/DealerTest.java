@@ -63,12 +63,16 @@ class DealerTest {
     @DisplayName("딜러 승패 확인")
     void checkDealerResult(Suit suit, Denomination denomination, Denomination secondDenomination, Match expected) {
         Guest guest = new Guest("guest", new Ready(), 100);
-        guest.getState().draw(new PlayingCard(suit, denomination));
-        guest.changeState(guest.getState().stay());
+        guest.draw(new PlayingCard(suit, denomination));
+        if (guest.isRunning()) {
+            guest.stay();
+        }
 
         Dealer dealer = new Dealer();
-        dealer.getState().draw(new PlayingCard(suit, secondDenomination));
-        dealer.changeState(dealer.getState().stay());
+        dealer.draw(new PlayingCard(suit, secondDenomination));
+        if (dealer.isRunning()) {
+            dealer.stay();
+        }
 
         assertThat(dealer.getState().matchResult(guest)).isEqualTo(expected);
     }

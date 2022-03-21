@@ -13,7 +13,6 @@ import blackjack.domain.player.Players;
 import blackjack.domain.result.GameResponse;
 import blackjack.domain.result.Profits;
 import blackjack.domain.state.Ready;
-import blackjack.domain.state.State;
 
 public class BlackjackGame {
 
@@ -45,15 +44,13 @@ public class BlackjackGame {
 
     private void initCards() {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
-            blackjackPlayer.getState().draw(deck.assignCard());
-
-            State state = blackjackPlayer.getState().draw(deck.assignCard());
-            blackjackPlayer.changeState(state);
+            blackjackPlayer.draw(deck.assignCard());
+            blackjackPlayer.draw(deck.assignCard());
         }
     }
 
     public void assignCard(Player player) {
-        player.changeState(player.getState().draw(deck.assignCard()));
+        player.draw(deck.assignCard());
     }
 
     public Profits calculateProfits() {
@@ -78,14 +75,6 @@ public class BlackjackGame {
 
     public boolean isTurnDealer() {
         return this.getDealer().isHit();
-    }
-
-    public boolean isTurnPlayerStateFinished() {
-        return blackjackPlayers.turnPlayer().isFinished();
-    }
-
-    public State makeTurnPlayerStateStay() {
-        return blackjackPlayers.turnPlayer().getState().stay();
     }
 
     public Player getTurnPlayer() {

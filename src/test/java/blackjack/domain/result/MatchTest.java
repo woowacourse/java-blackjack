@@ -12,9 +12,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
-import blackjack.domain.state.Hit;
 import blackjack.domain.state.Ready;
-import blackjack.domain.state.State;
 
 class MatchTest {
 
@@ -25,18 +23,15 @@ class MatchTest {
     public void checkInitCardFindWinner(Suit suit, Suit secondSuit, Denomination denomination,
                                         Denomination secondDenomination, Denomination thirdDenomination, Match result) {
         Player guest = new Guest("guest", new Ready(), 100);
-        guest.getState().draw(new PlayingCard(suit, denomination));
-        State state = guest.getState().draw(new PlayingCard(secondSuit, secondDenomination));
-        guest.changeState(state);
-        if (state instanceof Hit) {
-            guest.changeState(state.stay());
+        guest.draw(new PlayingCard(suit, denomination));
+        guest.draw(new PlayingCard(secondSuit, secondDenomination));
+        if (guest.isRunning()) {
+            guest.stay();
         }
 
         Player dealer = new Dealer();
         dealer.getState().draw(new PlayingCard(suit, denomination));
         dealer.getState().draw(new PlayingCard(secondSuit, thirdDenomination));
-        dealer.changeState(dealer.getState().stay());
-
         assertThat(guest.getState().matchResult(dealer)).isEqualTo(result);
     }
 
@@ -47,16 +42,18 @@ class MatchTest {
                                      Denomination secondDenomination, Denomination thirdDenomination, Match result) {
         Player guest = new Guest("guest", new Ready(), 100);
         guest.getState().draw(new PlayingCard(suit, denomination));
-        guest.changeState(guest.getState().draw(new PlayingCard(secondSuit, thirdDenomination)));
-        guest.changeState(guest.getState().draw(new PlayingCard(secondSuit, thirdDenomination)));
+        guest.getState().draw(new PlayingCard(secondSuit, thirdDenomination));
+        guest.getState().draw(new PlayingCard(secondSuit, thirdDenomination));
+        if (guest.isRunning()) {
+            guest.stay();
+        }
 
         Player dealer = new Dealer();
         dealer.getState().draw(new PlayingCard(suit, denomination));
-        dealer.changeState(dealer.getState().draw(new PlayingCard(secondSuit, secondDenomination)));
+        dealer.getState().draw(new PlayingCard(secondSuit, secondDenomination));
 
         assertThat(guest.getState().matchResult(dealer)).isEqualTo(result);
     }
-
 
     @ParameterizedTest
     @CsvSource(value = {"SPADE:CLUB:HEART:ACE:JACK:WIN", "SPADE:CLUB:HEART:ACE:KING:WIN"}, delimiter = ':')
@@ -64,18 +61,19 @@ class MatchTest {
     public void checkWinnerGuest(Suit suit, Suit secondSuit, Suit thirdSuit, Denomination denomination,
                                   Denomination thirdDenomination, Match result) {
         Player guest = new Guest("guest", new Ready(), 100);
-        guest.getState().draw(new PlayingCard(suit, denomination));
-        guest.changeState(guest.getState().draw(new PlayingCard(secondSuit, denomination)));
-        guest.changeState(guest.getState().stay());
+        guest.draw(new PlayingCard(suit, denomination));
+        guest.draw(new PlayingCard(secondSuit, denomination));
+        if (guest.isRunning()) {
+            guest.stay();
+        }
 
         Dealer dealer = new Dealer();
-        dealer.getState().draw(new PlayingCard(suit, thirdDenomination));
-        dealer.getState().draw(new PlayingCard(secondSuit, thirdDenomination));
-        dealer.getState().draw(new PlayingCard(thirdSuit, thirdDenomination));
+        dealer.draw(new PlayingCard(suit, thirdDenomination));
+        dealer.draw(new PlayingCard(secondSuit, thirdDenomination));
+        dealer.draw(new PlayingCard(thirdSuit, thirdDenomination));
 
         assertThat(guest.getState().matchResult(dealer)).isEqualTo(result);
     }
-
 
     @ParameterizedTest
     @CsvSource(value = {"SPADE:CLUB:HEART:ACE:ACE:TEN:LOSE", "SPADE:CLUB:HEART:ACE:NINE:EIGHT:LOSE"}, delimiter = ':')
@@ -83,13 +81,16 @@ class MatchTest {
     public void checkWinnerDealer(Suit suit, Suit secondSuit, Suit thirdSuit, Denomination denomination,
                                   Denomination secondDenomination, Denomination thirdDenomination, Match result) {
         Player guest = new Guest("guest", new Ready(), 100);
-        guest.getState().draw(new PlayingCard(suit, thirdDenomination));
-        guest.changeState(guest.getState().draw(new PlayingCard(secondSuit, thirdDenomination)));
-        guest.changeState(guest.getState().draw(new PlayingCard(thirdSuit, thirdDenomination)));
+        guest.draw(new PlayingCard(suit, thirdDenomination));
+        guest.draw(new PlayingCard(secondSuit, thirdDenomination));
+        guest.draw(new PlayingCard(thirdSuit, thirdDenomination));
+        if (guest.isRunning()) {
+            guest.stay();
+        }
 
         Player dealer = new Dealer();
-        dealer.getState().draw(new PlayingCard(suit, denomination));
-        dealer.getState().draw(new PlayingCard(secondSuit, secondDenomination));
+        dealer.draw(new PlayingCard(suit, denomination));
+        dealer.draw(new PlayingCard(secondSuit, secondDenomination));
 
         assertThat(guest.getState().matchResult(dealer)).isEqualTo(result);
     }

@@ -1,7 +1,8 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
-import blackjack.domain.state.State;
+import blackjack.domain.state.*;
 
 import java.util.Objects;
 
@@ -16,23 +17,18 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public final State getState() {
-        return state;
+    public final void stay() {
+        this.state = state.stay();
     }
 
     @Override
-    public final boolean isFinished() {
-        return state.isFinished();
+    public final void draw(PlayingCard playingCard) {
+        this.state = state.draw(playingCard);
     }
 
     @Override
-    public final PlayingCards playingCards() {
-        return state.playingCards();
-    }
-
-    @Override
-    public final void changeState(State state) {
-        this.state = state;
+    public final boolean isRunning() {
+        return state.isRunning();
     }
 
     @Override
@@ -63,8 +59,18 @@ public abstract class AbstractPlayer implements Player {
     protected abstract int limitHit();
 
     @Override
+    public final PlayingCards playingCards() {
+        return state.playingCards();
+    }
+
+    @Override
     public final String getName() {
         return name;
+    }
+
+    @Override
+    public final State getState() {
+        return state;
     }
 
     @Override

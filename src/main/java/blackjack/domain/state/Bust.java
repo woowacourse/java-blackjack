@@ -6,7 +6,7 @@ import blackjack.domain.result.Match;
 
 public class Bust extends Finished {
 
-    protected Bust(PlayingCards playingCards) {
+    Bust(PlayingCards playingCards) {
         super(playingCards);
     }
 

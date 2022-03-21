@@ -11,9 +11,9 @@ public interface State {
 
     PlayingCards playingCards();
 
-    State stay();
-
     Match matchResult(Player player);
 
-    boolean isFinished();
+    State stay();
+
+    boolean isRunning();
 }

@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
 import blackjack.domain.state.State;
 
@@ -17,9 +18,11 @@ public interface Player {
 
     boolean isLose(PlayingCards playingCards);
 
-    boolean isFinished();
+    boolean isRunning();
 
-    void changeState(State state);
+    void draw(PlayingCard playingCard);
+
+    void stay();
 
     State getState();
 
