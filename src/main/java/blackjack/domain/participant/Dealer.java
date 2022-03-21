@@ -21,7 +21,7 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        return participantCards.getFirstCard();
+        return state.participantCards().getFirstCard();
     }
 
 }

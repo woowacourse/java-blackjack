@@ -75,7 +75,8 @@ public class PlayerTest {
 
         player.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.HEART, Denomination.THREE)));
-        player.receiveCard(new Card(Suit.DIAMOND, Denomination.TWO));
+        //player.receiveCard(new Card(Suit.DIAMOND, Denomination.TWO));
+        player.draw(new Card(Suit.DIAMOND, Denomination.TWO));
 
         assertThat(player.getCards().size()).isEqualTo(3);
     }

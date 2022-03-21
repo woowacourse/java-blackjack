@@ -19,6 +19,10 @@ public class ParticipantCards {
         this.cards = new ArrayList<>(cards);
     }
 
+    public ParticipantCards() {
+        this.cards  = new ArrayList<>();
+    }
+
     public int calculateScore() {
         int totalScore = cards.stream().mapToInt(Card::getPoint).sum();
         int aceCount = getAceCount();
@@ -33,8 +37,21 @@ public class ParticipantCards {
         cards.add(card);
     }
 
+    public ParticipantCards addCard2(Card card) {
+        cards.add(card);
+        return new ParticipantCards(cards);
+    }
+
+    public boolean isReady() {
+        return cards.size() < 2;
+    }
+
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_SIZE && calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BUST_THRESHOLD;
     }
 
     public Card getFirstCard() {

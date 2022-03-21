@@ -57,17 +57,20 @@ public class BlackjackController {
 
     private void handOutMoreCardsToPlayer(Player player, Deck deck) {
         boolean cardPrintFlag = isPlayerWantMoreCards(player, deck);
-
+        if (!player.isFinished()) {
+            player.stay();
+        }
         if (!cardPrintFlag) {
             OutputView.printPlayerCardInformation(player);
         }
+
     }
 
     private boolean isPlayerWantMoreCards(Player player, Deck deck) {
         boolean cardPrintFlag = false;
 
         while (isHittable(player) && isPlayerWantToHit(player)) {
-            player.receiveCard(deck.pickCard());
+            player.draw(deck.pickCard());
             OutputView.printPlayerCardInformation(player);
             cardPrintFlag = true;
         }
@@ -89,8 +92,13 @@ public class BlackjackController {
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
         while (dealer.isHittable()) {
             OutputView.printDealerHitMessage();
-            dealer.receiveCard(deck.pickCard());
+            //dealer.receiveCard(deck.pickCard());
+            dealer.draw(deck.pickCard());
         }
+        if (!dealer.isFinished()) {
+            dealer.stay();
+        }
+
     }
 
     private void printResult(Participants participants) {
@@ -115,5 +123,14 @@ public class BlackjackController {
 
         OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
     }
+
+//    private void printProfitResult2(Participants participants) {
+//        Map<Player, Long> playerProfitResult = new HashMap<>();
+//        for (Player player : participants.getPlayers()) {
+//            playerProfitResult.put(player, player.getProfit(participants.getDealer()));
+//        }
+//        long dealerProfitResult = profitCalculator.calculateDealerProfit();
+//        OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
+//    }
 
 }

@@ -47,6 +47,10 @@ public class Player extends Participant {
         return bettingMoney;
     }
 
+//    public long getProfit(Dealer dealer) {
+//        return state.profit(bettingMoney.getBettingMoney(), dealer.state);
+//    }
+
     private void validateName(String name) {
         checkNullAndEmpty(name);
         checkBlank(name);
