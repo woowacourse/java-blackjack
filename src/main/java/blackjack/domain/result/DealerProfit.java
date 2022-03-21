@@ -15,7 +15,7 @@ public class DealerProfit {
                 .stream()
                 .map(Money::getValue)
                 .reduce(0L, Long::sum);
-        return Money.valueOf(-profit);
+        return new Money(-profit);
     }
 
     public Money getProfit() {

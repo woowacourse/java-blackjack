@@ -70,6 +70,6 @@ public class GuestTest {
         Guest guest = new Guest("김제니");
         guest.betMoney(new BetMoney(input).getMoney());
 
-        assertThat(guest.getMoney()).isEqualTo(Money.valueOf(expected));
+        assertThat(guest.getMoney()).isEqualTo(new Money(expected));
     }
 }

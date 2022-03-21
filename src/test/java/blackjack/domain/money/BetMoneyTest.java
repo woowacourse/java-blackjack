@@ -16,7 +16,7 @@ public class BetMoneyTest {
     void createBetMoney(String input, long value) {
         BetMoney betMoney = new BetMoney(input);
 
-        assertThat(betMoney.getMoney()).isEqualTo(Money.valueOf(value));
+        assertThat(betMoney.getMoney()).isEqualTo(new Money(value));
     }
 
     @ParameterizedTest(name = "[{index}] {0}")

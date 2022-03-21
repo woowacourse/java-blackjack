@@ -19,10 +19,6 @@ public class Guests implements Iterable<Guest> {
         this.guests = new ArrayList<>(guests);
     }
 
-    public static Guests of(final List<Guest> guests) {
-        return new Guests(guests);
-    }
-
     public static Guests of(final Guest... guests) {
         return new Guests(List.of(guests));
     }

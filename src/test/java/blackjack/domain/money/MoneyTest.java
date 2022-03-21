@@ -15,7 +15,7 @@ public class MoneyTest {
     @ValueSource(ints = {-10_000, 0, 10_000})
     @DisplayName("원하는 돈을 생성한다.")
     void generateMoney(long value) {
-        Money money = Money.valueOf(value);
+        Money money = new Money(value);
 
         assertThat(money.getValue()).isEqualTo(value);
     }
@@ -24,7 +24,7 @@ public class MoneyTest {
     @MethodSource("generateMultiplyArguments")
     @DisplayName("곱셈을 한 결과를 반환한다.")
     void multiply(long value, double multiplier, long expected) {
-        assertThat(Money.valueOf(value).multiply(multiplier)).isEqualTo(Money.valueOf(expected));
+        assertThat(new Money(value).multiply(multiplier)).isEqualTo(new Money(expected));
     }
 
     static Stream<Arguments> generateMultiplyArguments() {

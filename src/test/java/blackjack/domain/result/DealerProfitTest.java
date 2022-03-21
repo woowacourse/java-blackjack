@@ -34,9 +34,9 @@ public class DealerProfitTest {
             takeTwoCards(dealer, ACE_CLOVER, FIVE_CLOVER);
 
             lisa = new Guest("리사");
-            lisa.betMoney(Money.valueOf(10_000));
+            lisa.betMoney(new Money(10_000));
             rose = new Guest("채영");
-            rose.betMoney(Money.valueOf(10_000));
+            rose.betMoney(new Money(10_000));
         }
 
         @Test
@@ -48,7 +48,7 @@ public class DealerProfitTest {
             GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
-            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(-30_000));
+            assertThat(dealerProfit.getProfit()).isEqualTo(new Money(-30_000));
         }
 
         @Test
@@ -60,7 +60,7 @@ public class DealerProfitTest {
             GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
-            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(-20_000));
+            assertThat(dealerProfit.getProfit()).isEqualTo(new Money(-20_000));
         }
 
         @Test
@@ -72,7 +72,7 @@ public class DealerProfitTest {
             GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
-            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(0));
+            assertThat(dealerProfit.getProfit()).isEqualTo(new Money(0));
         }
 
         @Test
@@ -84,7 +84,7 @@ public class DealerProfitTest {
             GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
-            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(20_000));
+            assertThat(dealerProfit.getProfit()).isEqualTo(new Money(20_000));
         }
     }
 }

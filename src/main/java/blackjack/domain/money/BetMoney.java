@@ -8,7 +8,7 @@ public class BetMoney {
         final long value = toLong(input);
         checkPositive(value);
 
-        this.money = Money.valueOf(value);
+        this.money = new Money(value);
     }
 
     private long toLong(final String value) {

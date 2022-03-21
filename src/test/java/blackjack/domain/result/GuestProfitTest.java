@@ -36,9 +36,9 @@ public class GuestProfitTest {
             takeTwoCards(dealer, ACE_CLOVER, FIVE_CLOVER);
 
             lisa = new Guest("리사");
-            lisa.betMoney(Money.valueOf(10_000));
+            lisa.betMoney(new Money(10_000));
             rose = new Guest("채영");
-            rose.betMoney(Money.valueOf(10_000));
+            rose.betMoney(new Money(10_000));
         }
 
         @Test
@@ -50,8 +50,8 @@ public class GuestProfitTest {
             GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             Map<Guest, Money> profits = guestProfits.getProfits();
 
-            assertThat(profits).contains(entry(lisa, Money.valueOf(15_000)),
-                    entry(rose, Money.valueOf(15_000)));
+            assertThat(profits).contains(entry(lisa, new Money(15_000)),
+                    entry(rose, new Money(15_000)));
         }
 
         @Test
@@ -63,8 +63,8 @@ public class GuestProfitTest {
             GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             Map<Guest, Money> profits = guestProfits.getProfits();
 
-            assertThat(profits).contains(entry(lisa, Money.valueOf(10_000)),
-                    entry(rose, Money.valueOf(10_000)));
+            assertThat(profits).contains(entry(lisa, new Money(10_000)),
+                    entry(rose, new Money(10_000)));
         }
 
         @Test
@@ -76,8 +76,8 @@ public class GuestProfitTest {
             GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             Map<Guest, Money> profits = guestProfits.getProfits();
 
-            assertThat(profits).contains(entry(lisa, Money.valueOf(0)),
-                    entry(rose, Money.valueOf(0)));
+            assertThat(profits).contains(entry(lisa, new Money(0)),
+                    entry(rose, new Money(0)));
         }
 
         @Test
@@ -89,8 +89,8 @@ public class GuestProfitTest {
             GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             Map<Guest, Money> profits = guestProfits.getProfits();
 
-            assertThat(profits).contains(entry(lisa, Money.valueOf(-10_000)),
-                    entry(rose, Money.valueOf(-10_000)));
+            assertThat(profits).contains(entry(lisa, new Money(-10_000)),
+                    entry(rose, new Money(-10_000)));
 
         }
     }
