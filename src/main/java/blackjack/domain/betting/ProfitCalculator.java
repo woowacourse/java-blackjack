@@ -7,8 +7,6 @@ import java.util.Map;
 
 public class ProfitCalculator {
 
-    private static final EarningRateCalculator earningRateCalculator = new EarningRateCalculator();
-
     private final Map<Player, WinningResult> playerResult;
     private final Map<Player, Long> playerProfit = new LinkedHashMap<>();
 
@@ -34,7 +32,7 @@ public class ProfitCalculator {
     }
 
     private long calculateProfit(Player player, WinningResult winningResult) {
-        return multiplyMoneyAndRate(player, earningRateCalculator.calculate(winningResult));
+        return multiplyMoneyAndRate(player, winningResult.getEarningRate());
     }
 
     private long multiplyMoneyAndRate(Player player, double earningRate) {

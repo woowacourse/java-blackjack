@@ -5,15 +5,17 @@ import blackjack.domain.participant.Player;
 
 public enum WinningResult {
 
-    BLACKJACK("블랙잭"),
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK("블랙잭", 1.5),
+    WIN("승", 1),
+    LOSE("패", -1),
+    DRAW("무", 0);
 
     private final String result;
+    private final double earningRate;
 
-    WinningResult(String result) {
+    WinningResult(String result, double earningRate) {
         this.result = result;
+        this.earningRate = earningRate;
     }
 
     public static WinningResult of(Player player, Dealer dealer) {
@@ -40,20 +42,12 @@ public enum WinningResult {
         return LOSE;
     }
 
-    public boolean isBlackjack() {
-        return this == BLACKJACK;
-    }
-
-    public boolean isWin() {
-        return this == WIN;
-    }
-
-    public boolean isLose() {
-        return this == LOSE;
-    }
-
     public String getResult() {
         return result;
+    }
+
+    public double getEarningRate() {
+        return earningRate;
     }
 
 }
