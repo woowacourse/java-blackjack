@@ -12,30 +12,37 @@ public class Dealer extends Player {
         super("딜러", new Cards(cards));
     }
 
-    public Result match(Cards cards) {
-        Score playerScore = cards.bestScore();
-        if (playerScore.isBust()) {
+    public Result match(Gamer gamer) {
+        if (gamer.score().isBust()) {
             return Result.WIN;
         }
         if (score().isBust()) {
             return Result.LOSE;
         }
-        return compare(playerScore);
+        return compare(gamer);
     }
 
-    private Result compare(Score playerScore) {
-        if (score().lessThan(playerScore)) {
-            return Result.LOSE;
-        }
-        if (score().moreThan(playerScore)) {
+    private Result compare(Gamer gamer) {
+        if (isDealerWinCase(gamer)) {
             return Result.WIN;
+        }
+        if (isDealerLoseCase(gamer)) {
+            return Result.LOSE;
         }
         return Result.DRAW;
     }
 
+    private boolean isDealerWinCase(Gamer gamer) {
+        return score().moreThan(gamer.score()) || isBlackjack() && !gamer.isBlackjack();
+    }
+
+    private boolean isDealerLoseCase(Gamer gamer) {
+        return score().lessThan(gamer.score()) || !isBlackjack() && gamer.isBlackjack();
+    }
+
     @Override
-    public List<Card> openCards() {
-        return List.of(cards.getEachCard().get(0));
+    public Cards openCards() {
+        return new Cards(List.of(cards.getEachCard().get(0)));
     }
 
     public boolean isHittable() {

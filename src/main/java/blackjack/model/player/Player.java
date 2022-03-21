@@ -3,9 +3,11 @@ package blackjack.model.player;
 import blackjack.model.Card;
 import blackjack.model.Cards;
 import blackjack.model.Score;
-import java.util.List;
 
 public abstract class Player {
+
+    public static final int BLACKJACK_NUMBER = 21;
+    public static final int INITIAL_CARD_COUNT = 2;
 
     protected final Cards cards;
     private final String name;
@@ -34,7 +36,11 @@ public abstract class Player {
         return cards.bestScore();
     }
 
-    public abstract List<Card> openCards();
+    public boolean isBlackjack() {
+        return score().getValue() == BLACKJACK_NUMBER && cards.getEachCard().size() == INITIAL_CARD_COUNT;
+    }
+
+    public abstract Cards openCards();
 
     public abstract boolean isHittable();
 }
