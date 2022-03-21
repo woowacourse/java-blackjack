@@ -18,7 +18,7 @@ public class InputView {
         System.out.println(REQUEST_NAMES_MESSAGE);
         String input = readLine();
         System.out.println();
-        return Arrays.asList(input.split(NAME_DELIMITER));
+        return Arrays.asList(input.split(NAME_DELIMITER, -1));
     }
 
     private static String readLine() {
