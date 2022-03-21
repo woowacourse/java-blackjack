@@ -29,7 +29,7 @@ class BlackjackTest {
         final State state = new Blackjack(BLACKJACK_CARDS);
 
         assertThatThrownBy(() -> state.draw(new Card(CardPattern.HEART, CardNumber.TWO)))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("더 이상 카드를 받을 수 없습니다.");
     }
 

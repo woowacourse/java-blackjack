@@ -20,7 +20,7 @@ public class CardDeckTest {
         }
 
         assertThatThrownBy(cardDeck::draw)
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드덱에 남은 카드가 없습니다.");
     }
 

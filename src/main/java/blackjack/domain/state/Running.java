@@ -39,6 +39,6 @@ public abstract class Running implements State {
 
     @Override
     public final double profit(Dealer dealer, int money) {
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException();
     }
 }

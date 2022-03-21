@@ -14,12 +14,12 @@ public abstract class Finished implements State {
 
     @Override
     public final State draw(Card card) {
-        throw new IllegalStateException("더 이상 카드를 받을 수 없습니다.");
+        throw new UnsupportedOperationException("더 이상 카드를 받을 수 없습니다.");
     }
 
     @Override
     public final State stay() {
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException("종료 상태에서는 stay를 할 수 없습니다.");
     }
 
     @Override
