@@ -26,15 +26,12 @@ public class OutputView {
     }
 
     public static void printOpenCards(final List<Gamer> gamers, final Dealer dealer) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format(PRINT_OPEN_CARD_PREFIX_MESSAGE, DEALER_NAME))
-            .append(joinNames(gamers))
-            .append(PRINT_OPEN_CARD_SUFFIX_MESSAGE);
+        System.out.print(
+            String.format(PRINT_OPEN_CARD_PREFIX_MESSAGE, DEALER_NAME) + joinNames(gamers)
+                + PRINT_OPEN_CARD_SUFFIX_MESSAGE);
 
-        appendDealerFormat(dealer, stringBuilder);
-        appendGamerFormat(gamers, stringBuilder);
-
-        System.out.println(stringBuilder);
+        appendDealerFormat(dealer);
+        appendGamerFormat(gamers);
     }
 
     private static String joinNames(final List<Gamer> gamers) {
@@ -43,9 +40,9 @@ public class OutputView {
             .collect(joining(PRINT_JOINING_DELIMITER));
     }
 
-    private static void appendDealerFormat(final Dealer dealer, final StringBuilder stringBuilder) {
+    private static void appendDealerFormat(final Dealer dealer) {
         List<Card> dealerCards = dealer.openCards();
-        stringBuilder.append(
+        System.out.print(
             String.format(PRINT_DEFAULT_FORMAT_MESSAGE, DEALER_NAME, joinCards(dealerCards)));
     }
 
@@ -55,13 +52,13 @@ public class OutputView {
             .collect(joining(PRINT_JOINING_DELIMITER));
     }
 
-    private static void appendGamerFormat(final List<Gamer> gamers,
-        final StringBuilder stringBuilder) {
+    private static void appendGamerFormat(final List<Gamer> gamers) {
         for (Gamer gamer : gamers) {
-            stringBuilder.append(String.format(PRINT_SHOW_CARD_FORMAT_MESSAGE,
+            System.out.print(String.format(PRINT_SHOW_CARD_FORMAT_MESSAGE,
                 gamer.getName(),
                 joinCards(gamer.openCards())));
         }
+        System.out.println();
     }
 
     public static void printGamerCards(final Gamer gamer) {

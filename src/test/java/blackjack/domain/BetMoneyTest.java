@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 class BetMoneyTest {
 
-
     @Test
     @DisplayName("배팅 금액이 음수인 경우, 에러를 발생시킨다.")
     void isNegativeBetMoney() {
