@@ -36,36 +36,9 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printInitialPlayersCardInformation(List<Player> players) {
-        for (Player player : players) {
-            printCards(player);
-            System.out.println();
-        }
-    }
-
-    private static void printInitialDealerCardInformation(Dealer dealer) {
-        Card dealerFirstCard = dealer.getFirstCard();
-
-        System.out.printf(CARD_INFORMATION_FORMAT, dealer.getName(),
-            dealerFirstCard.getDenominationName() + dealerFirstCard.getSuitName());
-
-        System.out.println();
-    }
-
     public static void printPlayerCardInformation(Player player) {
         printCards(player);
         System.out.println();
-    }
-
-    public static void printCards(Participant participant) {
-        List<String> participantCardInfo = participant.getCards()
-            .stream()
-            .map(x -> x.getDenominationName() + x.getSuitName())
-            .collect(Collectors.toList());
-
-        String cardInfo = String.join(NAME_DELIMITER, participantCardInfo);
-
-        System.out.printf(CARD_INFORMATION_FORMAT, participant.getName(), cardInfo);
     }
 
     public static void printDealerHitMessage() {
@@ -85,6 +58,14 @@ public class OutputView {
         }
     }
 
+    public static void printResult(Map<WinningResult, Integer> dealerResult,
+        Map<Player, WinningResult> playerResult) {
+        System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
+
+        printDealerResult(dealerResult);
+        printPlayerResult(playerResult);
+    }
+
     public static void printProfitResult(Map<Player, Long> playerProfitResult, long dealerProfitResult) {
         System.out.println();
         System.out.println(PARTICIPANT_PROFIT_RESULT_MESSAGE);
@@ -96,17 +77,36 @@ public class OutputView {
                 key.getName() + RESULT_DELIMITER + value));
     }
 
-    private static void printPoint(Participant participant) {
-        System.out.printf(PARTICIPANT_POINT_RESULT, participant.getScore());
+    private static void printInitialDealerCardInformation(Dealer dealer) {
+        Card dealerFirstCard = dealer.getFirstCard();
+
+        System.out.printf(CARD_INFORMATION_FORMAT, dealer.getName(),
+            dealerFirstCard.getDenominationName() + dealerFirstCard.getSuitName());
+
         System.out.println();
     }
 
-    public static void printResult(Map<WinningResult, Integer> dealerResult,
-        Map<Player, WinningResult> playerResult) {
-        System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
+    private static void printInitialPlayersCardInformation(List<Player> players) {
+        for (Player player : players) {
+            printCards(player);
+            System.out.println();
+        }
+    }
 
-        printDealerResult(dealerResult);
-        printPlayerResult(playerResult);
+    private static void printCards(Participant participant) {
+        List<String> participantCardInfo = participant.getCards()
+            .stream()
+            .map(x -> x.getDenominationName() + x.getSuitName())
+            .collect(Collectors.toList());
+
+        String cardInfo = String.join(NAME_DELIMITER, participantCardInfo);
+
+        System.out.printf(CARD_INFORMATION_FORMAT, participant.getName(), cardInfo);
+    }
+
+    private static void printPoint(Participant participant) {
+        System.out.printf(PARTICIPANT_POINT_RESULT, participant.getScore());
+        System.out.println();
     }
 
     private static void printDealerResult(Map<WinningResult, Integer> dealerResult) {

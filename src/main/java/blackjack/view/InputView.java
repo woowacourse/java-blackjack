@@ -38,14 +38,6 @@ public class InputView {
         return Integer.parseInt(bettingMoneyAnswer);
     }
 
-    private static void validateBettingMoneyAnswer(String bettingMoneyAnswer) {
-        try {
-            Integer.parseInt(bettingMoneyAnswer);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(INPUT_PLAYER_BETTING_MONEY_NUMBER_ERROR_MESSAGE);
-        }
-    }
-
     public static String inputPlayerHit(String playerName) {
         System.out.printf(INPUT_PLAYER_HIT_ASK_MESSAGE, playerName);
 
@@ -58,6 +50,14 @@ public class InputView {
     private static void validatePlayerNames(List<String> playerNames) {
         if (playerNames.isEmpty()) {
             throw new IllegalArgumentException(PLAYER_NAME_INPUT_ERROR_MESSAGE);
+        }
+    }
+
+    private static void validateBettingMoneyAnswer(String bettingMoneyAnswer) {
+        try {
+            Integer.parseInt(bettingMoneyAnswer);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(INPUT_PLAYER_BETTING_MONEY_NUMBER_ERROR_MESSAGE);
         }
     }
 
