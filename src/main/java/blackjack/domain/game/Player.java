@@ -17,7 +17,7 @@ public class Player extends Gamer {
     }
 
     public void bet(final Consumer<String> inputBetting, final Supplier<String> betting) {
-        inputBetting.accept(name);
+        inputBetting.accept(getName());
         state.bet(betting.get());
     }
 
@@ -59,11 +59,11 @@ public class Player extends Gamer {
     }
 
     private boolean isDrawing(final Predicate<String> drawing) {
-        return drawing.test(name);
+        return drawing.test(getName());
     }
 
     private void openCards(final BiConsumer<String, List<String>> openCards) {
-        openCards.accept(name, GamerDto.getCards(this));
+        openCards.accept(getName(), GamerDto.getCards(this));
     }
 
     @Override

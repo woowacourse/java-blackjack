@@ -12,10 +12,10 @@ public abstract class Gamer {
 
     static final String DEALER_NAME = "딜러";
 
-    protected final String name;
-    protected State state = new Ready();
+    private final String name;
+    State state = new Ready();
 
-    protected Gamer(final String name) {
+    Gamer(final String name) {
         this.name = name;
     }
 

@@ -34,7 +34,7 @@ public class Dealer extends Gamer {
     }
 
     private void noticeDrawing(final BiConsumer<String, Integer> drawing) {
-        drawing.accept(name, DRAWING_MAXIMUM);
+        drawing.accept(getName(), DRAWING_MAXIMUM);
     }
 
     @Override
