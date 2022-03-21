@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,5 +69,29 @@ class PlayerTest {
         player.hit(Card.of(Symbol.SPADE, Denomination.NINE));
 
         assertThat(player.canDrawCard()).isTrue();
+    }
+
+    @Test
+    @DisplayName("결과가 블랙잭인 경우 계산이 제대로 되는지 확인한다.")
+    void multiplyTest_BlackJack() {
+        assertThat(player.multiply(PlayerResult.BLACKJACK)).isEqualTo(BigDecimal.valueOf(15000.0));
+    }
+
+    @Test
+    @DisplayName("결과가 동점인 경우 계산이 제대로 되는지 확인한다.")
+    void multiplyTest_Draw() {
+        assertThat(player.multiply(PlayerResult.DRAW)).isEqualTo(BigDecimal.valueOf(0.0));
+    }
+
+    @Test
+    @DisplayName("결과가 승리인 경우 계산이 제대로 되는지 확인한다.")
+    void multiplyTest_Win() {
+        assertThat(player.multiply(PlayerResult.WIN)).isEqualTo(BigDecimal.valueOf(10000.0));
+    }
+
+    @Test
+    @DisplayName("결과가 패배인 경우 계산이 제대로 되는지 확인한다.")
+    void multiplyTest_Lose() {
+        assertThat(player.multiply(PlayerResult.LOSE)).isEqualTo(BigDecimal.valueOf(-10000.0));
     }
 }
