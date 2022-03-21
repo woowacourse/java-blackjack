@@ -7,7 +7,6 @@ public class Score {
 
     private static final int ACE_ADDITIONAL_NUMBER = 10;
     private static final int DEALER_RECEIVABLE_SCORE = 17;
-    private static final int BLACKJACK_SCORE = 21;
     private static final int BUST_THRESHOLD = 21;
 
     private final int score;
@@ -19,7 +18,7 @@ public class Score {
     public static Score soft(IntStream scores) {
         int best = scores.sum();
         if (best + ACE_ADDITIONAL_NUMBER > BUST_THRESHOLD) {
-            return new Score(best);
+            return hard(scores);
         }
         return new Score(best + ACE_ADDITIONAL_NUMBER);
     }
@@ -32,8 +31,8 @@ public class Score {
         return score > BUST_THRESHOLD;
     }
 
-    public boolean isBlackJack() {
-        return score == BLACKJACK_SCORE;
+    public boolean isMaxScore() {
+        return score == BUST_THRESHOLD;
     }
 
     public boolean isDealerReceivable() {

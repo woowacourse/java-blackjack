@@ -55,7 +55,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_CARD_HAND_COUNT && getBestPossible().isBlackJack();
+        return cards.size() == BLACKJACK_CARD_HAND_COUNT && getBestPossible().isMaxScore();
     }
 
     public List<Card> getCards() {
