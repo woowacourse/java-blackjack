@@ -23,8 +23,7 @@ public final class Player extends Participant {
     }
 
     public Result receiveResult(Dealer dealer) {
-        return Result.judgeResult(calculateScore(), dealer.calculateScore(),
-            isBlackJack(), dealer.isBlackJack());
+        return Result.judgeResult(this, dealer);
     }
 
     @Override
@@ -41,7 +40,7 @@ public final class Player extends Participant {
     }
 
     public int calculateIncome(Result result) {
-        return money.multiplyDividendRate(result.getDividendRate());
+        return money.multiplyDividendRate(result.getProfitRate());
     }
 
 }

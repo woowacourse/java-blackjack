@@ -56,6 +56,10 @@ public final class Cards {
         return cards.size() == CARD_COUNT_FOR_BLACKJACK && calculateScore() == MAX_SCORE;
     }
 
+    public boolean isBust() {
+        return calculateScore() > MAX_SCORE;
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }
