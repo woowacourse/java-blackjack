@@ -10,10 +10,10 @@ public class Results {
 
     private static final String ABSENT_NAME_ERROR_MESSAGE_FORMAT = "[Error] \"%s\" : 이름이 존재하지 않습니다.";
 
-    private final Map<Name, WinOrLose> maps;
+    private final Map<Name, WinOrLose> playerResults;
 
-    private Results(Map<Name, WinOrLose> maps) {
-        this.maps = Map.copyOf(maps);
+    private Results(Map<Name, WinOrLose> playerResults) {
+        this.playerResults = Map.copyOf(playerResults);
     }
 
     public static Results generateResults(Dealer dealer, Players players) {
@@ -23,27 +23,27 @@ public class Results {
     }
 
     public WinOrLose getVersusOfPlayer(Name name) {
-        if (!maps.containsKey(name)) {
+        if (!playerResults.containsKey(name)) {
             throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getValue()));
         }
-        return maps.get(name);
+        return playerResults.get(name);
     }
 
     public int countDealerWin() {
-        return (int) maps.keySet().stream()
-                .filter(key -> maps.get(key) == WinOrLose.LOSE)
+        return (int) playerResults.keySet().stream()
+                .filter(key -> playerResults.get(key) == WinOrLose.LOSE)
                 .count();
     }
 
     public int countDealerDraw() {
-        return (int) maps.keySet().stream()
-                .filter(key -> maps.get(key) == WinOrLose.DRAW)
+        return (int) playerResults.keySet().stream()
+                .filter(key -> playerResults.get(key) == WinOrLose.DRAW)
                 .count();
     }
 
     public int countDealerLose() {
-        return (int) maps.keySet().stream()
-                .filter(key -> maps.get(key) == WinOrLose.WIN)
+        return (int) playerResults.keySet().stream()
+                .filter(key -> playerResults.get(key) == WinOrLose.WIN)
                 .count();
     }
 }

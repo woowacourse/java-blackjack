@@ -13,10 +13,10 @@ public class Profits {
     private static final double BLACK_JACK_BONUS_PROFIT_RATE = 1.5;
     private static final int INT_FOR_NEGATIVE = -1;
 
-    private final Map<Name, Double> maps;
+    private final Map<Name, Double> playerProfits;
 
-    private Profits(Map<Name, Double> maps) {
-        this.maps = Map.copyOf(maps);
+    private Profits(Map<Name, Double> playerProfits) {
+        this.playerProfits = Map.copyOf(playerProfits);
     }
 
     public static Profits generateProfits(Results results, BettingReceipts bettingReceipts, Players players) {
@@ -55,15 +55,15 @@ public class Profits {
     }
 
     public double getProfit(Name name) {
-        if (!maps.containsKey(name)) {
+        if (!playerProfits.containsKey(name)) {
             throw new IllegalArgumentException(String.format(ABSENT_NAME_ERROR_MESSAGE_FORMAT, name.getValue()));
         }
-        return maps.get(name);
+        return playerProfits.get(name);
     }
 
     public double calculateDealerProfit() {
-        double sum = maps.keySet().stream()
-                .mapToDouble(maps::get)
+        double sum = playerProfits.keySet().stream()
+                .mapToDouble(playerProfits::get)
                 .sum();
         return toNegative(sum);
     }
