@@ -10,7 +10,7 @@ public interface State {
 
     boolean isReady();
 
-    boolean isHit();
+    boolean isHitAble();
 
     State stay();
 

@@ -23,7 +23,7 @@ public final class Ready extends Running {
             return new Blackjack(cards);
         }
         if (cards.canHit()) {
-            return new Hit(cards);
+            return new HitAble(cards);
         }
         return new Ready(cards);
     }
@@ -34,7 +34,7 @@ public final class Ready extends Running {
     }
 
     @Override
-    public boolean isHit() {
+    public boolean isHitAble() {
         return false;
     }
 

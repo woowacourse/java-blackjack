@@ -29,7 +29,7 @@ public class Player extends Participant {
 
     @Override
     public void hitFrom(CardDeck cardDeck, GameSign gameSign, TurnProgress turnProgress) {
-        while (this.state.isHit() && isNotStay(gameSign)) {
+        while (this.state.isHitAble() && isNotStay(gameSign)) {
             this.state = this.state.add(cardDeck.draw());
             turnProgress.show(this);
         }

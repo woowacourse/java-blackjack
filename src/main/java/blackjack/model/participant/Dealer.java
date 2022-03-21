@@ -14,7 +14,7 @@ public class Dealer extends Participant {
 
     @Override
     public void hitFrom(CardDeck cardDeck, GameSign gameSign, TurnProgress turnProgress) {
-        while (this.state.isHit() && isNotStay()) {
+        while (this.state.isHitAble() && isNotStay()) {
             this.state = this.state.add(cardDeck.draw());
         }
         turnProgress.show(this);

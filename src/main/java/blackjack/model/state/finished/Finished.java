@@ -17,7 +17,7 @@ public abstract class Finished extends Created {
     }
 
     @Override
-    public boolean isHit() {
+    public boolean isHitAble() {
         return false;
     }
 

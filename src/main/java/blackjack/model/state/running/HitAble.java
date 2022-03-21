@@ -6,9 +6,9 @@ import blackjack.model.state.finished.Bust;
 import blackjack.model.state.finished.Stay;
 import blackjack.model.state.State;
 
-public class Hit extends Running {
+public class HitAble extends Running {
 
-    public Hit(final Cards cards) {
+    public HitAble(final Cards cards) {
         super(cards);
     }
 
@@ -22,7 +22,7 @@ public class Hit extends Running {
         if (cards.isBust()) {
             return new Bust(cards);
         }
-        return new Hit(cards);
+        return new HitAble(cards);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Hit extends Running {
     }
 
     @Override
-    public boolean isHit() {
+    public boolean isHitAble() {
         return true;
     }
 

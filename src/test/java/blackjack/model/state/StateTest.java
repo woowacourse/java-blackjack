@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.state.finished.Blackjack;
-import blackjack.model.state.running.Hit;
+import blackjack.model.state.running.HitAble;
 import blackjack.model.state.running.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class StateTest {
     void hit() {
         State state = new Ready().add(CLOVER_EIGHT).add(CLOVER_TWO);
 
-        assertThat(state).isInstanceOf(Hit.class);
+        assertThat(state).isInstanceOf(HitAble.class);
     }
 
     @DisplayName("카드를 두장 가지고 있을때 카드 숫자 합이 21이면 Blackjack이다.")
