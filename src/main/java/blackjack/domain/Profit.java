@@ -14,7 +14,7 @@ public enum Profit {
         this.profit = profit;
     }
 
-    public Money calculateProfit(final Money money) {
-        return money.profits(this.profit);
+    public BettingMoney calculateProfit(final BettingMoney money) {
+        return money.multiplyProfit(this.profit);
     }
 }

@@ -10,9 +10,8 @@ public class BlackjackGame {
         Players players = createPlayers();
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
-        Betting betting = new Betting();
 
-        play(players, cardDeck, dealer, betting);
+        play(players, cardDeck, dealer);
     }
 
     private Players createPlayers() {
@@ -25,9 +24,9 @@ public class BlackjackGame {
         }
     }
 
-    private void play(Players players, CardDeck cardDeck, Dealer dealer, Betting betting) {
+    private void play(Players players, CardDeck cardDeck, Dealer dealer) {
         dealInitCards(cardDeck, dealer, players);
-        Bank bank = betting.play(players);
+        Betting betting = bet(players);
         openInitCards(dealer, players);
 
         drawPlayers(players, cardDeck);
@@ -35,12 +34,31 @@ public class BlackjackGame {
 
         Result result = new Result();
         result.openResult(players, dealer);
-        result.openProfits(bank, dealer, players);
+        result.openProfits(betting, dealer, players);
     }
 
     private void dealInitCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
         dealer.dealInit(cardDeck.dealInit());
         players.dealInit(cardDeck);
+    }
+
+    private Betting bet(Players players) {
+        Betting betAmount = new Betting();
+        for (Player player : players.getPlayers()) {
+            betAmount = bets(betAmount, player);
+        }
+        return betAmount;
+    }
+
+    private Betting bets(Betting betAmount, Player player) {
+        try {
+            OutputView.printBettingInstruction(player.getName());
+            betAmount.bet(player, BettingMoney.of(InputView.inputBettingMoney()));
+        } catch (IllegalArgumentException exception) {
+            OutputView.printExceptionMessage(exception.getMessage());
+            return bets(betAmount, player);
+        }
+        return betAmount;
     }
 
     private void openInitCards(final Dealer dealer, final Players players) {
@@ -70,17 +88,17 @@ public class BlackjackGame {
     }
 
     private boolean isDrawing(final Player player) {
-        return player.canDraw() && hitOrStay(player);
+        return player.canDraw() && hits(player);
     }
 
-    private boolean hitOrStay(final Player player) {
+    private boolean hits(final Player player) {
         try {
             OutputView.printTakeCardInstruction(player.getName());
             String input = InputView.inputTakeCardAnswer();
             return HitOption.hits(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
-            return hitOrStay(player);
+            return hits(player);
         }
     }
 

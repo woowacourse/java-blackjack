@@ -23,23 +23,23 @@ public class Result {
         OutputView.printNewLine();
     }
 
-    public void openProfits(final Bank bank, final Dealer dealer, final Players players) {
+    public void openProfits(final Betting betAmount, final Dealer dealer, final Players players) {
         GameResult gameResult = new GameResult();
-        players.determine(gameResult, dealer);
+        players.decideWinners(gameResult, dealer);
         OutputView.printProfitTitle();
-        printDealerProfit(bank, gameResult, dealer);
-        printPlayerProfit(bank, gameResult, players);
+        printDealerProfit(betAmount, gameResult, dealer);
+        printPlayerProfit(betAmount, gameResult, players);
     }
 
-    private void printDealerProfit(final Bank bank, final GameResult gameResult, final Dealer dealer) {
-        Money money = bank.getDealerProfit(gameResult);
+    private void printDealerProfit(final Betting betAmount, final GameResult gameResult, final Dealer dealer) {
+        BettingMoney money = betAmount.getDealerProfit(gameResult);
         OutputView.printProfit(dealer.getName(), money.getMoney());
     }
 
-    private void printPlayerProfit(final Bank bank, final GameResult gameResult, final Players players) {
+    private void printPlayerProfit(final Betting betAmount, final GameResult gameResult, final Players players) {
         for (Player player : players.getPlayers()) {
-            Money money = bank.getProfit(gameResult, player);
-            OutputView.printProfit(player.getName(), money.getMoney());
+            BettingMoney bettingMoney = betAmount.getProfit(gameResult, player);
+            OutputView.printProfit(player.getName(), bettingMoney.getMoney());
         }
     }
 }

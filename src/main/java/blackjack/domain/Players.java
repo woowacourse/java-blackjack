@@ -55,11 +55,10 @@ public class Players {
         }
     }
 
-    public GameResult determine(GameResult gameResult, Dealer dealer) {
+    public void decideWinners(GameResult gameResult, Dealer dealer) {
         for (Player player : players) {
-            gameResult.determine(dealer, player);
+            gameResult.decideWinner(dealer, player);
         }
-        return gameResult;
     }
 
     public List<String> getNames() {

@@ -20,7 +20,7 @@ public abstract class Human {
     }
 
     public boolean isWinner(final Human human) {
-        if (human.isSameTotal(getTotal())) {
+        if (human.isSameTotalPoints(getTotal())) {
             return isBlackjack();
         }
         return human.isBust() || human.hasTotalLowerThan(getTotal());
@@ -34,7 +34,7 @@ public abstract class Human {
         return cards.isBlackjack();
     }
 
-    boolean isSameTotal(final int total) {
+    boolean isSameTotalPoints(final int total) {
         return getTotal() == total;
     }
 

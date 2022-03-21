@@ -70,7 +70,7 @@ public class DealerTest {
         player.dealInit(playerCards);
         dealer.dealInit(dealerCards);
 
-        final boolean compare = dealer.isSameTotal(player.getTotal());
+        final boolean compare = dealer.isSameTotalPoints(player.getTotal());
         assertThat(compare).isTrue();
     }
 

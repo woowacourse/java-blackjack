@@ -7,7 +7,7 @@ public class GameResult {
 
     final Map<Player, Profit> gameResult = new HashMap<>();
 
-    public void determine(final Dealer dealer, final Player player) {
+    public void decideWinner(final Dealer dealer, final Player player) {
         putResult(player, compete(dealer, player));
     }
 
@@ -16,11 +16,11 @@ public class GameResult {
     }
 
     private Profit compete(final Dealer dealer, final Player player) {
-        if (player.isBlackjack()) {
-            return Profit.BLACKJACK_WIN;
-        }
         if (dealer.isWinner(player)) {
             return Profit.LOSE;
+        }
+        if (player.isBlackjack()) {
+            return Profit.BLACKJACK_WIN;
         }
         if (player.isWinner(dealer)) {
             return Profit.WIN;
@@ -28,7 +28,7 @@ public class GameResult {
         return Profit.DRAW;
     }
 
-    public Money calculateProfit(Player player, Money money) {
+    public BettingMoney calculateProfit(Player player, BettingMoney money) {
         Profit result = gameResult.get(player);
         return result.calculateProfit(money);
     }

@@ -20,7 +20,7 @@ public class GameResultTest {
     @Test
     void win_blackjack_profit() {
         gameResult.putResult(player, Profit.BLACKJACK_WIN);
-        Money money = gameResult.calculateProfit(player, Money.of("5000"));
+        BettingMoney money = gameResult.calculateProfit(player, BettingMoney.of("5000"));
 
         assertThat(money.getMoney()).isEqualTo(7500);
     }
@@ -29,7 +29,7 @@ public class GameResultTest {
     @Test
     void win_profit() {
         gameResult.putResult(player, Profit.WIN);
-        Money money = gameResult.calculateProfit(player, Money.of("5000"));
+        BettingMoney money = gameResult.calculateProfit(player, BettingMoney.of("5000"));
 
         assertThat(money.getMoney()).isEqualTo(5000);
     }
@@ -38,7 +38,7 @@ public class GameResultTest {
     @Test
     void lose_profit() {
         gameResult.putResult(player, Profit.LOSE);
-        Money money = gameResult.calculateProfit(player, Money.of("5000"));
+        BettingMoney money = gameResult.calculateProfit(player, BettingMoney.of("5000"));
 
         assertThat(money.getMoney()).isEqualTo(-5000);
     }
@@ -47,7 +47,7 @@ public class GameResultTest {
     @Test
     void draw_profit() {
         gameResult.putResult(player, Profit.DRAW);
-        Money money = gameResult.calculateProfit(player, Money.of("5000"));
+        BettingMoney money = gameResult.calculateProfit(player, BettingMoney.of("5000"));
 
         assertThat(money.getMoney()).isEqualTo(0);
     }
