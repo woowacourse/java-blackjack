@@ -10,12 +10,8 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -54,28 +50,13 @@ class BlackJackManagerTest {
 		assertThat(names).containsExactly("pobi", "jason");
 	}
 
-	@ParameterizedTest
-	@CsvSource(value = {"TWO:true", "ACE:false"}, delimiter = ':')
-	@DisplayName("이름을 입력 받아, 해당 플레이어가 카드 총 합이 21이 넘는 버스트 상태인지 확인한다.")
-	void isBurst(String input, boolean result) {
-		Player pobi = manager.findPlayerByName("pobi");
-
-		pobi.addCard(CLOVER_TEN);
-		pobi.addCard(CLOVER_TEN);
-		pobi.addCard(Card.getInstance(CardShape.HEART, CardNumber.valueOf(input)));
-
-		assertThat(!pobi.isDrawable()).isEqualTo(result);
-	}
-
 	@Test
 	@DisplayName("배팅 결과를 반환한다.")
 	void createBettingResult() {
-		Deck deck = new Deck(List.of(CLOVER_ACE, CLOVER_TEN, CLOVER_TEN, CLOVER_TEN));
-		manager.giveCardToDealer(deck);
-		manager.giveCardToDealer(deck);
-
-		manager.giveCardToPlayer("pobi", deck);
-		manager.giveCardToPlayer("jason", deck);
+		Dealer dealer = new Dealer(CLOVER_ACE, CLOVER_TEN);
+		Player pobi = new Player("pobi", 10, CLOVER_TEN, CLOVER_TEN);
+		Player jason = new Player("jason", 10, CLOVER_TEN, CLOVER_TEN);
+		BlackJackManager manager = new BlackJackManager(dealer, pobi, jason);
 
 		BettingResult result = manager.createBettingResult();
 		int dealerEarning = result.getDealerEarning();

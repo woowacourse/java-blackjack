@@ -16,6 +16,11 @@ public abstract class Gamer {
         cards = new Cards();
     }
 
+    public Gamer(String name, Card... cards) {
+        this.name = new Name(name);
+        this.cards = new Cards(cards);
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

@@ -15,6 +15,10 @@ public class Dealer extends Gamer{
         super(NAME);
     }
 
+    public Dealer(Card... cards) {
+        super(NAME, cards);
+    }
+
     @Override
     public boolean isDrawable() {
         return cards.sum() <= ADDITIONAL_DISTRIBUTE_STANDARD;

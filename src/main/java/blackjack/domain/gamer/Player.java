@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.result.BlackJackResult;
 
 public class Player extends Gamer{
@@ -8,6 +9,11 @@ public class Player extends Gamer{
 
     public Player(String name, int amount) {
         super(name);
+        this.bet = new Bet(amount);
+    }
+
+    public Player(String name, int amount, Card... cards) {
+        super(name, cards);
         this.bet = new Bet(amount);
     }
 

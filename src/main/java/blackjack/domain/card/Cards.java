@@ -18,6 +18,10 @@ public class Cards {
 		this.values = new ArrayList<>();
 	}
 
+	public Cards(Card... cards) {
+		values = new ArrayList<>(List.of(cards));
+	}
+
 	public void add(Card card) {
 		values.add(card);
 	}

@@ -29,6 +29,11 @@ public class BlackJackManager {
 			.collect(toList());
 	}
 
+	public BlackJackManager(Dealer dealer, Player... players) {
+		this.dealer = dealer;
+		this.players = List.of(players);
+	}
+
 	public void handOutFirst(Deck deck) {
 		for (int i = 0; i < Cards.BLACKJACK_SIZE; i++) {
 			handOutToAllGamers(deck);
