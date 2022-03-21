@@ -1,9 +1,9 @@
 package blackjack.model.state.finished;
 
-import static blackjack.model.BettingRate.LOSE;
-import static blackjack.model.BettingRate.WIN;
+import static blackjack.model.betting.BettingRate.LOSE;
+import static blackjack.model.betting.BettingRate.WIN;
 
-import blackjack.model.BettingRate;
+import blackjack.model.betting.BettingRate;
 import blackjack.model.card.Cards;
 import blackjack.model.state.State;
 

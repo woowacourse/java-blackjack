@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.BettingResult;
+import blackjack.model.betting.BettingResult;
 import blackjack.model.card.Card;
 import blackjack.model.participant.Participant;
 import java.util.List;

@@ -1,6 +1,6 @@
 package blackjack.model.state;
 
-import blackjack.model.BettingRate;
+import blackjack.model.betting.BettingRate;
 import blackjack.model.card.Card;
 import java.util.List;
 
