@@ -4,7 +4,9 @@ import blackjack.domain.Betting;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerNames;
 import blackjack.domain.participant.Players;
 import blackjack.dto.HitRequest;
 import blackjack.dto.ParticipantInitialResponse;
@@ -24,22 +26,27 @@ public class BlackjackGame {
         proceed(deck, dealer, players);
     }
 
-    private List<String> inputPlayerNames() {
+    private PlayerNames inputPlayerNames() {
         try {
-            return InputView.inputPlayerNames();
+            return new PlayerNames(InputView.inputPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerNames();
         }
     }
 
-    private Players createPlayers(List<String> names, CardDeck deck) {
-        return new Players(names, deck, this::inputBetting);
+    private Players createPlayers(PlayerNames names, CardDeck deck) {
+        try {
+            return new Players(names, deck, this::inputBetting);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return createPlayers(names, deck);
+        }
     }
 
-    private Betting inputBetting(String name) {
+    private Betting inputBetting(Name name) {
         try {
-            return new Betting(InputView.inputBetMoney(name));
+            return new Betting(InputView.inputBetMoney(name.getValue()));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputBetting(name);

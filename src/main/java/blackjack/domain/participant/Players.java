@@ -16,33 +16,16 @@ public class Players implements Iterable<Player> {
         this.players = players;
     }
 
-    public Players(List<String> nameStrings, CardDeck deck, Function<String, Betting> inputBetting) {
-        this(createPlayers(nameStrings, deck, inputBetting));
+    public Players(PlayerNames names, CardDeck deck, Function<Name, Betting> inputBetting) {
+        this(createPlayers(names, deck, inputBetting));
     }
 
-    public static List<Player> createPlayers(List<String> nameStrings, CardDeck deck,
-                                             Function<String, Betting> inputBetting) {
-        validateNames(nameStrings);
-        return nameStrings.stream()
-                .map(name -> new Player(new Name(name), deck.drawDouble(), inputBetting.apply(name)))
+    public static List<Player> createPlayers(PlayerNames names, CardDeck deck,
+                                             Function<Name, Betting> inputBetting) {
+        return names.getNames()
+                .stream()
+                .map(name -> new Player(name, deck.drawDouble(), inputBetting.apply(name)))
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    private static void validateNames(List<String> names) {
-        validateSize(names);
-        validateDistinct(names);
-    }
-
-    private static void validateSize(List<String> names) {
-        if (names.size() < 2 || names.size() > 8) {
-            throw new IllegalArgumentException("[ERROR] 2~8인의 플레이어가 참가할 수 있습니다.");
-        }
-    }
-
-    private static void validateDistinct(List<String> names) {
-        if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
-        }
     }
 
     @Override
