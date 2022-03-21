@@ -18,7 +18,7 @@ public enum GameResult {
         && dealer.calculateResult() == gamer.calculateResult()
     ),
     LOSE(-1.0, (dealer, gamer) -> gamer.isBust()
-        || dealer.calculateResult() > gamer.calculateResult()
+        || (dealer.calculateResult() > gamer.calculateResult() && !dealer.isBust())
     );
 
     private final Double multiplePoint;
@@ -42,7 +42,8 @@ public enum GameResult {
         for (Gamer gamer : gamers) {
             gamersProfit
                 .put(gamer,
-                    (long) (GameResult.findResult(dealer, gamer).getMultiplePoint() * gamer.getBetMoney()));
+                    (long) (GameResult.findResult(dealer, gamer).getMultiplePoint() * gamer
+                        .getBetMoney()));
         }
         return gamersProfit;
     }
