@@ -76,9 +76,9 @@ public abstract class Participant {
         return myCards;
     }
 
-    abstract void setStateStayIfSatisfied(boolean stayFlag);
+    public abstract void setStateStayIfSatisfied(boolean stayFlag);
 
     abstract void updateStateAfterAddCard();
 
-    abstract Cards pickOpenCards();
+    public abstract Cards pickOpenCards();
 }

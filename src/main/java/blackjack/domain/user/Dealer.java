@@ -17,7 +17,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    protected void setStateStayIfSatisfied(boolean stayFlag) {
+    public void setStateStayIfSatisfied(boolean stayFlag) {
         if (state.equals(State.HIT) && myCards.scoreSum() > 16) {
             state = State.STAY;
         }

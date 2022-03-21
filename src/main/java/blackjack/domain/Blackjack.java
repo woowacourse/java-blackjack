@@ -1,15 +1,13 @@
 package blackjack.domain;
 
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participant;
-import blackjack.domain.user.Player;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Blackjack {
 
     private final Deck deck;
-    private final Map<Player, Receipt> bettingTable;
+    private final Map<Participant, Receipt> bettingTable;
     private final Map<Participant, Receipt> yieldTable;
 
     private Blackjack() {
@@ -32,7 +30,7 @@ public class Blackjack {
         return new Blackjack(deck);
     }
 
-    public void distributeInitCards(Dealer dealer, Players players) {
+    public void distributeInitCards(Participant dealer, Players players) {
         dealer.drawInitialCards(deck);
         players.drawInitialCards(deck);
     }
@@ -45,16 +43,16 @@ public class Blackjack {
         player.drawAdditionalCard(deck);
     }
 
-    public void betting(Player player, int money) {
+    public void betting(Participant player, int money) {
         bettingTable.put(player, Receipt.generate(money));
     }
 
-    public boolean gameOverByBlackjack(Dealer dealer) {
+    public boolean gameOverByBlackjack(Participant dealer) {
         return dealer.isBlackjack();
     }
 
-    public Map<Participant, Receipt> calculateYield(Dealer dealer, Players players) {
-        for (Player player : players) {
+    public Map<Participant, Receipt> calculateYield(Participant dealer, Players players) {
+        for (Participant player : players) {
             yieldTable.put(player, BlackjackResult.of(dealer, player)
                     .settle(bettingTable.get(player)));
         }

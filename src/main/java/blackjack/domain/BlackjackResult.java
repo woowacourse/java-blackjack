@@ -1,7 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
+import blackjack.domain.user.Participant;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -41,10 +40,10 @@ public enum BlackjackResult {
                                      player.score() < dealer.score()),
             (Receipt::opposite));
 
-    private BiPredicate<Dealer, Player> condition;
+    private BiPredicate<Participant, Participant> condition;
     private Function<Receipt, Receipt> settle;
 
-    BlackjackResult(BiPredicate<Dealer, Player> condition, Function<Receipt, Receipt> settle) {
+    BlackjackResult(BiPredicate<Participant, Participant> condition, Function<Receipt, Receipt> settle) {
         this.condition = condition;
         this.settle = settle;
     }
@@ -53,7 +52,7 @@ public enum BlackjackResult {
         return settle.apply(receipt);
     }
 
-    public static BlackjackResult of(Dealer dealer, Player player) {
+    public static BlackjackResult of(Participant dealer, Participant player) {
         return Arrays.stream(BlackjackResult.values())
                 .filter(result -> result.condition.test(dealer, player))
                 .findFirst()
