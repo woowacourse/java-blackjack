@@ -29,7 +29,7 @@ public class Players {
         }
     }
 
-    public List<String> getNames() {
+    public List<Name> getNames() {
         return blackjackPlayers.stream().map(Player::getName).collect(Collectors.toList());
     }
 

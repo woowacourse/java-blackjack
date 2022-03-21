@@ -2,6 +2,7 @@ package blackjack.domain.machine;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
@@ -66,7 +67,7 @@ public class BlackjackGame {
         return matchResults;
     }
 
-    public List<String> getPlayerNames() {
+    public List<Name> getPlayerNames() {
         return blackjackPlayers.getNames();
     }
 

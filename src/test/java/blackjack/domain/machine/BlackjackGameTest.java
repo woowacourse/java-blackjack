@@ -51,6 +51,6 @@ class BlackjackGameTest {
         Player player = new Guest("eden");
         bettingBox.put(player, (double) 1000);
         MatchResults matchResults = blackjackGame.calculateResult(bettingBox);
-        assertThat(matchResults.getPlayers().size()).isEqualTo(2);
+        assertThat(matchResults.getKeys().size()).isEqualTo(2);
     }
 }

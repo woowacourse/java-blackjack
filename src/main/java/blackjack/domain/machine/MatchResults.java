@@ -1,5 +1,6 @@
 package blackjack.domain.machine;
 
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,11 +8,11 @@ import java.util.Set;
 
 public class MatchResults {
 
-    private final Map<Player, Double> results;
+    private final Map<Name, Double> results;
 
     public MatchResults(Player dealer) {
         this.results = new LinkedHashMap<>();
-        this.results.put(dealer, (double) 0);
+        this.results.put(dealer.getName(), (double) 0);
     }
 
     public void addResult(Player guest, Player dealer, double profit) {
@@ -19,23 +20,23 @@ public class MatchResults {
         updateDealerProfit(dealer, profit);
     }
 
-    public Set<Player> getPlayers() {
+    public Set<Name> getKeys() {
         return results.keySet();
     }
 
-    public Double getProfit(Player player) {
-        return results.get(player);
+    public Double getProfit(Name playerName) {
+        return results.get(playerName);
     }
 
     private void putGuestProfit(Player guest, double profit) {
-        results.put(guest, profit);
+        results.put(guest.getName(), profit);
     }
 
     private void updateDealerProfit(Player dealer, double profit) {
-        results.put(dealer, calculateDealerProfit(dealer, profit));
+        results.put(dealer.getName(), calculateDealerProfit(dealer, profit));
     }
 
     private double calculateDealerProfit(Player dealer, double profit) {
-        return results.get(dealer) + profit * -1;
+        return results.get(dealer.getName()) + profit * -1;
     }
 }

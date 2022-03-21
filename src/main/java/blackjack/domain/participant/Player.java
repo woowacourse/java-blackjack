@@ -9,7 +9,7 @@ public abstract class Player {
     private static final String DEALER_NAME = "딜러";
 
     protected Cards cards;
-    protected String name;
+    protected Name name;
 
     Player() {
         this(DEALER_NAME);
@@ -17,7 +17,7 @@ public abstract class Player {
 
     Player(String name) {
         this.cards = new Cards();
-        this.name = name;
+        this.name = new Name(name);
     }
 
     public void addCard(Card card) {
@@ -34,7 +34,7 @@ public abstract class Player {
 
     abstract int limit();
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 

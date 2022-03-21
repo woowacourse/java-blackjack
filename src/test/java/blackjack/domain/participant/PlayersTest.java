@@ -53,7 +53,7 @@ class PlayersTest {
     void checkTurnPlayer() {
         Player turnPlayer = players.getTurnPlayer();
 
-        assertThat(turnPlayer.getName()).isEqualTo("eden");
+        assertThat(turnPlayer.getName()).isEqualTo(new Name("eden"));
     }
 
     @Test
@@ -61,7 +61,7 @@ class PlayersTest {
     void checkDealer() {
         Player dealer = players.getDealer();
 
-        assertThat(dealer.getName()).isEqualTo("딜러");
+        assertThat(dealer.getName()).isEqualTo(new Name("딜러"));
     }
 
     @Test
