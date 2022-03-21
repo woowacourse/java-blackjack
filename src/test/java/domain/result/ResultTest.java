@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
 import domain.participant.Dealer;
-import domain.participant.Participant;
+import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.info.Betting;
 import domain.participant.info.Hand;
@@ -36,10 +36,10 @@ public class ResultTest {
 	@Test
 	@DisplayName("딜러의 최종 수익 확인")
 	void getDealerMoney() {
-		Participant pobi = new Participant(new Name("pobi"), new Hand(cards_20), new Betting(10000));
-		Participant jason = new Participant(new Name("jason"), new Hand(cards_15), new Betting(20000));
-		Participant woni = new Participant(new Name("woni"), new Hand(cards_BURST), new Betting(30000));
-		Participant gugu = new Participant(new Name("gugu"), new Hand(cards_17), new Betting(40000));
+		Player pobi = new Player(new Name("pobi"), new Hand(cards_20), new Betting(10000));
+		Player jason = new Player(new Name("jason"), new Hand(cards_15), new Betting(20000));
+		Player woni = new Player(new Name("woni"), new Hand(cards_BURST), new Betting(30000));
+		Player gugu = new Player(new Name("gugu"), new Hand(cards_17), new Betting(40000));
 		Dealer dealer = new Dealer(new Hand(cards_17));
 		Players players = new Players(Arrays.asList(pobi, jason, woni, gugu));
 		Result result = Result.of(dealer, players);
@@ -49,10 +49,10 @@ public class ResultTest {
 	@Test
 	@DisplayName("딜러의 최종 수익 확인 - 딜러가 Bust일 경우")
 	void getDealerMoneyAtDealerBurst() {
-		Participant pobi = new Participant(new Name("pobi"), new Hand(cards_20), new Betting(10000));
-		Participant jason = new Participant(new Name("jason"), new Hand(cards_15), new Betting(20000));
-		Participant woni = new Participant(new Name("woni"), new Hand(cards_BURST), new Betting(30000));
-		Participant gugu = new Participant(new Name("gugu"), new Hand(cards_17), new Betting(40000));
+		Player pobi = new Player(new Name("pobi"), new Hand(cards_20), new Betting(10000));
+		Player jason = new Player(new Name("jason"), new Hand(cards_15), new Betting(20000));
+		Player woni = new Player(new Name("woni"), new Hand(cards_BURST), new Betting(30000));
+		Player gugu = new Player(new Name("gugu"), new Hand(cards_17), new Betting(40000));
 		Dealer dealer = new Dealer(new Hand(cards_BURST));
 		Players players = new Players(Arrays.asList(pobi, jason, woni, gugu));
 		Result result = Result.of(dealer, players);
@@ -62,7 +62,7 @@ public class ResultTest {
 	@Test
 	@DisplayName("플레이어의 최종 수익 확인")
 	void getPlayerMoney() {
-		Participant pobi = new Participant(new Name("pobi"), new Hand(cards_20), new Betting(10000));
+		Player pobi = new Player(new Name("pobi"), new Hand(cards_20), new Betting(10000));
 		Dealer dealer = new Dealer(new Hand(cards_BURST));
 		Players players = new Players(Arrays.asList(pobi));
 		Result result = Result.of(dealer, players);
@@ -73,7 +73,7 @@ public class ResultTest {
 	@DisplayName("플레이어의 최종 수익 확인_플레이어가 블랙잭일 때")
 	void getPlayerMoneyAtPlayerBlackJack() {
 		Hand hand = new Hand(List.of(ACE_CLOVER, QUEEN_CLOVER));
-		Participant pobi = new Participant(new Name("pobi"), hand, new Betting(10000));
+		Player pobi = new Player(new Name("pobi"), hand, new Betting(10000));
 		Dealer dealer = new Dealer(new Hand(cards_17));
 		Players players = new Players(Arrays.asList(pobi));
 		Result result = Result.of(dealer, players);

@@ -25,9 +25,9 @@ public class ParticipantTest {
 	void isBurst(Denomination denomination) {
 		Card card = new Card(denomination, Suit.HEART);
 		Card card1 = new Card(Denomination.KING, Suit.HEART);
-		Participant participant = new Participant(new Name("pobi"), new Hand(List.of(card, card1, card1)),
+		Player player = new Player(new Name("pobi"), new Hand(List.of(card, card1, card1)),
 			new Betting(0));
-		assertThat(participant.isBust()).isTrue();
+		assertThat(player.isBust()).isTrue();
 	}
 
 	@Test()
@@ -37,49 +37,49 @@ public class ParticipantTest {
 		Card card2 = new Card(Denomination.ACE, Suit.SPADE);
 		Card card3 = new Card(Denomination.ACE, Suit.CLOVER);
 		Card card4 = new Card(Denomination.EIGHT, Suit.CLOVER);
-		Participant participant = new Participant(new Name("pobi"),
+		Player player = new Player(new Name("pobi"),
 			new Hand(List.of(card1, card2, card3, card4)), new Betting(0));
-		assertThat(participant.getScore()).isEqualTo(20);
+		assertThat(player.getScore()).isEqualTo(20);
 	}
 
 	@Test
 	@DisplayName("블랙잭 확인 테스트")
 	void isBlackJack() {
 		Hand hand = new Hand(List.of(ACE_CLOVER, QUEEN_CLOVER));
-		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
-		assertThat(participant.isBlackJack()).isTrue();
+		Player player = new Player(new Name("pobi"), hand, new Betting(0));
+		assertThat(player.isBlackJack()).isTrue();
 	}
 
 	@Test
 	@DisplayName("버스트 확인 테스트")
 	void isBust() {
 		Hand hand = new Hand(List.of(TWO_CLOVER, QUEEN_CLOVER, QUEEN_CLOVER));
-		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
-		assertThat(participant.isBust()).isTrue();
+		Player player = new Player(new Name("pobi"), hand, new Betting(0));
+		assertThat(player.isBust()).isTrue();
 	}
 
 	@Test
 	@DisplayName("Ace가 있을 경우 계산_ACE가 11로 계산될 경우")
 	void getScoreAceEleven() {
 		Hand hand = new Hand(List.of(ACE_CLOVER, TWO_CLOVER));
-		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
-		assertThat(participant.getScore()).isEqualTo(13);
+		Player player = new Player(new Name("pobi"), hand, new Betting(0));
+		assertThat(player.getScore()).isEqualTo(13);
 	}
 
 	@Test
 	@DisplayName("Ace가 있을 경우 계산_ACE가 1로 계산될 경우")
 	void getScoreAceOne() {
 		Hand hand = new Hand(List.of(ACE_CLOVER, TWO_CLOVER, QUEEN_CLOVER));
-		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
-		assertThat(participant.getScore()).isEqualTo(13);
+		Player player = new Player(new Name("pobi"), hand, new Betting(0));
+		assertThat(player.getScore()).isEqualTo(13);
 	}
 
 	@Test
 	@DisplayName("카드가 정상적으로 추가가 되는지 확인")
 	void addCard() {
 		Hand hand = new Hand(new ArrayList<>(List.of(ACE_CLOVER, TWO_CLOVER)));
-		Participant participant = new Participant(new Name("pobi"), hand, new Betting(0));
-		participant.addCard(QUEEN_CLOVER);
-		assertThat(participant.getCards()).isEqualTo(List.of(ACE_CLOVER, TWO_CLOVER, QUEEN_CLOVER));
+		Player player = new Player(new Name("pobi"), hand, new Betting(0));
+		player.addCard(QUEEN_CLOVER);
+		assertThat(player.getCards()).isEqualTo(List.of(ACE_CLOVER, TWO_CLOVER, QUEEN_CLOVER));
 	}
 }

@@ -1,7 +1,7 @@
 package domain.result;
 
 import domain.participant.Dealer;
-import domain.participant.Participant;
+import domain.participant.Player;
 
 public enum WinOrLose {
 	WIN(1),
@@ -15,7 +15,7 @@ public enum WinOrLose {
 		this.earningRate = earningRate;
 	}
 
-	public static WinOrLose judgePlayerWinOrLose(Dealer dealer, Participant player) {
+	public static WinOrLose judgePlayerWinOrLose(Dealer dealer, Player player) {
 		if (dealer.isBlackJack() || player.isBlackJack()) {
 			return judgeWinOrLoseAtBlackJackExist(dealer, player);
 		}
@@ -26,21 +26,21 @@ public enum WinOrLose {
 		return judgeWinOrLoseByScore(dealer, player);
 	}
 
-	private static WinOrLose judgeWinOrLoseAtBlackJackExist(Dealer dealer, Participant player) {
+	private static WinOrLose judgeWinOrLoseAtBlackJackExist(Dealer dealer, Player player) {
 		if (dealer.isBlackJack()) {
 			return judgeWinOrLoseAtDealerBlackJack(player);
 		}
 		return WinOrLose.BLACK_JACK_WIN;
 	}
 
-	private static WinOrLose judgeWinOrLoseAtDealerBlackJack(Participant player) {
+	private static WinOrLose judgeWinOrLoseAtDealerBlackJack(Player player) {
 		if (player.isBlackJack()) {
 			return WinOrLose.DRAW;
 		}
 		return WinOrLose.LOSE;
 	}
 
-	private static WinOrLose judgeWinOrLoseAtBustExist(Participant player) {
+	private static WinOrLose judgeWinOrLoseAtBustExist(Player player) {
 		if (player.isBust()) {
 			return WinOrLose.LOSE;
 		}
@@ -48,7 +48,7 @@ public enum WinOrLose {
 		return WinOrLose.WIN;
 	}
 
-	private static WinOrLose judgeWinOrLoseByScore(Dealer dealer, Participant player) {
+	private static WinOrLose judgeWinOrLoseByScore(Dealer dealer, Player player) {
 		int playerScore = player.getScore();
 		int dealerScore = dealer.getScore();
 

@@ -4,19 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import domain.participant.Dealer;
-import domain.participant.Participant;
+import domain.participant.Player;
 import domain.participant.Players;
 
 public class Result {
 
-	private final Map<Participant, WinOrLose> playerResults;
+	private final Map<Player, WinOrLose> playerResults;
 
-	private Result(Map<Participant, WinOrLose> playerResults) {
+	private Result(Map<Player, WinOrLose> playerResults) {
 		this.playerResults = playerResults;
 	}
 
 	public static Result of(Dealer dealer, Players players) {
-		Map<Participant, WinOrLose> result = new HashMap<>();
+		Map<Player, WinOrLose> result = new HashMap<>();
 		players.forEach(player -> result.putIfAbsent(player, WinOrLose.judgePlayerWinOrLose(dealer, player)));
 		return new Result(result);
 	}
@@ -28,8 +28,8 @@ public class Result {
 			.sum();
 	}
 
-	public int getPlayerMoney(Participant player) {
+	public int getPlayerMoney(Player player) {
 		return (int)(player.getBettingMoney() * playerResults.get(player).getEarningRate());
 	}
-	
+
 }

@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
-public class Players implements Iterable<Participant> {
-	private final List<Participant> players;
+public class Players implements Iterable<Player> {
+	private final List<Player> players;
 
-	public Players(List<Participant> players) {
+	public Players(List<Player> players) {
 		this.players = players;
 	}
 
-	private class PlayerIterator implements Iterator<Participant> {
+	private class PlayerIterator implements Iterator<Player> {
 		private int current = 0;
 
 		@Override
@@ -21,7 +21,7 @@ public class Players implements Iterable<Participant> {
 		}
 
 		@Override
-		public Participant next() {
+		public Player next() {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
@@ -30,12 +30,12 @@ public class Players implements Iterable<Participant> {
 	}
 
 	@Override
-	public Iterator<Participant> iterator() {
+	public Iterator<Player> iterator() {
 		return new PlayerIterator();
 	}
 
 	@Override
-	public void forEach(Consumer<? super Participant> action) {
+	public void forEach(Consumer<? super Player> action) {
 		Iterable.super.forEach(action);
 	}
 }
