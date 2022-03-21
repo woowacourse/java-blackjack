@@ -51,16 +51,16 @@ class BlackjackProfitResultTest {
         dealer.receiveCard(Card.from(Suit.CLOVER, Denomination.TWO));
         dealer.requestStay();
 
-        player1.betting(new PlayerBettingMoney(10000));
+        player1.betting(10000);
         player1.receiveCard(Card.from(Suit.SPADE, Denomination.EIGHT));
         player1.receiveCard(Card.from(Suit.HEART, Denomination.TWO));
         player1.requestStay();
 
-        player2.betting(new PlayerBettingMoney(5000));
+        player2.betting(5000);
         player2.receiveCard(Card.from(Suit.DIAMOND, Denomination.ACE));
         player2.receiveCard(Card.from(Suit.DIAMOND, Denomination.KING));
 
-        player3.betting(new PlayerBettingMoney(20000));
+        player3.betting(20000);
         player3.receiveCard(Card.from(Suit.SPADE, Denomination.ACE));
         player3.receiveCard(Card.from(Suit.SPADE, Denomination.TWO));
         player3.requestStay();

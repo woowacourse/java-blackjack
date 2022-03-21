@@ -30,7 +30,7 @@ public class Player extends Participant {
         }
     }
 
-    public void betting(BettingMoney money) {
+    public void betting(int money) {
         if (bettingMoney.isEmpty()) {
             bettingMoney = new PlayerBettingMoney(money);
         }

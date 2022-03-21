@@ -45,18 +45,17 @@ public class BlackjackController {
 
     private void betting(List<Player> players) {
         for (Player player : players) {
-            final BettingMoney money = getPlayerBettingMoney(player.getName());
-            player.betting(money);
+            bettingEachPlayer(player);
         }
     }
 
-    private BettingMoney getPlayerBettingMoney(String playerName) {
+    private void bettingEachPlayer(Player player) {
         try {
-            final int money = InputView.inputPlayerMoney(playerName);
-            return new PlayerBettingMoney(money);
+            final int money = InputView.inputPlayerMoney(player.getName());
+            player.betting(money);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
-            return getPlayerBettingMoney(playerName);
+            bettingEachPlayer(player);
         }
     }
 
