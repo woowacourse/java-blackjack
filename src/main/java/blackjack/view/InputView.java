@@ -15,15 +15,27 @@ public class InputView {
 
     public static List<String> inputPlayerNames() {
         System.out.println(INPUT_PLAYER_NAMES);
-        final String names = SCANNER.nextLine();
-        System.out.println();
-        return splitNames(names);
+        final List<String> names = split(SCANNER.nextLine());
+        checkEmptyIn(names);
+        return names;
     }
 
-    private static List<String> splitNames(final String names) {
+    private static List<String> split(final String names) {
         return Arrays.stream(names.split(NAME_DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    private static void checkEmptyIn(List<String> names) {
+        for (String name : names) {
+            checkEmpty(name);
+        }
+    }
+
+    private static void checkEmpty(String name) {
+        if (name.isEmpty() || name.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 입력된 이름이 없거나 공백인 경우가 있습니다.");
+        }
     }
 
     public static int inputBet(final String name) {

@@ -8,22 +8,6 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    @DisplayName("이름이 공백이면 예외가 발생한다")
-    @Test
-    void construct_exception_blank() {
-        assertThatThrownBy(() -> new Player(" ", 3000))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름은 공백이거나 없을 수 없습니다.");
-    }
-
-    @DisplayName("이름이 null값 이면 예외가 발생한다")
-    @Test
-    void construct_exception_null() {
-        assertThatThrownBy(() -> new Player(null, 3000))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름은 공백이거나 없을 수 없습니다.");
-    }
-
     @DisplayName("베팅 금액이 음수이면 예외가 발생한다.")
     @Test
     void construct_exception_minus() {
