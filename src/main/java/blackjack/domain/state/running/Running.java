@@ -5,6 +5,7 @@ import blackjack.domain.state.Init;
 import blackjack.domain.state.finished.Finished;
 
 public abstract class Running extends Init {
+
     public Running(final Cards cards) {
         super(cards);
     }

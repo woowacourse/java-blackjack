@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class OutputView {
-
     private static final String NAMES_DELIMITER = ",";
     private static final String CARDS_DELIMITER = ", ";
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
@@ -47,7 +46,7 @@ public final class OutputView {
         }
     }
 
-    public static void printHumanHand(final Human human) {
+    private static void printHumanHand(final Human human) {
         System.out.printf(CARD_STATE_MESSAGE, human.getName(), getCardsState(human.getRawCards()));
         System.out.println();
     }
@@ -64,7 +63,7 @@ public final class OutputView {
         players.printHand(OutputView::printHumanCardPointState);
     }
 
-    public static void printHumanCardPointState(final Human human) {
+    private static void printHumanCardPointState(final Human human) {
         System.out.printf(CARD_STATE_MESSAGE + HUMAN_POINT_STATE + System.lineSeparator(),
                 human.getName(), getCardsState(human.getRawCards()), human.getPoint());
     }

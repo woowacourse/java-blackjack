@@ -2,7 +2,7 @@ package blackjack.controller;
 
 
 import static blackjack.view.InputView.inputBetAmount;
-import static blackjack.view.InputView.inputIsDraw;
+import static blackjack.view.InputView.inputIsHit;
 import static blackjack.view.InputView.inputPlayerNames;
 import static blackjack.view.OutputView.printDealerHit;
 import static blackjack.view.OutputView.printDealerProfit;
@@ -28,7 +28,7 @@ public final class BlackjackGame {
         printInitHands(players, dealer);
 
         startGame(players, dealer, cardDeck);
-        calculateResult(players, dealer);
+        showResult(players, dealer);
     }
 
     private Players initPlayers(final CardDeck cardDeck) {
@@ -41,14 +41,14 @@ public final class BlackjackGame {
     private void startGame(final Players players, final Dealer dealer, final CardDeck cardDeck) {
         players.start(cardDeck, (player, deck) -> {
             while (!player.getState().isFinished()) {
-                player.draw(deck, inputIsDraw(player.getName()));
+                player.draw(deck, inputIsHit(player.getName()));
                 printHand(player);
             }
         });
         printDealerHit(dealer.draw(cardDeck));
     }
 
-    private void calculateResult(final Players players, final Dealer dealer) {
+    private void showResult(final Players players, final Dealer dealer) {
         printHandAndPoint(players, dealer);
 
         Map<Player, Integer> payouts = players.getPayouts(dealer);

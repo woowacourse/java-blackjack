@@ -8,17 +8,11 @@ import blackjack.domain.state.finished.Finished;
 import java.util.List;
 
 public final class Player extends Human {
-    private static final int INIT_NUMBER = 2;
-
     private final BetAmount betAmount;
 
     public Player(final String name, final int money, final List<Card> cards) {
         super(cards, new Name(name));
         this.betAmount = new BetAmount(money);
-    }
-
-    public boolean isInitSize() {
-        return getCards().size() == INIT_NUMBER;
     }
 
     public int getProfit(Dealer dealer) {

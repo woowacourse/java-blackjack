@@ -8,6 +8,8 @@ import blackjack.domain.state.running.Ready;
 import java.util.List;
 
 public abstract class Human {
+    private static final int INIT_NUMBER = 2;
+
     protected final Name name;
     protected State state;
 
@@ -27,6 +29,10 @@ public abstract class Human {
 
     public void addCard(final Card card) {
         state = state.draw(card);
+    }
+
+    public boolean isInitSize() {
+        return getCards().size() == INIT_NUMBER;
     }
 
     public void stay() {

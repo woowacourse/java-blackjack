@@ -44,7 +44,7 @@ public final class InputView {
         return input;
     }
 
-    public static boolean inputIsDraw(final String name) {
+    public static boolean inputIsHit(final String name) {
         System.out.printf(MORE_CARD_INPUT_MESSAGE, name);
         String input = SCANNER.nextLine();
         validateAnswer(input);
