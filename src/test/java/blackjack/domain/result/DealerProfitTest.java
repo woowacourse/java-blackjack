@@ -13,7 +13,6 @@ import blackjack.domain.money.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Guests;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,6 +22,7 @@ public class DealerProfitTest {
 
     private Dealer dealer;
     private Guest lisa;
+    private Guest rose;
 
     @Nested
     @DisplayName("딜러의 수익을 계산한다.")
@@ -32,38 +32,44 @@ public class DealerProfitTest {
         void setUp() {
             dealer = new Dealer();
             takeTwoCards(dealer, ACE_CLOVER, FIVE_CLOVER);
+
             lisa = new Guest("리사");
             lisa.betMoney(Money.valueOf(10_000));
+            rose = new Guest("채영");
+            rose.betMoney(Money.valueOf(10_000));
         }
 
         @Test
         @DisplayName("참가자가 블랙잭 승리인 경우 수익은 -1.5배한 금액이다.")
         void blackjack() {
             takeTwoCards(lisa, ACE_HEART, KING_HEART);
+            takeTwoCards(rose, ACE_HEART, KING_HEART);
 
-            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(lisa)));
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
-            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(-15_000));
+            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(-30_000));
         }
 
         @Test
         @DisplayName("참가자가 일반 승리인 경우 수익은 -1배한 금액이다.")
         void win() {
             takeTwoCards(lisa, ACE_HEART, NINE_HEART);
+            takeTwoCards(rose, ACE_HEART, NINE_HEART);
 
-            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(lisa)));
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
-            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(-10_000));
+            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(-20_000));
         }
 
         @Test
         @DisplayName("참가자가 무승부인 경우 수익은 0배한 금액이다.")
         void draw() {
             takeTwoCards(lisa, ACE_HEART, FIVE_HEART);
+            takeTwoCards(rose, ACE_HEART, FIVE_HEART);
 
-            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(lisa)));
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
             assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(0));
@@ -73,11 +79,12 @@ public class DealerProfitTest {
         @DisplayName("참가자가 패한 경우 수익은 1배한 금액이다.")
         void lose() {
             takeTwoCards(lisa, KING_HEART, FIVE_HEART);
+            takeTwoCards(rose, KING_HEART, FIVE_HEART);
 
-            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(lisa)));
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             DealerProfit dealerProfit = new DealerProfit(guestProfits);
 
-            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(10_000));
+            assertThat(dealerProfit.getProfit()).isEqualTo(Money.valueOf(20_000));
         }
     }
 }

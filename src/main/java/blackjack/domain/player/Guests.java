@@ -13,6 +13,9 @@ public class Guests implements Iterable<Guest> {
     private final List<Guest> guests;
 
     private Guests(final List<Guest> guests) {
+        checkSize(guests);
+        checkDuplicatedNames(guests);
+
         this.guests = new ArrayList<>(guests);
     }
 
@@ -20,26 +23,28 @@ public class Guests implements Iterable<Guest> {
         return new Guests(guests);
     }
 
-    public static Guests namesOf(final List<String> names) {
-        checkSize(names);
-        checkDuplicatedNames(names);
+    public static Guests of(final Guest... guests) {
+        return new Guests(List.of(guests));
+    }
 
+    public static Guests namesOf(final List<String> names) {
         return new Guests(toGuests(names));
     }
 
-    private static void checkSize(final List<String> names) {
-        final int size = names.size();
+    private static void checkSize(final List<Guest> guests) {
+        final int size = guests.size();
         if (size < MIN_GUESTS_SIZE || size > MAX_GUESTS_SIZE) {
             throw new IllegalArgumentException("[ERROR] 참자가 인원은 2명~8명 사이여야합니다.");
         }
     }
 
-    private static void checkDuplicatedNames(final List<String> names) {
-        int count = (int) names.stream()
+    private static void checkDuplicatedNames(final List<Guest> guests) {
+        int count = (int) guests.stream()
+                .map(Player::getName)
                 .distinct()
                 .count();
 
-        if (count != names.size()) {
+        if (count != guests.size()) {
             throw new IllegalArgumentException("[ERROR] 참가자의 이름은 중복될 수 없습니다.");
         }
     }

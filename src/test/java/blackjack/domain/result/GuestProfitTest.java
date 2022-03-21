@@ -14,7 +14,6 @@ import blackjack.domain.money.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Guests;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +23,8 @@ import org.junit.jupiter.api.Test;
 public class GuestProfitTest {
 
     private Dealer dealer;
-    private Guest jennie;
+    private Guest lisa;
+    private Guest rose;
 
     @Nested
     @DisplayName("참가자의 수익을 계산한다.")
@@ -34,52 +34,63 @@ public class GuestProfitTest {
         void setUp() {
             dealer = new Dealer();
             takeTwoCards(dealer, ACE_CLOVER, FIVE_CLOVER);
-            jennie = new Guest("제니");
-            jennie.betMoney(Money.valueOf(10_000));
+
+            lisa = new Guest("리사");
+            lisa.betMoney(Money.valueOf(10_000));
+            rose = new Guest("채영");
+            rose.betMoney(Money.valueOf(10_000));
         }
 
         @Test
         @DisplayName("BLACKJACK인 경우 수익은 1.5배한 금액이다.")
         void blackjack() {
-            takeTwoCards(jennie, ACE_HEART, KING_HEART);
+            takeTwoCards(lisa, ACE_HEART, KING_HEART);
+            takeTwoCards(rose, ACE_HEART, KING_HEART);
 
-            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(jennie)));
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             Map<Guest, Money> profits = guestProfits.getProfits();
 
-            assertThat(profits).contains(entry(jennie, Money.valueOf(15_000)));
+            assertThat(profits).contains(entry(lisa, Money.valueOf(15_000)),
+                    entry(rose, Money.valueOf(15_000)));
         }
 
         @Test
         @DisplayName("WIN인 경우 수익은 1배한 금액이다.")
         void win() {
-            takeTwoCards(jennie, ACE_HEART, NINE_HEART);
+            takeTwoCards(lisa, ACE_HEART, NINE_HEART);
+            takeTwoCards(rose, ACE_HEART, NINE_HEART);
 
-            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(jennie)));
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             Map<Guest, Money> profits = guestProfits.getProfits();
 
-            assertThat(profits).contains(entry(jennie, Money.valueOf(10_000)));
+            assertThat(profits).contains(entry(lisa, Money.valueOf(10_000)),
+                    entry(rose, Money.valueOf(10_000)));
         }
 
         @Test
         @DisplayName("DRAW인 경우 수익은 0배한 금액이다.")
         void draw() {
-            takeTwoCards(jennie, ACE_HEART, FIVE_HEART);
+            takeTwoCards(lisa, ACE_HEART, FIVE_HEART);
+            takeTwoCards(rose, ACE_HEART, FIVE_HEART);
 
-            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(jennie)));
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             Map<Guest, Money> profits = guestProfits.getProfits();
 
-            assertThat(profits).contains(entry(jennie, Money.valueOf(0)));
+            assertThat(profits).contains(entry(lisa, Money.valueOf(0)),
+                    entry(rose, Money.valueOf(0)));
         }
 
         @Test
         @DisplayName("LOSE인 경우 수익은 -1배한 금액이다.")
         void lose() {
-            takeTwoCards(jennie, KING_HEART, FIVE_HEART);
+            takeTwoCards(lisa, KING_HEART, FIVE_HEART);
+            takeTwoCards(rose, KING_HEART, FIVE_HEART);
 
-            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(List.of(jennie)));
+            GuestProfits guestProfits = new GuestProfits(dealer, Guests.of(lisa, rose));
             Map<Guest, Money> profits = guestProfits.getProfits();
 
-            assertThat(profits).contains(entry(jennie, Money.valueOf(-10_000)));
+            assertThat(profits).contains(entry(lisa, Money.valueOf(-10_000)),
+                    entry(rose, Money.valueOf(-10_000)));
 
         }
     }
