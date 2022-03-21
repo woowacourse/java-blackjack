@@ -68,8 +68,8 @@
 
 2단계 피드백
 
-- [x] 블랙잭게임-> 매직넘버 INIT_CARD_COUNT 를 popCards(2) 에서도 사용
-- [x] BlackjackGame 의 endGame 이름 출력하는 일 하는 느낌으로 변경
+- [x] BlackjackGame -> 매직넘버 INIT_CARD_COUNT 를 popCards(2) 에서도 사용
+- [x] BlackjackGame -> endGame 이름 출력하는 일 하는 느낌으로 변경
 - [x] Players -> 상수와 인스턴스 변수 사이 개행
 - [x] 테스트 코드에서만 사용되는 메소드 제거
     - [x] fromNames(), fromText()
@@ -83,21 +83,18 @@
 - [x] Result 삭제
 - [x] BlackjackGame 로직 다른 곳으로 이동
 - [x] PrideCalculator ->
-    - [x] hashCode() 메서드 용도 공부 : 해시코드는 객체의 아이디-> 클라이언트 전달 용도로는 부적절
-    - [x] hashCode() 대신 다른 방식으로 사용
-- [x] pride라는 단어의 의미...? -> 클래스명 payout...로 변경
+    - [x] [hashCode() 메서드 용도 공부](https://www.baeldung.com/java-hashcode) : 해시코드는 객체의 아이디-> 클라이언트 전달 용도로는 부적절
 - [x] betting
-    - [x] getMultiple()이름보다는 적합한 단어 하나를 사용하는 편이 더 좋을 것 같아요.
-    - [x] percentage 라는 단어는 주로 백분율로 나타낸 비율을 의미하기 때문에, 현재 맥락에서 적절하지 못한 표현 같습니다.
+    - [x] getMultiple()이름 수정
+    - [x] percentage 라는 단어 수정
 - [x] InputView
-    - [x] Name의 존재를 아는 것이 적절한가요?
+    - [x] Name의 존재를 모르도록 수정
     - [x] 이름은 한자 이상 입력 검증로직 수정
         - [x] "a,,a" 같은 입력을 인풋뷰에서 예외처리
 - [x] Point
-    - [x] point > 21 같은 원시적 방식이 훨씬 이해하기 편한 것 같네요.
-    - [x] 코드를 이해하기 위한 인지적 부하가 더 늘어난 느낌
-- [x] isBlackjack -> 점수 조건만 충족하면 블랙잭인가요? -> 카드도 두장이어야 함!!
-- [x] getMultiple()에 전달되고 있는 각 값들에 모두 의미가 있지 않나요? -> 상수화!!
+    - [x] point > 21 같은 원시적 방식으로 변경
+- [x] isBlackjack -> 카드가 두장인 조건 추가
+- [x] getMultiple() 매직넘버 상수화
 
 ## TODO
 
@@ -128,10 +125,8 @@
 - [x] BlackjackGame 코드 효율화
     - [x] 플레이어들 결과 계산 로직 players 로 이동
 
-- [x] 패키지 구조 여러개-낱개-구성요소 순으로 정렬가 변경
+- [x] 패키지 구조 여러개-낱개-구성요소 순으로 정렬 변경
 - [x] 테스트 코드 검사
-- [x] point를 객체로 두고 비교자 상속해 값 비교
-- [x] 이름들 변경
 
 - [x] cards.add 불변처리
 - [x] players test 추가
