@@ -74,7 +74,7 @@ class BettingReturnTest {
         @Test
         @DisplayName("플레이어가 블랙잭이면 수익률은 1.5 이다 (승)")
         void when_dealer_under_21_player_blackjack_then_1_point_5() {
-            
+
             Player player = playerBuilder()
                     .denominations(ACE, JACK)
                     .bettingAmount(10_000)
@@ -83,6 +83,21 @@ class BettingReturnTest {
             assertBettingReturn(
                     dealer, -15_000,
                     player, +15_000
+            );
+        }
+
+        @Test
+        @DisplayName("플레이어가 딜러의 점수보다 높으면서 카드합이 21이지만 3장인 경우 블랙잭이 아닌 그냥 승이다 (수익률 1)")
+        void when_dealer_under_21_and_player_score_21_but_3cards_then_not_blackjack_win_but_win() {
+
+            Player player = playerBuilder()
+                    .denominations(ACE, JACK, QUEEN)  // 21
+                    .bettingAmount(10_000)
+                    .build();
+
+            assertBettingReturn(
+                    dealer, -10_000,
+                    player, +10_000
             );
         }
 
@@ -143,21 +158,6 @@ class BettingReturnTest {
             assertBettingReturn(
                     dealer, 0,
                     player, 0
-            );
-        }
-
-        @Test
-        @DisplayName("플레이어가 딜러의 점수보다 높으면서 카드합이 21이지만 3장인 경우 블랙잭이 아닌 그냥 승이다 (수익률 1)")
-        void when_dealer_under_21_and_player_score_21_but_3cards_then_not_blackjack_win_but_win() {
-
-            Player player = playerBuilder()
-                    .denominations(ACE, JACK, QUEEN)  // 21
-                    .bettingAmount(10_000)
-                    .build();
-
-            assertBettingReturn(
-                    dealer, -10_000,
-                    player, +10_000
             );
         }
     }
