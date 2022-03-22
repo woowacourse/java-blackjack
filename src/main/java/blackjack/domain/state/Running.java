@@ -39,6 +39,6 @@ public abstract class Running implements State {
 
     @Override
     public final double profit(Dealer dealer, int money) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("실행 중인 상태에서는 수익을 계산할 수 없습니다.");
     }
 }
