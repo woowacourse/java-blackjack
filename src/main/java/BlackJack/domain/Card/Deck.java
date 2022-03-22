@@ -25,7 +25,7 @@ public class Deck {
         this.deck = initDeck();
     }
 
-    Deck(LinkedList<Card> deck) {
+    public Deck(LinkedList<Card> deck) {
         this.deck = deck;
     }
 

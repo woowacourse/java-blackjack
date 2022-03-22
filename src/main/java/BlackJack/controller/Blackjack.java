@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static blackJack.domain.Card.Deck.initDeck;
 
@@ -24,8 +25,7 @@ public class Blackjack {
         final Dealer dealer = new Dealer();
         final Deck deck = new Deck();
         List<String> playerNames = InputView.inputPlayerNames();
-        Map<String, Integer> bettingMoneys = getBettingMoneys(playerNames);
-        final Players players = new Players(playerNames, bettingMoneys);
+        final Players players = initPlayers(playerNames);
 
         handOutInitCard(dealer, players, deck);
 
@@ -42,20 +42,19 @@ public class Blackjack {
         printProfit(dealer, playerResult, dealerResult);
     }
 
+    private Players initPlayers(List<String> playerNames) {
+        List<Player> initPlayersWithBettingMoney = playerNames.stream()
+                .map((name) -> new Player(name, InputView.inputBettingMoney(name)))
+                .collect(Collectors.toList());
+        return new Players(initPlayersWithBettingMoney);
+    }
+
     private void printProfit(Dealer dealer, Map<Player, Integer> playerResults, int dealerResult) {
         OutputView.printFinalResult(
                 dealer.getName(),
                 playerResults,
                 dealerResult
         );
-    }
-
-    private Map<String, Integer> getBettingMoneys(List<String> playerNames) {
-        Map<String, Integer> bettingMoneys = new HashMap<>();
-        for (String playerName : playerNames) {
-            bettingMoneys.put(playerName, InputView.inputBettingMoney(playerName));
-        }
-        return bettingMoneys;
     }
 
     private List<User> makeUserList(Dealer dealer, Players players) {

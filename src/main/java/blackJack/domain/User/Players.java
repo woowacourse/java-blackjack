@@ -8,12 +8,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Players {
-    private final List<Player> players = new ArrayList<>();
+    private List<Player> players;
 
-    public Players(List<String> playersNames, Map<String, Integer> bettingMoneys) {
-        for (String playersName : playersNames) {
-            players.add(new Player(playersName, bettingMoneys.get(playersName)));
-        }
+    public Players(List<Player> players) {
+        this.players = players;
     }
 
     public void dealCardToPlayers(Deck deck) {
