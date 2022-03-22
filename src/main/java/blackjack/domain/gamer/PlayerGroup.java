@@ -4,9 +4,10 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import blackjack.domain.card.CardPack;
+import blackjack.domain.gamer.role.Dealer;
+import blackjack.domain.gamer.role.Player;
 import blackjack.domain.result.Match;
 
 public class PlayerGroup {
@@ -52,19 +53,14 @@ public class PlayerGroup {
 
     public void addCard(CardPack cardPack) {
         for (Player player : players) {
-            player.addCard(cardPack.pickOne());
+            player.addCard(cardPack.pickOne(false));
         }
     }
 
-    public void addAllTo(List<Player> gamers) {
-        gamers.addAll(players);
-    }
-
-    public Map<String, Match> getPlayerResult(int sum) {
-        Map<String, Match> result = new LinkedHashMap<>();
+    public Map<Player, Match> getPlayerResult(Dealer dealer) {
+        Map<Player, Match> result = new LinkedHashMap<>();
         for (Player player : players) {
-            Optional<Match> matchResult = Match.of(player.compareCardsSumTo(sum));
-            matchResult.ifPresent(match -> result.put(player.getName(), match));
+            result.put(player, Match.compare(player, dealer));
         }
         return Collections.unmodifiableMap(result);
     }

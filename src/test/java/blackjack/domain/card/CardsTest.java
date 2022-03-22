@@ -1,16 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardGroup;
-import blackjack.domain.card.property.CardNumber;
-import blackjack.domain.card.property.CardShape;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import blackjack.domain.card.property.CardNumber;
+import blackjack.domain.card.property.CardShape;
 
 class CardsTest {
 
@@ -22,9 +22,9 @@ class CardsTest {
                 CardNumber number3,
                 boolean result,
                 String testName) {
-        Card heart = new Card(CardShape.HEART, number1);
-        Card spade = new Card(CardShape.SPADE, number2);
-        Card club = new Card(CardShape.CLUB, number3);
+        Card heart = Card.of(CardShape.HEART, number1);
+        Card spade = Card.of(CardShape.SPADE, number2);
+        Card club = Card.of(CardShape.CLUB, number3);
         
         CardGroup playerCardGroup = new CardGroup();
         playerCardGroup.addCard(heart);

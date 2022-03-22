@@ -9,8 +9,9 @@ import blackjack.domain.card.property.CardNumber;
 import blackjack.domain.card.property.CardShape;
 
 public class CardPack {
-    private final List<Card> cardPack = new LinkedList<>();
     private static final List<Card> cards = createCards();
+
+    private final List<Card> cardPack = new LinkedList<>();
 
     public CardPack() {
         initializeCards();
@@ -26,7 +27,7 @@ public class CardPack {
 
     private static void addCards(List<Card> cards, CardShape cardShape) {
         for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(cardShape, cardNumber));
+            cards.add(Card.of(cardShape, cardNumber));
         }
     }
 
@@ -35,11 +36,20 @@ public class CardPack {
         cardPack.addAll(cards);
     }
 
-    public Card pickOne() {
+    public Card pickOne(boolean isClose) {
         if (cardPack.isEmpty()) {
             initializeCards();
         }
 
-        return cardPack.remove(0);
+        return returnCard(isClose);
+    }
+
+    private Card returnCard(boolean isClose) {
+        Card card = cardPack.remove(0);
+        if (isClose) {
+            card.close();
+        }
+
+        return card;
     }
 }

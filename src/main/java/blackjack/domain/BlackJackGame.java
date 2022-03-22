@@ -1,42 +1,65 @@
-package blackjack.controller;
+package blackjack.domain;
 
 import java.util.List;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;
+import blackjack.domain.gamer.role.Player;
 import blackjack.domain.result.GameResult;
+import blackjack.domain.result.ProfitResult;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
 import blackjack.dto.GamerCardsResultDto;
 import blackjack.dto.PlayerResultDto;
+import blackjack.dto.ProfitResultsDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackController {
+public class BlackJackGame {
     private PlayerGroup playerGroup;
     private BlackJack blackJack;
 
-    public void run() {
+    public void start() {
         initialize();
         play();
         finish();
     }
 
     private void initialize() {
-        playerGroup = initializePlayerGroup();
-        blackJack = new BlackJack(playerGroup);
-        blackJack.divideCards();
+        initializePlayerGroup();
+        addInputMoney();
+        initializeBlackJack();
         OutputView.printGamersCards(GamerCardsDto.of(blackJack.getGamers()));
     }
 
-    private PlayerGroup initializePlayerGroup() {
+    private void initializePlayerGroup() {
         try {
-            return new PlayerGroup(Player.of(InputView.requestPlayerNames()));
+            playerGroup =  new PlayerGroup(Player.of(InputView.requestPlayerNames()));
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
-            return initializePlayerGroup();
+            initializePlayerGroup();
         }
+    }
+
+    private void addInputMoney() {
+        try {
+            requestAndAddInputMoney();
+        } catch (IllegalArgumentException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            addInputMoney();
+        }
+    }
+
+    private void requestAndAddInputMoney() {
+        List<Player> players = playerGroup.getPlayers();
+        for (Player player : players) {
+            player.initializeBettingMoney(InputView.requestInputMoney(player.getName()));
+        }
+    }
+
+    private void initializeBlackJack() {
+        blackJack = new BlackJack(playerGroup);
+        blackJack.divideCards();
     }
 
     private void play() {
@@ -66,6 +89,7 @@ public class BlackJackController {
     private void finish() {
         printCards();
         printResult();
+        printProfit();
     }
 
     private void printCards() {
@@ -77,5 +101,10 @@ public class BlackJackController {
         GameResult gameResult = blackJack.getGameResult();
         OutputView.printGameResult(DealerResultDto.of(gameResult.getDealerResult()),
                 PlayerResultDto.of(gameResult.getPlayerResult()));
+    }
+
+    private void printProfit() {
+        ProfitResult profitResult = blackJack.getProfitResult();
+        OutputView.printProfitResult(ProfitResultsDto.of(profitResult.get()));
     }
 }

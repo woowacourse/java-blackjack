@@ -1,32 +1,28 @@
-package blackjack.domain.gamer;
-
-import java.util.ArrayList;
-import java.util.List;
+package blackjack.domain.gamer.role;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
+import blackjack.domain.gamer.BettingMoney;
+import blackjack.domain.result.Match;
 
-public class Player{
+public abstract class Role {
     private static final String NAME_LENGTH_ERROR_MESSAGE = "이름은 최소 1글자, 최대 6글자로 입력해야 합니다.";
     private static final String NAME_EMPTY_ERROR_MESSAGE = "빈 문자는 이름으로 입력할 수 없습니다.";
     private static final int MINIMUM_NAME_LENGTH = 1;
     private static final int MAXIMUM_NAME_LENGTH = 6;
 
-    private final CardGroup cardGroup = new CardGroup();
+    protected final CardGroup cardGroup = new CardGroup();
+    protected BettingMoney bettingMoney;
     private final String name;
 
-    public Player(String name) {
+    public Role(String name) {
         validateName(name);
         this.name = name;
     }
 
-    public static List<Player> of(List<String> playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName));
-        }
-        return players;
-    }
+    public abstract boolean isAddable();
+
+    public abstract void addCard(Card card);
 
     private void validateName(String name) {
         validateEmpty(name);
@@ -45,23 +41,12 @@ public class Player{
         }
     }
 
-    public int compareCardsSumTo(int sum) {
-        if (isBust()) {
-            return -1;
-        }
-
-        if (isBust(sum)) {
-            return 1;
-        }
-
-        return Integer.compare(getScore(), sum);
+    public void initializeTotalMoney(Match match, int money) {
+        bettingMoney = bettingMoney.initializeTotalMoney(match, money);
     }
 
-    public void addCard(Card card) {
-        if (cardGroup.isBust()) {
-            return;
-        }
-        cardGroup.addCard(card);
+    public int getTotalMoney() {
+        return bettingMoney.getTotalMoney();
     }
 
     public void openAllCards() {
@@ -70,14 +55,6 @@ public class Player{
 
     public boolean isBust() {
         return cardGroup.isBust();
-    }
-
-    public boolean isBust(int sum) {
-        return cardGroup.isBust(sum);
-    }
-
-    public boolean isAddable() {
-        return cardGroup.isAddable();
     }
 
     public int getScore() {

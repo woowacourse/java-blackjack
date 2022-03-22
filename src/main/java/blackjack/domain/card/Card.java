@@ -8,8 +8,12 @@ public class Card {
     private final CardProperty cardProperty;
     private boolean isOpen = true;
 
-    public Card(CardShape shape, CardNumber number) {
-        this.cardProperty = new CardProperty(shape, number);
+    private Card(CardProperty cardProperty) {
+        this.cardProperty = cardProperty;
+    }
+
+    public static Card of(CardShape shape, CardNumber number) {
+        return new Card(CardProperty.of(shape, number));
     }
 
     public void open() {
