@@ -1,6 +1,5 @@
 package blackjack.domain.players.participant;
 
-import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.players.participant.name.Name;
 import blackjack.domain.state.State;
@@ -12,7 +11,6 @@ public abstract class Participant {
 
     protected final Name name;
     protected State state;
-
 
     protected Participant(List<Card> cards, Name name) {
         this.name = name;
@@ -32,7 +30,7 @@ public abstract class Participant {
     }
 
     public boolean isInitState() {
-        return getCards().isSizeOf(INIT_CARD_SIZE);
+        return state.cards().isSizeOf(INIT_CARD_SIZE);
     }
 
     public void stay() {
@@ -44,18 +42,14 @@ public abstract class Participant {
     }
 
     public int getPoint() {
-        return getCards().getPoint();
+        return state.cards().getPoint();
     }
 
     public String getName() {
         return name.get();
     }
 
-    public List<Card> getRawCards() {
-        return getCards().getCopy();
-    }
-
-    protected Cards getCards() {
-        return state.cards();
+    public List<Card> getCards() {
+        return state.cards().getCopy();
     }
 }

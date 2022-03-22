@@ -46,7 +46,7 @@ public final class OutputView {
     }
 
     private static void printParticipantHand(final Participant participant) {
-        System.out.printf(CARD_STATE_MESSAGE, participant.getName(), getCardsState(participant.getRawCards()));
+        System.out.printf(CARD_STATE_MESSAGE, participant.getName(), getCardsState(participant.getCards()));
         System.out.println();
     }
 
@@ -64,7 +64,7 @@ public final class OutputView {
 
     private static void printParticipantCardPointState(final Participant participant) {
         System.out.printf(CARD_STATE_MESSAGE + PARTICIPANT_POINT_STATE + System.lineSeparator(),
-                participant.getName(), getCardsState(participant.getRawCards()), participant.getPoint());
+                participant.getName(), getCardsState(participant.getCards()), participant.getPoint());
     }
 
     public static void printDealerHit(boolean isPrint) {
