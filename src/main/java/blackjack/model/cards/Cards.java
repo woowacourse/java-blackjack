@@ -40,6 +40,10 @@ public class Cards {
         values.add(card);
     }
 
+    public int size() {
+        return values.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

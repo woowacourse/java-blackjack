@@ -1,20 +1,19 @@
-package blackjack.model.blackjack;
+package blackjack.model.card;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Rank;
-import blackjack.model.card.Suit;
+import static java.util.stream.Collectors.toUnmodifiableList;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class CardDispenser {
+public final class CardDeck {
 
     private final Queue<Card> deck;
 
-    public CardDispenser() {
+    public CardDeck() {
         this.deck = new LinkedList<>(shuffledCards());
     }
 
@@ -25,14 +24,20 @@ public final class CardDispenser {
     }
 
     private List<Card> createCardPool() {
-        return Stream.of(Suit.values())
-            .flatMap(
-                suit -> Stream.of(Rank.values())
-                    .map(rank -> new Card(rank, suit)))
-            .collect(Collectors.toList());
+        List<Card> pool = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            pool.addAll(createCardsEach(suit));
+        }
+        return pool;
     }
 
-    public Card issue() {
+    private List<Card> createCardsEach(Suit suit) {
+        return Stream.of(Rank.values())
+            .map(rank -> new Card(rank, suit))
+            .collect(toUnmodifiableList());
+    }
+
+    public Card next() {
         if (deck.isEmpty()) {
             throw new IllegalStateException("남아있는 카드가 없습니다.");
         }

@@ -5,30 +5,26 @@ import blackjack.model.cards.BestScoreCalculator;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
 
-public class Player {
+public abstract class Participant {
 
     private static final BestScoreCalculator BEST_SCORE_CALCULATOR = new BestScoreCalculator();
-    private static final Score HIT_BOUNDARY = new Score(21);
-    private static final int OPEN_CARD_COUNT = 2;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final Score BLACKJACK_SCORE = new Score(21);
 
     private final Cards cards;
     private final String name;
 
-    public Player(String name, Card card1, Card card2, Card... cards) {
+    public Participant(String name, Card card1, Card card2, Card... cards) {
         this(name, new Cards(card1, card2, cards));
     }
 
-    protected Player(String name, Cards cards) {
+    protected Participant(String name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
 
     public final String name() {
         return name;
-    }
-
-    public Cards openCards() {
-        return cards.openedCards(OPEN_CARD_COUNT);
     }
 
     public final Cards cards() {
@@ -50,15 +46,27 @@ public class Player {
         return score().isBust();
     }
 
-    protected final boolean lessScoreThan(Player other) {
+    public final boolean isBlackjack() {
+        return isBlackjackCardSize() && isBlackjackScore();
+    }
+
+    private boolean isBlackjackCardSize() {
+        return cards().size() == BLACKJACK_CARD_SIZE;
+    }
+
+    private boolean isBlackjackScore() {
+        return score().equals(BLACKJACK_SCORE);
+    }
+
+    public final boolean lessScoreThan(Participant other) {
         return score().lessThan(other.score());
     }
 
-    protected final boolean moreScoreThan(Player other) {
+    public final boolean moreScoreThan(Participant other) {
         return score().moreThan(other.score());
     }
 
-    public boolean isHittable() {
-        return score().lessThan(HIT_BOUNDARY);
-    }
+    public abstract Cards openCards();
+
+    public abstract boolean isHittable();
 }

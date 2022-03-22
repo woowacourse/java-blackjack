@@ -1,10 +1,9 @@
 package blackjack.model.card;
 
-import static blackjack.model.card.Rank.ACE;
-
 import java.util.Objects;
 
 public final class Card {
+
     private final Rank rank;
     private final Suit suit;
 
@@ -22,7 +21,7 @@ public final class Card {
     }
 
     public boolean isAce() {
-        return rank == ACE;
+        return rank.isAce();
     }
 
     public Rank rank() {
@@ -54,4 +53,5 @@ public final class Card {
     public String toString() {
         return rank.hard() + "-" + suit;
     }
+
 }

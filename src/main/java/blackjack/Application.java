@@ -2,13 +2,15 @@ package blackjack;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import blackjack.model.blackjack.CardDispenser;
+import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
-import blackjack.model.player.Player;
-import blackjack.model.player.Players;
+import blackjack.model.player.Gamer;
+import blackjack.model.player.Gamers;
+import blackjack.model.player.Money;
 import blackjack.view.Answer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Application {
@@ -22,47 +24,57 @@ public class Application {
     }
 
     private static void run() {
-        CardDispenser cardDispenser = new CardDispenser();
-        Dealer dealer = new Dealer(cardDispenser.issue(), cardDispenser.issue());
-        Players players = new Players(createPlayers(cardDispenser));
-        playBlackjack(cardDispenser, dealer, players);
+        CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer(cardDeck.next(), cardDeck.next());
+        Gamers gamers = new Gamers(createGamers(cardDeck));
+        playBlackjack(cardDeck, dealer, gamers);
     }
 
-    private static List<Player> createPlayers(CardDispenser cardDispenser) {
+    private static List<Gamer> createGamers(CardDeck cardDeck) {
         List<String> names = InputView.inputNames();
         return names.stream()
-            .map(n -> new Player(n, cardDispenser.issue(), cardDispenser.issue()))
+            .map(name -> createGamer(name, cardDeck))
             .collect(toUnmodifiableList());
     }
 
-    private static void playBlackjack(CardDispenser cardDispenser, Dealer dealer, Players players) {
-        printOpenCard(dealer, players);
-        takeCards(cardDispenser, dealer, players);
-        printResults(dealer, players);
+    private static Gamer createGamer(String name, CardDeck cardDeck) {
+        Money money = createMoney(name);
+        return new Gamer(name, money, cardDeck.next(), cardDeck.next());
     }
 
-    private static void printOpenCard(Dealer dealer, Players players) {
-        OutputView.printOpenCardMessage(dealer.name(), playerNames(players));
+    private static Money createMoney(String name) {
+        BigDecimal moneyAmount = InputView.inputMoneys(name);
+        return new Money(moneyAmount);
+    }
+
+    private static void playBlackjack(CardDeck cardDeck, Dealer dealer, Gamers gamers) {
+        printOpenCard(dealer, gamers);
+        takeCards(cardDeck, dealer, gamers);
+        printResults(dealer, gamers);
+    }
+
+    private static void printOpenCard(Dealer dealer, Gamers gamers) {
+        OutputView.printOpenCardMessage(dealer.name(), playerNames(gamers));
         OutputView.printOpenCard(dealer.name(), dealer.openCards());
-        for (Player player : players.values()) {
-            OutputView.printOpenCard(player.name(), player.openCards());
+        for (Gamer gamer : gamers.values()) {
+            OutputView.printOpenCard(gamer.name(), gamer.openCards());
         }
     }
 
-    private static List<String> playerNames(Players players) {
-        return players.values().stream().map(Player::name).collect(toUnmodifiableList());
+    private static List<String> playerNames(Gamers gamers) {
+        return gamers.values().stream().map(Gamer::name).collect(toUnmodifiableList());
     }
 
-    private static void takeCards(CardDispenser cardDispenser, Dealer dealer, Players players) {
-        for (Player player : players.values()) {
-            takePlayerCard(player, cardDispenser);
+    private static void takeCards(CardDeck cardDeck, Dealer dealer, Gamers gamers) {
+        for (Gamer gamer : gamers.values()) {
+            takePlayerCard(gamer, cardDeck);
         }
-        takeDealerCard(dealer, cardDispenser);
+        takeDealerCard(dealer, cardDeck);
     }
 
-    private static void takePlayerCard(Player gamer, CardDispenser cardDispenser) {
+    private static void takePlayerCard(Gamer gamer, CardDeck cardDeck) {
         while (gamer.isHittable() && isKeepTakeCard(gamer.name())) {
-            gamer.take(cardDispenser.issue());
+            gamer.take(cardDeck.next());
             OutputView.printCards(gamer.name(), gamer.cards());
         }
     }
@@ -72,18 +84,18 @@ public class Application {
         return answer.isKeepGoing();
     }
 
-    private static void takeDealerCard(Dealer dealer, CardDispenser cardDispenser) {
+    private static void takeDealerCard(Dealer dealer, CardDeck cardDeck) {
         while (dealer.isHittable()) {
-            dealer.take(cardDispenser.issue());
+            dealer.take(cardDeck.next());
             OutputView.printDealerTakeCardMessage();
         }
     }
 
-    private static void printResults(Dealer dealer, Players players) {
+    private static void printResults(Dealer dealer, Gamers gamers) {
         OutputView.printTotalScore(dealer.name(), dealer.cards(), dealer.score());
-        for (Player player : players.values()) {
-            OutputView.printTotalScore(player.name(), player.cards(), player.score());
+        for (Gamer gamer : gamers.values()) {
+            OutputView.printTotalScore(gamer.name(), gamer.cards(), gamer.score());
         }
-        OutputView.printRecords(players.match(dealer));
+        OutputView.printRecords(gamers.match(dealer));
     }
 }

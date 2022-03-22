@@ -7,11 +7,10 @@ import static blackjack.model.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.model.blackjack.Record;
-import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.cards.Score;
+import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,65 +21,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class DealerTest {
 
     private static final Card ACE = new Card(Rank.ACE, SPADE);
-    private static final Card TWO = new Card(Rank.TWO, SPADE);
     private static final Card THREE = new Card(Rank.THREE, CLOVER);
     private static final Card FOUR = new Card(Rank.FOUR, HEART);
-    private static final Card FIVE = new Card(Rank.FIVE, CLOVER);
     private static final Card SIX = new Card(Rank.SIX, SPADE);
     private static final Card SEVEN = new Card(Rank.SEVEN, CLOVER);
-    private static final Card EIGHT = new Card(Rank.EIGHT, DIAMOND);
     private static final Card JACK = new Card(Rank.JACK, HEART);
     private static final Card QUEEN = new Card(Rank.QUEEN, SPADE);
-    private static final Card KING = new Card(Rank.KING, CLOVER);
-    private static final String GAMER_NAME = "pobi";
-
-    @ParameterizedTest
-    @MethodSource("providePlayerLosingCaseCards")
-    @DisplayName("플레이어가 지는 경우 판별 테스트")
-    void dealerIsWinner(Dealer dealer, Player player) {
-        Record record = dealer.match(player);
-        assertThat(record).isEqualTo(new Record(player.name(), Result.LOSS));
-    }
-
-    private static Stream<Arguments> providePlayerLosingCaseCards() {
-        return Stream.of(
-            Arguments.of(new Dealer(EIGHT, JACK), new Player(GAMER_NAME, SEVEN, EIGHT)),
-            Arguments.of(new Dealer(EIGHT, JACK), new Player(GAMER_NAME, JACK, QUEEN, FOUR)),
-            Arguments.of(new Dealer(ACE, FIVE), new Player(GAMER_NAME, SEVEN, SIX)),
-            Arguments.of(new Dealer(ACE, JACK, QUEEN), new Player(GAMER_NAME, QUEEN, JACK))
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("providePlayerWinningCaseCards")
-    @DisplayName("플레이어가 이기는 경우 판별 테스트")
-    void dealerIsLoser(Dealer dealer, Player player) {
-        Record record = dealer.match(player);
-        assertThat(record).isEqualTo(new Record(player.name(), Result.WIN));
-    }
-
-    private static Stream<Arguments> providePlayerWinningCaseCards() {
-        return Stream.of(
-            Arguments.of(new Dealer(SEVEN, EIGHT), new Player(GAMER_NAME, QUEEN, JACK)),
-            Arguments.of(new Dealer(JACK, QUEEN, FOUR), new Player(GAMER_NAME, QUEEN, JACK))
-        );
-    }
-
-    @Test
-    @DisplayName("비기는 경우 판별 테스트")
-    void dealerIsDraw() {
-        Dealer dealer = new Dealer(JACK, FOUR);
-        Record record = dealer.match(new Player(GAMER_NAME, EIGHT, SIX));
-        assertThat(record).isEqualTo(new Record(GAMER_NAME, Result.DRAW));
-    }
-
-    @Test
-    @DisplayName("둘 다 버스트인 경우 테스트")
-    void bothBust() {
-        Dealer dealer = new Dealer(JACK, KING, SEVEN);
-        Record record = dealer.match(new Player(GAMER_NAME, EIGHT, SIX, KING));
-        assertThat(record).isEqualTo(new Record(GAMER_NAME, Result.LOSS));
-    }
 
     @ParameterizedTest
     @MethodSource("provideCardsForDealer")
