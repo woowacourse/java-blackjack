@@ -1,7 +1,11 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.machine.Blackjack;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
@@ -10,32 +14,44 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.dto.DealerResultDto;
-import blackjack.domain.dto.PlayerResultDto;
-import blackjack.domain.dto.ResultDto;
-import blackjack.domain.machine.Blackjack;
-import blackjack.domain.machine.Records;
+import blackjack.domain.dto.DealerRecordDto;
+import blackjack.domain.dto.PlayerRecordDto;
+import blackjack.domain.dto.RecordsDto;
 
 public class RecordsTest {
-    private ResultDto dto;
+    private RecordsDto dto;
 
     @BeforeEach
     void setUp() {
-        List<String> playerNames = List.of("범블비", "잉");
-        Blackjack blackjack = new Blackjack(playerNames);
-        IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 11, 15, 9));
-        blackjack.dealInitialCards(intendedNumberGenerator);
+        Map<String, Long> playersInfo = new LinkedHashMap<>();
+        playersInfo.put("범블비", 1000L);
+        playersInfo.put("잉", 2000L);
+
+        Players players = new Players(playersInfo);
+        Blackjack blackjack = new Blackjack();
+
+        Dealer dealer = new Dealer();
+        Player player1 = players.getPlayers().get(0);
+        Player player2 = players.getPlayers().get(1);
+
+        dealer.addCard(Card.FIVE_DIAMOND);
+        dealer.addCard(Card.SEVEN_HEART);
+
+        player1.addCard(Card.SEVEN_CLOVER);
+
+        player2.addCard(Card.NINE_HEART);
+        player2.addCard(Card.FIVE_SPADE);
 
         //dealer: 12점, player: 7점(범블비), 14점(잉)
-        dto = Records.of(blackjack.getDealer(), blackjack.getPlayers());
+        dto = blackjack.record(dealer, players);
     }
 
     @DisplayName("딜러 전적 테스트")
     @Test
     void dealerRecords() {
-        DealerResultDto dealerResultDto = dto.getDealerResultDto();
+        DealerRecordDto dealerRecordDto = dto.getDealerResultDto();
 
-        Map<String, Integer> actual = dealerResultDto.getOutcome();
+        Map<String, Integer> actual = dealerRecordDto.getOutcome();
 
         Map<String, Integer> expected = new LinkedHashMap<>();
         expected.put("승", 1);
@@ -48,9 +64,9 @@ public class RecordsTest {
     @DisplayName("플레이 전적 테스트")
     @Test
     void playersRecords() {
-        PlayerResultDto playerResultDto = dto.getPlayerResultDto();
+        PlayerRecordDto playerRecordDto = dto.getPlayerResultDto();
 
-        Map<String, String> actual = playerResultDto.getOutcome();
+        Map<String, String> actual = playerRecordDto.getOutcome();
 
         Map<String, String> expected = new LinkedHashMap<>();
         expected.put("범블비", "패");

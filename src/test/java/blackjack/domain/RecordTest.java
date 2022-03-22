@@ -1,45 +1,48 @@
 package blackjack.domain;
 
-import blackjack.domain.machine.CardPickMachine;
-import java.util.List;
+import blackjack.domain.machine.Blackjack;
+import blackjack.domain.participant.Players;
+import java.util.LinkedHashMap;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.machine.Blackjack;
-import blackjack.domain.machine.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.machine.Record;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public class RecordTest {
-    private Blackjack blackjack;
     private Player player;
     private Dealer dealer;
-    private CardPickMachine cardPickMachine;
+    private Blackjack blackjack;
 
     @BeforeEach
     void setUp() {
-        List<String> playerNames = List.of("범블비");
-        blackjack = new Blackjack(playerNames);
-        IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 11, 8));
-        blackjack.dealInitialCards(intendedNumberGenerator);
-        cardPickMachine = new CardPickMachine();
+        Map<String, Long> playersInfo = new LinkedHashMap<>();
+        playersInfo.put("범블비", 1000L);
+
+        Players players = new Players(playersInfo);
+        dealer = new Dealer();
+        blackjack = new Blackjack();
+        player = players.getPlayers().get(0);
 
         //dealer: 12점, player: 12점
-        player = blackjack.getPlayers().get(0);
-        dealer = blackjack.getDealer();
+        player.addCard(Card.FIVE_CLOVER);
+        player.addCard(Card.SEVEN_CLOVER);
+
+        dealer.addCard(Card.FIVE_DIAMOND);
+        dealer.addCard(Card.SEVEN_HEART);
     }
 
     @DisplayName("딜러만 버스트일 경우 전적 테스트")
     @Test
     void dealerBurst() {
-        IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(10));
-        Card card =cardPickMachine.pickCard(intendedNumberGenerator);
-        dealer.addCard(card);
+        dealer.addCard(Card.J_HEART);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.VICTORY);
     }
@@ -47,9 +50,7 @@ public class RecordTest {
     @DisplayName("플레이어만 버스트일 경우 전적 테스트")
     @Test
     void playerBurst() {
-        IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(10));
-        Card card = cardPickMachine.pickCard(intendedNumberGenerator);
-        player.addCard(card);
+        player.addCard(Card.J_DIAMOND);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
     }
@@ -57,13 +58,8 @@ public class RecordTest {
     @DisplayName("딜러, 플레이어 모두 버스트일 경우 전적 테스트")
     @Test
     void dealerPlayerBurst() {
-        IntendedNumberGenerator intendedNumberGenerator1 = new IntendedNumberGenerator(List.of(10));
-        Card card1 = cardPickMachine.pickCard(intendedNumberGenerator1);
-        player.addCard(card1);
-
-        IntendedNumberGenerator intendedNumberGenerator2 = new IntendedNumberGenerator(List.of(9));
-        Card card2 = cardPickMachine.pickCard(intendedNumberGenerator2);
-        dealer.addCard(card2);
+        player.addCard(Card.J_CLOVER);
+        dealer.addCard(Card.J_SPADE);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
     }
@@ -77,15 +73,8 @@ public class RecordTest {
     @DisplayName("버스드가 아닌 경우 딜러 승리 전적 테스트")
     @Test
     void ordinaryDefeatTest() {
-        // 7하트
-        IntendedNumberGenerator intendedNumberGenerator1 = new IntendedNumberGenerator(List.of(18));
-        Card card1 = cardPickMachine.pickCard(intendedNumberGenerator1);
-        player.addCard(card1);
-
-        // 9하트
-        IntendedNumberGenerator intendedNumberGenerator2 = new IntendedNumberGenerator(List.of(20));
-        Card card2 = cardPickMachine.pickCard(intendedNumberGenerator2);
-        dealer.addCard(card2);
+        player.addCard(Card.SEVEN_HEART);
+        dealer.addCard(Card.NINE_HEART);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
     }
@@ -93,15 +82,8 @@ public class RecordTest {
     @DisplayName("버스드가 아닌 경우 플레이어 승리 전적 테스트")
     @Test
     void ordinaryVictoryTest() {
-        IntendedNumberGenerator intendedNumberGenerator1 = new IntendedNumberGenerator(List.of(20));
-        Card card1 = cardPickMachine.pickCard(intendedNumberGenerator1);
-        System.out.println(card1.getName());
-        player.addCard(card1);
-
-        IntendedNumberGenerator intendedNumberGenerator2 = new IntendedNumberGenerator(List.of(18));
-        Card card2 = cardPickMachine.pickCard(intendedNumberGenerator2);
-        System.out.println(card2.getName());
-        dealer.addCard(card2);
+        player.addCard(Card.NINE_HEART);
+        dealer.addCard(Card.SEVEN_HEART);
 
         assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.VICTORY);
     }

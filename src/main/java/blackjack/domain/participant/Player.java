@@ -1,32 +1,31 @@
 package blackjack.domain.participant;
 
-import java.util.Objects;
-
 public class Player extends Participant {
-    public Player(String name) {
+    private static final String MONEY_ERROR = "[ERROR] 베팅 금액은 0원 보다 커야 됩니다.";
+    private final long bettingMoney;
+
+    public Player(String name, long bettingMoney) {
         super(name);
+        validateMoney(bettingMoney);
+        this.bettingMoney = bettingMoney;
     }
 
-    public static Player copy(Player original) {
-        Player copy = new Player(original.name);
-        copy.myCards = original.getMyCards();
-        return copy;
+    private void validateMoney(long bettingMoney) {
+        if (bettingMoney <= 0) {
+            throw new IllegalArgumentException(MONEY_ERROR);
+        }
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return name.equals(player.name);
+    public boolean canDraw() {
+        return !isBust() && !isBlackjack();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
+    public int isWin(Participant participant) {
+        return Integer.compare(score().getSum(), participant.score().getSum());
+    }
+
+    public long getBettingMoney() {
+        return bettingMoney;
     }
 }

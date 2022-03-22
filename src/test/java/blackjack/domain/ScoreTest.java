@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.machine.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.machine.Score;
 
 public class ScoreTest {

@@ -1,11 +1,13 @@
 package blackjack.domain.machine;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Score {
+    public static final int MAX_SCORE = 21;
     private static final int INIT_A_NUMBER = 1;
     private static final int NEW_A_NUMBER = 11;
-    public static final int CONDITION_BURST = 21;
+    private static final int CONDITION_HIT = 16;
 
     private final int sum;
 
@@ -38,11 +40,30 @@ public class Score {
     }
 
     private static int scoreWithA(int sum) {
-        if (sum + (NEW_A_NUMBER - INIT_A_NUMBER) <= CONDITION_BURST) {
+        if (sum + (NEW_A_NUMBER - INIT_A_NUMBER) <= MAX_SCORE) {
             return sum + NEW_A_NUMBER - INIT_A_NUMBER;
         }
 
         return sum;
+    }
+
+    public boolean isHit() {
+        return sum <= CONDITION_HIT;
+    }
+
+    public boolean isBust() {
+        return sum > MAX_SCORE;
+    }
+
+    public boolean isMax() {
+        return sum == MAX_SCORE;
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "sum=" + sum +
+                '}';
     }
 
     public int getSum() {

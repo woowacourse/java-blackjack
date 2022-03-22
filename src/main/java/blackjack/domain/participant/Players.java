@@ -1,71 +1,36 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.machine.CardPickMachine;
-import java.util.ArrayList;
+import blackjack.domain.card.Cards;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.strategy.NumberGenerator;
-
 public class Players {
-    private static final String DUPLICATED_ERROR = "[ERROR] 이름은 중복될 수 없습니다.";
     private static final String NO_PLAYER_ERROR = "[ERROR] 플레이어는 1명 이상이여야 합니다.";
 
-    private final List<Player> players = new ArrayList<>();
-    private int turn = 0;
+    private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validateNames(playerNames);
-        playerNames.forEach(name -> players.add(new Player(name)));
+    public Players(Map<String, Long> playersInfo) {
+        validatePlayers(playersInfo);
+
+        this.players = playersInfo.keySet().stream()
+                .map(name -> new Player(name, playersInfo.get(name)))
+                .collect(Collectors.toList());
     }
 
-    private void validateNames(List<String> playerNames) {
-        if (playerNames.size() == 0) {
+    private void validatePlayers(Map<String, Long> playersInfo) {
+        if (playersInfo.size() == 0) {
             throw new IllegalArgumentException(NO_PLAYER_ERROR);
         }
-
-        List<String> duplicatedChecker = playerNames.stream().distinct().collect(Collectors.toList());
-        if (duplicatedChecker.size() != playerNames.size()) {
-            throw new IllegalArgumentException(DUPLICATED_ERROR);
-        }
-    }
-
-    public boolean isEnd() {
-        return !(turn < players.size());
-    }
-
-    public boolean isPlayerBurst(Player player) {
-        return findPlayer(player).isBurst();
-    }
-
-    public void next() {
-        turn++;
-    }
-
-    public Player findPlayer(Player player) {
-        return players.get(findIndex(player));
-    }
-
-    public Player findNextPlayer() {
-        Player player = players.get(turn);
-        return Player.copy(player);
-    }
-
-    private int findIndex(Player player) {
-        return players.indexOf(player);
-    }
-
-    public void addCards(CardPickMachine cardPickMachine, NumberGenerator numberGenerator) {
-        players.forEach(player -> player
-                .addCard(cardPickMachine.pickCard(numberGenerator)));
-    }
-
-    public void addCard(CardPickMachine cardPickMachine, Player player, NumberGenerator numberGenerator) {
-        player.addCard(cardPickMachine.pickCard(numberGenerator));
-        players.set(findIndex(player), player);
     }
 
     public List<Player> getPlayers() {
-        return List.copyOf(players);
+        return Collections.unmodifiableList(players);
+    }
+
+    public void addCards(Cards cards) {
+        players.forEach(player ->
+                player.addCard(cards.draw()));
     }
 }

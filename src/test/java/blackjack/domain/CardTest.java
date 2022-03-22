@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.machine.Card;
+import blackjack.domain.card.Card;
 
 public class CardTest {
     @DisplayName("인덱스에 맞는 카드 return 테스트")

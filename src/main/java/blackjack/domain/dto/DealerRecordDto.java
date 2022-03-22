@@ -2,11 +2,11 @@ package blackjack.domain.dto;
 
 import java.util.Map;
 
-public class DealerResultDto {
+public class DealerRecordDto {
     private String name;
     private Map<String, Integer> outcome;
 
-    public DealerResultDto(String name, Map<String, Integer> outcome) {
+    public DealerRecordDto(String name, Map<String, Integer> outcome) {
         this.name = name;
         this.outcome = outcome;
     }

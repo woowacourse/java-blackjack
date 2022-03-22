@@ -1,5 +1,6 @@
 package blackjack.domain.machine;
 
+import blackjack.domain.participant.Players;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,21 +8,21 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import blackjack.domain.dto.DealerResultDto;
-import blackjack.domain.dto.PlayerResultDto;
-import blackjack.domain.dto.ResultDto;
+import blackjack.domain.dto.DealerRecordDto;
+import blackjack.domain.dto.PlayerRecordDto;
+import blackjack.domain.dto.RecordsDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public class Records {
-    public static ResultDto of(Dealer dealer, List<Player> players) {
-        Map<String, String> playerRecords = getPlayerRecords(dealer, players);
-        Map<String, Integer> dealerRecords = getDealerRecords(dealer, players);
+    public static RecordsDto of(Dealer dealer, Players players) {
+        Map<String, String> playerRecords = getPlayerRecords(dealer, players.getPlayers());
+        Map<String, Integer> dealerRecords = getDealerRecords(dealer, players.getPlayers());
 
-        PlayerResultDto playerResultDto = new PlayerResultDto(playerRecords);
-        DealerResultDto dealerResultDto = new DealerResultDto(dealer.getName(), dealerRecords);
+        PlayerRecordDto playerRecordDto = new PlayerRecordDto(playerRecords);
+        DealerRecordDto dealerRecordDto = new DealerRecordDto(dealer.getName(), dealerRecords);
 
-        return new ResultDto(dealerResultDto, playerResultDto);
+        return new RecordsDto(dealerRecordDto, playerRecordDto);
     }
 
     private static Map<String, String> getPlayerRecords(Dealer dealer, List<Player> players) {
@@ -35,7 +36,7 @@ public class Records {
     private static Map<String, Integer> getDealerRecords(Dealer dealer, List<Player> players) {
         Map<String, Integer> records = Arrays.stream(Record.values())
                 .collect(Collectors.toMap(Record::getPlayerRecord, record -> 0,
-                        (o1, o2) -> o1, TreeMap::new));
+                        (o1, o2) -> o2, TreeMap::new));
 
         for (Player player : players) {
             String record = Record.getRecord(player, dealer).getDealerRecord();

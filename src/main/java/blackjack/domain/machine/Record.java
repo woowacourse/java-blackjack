@@ -23,8 +23,8 @@ public enum Record {
     }
 
     public static Record getRecord(Player player, Dealer dealer) {
-        if (isBurst(player, dealer)) {
-            return getRecordForBurst(player, dealer);
+        if (player.isBust() || dealer.isBust()) {
+            return getRecordForBust(player, dealer);
         }
 
         return getOrdinaryRecord(player, dealer);
@@ -33,25 +33,17 @@ public enum Record {
     private static Record getOrdinaryRecord(Player player, Dealer dealer) {
         return Objects.requireNonNull(Arrays.stream(Record.values())
                 .filter(record
-                        -> record.recordNumber == compare(player, dealer))
+                        -> record.recordNumber == player.isWin(dealer))
                 .findFirst()
                 .orElse(null));
     }
 
-    private static int compare(Participant participant1, Participant participant2) {
-        return Integer.compare(participant1.score(), participant2.score());
-    }
-
-    private static boolean isBurst(Player player, Dealer dealer) {
-        return player.isBurst() || dealer.isBurst();
-    }
-
-    private static Record getRecordForBurst(Player player, Dealer dealer) {
-        if (player.isBurst()) {
+    private static Record getRecordForBust(Player player, Dealer dealer) {
+        if (player.isBust()) {
             return DEFEAT;
         }
 
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return VICTORY;
         }
 

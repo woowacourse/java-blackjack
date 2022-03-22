@@ -1,78 +1,40 @@
 package blackjack.domain.machine;
 
-import blackjack.domain.participant.Participant;
-import java.util.List;
-
-import blackjack.domain.dto.ResultDto;
+import blackjack.domain.card.Cards;
+import blackjack.domain.dto.RecordsDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.strategy.NumberGenerator;
 
 public class Blackjack {
     private static final int NUMBER_OF_INIT_CARD = 2;
 
-    private final Players players;
-    private final Dealer dealer;
-    private final CardPickMachine cardPickMachine;
+    private final Cards cards;
 
-    public Blackjack(List<String> playerNames) {
-        this.players = new Players(playerNames);
-        this.dealer = new Dealer();
-        this.cardPickMachine = new CardPickMachine();
+    public Blackjack() {
+        this.cards = new Cards();
     }
 
-    public void dealInitialCards(NumberGenerator numberGenerator) {
+    public void dealInitialCards(Dealer dealer, Players players) {
         for (int i = 0; i < NUMBER_OF_INIT_CARD; ++i) {
-            dealer.addCard(cardPickMachine.pickCard(numberGenerator));
-            players.addCards(cardPickMachine, numberGenerator);
+            dealer.addCard(cards.draw());
+            players.addCards(cards);
         }
     }
 
-    public void dealAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
-        players.addCard(cardPickMachine, player, numberGenerator);
+    public void dealAdditionalCardToPlayer(Player player) {
+        player.addCard(cards.draw());
     }
 
-    public boolean dealAdditionalCardToDealer(NumberGenerator numberGenerator) {
-        if (dealer.isHit()) {
-            dealer.addCard(cardPickMachine.pickCard(numberGenerator));
-            return true;
-        }
-
-        return false;
+    public void dealAdditionalCardToDealer(Dealer dealer) {
+        dealer.addCard(cards.draw());
     }
 
-    public boolean isDealOneMore() {
-        return !players.isEnd();
+    public RecordsDto record(Dealer dealer, Players players) {
+        return Records.of(dealer, players);
     }
 
-    public boolean isPlayerBurst(Player player) {
-        return players.isPlayerBurst(player);
-    }
-
-    public boolean isBlackjack(Participant participant) {
-        return participant.isBlackjack();
-    }
-
-    public Player getPlayer(Player player) {
-        return players.findPlayer(player);
-    }
-
-    public Player getNextPlayer() {
-        Player player = players.findNextPlayer();
-        players.next();
-        return player;
-    }
-
-    public List<Player> getPlayers() {
-        return players.getPlayers();
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public ResultDto result() {
-        return Records.of(dealer, players.getPlayers());
+    public Profits profit(Dealer dealer, Players players) {
+        return Profits.of(dealer, players);
     }
 }
