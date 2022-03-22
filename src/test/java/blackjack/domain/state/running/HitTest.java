@@ -31,7 +31,7 @@ class HitTest {
     @DisplayName("draw 카드추가 기능 테스트")
     void draw_hit_containEight() {
         var state = new Hit(new Cards(new ArrayList<>(List.of(ACE, TWO))));
-        assertThat(state.addCard(EIGHT).cards().getCopy())
+        assertThat(state.addCard(EIGHT).cards().get())
                 .contains(EIGHT);
     }
 

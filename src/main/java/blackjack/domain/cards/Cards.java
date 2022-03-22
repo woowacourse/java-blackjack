@@ -1,7 +1,6 @@
 package blackjack.domain.cards;
 
 import blackjack.domain.cards.card.Card;
-import blackjack.domain.cards.card.denomination.Denomination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -73,7 +72,7 @@ public final class Cards {
         return this.getPoint() == cards.getPoint();
     }
 
-    public List<Card> getCopy() {
+    public List<Card> get() {
         return List.copyOf(value);
     }
 

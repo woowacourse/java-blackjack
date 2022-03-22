@@ -66,7 +66,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드 리스트 리턴 기능 테스트")
     void get() {
-        assertThat(cards.getCopy())
+        assertThat(cards.get())
                 .isEqualTo(List.of(ACE, ACE));
     }
 

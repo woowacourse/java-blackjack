@@ -55,7 +55,7 @@ class ParticipantTest {
     void getCards() {
         fx.POBI.addCard(ACE);
         fx.POBI.addCard(NINE);
-        assertThat(fx.POBI.getState().cards().getCopy())
+        assertThat(fx.POBI.getState().cards().get())
                 .contains(ACE, NINE);
     }
 }

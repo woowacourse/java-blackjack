@@ -50,6 +50,6 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return state.cards().getCopy();
+        return state.cards().get();
     }
 }
