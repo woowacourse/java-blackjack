@@ -23,10 +23,6 @@ public abstract class Participant {
         }
     }
 
-    public void stay() {
-        state = state.stay();
-    }
-
     public boolean isBlackjack() {
         return state.cards().isBlackjack();
     }

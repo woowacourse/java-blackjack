@@ -8,11 +8,18 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.Finished;
+import blackjack.domain.state.State;
+import blackjack.domain.state.Stay;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
 
@@ -102,5 +109,51 @@ class PlayerTest {
         boolean actual = player.isHit(DrawStatus.NO);
 
         assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름이 공백인 경우, 예외를 발생한다.")
+    void checkEmptyName() {
+        assertThatThrownBy(() -> new Player("", firstDrawTwoCards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 공백이 될 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("플레이어는 hit 상태일 때 stay 를 할 수 있다.")
+    void stay() {
+        player.stay();
+
+        final State actual = player.getState();
+
+        assertThat(actual).isInstanceOf(Stay.class);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideFinishedPlayer")
+    @DisplayName("플레이어가 blackjack, bust, stay 인 경우 finished 상태가 된다.")
+    void checkFinishedState(Player player) {
+        final State actual = player.getState();
+
+        assertThat(actual).isInstanceOf(Finished.class);
+    }
+
+    static Stream<Arguments> provideFinishedPlayer() {
+        final Cards blackjackCards = new Cards(List.of(
+                new Card(CardPattern.HEART, CardNumber.JACK),
+                new Card(CardPattern.HEART, CardNumber.ACE)
+        ));
+        final Cards bustCards = new Cards(List.of(
+                new Card(CardPattern.HEART, CardNumber.JACK),
+                new Card(CardPattern.HEART, CardNumber.ACE)
+        ));
+        final Player stayPlayer = new Player("java", createFirstDrawTwoCards());
+        stayPlayer.stay();
+
+        return Stream.of(Arguments.of(
+                new Player("slow", blackjackCards),
+                new Player("pobi", bustCards),
+                stayPlayer
+        ));
     }
 }

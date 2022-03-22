@@ -25,6 +25,10 @@ public class Player extends Participant {
         }
     }
 
+    public void stay() {
+        state = state.stay();
+    }
+
     public double findProfit(Dealer dealer) {
         return state.profit(dealer, getBettingMoney());
     }
