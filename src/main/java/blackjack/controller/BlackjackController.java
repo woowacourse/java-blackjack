@@ -91,6 +91,6 @@ public class BlackjackController {
         ParticipantProfit participantProfit = blackjackGame.findProfit();
 
         outputView.printAllPlayerCardStatus(blackjackGame.getPlayers(), blackjackGame.getDealer());
-        outputView.printGameResult(participantProfit.getDealerValue(), participantProfit.getPlayerValues());
+        outputView.printGameResult(participantProfit.getDealerProfit(), participantProfit.getPlayerProfit());
     }
 }

@@ -8,36 +8,36 @@ import java.util.Map;
 
 public class ParticipantProfit {
 
-    private final Map<String, Double> playerValues;
-    private final double dealerValue;
+    private final Map<String, Double> playerProfit;
+    private final double dealerProfit;
 
-    private ParticipantProfit(Map<String, Double> playerValues, double dealerValue) {
-        this.playerValues = playerValues;
-        this.dealerValue = dealerValue;
+    private ParticipantProfit(Map<String, Double> playerProfit, double dealerProfit) {
+        this.playerProfit = playerProfit;
+        this.dealerProfit = dealerProfit;
     }
 
     public static ParticipantProfit create(Dealer dealer, List<Player> players) {
-        Map<String, Double> playerValues = new HashMap<>();
+        Map<String, Double> playerProfit = new HashMap<>();
 
         for (Player player : players) {
             double profit = player.findProfit(dealer);
-            playerValues.put(player.getName(), profit);
+            playerProfit.put(player.getName(), profit);
         }
 
-        return new ParticipantProfit(playerValues, calculateDealerProfit(playerValues));
+        return new ParticipantProfit(playerProfit, calculateDealerProfit(playerProfit));
     }
 
-    private static double calculateDealerProfit(Map<String, Double> playerValues) {
-        return playerValues.values().stream()
+    private static double calculateDealerProfit(Map<String, Double> playerProfit) {
+        return playerProfit.values().stream()
                 .mapToDouble(Double::doubleValue)
                 .sum() * -1;
     }
 
-    public Map<String, Double> getPlayerValues() {
-        return playerValues;
+    public Map<String, Double> getPlayerProfit() {
+        return playerProfit;
     }
 
-    public double getDealerValue() {
-        return dealerValue;
+    public double getDealerProfit() {
+        return dealerProfit;
     }
 }
