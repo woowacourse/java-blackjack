@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import blackjack.domain.Name;
 
 public class NameTest {
     @ParameterizedTest
@@ -28,5 +30,15 @@ public class NameTest {
         assertThatThrownBy(() -> Name.of(stringBuilder))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("길이는 100자를 초과할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("Name 객체 동등성 비교 테스트")
+    void equals() {
+        //given
+        Name actual = Name.of("pobi");
+
+        //then
+        assertThat(actual).isEqualTo(Name.of("pobi"));
     }
 }

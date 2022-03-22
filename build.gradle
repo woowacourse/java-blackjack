@@ -6,12 +6,14 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    implementation 'com.github.woowacourse-projects:mission-utils:1.0.0'
 }
 
 java {

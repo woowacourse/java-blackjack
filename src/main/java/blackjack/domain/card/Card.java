@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class Card {
+public final class Card {
 
     private final CardSymbol symbol;
     private final CardNumber number;

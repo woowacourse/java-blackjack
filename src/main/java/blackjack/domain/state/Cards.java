@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.state;
 
 import static blackjack.domain.card.CardNumber.*;
 
@@ -8,12 +8,13 @@ import java.util.Set;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 
-class Cards {
+public final class Cards {
 
     private static final int ACE_BIG = 11;
+    private static final int MAX_HIT_SCORE = 21;
+    private static final int INIT_NUMBER_OF_CARDS = 2;
 
     private final Set<Card> value;
 
@@ -21,15 +22,29 @@ class Cards {
         this.value = new LinkedHashSet<>(value);
     }
 
-    void add(Card card) {
-        value.add(card);
+    Cards add(Card card) {
+        Set<Card> newCards = new LinkedHashSet<>(value);
+        newCards.add(card);
+        return new Cards(newCards);
     }
 
-    PlayStatus getStatus() {
-        return PlayStatus.hitOrBust(sum());
+    public boolean isBlackjack() {
+        return isReadyToStop() && isEndInit();
     }
 
-    int sum() {
+    public boolean isBust() {
+        return sum() > MAX_HIT_SCORE;
+    }
+
+    boolean isReadyToStop() {
+        return sum() == MAX_HIT_SCORE;
+    }
+
+    boolean isEndInit() {
+        return value.size() == INIT_NUMBER_OF_CARDS;
+    }
+
+    public int sum() {
         return sumWithAce(value.stream()
             .mapToInt(Card::getNumberValue)
             .sum());
@@ -47,13 +62,13 @@ class Cards {
             .anyMatch(Card::isAce);
     }
 
-    Card findFirst() {
+    public Card findFirst() {
         return value.stream()
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
     }
 
-    Set<Card> getValue() {
+    public Set<Card> getValue() {
         return new LinkedHashSet<>(value);
     }
 
