@@ -7,7 +7,7 @@ public abstract class Running extends Started {
     private static final String RUNNING_GET_SCORE_ERROR_MESSAGE = "[ERROR] 게임이 끝나지 않은 경우 점수를 가져올 수 없습니다.";
     private static final String RUNNING_PROFIT_ERROR_MESSAGE = "[ERROR] 게임이 끝나지 않은 경우 수익을 구할 수 없습니다.";
 
-    public Running(ParticipantCards participantCards) {
+    protected Running(ParticipantCards participantCards) {
         super(participantCards);
     }
 

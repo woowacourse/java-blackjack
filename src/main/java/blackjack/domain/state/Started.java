@@ -6,7 +6,7 @@ public abstract class Started implements State {
 
     protected ParticipantCards participantCards;
 
-    public Started(ParticipantCards participantCards) {
+    protected Started(ParticipantCards participantCards) {
         this.participantCards = participantCards;
     }
 
