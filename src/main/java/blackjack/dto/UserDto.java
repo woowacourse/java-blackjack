@@ -8,7 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.user.User;
 
-public class UserDto {
+public final class UserDto {
 
     private final String userName;
     private final List<String> cardNames;

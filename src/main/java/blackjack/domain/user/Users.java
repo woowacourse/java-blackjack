@@ -2,15 +2,17 @@ package blackjack.domain.user;
 
 import static java.util.stream.Collectors.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import blackjack.domain.MatchRecord;
 import blackjack.domain.card.Deck;
+import blackjack.domain.money.Money;
 
-public class Users {
+public final class Users {
+
+    private static final int INIT_DRAW_SIZE = 2;
 
     private final List<Player> players;
     private final Dealer dealer;
@@ -20,36 +22,48 @@ public class Users {
         this.dealer = dealer;
     }
 
-    private Users(List<Player> players) {
-        this(players, new Dealer());
-    }
-
-    public static Users from(List<String> inputNames) {
-        List<Player> players = inputNames.stream()
-            .map(Player::new)
+    public static Users of(Map<String, String> inputNameAndMoney) {
+        List<Player> players = inputNameAndMoney.entrySet()
+            .stream()
+            .map(nameMoneyEntry -> Player.of(nameMoneyEntry.getKey(), nameMoneyEntry.getValue()))
             .collect(toList());
-        return new Users(players);
+        Dealer dealer = new Dealer();
+        return new Users(players, dealer);
     }
 
-    public void drawInitCards(Deck deck) {
+    public void drawInitialCardsPerUser(Deck deck) {
         for (Player player : players) {
-            player.receiveCard(deck.drawCard());
-            player.receiveCard(deck.drawCard());
+            drawInitialCards(player, deck);
         }
-        dealer.receiveCard(deck.drawCard());
-        dealer.receiveCard(deck.drawCard());
+        drawInitialCards(dealer, deck);
     }
 
-    public Map<Player, MatchRecord> createPlayerMatchRecords() {
+    private void drawInitialCards(User user, Deck deck) {
+        for (int i = 0; i < INIT_DRAW_SIZE; i++) {
+            user.hit(deck.drawCard());
+        }
+    }
+
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackjack();
+    }
+
+    public void stayAllPlayers() {
+        for (Player player : players) {
+            player.stay();
+        }
+    }
+
+    public Map<Player, Money> createPlayerProfit() {
         return players.stream()
-            .collect(toMap(
+            .collect(Collectors.toMap(
                 Function.identity(),
-                player -> MatchRecord.findMatchRecord(player, dealer)
+                player -> player.calculateProfit(dealer)
             ));
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return List.copyOf(players);
     }
 
     public Dealer getDealer() {

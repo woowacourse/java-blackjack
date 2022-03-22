@@ -3,22 +3,23 @@ package blackjack.domain.card;
 import java.util.List;
 import java.util.Objects;
 
-public class Score {
+public final class Score {
 
     public static final int BLACKJACK = 21;
 
     private static final int ACE_POINT_DIFFERENCE = 10;
     private static final int ZERO = 0;
+    private static final Score ZERO_SCORE = new Score(ZERO);
 
-    private int score;
+    private final int score;
 
     public Score(int score) {
         validatePositive(score);
         this.score = score;
     }
 
-    public Score() {
-        this(ZERO);
+    public static Score getZero() {
+        return ZERO_SCORE;
     }
 
     private void validatePositive(int score) {
@@ -70,8 +71,23 @@ public class Score {
         return score > BLACKJACK;
     }
 
+    public boolean isBlackJackScore() {
+        return score == BLACKJACK;
+    }
+
     public boolean isGreaterThan(Score other) {
         return this.score > other.score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+            "score=" + score +
+            '}';
     }
 
     @Override
@@ -87,9 +103,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
-    }
-
-    public int getScore() {
-        return score;
     }
 }

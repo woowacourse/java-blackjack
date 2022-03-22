@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Deck {
+public final class Deck {
 
     private static final List<Card> CARDS_CACHE = createAllCards();
 
@@ -26,13 +26,13 @@ public class Deck {
 
     private static List<Card> createAllCards() {
         return stream(Suit.values())
-                .flatMap(Deck::createCardStreamPerSuit)
-                .collect(Collectors.toList());
+            .flatMap(Deck::createCardStreamPerSuit)
+            .collect(Collectors.toList());
     }
 
     private static Stream<Card> createCardStreamPerSuit(Suit suit) {
         return stream(Denomination.values())
-                .map(denomination -> new Card(suit, denomination));
+            .map(denomination -> new Card(suit, denomination));
     }
 
     public Card drawCard() {

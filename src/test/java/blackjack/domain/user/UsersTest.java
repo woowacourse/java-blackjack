@@ -1,19 +1,18 @@
 package blackjack.domain.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.MatchRecord;
-import blackjack.domain.card.Card;
+import blackjack.domain.CardFixtures;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
+import blackjack.domain.money.Money;
 
 class UsersTest {
 
@@ -21,32 +20,69 @@ class UsersTest {
     @Test
     public void testCreateUsers() {
         //given
-        List<String> names = List.of("pobi", "jason");
-
+        Map<String, String> inputNameAndMoney = Map.ofEntries(
+            Map.entry("pobi", "1000"), Map.entry("jason", "1000")
+        );
         //when
-        Users users = Users.from(names);
+        Users users = Users.of(inputNameAndMoney);
 
         //then
         Assertions.assertAll(
-                () -> assertThat(users).isNotNull(),
-                () -> assertThat(users.getPlayers().size()).isEqualTo(2)
+            () -> assertThat(users).isNotNull(),
+            () -> assertThat(users.getPlayers().size()).isEqualTo(2)
         );
     }
 
     @Test
-    @DisplayName("플레이어의 승패를 구할 수 있다.")
-    public void testCreatePlayerMatchRecords() {
+    @DisplayName("유저들에게 초기 카드를 나눠준다.")
+    public void testInitialDrawForUsers() {
         // given
         Deck deck = new Deck();
-        List<String> names = List.of("pobi", "jason");
-        Users users = Users.from(names);
+        Map<String, String> inputNameAndMoney = Map.ofEntries(
+            Map.entry("pobi", "1000"), Map.entry("jason", "1000")
+        );
+        Users users = Users.of(inputNameAndMoney);
+        users.drawInitialCardsPerUser(deck);
 
         // when
-        users.getDealer().receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
+        int dealerSize = users.getDealer()
+            .showInitCards()
+            .size();
+
+        List<Integer> playerSizes = users.getPlayers().stream()
+            .map(player -> player.showInitCards().size())
+            .collect(Collectors.toList());
 
         // then
-        Map<Player, MatchRecord> playerMatchRecords = users.createPlayerMatchRecords();
-        assertThat(playerMatchRecords.values()).allMatch(matchRecord -> matchRecord == MatchRecord.LOSS);
+        Assertions.assertAll(
+            () -> assertThat(dealerSize).isEqualTo(1),
+            () -> assertThat(playerSizes).containsSequence(2, 2)
+        );
     }
 
+    @Test
+    @DisplayName("플레이어들의 수익률을 계산한다.")
+    public void testProfitCalculationPerPlayers() {
+        // given
+        Map<String, String> inputNameAndMoney = Map.ofEntries(
+            Map.entry("pobi", "1000"), Map.entry("jason", "1000")
+        );
+        Users users = Users.of(inputNameAndMoney);
+        for (Player player : users.getPlayers()) {
+            player.hit(CardFixtures.TEN);
+            player.hit(CardFixtures.SEVEN);
+            player.stay();
+        }
+        users.getDealer().hit(CardFixtures.TEN);
+        users.getDealer().hit(CardFixtures.FIVE);
+
+        // when
+        Map<Player, Money> playerProfit = users.createPlayerProfit();
+
+        // then
+        Assertions.assertAll(
+            () -> assertThat(playerProfit.size()).isEqualTo(2),
+            () -> assertThat(playerProfit.values()).containsSequence(new Money(1000), new Money(1000))
+        );
+    }
 }

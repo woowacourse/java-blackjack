@@ -4,7 +4,7 @@ import static blackjack.domain.card.Denomination.*;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
 
     private final Suit suit;
     private final Denomination denomination;
@@ -38,7 +38,7 @@ public class Card {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Card card = (Card) o;
+        Card card = (Card)o;
         return suit == card.suit && denomination == card.denomination;
     }
 
