@@ -1,14 +1,11 @@
 package blackjack.controller;
 
-import static blackjack.constant.Command.HIT;
+import static blackjack.dto.Command.HIT;
 
-import blackjack.constant.Command;
-import blackjack.domain.ScoreBoard;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
-import blackjack.domain.dto.ScoreBoardResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.BettingReturnResponse;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -16,60 +13,67 @@ import java.util.List;
 
 public class BlackJackController {
 
-    private static final String Y = "Y";
+    private static final String COMMA_DELIMINATOR = ",";
 
-    private Deck deck = new Deck(new RandomCardsGenerateStrategy());
-    private Dealer dealer = new Dealer();
-    private List<Player> players = createPlayers();
-
-    public void run() {
-        initiateParticipantsHand();
-
-        takeMoreCardPlayerTurnForAllPlayers();
-        takeOneMoreCardDuringDealerTurn();
-        OutputView.printParticipantScore(dealer, players);
-
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, players);
-        ScoreBoardResponse scoreBoardResponse = ScoreBoardResponse.from(scoreBoard);
-        OutputView.printBlackjackGameResult2(scoreBoardResponse);
+    private BlackJackController() {
     }
 
-    private List<Player> createPlayers() {
+    public static List<Player> createPlayers() {
         List<Player> players = new ArrayList<>();
         String participantsNames = InputView.inputParticipantsNames();
-        for (String participantName : participantsNames.split(",")) {
+        for (String participantName : participantsNames.split(COMMA_DELIMINATOR)) {
             players.add(new Player(participantName));
         }
         return players;
     }
 
-    private void initiateParticipantsHand() {
+    public static void placeBetting(List<Player> players) {
+        for (Player player : players) {
+            int bettingAmount = InputView.inputBettingAmount(player);
+            player.placeBet(bettingAmount);
+        }
+    }
+
+    public static void initiateParticipantsHand(Dealer dealer, List<Player> players, Deck deck) {
         dealer.receiveCard(deck.draw());
         dealer.receiveCard(deck.draw());
         for (Player player : players) {
             player.receiveCard(deck.draw());
             player.receiveCard(deck.draw());
         }
-        OutputView.printGiveCardsToParticipants(dealer, players);
     }
 
-    private void takeMoreCardPlayerTurnForAllPlayers() {
+    public static void printParticipantsHand(Dealer dealer, List<Player> players) {
+        OutputView.printInitialParticipantsHand(dealer, players);
+    }
+
+    public static void takeMoreCard(List<Player> players, Dealer dealer, Deck deck) {
+        takeMoreCardPlayerTurnForAllPlayers(players, deck);
+        takeOneMoreCardDuringDealerTurn(dealer, deck);
+        OutputView.printParticipantCardsAndScore(dealer, players);
+    }
+
+    public static void takeMoreCardPlayerTurnForAllPlayers(List<Player> players, Deck deck) {
         for (Player player : players) {
-            takeMoreCardPlayerTurnForPlayer(player);
+            takeMoreCardPlayerTurnForPlayer(player, deck);
         }
     }
 
-    private void takeMoreCardPlayerTurnForPlayer(Player player) {
+    public static void takeMoreCardPlayerTurnForPlayer(Player player, Deck deck) {
         while (player.canReceive() && InputView.inputOneMoreCard(player) == HIT) {
             player.receiveCard(deck.draw());
             OutputView.showPlayerHand(player);
         }
     }
 
-    private void takeOneMoreCardDuringDealerTurn() {
+    public static void takeOneMoreCardDuringDealerTurn(Dealer dealer, Deck deck) {
         while (dealer.shouldReceive()) {
             OutputView.printDealerOneMoreCard();
             dealer.receiveCard(deck.draw());
         }
+    }
+
+    public static void printBettingReturn(BettingReturnResponse bettingReturnResponse) {
+        OutputView.printRevenueResultResponse(bettingReturnResponse);
     }
 }

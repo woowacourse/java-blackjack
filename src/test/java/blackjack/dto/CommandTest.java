@@ -1,9 +1,8 @@
-package blackjack.constant;
+package blackjack.dto;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +14,8 @@ class CommandTest {
     @Test
     @DisplayName("존재하지 않는 명령어를 입력하였을 경우")
     void not_exist_command() {
-        Optional<Command> command = Command.of("x");
 
-        assertThatThrownBy(() -> command.get())
+        assertThatThrownBy(() -> Command.of("x"))
                 .isInstanceOf(NoSuchElementException.class);
     }
 
@@ -25,9 +23,8 @@ class CommandTest {
     @ValueSource(strings = {"n", "N", "y", "Y"})
     @DisplayName("존재하는 명령어를 입력하였을 경우")
     void exist_command(String input) {
-        Optional<Command> command = Command.of(input);
 
-        Assertions.assertDoesNotThrow(() -> command.get());
+        Assertions.assertDoesNotThrow(() -> Command.of(input));
     }
 
 }

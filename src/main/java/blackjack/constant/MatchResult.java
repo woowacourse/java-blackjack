@@ -6,39 +6,58 @@ import java.util.function.BiPredicate;
 
 public enum MatchResult {
 
-    WIN("승", (self, other) -> winCondition(self, other)),
-    LOSE("패", (self, other) -> loseCondition(self, other)),
-    DRAW("무", (self, other) -> drawCondition(self, other));
+    BLACKJACK(1.5, MatchResult::playerBlackJackWinCondition),
+    WIN(1, MatchResult::playerWinCondition),
+    LOSE(-1, MatchResult::playerLoseCondition),
+    DRAW(0, MatchResult::playerDrawCondition);
 
-    private final String name;
+    private final double returnRate;
     private final BiPredicate<Hand, Hand> condition;
 
-    MatchResult(String name, BiPredicate<Hand, Hand> condition) {
-        this.name = name;
+    MatchResult(double returnRate, BiPredicate<Hand, Hand> condition) {
         this.condition = condition;
+        this.returnRate = returnRate;
     }
 
-    private static boolean winCondition(Hand self, Hand other) {
-        return !self.isBust() && other.isBust() ||
-                (!self.isBust() && !other.isBust() && self.getScore() > other.getScore());
+    private static boolean playerBlackJackWinCondition(Hand player, Hand dealer) {
+        return player.isBlackjack() && !dealer.isBlackjack();
     }
 
-    private static boolean loseCondition(Hand self, Hand other) {
-        return WIN.condition.test(other, self);
+    private static boolean playerWinCondition(Hand player, Hand dealer) {
+        return (!player.isBust() && dealer.isBust()) ||
+                (!player.isBust() && !dealer.isBust() && player.getScore() > dealer.getScore());
     }
 
-    private static boolean drawCondition(Hand self, Hand other) {
-        return self.isBust() && other.isBust() || self.getScore() == other.getScore();
+    private static boolean playerLoseCondition(Hand player, Hand dealer) {
+        return player.isBust() ||
+                (!player.isBust() && !dealer.isBust() && player.getScore() < dealer.getScore());
     }
 
-    public static MatchResult get(Hand self, Hand other) {
+    private static boolean playerDrawCondition(Hand player, Hand dealer) {
+        return player.isBust() && dealer.isBust() ||
+                player.getScore() == dealer.getScore() ||
+                player.isBlackjack() && dealer.isBlackjack();
+    }
+
+    public static MatchResult get(Hand player, Hand dealer) {
         return Arrays.stream(values())
-                .filter(matchResult -> matchResult.condition.test(self, other))
+                .filter(matchResult -> matchResult.condition.test(player, dealer))
                 .findFirst()
                 .orElse(DRAW);
     }
 
-    public String getName() {
-        return name;
+    public MatchResult reverse() {
+        if (this == WIN || this == BLACKJACK) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
+    public int getReturn(int bettingMoney) {
+        return Double.valueOf(returnRate * bettingMoney)
+                .intValue();
     }
 }

@@ -4,9 +4,9 @@ import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.ScoreBoardResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.BettingReturnResponse;
 import java.util.List;
 
 public class OutputView {
@@ -19,9 +19,9 @@ public class OutputView {
     private static final String GIVE_CARDS_TO_DEALER_MESSAGE = "%s: %s" + NEW_LINE;
     private static final String PLAYER_CARD_MESSAGE = "%s카드: %s" + NEW_LINE;
     private static final String COMMA_DELIMITER = ", ";
-    private static final String BLACKJACK_GAME_RESULT_MESSAGE = "## 최종 승패";
+    public static final String BLACKJACK_GAME_RESULT_MESSAGE = "## 최종 수익";
 
-    public static void printGiveCardsToParticipants(Dealer dealer, List<Player> players) {
+    public static void printInitialParticipantsHand(Dealer dealer, List<Player> players) {
         out.printf(GIVE_CARDS_TO_PLAYERS_MESSAGE, getPlayerNames(players));
         out.printf(GIVE_CARDS_TO_DEALER_MESSAGE, dealer.getName(), cardDisplayContents(dealer.getOpenCard()));
         for (Player player : players) {
@@ -47,7 +47,7 @@ public class OutputView {
         out.println(DEALER_ONE_MORE_CARD_MESSAGE);
     }
 
-    public static void printParticipantScore(Dealer dealer, List<Player> players) {
+    public static void printParticipantCardsAndScore(Dealer dealer, List<Player> players) {
         printDealerScore(dealer);
         printPlayersScore(players);
         out.println();
@@ -77,13 +77,13 @@ public class OutputView {
         return card.getDenomination() + card.getSuit();
     }
 
-    public static void printBlackjackGameResult2(ScoreBoardResponse scoreBoardResponse) {
-        String dealerMatchResultMessage = scoreBoardResponse.getDealerMatchResultMessage();
-        out.println(BLACKJACK_GAME_RESULT_MESSAGE);
-        out.println(dealerMatchResultMessage);
-        List<String> playerMatchResultMessages = scoreBoardResponse.getPlayerMatchResultMessages();
-        for (String playerMatchResultMessage : playerMatchResultMessages) {
-            out.println(playerMatchResultMessage);
+    public static void printRevenueResultResponse(BettingReturnResponse bettingReturnResponse) {
+        String dealerRevenueMessage = bettingReturnResponse.getDealerRevenueMessage();
+        List<String> playersRevenueMessage = bettingReturnResponse.getPlayersRevenueMessage();
+        out.println(OutputView.BLACKJACK_GAME_RESULT_MESSAGE);
+        out.println(dealerRevenueMessage);
+        for (String playerRevenueMessage : playersRevenueMessage) {
+            out.println(playerRevenueMessage);
         }
     }
 }
