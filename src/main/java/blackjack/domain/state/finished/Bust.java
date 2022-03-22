@@ -20,9 +20,6 @@ public final class Bust extends Finished {
 
     @Override
     public double earningRate(final Finished other) {
-        if (other.isBust()) {
-            return WIN_PROFIT_RATE;
-        }
         return LOSE_PROFIT_RATE;
     }
 }

@@ -34,8 +34,7 @@ public final class BlackjackGame {
     private Players initPlayers(final CardDeck cardDeck) {
         return new Players(inputPlayerNames().stream()
                 .map(name -> new Player(name, inputBetAmount(name), cardDeck.popCards(INIT_NUMBER)))
-                .collect(Collectors.toList())
-        );
+                .collect(Collectors.toList()));
     }
 
     private void startGame(final Players players, final Dealer dealer, final CardDeck cardDeck) {
