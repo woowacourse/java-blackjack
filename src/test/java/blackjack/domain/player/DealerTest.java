@@ -29,7 +29,7 @@ class DealerTest {
         Dealer dealer = new Dealer(new Cards(firstDrawTwoCards));
         final Card expected = firstDrawTwoCards.get(0);
 
-        final Card actual = dealer.openFirstCards().get(0);
+        final Card actual = dealer.openFirstCards();
 
         assertThat(actual).isEqualTo(expected);
     }

@@ -58,6 +58,4 @@ public abstract class Participant {
     public State getState() {
         return state;
     }
-
-    public abstract List<Card> openFirstCards();
 }

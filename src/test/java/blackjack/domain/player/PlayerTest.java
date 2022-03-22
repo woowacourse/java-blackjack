@@ -49,7 +49,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어는 처음 받은 카드 두 장을 모두 보여준다.")
     void openFirstCards() {
-        final List<Card> actual = player.openFirstCards();
+        final List<Card> actual = player.openAllOfCards();
 
         assertThat(actual).isEqualTo(firstDrawTwoCards.getCards());
     }

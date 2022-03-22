@@ -17,9 +17,9 @@ public class OutputView {
         System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), getPlayerNames(players));
         printNewLine();
 
-        printPlayerCardStatus(dealer.getName(), dealer.openFirstCards());
+        printPlayerCardStatus(dealer.getName(), List.of(dealer.openFirstCards()));
         for (Player player : players) {
-            printPlayerCardStatus(player.getName(), player.openFirstCards());
+            printPlayerCardStatus(player.getName(), player.getCards());
         }
         printNewLine();
     }

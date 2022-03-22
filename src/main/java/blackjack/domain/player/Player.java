@@ -1,12 +1,8 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.List;
 
 public class Player extends Participant {
-
-    private static final int FIRST_OPEN_COUNT = 2;
 
     private BettingMoney bettingMoney;
 
@@ -39,10 +35,5 @@ public class Player extends Participant {
 
     public int getBettingMoney() {
         return bettingMoney.getValue();
-    }
-
-    @Override
-    public List<Card> openFirstCards() {
-        return getCards().subList(0, FIRST_OPEN_COUNT);
     }
 }
