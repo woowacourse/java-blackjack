@@ -2,31 +2,40 @@ package blackjack.domain.gamer;
 
 import static blackjack.domain.card.CardGroup.BLACKJACK_NUMBER;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.result.Match;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends Gamer{
+public class Player {
 
-    public Player(String name) {
-        super(name);
+    private final Gamer gamer;
+    private final BettingMoney bettingMoney;
+
+    private Player(String name, BettingMoney bettingMoney) {
+        this.gamer = new Gamer(name);
+        this.bettingMoney = bettingMoney;
     }
 
-    public Player(String name, List<Card> cards) {
-        super(name, cards);
+    private Player(Player player) {
+        this.gamer = player.gamer.copy();
+        this.bettingMoney = player.bettingMoney;
     }
 
-    public static List<Player> of(List<String> playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName));
-        }
-        return players;
+    public static Player of(String playerName, BettingMoney bettingMoney) {
+        return new Player(playerName, bettingMoney);
+    }
+
+    public Player copy() {
+        return new Player(this);
+    }
+
+    public void addCard(Card card) {
+        gamer.addCard(card);
     }
 
     public Match compareCardsSumTo(int anotherCardsSum) {
-        if (isBust()) {
+        if (gamer.isBust()) {
             return Match.LOSE;
         }
 
@@ -34,10 +43,34 @@ public class Player extends Gamer{
             return Match.WIN;
         }
 
-        return Match.of(Integer.compare(getScore(), anotherCardsSum));
+        return Match.of(Integer.compare(gamer.getScore(), anotherCardsSum));
     }
 
     private boolean isBust(int sum) {
         return sum > BLACKJACK_NUMBER;
+    }
+
+    public boolean isBust() {
+        return gamer.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return gamer.isBlackJack();
+    }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
+    }
+
+    public String getName() {
+        return gamer.getName();
+    }
+
+    public List<Card> getCards() {
+        return gamer.getCards();
+    }
+
+    public int getScore() {
+        return gamer.getScore();
     }
 }

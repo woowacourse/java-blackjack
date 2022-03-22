@@ -19,10 +19,9 @@ public class Gamer {
         this.cardGroup = new CardGroup();
     }
 
-    public Gamer(String name, List<Card> cards) {
-        validateName(name);
-        this.name = name;
-        this.cardGroup = new CardGroup(cards);
+    private Gamer(Gamer gamer) {
+        this.name = gamer.name;
+        this.cardGroup = gamer.cardGroup.copy();
     }
 
     private void validateName(String name) {
@@ -50,15 +49,15 @@ public class Gamer {
         return name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH;
     }
 
+    public Gamer copy() {
+        return new Gamer(this);
+    }
+
     public void addCard(Card card) {
         if (cardGroup.isBust()) {
             return;
         }
         cardGroup.addCard(card);
-    }
-
-    public void openAllCards() {
-        cardGroup.open();
     }
 
     public boolean isBust() {
@@ -67,6 +66,10 @@ public class Gamer {
 
     public boolean isNotBust() {
         return cardGroup.isNotBust();
+    }
+
+    public boolean isBlackJack() {
+        return cardGroup.isBlackJack();
     }
 
     public int getScore() {
@@ -79,9 +82,5 @@ public class Gamer {
 
     public String getName() {
         return this.name;
-    }
-
-    public int getCardsSize() {
-        return cardGroup.getSize();
     }
 }

@@ -1,12 +1,14 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.property.CardNumber;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardGroup {
     public static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_SPECIAL_SCORE = 10;
+    private static final int FIRST_CARD_INDEX = 0;
+    private static final int SECOND_CARD_INDEX = 1;
 
     private final List<Card> cards;
 
@@ -16,6 +18,14 @@ public class CardGroup {
 
     public CardGroup(List<Card> cards) {
         this.cards = cards;
+    }
+
+    private CardGroup(CardGroup cardGroup) {
+        this.cards = List.copyOf(cardGroup.cards);
+    }
+
+    public CardGroup copy() {
+        return new CardGroup(this);
     }
 
     public void addCard(Card card) {
@@ -58,21 +68,12 @@ public class CardGroup {
                 .count();
     }
 
-    public void open() {
-        for (Card card : cards) {
-            card.open();
-        }
-    }
-
-    public int getSize() {
-        return cards.size();
+    public boolean isBlackJack() {
+        CardGroup initialCardGroup = new CardGroup(cards.subList(FIRST_CARD_INDEX, SECOND_CARD_INDEX + 1));
+        return initialCardGroup.calculateScore() == BLACKJACK_NUMBER;
     }
 
     public List<Card> getCards() {
-        List<Card> copiedCards = new ArrayList<>();
-        for (Card card: cards) {
-            copiedCards.add(Card.of(card.getCardShape(), card.getCardNumber(), card.isOpen()));
-        }
-        return copiedCards;
+        return Collections.unmodifiableList(cards);
     }
 }

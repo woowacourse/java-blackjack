@@ -24,18 +24,22 @@ class PlayerGroupTest {
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
                 Arguments.of(List.of(), "플레이어 0명 입력"),
-                Arguments.of(List.of(new Player("a"),
-                        new Player("b"),
-                        new Player("c"),
-                        new Player("d"),
-                        new Player("e"),
-                        new Player("f"),
-                        new Player("g"),
-                        new Player("h"),
-                        new Player("i")), "플레이어 9명 입력"),
-                Arguments.of(List.of(new Player("pobi"),
-                        new Player("ash"),
-                        new Player("ash")), "플레이어 중복 입력")
+                Arguments.of(List.of(Player.of("a", initializeBettingMoney()),
+                        Player.of("b", initializeBettingMoney()),
+                        Player.of("c", initializeBettingMoney()),
+                        Player.of("d", initializeBettingMoney()),
+                        Player.of("e", initializeBettingMoney()),
+                        Player.of("f", initializeBettingMoney()),
+                        Player.of("g", initializeBettingMoney()),
+                        Player.of("h", initializeBettingMoney()),
+                        Player.of("i", initializeBettingMoney())), "플레이어 9명 입력"),
+                Arguments.of(List.of(Player.of("pobi", initializeBettingMoney()),
+                        Player.of("ash", initializeBettingMoney()),
+                        Player.of("ash", initializeBettingMoney())), "플레이어 중복 입력")
         );
+    }
+
+    private static BettingMoney initializeBettingMoney() {
+        return BettingMoney.of(10);
     }
 }

@@ -1,12 +1,8 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.CardPack;
-import blackjack.domain.result.Match;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PlayerGroup {
     private static final String NAME_DUPLICATION_ERROR_MESSAGE = "플레이어 이름은 중복될 수 없습니다.";
@@ -63,19 +59,10 @@ public class PlayerGroup {
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_EXISTS_ERROR_MESSAGE));
     }
 
-    public Map<String, Match> getPlayerResult(int sum) {
-        Map<String, Match> result = new LinkedHashMap<>();
-        for (Player player : players) {
-            Match matchResult = player.compareCardsSumTo(sum);
-            result.put(player.getName(), matchResult);
-        }
-        return Collections.unmodifiableMap(result);
-    }
-
     public List<Player> getPlayers() {
         List<Player> copiedPlayers = new ArrayList<>();
         for (Player player : players) {
-            Player copiedPlayer = new Player(player.getName(), player.getCards());
+            Player copiedPlayer = player.copy();
             copiedPlayers.add(copiedPlayer);
         }
         return copiedPlayers;

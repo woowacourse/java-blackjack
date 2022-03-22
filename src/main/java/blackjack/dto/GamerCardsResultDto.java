@@ -1,7 +1,8 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,12 +20,16 @@ public class GamerCardsResultDto {
         return new GamerCardsResultDto(GamerCardsDto.of(name, cards), sum);
     }
 
-    public static List<GamerCardsResultDto> of(List<Gamer> gamersCards) {
+    public static List<GamerCardsResultDto> valueOf(List<Player> players) {
         List<GamerCardsResultDto> gamersCardsResultDto = new ArrayList<>();
-        for (Gamer gamer : gamersCards) {
-            gamersCardsResultDto.add(of(gamer.getName(), gamer.getCards(), gamer.getScore()));
+        for (Player player : players) {
+            gamersCardsResultDto.add(of(player.getName(), player.getCards(), player.getScore()));
         }
         return Collections.unmodifiableList(gamersCardsResultDto);
+    }
+
+    public static GamerCardsResultDto valueOf(Dealer dealer) {
+        return of(dealer.getName(), dealer.getCards(), dealer.getScore());
     }
 
     public int getSum() {

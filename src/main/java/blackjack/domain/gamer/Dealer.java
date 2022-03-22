@@ -1,26 +1,48 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import java.util.List;
 
-public class Dealer extends Gamer {
+public class Dealer {
     private static final String NAME = "딜러";
     private static final int DEALER_STAND_CONDITION = 16;
+    private static final int INITIAL_OPEN_CARD_INDEX = 1;
+
+    private final Gamer gamer;
 
     public Dealer() {
-        super(NAME);
+        this.gamer = new Gamer(NAME);
     }
 
-    @Override
+    public Card getInitialOpenedCard() {
+        return gamer.getCards().get(INITIAL_OPEN_CARD_INDEX);
+    }
+
     public void addCard(Card card) {
-        if (getScore() > DEALER_STAND_CONDITION) {
+        if (gamer.getScore() > DEALER_STAND_CONDITION) {
             return;
         }
 
-        super.addCard(card);
+        gamer.addCard(card);
     }
 
-    @Override
     public boolean isNotBust() {
-        return getScore() <= DEALER_STAND_CONDITION;
+        return gamer.getScore() <= DEALER_STAND_CONDITION;
+    }
+
+    public boolean isBlackJack() {
+        return gamer.isBlackJack();
+    }
+
+    public String getName() {
+        return gamer.getName();
+    }
+
+    public int getScore() {
+        return gamer.getScore();
+    }
+
+    public List<Card> getCards() {
+        return gamer.getCards();
     }
 }
