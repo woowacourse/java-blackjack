@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.BlackjackBoard.INIT_CARD_COUNT;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +11,8 @@ public class HoldingCard {
 
     private final List<Card> holdingCard;
 
-    public HoldingCard(List<Card> cards) {
-        this.holdingCard = new ArrayList<>(cards);
+    public HoldingCard() {
+        this.holdingCard = new ArrayList<>();
     }
 
     public void add(Card card) {
@@ -19,6 +21,10 @@ public class HoldingCard {
 
     public boolean isBust() {
         return computeTotalScore() > BLACK_JACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return computeTotalScore() == BLACK_JACK_SCORE && holdingCard.size() == INIT_CARD_COUNT;
     }
 
     public int computeTotalScore() {

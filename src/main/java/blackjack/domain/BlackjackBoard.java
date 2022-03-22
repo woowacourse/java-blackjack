@@ -1,39 +1,33 @@
 package blackjack.domain;
 
-import static blackjack.domain.DrawCommand.*;
-
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.HoldingCard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.dto.ParticipantDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-public class BlackjackGame {
+public class BlackjackBoard {
+    public static final int INIT_CARD_COUNT = 2;
+
     private final Players players;
-    private final Participant dealer;
+    private final Dealer dealer;
     private final CardDeck cardDeck;
 
-    public BlackjackGame(List<String> playersNames) {
-        this.cardDeck = CardDeck.createNewCardDeck();
-        this.dealer = new Dealer(List.of(cardDeck.drawCard()));
-        this.players = new Players(createPlayers(playersNames));
+    public BlackjackBoard(CardDeck cardDeck, List<Player> players) {
+        this.cardDeck = cardDeck;
+        this.dealer = new Dealer();
+        this.players = new Players(players);
+        distributeCards();
     }
 
-    private List<Participant> createPlayers(List<String> playersNames) {
-        return playersNames.stream()
-                .map(playerName -> new Player(playerName.trim(), setPlayerInitCards()))
-                .collect(Collectors.toList());
-    }
-
-    private List<Card> setPlayerInitCards() {
-        return List.of(cardDeck.drawCard(), cardDeck.drawCard());
+    private void distributeCards() {
+        dealer.receiveCard(cardDeck.drawCard());
+        players.getPlayers()
+                .forEach(player -> player.receiveCards(cardDeck.drawCard(INIT_CARD_COUNT)));
     }
 
     public boolean isAllPlayerFinished() {
@@ -42,10 +36,10 @@ public class BlackjackGame {
 
     public HoldingCard drawCurrentPlayer(DrawCommand drawCommand) {
         Participant currentPlayer = players.getCurrentPlayer();
-        if (drawCommand == YES) {
+        if (drawCommand.isAccept()) {
             currentPlayer.receiveCard(cardDeck.drawCard());
         }
-        if (drawCommand == NO || currentPlayer.isBust()) {
+        if (!drawCommand.isAccept() || currentPlayer.isBust()) {
             players.skipTurn();
         }
         return currentPlayer.getHoldingCard();
@@ -74,13 +68,7 @@ public class BlackjackGame {
         return participantDtos;
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
-        int score = dealer.calculateScore();
-        return players.getDealerGameResult(score);
-    }
-
-    public Map<String, GameResult> getPlayersResult() {
-        int score = dealer.calculateScore();
-        return players.getPlayersGameResult(score);
+    public BettingResult getBettingResult() {
+        return BettingResult.of(dealer, players.getPlayers());
     }
 }

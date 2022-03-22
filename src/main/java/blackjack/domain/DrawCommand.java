@@ -18,4 +18,8 @@ public enum DrawCommand {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 지원하지 않는 커맨드입니다."));
     }
+
+    public boolean isAccept() {
+        return inputValue == YES.inputValue;
+    }
 }

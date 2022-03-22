@@ -20,9 +20,9 @@ class PlayersTest {
     @Test
     @DisplayName("턴을 스킵했을 때 다음 참가자로 넘어가는지 테스트")
     void playersSkipTest() {
-        Player pobi = new Player("pobi", new ArrayList<>());
-        Player elsa = new Player("elsa", new ArrayList<>());
-        List<Participant> players = Arrays.asList(pobi, elsa);
+        Player pobi = new Player("pobi", new BetMoney(1000));
+        Player elsa = new Player("elsa", new BetMoney(1000));
+        List<Player> players = Arrays.asList(pobi, elsa);
 
         Players participants = new Players(players);
         participants.skipTurn();
@@ -34,9 +34,9 @@ class PlayersTest {
     @Test
     @DisplayName("모든 플레이어가 끝났는지 확인하는 기능")
     void allPlayersFinished() {
-        Player pobi = new Player("pobi", new ArrayList<>());
-        Player elsa = new Player("elsa", new ArrayList<>());
-        List<Participant> players = Arrays.asList(pobi, elsa);
+        Player pobi = new Player("pobi", new BetMoney(1000));
+        Player elsa = new Player("elsa", new BetMoney(1000));
+        List<Player> players = Arrays.asList(pobi, elsa);
 
         Players participants = new Players(players);
         participants.skipTurn();

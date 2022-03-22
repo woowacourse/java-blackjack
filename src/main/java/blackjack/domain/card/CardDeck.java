@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +28,14 @@ public class CardDeck {
     public Card drawCard() {
         checkEmptyDeck();
         return cards.poll();
+    }
+
+    public List<Card> drawCard(int count) {
+        List<Card> drawCards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            drawCards.add(drawCard());
+        }
+        return drawCards;
     }
 
     private void checkEmptyDeck() {

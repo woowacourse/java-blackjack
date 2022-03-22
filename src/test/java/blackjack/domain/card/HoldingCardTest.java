@@ -1,9 +1,9 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.Fixture.*;
 import static blackjack.domain.card.CardNumber.*;
 import static blackjack.domain.card.CardSymbol.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,84 +14,80 @@ class HoldingCardTest {
     @Test
     @DisplayName("합이 21초과일 경우 버스트다")
     void over21_isBust() {
-        List<Card> cards = new ArrayList<>(
-                List.of(Card.valueOf(QUEEN, CLOVER),
-                        Card.valueOf(JACK, CLOVER)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(Card.valueOf(FIVE, CLOVER));
+        HoldingCard holdingCard = new HoldingCard();
+
+        List<Card> cards = List.of(Card.valueOf(QUEEN, CLUBS), Card.valueOf(JACK, CLUBS), Card.valueOf(FIVE, CLUBS));
+        cards.forEach(holdingCard::add);
+
         Assertions.assertThat(holdingCard.isBust()).isTrue();
     }
 
     @Test
     @DisplayName("합이 21보다 작을 경우 버스트가 아니다.")
     void under21_isNotBust() {
-        List<Card> cards = new ArrayList<>(
-                List.of(Card.valueOf(EIGHT, CLOVER),
-                        Card.valueOf(SEVEN, CLOVER)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(Card.valueOf(SIX, CLOVER));
+        HoldingCard holdingCard = new HoldingCard();
+
+        List<Card> cards = List.of(Card.valueOf(EIGHT, CLUBS), Card.valueOf(SEVEN, CLUBS));
+        cards.forEach(holdingCard::add);
+
         Assertions.assertThat(holdingCard.isBust()).isFalse();
     }
 
     @Test
     @DisplayName("Ace를 포함한 합이 21보다 작을 경우 버스트가 아니다.")
     void under21withAce_isNotBust() {
-        List<Card> cards = new ArrayList<>(
-                List.of(Card.valueOf(JACK, CLOVER),
-                        Card.valueOf(KING, CLOVER)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(Card.valueOf(ACE, CLOVER));
+        HoldingCard holdingCard = new HoldingCard();
+
+        List<Card> cards = List.of(Card.valueOf(JACK, CLUBS), Card.valueOf(KING, CLUBS), ACE_CLUBS);
+        cards.forEach(holdingCard::add);
+
         Assertions.assertThat(holdingCard.isBust()).isFalse();
     }
 
     @Test
     @DisplayName("Ace를 포함한 합이 21보다 클 경우 버스트다.")
     void under21withAce_isBust() {
-        List<Card> cards = new ArrayList<>(
-                List.of(Card.valueOf(JACK, CLOVER),
-                        Card.valueOf(KING, CLOVER)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(Card.valueOf(ACE, CLOVER));
-        holdingCard.add(Card.valueOf(ACE, SPADE));
+        HoldingCard holdingCard = new HoldingCard();
+
+        List<Card> cards = List.of(Card.valueOf(JACK, CLUBS), Card.valueOf(KING, CLUBS),
+                ACE_CLUBS, ACE_SPADES);
+        cards.forEach(holdingCard::add);
+
         Assertions.assertThat(holdingCard.isBust()).isTrue();
     }
 
     @Test
     @DisplayName("A가 4장 존재할 때 14로 계산할 수 있는가?")
     void fourAce_calculate() {
-        List<Card> cards = new ArrayList<>(
-                List.of(Card.valueOf(ACE, CLOVER), Card.valueOf(ACE, SPADE),
-                        Card.valueOf(ACE, HEART),
-                        Card.valueOf(ACE, DIAMOND)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        int result = holdingCard.computeTotalScore();
-        Assertions.assertThat(result).isEqualTo(14);
+        HoldingCard holdingCard = new HoldingCard();
+
+        List<Card> cards = List.of(ACE_CLUBS, ACE_SPADES, ACE_HEARTS, ACE_DIAMONDS);
+        cards.forEach(holdingCard::add);
+
+        Assertions.assertThat(holdingCard.computeTotalScore()).isEqualTo(14);
     }
 
     @Test
-    @DisplayName("A가 4개 존재하고, 7이 추가되면 21로 계산할 수 있는가?")
+    @DisplayName("A가 4개와 7이 있으면 21로 계산할 수 있는가?")
     void fourAce_Add7_calculate() {
-        List<Card> cards = new ArrayList<>(
-                List.of(Card.valueOf(ACE, CLOVER), Card.valueOf(ACE, SPADE),
-                        Card.valueOf(ACE, HEART),
-                        Card.valueOf(ACE, DIAMOND)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(Card.valueOf(SEVEN, DIAMOND));
-        int result = holdingCard.computeTotalScore();
-        Assertions.assertThat(result).isEqualTo(21);
+        HoldingCard holdingCard = new HoldingCard();
+
+        List<Card> cards = List.of(ACE_CLUBS, ACE_SPADES,
+                ACE_HEARTS, ACE_DIAMONDS, Card.valueOf(SEVEN, DIAMONDS));
+        cards.forEach(holdingCard::add);
+
+        Assertions.assertThat(holdingCard.computeTotalScore()).isEqualTo(21);
     }
 
     @Test
-    @DisplayName("A가 4개 존재하고, 7과 10이 추가되면 21로 계산할 수 있는가?")
+    @DisplayName("A가 4개와 7, 10이 있으면 21로 계산할 수 있는가?")
     void fourAce_Add17_calculate() {
-        List<Card> cards = new ArrayList<>(
-                List.of(Card.valueOf(ACE, CLOVER), Card.valueOf(ACE, SPADE),
-                        Card.valueOf(ACE, HEART),
-                        Card.valueOf(ACE, DIAMOND)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(Card.valueOf(SEVEN, DIAMOND));
-        holdingCard.add(Card.valueOf(TEN, DIAMOND));
-        int result = holdingCard.computeTotalScore();
-        Assertions.assertThat(result).isEqualTo(21);
+        HoldingCard holdingCard = new HoldingCard();
+
+        List<Card> cards = List.of(ACE_CLUBS, ACE_SPADES, ACE_HEARTS, ACE_DIAMONDS,
+                Card.valueOf(SEVEN, DIAMONDS), Card.valueOf(TEN, DIAMONDS));
+        cards.forEach(holdingCard::add);
+
+        Assertions.assertThat(holdingCard.computeTotalScore()).isEqualTo(21);
     }
 }

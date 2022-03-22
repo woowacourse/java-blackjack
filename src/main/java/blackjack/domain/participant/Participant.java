@@ -1,19 +1,18 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.HoldingCard.*;
+import static blackjack.domain.card.HoldingCard.BLACK_JACK_SCORE;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldingCard;
-import java.util.List;
 
 public abstract class Participant {
-    protected final String name;
+    private final String name;
     protected final HoldingCard holdingCard;
 
-    public Participant(String name, List<Card> cards) {
+    public Participant(String name) {
         validateEmptyName(name);
         this.name = name;
-        this.holdingCard = new HoldingCard(cards);
+        this.holdingCard = new HoldingCard();
     }
 
     private void validateEmptyName(String name) {
@@ -36,6 +35,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return holdingCard.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return holdingCard.isBlackjack();
     }
 
     public abstract boolean isFinished();

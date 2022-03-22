@@ -1,8 +1,8 @@
-package blackjack;
+package blackjack_statepattern;
 
 public class Application {
     public static void main(String[] args) {
         BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.start();
+        blackjackGame.run();
     }
 }

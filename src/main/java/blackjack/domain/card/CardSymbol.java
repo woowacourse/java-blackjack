@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
 public enum CardSymbol {
-    SPADE("스페이드"),
-    CLOVER("클로버"),
-    HEART("하트"),
-    DIAMOND("다이아몬드"),
+    SPADES("스페이드"),
+    CLUBS("클로버"),
+    HEARTS("하트"),
+    DIAMONDS("다이아몬드"),
     ;
 
     private final String symbolName;
