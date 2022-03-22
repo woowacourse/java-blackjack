@@ -35,7 +35,7 @@ public final class Cards {
     }
 
     public int getPoint() {
-        int point = getRawPoint();
+        int point = getAceNotConsideredPoint();
         int aceCount = getAceCount();
 
         while (point > BLACKJACK_NUMBER && aceCount > 0) {
@@ -45,7 +45,7 @@ public final class Cards {
         return point;
     }
 
-    private int getRawPoint() {
+    private int getAceNotConsideredPoint() {
         return value.stream()
                 .mapToInt(Card::getPoint)
                 .sum();

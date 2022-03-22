@@ -78,6 +78,7 @@
 - [x] 사이즈 꺼내서 비교하는 대신 물어보기
 - [x] raw라는 단어 변환
 - [x] state의 draw()라는 메서드 이름 addCard로 변경
+- [x] getRawPoint -> getAceNotConsideredPoint로 이름 변경
 
 2단계 피드백
 
