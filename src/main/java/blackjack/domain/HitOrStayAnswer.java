@@ -19,7 +19,11 @@ public enum HitOrStayAnswer {
                 .anyMatch(hitOrStayAnswer -> hitOrStayAnswer.get().equals(answer));
     }
 
-    public String get() {
+    public static boolean isHit(String answer) {
+        return HIT_ANSWER.get().equals(answer);
+    }
+
+    private String get() {
         return answer;
     }
 }

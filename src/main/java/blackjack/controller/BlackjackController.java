@@ -1,16 +1,17 @@
 package blackjack.controller;
 
+import blackjack.PlayerProfitResults;
 import blackjack.domain.HitOrStayAnswer;
+import blackjack.domain.Outcome;
+import blackjack.domain.bet.BetMoney;
+import blackjack.domain.bet.Profit;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomDeck;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Name;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.player.Name;
-import blackjack.domain.OutcomeResults;
-import blackjack.domain.player.Participant;
-import blackjack.domain.card.RandomDeck;
-import blackjack.domain.Outcome;
-import blackjack.domain.Results;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.LinkedHashMap;
@@ -32,21 +33,24 @@ public class BlackjackController {
 
     private Players createPlayers(Deck deck) {
         try {
-            List<Player> participants = toPlayers(InputView.requestNames());
-            Players players = new Players(participants);
-            players.dealCards(deck);
-            return players;
+            List<Player> participants = toPlayers(InputView.requestNames(), deck);
+            return new Players(participants, deck);
         } catch (IllegalArgumentException e) {
             ResultView.printErrorNames(e.getMessage());
             return createPlayers(deck);
         }
     }
 
-    private List<Player> toPlayers(List<String> names) {
+    private List<Player> toPlayers(List<String> names, Deck deck) {
         return names.stream()
                 .map(Name::new)
-                .map(Participant::new)
+                .map(name -> new Participant(name, deck, getBetMoney(name)))
                 .collect(Collectors.toList());
+    }
+
+    private BetMoney getBetMoney(Name name) {
+        int input = InputView.requestBetMoney(name);
+        return new BetMoney(input);
     }
 
     private void play(Players players, Deck deck) {
@@ -59,24 +63,27 @@ public class BlackjackController {
     }
 
     private void takeParticipantCards(Player player, Deck deck) {
-        if (canHit(player)) {
-            player.hit(deck.pick());
+        while (player.canHit()) {
+            hitOrStayByAnswer(player, deck, readHitOrStay(player));
             ResultView.printPlayerCard(player);
-            takeParticipantCards(player, deck);
         }
     }
 
-    private boolean canHit(Player player) {
-        if (!player.canHit()) {
-            return false;
+    private void hitOrStayByAnswer(Player player, Deck deck, String hitOrStay) {
+        if (HitOrStayAnswer.isHit(hitOrStay)) {
+            player.hit(deck.pick());
+            return;
         }
+        player.stay();
+    }
 
+    private String readHitOrStay(Player player) {
         String answer;
         do {
             answer = InputView.requestHitOrStay(player.getName());
             printErrorIfNotContainsHitOrStay(answer);
         } while (!HitOrStayAnswer.containsValue(answer));
-        return answer.equals(HitOrStayAnswer.HIT_ANSWER.get());
+        return answer;
     }
 
     private void printErrorIfNotContainsHitOrStay(String answer) {
@@ -94,20 +101,29 @@ public class BlackjackController {
 
     private void printResults(Players players) {
         ResultView.printCardsResults(players);
-        ResultView.printOutcomeResults(calculateOutcomeResults(players));
+        ResultView.printProfitResults(calculateProfitResults(players));
     }
 
-    private Results calculateOutcomeResults(Players players) {
-        Map<Player, OutcomeResults> results = new LinkedHashMap<>();
+    private PlayerProfitResults calculateProfitResults(Players players) {
+        Map<Player, Profit> results = new LinkedHashMap<>();
         Player dealer = players.getDealer();
-        results.put(dealer, new OutcomeResults());
+        results.put(dealer, new Profit(0));
 
+        int totalProfit = calculateProfits(players, results, dealer);
+        results.put(dealer, new Profit(totalProfit * -1));
+
+        return new PlayerProfitResults(results);
+    }
+
+    private int calculateProfits(Players players, Map<Player, Profit> results, Player dealer) {
+        int totalProfit = 0;
         for (Player player : players.getParticipants()) {
-            Outcome outcome = Outcome.match((Dealer) dealer, player);
-            results.get(dealer).increase(outcome);
-            results.put(player, new OutcomeResults());
-            results.get(player).increase(outcome.not());
+            Outcome playerOutcome = Outcome.matchAboutPlayer((Dealer) dealer, player);
+
+            Profit profit = ((Participant) player).getProfit(playerOutcome);
+            totalProfit += profit.get();
+            results.put(player, profit);
         }
-        return new Results(results);
+        return totalProfit;
     }
 }

@@ -1,44 +1,35 @@
 package blackjack.domain.card;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Card {
 
-    private static final Map<Type, Map<CardNumber, Card>> cacheCard;
-
-    static {
-        cacheCard = new EnumMap<>(Type.class);
-        for (Type type : Type.values()) {
-            cacheCard.put(type, new EnumMap<>(CardNumber.class));
-        }
-    }
+    private static final Map<String, Card> cacheCard = new HashMap<>(52);
 
     private final CardNumber cardNumber;
-    private final Type type;
+    private final Suit Suit;
 
-    private Card(CardNumber cardNumber, Type type) {
+    private Card(CardNumber cardNumber, Suit Suit) {
         this.cardNumber = cardNumber;
-        this.type = type;
+        this.Suit = Suit;
     }
 
-    public static Card of(CardNumber cardNumber, Type type) {
-        if (!cacheCard.containsKey(type)) {
-            cacheCard.put(type, new EnumMap<>(CardNumber.class));
+    public static Card of(CardNumber cardNumber, Suit Suit) {
+        String key = cardNumber.name() + Suit.name();
+        if (!cacheCard.containsKey(key)) {
+            cacheCard.put(key, new Card(cardNumber, Suit));
         }
-        if (!cacheCard.get(type).containsKey(cardNumber)) {
-            cacheCard.get(type).put(cardNumber, new Card(cardNumber, type));
-        }
-        return cacheCard.get(type).get(cardNumber);
+        return cacheCard.get(key);
     }
 
     public CardNumber getCardNumber() {
         return cardNumber;
     }
 
-    public Type getType() {
-        return type;
+    public Suit getSuit() {
+        return Suit;
     }
 
     @Override
@@ -50,19 +41,19 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return cardNumber == card.cardNumber && type == card.type;
+        return cardNumber == card.cardNumber && Suit == card.Suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardNumber, type);
+        return Objects.hash(cardNumber, Suit);
     }
 
     @Override
     public String toString() {
         return "Card{" +
                 "number=" + cardNumber +
-                ", type=" + type +
+                ", Suit=" + Suit +
                 '}';
     }
 }

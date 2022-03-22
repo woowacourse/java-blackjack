@@ -1,15 +1,27 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.PlayerCards;
-import java.util.ArrayList;
+import blackjack.domain.Outcome;
+import blackjack.domain.bet.BetMoney;
+import blackjack.domain.bet.Profit;
+import blackjack.domain.card.Deck;
+import blackjack.domain.state.Ready;
 
-public class Participant extends AbstractPlayer implements Player {
+public class Participant extends AbstractPlayer {
 
-    private static final int MAX_SCORE = 21;
+    private final BetMoney money;
 
-    public Participant(Name name) {
+    public Participant(Name name, Deck deck, BetMoney money) {
         this.name = name;
-        this.playerCards = new PlayerCards(new ArrayList<>());
+        this.state = Ready.dealToParticipant(deck.pick(), deck.pick());
+        this.money = money;
+    }
+
+    public BetMoney getBetMoney() {
+        return money;
+    }
+
+    public Profit getProfit(Outcome outcome) {
+        return state.profit(outcome, money);
     }
 
     @Override
@@ -18,15 +30,10 @@ public class Participant extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean canHit() {
-        return !isBust();
-    }
-
-    @Override
     public String toString() {
         return "Participant{" +
                 "name=" + name +
-                ", playerCards=" + playerCards +
+                ", playerCards=" + state.getCards() +
                 '}';
     }
 }

@@ -1,11 +1,13 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class PlayerCards {
 
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int ACE_ADDITIONAL_VALUE = 10;
     private static final int MAX_SCORE = 21;
 
@@ -13,6 +15,10 @@ public class PlayerCards {
 
     public PlayerCards(List<Card> playerCards) {
         this.playerCards = playerCards;
+    }
+
+    public PlayerCards() {
+        this(new ArrayList<>());
     }
 
     public void add(Card card) {
@@ -32,6 +38,14 @@ public class PlayerCards {
             return sum + ACE_ADDITIONAL_VALUE;
         }
         return sum;
+    }
+
+    public boolean isBust() {
+        return getTotalScore() > MAX_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return getTotalScore() == MAX_SCORE && playerCards.size() == BLACKJACK_CARD_SIZE;
     }
 
     private boolean hasAce() {

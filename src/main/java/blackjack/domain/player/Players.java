@@ -17,8 +17,8 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> participants) {
-        Dealer dealer = new Dealer();
+    public Players(List<Player> participants, Deck deck) {
+        Dealer dealer = new Dealer(deck);
         validateNull(participants);
         validateHasDealerName(dealer, participants);
         validateSize(participants);
@@ -59,17 +59,6 @@ public class Players {
         if (players.size() != distinctNameCount) {
             throw new IllegalArgumentException(DUPLICATE_NAME_ERROR_MESSAGE);
         }
-    }
-
-    public void dealCards(Deck deck) {
-        for (Player player : players) {
-            player.hit(deck.pick());
-            player.hit(deck.pick());
-        }
-    }
-
-    public List<Player> get() {
-        return players;
     }
 
     public Player getDealer() {
