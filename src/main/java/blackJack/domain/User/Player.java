@@ -11,10 +11,7 @@ public class Player extends User {
     }
 
     public boolean isPossibleToAdd() {
-        if (this.getScore() < PLAYER_ADD_CARD_LIMIT) {
-            return true;
-        }
-        return false;
+        return this.getScore() < PLAYER_ADD_CARD_LIMIT;
     }
 }
 

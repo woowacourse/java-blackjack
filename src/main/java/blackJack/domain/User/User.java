@@ -20,10 +20,7 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        if (cards.isOnlyTwoCards() && cards.calculateScore() == WINNING_SCORE) {
-            return true;
-        }
-        return false;
+        return cards.isOnlyTwoCards() && cards.calculateScore() == WINNING_SCORE;
     }
 
     public boolean isBurst() {
