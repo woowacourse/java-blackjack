@@ -53,7 +53,7 @@ public final class Cards {
 
     private int getAceCount() {
         return (int) value.stream()
-                .filter(card -> card.isSameDenomination(Denomination.ACE))
+                .filter(Card::isAce)
                 .count();
     }
 

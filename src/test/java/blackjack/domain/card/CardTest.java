@@ -15,14 +15,14 @@ class CardTest {
     @Test
     @DisplayName("같은 숫자인지 확인하는 기능 True 테스트")
     void isSameDenomination() {
-        assertThat(card.isSameDenomination(Denomination.ACE))
+        assertThat(card.isAce())
                 .isTrue();
     }
 
     @Test
     @DisplayName("같은 숫자인지 확인하는 기능 False 테스트")
     void isSameDenominationFalse() {
-        assertThat(card.isSameDenomination(Denomination.TEN))
+        assertThat(Fixtures.TEN.isAce())
                 .isFalse();
     }
 

@@ -17,8 +17,8 @@ public final class Card {
         return new Card(denomination, suit);
     }
 
-    public boolean isSameDenomination(Denomination denomination) {
-        return this.denomination.equals(denomination);
+    public boolean isAce() {
+        return this.denomination.equals(Denomination.ACE);
     }
 
     public int getPoint() {
