@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.cards.CardDeck;
+import blackjack.domain.cards.card.Card;
+import java.util.Queue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +17,7 @@ class CardDeckTest {
         CardDeck cardDeck = new CardDeck();
         assertThat(cardDeck)
                 .extracting("value")
-                .asList()
-                .size()
-                .isEqualTo(52);
+                .isInstanceOf(Queue.class);
     }
 
     @Test
@@ -25,15 +25,9 @@ class CardDeckTest {
     void drawTest() {
         // given
         CardDeck cardDeck = new CardDeck();
-
-        // when
-        cardDeck.pop();
-
         // then
-        assertThat(cardDeck)
-                .extracting("value")
-                .asList()
-                .size().isEqualTo(51);
+        assertThat(cardDeck.pop())
+                .isInstanceOf(Card.class);
     }
 
     @Test
@@ -63,9 +57,7 @@ class CardDeckTest {
         cardDeck.popCards(2);
 
         // then
-        assertThat(cardDeck)
-                .extracting("value")
-                .asList()
-                .size().isEqualTo(50);
+        assertThat(cardDeck.size())
+                .isEqualTo(50);
     }
 }

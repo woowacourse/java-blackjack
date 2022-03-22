@@ -8,7 +8,7 @@ import blackjack.domain.state.running.Ready;
 import java.util.List;
 
 public abstract class Participant {
-    private static final int INIT_NUMBER = 2;
+    private static final int INIT_CARD_SIZE = 2;
 
     protected final Name name;
     protected State state;
@@ -32,7 +32,7 @@ public abstract class Participant {
     }
 
     public boolean isInitState() {
-        return getCards().size() == INIT_NUMBER;
+        return getCards().size() == INIT_CARD_SIZE;
     }
 
     public void stay() {

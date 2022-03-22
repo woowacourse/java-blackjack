@@ -66,6 +66,14 @@
 
 ## 피드백
 
+2단계 2차 피드백
+
+- [x] Java 의 Stack 대신 Deque을 한번 읽어 보세요~
+- [x] value에 값을 할당하는 로직도 init() 안에 넣어도 될 것 같네요.
+- [x] popCards 검증로직 개선
+- [x] INIT_NUMBER라는 이름만으로는 의미를 온전하게 전달하지 못하는 것 같아요.
+- [ ] human이라는 단어는 어디서 온 걸까요? participant와 혼용될 필요가 있나요?
+
 2단계 피드백
 
 - [x] BlackjackGame -> 매직넘버 INIT_CARD_COUNT 를 popCards(2) 에서도 사용
