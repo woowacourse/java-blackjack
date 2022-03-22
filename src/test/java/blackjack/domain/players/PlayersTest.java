@@ -39,7 +39,7 @@ class PlayersTest {
         Fixtures fx = new Fixtures();
         // given
         Players players = new Players(List.of(fx.POBI));
-        Dealer dealer = new Dealer(List.of(TWO, TWO));
+        Dealer dealer = new Dealer(List.of(TWO, ACE));
         dealer.stay();
 
         // when

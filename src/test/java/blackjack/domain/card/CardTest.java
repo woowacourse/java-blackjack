@@ -48,7 +48,7 @@ class CardTest {
     }
 
     @Test
-    @DisplayName("동일 카드인지 확인 기능 테스트")
+    @DisplayName("동등한 카드인지 확인 기능 테스트")
     void testEquals() {
         assertThat(Card.of(Denomination.TEN, Suit.CLOVER))
                 .isEqualTo(Card.of(Denomination.TEN, Suit.CLOVER));

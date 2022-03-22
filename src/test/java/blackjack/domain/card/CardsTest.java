@@ -25,7 +25,6 @@ public class CardsTest {
     void setup() {
         cards = new Cards();
         cards.add(ACE);
-        cards.add(ACE);
     }
 
     @Test
@@ -52,7 +51,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드모음 생성되는지 테스트")
     public void equalSizeTest() {
-        assertThat(cards.isSizeOf(2))
+        assertThat(cards.isSizeOf(1))
                 .isTrue();
     }
 
@@ -67,7 +66,7 @@ public class CardsTest {
     @DisplayName("카드 리스트 리턴 기능 테스트")
     void get() {
         assertThat(cards.get())
-                .isEqualTo(List.of(ACE, ACE));
+                .isEqualTo(List.of(ACE));
     }
 
     @ParameterizedTest
