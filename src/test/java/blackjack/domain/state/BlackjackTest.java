@@ -56,4 +56,14 @@ class BlackjackTest {
         final double actual = state.profit(dealer, money);
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("Blackjack 상태일 때 Stay 를 하면 예외가 발생한다.")
+    void checkStay() {
+        final State state = new Blackjack(BLACKJACK_CARDS);
+
+        assertThatThrownBy(state::stay)
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("종료 상태에서는 stay를 할 수 없습니다.");
+    }
 }
