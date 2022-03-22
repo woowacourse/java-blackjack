@@ -1,0 +1,66 @@
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Shape;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static blackjack.fixture.CardBundleFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class UserTest {
+
+    @Test
+    @DisplayName("유저가 버스트 났으면 True")
+    void isBustTest() {
+        Dealer dealer = new Dealer(_21_OVER_CARDS);
+        assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러의 점수가 같다면 True")
+    void isSameScoreTest() {
+        Player player = new Player("test", Money.from(1000), _16_CARDS);
+        Dealer dealer = new Dealer(_16_CARDS);
+        assertThat(player.isSameScoreWithNotBlackJack(dealer)).isTrue();
+    }
+
+    @Test
+    @DisplayName("버스트가 안날 때, 플레이어가 딜러보다 점수가 높으면 True")
+    void isGreaterScoreThanTest() {
+        Cards playerCards = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.JACK)));
+        Cards dealerCards = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.FOUR)));
+        Player player = new Player("test", Money.from(1000), playerCards);
+        Dealer dealer = new Dealer(dealerCards);
+        assertThat(player.isGreaterScoreThan(dealer)).isTrue();
+    }
+
+    @Test
+    @DisplayName("ACE와 10의 조합으로 블랙잭이면 True")
+    void isBlackJackTest() {
+        Cards cards = new Cards(List.of(Card.valueOf(Shape.CLOVER, Number.ACE), Card.valueOf(Shape.CLOVER, Number.TEN)));
+        Dealer dealer = new Dealer(cards);
+        assertThat(dealer.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭이 아닌, 카드들의 합이 21이면 블랙잭이 아니다. - False")
+    void isNotBlackJackTest() {
+        Dealer dealer = new Dealer(_21_NOT_BLACKJACK);
+        assertThat(dealer.isBlackJack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("유저가 카드를 받아 유저가 소지한 카드가 증가한다.")
+    void addCardTest() {
+        Cards cards = new Cards(List.of(Card.valueOf(Shape.DIAMOND, Number.TEN)));
+        Dealer dealer = new Dealer(cards);
+        dealer.addCard(Card.valueOf(Shape.CLOVER, Number.ACE));
+
+        assertThat(dealer.getCards().size()).isEqualTo(2);
+    }
+}
