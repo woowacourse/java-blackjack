@@ -1,17 +1,19 @@
 package domain.player;
 
+import static domain.CardFixtures.ACE_SPADES;
+import static domain.CardFixtures.FIVE_SPADES;
+import static domain.CardFixtures.FOUR_SPADES;
+import static domain.CardFixtures.KING_HEARTS;
+import static domain.CardFixtures.SEVEN_CLUBS;
+import static domain.CardFixtures.SIX_HEARTS;
+import static domain.CardFixtures.TEN_HEARTS;
+import static domain.CardFixtures.TWO_SPADES;
 import static domain.MatchResult.LOSE;
 import static domain.MatchResult.WIN;
-import static domain.player.CardFixtures.A_SPADES;
-import static domain.player.CardFixtures.SEVEN_CLUBS;
-import static domain.player.CardFixtures.TEN_HEARTS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.MatchResult;
-import domain.card.Denomination;
-import domain.card.PlayingCard;
-import domain.card.Suit;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
@@ -36,13 +38,11 @@ class DealerTest {
     @DisplayName("보유한 카드 기준 합산 점수 반환 테스트")
     void supply_card() {
         // given
-        Dealer rich = new Dealer("rich");
-        rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
-        rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
+        Dealer dealer = new Dealer(List.of(FIVE_SPADES, FIVE_SPADES));
         int expected = 10;
 
         // when
-        int actual = rich.getScore();
+        int actual = dealer.getScore();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -52,9 +52,7 @@ class DealerTest {
     @DisplayName("딜러는 현재 합산 16이하인지 확인할 수 있다")
     void checkIfSameOrLessThanSixteen() {
         // given
-        Dealer dealer = new Dealer("rich");
-        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
+        Dealer dealer = new Dealer(List.of(FIVE_SPADES, FIVE_SPADES));
 
         // when
         boolean actual = dealer.isHittable();
@@ -67,9 +65,7 @@ class DealerTest {
     @DisplayName("딜러는 현재 합산 17이상인지 확인할 수 있다")
     void checkIfSameOrGreaterThanSeventeen() {
         // given
-        Dealer dealer = new Dealer("rich");
-        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
+        Dealer dealer = new Dealer(List.of(KING_HEARTS, KING_HEARTS));
 
         // when
         boolean actual = dealer.isHittable();
@@ -82,10 +78,7 @@ class DealerTest {
     @DisplayName("버스트 여부를 확인할 수 있다.")
     void isBust() {
         // given
-        Dealer dealer = new Dealer("rich");
-        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
-        dealer.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
+        Dealer dealer = new Dealer(List.of(KING_HEARTS, KING_HEARTS, KING_HEARTS));
 
         // when
         boolean isBust = dealer.isBust();
@@ -98,9 +91,7 @@ class DealerTest {
     @DisplayName("딜러는 겜블러 목록을 받아 자신의 승패를 확인할 수 있다")
     void getMatchResults() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.ACE));
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.FOUR));
+        Dealer dealer = new Dealer(List.of(ACE_SPADES, FOUR_SPADES));
         Gamblers gamblers = setupGamblers();
 
         // when
@@ -114,17 +105,9 @@ class DealerTest {
     }
 
     private Gamblers setupGamblers() {
-        Gambler pobi = new Gambler("pobi");
-        pobi.addCard(PlayingCard.of(Suit.HEARTS, Denomination.SIX));
-        pobi.addCard(PlayingCard.of(Suit.HEARTS, Denomination.TEN));
-
-        Gambler rich = new Gambler("rich");
-        rich.addCard(PlayingCard.of(Suit.CLUBS, Denomination.ACE));
-        rich.addCard(PlayingCard.of(Suit.CLUBS, Denomination.TEN));
-
-        Gambler dolbum = new Gambler("dolbum");
-        dolbum.addCard(PlayingCard.of(Suit.CLUBS, Denomination.ACE));
-        dolbum.addCard(PlayingCard.of(Suit.CLUBS, Denomination.TWO));
+        Gambler pobi = new Gambler("pobi", List.of(SIX_HEARTS, TEN_HEARTS));
+        Gambler rich = new Gambler("rich", List.of(ACE_SPADES, TEN_HEARTS));
+        Gambler dolbum = new Gambler("dolbum", List.of(ACE_SPADES, TWO_SPADES));
 
         return new Gamblers(List.of(pobi, rich, dolbum));
     }
@@ -133,14 +116,8 @@ class DealerTest {
     @DisplayName("동점이더라도 딜러만 블랙잭이면 딜러가 승리한다.")
     void blackjackWinEvenIfCompetitorMadeSameScore() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(A_SPADES);
-        dealer.addCard(TEN_HEARTS);
-
-        Gambler gambler = new Gambler("rich");
-        gambler.addCard(SEVEN_CLUBS);
-        gambler.addCard(SEVEN_CLUBS);
-        gambler.addCard(SEVEN_CLUBS);
+        Dealer dealer = new Dealer(List.of(ACE_SPADES, TEN_HEARTS));
+        Gambler gambler = new Gambler("rich", List.of(SEVEN_CLUBS, SEVEN_CLUBS, SEVEN_CLUBS));
 
         // when
         boolean isDealerBlackjack = dealer.isBlackJack();
@@ -162,14 +139,8 @@ class DealerTest {
     @DisplayName("겜블러가 버스트이면, 딜러는 버스트여도 딜러가 승리한다.")
     void dealerWinsInAnyConditionWhenGamblerIsBust() {
         // given
-        Gambler gambler = new Gambler("rich");
-        gambler.addCard(TEN_HEARTS);
-        gambler.addCard(TEN_HEARTS);
-        gambler.addCard(SEVEN_CLUBS);
-
-        Dealer dealer = new Dealer();
-        dealer.addCard(SEVEN_CLUBS);
-        dealer.addCard(TEN_HEARTS);
+        Gambler gambler = new Gambler("rich", List.of(TEN_HEARTS, TEN_HEARTS, SEVEN_CLUBS));
+        Dealer dealer = new Dealer(List.of(SEVEN_CLUBS, TEN_HEARTS));
 
         // when
         boolean isGamblerBust = gambler.isBust();

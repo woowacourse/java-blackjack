@@ -3,16 +3,33 @@ package domain.player;
 import domain.MatchResult;
 import domain.card.PlayingCard;
 import domain.card.PlayingCards;
+import domain.vo.Wallet;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    private final String name;
+    protected final Wallet wallet;
     protected final PlayingCards playingCards;
 
+    protected Player(Wallet wallet, PlayingCards playingCards) {
+        this.wallet = wallet;
+        this.playingCards = playingCards;
+    }
+
+    protected Player(Wallet wallet) {
+        this(wallet, new PlayingCards());
+    }
+
+    protected Player(Wallet wallet, List<PlayingCard> cards) {
+        this(wallet, new PlayingCards(cards));
+    }
+
     protected Player(String name) {
-        this.name = name;
-        this.playingCards = new PlayingCards();
+        this(Wallet.of(name), new PlayingCards());
+    }
+
+    protected Player(String name, List<PlayingCard> cards) {
+        this(Wallet.of(name), new PlayingCards(cards));
     }
 
     public abstract boolean isHittable();
@@ -20,8 +37,6 @@ public abstract class Player {
     public abstract List<PlayingCard> getOpenCards();
 
     public abstract MatchResult match(Player another);
-
-    public abstract boolean isDealer();
 
     public void addCard(PlayingCard playingCard) {
         playingCards.addCard(playingCard);
@@ -60,7 +75,7 @@ public abstract class Player {
     }
 
     public String getName() {
-        return this.name;
+        return wallet.getName();
     }
 
     public List<PlayingCard> getHoldingCards() {
@@ -69,10 +84,9 @@ public abstract class Player {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Player{");
-        sb.append("name='").append(name).append('\'');
-        sb.append(", playingCards=").append(playingCards);
-        sb.append('}');
-        return sb.toString();
+        return "Player{" +
+                "wallet=" + wallet +
+                ", playingCards=" + playingCards +
+                '}';
     }
 }

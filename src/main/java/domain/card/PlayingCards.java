@@ -5,22 +5,21 @@ import java.util.List;
 
 public class PlayingCards {
     private static final int MAXIMUM_VALID_SCORE = 21;
-    private static final int MINIMUM_CARDS_TO_CHECK_IF_BLACKJACK = 2;
     private static final int ALTERNATIVE_ACE_GAP = 10;
     private static final int CARD_QUANTITY_FOR_BLACKJACK = 2;
 
-    private final List<PlayingCard> playingPlayingCards;
+    private final List<PlayingCard> playingCards;
 
     public PlayingCards() {
         this(new ArrayList<>());
     }
 
     public PlayingCards(List<PlayingCard> playingCards) {
-        this.playingPlayingCards = new ArrayList<>(playingCards);
+        this.playingCards = new ArrayList<>(playingCards);
     }
 
     public void addCard(PlayingCard playingCard) {
-        playingPlayingCards.add(playingCard);
+        playingCards.add(playingCard);
     }
 
     public boolean isBust() {
@@ -28,7 +27,7 @@ public class PlayingCards {
     }
 
     public boolean isBlackJack() {
-        return getScore() == MAXIMUM_VALID_SCORE && playingPlayingCards.size() == CARD_QUANTITY_FOR_BLACKJACK;
+        return getScore() == MAXIMUM_VALID_SCORE && playingCards.size() == CARD_QUANTITY_FOR_BLACKJACK;
     }
 
     public int getScore() {
@@ -44,7 +43,7 @@ public class PlayingCards {
     }
 
     private boolean containsAce() {
-        return playingPlayingCards.stream()
+        return playingCards.stream()
                 .anyMatch(PlayingCard::isAce);
     }
 
@@ -59,12 +58,12 @@ public class PlayingCards {
     }
 
     private int calculateScoreWithoutAce() {
-        return playingPlayingCards.stream()
+        return playingCards.stream()
                 .mapToInt(PlayingCard::getScore)
                 .sum();
     }
 
     public List<PlayingCard> getCards() {
-        return new ArrayList<>(playingPlayingCards);
+        return new ArrayList<>(playingCards);
     }
 }

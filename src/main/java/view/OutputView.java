@@ -1,99 +1,85 @@
 package view;
 
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
 import domain.BlackJackResult;
-import domain.MatchResult;
 import domain.card.PlayingCard;
 import domain.player.Dealer;
-import dto.CardsAndScoreDto;
-import dto.CardsDto;
-import dto.NameDto;
-import dto.ResultDto;
-import java.util.Arrays;
-import java.util.EnumMap;
+import domain.player.Gambler;
+import domain.player.Gamblers;
+import domain.player.Player;
+import domain.player.Players;
+import domain.vo.Name;
+import domain.vo.Revenue;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
-import view.util.NameMapper;
+import util.NameMapper;
 
 public class OutputView {
-    private static final String NEW_LINE = System.lineSeparator();
-    private static final String INFO_FOR_INITIAL_SPREAD = "%s와 %s에게 2장을 나누었습니다." + NEW_LINE;
-    private static final String INFO_FOR_DEALER_ADD_CARD = "%s는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
-    private static final String INFO_PLAYER_CARD_AND_SCORE = "%s카드: %s - 결과: %d" + NEW_LINE;
-    private static final String INFO_CARD_STATUS_AFTER_INITIAL_SPREAD = "%s: %s" + NEW_LINE;
-    private static final String COLON_FOR_JOINING_NAME_AND_CARD = ": ";
-    private static final String RESULT_TITLE = "## 최종 승패";
+    private static final String INFO_FOR_INITIAL_SPREAD = "%s와 %s에게 2장을 나누었습니다.%n";
+    private static final String INFO_PLAYER_CARD_AND_SCORE = "%s카드: %s - 결과: %d%n";
+    private static final String COLON_FOR_NAME_AND_REVENUE = ": ";
+    private static final String RESULT_TITLE = "## 최종 수익";
     private static final String CARD_NAME_JOIN_CHARACTER = ", ";
     private static final String GAMBLER_NAME_DELIMITER = ", ";
-    private static final String WIN_DRAW_LOSE_DELIMITER = " ";
-    private static final String ERROR_FOR_NO_DEALER_FOUND = "[ERROR] 딜러를 확인하지 못했습니다";
+    private static final DecimalFormat REVENUE_FORMAT = new DecimalFormat("#");
 
     private OutputView() {
     }
 
-    public static void printSpreadAnnouncement(List<NameDto> names) {
+    public static void printInitCards(Players players) {
+        Dealer dealer = players.getDealer();
+        Gamblers gamblers = players.getGamblers();
+
         System.out.println();
-        NameDto dealerNameDto = getDealerNameByNameDtos(names);
-        String gamblerNames = getGamblerNamesByNameDtos(names);
+        System.out.printf(INFO_FOR_INITIAL_SPREAD, dealer.getName(), getGamblerNames(gamblers));
 
-        System.out.printf(INFO_FOR_INITIAL_SPREAD, dealerNameDto.getName(),
-                String.join(GAMBLER_NAME_DELIMITER, gamblerNames));
+        printInitOpenCards(dealer);
+        gamblers.getGamblers()
+                .forEach(OutputView::printInitOpenCards);
     }
 
-    private static NameDto getDealerNameByNameDtos(List<NameDto> names) {
-        return names.stream()
-                .filter(NameDto::isDealer)
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException(ERROR_FOR_NO_DEALER_FOUND));
-    }
-
-    private static String getGamblerNamesByNameDtos(List<NameDto> names) {
-        return names.stream()
-                .filter(NameDto::isGambler)
-                .map(NameDto::getName)
+    private static String getGamblerNames(Gamblers gamblers) {
+        return gamblers.getGamblers()
+                .stream()
+                .map(Gambler::getName)
                 .collect(joining(GAMBLER_NAME_DELIMITER));
     }
 
-    public static void printInitialOpenCards(List<CardsDto> cardsDtos) {
-        cardsDtos.forEach(
-                cardsDto -> System.out.printf(
-                        INFO_CARD_STATUS_AFTER_INITIAL_SPREAD,
-                        cardsDto.getName(), getJoinedCardNames(cardsDto.getCards())
-                ));
+    private static void printInitOpenCards(Player player) {
+        System.out.println(player.getName() + "카드: " + getJoinedCardNames(player.getOpenCards()));
     }
 
-    private static String getJoinedCardNames(List<PlayingCard> playingPlayingCards) {
-        return playingPlayingCards.stream()
+    public static void printCardAndScore(Players players) {
+        System.out.println();
+        Dealer dealer = players.getDealer();
+        Gamblers gamblers = players.getGamblers();
+
+        printDealerCardAndScore(dealer);
+        printGamblersCardAndScore(gamblers);
+    }
+
+    private static void printGamblersCardAndScore(Gamblers gamblers) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            System.out.printf(INFO_PLAYER_CARD_AND_SCORE,
+                    gambler.getName(),
+                    getJoinedCardNames(gambler.getHoldingCards()),
+                    gambler.getScore());
+        }
+    }
+
+    private static void printDealerCardAndScore(Dealer dealer) {
+        System.out.printf(INFO_PLAYER_CARD_AND_SCORE,
+                dealer.getName(),
+                getJoinedCardNames(dealer.getHoldingCards()),
+                dealer.getScore());
+    }
+
+    private static String getJoinedCardNames(List<PlayingCard> cards) {
+        return cards.stream()
                 .map(NameMapper::getCardName)
                 .collect(joining(CARD_NAME_JOIN_CHARACTER));
-    }
-
-    public static void printLineSeparator() {
-        System.out.println();
-    }
-
-    public static void printCards(CardsDto playerDto) {
-        System.out.println(
-                playerDto.getName() + COLON_FOR_JOINING_NAME_AND_CARD + getJoinedCardNames(playerDto.getCards()));
-    }
-
-    public static void printDealerAddCard(Dealer dealer) {
-        System.out.printf(INFO_FOR_DEALER_ADD_CARD, dealer.getName());
-    }
-
-    public static void printCardAndScoreDtos(List<CardsAndScoreDto> cardsAndScoreDtos) {
-        System.out.println();
-
-        for (CardsAndScoreDto cardsAndScoreDto : cardsAndScoreDtos) {
-            System.out.printf(INFO_PLAYER_CARD_AND_SCORE,
-                    cardsAndScoreDto.getName(),
-                    getJoinedCardNames(cardsAndScoreDto.getCards()),
-                    cardsAndScoreDto.getScore());
-        }
     }
 
     public static void printResult(BlackJackResult blackJackResult) {
@@ -104,29 +90,9 @@ public class OutputView {
                 .forEach(OutputView::printSingleGamblerResult);
     }
 
-    public static void printSingleGamblerResult(Map.Entry<String, ResultDto> entry) {
-        System.out.println(
-                entry.getKey() + COLON_FOR_JOINING_NAME_AND_CARD + getResultMessageByResultDto(entry.getValue()));
-    }
-
-    private static String getResultMessageByResultDto(ResultDto resultDto) {
-        if (resultDto.isGamblerResult()) {
-            return NameMapper.getResultName(resultDto.getGamblerResult());
-        }
-
-        return getDealerResult(getDealerResultByResultDto(resultDto));
-    }
-
-    private static Map<MatchResult, Long> getDealerResultByResultDto(ResultDto resultDto) {
-        return resultDto.getMatchResults()
-                .stream()
-                .collect(groupingBy(identity(), () -> new EnumMap<>(MatchResult.class), counting()));
-    }
-
-    private static String getDealerResult(Map<MatchResult, Long> dealerResult) {
-        return Arrays.stream(MatchResult.values())
-                .filter(dealerResult::containsKey)
-                .map(matchResult -> dealerResult.get(matchResult) + NameMapper.getResultName(matchResult))
-                .collect(joining(WIN_DRAW_LOSE_DELIMITER));
+    public static void printSingleGamblerResult(Map.Entry<Name, Revenue> entry) {
+        Name name = entry.getKey();
+        Revenue revenue = entry.getValue();
+        System.out.println(name.getName() + COLON_FOR_NAME_AND_REVENUE + REVENUE_FORMAT.format(revenue.getRevenue()));
     }
 }

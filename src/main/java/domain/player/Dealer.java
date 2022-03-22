@@ -4,7 +4,7 @@ import domain.MatchResult;
 import domain.card.PlayingCard;
 import java.util.List;
 
-public class Dealer extends Player {
+public final class Dealer extends Player {
     private static final int MORE_CARD_CRITERIA = 16;
     private static final int FIRST_CARD_OPEN_INDEX = 0;
     private static final String DEFAULT_DEALER_NAME = "딜러";
@@ -15,6 +15,10 @@ public class Dealer extends Player {
 
     public Dealer(String name) {
         super(name);
+    }
+
+    public Dealer(List<PlayingCard> cards) {
+        super(DEFAULT_DEALER_NAME, cards);
     }
 
     @Override
@@ -36,10 +40,5 @@ public class Dealer extends Player {
             return MatchResult.LOSE;
         }
         return getMatchResultAfterBustCheck(gambler);
-    }
-
-    @Override
-    public boolean isDealer() {
-        return true;
     }
 }

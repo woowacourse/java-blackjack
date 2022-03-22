@@ -1,8 +1,10 @@
 package domain.player;
 
-import static domain.player.CardFixtures.A_SPADES;
-import static domain.player.CardFixtures.SEVEN_CLUBS;
-import static domain.player.CardFixtures.TEN_HEARTS;
+import static domain.CardFixtures.ACE_SPADES;
+import static domain.CardFixtures.FOUR_SPADES;
+import static domain.CardFixtures.KING_HEARTS;
+import static domain.CardFixtures.SEVEN_CLUBS;
+import static domain.CardFixtures.TEN_HEARTS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -10,6 +12,7 @@ import domain.MatchResult;
 import domain.card.Denomination;
 import domain.card.PlayingCard;
 import domain.card.Suit;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,10 +37,7 @@ class GamblerTest {
     @DisplayName("버스트 여부를 확인할 수 있다.")
     void is_bust() {
         // given
-        Gambler gambler = new Gambler("dolbum");
-        gambler.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
-        gambler.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
-        gambler.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
+        Gambler gambler = new Gambler("dolbum", List.of(KING_HEARTS, KING_HEARTS, KING_HEARTS));
 
         // when
         boolean isBust = gambler.isBust();
@@ -53,13 +53,9 @@ class GamblerTest {
                                   Denomination denomination2,
                                   MatchResult expected) {
         // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.ACE));
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.FOUR));
-
-        Gambler gambler = new Gambler("pobi");
-        gambler.addCard(PlayingCard.of(Suit.HEARTS, denomination));
-        gambler.addCard(PlayingCard.of(Suit.HEARTS, denomination2));
+        Dealer dealer = new Dealer(List.of(ACE_SPADES, FOUR_SPADES));
+        Gambler gambler = new Gambler("pobi", List.of(
+                PlayingCard.of(Suit.HEARTS, denomination), PlayingCard.of(Suit.HEARTS, denomination2)));
 
         // when
         MatchResult match = gambler.match(dealer);
@@ -72,13 +68,8 @@ class GamblerTest {
     @DisplayName("딜러와 겜블러 모두 블랙잭이면, 무승부(push)처리 되어야 한다")
     void matchResultShouldBeDrawWhenBothHaveBlackjack() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(A_SPADES);
-        dealer.addCard(TEN_HEARTS);
-
-        Gambler gambler = new Gambler("rich");
-        gambler.addCard(A_SPADES);
-        gambler.addCard(TEN_HEARTS);
+        Dealer dealer = new Dealer(List.of(ACE_SPADES, TEN_HEARTS));
+        Gambler gambler = new Gambler("rich", List.of(ACE_SPADES, TEN_HEARTS));
 
         // when
         boolean isDealerBlackjack = dealer.isBlackJack();
@@ -99,14 +90,8 @@ class GamblerTest {
     @DisplayName("동점이더라도 겜블러만 블랙잭이면 겜블러가 승리한다.")
     void blackjackWinEvenIfCompetitorMadeSameScore() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(SEVEN_CLUBS);
-        dealer.addCard(SEVEN_CLUBS);
-        dealer.addCard(SEVEN_CLUBS);
-
-        Gambler gambler = new Gambler("rich");
-        gambler.addCard(A_SPADES);
-        gambler.addCard(TEN_HEARTS);
+        Dealer dealer = new Dealer(List.of(SEVEN_CLUBS, SEVEN_CLUBS, SEVEN_CLUBS));
+        Gambler gambler = new Gambler("rich", List.of(ACE_SPADES, TEN_HEARTS));
 
         // when
         boolean isDealerBlackjack = dealer.isBlackJack();

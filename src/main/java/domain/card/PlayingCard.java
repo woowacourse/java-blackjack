@@ -50,10 +50,9 @@ public class PlayingCard {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Card{");
-        sb.append("suit=").append(suit);
-        sb.append(", denomination=").append(denomination);
-        sb.append('}');
-        return sb.toString();
+        return "PlayingCard{" +
+                "suit=" + suit +
+                ", denomination=" + denomination +
+                '}';
     }
 }

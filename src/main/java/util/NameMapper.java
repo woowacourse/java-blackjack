@@ -1,10 +1,5 @@
-package view.util;
+package util;
 
-import static domain.MatchResult.DRAW;
-import static domain.MatchResult.LOSE;
-import static domain.MatchResult.WIN;
-
-import domain.MatchResult;
 import domain.card.Denomination;
 import domain.card.PlayingCard;
 import domain.card.Suit;
@@ -14,7 +9,6 @@ import java.util.Map;
 public class NameMapper {
     private static final Map<Suit, String> SUIT_NAME_MAPPER = new EnumMap<>(Suit.class);
     private static final Map<Denomination, String> DENOMINATION_NAME_MAPPER = new EnumMap<>(Denomination.class);
-    private static final Map<MatchResult, String> MATCH_RESULT_MAPPER = new EnumMap<>(MatchResult.class);
 
     private NameMapper() {
     }
@@ -38,18 +32,10 @@ public class NameMapper {
         SUIT_NAME_MAPPER.put(Suit.DIAMONDS, "다이아몬드");
         SUIT_NAME_MAPPER.put(Suit.HEARTS, "하트");
         SUIT_NAME_MAPPER.put(Suit.SPADES, "스페이드");
-
-        MATCH_RESULT_MAPPER.put(WIN, "승");
-        MATCH_RESULT_MAPPER.put(DRAW, "무");
-        MATCH_RESULT_MAPPER.put(LOSE, "패");
     }
 
     public static String getCardName(PlayingCard playingCard) {
-        return SUIT_NAME_MAPPER.get(playingCard.getSuit()) + DENOMINATION_NAME_MAPPER.get(
-                playingCard.getDenomination());
-    }
-
-    public static String getResultName(MatchResult matchResult) {
-        return MATCH_RESULT_MAPPER.get(matchResult);
+        return DENOMINATION_NAME_MAPPER.get(playingCard.getDenomination())
+                + SUIT_NAME_MAPPER.get(playingCard.getSuit());
     }
 }
