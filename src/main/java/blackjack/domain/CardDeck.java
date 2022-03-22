@@ -16,7 +16,7 @@ public class CardDeck {
     }
 
     public List<Card> dealInit() {
-        List<Card> cards = new ArrayList<>();
+        final List<Card> cards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             cards.add(drawCard());
         }

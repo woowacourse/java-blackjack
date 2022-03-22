@@ -19,12 +19,15 @@ public class Player extends Human {
         }
     }
 
+    public boolean isWinner(final Dealer dealer) {
+        if (getTotal() == dealer.getTotal()) {
+            return isBlackjack();
+        }
+        return getTotal() > dealer.getTotal();
+    }
+
     @Override
     public boolean canDraw() {
         return cards.isUnderBlackjack();
-    }
-
-    public String getName() {
-        return name;
     }
 }

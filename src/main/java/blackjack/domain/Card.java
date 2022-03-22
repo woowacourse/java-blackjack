@@ -9,23 +9,27 @@ public class Card {
     private final CardNumber cardNumber;
     private final CardShape cardShape;
 
-    private static final List<Card> cache = new ArrayList<>();
+    private static final List<Card> CACHE = new ArrayList<>();
 
     static {
-        for (CardNumber cardNumber : CardNumber.values()) {
+        for (final CardNumber cardNumber : CardNumber.values()) {
             selectCardShape(cardNumber);
         }
     }
 
     private static void selectCardShape(final CardNumber cardNumber) {
-        for (CardShape cardShape : CardShape.values()) {
-            cache.add(new Card(cardNumber, cardShape));
+        for (final CardShape cardShape : CardShape.values()) {
+            CACHE.add(new Card(cardNumber, cardShape));
         }
     }
 
-    public Card(final CardNumber cardNumber, final CardShape cardShape) {
+    private Card(final CardNumber cardNumber, final CardShape cardShape) {
         this.cardNumber = cardNumber;
         this.cardShape = cardShape;
+    }
+
+    public static Card of(final CardNumber cardNumber, final CardShape cardShape) {
+        return new Card(cardNumber, cardShape);
     }
 
     public CardNumber getCardNumber() {
@@ -37,6 +41,6 @@ public class Card {
     }
 
     public static List<Card> getDeck() {
-        return Collections.unmodifiableList(cache);
+        return Collections.unmodifiableList(CACHE);
     }
 }

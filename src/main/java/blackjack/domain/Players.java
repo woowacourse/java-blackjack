@@ -49,8 +49,16 @@ public class Players {
         }
     }
 
-    public int countLoser(int countWinner) {
-        return players.size() - countWinner;
+    public void dealInit(final CardDeck cardDeck) {
+        for (Player player : players) {
+            player.dealInit(cardDeck.dealInit());
+        }
+    }
+
+    public void decideWinners(GameResult gameResult, Dealer dealer) {
+        for (Player player : players) {
+            gameResult.decideWinner(dealer, player);
+        }
     }
 
     public List<String> getNames() {

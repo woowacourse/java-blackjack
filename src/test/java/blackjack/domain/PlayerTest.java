@@ -22,8 +22,8 @@ public class PlayerTest {
     @BeforeEach
     void before() {
         player = new Player("woowahan");
-        aceSpade = new Card(CardNumber.ACE, CardShape.SPADE);
-        queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
+        aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
+        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("딜러 이름과 동일한 이름을 입력할 경우 예외를 발생시킨다.")

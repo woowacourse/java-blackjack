@@ -11,7 +11,7 @@ public abstract class Human {
         this.name = name;
     }
 
-    public void dealInit(List<Card> initCards) {
+    public void dealInit(final List<Card> initCards) {
         cards.add(initCards);
     }
 
@@ -19,8 +19,27 @@ public abstract class Human {
         cards.add(card);
     }
 
-    public boolean isBust() {
+    public boolean isWinner(final Human human) {
+        if (human.isSameTotalPoints(getTotal())) {
+            return isBlackjack();
+        }
+        return human.isBust() || human.hasTotalLowerThan(getTotal());
+    }
+
+    private boolean isBust() {
         return cards.isOverBlackjack();
+    }
+
+    boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
+    boolean isSameTotalPoints(final int total) {
+        return getTotal() == total;
+    }
+
+    boolean hasTotalLowerThan(final int total) {
+        return getTotal() < total;
     }
 
     abstract boolean canDraw();
@@ -31,5 +50,9 @@ public abstract class Human {
 
     public int getTotal() {
         return cards.calculateTotal();
+    }
+
+    public String getName() {
+        return name;
     }
 }

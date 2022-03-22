@@ -20,7 +20,7 @@ public class CardTest {
     @DisplayName("카드 이름이 정상적으로 출력되는지 확인한다.")
     @Test
     void print_name() {
-        Card card = new Card(CardNumber.ACE, CardShape.SPADE);
+        Card card = Card.of(CardNumber.ACE, CardShape.SPADE);
 
         assertThat(card.getName()).isEqualTo("A스페이드");
     }
