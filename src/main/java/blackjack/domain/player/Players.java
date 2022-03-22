@@ -35,10 +35,13 @@ public class Players {
     }
 
     private void checkDuplicatePlayerName(final List<Player> playerNames) {
-        boolean duplicated = playerNames.size() != playerNames.stream()
+        final int originPlayerNameCount = playerNames.size();
+        final int distinctPlayerNameCount = (int) playerNames.stream()
                 .map(Participant::getName)
                 .distinct()
                 .count();
+
+        boolean duplicated = originPlayerNameCount != distinctPlayerNameCount;
 
         if (duplicated) {
             throw new IllegalArgumentException("중복된 플레이어의 이름이 있습니다.");
