@@ -26,7 +26,8 @@ class DealerTest {
     public void isAbleToHitTest() {
         Dealer dealer = new Dealer(List.of(NINE, TWO));
         CardDeck cardDeck = new CardDeck();
-        assertThat(dealer.draw(cardDeck))
-                .isTrue();
+        dealer.draw(cardDeck);
+        assertThat(dealer.isInitState())
+                .isFalse();
     }
 }

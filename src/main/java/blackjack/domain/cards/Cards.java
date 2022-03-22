@@ -26,8 +26,8 @@ public final class Cards {
         return new Cards(value);
     }
 
-    public int size() {
-        return value.size();
+    public boolean isSizeOf(final int size) {
+        return value.size() == size;
     }
 
     public Card getFirstCard() {
@@ -62,7 +62,7 @@ public final class Cards {
     }
 
     public boolean isBlackjack() {
-        return getPoint() == BLACKJACK_NUMBER && size() == BLACKJACK_CARD_COUNT;
+        return getPoint() == BLACKJACK_NUMBER && isSizeOf(BLACKJACK_CARD_COUNT);
     }
 
     public boolean hasMorePoint(final Cards cards) {

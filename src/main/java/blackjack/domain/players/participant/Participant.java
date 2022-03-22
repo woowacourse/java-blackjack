@@ -32,7 +32,7 @@ public abstract class Participant {
     }
 
     public boolean isInitState() {
-        return getCards().size() == INIT_CARD_SIZE;
+        return getCards().isSizeOf(INIT_CARD_SIZE);
     }
 
     public void stay() {

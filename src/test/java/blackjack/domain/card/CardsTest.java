@@ -52,8 +52,8 @@ public class CardsTest {
     @Test
     @DisplayName("카드모음 생성되는지 테스트")
     public void equalSizeTest() {
-        assertThat(cards.size())
-                .isEqualTo(2);
+        assertThat(cards.isSizeOf(2))
+                .isTrue();
     }
 
     @Test
