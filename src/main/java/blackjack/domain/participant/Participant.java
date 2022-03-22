@@ -12,7 +12,7 @@ public abstract class Participant {
     protected String name;
     protected State state;
 
-    public Participant() {
+    protected Participant() {
         this.state = new Ready(new ParticipantCards());
     }
 
