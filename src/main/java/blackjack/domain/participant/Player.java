@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Player extends AbstractParticipant {
+public class Player extends Participant {
 
-    public Player(final String name) {
+    private final Bet bet;
+
+    public Player(final String name, final Bet bet) {
         super(name, new ArrayList<>());
+        this.bet = bet;
         validatePlayerName(name);
     }
 
@@ -17,6 +20,10 @@ public class Player extends AbstractParticipant {
         if (name.isBlank()) {
             throw new IllegalArgumentException("플레이어명은 공백이 될 수 없습니다.");
         }
+    }
+
+    public double getProfit(final double profitRate) {
+        return bet.calculateProfit(profitRate);
     }
 
     @Override

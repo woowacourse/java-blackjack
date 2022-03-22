@@ -4,7 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.BettingResult;
+import blackjack.dto.BettingResultDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,18 +24,20 @@ public class PlayersTest {
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideForPlayerNamesDuplicatedExceptionTest")
     @DisplayName("플레이어명 중복 시 예외 발생")
-    void playerNamesDuplicatedExceptionTest(final List<String> playerNames, final List<Card> initializedCards) {
+    void playerNamesDuplicatedExceptionTest(final List<String> playerNames,
+                                            final List<Integer> playerBets,
+                                            final List<Card> initializedCards) {
         final Deck deck = new Deck(initializedCards);
 
-        assertThatThrownBy(() -> Players.startWithTwoCards(playerNames, deck))
+        assertThatThrownBy(() -> Players.startWithTwoCards(playerNames, playerBets, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
     }
 
     private static Stream<Arguments> provideForPlayerNamesDuplicatedExceptionTest() {
         return Stream.of(
-                Arguments.of(List.of("pobi", "pobi"), Collections.emptyList()),
-                Arguments.of(List.of("pobi", "sun", "pobi"), Collections.emptyList())
+                Arguments.of(List.of("pobi", "pobi"), List.of(1000, 1000), Collections.emptyList()),
+                Arguments.of(List.of("pobi", "sun", "pobi"), List.of(1000, 1000, 1000), Collections.emptyList())
         );
     }
 
@@ -46,7 +49,7 @@ public class PlayersTest {
         List<String> names = Arrays.stream(playerNames.split(","))
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> Players.startWithTwoCards(names, deck))
+        assertThatThrownBy(() -> Players.startWithTwoCards(names, List.of(1000), deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
     }
@@ -56,7 +59,7 @@ public class PlayersTest {
     @DisplayName("각 플레이어는 카드 2장을 지닌채 게임을 시작한다.")
     void startWithDrawCardTest(final List<String> playerNames, final List<Card> initializedCards) {
         final Deck deck = new Deck(initializedCards);
-        final Players players = Players.startWithTwoCards(playerNames, deck);
+        final Players players = Players.startWithTwoCards(playerNames, List.of(1000, 1000), deck);
         final List<Player> actualPlayers = players.getStatuses();
 
         final List<Card> actualCards = new ArrayList<>();
@@ -84,20 +87,23 @@ public class PlayersTest {
     @MethodSource("provideForCompareCardTotalTest")
     @DisplayName("각 플레이어는 딜러와의 승패를 계산한다.")
     void compareCardSum(final List<String> names,
+                        final List<Integer> bets,
                         final List<Card> dealerCards,
                         final List<Card> playersCards,
-                        final Map<String, PlayerResult> expectedWinningResults) {
+                        final Map<String, Double> expected) {
         final Dealer dealer = Dealer.startWithTwoCards(new Deck(dealerCards));
-        final Players players = Players.startWithTwoCards(names, new Deck(playersCards));
+        final Players players = Players.startWithTwoCards(names, bets, new Deck(playersCards));
+        final BettingResult actual = players.compareScore(dealer);
+        final BettingResultDto resultDto = BettingResultDto.toDto(actual);
 
-        final Map<String, PlayerResult> actualWinningResults = players.judgeWinners(dealer).getPlayerResult();
-        assertThat(actualWinningResults).isEqualTo(expectedWinningResults);
+        assertThat(resultDto.getPlayerResult()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideForCompareCardTotalTest() {
         return Stream.of(
                 Arguments.of(
                         List.of("sun"),
+                        List.of(5000),
                         List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.KING),
                                 new Card(CardPattern.DIAMOND, CardNumber.TEN)
@@ -106,10 +112,11 @@ public class PlayersTest {
                                 new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
                                 new Card(CardPattern.DIAMOND, CardNumber.NINE)
                         ),
-                        Map.of("sun", PlayerResult.LOSS)
+                        Map.of("sun", (double) -5000)
                 ),
                 Arguments.of(
                         List.of("sun", "if"),
+                        List.of(3000, 4000),
                         List.of(
                                 new Card(CardPattern.SPADE, CardNumber.NINE),
                                 new Card(CardPattern.HEART, CardNumber.EIGHT)
@@ -121,8 +128,8 @@ public class PlayersTest {
                                 new Card(CardPattern.SPADE, CardNumber.TWO)
                         ),
                         Map.of(
-                                "sun", PlayerResult.WIN,
-                                "if", PlayerResult.LOSS
+                                "sun", (double) 3000,
+                                "if", (double) -4000
                         )
                 )
         );

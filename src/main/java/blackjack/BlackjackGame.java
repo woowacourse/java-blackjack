@@ -7,8 +7,8 @@ import blackjack.domain.card.strategy.CardStrategy;
 import blackjack.domain.card.strategy.RandomCardStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.MatchResult;
-import blackjack.dto.MatchResultDto;
+import blackjack.domain.result.BettingResult;
+import blackjack.dto.BettingResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -41,7 +41,18 @@ public class BlackjackGame {
     private Players initPlayers(final Deck deck) {
         outputView.printMessageOfRequestPlayerNames();
         final List<String> playerNames = inputView.requestPlayerNames();
-        return Players.startWithTwoCards(playerNames, deck);
+        final List<Integer> playerBets = initPlayersBetAmount(playerNames);
+        return Players.startWithTwoCards(playerNames,  playerBets, deck);
+    }
+
+    private List<Integer> initPlayersBetAmount(List<String> names) {
+        List<Integer> bets = new ArrayList<>();
+        for (String name : names) {
+            outputView.printMessageOfInputBetAmount(name);
+            final int amount = inputView.requestBetAmount();
+            bets.add(amount);
+        }
+        return bets;
     }
 
     private void printParticipantsStatuses(final Dealer dealer, final Players players) {
@@ -62,7 +73,7 @@ public class BlackjackGame {
 
             @Override
             public void onUpdate(final String dealerName, final List<Card> cards) {
-                outputView.printCards(dealerName, cards);
+                outputView.printMessageOfDealerDrawCard();
             }
         });
     }
@@ -76,7 +87,7 @@ public class BlackjackGame {
 
             @Override
             public void onUpdate(final String playerName, final List<Card> cards) {
-                outputView.printCards(playerName, cards);
+                outputView.printDistributedCards(playerName, cards);
             }
         });
     }
@@ -92,10 +103,9 @@ public class BlackjackGame {
         participantDtos.addAll(players.getStatuses().stream()
                 .map(ParticipantDto::toOpenAllCards)
                 .collect(Collectors.toList()));
-
-        MatchResult result = players.judgeWinners(dealer);
+        BettingResult result = players.compareScore(dealer);
 
         outputView.printScores(participantDtos);
-        outputView.printMatchResult(MatchResultDto.toDto(result));
+        outputView.printBettingResult(BettingResultDto.toDto(result));
     }
 }

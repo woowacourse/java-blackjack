@@ -2,32 +2,23 @@ package blackjack.domain.participant;
 
 import blackjack.domain.DrawCallback;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.MatchResult;
+import blackjack.domain.result.BettingResult;
 import blackjack.domain.result.PlayerResult;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Players {
 
     private final List<Player> players;
 
-    private Players(final List<String> playerNames) {
-        validatePlayerNamesDuplicated(playerNames);
-        this.players = playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
+    private Players(final List<Player> players) {
+        this.players = players;
     }
 
-    private static void validatePlayerNamesDuplicated(final List<String> playerNames) {
-        final Set<String> validNames = new HashSet<>(playerNames);
-        if (validNames.size() != playerNames.size()) {
-            throw new IllegalArgumentException("플레이어명은 중복될 수 없습니다.");
-        }
-    }
-
-    public static Players startWithTwoCards(final List<String> names, final Deck deck) {
-        Players players = new Players(names);
+    public static Players startWithTwoCards(final List<String> names, final List<Integer> amounts, final Deck deck) {
+        validatePlayerNamesDuplicated(names);
+        validateSameSize(names, amounts);
+        Players players = new Players(refinePlayers(names, amounts));
         players.distributeCards(deck);
         return players;
     }
@@ -38,20 +29,43 @@ public class Players {
         }
     }
 
-    public MatchResult judgeWinners(Dealer dealer) {
-        final Map<String, PlayerResult> winningResults = new HashMap<>();
+    public BettingResult compareScore(Dealer dealer) {
+        final Map<Player, PlayerResult> result = new HashMap<>();
+
         for (final Player player : players) {
-            final String playerName = player.getName();
             final PlayerResult playerResult = dealer.judgeWinner(player);
-            winningResults.put(playerName, playerResult);
+            result.put(player, playerResult);
         }
-        return new MatchResult(winningResults);
+
+        return new BettingResult(result);
     }
 
     private void distributeCards(Deck deck) {
         for (final Player player : players) {
             player.drawCard(deck);
             player.drawCard(deck);
+        }
+    }
+
+    private static List<Player> refinePlayers(List<String> names, List<Integer> amounts) {
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            players.add(new Player(names.get(i), new Bet(amounts.get(i))));
+        }
+
+        return players;
+    }
+
+    private static void validatePlayerNamesDuplicated(final List<String> playerNames) {
+        final Set<String> validNames = new HashSet<>(playerNames);
+        if (validNames.size() != playerNames.size()) {
+            throw new IllegalArgumentException("플레이어명은 중복될 수 없습니다.");
+        }
+    }
+
+    private static void validateSameSize(List<String> names, List<Integer> amounts) {
+        if (names.size() != amounts.size()) {
+            throw new IllegalArgumentException("플레이어 이름과 베팅의 수가 일치하지 않습니다.");
         }
     }
 

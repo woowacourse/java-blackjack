@@ -28,4 +28,9 @@ public class InputView {
         final String input = reader.readLine();
         return Choice.from(input).getContinuable();
     }
+
+    public int requestBetAmount() {
+        final String input = reader.readLine();
+        return Integer.parseInt(input);
+    }
 }
