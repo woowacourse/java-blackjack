@@ -26,10 +26,12 @@ public class BlackJackController {
 	private Map<String, Integer> createPlayers(List<String> names) {
 		return names.stream()
 			.collect(toMap(name -> name, InputView::askBet,
-				(name, duplicateName) -> {
-					throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
-				},
+				this::validateDuplicateName,
 				LinkedHashMap::new));
+	}
+
+	private int validateDuplicateName(int name, int duplicateName) {
+		throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
 	}
 
 	public void play() {
