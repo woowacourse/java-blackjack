@@ -3,7 +3,9 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.machine.Score;
 import blackjack.domain.participant.Guest;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,9 +27,8 @@ public class GuestTest {
         Card card = new Card(Suit.SPADE, Rank.FOUR);
         guest.addCard(card);
 
-        Guest compareGuest = new Guest("compare_guest");
-        compareGuest.addCard(card);
-        assertThat(guest).isEqualTo(compareGuest);
+        assertThat(guest.getScore())
+                .isEqualTo(new Score(Set.of(new Card(Suit.SPADE, Rank.FOUR))));
     }
 
     @Test

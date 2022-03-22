@@ -1,7 +1,8 @@
 package blackjack.domain.machine;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.Cards;
+import blackjack.domain.participant.Name;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,15 +10,15 @@ public class GameResponse {
 
     private final String name;
     private final List<String> deck;
-    private final int totalPoint;
+    private final int score;
 
-    public GameResponse(String name, Deck deck) {
-        this.name = name;
-        this.deck = deck.getCards()
+    public GameResponse(Name name, Cards cards) {
+        this.name = name.value();
+        this.deck = cards.getCards()
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.toList());
-        this.totalPoint = deck.sumPoints();
+        this.score = cards.score().value();
     }
 
     public String getName() {
@@ -28,7 +29,7 @@ public class GameResponse {
         return deck;
     }
 
-    public int getTotalPoint() {
-        return totalPoint;
+    public int getScore() {
+        return score;
     }
 }

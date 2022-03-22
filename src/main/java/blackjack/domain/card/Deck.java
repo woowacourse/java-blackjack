@@ -1,73 +1,36 @@
 package blackjack.domain.card;
 
-import blackjack.domain.participant.Guest;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Deck {
 
-    private static final int BONUS_ACE_POINT = 10;
+    private final Stack<Card> deck;
 
-    private final Set<Card> cards = new LinkedHashSet<>();
-
-    public void addCard(Card card) {
-        cards.add(card);
+    public Deck(CardMachine cardMachine) {
+        this.deck = makeCards();
+        cardMachine.shuffleCards(deck);
     }
 
-    public int sumPoints() {
-        int sumWithoutAce = cards.stream()
-                .filter(this::excludeAce)
-                .mapToInt(this::getCardPoint)
-                .sum();
+    public Card assignCard() {
+        return deck.pop();
+    }
 
-        int aceCount = countAces();
-        if (aceCount == 0) {
-            return sumWithoutAce;
+    private Stack<Card> makeCards() {
+        Stack<Card> deck = new Stack<>();
+        List<Suit> suits = Arrays.stream(Suit.values()).collect(Collectors.toList());
+        for (Suit suit : suits) {
+            addRankForSuit(deck, suit);
         }
-        return calculateAcePoint(sumWithoutAce, aceCount);
+        return deck;
     }
 
-    public Set<Card> getCards() {
-        return cards;
-    }
-
-    private int countAces() {
-        return (int) cards.stream()
-                .filter(card -> !excludeAce(card))
-                .count();
-    }
-
-    private int calculateAcePoint(int sumWithoutAce, int aceCount) {
-        if (sumWithoutAce + aceCount + BONUS_ACE_POINT <= Guest.LIMIT_POINT) {
-            return sumWithoutAce + aceCount + BONUS_ACE_POINT;
+    private void addRankForSuit(Stack<Card> deck, Suit suit) {
+        List<Rank> ranks = Arrays.stream(Rank.values()).collect(Collectors.toList());
+        for (Rank rank : ranks) {
+            deck.add(new Card(suit, rank));
         }
-        return sumWithoutAce + aceCount;
-    }
-
-    private boolean excludeAce(Card card) {
-        return !card.getRank().equals(Rank.ACE);
-    }
-
-    private int getCardPoint(Card card) {
-        return card.getRank().getPoint();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Deck deck = (Deck) o;
-
-        return cards != null ? cards.equals(deck.cards) : deck.cards == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return cards != null ? cards.hashCode() : 0;
     }
 }

@@ -1,24 +1,23 @@
 package blackjack.domain.machine;
 
 import blackjack.domain.card.CardShuffleMachine;
-import blackjack.domain.card.Cards;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Guest;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
 
-    private final Cards cards;
+    private final Deck deck;
     private final Players blackjackPlayers;
 
     public BlackjackGame(List<String> playerNames) {
-        this.cards = new Cards(new CardShuffleMachine());
+        this.deck = new Deck(new CardShuffleMachine());
         this.blackjackPlayers = new Players(playerNames);
-        blackjackPlayers.startWithTwoCards(cards);
+        blackjackPlayers.startWithTwoCards(deck);
     }
-
 
     public boolean hasNextGuest() {
         return blackjackPlayers.hasNextGuest();
@@ -30,36 +29,41 @@ public class BlackjackGame {
 
     public GameResponse addCardToPlayer() {
         Player player = blackjackPlayers.getTurnPlayer();
-        player.addCard(cards.assignCard());
+        player.addCard(deck.assignCard());
         return new GameResponse(player.getName(), player.getDeck());
     }
 
     public boolean checkOverLimit() {
         Player player = blackjackPlayers.getTurnPlayer();
-        return player.isOverLimit(Guest.LIMIT_POINT);
+        return player.canGetMoreCard();
     }
 
     public boolean canGetMoreCardToDealer() {
         Player dealer = blackjackPlayers.getDealer();
-        return !dealer.isOverLimit(Dealer.LIMIT_POINT);
+        return dealer.canGetMoreCard();
     }
 
     public void addCardToDealer() {
         Player dealer = blackjackPlayers.getDealer();
-        dealer.addCard(cards.assignCard());
+        dealer.addCard(deck.assignCard());
     }
 
-    public Results calculateResult() {
-        Results results = new Results();
+    public MatchResults calculateResult(Map<Name, Double> bettingBox) {
+        MatchResults matchResults = new MatchResults(blackjackPlayers);
         Player dealer = blackjackPlayers.getDealer();
-        List<Player> guests = blackjackPlayers.getGuests();
-        for (Player player : guests) {
-            scorePlayers(dealer, player, results);
-        }
-        return results;
+        return yieldMatchResults(bettingBox, matchResults, dealer);
     }
 
-    public List<String> getPlayerNames() {
+    private MatchResults yieldMatchResults(Map<Name, Double> bettingBox, MatchResults matchResults, Player dealer) {
+        for (Player guest : blackjackPlayers.getGuests()) {
+            Double money = bettingBox.get(guest.getName());
+            MatchJudge result = MatchJudge.judgeMatch(guest.getScore(), dealer.getScore());
+            matchResults.addResult(guest, dealer, result.calculateProfit(money));
+        }
+        return matchResults;
+    }
+
+    public List<Name> getPlayerNames() {
         return blackjackPlayers.getNames();
     }
 
@@ -71,13 +75,7 @@ public class BlackjackGame {
         return blackjackPlayers.getTurnPlayer();
     }
 
-    private void scorePlayers(Player dealer, Player guest, Results results) {
-        int playerPoint = guest.getDeck().sumPoints();
-        int dealerPoint = dealer.getDeck().sumPoints();
-
-        Match result = Match.findWinner(playerPoint, dealerPoint);
-        Match dealerResult = result.getDealerResult();
-        results.addResult(dealer, dealerResult);
-        results.addResult(guest, result);
+    public List<Player> getGuests() {
+        return blackjackPlayers.getGuests();
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,14 +22,14 @@ public class Players {
         }
     }
 
-    public void startWithTwoCards(Cards cards) {
+    public void startWithTwoCards(Deck deck) {
         for (Player blackjackPlayer : blackjackPlayers) {
-            blackjackPlayer.addCard(cards.assignCard());
-            blackjackPlayer.addCard(cards.assignCard());
+            blackjackPlayer.addCard(deck.assignCard());
+            blackjackPlayer.addCard(deck.assignCard());
         }
     }
 
-    public List<String> getNames() {
+    public List<Name> getNames() {
         return blackjackPlayers.stream().map(Player::getName).collect(Collectors.toList());
     }
 
@@ -39,7 +39,7 @@ public class Players {
 
     public List<Player> getGuests() {
         return blackjackPlayers.stream()
-                .filter(player -> !player.isDealer())
+                .filter(Player::isGuest)
                 .collect(Collectors.toList());
     }
 
