@@ -83,6 +83,7 @@
 - [x] getCopy() 를 get()으로 변경
 - [x] isPrint 인자를 isDealerHit으로 변경
 - [x] 잘못 쓴 Integer int로 변경
+- [x] Finished 상수 이름 변경(PROFIT 추가)
 
 2단계 피드백
 

@@ -21,8 +21,8 @@ public final class Blackjack extends Finished {
     @Override
     public double earningRate(final Finished other) {
         if (other.isBlackjack()) {
-            return PUSH_RATE;
+            return PUSH_PROFIT_RATE;
         }
-        return BLACKJACK_RATE;
+        return BLACKJACK_PROFIT_RATE;
     }
 }
