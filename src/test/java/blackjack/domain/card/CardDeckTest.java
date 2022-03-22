@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.generator.RandomCardDeckGenerator;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +21,7 @@ public class CardDeckTest {
         }
 
         assertThatThrownBy(cardDeck::draw)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("카드덱에 남은 카드가 없습니다.");
+                .isInstanceOf(NoSuchElementException.class);
     }
 
     @Test

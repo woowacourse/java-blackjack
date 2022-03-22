@@ -25,13 +25,6 @@ public class CardDeck {
     }
 
     public Card draw() {
-        checkEmptyCardDeck();
-        return cardDeck.poll();
-    }
-
-    private void checkEmptyCardDeck() {
-        if (cardDeck.isEmpty()) {
-            throw new IllegalStateException("카드덱에 남은 카드가 없습니다.");
-        }
+        return cardDeck.remove();
     }
 }
