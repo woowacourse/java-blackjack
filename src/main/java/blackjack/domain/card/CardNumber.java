@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.gamer.Gamer.MAX_CARD_VALUE;
+import static blackjack.domain.result.BlackJackResult.MAX_CARD_VALUE;
 
 public enum CardNumber {
     ACE(11, "A"),

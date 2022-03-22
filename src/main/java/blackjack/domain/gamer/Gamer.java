@@ -5,11 +5,13 @@ import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static blackjack.domain.result.BlackJackResult.MAX_CARD_VALUE;
 
 public abstract class Gamer {
     public static final int INIT_DISTRIBUTION_COUNT = 2;
-    public static final int MAX_CARD_VALUE = 21;
 
     private final Name name;
     private final List<Card> cards;
@@ -30,7 +32,7 @@ public abstract class Gamer {
     public int getCardsNumberSum() {
         int sum = getSumExceptAce();
         List<Card> aces = getAces();
-        return getSumNotToBurst(sum, aces);
+        return getPlusAceForNotBust(sum, aces);
     }
 
     private int getSumExceptAce() {
@@ -46,7 +48,7 @@ public abstract class Gamer {
                 .collect(Collectors.toList());
     }
 
-    private int getSumNotToBurst(int sum, List<Card> aces) {
+    private int getPlusAceForNotBust(int sum, List<Card> aces) {
         for (Card ace : aces) {
             sum += ace.getAceValue(sum);
         }
@@ -61,5 +63,22 @@ public abstract class Gamer {
         return cards.size();
     }
 
-    abstract boolean isBurst();
+    public boolean isBlackJack() {
+        return getCardsNumberSum() == MAX_CARD_VALUE && getCardsSize() == INIT_DISTRIBUTION_COUNT;
+    }
+
+    abstract boolean canDraw();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Gamer gamer = (Gamer) o;
+        return name.equals(gamer.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

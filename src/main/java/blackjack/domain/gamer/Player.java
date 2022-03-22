@@ -1,24 +1,38 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.result.BlackJackResult;
 
-public class Player extends Gamer {
+import java.util.List;
 
-    public Player(String name) {
+import static blackjack.domain.result.BlackJackResult.MAX_CARD_VALUE;
+
+public class Player extends Gamer {
+    private final BettingMoney bettingMoney;
+
+    public Player(String name, List<Card> cards, int value) {
         super(name);
+        for (Card card : cards) {
+            addCard(card);
+        }
+        bettingMoney = new BettingMoney(value);
     }
 
     public BlackJackResult match(Dealer dealer) {
-        return BlackJackResult.of(this, dealer);
+        return BlackJackResult.findResult(this, dealer);
     }
 
-    public boolean isSameName(String name) {
-        return this.getName()
-                .equals(name);
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
     }
 
     @Override
-    boolean isBurst() {
+    public boolean canDraw() {
         return getCardsNumberSum() <= MAX_CARD_VALUE;
+    }
+
+    public int getProfit(Dealer dealer) {
+        BlackJackResult blackJackResult = match(dealer);
+        return blackJackResult.getProfit(bettingMoney.getValue());
     }
 }

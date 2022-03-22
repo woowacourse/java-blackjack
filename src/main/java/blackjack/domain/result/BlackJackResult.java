@@ -1,62 +1,63 @@
 package blackjack.domain.result;
 
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 
-import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
-import static blackjack.domain.gamer.Gamer.MAX_CARD_VALUE;
-
-
 public enum BlackJackResult {
-    WIN("승", (player, dealer) ->
-            ((isBlackJack(player) && !isBlackJack(dealer))
-                    || (player.getCardsNumberSum() <= MAX_CARD_VALUE
-                    && (player.getCardsNumberSum() > dealer.getCardsNumberSum() || dealer.getCardsNumberSum() > MAX_CARD_VALUE)))),
-    LOSE("패", (player, dealer) ->
-            ((!isBlackJack(player) && isBlackJack(dealer))
-                    || (player.getCardsNumberSum() > MAX_CARD_VALUE) || (dealer.getCardsNumberSum() <= MAX_CARD_VALUE
-                    && player.getCardsNumberSum() < dealer.getCardsNumberSum()))),
-    DRAW("무", (player, dealer) ->
-            ((isBlackJack(player) && isBlackJack(dealer))
-                    || (player.getCardsNumberSum() <= MAX_CARD_VALUE
-                    && dealer.getCardsNumberSum() <= MAX_CARD_VALUE && player.getCardsNumberSum() == dealer.getCardsNumberSum())));
+    BLACK_JACK_WIN(1.5),
+    WIN(1),
+    LOSE(-1),
+    DRAW(0);
 
-    private static final String NOT_EXIST_ERROR = "옯바른 결과를 찾을 수 없습니다.";
+    public static final int MAX_CARD_VALUE = 21;
+    private static final int REVERSE_VALUE = -1;
 
-    private final String value;
-    private final BiPredicate<Player, Dealer> predicate;
+    private final double profitRate;
 
-    BlackJackResult(String value, BiPredicate<Player, Dealer> predicate) {
-        this.value = value;
-        this.predicate = predicate;
+    BlackJackResult(double profitRate) {
+        this.profitRate = profitRate;
     }
 
-    public static BlackJackResult of(Player point, Dealer otherPoint) {
-        return Arrays.stream(values())
-                .filter(result -> result.predicate.test(point, otherPoint))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
-    }
-
-    private static boolean isBlackJack(Gamer gamer) {
-        return gamer.getCardsNumberSum() == MAX_CARD_VALUE && gamer.getCardsSize() == INIT_DISTRIBUTION_COUNT;
-    }
-
-    public BlackJackResult getReverse() {
-        if (this == WIN) {
-            return LOSE;
+    public static BlackJackResult findResult(Player player, Dealer dealer) {
+        if (isPlayerBlackJackWin(player, dealer)) {
+            return BLACK_JACK_WIN;
         }
-        if (this == LOSE) {
+        if (isPlayerWin(player, dealer)) {
             return WIN;
+        }
+        if (isPlayerLose(player, dealer)) {
+            return LOSE;
         }
         return DRAW;
     }
 
-    public String getValue() {
-        return value;
+    private static boolean isPlayerBlackJackWin(Player player, Dealer dealer) {
+        return player.isBlackJack() && !dealer.isBlackJack();
+    }
+
+    private static boolean isPlayerWin(Player player, Dealer dealer) {
+        return (player.isBlackJack() && !dealer.isBlackJack())
+                || (player.getCardsNumberSum() <= MAX_CARD_VALUE
+                && (player.getCardsNumberSum() > dealer.getCardsNumberSum() || dealer.getCardsNumberSum() > MAX_CARD_VALUE));
+    }
+
+    private static boolean isPlayerLose(Player player, Dealer dealer) {
+        return (!player.isBlackJack() && dealer.isBlackJack())
+                || (player.getCardsNumberSum() > MAX_CARD_VALUE) || (dealer.getCardsNumberSum() <= MAX_CARD_VALUE
+                && player.getCardsNumberSum() < dealer.getCardsNumberSum());
+    }
+
+    public double getProfitRate() {
+        return profitRate;
+    }
+
+    public static int getReverse(int value) {
+        return value * REVERSE_VALUE;
+    }
+
+    public int getProfit(int value) {
+        return (int) (this.profitRate * value);
     }
 }
