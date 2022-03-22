@@ -1,11 +1,14 @@
 package controller;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.participant.Result;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -17,7 +20,7 @@ public class BlackJackController {
     public void run() {
         Players players = createPlayers();
         Dealer dealer = new Dealer();
-        Deck deck = Deck.getInstance();
+        Deck deck = Deck.of(Card.getShuffledCardCache());
 
         initialTurn(players, dealer, deck);
         hitCard(players, dealer, deck);
@@ -26,9 +29,10 @@ public class BlackJackController {
     }
 
     private Players createPlayers() {
-        String playerNames = inputView.inputPlayerName();
+        List<String> playerNames = inputView.inputPlayerName();
+        List<Integer> playerMoneys = inputView.inputPlayerMoney(playerNames);
         try {
-            return Players.of(playerNames);
+            return Players.of(playerNames, playerMoneys);
         } catch (IllegalArgumentException exception) {
             outputView.printError(exception.getMessage());
             return createPlayers();
@@ -72,7 +76,8 @@ public class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        List<Result> playerResult = (List<Result>) players.checkResults(dealer).values();
-        outputView.showResult(dealer.checkResult(playerResult), players.checkResults(dealer));
+        Map<Player, BigDecimal> playerResult = players.checkResults(dealer);
+        List<BigDecimal> playerMoney = new ArrayList<>(playerResult.values());
+        outputView.showResult(dealer.getName(), dealer.getResultMoney(playerMoney), playerResult);
     }
 }

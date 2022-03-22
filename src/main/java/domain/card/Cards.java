@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Cards {
+public final class Cards {
 
     private static final String ACE_LETTER = "A";
     private static final int ACE_ADDITIONAL_VALUE = 10;
@@ -18,22 +18,14 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int aceAmount = countAceAmount();
-        if (aceAmount > 0) {
-            return judgeAdvantageResult(aceAmount);
-        }
-        return calculateSum();
-    }
-
-    private int judgeAdvantageResult(int aceAmount) {
-        return IntStream.range(0, aceAmount + 1)
+        return IntStream.range(0, countAceAmount() + 1)
             .map(aceCount -> calculateSum() + aceCount * ACE_ADDITIONAL_VALUE)
-            .filter(result -> result < BLACKJACK_MAX_VALUE_CRITERIA)
+            .filter(result -> result <= BLACKJACK_MAX_VALUE_CRITERIA)
             .max()
             .orElse(calculateSum());
     }
 
-    public int calculateSum() {
+    private int calculateSum() {
         return cards.stream()
             .mapToInt(Card::getScore)
             .sum();
@@ -55,5 +47,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

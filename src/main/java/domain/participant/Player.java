@@ -1,25 +1,24 @@
 package domain.participant;
 
-public class Player extends Participant {
+import java.math.BigDecimal;
 
-    private static final int COMPARE_CRITERIA = 0;
+public final class Player extends Participant {
 
-    public Player(String name) {
+    private final Money money;
+
+    Player(String name, int money) {
         super(name);
-    }
-
-    public Result isWin(Dealer dealer) {
-        if (compareTo(dealer) > COMPARE_CRITERIA) {
-            return Result.WIN;
-        }
-        if (compareTo(dealer) < COMPARE_CRITERIA) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
+        this.money = new Money(money);
     }
 
     @Override
     public boolean canDrawCard() {
-        return cards.calculateSum() < MAX_SCORE;
+        return cards.calculateScore() < MAX_SCORE;
+    }
+
+    public BigDecimal multiply(PlayerResult playerResult) {
+        BigDecimal profitRate = BigDecimal.valueOf(playerResult.getProfitRate());
+
+        return money.getValue().multiply(profitRate);
     }
 }

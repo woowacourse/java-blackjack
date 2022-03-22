@@ -1,6 +1,10 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -8,10 +12,13 @@ public class InputView {
     private static final String GET_MORE_CARD_OR_NOT_MESSAGE =
         "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator();
     private static final String GET_CARD_OR_NOT_REGEX = "^[y,n]$";
+    private static final String INT_REGEX = "^[\\d]+$";
+    private static final String DELIMITER = ",";
     private static final String YES = "y";
 
     private static final String EMPTY_INPUT_ERROR_MESSAGE = "[ERROR] 빈 값을 입력할 수 없습니다.";
     private static final String INPUT_ONLY_Y_OR_N_ERROR = "[ERROR] y나 n만 입력할 수 있습니다.";
+    private static final String INPUT_ONLY_INT_ERROR = "[ERROR] 배팅 금액은 숫자만 입력할 수 있습니다.";
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
@@ -24,9 +31,38 @@ public class InputView {
         return INPUT_VIEW;
     }
 
-    public String inputPlayerName() {
+    public List<String> inputPlayerName() {
         System.out.println(PLAYER_NAME_INPUT_MESSAGE);
-        return input();
+
+        return Arrays.stream(input().split(DELIMITER))
+            .map(String::trim)
+            .collect(Collectors.toList());
+    }
+
+    public List<Integer> inputPlayerMoney(List<String> names) {
+        List<Integer> moneys = new ArrayList<>();
+        for (String name : names) {
+            moneys.add(inputMoney(name));
+        }
+        return moneys;
+    }
+
+    private Integer inputMoney(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String inputMoney = input();
+        try {
+            validateInteger(inputMoney);
+            return Integer.parseInt(inputMoney);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            return inputMoney(name);
+        }
+    }
+
+    private void validateInteger(String inputMoney) {
+        if (!inputMoney.matches(INT_REGEX)) {
+            throw new IllegalArgumentException(INPUT_ONLY_INT_ERROR);
+        }
     }
 
     private String input() {

@@ -6,10 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class DealerTest {
     private Dealer dealer;
 
     @BeforeEach
-    void makePlayer(){
+    void makePlayer() {
         dealer = new Dealer();
     }
 
@@ -30,7 +30,7 @@ class DealerTest {
         dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
         dealer.hit(Card.of(Symbol.SPADE, Denomination.NINE));
 
-        assertThatThrownBy(() ->  dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE)))
+        assertThatThrownBy(() -> dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE)))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
     }
@@ -56,8 +56,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 결과값을 받는다.")
     void checkResultTest() {
-        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.DRAW);
-
-        assertThat(dealer.checkResult(playerResult).values()).contains(1,1,2);
+        assertThat(dealer.getResultMoney(List.of(BigDecimal.valueOf(1000), BigDecimal.valueOf(3000),
+            BigDecimal.valueOf(4000)))).isEqualTo(BigDecimal.valueOf(-8000));
     }
 }

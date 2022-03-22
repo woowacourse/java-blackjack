@@ -14,7 +14,7 @@ class CardsTest {
         Cards cards = new Cards(List.of(Card.of(Symbol.SPADE, Denomination.EIGHT),
             Card.of(Symbol.SPADE, Denomination.NINE), Card.of(Symbol.SPADE, Denomination.QUEEN)));
 
-        assertThat(cards.calculateSum()).isEqualTo(27);
+        assertThat(cards.calculateScore()).isEqualTo(27);
     }
 
     @Test

@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,10 @@ import utils.ExceptionMessages;
 class PlayerTest {
 
     private Player player;
-    private Dealer dealer;
 
     @BeforeEach
     void init() {
-        player = new Player("test");
-        dealer = new Dealer();
+        player = new Player("test", 10000);
     }
 
     @Test
@@ -27,7 +26,7 @@ class PlayerTest {
     void playerEmptyNameTest() {
         String name = "";
 
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, 10))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }
@@ -73,64 +72,26 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player가 21이 넘고, 딜러가 21이 넘지 않을 경우 Lose를 반환한다.")
-    void isWinTest() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        player.hit(Card.of(Symbol.SPADE, Denomination.NINE));
-        player.hit(Card.of(Symbol.HEART, Denomination.NINE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.LOSE);
+    @DisplayName("결과가 블랙잭인 경우 계산이 제대로 되는지 확인한다.")
+    void multiplyTest_BlackJack() {
+        assertThat(player.multiply(PlayerResult.BLACKJACK)).isEqualTo(BigDecimal.valueOf(15000.0));
     }
 
     @Test
-    @DisplayName("Player가 21이 넘고, 딜러도 21을 경우 Win을 반환한다.")
-    void isWinTest2() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        player.hit(Card.of(Symbol.SPADE, Denomination.NINE));
-        player.hit(Card.of(Symbol.HEART, Denomination.NINE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.QUEEN));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.WIN);
+    @DisplayName("결과가 동점인 경우 계산이 제대로 되는지 확인한다.")
+    void multiplyTest_Draw() {
+        assertThat(player.multiply(PlayerResult.DRAW)).isEqualTo(BigDecimal.valueOf(0.0));
     }
 
     @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Player가 총 점수가 클 경우 Win을 반환한다.")
-    void isWinTest3() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        player.hit(Card.of(Symbol.SPADE, Denomination.NINE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.WIN);
+    @DisplayName("결과가 승리인 경우 계산이 제대로 되는지 확인한다.")
+    void multiplyTest_Win() {
+        assertThat(player.multiply(PlayerResult.WIN)).isEqualTo(BigDecimal.valueOf(10000.0));
     }
 
     @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, Dealer가 총 점수가 클 경우 Lose를 반환한다.")
-    void isWinTest4() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-        player.hit(Card.of(Symbol.SPADE, Denomination.FIVE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SEVEN));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    @DisplayName("Player와 딜러 모두 21을 넘지 않고, 점수가 같을 경우 Draw를 반환한다.")
-    void isWinTest5() {
-        player.hit(Card.of(Symbol.SPADE, Denomination.FIVE));
-        player.hit(Card.of(Symbol.SPADE, Denomination.FIVE));
-
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.SIX));
-        dealer.hit(Card.of(Symbol.SPADE, Denomination.FOUR));
-
-        assertThat(player.isWin(dealer)).isEqualTo(Result.DRAW);
+    @DisplayName("결과가 패배인 경우 계산이 제대로 되는지 확인한다.")
+    void multiplyTest_Lose() {
+        assertThat(player.multiply(PlayerResult.LOSE)).isEqualTo(BigDecimal.valueOf(-10000.0));
     }
 }

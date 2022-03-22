@@ -1,7 +1,5 @@
 package domain.participant;
 
-import static java.lang.Integer.compare;
-
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
@@ -10,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import utils.ExceptionMessages;
 
-public abstract class Participant implements Comparable<Participant> {
+public abstract class Participant {
 
     protected static final int MAX_SCORE = 21;
 
@@ -22,7 +20,7 @@ public abstract class Participant implements Comparable<Participant> {
         this.name = new Name(name);
     }
 
-    public void hit(Card card) {
+    public final void hit(Card card) {
         if (!canDrawCard()) {
             throw new IllegalStateException(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
         }
@@ -31,35 +29,31 @@ public abstract class Participant implements Comparable<Participant> {
 
     public abstract boolean canDrawCard();
 
-    public void hitInitialTurn(Deck deck) {
-        cards.addCards(deck.handOutInitialTurn());
+    public final boolean isBurst() {
+        return score() > MAX_SCORE;
     }
 
-    public int calculateScore() {
+    public final boolean isBlackJack() {
+        return score() == MAX_SCORE && cards.size() == 2;
+    }
+
+    public final boolean isNotBlackJack() {
+        return !isBlackJack();
+    }
+
+    public final int score() {
         return cards.calculateScore();
     }
 
-    private boolean isOverMaxScore() {
-        return calculateScore() > MAX_SCORE;
+    public final void hitInitialTurn(Deck deck) {
+        cards.addCards(deck.handOutInitialTurn());
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
-    }
-
-    @Override
-    public int compareTo(Participant participant) {
-        if (participant.isOverMaxScore()) {
-            return 1;
-        }
-        if (isOverMaxScore()) {
-            return -1;
-        }
-
-        return compare(calculateScore(), participant.calculateScore());
     }
 }

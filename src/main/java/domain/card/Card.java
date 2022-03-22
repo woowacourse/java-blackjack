@@ -1,9 +1,11 @@
 package domain.card;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
-public class Card {
+public final class Card {
 
     private static final HashMap<String, Card> CACHE = new HashMap<>();
 
@@ -32,8 +34,10 @@ public class Card {
         return CACHE.get(symbol.getLetter() + denomination.getLetter());
     }
 
-    public static Collection<Card> getCardCache() {
-        return CACHE.values();
+    public static List<Card> getShuffledCardCache() {
+        List<Card> cards = new ArrayList<>(CACHE.values());
+        Collections.shuffle(cards);
+        return cards;
     }
 
     public int getScore() {
