@@ -11,6 +11,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class BlackJackGame {
 
@@ -27,7 +28,6 @@ public class BlackJackGame {
         Gamers gamers = setGamers();
 
         startAllPlayer(dealer, gamers.getGamers());
-        OutputView.printOpenCards(gamers.getGamers(), dealer);
         drawAdditionalCards(dealer, gamers);
 
         printFinalMessage(dealer, gamers);
@@ -35,18 +35,29 @@ public class BlackJackGame {
 
     private Gamers setGamers() {
         try {
-            return Gamers.createGamers(InputView.requestPlayerName());
+            return Gamers
+                .createGamers(InputView.requestPlayerName(), requestBettingMoney());
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return setGamers();
         }
     }
 
-    private void startAllPlayer(final Player dealer, final List<Gamer> gamers) {
+    private Function<String, Integer> requestBettingMoney() {
+        try {
+            return InputView::requestBettingMoney;
+        } catch (IllegalStateException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            return requestBettingMoney();
+        }
+    }
+
+    private void startAllPlayer(final Dealer dealer, final List<Gamer> gamers) {
         setInitialCards(dealer);
         for (Gamer gamer : gamers) {
             setInitialCards(gamer);
         }
+        OutputView.printOpenCards(gamers, dealer);
     }
 
     private void setInitialCards(final Player player) {
@@ -55,7 +66,7 @@ public class BlackJackGame {
         }
     }
 
-    private void drawAdditionalCards(final Player dealer, final Gamers gamers) {
+    private void drawAdditionalCards(final Dealer dealer, final Gamers gamers) {
         for (Gamer gamer : gamers.getGamers()) {
             progressGamerAdditionalCard(gamer, deck);
         }
@@ -70,19 +81,19 @@ public class BlackJackGame {
     }
 
     private boolean isReceivableCard(final Gamer gamer) {
-        return gamer.isReceivable() && isAnswerYes(gamer.getName());
+        return gamer.isReceivable() && isHit(gamer.getName());
     }
 
-    private boolean isAnswerYes(final String name) {
+    private boolean isHit(final String name) {
         try {
-            return Answer.isYes(InputView.requestAnswer(name));
+            return Answer.isHit(InputView.requestAnswer(name));
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
-            return isAnswerYes(name);
+            return isHit(name);
         }
     }
 
-    private void progressDealerAdditionalCard(final Player dealer, final Deck deck) {
+    private void progressDealerAdditionalCard(final Dealer dealer, final Deck deck) {
         boolean receivable = dealer.isReceivable();
         OutputView.printDealerReceive(receivable);
         if (receivable) {
@@ -92,10 +103,10 @@ public class BlackJackGame {
 
     private static void printFinalMessage(final Dealer dealer, final Gamers gamers) {
         OutputView.printFinalResult(dealer, gamers.getGamers());
-        Map<Gamer, GameResult> gamerResultBoard =
-            GameResult.calculateGamersFinalResultBoard(dealer, gamers.getGamers());
-        OutputView.printFinalResultBoard(gamerResultBoard,
-            GameResult.calculateDealerFinalResultBoard(gamerResultBoard));
+        Map<Gamer, Long> gamersProfit =
+            GameResult.calculateGamersProfit(dealer, gamers.getGamers());
+        OutputView.printFinalResultBoard(gamersProfit,
+            GameResult.calculateDealerProfit(gamersProfit));
     }
 
 }

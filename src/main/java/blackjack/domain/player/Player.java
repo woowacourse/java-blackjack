@@ -1,36 +1,39 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.List;
 
 public abstract class Player {
 
-    private final String name;
-    protected final Cards cards;
+    protected final Hand hand;
 
-    protected Player(final String name, final Cards cards) {
-        this.name = name;
-        this.cards = cards;
+    protected Player(final Hand hand) {
+        this.hand = hand;
     }
 
     public void receiveCard(final Card card) {
-        cards.save(card);
+        hand.save(card);
+    }
+
+    public List<Card> showCards() {
+        return List.copyOf(hand.getHand());
+    }
+
+    public int calculateResult() {
+        return hand.calculateTotalPoint();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
     }
 
     public abstract List<Card> openCards();
 
-    public List<Card> showCards() {
-        return List.copyOf(cards.getCards());
-    }
-
-    public int calculateResult() {
-        return cards.calculateTotalPoint();
-    }
-
     public abstract boolean isReceivable();
 
-    public String getName() {
-        return name;
-    }
 }

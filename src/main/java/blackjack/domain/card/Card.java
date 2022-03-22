@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.pattern.Denomination;
 import blackjack.domain.card.pattern.Suit;
-import java.util.Objects;
 
 public class Card {
 
@@ -16,23 +15,6 @@ public class Card {
 
     public boolean isAce() {
         return denomination == Denomination.ACE;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Card card = (Card) o;
-        return suit == card.suit && denomination == card.denomination;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(suit, denomination);
     }
 
     public int denominationPoint() {

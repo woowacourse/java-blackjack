@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,7 +18,7 @@ public class GamerTest {
     @Test
     @DisplayName("이름이 공백인 경우 예외를 발생시킨다.")
     void createGamerExceptionNameEmpty() {
-        assertThatThrownBy(() -> new Gamer(""))
+        assertThatThrownBy(() -> new Gamer("", 0))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] Gamer의 이름은 공백일 수 없습니다.");
     }
@@ -27,7 +26,7 @@ public class GamerTest {
     @Test
     @DisplayName("이름이 딜러인경우 예외를 발생시킨다.")
     void createGamerExceptionNameDealer() {
-        assertThatThrownBy(() -> new Gamer("딜러"))
+        assertThatThrownBy(() -> new Gamer("딜러", 0))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] Gamer의 이름은 딜러일 수 없습니다.");
     }
@@ -44,12 +43,9 @@ public class GamerTest {
     void openTwoCards() {
         Gamer gamer = initGamer();
 
-        List<Card> cards = gamer.openCards();
-        assertAll(
-            () -> assertThat(cards).contains(new Card(Suit.CLOVER, Denomination.JACK)
-                , new Card(Suit.DIAMOND, Denomination.QUEEN)),
-            () -> assertThat(cards.size()).isEqualTo(2)
-        );
+        List<Card> gamerCards = gamer.openCards();
+        assertThat(gamerCards.size()).isEqualTo(2);
+
     }
 
     @Test
@@ -76,7 +72,7 @@ public class GamerTest {
     }
 
     private Gamer initGamer() {
-        Gamer gamer = new Gamer("judy");
+        Gamer gamer = new Gamer("judy", 0);
 
         gamer.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.QUEEN));

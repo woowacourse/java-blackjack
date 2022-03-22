@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Gamers {
@@ -13,10 +14,11 @@ public class Gamers {
         this.gamers = gamers;
     }
 
-    public static Gamers createGamers(final List<String> names) {
+    public static Gamers createGamers(final List<String> names,
+        final Function<String, Integer> betMoney) {
         checkDuplicateName(names);
         List<Gamer> gamers = names.stream()
-            .map(Gamer::new)
+            .map(name -> new Gamer(name, betMoney.apply(name)))
             .collect(Collectors.toList());
         return new Gamers(gamers);
     }

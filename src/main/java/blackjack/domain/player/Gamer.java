@@ -1,18 +1,25 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BetMoney;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Gamer extends Player {
 
-    public static final int LIMIT_GAMER_TOTAL_POINT = 21;
+    private static final int LIMIT_GAMER_TOTAL_POINT = 21;
     private static final int GAMER_OPEN_CARDS_SIZE = 2;
+    private static final String BANNED_NAME = "딜러";
 
-    public Gamer(final String name) {
-        super(name, new Cards());
+    private final String name;
+    private final BetMoney betMoney;
+
+    public Gamer(final String name, final int betMoney) {
+        super(new Hand());
         checkName(name);
+        this.name = name;
+        this.betMoney = new BetMoney(betMoney);
     }
 
     private void checkName(final String name) {
@@ -34,19 +41,27 @@ public class Gamer extends Player {
     }
 
     private void checkBannedName(final String name) {
-        if (name.equals(Dealer.DEALER_NAME)) {
+        if (name.equals(BANNED_NAME)) {
             throw new IllegalArgumentException("[ERROR] Gamer의 이름은 딜러일 수 없습니다.");
         }
     }
 
     @Override
     public List<Card> openCards() {
-        return new ArrayList<>(cards.getCards().subList(0, GAMER_OPEN_CARDS_SIZE));
+        return new ArrayList<>(hand.getHand().subList(0, GAMER_OPEN_CARDS_SIZE));
     }
 
     @Override
     public boolean isReceivable() {
         return calculateResult() < LIMIT_GAMER_TOTAL_POINT;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getBetMoney() {
+        return betMoney.getBetMoney();
     }
 
 }

@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public enum Answer {
 
-    YES("y"),
-    NO("n");
+    HIT("y"),
+    STAY("n");
 
     private final String answer;
 
@@ -13,18 +13,18 @@ public enum Answer {
         this.answer = answer;
     }
 
-    public static Answer of(final String input) {
+    private static Answer of(final String input) {
         return Arrays.stream(values())
             .filter(value -> value.getAnswer().equals(input.toLowerCase()))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 응답입니다."));
     }
 
-    public static boolean isYes(String answer) {
-        return YES == of(answer);
+    public static boolean isHit(String answer) {
+        return HIT == of(answer);
     }
 
-    public String getAnswer() {
+    private String getAnswer() {
         return answer;
     }
 }
