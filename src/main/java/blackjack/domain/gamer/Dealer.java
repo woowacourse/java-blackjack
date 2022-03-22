@@ -28,7 +28,7 @@ public class Dealer extends Gamer{
         return cards.size() - Cards.BLACKJACK_SIZE;
     }
 
-    public List<Card> openCardFirst() {
+    public List<Card> openFirstCard() {
         return cards.open(DEALER_OPEN_COUNT_FIRST);
     }
 }

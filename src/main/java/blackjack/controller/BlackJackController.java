@@ -5,10 +5,14 @@ import static java.util.stream.Collectors.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import blackjack.domain.BlackJackManager;
+import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.result.BettingResult;
+import blackjack.domain.result.CardResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -16,11 +20,15 @@ public class BlackJackController {
 
 	private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
 
-	private final BlackJackManager manager;
+	private final Deck deck;
+	private final Dealer dealer;
+	private final Players players;
 
 	public BlackJackController() {
 		List<String> names = InputView.askNames();
-		this.manager = new BlackJackManager(createPlayers(names));
+		this.players = new Players(createPlayers(names));
+		this.dealer = new Dealer();
+		this.deck = new Deck(Card.getCards());
 	}
 
 	private Map<String, Integer> createPlayers(List<String> names) {
@@ -35,51 +43,66 @@ public class BlackJackController {
 	}
 
 	public void play() {
-		String dealer = manager.findDealerName();
-		List<String> players = manager.findPlayerNames();
-		OutputView.printGamers(dealer, players);
-
-		Deck deck = new Deck(Card.getCards());
-		checkFirstHandOut(dealer, players, deck);
-		askHitOrStay(deck);
-
+		OutputView.printGamers(dealer.getName(), players.findNames());
+		checkFirstHandOut();
+		askHitOrStay();
 		printFinalMessages();
 	}
 
-	private void checkFirstHandOut(String dealer, List<String> players, Deck deck) {
-		manager.handOutFirst(deck);
-		OutputView.printNameAndCards(dealer, manager.findDealerFirstCard());
-		players.forEach(
-			player -> OutputView.printNameAndCards(player, manager.findCardsOfPlayer(player)));
+	private void checkFirstHandOut() {
+		handOutFirst();
+		OutputView.printNameAndCards(dealer.getName(), dealer.openFirstCard());
+		players.findNames().forEach(
+			playerName -> OutputView.printNameAndCards(playerName, players.findCards(playerName)));
 	}
 
-	private void askHitOrStay(Deck deck) {
-		askPlayersHitOrStay(deck);
-		askDealerHitOrStay(deck);
+	private void handOutFirst() {
+		dealer.addCard(deck.draw());
+		dealer.addCard(deck.draw());
+		players.handOutFirst(deck);
 	}
 
-	private void askPlayersHitOrStay(Deck deck) {
-		for (String name : manager.findPlayerNames()) {
+	private void askHitOrStay() {
+		askPlayersHitOrStay();
+		askDealerHitOrStay();
+	}
+
+	private void askPlayersHitOrStay() {
+		for (String name : players.findNames()) {
 			selectHitOrStay(name, deck);
 		}
 	}
 
 	private void selectHitOrStay(String name, Deck deck) {
-		while (!manager.checkPlayerBust(name) && InputView.askIfHit(name)) {
-			manager.giveCardToPlayer(name, deck);
-			OutputView.printNameAndCards(name, manager.findCardsOfPlayer(name));
+		while (!players.checkBust(name) && InputView.askIfHit(name)) {
+			players.handOut(name, deck);
+			OutputView.printNameAndCards(name, players.findCards(name));
 		}
 	}
 
-	private void askDealerHitOrStay(Deck deck) {
-		while (manager.checkDealerDrawPossible()) {
-			manager.giveCardToDealer(deck);
+	private void askDealerHitOrStay() {
+		while (dealer.isDrawable()) {
+			dealer.addCard(deck.draw());
 		}
 	}
 
 	private void printFinalMessages() {
-		OutputView.printAdditionalDrawDealer(manager.findDealerHitCount());
-		OutputView.printFinalCards(manager.createDealerResult(), manager.createPlayerResults());
-		OutputView.printFinalResult(manager.createBettingResult());
+		OutputView.printAdditionalDrawDealer(dealer.findHitCount());
+		OutputView.printFinalCards(new CardResult(dealer), createPlayerCardResults());
+		OutputView.printFinalResult(createBettingResult());
+	}
+
+	private List<CardResult> createPlayerCardResults() {
+		return players.getValue().stream()
+			.map(CardResult::new)
+			.collect(Collectors.toList());
+	}
+
+	private BettingResult createBettingResult() {
+		Map<String, Integer> result = players.findNames().stream()
+			.collect(
+				toMap(playerName -> playerName,
+					playerName -> players.calculatePlayerEarning(playerName, dealer)));
+		return new BettingResult(result);
 	}
 }

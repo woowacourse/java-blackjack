@@ -26,6 +26,6 @@ class DealerTest {
     @DisplayName("딜러는 처음 받은 카드만 보여줄 수 있다..")
     void openCardFirst() {
         Dealer dealer = new Dealer(CLOVER_TEN, CLOVER_SEVEN);
-        assertThat(dealer.openCardFirst().get(0)).isEqualTo(CLOVER_TEN);
+        assertThat(dealer.openFirstCard().get(0)).isEqualTo(CLOVER_TEN);
     }
 }
