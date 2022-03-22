@@ -13,9 +13,9 @@ import org.junit.jupiter.api.Test;
 public class BustTest {
 
     ParticipantCards bustCardsSet = new ParticipantCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
-            new Card(Suit.DIAMOND, Denomination.FIVE),
-            new Card(Suit.HEART, Denomination.TWO),
-            new Card(Suit.CLOVER, Denomination.TEN)));
+        new Card(Suit.DIAMOND, Denomination.FIVE),
+        new Card(Suit.HEART, Denomination.TWO),
+        new Card(Suit.CLOVER, Denomination.TEN)));
 
     @Test
     @DisplayName("Bust일 시 earningRate는 -1이다.")

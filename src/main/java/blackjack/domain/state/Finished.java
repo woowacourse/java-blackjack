@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.ParticipantCards;
 
-public abstract class Finished extends Started{
+public abstract class Finished extends Started {
 
     private static final String FINISHED_DRAW_ERROR_MESSAGE = "[ERROR] 턴이 끝난 후 카드를 새로 뽑을 수 없습니다.";
     private static final String FINISHED_STAY_ERROR_MESSAGE = "[ERROR] 턴이 끝난 후 스테이를 외칠 수 없습니다.";

@@ -21,7 +21,7 @@ public class ParticipantCards {
     }
 
     public ParticipantCards() {
-        this.cards  = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
     public int calculateScore() {
@@ -33,7 +33,7 @@ public class ParticipantCards {
         }
         return totalScore;
     }
-    
+
     public ParticipantCards addCard(Card card) {
         cards.add(card);
         return new ParticipantCards(cards);

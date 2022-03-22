@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.ParticipantCards;
 
-public class Bust extends Finished{
+public class Bust extends Finished {
 
     private static final int BUST_RATE = -1;
 
