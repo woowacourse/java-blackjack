@@ -1,27 +1,27 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Hand;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 
 public class Dealer extends Participant {
 
-    private static final Name DEALER_NAME = new Name("딜러");
-    private static final int DEALER_OVER_SCORE = 17;
+    private static final int DEALER_UNDER_SCORE = 16;
+    private static final String DEFAULT_NAME = "딜러";
 
     public Dealer() {
-        this(new Hand());
+        this(new Ready());
     }
 
-    public Dealer(Hand hand) {
-        this(DEALER_NAME, hand);
+    private Dealer(State state) {
+        this(new Name(DEFAULT_NAME), state);
     }
 
-    private Dealer(Name name, Hand hand) {
-        super(name, hand);
+    private Dealer(Name name, State state) {
+        super(name, state);
     }
 
     @Override
     public boolean shouldReceive() {
-        return cardHand.getScore() < DEALER_OVER_SCORE && !cardHand.isBust()
-            && !cardHand.isBlackjack();
+        return getCardTotalScore() <= DEALER_UNDER_SCORE && !isFinished();
     }
 }

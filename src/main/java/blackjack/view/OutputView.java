@@ -4,30 +4,25 @@ import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameScoreBoard;
-import blackjack.domain.result.CardScoreResult;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.result.PlayerProfit;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class OutputView {
 
-    private static final String NEWLINE = System.lineSeparator();
+    public static final String NEWLINE = System.lineSeparator();
     private static final String TURN_CARD_PROMPT = NEWLINE + "딜러와 %s에게 2장의 카드를 나누었습니다.";
     private static final String DEALER_CARD_STATUS_FORMAT = NEWLINE + "%s: %s" + NEWLINE;
     private static final String DELIMITER = ", ";
     private static final String CARD_HAND_FORMAT = "%s: 카드: %s" + NEWLINE;
     private static final String CARD_HAND_RESULT_FORMAT = NEWLINE + "%s 카드: %s - 결과: %d";
-    private static final String MATCH_RESULT_FORMAT = "%d%s ";
-    private static final String GAME_RESULT_FORMAT = "%s: %s" + NEWLINE;
+    private static final String SHOW_PROFIT_FORMAT = "%s: %d" + NEWLINE;
+    private static final String DEALER_NAME = "딜러";
 
     private OutputView() {
     }
 
-    public static void showParticipantsHand(Dealer dealer, List<Player> players) {
+    public static void showParticipantsHand(Participant dealer, List<Participant> players) {
         out.printf(TURN_CARD_PROMPT, getPlayerNames(players));
         out.printf(DEALER_CARD_STATUS_FORMAT, dealer.getName(), getCardDetail(dealer));
         for (Participant player : players) {
@@ -36,13 +31,13 @@ public class OutputView {
         out.println();
     }
 
-    private static String getPlayerNames(List<Player> players) {
+    private static String getPlayerNames(List<Participant> players) {
         return players.stream()
-            .map(Player::getName)
+            .map(Participant::getName)
             .collect(joining(DELIMITER));
     }
 
-    private static String getCardDetail(Dealer dealer) {
+    private static String getCardDetail(Participant dealer) {
         Card openCard = dealer.getOpenCard();
         return openCard.getDenomination() + dealer.getOpenCard().getSuit();
     }
@@ -55,8 +50,8 @@ public class OutputView {
         printPlayerHand(player);
     }
 
-    private static String getCards(Participant participant) {
-        return participant.getCards().stream()
+    private static String getCards(Participant player) {
+        return player.getState().hand().getCards().stream()
             .map(card -> card.getDenomination() + card.getSuit())
             .collect(joining(DELIMITER));
     }
@@ -65,9 +60,9 @@ public class OutputView {
         out.println(NEWLINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printParticipantResult(Dealer dealer, List<Player> players) {
+    public static void printParticipantResult(Participant dealer, List<Participant> players) {
         printCardHand(dealer);
-        for (Player player : players) {
+        for (Participant player : players) {
             printCardHand(player);
         }
         out.println();
@@ -78,26 +73,17 @@ public class OutputView {
             participant.getCardTotalScore());
     }
 
-    public static void printBlackjackGameResult(GameScoreBoard result) {
-        out.println(NEWLINE + "## 최종 승패");
-        printDealerGameResult(result);
-        printPlayersGameResult(result);
+    public static void printDealerProfit(final int dealerProfit) {
+        System.out.println(NEWLINE + "## 최종 수익");
+        System.out.printf(SHOW_PROFIT_FORMAT, DEALER_NAME, dealerProfit);
     }
 
-    private static void printDealerGameResult(GameScoreBoard result) {
-        out.print("딜러: ");
-        for (Entry<CardScoreResult, Integer> dealerGameResult : result.getDealerGameResult().entrySet()) {
-            CardScoreResult matchResult = dealerGameResult.getKey();
-            out.printf(MATCH_RESULT_FORMAT, dealerGameResult.getValue(), matchResult.getName());
-        }
-        out.println();
+    public static void printPlayersProfit(List<PlayerProfit> playersProfit) {
+        playersProfit.forEach(OutputView::showPlayerProfit);
     }
 
-    private static void printPlayersGameResult(GameScoreBoard result) {
-        Map<String, String> playerResult = result.getPlayerGameResultMap();
-        for (Entry<String, String> playerGameResult : playerResult.entrySet()) {
-            out.printf(GAME_RESULT_FORMAT, playerGameResult.getKey(), playerGameResult.getValue());
-        }
+    private static void showPlayerProfit(PlayerProfit playerProfit) {
+        System.out.printf(SHOW_PROFIT_FORMAT, playerProfit.getName(), playerProfit.getProfit());
     }
 
     public static void printBustMessage() {

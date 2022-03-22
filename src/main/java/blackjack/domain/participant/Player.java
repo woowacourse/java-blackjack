@@ -1,8 +1,7 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Hand.BLACKJACK_SYMBOL_SCORE;
-
-import blackjack.domain.card.Hand;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 
 public class Player extends Participant {
 
@@ -11,16 +10,15 @@ public class Player extends Participant {
     }
 
     public Player(Name name) {
-        this(name, new Hand());
+        this(name, new Ready());
     }
 
-    public Player(Name name, Hand cardHand) {
-        super(name, cardHand);
+    public Player(Name name, State state) {
+        super(name, state);
     }
 
     @Override
     public boolean shouldReceive() {
-        return !cardHand.isBust() && !cardHand.isBlackjack()
-            && cardHand.getScore() != BLACKJACK_SYMBOL_SCORE;
+        return !isFinished();
     }
 }

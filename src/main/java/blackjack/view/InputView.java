@@ -1,14 +1,17 @@
 package blackjack.view;
 
+import static blackjack.view.OutputView.NEWLINE;
 import static java.lang.System.out;
 
 import blackjack.domain.participant.Participant;
+
 import java.util.Locale;
 import java.util.Scanner;
 
 public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
+    public static final String BETTING_MONEY_FORMAT = NEWLINE + "%s의 베팅 금액은?" + NEWLINE;
 
     private InputView() {
     }
@@ -34,5 +37,10 @@ public class InputView {
             return "y".equals(input);
         }
         throw new IllegalArgumentException("[ERROR] y 또는 n을 입력하셔야합니다.");
+    }
+
+    public static String inputBettingMoney(String name) {
+        out.printf(BETTING_MONEY_FORMAT, name);
+        return SCANNER.nextLine();
     }
 }

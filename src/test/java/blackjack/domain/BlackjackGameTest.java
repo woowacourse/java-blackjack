@@ -1,53 +1,53 @@
 package blackjack.domain;
 
 import static blackjack.domain.TestCardFixture.*;
-import static blackjack.domain.result.CardScoreResult.LOSE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.betting.BettingPlayer;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameScoreBoard;
-import blackjack.domain.result.CardScoreResult;
+import blackjack.domain.result.PlayerProfit;
+import blackjack.domain.state.State;
+import blackjack.view.InputView;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackjackGameTest {
 
+    private List<Participant> players;
     private BlackjackGame blackjackGame;
-    private Deck deck;
 
     @BeforeEach
     void setUp() {
-        blackjackGame = BlackjackGame.create("seung");
-        deck = Deck.createShuffledCards();
+        players = createPlayers();
+        blackjackGame = BlackjackGame.create(players);
+    }
+
+    private List<Participant> createPlayers() {
+        return Collections.singletonList(new Player("seung"));
     }
 
     @DisplayName("게임 실행 객체가 정상적으로 생성되었는지 확인")
     @Test
     void create() {
-        List<Player> players = blackjackGame.getPlayers();
-        Participant participant = players.get(0);
+        List<Participant> players = blackjackGame.getPlayers();
+        Participant player = players.get(0);
 
-        assertThat(participant.getName()).isEqualTo("seung");
+        assertThat(player.getName()).isEqualTo("seung");
     }
 
     @DisplayName("기본 카드 세팅이 정상적인지 확인")
     @Test
     void drawBaseCards() {
-        blackjackGame.drawBaseCards(deck);
+        blackjackGame.drawBaseCards();
         Participant dealer = blackjackGame.getDealer();
-        List<Player> players = blackjackGame.getPlayers();
+        List<Participant> players = blackjackGame.getPlayers();
         Participant player = players.get(0);
 
         assertAll(
@@ -56,44 +56,67 @@ class BlackjackGameTest {
         );
     }
 
-    @DisplayName("참가자들이 카드를 더 받을 수 있는지 없는지 확인")
-    @ParameterizedTest
-    @MethodSource("takeMoreCardByParticipantCase")
-    void takeMoreCard(Participant participant, StubDeck stubDeck, boolean excepted) {
-        participant.receiveCard(stubDeck.draw());
-        participant.receiveCard(stubDeck.draw());
+    @DisplayName("딜러가 카드를 한장 더 받는지 확인")
+    @Test
+    void takeMoreCardDealer() {
+        Participant dealer = blackjackGame.getDealer();
+        blackjackGame.takeMoreCard(dealer);;
 
-        assertThat(blackjackGame.takeMoreCard(participant, deck)).isEqualTo(excepted);
+        assertThat(dealer.getCards()).hasSize(1);
     }
 
-    private static Stream<Arguments> takeMoreCardByParticipantCase() {
-        return Stream.of(
-            Arguments.of(new Dealer(), new StubDeck(List.of(aceCard, tenCard)), false),
-            Arguments.of(new Player("seung"), new StubDeck(List.of(aceCard, tenCard)), false),
-            Arguments.of(new Dealer(), new StubDeck(List.of(tenCard, sixCard)), true),
-            Arguments.of(new Player("pobi"), new StubDeck(List.of(tenCard, sixCard)), true),
-            Arguments.of(new Dealer(), new StubDeck(List.of(tenCard, sevenCard)), false),
-            Arguments.of(new Player("heebong"), new StubDeck(List.of(tenCard, sevenCard)), true)
+    @DisplayName("플레이어가 카드를 한장 더 받는지 확인")
+    @Test
+    void takeMoreCardPlayer() {
+        Participant player = players.get(0);
+        blackjackGame.takeMoreCard(player);
+
+        assertThat(player.getCards()).hasSize(1);
+    }
+
+
+    @DisplayName("플레이어의 게임결과를 잘 계산하는지 확인")
+    @Test
+    void calculatePlayerProfit() {
+        Participant dealer = blackjackGame.getDealer();
+        State dealerState = dealer.getState();
+        initCards(dealerState);
+        List<BettingPlayer> bettingPlayers = getBettingPlayers();
+
+        List<PlayerProfit> actual = blackjackGame.calculatePlayerProfit(bettingPlayers);
+        PlayerProfit playerProfit = actual.get(0);
+        assertAll(
+            () -> assertThat(playerProfit.getProfit()).isEqualTo(15000),
+            () -> assertThat(playerProfit.getName()).isEqualTo("seung")
         );
     }
 
-    @DisplayName("게임결과를 잘 계산하는지 확인")
+    @DisplayName("딜러의 게임결과를 잘 계산하는지 확인")
     @Test
-    void calculateGameScore() {
-        StubDeck deck = new StubDeck(List.of(aceCard, tenCard, twoCard, threeCard));
-        List<Player> players = blackjackGame.getPlayers();
-        Player player = players.get(0);
-        Dealer dealer = blackjackGame.getDealer();
+    void calculateDealerProfit() {
+        Participant dealer = blackjackGame.getDealer();
+        State dealerState = dealer.getState();
+        initCards(dealerState);
+        List<BettingPlayer> bettingPlayers = getBettingPlayers();
 
-        player.receiveCard(deck.draw());
-        player.receiveCard(deck.draw());
-        dealer.receiveCard(deck.draw());
-        dealer.receiveCard(deck.draw());
+        int dealerProfit = blackjackGame.calculateDealerProfit(bettingPlayers);
+        assertThat(dealerProfit).isEqualTo(-15000);
+    }
 
-        GameScoreBoard gameScoreBoard = blackjackGame.calculateGameScore();
-        Map<CardScoreResult, Integer> dealerGameResult = gameScoreBoard.getDealerGameResult();
-        for (Entry<CardScoreResult, Integer> dealerResult : dealerGameResult.entrySet()) {
-            assertThat(dealerResult.getKey()).isEqualTo(LOSE);
+    private List<BettingPlayer> getBettingPlayers() {
+        return players.stream()
+            .map(player -> BettingPlayer.of(player, "10000"))
+            .collect(Collectors.toList());
+    }
+
+    private void initCards(State dealerState) {
+        dealerState = dealerState.draw(kingCard);
+        dealerState = dealerState.draw(tenCard);
+        dealerState = dealerState.draw(jackCard);
+
+        for (Participant player : players) {
+            player.hit(aceCard);
+            player.hit(tenCard);
         }
     }
 }

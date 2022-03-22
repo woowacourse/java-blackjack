@@ -1,62 +1,57 @@
 package blackjack.domain;
 
+import blackjack.domain.betting.BettingPlayer;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameScoreBoard;
-import java.util.Arrays;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.result.PlayerProfit;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private static final String DELIMITER = ",";
+    private static final int CHANGE_TO_NEGATIVE = -1;
 
-    private final List<Player> players;
-    private final Dealer dealer;
+    private final Participants participants;
+    private final Deck deck;
 
-    public BlackjackGame(List<Player> players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
+    public BlackjackGame(Participants participants, Deck deck) {
+        this.participants = participants;
+        this.deck = deck;
     }
 
-    public static BlackjackGame create(String inputNames) {
-        List<Player> players = Arrays.stream(inputNames.split(DELIMITER))
-            .map(playerName -> new Player(playerName.trim()))
-            .collect(Collectors.toList());
-        return new BlackjackGame(players, new Dealer());
+    public static BlackjackGame create(List<Participant> players) {
+        return new BlackjackGame(Participants.from(players), Deck.createShuffledCards());
     }
 
-    public void drawBaseCards(Deck deck) {
-        for (Player player : players) {
-            drawBaseCardsByParticipant(deck, player);
-        }
-        drawBaseCardsByParticipant(deck, dealer);
+    public void drawBaseCards() {
+        participants.drawBaseCards(deck);
     }
 
-    private void drawBaseCardsByParticipant(Deck deck, Participant participant) {
-        participant.receiveCard(deck.draw());
-        participant.receiveCard(deck.draw());
-    }
-
-    public boolean takeMoreCard(Participant participant, Deck deck) {
+    public void takeMoreCard(Participant participant) {
         if (participant.shouldReceive()) {
-            participant.receiveCard(deck.draw());
-            return true;
+            participant.hit(deck.draw());
         }
-        return false;
     }
 
-    public GameScoreBoard calculateGameScore() {
-        return GameScoreBoard.recordGameScore(dealer, players);
+    public List<PlayerProfit> calculatePlayerProfit(List<BettingPlayer> bettingPlayers) {
+        return bettingPlayers.stream()
+            .map(player -> new PlayerProfit(player.getName(), player.calculateProfit(
+                participants.getDealer())))
+            .collect(Collectors.toList());
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public int calculateDealerProfit(List<BettingPlayer> bettingPlayers) {
+        return calculatePlayerProfit(bettingPlayers).stream()
+            .mapToInt(player -> player.getProfit() * CHANGE_TO_NEGATIVE)
+            .sum();
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
+    }
+
+    public Participant getDealer() {
+        return participants.getDealer();
     }
 }
