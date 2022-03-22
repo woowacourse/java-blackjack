@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.info;
 
 import java.util.Objects;
 
@@ -17,14 +17,6 @@ public class Name {
 		if (name == null || name.isBlank()) {
 			throw new IllegalArgumentException(BLANK_NAME_ERROR_MESSAGE);
 		}
-	}
-
-	public static Name copyOf(Name name) {
-		return new Name(name.name);
-	}
-
-	public NameDTO getInfo() {
-		return new NameDTO(name);
 	}
 
 	public String getName() {

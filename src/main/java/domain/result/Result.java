@@ -1,36 +1,35 @@
 package domain.result;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import domain.participant.Name;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 
 public class Result {
 
-	private final Map<Name, WinOrLose> playerResults;
+	private final Map<Player, WinOrLose> playerResults;
 
-	public Result(Map<Name, WinOrLose> playerResults) {
-		this.playerResults = Map.copyOf(playerResults);
+	private Result(Map<Player, WinOrLose> playerResults) {
+		this.playerResults = playerResults;
 	}
 
-	public WinOrLose getResultOfPlayer(Name name) {
-		return playerResults.get(name);
+	public static Result of(Dealer dealer, Players players) {
+		Map<Player, WinOrLose> result = new HashMap<>();
+		players.forEach(player -> result.putIfAbsent(player, WinOrLose.judgePlayerWinOrLose(dealer, player)));
+		return new Result(result);
 	}
 
-	public int getDealerWinCount() {
-		return (int)playerResults.keySet().stream()
-			.filter(key -> playerResults.get(key) == WinOrLose.LOSE)
-			.count();
+	public int getDealerMoney() {
+		return -1 * playerResults.entrySet().stream()
+			.mapToDouble(entry -> entry.getKey().getBettingMoney() * entry.getValue().getEarningRate())
+			.mapToInt(money -> (int)money)
+			.sum();
 	}
 
-	public int getDealerDrawCount() {
-		return (int)playerResults.keySet().stream()
-			.filter(key -> playerResults.get(key) == WinOrLose.DRAW)
-			.count();
+	public int getPlayerMoney(Player player) {
+		return (int)(player.getBettingMoney() * playerResults.get(player).getEarningRate());
 	}
 
-	public int getDealerLoseCount() {
-		return (int)playerResults.keySet().stream()
-			.filter(key -> playerResults.get(key) == WinOrLose.WIN)
-			.count();
-	}
 }

@@ -4,29 +4,28 @@ import java.util.Objects;
 
 public class Card {
 
-	private final Rank rank;
+	private final Denomination denomination;
 	private final Suit suit;
 
-	public Card(Rank rank, Suit suit) {
-		this.rank = rank;
+	public Card(Denomination denomination, Suit suit) {
+		this.denomination = denomination;
 		this.suit = suit;
 	}
 
 	public int getPoint() {
-		return rank.getPoint();
+		return denomination.getPoint();
 	}
 
 	public boolean isAce() {
-		return rank.isAce();
+		return denomination.isAce();
 	}
 
-	public CardDTO getInfo() {
-		return new CardDTO(rank, suit);
+	public String getDenomination() {
+		return denomination.getDenomination();
 	}
 
-	@Override
-	public String toString() {
-		return rank.getRank() + suit.getSuit();
+	public String getSuit() {
+		return suit.getSuit();
 	}
 
 	@Override
@@ -36,11 +35,11 @@ public class Card {
 		if (!(o instanceof Card))
 			return false;
 		Card card = (Card)o;
-		return rank == card.rank && suit == card.suit;
+		return denomination == card.denomination && suit == card.suit;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(rank, suit);
+		return Objects.hash(denomination, suit);
 	}
 }

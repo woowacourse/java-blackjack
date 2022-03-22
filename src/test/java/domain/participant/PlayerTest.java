@@ -1,46 +1,40 @@
 package domain.participant;
 
+import static domain.card.Cards.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
-import domain.result.WinOrLose;
+import domain.participant.info.Betting;
+import domain.participant.info.Hand;
+import domain.participant.info.Name;
 
 public class PlayerTest {
-	List<Card> handForPlayer;
-	Player player;
 
-	@BeforeEach
-	void setUp() {
-		handForPlayer = new ArrayList<>(
-			List.of(new Card(Rank.RANK_EIGHT, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
-		player = new Player(new Name("pobi"), handForPlayer);
+	@Test
+	@DisplayName("드로우할 수 있는 경우 할 수 있는지 테스트")
+	void canDraw() {
+		Hand hand = new Hand(List.of(ACE_CLOVER, TWO_CLOVER));
+		Player player = new Player(new Name("pobi"), hand, new Betting());
+		assertThat(player.canDraw()).isTrue();
 	}
 
 	@Test
-	@DisplayName("블랙잭 발생 시 승패 판단")
-	void compareAtBlackJack() {
-		List<Card> handForDealer = new ArrayList<>(
-			List.of(new Card(Rank.RANK_JACK, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
-		Dealer dealer = new Dealer(handForDealer);
-		assertThat(player.compareAtBlackJack(dealer)).isEqualTo(WinOrLose.LOSE);
+	@DisplayName("버스트 일 경우 드로우할 수 있는지 테스트")
+	void cantDrawBust() {
+		Hand hand = new Hand(List.of(QUEEN_CLOVER, QUEEN_CLOVER, TWO_CLOVER));
+		Player player = new Player(new Name("pobi"), hand, new Betting());
+		assertThat(player.canDraw()).isFalse();
 	}
 
 	@Test
-	@DisplayName("최종 결과를 위한 승패 판단")
-	void compareAtFinal() {
-		List<Card> handForDealer = new ArrayList<>(
-			List.of(new Card(Rank.RANK_JACK, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
-		Dealer dealer = new Dealer(handForDealer);
-		assertThat(player.compareAtFinal(dealer)).isEqualTo(WinOrLose.LOSE);
+	@DisplayName("블랙잭일 경우 드로우할 수 있는지 테스트")
+	void cantDrawBlackJack() {
+		Hand hand = new Hand(List.of(QUEEN_CLOVER, ACE_CLOVER));
+		Player player = new Player(new Name("pobi"), hand, new Betting());
+		assertThat(player.canDraw()).isFalse();
 	}
-	
 }

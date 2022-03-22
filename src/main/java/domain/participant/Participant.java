@@ -1,71 +1,74 @@
 package domain.participant;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import domain.card.Card;
+import domain.participant.info.Betting;
+import domain.participant.info.Hand;
+import domain.participant.info.Name;
 
 public class Participant {
-	protected static final int MAX_SCORE = 21;
-	protected static final int ACE_COUNT_LOWER_BOUND = 0;
-	protected static final int ADDITIONAL_SCORE_ACE = 10;
+	private static final int WINNING_SCORE = 21;
+	private static final int ADDITIONAL_SCORE_ACE = 10;
+	private static final int BLACKJACK_SIZE = 2;
 
 	protected final Name name;
-	protected final boolean blackJack;
-	protected List<Card> hand;
+	protected final Hand hand;
+	protected final Betting betting;
 
-	public Participant(Name name, List<Card> hand) {
+	public Participant(Name name, Hand hand, Betting betting) {
 		this.name = name;
-		this.hand = new ArrayList<>(hand);
-		this.blackJack = isMaxScore();
+		this.hand = hand;
+		this.betting = betting;
 	}
 
 	public void addCard(Card card) {
 		hand.add(card);
 	}
 
-	public boolean isBust() {
-		return getMinScore() > MAX_SCORE;
-	}
-
-	protected int getMinScore() {
-		return hand.stream().mapToInt(Card::getPoint).sum();
-	}
-
-	public boolean isMaxScore() {
-		return getBestScore() == MAX_SCORE;
-	}
-
-	public int getBestScore() {
-		int aceCount = getAceCount();
-		int bestScore = getMinScore();
-
-		while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ADDITIONAL_SCORE_ACE <= MAX_SCORE) {
-			bestScore += ADDITIONAL_SCORE_ACE;
-			aceCount--;
-		}
-		return bestScore;
-	}
-
-	protected int getAceCount() {
-		return (int)hand.stream().filter(Card::isAce).count();
-	}
-
 	public boolean isBlackJack() {
-		return blackJack;
+		return hand.size() == BLACKJACK_SIZE && getScore() == WINNING_SCORE;
 	}
 
-	public ParticipantDTO getInfo() {
-		return new ParticipantDTO(
-			name.getInfo(),
-			hand.stream()
-				.map(Card::getInfo)
-				.collect(Collectors.toList())
-		);
+	public boolean isBust() {
+		return sumPoint() > WINNING_SCORE;
 	}
 
-	public Name getName() {
-		return Name.copyOf(name);
+	public int getScore() {
+		int score = sumPoint();
+
+		if (hand.hasAce() && canAddAcePoint(score)) {
+			score += ADDITIONAL_SCORE_ACE;
+		}
+
+		return score;
+	}
+
+	private boolean canAddAcePoint(int score) {
+		return score + ADDITIONAL_SCORE_ACE <= WINNING_SCORE;
+	}
+
+	private int sumPoint() {
+		int totalPoint = 0;
+		Iterator<Card> iterator = hand.iterator();
+
+		while (iterator.hasNext()) {
+			Card card = iterator.next();
+			totalPoint += card.getPoint();
+		}
+		return totalPoint;
+	}
+
+	public String getName() {
+		return name.getName();
+	}
+
+	public List<Card> getCards() {
+		return hand.getHand();
+	}
+
+	public int getBettingMoney() {
+		return betting.getBettingMoney();
 	}
 }
