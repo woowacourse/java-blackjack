@@ -73,7 +73,7 @@ public final class OutputView {
         }
     }
 
-    public static void printDealerProfit(final Dealer dealer, final Integer money) {
+    public static void printDealerProfit(final Dealer dealer, final int money) {
         System.out.println(RESULT_FRONT_MESSAGE);
         printProfit(dealer, money);
     }
