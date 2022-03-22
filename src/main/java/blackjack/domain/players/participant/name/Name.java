@@ -1,4 +1,4 @@
-package blackjack.domain.participant.human.name;
+package blackjack.domain.players.participant.name;
 
 import java.util.Objects;
 import java.util.regex.Pattern;

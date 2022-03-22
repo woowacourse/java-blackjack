@@ -1,8 +1,8 @@
-package blackjack.domain.participant.human;
+package blackjack.domain.players.participant;
 
 import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
-import blackjack.domain.participant.human.name.Name;
+import blackjack.domain.players.participant.name.Name;
 import blackjack.domain.state.State;
 import blackjack.domain.state.running.Ready;
 import java.util.List;

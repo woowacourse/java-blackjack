@@ -1,9 +1,9 @@
-package blackjack.domain.human;
+package blackjack.domain.players;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import blackjack.domain.participant.human.name.Name;
+import blackjack.domain.players.participant.name.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

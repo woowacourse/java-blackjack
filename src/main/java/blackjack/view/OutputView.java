@@ -1,10 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.cards.card.Card;
-import blackjack.domain.participant.Players;
-import blackjack.domain.participant.human.Dealer;
-import blackjack.domain.participant.human.Participant;
-import blackjack.domain.participant.human.Player;
+import blackjack.domain.players.Players;
+import blackjack.domain.players.participant.Dealer;
+import blackjack.domain.players.participant.Participant;
+import blackjack.domain.players.participant.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +14,7 @@ public final class OutputView {
     private static final String INIT_CARD_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
             + System.lineSeparator();
     private static final String CARD_STATE_MESSAGE = "%s카드: %s";
-    private static final String HUMAN_POINT_STATE = " - 결과 : %s";
+    private static final String PARTICIPANT_POINT_STATE = " - 결과 : %s";
     private static final String DEALER_CARD_ADDED_MESSAGE = System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PLAYER_RESULT_MESSAGE = "%s: %d" + System.lineSeparator();
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 수익";
@@ -22,7 +22,7 @@ public final class OutputView {
     public static void printInitHands(final Players players, final Dealer dealer) {
         printInitCardState(players, dealer);
         printInitDealerHand(dealer);
-        players.printHand(OutputView::printHumanHand);
+        players.printHand(OutputView::printParticipantHand);
         System.out.println();
     }
 
@@ -41,11 +41,11 @@ public final class OutputView {
 
     public static void printHand(final Player player) {
         if (player.isInitState() || !player.getState().isFinished()) {
-            printHumanHand(player);
+            printParticipantHand(player);
         }
     }
 
-    private static void printHumanHand(final Participant participant) {
+    private static void printParticipantHand(final Participant participant) {
         System.out.printf(CARD_STATE_MESSAGE, participant.getName(), getCardsState(participant.getRawCards()));
         System.out.println();
     }
@@ -58,12 +58,12 @@ public final class OutputView {
 
     public static void printHandAndPoint(final Players players, final Dealer dealer) {
         System.out.println();
-        printHumanCardPointState(dealer);
-        players.printHand(OutputView::printHumanCardPointState);
+        printParticipantCardPointState(dealer);
+        players.printHand(OutputView::printParticipantCardPointState);
     }
 
-    private static void printHumanCardPointState(final Participant participant) {
-        System.out.printf(CARD_STATE_MESSAGE + HUMAN_POINT_STATE + System.lineSeparator(),
+    private static void printParticipantCardPointState(final Participant participant) {
+        System.out.printf(CARD_STATE_MESSAGE + PARTICIPANT_POINT_STATE + System.lineSeparator(),
                 participant.getName(), getCardsState(participant.getRawCards()), participant.getPoint());
     }
 

@@ -11,9 +11,9 @@ import static blackjack.view.OutputView.printHandAndPoint;
 import static blackjack.view.OutputView.printInitHands;
 
 import blackjack.domain.cards.CardDeck;
-import blackjack.domain.participant.Players;
-import blackjack.domain.participant.human.Dealer;
-import blackjack.domain.participant.human.Player;
+import blackjack.domain.players.Players;
+import blackjack.domain.players.participant.Dealer;
+import blackjack.domain.players.participant.Player;
 import blackjack.view.OutputView;
 import java.util.Map;
 import java.util.stream.Collectors;

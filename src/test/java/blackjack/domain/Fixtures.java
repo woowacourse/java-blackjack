@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.cards.card.Card;
 import blackjack.domain.cards.card.denomination.Denomination;
 import blackjack.domain.cards.card.denomination.Suit;
-import blackjack.domain.participant.human.Player;
+import blackjack.domain.players.participant.Player;
 import java.util.ArrayList;
 
 public class Fixtures {

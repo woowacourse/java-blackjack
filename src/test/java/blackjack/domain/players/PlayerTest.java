@@ -1,4 +1,4 @@
-package blackjack.domain.human;
+package blackjack.domain.players;
 
 import static blackjack.domain.Fixtures.ACE;
 import static blackjack.domain.Fixtures.EIGHT;
