@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.PlayerDto;
-import blackjack.dto.UserProfitDto;
 import blackjack.dto.UserScoreDto;
 
 import java.util.List;
@@ -45,11 +44,17 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(UserProfitDto userProfitDto) {
+    public static void printFinalResult(Map<String, Double> userProfit) {
         System.out.println(FINAL_RESULT_MESSAGE);
-        System.out.printf(REVENUE_FORMAT, DEALER, userProfitDto.getDealerProfit());
+        System.out.printf(REVENUE_FORMAT, DEALER, userProfit.get(DEALER));
 
-        for (Map.Entry<String, Double> entry : userProfitDto.getPlayerProfit().entrySet()) {
+        for (Map.Entry<String, Double> entry : userProfit.entrySet()) {
+            showPlayerProfit(entry);
+        }
+    }
+
+    private static void showPlayerProfit(Map.Entry<String, Double> entry) {
+        if (!entry.getKey().equals(DEALER)) {
             System.out.printf(REVENUE_FORMAT, entry.getKey(), entry.getValue());
         }
     }

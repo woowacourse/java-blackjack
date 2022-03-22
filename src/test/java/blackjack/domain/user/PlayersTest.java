@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Cards;
-import blackjack.dto.UserProfitDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,10 +47,10 @@ class PlayersTest {
         input.put(playerName, Money.from(1000));
 
         Players players = Players.create(input, cards);
-        UserProfitDto statistics = players.getStatistics(new Dealer(_15_INIT_CARDS));
+        Map<String, Double> statistics = players.getStatistics(new Dealer(_15_INIT_CARDS));
         assertAll(
-                () -> assertThat(statistics.getPlayerProfit()).isEqualTo(playerProfit),
-                () -> assertThat(statistics.getDealerProfit()).isEqualTo(-playerProfit.get(playerName))
+                () -> assertThat(statistics.get(playerName)).isEqualTo(playerProfit.get(playerName)),
+                () -> assertThat(statistics.get("딜러")).isEqualTo(-playerProfit.get(playerName))
 
         );
     }

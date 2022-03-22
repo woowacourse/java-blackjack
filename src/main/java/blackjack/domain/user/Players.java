@@ -1,8 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
-import blackjack.dto.UserProfitDto;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -37,14 +35,15 @@ public class Players {
         return new ArrayList<>(players);
     }
 
-    public UserProfitDto getStatistics(Dealer dealer) {
+    public Map<String, Double> getStatistics(Dealer dealer) {
         Map<String, Double> playerProfit = new LinkedHashMap<>();
         double dealerProfit= 0;
         for (Player player : players) {
             double profit = player.calculateProfit(dealer);
-            dealerProfit+=profit;
+            dealerProfit-=profit;
             playerProfit.put(player.getName(), profit);
         }
-        return new UserProfitDto(-dealerProfit, playerProfit);
+        playerProfit.put(dealer.getName(), dealerProfit);
+        return playerProfit;
     }
 }
