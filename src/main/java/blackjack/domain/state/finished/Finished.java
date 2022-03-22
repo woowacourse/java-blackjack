@@ -2,10 +2,10 @@ package blackjack.domain.state.finished;
 
 import blackjack.domain.cards.Cards;
 import blackjack.domain.cards.card.Card;
-import blackjack.domain.state.Init;
+import blackjack.domain.state.CardsIncludedState;
 import blackjack.domain.state.State;
 
-public abstract class Finished extends Init {
+public abstract class Finished extends CardsIncludedState {
     static final float BLACKJACK_PROFIT_RATE = 1.5f;
     static final int WIN_PROFIT_RATE = 1;
     static final int LOSE_PROFIT_RATE = -1;

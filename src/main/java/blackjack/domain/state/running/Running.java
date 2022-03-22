@@ -1,10 +1,10 @@
 package blackjack.domain.state.running;
 
 import blackjack.domain.cards.Cards;
-import blackjack.domain.state.Init;
+import blackjack.domain.state.CardsIncludedState;
 import blackjack.domain.state.finished.Finished;
 
-public abstract class Running extends Init {
+public abstract class Running extends CardsIncludedState {
 
     public Running(final Cards cards) {
         super(cards);

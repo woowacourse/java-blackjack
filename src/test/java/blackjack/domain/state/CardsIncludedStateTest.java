@@ -10,9 +10,9 @@ import blackjack.domain.state.finished.Finished;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class InitTest {
+class CardsIncludedStateTest {
     Cards cards = new Cards(List.of(TEN, NINE));
-    Init init = new Init(cards) {
+    CardsIncludedState cardsIncludedState = new CardsIncludedState(cards) {
         @Override
         public State addCard(Card card) {
             return null;
@@ -36,7 +36,7 @@ class InitTest {
 
     @Test
     void cards() {
-        assertThat(init.cards())
+        assertThat(cardsIncludedState.cards())
                 .isEqualTo(cards);
     }
 }

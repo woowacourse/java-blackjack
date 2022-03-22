@@ -16,21 +16,21 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class HitTest {
+class HitStateTest {
     Fixtures fx = new Fixtures();
 
     @Test
     @DisplayName("draw 히트여부 기능 테스트")
     void draw_hit() {
-        var state = new Hit(new Cards(new ArrayList<>(List.of(ACE, TWO))));
+        var state = new HitState(new Cards(new ArrayList<>(List.of(ACE, TWO))));
         assertThat(state.addCard(EIGHT))
-                .isInstanceOf(Hit.class);
+                .isInstanceOf(HitState.class);
     }
 
     @Test
     @DisplayName("draw 카드추가 기능 테스트")
     void draw_hit_containEight() {
-        var state = new Hit(new Cards(new ArrayList<>(List.of(ACE, TWO))));
+        var state = new HitState(new Cards(new ArrayList<>(List.of(ACE, TWO))));
         assertThat(state.addCard(EIGHT).cards().get())
                 .contains(EIGHT);
     }
@@ -38,7 +38,7 @@ class HitTest {
     @Test
     @DisplayName("draw 버스트여부 기능 테스트")
     void draw_bust() {
-        var state = new Hit(new Cards(new ArrayList<>(List.of(NINE, TEN))));
+        var state = new HitState(new Cards(new ArrayList<>(List.of(NINE, TEN))));
         assertThat(state.addCard(EIGHT))
                 .isInstanceOf(Bust.class);
     }
@@ -46,7 +46,7 @@ class HitTest {
     @Test
     @DisplayName("draw stay 변경 테스트")
     void stay() {
-        var state = new Hit(new Cards(new ArrayList<>(List.of(TWO, TEN))));
+        var state = new HitState(new Cards(new ArrayList<>(List.of(TWO, TEN))));
         assertThat(state.stay())
                 .isInstanceOf(Stay.class);
     }

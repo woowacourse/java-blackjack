@@ -2,10 +2,10 @@ package blackjack.domain.state;
 
 import blackjack.domain.cards.Cards;
 
-public abstract class Init implements State {
+public abstract class CardsIncludedState implements State {
     protected final Cards cards;
 
-    public Init(final Cards cards) {
+    public CardsIncludedState(final Cards cards) {
         this.cards = cards;
     }
 

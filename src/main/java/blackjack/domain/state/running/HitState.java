@@ -7,8 +7,8 @@ import blackjack.domain.state.finished.Blackjack;
 import blackjack.domain.state.finished.Bust;
 import blackjack.domain.state.finished.Stay;
 
-public final class Hit extends Running {
-    public Hit(final Cards cards) {
+public final class HitState extends Running {
+    public HitState(final Cards cards) {
         super(cards);
     }
 
@@ -21,7 +21,7 @@ public final class Hit extends Running {
         if (cards.isBust()) {
             return new Bust(cards);
         }
-        return new Hit(cards);
+        return new HitState(cards);
     }
 
     @Override

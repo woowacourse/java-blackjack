@@ -17,7 +17,7 @@ public final class Ready extends Running {
         if (cards.isBlackjack()) {
             return new Blackjack(cards);
         }
-        return new Hit(cards);
+        return new HitState(cards);
     }
 
     @Override

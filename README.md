@@ -85,6 +85,7 @@
 - [x] 잘못 쓴 Integer int로 변경
 - [x] Finished 상수 이름 변경(PROFIT 추가)
 - [x] abstract끼리 모아두기
+- [x] State 클래스들 이름 변경
 
 2단계 피드백
 
