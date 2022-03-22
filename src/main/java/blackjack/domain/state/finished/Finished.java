@@ -26,6 +26,11 @@ public abstract class Finished extends Init {
     }
 
     @Override
+    public int profit(int money, Finished other) {
+        return (int) (money * earningRate(other));
+    }
+
+    @Override
     public boolean isFinished() {
         return true;
     }
@@ -33,11 +38,6 @@ public abstract class Finished extends Init {
     public abstract boolean isBust();
 
     public abstract boolean isBlackjack();
-
-    @Override
-    public int profit(int money, Finished other) {
-        return (int) (money * earningRate(other));
-    }
 
     public abstract double earningRate(Finished other);
 }
