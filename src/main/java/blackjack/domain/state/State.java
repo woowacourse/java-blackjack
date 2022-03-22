@@ -5,7 +5,7 @@ import blackjack.domain.cards.card.Card;
 import blackjack.domain.state.finished.Finished;
 
 public interface State {
-    State draw(Card card);
+    State addCard(Card card);
 
     State stay();
 

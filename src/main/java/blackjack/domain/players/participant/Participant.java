@@ -20,13 +20,13 @@ public abstract class Participant {
     private State getInitState(List<Card> cards) {
         State state = new Ready();
         for (Card card : cards) {
-            state = state.draw(card);
+            state = state.addCard(card);
         }
         return state;
     }
 
     public void addCard(final Card card) {
-        state = state.draw(card);
+        state = state.addCard(card);
     }
 
     public boolean isInitState() {

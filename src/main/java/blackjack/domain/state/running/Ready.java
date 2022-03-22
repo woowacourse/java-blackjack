@@ -12,7 +12,7 @@ public final class Ready extends Running {
     }
 
     @Override
-    public State draw(Card card) {
+    public State addCard(Card card) {
         cards.add(card);
         if (cards.isBlackjack()) {
             return new Blackjack(cards);

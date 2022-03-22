@@ -37,7 +37,7 @@ class FinishedTest {
     @Test
     @DisplayName("draw 예외출력 테스트")
     void draw() {
-        assertThatThrownBy(() -> finished.draw(TEN))
+        assertThatThrownBy(() -> finished.addCard(TEN))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("더 이상 카드를 받을 수 없습니다.");
     }

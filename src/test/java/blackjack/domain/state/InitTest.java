@@ -14,7 +14,7 @@ class InitTest {
     Cards cards = new Cards(List.of(TEN, NINE));
     Init init = new Init(cards) {
         @Override
-        public State draw(Card card) {
+        public State addCard(Card card) {
             return null;
         }
 

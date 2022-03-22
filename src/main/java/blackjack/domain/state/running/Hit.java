@@ -13,7 +13,7 @@ public final class Hit extends Running {
     }
 
     @Override
-    public State draw(final Card card) {
+    public State addCard(final Card card) {
         cards.add(card);
         if (cards.isBlackjack()) {
             return new Blackjack(cards);

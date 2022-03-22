@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class RunningTest {
     Running running = new Running(new Cards()) {
         @Override
-        public State draw(Card card) {
+        public State addCard(Card card) {
             return null;
         }
 

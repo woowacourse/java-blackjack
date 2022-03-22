@@ -23,7 +23,7 @@ class HitTest {
     @DisplayName("draw 히트여부 기능 테스트")
     void draw_hit() {
         var state = new Hit(new Cards(new ArrayList<>(List.of(ACE, TWO))));
-        assertThat(state.draw(EIGHT))
+        assertThat(state.addCard(EIGHT))
                 .isInstanceOf(Hit.class);
     }
 
@@ -31,7 +31,7 @@ class HitTest {
     @DisplayName("draw 카드추가 기능 테스트")
     void draw_hit_containEight() {
         var state = new Hit(new Cards(new ArrayList<>(List.of(ACE, TWO))));
-        assertThat(state.draw(EIGHT).cards().getCopy())
+        assertThat(state.addCard(EIGHT).cards().getCopy())
                 .contains(EIGHT);
     }
 
@@ -39,7 +39,7 @@ class HitTest {
     @DisplayName("draw 버스트여부 기능 테스트")
     void draw_bust() {
         var state = new Hit(new Cards(new ArrayList<>(List.of(NINE, TEN))));
-        assertThat(state.draw(EIGHT))
+        assertThat(state.addCard(EIGHT))
                 .isInstanceOf(Bust.class);
     }
 
