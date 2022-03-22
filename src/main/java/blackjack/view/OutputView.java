@@ -1,8 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.dto.GameResultDto;
+import blackjack.domain.*;
+import blackjack.domain.dto.BettingResultDto;
 import blackjack.domain.dto.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,14 +27,14 @@ public class OutputView {
     private static void printEachParticipantCard(ParticipantDto participantDto) {
         System.out.println(participantDto.getName() + "카드" + ": " +
                 participantDto.getCards().stream()
-                        .map(Card::toString)
+                        .map(Card::cardInfo)
                         .collect(Collectors.joining(", ")));
     }
 
     public static void showDrawResult(String name, List<Card> cards) {
         System.out.printf(name + "카드: ");
         System.out.println(cards.stream()
-                .map(Card::toString)
+                .map(Card::cardInfo)
                 .collect(Collectors.joining(", ")));
     }
 
@@ -52,17 +51,18 @@ public class OutputView {
         for (ParticipantDto participantDto : participantDtos) {
             System.out.println(participantDto.getName() + "카드" + ": " +
                     participantDto.getCards().stream()
-                            .map(Card::toString)
+                            .map(Card::cardInfo)
                             .collect(Collectors.joining(", "))
             + " - 결과: " + participantDto.getScore());
         }
 
     }
 
-    public static void showGameResults(List<GameResultDto> gameResults) {
-        System.out.println();
-        for (GameResultDto gameResult : gameResults) {
-            System.out.println(gameResult.getName() + ": " + gameResult.getResult());
+    public static void showDealerRevenue(List<BettingResultDto> bettingResultDtos) {
+        System.out.printf("%n## 최종 수익%n");
+        for (BettingResultDto bettingResultDto : bettingResultDtos) {
+            System.out.printf("%s: %d%n", bettingResultDto.getName(), bettingResultDto.getRevenue());
         }
     }
+
 }

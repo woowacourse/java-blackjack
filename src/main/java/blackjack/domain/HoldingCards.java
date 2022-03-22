@@ -7,11 +7,7 @@ public class HoldingCards {
     private static final int FULL_SCORE = 21;
     private static final int BLACK_JACK_CARD_COUNT = 2;
 
-    private final List<Card> cards;
-
-    public HoldingCards(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
-    }
+    private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         cards.add(card);

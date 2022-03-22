@@ -1,19 +1,37 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
-    private Name name;
-    private HoldingCards holdingCards;
+    private final Name name;
+    private final HoldingCards holdingCards = new HoldingCards();
 
-    public Participant(String name, HoldingCards holdingCards) {
+    public Participant(String name) {
         this.name = new Name(name);
-        this.holdingCards = holdingCards;
+    }
+
+    void receiveCards(List<Card> cards) {
+        for (Card card : cards) {
+            holdingCards.add(card);
+        }
     }
 
     void receiveCard(Card card){
         holdingCards.add(card);
-    };
+    }
+
+    boolean isBust() {
+        return holdingCards.isBust();
+    }
+
+    boolean hasBlackJack() {
+        return holdingCards.isBlackJack();
+    }
+
+    int calculateTotal() {
+        return holdingCards.calculateTotal();
+    }
 
     List<Card> showCards(){
         return holdingCards.getCards();
@@ -29,11 +47,11 @@ public abstract class Participant {
 
     public abstract boolean isFinished();
 
-    private class Name {
+    private static class Name {
         private final String name;
 
         private Name(String name) {
-            if (name.isEmpty()) {
+            if (Objects.isNull(name) || name.isEmpty()) {
                 throw new IllegalArgumentException("[ERROR] 빈 이름은 사용할 수 없습니다.");
             }
             this.name = name;

@@ -1,34 +1,28 @@
 package blackjack.domain;
 
-import blackjack.domain.dto.GameResultDto;
+import blackjack.domain.dto.BettingResultDto;
 import blackjack.domain.dto.ParticipantDto;
 import blackjack.domain.strategy.RandomCardGenerator;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private final List<Player> players;
     private final Dealer dealer;
     private final CardDeck cardDeck;
 
-    public BlackJackGame(List<String> playersNames) {
+    public BlackJackGame(List<Player> players) {
         this.cardDeck = new CardDeck(RandomCardGenerator.getInstance());
-        this.dealer = new Dealer(cardDeck.drawTwoCards());
-        validateEmptyNames(playersNames);
-        this.players = createPlayers(playersNames);
+        this.dealer = new Dealer();
+        this.players = players;
+        giveTwoCardsToAll();
     }
 
-    private void validateEmptyNames(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 이름 입력이 비었습니다");
+    private void giveTwoCardsToAll() {
+        dealer.receiveCards(cardDeck.drawTwoCards());
+        for (Player player : players) {
+            player.receiveCards(cardDeck.drawTwoCards());
         }
-    }
-
-    private List<Player> createPlayers(List<String> playersNames) {
-        return playersNames.stream()
-                .map(playerName -> new Player(playerName.trim(), cardDeck.drawTwoCards()))
-                .collect(Collectors.toList());
     }
 
     public List<ParticipantDto> getParticipantsDto() {
@@ -71,7 +65,8 @@ public class BlackJackGame {
     private Player findPlayerOnTurn() {
         return players.stream()
                 .filter(participant -> !participant.isFinished())
-                .findFirst().get();
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 모든 플레이어의 턴이 끝났습니다."));
     }
 
     public boolean dealerDrawMoreCard() {
@@ -82,16 +77,17 @@ public class BlackJackGame {
         return false;
     }
 
-    public List<GameResultDto> getGameResultsDtos() {
-        List<GameResultDto> gameResultDtos = new ArrayList<>();
-        List<GameResult> dealerResults = new ArrayList<>();
+    public List<BettingResultDto> calculateGameResults() {
+        List<BettingResultDto> bettingResultDtos = new ArrayList<>();
+        int dealerRevenue = 0;
         for (Player player : players) {
-            GameResult dealerResult = dealer.judgeResult(player);
-            dealerResults.add(dealerResult);
-            gameResultDtos.add(GameResultDto.ofPlayer(player.getName(), GameResult.getPairResult(dealerResult)));
+            GameResult gameResult = player.judgeResult(dealer);
+            int playerRevenue = gameResult.calculateRevenue(player.getBettingMoney());
+            bettingResultDtos.add(BettingResultDto.of(player, playerRevenue));
+            dealerRevenue -= playerRevenue;
         }
-        gameResultDtos.add(0, GameResultDto.ofDealer(Dealer.DEALER_NAME, dealerResults));
-        return gameResultDtos;
+        bettingResultDtos.add(0, BettingResultDto.of(dealer, dealerRevenue));
+        return bettingResultDtos;
     }
 
 }

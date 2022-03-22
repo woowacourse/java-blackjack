@@ -2,9 +2,11 @@ package blackjack.domain.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
+import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
@@ -13,13 +15,35 @@ public class BlackJackController {
         BlackJackGame blackJackGame = initBlackJackGame();
         OutputView.printInitialCardStatus(blackJackGame.getParticipantsDto());
 
-        while(blackJackGame.isAnyPlayerTurnRemain()) {
-            playTurn(blackJackGame);
-        }
+        playUntilAllTurnsEnd(blackJackGame);
         OutputView.showDealerResult(blackJackGame.dealerDrawMoreCard());
         OutputView.showFinalCardsAndScore(blackJackGame.getFinalParticipantsDto());
 
-        OutputView.showGameResults(blackJackGame.getGameResultsDtos());
+        OutputView.showDealerRevenue(blackJackGame.calculateGameResults());
+    }
+
+    private List<Player> setupAllPlayersBetting(List<String> names) {
+        List<Player> players = new ArrayList<>();
+        for (String name : names) {
+            name = name.trim();
+            players.add(new Player(name, askBettingMoney(name)));
+        }
+        return players;
+    }
+
+    private void playUntilAllTurnsEnd(BlackJackGame blackJackGame) {
+        while(blackJackGame.isAnyPlayerTurnRemain()) {
+            playTurn(blackJackGame);
+        }
+    }
+
+    private int askBettingMoney(String name) {
+        try {
+            return InputView.askBettingMoney(name);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            return askBettingMoney(name);
+        }
     }
 
     private void playTurn(BlackJackGame blackJackGame) {
@@ -33,7 +57,8 @@ public class BlackJackController {
 
     private BlackJackGame initBlackJackGame() {
         try {
-            return new BlackJackGame(InputView.askPlayerNames());
+            List<String> names = InputView.askPlayerNames();
+            return new BlackJackGame(setupAllPlayersBetting(names));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return initBlackJackGame();
