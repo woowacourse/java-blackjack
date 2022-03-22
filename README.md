@@ -73,6 +73,8 @@
 - [x] popCards 검증로직 개선
 - [x] INIT_NUMBER라는 이름만으로는 의미를 온전하게 전달하지 못하는 것 같아요.
 - [x] human이라는 단어는 어디서 온 걸까요? participant와 혼용될 필요가 있나요?
+- [x] Dealer draw() 속 메서드 변경
+- [x] Dealer draw() 속 메서드 변경
 
 2단계 피드백
 

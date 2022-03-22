@@ -45,7 +45,8 @@ public final class BlackjackGame {
                 printHand(player);
             }
         });
-        printDealerHit(dealer.draw(cardDeck));
+        dealer.draw(cardDeck);
+        printDealerHit(!dealer.isInitState());
     }
 
     private void showResult(final Players players, final Dealer dealer) {
