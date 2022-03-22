@@ -1,10 +1,10 @@
 package domain.participant;
 
+import domain.card.Card;
+import domain.card.InitCards;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import domain.card.Card;
 
 public abstract class Participant {
 
@@ -12,9 +12,6 @@ public abstract class Participant {
     private static final int BLACK_JACK_NUMBER = 21;
     private static final int ACE_COUNT_LOWER_BOUND = 0;
     private static final int ADDITIONAL_SCORE_OF_ACE = 10;
-    private static final int SECOND_INDEX_OF_HAND = 1;
-    private static final int POINT_OF_ACE = 1;
-    private static final int POINT_OF_TEN = 10;
 
     protected static final int FIRST_INDEX_OF_HAND = 0;
 
@@ -30,13 +27,13 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public abstract boolean isNeedToDraw();
-
     public String showHand() {
-        return String.join(
-                JOINING_DELIMITER,
-                hand.stream().map(Card::combineRankAndSuit).collect(Collectors.toList())
-        );
+        List<String> cardsOfHand = hand.stream().map(Card::combineRankAndSuit).collect(Collectors.toList());
+        return String.join(JOINING_DELIMITER, cardsOfHand);
+    }
+
+    public boolean isBlackJack() {
+        return hand.size() == InitCards.INIT_CARDS_SIZE && isUpperBoundScore();
     }
 
     public boolean isBust() {
@@ -48,8 +45,8 @@ public abstract class Participant {
     }
 
     public int calculateBestScore() {
-        int aceCount = countAceCard();
         int bestScore = calculateMinScoreOfHand();
+        int aceCount = countAceCard();
         while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ADDITIONAL_SCORE_OF_ACE <= BLACK_JACK_NUMBER) {
             bestScore += ADDITIONAL_SCORE_OF_ACE;
             aceCount--;
@@ -57,25 +54,15 @@ public abstract class Participant {
         return bestScore;
     }
 
-    private int countAceCard() {
-        return (int) hand.stream().filter(Card::isAce).count();
-    }
-
     private int calculateMinScoreOfHand() {
         return hand.stream().mapToInt(Card::getPoint).sum();
     }
 
-    public boolean isBlackJack() {
-        int firstCardPoint = hand.get(FIRST_INDEX_OF_HAND).getPoint();
-        int secondCardPoint = hand.get(SECOND_INDEX_OF_HAND).getPoint();
-        if (firstCardPoint == POINT_OF_ACE && secondCardPoint == POINT_OF_TEN) {
-            return true;
-        }
-        if (firstCardPoint == POINT_OF_TEN && secondCardPoint == POINT_OF_ACE) {
-            return true;
-        }
-        return false;
+    private int countAceCard() {
+        return (int) hand.stream().filter(Card::isAce).count();
     }
+
+    public abstract boolean isNeedToDraw();
 
     public Name getName() {
         return name;

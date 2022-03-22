@@ -18,7 +18,7 @@ public class Dealer extends Participant {
         return calculateBestScore() <= STANDARD_SCORE_OF_ENOUGH_CARD;
     }
 
-    public Card getFirstHand() {
+    public Card getFirstCardOfHand() {
         return getHand().get(FIRST_INDEX_OF_HAND);
     }
 }

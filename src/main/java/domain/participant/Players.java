@@ -1,65 +1,18 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.result.Result;
-import domain.result.Versus;
-import java.util.LinkedHashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import org.jetbrains.annotations.NotNull;
 
-public class Players {
-
-    private static final String NOT_ENOUGH_CARDS_FOR_INIT_PLAYER_ERROR_MESSAGE = "[Error] 초기화할 카드가 모자랍니다.";
-    private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
-    private static final String CANT_FIND_PLAYER_ERROR_MESSAGE = "[Error] 플레이어를 찾을 수 없습니다.";
-    private static final int SINGLE_ELEMENT_COUNT = 1;
-    private static final int FIND_FIRST_INDEX = 0;
+public class Players implements Iterable<Player> {
 
     private final List<Player> players;
 
-    public Players(List<Name> names, List<List<Card>> initCards) {
-        validateInitCardsForPlayers(names, initCards);
-        this.players = IntStream.range(0, names.size())
-                .mapToObj(i -> new Player(names.get(i), initCards.get(i)))
-                .collect(Collectors.toList());
-    }
-
-    private void validateInitCardsForPlayers(List<Name> names, List<List<Card>> initCards) {
-        if (names.size() > initCards.size()) {
-            throw new IllegalArgumentException(NOT_ENOUGH_CARDS_FOR_INIT_PLAYER_ERROR_MESSAGE);
-        }
-    }
-
-    public Player findByName(Name name) {
-        List<Player> matchNamePlayers = players.stream()
-                .filter(player -> player.isNameMatch(name))
-                .collect(Collectors.toList());
-        validateNameForFindByName(matchNamePlayers);
-        return matchNamePlayers.get(FIND_FIRST_INDEX);
-    }
-
-    private void validateNameForFindByName(List<Player> matchNamePlayers) {
-        if (matchNamePlayers.size() != SINGLE_ELEMENT_COUNT) {
-            throw new IllegalArgumentException(CANT_FIND_PLAYER_ERROR_MESSAGE);
-        }
-    }
-
-    public void addCardByName(Name name, Card card) {
-        findByName(name).addCard(card);
-    }
-
-    public String showHandByName(Name name) {
-        return findByName(name).showHand();
-    }
-
-    public int getBestScoreByName(Name name) {
-        return findByName(name).calculateBestScore();
-    }
-
-    public boolean isBustByName(Name name) {
-        return findByName(name).isBust();
+    public Players(List<Player> players) {
+        this.players = List.copyOf(players);
     }
 
     public boolean isNotAllBust() {
@@ -69,34 +22,36 @@ public class Players {
         return bustPlayerCount != players.size();
     }
 
-    public boolean isUpperBoundScoreByName(Name name) {
-        return findByName(name).isUpperBoundScore();
-    }
-
-    public boolean isNeedToDrawByName(Name name) {
-        return findByName(name).isNeedToDraw();
-    }
-
     public List<Name> getNames() {
         return players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
-    public Result getResultAtDealerBlackJack(Dealer dealer) {
-        validateDealerIsBlackJack(dealer);
-        Map<Name, Versus> playerResult = new LinkedHashMap<>();
-        players.forEach(player -> playerResult.put(player.getName(), player.compareAtDealerBlackJack()));
-        return new Result(playerResult);
+    @Override
+    public void forEach(Consumer<? super Player> action) {
+        Iterable.super.forEach(action);
     }
 
-    private void validateDealerIsBlackJack(Dealer dealer) {
-        if (!dealer.isBlackJack()) {
-            throw new IllegalStateException(NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE);
+    @NotNull
+    @Override
+    public Iterator<Player> iterator() {
+        return new PlayersIterator();
+    }
+
+    public class PlayersIterator implements Iterator<Player> {
+
+        private int currentIndex;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < players.size();
         }
-    }
 
-    public Result getResultAtFinal(Dealer dealer) {
-        Map<Name, Versus> playerResult = new LinkedHashMap<>();
-        players.forEach(player -> playerResult.put(player.getName(), player.compareAtFinal(dealer)));
-        return new Result(playerResult);
+        @Override
+        public Player next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return players.get(currentIndex++);
+        }
     }
 }
