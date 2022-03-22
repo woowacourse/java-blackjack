@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
+import static blackJack.utils.ExeptionMessage.WRONG_RESULT;
+
 public enum Result {
     BlackJack((dealer, player) -> !dealer.isBlackJack() && player.isBlackJack(), 1.5),
     LOSE((dealer, player) -> player.isBurst() || !dealer.isBurst() && dealer.getScore() > player.getScore(), -1),
@@ -30,7 +32,7 @@ public enum Result {
         return Arrays.stream(values())
                 .filter(result -> result.predicate.test(dealer, player))
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException(WRONG_RESULT));
     }
 
     public static Map<Player, Integer> makePlayerResult(Dealer dealer, Players players) {
