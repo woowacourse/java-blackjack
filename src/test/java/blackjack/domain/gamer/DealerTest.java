@@ -1,27 +1,31 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import static blackjack.CardConstant.*;
+import static org.assertj.core.api.Assertions.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {"14:true", "16:false"}, delimiter = ':')
-    @DisplayName("보유 카드 번호 합이 특정 숫자를 넘었는지 확인")
-    void checkCardsNumberSum(int input, boolean result) {
-        Dealer dealer = new Dealer();
-        Card card1 = Card.getInstance(CardShape.SPADE, CardNumber.TEN);
-        Card card2 = Card.getInstance(CardShape.SPADE, CardNumber.FIVE);
+    @Test
+    @DisplayName("딜러는 카드 번호합 17 이상이면 더 뽑을 수 없다.")
+    void dealerDrawable() {
+        Dealer dealer = new Dealer(CLOVER_TEN, CLOVER_SEVEN);
+        assertThat(dealer.isDrawable()).isFalse();
+    }
 
-        dealer.addCard(card1);
-        dealer.addCard(card2);
+    @Test
+    @DisplayName("딜러는 2장보다 더 받은 카드 개수를 반환한다.")
+    void findHitCount() {
+        Dealer dealer = new Dealer(CLOVER_TEN, CLOVER_SEVEN, CLOVER_SEVEN);
+        assertThat(dealer.findHitCount()).isEqualTo(1);
+    }
 
-        assertThat(dealer.isOverThan(input)).isEqualTo(result);
+    @Test
+    @DisplayName("딜러는 처음 받은 카드만 보여줄 수 있다..")
+    void openCardFirst() {
+        Dealer dealer = new Dealer(CLOVER_TEN, CLOVER_SEVEN);
+        assertThat(dealer.openFirstCard().get(0)).isEqualTo(CLOVER_TEN);
     }
 }

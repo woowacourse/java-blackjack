@@ -17,8 +17,8 @@ public class Name {
 		}
 	}
 
-	public boolean isSame(String name) {
-		return this.name.equals(name);
+	public String getValue() {
+		return name;
 	}
 
 	@Override
@@ -32,9 +32,5 @@ public class Name {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);
-	}
-
-	public String getValue() {
-		return name;
 	}
 }

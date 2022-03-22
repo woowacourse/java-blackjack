@@ -17,7 +17,25 @@ public class InputView {
         return names;
     }
 
-    public static boolean askHitOrStay(String name) {
+    public static int askBet(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        int amount = convertToInteger(SCANNER.nextLine());
+        System.out.println();
+        return amount;
+    }
+
+    private static int convertToInteger(String input) {
+        int amount;
+        try {
+            amount = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력하세요.");
+        }
+        return amount;
+    }
+
+    public static boolean askIfHit(String name) {
+        System.out.println();
         System.out.println(name + "는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return Answer.from(SCANNER.nextLine()).isYes();
     }

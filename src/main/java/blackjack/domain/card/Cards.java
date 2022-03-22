@@ -9,8 +9,8 @@ public class Cards {
 
 	private static final String NOT_ACE = "Ace 카드가 아닙니다.";
 
-	private static final int MAX_CARD_VALUE = 21;
-	private static final int CARD_SIZE_BLACKJACK = 2;
+	public static final int BLACKJACK_SIZE = 2;
+	private static final int BLACKJACK_NUMBER = 21;
 
 	private final List<Card> values;
 
@@ -18,30 +18,34 @@ public class Cards {
 		this.values = new ArrayList<>();
 	}
 
+	public Cards(Card... cards) {
+		values = new ArrayList<>(List.of(cards));
+	}
+
 	public void add(Card card) {
 		values.add(card);
 	}
 
 	public int sum() {
-		int sum = getSumExceptAce();
-		List<Card> aces = getAces();
-		return getSumNotToBust(sum, aces);
+		int sum = sumExceptAce();
+		List<Card> aces = filterAces();
+		return sumNotToBust(sum, aces);
 	}
 
-	private int getSumExceptAce() {
+	private int sumExceptAce() {
 		return values.stream()
 			.filter(card -> !card.isAce())
 			.mapToInt(Card::getValue)
 			.sum();
 	}
 
-	private List<Card> getAces() {
+	private List<Card> filterAces() {
 		return values.stream()
 			.filter(Card::isAce)
 			.collect(Collectors.toList());
 	}
 
-	private int getSumNotToBust(int sum, List<Card> aces) {
+	private int sumNotToBust(int sum, List<Card> aces) {
 		for (Card ace : aces) {
 			sum += selectAceValue(sum, ace);
 		}
@@ -50,7 +54,7 @@ public class Cards {
 
 	private int selectAceValue(int sum, Card ace) {
 		validateNotAce(ace);
-		if (ace.getValue() + sum > MAX_CARD_VALUE) {
+		if (ace.getValue() + sum > BLACKJACK_NUMBER) {
 			return CardNumber.LOWER_ACE_VALUE;
 		}
 		return ace.getValue();
@@ -63,12 +67,12 @@ public class Cards {
 	}
 
 	public boolean isBlackJack() {
-		return this.size() == CARD_SIZE_BLACKJACK &&
-			this.sum() == MAX_CARD_VALUE;
+		return this.size() == BLACKJACK_SIZE &&
+			this.sum() == BLACKJACK_NUMBER;
 	}
 
 	public boolean isBust() {
-		return this.sum() > MAX_CARD_VALUE;
+		return this.sum() > BLACKJACK_NUMBER;
 	}
 
 	public boolean isGreaterThan(Cards cards) {
@@ -81,6 +85,10 @@ public class Cards {
 
 	public boolean isSame(Cards dealer) {
 		return this.sum() == dealer.sum();
+	}
+
+	public List<Card> open(int count) {
+		return values.subList(0, count);
 	}
 
 	public List<Card> getValues() {

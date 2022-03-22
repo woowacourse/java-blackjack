@@ -6,29 +6,31 @@ import java.util.function.BiPredicate;
 import blackjack.domain.card.Cards;
 
 public enum BlackJackResult {
-
-	WIN("승", (player, dealer) ->
-		(player.isBlackJack() && !dealer.isBlackJack()) ||
-			(!player.isBust() && dealer.isBust()) ||
+	
+	BLACKJACK_WIN( 1.5, (player, dealer) ->
+		player.isBlackJack() && !dealer.isBlackJack()
+	),
+	WIN( 1, (player, dealer) ->
+		(!player.isBust() && dealer.isBust()) ||
 			(!player.isBust() && !dealer.isBust() && player.isGreaterThan(dealer))
 	),
-	LOSE("패", (player, dealer) ->
+	LOSE( -1, (player, dealer) ->
 		player.isBust() ||
 			(!player.isBlackJack() && dealer.isBlackJack()) ||
 			(!player.isBust() && !dealer.isBust() && dealer.isGreaterThan(player))
 	),
-	DRAW("무", (player, dealer) ->
+	DRAW(0, (player, dealer) ->
 		(player.isBlackJack()) && dealer.isBlackJack() ||
 			(!player.isBlackJack() && !dealer.isBlackJack() && player.isSame(dealer))
 	);
 
 	private static final String NOT_EXIST_ERROR = "옯바른 결과를 찾을 수 없습니다.";
 
-	private final String value;
+	private final double profit;
 	private final BiPredicate<Cards, Cards> predicate;
 
-	BlackJackResult(String value, BiPredicate<Cards, Cards> predicate) {
-		this.value = value;
+	BlackJackResult(double profit, BiPredicate<Cards, Cards> predicate) {
+		this.profit = profit;
 		this.predicate = predicate;
 	}
 
@@ -39,17 +41,7 @@ public enum BlackJackResult {
 			.orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
 	}
 
-	public BlackJackResult getReverse() {
-		if (this == WIN) {
-			return LOSE;
-		}
-		if (this == LOSE) {
-			return WIN;
-		}
-		return DRAW;
-	}
-
-	public String getValue() {
-		return value;
+	public double getProfit() {
+		return profit;
 	}
 }
