@@ -21,7 +21,11 @@ public class Deck {
 
     public final LinkedList<Card> deck;
 
-    public Deck(LinkedList<Card> deck) {
+    public Deck(){
+        this.deck = initDeck();
+    }
+
+    Deck(LinkedList<Card> deck) {
         this.deck = deck;
     }
 

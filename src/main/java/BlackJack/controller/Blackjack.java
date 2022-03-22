@@ -22,7 +22,7 @@ public class Blackjack {
 
     public void run() {
         final Dealer dealer = new Dealer();
-        final Deck deck = new Deck(initDeck());
+        final Deck deck = new Deck();
         List<String> playerNames = InputView.inputPlayerNames();
         Map<String, Integer> bettingMoneys = getBettingMoneys(playerNames);
         final Players players = new Players(playerNames, bettingMoneys);
