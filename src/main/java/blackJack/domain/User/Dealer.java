@@ -1,26 +1,20 @@
 package blackJack.domain.User;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Dealer extends User {
 
+    public static final int INIT_BETTING_MONEY = 0;
     private static final int DEALER_ADD_CARD_LIMIT = 16;
 
     public Dealer() {
         super("딜러");
+        bettingMoney = new BettingMoney(INIT_BETTING_MONEY, true);
     }
-
-    public boolean checkBlackJack() {
-        List<String> openCardNumber = Arrays.asList("10", "K", "J", "Q");
-        if (openCardNumber.contains(cards.getDeck().get(0).getNumber().getDenomination())) {
-            return this.isBlackJack();
-        }
-        return false;
-    }
-
 
     public boolean isPossibleToAdd() {
         return this.getScore() < DEALER_ADD_CARD_LIMIT;
+    }
+
+    public String getFirstCard() {
+        return cards.getFirst();
     }
 }

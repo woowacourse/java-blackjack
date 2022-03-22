@@ -1,6 +1,7 @@
 package blackJack.controller;
 
-import blackJack.domain.Game;
+import blackJack.domain.Card.Deck;
+import blackJack.domain.Result.Result;
 import blackJack.domain.User.Dealer;
 import blackJack.domain.User.Player;
 import blackJack.domain.User.Players;
@@ -10,68 +11,80 @@ import blackJack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Blackjack {
 
+    private static final int HAND_OUT_COUNT = 2;
+
     public void run() {
-        List<String> inputPlayerNames = InputView.inputPlayerNames();
-        Game game = new Game(inputPlayerNames, new Dealer());
-        OutputView.printDrawMessage(inputPlayerNames);
-        OutputView.printTotalUserCards(game.getDealer(), game.getPlayers());
+        final Dealer dealer = new Dealer();
+        final Deck deck = new Deck();
+        List<String> playerNames = InputView.inputPlayerNames();
+        final Players players = initPlayers(playerNames);
 
-        checkDealerIsBlackJack(game);
+        handOutInitCard(dealer, players, deck);
 
-        playGame(game.getDealer(), game.getPlayers());
-        OutputView.printTotalResult(calculateDealerAndPlayersScore(game));
+        OutputView.printDrawMessage(playerNames);
+        OutputView.printTotalUserCards(dealer, players);
 
-        makeResults(game);
+        if (!dealer.isBlackJack()) {
+            playGame(dealer, players, deck);
+        }
 
+        Map<Player, Integer> playerResult = Result.makePlayerResult(dealer, players);
+        int dealerResult = Result.calculateDealerProfit(playerResult);
+
+        printProfit(dealer, playerResult, dealerResult);
+    }
+
+    private Players initPlayers(List<String> playerNames) {
+        List<Player> initPlayersWithBettingMoney = playerNames.stream()
+                .map((name) -> new Player(name, InputView.inputBettingMoney(name)))
+                .collect(Collectors.toList());
+        return new Players(initPlayersWithBettingMoney);
+    }
+
+    private void printProfit(Dealer dealer, Map<Player, Integer> playerResults, int dealerResult) {
         OutputView.printFinalResult(
-                game.getDealer().getName(),
-                game.getDealerScore(),
-                game.getPlayerScore()
+                dealer.getName(),
+                playerResults,
+                dealerResult
         );
     }
 
-    private List<User> calculateDealerAndPlayersScore(Game game) {
+    private List<User> makeUserList(Dealer dealer, Players players) {
         List<User> users = new ArrayList<>();
-        users.add(game.getDealer());
-        for (Player player : game.getPlayers().getPlayers()) {
+        users.add(dealer);
+        for (Player player : players.getPlayers()) {
             users.add(player);
         }
         return users;
     }
 
-    private void makeResults(Game game) {
-        game.makePlayerResult();
-        game.makeDealerResult(game.getPlayerScore());
-    }
-
-    private void checkDealerIsBlackJack(Game game) {
-        if (game.checkDealerIsBlackJack()) {
-            OutputView.printFinalResult(
-                    game.getDealer().getName(),
-                    game.getDealerScore(),
-                    game.getPlayerScore()
-            );
-        }
-    }
-
-    private void playGame(Dealer dealer, Players players) {
+    private void playGame(Dealer dealer, Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            addCardPerPlayer(player);
+            addCardPerPlayer(player, deck);
         }
         while (dealer.isPossibleToAdd()) {
             OutputView.printAddDealerCard();
-            dealer.requestCard();
+            dealer.requestCard(deck.getCard());
         }
+        OutputView.printTotalResult(makeUserList(dealer, players));
     }
 
-    private void addCardPerPlayer(Player player) {
-        while (InputView.askOneMoreCard(player)) {
-            player.requestCard();
+    private void addCardPerPlayer(Player player, Deck deck) {
+        while (player.isPossibleToAdd() && InputView.askOneMoreCard(player)) {
+            player.requestCard(deck.getCard());
             OutputView.printPlayerCard(player);
         }
     }
 
+    private void handOutInitCard(Dealer dealer, Players players, Deck deck) {
+        for (int i = 0; i < HAND_OUT_COUNT; i++) {
+            dealer.dealCard(deck.getCard());
+            players.dealCardToPlayers(deck);
+        }
+    }
 }
