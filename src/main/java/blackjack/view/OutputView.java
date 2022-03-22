@@ -67,8 +67,8 @@ public final class OutputView {
                 participant.getName(), getCardsState(participant.getCards()), participant.getPoint());
     }
 
-    public static void printDealerHit(boolean isPrint) {
-        if (isPrint) {
+    public static void printDealerHit(boolean isDealerHit) {
+        if (isDealerHit) {
             System.out.println(DEALER_CARD_ADDED_MESSAGE);
         }
     }
