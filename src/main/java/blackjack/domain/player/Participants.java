@@ -1,14 +1,17 @@
 package blackjack.domain.player;
 
+import blackjack.domain.result.Result;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants implements Iterable<Participant> {
 
-    public static final int MIN_PLAYER_NUMBER = 1;
-    public static final int MAX_PLAYER_NUMBER = 8;
-    private final List<Participant> participants;
+    private static final int MIN_PLAYER_NUMBER = 1;
+    private static final int MAX_PLAYER_NUMBER = 8;
+    private final Map<Participant, Money> participants;
 
     public Participants(final List<String> names) {
         checkNonNull(names);
@@ -16,8 +19,7 @@ public class Participants implements Iterable<Participant> {
         checkDuplicatedNames(names);
 
         participants = names.stream()
-                .map(Participant::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(Participant::new, money -> new Money(0),  (o1, o2) -> o1, LinkedHashMap::new));
     }
 
     private void checkNonNull(List<String> names) {
@@ -44,8 +46,17 @@ public class Participants implements Iterable<Participant> {
         }
     }
 
+    public void putBet(final Participant participant, final int bet) {
+        participants.computeIfPresent(participant, (key, value) -> new Money(bet));
+    }
+
+    public int getRevenue(Participant participant, Result result) {
+        Money bet = participants.get(participant);
+        return bet.getRevenue(result);
+    }
+
     @Override
     public Iterator<Participant> iterator() {
-        return participants.iterator();
+        return participants.keySet().iterator();
     }
 }

@@ -3,47 +3,53 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public abstract class Player {
 
-    private static final Pattern NON_SPECIAL_CHARACTERS = Pattern.compile("^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\\s]*$");
+    private static final int DIFFERENCE_IN_ACE_SCORE = 10;
+    private static final int BLACK_JACK_TARGET_SCORE = 21;
 
-    private final String name;
+    private final Name name;
     private final Cards cards;
 
     public Player(final String name) {
-        checkNameBlank(name);
-        checkNameSpecialCharacters(name);
-
-        this.name = name;
+        this.name = new Name(name);
         this.cards = new Cards(new ArrayList<>());
     }
 
     abstract public boolean canAddCard();
 
-    private void checkNameBlank(final String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 이름은 공백일 수 없습니다.");
-        }
-    }
-
-    private void checkNameSpecialCharacters(String name) {
-        if (!NON_SPECIAL_CHARACTERS.matcher(name).matches()) {
-            throw new IllegalArgumentException("[ERROR] 이름에는 특수문자가 들어갈 수 없습니다.");
-        }
-    }
-
     public void addCard(final Card card) {
         cards.addCard(card);
     }
 
-    public int getTotalScore() {
-        return cards.getTotalScore();
+    public int getTotal() {
+        int totalScore = cards.getTotalScore();
+
+        for (int i = 0; i < cards.countAce(); i++) {
+            totalScore = changeAceScore(totalScore);
+        }
+
+        return totalScore;
+    }
+
+    private int changeAceScore(int totalScore) {
+        if (totalScore > BLACK_JACK_TARGET_SCORE) {
+            totalScore -= DIFFERENCE_IN_ACE_SCORE;
+        }
+        return totalScore;
+    }
+
+    public boolean isBlackJack() {
+        return getTotal() == BLACK_JACK_TARGET_SCORE && cards.hasTwoCards();
+    }
+
+    public boolean isBust() {
+        return getTotal() > BLACK_JACK_TARGET_SCORE;
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public Cards getCards() {

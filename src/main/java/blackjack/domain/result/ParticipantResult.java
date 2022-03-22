@@ -1,46 +1,36 @@
 package blackjack.domain.result;
 
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participants;
 import blackjack.domain.player.Participant;
-import java.util.EnumMap;
+import blackjack.domain.player.Participants;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ParticipantResult {
 
-    private final Map<Participant, Result> results;
+    private final Map<Participant, Integer> yields;
 
     public ParticipantResult(final Dealer dealer, final Participants participants) {
-        results = getResults(dealer, participants);
+        yields = getYields(dealer, participants);
     }
 
-    private Map<Participant, Result> getResults(final Dealer dealer, final Participants participants) {
-        Map<Participant, Result> results = new LinkedHashMap<>();
-        final int dealerScore = dealer.getTotalScore();
+    private Map<Participant, Integer> getYields(final Dealer dealer, final Participants participants) {
+        Map<Participant, Integer> yields = new LinkedHashMap<>();
+
         for (Participant participant : participants) {
-            final int participantScore = participant.getTotalScore();
-            results.put(participant, Result.decide(dealerScore, participantScore));
+            Result result = Result.decide(dealer, participant);
+            yields.put(participant, participants.getRevenue(participant, result));
         }
-        return results;
+        return yields;
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        for (Result result : Result.values()) {
-            dealerResult.put(result, countDealerResult(result.getOpposite()));
-        }
-        return dealerResult;
+    public int getDealerYield() {
+        return (-1) * yields.values().stream()
+                .mapToInt(yield -> yield)
+                .sum();
     }
 
-    private int countDealerResult(final Result result) {
-        return (int) results.values()
-                .stream()
-                .filter(value -> value == result)
-                .count();
-    }
-
-    public Map<Participant, Result> getParticipantResult() {
-        return results;
+    public Map<Participant, Integer> getParticipantYields() {
+        return yields;
     }
 }

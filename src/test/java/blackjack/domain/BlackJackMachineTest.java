@@ -21,11 +21,11 @@ public class BlackJackMachineTest {
         participant.addCard(new Card(Denomination.THREE, Suit.SPADE));
         participant.addCard(new Card(Denomination.TWO, Suit.HEART));
 
-        int totalScore = participant.getTotalScore();
+        int totalScore = participant.getTotal();
 
         blackJackMachine.giveCardToPlayer(participant);
 
-        Assertions.assertThat(participant.getTotalScore()).isGreaterThan(totalScore);
+        Assertions.assertThat(participant.getTotal()).isGreaterThan(totalScore);
     }
 
     @Test
@@ -39,6 +39,6 @@ public class BlackJackMachineTest {
             blackJackMachine.giveCardToPlayer(dealer);
         }
 
-        Assertions.assertThat(dealer.getTotalScore()).isGreaterThan(16);
+        Assertions.assertThat(dealer.getTotal()).isGreaterThan(16);
     }
 }

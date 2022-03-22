@@ -28,6 +28,20 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public static int getBet(Participant participant) {
+        System.out.println(participant.getName() + "의 배팅 금액은?");
+        return getIntegerInput();
+    }
+
+    private static int getIntegerInput() {
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (IllegalArgumentException exception) {
+            System.out.println("[ERROR] 수를 입력해주세요.");
+            return getIntegerInput();
+        }
+    }
+
     public static Choice getChoice(Participant participant) {
         System.out.println(participant.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return Choice.from(scanner.nextLine());

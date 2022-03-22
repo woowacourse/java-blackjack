@@ -17,13 +17,29 @@ public class BlackJackController {
         final BlackJackMachine blackJackMachine = new BlackJackMachine(new CardDeck());
         final Dealer dealer = new Dealer();
         final Participants participants = getParticipants();
-
+        putBet(participants);
         giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
         askAndGiveCardsToParticipants(blackJackMachine, participants);
         giveCardsToDealer(blackJackMachine, dealer);
 
         calculateTotalScores(dealer, participants);
-        decideResults(dealer, participants);
+        decideYields(dealer, participants);
+    }
+
+    private void putBet(Participants participants) {
+        for (Participant participant : participants) {
+            putParticipantBet(participants, participant);
+        }
+    }
+
+    private void putParticipantBet(Participants participants, Participant participant) {
+        try {
+            int bet = InputView.getBet(participant);
+            participants.putBet(participant, bet);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            putParticipantBet(participants,participant);
+        }
     }
 
     private Participants getParticipants() {
@@ -84,13 +100,13 @@ public class BlackJackController {
     }
 
     private void calculateTotalScores(Dealer dealer, Participants participants) {
-        OutputView.printTotalScore(dealer, dealer.getTotalScore());
+        OutputView.printTotalScore(dealer, dealer.getTotal());
         for (Participant participant : participants) {
-            OutputView.printTotalScore(participant, participant.getTotalScore());
+            OutputView.printTotalScore(participant, participant.getTotal());
         }
     }
 
-    private void decideResults(final Dealer dealer, final Participants participants) {
+    private void decideYields(final Dealer dealer, final Participants participants) {
         final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
         OutputView.printResults(dealer, participantResult);
     }
