@@ -25,13 +25,12 @@ public class Players {
     }
 
     private void checkPlayerCountToPlayGame(int playerCount) {
-        if (isRangePlayerCount(playerCount)) {
+        boolean isLesserThanMinCount = playerCount < MIN_PLAYER_COUNT_TO_PLAY_GAME;
+        boolean isGreaterThanMaxCount = playerCount > MAX_PLAYER_COUNT_TO_PLAY_GAME;
+
+        if (isLesserThanMinCount || isGreaterThanMaxCount) {
             throw new IllegalArgumentException("게임을 하기 위한 플레이어 수는 1명이상 8명이하로 입력해주세요.");
         }
-    }
-
-    private boolean isRangePlayerCount(int playerCount) {
-        return playerCount < MIN_PLAYER_COUNT_TO_PLAY_GAME || playerCount > MAX_PLAYER_COUNT_TO_PLAY_GAME;
     }
 
     private void checkDuplicatePlayerName(final List<Player> playerNames) {
