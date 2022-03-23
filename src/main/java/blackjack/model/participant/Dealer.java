@@ -1,10 +1,8 @@
 package blackjack.model.participant;
 
-import blackjack.model.card.Card;
 import blackjack.model.game.DrawStrategy;
 import blackjack.model.game.GameSign;
 import blackjack.model.game.TurnProgress;
-import java.util.List;
 
 public class Dealer extends Participant {
     private static final String NAME = "딜러";
