@@ -21,9 +21,9 @@ public class InputView {
 
     public static List<String> inputPlayerNames() {
         System.out.println(INPUT_PLAYER_NAMES_MESSAGE);
-        String input = removeBlack(readLine());
+        String[] input = trim(readLine().split(PLAYER_NAME_DELIMITER));
         System.out.println();
-        return Arrays.asList(input.split(PLAYER_NAME_DELIMITER));
+        return Arrays.asList(input);
     }
 
     public static Map<String, BetMoney> inputBettingMoney(List<String> names) {
@@ -63,6 +63,13 @@ public class InputView {
 
     private static String readLine() {
         return scanner.nextLine();
+    }
+
+    private static String[] trim(String[] input) {
+        for (int i = 0; i < input.length; i++) {
+            input[i] = input[i].trim();
+        }
+        return input;
     }
 
     private static String removeBlack(String input) {
