@@ -36,15 +36,11 @@ public class Player extends Participant {
     }
 
     private boolean isNotStay(final GameSign gameSign) {
-        String sign = gameSign.choiceSignTo(name);
-        if (sign.equals("y")) {
-            return true;
-        }
-        if (sign.equals("n") || isFinished()) {
+        if (gameSign.isStaySign(name) || isFinished()) {
             this.state = state.stay();
             return false;
         }
-        throw new IllegalArgumentException("[ERROR] y 또는 n만 입력해주세요");
+        return true;
     }
 
     private boolean isFinished() {
