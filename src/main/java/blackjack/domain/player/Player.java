@@ -1,44 +1,39 @@
 package blackjack.domain.player;
 
-import blackjack.domain.DrawStatus;
-import blackjack.domain.GameResult;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.List;
 
 public class Player extends Participant {
 
-    private static final int MAX_SCORE_TO_RECEIVE_CARD = 21;
-    private static final int FIRST_OPEN_COUNT = 2;
+    private BettingMoney bettingMoney;
 
     public Player(String name, Cards cards) {
         super(name, cards);
     }
 
-    public GameResult findResult(Dealer dealer) {
-        return GameResult.findPlayerResult(this, dealer);
+    public void betMoney(int money) {
+        checkBetMoneyAlready();
+        this.bettingMoney = new BettingMoney(money);
     }
 
-    @Override
-    public List<Card> openFirstCards() {
-        return cards.getCards().subList(0, FIRST_OPEN_COUNT);
+    private void checkBetMoneyAlready() {
+        if (bettingMoney != null) {
+            throw new IllegalStateException("베팅은 한 번만 할 수 있습니다.");
+        }
     }
 
-    public boolean isPossibleToHit(DrawStatus drawStatus) {
-        return isRangeScoreToReceive() && isHit(drawStatus);
+    public void stay() {
+        state = state.stay();
     }
 
-    @Override
-    public boolean isRangeScoreToReceive() {
-        return cards.calculateScore() <= MAX_SCORE_TO_RECEIVE_CARD;
-    }
-
-    @Override
-    public boolean isBust() {
-        return cards.calculateScore() > MAX_BLACKJACK_SCORE;
+    public double findProfit(Dealer dealer) {
+        return state.profit(dealer, getBettingMoney());
     }
 
     public boolean isHit(DrawStatus drawStatus) {
         return drawStatus == DrawStatus.YES;
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
     }
 }

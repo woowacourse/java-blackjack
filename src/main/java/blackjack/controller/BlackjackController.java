@@ -1,14 +1,15 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.CardDeck;
-import blackjack.domain.CardDeckGenerator;
-import blackjack.domain.DrawStatus;
-import blackjack.domain.ParticipantResult;
+import blackjack.domain.ParticipantProfit;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.generator.RandomCardDeckGenerator;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.DrawStatus;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class BlackjackController {
 
@@ -23,20 +24,36 @@ public class BlackjackController {
     public void run() {
         final BlackjackGame blackjackGame = setUpBlackjackGame();
         playGame(blackjackGame);
-        announceGameResult(blackjackGame);
+        announceProfit(blackjackGame);
     }
 
     private BlackjackGame setUpBlackjackGame() {
-        final BlackjackGame blackjackGame = BlackjackGame.create(inputView.requestPlayerNamesToPlayGame(),
-                new CardDeck(new CardDeckGenerator()));
+        final BlackjackGame blackjackGame = BlackjackGame.create(requestPlayerNames(),
+                new CardDeck(new RandomCardDeckGenerator()));
+
+        betMoney(blackjackGame);
 
         outputView.printParticipantInitialCards(blackjackGame.getPlayers(), blackjackGame.getDealer());
         return blackjackGame;
     }
 
+    private List<String> requestPlayerNames() {
+        return inputView.requestPlayerNamesToPlayGame();
+    }
+
+    private void betMoney(BlackjackGame blackjackGame) {
+        for (Player player : blackjackGame.getPlayers()) {
+            player.betMoney(requestBettingMoney(player.getName()));
+        }
+    }
+
+    private int requestBettingMoney(String playerName) {
+        return inputView.requestPlayerBettingMoney(playerName);
+    }
+
     private void playGame(final BlackjackGame blackjackGame) {
         turnOfPlayer(blackjackGame);
-        turnOfDealer(blackjackGame, blackjackGame.getDealer());
+        turnOfDealer(blackjackGame);
     }
 
     private void turnOfPlayer(final BlackjackGame blackjackGame) {
@@ -46,9 +63,9 @@ public class BlackjackController {
     }
 
     private void processForPlayer(final BlackjackGame blackjackGame, final Player player) {
-        while (player.isPossibleToHit(requestDrawStatus(player.getName()))) {
-            blackjackGame.hit(player);
-            outputView.printPlayerCardStatus(player.getName(), player.getCards().getCards());
+        while (!player.isFinish()) {
+            blackjackGame.hitOrStayByPlayer(player, requestDrawStatus(player.getName()));
+            outputView.printPlayerCardStatus(player.getName(), player.getCards());
         }
     }
 
@@ -61,17 +78,19 @@ public class BlackjackController {
         }
     }
 
-    private void turnOfDealer(final BlackjackGame blackjackGame, Dealer dealer) {
+    private void turnOfDealer(final BlackjackGame blackjackGame) {
+        final Dealer dealer = blackjackGame.getDealer();
+
         while (dealer.isRangeScoreToReceive()) {
             outputView.printDealerDrawOneMoreCard();
-            blackjackGame.hit(dealer);
+            blackjackGame.hitByDealer();
         }
     }
 
-    private void announceGameResult(final BlackjackGame blackjackGame) {
-        ParticipantResult participantResult = blackjackGame.findGameResult();
+    private void announceProfit(final BlackjackGame blackjackGame) {
+        ParticipantProfit participantProfit = blackjackGame.findProfit();
 
         outputView.printAllPlayerCardStatus(blackjackGame.getPlayers(), blackjackGame.getDealer());
-        outputView.printGameResult(participantResult.getDealerResultCount(), participantResult.getPlayerResults());
+        outputView.printGameResult(participantProfit.getDealerProfit(), participantProfit.getPlayerProfit());
     }
 }

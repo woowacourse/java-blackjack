@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card.generator;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CardDeckGenerator {
+public class RandomCardDeckGenerator implements CardDeckGenerator{
 
     private static final List<Card> CARDS = initializeCardDeckByCardNumber();
 
@@ -25,8 +25,9 @@ public class CardDeckGenerator {
         }
     }
 
-    public LinkedList<Card> generate() {
-        LinkedList<Card> cards = new LinkedList<>(CARDS);
+    @Override
+    public List<Card> generate() {
+        List<Card> cards = new LinkedList<>(CARDS);
         Collections.shuffle(cards);
         return cards;
     }

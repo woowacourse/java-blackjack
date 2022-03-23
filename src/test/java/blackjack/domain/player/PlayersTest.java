@@ -3,8 +3,8 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.CardDeck;
-import blackjack.domain.CardDeckGenerator;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.generator.RandomCardDeckGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,7 +20,7 @@ class PlayersTest {
     @MethodSource("providePlayerNames")
     @DisplayName("플레이어의 수가 1 ~ 8 명이 아니면, 예외를 발생한다.")
     void checkPlayerCountToPlayGame(List<String> playerNames) {
-        CardDeck cardDeck = new CardDeck(new CardDeckGenerator());
+        final CardDeck cardDeck = new CardDeck(new RandomCardDeckGenerator());
 
         assertThatThrownBy(() -> Players.of(playerNames, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -37,9 +37,8 @@ class PlayersTest {
     @Test
     @DisplayName("플레이어의 이름이 중복이면, 예외를 발생한다.")
     void checkDuplicatePlayerNames() {
-        CardDeck cardDeck = new CardDeck(new CardDeckGenerator());
-
-        List<String> playerNames = new ArrayList<>(List.of("slow", "slow", "pobi"));
+        final CardDeck cardDeck = new CardDeck(new RandomCardDeckGenerator());
+        final List<String> playerNames = new ArrayList<>(List.of("slow", "slow", "pobi"));
 
         assertThatThrownBy(() -> Players.of(playerNames, cardDeck))
                 .isInstanceOf(IllegalArgumentException.class)

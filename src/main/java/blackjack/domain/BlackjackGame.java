@@ -1,8 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
+import blackjack.domain.player.DrawStatus;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
@@ -31,16 +32,24 @@ public class BlackjackGame {
         return new Dealer(cardDeck.drawInitialCards());
     }
 
-    public void hit(final Participant participant) {
-        participant.hit(drawCard());
+    public void hitOrStayByPlayer(final Player player, DrawStatus drawStatus) {
+        if (player.isHit(drawStatus)) {
+            player.receiveCard(drawCard());
+            return;
+        }
+        player.stay();
+    }
+
+    public void hitByDealer() {
+        dealer.receiveCard(drawCard());
     }
 
     private Card drawCard() {
         return cardDeck.draw();
     }
 
-    public ParticipantResult findGameResult() {
-        return ParticipantResult.create(dealer, players.getPlayers());
+    public ParticipantProfit findProfit() {
+        return ParticipantProfit.create(dealer, players.getPlayers());
     }
 
     public List<Player> getPlayers() {

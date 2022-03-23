@@ -2,19 +2,19 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 import java.util.List;
 
 public abstract class Participant {
 
-    protected static final int MAX_BLACKJACK_SCORE = 21;
-
     private final String name;
-    protected final Cards cards;
+    protected State state;
 
     public Participant(String name, Cards cards) {
         checkEmptyName(name);
         this.name = name;
-        this.cards = cards;
+        this.state = StateFactory.createFirstState(cards);
     }
 
     private void checkEmptyName(String name) {
@@ -23,29 +23,39 @@ public abstract class Participant {
         }
     }
 
-    public void hit(Card card) {
-        cards.addCard(card);
+    public boolean isBlackjack() {
+        return state.cards().isBlackjack();
+    }
+
+    public boolean isBust() {
+        return state.cards().isBust();
+    }
+
+    public boolean isFinish() {
+        return state.isFinished();
+    }
+
+    public void receiveCard(Card card) {
+        state = state.draw(card);
     }
 
     public int calculateScore() {
-        return cards.calculateScore();
+        return state.cards().calculateScore();
     }
 
     public List<Card> openAllOfCards() {
-        return cards.getCards();
+        return getCards();
+    }
+
+    public List<Card> getCards() {
+        return state.cards().getCards();
     }
 
     public String getName() {
         return name;
     }
 
-    public Cards getCards() {
-        return cards;
+    public State getState() {
+        return state;
     }
-
-    public abstract List<Card> openFirstCards();
-
-    public abstract boolean isRangeScoreToReceive();
-
-    public abstract boolean isBust();
 }

@@ -29,7 +29,7 @@ class DealerTest {
         Dealer dealer = new Dealer(new Cards(firstDrawTwoCards));
         final Card expected = firstDrawTwoCards.get(0);
 
-        final Card actual = dealer.openFirstCards().get(0);
+        final Card actual = dealer.openFirstCards();
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -41,9 +41,9 @@ class DealerTest {
         Dealer dealer = new Dealer(cards);
         final Card card = new Card(CardPattern.DIAMOND, CardNumber.SIX);
 
-        dealer.hit(card);
+        dealer.receiveCard(card);
 
-        assertThat(dealer.getCards().getCards()).contains(card);
+        assertThat(dealer.getCards()).contains(card);
     }
 
     private List<Card> firstDrawTwoCards() {
