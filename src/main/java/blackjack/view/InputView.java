@@ -10,6 +10,8 @@ public class InputView {
     private static final String INPUT_PLAYER_BETTING = "%s의 베팅 금액은?%n";
     private static final String PLAYER_INPUT_SIGN_FORMAT = "%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String NAME_DELIMITER = ",";
+    private static final String HIT_SIGN = "y";
+    private static final String STAY_SIGN = "n";
 
     private final static Scanner SCANNER = new Scanner(System.in);
 
@@ -52,8 +54,19 @@ public class InputView {
         }
     }
 
-    public static String inputSign(final String name) {
+    public static boolean inputSign(final String name) {
         System.out.printf(PLAYER_INPUT_SIGN_FORMAT, name);
-        return SCANNER.nextLine();
+        String sign = SCANNER.nextLine();
+        return parseToBoolean(sign);
+    }
+
+    private static boolean parseToBoolean(String sign) {
+        if (sign.equals(STAY_SIGN)) {
+            return true;
+        }
+        if (sign.equals(HIT_SIGN)) {
+            return false;
+        }
+        throw new IllegalArgumentException("[ERROR] y 또는 n만 입력해주세요");
     }
 }
