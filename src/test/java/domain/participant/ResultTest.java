@@ -23,7 +23,7 @@ public class ResultTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.of(Name.from("kun"), 3000);
+        player = new Player(Name.from("kun"), "3000");
         dealer = new Dealer();
     }
 
@@ -86,8 +86,8 @@ public class ResultTest {
             Card.valueOf(Symbol.CLOVER, Denomination.SEVEN),
             Card.valueOf(Symbol.DIAMOND, Denomination.TWO)));
         Deck deck2 = Deck.initDeck(Arrays.asList(Card.valueOf(Symbol.CLOVER, Denomination.SEVEN),
-            Card.valueOf(Symbol.HEART, Denomination.FIVE),
-            Card.valueOf(Symbol.SPADE, Denomination.QUEEN)));
+            Card.valueOf(Symbol.HEART, Denomination.EIGHT),
+            Card.valueOf(Symbol.SPADE, Denomination.SEVEN)));
         player.receiveInitialTwoCards(deck1);
         dealer.receiveInitialTwoCards(deck2);
         player.hit(deck1);
@@ -108,7 +108,7 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("플레이어가 BLACKJACK이고 딜러가 BLACKJACK이 아닌 경우에 WIN을 반환한다.")
+    @DisplayName("플레이어가 BLACKJACK이고 딜러가 BLACKJACK이 아닌 경우에 BLACKJACK을 반환한다.")
     void judgeResultTest_playerIsOnlyBlackJack() {
         Deck deck1 = Deck.initDeck(Arrays.asList(Card.valueOf(Symbol.DIAMOND, Denomination.JACK),
             Card.valueOf(Symbol.CLOVER, Denomination.ACE)));
@@ -116,7 +116,7 @@ public class ResultTest {
             Card.valueOf(Symbol.HEART, Denomination.THREE)));
         player.receiveInitialTwoCards(deck1);
         dealer.receiveInitialTwoCards(deck2);
-        assertThat(Result.judgeResult(player, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.judgeResult(player, dealer)).isEqualTo(Result.BLACKJACK);
     }
 
     @Test
