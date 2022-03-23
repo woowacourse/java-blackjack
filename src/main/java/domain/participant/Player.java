@@ -9,17 +9,9 @@ public final class Player extends Participant {
 
     private final BettingMoney money;
 
-    private Player(Name name, int money) {
+    public Player(Name name, String money) {
         super(name);
-        this.money = BettingMoney.from(money);
-    }
-
-    public static Player of(Name name, int money) {
-        return new Player(name, money);
-    }
-
-    public static Player of(Name name, String money) {
-        return of(name, Integer.parseInt(money));
+        this.money = BettingMoney.from(Integer.parseInt(money));
     }
 
     public Result receiveResult(Dealer dealer) {

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.MethodSource;
 import utils.ExceptionMessages;
 
@@ -26,18 +27,17 @@ class PlayerTest {
 
     @BeforeEach
     void init() {
-        player = Player.of(Name.from("test"), 3000);
+        player = new Player(Name.from("test"), "3000");
         dealer = new Dealer();
         deck = Deck.initDeck(Card.values());
     }
 
 
-    @Test
+    @ParameterizedTest
+    @EmptySource
     @DisplayName("이름이 공백인 경우 예외를 발생한다.")
-    void playerEmptyNameTest() {
-        String name = "";
-
-        assertThatThrownBy(() -> Player.of(Name.from(name), 2000 ))
+    void playerEmptyNameTest(String name) {
+        assertThatThrownBy(() -> new Player(Name.from(name), "2000" ))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }
