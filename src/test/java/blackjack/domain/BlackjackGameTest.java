@@ -26,7 +26,8 @@ public class BlackjackGameTest {
     @DisplayName("게임에 참여할 사람들의 이름을 입력받으면 블랙잭 게임을 시작한다.")
     void start() {
         BlackjackGame blackjackGame = new BlackjackGame();
-        Players players = blackjackGame.start(List.of("pobi", "jason"));
+        blackjackGame.start(List.of("pobi", "jason"));
+        Players players = blackjackGame.getPlayers();
 
         assertThat(players.hasPlayerName("pobi")).isTrue();
         assertThat(players.hasPlayerName("jason")).isTrue();
@@ -37,7 +38,9 @@ public class BlackjackGameTest {
     void take_init_hand() {
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.start(List.of("pobi", "jason"));
-        ResponseInitHandDto initHandDto = blackjackGame.takeInitHand(new OnlyTenSpadePickDeck());
+        blackjackGame.takeInitHand(new OnlyTenSpadePickDeck());
+        ResponseInitHandDto initHandDto
+                = new ResponseInitHandDto(blackjackGame.getDealer(), blackjackGame.getPlayers());
 
         assertThat(initHandDto.getDealer().getCards().get()).hasSize(2);
         assertThat(initHandDto.getPlayers().get().get(0).getCards().get()).hasSize(2);
@@ -59,7 +62,8 @@ public class BlackjackGameTest {
     void take_dealer_card() {
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.start(List.of("pobi", "jason"));
-        User dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
+        blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
+        User dealer = blackjackGame.getDealer();
 
         assertThat(dealer.getScore()).isEqualTo(10);
     }
@@ -68,7 +72,8 @@ public class BlackjackGameTest {
     @DisplayName("calculateCardResult 메서드는 현재 유저들의 카드 결과를 계산한다.")
     void calculate_card_result() {
         BlackjackGame blackjackGame = new BlackjackGame();
-        Players players = blackjackGame.start(List.of("pobi", "jason"));
+        blackjackGame.start(List.of("pobi", "jason"));
+        Players players = blackjackGame.getPlayers();
         players.get()
                 .stream()
                 .forEach(player -> blackjackGame.takePlayerCard(player, new OnlyTenSpadePickDeck()));
@@ -81,7 +86,8 @@ public class BlackjackGameTest {
     @DisplayName("calculateProfit 메서드는 최종 수익을 계산한다.")
     void calculate_profit() {
         BlackjackGame blackjackGame = new BlackjackGame();
-        Players players = blackjackGame.start(List.of("pobi"));
+        blackjackGame.start(List.of("pobi"));
+        Players players = blackjackGame.getPlayers();
         players.get()
                 .stream()
                 .forEach(player -> blackjackGame.takePlayerCard(player, new OnlyTenSpadePickDeck()));
@@ -120,8 +126,9 @@ public class BlackjackGameTest {
     void is_dealer_finished_true() {
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.start(List.of("pobi", "jason"));
-        User dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
-        dealer.hit(Card.of(CardNumber.SEVEN, CardType.DIAMOND));
+
+        blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
+        blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
 
         assertThat(blackjackGame.isDealerFinished()).isTrue();
     }
@@ -131,8 +138,7 @@ public class BlackjackGameTest {
     void is_dealer_finished_false() {
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.start(List.of("pobi", "jason"));
-        User dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
-        dealer.hit(Card.of(CardNumber.SIX, CardType.DIAMOND));
+        blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
 
         assertThat(blackjackGame.isDealerFinished()).isFalse();
     }

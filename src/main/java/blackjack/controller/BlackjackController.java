@@ -4,6 +4,7 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.deck.Deck;
 import blackjack.domain.card.deck.RandomDeck;
+import blackjack.domain.dto.ResponseInitHandDto;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 import blackjack.view.InputView;
@@ -19,8 +20,10 @@ public class BlackjackController {
         BlackjackGame blackjackGame = new BlackjackGame();
         Deck deck = new RandomDeck();
 
-        Players players = blackjackGame.start(names);
-        ResultView.printInitHand(blackjackGame.takeInitHand(deck));
+        blackjackGame.start(names);
+        Players players = blackjackGame.getPlayers();
+        blackjackGame.takeInitHand(deck);
+        ResultView.printInitHand(new ResponseInitHandDto(blackjackGame.getDealer(), blackjackGame.getPlayers()));
 
         takeTurns(blackjackGame, players, deck);
         takeDealerTurn(blackjackGame, deck);

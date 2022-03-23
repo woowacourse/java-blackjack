@@ -5,7 +5,6 @@ import blackjack.domain.bet.Bets;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.deck.Deck;
 import blackjack.domain.dto.ResponseCardResultDto;
-import blackjack.domain.dto.ResponseInitHandDto;
 import blackjack.domain.dto.ResponseProfitDto;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -22,32 +21,22 @@ public class BlackjackGame {
     private Players players;
     private User dealer;
 
-    public Players start(List<String> names) {
-        List<Player> players = names.stream()
-                .map(UserName::new)
-                .map(Player::new)
-                .collect(Collectors.toList());
-        this.players = new Players(players);
-        this.dealer = new Dealer();
-
-        return this.players;
+    public void start(List<String> names) {
+        createPlayers(names);
+        createDealer();
     }
 
-    public ResponseInitHandDto takeInitHand(Deck deck) {
+    public void takeInitHand(Deck deck) {
         dealer.takeInitHand(deck);
         players.takeInitHand(deck);
-
-        return new ResponseInitHandDto(dealer, players);
     }
 
-    public User takePlayerCard(User player, Deck deck) {
+    public void takePlayerCard(User player, Deck deck) {
         player.hit(deck.pick());
-        return player;
     }
 
-    public User takeDealerCard(Deck deck) {
+    public void takeDealerCard(Deck deck) {
         dealer.hit(deck.pick());
-        return dealer;
     }
 
     public ResponseCardResultDto calculateCardResult() {
@@ -78,5 +67,25 @@ public class BlackjackGame {
 
     public boolean isDealerFinished() {
         return !dealer.isValidRange();
+    }
+
+    private void createPlayers(List<String> names) {
+        List<Player> players = names.stream()
+                .map(UserName::new)
+                .map(Player::new)
+                .collect(Collectors.toList());
+        this.players = new Players(players);
+    }
+
+    private void createDealer() {
+        this.dealer = new Dealer();
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public User getDealer() {
+        return dealer;
     }
 }
