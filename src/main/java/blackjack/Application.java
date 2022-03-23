@@ -10,8 +10,9 @@ public class Application {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames(), InputView::inputBet);
         blackjackGame.start();
         OutputView.printStartResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        blackjackGame.hitToParticipants(InputView::inputSign, OutputView::printTurnResult);
-        OutputView.printFinishResult(blackjackGame.getParticipants());
+        blackjackGame.hitToPlayers(InputView::inputSign, OutputView::printPlayerTurnResult);
+        OutputView.printDealerTurnResult(blackjackGame.getDealer());
+        OutputView.printFinishResult(blackjackGame.getParticipant());
         OutputView.printBettingResult(blackjackGame.createBettingResult());
     }
 }

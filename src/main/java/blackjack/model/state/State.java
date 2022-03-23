@@ -23,4 +23,6 @@ public interface State {
     boolean isBust();
 
     boolean isBlackjack();
+
+    int getAddedCardCount();
 }

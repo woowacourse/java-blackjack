@@ -26,4 +26,9 @@ public abstract class Created implements State {
     public int getScore() {
         return cards.sumScore();
     }
+
+    @Override
+    public int getAddedCardCount() {
+        return cards.getAddedCardCount();
+    }
 }

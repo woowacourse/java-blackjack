@@ -14,6 +14,7 @@ public class OutputView {
     private static final String PARTICIPANT_PROFIT_PRINT_FORMAT = ": %d";
 
     private static final String JOINER = ", ";
+    public static final String DEALER_ADDED_CARD_PRINT_FORMAT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
 
     public static void printStartResult(Participant dealer, List<Participant> players) {
         System.out.printf(DEALER_NAME_PRINT_FORMAT, dealer.getName());
@@ -41,9 +42,14 @@ public class OutputView {
                 .collect(Collectors.joining(JOINER));
     }
 
-    public static void printTurnResult(Participant participant) {
-        printNameResult(participant.getName());
-        printCardsResult(participant.getCards());
+    public static void printPlayerTurnResult(Participant player) {
+        printNameResult(player.getName());
+        printCardsResult(player.getCards());
+        System.out.println();
+    }
+
+    public static void printDealerTurnResult(Participant dealer) {
+        System.out.printf(DEALER_ADDED_CARD_PRINT_FORMAT, dealer.getAddedCardCount());
         System.out.println();
     }
 

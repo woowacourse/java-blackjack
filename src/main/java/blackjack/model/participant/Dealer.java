@@ -17,7 +17,6 @@ public class Dealer extends Participant {
         while (this.state.isHitAble() && isNotStay()) {
             this.state = this.state.add(drawStrategy.draw());
         }
-        turnProgress.show(this);
     }
 
     @Override

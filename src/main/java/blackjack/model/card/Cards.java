@@ -50,4 +50,8 @@ public class Cards {
         return values.stream()
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public int getAddedCardCount() {
+        return values.size() - START_CARD_COUNT;
+    }
 }

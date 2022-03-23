@@ -19,7 +19,7 @@ public class BlackjackGame {
         participants.drawFrom(cardDeck);
     }
 
-    public void hitToParticipants(final GameSign gameSign, final TurnProgress turnProgress) {
+    public void hitToPlayers(final GameSign gameSign, final TurnProgress turnProgress) {
         participants.hitFrom(cardDeck, gameSign, turnProgress);
     }
 
@@ -31,11 +31,11 @@ public class BlackjackGame {
         return participants.getPlayers();
     }
 
-    public List<Participant> getParticipants() {
-        return participants.getParticipants();
-    }
-
     public BettingResult createBettingResult() {
         return participants.createBettingResult();
+    }
+
+    public List<Participant> getParticipant() {
+        return participants.getParticipants();
     }
 }

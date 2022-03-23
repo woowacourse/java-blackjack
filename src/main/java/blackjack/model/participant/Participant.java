@@ -43,4 +43,8 @@ public abstract class Participant {
     public List<Card> getFirstCard() {
         return List.of(state.getCards().get(0));
     }
+
+    public int getAddedCardCount() {
+        return state.getAddedCardCount();
+    }
 }
