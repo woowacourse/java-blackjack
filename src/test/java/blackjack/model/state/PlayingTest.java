@@ -10,25 +10,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.Cards;
 import blackjack.model.state.finished.Bust;
 import blackjack.model.state.finished.Stay;
-import blackjack.model.state.running.HitAble;
+import blackjack.model.state.running.Playing;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class HitAbleTest {
+class PlayingTest {
 
     @DisplayName("카드를 한장 추가하고 카드 점수 합이 21 미만이면 Hit다.")
     @Test
     void hit() {
-        State state = new HitAble(new Cards(List.of(CLOVER_EIGHT, CLOVER_TWO))).add(CLOVER_JACK);
+        State state = new Playing(new Cards(List.of(CLOVER_EIGHT, CLOVER_TWO))).add(CLOVER_JACK);
 
-        assertThat(state).isInstanceOf(HitAble.class);
+        assertThat(state).isInstanceOf(Playing.class);
     }
 
     @DisplayName("카드를 한장 추가하고 카드 점수 합이 21 이면 Stay다.")
     @Test
     void stay() {
-        State state = new HitAble(new Cards(List.of(CLOVER_EIGHT, CLOVER_TWO))).add(CLOVER_ACE);
+        State state = new Playing(new Cards(List.of(CLOVER_EIGHT, CLOVER_TWO))).add(CLOVER_ACE);
 
         assertThat(state).isInstanceOf(Stay.class);
     }
@@ -36,7 +36,7 @@ class HitAbleTest {
     @DisplayName("카드를 한장 추가하고 카드 점수 합이 21을 넘으면 Bust다.")
     @Test
     void bust() {
-        State state = new HitAble(new Cards(List.of(CLOVER_KING, CLOVER_TWO))).add(CLOVER_JACK);
+        State state = new Playing(new Cards(List.of(CLOVER_KING, CLOVER_TWO))).add(CLOVER_JACK);
 
         assertThat(state).isInstanceOf(Bust.class);
     }

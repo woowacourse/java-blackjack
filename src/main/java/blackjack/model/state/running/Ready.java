@@ -23,7 +23,7 @@ public final class Ready extends Running {
             return new Blackjack(cards);
         }
         if (cards.canHit()) {
-            return new HitAble(cards);
+            return new Playing(cards);
         }
         return new Ready(cards);
     }
