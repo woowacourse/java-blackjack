@@ -8,13 +8,9 @@ public final class BettingMoney {
 
     private final int money;
 
-    private BettingMoney(final int money) {
+    public BettingMoney(final int money) {
         validatePositiveMoney(money);
         this.money = money;
-    }
-
-    public static BettingMoney from(int money) {
-        return new BettingMoney(money);
     }
 
     private void validatePositiveMoney(int money) {

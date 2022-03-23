@@ -11,7 +11,7 @@ public final class Player extends Participant {
 
     public Player(Name name, String money) {
         super(name);
-        this.money = BettingMoney.from(Integer.parseInt(money));
+        this.money = new BettingMoney(Integer.parseInt(money));
     }
 
     public Result receiveResult(Dealer dealer) {
