@@ -13,7 +13,7 @@ public class DealerTest {
     @Test
     @DisplayName("Dealer 클래스는 딜러라는 이름을 가지고 정상적으로 생성된다.")
     void create_dealer() {
-        Dealer dealer = new Dealer();
+        User dealer = new Dealer();
 
         assertThat(dealer.getName().get()).isEqualTo("딜러");
     }
@@ -21,7 +21,7 @@ public class DealerTest {
     @Test
     @DisplayName("isValidRange 메서드는 카드의 총합이 16 이하면 true를 반환한다.")
     void validate_range_true() {
-        Dealer dealer = new Dealer();
+        User dealer = new Dealer();
         dealer.hit(Card.of(CardNumber.SIX, CardType.CLOVER));
         dealer.hit(Card.of(CardNumber.TEN, CardType.SPADE));
 
@@ -31,7 +31,7 @@ public class DealerTest {
     @Test
     @DisplayName("isValidRange 메서드는 카드의 총합이 17 이상이면 false를 반환한다.")
     void validate_range_false() {
-        Dealer dealer = new Dealer();
+        User dealer = new Dealer();
         dealer.hit(Card.of(CardNumber.SEVEN, CardType.CLOVER));
         dealer.hit(Card.of(CardNumber.TEN, CardType.SPADE));
 

@@ -10,6 +10,7 @@ import blackjack.domain.dto.ResponseProfitDto;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 import blackjack.domain.user.UserName;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class BlackjackGame {
 
     private Players players;
-    private Dealer dealer;
+    private User dealer;
 
     public Players start(List<String> names) {
         List<Player> players = names.stream()
@@ -39,12 +40,12 @@ public class BlackjackGame {
         return new ResponseInitHandDto(dealer, players);
     }
 
-    public Player takePlayerCard(Player player, Deck deck) {
+    public User takePlayerCard(User player, Deck deck) {
         player.hit(deck.pick());
         return player;
     }
 
-    public Dealer takeDealerCard(Deck deck) {
+    public User takeDealerCard(Deck deck) {
         dealer.hit(deck.pick());
         return dealer;
     }
@@ -52,7 +53,7 @@ public class BlackjackGame {
     public ResponseCardResultDto calculateCardResult() {
         Map<String, Hand> results = new LinkedHashMap<>();
         results.put(dealer.getName().get(), dealer.getCards());
-        for (Player player : players.get()) {
+        for (User player : players.get()) {
             results.put(player.getName().get(), player.getCards());
         }
 
@@ -62,7 +63,7 @@ public class BlackjackGame {
     public ResponseProfitDto calculateProfit(Map<String, BetMoney> playerNameAndBets) {
         Map<String, Integer> playersProfit = new LinkedHashMap<>();
         Bets bets = new Bets(playerNameAndBets);
-        for (Player player : players.get()) {
+        for (User player : players.get()) {
             double profit = bets.calculatePlayerProfit(dealer, player);
             playersProfit.put(player.getName().get(), (int) profit);
         }
@@ -71,7 +72,7 @@ public class BlackjackGame {
         return new ResponseProfitDto(dealerProfit, playersProfit);
     }
 
-    public boolean isPlayerFinished(Player player) {
+    public boolean isPlayerFinished(User player) {
         return !player.isValidRange();
     }
 

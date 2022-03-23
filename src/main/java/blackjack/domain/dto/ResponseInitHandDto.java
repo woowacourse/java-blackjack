@@ -1,19 +1,19 @@
 package blackjack.domain.dto;
 
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 
 public class ResponseInitHandDto {
 
-    private final Dealer dealer;
+    private final User dealer;
     private final Players players;
 
-    public ResponseInitHandDto(Dealer dealer, Players players) {
+    public ResponseInitHandDto(User dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    public Dealer getDealer() {
+    public User getDealer() {
         return dealer;
     }
 

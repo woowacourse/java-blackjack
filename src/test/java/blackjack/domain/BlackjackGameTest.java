@@ -10,9 +10,9 @@ import blackjack.domain.card.deck.OnlyTenSpadePickDeck;
 import blackjack.domain.dto.ResponseCardResultDto;
 import blackjack.domain.dto.ResponseInitHandDto;
 import blackjack.domain.dto.ResponseProfitDto;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 import blackjack.domain.user.UserName;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -48,7 +48,7 @@ public class BlackjackGameTest {
     @DisplayName("takePlayerCard 메서드는 플레이어가 한장의 카드를 뽑게 한다.")
     void take_player_card() {
         BlackjackGame blackjackGame = new BlackjackGame();
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         blackjackGame.takePlayerCard(player, new OnlyTenSpadePickDeck());
 
         assertThat(player.getScore()).isEqualTo(10);
@@ -59,7 +59,7 @@ public class BlackjackGameTest {
     void take_dealer_card() {
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.start(List.of("pobi", "jason"));
-        Dealer dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
+        User dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
 
         assertThat(dealer.getScore()).isEqualTo(10);
     }
@@ -97,7 +97,7 @@ public class BlackjackGameTest {
     @DisplayName("isPlayerFinished 메서드는 플레이어의 카드의 총합이 21 이상이면 끝났다고 판단한다.")
     void is_player_finished_true() {
         BlackjackGame blackjackGame = new BlackjackGame();
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.ACE, CardType.DIAMOND));
         player.hit(Card.of(CardNumber.TEN, CardType.HEART));
 
@@ -108,7 +108,7 @@ public class BlackjackGameTest {
     @DisplayName("isPlayerFinished 메서드는 플레이어의 카드의 총합이 20 이하면 끝나지 않았다고 판단한다.")
     void is_player_finished_false() {
         BlackjackGame blackjackGame = new BlackjackGame();
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));
         player.hit(Card.of(CardNumber.TEN, CardType.HEART));
 
@@ -120,7 +120,7 @@ public class BlackjackGameTest {
     void is_dealer_finished_true() {
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.start(List.of("pobi", "jason"));
-        Dealer dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
+        User dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
         dealer.hit(Card.of(CardNumber.SEVEN, CardType.DIAMOND));
 
         assertThat(blackjackGame.isDealerFinished()).isTrue();
@@ -131,7 +131,7 @@ public class BlackjackGameTest {
     void is_dealer_finished_false() {
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.start(List.of("pobi", "jason"));
-        Dealer dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
+        User dealer = blackjackGame.takeDealerCard(new OnlyTenSpadePickDeck());
         dealer.hit(Card.of(CardNumber.SIX, CardType.DIAMOND));
 
         assertThat(blackjackGame.isDealerFinished()).isFalse();

@@ -4,8 +4,8 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.bet.BetMoney;
 import blackjack.domain.card.deck.Deck;
 import blackjack.domain.card.deck.RandomDeck;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;
@@ -30,12 +30,12 @@ public class BlackjackController {
     }
 
     private void takeTurns(BlackjackGame blackjackGame, Players players, Deck deck) {
-        for (Player player : players.get()) {
+        for (User player : players.get()) {
             takePlayerCards(blackjackGame, player, deck);
         }
     }
 
-    private void takePlayerCards(BlackjackGame blackjackGame, Player player, Deck deck) {
+    private void takePlayerCards(BlackjackGame blackjackGame, User player, Deck deck) {
         if (blackjackGame.isPlayerFinished(player) || InputView.requestIsStay(player)) {
             return;
         }

@@ -22,7 +22,7 @@ public class PlayerTest {
     @Test
     @DisplayName("isValidRange 메서드는 카드의 총합이 20 이하면 true를 반환한다.")
     void validate_range_true() {
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.TEN, CardType.SPADE));
         player.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));
 
@@ -32,7 +32,7 @@ public class PlayerTest {
     @Test
     @DisplayName("isValidRange 메서드는 카드의 총합이 21 이상이면 false를 반환한다.")
     void validate_range_false() {
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.SEVEN, CardType.CLOVER));
         player.hit(Card.of(CardNumber.FIVE, CardType.SPADE));
         player.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));

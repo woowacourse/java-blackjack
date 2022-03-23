@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.bet.BetMoney;
-import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -48,7 +48,7 @@ public class InputView {
         }
     }
 
-    public static boolean requestIsStay(Player player) {
+    public static boolean requestIsStay(User player) {
         try {
             System.out.println(player.getName().get() + INPUT_HIT_OR_STAY_MESSAGE);
             String answer = toLowerCase(removeBlack(readLine()));

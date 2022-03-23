@@ -7,6 +7,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import blackjack.domain.user.UserName;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class BetsTest {
         dealer.hit(Card.of(CardNumber.SEVEN, CardType.CLOVER));
         dealer.hit(Card.of(CardNumber.TEN, CardType.SPADE));
 
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.TEN, CardType.CLOVER));
         player.hit(Card.of(CardNumber.TEN, CardType.SPADE));
         player.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));
@@ -48,7 +49,7 @@ public class BetsTest {
         dealer.hit(Card.of(CardNumber.FIVE, CardType.SPADE));
         dealer.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));
 
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.TEN, CardType.CLOVER));
         player.hit(Card.of(CardNumber.TEN, CardType.SPADE));
 
@@ -63,7 +64,7 @@ public class BetsTest {
         dealer.hit(Card.of(CardNumber.FIVE, CardType.SPADE));
         dealer.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));
 
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.TEN, CardType.CLOVER));
         player.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));
         player.hit(Card.of(CardNumber.TEN, CardType.SPADE));
@@ -78,7 +79,7 @@ public class BetsTest {
         dealer.hit(Card.of(CardNumber.ACE, CardType.CLOVER));
         dealer.hit(Card.of(CardNumber.KING, CardType.SPADE));
 
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.TEN, CardType.CLOVER));
         player.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));
 
@@ -92,7 +93,7 @@ public class BetsTest {
         dealer.hit(Card.of(CardNumber.TEN, CardType.CLOVER));
         dealer.hit(Card.of(CardNumber.TEN, CardType.SPADE));
 
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.ACE, CardType.CLOVER));
         player.hit(Card.of(CardNumber.JACK, CardType.DIAMOND));
 
@@ -106,7 +107,7 @@ public class BetsTest {
         dealer.hit(Card.of(CardNumber.ACE, CardType.CLOVER));
         dealer.hit(Card.of(CardNumber.KING, CardType.SPADE));
 
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.ACE, CardType.CLOVER));
         player.hit(Card.of(CardNumber.JACK, CardType.DIAMOND));
 
@@ -121,7 +122,7 @@ public class BetsTest {
         dealer.hit(Card.of(CardNumber.TEN, CardType.SPADE));
         dealer.hit(Card.of(CardNumber.THREE, CardType.DIAMOND));
 
-        Player player = new Player(new UserName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(Card.of(CardNumber.SEVEN, CardType.CLOVER));
         player.hit(Card.of(CardNumber.TEN, CardType.DIAMOND));
 
@@ -131,7 +132,7 @@ public class BetsTest {
     @Test
     @DisplayName("플레이어의 총 수익을 통해 딜러의 수익 판단한다.")
     void calculate_dealer_profit() {
-        Player aki = new Player(new UserName("aki"));
+        User aki = new Player(new UserName("aki"));
         Map<String, Integer> playersProfit = new LinkedHashMap<>();
         playersProfit.put("aki", 10000);
 

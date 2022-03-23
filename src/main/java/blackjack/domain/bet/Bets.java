@@ -1,7 +1,6 @@
 package blackjack.domain.bet;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import java.util.Map;
 
 public class Bets {
@@ -18,7 +17,7 @@ public class Bets {
                 .sum();
     }
 
-    public double calculatePlayerProfit(Dealer dealer, Player player) {
+    public double calculatePlayerProfit(User dealer, User player) {
         if (dealer.isBlackjack() || player.isBlackjack()) {
             return checkBlackjack(dealer, player);
         }
@@ -28,7 +27,7 @@ public class Bets {
         return checkScore(dealer, player);
     }
 
-    private double checkBlackjack(Dealer dealer, Player player) {
+    private double checkBlackjack(User dealer, User player) {
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return toBetMoney(player) * BetRate.DRAW.getRate();
         }
@@ -38,7 +37,7 @@ public class Bets {
         return toBetMoney(player) * BetRate.LOSE.getRate();
     }
 
-    private double checkBust(Dealer dealer, Player player) {
+    private double checkBust(User dealer, User player) {
         if (dealer.isBust() && player.isBust()) {
             return toBetMoney(player) * BetRate.DRAW.getRate();
         }
@@ -48,7 +47,7 @@ public class Bets {
         return toBetMoney(player) * BetRate.WIN.getRate();
     }
 
-    private double checkScore(Dealer dealer, Player player) {
+    private double checkScore(User dealer, User player) {
         int gap = player.getScore() - dealer.getScore();
         if (gap > 0) {
             return toBetMoney(player) * BetRate.WIN.getRate();
@@ -59,7 +58,7 @@ public class Bets {
         return toBetMoney(player) * BetRate.DRAW.getRate();
     }
 
-    private int toBetMoney(Player player) {
+    private int toBetMoney(User player) {
         return playerNameAndBets.get(player.getName().get()).get();
     }
 }
