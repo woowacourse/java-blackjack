@@ -1,10 +1,11 @@
 package controller;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.participant.Result;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -15,7 +16,7 @@ public final class BlackJackController {
     private final OutputView outputView = OutputView.getInstance();
 
     public void run() {
-        Deck deck = Deck.initDeck();
+        Deck deck = Deck.initDeck(Card.values());
         Players players = createPlayers();
         Dealer dealer = new Dealer();
         handOverTwoCards(players, dealer, deck);
@@ -27,7 +28,8 @@ public final class BlackJackController {
 
     private Players createPlayers() {
         try {
-            return Players.of(inputView.inputPlayerName());
+            List<Name> playerNames = Name.from(inputView.inputPlayerName());
+            return Players.of(inputView.inputBettings(playerNames));
         } catch (IllegalArgumentException exception) {
             outputView.printError(exception.getMessage());
             return createPlayers();
@@ -36,7 +38,7 @@ public final class BlackJackController {
 
     private void handOverTwoCards(Players players, Dealer dealer, Deck deck) {
         players.runInitialTurn(deck);
-        dealer.pickTwoCards(deck);
+        dealer.receiveInitialTwoCards(deck);
         outputView.showInitialTurnStatus(players, dealer);
     }
 
@@ -66,9 +68,8 @@ public final class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        List<Result> playersResult = players.checkResults(dealer);
-
-        outputView.showResult(dealer.getName(), dealer.checkResult(playersResult), players.toNames(),
-            players.checkResults(dealer));
+        List<Integer> playerIncomes = players.calculateIncomes(dealer);
+        outputView.showResult(dealer.getName(), dealer.calculateIncome(playerIncomes),
+            players.toNames(), playerIncomes);
     }
 }

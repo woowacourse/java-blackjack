@@ -1,42 +1,37 @@
 package domain.participant;
 
-import static java.lang.Integer.compare;
+import domain.card.Deck;
+import utils.ExceptionMessages;
 
-public final class Player extends Participant implements Comparable<Participant> {
+public final class Player extends Participant {
 
     private static final int MAX_SCORE = 21;
-    private static final int COMPARE_CRITERIA = 0;
 
-    public Player(String name) {
+    private final BettingMoney money;
+
+    public Player(Name name, String money) {
         super(name);
+        this.money = new BettingMoney(Integer.parseInt(money));
     }
 
-    public Result judgeResult(Dealer dealer) {
-        if (compareTo(dealer) > COMPARE_CRITERIA) {
-            return Result.WIN;
+    public Result receiveResult(Dealer dealer) {
+        return Result.judgeResult(this, dealer);
+    }
+
+    @Override
+    public void hit(Deck deck) {
+        if (!canHit()) {
+            throw new IllegalStateException(ExceptionMessages.PLAYER_CAN_NOT_HIT_ERROR);
         }
-        if (compareTo(dealer) < COMPARE_CRITERIA) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
+        cards.addCard(deck.handOut());
     }
 
     @Override
     public boolean canHit() {
-        return cards.calculateSum() < MAX_SCORE;
+        return !isBlackJack() && cards.calculateSum() < MAX_SCORE;
     }
 
-
-    @Override
-    public int compareTo(Participant participant) {
-        if (isBust()) {
-            return -1;
-        }
-
-        if(participant.isBust()){
-            return 1;
-        }
-
-        return compare(calculateScore(), participant.calculateScore());
+    public int calculateIncome(Result result) {
+        return money.multiplyDividendRate(result.getProfitRate());
     }
 }

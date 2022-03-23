@@ -5,10 +5,7 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.participant.Result;
-
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class OutputView {
@@ -18,11 +15,8 @@ public final class OutputView {
     private static final String STATUS_FORMAT = "%s: %s";
     private static final String DEALER_HIT_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARDS_SCORE_MESSAGE = "%s - 결과: %d";
-    private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
-    private static final String RECORD_FORMAT = "%d승 %d무 %d패";
-    private static final String WIN_MESSAGE = "승";
-    private static final String DRAW_MESSAGE = "무";
-    private static final String LOSE_MESSAGE = "패";
+    private static final String FINAL_RESULT_MESSAGE = "## 최종 수익";
+    private static final String INCOME_RESULT_FORMAT = "%s: %d";
 
     private static final OutputView OUTPUT_VIEW = new OutputView();
 
@@ -88,36 +82,23 @@ public final class OutputView {
         }
     }
 
-    public void showResult(String dealerName, Map<Result,Integer> dealerResult, List<String> names, List<Result> results) {
+    public void showResult(String dealerName,int dealerIncome, List<String> names, List<Integer> playerIncomes) {
         System.out.print(System.lineSeparator());
-
         System.out.println(FINAL_RESULT_MESSAGE);
-        showDealerResult(dealerName, dealerResult);
-        showPlayersResult(names, results);
+        showDealerResult(dealerName, dealerIncome);
+        showPlayersResult(names, playerIncomes);
     }
 
-    private void showDealerResult(String dealerName, Map<Result, Integer> dealerResult) {
-        String record = String.format(RECORD_FORMAT, dealerResult.get(Result.WIN),
-            dealerResult.get(Result.DRAW), dealerResult.get(Result.LOSE));
-        System.out.printf(STATUS_FORMAT, dealerName, record);
+    private void showDealerResult(String dealerName, int dealerIncome) {
+        System.out.printf(INCOME_RESULT_FORMAT, dealerName, dealerIncome);
         System.out.print(System.lineSeparator());
     }
 
-    private void showPlayersResult(List<String> names, List<Result> results) {
+    private void showPlayersResult(List<String> names, List<Integer> playerIncomes) {
         for (int i = 0; i < names.size(); i++) {
-            System.out.printf(STATUS_FORMAT, names.get(i), showPlayerResult(results.get(i)));
+            System.out.printf(INCOME_RESULT_FORMAT, names.get(i),playerIncomes.get(i));
             System.out.print(System.lineSeparator());
         }
-    }
-
-    private String showPlayerResult(Result playerResult) {
-        if (playerResult == Result.WIN) {
-            return WIN_MESSAGE;
-        }
-        if (playerResult == Result.LOSE) {
-            return LOSE_MESSAGE;
-        }
-        return DRAW_MESSAGE;
     }
 
     public void printError(String errorMessage) {

@@ -3,10 +3,12 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
 import domain.card.Deck;
+import domain.card.Denomination;
+import domain.card.Symbol;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,21 +20,21 @@ class DealerTest {
     private Deck deck;
 
     @BeforeEach
-    void makePlayer(){
+    void makePlayer() {
         dealer = new Dealer();
-        deck = Deck.initDeck();
+        deck = Deck.initDeck(Card.values());
     }
 
     @Test
-    @DisplayName("16이 넘은 상태에서 카드를 뽑을 경우 에러를 발생시킨다.")
+    @DisplayName("블랙잭이거나 16이 넘은 상태에서 카드를 뽑을 경우 에러를 발생시킨다.")
     void hitCardOverLimitError() {
         while (dealer.canHit()) {
             dealer.hit(deck);
         }
 
-        assertThatThrownBy(() ->  dealer.hit(deck))
+        assertThatThrownBy(() -> dealer.hit(deck))
             .isInstanceOf(IllegalStateException.class)
-            .hasMessage(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
+            .hasMessage(ExceptionMessages.DEALER_CAN_NOT_HIT_ERROR);
     }
 
     @Test
@@ -54,13 +56,23 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 결과값을 받는다.")
-    void checkResultTest() {
-        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.DRAW);
-        Map<Result, Integer> dealerResult = dealer.checkResult(playerResult);
+    @DisplayName("플레이어의 수익을 종합해 딜러의 수익을 계산한다.")
+    void calculateIncomeTest() {
+        List<Integer> playerIncomes = Arrays.asList(3000, 4000, -2000);
+        int actual = dealer.calculateIncome(playerIncomes);
+        int expected = -5000;
 
-        assertThat(dealerResult.get(Result.WIN)).isEqualTo(1);
-        assertThat(dealerResult.get(Result.DRAW)).isEqualTo(1);
-        assertThat(dealerResult.get(Result.LOSE)).isEqualTo(2);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러가 카드를 뽑을 때 잘 뽑는지 확인한다.")
+    void hitTest() {
+        Card card = Card.valueOf(Symbol.CLOVER, Denomination.THREE);
+        Deck testDeck = Deck.initDeck(List.of(card));
+
+        dealer.hit(testDeck);
+
+        assertThat(dealer.getFirstCard()).isSameAs(card);
     }
 }

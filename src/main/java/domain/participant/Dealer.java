@@ -1,39 +1,42 @@
 package domain.participant;
 
 import domain.card.Card;
-import java.util.EnumMap;
+import domain.card.Deck;
 import java.util.List;
-import java.util.Map;
+import utils.ExceptionMessages;
 
 public final class Dealer extends Participant {
 
+    private static final int CONVERT_POSITIVE = -1;
     private static final int MAX_CARD_SUM = 16;
+    private static final int FIRST_CARD_INDEX = 0;
     private static final String NAME = "딜러";
 
     public Dealer() {
-        super(NAME);
+        super(Name.from(NAME));
     }
 
-    public Map<Result, Integer> checkResult(List<Result> playersResult) {
-        Map<Result, Integer> dealerResult = new EnumMap<Result, Integer>(Result.class);
-        dealerResult.put(Result.WIN, countTargetResult(playersResult, Result.LOSE));
-        dealerResult.put(Result.DRAW, countTargetResult(playersResult, Result.DRAW));
-        dealerResult.put(Result.LOSE, countTargetResult(playersResult, Result.WIN));
-        return dealerResult;
-    }
-
-    private int countTargetResult(List<Result> playersResult, Result targetResult) {
-        return (int) playersResult.stream()
-            .filter(result -> result == targetResult)
-            .count();
+    public int calculateIncome(List<Integer> playerIncomes) {
+        int playerIncomeSum = playerIncomes.stream()
+            .mapToInt(playerIncome -> playerIncome)
+            .sum();
+        return playerIncomeSum * CONVERT_POSITIVE;
     }
 
     public Card getFirstCard() {
-        return cards.getCardByIndex(0);
+        return cards.getCardByIndex(FIRST_CARD_INDEX);
+    }
+
+    @Override
+    public void hit(Deck deck) {
+        if (!canHit()) {
+            throw new IllegalStateException(ExceptionMessages.DEALER_CAN_NOT_HIT_ERROR);
+        }
+        cards.addCard(deck.handOut());
     }
 
     @Override
     public boolean canHit() {
-        return cards.calculateSum() <= MAX_CARD_SUM;
+        return !isBlackJack() && cards.calculateSum() <= MAX_CARD_SUM;
     }
 }

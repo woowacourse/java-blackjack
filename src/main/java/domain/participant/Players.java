@@ -2,8 +2,8 @@ package domain.participant;
 
 import domain.card.Deck;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Players {
@@ -14,18 +14,17 @@ public final class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players of(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-            .map(String::trim)
-            .map(Player::new)
-            .collect(Collectors.toList());
-
+    public static Players of(Map<Name, String> bettingMoneys) {
+        List<Player> players = new ArrayList<>();
+        for (Name playerName : bettingMoneys.keySet()) {
+            players.add(new Player(playerName, bettingMoneys.get(playerName)));
+        }
         return new Players(players);
     }
 
     public void runInitialTurn(Deck deck) {
         for (Player player : players) {
-            player.pickTwoCards(deck);
+            player.receiveInitialTwoCards(deck);
         }
     }
 
@@ -35,13 +34,13 @@ public final class Players {
             .collect(Collectors.toList());
     }
 
-    public List<Result> checkResults(Dealer dealer) {
+    public List<Integer> calculateIncomes(Dealer dealer) {
         return players.stream()
-            .map(player -> player.judgeResult(dealer))
+            .map(player -> player.calculateIncome(player.receiveResult(dealer)))
             .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return List.copyOf(players);
     }
 }

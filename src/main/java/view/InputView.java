@@ -1,7 +1,10 @@
 package view;
 
+import domain.participant.Name;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public final class InputView {
@@ -11,6 +14,7 @@ public final class InputView {
     private static final String GET_MORE_CARD_OR_NOT_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String GET_CARD_OR_NOT_REGEX = "^[y,n]$";
     private static final String YES = "y";
+    private static final String BETTING_MONEY_INPUT_MESSAGE = "%s의 베팅 금액은?";
 
     private static final String EMPTY_INPUT_ERROR_MESSAGE = "[ERROR] 빈 값을 입력할 수 없습니다.";
     private static final String INPUT_ONLY_Y_OR_N_ERROR = "[ERROR] y나 n만 입력할 수 있습니다.";
@@ -33,6 +37,21 @@ public final class InputView {
 
     private List<String> splitByComma(String names) {
         return Arrays.asList(names.split(COMMA));
+    }
+
+    public Map<Name, String> inputBettings(List<Name> playerNames) {
+        Map<Name, String> bettingMoneys = new LinkedHashMap<>();
+        for (Name playerName : playerNames) {
+            bettingMoneys.put(playerName, inputBettingMoney(playerName));
+        }
+        return bettingMoneys;
+    }
+
+    private String inputBettingMoney(Name playerName){
+        System.out.print(System.lineSeparator());
+        System.out.printf(BETTING_MONEY_INPUT_MESSAGE, playerName.getValue());
+        System.out.print(System.lineSeparator());
+        return input();
     }
 
     private String input() {
