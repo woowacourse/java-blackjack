@@ -23,6 +23,14 @@ public class BlackjackGame {
         participants.hitFrom(cardDeck, gameSign, turnProgress);
     }
 
+    public Participant getDealer() {
+        return participants.getDealer();
+    }
+
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
+    }
+
     public List<Participant> getParticipants() {
         return participants.getParticipants();
     }

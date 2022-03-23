@@ -38,9 +38,4 @@ public class Dealer extends Participant {
     private boolean isFinished() {
         return this.state.getScore() > DEALER_HIT_LIMIT_SCORE;
     }
-
-    @Override
-    public List<Card> getCards() {
-        return List.of(state.getCards().get(0));
-    }
 }

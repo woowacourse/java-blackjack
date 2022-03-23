@@ -63,4 +63,13 @@ public class Participants {
     public BettingResult createBettingResult() {
         return new BettingResult(dealer, players);
     }
+
+    public Participant getDealer() {
+        return dealer;
+    }
+
+    public List<Participant> getPlayers() {
+        return players.stream()
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

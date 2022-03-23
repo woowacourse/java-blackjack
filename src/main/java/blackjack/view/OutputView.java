@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    public static final String DEALER_NAME_PRINT_FORMAT = "%s와 ";
     private static final String PARTICIPANT_NAME_PRINT_FORMAT = "%s";
     private static final String PARTICIPANT_CARD_PRINT_FORMAT = ": %s ";
     private static final String PARTICIPANT_SCORE_PRINT_FORMAT = "- 결과: %d";
@@ -14,14 +15,24 @@ public class OutputView {
 
     private static final String JOINER = ", ";
 
-    public static void printStartResult(List<Participant> participants) {
-        System.out.printf(PARTICIPANT_NAME_PRINT_FORMAT, joinNames(participants) + "에게 2장의 카드를 나누었습니다.");
+    public static void printStartResult(Participant dealer, List<Participant> players) {
+        System.out.printf(DEALER_NAME_PRINT_FORMAT, dealer.getName());
+        System.out.printf(PARTICIPANT_NAME_PRINT_FORMAT, joinNames(players) + "에게 2장의 카드를 나누었습니다.");
         System.out.println();
-        participants.forEach(participant -> {
-            printNameResult(participant.getName());
-            printCardsResult(participant.getCards());
-            System.out.println();
-        });
+        printDealerCardsResult(dealer);
+        players.forEach(OutputView::printPlayerCardsResult);
+    }
+
+    private static void printDealerCardsResult(Participant dealer) {
+        printNameResult(dealer.getName());
+        printCardsResult(dealer.getFirstCard());
+        System.out.println();
+    }
+
+    private static void printPlayerCardsResult(Participant participant) {
+        printNameResult(participant.getName());
+        printCardsResult(participant.getCards());
+        System.out.println();
     }
 
     private static String joinNames(List<Participant> participants) {

@@ -39,4 +39,8 @@ public abstract class Participant {
     public int getScore() {
         return state.getScore();
     }
+
+    public List<Card> getFirstCard() {
+        return List.of(state.getCards().get(0));
+    }
 }
