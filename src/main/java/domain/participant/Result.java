@@ -5,12 +5,12 @@ import java.util.function.BiPredicate;
 
 public enum Result {
     WIN(1,
-        (player, dealer) -> (!player.isBlackJack() && (player.calculateScore() > dealer.calculateScore()) && !player.isBust())
+        (player, dealer) -> !player.isBlackJack() && player.isHigherScore(dealer)
             || dealer.isBust()),
-    LOSE(-1, (player, dealer) -> player.isBust() || (!player.isBlackJack() && dealer.isBlackJack())
-        || (player.calculateScore() < dealer.calculateScore() && !dealer.isBust())),
-    PUSH(0, (player, dealer) -> player.calculateScore() == dealer.calculateScore()),
-    BLACKJACK(1.5, (player, dealer) -> player.isBlackJack() && !dealer.isBlackJack());
+    LOSE(-1, (player, dealer) -> player.isBust() || dealer.isOnlyBlackJack(player)
+        || dealer.isHigherScore(player)),
+    PUSH(0, Participant::isSameScore),
+    BLACKJACK(1.5, Participant::isOnlyBlackJack);
 
     private final double profitRate;
     private BiPredicate<Player, Dealer> condition;

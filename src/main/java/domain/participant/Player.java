@@ -34,5 +34,4 @@ public final class Player extends Participant {
     public int calculateIncome(Result result) {
         return money.multiplyDividendRate(result.getProfitRate());
     }
-
 }

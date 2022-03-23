@@ -35,6 +35,18 @@ public abstract class Participant {
         return cards.isBust();
     }
 
+    public boolean isHigherScore(Participant participant) {
+        return !this.isBust() && (this.calculateScore() > participant.calculateScore());
+    }
+
+    public boolean isSameScore(Participant participant) {
+        return calculateScore() == participant.calculateScore();
+    }
+
+    public boolean isOnlyBlackJack(Participant participant) {
+        return isBlackJack() && !participant.isBlackJack();
+    }
+
     public String getName() {
         return name.getValue();
     }
