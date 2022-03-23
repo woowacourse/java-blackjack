@@ -2,34 +2,44 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.ParticipantCards;
-import java.util.ArrayList;
+import blackjack.domain.state.Ready;
+import blackjack.domain.state.State;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BUST_THRESHOLD_NUMBER = 21;
+    protected String name;
+    protected State state;
 
-    protected ParticipantCards participantCards;
+    protected Participant() {
+        this.state = new Ready(new ParticipantCards());
+    }
 
     public void receiveInitCards(List<Card> cards) {
-        participantCards = new ParticipantCards(new ArrayList<>(cards));
+        for (Card card : cards) {
+            state = state.draw(card);
+        }
     }
 
-    public void receiveCard(Card card) {
-        participantCards.addCard(card);
+    public void draw(Card card) {
+        state = state.draw(card);
     }
 
-    public int getScore() {
-        return participantCards.calculateScore();
+    public void stay() {
+        state = state.stay();
     }
 
-    public boolean isBust() {
-        return getScore() > BUST_THRESHOLD_NUMBER;
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(participantCards.getCards());
+        return Collections.unmodifiableList(state.getParticipantCards().getCards());
+    }
+
+    public int getScore() {
+        return state.getParticipantCards().calculateScore();
     }
 
     public abstract boolean isHittable();

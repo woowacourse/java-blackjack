@@ -1,11 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.result.BlackjackGameResult;
-import blackjack.domain.participant.Dealer;
+import blackjack.domain.betting.BettingMoney;
+import blackjack.domain.betting.ProfitCalculator;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -17,11 +17,20 @@ public class BlackjackController {
         Deck deck = new Deck();
         Participants participants = createParticipants();
 
+        askBettingMoney(participants);
+
         handOutAndPrintInitialCards(participants, deck);
 
         handOutMoreCards(participants, deck);
 
         printResult(participants);
+    }
+
+    private void askBettingMoney(Participants participants) {
+        for (Player player : participants.getPlayers()) {
+            BettingMoney bettingMoney = new BettingMoney(InputView.inputPlayerBettingMoney(player.getName()));
+            player.createBettingMoney(bettingMoney);
+        }
     }
 
     private Participants createParticipants() {
@@ -47,6 +56,9 @@ public class BlackjackController {
     private void handOutMoreCardsToPlayer(Player player, Deck deck) {
         boolean cardPrintFlag = isPlayerWantMoreCards(player, deck);
 
+        if (!player.isFinished()) {
+            player.stay();
+        }
         if (!cardPrintFlag) {
             OutputView.printPlayerCardInformation(player);
         }
@@ -56,7 +68,7 @@ public class BlackjackController {
         boolean cardPrintFlag = false;
 
         while (isHittable(player) && isPlayerWantToHit(player)) {
-            player.receiveCard(deck.pickCard());
+            player.draw(deck.pickCard());
             OutputView.printPlayerCardInformation(player);
             cardPrintFlag = true;
         }
@@ -78,20 +90,28 @@ public class BlackjackController {
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
         while (dealer.isHittable()) {
             OutputView.printDealerHitMessage();
-            dealer.receiveCard(deck.pickCard());
+            dealer.draw(deck.pickCard());
+        }
+        if (!dealer.isFinished()) {
+            dealer.stay();
         }
     }
 
     private void printResult(Participants participants) {
         OutputView.printCardsAndPoint(participants);
 
-        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(participants);
-        blackjackGameResult.calculatePlayerResult();
+        printProfitResult(participants);
+    }
 
-        Map<WinningResult, Integer> dealerResult = blackjackGameResult.getDealerResult();
-        Map<Player, WinningResult> playerResult = blackjackGameResult.getPlayerResult();
+    private void printProfitResult(Participants participants) {
+        ProfitCalculator profitCalculator = new ProfitCalculator(participants);
 
-        OutputView.printResult(dealerResult, playerResult);
+        profitCalculator.calculate();
+
+        Map<Player, Long> playerProfitResult = profitCalculator.getPlayerProfit();
+        long dealerProfitResult = profitCalculator.calculateDealerProfit();
+
+        OutputView.printProfitResult(playerProfitResult, dealerProfitResult);
     }
 
 }

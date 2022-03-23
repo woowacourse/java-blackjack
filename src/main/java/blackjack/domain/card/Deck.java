@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Deck {
 
@@ -28,12 +27,17 @@ public class Deck {
         List<Card> cardsPool = new ArrayList<>();
 
         for (Suit suit : Suit.values()) {
-            Stream.of(Denomination.values())
-                .forEach(denomination -> cardsPool.add(new Card(suit, denomination)));
+            addSuitAndDenomination(suit, cardsPool);
         }
         Collections.shuffle(cardsPool);
 
         return cardsPool;
+    }
+
+    private void addSuitAndDenomination(Suit suit, List<Card> cardsPool) {
+        for (Denomination denomination : Denomination.values()) {
+            cardsPool.add(new Card(suit, denomination));
+        }
     }
 
 }

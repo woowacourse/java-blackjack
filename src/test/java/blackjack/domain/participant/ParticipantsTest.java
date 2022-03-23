@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import blackjack.domain.card.Deck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,19 @@ public class ParticipantsTest {
 
         assertThatThrownBy(() -> Participants.from(players))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("참가자들에게 카드를 2장씩 나눠준다.")
+    void handOutInitialCards() {
+        List<String> players = List.of("앤지", "엔젤");
+        Participants participants = Participants.from(players);
+        Deck deck = new Deck();
+
+        participants.handOutInitialCards(deck);
+        int playerCardSize = participants.getPlayers().get(0).getCards().size();
+
+        assertThat(playerCardSize).isEqualTo(2);
     }
 
 }

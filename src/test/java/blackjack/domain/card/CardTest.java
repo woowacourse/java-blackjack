@@ -39,5 +39,4 @@ public class CardTest {
         assertThat(card.isAce()).isEqualTo(false);
     }
 
-
 }
