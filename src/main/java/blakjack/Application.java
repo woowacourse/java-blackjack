@@ -1,25 +1,20 @@
 package blakjack;
 
+import blakjack.domain.BlackjackGame;
 import blakjack.domain.Chip;
 import blakjack.domain.PlayerName;
-import blakjack.domain.card.CardDeck;
-import blakjack.domain.participant.Dealer;
-import blakjack.domain.participant.Participant;
-import blakjack.domain.participant.Player;
 import blakjack.view.InputView;
 import blakjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
-    public static void main(String[] args) {
+
+    public static void main(final String[] args) {
         final List<PlayerName> playerNames = catchPlayerNameException();
         final List<Chip> chips = catchChipException(playerNames);
-        final CardDeck cardDeck = new CardDeck();
-        final Participant dealer = new Dealer();
-        final List<Participant> players = generatePlayers(playerNames, chips);
-        gameStart(cardDeck, dealer, players);
+        final BlackjackGame blackjackGame = new BlackjackGame(playerNames, chips);
+        run(blackjackGame);
     }
 
     private static List<PlayerName> catchPlayerNameException() {
@@ -40,67 +35,56 @@ public class Application {
         }
     }
 
-    private static List<Participant> generatePlayers(final List<PlayerName> playerNames, final List<Chip> chips) {
-        final List<Participant> players = new ArrayList<>();
-        for (int i = 0; i < playerNames.size(); i++) {
-            players.add(new Player(playerNames.get(i), chips.get(i)));
+    private static void run(final BlackjackGame blackjackGame) {
+        initCards(blackjackGame);
+        hit(blackjackGame);
+        showScore(blackjackGame);
+        showProfit(blackjackGame);
+    }
+
+    private static void initCards(final BlackjackGame blackjackGame) {
+        blackjackGame.initCards();
+
+        OutputView.printInitCards(blackjackGame);
+    }
+
+    private static void hit(final BlackjackGame blackjackGame) {
+        for (final String name : blackjackGame.getPlayerNames()) {
+            catchPlayerHitException(name, blackjackGame);
         }
-        return players;
+        catchDealerHitException(blackjackGame);
     }
 
-    private static void gameStart(final CardDeck cardDeck, final Participant dealer, final List<Participant> players) {
-        initCards(cardDeck, dealer, players);
-        hit(cardDeck, dealer, players);
-        showScore(dealer, players);
-        showProfit(dealer, players);
-    }
-
-    private static void initCards(final CardDeck cardDeck, final Participant dealer, final List<Participant> players) {
-        dealer.initCards(cardDeck);
-        for (final Participant player : players) {
-            player.initCards(cardDeck);
-        }
-
-        OutputView.printInitCards(dealer, players);
-    }
-
-    private static void hit(final CardDeck cardDeck, final Participant dealer, final List<Participant> players) {
-        for (final Participant player : players) {
-            catchPlayerHitException(cardDeck, player);
-        }
-        catchDealerHitException(cardDeck, dealer);
-    }
-
-    private static void catchPlayerHitException(final CardDeck cardDeck, final Participant player) {
+    private static void catchPlayerHitException(final String playerName, final BlackjackGame blackjackGame) {
         try {
-            hitPlayer(cardDeck, player);
+            hitPlayer(playerName, blackjackGame);
         } catch (IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private static void hitPlayer(final CardDeck cardDeck, final Participant player) {
-        while (InputView.inputHitRequest(player)) {
-            player.hit(cardDeck.draw());
-            OutputView.printDealerCards(player);
+    private static void hitPlayer(final String name, final BlackjackGame blackjackGame) {
+        while (InputView.inputHitRequest(name)) {
+            blackjackGame.hitPlayer(name);
+            OutputView.printCards(blackjackGame.findPlayerByName(name));
         }
-        player.stay();
+        blackjackGame.stay(name);
     }
 
-    private static void catchDealerHitException(final CardDeck cardDeck, final Participant dealer) {
+    private static void catchDealerHitException(final BlackjackGame blackjackGame) {
         try {
-            dealer.hit(cardDeck.draw());
+            blackjackGame.hitDealer();
             OutputView.printDealerHit();
         } catch (IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private static void showScore(final Participant dealer, final List<Participant> players) {
-        OutputView.printScore(dealer, players);
+    private static void showScore(final BlackjackGame blackjackGame) {
+        OutputView.printScore(blackjackGame);
     }
 
-    private static void showProfit(final Participant dealer, final List<Participant> players) {
-        OutputView.printProfit(dealer, players);
+    private static void showProfit(final BlackjackGame blackjackGame) {
+        OutputView.printProfit(blackjackGame);
     }
 }

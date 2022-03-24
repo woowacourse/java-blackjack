@@ -2,7 +2,6 @@ package blakjack.view;
 
 import blakjack.domain.Chip;
 import blakjack.domain.PlayerName;
-import blakjack.domain.participant.Participant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,17 +76,17 @@ public class InputView {
         }
     }
 
-    public static boolean inputHitRequest(final Participant player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
+    private static boolean isYorN(final String raw) {
+        return DO_HIT.equalsIgnoreCase(raw) || NO_HIT.equalsIgnoreCase(raw);
+    }
+
+    public static boolean inputHitRequest(final String playerName) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
         final String raw = readLine();
         if (isYorN(raw)) {
             return DO_HIT.equalsIgnoreCase(raw);
         }
         System.out.println(INVALID_HIT_REQUEST_MESSAGE);
-        return inputHitRequest(player);
-    }
-
-    private static boolean isYorN(final String raw) {
-        return DO_HIT.equalsIgnoreCase(raw) || NO_HIT.equalsIgnoreCase(raw);
+        return inputHitRequest(playerName);
     }
 }
