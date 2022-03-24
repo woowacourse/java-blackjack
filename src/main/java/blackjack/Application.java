@@ -1,15 +1,18 @@
 package blackjack;
 
-import blackjack.model.BlackjackGame;
+import blackjack.model.game.BlackjackGame;
 import blackjack.view.InputView;
-import blackjack.view.ResultView;
+import blackjack.view.OutputView;
 
 public class Application {
+
     public static void main(String[] args) {
-        BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
-        ResultView.printStartResult(blackjackGame.start());
-        blackjackGame.performEachTurn(InputView::inputHitOrStaySign, ResultView::printCurrentTurnResult);
-        ResultView.printScoreResult(blackjackGame.getParticipant());
-        ResultView.printMatchResult(blackjackGame.createMatchResult());
+        BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames(), InputView::inputBet);
+        blackjackGame.start();
+        OutputView.printStartResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        blackjackGame.hitToPlayers(InputView::inputSign, OutputView::printPlayerTurnResult);
+        OutputView.printDealerTurnResult(blackjackGame.getDealer());
+        OutputView.printFinishResult(blackjackGame.getParticipant());
+        OutputView.printBettingResult(blackjackGame.createBettingResult());
     }
 }

@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-    public static final int START_CARD_COUNT = 2;
+    private static final int START_CARD_COUNT = 2;
+    private static final int FINISH_SCORE = 21;
 
     private final List<Card> values;
 
@@ -13,7 +14,7 @@ public class Cards {
         this.values = new ArrayList<>();
     }
 
-    private Cards(List<Card> values) {
+    public Cards(final List<Card> values) {
         this.values = new ArrayList<>(values);
     }
 
@@ -22,21 +23,35 @@ public class Cards {
         return new Cards(values);
     }
 
+    public boolean isBlackjack() {
+        return canHit() && isFinishScore();
+    }
+
+    public boolean canHit() {
+        return values.size() >= START_CARD_COUNT;
+    }
+
+    public boolean isFinishScore() {
+        return sumScore() == FINISH_SCORE;
+    }
+
     public int sumScore() {
-        return CardScoreTotalizer.sum(values);
+        final List<CardNumber> cardNumbers = values.stream()
+                .map(Card::getNumber)
+                .collect(Collectors.toUnmodifiableList());
+        return CardNumber.calculateScore(cardNumbers);
     }
 
-    public boolean hasOnlyStartCards() {
-        return values.size() == START_CARD_COUNT;
+    public boolean isBust() {
+        return sumScore() > FINISH_SCORE;
     }
 
-    public List<String> getCardGroup() {
+    public List<Card> getValues() {
         return values.stream()
-                .map(card -> card.getNumberOfString() + card.getSymbol())
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public int getAddedCount() {
+    public int getAddedCardCount() {
         return values.size() - START_CARD_COUNT;
     }
 }

@@ -1,27 +1,19 @@
 package blackjack.model.card;
 
 public class Card {
-    private final TrumpNumber number;
-    private final TrumpSymbol symbol;
+    private final CardNumber cardNumber;
+    private final CardSymbol cardSymbol;
 
-    public Card(TrumpNumber number, TrumpSymbol symbol) {
-        this.number = number;
-        this.symbol = symbol;
+    public Card(CardNumber cardNumber, CardSymbol cardSymbol) {
+        this.cardNumber = cardNumber;
+        this.cardSymbol = cardSymbol;
     }
 
-    public boolean hasSameNumber(TrumpNumber trumpNumber) {
-        return this.number == trumpNumber;
+    public CardNumber getNumber() {
+        return cardNumber;
     }
 
-    public int getNumber() {
-        return number.getValue();
-    }
-
-    public String getNumberOfString() {
-        return number.getValueOfString();
-    }
-
-    public String getSymbol() {
-        return symbol.getValue();
+    public CardSymbol getSymbol() {
+        return cardSymbol;
     }
 }
