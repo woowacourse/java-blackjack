@@ -24,8 +24,8 @@ public final class PrivateArea {
     }
 
     public int getTotalScore() {
-        final var minScore = calculateMinScore();
-        final var maxScore = calculateMaxScore(minScore);
+        final int minScore = calculateMinScore();
+        final int maxScore = calculateMaxScore(minScore);
 
         if (maxScore > BLACKJACK_SCORE) {
             return minScore;
