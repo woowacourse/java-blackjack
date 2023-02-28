@@ -7,9 +7,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static model.Player.DEADLER;
+
 public class Result {
 
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
+    private static final int CAN_RECEIVE_DEALER_MAX_NUMBER = 16;
+
     private final Map<Player, List<Card>> scoreBoards;
 
     public Result(final Players players) {
@@ -31,6 +35,12 @@ public class Result {
 
     public boolean canPlayerReceiveCard(final Player player) {
         return CAN_RECEIVE_MAX_NUMBER >= scoreBoards.get(player).stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
+    public boolean canDealerReceiveCard() {
+        return CAN_RECEIVE_DEALER_MAX_NUMBER >= scoreBoards.get(DEADLER).stream()
                 .mapToInt(Card::getValue)
                 .sum();
     }

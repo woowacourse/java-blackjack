@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DIVIDE_CARDS_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
+    private static final String DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public static void printDivideInitialCards(final Result result) {
         final Map<Player, List<Card>> scoreBoards = result.getScoreBoards();
@@ -21,8 +22,8 @@ public class OutputView {
 
     private static void printDividedMessage(final Map<Player, List<Card>> scoreBoards) {
         final String playerNames = scoreBoards.keySet().stream()
+                .filter(Player.DEADLER::equals)
                 .map(Player::getName)
-                .filter(name -> !name.equals("딜러"))
                 .collect(Collectors.joining(", "));
         System.out.printf(System.lineSeparator() + (DIVIDE_CARDS_MESSAGE) + "%n", playerNames);
     }
@@ -40,5 +41,9 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder();
         scoreBoards.get(player).forEach(card -> stringBuilder.append(card.toString()).append(", "));
         return stringBuilder.substring(0, stringBuilder.length() - 2);
+    }
+
+    public static void printDealerGetCard() {
+        System.out.println(DEALER_GET_CARD);
     }
 }

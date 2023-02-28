@@ -13,6 +13,7 @@ import static model.card.Shape.HEART;
 import static model.card.Shape.SPADE;
 import static model.card.Value.ACE;
 import static model.card.Value.NINE;
+import static model.card.Value.SIX;
 import static model.card.Value.TEN;
 import static model.card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,12 +24,14 @@ class ResultTest {
     private Result result;
     private Player bebe;
     private Player ethan;
+    private Players players;
 
     @BeforeEach
     void init() {
         bebe = new Player("bebe");
         ethan = new Player("ethan");
-        result = new Result(new Players(List.of("bebe", "ethan")));
+        players = new Players(List.of("bebe", "ethan"));
+        result = new Result(players);
     }
 
     @Test
@@ -63,6 +66,27 @@ class ResultTest {
                 () -> {
                     result.addCard(bebe, new Card(SPADE, ACE));
                     assertThat(result.canPlayerReceiveCard(bebe)).isFalse();
+                }
+        );
+    }
+
+    @Test
+    @DisplayName("Dealer의 카드 숫자의 총 합이 16이하 인지 확인한다.")
+    void canDealerReceiveCard() {
+        // given
+        final Card cloverTen = new Card(CLOVER, TEN);
+        final Card heartSix = new Card(HEART, SIX);
+
+        Player dealer = Player.DEADLER;
+        result.addCard(dealer, cloverTen);
+        result.addCard(dealer, heartSix);
+        // when, then
+        assertAll(
+                () -> assertThat(result.canDealerReceiveCard()).isTrue(),
+
+                () -> {
+                    result.addCard(dealer, new Card(SPADE, ACE));
+                    assertThat(result.canDealerReceiveCard()).isFalse();
                 }
         );
     }

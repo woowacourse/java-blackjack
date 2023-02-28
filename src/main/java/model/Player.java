@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Player {
 
+    public static final Player DEADLER = new Player("딜러");
+
     private final String name;
 
     public Player(final String name) {

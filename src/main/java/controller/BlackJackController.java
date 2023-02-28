@@ -9,10 +9,11 @@ import ui.output.OutputView;
 
 import java.util.Arrays;
 
+import static model.Player.DEADLER;
+
 public class BlackJackController {
 
     private static final String RECEIVE_CARD_COMMAND = "y";
-    private static final Player DEALER  = new Player("딜러");
 
     private final BlackJackGame blackJackGame;
 
@@ -33,10 +34,11 @@ public class BlackJackController {
                 OutputView.printPlayerCardsInfo(player, result);
             }
         }
+        dealerReceiveCard(result);
     }
 
     private static boolean canReceiveMoreCard(final Result result, final Player player) {
-        return !DEALER.equals(player)
+        return !DEADLER.equals(player)
                 && result.canPlayerReceiveCard(player)
                 && RECEIVE_CARD_COMMAND.equals(InputView.getReceiveCardCommand(player.getName()));
     }
@@ -54,6 +56,13 @@ public class BlackJackController {
     private void divideInitialCard(final Result result, final Player player) {
         blackJackGame.divideCard(result, player);
         blackJackGame.divideCard(result, player);
+    }
+
+    private void dealerReceiveCard(Result result) {
+        if (result.canDealerReceiveCard()) {
+            OutputView.printDealerGetCard();
+            blackJackGame.divideCard(result, DEADLER);
+        }
     }
 
 }
