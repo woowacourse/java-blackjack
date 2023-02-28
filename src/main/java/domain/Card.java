@@ -17,4 +17,8 @@ public class Card {
     public int getScore() {
         return number.getScore();
     }
+
+    public Number getNumber() {
+        return number;
+    }
 }

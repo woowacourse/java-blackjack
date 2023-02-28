@@ -15,9 +15,28 @@ public class Cards {
         cards.add(card);
     }
 
+
     public int sumScore() {
-        return cards.stream()
+        final int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+
+        if (hasAce() && isUnderTwentyOne(score)) {
+            return score + 10;
+        }
+        return score;
+    }
+
+    private static boolean isUnderTwentyOne(final int sum) {
+        return sum <= 11;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(this::isAce);
+    }
+
+    private boolean isAce(Card card) {
+        return card.getNumber() == Number.ACE;
     }
 }
