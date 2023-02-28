@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Guest {
     Name name;
@@ -28,5 +29,20 @@ public class Guest {
 
     public Collection<Object> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Guest guest = (Guest)o;
+        return Objects.equals(name, guest.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

@@ -1,5 +1,7 @@
 package blackjackgame.domain;
 
+import java.util.Objects;
+
 public class Name {
     private static final int MAX_NAME_LENGTH = 15;
     private static final String ERROR_NAME_BLANK_MSG = "플레이어의 이름은 공백일 수 없습니다.";
@@ -26,4 +28,18 @@ public class Name {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Name name1 = (Name)o;
+        return Objects.equals(name, name1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
