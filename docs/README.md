@@ -5,7 +5,7 @@
 ## Deck
 
 - [X] 시작할 때 Card 52장을 초기화해서 셔플한다.
-- [X] Card 한장을 뽑는다.
+- [X] Card 한장을 뽑는다. (Gambler에게 Card 배분)
 
 ## Card
 
@@ -27,7 +27,7 @@
 
 ## Gambler (interface)
 
-- [ ] 카드를 뽑는다.
+- [ ] 카드를 뽑는다. (자신의 Cards에 뽑은 Card 넣기)
 
 ### Player
 
