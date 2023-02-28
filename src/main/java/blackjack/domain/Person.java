@@ -8,4 +8,12 @@ public class Person {
         this.name = name;
         this.cards = new Cards();
     }
+
+    public void addCard(Card card) {
+        cards.addCard(card);
+    }
+
+    public int getScore() {
+        return cards.getScore();
+    }
 }

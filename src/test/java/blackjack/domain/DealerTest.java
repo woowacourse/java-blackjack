@@ -25,4 +25,31 @@ class DealerTest {
         assertThat(uniqueCards)
                 .hasSize(48);
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 더 뽑을 수 있으면 참을 반환해야 한다.")
+    void canDrawCard_true() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+
+        // expect
+        assertThat(dealer.canDrawCard())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 카드를 더 뽑을 수 없으면 거짓을 반환해야 한다.")
+    void canDrawCard_false() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+
+        // expect
+        assertThat(dealer.canDrawCard())
+                .isFalse();
+    }
 }
