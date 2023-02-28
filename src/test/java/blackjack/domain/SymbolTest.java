@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -15,7 +11,7 @@ class SymbolTest {
 
     @DisplayName("심볼(스페이드, 하트, 클로버, 다이아몬드)을 가진다.")
     @Test
-    void should_HaveAllSymbolValues() {
+    void should_HaveAllSymbolTypes() {
         Assertions.assertThat(Symbol.values())
                 .containsExactlyInAnyOrder(Symbol.SPADE, Symbol.HEART, Symbol.CLUB, Symbol.DIAMOND);
     }
