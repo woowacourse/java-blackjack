@@ -1,13 +1,12 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CardGenerator {
-    public List<Card> generate() {
+    public Queue<Card> generate() {
         List<Card> cards = new ArrayList<>();
         makeCards(cards);
-        return cards;
+        return suffleCards(cards);
     }
 
     private void makeCards(List<Card> cards) {
@@ -20,6 +19,13 @@ public class CardGenerator {
         for (CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Card(cardNumber, cardPattern));
         }
+    }
+
+    private Queue<Card> suffleCards(List<Card> cards){
+        Queue<Card> suffledCards = new LinkedList<>();
+        Collections.shuffle(cards);
+        suffledCards.addAll(cards);
+        return suffledCards;
     }
 
 }
