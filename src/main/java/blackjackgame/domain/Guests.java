@@ -1,6 +1,7 @@
 package blackjackgame.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Guests {
@@ -31,5 +32,9 @@ public class Guests {
         if (guests.contains(guest)) {
             throw new IllegalArgumentException(ERROR_DUPLICATE_GUEST_NAMES_MSG);
         }
+    }
+
+    public List<Guest> getGuests() {
+        return Collections.unmodifiableList(guests);
     }
 }
