@@ -30,3 +30,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### git Template ###
+.gitmessage.txt
