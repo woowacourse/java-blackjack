@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
 
     private final Shape shape;
     private final Number number;

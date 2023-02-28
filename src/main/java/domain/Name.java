@@ -1,6 +1,6 @@
 package domain;
 
-public class Name {
+public final class Name {
 
     private final String name;
 

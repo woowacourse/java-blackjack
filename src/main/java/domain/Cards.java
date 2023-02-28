@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public final class Cards {
 
     private final List<Card> cards;
 
@@ -16,15 +16,19 @@ public class Cards {
     }
 
 
-    public int sumScore() {
-        final int score = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+    public int getScore() {
+        final int score = sumScore();
 
         if (hasAce() && isUnderTwentyOne(score)) {
             return score + 10;
         }
         return score;
+    }
+
+    private int sumScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public List<Card> displayCards() {

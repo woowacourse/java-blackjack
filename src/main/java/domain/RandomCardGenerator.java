@@ -3,7 +3,7 @@ package domain;
 import java.util.Collections;
 import java.util.List;
 
-public class RandomCardGenerator implements CardGenerator {
+public final class RandomCardGenerator implements CardGenerator {
     static List<Card> cards;
 
     static {

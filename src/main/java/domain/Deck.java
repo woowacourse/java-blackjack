@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
-public class Deck {
+public final class Deck {
 
     private final Deque<Card> deck;
 

@@ -1,12 +1,10 @@
 package domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CardsTest {
     @Test
@@ -19,7 +17,7 @@ class CardsTest {
         cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
 
         //when
-        int score = cards.sumScore();
+        int score = cards.getScore();
 
         //then
         assertThat(score).isEqualTo(21);
@@ -37,7 +35,7 @@ class CardsTest {
             cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
 
             //when
-            final int score = cards.sumScore();
+            final int score = cards.getScore();
 
             //then
             assertThat(score).isEqualTo(20);
@@ -53,7 +51,7 @@ class CardsTest {
             cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
 
             //when
-            final int score = cards.sumScore();
+            final int score = cards.getScore();
 
             //then
             assertThat(score).isEqualTo(13);
