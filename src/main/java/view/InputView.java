@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String INPUT_CARD_COMMAND_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+
     private final Scanner scanner;
     private final InputValidator validator;
 
@@ -30,5 +32,12 @@ public class InputView {
         }
 
         return trimmedList;
+    }
+
+    public String inputCardCommand(String player) {
+        System.out.println(player + INPUT_CARD_COMMAND_MESSAGE);
+        String line = scanner.nextLine();
+        validator.validateNotBlank(line);
+        return line;
     }
 }
