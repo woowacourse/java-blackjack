@@ -7,4 +7,8 @@ public class Card {
         this.shape = shape;
         this.number = number;
     }
+
+    public int getScore() {
+        return number.getScore();
+    }
 }
