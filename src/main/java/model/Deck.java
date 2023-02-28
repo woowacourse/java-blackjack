@@ -4,30 +4,35 @@ import model.card.Card;
 import model.card.Shape;
 import model.card.Value;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Stack;
 
 public class Deck {
 
-    private final List<Card> cards;
+    private final Stack<Card> cards;
 
     public Deck() {
         this.cards = createCards();
     }
 
-    private List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
+    private Stack<Card> createCards() {
+        Stack<Card> cards = new Stack<>();
 
         for (Shape shape : Shape.values()) {
             addCard(cards, shape);
         }
+        Collections.shuffle(cards);
 
         return cards;
     }
 
-    private static void addCard(final List<Card> cards, final Shape shape) {
+    private static void addCard(final Stack<Card> cards, final Shape shape) {
         for (Value value : Value.values()) {
-            cards.add(new Card(shape, value));
+            cards.push(new Card(shape, value));
         }
+    }
+
+    public Card pick() {
+        return cards.pop();
     }
 }
