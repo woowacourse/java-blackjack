@@ -17,4 +17,8 @@ public class CardDeck {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
+
+    public Card pick() {
+        return cards.remove(0);
+    }
 }

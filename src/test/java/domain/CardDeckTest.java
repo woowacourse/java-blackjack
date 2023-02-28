@@ -14,4 +14,14 @@ class CardDeckTest {
 
         assertThat(cardDeck.getCards()).hasSize(52);
     }
+
+    @Test
+    @DisplayName("카드 한 장을 나눠준다")
+    void pickCard() {
+        CardDeck cardDeck = CardDeck.generate();
+
+        Card card = cardDeck.pick();
+
+        assertThat(CardSuit.values()).contains(card.getSuit());
+    }
 }
