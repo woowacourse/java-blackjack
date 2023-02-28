@@ -17,4 +17,17 @@ class PlayerCardsTest {
 
         assertThat(playerCards.toList()).contains(card);
     }
+
+    @Test
+    @DisplayName("카드의 점수를 계산한다")
+    void calculateScoreTest() {
+        PlayerCards playerCards = new PlayerCards();
+        Card one = new Card(CardSuit.SPADE, CardNumber.ACE);
+        Card three = new Card(CardSuit.SPADE, CardNumber.THREE);
+
+        playerCards.add(one);
+        playerCards.add(three);
+        
+        assertThat(playerCards.getScore()).isEqualTo(4);
+    }
 }

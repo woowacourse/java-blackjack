@@ -14,6 +14,16 @@ public class PlayerCards {
         cards.add(card);
     }
 
+    public int getScore() {
+        int score = 0;
+
+        for (Card card : cards) {
+            CardNumber cardNumber = card.getNumber();
+            score += cardNumber.getScore();
+        }
+        return score;
+    }
+
     public List<Card> toList() {
         return List.copyOf(cards);
     }
