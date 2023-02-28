@@ -5,5 +5,5 @@ public enum Symbol {
     SPADE,
     HEART,
     CLUB,
-    DIAMOND;
+    DIAMOND
 }
