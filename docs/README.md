@@ -10,7 +10,7 @@
 ## Card
 
 - [X] 필드로 Suit을 가진다.
-- [ ] 필드로 Denomination을 가진다.
+- [X] 필드로 Denomination을 가진다.
 
 ## Suit (enum)
 
