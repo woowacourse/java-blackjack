@@ -18,10 +18,10 @@ class CardsTest {
     public void testAddCard() {
         //given
         Set<Card> cardSet = IntStream.range(0, 10)
-            .mapToObj(i -> new Card("test" + i))
+            .mapToObj(i -> new Card("test" + i, List.of(1)))
             .collect(Collectors.toCollection(LinkedHashSet::new));
         Cards cards = new Cards(cardSet);
-        Card card = new Card("card");
+        Card card = new Card("card", List.of(1));
 
         //when
         cards.add(card);
@@ -37,13 +37,13 @@ class CardsTest {
         String name = "test";
         int end = 10;
         Set<Card> cardSet = IntStream.range(0, end + 1)
-            .mapToObj(i -> new Card(name + i))
+            .mapToObj(i -> new Card(name + i, List.of(1)))
             .collect(Collectors.toCollection(LinkedHashSet::new));
         Cards cards = new Cards(cardSet);
 
         //when
-        boolean result1 = cards.contains(new Card(name + end));
-        boolean result2 = cards.contains(new Card(name + (end + 1)));
+        boolean result1 = cards.contains(new Card(name + end, List.of(1)));
+        boolean result2 = cards.contains(new Card(name + end + 1, List.of(1)));
 
         //then
         assertTrue(result1);

@@ -6,9 +6,11 @@ import java.util.Objects;
 public class Card {
 
     private final String name;
+    private final List<Integer> scores;
 
-    public Card(String name) {
+    public Card(final String name, final List<Integer> scores) {
         this.name = name;
+        this.scores = scores;
     }
 
     @Override
