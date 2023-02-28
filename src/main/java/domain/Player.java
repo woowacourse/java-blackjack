@@ -51,6 +51,9 @@ public class Player {
         return score;
     }
 
+    public boolean isBusted() {
+        return score > 21;
+    }
 }
 
 

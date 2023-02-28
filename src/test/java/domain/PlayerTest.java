@@ -30,5 +30,15 @@ class PlayerTest {
         assertThat(player.getScore()).isEqualTo(score);
     }
 
+    @ParameterizedTest(name = "점수가 21을 초과하는지 확인한다")
+    @CsvSource({"diamond,8,heart,K,true", "diamond,10,spade,5,false"})
+    void c(String face1, String letter1, String face2, String letter2, boolean isBusted) {
+        var player = new Player(List.of(
+                new Card(face1, letter1),
+                new Card(face2, letter2),
+                new Card("spade", "5")));
+
+        assertThat(player.isBusted()).isEqualTo(isBusted);
+    }
 
 }
