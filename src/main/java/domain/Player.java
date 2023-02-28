@@ -1,3 +1,5 @@
+package domain;
+
 public class Player {
     private final String name;
 
