@@ -2,16 +2,16 @@ package blackjack.domain;
 
 public class Card {
 
-    private final Shape shape;
+    private final CardShape cardShape;
     private final CardNumber number;
 
-    public Card(final Shape shape, final CardNumber number) {
-        this.shape = shape;
+    public Card(final CardShape cardShape, final CardNumber number) {
+        this.cardShape = cardShape;
         this.number = number;
     }
 
-    public Shape getShape(){
-        return shape;
+    public CardShape getShape(){
+        return cardShape;
     }
 
     public CardNumber getNumber(){

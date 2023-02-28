@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public enum Shape {
+public enum CardShape {
     SPADE,
     CLOVER,
     HEART,
