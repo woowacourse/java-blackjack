@@ -4,31 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardRepository {
-    private static final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
-    private CardRepository() {}
-
-    public static void init() {
-        initializeCards();
+    private CardRepository(List<Card> cards) {
+        this.cards = cards;
     }
 
-    private static void initializeCards() {
+    public static CardRepository create() {
+        return new CardRepository(initializeCards());
+    }
+
+    private static List<Card> initializeCards() {
+        List<Card> cards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
-            initializeCardsByShape(shape);
+            initializeCardsByShape(cards, shape);
         }
+
+        return cards;
     }
 
-    private static void initializeCardsByShape(Shape shape) {
+    private static void initializeCardsByShape(List<Card> cards, Shape shape) {
         for (Number number : Number.values()) {
             cards.add(new Card(shape, number));
         }
     }
 
-    public static int size() {
+    public int size() {
         return cards.size();
     }
 
-    public static Card findCardByIndex(int index) {
+    public Card findCardByIndex(int index) {
         return cards.remove(index);
     }
 }
