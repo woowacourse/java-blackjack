@@ -29,6 +29,18 @@ public class Deck {
         }
     }
 
+    public Card drawCard() {
+        validateIsNotEmpty();
+
+        return shuffledDeck.pop();
+    }
+
+    private void validateIsNotEmpty() {
+        if (shuffledDeck.isEmpty()) {
+            throw new IllegalStateException();
+        }
+    }
+
     public int size() {
         return shuffledDeck.size();
     }
