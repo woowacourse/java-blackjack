@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,5 +22,9 @@ public class Deck {
                                 .map(suit -> new Card(suit, denomination))
                 )
                 .collect(Collectors.toList());
+    }
+
+    public List<Card> getDeck() {
+        return new ArrayList<>(deck);
     }
 }
