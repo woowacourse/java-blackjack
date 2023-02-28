@@ -18,4 +18,8 @@ public enum Value {
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
     }
+
+    public String getValue() {
+        return value;
+    }
 }
