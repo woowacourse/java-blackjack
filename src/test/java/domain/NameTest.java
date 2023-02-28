@@ -30,7 +30,7 @@ class NameTest {
 
     @DisplayName("이름의 길이는 10자를 초과하면 예외를 반환한다.")
     @Test
-    void dsa() {
+    void create_fail_by_wrong_name_length() {
         // given
         String givenName = "1234567890a";
 

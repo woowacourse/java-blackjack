@@ -28,4 +28,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(type, value);
     }
+
+    public int getScore() {
+        return value.getScore();
+    }
+
+    public boolean isAce() {
+        return value.isAce();
+    }
 }

@@ -21,4 +21,12 @@ public enum Value {
     Value(final int score) {
         this.score = score;
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public boolean isAce() {
+        return this.equals(A);
+    }
 }
