@@ -14,10 +14,24 @@ public class Player {
     }
 
     public int calculateScore() {
-        int score = 0;
+        int countOfAce = countAce();
+        int score = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
 
-        for (Card card : cards) {
-            score += card.getScore();
+        return applyAce(score, countOfAce);
+    }
+
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int applyAce(int score, int aceCount) {
+        while (score > 21 && aceCount > 0) {
+            score -= 10;
+            aceCount -= 1;
         }
 
         return score;

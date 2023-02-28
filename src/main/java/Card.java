@@ -11,4 +11,8 @@ public class Card {
     public int getScore() {
         return number.getScore();
     }
+
+    public boolean isAce() {
+        return this.number == Number.A;
+    }
 }
