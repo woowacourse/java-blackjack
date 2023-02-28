@@ -2,11 +2,11 @@ package domain;
 
 public class Player {
 
-    private String playerName;
+    private Name playerName;
     private CardPool cardPool;
 
     public Player(String playerName, CardPool cardPool) {
-        this.playerName = playerName;
+        this.playerName = new Name(playerName);
         this.cardPool = cardPool;
     }
 
