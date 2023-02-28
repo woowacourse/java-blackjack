@@ -1,4 +1,6 @@
-package domain;
+package domain.card;
+
+import util.PickerStrategy;
 
 import java.util.ArrayList;
 import java.util.Arrays;

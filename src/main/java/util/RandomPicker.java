@@ -1,4 +1,4 @@
-package domain;
+package util;
 
 import java.security.SecureRandom;
 import java.util.Random;
