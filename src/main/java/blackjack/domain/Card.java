@@ -1,13 +1,19 @@
 package blackjack.domain;
 
 public class Card {
-    private String name;
+    private TrumpShape trumpShape;
+    private TrumpNumber trumpNumber;
 
-    public Card(String name) {
-        this.name = name;
+    public Card(TrumpShape trumpShape, TrumpNumber trumpNumber) {
+        this.trumpShape = trumpShape;
+        this.trumpNumber = trumpNumber;
     }
 
-    public String getName() {
-        return name;
+    public TrumpShape getTrumpShape() {
+        return trumpShape;
+    }
+
+    public TrumpNumber getTrumpNumber() {
+        return trumpNumber;
     }
 }
