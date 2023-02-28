@@ -9,4 +9,12 @@ public class Card {
         this.number = number;
         this.pattern = pattern;
     }
+
+    public int convertToScore() {
+        return Number.convertNumberToScore(number);
+    }
+
+    public boolean isAce() {
+        return this.number == Number.ACE;
+    }
 }
