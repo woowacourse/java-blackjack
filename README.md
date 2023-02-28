@@ -32,10 +32,10 @@
 - 최종 승패를 결정한다.
 
 ### Card
-- `Number`와 `Pattern`을 가진다.
+- [x] `Number`와 `Pattern`을 가진다.
 
 ### Cards
-- `Card`들을 가진다.
+- [x] `Card`들을 가진다.
 
 ### Number (Enum)
 - [x] 숫자를 가진다. (A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K)
