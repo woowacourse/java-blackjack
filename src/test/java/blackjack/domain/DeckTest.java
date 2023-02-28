@@ -49,4 +49,15 @@ public class DeckTest {
                 .size()
                 .isEqualTo(52);
     }
+
+    @Test
+    @DisplayName("52개 이상을 덱에서 뽑으면 예외를 발생시킨다.")
+    void drawExceptionTest() {
+        for (int i = 0; i < 52; i++) {
+            deck.drawCard();
+        }
+        assertThatThrownBy(() -> deck.drawCard())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("카드 업슝");
+    }
 }

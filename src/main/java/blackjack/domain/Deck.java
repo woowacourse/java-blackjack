@@ -20,7 +20,11 @@ public class Deck {
     }
 
     public Card drawCard() {
-        return cards.remove(0);
+        try {
+            return cards.remove(0);
+        } catch (IndexOutOfBoundsException exception) {
+            throw new IllegalStateException("카드 업슝", exception);
+        }
     }
 
 }
