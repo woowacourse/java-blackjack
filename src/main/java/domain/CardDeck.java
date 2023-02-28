@@ -21,11 +21,29 @@ public class CardDeck {
         if (isDuplicate(cards)) {
             throw new IllegalArgumentException("중복된 카드가 존재합니다.");
         }
+
+        //TODO: 추후에 로직 분리 예정
+//        if(isNotShuffled()) {
+//            throw new IllegalArgumentException("카드가 섞이지 않았습니다.");
+//        }
     }
+
+//    private boolean isNotShuffled() {
+//        return false;
+//    }
+
 
     private boolean isDuplicate(final List<Card> cards) {
         return cards.stream()
                 .distinct()
                 .count() != SIZE_OF_CARD_DECK;
+    }
+
+    public Card draw() {
+        return cards.remove(getLastIndexOfCards());
+    }
+
+    private int getLastIndexOfCards() {
+        return cards.size() - 1;
     }
 }
