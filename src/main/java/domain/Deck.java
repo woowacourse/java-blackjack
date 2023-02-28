@@ -1,14 +1,13 @@
 package domain;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
 
 public class Deck {
 
     private static final Deck instance = create();
-    private final Deque<Card> cards;
+    private final LinkedList<Card> cards;
 
-    private Deck(Deque<Card> cards) {
+    private Deck(LinkedList<Card> cards) {
         this.cards = cards;
     }
 
@@ -17,24 +16,28 @@ public class Deck {
     }
 
     private static Deck create() {
-        final Deque<Card> cards = new ArrayDeque<>();
+        final LinkedList<Card> cards = new LinkedList<>();
         addAllCards(cards);
         return new Deck(cards);
     }
 
-    private static void addAllCards(Deque<Card> cards) {
+    private static void addAllCards(LinkedList<Card> cards) {
         for (Suit suit : Suit.values()) {
             addAllNumbersInSuit(cards, suit);
         }
     }
 
-    private static void addAllNumbersInSuit(Deque<Card> cards, Suit suit) {
+    private static void addAllNumbersInSuit(LinkedList<Card> cards, Suit suit) {
         for (Number number : Number.values()) {
-            cards.addLast(new Card(suit, number));
+            cards.add(new Card(suit, number));
         }
     }
 
     public Card draw() {
         return cards.pollLast();
+    }
+
+    public void shuffle(ShuffleStrategy shuffleStrategy) {
+        shuffleStrategy.shuffle(cards);
     }
 }
