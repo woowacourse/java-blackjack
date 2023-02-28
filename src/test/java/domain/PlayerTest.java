@@ -18,4 +18,17 @@ class PlayerTest {
 
         assertThat(player.getScore()).isEqualTo(score);
     }
+
+    @ParameterizedTest(name = "A는 무조건 플레이어에게 유리하게 계산한다")
+    @CsvSource({"diamond,J,heart,10,21", "diamond,7,spade,3,21", "diamond,A,spade,A,13"})
+    void b(String face1, String letter1, String face2, String letter2, int score) {
+        var player = new Player(List.of(
+                new Card(face1, letter1),
+                new Card(face2, letter2),
+                new Card("spade", "A")));
+
+        assertThat(player.getScore()).isEqualTo(score);
+    }
+
+
 }
