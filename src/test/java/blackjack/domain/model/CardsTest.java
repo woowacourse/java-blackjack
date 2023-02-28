@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 public class CardsTest {
     @Test
     @DisplayName("패 생성 테스트")
-    void constructCards() {
+    void constructCardsTest() {
         assertThatNoException().isThrownBy(() -> new Cards());
     }
 
@@ -30,5 +30,22 @@ public class CardsTest {
 
         // that
         assertThat(expectedCards).isEqualTo(cards.getCards());
+    }
+
+    @Test
+    @DisplayName("카드의 총 합을 반환한다")
+    void calculateTotalScoreTest() {
+        // given
+        Cards cards = new Cards();
+        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
+        Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
+        int expectedValue = card1.getValue() + card2.getValue();
+
+        // when
+        cards.add(card1);
+        cards.add(card2);
+
+        // that
+        assertThat(expectedValue).isEqualTo(cards.calculateTotalScore());
     }
 }

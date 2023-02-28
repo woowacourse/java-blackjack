@@ -22,4 +22,8 @@ public enum Letter {
         this.name = name;
         this.value = value;
     }
+
+    public int getValue() {
+        return this.value;
+    }
 }

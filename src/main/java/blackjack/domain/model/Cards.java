@@ -2,7 +2,6 @@ package blackjack.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Cards {
     private final List<Card> cards;
@@ -17,5 +16,11 @@ public class Cards {
 
     public List<Card> getCards() {
         return this.cards;
+    }
+
+    public int calculateTotalScore() {
+        return this.cards.stream().
+                map(Card::getValue).
+                reduce(0,Integer::sum);
     }
 }

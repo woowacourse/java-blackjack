@@ -11,4 +11,8 @@ public class Card {
         this.shape = shape;
         this.letter = letter;
     }
+
+    public int getValue() {
+        return this.letter.getValue();
+    }
 }
