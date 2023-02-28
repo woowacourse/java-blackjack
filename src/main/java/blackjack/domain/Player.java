@@ -6,6 +6,7 @@ public class Player {
     private static final int MAX_NAME_LENGTH = 5;
 
     private final String name;
+    private final Cards cards = Cards.generateEmptyCards();
 
     public Player(String name) {
         validateNameLength(name);
@@ -18,7 +19,15 @@ public class Player {
         }
     }
 
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
+
     public String getName() {
         return name;
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }
