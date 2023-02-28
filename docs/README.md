@@ -29,7 +29,7 @@
 
 - [X] 카드를 뽑는다. (자신의 Cards에 뽑은 Card 넣기)
 
-### Player
+### Player (Gambler 상속)
 
 - [X] 필드로 PlayerName을 가진다.
 - [X] 필드로 Cards를 가진다.
@@ -39,7 +39,7 @@
 - [X] 플레이어의 이름을 검증한다.
   - [X] blank면 예외 처리
 
-### Dealer (플레이어 상속) 
+### Dealer (Gambler 상속) 
 
 - [ ] 필드로 Cards를 가진다.
 - [ ] 16이하면 카드를 뽑고 17이상이면 카드를 뽑지 않는다.
