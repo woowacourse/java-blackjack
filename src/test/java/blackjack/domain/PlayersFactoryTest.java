@@ -4,11 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerFactoryTest {
+public class PlayersFactoryTest {
 
     @Test
     @DisplayName("입력된 참가자의 수가 2명 미만인 경우 예외 발생")
@@ -18,7 +17,7 @@ public class PlayerFactoryTest {
 
         // expect
         assertThatIllegalArgumentException().isThrownBy(() ->
-                PlayerFactory.from(names)
+                PlayersFactory.from(names)
         ).withMessage("[ERROR] 참가자의 수는 최소 2명에서 최대 8명이어야 합니다.");
     }
 
@@ -30,7 +29,7 @@ public class PlayerFactoryTest {
 
         // expect
         assertThatIllegalArgumentException().isThrownBy(() ->
-                PlayerFactory.from(names)
+                PlayersFactory.from(names)
         ).withMessage("[ERROR] 참가자의 수는 최소 2명에서 최대 8명이어야 합니다.");
     }
 
@@ -41,7 +40,7 @@ public class PlayerFactoryTest {
         String[] names = {"milli", "doggy"};
 
         // when
-        Players players = PlayerFactory.from(names);
+        Players players = PlayersFactory.from(names);
 
         // then
         assertAll(

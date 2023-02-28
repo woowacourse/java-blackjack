@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PlayerFactory {
+public class PlayersFactory {
 
     public static Players from(String[] names) {
         validateLength(names);

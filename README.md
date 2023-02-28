@@ -4,7 +4,7 @@
 
 # 요구사항 분석
 ## 주요 객체의 속성, 역할
-### PlayerFactory
+### PlayersFactory
 - 입력된 이름을 가지고 `Players`를 만들어 반환한다.
   - 최소 2명에서 최대 8명의 `Players`를 생성한다.
 
