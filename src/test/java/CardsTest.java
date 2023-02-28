@@ -1,5 +1,9 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.Card;
+import domain.Cards;
+import domain.CardsShuffler;
+import domain.FixedCardsShuffler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
