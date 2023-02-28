@@ -20,4 +20,8 @@ public enum Value {
     Value(final int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return this.value;
+    }
 }
