@@ -1,12 +1,17 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Cards {
 
     private final List<Card> cards;
 
     public Cards() {
-        this.cards = initializeCards();
+        List<Card> cards = initializeCards();
+        // TODO: shuffle을 통제할 수 있는 Random 필요!
+        Collections.shuffle(cards, new Random());
+        this.cards = cards;
     }
 
     private static List<Card> initializeCards() {
