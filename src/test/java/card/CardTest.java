@@ -2,6 +2,7 @@ package card;
 
 import static card.CardNumber.ACE;
 import static card.Pattern.HEART;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
@@ -13,5 +14,13 @@ class CardTest {
     void create() {
         assertThatCode(() -> new Card(ACE, HEART))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("생성된 카드의 이름을 가져올 수 있다.")
+    void getName() {
+        Card card = new Card(ACE, HEART);
+
+        assertThat(card.getName()).isEqualTo("A하트");
     }
 }
