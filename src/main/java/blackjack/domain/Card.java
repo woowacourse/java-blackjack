@@ -14,8 +14,7 @@ public class Card {
         return symbol;
     }
 
-    public int getValue() {
-        return number.getValue();
+    public Number getNumber() {
+        return number;
     }
-
 }
