@@ -27,6 +27,10 @@ public class Cards {
         return score;
     }
 
+    public List<Card> displayCards() {
+        return List.copyOf(cards);
+    }
+
     private static boolean isUnderTwentyOne(final int sum) {
         return sum <= 11;
     }
