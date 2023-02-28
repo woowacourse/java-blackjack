@@ -10,8 +10,8 @@ public class BlackJackGame {
         this.deck = deck;
     }
 
-    public Card pickCard() {
-        return deck.pick();
+    public void divideCard(final Result result, final Player player) {
+        final Card card = deck.pick();
+        result.addCard(player, card);
     }
-
 }

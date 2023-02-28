@@ -1,11 +1,12 @@
 package model;
 
-import model.card.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BlackJackGameTest {
@@ -18,20 +19,21 @@ public class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("카드를 뽑는지 테스트한다")
-    void pickCardTest() {
-        //given, when
-        final Card card = blackJackGame.pickCard();
+    @DisplayName("Player에게 카드를 나눠준다.")
+    void divideCard() {
+        // given
+        final Players players = new Players(List.of("bebe", "ethan"));
+        final Result result = new Result(players);
 
-        //then
+        // when
+        for (Player player : players.getPlayers()) {
+            blackJackGame.divideCard(result, player);
+        }
+
+        // then
         assertAll(
-                () -> assertThat(card.getClass()).isEqualTo(Card.class),
-                () -> assertThat(card)
-                        .extracting("shape")
-                        .isNotNull(),
-                () -> assertThat(card)
-                        .extracting("value")
-                        .isNotNull()
+                () -> assertThat(result.getScoreBoards().get(new Player("bebe"))).hasSize(1),
+                () -> assertThat(result.getScoreBoards().get(new Player("ethan"))).hasSize(1)
         );
     }
 }
