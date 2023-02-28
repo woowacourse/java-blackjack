@@ -10,7 +10,6 @@ public class Player {
     public Player(String name) {
         validateNameLength(name);
         this.name = name;
-
     }
 
     private void validateNameLength(final String name) {

@@ -16,7 +16,6 @@ public class PlayersFactory {
                 .map(String::trim)
                 .map(Player::new)
                 .collect(Collectors.toList());
-
         return new Players(players);
     }
 
