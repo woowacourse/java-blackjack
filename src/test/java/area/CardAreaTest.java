@@ -7,9 +7,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -23,11 +22,15 @@ class CardAreaTest {
     }
 
     @Test
-    void () {
+    void 카드를_추가할_수_있다() {
         // given
+        final CardArea cardArea = new CardArea(new Card(CardValue.THREE), new Card(CardValue.TWO));
 
         // when
+        final int beforeSize = cardArea.cards().size();
+        cardArea.addCard(new Card(CardValue.FOUR));
 
         // then
+        assertThat(cardArea.cards().size()).isEqualTo(beforeSize + 1);
     }
 }
