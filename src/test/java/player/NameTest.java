@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class NameTest {
     @Test
@@ -14,10 +16,10 @@ class NameTest {
                 .doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("이름이 5자 초과인 경우 예외가 발생한다.")
-    void crateNameFailTest() {
-        assertThatThrownBy(() -> new Name("폴로랑로지다"))
+    @ParameterizedTest(name = "이름이 1자 이상 5자 이하가 아닌 경우 예외가 발생한다. 입력값 = {0}")
+    @ValueSource(strings = {"폴로랑로지다", ""})
+    void createNameFailTest(String value) {
+        assertThatThrownBy(() -> new Name(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 1글자 이상 5글자 이하만 가능합니다.");
     }
