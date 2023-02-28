@@ -1,5 +1,6 @@
 package player;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,5 +23,13 @@ class NameTest {
         assertThatThrownBy(() -> new Name(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 1글자 이상 5글자 이하만 가능합니다.");
+    }
+
+    @ParameterizedTest(name = "생성자에 넣은 값과 이름의 밸류가 동일하다")
+    @ValueSource(strings = {"폴로", "로지"})
+    void nameEqualTest(String value) {
+        Name name = new Name(value);
+
+        assertThat(name.getValue()).isEqualTo(value);
     }
 }
