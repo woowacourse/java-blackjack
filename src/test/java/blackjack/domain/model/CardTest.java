@@ -1,12 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.model;
 
-import blackjack.domain.model.Card;
 import blackjack.domain.vo.Letter;
 import blackjack.domain.vo.Shape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 public class CardTest {
