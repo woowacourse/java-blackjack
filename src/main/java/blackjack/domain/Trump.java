@@ -6,9 +6,11 @@ import java.util.List;
 
 public class Trump {
     private List<Card> cards = new ArrayList<>();
+    private NumberGenerator numberGenerator;
 
-    public Trump() {
+    public Trump(NumberGenerator numberGenerator) {
         generateTrump();
+        this.numberGenerator = numberGenerator;
     }
 
     private void generateTrump() {
@@ -25,7 +27,8 @@ public class Trump {
         }
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public Card getCard(){
+        return cards.remove(numberGenerator.generate(cards.size()));
     }
+
 }
