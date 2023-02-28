@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,6 +23,15 @@ public class PlayersTest {
         Players players = Players.create(inputNames);
 
         assertThat(players).isNotNull();
+    }
+
+    @Test
+    @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
+    void createPlayersWithDuplicatedName() {
+        List<String> inputNames = List.of("gray", "gray", "pobi", "neo", "hoy");
+
+        assertThatThrownBy(() -> Players.create(inputNames))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
