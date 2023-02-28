@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
@@ -26,7 +27,7 @@ public class Cards {
         return sum;
     }
 
-    private static boolean notBusted(int sum) {
+    private boolean notBusted(int sum) {
         return sum + BIGGER_A_SCORE <= BOUNDARY;
     }
 
@@ -34,5 +35,13 @@ public class Cards {
         return cards.stream()
                 .map(Card::getName)
                 .anyMatch(name -> name.equals(ACE));
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }
