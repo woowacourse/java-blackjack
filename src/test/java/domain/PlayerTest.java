@@ -14,4 +14,15 @@ public class PlayerTest {
 
         assertThat(player.getName()).isEqualTo("boxster");
     }
+
+    @Test
+    @DisplayName("카드를 받아 플레이어 카드에 추가한다")
+    void addPlayerCardsTest() {
+        Player player = new Player("jamie");
+        Card card = new Card(CardSuit.HEART, CardNumber.ACE);
+
+        player.addCard(card);
+
+        assertThat(player.getCards()).contains(card);
+    }
 }
