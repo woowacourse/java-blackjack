@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlayerNames {
+    private static final int MAX_SIZE = 8;
     private final List<PlayerName> names;
 
     private PlayerNames(List<PlayerName> names) {
@@ -18,7 +19,14 @@ public class PlayerNames {
     }
 
     private void validate(List<PlayerName> names) {
+        validateSize(names);
         validateDuplication(names);
+    }
+
+    private void validateSize(List<PlayerName> names) {
+        if(names.isEmpty() || names.size() > MAX_SIZE){
+            throw new IllegalArgumentException("참여자 수는 1명 이상 8명 이하여야 합니다.");
+        }
     }
 
     private void validateDuplication(List<PlayerName> names) {
