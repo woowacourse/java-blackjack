@@ -10,10 +10,7 @@ public class Card {
         this.letter = letter;
     }
 
-    public int calculateNumber() {
-        if (letter.equals("K") || letter.equals("Q") || letter.equals("J")) {
-            return 10;
-        }
-        return 0;
+    public String getLetter() {
+        return letter;
     }
 }
