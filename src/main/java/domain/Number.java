@@ -1,7 +1,7 @@
 package domain;
 
 public enum Number {
-    A(1),
+    ACE(0),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -19,5 +19,13 @@ public enum Number {
 
     Number(int score) {
         this.score = score;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
