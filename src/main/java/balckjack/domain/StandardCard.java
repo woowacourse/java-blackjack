@@ -10,7 +10,7 @@ public class StandardCard extends Card {
     }
 
     @Override
-    void validateValue(int value) {
+    protected void validateValue(int value) {
         if (value > MAX_BOUND_VALUE || value < MIN_BOUND_VALUE) {
             throw new IllegalArgumentException(
                 String.format("일반 카드의 번호는 2에서 10 사이여야 합니다. 입력값: %d", value));
