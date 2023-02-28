@@ -2,9 +2,11 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Deck {
 
+    private final Random random = new Random();
     private final List<Card> cards;
 
     public Deck() {
@@ -25,9 +27,19 @@ public class Deck {
     }
 
     public Card drawCard() {
+        validateNotEmpty();
+
+        return cards.remove(pickRandomCard());
+    }
+
+    private void validateNotEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 모두 소진됐습니다.");
         }
-        return cards.remove(0);
     }
+
+    private int pickRandomCard() {
+        return random.nextInt(cards.size());
+    }
+
 }
