@@ -61,4 +61,4 @@
 
 ## 객체 다이어그램
 
-![img.png](diagram.png)
+<img src="diagram.png" style="width: 80%; height= 80%">
