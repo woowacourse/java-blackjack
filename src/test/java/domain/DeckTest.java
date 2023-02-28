@@ -1,18 +1,12 @@
 package domain;
 
-
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
-import org.assertj.core.api.InstanceOfAssertFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
 
@@ -28,4 +22,18 @@ class DeckTest {
                 .hasSize(52);
     }
 
+    @Test
+    @DisplayName("카드를 한장 뽑으면 deck의 size가 하나 줄어든다")
+    void drawCard_thenDecreaseDeckSize() {
+        //given
+        Deck deck = Deck.from(new RandomCardGenerator());
+
+        //when
+        deck.drawCard();
+
+        //then
+        assertThat(deck)
+                .extracting("deck", InstanceOfAssertFactories.collection(ArrayDeque.class))
+                .hasSize(51);
+    }
 }
