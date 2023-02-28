@@ -6,4 +6,8 @@ public class Players {
     public Players(List<Player> players){
         this.players = players;
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

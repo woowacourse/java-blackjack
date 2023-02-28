@@ -5,16 +5,16 @@ import view.InputView;
 public class BlackjackController {
     private final InputView inputView;
 
-    public BlackjackController(){
+    public BlackjackController() {
         inputView = new InputView();
     }
 
-    public void run(){
+    public void run() {
         Players players = createPlayers();
-
+        BlackjackGame blackjackGame = new BlackjackGame(players);
     }
 
-    private Players createPlayers(){
+    private Players createPlayers() {
         List<Player> players = readNames().stream()
                 .map(PlayerName::new)
                 .map(Player::new)
@@ -23,7 +23,7 @@ public class BlackjackController {
         return new Players(players);
     }
 
-    private List<String> readNames(){
+    private List<String> readNames() {
         return inputView.requestPlayerNames();
     }
 }

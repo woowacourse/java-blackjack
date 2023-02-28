@@ -31,4 +31,8 @@ public class Participant {
 
         return score;
     }
+
+    public int cardSize() {
+        return cards.size();
+    }
 }
