@@ -13,8 +13,8 @@ class CardTest {
     @DisplayName("동등성 검사 테스트")
     public void testEquals() {
         //given
-        Card card1 = new Card("card1");
-        Card card2 = new Card("card1");
+        Card card1 = new Card("card1", List.of(1));
+        Card card2 = new Card("card1", List.of(1));
 
         //when
         boolean result = card1.equals(card2);
