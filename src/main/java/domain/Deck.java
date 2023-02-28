@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.Stack;
 
 public class Deck {
@@ -14,6 +15,7 @@ public class Deck {
         for (Suit suit : Suit.values()) {
             pushCards(suit);
         }
+        Collections.shuffle(cards);
     }
 
     private void pushCards(final Suit suit) {
