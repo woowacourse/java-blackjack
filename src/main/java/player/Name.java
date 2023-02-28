@@ -4,9 +4,13 @@ public class Name {
     private final String value;
 
     public Name(String value) {
-        String valueWithoutBlank = value.replace(" ", "");
+        String valueWithoutBlank = removeBlank(value);
         validateNameLength(valueWithoutBlank);
         this.value = valueWithoutBlank;
+    }
+
+    private static String removeBlank(String value) {
+        return value.replace(" ", "");
     }
 
     private static void validateNameLength(String value) {
