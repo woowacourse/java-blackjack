@@ -22,4 +22,9 @@ public class PlayerName {
             throw new IllegalArgumentException("이름 길이는 1자 이상 5자 이하여야 합니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
 }
