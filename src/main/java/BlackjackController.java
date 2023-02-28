@@ -10,21 +10,33 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = createPlayers();
+        List<Player> players = createPlayers();
         BlackjackGame blackjackGame = new BlackjackGame(players);
         blackjackGame.giveInitCards();
+
+        for (Player player : players) {
+            requestMoreCard(blackjackGame, player);
+        }
     }
 
-    private Players createPlayers() {
-        List<Player> players = readNames().stream()
+    private List<Player> createPlayers() {
+        return readNames().stream()
                 .map(PlayerName::new)
                 .map(Player::new)
                 .collect(Collectors.toList());
-
-        return new Players(players);
     }
 
     private List<String> readNames() {
         return inputView.requestPlayerNames();
+    }
+
+    private void requestMoreCard(BlackjackGame blackjackGame, Player player) {
+        while (isHitCommand(player.getName())) {
+            blackjackGame.giveCardTo(player);
+        }
+    }
+
+    private boolean isHitCommand(String name) {
+        return Command.from(inputView.requestMoreCard(name)) != Command.HOLD;
     }
 }

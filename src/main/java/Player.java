@@ -5,4 +5,7 @@ public class Player extends Participant {
         this.name = name;
     }
 
+    public String getName() {
+        return name.getName();
+    }
 }
