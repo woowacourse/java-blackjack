@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CardDeck {
@@ -12,13 +11,7 @@ public class CardDeck {
     }
 
     public static CardDeck generate() {
-        List<Card> cards = new ArrayList<>();
-        for (CardSuit suit : CardSuit.values()) {
-            Arrays.stream(CardNumber.values())
-                  .map(cardNumber -> new Card(suit, cardNumber))
-                  .forEach(cards::add);
-        }
-        return new CardDeck(cards);
+        return new CardDeck(Card.values());
     }
 
     public List<Card> getCards() {
