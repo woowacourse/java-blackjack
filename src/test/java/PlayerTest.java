@@ -1,5 +1,3 @@
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +26,34 @@ class PlayerTest {
 
         Assertions.assertThat(player.calculateScore())
                 .isEqualTo(14);
+
+    }
+
+    @DisplayName("21을 넘은 경우 ACE는 1로 계산한다.")
+    @Test
+    void calculateScoreSuccessTestWhenHasAce(){
+        Player player = new Player(new PlayerName("pobi"));
+
+        player.receiveCard(new Card(Shape.CLUB, Number.A));
+        player.receiveCard(new Card(Shape.HEART, Number.THREE));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+
+        Assertions.assertThat(player.calculateScore())
+                .isEqualTo(14);
+
+    }
+
+    @DisplayName("21을 넘지 않는 경우 까지 ACE는 1로 계산한다.")
+    @Test
+    void calculateScoreSuccessTestWhenHasAceUntilNotBusted(){
+        Player player = new Player(new PlayerName("pobi"));
+
+        player.receiveCard(new Card(Shape.CLUB, Number.A));
+        player.receiveCard(new Card(Shape.HEART, Number.A));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+
+        Assertions.assertThat(player.calculateScore())
+                .isEqualTo(12);
 
     }
 
