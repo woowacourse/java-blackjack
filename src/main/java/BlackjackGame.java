@@ -11,17 +11,20 @@ public class BlackjackGame {
     }
 
     public void giveInitCards() {
-        giveCardToDealer();
+        giveCardsToDealer();
+        giveCardsToPlayers();
+    }
+
+    private void giveCardsToPlayers() {
         for (Player player : players.getPlayers()) {
             player.receiveCard(deck.drawCard());
             player.receiveCard(deck.drawCard());
         }
     }
 
-    private void giveCardToDealer() {
-        Card card = deck.drawCard();
-        dealer.receiveCard(card);
-        dealer.receiveCard(card);
+    private void giveCardsToDealer() {
+        dealer.receiveCard(deck.drawCard());
+        dealer.receiveCard(deck.drawCard());
     }
 
 }

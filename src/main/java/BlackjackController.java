@@ -12,6 +12,7 @@ public class BlackjackController {
     public void run() {
         Players players = createPlayers();
         BlackjackGame blackjackGame = new BlackjackGame(players);
+        blackjackGame.giveInitCards();
     }
 
     private Players createPlayers() {
