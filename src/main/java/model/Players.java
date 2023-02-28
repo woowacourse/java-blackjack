@@ -16,8 +16,12 @@ public class Players {
     }
 
     private List<Player> createPlayers(final List<String> playersName) {
-        return playersName.stream()
+        final List<Player> players = playersName.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
+
+        players.add(0, new Player("딜러"));
+
+        return players;
     }
 }
