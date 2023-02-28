@@ -1,7 +1,7 @@
 package domain;
 
 public enum Number {
-    ACE_ONE(1),
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -13,8 +13,7 @@ public enum Number {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10),
-    ACE_ELEVEN(11);
+    KING(10);
 
     private final int number;
 
