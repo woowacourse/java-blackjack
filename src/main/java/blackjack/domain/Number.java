@@ -29,8 +29,7 @@ public enum Number {
         return value;
     }
 
-    public static List<Number> getAllNumbers() {
-        return Arrays.stream(values())
-                .collect(Collectors.toList());
+    public static List<Number> getAll() {
+        return Arrays.asList(values());
     }
 }

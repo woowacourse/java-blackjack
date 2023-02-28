@@ -19,7 +19,7 @@ public class NumberTest {
         List<Number> expectedNumbers = List.of(Number.ACE, Number.TWO, Number.THREE, Number.FOUR, Number.FIVE, Number.SIX,
                 Number.SEVEN, Number.EIGHT, Number.NINE, Number.TEN, Number.JACK, Number.QUEEN, Number.KING);
 
-        List<Number> numbers = Number.getAllNumbers();
+        List<Number> numbers = Number.getAll();
 
         assertThat(numbers).containsAll(expectedNumbers);
     }
