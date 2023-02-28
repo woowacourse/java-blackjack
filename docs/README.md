@@ -23,6 +23,7 @@
 ## Cards
 
 - [X] 컬렉션의 점수를 계산한다.
+- [X] A는 1점 혹은 11점을 선택한다.
 
 ## Gambler (interface)
 

@@ -13,4 +13,8 @@ public class Card {
     public int getScore() {
         return denomination.getScore();
     }
+
+    public String getName() {
+        return denomination.getName();
+    }
 }
