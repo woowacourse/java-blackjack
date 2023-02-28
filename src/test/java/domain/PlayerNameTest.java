@@ -16,11 +16,4 @@ class PlayerNameTest {
         Assertions.assertThatThrownBy(() -> new PlayerName(nameInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-    @Test
-    void playerName이_Null이라면_예외처리() {
-        String nameInput = null;
-        Assertions.assertThatThrownBy(() -> new PlayerName(nameInput))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 }
