@@ -18,4 +18,8 @@ public class Player {
             throw new IllegalArgumentException("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

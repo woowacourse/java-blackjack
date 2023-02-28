@@ -1,10 +1,23 @@
 package blackjack.domain;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class PlayerFactory {
 
     public static Players from(String[] names) {
         validateLength(names);
-        return null;
+        return createPlayers(names);
+    }
+
+    private static Players createPlayers(final String[] names) {
+        List<Player> players = Arrays.stream(names)
+                .map(String::trim)
+                .map(Player::new)
+                .collect(Collectors.toList());
+
+        return new Players(players);
     }
 
     private static void validateLength(String[] names) {
