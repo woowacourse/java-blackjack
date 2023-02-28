@@ -22,4 +22,8 @@ public class Cards {
     public boolean contains(final Card card) {
         return cards.contains(card);
     }
+
+    public Card receiveCard(final int index) {
+        return cards.get(index);
+    }
 }
