@@ -30,6 +30,14 @@ public class CardNumber implements Comparable<CardNumber> {
                 .orElseThrow(() -> new AssertionError());
     }
 
+    public static int getMinValue() {
+        return MIN_RANGE;
+    }
+
+    public static int getMaxValue() {
+        return MAX_RANGE;
+    }
+
     private void validateRange(final int value) {
         if (value < MIN_RANGE || value > MAX_RANGE) {
             throw new IllegalArgumentException("범위를 초과하였습니다.");
