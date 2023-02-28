@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class Deck {
 
     private final List<Card> deck;
+    private int index = 0;
 
     public Deck() {
         this.deck = createDeck();
@@ -22,6 +23,10 @@ public class Deck {
                                 .map(suit -> new Card(suit, denomination))
                 )
                 .collect(Collectors.toList());
+    }
+
+    public Card pickCard() {
+        return deck.get(index++);
     }
 
     public List<Card> getDeck() {
