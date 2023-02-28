@@ -1,5 +1,7 @@
 package domain.card;
 
+import domain.CardShuffler;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,5 +23,9 @@ public class Cards {
         return cardPatterns.stream()
                 .flatMap(pattern -> cardNumbers.stream().map(number -> Card.create(pattern, number)))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Card> getShuffledCards(final CardShuffler cardShuffler) {
+        return cardShuffler.shuffle(cards);
     }
 }
