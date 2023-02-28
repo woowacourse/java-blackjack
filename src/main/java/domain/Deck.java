@@ -12,11 +12,11 @@ public class Deck {
 
     private void initCards() {
         for (Suit suit : Suit.values()) {
-            initCards(suit);
+            pushCards(suit);
         }
     }
 
-    private void initCards(final Suit suit) {
+    private void pushCards(final Suit suit) {
         for (Rank rank : Rank.values()) {
             cards.push(new Card(suit, rank));
         }
