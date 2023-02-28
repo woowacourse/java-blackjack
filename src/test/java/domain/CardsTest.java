@@ -20,4 +20,15 @@ class CardsTest {
         int expectedScore = 15;
         Assertions.assertThat(new Cards(cards).calculateScore()).isEqualTo(expectedScore);
     }
+
+    @Test
+    void A가_나오면_10_혹은_1중에_고른다() {
+        //given, when
+        List<Card> cards = List.of(new Card(Suit.CLOVER, Denomination.QUEEN),
+                new Card(Suit.HEART, Denomination.QUEEN), new Card(Suit.HEART, Denomination.ACE));
+
+        //then
+        int expectedScore = 21;
+        Assertions.assertThat(new Cards(cards).calculateScore()).isEqualTo(expectedScore);
+    }
 }
