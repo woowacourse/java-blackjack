@@ -1,9 +1,14 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -32,5 +37,20 @@ class PlayerTest {
         assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.");
+    }
+
+    @Test
+    void 카드를_뽑을_수_있다() {
+        //given
+        Player player = new Player("럿고");
+        int beforeCount = player.getCards().size();
+
+        //when
+        player.addCard(new Card(Rank.ACE, Suit.CLUB));
+
+        //then
+        int afterCount = player.getCards().size();
+
+        assertThat(beforeCount + 1).isEqualTo(afterCount);
     }
 }
