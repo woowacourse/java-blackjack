@@ -11,7 +11,7 @@ class DeckTest {
     @Test
     @DisplayName("0번째 위치의 카드를 반환한다")
     void drawFirstTest() {
-        Deck deck = new Deck(() -> 0);
+        Deck deck = new Deck((x) -> 0);
 
         assertThat(deck.draw()).isEqualTo(new Card(CardType.HEART, CardNumber.ACE));
     }
@@ -19,7 +19,7 @@ class DeckTest {
     @Test
     @DisplayName("51번째 위치의 카드를 반환한다")
     void drawLastTest() {
-        Deck deck = new Deck(() -> 51);
+        Deck deck = new Deck((x) -> 51);
 
         assertThat(deck.draw()).isEqualTo(new Card(CardType.DIAMOND, CardNumber.KING));
     }

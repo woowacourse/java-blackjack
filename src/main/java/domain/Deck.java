@@ -23,6 +23,6 @@ public class Deck {
     }
 
     public Card draw() {
-        return cards.get(numberGenerator.generate());
+        return cards.get(numberGenerator.generate(cards.size()));
     }
 }
