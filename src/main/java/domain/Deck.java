@@ -10,16 +10,29 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck() {
+        this.cards = buildDeck();
+    }
+
+    private List<Card> buildDeck() {
         var cards = new ArrayList<Card>();
-        var faces = List.of("heart", " spade", "diamond", "clover");
-        var letters = List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J");
+        var faces = List.of("heart", "spade", "diamond", "clover");
 
         for (String face : faces) {
-            for (String letter : letters) {
-                cards.add(new Card(face, letter));
-            }
+            cards.addAll(buildCardsFrom(face));
         }
-        this.cards = cards;
+
+        return cards;
+    }
+
+    private List<Card> buildCardsFrom(String face) {
+        var cards = new ArrayList<Card>();
+        var letters = List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J");
+
+        for (String letter : letters) {
+            cards.add(new Card(face, letter));
+        }
+
+        return cards;
     }
 
     public List<Card> getCards() {
