@@ -1,11 +1,7 @@
-package domain;
+package domain.Card;
 
 import static org.assertj.core.api.Assertions.*;
 
-import domain.Card.CloverCard;
-import domain.Card.DiamondCard;
-import domain.Card.HeartCard;
-import domain.Card.SpadeCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
