@@ -4,27 +4,29 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class Deck {
-    Stack<Card> cards;
+    private static final Stack<Card> cards = initCards();
 
-    public Deck() {
-        cards = new Stack<>();
-        initCards();
+    private Deck() {
     }
 
-    private void initCards() {
+    private static Stack<Card> initCards() {
+        Stack<Card> cards = new Stack<>();
+
         for (Suit suit : Suit.values()) {
-            pushCards(suit);
+            pushCards(cards, suit);
         }
         Collections.shuffle(cards);
+
+        return cards;
     }
 
-    private void pushCards(final Suit suit) {
+    private static void pushCards(final Stack<Card> cards, final Suit suit) {
         for (Rank rank : Rank.values()) {
             cards.push(new Card(suit, rank));
         }
     }
 
-    public Card popCard() {
+    public static Card popCard() {
         return cards.pop();
     }
 }

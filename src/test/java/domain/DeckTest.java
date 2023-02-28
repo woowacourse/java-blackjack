@@ -13,11 +13,10 @@ public class DeckTest {
     @Test
     void generateCardsTest() {
         final int expectedDeckSize = 52;
-        Deck deck = new Deck();
 
         for (int i = 0; i < expectedDeckSize; i++) {
-            deck.popCard();
+            Deck.popCard();
         }
-        assertThrows(EmptyStackException.class, deck::popCard);
+        assertThrows(EmptyStackException.class, Deck::popCard);
     }
 }
