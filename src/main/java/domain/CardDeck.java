@@ -11,5 +11,9 @@ public class CardDeck {
     public CardDeck(Queue<Card> cards) {
         this.cards = cards;
     }
-    
+
+    public Card poll(){
+        return cards.poll();
+    }
+
 }
