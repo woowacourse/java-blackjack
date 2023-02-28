@@ -31,7 +31,7 @@
         - **CardPattern (카드 패턴)**
             - [x] '하트', '스페이드', '다이아', '클로버'를 반환한다.
         - **CardNumber (카드 번호)**
-            - [ ] 2~10, Ace, King, Queen, Jack을 반환한다.
+            - [x] 2~10, Ace, King, Queen, Jack을 반환한다.
 
 ### Deck (섞인 카드뭉치)
 
