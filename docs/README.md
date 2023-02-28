@@ -14,7 +14,7 @@
 
 ## Suit (enum)
 
-- [ ] 필드로 이름을 가진다.
+- [X] 필드로 이름을 가진다.
 
 ## Denomination (enum)
 
