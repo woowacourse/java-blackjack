@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -11,6 +12,7 @@ public class Deck {
         for (Shape shape : Shape.values()) {
             getMakeCardsOf(shape);
         }
+        Collections.shuffle(cards);
     }
 
     private void getMakeCardsOf(final Shape shape) {
