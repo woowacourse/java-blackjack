@@ -29,4 +29,8 @@ public class Card {
     public String toString() {
         return value.getValue() + shape.getShape();
     }
+
+    public int getValue() {
+        return this.value.getValue();
+    }
 }

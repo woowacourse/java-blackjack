@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Result {
 
+    private static final int CAN_RECEIVE_MAX_NUMBER = 21;
     private final Map<Player, List<Card>> scoreBoards;
 
     public Result(final Players players) {
@@ -24,11 +25,17 @@ public class Result {
         return scoreBoards;
     }
 
-    public Map<Player, List<Card>> getScoreBoards() {
-        return scoreBoards;
-    }
-
     public void addCard(final Player player, final Card card) {
         scoreBoards.get(player).add(card);
+    }
+
+    public boolean canPlayerReceiveCard(final Player player) {
+        return CAN_RECEIVE_MAX_NUMBER >= scoreBoards.get(player).stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
+    public Map<Player, List<Card>> getScoreBoards() {
+        return scoreBoards;
     }
 }
