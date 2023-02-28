@@ -10,6 +10,10 @@ public class Card {
         this.shape = Shape.of(shape);
     }
 
+    public int getScore() {
+        return value.getScore();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
