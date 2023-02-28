@@ -20,4 +20,11 @@ public enum Number {
     Number(final int number) {
         this.number = number;
     }
+
+    public static int convertNumberToScore(Number number) {
+        if (number == J || number == Q || number == K) {
+            return 10;
+        }
+        return number.number;
+    }
 }
