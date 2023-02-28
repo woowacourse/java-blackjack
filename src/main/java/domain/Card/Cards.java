@@ -18,7 +18,14 @@ public class Cards {
         cards.addAll(Arrays.asList(SpadeCard.values()));
     }
 
-    public boolean isEmpty() {
+    public Card drawCard() {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 카드가 존재하지 않습니다.");
+        }
+        return cards.remove(0);
+    }
+
+    private boolean isEmpty() {
         return cards.isEmpty();
     }
 }
