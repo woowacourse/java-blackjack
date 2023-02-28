@@ -3,7 +3,7 @@ package domain.Card;
 import domain.Number;
 import domain.Pattern;
 
-public enum HeartCard {
+public enum HeartCard implements Card{
     HEART_ACE(Pattern.HEART, Number.ACE),
     HEART_TWO(Pattern.HEART, Number.TWO),
     HEART_THREE(Pattern.HEART, Number.THREE),

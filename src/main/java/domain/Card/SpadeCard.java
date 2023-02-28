@@ -3,7 +3,7 @@ package domain.Card;
 import domain.Number;
 import domain.Pattern;
 
-public enum SpadeCard {
+public enum SpadeCard implements Card{
     SPADE_ACE(Pattern.SPADE, Number.ACE),
     SPADE_TWO(Pattern.SPADE, Number.TWO),
     SPADE_THREE(Pattern.SPADE, Number.THREE),
