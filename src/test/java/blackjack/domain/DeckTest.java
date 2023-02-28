@@ -59,7 +59,7 @@ public class DeckTest {
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
-        assertThatThrownBy(() -> deck.draw())
+        assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class);
     }
 
