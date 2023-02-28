@@ -12,7 +12,18 @@ public class Player {
     }
 
     private void validateName(final String name) {
-        if (name.isBlank() || name.length() > NAME_MAX_LENGTH) {
+        validateBlank(name);
+        validateLength(name);
+    }
+
+    private void validateBlank(final String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateLength(final String name) {
+        if (name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException();
         }
     }

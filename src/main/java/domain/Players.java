@@ -1,5 +1,7 @@
 package domain;
 
+import static java.util.stream.Collectors.collectingAndThen;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,9 +14,8 @@ public class Players {
     }
 
     public static Players of(final List<String> names) {
-        List<Player> players = names.stream()
+        return names.stream()
             .map(Player::new)
-            .collect(Collectors.toList());
-        return new Players(players);
+            .collect(collectingAndThen(Collectors.toList(), Players::new));
     }
 }
