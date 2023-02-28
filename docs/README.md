@@ -27,7 +27,7 @@
 
 ## Gambler (interface)
 
-- [ ] 카드를 뽑는다. (자신의 Cards에 뽑은 Card 넣기)
+- [X] 카드를 뽑는다. (자신의 Cards에 뽑은 Card 넣기)
 
 ### Player
 
