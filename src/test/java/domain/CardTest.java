@@ -21,4 +21,15 @@ public class CardTest {
         assertThat(card.getValue().getValue()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("카드는 한 번 뽑으면 삭제된다.")
+    void removeCardWhenPicked() {
+        CardDeck cardDeck = new CardDeck();
+
+        Card card = cardDeck.pick();
+
+        assertThat(cardDeck.getSize()).isEqualTo(51);
+        assertThat(cardDeck.getCards().contains(card)).isFalse();
+    }
+
 }
