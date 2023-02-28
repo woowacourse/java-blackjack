@@ -1,8 +1,11 @@
 package domain;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -39,6 +42,16 @@ class PlayerTest {
                 new Card("spade", "5")));
 
         assertThat(player.isBusted()).isEqualTo(isBusted);
+    }
+
+    @DisplayName("카드를 받는다.")
+    @Test
+    void d() {
+        List<Card> cards = new ArrayList<>(List.of(new Card("heart", "2")));
+        var player = new Player(cards);
+        player.addCard(new Card("heart", "K"));
+
+        assertThat(player.getScore()).isEqualTo(12);
     }
 
 }

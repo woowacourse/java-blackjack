@@ -54,6 +54,11 @@ public class Player {
     public boolean isBusted() {
         return score > 21;
     }
+
+    public void addCard(Card card) {
+        cards.add(card);
+        this.score = calculateScore();
+    }
 }
 
 
