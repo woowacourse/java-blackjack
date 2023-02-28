@@ -11,6 +11,14 @@ public class Card {
         this.rank = rank;
     }
 
+    public int getScore() {
+        return rank.getValue();
+    }
+
+    public boolean isAce() {
+        return this.rank == Rank.ACE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
