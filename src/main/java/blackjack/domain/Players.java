@@ -14,10 +14,19 @@ public class Players {
     }
 
     private List<Player> makePlayers(final String input) {
-        return Arrays.stream(input.split(","))
+        List<String> names = Arrays.asList(input.split(","));
+        validateNumberOfPlayers(names);
+        return names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
     }
+
+    private void validateNumberOfPlayers(List<String> names) {
+        if (names.size() < 1 || names.size() > 7) {
+            throw new IllegalArgumentException("플레이어의 수는 1명 이상 7명 이하만 가능합나다.");
+        }
+    }
+
 
     public List<Player> getPlayers() {
         return this.players;
