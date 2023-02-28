@@ -2,22 +2,34 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class Deck {
-    private final Stack<Card> cardStack;
+    private final Stack<Card> shuffledDeck;
 
     public Deck() {
-        cardStack = new Stack<>();
-        Number[] numbers = Number.values();
-        Shape[] shapes = Shape.values();
-        for (Shape shape : shapes) {
-            for (Number number : numbers) {
-                cardStack.add(new Card(shape,number));
-            }
-        }
+        Stack<Card> deck = new Stack<>();
 
-        Collections.shuffle(cardStack);
+        addAllCards(deck);
+        Collections.shuffle(deck);
+
+        this.shuffledDeck = deck;
     }
 
-    public int size(){
-        return cardStack.size();
+    private void addAllCards(Stack<Card> deck) {
+        Shape[] shapes = Shape.values();
+
+        for (Shape shape : shapes) {
+            addCardsOfShape(deck, shape);
+        }
+    }
+
+    private void addCardsOfShape(Stack<Card> deck, Shape shape) {
+        Number[] numbers = Number.values();
+
+        for (Number number : numbers) {
+            deck.add(new Card(shape, number));
+        }
+    }
+
+    public int size() {
+        return shuffledDeck.size();
     }
 }
