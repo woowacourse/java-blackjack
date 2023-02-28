@@ -27,7 +27,7 @@
 - Players : Player 목록을 가지고 있는 일급 컬렉션
 
 - Card : 카드
-  - [ ] 카드 숫자를 보고 값을 반환한다 (ex. Ace -> 1 or 11 // King, Queen, Jack -> 10)
+  - [x] 카드 숫자를 보고 점수를 반환한다 (ex. Ace -> 1 or 11 // King, Queen, Jack -> 10)
 
 - CardDeck : 덱에 있는 카드. Card 목록을 가지고 있는 일급 컬렉션
   - [ ] 52장의 카드를 초기화한다
