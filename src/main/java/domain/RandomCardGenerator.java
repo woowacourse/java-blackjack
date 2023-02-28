@@ -4,16 +4,16 @@ import java.util.Collections;
 import java.util.List;
 
 public class RandomCardGenerator implements CardGenerator {
+    static List<Card> cards;
+
+    static {
+        cards = CardGenerator.generate();
+    }
 
     @Override
     public List<Card> shuffle() {
-        final List<Card> cards = generate();
         Collections.shuffle(cards);
         return cards;
     }
 
-    @Override
-    public List<Card> generate() {
-        return CardGenerator.super.generate();
-    }
 }

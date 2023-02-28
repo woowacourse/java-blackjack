@@ -11,18 +11,18 @@ import java.util.stream.Stream;
 public interface CardGenerator {
     List<Card> shuffle();
 
-    default List<Card> generate() {
+    static List<Card> generate() {
         return Arrays.stream(Shape.values())
-                .flatMap(this::giveNumber)
+                .flatMap(CardGenerator::giveNumber)
                 .collect(Collectors.toList());
     }
 
-    private Stream<Card> giveNumber(final Shape i) {
+    private static Stream<Card> giveNumber(final Shape shape) {
         return Arrays.stream(Number.values())
-                .map(createCard(i));
+                .map(createCard(shape));
     }
 
-    private Function<Number, Card> createCard(final Shape i) {
-        return j -> Card.of(i, j);
+    private static  Function<Number, Card> createCard(final Shape shape) {
+        return number -> Card.of(shape, number);
     }
 }
