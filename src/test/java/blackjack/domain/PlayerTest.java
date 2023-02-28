@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,8 @@ public class PlayerTest {
         String name = "millie";
 
         // expect
-        assertThatThrownBy(() -> new Player(name))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다.");
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                new Player(name)
+        ).withMessage("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다.");
      }
 }
