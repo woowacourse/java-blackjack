@@ -4,8 +4,9 @@ public class Name {
     private final String value;
 
     public Name(String value) {
-        validateNameLength(value);
-        this.value = value;
+        String valueWithoutBlank = value.replace(" ", "");
+        validateNameLength(valueWithoutBlank);
+        this.value = valueWithoutBlank;
     }
 
     private static void validateNameLength(String value) {

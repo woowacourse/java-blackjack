@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class NameTest {
@@ -31,5 +32,13 @@ class NameTest {
         Name name = new Name(value);
 
         assertThat(name.getValue()).isEqualTo(value);
+    }
+
+    @ParameterizedTest(name = "입력받은 밸류에서 공백을 제거 후 생성한다. 입력값 = {0}, 기대값 = {1}")
+    @CsvSource({"'   폴   로',폴로", "'로  지  ',로지"})
+    void removeBlankTest(String value, String expect) {
+        Name name = new Name(value);
+
+        assertThat(name.getValue()).isEqualTo(expect);
     }
 }
