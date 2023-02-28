@@ -31,7 +31,7 @@
 
 ### Player
 
-- [ ] 필드로 PlayerName을 가진다.
+- [X] 필드로 PlayerName을 가진다.
 - [ ] 필드로 Cards를 가진다.
 
 #### PlayerName
