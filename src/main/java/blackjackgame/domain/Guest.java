@@ -9,9 +9,9 @@ public class Guest {
     Name name;
     List<Card> cards;
 
-    public Guest(Name name, Card firstCard, Card secondCard) {
+    public Guest(Name name) {
         this.name = name;
-        this.cards = new ArrayList<>(List.of(firstCard, secondCard));
+        cards = new ArrayList<>();
     }
 
     public int getScore() {
