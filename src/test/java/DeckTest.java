@@ -13,4 +13,17 @@ class DeckTest {
                 .isEqualTo(52);
     }
 
+    @DisplayName("카드가 남아있지 않으면 뽑을 수 없다.")
+    @Test
+    void drawCardFailTestWhenDeckIsEmpty() {
+        Deck deck = new Deck();
+        for (int i = 0; i < 52; i++) {
+            deck.drawCard();
+        }
+
+        Assertions.assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(IllegalStateException.class);
+
+    }
+
 }
