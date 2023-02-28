@@ -1,5 +1,10 @@
 package blackjack.domain;
 
+import static blackjack.domain.Number.*;
+import static blackjack.domain.Symbol.CLUB;
+import static blackjack.domain.Symbol.DIAMOND;
+import static blackjack.domain.Symbol.SPADE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -20,7 +25,7 @@ class DeckTest {
     void createCards() {
         cards = new ArrayList<>();
         for (Symbol symbol : Symbol.values()) {
-            for (Number number : Number.values()) {
+            for (Number number : values()) {
                 cards.add(new Card(symbol, number));
             }
         }
@@ -38,7 +43,7 @@ class DeckTest {
     @DisplayName("카드 덱은 52장의 카드가 아니면 예외를 발생시킨다. (53장)")
     @Test
     void should_ThrowException_When_53Cards() {
-        cards.add(new Card(Symbol.DIAMOND, Number.JACK));
+        cards.add(new Card(DIAMOND, JACK));
         assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("카드들의 갯수는 52장이어야 합니다.");
@@ -55,9 +60,17 @@ class DeckTest {
     @Test
     void should_ThrowException_When_Duplicated() {
         cards.remove(0);
-        cards.add(new Card(Symbol.CLUB, Number.JACK));
+        cards.add(new Card(CLUB, JACK));
         assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("카드 덱은 중복될 수 없습니다.");
+    }
+
+    @DisplayName("카드 덱에서 주어진 장수만큼 카드를 뽑는다.")
+    @Test
+    void should_DrawCards_As_Count() {
+        Deck deck = new Deck(cards);
+        assertThat(deck.draw(2))
+                .containsExactly(new Card(SPADE, ACE), new Card(SPADE, TWO));
     }
 }
