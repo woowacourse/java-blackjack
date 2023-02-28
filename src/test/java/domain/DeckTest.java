@@ -11,7 +11,7 @@ class DeckTest {
     @Nested
     class 생성 {
         @Test
-        void test_생성_should_중복되는인스턴스가없어야한다_when_생성되었을때() {
+        void should_중복되는인스턴스가없어야한다_when_생성() {
             //given
             Deck deck = Deck.getInstance();
 
@@ -21,6 +21,22 @@ class DeckTest {
             assertThat(deck).extracting("cards", InstanceOfAssertFactories.collection(Set.class))
                     .size()
                     .isEqualTo(52);
+        }
+    }
+
+    @Nested
+    class 카드뽑기 {
+        @Test
+        void should_적절한카드반환_when_draw호출() {
+            //given
+            Deck deck = Deck.getInstance();
+            Card expected = new Card(Suit.CLUB, Number.JACK);
+
+            //when
+            Card card = deck.draw();
+
+            //then
+            assertThat(card).isEqualTo(expected);
         }
     }
 }

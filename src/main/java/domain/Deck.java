@@ -1,14 +1,14 @@
 package domain;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Deck {
 
     private static final Deck instance = create();
-    private final Set<Card> cards;
+    private final Deque<Card> cards;
 
-    private Deck(Set<Card> cards) {
+    private Deck(Deque<Card> cards) {
         this.cards = cards;
     }
 
@@ -17,20 +17,24 @@ public class Deck {
     }
 
     private static Deck create() {
-        final Set<Card> cards = new LinkedHashSet<>();
+        final Deque<Card> cards = new ArrayDeque<>();
         addAllCards(cards);
         return new Deck(cards);
     }
 
-    private static void addAllCards(Set<Card> cards) {
+    private static void addAllCards(Deque<Card> cards) {
         for (Suit suit : Suit.values()) {
             addAllNumbersInSuit(cards, suit);
         }
     }
 
-    private static void addAllNumbersInSuit(Set<Card> cards, Suit suit) {
+    private static void addAllNumbersInSuit(Deque<Card> cards, Suit suit) {
         for (Number number : Number.values()) {
-            cards.add(new Card(suit, number));
+            cards.addLast(new Card(suit, number));
         }
+    }
+
+    public Card draw() {
+        return cards.pollLast();
     }
 }
