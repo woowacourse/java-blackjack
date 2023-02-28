@@ -32,6 +32,10 @@ public class OutputView {
                 .forEach(player -> System.out.println(player.getName() + ": " + createCardInfo(scoreBoards, player)));
     }
 
+    public static void printPlayerCardsInfo(final Player player, final Result result) {
+        System.out.println(player.getName() + ": " + createCardInfo(result.getScoreBoards(), player));
+    }
+
     private static String createCardInfo(final Map<Player, List<Card>> scoreBoards, final Player player) {
         StringBuilder stringBuilder = new StringBuilder();
         scoreBoards.get(player).forEach(card -> stringBuilder.append(card.toString()).append(", "));
