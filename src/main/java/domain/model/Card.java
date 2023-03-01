@@ -13,6 +13,10 @@ public class Card {
         this.scores = scores;
     }
 
+    public boolean isMatch(final Letter letter) {
+        return this.letter.equals(letter);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -22,16 +26,20 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return Objects.equals(name, card.name);
+        return suit == card.suit && letter == card.letter;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(suit, letter);
     }
 
     @Override
     public String toString() {
-        return name;
+        return letter.getNumber() + suit.getName();
+    }
+
+    public int getNumber() {
+        return letter.getNumber();
     }
 }
