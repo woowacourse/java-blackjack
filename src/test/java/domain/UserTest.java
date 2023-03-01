@@ -7,10 +7,14 @@ import org.junit.jupiter.api.Test;
 
 public class UserTest {
 
+    static class UserImplement extends User {
+
+    }
+
     @DisplayName("카드를 받아 자신의 카드 더미에 추가할 수 있다")
     @Test
     void receiveCard() {
-        User user = new User();
+        User user = new UserImplement();
         Card card1 = new Card(Denomination.ACE, Suits.HEART);
         Card card2 = new Card(Denomination.THREE, Suits.DIAMOND);
         user.receiveCard(card1);
