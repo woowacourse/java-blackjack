@@ -28,4 +28,8 @@ public enum CardValue {
     public int value() {
         return value;
     }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
 }
