@@ -34,6 +34,13 @@ public class PlayerTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("이름이 딜러이면 예외가 발생한다")
+    @Test
+    void nameNot딜러() {
+        assertThatThrownBy(() -> new Player("딜러"))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("카드 점수가 21보다 작으면 카드를 받을 수 있다")
     @Test
     void hit_WhenScoreUnder21() {
