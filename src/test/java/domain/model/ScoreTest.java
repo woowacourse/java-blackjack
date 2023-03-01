@@ -11,17 +11,30 @@ import org.junit.jupiter.api.Test;
 class ScoreTest {
 
     @Test
-    @DisplayName("점수 추가를 테스트")
-    public void testAddScore() {
+    @DisplayName("21 이하의 점수 생성을 테스트")
+    public void testScoreOfUnder21() {
         //given
-        int initialValue = 1;
-        Score score = new Score(initialValue);
-        int additionalValue = 2;
+        Cards cards = new Cards(Set.of(new Card(Suit.CLUB, Letter.ACE)));
+        Score score = Score.of(cards);
 
         //when
-        score.add(additionalValue);
+        int value = score.getValue();
 
         //then
-        assertThat(score.getValue()).isEqualTo(initialValue + additionalValue);
+        assertThat(value).isEqualTo(11);
+    }
+
+    @Test
+    @DisplayName("ACE가 포함된 21점 생성을 테스트")
+    public void testScoreOf21() {
+        //given
+        Cards cards = new Cards(Set.of(new Card(Suit.CLUB, Letter.ACE), new Card(Suit.CLUB, Letter.TEN),
+            new Card(Suit.DIAMOND, Letter.TEN)));
+        Score score = Score.of(cards);
+        //when
+        int value = score.getValue();
+
+        //then
+        assertThat(value).isEqualTo(21);
     }
 }
