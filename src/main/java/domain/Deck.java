@@ -22,4 +22,8 @@ public class Deck {
             deck.add(new Card(value.getName() + shape.getShape(), value.getValue()));
         }
     }
+
+    public Card draw() {
+        return deck.pop();
+    }
 }
