@@ -2,6 +2,7 @@ package view;
 
 import domain.Card;
 import domain.Name;
+import domain.Results;
 
 import java.util.List;
 
@@ -30,6 +31,13 @@ public final class OutputView {
         final String playerCards = convertCardsFormat(cards);
         System.out.printf("%s 카드: %s - 결과: %d%n", name.getName(), playerCards, playerScore);
 
+    }
+
+    public static void printGameResult(final Results results) {
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %d승 %d패%n", results.countLosers(), results.countWinners());
+        results.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner.getName()));
+        results.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser.getName()));
     }
 
     private static String convertCardsFormat(final List<Card> cards) {
