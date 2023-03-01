@@ -18,7 +18,7 @@ public class CardsTest {
 
     @Test
     void 카드뭉치_안에는_같은_카드가_두개일_수_없다() {
-        List<Card> cards = List.of(new Card("A하트", 1), new Card("A하트", 1));
+        List<Card> cards = List.of(new Card("A하트", 11), new Card("A하트", 11));
         assertThatThrownBy(() -> new Cards(cards))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -26,21 +26,21 @@ public class CardsTest {
     @Test
     void 카드뭉치는_가진_카드의_총합을_반환한다() {
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card("A하트", 1));
+        cards.add(new Card("A하트", 11));
         cards.add(new Card("3하트", 3));
         Cards actual = new Cards(cards);
 
-        assertThat(actual.sumOfCards()).isEqualTo(4);
+        assertThat(actual.sumOfCards()).isEqualTo(14);
     }
 
     @ParameterizedTest
     @CsvSource(value = {
-            "A하트,1,false",
-            "A클로버,1,true"
+            "A하트,11,false",
+            "A클로버,11,true"
     })
     void 카드뭉치는_카드를_추가할_경우_성공하면_True를_실패하면_False를_반환한다(String cardName, int cardValue, boolean expected) {
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card("A하트", 1));
+        cards.add(new Card("A하트", 11));
         cards.add(new Card("3하트", 3));
         Cards actual = new Cards(cards);
 
