@@ -1,7 +1,6 @@
 package view;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     private static final String PRINT_PARTICIPANT_CARD_FORMAT = "%s : %s\n";
@@ -13,11 +12,9 @@ public class OutputView {
         System.out.printf("딜러%s에게 2장을 나누었습니다.\n", participants);
     }
 
-    public void printParticipantCard(Map<String, List<String>> participantsHands) {
-        for (Map.Entry<String, List<String>> participantHand : participantsHands.entrySet()) {
-            String cards = String.join(", ", participantHand.getValue());
-            System.out.printf((PRINT_PARTICIPANT_CARD_FORMAT), participantHand.getKey(), cards);
-        }
+    public void printParticipantCard(String name, List<String> participantsHand) {
+        String cards = String.join(", ", participantsHand);
+        System.out.printf((PRINT_PARTICIPANT_CARD_FORMAT), name, cards);
     }
 
     public void printDealerPickCardMessage() {
