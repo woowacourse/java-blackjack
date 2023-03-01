@@ -1,7 +1,6 @@
 package area;
 
 import card.Card;
-import card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,15 +25,13 @@ class CardAreaTest {
     @Test
     void 카드를_두장만_받아서_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> new CardArea(new Card(ACE), new Card(TWO)) {
-        });
+        assertDoesNotThrow(() -> new SimpleCardArea(new Card(ACE), new Card(TWO)));
     }
 
     @Test
     void 카드를_추가할_수_있다() {
         // given
-        final CardArea cardArea = new CardArea(new Card(THREE), new Card(TWO)) {
-        };
+        final CardArea cardArea = new SimpleCardArea(new Card(THREE), new Card(TWO));
 
         // when
         final int beforeSize = cardArea.cards().size();
@@ -71,8 +68,7 @@ class CardAreaTest {
     void 자신이_가진_카드의_합을_구할_수_있다(final String values, final int totalScore) {
         // given
         final String[] split = values.split("\\+");
-        final CardArea cardArea = new CardArea(new Card(valueOf(split[0])), new Card(valueOf(split[1]))) {
-        };
+        final CardArea cardArea = new SimpleCardArea(new Card(valueOf(split[0])), new Card(valueOf(split[1])));
 
         // when & then
         assertThat(cardArea.calculate()).isEqualTo(totalScore);
@@ -90,8 +86,7 @@ class CardAreaTest {
     void 킹_퀸_잭은_10으로_계산한다(final String values, final int totalScore) {
         // given
         final String[] split = values.split("\\+");
-        final CardArea cardArea = new CardArea(new Card(valueOf(split[0])), new Card(valueOf(split[1]))) {
-        };
+        final CardArea cardArea = new SimpleCardArea(new Card(valueOf(split[0])), new Card(valueOf(split[1])));
 
         // when & then
         assertThat(cardArea.calculate()).isEqualTo(totalScore);
@@ -107,22 +102,22 @@ class CardAreaTest {
     static Stream<Arguments> containsAceCardArea() {
 
         // 10 + [11] = 21
-        final CardArea cardArea1 = new CardArea(new Card(TEN), new Card(ACE)) {};
+        final CardArea cardArea1 = new SimpleCardArea(new Card(TEN), new Card(ACE));
 
         // 10 + 10 + [1] = 21
-        final CardArea cardArea2 = new CardArea(new Card(JACK), new Card(TEN)) {};
+        final CardArea cardArea2 = new SimpleCardArea(new Card(JACK), new Card(TEN));
         cardArea2.addCard(new Card(ACE));
 
         // [11] + 9 + [1] = 21
-        final CardArea cardArea3 = new CardArea(new Card(ACE), new Card(NINE)) {};
+        final CardArea cardArea3 = new SimpleCardArea(new Card(ACE), new Card(NINE));
         cardArea3.addCard(new Card(ACE));
 
         // [11] + 6 + 3 = 20
-        final CardArea cardArea4 = new CardArea(new Card(SIX), new Card(THREE)) {};
+        final CardArea cardArea4 = new SimpleCardArea(new Card(SIX), new Card(THREE));
         cardArea4.addCard(new Card(ACE));
 
         // [11] + 10 = 21
-        final CardArea cardArea5 = new CardArea(new Card(ACE), new Card(TEN)) {};
+        final CardArea cardArea5 = new SimpleCardArea(new Card(ACE), new Card(TEN));
 
         return Stream.of(
                 Arguments.of(cardArea1, 21),
@@ -136,7 +131,7 @@ class CardAreaTest {
     @Test
     void 총합이_20_이하면_카드를_더_받을_수_있는_상태이다() {
         // given
-        final CardArea cardArea = new CardArea(new Card(TEN), new Card(TEN)) {};
+        final CardArea cardArea = new SimpleCardArea(new Card(TEN), new Card(TEN));
 
         // when & then
         assertTrue(cardArea.canMoreCard());
@@ -145,9 +140,21 @@ class CardAreaTest {
     @Test
     void 총합이_21_이상이면_카드를_더_받을_수_없는_상태이다() {
         // given
-        final CardArea cardArea = new CardArea(new Card(TEN), new Card(ACE)) {};
+        final CardArea cardArea = new SimpleCardArea(new Card(TEN), new Card(ACE));
 
         // when & then
         assertFalse(cardArea.canMoreCard());
+    }
+
+    static class SimpleCardArea extends CardArea {
+
+        public SimpleCardArea(final Card firstCard, final Card secondCard) {
+            super(firstCard, secondCard);
+        }
+
+        @Override
+        public boolean wantHit() {
+            return false;
+        }
     }
 }

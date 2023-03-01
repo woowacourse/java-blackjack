@@ -14,6 +14,8 @@ public abstract class CardArea {
         cards.addAll(List.of(firstCard, secondCard));
     }
 
+    public abstract boolean wantHit();
+
     public List<Card> cards() {
         return new ArrayList<>(cards);
     }
