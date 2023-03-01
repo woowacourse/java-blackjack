@@ -4,8 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +15,7 @@ class CardTest {
     @Test
     void 카드_값을_갖는다() {
         // given
-        final Card card = new Card(CardValue.TWO);
+        final Card card = new Card(CardShape.CLOVER, CardValue.TWO);
 
         // when
         CardValue cardValue = card.cardValue();
@@ -26,13 +24,22 @@ class CardTest {
         assertThat(cardValue.value()).isEqualTo(2);
     }
 
-    @ParameterizedTest(name = "{arguments} 카드를 가질 수 있다.")
-    @ValueSource(classes = {DiamondCard.class, HeartCard.class, CloverCard.class, SpadeCard.class})
-    void 여러_카드_종류가_있다(final Class<? extends Card> type) throws Exception {
+    @Test
+    void 카드_종류를_가진다() throws Exception {
         // given
-        final Card card = type.cast(type.getDeclaredConstructor(CardValue.class).newInstance(CardValue.TWO));
+        final Card card = new Card(CardShape.CLOVER, CardValue.TEN);
 
         // when & then
-        assertThat(card).isInstanceOf(type);
+        assertThat(card.cardShape()).isEqualTo(CardShape.CLOVER);
+    }
+
+    @Test
+    void 모양과_값이_같으면_같은_카드이다() {
+        // given
+        final Card card1 = new Card(CardShape.CLOVER, CardValue.TWO);
+        final Card card2 = new Card(CardShape.CLOVER, CardValue.TWO);
+
+        // when & then
+        assertThat(card1).isEqualTo(card2);
     }
 }
