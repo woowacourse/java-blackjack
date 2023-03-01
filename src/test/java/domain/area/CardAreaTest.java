@@ -157,4 +157,23 @@ class CardAreaTest {
             return false;
         }
     }
+
+    @Test
+    void 총합이_21_초과이면_버스트_된다() {
+        // given
+        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, TEN));
+        cardArea.addCard(new Card(CardShape.DIAMOND, TEN));
+
+        // when & then
+        assertTrue(cardArea.isBurst());
+    }
+
+    @Test
+    void 총합이_21_이하이면_버스트_아니다() {
+        // given
+        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
+
+        // when & then
+        assertFalse(cardArea.isBurst());
+    }
 }

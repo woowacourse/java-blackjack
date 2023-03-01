@@ -38,4 +38,8 @@ public abstract class CardArea {
     public boolean canMoreCard() {
         return calculate() < 21;
     }
+
+    public boolean isBurst() {
+        return calculate() > 21;
+    }
 }
