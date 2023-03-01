@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static card.CardValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -106,8 +106,8 @@ class CardAreaTest {
 
     static Stream<Arguments> containsAceCardArea() {
 
-        // [11] + 10 = 21
-        final CardArea cardArea1 = new CardArea(new Card(ACE), new Card(TEN)) {};
+        // 10 + [11] = 21
+        final CardArea cardArea1 = new CardArea(new Card(TEN), new Card(ACE)) {};
 
         // 10 + 10 + [1] = 21
         final CardArea cardArea2 = new CardArea(new Card(JACK), new Card(TEN)) {};
@@ -121,16 +121,33 @@ class CardAreaTest {
         final CardArea cardArea4 = new CardArea(new Card(SIX), new Card(THREE)) {};
         cardArea4.addCard(new Card(ACE));
 
-        // 10 + [1] + [1] = 12
-        final CardArea cardArea5 = new CardArea(new Card(TEN), new Card(ACE)) {};
-        cardArea5.addCard(new Card(ACE));
+        // [11] + 10 = 21
+        final CardArea cardArea5 = new CardArea(new Card(ACE), new Card(TEN)) {};
 
         return Stream.of(
                 Arguments.of(cardArea1, 21),
                 Arguments.of(cardArea2, 21),
                 Arguments.of(cardArea3, 21),
                 Arguments.of(cardArea4, 20),
-                Arguments.of(cardArea5, 12)
+                Arguments.of(cardArea5, 21)
         );
+    }
+
+    @Test
+    void 총합이_20_이하면_카드를_더_받을_수_있는_상태이다() {
+        // given
+        final CardArea cardArea = new CardArea(new Card(TEN), new Card(TEN)) {};
+
+        // when & then
+        assertTrue(cardArea.canMoreCard());
+    }
+
+    @Test
+    void 총합이_21_이상이면_카드를_더_받을_수_없는_상태이다() {
+        // given
+        final CardArea cardArea = new CardArea(new Card(TEN), new Card(ACE)) {};
+
+        // when & then
+        assertFalse(cardArea.canMoreCard());
     }
 }

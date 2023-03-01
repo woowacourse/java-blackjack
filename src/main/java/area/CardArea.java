@@ -39,9 +39,13 @@ public abstract class CardArea {
     }
 
     private Integer judgeAceValue(final Integer totalScore) {
-        if (totalScore + 11 < 21) {
+        if (totalScore + 11 <= 21) {
             return 11;
         }
         return 1;
+    }
+
+    public boolean canMoreCard() {
+        return calculate() < 21;
     }
 }
