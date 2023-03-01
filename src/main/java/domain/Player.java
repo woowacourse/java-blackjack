@@ -22,4 +22,8 @@ public abstract class Player {
     public int getScore() {
         return cards.getScore();
     }
+
+    public Name getName() {
+        return name;
+    }
 }

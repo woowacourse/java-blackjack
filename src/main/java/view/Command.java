@@ -21,4 +21,8 @@ public enum Command {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("y 혹은 n만 입력해주세요"));
     }
+
+    public boolean isValue() {
+        return value;
+    }
 }
