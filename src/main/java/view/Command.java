@@ -3,6 +3,7 @@ package view;
 import java.util.Arrays;
 
 public enum Command {
+
     YES("y", true),
     NO("n", false);
 

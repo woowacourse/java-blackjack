@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 @FunctionalInterface
 public interface CardGenerator {
+
     List<Card> shuffle();
 
     static List<Card> generate() {

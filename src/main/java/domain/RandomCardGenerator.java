@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public final class RandomCardGenerator implements CardGenerator {
+
     static List<Card> cards;
 
     static {

@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public final class InputView {
+
     private static final Scanner scanner = new Scanner(System.in);
 
     public List<String> readPlayerNames() {
