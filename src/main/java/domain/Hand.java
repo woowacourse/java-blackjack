@@ -21,6 +21,7 @@ public class Hand {
 
     public int calculateValue() {
         int value = 0;
+
         for (Card card : hand) {
             value += card.getValue();
         }
@@ -39,5 +40,4 @@ public class Hand {
         }
         return cards;
     }
-
 }
