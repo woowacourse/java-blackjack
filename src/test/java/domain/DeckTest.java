@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
-import java.util.Set;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,14 +13,13 @@ class DeckTest {
         @Test
         void should_중복되는인스턴스가없어야한다_when_생성() {
             //given
-            Deck deck = Deck.getInstance();
+            Deck deck = Deck.create();
 
             //when
 
             //then
-            assertThat(deck).extracting("cards", InstanceOfAssertFactories.collection(Set.class))
-                    .size()
-                    .isEqualTo(52);
+            assertThat(deck).extracting("cards", InstanceOfAssertFactories.collection(Card.class))
+                    .hasSize(52);
         }
     }
 
@@ -30,7 +28,7 @@ class DeckTest {
         @Test
         void should_적절한카드반환_when_draw호출() {
             //given
-            Deck deck = Deck.getInstance();
+            Deck deck = Deck.create();
             Card expected = new Card(Suit.CLUB, Number.JACK);
 
             //when
@@ -46,7 +44,7 @@ class DeckTest {
         @Test
         void should_카드를섞는다_when_shuffle호출() {
             //given
-            Deck deck = Deck.getInstance();
+            Deck deck = Deck.create();
             Card expected = new Card(Suit.SPADE, Number.ACE);
             ShuffleStrategy testShuffleStrategy = Collections::reverse;
 

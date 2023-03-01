@@ -4,18 +4,13 @@ import java.util.LinkedList;
 
 public class Deck {
 
-    private static final Deck instance = create();
     private final LinkedList<Card> cards;
 
     private Deck(LinkedList<Card> cards) {
         this.cards = cards;
     }
 
-    public static Deck getInstance() {
-        return instance;
-    }
-
-    private static Deck create() {
+    public static Deck create() {
         final LinkedList<Card> cards = new LinkedList<>();
         addAllCards(cards);
         return new Deck(cards);
