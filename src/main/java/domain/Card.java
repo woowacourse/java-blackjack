@@ -16,14 +16,6 @@ public final class Card {
         return new Card(shape, number);
     }
 
-    public int getScore() {
-        return number.getScore();
-    }
-
-    public Number getNumber() {
-        return number;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -35,5 +27,17 @@ public final class Card {
     @Override
     public int hashCode() {
         return Objects.hash(shape, number);
+    }
+
+    public String getShape() {
+        return shape.getName();
+    }
+
+    public int getScore() {
+        return number.getScore();
+    }
+
+    public Number getNumber() {
+        return number;
     }
 }
