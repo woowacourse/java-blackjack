@@ -28,6 +28,10 @@ public class Score {
             .sum();
     }
 
+    public boolean isBust() {
+        return value > BLACK_JACK;
+    }
+
     public int getValue() {
         return value;
     }

@@ -16,7 +16,11 @@ public class Player {
 
     public void addCard(final Card card) {
         cards.add(card);
-        this.score = makeScore(cards);
+        score = makeScore(cards);
+    }
+
+    public boolean isBust() {
+        return score.isBust();
     }
 
     public Score getScore() {
