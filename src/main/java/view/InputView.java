@@ -8,12 +8,13 @@ public class InputView {
     private static final String delimiter = ",";
     private static final Scanner scanner = new Scanner(System.in);
 
-    public void askInputNames() {
+    private void askInputNames() {
         System.out.println(ViewMessage.ASK_INPUT_NAMES.getMessage());
     }
 
     public List<String> requestNames() {
-        List<String> names = Arrays.asList(scanner.nextLine().split(delimiter));
+        askInputNames();
+        List<String> names = Arrays.asList(scanner.nextLine().split(delimiter,-1));
         validateNumberOfNames(names);
         return names;
     }
