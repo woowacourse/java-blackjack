@@ -17,6 +17,12 @@ public class Participants {
         return new Participants(participants);
     }
 
+    private static void addParticipantIfPlayer(ArrayList<Player> players, Participant participant) {
+        if (participant.getClass().equals(Player.class)) {
+            players.add((Player)participant);
+        }
+    }
+
     public void deal(Deck deck) {
         for (Participant participant : participants) {
             participant.receiveCard(deck.draw());
@@ -33,11 +39,5 @@ public class Participants {
             addParticipantIfPlayer(players, participant);
         }
         return players;
-    }
-
-    private static void addParticipantIfPlayer(ArrayList<Player> players, Participant participant) {
-        if (participant.getClass().isInstance(Player.class)) {
-            players.add((Player)participant);
-        }
     }
 }
