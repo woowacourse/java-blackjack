@@ -3,7 +3,7 @@ package domain;
 public class Player extends User {
 
     private static final int NAME_MAX_LENGTH = 5;
-    public static final int BLACK_JACK_SCORE = 21;
+    private static final int BLACK_JACK_SCORE = 21;
 
     private final String name;
 

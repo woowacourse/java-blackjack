@@ -18,7 +18,7 @@ public class PlayersTest {
     @MethodSource("parameterProvider")
     void playerCount1_4(List<String> names) {
         assertThatNoException()
-            .isThrownBy(() -> Players.from(names));
+            .isThrownBy(() -> Users.from(names));
     }
 
     static Stream<List<String>> parameterProvider() {
@@ -31,19 +31,19 @@ public class PlayersTest {
     @DisplayName("참여 인원은 1명미만이 될 수 없다")
     @Test
     void playerCount_shouldNotBeUnder1() {
-        assertThatThrownBy(() -> Players.from(Collections.emptyList()));
+        assertThatThrownBy(() -> Users.from(Collections.emptyList()));
     }
 
     @DisplayName("참여 인원은 4명초과가 될 수 없다")
     @Test
     void playerCount_shouldNotBeOver4() {
-        assertThatThrownBy(() -> Players.from(List.of("a", "b", "c", "d", "e")));
+        assertThatThrownBy(() -> Users.from(List.of("a", "b", "c", "d", "e")));
     }
 
     @DisplayName("플레이어의 이름은 중복될 수 없다")
     @Test
     void validateDuplication() {
-        assertThatThrownBy(() -> Players.from(List.of("hongo", "hongo", "ash", "kiara")))
+        assertThatThrownBy(() -> Users.from(List.of("hongo", "hongo", "ash", "kiara")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }
