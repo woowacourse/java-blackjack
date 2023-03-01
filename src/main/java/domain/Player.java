@@ -15,14 +15,14 @@ public class Player {
     private final String name;
     private final Cards cards;
 
-    private Player(String name, Cards cards) {
+    private Player(String name) {
         this.name = name.trim();
-        this.cards = cards;
+        this.cards = new Cards();
     }
 
-    public static Player of(String name, Cards cards) {
+    public static Player from(String name) {
         validate(name);
-        return new Player(name, cards);
+        return new Player(name);
     }
 
     private static void validate(String name) {

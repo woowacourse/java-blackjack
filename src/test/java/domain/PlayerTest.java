@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +25,7 @@ class PlayerTest {
         //when
 
         //then
-        assertDoesNotThrow(() -> Player.of(name, new Cards()));
+        assertDoesNotThrow(() -> Player.from(name));
     }
 
     @ParameterizedTest
@@ -37,7 +36,7 @@ class PlayerTest {
         //when
 
         //then
-        assertThatThrownBy(() -> Player.of(name, new Cards()))
+        assertThatThrownBy(() -> Player.from(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.");
     }
@@ -45,7 +44,7 @@ class PlayerTest {
     @Test
     void 카드를_뽑을_수_있다() {
         //given
-        Player player = Player.of("럿고", new Cards());
+        Player player = Player.from("럿고");
         int beforeCount = player.getCards().size();
 
         //when
@@ -60,7 +59,7 @@ class PlayerTest {
     @Test
     void 카드들의_합을_계산_할_수_있다() {
         //given
-        Player player = Player.of("연어", new Cards());
+        Player player = Player.from("연어");
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.EIGHT, Suit.HEART));
         cards.forEach(player::addCard);
 
@@ -74,7 +73,7 @@ class PlayerTest {
     @Test
     void 카드들의_합이_21_이하라면_더_받을_수_있다() throws Exception {
         //given
-        Player player = Player.of("연어", new Cards());
+        Player player = Player.from("연어");
 
         //when
 
@@ -85,7 +84,7 @@ class PlayerTest {
     @Test
     void 카드들의_합이_21_초과라면_더_받을_수_없다() throws Exception {
         //given
-        Player player = Player.of("연어", new Cards());
+        Player player = Player.from("연어");
         List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
                 new Card(Rank.TEN, Suit.HEART),
                 new Card(Rank.TEN, Suit.SPACE));
