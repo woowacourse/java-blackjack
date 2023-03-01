@@ -35,4 +35,8 @@ public class Cards {
         return cards.stream()
             .anyMatch(card -> card.getDenomination() == ACE);
     }
+
+    public boolean isUnder(int score) {
+        return getSumOfScores() < score;
+    }
 }

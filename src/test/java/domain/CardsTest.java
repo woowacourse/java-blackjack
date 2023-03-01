@@ -58,4 +58,17 @@ public class CardsTest {
 
         assertThat(cards.getSumOfScores()).isEqualTo(12);
     }
+
+    @DisplayName("카드의 점수 합이 n점 이상인지 확인한다")
+    @Test
+    void checkScoreMoreThanN() {
+        Cards cards = new Cards();
+        Card card1 = new Card(Denomination.TWO, Suits.HEART);
+        Card card2 = new Card(Denomination.THREE, Suits.DIAMOND);
+        cards.addCard(card1);
+        cards.addCard(card2);
+
+        assertThat(cards.isUnder(5)).isFalse();
+        assertThat(cards.isUnder(6)).isTrue();
+    }
 }
