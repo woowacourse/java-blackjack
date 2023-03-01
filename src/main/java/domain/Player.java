@@ -3,6 +3,7 @@ package domain;
 public class Player extends User {
 
     private static final int NAME_MAX_LENGTH = 5;
+    public static final int BLACK_JACK = 21;
 
     private final String name;
 
@@ -26,5 +27,9 @@ public class Player extends User {
         if (name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public boolean isReceivable() {
+        return cards.isUnder(BLACK_JACK);
     }
 }
