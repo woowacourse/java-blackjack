@@ -24,26 +24,15 @@ public abstract class CardArea {
     }
 
     public int calculate() {
-        int total = 0;
-        for (final Card card : cards) {
-            total += judgeCardValue(total, card.cardValue());
+        int aceCount = (int) cards.stream().filter(it -> it.cardValue().isAce()).count();
+        int total = cards.stream().mapToInt(it -> it.cardValue().value()).sum();
+        while (aceCount > 0) {
+            if (total <= 11) {
+                total += 10;
+            }
+            aceCount--;
         }
         return total;
-    }
-
-    private int judgeCardValue(final Integer totalScore, final CardValue cardValue) {
-        int addValue = cardValue.value();
-        if (cardValue.isAce()) {
-            addValue = judgeAceValue(totalScore);
-        }
-        return addValue;
-    }
-
-    private Integer judgeAceValue(final Integer totalScore) {
-        if (totalScore + 11 <= 21) {
-            return 11;
-        }
-        return 1;
     }
 
     public boolean canMoreCard() {

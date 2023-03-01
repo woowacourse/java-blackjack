@@ -10,7 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -52,17 +51,6 @@ class CardAreaTest {
     void CardArea_는_추상_클래스이다() {
         // when & then
         assertThat(CardArea.class).isAbstract();
-    }
-
-    @ParameterizedTest(name = "{arguments} 카드 영역이 있다.")
-    @ValueSource(classes = {DealerCardArea.class, ParticipantCardArea.class})
-    void 카드_영역은_두_종류가_있다(final Class<? extends CardArea> type) throws Exception {
-        // given
-        final CardArea cardArea = type.cast(type.getDeclaredConstructor(Card.class, Card.class)
-                .newInstance(new Card(CardShape.CLOVER, THREE), new Card(CardShape.CLOVER, TWO)));
-
-        // when & then
-        assertThat(cardArea).isInstanceOf(type);
     }
 
     @ParameterizedTest(name = "카드 목록이 {0} 일 때, 총합은 {1}다.")
@@ -126,12 +114,17 @@ class CardAreaTest {
         // [11] + 10 = 21
         final CardArea cardArea5 = new SimpleCardArea(new Card(CardShape.CLOVER, ACE), new Card(CardShape.CLOVER, TEN));
 
+        // 10 + [1] + 7 = 18
+        final CardArea cardArea6 = new SimpleCardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
+        cardArea6.addCard(new Card(CardShape.SPADE, SEVEN));
+
         return Stream.of(
                 Arguments.of(cardArea1, 21),
                 Arguments.of(cardArea2, 21),
                 Arguments.of(cardArea3, 21),
                 Arguments.of(cardArea4, 20),
-                Arguments.of(cardArea5, 21)
+                Arguments.of(cardArea5, 21),
+                Arguments.of(cardArea6, 18)
         );
     }
 
