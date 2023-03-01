@@ -10,6 +10,10 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();
