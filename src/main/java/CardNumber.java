@@ -28,4 +28,8 @@ public enum CardNumber {
     public int getScore(){
         return score;
     }
+
+    public boolean isAce() {
+        return this.equals(ACE);
+    }
 }

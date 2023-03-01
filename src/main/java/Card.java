@@ -14,4 +14,8 @@ public class Card {
     public String getText() {
         return this.cardNumber.getNumberToPrint() + this.symbol.getName();
     }
+
+    public boolean isAce() {
+        return this.cardNumber.isAce();
+    }
 }
