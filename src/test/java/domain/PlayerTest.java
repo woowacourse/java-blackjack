@@ -38,7 +38,8 @@ public class PlayerTest {
     @Test
     void hit_WhenScoreUnder21() {
         Player player = new Player("kiara");
-        player.hit(new Card(Denomination.SIX, Suits.HEART));
+        player.hit(new Card(Denomination.JACK, Suits.HEART));
+        player.hit(new Card(Denomination.QUEEN, Suits.HEART));
         assertThat(player.isHittable()).isTrue();
     }
 
