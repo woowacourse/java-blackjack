@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import view.ErrorMessage;
 
-public class Player extends Participant{
+public class Player extends Participant {
     private final String name;
 
     public Player(String name) {
-        super(new ArrayList<>());
+        super(new ArrayList<>(), name);
         validate(name);
         this.name = name;
     }
