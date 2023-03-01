@@ -3,7 +3,7 @@ package domain;
 public class Player extends User {
 
     private static final int NAME_MAX_LENGTH = 5;
-    public static final int BLACK_JACK = 21;
+    public static final int BLACK_JACK_SCORE = 21;
 
     private final String name;
 
@@ -31,6 +31,6 @@ public class Player extends User {
 
     @Override
     public boolean isHittable() {
-        return cards.isUnder(BLACK_JACK);
+        return cards.isUnder(BLACK_JACK_SCORE);
     }
 }
