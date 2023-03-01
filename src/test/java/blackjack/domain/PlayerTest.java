@@ -13,7 +13,7 @@ class PlayerTest {
     @DisplayName("플레이어가 카드를 정상적으로 받았는지 확인한다.")
     void receiveCardTest() {
         //given
-        Player player = new Player(new PlayerName("아코"));
+        Player player = new Player(new ParticipantName("아코"));
         Card card = new Card(CardNumber.ACE, CardSuit.DIAMOND);
 
         //when
@@ -27,7 +27,7 @@ class PlayerTest {
     @DisplayName("Ace 카드를 포함하지 않은 플레이어의 카드를 계산해서 넘겨주기")
     void cardCalculation1() {
         //given
-        Player player = new Player(new PlayerName("아코"));
+        Player player = new Player(new ParticipantName("아코"));
         List<Card> cards = List.of(
             new Card(CardNumber.FOUR, CardSuit.DIAMOND),
             new Card(CardNumber.EIGHT, CardSuit.SPADE)
@@ -50,7 +50,7 @@ class PlayerTest {
     @DisplayName("Ace 카드를 포함된 플레이어의 카드를 계산해서 넘겨주기(Ace 카드를 11로 계산)")
     void cardCalculation2() {
         //given
-        Player player = new Player(new PlayerName("아코"));
+        Player player = new Player(new ParticipantName("아코"));
         List<Card> cards = List.of(
             new Card(CardNumber.FOUR, CardSuit.DIAMOND),
             new Card(CardNumber.ACE, CardSuit.SPADE)
@@ -70,7 +70,7 @@ class PlayerTest {
     @DisplayName("Ace 카드를 포함된 플레이어의 카드를 계산해서 넘겨주기(Ace 카드를 1로 계산)")
     void cardCalculation3() {
         //given
-        Player player = new Player(new PlayerName("아코"));
+        Player player = new Player(new ParticipantName("아코"));
         List<Card> cards = List.of(
             new Card(CardNumber.QUEEN, CardSuit.DIAMOND),
             new Card(CardNumber.EIGHT, CardSuit.SPADE),

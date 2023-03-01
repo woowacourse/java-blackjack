@@ -5,11 +5,11 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private final PlayerName playerName;
+    private final ParticipantName participantName;
     private final List<Card> receivedCards = new ArrayList<>();
 
-    public Participant(PlayerName playerName) {
-        this.playerName = playerName;
+    public Participant(ParticipantName participantName) {
+        this.participantName = participantName;
     }
 
     public void hit(Card card) {

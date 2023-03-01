@@ -6,8 +6,8 @@ public class Player extends Participant{
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
 
 
-    public Player(PlayerName playerName) {
-        super(playerName);
+    public Player(ParticipantName participantName) {
+        super(participantName);
     }
 
     @Override

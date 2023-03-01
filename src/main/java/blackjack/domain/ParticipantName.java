@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PlayerName {
+public class ParticipantName {
 
     public static final String PLAYER_NAME_ERROR_MESSAGE = "플레이어의 이름은 숫자,영어,한글만 가능합니다.";
     private static final Pattern pattern = Pattern.compile("^[ㄱ-ㅎ가-힣a-zA-Z0-9]*$");
@@ -11,7 +11,7 @@ public class PlayerName {
 
     private final String name;
 
-    public PlayerName(String name) {
+    public ParticipantName(String name) {
         validateName(name);
         this.name = name;
     }
