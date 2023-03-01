@@ -11,15 +11,15 @@ public class Deck {
 
     public static Deck from(ShuffleStrategy shuffleStrategy) {
         Stack<Card> deck = new Stack<>();
-        for (Shape shape : Shape.values()) {
-            makeCard(deck, shape);
+        for (Suit suit : Suit.values()) {
+            makeCard(deck, suit);
         }
         return new Deck(shuffleStrategy.shuffle(deck));
     }
 
-    private static void makeCard(Stack<Card> deck, Shape shape) {
-        for (Value value : Value.values()) {
-            deck.add(new Card(value.getName() + shape.getShape(), value.getValue()));
+    private static void makeCard(Stack<Card> deck, Suit suit) {
+        for (Rank rank : Rank.values()) {
+            deck.add(new Card(rank.getName() + suit.getShape(), rank.getValue()));
         }
     }
 
