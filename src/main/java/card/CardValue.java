@@ -16,8 +16,7 @@ public enum CardValue {
 
     KING(10),
     QUEEN(10),
-    JACK(10)
-    ;
+    JACK(10);
 
     private final int value;
 
