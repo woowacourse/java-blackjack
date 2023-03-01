@@ -16,4 +16,14 @@ public class Participants {
         participants.add(new Dealer());
         return new Participants(participants);
     }
+
+    public void deal(Deck deck) {
+        for (Participant participant : participants) {
+            participant.receiveCard(deck.draw());
+        }
+    }
+
+    public List<Participant> getParticipants() {
+        return new ArrayList<>(participants);
+    }
 }
