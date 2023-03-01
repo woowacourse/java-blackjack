@@ -2,6 +2,9 @@ package domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.type.Letter;
+import domain.type.Suit;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
