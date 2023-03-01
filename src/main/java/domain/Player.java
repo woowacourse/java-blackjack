@@ -10,6 +10,7 @@ public class Player {
     private static final String ERROR_NAME_LENGTH = "[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.";
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
+    private static final int BLACKJACK = 21;
 
     private final String name;
     private final Cards cards;
@@ -36,6 +37,10 @@ public class Player {
 
     public int calculateScore() {
         return cards.calculateScore();
+    }
+
+    public boolean isBust() {
+        return calculateScore() <= BLACKJACK;
     }
 
     public List<Card> getCards() {

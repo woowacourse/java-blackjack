@@ -70,4 +70,30 @@ class PlayerTest {
         //then
         assertThat(totalScore).isEqualTo(19);
     }
+
+    @Test
+    void 카드들의_합이_21_이하라면_더_받을_수_있다() throws Exception {
+        //given
+        Player player = Player.of("연어", new Cards());
+
+        //when
+
+        //then
+        assertThat(player.isBust()).isTrue();
+    }
+
+    @Test
+    void 카드들의_합이_21_초과라면_더_받을_수_없다() throws Exception {
+        //given
+        Player player = Player.of("연어", new Cards());
+        List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
+                new Card(Rank.TEN, Suit.HEART),
+                new Card(Rank.TEN, Suit.SPACE));
+
+        //when
+        cards.forEach(player::addCard);
+
+        //then
+        assertThat(player.isBust()).isFalse();
+    }
 }
