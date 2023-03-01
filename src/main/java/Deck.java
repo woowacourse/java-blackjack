@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,15 +6,19 @@ public class Deck {
     List<Card> deck = new ArrayList<>();
 
     public Deck() {
+        generateCards();
+    }
+
+    private void generateCards() {
         for (Symbol symbol: Symbol.values()){
             addCardsWithSymbolOf(symbol);
         }
-        Collections.shuffle(deck);
+        Collections.shuffle(this.deck);
     }
 
     private void addCardsWithSymbolOf(Symbol symbol){
         for (CardNumber cardNumber: CardNumber.values()){
-            deck.add(new Card(symbol, cardNumber));
+            this.deck.add(new Card(symbol, cardNumber));
         }
     }
 
