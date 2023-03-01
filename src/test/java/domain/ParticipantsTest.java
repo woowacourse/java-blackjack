@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-class PlayersTest {
+class ParticipantsTest {
     @Test
     void playersTest() {
-        assertThatCode(() -> Players.from(List.of("leo", "reo", "reoleo")))
+        assertThatCode(() -> Participants.from(List.of("leo", "reo", "reoleo")))
             .doesNotThrowAnyException();
     }
 }
