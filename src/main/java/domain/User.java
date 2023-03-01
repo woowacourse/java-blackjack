@@ -1,18 +1,16 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final Cards cards = new Cards();
 
     public void receiveCard(Card card) {
-        cards.add(card);
+        cards.addCard(card);
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
     }
 }
