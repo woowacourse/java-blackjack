@@ -12,11 +12,7 @@ public class CardTest {
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13})
     @DisplayName("카드 정상 생성 테스트")
     void validCardTest(int value) {
-        assertDoesNotThrow(() -> {
-            new Card(Shape.DIAMOND, CardNumber.of(value));
-        });
+        assertDoesNotThrow(() -> new Card(Shape.DIAMOND, CardNumber.of(value)));
     }
-
-
 
 }

@@ -1,24 +1,22 @@
 package blackjack.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Objects;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class CardNumberTest {
 
     @ParameterizedTest
-    @ValueSource(ints = {1,2,3,4,5,6,7,8,9,10,11,12,13})
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13})
     @DisplayName("카드 숫자는 1부터 13사이의 숫자이다")
     void validCardNUmberTest(int value) {
-        assertDoesNotThrow(()->{
+        assertDoesNotThrow(() -> {
             CardNumber.of(value);
         });
     }
@@ -40,9 +38,9 @@ public class CardNumberTest {
         final CardNumber largerNumber = CardNumber.of(3);
 
         assertAll(
-                ()-> assertThat(targetNumber.compareTo(smallNumber)).isGreaterThanOrEqualTo(1),
-                ()-> assertThat(targetNumber.compareTo(sameNumber)).isEqualTo(0),
-                ()-> assertThat(targetNumber.compareTo(largerNumber)).isLessThanOrEqualTo(-1)
+                () -> assertThat(targetNumber.compareTo(smallNumber)).isGreaterThanOrEqualTo(1),
+                () -> assertThat(targetNumber.compareTo(sameNumber)).isEqualTo(0),
+                () -> assertThat(targetNumber.compareTo(largerNumber)).isLessThanOrEqualTo(-1)
         );
     }
 

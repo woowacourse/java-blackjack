@@ -61,4 +61,12 @@ public class CardNumber implements Comparable<CardNumber> {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    public int plus(final int point) {
+        return value + point;
+    }
+
+    public int getValue() {
+        return value;
+    }
 }

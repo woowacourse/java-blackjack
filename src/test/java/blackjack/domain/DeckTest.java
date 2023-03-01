@@ -51,7 +51,7 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("52개 이상을 덱에서 뽑으면 예외를 발생시킨다.")
+    @DisplayName("52개 이상을 덱에서 뽑으면 예외가 발생한다.")
     void drawExceptionTest() {
         for (int i = 0; i < 52; i++) {
             deck.drawCard();

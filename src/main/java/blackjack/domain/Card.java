@@ -27,4 +27,27 @@ public class Card {
     public int hashCode() {
         return Objects.hash(shape, cardNumber);
     }
+
+    public int plus(final int point) {
+        return cardNumber.plus(point);
+    }
+
+    public boolean isAce() {
+        if (cardNumber == CardNumber.of(1)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isOverTen() {
+        if (CardNumber.of(10).compareTo(cardNumber) <= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getCardNumberValue() {
+        return cardNumber.getValue();
+    }
 }
