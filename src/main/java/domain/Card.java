@@ -9,4 +9,12 @@ public class Card {
         this.denomination = denomination;
         this.suit = suit;
     }
+
+    public int getScore() {
+        return denomination.getScore();
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
 }
