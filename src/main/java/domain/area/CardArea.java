@@ -1,7 +1,6 @@
-package area;
+package domain.area;
 
-import card.Card;
-import card.CardValue;
+import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;

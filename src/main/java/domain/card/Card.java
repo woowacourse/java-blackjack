@@ -1,4 +1,4 @@
-package card;
+package domain.card;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package participant;
+package domain.participant;
 
 public enum State {
     HIT,

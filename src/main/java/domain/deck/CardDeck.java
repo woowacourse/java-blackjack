@@ -1,8 +1,8 @@
-package deck;
+package domain.deck;
 
-import card.Card;
-import card.CardShape;
-import card.CardValue;
+import domain.card.Card;
+import domain.card.CardShape;
+import domain.card.CardValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;

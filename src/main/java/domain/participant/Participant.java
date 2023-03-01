@@ -1,4 +1,4 @@
-package participant;
+package domain.participant;
 
 public class Participant {
 

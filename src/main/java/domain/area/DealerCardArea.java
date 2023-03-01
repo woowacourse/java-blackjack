@@ -1,6 +1,6 @@
-package area;
+package domain.area;
 
-import card.Card;
+import domain.card.Card;
 
 public class DealerCardArea extends CardArea {
 

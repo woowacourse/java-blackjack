@@ -1,7 +1,7 @@
-package area;
+package domain.area;
 
-import card.Card;
-import card.CardShape;
+import domain.card.Card;
+import domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
-import static card.CardValue.*;
+import static domain.card.CardValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,8 +27,8 @@ class CardAreaTest {
     void 카드를_두장만_받아서_생성된다() {
         // when & then
         assertDoesNotThrow(() -> new SimpleCardArea(
-                new Card(CardShape.CLOVER,ACE),
-                new Card(CardShape.CLOVER,TWO))
+                new Card(CardShape.CLOVER, ACE),
+                new Card(CardShape.CLOVER, TWO))
         );
     }
 
@@ -36,13 +36,13 @@ class CardAreaTest {
     void 카드를_추가할_수_있다() {
         // given
         final CardArea cardArea = new SimpleCardArea(
-                new Card(CardShape.CLOVER,THREE),
-                new Card(CardShape.CLOVER,TWO)
+                new Card(CardShape.CLOVER, THREE),
+                new Card(CardShape.CLOVER, TWO)
         );
 
         // when
         final int beforeSize = cardArea.cards().size();
-        cardArea.addCard(new Card(CardShape.CLOVER,FOUR));
+        cardArea.addCard(new Card(CardShape.CLOVER, FOUR));
 
         // then
         assertThat(cardArea.cards().size()).isEqualTo(beforeSize + 1);
@@ -59,7 +59,7 @@ class CardAreaTest {
     void 카드_영역은_두_종류가_있다(final Class<? extends CardArea> type) throws Exception {
         // given
         final CardArea cardArea = type.cast(type.getDeclaredConstructor(Card.class, Card.class)
-                .newInstance(new Card(CardShape.CLOVER,THREE), new Card(CardShape.CLOVER,TWO)));
+                .newInstance(new Card(CardShape.CLOVER, THREE), new Card(CardShape.CLOVER, TWO)));
 
         // when & then
         assertThat(cardArea).isInstanceOf(type);
@@ -75,7 +75,7 @@ class CardAreaTest {
     void 자신이_가진_카드의_합을_구할_수_있다(final String values, final int totalScore) {
         // given
         final String[] split = values.split("\\+");
-        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER,valueOf(split[0])), new Card(CardShape.CLOVER,valueOf(split[1])));
+        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER, valueOf(split[0])), new Card(CardShape.CLOVER, valueOf(split[1])));
 
         // when & then
         assertThat(cardArea.calculate()).isEqualTo(totalScore);
@@ -93,7 +93,7 @@ class CardAreaTest {
     void 킹_퀸_잭은_10으로_계산한다(final String values, final int totalScore) {
         // given
         final String[] split = values.split("\\+");
-        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER,valueOf(split[0])), new Card(CardShape.CLOVER,valueOf(split[1])));
+        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER, valueOf(split[0])), new Card(CardShape.CLOVER, valueOf(split[1])));
 
         // when & then
         assertThat(cardArea.calculate()).isEqualTo(totalScore);
@@ -109,23 +109,22 @@ class CardAreaTest {
     static Stream<Arguments> containsAceCardArea() {
 
         // 10 + [11] = 21
-        final CardArea cardArea1 = new SimpleCardArea(new Card(CardShape.CLOVER,TEN), new Card(CardShape.CLOVER,ACE));
+        final CardArea cardArea1 = new SimpleCardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
 
         // 10 + 10 + [1] = 21
-        final CardArea cardArea2 = new SimpleCardArea(new Card(CardShape.CLOVER,JACK), new Card(CardShape.CLOVER,TEN));
-        cardArea2.addCard(new Card(CardShape.CLOVER,ACE));
-
+        final CardArea cardArea2 = new SimpleCardArea(new Card(CardShape.CLOVER, JACK), new Card(CardShape.CLOVER, TEN));
+        cardArea2.addCard(new Card(CardShape.CLOVER, ACE));
 
         // [11] + 9 + [1] = 21
-        final CardArea cardArea3 = new SimpleCardArea(new Card(CardShape.CLOVER,ACE), new Card(CardShape.CLOVER,NINE));
-        cardArea3.addCard(new Card(CardShape.CLOVER,ACE));
+        final CardArea cardArea3 = new SimpleCardArea(new Card(CardShape.CLOVER, ACE), new Card(CardShape.CLOVER, NINE));
+        cardArea3.addCard(new Card(CardShape.CLOVER, ACE));
 
         // [11] + 6 + 3 = 20
-        final CardArea cardArea4 = new SimpleCardArea(new Card(CardShape.CLOVER,SIX), new Card(CardShape.CLOVER,THREE));
-        cardArea4.addCard(new Card(CardShape.CLOVER,ACE));
+        final CardArea cardArea4 = new SimpleCardArea(new Card(CardShape.CLOVER, SIX), new Card(CardShape.CLOVER, THREE));
+        cardArea4.addCard(new Card(CardShape.CLOVER, ACE));
 
         // [11] + 10 = 21
-        final CardArea cardArea5 = new SimpleCardArea(new Card(CardShape.CLOVER,ACE), new Card(CardShape.CLOVER,TEN));
+        final CardArea cardArea5 = new SimpleCardArea(new Card(CardShape.CLOVER, ACE), new Card(CardShape.CLOVER, TEN));
 
         return Stream.of(
                 Arguments.of(cardArea1, 21),
@@ -139,7 +138,7 @@ class CardAreaTest {
     @Test
     void 총합이_20_이하면_카드를_더_받을_수_있는_상태이다() {
         // given
-        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER,TEN), new Card(CardShape.CLOVER,TEN));
+        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, TEN));
 
         // when & then
         assertTrue(cardArea.canMoreCard());
@@ -148,7 +147,7 @@ class CardAreaTest {
     @Test
     void 총합이_21_이상이면_카드를_더_받을_수_없는_상태이다() {
         // given
-        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER,TEN), new Card(CardShape.CLOVER,ACE));
+        final CardArea cardArea = new SimpleCardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
 
         // when & then
         assertFalse(cardArea.canMoreCard());

@@ -1,7 +1,5 @@
-package area;
+package domain.area;
 
-import domain.area.CardArea;
-import domain.area.ParticipantCardArea;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.participant.Name;
@@ -14,7 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import static domain.card.CardValue.SEVEN;
 import static domain.card.CardValue.TEN;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
