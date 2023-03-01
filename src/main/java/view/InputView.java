@@ -14,7 +14,7 @@ public class InputView {
 
     public List<String> requestNames() {
         askInputNames();
-        List<String> names = Arrays.asList(scanner.nextLine().split(delimiter,-1));
+        List<String> names = Arrays.asList(scanner.nextLine().split(delimiter, -1));
         validateNumberOfNames(names);
         return names;
     }
@@ -25,11 +25,12 @@ public class InputView {
         }
     }
 
-    public void askDrawingCard(String name) {
+    private void askDrawingCard(String name) {
         System.out.printf("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
     }
 
-    public String requestDrawingCard() {
+    public String requestDrawingCard(String name) {
+        askDrawingCard(name);
         String drawingCardRequest = scanner.nextLine();
         validateDrawingCardRequest(drawingCardRequest);
         return drawingCardRequest;
