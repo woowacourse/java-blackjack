@@ -2,12 +2,12 @@ package blackjack.domain;
 
 public class Card {
 
-    private final int number;
     private final String symbol;
+    private final String number;
 
-    public Card(int number, String symbol) {
-        this.number = number;
+    public Card(String symbol, String number) {
         this.symbol = symbol;
+        this.number = number;
     }
 }
 
