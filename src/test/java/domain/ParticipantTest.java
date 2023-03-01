@@ -13,7 +13,7 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-        participant = new Participant(new ArrayList<>(List.of(new Card("2하트", 2), new Card("K다이아", 10))));
+        participant = new Participant(new ArrayList<>(List.of(new Card("2하트", 2), new Card("K다이아", 10))), "Leo");
     }
 
     @Test
