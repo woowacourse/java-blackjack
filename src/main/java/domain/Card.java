@@ -32,4 +32,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(name, value);
     }
+
+    public String getName() {
+        return name;
+    }
 }

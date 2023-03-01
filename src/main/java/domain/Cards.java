@@ -2,6 +2,7 @@ package domain;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -47,5 +48,11 @@ public class Cards {
 
     public boolean isBlackJack() {
         return blackJack;
+    }
+
+    public List<String> getCards() {
+        return cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
     }
 }

@@ -25,4 +25,8 @@ public class Player {
     public int sumOfPlayerCards() {
         return cards.sumOfCards();
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }
