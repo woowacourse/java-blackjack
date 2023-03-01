@@ -1,9 +1,9 @@
-package domain;
+package domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import domain.model.Card;
-import java.util.List;
+import domain.type.Letter;
+import domain.type.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

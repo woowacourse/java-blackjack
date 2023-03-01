@@ -3,11 +3,11 @@ package domain.model;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.LinkedHashSet;
-import java.util.List;
+import domain.type.Letter;
+import domain.type.Suit;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,11 +34,7 @@ class CardsTest {
     @DisplayName("보유 여부를 테스트")
     public void testContains() {
         //given
-        String name = "test";
-        int end = 10;
-        Set<Card> cardSet = IntStream.range(0, end + 1)
-            .mapToObj(i -> new Card(name + i, List.of(1)))
-            .collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<Card> cardSet = Set.of(new Card(Suit.CLUB, Letter.ACE));
         Cards cards = new Cards(cardSet);
 
         //when
