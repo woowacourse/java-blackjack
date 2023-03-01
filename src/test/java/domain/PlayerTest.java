@@ -1,9 +1,7 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import config.CardBox;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -47,25 +45,4 @@ public class PlayerTest {
         assertThat(player.sumOfPlayerCards()).isEqualTo(cards.sumOfCards());
     }
 
-    private class Player {
-
-        private final Name name;
-        private final Cards cards;
-
-        public Player(final Name name, final Cards cards) {
-            this.name = name;
-            this.cards = cards;
-        }
-
-        public boolean selectToPickOtherCard(final String yesOrNo, final CardNumberGenerator generator) {
-            if (yesOrNo.equals("Y")) {
-                return cards.addCard(CardBox.cardBox.get(generator.generateIndex()));
-            }
-            return false;
-        }
-
-        public int sumOfPlayerCards() {
-            return cards.sumOfCards();
-        }
-    }
 }
