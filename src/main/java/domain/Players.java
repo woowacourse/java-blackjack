@@ -13,7 +13,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> names) {
+    public static Players from(final List<String> names) {
         return names.stream()
             .map(Player::new)
             .collect(collectingAndThen(Collectors.toList(), Players::new));

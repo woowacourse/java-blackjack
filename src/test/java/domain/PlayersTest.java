@@ -14,7 +14,7 @@ public class PlayersTest {
     @MethodSource("parameterProvider")
     void playerCount1_4(List<String> names) {
         Assertions.assertThatNoException()
-            .isThrownBy(() -> Players.of(names));
+            .isThrownBy(() -> Players.from(names));
     }
 
     static Stream<List<String>> parameterProvider() {
