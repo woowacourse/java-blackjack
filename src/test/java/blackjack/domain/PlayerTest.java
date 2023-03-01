@@ -17,7 +17,7 @@ class PlayerTest {
         Card card = new Card(CardNumber.ACE, CardSuit.DIAMOND);
 
         //when
-        player.receiveCard(card);
+        player.hit(card);
 
         //then
         assertTrue(player.getReceivedCards().contains(card));
@@ -38,7 +38,7 @@ class PlayerTest {
 
         //when
         for (Card card : cards) {
-            player.receiveCard(card);
+            player.hit(card);
         }
         int result = player.calculateCardNumber();
 
@@ -58,7 +58,7 @@ class PlayerTest {
 
         //when
         for (Card card : cards) {
-            player.receiveCard(card);
+            player.hit(card);
         }
         int result = player.calculateCardNumber();
 
@@ -79,7 +79,7 @@ class PlayerTest {
 
         //when
         for (Card card : cards) {
-            player.receiveCard(card);
+            player.hit(card);
         }
         int result = player.calculateCardNumber();
 

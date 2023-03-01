@@ -1,28 +1,16 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Player {
+public class Player extends Participant{
 
     private static final int JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM = 11;
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
 
-    private final PlayerName playerName;
-    private final List<Card> receivedCards = new ArrayList<>();
 
     public Player(PlayerName playerName) {
-        this.playerName = playerName;
+        super(playerName);
     }
 
-    public void receiveCard(Card card) {
-        receivedCards.add(card);
-    }
-
-    public List<Card> getReceivedCards() {
-        return this.receivedCards;
-    }
-
+    @Override
     public int calculateCardNumber() {
         int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
         if (playerHasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
@@ -32,13 +20,13 @@ public class Player {
     }
 
     private int calculateCardNumberAceCardValueOne() {
-        return receivedCards.stream()
+        return getReceivedCards().stream()
             .mapToInt(card -> card.getCardNumber().value)
             .sum();
     }
 
     private boolean playerHasAceCard() {
-        return receivedCards.stream()
+        return getReceivedCards().stream()
             .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
     }
 }
