@@ -1,11 +1,14 @@
 package domain;
 
+import java.util.ArrayList;
+
 import view.ErrorMessage;
 
-public class Player {
+public class Player extends Participant{
     private final String name;
 
     public Player(String name) {
+        super(new ArrayList<>());
         validate(name);
         this.name = name;
     }
