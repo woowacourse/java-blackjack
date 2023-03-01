@@ -17,4 +17,8 @@ public class Card {
     public Denomination getDenomination() {
         return denomination;
     }
+
+    public Suits getSuit() {
+        return suit;
+    }
 }
