@@ -8,8 +8,8 @@ public class Hand {
 
     public Hand(List<Card> cards) {
         this.hand = cards;
-    };
-성
+    }
+
     public void addCard(Card card) {
         hand.add(card);
     }
