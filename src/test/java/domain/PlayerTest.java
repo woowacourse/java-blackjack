@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.CardBoxFixture.카드박스;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class PlayerTest {
 
         Player player = new Player(name, cards);
 
-        assertThat(player.selectToPickOtherCard(input, () -> randomCardIndex)).isEqualTo(expected);
+        assertThat(player.selectToPickOtherCard(input, 카드박스, () -> randomCardIndex)).isEqualTo(expected);
     }
 
     @Test

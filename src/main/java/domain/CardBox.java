@@ -1,21 +1,20 @@
-package config;
+package domain;
 
-import domain.Card;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardBox {
 
-    public static List<Card> cardBox = new ArrayList<>();
+    public List<Card> cardBox = new ArrayList<>();
 
-    static {
+    public CardBox() {
         initHeart();
         initClover();
         initDiamond();
         initSpade();
     }
 
-    private static void initSpade() {
+    private void initSpade() {
         cardBox.add(new Card("A스페이드", 11));
         cardBox.add(new Card("2스페이드", 2));
         cardBox.add(new Card("3스페이드", 3));
@@ -31,7 +30,7 @@ public class CardBox {
         cardBox.add(new Card("K스페이드", 10));
     }
 
-    private static void initDiamond() {
+    private void initDiamond() {
         cardBox.add(new Card("A다이아몬드", 11));
         cardBox.add(new Card("2다이아몬드", 2));
         cardBox.add(new Card("3다이아몬드", 3));
@@ -47,7 +46,7 @@ public class CardBox {
         cardBox.add(new Card("K다이아몬드", 10));
     }
 
-    private static void initClover() {
+    private void initClover() {
         cardBox.add(new Card("A클로버", 11));
         cardBox.add(new Card("2클로버", 2));
         cardBox.add(new Card("3클로버", 3));
@@ -63,7 +62,7 @@ public class CardBox {
         cardBox.add(new Card("K클로버", 10));
     }
 
-    private static void initHeart() {
+    private void initHeart() {
         cardBox.add(new Card("A하트", 11));
         cardBox.add(new Card("2하트", 2));
         cardBox.add(new Card("3하트", 3));
@@ -77,5 +76,12 @@ public class CardBox {
         cardBox.add(new Card("J하트", 10));
         cardBox.add(new Card("Q하트", 10));
         cardBox.add(new Card("K하트", 10));
+    }
+
+
+    public Card get(final int index) {
+        Card card = cardBox.get(index);
+        cardBox.remove(card);
+        return card;
     }
 }

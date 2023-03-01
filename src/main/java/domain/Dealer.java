@@ -8,4 +8,5 @@ public class Dealer extends Player {
     public boolean isSumUnderStandard() {
         return sumOfPlayerCards() < 17;
     }
+
 }

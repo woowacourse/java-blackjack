@@ -1,7 +1,5 @@
 package domain;
 
-import config.CardBox;
-
 public class Player {
 
     private final Name name;
@@ -12,15 +10,16 @@ public class Player {
         this.cards = cards;
     }
 
-    public boolean selectToPickOtherCard(final String yesOrNo, final CardNumberGenerator generator) {
+    public boolean selectToPickOtherCard(final String yesOrNo, final CardBox cardBox,
+                                         final CardNumberGenerator generator) {
         if (yesOrNo.equals("Y")) {
-            return pickOtherCard(generator);
+            return pickOtherCard(cardBox, generator);
         }
         return false;
     }
 
-    protected boolean pickOtherCard(final CardNumberGenerator generator) {
-        return cards.addCard(CardBox.cardBox.get(generator.generateIndex()));
+    protected boolean pickOtherCard(final CardBox cardBox, final CardNumberGenerator generator) {
+        return cards.addCard(cardBox.get(generator.generateIndex()));
     }
 
     public int sumOfPlayerCards() {
