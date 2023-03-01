@@ -9,8 +9,11 @@ public class Deck {
             "A클로버", "2클로버", "3클로버", "4클로버", "5클로버", "6클로버", "7클로버", "8클로버", "9클로버", "10클로버", "J클로버", "Q클로버", "K클로버",
             "A다이아몬드", "2다이아몬드", "3다이아몬드", "4다이아몬드", "5다이아몬드", "6다이아몬드", "7다이아몬드", "8다이아몬드", "9다이아몬드", "10다이아몬드", "J다이아몬드", "Q다이아몬드", "K다이아몬드");
 
-
     public static int extractCardNumber(String card) {
-        return Integer.parseInt(card.replaceAll(KOREAN_REGEX, ""));
+        String cardValue = card.replaceAll(KOREAN_REGEX, "");
+        if (SpecialCard.isSpecial(cardValue)) {
+            return SpecialCard.convertNumber(cardValue);
+        }
+        return Integer.parseInt(cardValue);
     }
 }
