@@ -12,8 +12,8 @@ public class Participants {
 
     public static Participants from(List<String> names) {
         List<Participant> participants = new ArrayList<>();
-        names.forEach(name -> participants.add(new Player(name)));
         participants.add(new Dealer());
+        names.forEach(name -> participants.add(new Player(name)));
         return new Participants(participants);
     }
 
@@ -25,5 +25,19 @@ public class Participants {
 
     public List<Participant> getParticipants() {
         return new ArrayList<>(participants);
+    }
+
+    public List<Player> getPlayers() {
+        ArrayList<Player> players = new ArrayList<>();
+        for (Participant participant : participants) {
+            addParticipantIfPlayer(players, participant);
+        }
+        return players;
+    }
+
+    private static void addParticipantIfPlayer(ArrayList<Player> players, Participant participant) {
+        if (participant.getClass().isInstance(Player.class)) {
+            players.add((Player)participant);
+        }
     }
 }
