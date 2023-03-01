@@ -27,4 +27,22 @@ class HandTest {
                     .containsSequence(card2, card1);
         }
     }
+
+    @Nested
+    class 점수계산 {
+        @Test
+        void should_올바른점수반환_when_calculateScore호출() {
+            //given
+            Hand hand = new Hand();
+            hand.add(new Card(Suit.CLUB, Number.ACE));
+            hand.add(new Card(Suit.SPADE, Number.ACE));
+            int expected = 12;
+
+            //when
+            int actual = hand.calculateScore();
+
+            //then
+            assertThat(actual).isEqualTo(expected);
+        }
+    }
 }
