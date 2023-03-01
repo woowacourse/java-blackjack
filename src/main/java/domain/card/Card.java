@@ -11,6 +11,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public boolean isAce() {
+        return rank.isAce();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -22,6 +26,10 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(rank, suit);
+    }
+
+    public int getScore() {
+        return rank.getScore();
     }
 }
 

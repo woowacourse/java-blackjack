@@ -16,11 +16,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
 
+    RandomPicker randomPicker = new RandomPicker();
+
     @Test
     void 덱은_52가지_종류의_카드가_있다() {
         //given
         List<Card> expectedCards = initCards();
-        Deck deck = new Deck();
+        Deck deck = Deck.create();
 
         //when
 
@@ -31,11 +33,11 @@ class DeckTest {
     @Test
     void 카드를_뽑을_수_있다() {
         //given
-        Deck deck = new Deck();
+        Deck deck = Deck.create();
         List<Card> cards = initCards();
 
         //when
-        Card card = deck.pollAvailableCard(new RandomPicker());
+        Card card = deck.pollAvailableCard(randomPicker);
 
         //then
         assertThat(card).isIn(cards);
@@ -44,8 +46,7 @@ class DeckTest {
     @Test
     void 뽑은_카드는_제거된다() {
         //given
-        RandomPicker randomPicker = new RandomPicker();
-        Deck deck = new Deck();
+        Deck deck = Deck.create();
 
         //when
         for (int i = 0; i < 52; i++) {

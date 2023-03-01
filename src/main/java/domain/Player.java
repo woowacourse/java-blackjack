@@ -1,8 +1,8 @@
 package domain;
 
 import domain.card.Card;
+import domain.card.Cards;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,24 +12,33 @@ public class Player {
     private static final int MAX_NAME_LENGTH = 10;
 
     private final String name;
-    private final List<Card> cards = new ArrayList<>();
+    private final Cards cards;
 
-    public Player(String name) {
-        validate(name);
-        this.name = name;
+    private Player(String name, Cards cards) {
+        this.name = name.trim();
+        this.cards = cards;
     }
 
-    private void validate(String name) {
+    public static Player of(String name, Cards cards) {
+        validate(name);
+        return new Player(name, cards);
+    }
+
+    private static void validate(String name) {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException(ERROR_NAME_LENGTH);
         }
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        cards.addCard(card);
+    }
+
+    public int calculateScore() {
+        return cards.calculateScore();
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(cards.toList());
     }
 }

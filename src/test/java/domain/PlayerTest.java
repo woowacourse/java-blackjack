@@ -1,12 +1,15 @@
 package domain;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,7 +26,7 @@ class PlayerTest {
         //when
 
         //then
-        assertDoesNotThrow(() -> new Player(name));
+        assertDoesNotThrow(() -> Player.of(name, new Cards()));
     }
 
     @ParameterizedTest
@@ -34,7 +37,7 @@ class PlayerTest {
         //when
 
         //then
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> Player.of(name, new Cards()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.");
     }
@@ -42,7 +45,7 @@ class PlayerTest {
     @Test
     void 카드를_뽑을_수_있다() {
         //given
-        Player player = new Player("럿고");
+        Player player = Player.of("럿고", new Cards());
         int beforeCount = player.getCards().size();
 
         //when
@@ -52,5 +55,19 @@ class PlayerTest {
         int afterCount = player.getCards().size();
 
         assertThat(beforeCount + 1).isEqualTo(afterCount);
+    }
+
+    @Test
+    void 카드들의_합을_계산_할_수_있다() {
+        //given
+        Player player = Player.of("연어", new Cards());
+        List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.EIGHT, Suit.HEART));
+        cards.forEach(player::addCard);
+
+        //when
+        int totalScore = player.calculateScore();
+
+        //then
+        assertThat(totalScore).isEqualTo(19);
     }
 }
