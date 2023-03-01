@@ -1,5 +1,6 @@
 package domain;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -32,5 +33,18 @@ class PlayersTest {
         assertThatThrownBy(() -> Players.of(List.of(names.split(","))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다");
+    }
+
+    @Test
+    void 중복된_이름을_입력하면_예외가_발생한다() {
+        //given
+        List<String> names = List.of("도비", "   도비");
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> Players.of(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 플레이어의 이름은 중복될 수 없습니다");
     }
 }
