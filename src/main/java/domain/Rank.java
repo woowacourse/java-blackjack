@@ -1,6 +1,6 @@
 package domain;
 
-public enum Value {
+public enum Rank {
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -18,7 +18,7 @@ public enum Value {
     private final String name;
     private final int value;
 
-    Value(String name, int value) {
+    Rank(String name, int value) {
         this.name = name;
         this.value = value;
     }
