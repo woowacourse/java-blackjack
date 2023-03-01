@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ParticipantCards {
 
@@ -27,5 +28,12 @@ public class ParticipantCards {
             throw new IllegalArgumentException("중복되는 카드를 가질 수 없습니다.");
         }
         cards.add(card);
+    }
+
+    public int calculate() {
+        List<CardNumber> cardNumbers = cards.stream()
+                .map(Card::getNumber)
+                .collect(Collectors.toList());
+        return CardNumber.getMaxValueNear21(cardNumbers);
     }
 }
