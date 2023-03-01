@@ -32,4 +32,8 @@ public class CardDeck {
     public List<Card> cards() {
         return List.copyOf(cards);
     }
+
+    public Card draw() {
+        return this.cards.remove(0);
+    }
 }

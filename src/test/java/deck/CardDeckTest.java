@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.stream.Collectors.groupingBy;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -38,5 +39,19 @@ class CardDeckTest {
         }
 
         assertEquals(result.size(), 4);
+    }
+
+    @Test
+    void 카드를_한_장씩_꺼낼_수_있다() {
+        // given
+        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
+        final int before = cardDeck.cards().size();
+
+        // when
+        final Card draw = cardDeck.draw();
+
+        // then
+        assertThat(draw).isNotNull();
+        assertThat(cardDeck.cards().size()).isEqualTo(before - 1);
     }
 }
