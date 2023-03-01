@@ -1,7 +1,5 @@
 package domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,5 +11,12 @@ class DeckTest {
     void DeckFromTest() {
         Assertions.assertThatCode(() -> Deck.from(new RandomShuffleStrategy()))
             .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("카드 덱에서 한 장 뽑는 메서드 테스트")
+    void DeckDrawTest() {
+        Deck deck = Deck.from((orderedDeck) -> orderedDeck);
+        Assertions.assertThat(deck.draw()).isEqualTo(new Card("A클로버", 11));
     }
 }
