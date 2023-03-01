@@ -11,19 +11,19 @@ public class UserTest {
     static class UserImplement extends User {
 
         @Override
-        boolean isReceivable() {
+        boolean isHittable() {
             return true;
         }
     }
 
     @DisplayName("카드를 받아 자신의 카드 더미에 추가할 수 있다")
     @Test
-    void receiveCard() {
+    void hit() {
         User user = new UserImplement();
         Card card1 = new Card(Denomination.TWO, Suits.HEART);
         Card card2 = new Card(Denomination.THREE, Suits.DIAMOND);
-        user.receiveCard(card1);
-        user.receiveCard(card2);
+        user.hit(card1);
+        user.hit(card2);
         List<Card> cards = user.getCards();
 
         assertThat(cards).containsExactly(card1, card2);

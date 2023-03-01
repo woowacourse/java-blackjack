@@ -6,7 +6,7 @@ public abstract class User {
 
     protected final Cards cards = new Cards();
 
-    public void receiveCard(Card card) {
+    public void hit(Card card) {
         cards.addCard(card);
     }
 
@@ -14,5 +14,5 @@ public abstract class User {
         return cards.getCards();
     }
 
-    abstract boolean isReceivable();
+    abstract boolean isHittable();
 }

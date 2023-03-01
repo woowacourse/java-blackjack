@@ -36,19 +36,19 @@ public class PlayerTest {
 
     @DisplayName("카드 점수가 21보다 작으면 카드를 받을 수 있다")
     @Test
-    void receiveCard_WhenScoreUnder21() {
+    void hit_WhenScoreUnder21() {
         Player player = new Player("kiara");
-        player.receiveCard(new Card(Denomination.SIX, Suits.HEART));
-        assertThat(player.isReceivable()).isTrue();
+        player.hit(new Card(Denomination.SIX, Suits.HEART));
+        assertThat(player.isHittable()).isTrue();
     }
 
     @DisplayName("카드 점수가 21 이상이면 카드를 받을 수 없다")
     @Test
-    void notReceiveCard_WhenScoreOver21() {
+    void stay_WhenScoreOver21() {
         Player player = new Player("kiara");
-        player.receiveCard(new Card(Denomination.JACK, Suits.HEART));
-        player.receiveCard(new Card(Denomination.FIVE, Suits.HEART));
-        player.receiveCard(new Card(Denomination.SIX, Suits.HEART));
-        assertThat(player.isReceivable()).isFalse();
+        player.hit(new Card(Denomination.JACK, Suits.HEART));
+        player.hit(new Card(Denomination.FIVE, Suits.HEART));
+        player.hit(new Card(Denomination.SIX, Suits.HEART));
+        assertThat(player.isHittable()).isFalse();
     }
 }
