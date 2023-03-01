@@ -17,17 +17,17 @@ class CardsTest {
     @DisplayName("카드를 추가하는 것을 테스트")
     public void testAddCard() {
         //given
-        Set<Card> cardSet = IntStream.range(0, 10)
-            .mapToObj(i -> new Card("test" + i, List.of(1)))
-            .collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<Card> cardSet = Arrays.stream(Letter.values())
+            .map(i -> new Card(Suit.DIAMOND, i))
+            .collect(Collectors.toSet());
         Cards cards = new Cards(cardSet);
-        Card card = new Card("card", List.of(1));
+        Card card = new Card(Suit.SPADE, Letter.ACE);
 
         //when
         cards.add(card);
 
         //then
-        assertTrue(cards.contains(card));
+        assertTrue(cards.contains(Letter.ACE));
     }
 
     @Test
@@ -38,8 +38,8 @@ class CardsTest {
         Cards cards = new Cards(cardSet);
 
         //when
-        boolean result1 = cards.contains(new Card(name + end, List.of(1)));
-        boolean result2 = cards.contains(new Card(name + end + 1, List.of(1)));
+        boolean result1 = cards.contains(Letter.ACE);
+        boolean result2 = cards.contains(Letter.TWO);
 
         //then
         assertTrue(result1);
