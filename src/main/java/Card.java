@@ -10,4 +10,8 @@ public class Card {
     public int getScore() {
         return this.cardNumber.getScore();
     }
+
+    public String getText() {
+        return this.cardNumber.getNumberToPrint() + this.symbol.getName();
+    }
 }
