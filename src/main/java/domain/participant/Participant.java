@@ -6,7 +6,7 @@ import domain.card.Cards;
 import java.util.Collections;
 import java.util.List;
 
-abstract class Participant {
+public abstract class Participant {
 
     private static final int BLACKJACK = 21;
 
@@ -27,6 +27,8 @@ abstract class Participant {
     public boolean isBust() {
         return calculateScore() > BLACKJACK;
     }
+
+    public abstract boolean isStay();
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.toList());

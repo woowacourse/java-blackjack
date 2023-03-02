@@ -9,9 +9,9 @@ public class Players {
     private static final String ERROR_PLAYER_COUNT = "[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다";
     private static final String ERROR_DUPLICATED_NAME = "[ERROR] 플레이어의 이름은 중복될 수 없습니다";
 
-    private final List<Player> players;
+    private final List<Participant> players;
 
-    private Players(List<Player> players) {
+    private Players(List<Participant> players) {
         this.players = players;
     }
 

@@ -8,6 +8,7 @@ public class Dealer extends Participant {
         super();
     }
 
+    @Override
     public boolean isStay() {
         return calculateScore() > STAY_LOWER_BOUND;
     }

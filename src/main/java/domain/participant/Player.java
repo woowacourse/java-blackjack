@@ -22,4 +22,9 @@ public class Player extends Participant {
             throw new IllegalArgumentException(ERROR_NAME_LENGTH);
         }
     }
+
+    @Override
+    public boolean isStay() {
+        throw new UnsupportedOperationException();
+    }
 }
