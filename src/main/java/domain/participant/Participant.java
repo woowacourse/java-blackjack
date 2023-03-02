@@ -22,8 +22,4 @@ public class Participant extends Player {
     public void changeState(final State state) {
         this.state = state;
     }
-
-    public Name name() {
-        return name;
-    }
 }
