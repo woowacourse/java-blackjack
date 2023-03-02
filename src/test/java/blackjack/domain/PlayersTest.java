@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.Players.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -16,24 +18,32 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class PlayersTest {
 
     @Test
-    void 입력받은_사용자의_이름이_중복되는_경우_예외를_던진다() {
-        List<String> names = List.of("name", "name");
+    void 입력받은_플레이어의_이름이_중복되는_경우_예외를_던진다() {
+        final List<String> names = List.of("name", "name");
 
-        assertThatThrownBy(() -> Players.from(names))
+        assertThatThrownBy(() -> from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Players.DUPLICATE_NAMES_MESSAGE + names);
     }
 
-    @ParameterizedTest(name = "입력받은 사용자가 {0}명인 경우 예외를 던진다.")
+    @ParameterizedTest(name = "입력받은 플레이어가 {0}명인 경우 예외를 던진다.")
     @ValueSource(ints = {0, 7})
-    void 입력받은_사용자가_1명_미만_6명_초과인_경우_예외를_던진다(final int count) {
+    void 입력받은_플레이어가_1명_미만_6명_초과인_경우_예외를_던진다(final int count) {
         final List<String> names = IntStream.range(0, count)
                 .mapToObj(String::valueOf)
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> Players.from(names))
+        assertThatThrownBy(() -> from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Players.INVALID_NAME_COUNT + count);
     }
 
+    @Test
+    void 플레이어들이_정상_생성된다() {
+        final List<String> names = List.of("후추", "허브");
+
+        final Players players = from(names);
+
+        assertThat(players.getNames()).containsExactly("딜러", "후추", "허브");
+    }
 }

@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -10,10 +13,17 @@ public class Players {
     private static final int NAME_COUNT_UPPER_BOUND = 6;
     static final String INVALID_NAME_COUNT =
             "플레이어는 최소 " + NAME_COUNT_LOWER_BOUND + "명 이상, 최대 " + NAME_COUNT_UPPER_BOUND + "명 이하여야 합니다. 입력값:";
+    
+    private final List<Player> players;
 
-    public static void from(final List<String> names) {
+    public Players(final List<Player> players) {
+        this.players = players;
+    }
+
+    public static Players from(final List<String> names) {
         validateDuplicate(names);
         validateNameCount(names);
+        return new Players(generate(names));
     }
 
     private static void validateDuplicate(final List<String> names) {
@@ -34,5 +44,20 @@ public class Players {
 
     private static boolean isValidNameCount(final List<String> names) {
         return names.size() < NAME_COUNT_LOWER_BOUND || NAME_COUNT_UPPER_BOUND < names.size();
+    }
+
+    private static List<Player> generate(final List<String> names) {
+        final List<Player> players = new ArrayList<>();
+        players.add(Dealer.create());
+        for (String name : names) {
+            players.add(new Gambler(name));
+        }
+        return players;
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(toUnmodifiableList());
     }
 }

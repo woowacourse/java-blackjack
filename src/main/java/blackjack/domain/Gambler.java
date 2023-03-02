@@ -7,6 +7,7 @@ public class Gambler implements Player {
         this.name = Name.from(name);
     }
 
+    @Override
     public String getName() {
         return name.getValue();
     }

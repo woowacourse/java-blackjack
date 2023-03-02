@@ -11,6 +11,7 @@ class Dealer implements Player {
         return new Dealer(Name.createDealerName());
     }
 
+    @Override
     public String getName() {
         return name.getValue();
     }
