@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -25,8 +26,13 @@ public class BlackJackGame {
         players.pickStartCards(cardDeck);
     }
 
-    public Players getPlayers() {
-        return players;
+    public boolean canPick(Player player) {
+        return player.canPick();
+    }
+
+    public void pick(Player player) {
+        Card pickedCard = cardDeck.pick();
+        player.pick(pickedCard);
     }
 
     public Player getDealer() {

@@ -22,7 +22,24 @@ public class BlackJackController {
         List<PlayerStatusDto> challengers = makeChallengersStatus();
         OutputView.printStartStatus(dealer, challengers);
 
+        takeAllPlayersTurn();
+
         InputView.terminate();
+    }
+
+    private void init() {
+        try {
+            List<String> playerNames = InputView.inputPlayerNames();
+            blackJackGame = BlackJackGame.from(playerNames);
+        } catch (CustomException e) {
+            OutputView.printErrorMessage(e);
+            init();
+        }
+    }
+
+    private PlayerStatusDto makeDealerStatus() {
+        Player dealer = blackJackGame.getDealer();
+        return new PlayerStatusDto(dealer);
     }
 
     private List<PlayerStatusDto> makeChallengersStatus() {
@@ -35,18 +52,31 @@ public class BlackJackController {
         return gameStatus;
     }
 
-    private PlayerStatusDto makeDealerStatus() {
-        Player dealer = blackJackGame.getDealer();
-        return new PlayerStatusDto(dealer);
+    private void takeAllPlayersTurn() {
+        for (Player player : blackJackGame.getChallengers()) {
+            takeEachPlayerTurn(player);
+        }
     }
 
-    private void init() {
+    private void takeEachPlayerTurn(Player player) {
+        while (blackJackGame.canPick(player)) {
+            checkChoice(player);
+        }
+    }
+
+    private void checkChoice(Player player) {
         try {
-            List<String> playerNames = InputView.inputPlayerNames();
-            blackJackGame = BlackJackGame.from(playerNames);
+            inputChoice(player);
         } catch (CustomException e) {
             OutputView.printErrorMessage(e);
-            init();
+            checkChoice(player);
+        }
+    }
+
+    private void inputChoice(Player player) {
+        boolean choice = InputView.inputPlayerChoice(player.getName());
+        if (choice) {
+            blackJackGame.pick(player);
         }
     }
 }
