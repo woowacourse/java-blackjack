@@ -39,10 +39,10 @@ public class Cards {
     }
 
     public boolean isTotalScoreOver() {
-        return getTotalScore() > MAXIMUM_SCORE;
+        return calculateTotalScore() > MAXIMUM_SCORE;
     }
 
-    public boolean isBlackJack() {
-        return getTotalScore() == MAXIMUM_SCORE;
+    public boolean isMaximumScore() {
+        return calculateTotalScore() == MAXIMUM_SCORE;
     }
 }

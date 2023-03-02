@@ -73,23 +73,23 @@ class CardsTest {
     }
 
     @Test
-    void 블랙잭이면_true_반환한다() {
+    void 최대_점수라면_true_반환한다() {
         final Cards cards = new Cards(
                 List.of(new Card(TEN, SPADE),
                         new Card(JACK, HEART),
                         new Card(ACE, CLOVER)
                 ));
 
-        assertThat(cards.isBlackJack()).isTrue();
+        assertThat(cards.isMaximumScore()).isTrue();
     }
 
     @Test
-    void 블랙잭이_아니면_false_반환한다() {
+    void 최대_점수_아니라면_false_반환한다() {
         final Cards cards = new Cards(
                 List.of(new Card(TEN, SPADE),
                         new Card(JACK, HEART)
                 ));
 
-        assertThat(cards.isBlackJack()).isFalse();
+        assertThat(cards.isMaximumScore()).isFalse();
     }
 }
