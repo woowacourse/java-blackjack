@@ -1,14 +1,18 @@
 package blackjack.domain;
 
-class Dealer implements Player {
-    private final Name name;
+import java.util.List;
 
-    private Dealer(final Name name) {
+public class Dealer implements Player {
+    private final Name name;
+    private final Hand hand;
+
+    private Dealer(final Name name, final Hand hand) {
         this.name = name;
+        this.hand = hand;
     }
 
     public static Dealer create() {
-        return new Dealer(Name.createDealerName());
+        return new Dealer(Name.createDealerName(), new Hand());
     }
 
     @Override
@@ -18,11 +22,16 @@ class Dealer implements Player {
 
     @Override
     public void initialDraw(final Deck deck) {
-
+        hand.add(deck.draw());
     }
 
     @Override
     public boolean canDraw() {
-        return false;
+        return hand.isPlayable();
+    }
+
+    @Override
+    public List<String> getCardLetters() {
+        return hand.getCardLetters();
     }
 }

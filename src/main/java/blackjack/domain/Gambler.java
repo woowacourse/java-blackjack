@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Gambler implements Player {
     private static final int DRAW_COUNT = 2;
 
@@ -26,5 +28,9 @@ public class Gambler implements Player {
     @Override
     public boolean canDraw() {
         return hand.isPlayable();
+    }
+
+    public List<String> getCardLetters() {
+        return hand.getCardLetters();
     }
 }
