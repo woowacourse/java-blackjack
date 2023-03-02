@@ -1,10 +1,10 @@
 package controller;
 
-import model.Dealer;
-import model.Deck;
-import model.User;
-import model.Users;
 import model.card.Card;
+import model.card.Deck;
+import model.user.Dealer;
+import model.user.User;
+import model.user.Users;
 import ui.input.InputView;
 import ui.output.OutputView;
 

@@ -1,8 +1,4 @@
-package model;
-
-import model.card.Card;
-import model.card.Shape;
-import model.card.Value;
+package model.card;
 
 import java.util.Collections;
 import java.util.Stack;

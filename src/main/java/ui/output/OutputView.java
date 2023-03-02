@@ -1,8 +1,8 @@
 package ui.output;
 
-import model.Dealer;
-import model.User;
-import model.Users;
+import model.user.Dealer;
+import model.user.User;
+import model.user.Users;
 
 import java.util.List;
 import java.util.stream.Collectors;

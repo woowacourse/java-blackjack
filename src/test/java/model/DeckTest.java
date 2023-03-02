@@ -1,6 +1,7 @@
 package model;
 
 import model.card.Card;
+import model.card.Deck;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

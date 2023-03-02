@@ -1,5 +1,5 @@
 import controller.BlackJackController;
-import model.Deck;
+import model.card.Deck;
 
 public class Application {
 

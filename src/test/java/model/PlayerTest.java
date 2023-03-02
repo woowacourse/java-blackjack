@@ -1,6 +1,8 @@
 package model;
 
 import model.card.Card;
+import model.user.Hand;
+import model.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

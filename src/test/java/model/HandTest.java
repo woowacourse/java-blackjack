@@ -3,6 +3,7 @@ package model;
 import model.card.Card;
 import model.card.Shape;
 import model.card.Value;
+import model.user.Hand;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

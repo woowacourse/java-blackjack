@@ -1,4 +1,4 @@
-package model;
+package model.user;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

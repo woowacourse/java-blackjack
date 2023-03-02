@@ -1,6 +1,11 @@
 package model;
 
 import model.card.Card;
+import model.user.Dealer;
+import model.user.Hand;
+import model.user.Player;
+import model.user.User;
+import model.user.Users;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
