@@ -12,7 +12,7 @@ public class ShuffledDeckTest {
 
     @Test
     void 카드를_반환한다() {
-        Deck deck = ShuffledDeck.getInstance();
+        final Deck deck = ShuffledDeck.getInstance();
 
         assertThat(deck.draw()).isInstanceOf(Card.class);
     }

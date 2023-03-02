@@ -30,7 +30,7 @@ public class HandTest {
         final Hand hand = generateHand(ranks);
         final Hand dealerHand = generateHand(dealerRanks);
 
-        Result result = hand.play(dealerHand);
+        final Result result = hand.play(dealerHand);
 
         assertThat(result).isEqualTo(expectedResult);
     }
