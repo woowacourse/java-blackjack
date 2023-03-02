@@ -6,34 +6,30 @@ import domain.card.CardValue;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class CardDeck {
 
-    private final List<Card> cards;
+    private final Stack<Card> cards;
 
-    private CardDeck(final List<Card> cards) {
+    private CardDeck(final Stack<Card> cards) {
         this.cards = cards;
     }
 
     public static CardDeck shuffledFullCardDeck() {
 
-        List<Card> cards = Arrays.stream(CardShape.values())
-                                 .flatMap(cardShape -> Arrays.stream(CardValue.values())
-                                                             .map(cardValue -> new Card(cardShape, cardValue)))
-                                 .collect(Collectors.toList());
+        Stack<Card> cards = Arrays.stream(CardShape.values())
+                                  .flatMap(cardShape -> Arrays.stream(CardValue.values())
+                                                              .map(cardValue -> new Card(cardShape, cardValue)))
+                                  .collect(Collectors.toCollection(Stack::new));
 
         Collections.shuffle(cards);
 
         return new CardDeck(cards);
     }
 
-    public List<Card> cards() {
-        return List.copyOf(cards);
-    }
-
     public Card draw() {
-        return cards.remove(0);
+        return cards.pop();
     }
 }
