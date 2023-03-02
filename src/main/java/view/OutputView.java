@@ -1,6 +1,7 @@
 package view;
 
 import domain.Dealer;
+import domain.Player;
 import domain.Players;
 
 import java.util.List;
@@ -18,5 +19,11 @@ public class OutputView {
             List<String> value = players.getInfo().get(key);
             System.out.println(key + "카드: " + value.stream().collect(Collectors.joining(", ")));
         }
+    }
+
+    public void printPlayerCardsInfo(Player player) {
+        System.out.println(player.getName().getName() + "카드: " +
+                player.getCards().stream().collect(Collectors.joining(", ")));
+
     }
 }

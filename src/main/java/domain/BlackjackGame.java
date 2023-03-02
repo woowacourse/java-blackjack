@@ -14,7 +14,8 @@ public class BlackjackGame {
         this.players = players;
         this.cardDeck = cardDeck;
     }
-    public void distributeInitialCard(){
+
+    public void distributeInitialCard() {
         for (int i = 0; i < 2; i++) {
             distributeDealer();
             distributePlayers();
@@ -27,7 +28,12 @@ public class BlackjackGame {
 
     public void distributePlayers() {
         for (Player player : players.getPlayers()) {
-            player.addCard(cardDeck.poll());
+            distributePlayer(player);
         }
+    }
+
+    public void distributePlayer(Player player) {
+        player.addCard(cardDeck.poll());
+
     }
 }
