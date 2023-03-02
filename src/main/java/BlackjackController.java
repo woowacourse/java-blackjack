@@ -2,6 +2,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;
 
+// TODO: 2023/02/28 결과 계산하기
+// TODO: 2023/02/28 출력
 public class BlackjackController {
     private final InputView inputView;
 
@@ -31,7 +33,7 @@ public class BlackjackController {
     }
 
     private void requestMoreCard(BlackjackGame blackjackGame, Player player) {
-        while (isHitCommand(player.getName())) {
+        while (isHitCommand(player.getName()) && !player.isBusted()) {
             blackjackGame.giveCardTo(player);
         }
     }

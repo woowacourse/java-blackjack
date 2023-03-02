@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: 2023/03/02 추상클래스로 변경
 public class Participant {
     private final List<Card> cards = new ArrayList<>();
 
@@ -30,6 +31,10 @@ public class Participant {
         }
 
         return score;
+    }
+
+    public boolean isBusted() {
+        return calculateScore() > 21;
     }
 
     public int cardSize() {
