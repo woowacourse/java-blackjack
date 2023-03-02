@@ -39,4 +39,13 @@ class ParticipantTest {
         Assertions.assertThat(participant.getReadyCards())
             .containsExactly(new Card(CardNumber.ACE, CardShape.SPADE), new Card(CardNumber.THREE, CardShape.HEART));
     }
+
+    @Test
+    @DisplayName("현재의 점수를 반환한다.")
+    void calculateScore() {
+        Participant participant = new Participant("echo");
+        participant.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
+        participant.addCard(new Card(CardNumber.THREE, CardShape.HEART));
+        Assertions.assertThat(participant.calculateScore()).isEqualTo(4);
+    }
 }

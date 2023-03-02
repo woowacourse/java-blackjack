@@ -24,6 +24,14 @@ public class Participant {
         return List.of(cards.get(0), cards.get(1));
     }
 
+    public int calculateScore() {
+        int score = 0;
+        for (Card card : cards) {
+            score += card.getCardNumber().getScore();
+        }
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

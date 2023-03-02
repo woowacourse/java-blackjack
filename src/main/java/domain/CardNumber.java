@@ -15,7 +15,7 @@ public enum CardNumber {
     QUEEN(10),
     KING(10);
 
-    final int score;
+    private final int score;
 
     CardNumber(int score) {
         this.score = score;
