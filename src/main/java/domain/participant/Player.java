@@ -1,24 +1,16 @@
 package domain.participant;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import domain.card.Card;
 
-public class Player {
+public class Player extends Participant {
 
     private static final int LIMIT_TAKE_CARD_VALUE = 21;
-    private final Name name;
-    private final List<Card> cards;
 
-    public Player(final Name name) {
-        this.name = name;
-        this.cards = new ArrayList<>();
-    }
-
-    public void takeCard(Card card) {
-        cards.add(card);
+    public Player(Name name) {
+        super(name);
     }
 
     public boolean checkCardsCondition() {

@@ -8,24 +8,13 @@ import java.util.stream.Stream;
 
 import domain.card.Card;
 
-public class Dealer {
+public class Dealer extends Participant {
     private static final int LIMIT_TAKE_CARD_VALUE = 17;
     public static final String DEALER_NAME = "딜러";
     private static final int MIN_BUST_NUMBER = 22;
-    private final String name;
-    private final List<Card> cards;
 
     public Dealer() {
-        this.name = DEALER_NAME;
-        this.cards = new ArrayList<>();
-    }
-
-    public void takeCard(Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        super(new Name(DEALER_NAME));
     }
 
     public boolean checkCardsCondition() {
@@ -50,7 +39,7 @@ public class Dealer {
         if (card.getValue() == 1) {
             totalValues = getAceSituationValues(totalValues, card);
         }
-        if (card.getValue() != 1){
+        if (card.getValue() != 1) {
             setCommonValues(totalValues, card);
         }
         return totalValues;
@@ -73,5 +62,9 @@ public class Dealer {
         totalValues = Stream.concat(commonSituationValues.stream(), aceSituationValues.stream())
                 .collect(Collectors.toList());
         return totalValues;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

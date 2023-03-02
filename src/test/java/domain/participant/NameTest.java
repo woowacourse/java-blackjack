@@ -1,8 +1,7 @@
 package domain.participant;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -19,8 +18,8 @@ public class NameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"가", "가A", "A1", "#", "A#"})
-    @DisplayName("이름이 영어가 아니면 예외 처리한다.")
+    @ValueSource(strings = {"Dino99", "#", "A#", "seongha@!", "디노!"})
+    @DisplayName("이름이 영어와 한글로 이루어져 있지 않으면 예외 처리한다.")
     void shouldThrowDoesNotEnglish(String name) {
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
