@@ -21,4 +21,17 @@ public class Deck {
     public boolean containsCard(Card card) {
         return drawnCards.contains(card);
     }
+
+    public Card drawCard() {
+        Card card;
+        do {
+            Number number = Number.pickRandomNumber();
+            Pattern pattern = Pattern.pickRandomPattern();
+
+            card = new Card(number, pattern);
+        } while (containsCard(card));
+        addCard(card);
+
+        return card;
+    }
 }
