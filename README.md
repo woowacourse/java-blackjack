@@ -6,9 +6,9 @@
 
 ### 입력
 
-- [ ] Player 이름
+- [x] Player 이름
     - [x] 중복 확인
-    - [ ] Blank 제거
+    - [x] Blank 검증
     - [x] Player 수 1~7 명
 - [x] 카드 더 받을지 여부
     - [x] y, n 이 아닐 경우
