@@ -32,4 +32,11 @@ public class Cards {
         return cards.stream()
                 .anyMatch(s -> s.getCardValue() == CardNumber.ACE.getValue());
     }
+
+    public List<String> getCards() {
+        return cards.stream()
+                .map(Card::getCard)
+                .collect(Collectors.toList());
+    }
+
 }

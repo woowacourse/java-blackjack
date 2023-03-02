@@ -26,4 +26,12 @@ public class Players {
     private List<String> splitName(String names) {
         return Arrays.asList(names.split(","));
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void addCard(int index, Card card){
+        players.get(index).addCard(card);
+    }
 }

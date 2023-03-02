@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Dealer {
     private static final String NAME = "딜러";
     private final Name name;
@@ -14,12 +16,16 @@ public class Dealer {
         cards.add(card);
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     public Card getCard(int index) {
         return cards.getCard(index);
+    }
+
+    public List<String> getCards() {
+        return cards.getCards();
     }
 
 }
