@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -25,11 +26,15 @@ public class Game {
     }
 
     public Result isWon(int index) {
-        Player player = players.get(index);
-        if (player.getScore() == dealer.getScore() || (player.isBusted() && dealer.isBusted())) {
+        return getResult(players.get(index), dealer);
+    }
+
+    private Result getResult(Player player, Player other) {
+        if (player.getScore() == other.getScore() || (player.isBusted() && other.isBusted())) {
             return Result.DRAW;
         }
-        if (player.getScore() > dealer.getScore() || dealer.isBusted()) {
+
+        if (!player.isBusted() && (player.getScore() > other.getScore() || other.isBusted())) {
             return Result.WIN;
         }
 
