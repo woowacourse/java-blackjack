@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.Objects;
 
 public class Card {
+    private static final CardNumber TEN = CardNumber.of(10);
+
     private final Shape shape;
     private final CardNumber cardNumber;
 
@@ -29,18 +31,11 @@ public class Card {
     }
 
     public boolean isAce() {
-        if (cardNumber == CardNumber.of(1)) {
-            return true;
-        }
-
-        return false;
+        return cardNumber == CardNumber.of(1);
     }
 
     public boolean isOverTen() {
-        if (CardNumber.of(10).compareTo(cardNumber) <= 0) {
-            return true;
-        }
-        return false;
+        return TEN.compareTo(cardNumber) <= 0;
     }
 
     public int getCardNumberValue() {
