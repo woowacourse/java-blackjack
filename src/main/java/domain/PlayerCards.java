@@ -27,4 +27,8 @@ public class PlayerCards {
     public List<Card> toList() {
         return List.copyOf(cards);
     }
+
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
 }

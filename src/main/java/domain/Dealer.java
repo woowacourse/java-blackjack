@@ -17,4 +17,8 @@ public class Dealer {
     public void addCard(Card card) {
         playerCards.add(card);
     }
+
+    public Card getFirstCard() {
+        return playerCards.getFirstCard();
+    }
 }
