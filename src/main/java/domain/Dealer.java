@@ -40,4 +40,7 @@ public class Dealer {
         return cards.getSum() > 16;
     }
 
+    public int getCardsSum(){
+        return cards.getSum();
+    }
 }

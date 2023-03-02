@@ -20,6 +20,9 @@ public class Controller {
         distributeInitialCard(dealer, players, game);
 
         selectAdditionalCard(players, game);
+        addWhenUnderStandard(dealer, game);
+
+        outputView.printCardsResult(dealer, players);
     }
 
     private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {
@@ -37,6 +40,13 @@ public class Controller {
                 }
                 outputView.printPlayerCardsInfo(player);
             } while (!player.isOverBlackJack() && command.equals("y"));
+        }
+    }
+
+    private void addWhenUnderStandard(Dealer dealer, BlackjackGame game) {
+        while (!dealer.isOverStandard()) {
+            game.distributeDealer();
+            outputView.printDistributeDealer(dealer);
         }
     }
 

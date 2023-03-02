@@ -16,7 +16,7 @@ public class Player {
         cards.add(card);
     }
 
-    public Card getCard(int index){
+    public Card getCard(int index) {
         return cards.getCard(index);
     }
 
@@ -32,4 +32,7 @@ public class Player {
         return cards.getCards();
     }
 
+    public int getCardsSum() {
+        return cards.getSum();
+    }
 }

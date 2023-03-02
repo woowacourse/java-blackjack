@@ -47,4 +47,13 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public int getCardsSum(String playerName) {
+        return players.stream()
+                .filter(s -> s.getName().getName() == playerName)
+                .findAny()
+                .get()
+                .getCardsSum();
+
+    }
 }
